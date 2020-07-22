@@ -36,7 +36,7 @@ Single-purpose requests that will only be used on one screen should be stored al
 
 ## Routing
 
-We are using [react-router](https://reactrouter.com/web/guides/quick-start) for routing and routes will be defined under src/routes.
+We are using [react-router](https://reactrouter.com/web/guides/quick-start) for routing and routes will be defined under [routes folder](src/routes).
 
 ## Theming
 [Emotion](https://emotion.sh/docs/introduction) is our base styling tool.
