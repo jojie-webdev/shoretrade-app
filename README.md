@@ -1,29 +1,51 @@
-# README #
+### Installation
 
-This README would normally document whatever steps are necessary to get your application up and running.
+To ensure precommit hooks are running on your code editors as well as Git clients,
+make `~/.huskyrc` and add this:
 
-### What is this repository for? ###
+````
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+PATH="/usr/local/bin:$PATH"
+````
 
-### How do I get set up? ###
+## Coding Standards
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Components
 
-### Contribution guidelines ###
+The components are separated into these categories to further organize the project:
 
-* Writing tests
-* Code review
-* Other guidelines
+- **`core`** - core UI components e.g. Navbar
 
-### Who do I talk to? ###
+- **`modules`** - components specific to a feature that can be reused on other places
 
-* Repo owner or admin
-* Other community or team contact
+- **`base`** - basic reusable components e.g. Typography
+
+### Components structure
+
+ - Use hooks: for state, lifecycle
+ - Separate this complex/stateful logic into the 'MyComponent.container.tsx' file
+ - Define template with minimal logic in 'MyComponent.view.tsx' file
+ - Define the props in your 'MyComponent.props.ts' file
+ - Put all styling on 'MyComponent.style.ts' file using styled components
+
+### Making asynchronous requests
+
+Single-purpose requests that will only be used on one screen should be stored along-side the component.
+
+## Routing
+
+We are using [react-router](https://reactrouter.com/web/guides/quick-start) for routing and routes will be defined under src/routes.
+
+## State Management
+
+The base repo will not have a state management.
+See tags for specific ones.
+
+## Internationalization
+
+See [locale.md](src/locales/i18n.md) for more.
+
+## Custom Environment Variables
+Environment files will be declared on their specific environment e.g. (.env for local)
