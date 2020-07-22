@@ -38,6 +38,23 @@ Single-purpose requests that will only be used on one screen should be stored al
 
 We are using [react-router](https://reactrouter.com/web/guides/quick-start) for routing and routes will be defined under src/routes.
 
+## Theming
+[Emotion](https://emotion.sh/docs/introduction) is our base styling tool.
+
+```jsx
+import React from 'react';
+import {useTheme} from "src/utils/Theme";
+
+export function MyComponent() {
+  const theme = useTheme();
+  // You can now access your theme and use it anywhere.
+
+  return <div style={{backgroundColor: theme.color.primary}} />;
+}
+```
+
+[Theme](src/utils/Theme.ts) is defined with its [types](src/types/Theme.ts).
+
 ## State Management
 
 The base repo will not have a state management.
