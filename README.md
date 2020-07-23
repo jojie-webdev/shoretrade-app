@@ -16,7 +16,7 @@ PATH="/usr/local/bin:$PATH"
 
 The components are separated into these categories to further organize the project:
 
-- **`core`** - core UI components e.g. Navbar
+- **`layout`** - components that display or wrap `children` in a certain manner, e.g. Container, AuthGuard, Grid, Row
 
 - **`module`** - components specific to a feature that can be reused on other places
 

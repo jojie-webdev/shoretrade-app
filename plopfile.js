@@ -125,6 +125,52 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('layout', {
+    description: 'Create a layout component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your layout component name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/components/layout/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/layout/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/components/layout/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/layout/layout.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/components/layout/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/layout/layout.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/components/layout/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/layout/layout.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/components/layout/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/layout/layout.container.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: '.storybook/stories/layout/{{pascalCase name}}.js',
+        templateFile: 'plop-templates/layout/layout.story.js.hbs',
+      },
+    ],
+  });
   plop.setGenerator('route', {
     description: 'Create a route component',
     prompts: [
