@@ -125,4 +125,45 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('route', {
+    description: 'Create a route component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your route name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/routes/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/route/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/route/route.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/route/route.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/route/route.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/route/route.container.tsx.hbs',
+      },
+    ],
+  });
 };
