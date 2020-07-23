@@ -18,7 +18,7 @@ The components are separated into these categories to further organize the proje
 
 - **`core`** - core UI components e.g. Navbar
 
-- **`modules`** - components specific to a feature that can be reused on other places
+- **`module`** - components specific to a feature that can be reused on other places
 
 - **`base`** - basic reusable components e.g. Typography
 
