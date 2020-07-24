@@ -34,6 +34,10 @@ The components are separated into these categories to further organize the proje
 
 Single-purpose requests that will only be used on one screen should be stored along-side the component.
 
+## React Grid
+
+The grid system that we are using is [react-grid-system](https://sealninja.github.io/react-grid-system/).
+
 ## Routing
 
 We are using [react-router](https://reactrouter.com/web/guides/quick-start) for routing and routes will be defined under [routes folder](src/routes).
@@ -65,4 +69,4 @@ See tags for specific ones.
 See [locale.md](src/locales/i18n.md) for more.
 
 ## Custom Environment Variables
-Environment files will be declared on their specific environment e.g. (.env for local)
+Environment files will be declared on their specific environment e.g. (.env for local).
