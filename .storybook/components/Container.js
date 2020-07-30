@@ -5,6 +5,8 @@ import { ThemeProvider } from 'emotion-theming';
 
 import theme from '../../src/utils/Theme';
 
+import '../../src/index.css';
+
 const BaseContainer = styled.div`
   flex: 1;
   padding: 10px;

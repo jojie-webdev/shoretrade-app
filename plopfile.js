@@ -218,7 +218,7 @@ module.exports = (plop) => {
       {
         type: 'input',
         name: 'name',
-        message: 'What is your seller oute name?',
+        message: 'What is your seller route name?',
       },
     ],
     actions: [
@@ -259,7 +259,7 @@ module.exports = (plop) => {
       {
         type: 'input',
         name: 'name',
-        message: 'What is your buyer oute name?',
+        message: 'What is your buyer route name?',
       },
     ],
     actions: [

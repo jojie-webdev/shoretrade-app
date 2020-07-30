@@ -1,7 +1,14 @@
-* {
-  box-sizing: border-box;
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro.woff") format("woff");
 }
 
 body {
   margin: 0;
+}
+
+body * {
+  font-family: "Basis Grotesque Pro", sans-serif;
+  box-sizing: border-box;
 }

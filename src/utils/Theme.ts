@@ -3,34 +3,8 @@ import { Theme } from 'types/Theme';
 
 export const useTheme = (): Theme => useThemeBase();
 
-const basisfontWeightMapping: { [s: string]: number } = {
-  Light: 300,
-  Regular: 400,
-  Medium: 500,
-  Bold: 700,
-  Black: 900,
-};
-
-const generateFontStyles = (
-  fontName: string,
-  fontWeightMapping: { [s: string]: number }
-) => {
-  return Object.keys(fontWeightMapping).reduce(
-    (acc, fontWeight) => ({
-      ...acc,
-      [fontWeight]: `
-          font-family: ${fontName};
-          font-weight: ${fontWeightMapping[fontWeight]};
-        `,
-      [`${fontWeight}Italic`]: `
-          font-family: ${fontName};
-          font-weight: ${fontWeightMapping[fontWeight]};
-          font-style: italic;
-        `,
-    }),
-    {}
-  );
-};
+const rootFontSizePx = 16;
+export const pxToRem = (n: number): string => `${n / rootFontSizePx}rem`;
 
 export const theme: Theme = {
   appType: 'seller', // should be overriden on provider level
@@ -52,12 +26,6 @@ export const theme: Theme = {
     shade8: '#111E2B',
     shade9: '#09131D',
     noshade: '#FFFFFF',
-  },
-  fonts: {
-    BasisGrotesquePro: generateFontStyles(
-      'Basis Grotesque Pro',
-      basisfontWeightMapping
-    ) as Theme['fonts']['BasisGrotesquePro'],
   },
 };
 

@@ -20,17 +20,4 @@ export type Theme = {
     shade9: string;
     noshade: string;
   };
-  fonts: {
-    BasisGrotesquePro: {
-      Light: string;
-      Regular: string;
-      Medium: string;
-      Bold: string;
-      Black: string;
-      LightItalic: string;
-      RegularItalic: string;
-      BoldItalic: string;
-      BlackItalic: string;
-    };
-  };
 };
