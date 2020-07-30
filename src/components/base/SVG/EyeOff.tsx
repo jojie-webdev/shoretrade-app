@@ -4,7 +4,7 @@ import { useTheme } from 'utils/Theme';
 
 import { SVGProps } from './SVG.props';
 
-const SvgComponent = (props: SVGProps): JSX.Element => {
+const EyeOff = (props: SVGProps): JSX.Element => {
   const theme = useTheme();
   const { width, height, fill } = props;
   return (
@@ -22,4 +22,4 @@ const SvgComponent = (props: SVGProps): JSX.Element => {
   );
 };
 
-export default SvgComponent;
+export default EyeOff;
