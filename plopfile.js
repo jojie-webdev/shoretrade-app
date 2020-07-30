@@ -212,4 +212,86 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('seller-route', {
+    description: 'Create a seller route component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your seller oute name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/routes/Buyer/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/seller-route/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/seller-route/route.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/seller-route/route.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/seller-route/route.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/seller-route/route.container.tsx.hbs',
+      },
+    ],
+  });
+  plop.setGenerator('buyer-route', {
+    description: 'Create a buyer route component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your buyer oute name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/routes/Buyer/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/buyer-route/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/buyer-route/route.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/buyer-route/route.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/buyer-route/route.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/buyer-route/route.container.tsx.hbs',
+      },
+    ],
+  });
 };

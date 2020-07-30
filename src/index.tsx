@@ -3,7 +3,7 @@ import React from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from 'routes';
+import Routes from 'routes/index.routes';
 import theme from 'utils/Theme';
 
 // Initialize languages
