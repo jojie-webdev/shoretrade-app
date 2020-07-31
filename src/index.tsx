@@ -8,7 +8,7 @@ import theme from 'utils/Theme';
 
 // Initialize languages
 import './locales/i18n';
-
+import './normalize.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
