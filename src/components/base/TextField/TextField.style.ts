@@ -1,3 +1,4 @@
+import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
@@ -39,4 +40,8 @@ export const VisibilityContainer = styled.div`
   justify-content: center;
   padding-right: 10px;
   padding-left: 4px;
+`;
+
+export const Error = styled(Typography)`
+  margin-top: 4px;
 `;

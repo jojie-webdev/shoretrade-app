@@ -11,6 +11,7 @@ import {
   FieldContainer,
   Field,
   VisibilityContainer,
+  Error,
 } from './TextField.style';
 
 const TextField = (props: TextFieldProps): JSX.Element => {
@@ -22,6 +23,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     onChangeText = () => null,
     placeholder,
     secured,
+    error = '',
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -53,6 +55,11 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           </VisibilityContainer>
         )}
       </FieldContainer>
+      {error.length > 0 && (
+        <Error variant="caption" color="error">
+          {error}
+        </Error>
+      )}
     </Container>
   );
 };

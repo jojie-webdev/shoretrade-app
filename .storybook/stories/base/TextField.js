@@ -33,6 +33,7 @@ storiesOf('base/TextField', module).add('Summary', () => {
           value={email}
           onChangeText={setEmail}
           placeholder="user@nomail.com"
+          error="Please enter your email"
         />
       </Wrapper>
 

@@ -5,4 +5,5 @@ export interface TextFieldProps {
   placeholder?: string;
   secured?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
