@@ -1,10 +1,10 @@
 import { Route } from 'types/Routes';
 
-export interface DashboardGeneratedProps {
-  routes: Route[];
-  pageTitle: string;
+export interface DashboardGeneratedProps extends DashboardPublicProps {
+  pageTitle?: string;
 }
 
 export interface DashboardPublicProps {
+  children: any;
   routes: Route[];
 }

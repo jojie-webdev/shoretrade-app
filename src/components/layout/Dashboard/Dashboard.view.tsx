@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { DashboardGeneratedProps } from './Dashboard.props';
 import { Container, Sidebar, Content, Navbar } from './Dashboard.style';
 
-const DashboardView: React.FC<DashboardGeneratedProps> = (props) => {
+const DashboardView = (props: DashboardGeneratedProps) => {
   // const theme = useTheme();
   const { routes, pageTitle, children } = props;
 

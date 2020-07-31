@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { DashboardPublicProps } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
 
-const Dashboard: React.FC<DashboardPublicProps> = (props): JSX.Element => {
+const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState('');
 
