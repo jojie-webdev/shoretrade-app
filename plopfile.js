@@ -294,4 +294,41 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('svg', {
+    description: 'Create svg component and storybook entry',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your svg name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/components/base/SVG/{{pascalCase name}}.tsx',
+        templateFile: 'plop-templates/svg/component.tsx.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/components/base/SVG/index.tsx',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "export { default as {{pascalCase name}} } from './{{pascalCase name}}';",
+      },
+      {
+        type: 'append',
+        path: '.storybook/stories/base/SVG.js',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "  {{pascalCase name}},",
+      },
+      {
+        type: 'append',
+        path: '.storybook/stories/base/SVG.js',
+        pattern: '{/* PLOP_INJECT_INSTANCE*/}',
+        template: `        <Wrapper label="{{pascalCase name}}">
+          <{{pascalCase name}} width={30} height={30} />
+        </Wrapper>`,
+      },
+    ],
+  });
 };
