@@ -6,4 +6,5 @@ export interface TextFieldProps {
   secured?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  LeftComponent?: React.ReactNode;
 }

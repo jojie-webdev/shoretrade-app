@@ -8,6 +8,7 @@ import { useTheme } from 'utils/Theme';
 import { TextFieldProps } from './TextField.props';
 import {
   Container,
+  LeftComponentContainer,
   FieldContainer,
   Field,
   VisibilityContainer,
@@ -24,6 +25,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     placeholder,
     secured,
     error = '',
+    LeftComponent = null,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -41,6 +43,9 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         {label}
       </Typography>
       <FieldContainer>
+        {LeftComponent && (
+          <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
+        )}
         <Field
           type={secured && !showSecuredText ? 'password' : 'text'}
           value={value}

@@ -33,6 +33,16 @@ export const Field = styled.input`
   }
 `;
 
+export const LeftComponentContainer = styled.div`
+  display: flex;
+  width: 48px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid ${({ theme }) => theme.grey.shade5};
+`;
+
 export const VisibilityContainer = styled.div`
   display: flex;
   flex-direction: column;
