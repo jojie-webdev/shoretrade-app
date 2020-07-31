@@ -33,4 +33,12 @@ export const ButtonContainer = styled.button<
     margin-right: ${(props) =>
       props.hasText && props.iconPosition === 'before' ? '8px' : '0'};
   }
+
+  :focus {
+    outline: none;
+  }
+
+  :hover {
+    opacity: 0.5;
+  }
 `;
