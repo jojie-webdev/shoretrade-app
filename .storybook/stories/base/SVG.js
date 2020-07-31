@@ -10,29 +10,27 @@ import {
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
+// eslint-disable-next-line react/prop-types
+const Content = ({ children }) => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
+      {children}
+    </div>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const Wrapper = ({ children, label }) => {
+  return (
+    <div style={{ marginLeft: 16, marginTop: 16 }}>
+      {children}
+      <div>{label}</div>
+    </div>
+  );
+};
+
 storiesOf('base/SVG', module).add('Summary', () => {
   const [text, setText] = useState('');
-
-  // eslint-disable-next-line react/prop-types
-  const Content = ({ children }) => {
-    return (
-      <div
-        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}
-      >
-        {children}
-      </div>
-    );
-  };
-
-  // eslint-disable-next-line react/prop-types
-  const Wrapper = ({ children, label }) => {
-    return (
-      <div style={{ marginLeft: 16, marginTop: 16 }}>
-        {children}
-        <div>{label}</div>
-      </div>
-    );
-  };
 
   return (
     <Container>

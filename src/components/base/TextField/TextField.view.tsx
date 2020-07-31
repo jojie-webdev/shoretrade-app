@@ -1,23 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { Eye, EyeOff } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { TextFieldProps } from './TextField.props';
-import { Container, Field } from './TextField.style';
+import {
+  Container,
+  FieldContainer,
+  Field,
+  VisibilityContainer,
+} from './TextField.style';
 
 const TextField = (props: TextFieldProps): JSX.Element => {
-  const { label, value, onChangeText } = props;
+  const theme = useTheme();
+  const {
+    label,
+    value = '',
+    onChange = () => null,
+    onChangeText = () => null,
+    placeholder,
+    secured,
+  } = props;
+
+  const [showSecuredText, setShowSecuredText] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(event);
     onChangeText(event.target.value);
   };
+
+  const VisibilityIcon = showSecuredText ? EyeOff : Eye;
 
   return (
     <Container>
       <Typography variant="overline" color={'shade6'}>
         {label}
       </Typography>
-      <Field type="text" value={value} onChange={handleChange} />
+      <FieldContainer>
+        <Field
+          type={secured && !showSecuredText ? 'password' : 'text'}
+          value={value}
+          onChange={handleChange}
+          placeholder={placeholder}
+        />
+        {secured && (
+          <VisibilityContainer>
+            <Touchable onPress={() => setShowSecuredText((v) => !v)}>
+              <VisibilityIcon fill={theme.grey.shade7} />
+            </Touchable>
+          </VisibilityContainer>
+        )}
+      </FieldContainer>
     </Container>
   );
 };
