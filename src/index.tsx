@@ -12,14 +12,11 @@ import './normalize.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-import Checkbox from 'components/base/Checkbox';
-
 const App = () => (
   <React.StrictMode>
     <Router>
       <ThemeProvider theme={theme}>
         <Routes />
-        <Checkbox />
       </ThemeProvider>
     </Router>
   </React.StrictMode>
