@@ -8,10 +8,9 @@ export type IconPosition = 'before' | 'after';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: keyof Theme['brand'];
   text?: string;
-  iconPosition: IconPosition;
-  variant: Variants;
-  icon: JSX.Element;
-  children: any;
+  iconPosition?: IconPosition;
+  variant?: Variants;
+  icon?: JSX.Element;
 }
 
 export type ButtonStyleProps = {
