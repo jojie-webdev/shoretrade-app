@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import Pagination from '../../../src/components/base/Pagination';
 import Container from '../../components/Container';
 
-const InputContainer = styled.div`
+const EditPropsContainer = styled.div`
   display: flex;
   align-items: center;
 
@@ -16,15 +16,25 @@ const InputContainer = styled.div`
 `;
 
 storiesOf('base/Pagination', module).add('Summary', () => {
+  const [numPages, setNumPages] = useState(5);
   const [currentValue, setCurrentValue] = useState(1);
 
   return (
     <Container>
       <h5>Current Page Value {currentValue}</h5>
 
+      <EditPropsContainer>
+        <h5>Set max pages</h5>
+        <input
+          type="text"
+          value={numPages}
+          onChange={(e) => setNumPages(+e.target.value)}
+        />
+      </EditPropsContainer>
+
       <h5>Numbers</h5>
       <Pagination
-        numPages={5}
+        numPages={numPages}
         currentValue={currentValue}
         onClickButton={(nextValue) => setCurrentValue(nextValue)}
       />
