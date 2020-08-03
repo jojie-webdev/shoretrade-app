@@ -6,6 +6,7 @@ import {
   /* PLOP_INJECT_IMPORT */
   ChevronRight,
   ChevronLeft,
+  Search,
   CheckFilled,
   CloseFilled,
   ExclamationFilled,
@@ -17,20 +18,36 @@ import {
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
+// eslint-disable-next-line react/prop-types
+const Content = ({ children }) => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
+      {children}
+    </div>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const Wrapper = ({ children, label }) => {
+  return (
+    <div
+      style={{
+        marginLeft: 16,
+        marginTop: 16,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      {children}
+      <div style={{ marginTop: '8px' }}>{label}</div>
+    </div>
+  );
+};
+
 storiesOf('base/SVG', module).add('Summary', () => {
   const [text, setText] = useState('');
-
-  // eslint-disable-next-line react/prop-types
-  const Content = ({ children }) => {
-    return (
-      <div
-        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}
-      >
-        {children}
-      </div>
-    );
-  };
-
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children, label }) => {
     return (
@@ -59,6 +76,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="ChevronLeft">
           <ChevronLeft width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Search">
+          <Search width={30} height={30} />
         </Wrapper>
         <Wrapper label="CheckFilled">
           <CheckFilled width={30} height={30} />
