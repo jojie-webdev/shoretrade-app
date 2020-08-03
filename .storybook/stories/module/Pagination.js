@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { storiesOf } from '@storybook/react';
 
-import Pagination from '../../../src/components/base/Pagination';
+import Pagination from '../../../src/components/module/Pagination';
 import Container from '../../components/Container';
 
 const EditPropsContainer = styled.div`
@@ -15,7 +15,7 @@ const EditPropsContainer = styled.div`
   }
 `;
 
-storiesOf('base/Pagination', module).add('Summary', () => {
+storiesOf('module/Pagination', module).add('Summary', () => {
   const [numPages, setNumPages] = useState(5);
   const [currentValue, setCurrentValue] = useState(1);
 
@@ -42,6 +42,14 @@ storiesOf('base/Pagination', module).add('Summary', () => {
       <h5>Dots</h5>
       <Pagination
         variant="dots"
+        numPages={numPages}
+        currentValue={currentValue}
+        onClickButton={(nextValue) => setCurrentValue(nextValue)}
+      />
+
+      <h5>Infinite Dots</h5>
+      <Pagination
+        variant="infinite-dots"
         numPages={numPages}
         currentValue={currentValue}
         onClickButton={(nextValue) => setCurrentValue(nextValue)}

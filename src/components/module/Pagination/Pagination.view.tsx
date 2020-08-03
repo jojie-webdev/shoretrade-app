@@ -1,10 +1,16 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import { ChevronLeft, ChevronRight } from '../SVG';
-import Typography from '../Typography';
+import { ChevronLeft, ChevronRight } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
+
 import { PaginationProps } from './Pagination.props';
-import { Container, PaginationButton, PaginationDot } from './Pagination.style';
+import {
+  Container,
+  PaginationButton,
+  PaginationDot,
+  InfiniteDot,
+} from './Pagination.style';
 
 const Pagination = (props: PaginationProps): JSX.Element => {
   // const theme = useTheme();
@@ -65,6 +71,14 @@ const Pagination = (props: PaginationProps): JSX.Element => {
             active={currentValue === value}
           />
         ))}
+      </>
+    );
+  } else if (variant === 'infinite-dots') {
+    pagination = (
+      <>
+        <InfiniteDot active={currentValue === 1} />
+        <InfiniteDot active={currentValue !== 1 && currentValue !== numPages} />
+        <InfiniteDot active={currentValue === numPages} />
       </>
     );
   }
