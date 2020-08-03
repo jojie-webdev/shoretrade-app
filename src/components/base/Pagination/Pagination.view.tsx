@@ -4,12 +4,12 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from '../SVG';
 import Typography from '../Typography';
 import { PaginationProps } from './Pagination.props';
-import { Container, PaginationButton } from './Pagination.style';
+import { Container, PaginationButton, PaginationDot } from './Pagination.style';
 
 const Pagination = (props: PaginationProps): JSX.Element => {
   // const theme = useTheme();
 
-  const { numPages, currentValue, onClickButton } = props;
+  const { numPages, currentValue, onClickButton, variant = 'number' } = props;
 
   const numArray = [];
 
@@ -29,30 +29,47 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     }
   }
 
-  return (
-    <Container>
-      <PaginationButton onClick={() => onClickManualControl('backward')}>
-        <ChevronLeft />
-      </PaginationButton>
-      {numArray.map((value) => (
-        <PaginationButton
-          key={`pagination-${value}`}
-          active={currentValue === value}
-          onClick={() => onClickButton(value)}
-        >
-          <Typography
-            variant="label"
-            color={currentValue === value ? 'noshade' : 'primary'}
-          >
-            {value}
-          </Typography>
+  let pagination;
+
+  if (variant === 'number') {
+    pagination = (
+      <>
+        <PaginationButton onClick={() => onClickManualControl('backward')}>
+          <ChevronLeft />
         </PaginationButton>
-      ))}
-      <PaginationButton onClick={() => onClickManualControl('forward')}>
-        <ChevronRight />
-      </PaginationButton>
-    </Container>
-  );
+        {numArray.map((value) => (
+          <PaginationButton
+            key={`pagination-${value}`}
+            active={currentValue === value}
+            onClick={() => onClickButton(value)}
+          >
+            <Typography
+              variant="label"
+              color={currentValue === value ? 'noshade' : 'primary'}
+            >
+              {value}
+            </Typography>
+          </PaginationButton>
+        ))}
+        <PaginationButton onClick={() => onClickManualControl('forward')}>
+          <ChevronRight />
+        </PaginationButton>
+      </>
+    );
+  } else if (variant === 'dots') {
+    pagination = (
+      <>
+        {numArray.map((value) => (
+          <PaginationDot
+            key={`pagination-dot-${value}`}
+            active={currentValue === value}
+          />
+        ))}
+      </>
+    );
+  }
+
+  return <Container>{pagination}</Container>;
 };
 
 export default React.memo(Pagination);

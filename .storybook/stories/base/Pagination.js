@@ -38,6 +38,14 @@ storiesOf('base/Pagination', module).add('Summary', () => {
         currentValue={currentValue}
         onClickButton={(nextValue) => setCurrentValue(nextValue)}
       />
+
+      <h5>Dots</h5>
+      <Pagination
+        variant="dots"
+        numPages={numPages}
+        currentValue={currentValue}
+        onClickButton={(nextValue) => setCurrentValue(nextValue)}
+      />
     </Container>
   );
 });

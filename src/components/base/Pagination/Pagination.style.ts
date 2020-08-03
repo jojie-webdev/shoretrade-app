@@ -22,3 +22,12 @@ export const PaginationButton = styled.button<{ active?: boolean }>`
     outline: none;
   }
 `;
+
+export const PaginationDot = styled.div<{ active?: boolean }>`
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 24px;
+  background: ${(props) =>
+    props.active ? props.theme.brand.primary : props.theme.grey.shade3};
+`;
