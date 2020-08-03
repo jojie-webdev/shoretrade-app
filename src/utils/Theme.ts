@@ -12,8 +12,9 @@ export const theme: Theme = {
     primary: '#E35D32',
     secondary: '#B6B4CA',
     info: '#1877F2',
+    alert: '#FFCF5C',
     success: '#00C48C',
-    warning: '#FFCF5C',
+    warning: '#FFA26B',
     error: '#F23742',
   },
   grey: {

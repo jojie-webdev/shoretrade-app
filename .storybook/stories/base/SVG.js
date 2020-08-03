@@ -4,6 +4,11 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  CheckFilled,
+  CloseFilled,
+  ExclamationFilled,
+  QuestionFilled,
+  InfoFilled,
   Close,
   Eye,
   EyeOff,
@@ -27,9 +32,18 @@ storiesOf('base/SVG', module).add('Summary', () => {
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children, label }) => {
     return (
-      <div style={{ marginLeft: 16, marginTop: 16 }}>
+      <div
+        style={{
+          marginLeft: 16,
+          marginTop: 16,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
         {children}
-        <div>{label}</div>
+        <div style={{ marginTop: '8px' }}>{label}</div>
       </div>
     );
   };
@@ -38,6 +52,21 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="CheckFilled">
+          <CheckFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CloseFilled">
+          <CloseFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ExclamationFilled">
+          <ExclamationFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="QuestionFilled">
+          <QuestionFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="InfoFilled">
+          <InfoFilled width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Close">
           <Close width={30} height={30} />
         </Wrapper>
