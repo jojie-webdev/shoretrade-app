@@ -6,8 +6,18 @@ import { TouchableBase } from './Touchable.style';
 
 const Touchable = (props: TouchableProps): JSX.Element => {
   // const theme = useTheme();
-  const { children, onPress } = props;
-  return <TouchableBase onClick={onPress}>{children}</TouchableBase>;
+  const { children, onPress, width, height, circle, dark } = props;
+  return (
+    <TouchableBase
+      onClick={onPress}
+      width={width}
+      height={height}
+      circle={circle}
+      dark={dark}
+    >
+      {children}
+    </TouchableBase>
+  );
 };
 
 export default React.memo(Touchable);

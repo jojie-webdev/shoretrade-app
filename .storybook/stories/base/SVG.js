@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Lock,
   CheckFilled,
   CloseFilled,
   ExclamationFilled,
@@ -51,6 +52,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Lock">
+          <Lock width={30} height={30} fill="#000" />
+        </Wrapper>
         <Wrapper label="CheckFilled">
           <CheckFilled width={30} height={30} />
         </Wrapper>

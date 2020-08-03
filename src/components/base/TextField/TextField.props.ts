@@ -7,4 +7,5 @@ export interface TextFieldProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   LeftComponent?: React.ReactNode;
+  className?: string;
 }

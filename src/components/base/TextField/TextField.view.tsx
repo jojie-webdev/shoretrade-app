@@ -26,6 +26,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     secured,
     error = '',
     LeftComponent = null,
+    className = undefined,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -38,7 +39,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   const VisibilityIcon = showSecuredText ? EyeOff : Eye;
 
   return (
-    <Container>
+    <Container className={className}>
       <Typography variant="overline" color={'shade6'}>
         {label}
       </Typography>

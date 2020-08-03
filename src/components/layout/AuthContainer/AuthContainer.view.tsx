@@ -18,7 +18,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
       <Background />
       <Grid>
         <Row justify="center" align="center">
-          <Content sm={4}>{children}</Content>
+          <Content lg={4}>{children}</Content>
         </Row>
       </Grid>
     </Container>
