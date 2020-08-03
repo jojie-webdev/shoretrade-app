@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Search } from './Search';
 export { default as CheckFilled } from './CheckFilled';
 export { default as CloseFilled } from './CloseFilled';
 export { default as ExclamationFilled } from './ExclamationFilled';

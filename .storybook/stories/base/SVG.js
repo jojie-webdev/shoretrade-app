@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Search,
   CheckFilled,
   CloseFilled,
   ExclamationFilled,
@@ -46,11 +47,31 @@ const Wrapper = ({ children, label }) => {
 storiesOf('base/SVG', module).add('Summary', () => {
   const [text, setText] = useState('');
   // eslint-disable-next-line react/prop-types
+  const Wrapper = ({ children, label }) => {
+    return (
+      <div
+        style={{
+          marginLeft: 16,
+          marginTop: 16,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        {children}
+        <div style={{ marginTop: '8px' }}>{label}</div>
+      </div>
+    );
+  };
 
   return (
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Search">
+          <Search width={30} height={30} />
+        </Wrapper>
         <Wrapper label="CheckFilled">
           <CheckFilled width={30} height={30} />
         </Wrapper>
