@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactHTMLElement, HTMLAttributes } from 'react';
 
 import { Theme } from 'types/Theme';
 
@@ -14,7 +14,7 @@ export type Variants =
   | 'small'
   | 'overline';
 
-export interface TypographyProps {
+export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   children: any;
   variant?: Variants;
   color?: keyof Theme['brand'] | keyof Theme['grey'];
@@ -22,4 +22,5 @@ export interface TypographyProps {
   align?: 'center' | 'left' | 'right';
   component?: string;
   style?: CSSProperties;
+  className?: string;
 }
