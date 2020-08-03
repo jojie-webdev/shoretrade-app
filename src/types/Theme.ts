@@ -5,6 +5,7 @@ export type Theme = {
     primary: string;
     secondary: string;
     info: string;
+    alert: string;
     success: string;
     warning: string;
     error: string;
