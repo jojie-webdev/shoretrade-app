@@ -1,33 +1,32 @@
 import React from 'react';
 
-import { CheckboxProps } from './Checkbox.props';
+import { RadioProps } from './Radio.props';
 import {
   Container,
-  HiddenCheckbox,
-  CustomCheckbox,
-  InnerCheck,
+  HiddenRadio,
+  InnerCircle,
+  CustomRadio,
   Label,
-} from './Checkbox.style';
+} from './Radio.style';
 
-const Checkbox = ({
+const Radio = ({
   checked = false,
   label,
   size = 24,
-  scale = 1,
   typographyProps,
   ...props
-}: CheckboxProps): JSX.Element => {
+}: RadioProps): JSX.Element => {
   return (
     <Container onClick={props.onClick}>
-      <HiddenCheckbox
+      <HiddenRadio
         onChange={(event) => event.stopPropagation()}
         checked={checked}
-        type="checkbox"
+        type="radio"
         {...props}
       />
-      <CustomCheckbox checked={checked} size={size}>
-        {checked && <InnerCheck scale={scale} />}
-      </CustomCheckbox>
+      <CustomRadio checked={checked} size={size}>
+        {checked && <InnerCircle size={size} />}
+      </CustomRadio>
       {label && (
         <Label {...typographyProps} variant="label">
           {label}
@@ -37,4 +36,4 @@ const Checkbox = ({
   );
 };
 
-export default React.memo(Checkbox);
+export default React.memo(Radio);

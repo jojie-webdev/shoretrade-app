@@ -10,31 +10,29 @@ export const Container = styled.div`
   }
 `;
 
-export const HiddenCheckbox = styled.input`
+export const HiddenRadio = styled.input`
   position: absolute;
   opacity: 0;
 `;
 
-export const InnerCheck = styled.span<{
-  scale: number;
+export const InnerCircle = styled.span<{
+  size: number;
 }>`
-  width: 6px;
-  height: 10px;
-  border: solid #fff;
-  border-radius: 2px;
-  border-width: 0 2px 2px 0;
+  border-radius: 50%;
   position: absolute;
+  height: ${({ size }) => `${size * 0.2}px`};
+  width: ${({ size }) => `${size * 0.2}px`};
+  background-color: #fff;
   left: 50%;
-  top: 40%;
-  transform: translate(-50%, -40%) rotate(45deg)
-    ${({ scale }) => `scale(${scale}, ${scale})`};
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
-export const CustomCheckbox = styled.span<{
+export const CustomRadio = styled.span<{
   size: number;
   checked: boolean;
 }>`
-  border-radius: 4px;
+  border-radius: 50%;
   position: relative;
   height: ${({ size }) => `${size}px`};
   width: ${({ size }) => `${size}px`};
