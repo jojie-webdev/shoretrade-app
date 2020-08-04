@@ -13,6 +13,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: JSX.Element;
 }
 
+// Styles
 export type ButtonStyleProps = {
   color?: keyof Theme['brand'];
   variant: Variants;
