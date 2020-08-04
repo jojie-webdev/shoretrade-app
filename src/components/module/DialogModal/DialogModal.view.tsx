@@ -38,4 +38,4 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
   );
 };
 
-export default React.memo(DialogModal);
+export default DialogModal;
