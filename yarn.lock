@@ -2287,6 +2287,14 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-dates@^17.1.14":
+  version "17.1.14"
+  resolved "https://registry.yarnpkg.com/@types/react-dates/-/react-dates-17.1.14.tgz#dbfc02ee56a16c88f9b097a24df4ad2d6afad36e"
+  integrity sha512-kHhbzBQM2Cs2+1R98jN4dRqT1NjKWGUgaoQ+L6qPQtT6DuR09ovS4PNBzVl5xKfjGyJ5BgIvpW9uCbF1oFLqzQ==
+  dependencies:
+    "@types/react" "*"
+    moment "^2.26.0"
+
 "@types/react-dom@*", "@types/react-dom@^16.9.0":
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
@@ -9716,7 +9724,7 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-moment@>=1.6.0, moment@^2.27.0:
+moment@>=1.6.0, moment@^2.26.0, moment@^2.27.0:
   version "2.27.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
   integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==

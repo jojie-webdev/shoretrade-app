@@ -12,6 +12,10 @@ import './normalize.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+// Third Party
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+
 const App = () => (
   <React.StrictMode>
     <Router>
