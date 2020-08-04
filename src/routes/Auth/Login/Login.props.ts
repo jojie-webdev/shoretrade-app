@@ -8,4 +8,5 @@ export interface Credentials {
 export interface LoginGeneratedProps {
   credentials: Credentials;
   updateCredentials: Dispatch<Partial<Credentials>>;
+  login: () => void;
 }

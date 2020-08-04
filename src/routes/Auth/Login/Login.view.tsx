@@ -26,7 +26,7 @@ import {
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { credentials, updateCredentials } = props;
+  const { credentials, updateCredentials, login } = props;
   return (
     <AuthContainer>
       <Container>
@@ -63,10 +63,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             secured
           />
           <LoginButtonContainer>
-            <Button
-              text="LOG IN"
-              onClick={() => console.log('LOG_ACTION: LOGIN')}
-            />
+            <Button text="LOG IN" onClick={() => login()} />
           </LoginButtonContainer>
         </Content>
         <Footer>
