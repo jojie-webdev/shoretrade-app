@@ -1,16 +1,13 @@
 import React from 'react';
 
+import Button from 'components/base/Button';
 import Modal from 'components/layout/Modal';
-import moment from 'moment';
 import { DayPickerRangeController } from 'react-dates';
 
 // import { useTheme } from 'utils/Theme';
 
 import { DatePickerModalProps } from './DatePickerModal.props';
 import { Container } from './DatePickerModal.style';
-
-const START_DATE = moment();
-const END_DATE = moment().add('day', 1);
 
 const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
   // const theme = useTheme();
@@ -28,6 +25,8 @@ const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
     <Modal {...modalProps}>
       <Container>
         <DayPickerRangeController
+          horizontalMonthPadding={0}
+          verticalHeight={350}
           startDate={startDate}
           endDate={endDate}
           onDatesChange={onDateChange}
@@ -35,6 +34,10 @@ const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
           onFocusChange={onFocusChange}
           hideKeyboardShortcutsPanel
         />
+
+        <div className="button-container">
+          <Button text="Apply" takeFullWidth />
+        </div>
       </Container>
     </Modal>
   );
