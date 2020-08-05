@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const Sidebar = styled.aside`
   width: 235px;
   padding: 0 24px;
+  background: #020a13;
 
   display: flex;
   flex-direction: column;
