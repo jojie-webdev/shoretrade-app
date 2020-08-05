@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as DropdownArrow } from './DropdownArrow';
+export { default as Pen } from './Pen';
 export { default as Exit } from './Exit';
 export { default as ShoretradeLogo } from './ShoretradeLogo';
 export { default as Dashboard } from './Dashboard';
