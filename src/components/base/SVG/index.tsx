@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as DropdownArrow } from './DropdownArrow';
+export { default as Pen } from './Pen';
 export { default as ChevronRight } from './ChevronRight';
 export { default as ChevronLeft } from './ChevronLeft';
 export { default as Search } from './Search';
