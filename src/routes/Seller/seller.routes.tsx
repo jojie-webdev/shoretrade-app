@@ -1,9 +1,18 @@
 import React from 'react';
 
+import {
+  Dashboard as DashboardSVG,
+  AddBorder,
+  Account as AccountSVG,
+  FileCheck,
+  Cart,
+  CheckBorder,
+} from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+// Screens
 import Account from './Account';
 import AddProduct from './AddProduct';
 import Dashboard from './Dashboard';
@@ -11,36 +20,44 @@ import MarketPrices from './MarketPrices';
 import Selling from './Selling';
 import Sold from './Sold';
 
+// Svgs
+
 const ROUTES: Routes = {
-  ACCOUNT: {
-    path: '/seller/account',
-    children: <Account />,
-    title: 'Account',
-  },
-  ADD_PRODUCT: {
-    path: '/seller/add-product',
-    children: <AddProduct />,
-    title: 'Add Product',
-  },
   DASHBOARD: {
     path: '/seller/dashboard',
-    children: <Dashboard />,
     title: 'Dashboard',
+    children: <Dashboard />,
+    icon: DashboardSVG,
   },
   MARKET_PRICES: {
     path: '/seller/market-prices',
-    children: <MarketPrices />,
     title: 'Market Prices',
+    children: <MarketPrices />,
+    icon: FileCheck,
+  },
+  ADD_PRODUCT: {
+    path: '/seller/add-product',
+    title: 'Add Product',
+    children: <AddProduct />,
+    icon: AddBorder,
   },
   SELLING: {
     path: '/seller/selling',
-    children: <Selling />,
     title: 'Selling',
+    children: <Selling />,
+    icon: Cart,
   },
   SOLD: {
     path: '/seller/sold',
-    children: <Sold />,
     title: 'Sold',
+    children: <Sold />,
+    icon: CheckBorder,
+  },
+  ACCOUNT: {
+    path: '/seller/account',
+    title: 'Account',
+    children: <Account />,
+    icon: AccountSVG,
   },
 };
 
