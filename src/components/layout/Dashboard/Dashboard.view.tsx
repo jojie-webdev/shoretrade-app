@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ShoretradeLogo } from 'components/base/SVG';
+import { ShoretradeLogo, Exit } from 'components/base/SVG';
+import { SVGProps } from 'components/base/SVG/SVG.props';
 import Typography from 'components/base/Typography';
-import { Route } from 'types/Routes';
 import { useTheme } from 'utils/Theme';
 
-import { DashboardGeneratedProps } from './Dashboard.props';
+import { DashboardGeneratedProps, NavLinkProps } from './Dashboard.props';
 import {
   Container,
   Sidebar,
@@ -14,53 +14,51 @@ import {
   SidebarItem,
 } from './Dashboard.style';
 
-const NavLink = ({
-  route,
-  active,
-  activeColor,
-}: {
-  route: Route;
-  active: boolean;
-  activeColor: string;
-}) => (
-  <SidebarItem to={route.path}>
+const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
+  <SidebarItem to={to}>
     <div className="icon-container">
-      {route.icon && (
-        <route.icon
-          fill={active ? activeColor : 'white'}
-          height={20}
-          width={20}
-        />
-      )}
+      {Icon && <Icon fill={iconColor} height={20} width={20} />}
     </div>
-    <Typography
-      className="link"
-      color={active ? 'primary' : 'noshade'}
-      weight="500"
-    >
-      {route.title}
+    <Typography className="link" color={color} weight="500">
+      {linkText}
     </Typography>
   </SidebarItem>
 );
 
-const DashboardView = (props: DashboardGeneratedProps) => {
+const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
   const { routes, pageTitle, currentPath, children } = props;
 
   return (
     <Container>
       <Sidebar>
-        <div className="logo-container">
-          <ShoretradeLogo />
+        <div>
+          <div className="logo-container">
+            <ShoretradeLogo />
+          </div>
+          {routes.map((route) => (
+            <NavLink
+              key={`sidenav-${route.path}`}
+              to={route.path}
+              color={route.path === currentPath ? 'primary' : 'noshade'}
+              iconColor={
+                route.path === currentPath
+                  ? theme.brand.primary
+                  : theme.grey.noshade
+              }
+              linkText={route.title || ''}
+              Icon={route.icon}
+            />
+          ))}
         </div>
-        {routes.map((route) => (
-          <NavLink
-            key={`sidenav-${route.path}`}
-            route={route}
-            active={route.path === currentPath}
-            activeColor={theme.brand.primary}
-          />
-        ))}
+
+        <NavLink
+          to={'/'}
+          color="shade7"
+          linkText="Logout"
+          Icon={Exit}
+          iconColor={theme.grey.shade7}
+        />
       </Sidebar>
       <Content>
         <Navbar className="appbar">

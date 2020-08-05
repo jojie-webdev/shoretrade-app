@@ -16,6 +16,7 @@ export const Sidebar = styled.aside`
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   .logo-container {
     margin-top: 68px;
@@ -24,9 +25,9 @@ export const Sidebar = styled.aside`
 `;
 
 export const SidebarItem = styled(Link)`
-  height: 48px;
+  height: 24px;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
   border-bottom: none;
