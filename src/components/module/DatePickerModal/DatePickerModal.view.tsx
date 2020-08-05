@@ -18,6 +18,7 @@ const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
     onDateChange,
     focusedInput,
     onFocusChange,
+    onClickApply,
     ...modalProps
   } = props;
 
@@ -32,11 +33,12 @@ const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
           onDatesChange={onDateChange}
           focusedInput={focusedInput}
           onFocusChange={onFocusChange}
+          daySize={50}
           hideKeyboardShortcutsPanel
         />
 
         <div className="button-container">
-          <Button text="Apply" takeFullWidth />
+          <Button text="Apply" takeFullWidth onClick={onClickApply} />
         </div>
       </Container>
     </Modal>

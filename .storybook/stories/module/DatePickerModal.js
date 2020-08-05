@@ -36,12 +36,17 @@ storiesOf('module/DatePickerModal', module).add('Summary', () => {
 
   return (
     <Container>
+      <h5>
+        Date range: {startDate && startDate.format('LLL')} to{' '}
+        {endDate && endDate.format('LLL')}
+      </h5>
       <DatePickerModal
         onDateChange={onDateChange}
         startDate={startDate}
         endDate={endDate}
         onFocusChange={onFocusChange}
         focusedInput={focus}
+        onClickApply={() => {}}
         {...modalProps}
       />
     </Container>

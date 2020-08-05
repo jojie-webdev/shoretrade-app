@@ -15,7 +15,7 @@ const Modal = (props: ModalProps): JSX.Element => {
   return (
     <Backdrop isOpen={isOpen}>
       <Row className="row" justify="center" align="center">
-        <Col xs={10} sm={6} lg={4}>
+        <Col xs={10} sm={6} md={4} lg={4}>
           <ModalContainer style={props.style}>
             <ExitButton onClick={onClickClose}>
               <Close />

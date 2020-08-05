@@ -8,7 +8,6 @@ export const Container = styled.div`
 
   .button-container {
     width: 100%;
-    padding: 0 24px;
   }
 
   /* Calendar Overrides */
@@ -20,6 +19,16 @@ export const Container = styled.div`
   .DayPicker__withBorder {
     background: ${(props) => props.theme.grey.shade8};
     border: none;
+
+    :hover {
+      color: ${(props) => props.theme.grey.noshade};
+    }
+  }
+
+  .DayPickerNavigation_button__default {
+    :hover {
+      border: none;
+    }
   }
 
   .DayPicker__withBorder {
@@ -35,6 +44,10 @@ export const Container = styled.div`
     background: ${(props) => props.theme.grey.shade9};
     color: ${(props) => props.theme.grey.shade7};
     border: none;
+
+    :hover {
+      color: ${(props) => props.theme.grey.shade7} !important;
+    }
   }
 
   /*  Will edit when the second date (end date) in a range of dates
@@ -46,12 +59,12 @@ export const Container = styled.div`
     border: none;
 
     :hover {
-      color: ${(props) => props.theme.grey.shade7};
+      color: ${(props) => props.theme.grey.shade7} !important;
     }
   }
 
   .CalendarDay__hovered_span {
-    color: ${(props) => props.theme.grey.noshade};
+    color: ${(props) => props.theme.grey.noshade} !important;
   }
 
   /*  Will edit selected date or the endpoints of a range of dates */
@@ -60,6 +73,8 @@ export const Container = styled.div`
     border: ${(props) => props.theme.brand.primary};
     border-radius: 100px;
     color: ${(props) => props.theme.grey.noshade};
+    position: relative;
+    z-index: 2;
 
     :hover {
       color: ${(props) => props.theme.grey.noshade};

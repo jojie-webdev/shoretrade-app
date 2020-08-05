@@ -10,4 +10,5 @@ export interface DatePickerModalProps extends ModalProps {
     startDate: moment.Moment | null;
     endDate: moment.Moment | null;
   }) => void;
+  onClickApply: () => void;
 }
