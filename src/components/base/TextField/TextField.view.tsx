@@ -18,6 +18,8 @@ import {
 const TextField = (props: TextFieldProps): JSX.Element => {
   const theme = useTheme();
   const {
+    id,
+    type,
     label,
     value = '',
     onChange = () => null,
@@ -27,6 +29,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     error = '',
     LeftComponent = null,
     className = undefined,
+    onBlur = () => null,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -37,6 +40,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   };
 
   const VisibilityIcon = showSecuredText ? EyeOff : Eye;
+  const defaultInputType = type || 'text';
 
   return (
     <Container className={className}>
@@ -48,9 +52,11 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
         )}
         <Field
-          type={secured && !showSecuredText ? 'password' : 'text'}
+          id={id}
+          type={secured && !showSecuredText ? 'password' : defaultInputType}
           value={value}
           onChange={handleChange}
+          onBlur={onBlur}
           placeholder={placeholder}
         />
         {secured && (
@@ -61,7 +67,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           </VisibilityContainer>
         )}
       </FieldContainer>
-      {error.length > 0 && (
+      {(error || '').length > 0 && (
         <Error variant="caption" color="error">
           {error}
         </Error>

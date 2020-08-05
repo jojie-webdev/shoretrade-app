@@ -6,7 +6,6 @@ export interface Credentials {
 }
 
 export interface LoginGeneratedProps {
-  credentials: Credentials;
-  updateCredentials: Dispatch<Partial<Credentials>>;
-  login: () => void;
+  login: (credentials: Credentials) => void;
+  pending: boolean;
 }

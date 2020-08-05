@@ -6,6 +6,7 @@ import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
+import { useFormik } from 'formik';
 
 import { LoginGeneratedProps } from './Login.props';
 import {
@@ -23,10 +24,21 @@ import {
   ForgotPasswordIcon,
   ForgotPasswordText,
 } from './Login.style';
+import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { credentials, updateCredentials, login } = props;
+  const { login, pending } = props;
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validate,
+    onSubmit: login,
+  });
+
   return (
     <AuthContainer>
       <Container>
@@ -43,28 +55,27 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
               <RegisterLink color="primary">Create an account</RegisterLink>
             </Touchable>
           </RegisterLinkContainer>
-          <Email
-            label="EMAIL"
-            value={credentials.email}
-            onChangeText={(value) =>
-              updateCredentials({
-                email: value,
-              })
-            }
-          />
-          <Password
-            label="PASSWORD"
-            value={credentials.password}
-            onChangeText={(value) =>
-              updateCredentials({
-                password: value,
-              })
-            }
-            secured
-          />
-          <LoginButtonContainer>
-            <Button text="LOG IN" onClick={() => login()} />
-          </LoginButtonContainer>
+          <form onSubmit={formik.handleSubmit}>
+            <Email
+              id="email"
+              type="email"
+              label="EMAIL"
+              {...formik.getFieldProps('email')}
+              error={formik.touched.email ? formik.errors.email : undefined}
+            />
+            <Password
+              secured
+              id="password"
+              label="PASSWORD"
+              {...formik.getFieldProps('password')}
+              error={
+                formik.touched.password ? formik.errors.password : undefined
+              }
+            />
+            <LoginButtonContainer>
+              <Button type="submit" text="LOG IN" />
+            </LoginButtonContainer>
+          </form>
         </Content>
         <Footer>
           <Touchable
