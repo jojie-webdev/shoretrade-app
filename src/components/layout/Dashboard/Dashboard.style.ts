@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
 // TODO: Change this basic layout to the figma spec
@@ -16,9 +17,23 @@ export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
 
-  a {
-    padding: 12px;
-    margin-bottom: 8px;
+  .logo-container {
+    margin-top: 68px;
+    margin-bottom: 60px;
+  }
+`;
+
+export const SidebarItem = styled(Link)`
+  height: 48px;
+  width: 100%;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: none;
+  text-decoration: none;
+
+  .icon-container {
+    margin-right: 12px;
   }
 `;
 

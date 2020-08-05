@@ -25,6 +25,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const generatedProps = {
     ...props,
     pageTitle,
+    currentPath: location.pathname,
   };
 
   return <DashboardView {...generatedProps} />;

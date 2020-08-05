@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  ShoretradeLogo,
   Dashboard,
   AddBorder,
   Cart,
@@ -85,6 +86,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="ShoretradeLogo">
+          <ShoretradeLogo width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Dashboard">
           <Dashboard width={30} height={30} fill="black" />
         </Wrapper>

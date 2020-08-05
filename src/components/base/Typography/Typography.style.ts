@@ -74,4 +74,5 @@ export const P = styled.p<TypographyProps>`
     ({ ...theme.grey, ...theme.brand }[color])};
   text-align: ${({ align }) => align || 'left'};
   margin: 0;
+  line-height: 24px;
 `;

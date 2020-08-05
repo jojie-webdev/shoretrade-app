@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ShoretradeLogo } from './ShoretradeLogo';
 export { default as Dashboard } from './Dashboard';
 export { default as AddBorder } from './AddBorder';
 export { default as Cart } from './Cart';
