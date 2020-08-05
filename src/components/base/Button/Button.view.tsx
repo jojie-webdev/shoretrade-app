@@ -15,6 +15,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     color,
     iconPosition = 'after',
     variant = 'primary',
+    takeFullWidth = false,
     ...buttonProps
   } = props;
 
@@ -34,12 +35,13 @@ const Button = (props: ButtonProps): JSX.Element => {
       variant={variant}
       hasText={text && text?.length > 0 ? true : false}
       iconPosition={iconPosition}
+      takeFullWidth={takeFullWidth}
       {...buttonProps}
     >
       {iconPosition === 'before' && icon}
 
       {text && (
-        <Typography variant="overline" color={textColor} weight="Black">
+        <Typography variant="overline" color={textColor} weight="900">
           {text}
         </Typography>
       )}

@@ -1,4 +1,3 @@
-import { Container } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Backdrop = styled.div<{ isOpen: boolean }>`
@@ -20,22 +19,9 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
 
 export const ModalContainer = styled.div`
   position: relative;
-  width: 438px;
   background-color: ${(props) => props.theme.grey.shade8};
   border-radius: 4px;
   padding: 56px 32px;
-
-  .title {
-    margin-bottom: 24px;
-  }
-
-  .content-container {
-    margin-bottom: 24px;
-
-    .overline {
-      margin-bottom: 8px;
-    }
-  }
 `;
 
 export const ExitButton = styled.button`

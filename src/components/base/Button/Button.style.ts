@@ -22,10 +22,12 @@ export const ButtonContainer = styled.button<
   background-color: ${({ variant }) => backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
   border-radius: 4px;
+  width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
 
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 
   svg {
     margin-left: ${(props) =>
