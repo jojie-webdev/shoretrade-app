@@ -1,6 +1,14 @@
 /* PLOP_INJECT_IMPORT */
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as Pen } from './Pen';
+export { default as Exit } from './Exit';
+export { default as ShoretradeLogo } from './ShoretradeLogo';
+export { default as Dashboard } from './Dashboard';
+export { default as AddBorder } from './AddBorder';
+export { default as Cart } from './Cart';
+export { default as CheckBorder } from './CheckBorder';
+export { default as Account } from './Account';
+export { default as FileCheck } from './FileCheck';
 export { default as ChevronRight } from './ChevronRight';
 export { default as ChevronLeft } from './ChevronLeft';
 export { default as Search } from './Search';

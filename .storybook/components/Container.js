@@ -32,6 +32,7 @@ const CenterContainer = styled(BaseContainer)`
 // eslint-disable-next-line react/prop-types
 const Container = ({ center = false, backgroundColor, children }) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
+
   return (
     <ThemeProvider theme={{ ...theme }}>
       <Wrapper style={{ backgroundColor: backgroundColor }}>{children}</Wrapper>

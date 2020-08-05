@@ -11,6 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: IconPosition;
   variant?: Variants;
   icon?: JSX.Element;
+  takeFullWidth?: boolean;
 }
 
 // Styles
@@ -18,4 +19,5 @@ export type ButtonStyleProps = {
   color?: keyof Theme['brand'];
   variant: Variants;
   iconPosition: IconPosition;
+  takeFullWidth?: boolean;
 };

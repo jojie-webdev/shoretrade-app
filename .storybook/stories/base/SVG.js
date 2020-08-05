@@ -6,6 +6,14 @@ import {
   /* PLOP_INJECT_IMPORT */
   DropdownArrow,
   Pen,
+  Exit,
+  ShoretradeLogo,
+  Dashboard,
+  AddBorder,
+  Cart,
+  CheckBorder,
+  Account,
+  FileCheck,
   ChevronRight,
   ChevronLeft,
   Search,
@@ -23,7 +31,14 @@ import Container from '../../components/Container';
 // eslint-disable-next-line react/prop-types
 const Content = ({ children }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100vw',
+      }}
+    >
       {children}
     </div>
   );
@@ -36,6 +51,7 @@ const Wrapper = ({ children, label }) => {
       style={{
         marginLeft: 16,
         marginTop: 16,
+        marginBottom: 16,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -43,7 +59,7 @@ const Wrapper = ({ children, label }) => {
       }}
     >
       {children}
-      <div style={{ marginTop: '8px' }}>{label}</div>
+      <div style={{ marginTop: '8px', marginBottom: 16 }}>{label}</div>
     </div>
   );
 };
@@ -78,6 +94,30 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Pen">
           <Pen width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Exit">
+          <Exit width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="ShoretradeLogo">
+          <ShoretradeLogo width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Dashboard">
+          <Dashboard width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="AddBorder">
+          <AddBorder width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="Cart">
+          <Cart width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="CheckBorder">
+          <CheckBorder width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="Account">
+          <Account width={30} height={30} fill="black" />
+        </Wrapper>
+        <Wrapper label="FileCheck">
+          <FileCheck width={30} height={30} fill="black" />
         </Wrapper>
         <Wrapper label="ChevronRight">
           <ChevronRight width={30} height={30} />
