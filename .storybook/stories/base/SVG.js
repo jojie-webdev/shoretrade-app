@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  ChevronRight,
+  ChevronLeft,
   Search,
   CheckFilled,
   CloseFilled,
@@ -69,6 +71,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="ChevronRight">
+          <ChevronRight width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ChevronLeft">
+          <ChevronLeft width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Search">
           <Search width={30} height={30} />
         </Wrapper>
