@@ -1,6 +1,6 @@
 import { Lock } from 'components/base/SVG';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import FormikTextField from 'components/module/FormikTextField';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -39,11 +39,11 @@ export const RegisterLink = styled(Typography)`
   font-weight: bold;
 `;
 
-export const Email = styled(TextField)`
+export const Email = styled(FormikTextField)`
   margin-top: 48px;
 `;
 
-export const Password = styled(TextField)`
+export const Password = styled(FormikTextField)`
   margin-top: 16px;
 `;
 

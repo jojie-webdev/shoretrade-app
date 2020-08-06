@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
-import { useFormik } from 'formik';
+import { Formik, Form } from 'formik';
 
 import { LoginGeneratedProps } from './Login.props';
 import {
@@ -30,14 +30,14 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
   const { login, pending } = props;
 
-  const formik = useFormik({
+  const formikProps = {
     initialValues: {
       email: '',
       password: '',
     },
     validate,
     onSubmit: login,
-  });
+  };
 
   return (
     <AuthContainer>
@@ -55,27 +55,15 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
               <RegisterLink color="primary">Create an account</RegisterLink>
             </Touchable>
           </RegisterLinkContainer>
-          <form onSubmit={formik.handleSubmit}>
-            <Email
-              id="email"
-              type="email"
-              label="EMAIL"
-              {...formik.getFieldProps('email')}
-              error={formik.touched.email ? formik.errors.email : undefined}
-            />
-            <Password
-              secured
-              id="password"
-              label="PASSWORD"
-              {...formik.getFieldProps('password')}
-              error={
-                formik.touched.password ? formik.errors.password : undefined
-              }
-            />
-            <LoginButtonContainer>
-              <Button type="submit" text="LOG IN" />
-            </LoginButtonContainer>
-          </form>
+          <Formik {...formikProps}>
+            <Form>
+              <Email name="email" type="email" label="EMAIL" />
+              <Password name="password" label="PASSWORD" />
+              <LoginButtonContainer>
+                <Button type="submit" text="LOG IN" />
+              </LoginButtonContainer>
+            </Form>
+          </Formik>
         </Content>
         <Footer>
           <Touchable
