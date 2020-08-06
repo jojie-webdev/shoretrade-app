@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
 // TODO: Change this basic layout to the figma spec
-export const Container = styled.div`
+export const DashboardContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -43,8 +43,16 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 150px;
-  background: #09131d;
+  background: ${(props) => props.theme.grey.shade9};
   color: white;
+
+  .screen {
+    background: ${(props) => props.theme.grey.shade8};
+    height: 80%;
+    padding: 40px 80px;
+    border-radius: 2px;
+    overflow-y: auto;
+  }
 `;
 
 export const Navbar = styled.nav`

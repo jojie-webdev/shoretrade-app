@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { ShoretradeLogo, Exit } from 'components/base/SVG';
-import { SVGProps } from 'components/base/SVG/SVG.props';
 import Typography from 'components/base/Typography';
+import { Container } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { DashboardGeneratedProps, NavLinkProps } from './Dashboard.props';
 import {
-  Container,
+  DashboardContainer,
   Sidebar,
   Content,
   Navbar,
@@ -30,7 +30,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const { routes, pageTitle, currentPath, children } = props;
 
   return (
-    <Container>
+    <DashboardContainer>
       <Sidebar>
         <div>
           <div className="logo-container">
@@ -40,9 +40,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <NavLink
               key={`sidenav-${route.path}`}
               to={route.path}
-              color={route.path === currentPath ? 'primary' : 'noshade'}
+              color={
+                // To handle inner routes
+                currentPath.search(route.path.split('/')[2]) > 0
+                  ? 'primary'
+                  : 'noshade'
+              }
               iconColor={
-                route.path === currentPath
+                currentPath.search(route.path.split('/')[2]) > 0
                   ? theme.brand.primary
                   : theme.grey.noshade
               }
@@ -63,13 +68,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Content>
         <Navbar className="appbar">
           <h1>{pageTitle}</h1>
-          <div>
-            <h3>Manettas Seafood</h3>
-          </div>
+
+          <h3>Manettas Seafood</h3>
         </Navbar>
-        {children}
+        <div className="screen">
+          <Container>{children}</Container>
+        </div>
       </Content>
-    </Container>
+    </DashboardContainer>
   );
 };
 
