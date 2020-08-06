@@ -7,7 +7,6 @@ import {
   DropdownArrow,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import moment from 'moment';
 import { DayPickerSingleDateController } from 'react-dates';
 
 // import { useTheme } from 'utils/Theme';
