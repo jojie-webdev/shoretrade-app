@@ -38,6 +38,10 @@ export const StyledDropdown = styled(Dropdown)`
       background-color: transparent;
     }
   }
+
+  .Dropdown-disabled {
+    //
+  }
 `;
 
 export const ArrowContainer = styled.div<{ flipped?: boolean }>`
