@@ -12,8 +12,10 @@ const font = `
 export const StyledDropdown = styled(Dropdown)`
   .${PREFIX}Container {
     height: 48px;
-    background: #ffffff;
-    color: ${({ theme }) => theme.grey.shade9};
+    background: ${({ theme, disabled }) =>
+      disabled ? theme.grey.shade3 : '#ffffff'};
+    color: ${({ theme, disabled }) =>
+      disabled ? theme.grey.shade6 : theme.grey.shade9};
     border: 1px solid ${({ theme }) => theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
@@ -37,10 +39,6 @@ export const StyledDropdown = styled(Dropdown)`
     &:hover {
       background-color: transparent;
     }
-  }
-
-  .Dropdown-disabled {
-    //
   }
 `;
 
