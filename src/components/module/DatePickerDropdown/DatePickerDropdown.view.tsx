@@ -10,21 +10,15 @@ import { Container, NavButton } from './DatePickerDropdown.style';
 
 const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
   // const theme = useTheme();
-  const {
-    startDate,
-    endDate,
-    onDateChange,
-    focusedInput,
-    onFocusChange,
-  } = props;
+  const { date, onDateChange } = props;
 
   return (
     <Container>
       <DayPickerSingleDateController
-        date={moment()}
-        focused={false}
-        onDateChange={(date) => {}}
-        onFocusChange={(args) => {}}
+        date={date}
+        onDateChange={onDateChange}
+        focused={true}
+        onFocusChange={() => {}}
         horizontalMonthPadding={0}
         numberOfMonths={1}
         daySize={35}
