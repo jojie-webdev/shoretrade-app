@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Crab } from './Crab';
 export { default as Lock } from './Lock';
 export { default as Spin } from './Spin';
 export { default as DropdownArrow } from './DropdownArrow';
