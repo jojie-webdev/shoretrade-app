@@ -12,3 +12,7 @@ body * {
   font-family: "Basis Grotesque Pro", sans-serif;
   box-sizing: border-box;
 }
+
+button:hover {
+  cursor: pointer;
+}

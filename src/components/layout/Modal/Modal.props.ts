@@ -1,7 +1,6 @@
 export interface ModalProps {
-  title: string;
-  overline?: string;
-  children?: string;
+  children?: any;
   isOpen: boolean;
   onClickClose: () => void;
+  style?: any;
 }

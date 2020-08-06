@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 import { ThemeProvider } from 'emotion-theming';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
