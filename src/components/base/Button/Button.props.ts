@@ -6,6 +6,7 @@ export type Variants = 'primary' | 'outline' | 'disabled';
 export type IconPosition = 'before' | 'after';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
   color?: keyof Theme['brand'];
   text?: string;
   iconPosition?: IconPosition;

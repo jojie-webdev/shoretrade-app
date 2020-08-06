@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 import { ThemeProvider } from 'emotion-theming';
 import ReactDOM from 'react-dom';
+import { Provider as ReduxProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import Routes from 'routes/index.routes';
+import { store, persistor, sagaMiddleware } from 'store';
+import sagas from 'store/sagas';
 import theme from 'utils/Theme';
 
 // Initialize languages
@@ -12,19 +18,28 @@ import './normalize.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-// Third Party
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+// create the saga middleware
+sagaMiddleware.run(sagas);
 
-const App = () => (
-  <React.StrictMode>
-    <Router>
-      <ThemeProvider theme={theme}>
-        <Routes />
-      </ThemeProvider>
-    </Router>
-  </React.StrictMode>
-);
+const App = () => {
+  const [rehydrated, setRehydrated] = useState(false);
+  const onRehydate = async () => {
+    setRehydrated(true);
+  };
+  return (
+    <React.StrictMode>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor(onRehydate)}>
+          <Router>
+            <ThemeProvider theme={theme}>
+              <Routes />
+            </ThemeProvider>
+          </Router>
+        </PersistGate>
+      </ReduxProvider>
+    </React.StrictMode>
+  );
+};
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
