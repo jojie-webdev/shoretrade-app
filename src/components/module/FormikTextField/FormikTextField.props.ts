@@ -1,9 +1,8 @@
 import { FieldInputProps } from 'formik';
 
-export interface FormikTextFieldProps {
-  className?: string;
+export interface FormikTextFieldProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  type?: string;
   name: string;
   secured?: boolean;
 }

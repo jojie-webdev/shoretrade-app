@@ -1,4 +1,5 @@
-export interface TouchableProps {
+export interface TouchableProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onPress: () => void;
   width?: number;

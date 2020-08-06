@@ -58,7 +58,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
           <Formik {...formikProps}>
             <Form>
               <Email name="email" type="email" label="EMAIL" />
-              <Password name="password" label="PASSWORD" />
+              <Password secured name="password" label="PASSWORD" />
               <LoginButtonContainer>
                 <Button type="submit" text="LOG IN" />
               </LoginButtonContainer>
