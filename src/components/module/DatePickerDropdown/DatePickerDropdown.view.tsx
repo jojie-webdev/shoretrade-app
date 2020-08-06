@@ -46,7 +46,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
             onFocusChange={() => {}}
             horizontalMonthPadding={0}
             numberOfMonths={1}
-            daySize={35}
+            daySize={37}
             hideKeyboardShortcutsPanel
             enableOutsideDays
             noBorder

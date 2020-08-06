@@ -16,11 +16,13 @@ export const Container = styled.div`
     top: calc(48px + 12px);
     left: 0;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    border-radius: 4px;
   }
 
   .CalendarDay__default {
     border: none;
     margin: 0;
+    border-radius: 4px;
 
     :hover {
       border-radius: 100px;
