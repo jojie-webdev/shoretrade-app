@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  ArrowRight,
+  ArrowLeft,
   DropdownArrow,
   Pen,
   Exit,
@@ -89,6 +91,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="ArrowRight">
+          <ArrowRight width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ArrowLeft">
+          <ArrowLeft width={30} height={30} />
+        </Wrapper>
         <Wrapper label="DropdownArrow">
           <DropdownArrow width={30} height={30} />
         </Wrapper>
