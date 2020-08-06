@@ -16,11 +16,10 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import Account from './Account';
 import AddProduct from './AddProduct';
 import Dashboard from './Dashboard';
+import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
 import Selling from './Selling';
 import Sold from './Sold';
-
-// Svgs
 
 const ROUTES: Routes = {
   DASHBOARD: {
@@ -29,12 +28,21 @@ const ROUTES: Routes = {
     children: <Dashboard />,
     icon: DashboardSVG,
   },
+  // Market Prices
   MARKET_PRICES: {
     path: '/seller/market-prices',
     title: 'Market Prices',
     children: <MarketPrices />,
     icon: FileCheck,
   },
+  MARKET_PRICE_DETAIL: {
+    path: '/seller/market-prices/:id',
+    title: '',
+    children: <MarketPriceDetail />,
+    hideFromSidebar: true,
+  },
+
+  // Add Product
   ADD_PRODUCT: {
     path: '/seller/add-product',
     title: 'Add Product',

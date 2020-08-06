@@ -1,15 +1,16 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Spinner from 'components/base/Spinner';
 import { Theme } from 'types/Theme';
 
 import Typography from '../Typography';
 import { ButtonProps } from './Button.props';
-import { ButtonContainer } from './Button.style';
-
+import { ButtonContainer, LoadingContainer } from './Button.style';
 const Button = (props: ButtonProps): JSX.Element => {
   // const theme = useTheme();
   const {
+    loading,
     icon,
     text,
     color,
@@ -45,8 +46,13 @@ const Button = (props: ButtonProps): JSX.Element => {
           {text}
         </Typography>
       )}
+      {loading && (
+        <LoadingContainer>
+          <Spinner width={24} height={24} />
+        </LoadingContainer>
+      )}
 
-      {iconPosition === 'after' && icon}
+      {iconPosition === 'after' && !loading && icon}
     </ButtonContainer>
   );
 };

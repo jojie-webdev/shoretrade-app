@@ -27,6 +27,11 @@ storiesOf('base/Button', module).add('Summary', () => (
           icon={<Eye fill="white" height={15} width={20} />}
           style={{ marginBottom: '5px' }}
         />
+        <Button
+          text="Primary Button Loading"
+          style={{ marginBottom: '5px' }}
+          loading
+        />
       </div>
       <div style={{ marginRight: '20px' }}>
         <Button
@@ -50,6 +55,12 @@ storiesOf('base/Button', module).add('Summary', () => (
         <Button
           variant="outline"
           icon={<Eye fill="#E35D32" height={15} width={20} />}
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          loading
+          text="Outline Button Loading"
+          variant="outline"
           style={{ marginBottom: '5px' }}
         />
       </div>

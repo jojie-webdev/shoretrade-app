@@ -7,6 +7,8 @@ import {
   Calendar,
   ArrowRight,
   ArrowLeft,
+  Lock,
+  Spin,
   DropdownArrow,
   Pen,
   Exit,
@@ -100,6 +102,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="ArrowLeft">
           <ArrowLeft width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Lock">
+          <Lock width={30} height={30} fill="#000" />
+        </Wrapper>
+        <Wrapper label="Spin">
+          <Spin width={30} height={30} />
         </Wrapper>
         <Wrapper label="DropdownArrow">
           <DropdownArrow width={30} height={30} />

@@ -1,10 +1,9 @@
-export interface TextFieldProps {
+export interface TextFieldProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  value?: string;
   onChangeText?: (value: string) => void;
-  placeholder?: string;
   secured?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   LeftComponent?: React.ReactNode;
+  className?: string;
 }
