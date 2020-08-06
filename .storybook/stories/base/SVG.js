@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Calendar,
   ArrowRight,
   ArrowLeft,
   DropdownArrow,
@@ -91,6 +92,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Calendar">
+          <Calendar width={30} height={30} />
+        </Wrapper>
         <Wrapper label="ArrowRight">
           <ArrowRight width={30} height={30} />
         </Wrapper>
