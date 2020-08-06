@@ -18,6 +18,7 @@ const border: Record<Variants, string> = {
 export const ButtonContainer = styled.button<
   ButtonStyleProps & { hasText: boolean }
 >`
+  max-height: 48px;
   padding: 18px 36px;
   background-color: ${({ variant }) => backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
@@ -42,5 +43,15 @@ export const ButtonContainer = styled.button<
 
   :hover {
     opacity: 0.5;
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  svg {
+    margin-left: 0;
   }
 `;
