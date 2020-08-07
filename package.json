@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
+    "react-dropdown": "^1.7.0",
     "react-grid-system": "^7.0.3",
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.7.0",
