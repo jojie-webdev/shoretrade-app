@@ -13,7 +13,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
-import Account from './Account';
+import SellerAccountRoutes from './Account/account.routes';
+import Account from './Account/Landing';
 import AddProduct from './AddProduct';
 import Dashboard from './Dashboard';
 import MarketPriceDetail from './MarketPriceDetail';
@@ -64,8 +65,9 @@ const ROUTES: Routes = {
   ACCOUNT: {
     path: '/seller/account',
     title: 'Account',
-    children: <Account />,
+    children: <SellerAccountRoutes />,
     icon: AccountSVG,
+    nested: true,
   },
 };
 
@@ -78,7 +80,7 @@ const SellerRoutes = (): JSX.Element => {
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (
-          <Route key={r.path} path={`${r.path}`} exact>
+          <Route key={r.path} path={`${r.path}`} exact={!r.nested}>
             {r.children}
           </Route>
         ))}

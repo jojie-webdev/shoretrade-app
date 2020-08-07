@@ -4,25 +4,27 @@ import React from 'react';
 
 import Typography from 'components/base/Typography';
 
-import { AccountGeneratedProps } from './Account.props';
+import { AccountLandingGeneratedProps } from './Landing.props';
 import {
   Container,
   NavInteraction,
   Header,
   AccountSelect,
-} from './Account.style';
+} from './Landing.style';
 
 const interactions = [
   { value: 'Your Details', path: '/1' },
-  { value: 'Shipping Addresses', path: '/2' },
+  { value: 'Shipping Addresses', path: '/seller/account/shipping-address' },
   { value: 'Change Password', path: '/3' },
   { value: 'Fisherman / Assistants', path: '/4' },
   { value: 'Bank Details', path: '/5' },
   { value: 'Help & Support', path: '/6' },
 ];
 
-const AccountView = (props: AccountGeneratedProps) => {
+const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
+  const { goto } = props;
+
   return (
     <Container>
       <Header>
@@ -47,11 +49,11 @@ const AccountView = (props: AccountGeneratedProps) => {
         <NavInteraction
           key={interaction.path}
           value={interaction.value}
-          onClick={() => {}}
+          onClick={() => goto(interaction.path)}
         />
       ))}
     </Container>
   );
 };
 
-export default AccountView;
+export default AccountLandingView;
