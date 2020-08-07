@@ -10,15 +10,6 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
 
   justify-content: center;
   align-items: center;
-
-  .row {
-    height: 100%;
-    width: 100%;
-  }
-
-  .col {
-    min-width: 438px;
-  }
 `;
 
 export const ModalContainer = styled.div`
@@ -26,6 +17,7 @@ export const ModalContainer = styled.div`
   background-color: ${(props) => props.theme.grey.shade8};
   border-radius: 4px;
   padding: 56px 32px;
+  min-width: 438px;
 `;
 
 export const ExitButton = styled.button`
