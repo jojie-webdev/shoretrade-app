@@ -15,6 +15,10 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
     height: 100%;
     width: 100%;
   }
+
+  .col {
+    min-width: 438px;
+  }
 `;
 
 export const ModalContainer = styled.div`
