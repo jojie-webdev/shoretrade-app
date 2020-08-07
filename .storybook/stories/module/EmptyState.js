@@ -16,11 +16,13 @@ const MainContainer = styled.div`
 const SellerContainer = styled.div`
   flex: 1;
   background: #111e2b;
+  height: 100%;
 `;
 
 const BuyerContainer = styled.div`
   flex: 1;
   background: #edeffa;
+  height: 100%;
 `;
 
 const EMPTY_STATE_PROPS = {

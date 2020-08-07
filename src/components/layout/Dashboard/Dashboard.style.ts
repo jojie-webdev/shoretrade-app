@@ -52,6 +52,11 @@ export const Content = styled.div`
     padding: 40px 80px;
     border-radius: 2px;
     overflow-y: auto;
+
+    .container {
+      height: 100%;
+      width: 100%;
+    }
   }
 `;
 
