@@ -15,7 +15,6 @@ import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
 import SellerAccountRoutes from './Account/account.routes';
-import Account from './Account/Landing';
 import AddProduct from './AddProduct';
 import Dashboard from './Dashboard';
 import MarketPriceDetail from './MarketPriceDetail';

@@ -3,6 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import Typography from 'components/base/Typography';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
 import {
@@ -13,12 +14,12 @@ import {
 } from './Landing.style';
 
 const interactions = [
-  { value: 'Your Details', path: '/1' },
-  { value: 'Shipping Addresses', path: '/seller/account/shipping-address' },
-  { value: 'Change Password', path: '/3' },
-  { value: 'Fisherman / Assistants', path: '/4' },
-  { value: 'Bank Details', path: '/5' },
-  { value: 'Help & Support', path: '/6' },
+  { value: 'Your Details', path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS },
+  { value: 'Shipping Addresses', path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS },
+  { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
+  { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },
+  { value: 'Bank Details', path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS },
+  { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
 ];
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
