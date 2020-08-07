@@ -21,7 +21,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     value,
     pressed,
     label,
-    onPress,
+    onClick,
     leftComponent,
     rightComponent,
   } = props;
@@ -55,7 +55,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   };
 
   return (
-    <Container {...props} onPress={onPress}>
+    <Container {...props} onClick={onClick}>
       {label ? (
         <Label variant="overline" color="shade5">
           {label}

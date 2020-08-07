@@ -7,7 +7,7 @@ export interface InteractionsProps {
   type?: Types;
   value: string;
   pressed?: boolean;
-  onPress: () => void;
+  onClick: () => void;
   backgroundColor?: string;
   leftComponent?: ReactNode;
   rightComponent?: ReactNode;
