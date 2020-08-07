@@ -1,1 +1,3 @@
-export interface SellingGeneratedProps {}
+export interface SellingGeneratedProps {
+  items: any[];
+}
