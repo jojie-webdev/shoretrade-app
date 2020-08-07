@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import InteractionsView from 'components/base/Interactions';
+import Interactions from 'components/base/Interactions';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -38,7 +38,7 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
               className="market-item"
               key={num}
             >
-              <InteractionsView value="Abait Tuna" onPress={() => {}} />
+              <Interactions value="Abait Tuna" onClick={() => {}} />
             </Link>
           ))}
         </Col>
