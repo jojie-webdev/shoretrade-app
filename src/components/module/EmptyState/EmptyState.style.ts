@@ -7,14 +7,31 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const MainText = styled(Typography)`
-  margin-bottom: 32px;
-`;
+export const MainText = styled(Typography)``;
 
-export const Circle = styled.div`
-  height: 220px;
-  width: 220px;
-  border-radius: 110px;
-  background: ${(props) => props.theme.grey.shade9};
-  margin-bottom: 16px;
+export const SVGContainer = styled.div<{ circleColor: string }>`
+  margin-top: 70px;
+  margin-bottom: 60px;
+  position: relative;
+  height: 245px;
+  width: 245px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    z-index: 2;
+  }
+
+  :before {
+    position: absolute;
+    content: '';
+    height: 210px;
+    width: 210px;
+    border-radius: 110px;
+    background: ${(props) =>
+      props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
+    z-index: 1;
+  }
 `;

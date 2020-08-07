@@ -23,6 +23,7 @@ const CenterContainer = styled(BaseContainer)`
  * @property {Object} children
  * @property {boolean} [center]
  * @property {string} [background]
+ * @property {string} [appType]
  */
 
 /**
@@ -30,11 +31,16 @@ const CenterContainer = styled(BaseContainer)`
  * @param {ContainerProps} props
  */
 // eslint-disable-next-line react/prop-types
-const Container = ({ center = false, backgroundColor, children }) => {
+const Container = ({
+  center = false,
+  backgroundColor,
+  children,
+  appType = 'seller',
+}) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
 
   return (
-    <ThemeProvider theme={{ ...theme }}>
+    <ThemeProvider theme={{ ...theme, appType }}>
       <Wrapper style={{ backgroundColor: backgroundColor }}>{children}</Wrapper>
     </ThemeProvider>
   );
