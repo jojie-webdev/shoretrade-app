@@ -10,11 +10,7 @@ import BuyerRoutes from './Buyer/buyer.routes';
 import SellerRoutes from './Seller/seller.routes';
 
 export const ROUTES: Routes = {
-  BUYER: {
-    path: '/buyer',
-    children: <BuyerRoutes />,
-    nested: true,
-  },
+  // Main Routes
   ROOT: {
     path: '/',
     children: <h1>Landing Page if it exists</h1>,
@@ -30,6 +26,13 @@ export const ROUTES: Routes = {
   ONBOARDING: {
     path: '/onboarding',
     children: <Onboarding />,
+  },
+
+  // Nested Routes
+  BUYER: {
+    path: '/buyer',
+    children: <BuyerRoutes />,
+    nested: true,
   },
   SELLER: {
     path: '/seller',
