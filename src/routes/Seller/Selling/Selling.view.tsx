@@ -1,11 +1,19 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import EmptyState from 'components/module/EmptyState';
 import { Row, Col } from 'react-grid-system';
 
 import { SellingGeneratedProps } from './Selling.props';
-import { ItemImage, ItemCard, ItemDetail, Tag } from './Selling.style';
+import {
+  ItemImage,
+  ItemCard,
+  ItemDetail,
+  Tag,
+  Container,
+} from './Selling.style';
 
 const Item = () => (
   <ItemCard>
@@ -64,16 +72,25 @@ const Item = () => (
 
 const SellingView = (props: SellingGeneratedProps) => {
   // const theme = useTheme();
-  const { items } = props;
+  const { items, toggleEmptyState } = props;
 
   return (
-    <Row>
-      <Col>
-        {items.map((item: any, ndx) => (
-          <Item key={ndx} />
-        ))}
-      </Col>
-    </Row>
+    <Container>
+      <Row className="row" align="center" justify="center">
+        <Col>
+          {items.length === 0 ? (
+            <EmptyState
+              title="The are no listings here at the moment"
+              buttonText="Toggle Empty State"
+              Svg={Crab}
+              onButtonClicked={toggleEmptyState}
+            />
+          ) : (
+            items.map((item: any, ndx) => <Item key={ndx} />)
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

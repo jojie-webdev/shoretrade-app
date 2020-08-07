@@ -72,7 +72,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           <h3>Manettas Seafood</h3>
         </Navbar>
         <div className="screen">
-          <Container>{children}</Container>
+          <Container className="container">{children}</Container>
         </div>
       </Content>
     </DashboardContainer>
