@@ -10,6 +10,8 @@ import '../../src/index.css';
 const BaseContainer = styled.div`
   flex: 1;
   padding: 10px;
+  height: 100%;
+  width: 100%;
 `;
 
 const CenterContainer = styled(BaseContainer)`
@@ -23,6 +25,7 @@ const CenterContainer = styled(BaseContainer)`
  * @property {Object} children
  * @property {boolean} [center]
  * @property {string} [background]
+ * @property {string} [appType]
  */
 
 /**
@@ -30,11 +33,16 @@ const CenterContainer = styled(BaseContainer)`
  * @param {ContainerProps} props
  */
 // eslint-disable-next-line react/prop-types
-const Container = ({ center = false, backgroundColor, children }) => {
+const Container = ({
+  center = false,
+  backgroundColor,
+  children,
+  appType = 'seller',
+}) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
 
   return (
-    <ThemeProvider theme={{ ...theme }}>
+    <ThemeProvider theme={{ ...theme, appType }}>
       <Wrapper style={{ backgroundColor: backgroundColor }}>{children}</Wrapper>
     </ThemeProvider>
   );

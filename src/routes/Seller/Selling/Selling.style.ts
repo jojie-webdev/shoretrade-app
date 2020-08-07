@@ -1,7 +1,13 @@
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: 100%;
+
+  .row {
+    height: 100%;
+  }
+`;
 
 export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
