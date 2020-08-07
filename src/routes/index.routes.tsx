@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MAIN_ROUTES, SELLER_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
 import { Routes } from 'types/Routes';
 
@@ -12,19 +13,19 @@ import SellerRoutes from './Seller/seller.routes';
 export const ROUTES: Routes = {
   // Main Routes
   ROOT: {
-    path: '/',
+    path: MAIN_ROUTES.ROOT,
     children: <h1>Landing Page if it exists</h1>,
   },
   LOGIN: {
-    path: '/login',
+    path: MAIN_ROUTES.LOGIN,
     children: <Login />,
   },
   REGISTER: {
-    path: '/register',
+    path: MAIN_ROUTES.REGISTER,
     children: <Register />,
   },
   ONBOARDING: {
-    path: '/onboarding',
+    path: MAIN_ROUTES.ONBOARDING,
     children: <Onboarding />,
   },
 
@@ -35,7 +36,7 @@ export const ROUTES: Routes = {
     nested: true,
   },
   SELLER: {
-    path: '/seller',
+    path: SELLER_ROUTES.ROOT,
     children: <SellerRoutes />,
     nested: true,
   },
