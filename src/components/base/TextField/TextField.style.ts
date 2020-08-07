@@ -8,7 +8,7 @@ export const FieldContainer = styled.div`
   flex-direction: row;
   margin-top: 4px;
   width: 100%;
-  height: 40px;
+  height: 48px;
   box-sizing: border-box;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.grey.shade5};
