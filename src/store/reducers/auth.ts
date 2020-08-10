@@ -6,12 +6,14 @@ import { authActions } from '../actions';
 
 const DEFAULT_STATE: AuthState = {
   token: null,
+  type: null,
 };
 
 const DEFAULT_ACTION: Action<AuthState> = {
   type: '',
   payload: {
     token: null,
+    type: null,
   },
 };
 

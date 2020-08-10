@@ -9,6 +9,7 @@ export interface Route extends RouteProps {
   title?: string; // Used for sidebar links and dashboard title
   icon?: React.FC<SVGProps>; // Used for sidebar icon
   hideFromSidebar?: boolean;
+  protected?: boolean;
 }
 
 export type Routes = {

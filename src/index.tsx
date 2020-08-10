@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
+import { ConnectedRouter } from 'connected-react-router';
 import { ThemeProvider } from 'emotion-theming';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import Routes from 'routes/index.routes';
-import { store, persistor, sagaMiddleware } from 'store';
+import { store, persistor, sagaMiddleware, history } from 'store';
 import sagas from 'store/sagas';
 import theme from 'utils/Theme';
 
@@ -30,11 +30,11 @@ const App = () => {
     <React.StrictMode>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor(onRehydate)}>
-          <Router>
+          <ConnectedRouter history={history}>
             <ThemeProvider theme={theme}>
               <Routes />
             </ThemeProvider>
-          </Router>
+          </ConnectedRouter>
         </PersistGate>
       </ReduxProvider>
     </React.StrictMode>

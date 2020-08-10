@@ -11,6 +11,7 @@ import { Formik, Form } from 'formik';
 import { LoginGeneratedProps } from './Login.props';
 import {
   Container,
+  ContentWrapper,
   Content,
   Footer,
   Title,
@@ -42,42 +43,44 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   return (
     <AuthContainer>
       <Container>
-        <Content>
-          <Title variant="title3" color="noshade">
-            Seller Log in
-          </Title>
-          <RegisterLinkContainer>
-            <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
+        <ContentWrapper>
+          <Content>
+            <Title variant="title3" color="noshade">
+              Seller Log in
+            </Title>
+            <RegisterLinkContainer>
+              <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
+              <Touchable
+                dark
+                onPress={() => console.log('LOG_ACTION: Create account')}
+              >
+                <RegisterLink color="primary">Create an account</RegisterLink>
+              </Touchable>
+            </RegisterLinkContainer>
+            <Formik {...formikProps}>
+              <Form>
+                <Email name="email" type="email" label="EMAIL" />
+                <Password secured name="password" label="PASSWORD" />
+                <LoginButtonContainer>
+                  <Button type="submit" text="LOG IN" loading={pending} />
+                </LoginButtonContainer>
+              </Form>
+            </Formik>
+          </Content>
+          <Footer>
             <Touchable
               dark
-              onPress={() => console.log('LOG_ACTION: Create account')}
+              onPress={() => console.log('LOG_ACTION: Forgot Password')}
             >
-              <RegisterLink color="primary">Create an account</RegisterLink>
+              <ForgotPasswordContainer>
+                <ForgotPasswordIcon />
+                <ForgotPasswordText color="noshade">
+                  Forgot Password?
+                </ForgotPasswordText>
+              </ForgotPasswordContainer>
             </Touchable>
-          </RegisterLinkContainer>
-          <Formik {...formikProps}>
-            <Form>
-              <Email name="email" type="email" label="EMAIL" />
-              <Password secured name="password" label="PASSWORD" />
-              <LoginButtonContainer>
-                <Button type="submit" text="LOG IN" loading={pending} />
-              </LoginButtonContainer>
-            </Form>
-          </Formik>
-        </Content>
-        <Footer>
-          <Touchable
-            dark
-            onPress={() => console.log('LOG_ACTION: Forgot Password')}
-          >
-            <ForgotPasswordContainer>
-              <ForgotPasswordIcon />
-              <ForgotPasswordText color="noshade">
-                Forgot Password?
-              </ForgotPasswordText>
-            </ForgotPasswordContainer>
-          </Touchable>
-        </Footer>
+          </Footer>
+        </ContentWrapper>
       </Container>
     </AuthContainer>
   );

@@ -15,7 +15,7 @@ const ArrowLeft = (props: SVGProps): JSX.Element => {
       width={width || '12'}
       height={height || '12'}
       viewBox="0 0 12 12"
-      fill={fill || 'none'}
+      fill={'none'}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

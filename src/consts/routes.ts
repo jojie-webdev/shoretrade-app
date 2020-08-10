@@ -1,13 +1,17 @@
+const SELLER_ROOT = '/seller';
+const BUYER_ROOT = '/buyer';
+
 export const MAIN_ROUTES = {
-  ROOT: '/',
-  LOGIN: '/login',
-  REGISTER: '/register',
-  ONBOARDING: '/onboarding',
+  LANDING: '/',
 };
 
-const SELLER_ROOT = '/seller';
 export const SELLER_ROUTES = {
   ROOT: `${SELLER_ROOT}`,
+  LOGIN: `${SELLER_ROOT}/login`,
+  REGISTER: `${SELLER_ROOT}/register`,
+  FORGOT_PASSWORD: `${SELLER_ROOT}/forgot-password`,
+  VERIFY2FA: `${SELLER_ROOT}/verify2fa`,
+  ONBOARDING: `${SELLER_ROOT}/onboarding`,
   ACCOUNT: `${SELLER_ROOT}/account`,
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,
@@ -27,4 +31,13 @@ export const SELLER_ACCOUNT_ROUTES = {
   CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/assistants/create-assistant`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
+};
+
+export const BUYER_ROUTES = {
+  ROOT: `${BUYER_ROOT}`,
+  LOGIN: `${BUYER_ROOT}/login`,
+  REGISTER: `${BUYER_ROOT}/register`,
+  FORGOT_PASSWORD: `${BUYER_ROOT}/forgot-password`,
+  VERIFY2FA: `${BUYER_ROOT}/verify2fa`,
+  ONBOARDING: `${BUYER_ROOT}/onboarding`,
 };
