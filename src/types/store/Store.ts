@@ -1,3 +1,6 @@
+import { RouterState } from 'connected-react-router';
+import { History } from 'history';
+
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
 import {
@@ -134,6 +137,7 @@ import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
+  router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;
   verify: AsyncState<VerifyMeta, VerifyPayload>;

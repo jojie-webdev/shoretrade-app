@@ -1,3 +1,5 @@
+import { routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 import {
   applyMiddleware,
   compose,
@@ -14,7 +16,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-import reducers from 'store/reducers';
+import createRootReducer from 'store/reducers';
+
+export const history = createBrowserHistory();
 
 const isDevMode =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -22,13 +26,13 @@ const isDevMode =
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'history'],
+  whitelist: ['auth'],
 };
 
-const reducer = persistReducer(persistConfig, reducers);
+const reducer = persistReducer(persistConfig, createRootReducer(history));
 export const sagaMiddleware = createSagaMiddleware();
 
-const enhancer = applyMiddleware(sagaMiddleware);
+const enhancer = applyMiddleware(sagaMiddleware, routerMiddleware(history));
 
 export const store: Store<any, any> = createStore(
   reducer,
