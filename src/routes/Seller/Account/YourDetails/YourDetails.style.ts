@@ -6,19 +6,6 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const HeaderRow = styled(Row)`
-  margin-bottom: 24px;
-
-  .header {
-    display: flex;
-    align-items: center;
-
-    .icon-container {
-      margin-right: 8px;
-    }
-  }
-`;
-
 export const InputRow = styled(Row)`
   margin-bottom: 8px;
 

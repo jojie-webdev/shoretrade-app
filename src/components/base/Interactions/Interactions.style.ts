@@ -1,7 +1,7 @@
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
-import { InteractionsProps } from './Interactions.props';
+import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
 
 export const Container = styled.div<InteractionsProps>`
   width: 100%;
@@ -42,8 +42,8 @@ export const DropdownFlipped = styled.div`
   transform: rotate(180deg);
 `;
 
-export const IconContainer = styled.div`
+export const IconContainer = styled.div<{ iconAlignment: IconAlignmentTypes }>`
   display: flex;
-  align-items: center;
+  align-items: ${(props) => props.iconAlignment}; // defaults to center
   justify-content: center;
 `;

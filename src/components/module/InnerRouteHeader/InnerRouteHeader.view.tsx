@@ -22,7 +22,7 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
         <ArrowLeft fill={theme.brand.primary} height={24} width={24} />
       </Touchable>
       <Typography variant="title5" color="noshade">
-        Your Details
+        {title}
       </Typography>
     </>
   );

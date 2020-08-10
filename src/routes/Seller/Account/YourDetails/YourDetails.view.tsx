@@ -1,21 +1,16 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
-import Touchable from 'components/base/Touchable';
-import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
-import { useTheme } from 'utils/Theme';
+// import { useTheme } from 'utils/Theme';
 
 import { YourDetailsGeneratedProps } from './YourDetails.props';
-import { Wrapper, HeaderRow, InputRow } from './YourDetails.style';
+import { Wrapper, InputRow } from './YourDetails.style';
 
 const YourDetailsView = (props: YourDetailsGeneratedProps) => {
-  const theme = useTheme();
-  const history = useHistory();
+  // const theme = useTheme();
 
   return (
     <Wrapper>
