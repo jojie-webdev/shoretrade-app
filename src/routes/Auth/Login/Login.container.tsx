@@ -16,6 +16,8 @@ const Login = (): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const pending = useSelector((state: Store) => state.login.pending) || false;
+  const isError =
+    (useSelector((state: Store) => state.login.error) || '').length > 0;
   const login = (credentials: Credentials) => {
     dispatch(loginActions.request(credentials));
   };
@@ -33,6 +35,7 @@ const Login = (): JSX.Element => {
     login,
     pending,
     goToForgotPassword,
+    isError,
   };
   return <LoginView {...generatedProps} />;
 };

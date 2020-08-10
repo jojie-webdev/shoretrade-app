@@ -4,11 +4,26 @@ import theme from 'utils/Theme';
 import { Variants, AlertContainerProps, AlertButtonProps } from './Alert.props';
 
 const backgroundColor: Record<Variants, string> = {
-  default: 'rgba(165, 175, 251, 0.08)',
-  alert: 'rgba(255, 207, 92, 0.08)',
-  error: 'rgba(255, 100, 124, 0.08)',
-  success: 'rgba(0, 196, 140, 0.08)',
-  warning: 'rgba(255, 162, 107, 0.08)',
+  default:
+    theme.appType === 'seller'
+      ? 'rgba(165, 175, 251, 0.12)'
+      : 'rgba(165, 175, 251, 0.08)',
+  alert:
+    theme.appType === 'seller'
+      ? 'rgba(255, 207, 92, 0.12)'
+      : 'rgba(255, 207, 92, 0.08)',
+  error:
+    theme.appType === 'seller'
+      ? 'rgba(255, 100, 124, 0.12)'
+      : 'rgba(255, 100, 124, 0.08)',
+  success:
+    theme.appType === 'seller'
+      ? 'rgba(0, 196, 140, 0.12)'
+      : 'rgba(0, 196, 140, 0.08)',
+  warning:
+    theme.appType === 'seller'
+      ? 'rgba(255, 162, 107, 0.12)'
+      : 'rgba(255, 162, 107, 0.08)',
 };
 
 const buttonBackgroundColor: Record<Variants, string> = {

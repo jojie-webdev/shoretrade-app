@@ -2,6 +2,7 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -29,7 +30,7 @@ import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { login, pending, goToForgotPassword } = props;
+  const { login, pending, goToForgotPassword, isError } = props;
 
   const formikProps = {
     initialValues: {
@@ -64,6 +65,16 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
                 <LoginButtonContainer>
                   <Button type="submit" text="LOG IN" loading={pending} />
                 </LoginButtonContainer>
+                {isError && (
+                  <Alert
+                    content="Verification Failed! Your email or password were incorrect."
+                    variant="error"
+                    style={{
+                      marginTop: 16,
+                      width: '100%',
+                    }}
+                  />
+                )}
               </Form>
             </Formik>
           </Content>

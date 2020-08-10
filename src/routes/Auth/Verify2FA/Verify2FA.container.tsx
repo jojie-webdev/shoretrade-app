@@ -24,6 +24,8 @@ const Verify2FA = (): JSX.Element => {
   };
 
   const pending = useSelector((state: Store) => state.verify.pending) || false;
+  const isError =
+    (useSelector((state: Store) => state.verify.error) || '').length > 0;
 
   const verify = (code: string) => {
     dispatch(verifyActions.request({ verify2Fa: code, email }));
@@ -52,6 +54,7 @@ const Verify2FA = (): JSX.Element => {
     pending,
     backToLogin,
     resendCode,
+    isError,
   };
   return <Verify2FAView {...generatedProps} />;
 };

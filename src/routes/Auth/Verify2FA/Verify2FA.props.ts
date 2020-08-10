@@ -5,4 +5,5 @@ export interface Verify2FAGeneratedProps {
   pending: boolean;
   backToLogin: () => void;
   resendCode: () => void;
+  isError: boolean;
 }

@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -41,7 +43,7 @@ const initialValues = [...Array(CODE_LENGTH).keys()].reduce(
 
 const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { verify, pending, backToLogin, resendCode } = props;
+  const { verify, pending, backToLogin, resendCode, isError } = props;
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const formik = useFormik({
@@ -102,6 +104,16 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
               <Verify2FAButtonContainer>
                 <Button type="submit" text="VERIFY" loading={pending} />
               </Verify2FAButtonContainer>
+              {isError && (
+                <Alert
+                  content={`Verification Failed!\nYour verification code were incorrect.`}
+                  variant="error"
+                  style={{
+                    marginTop: 16,
+                    width: '100%',
+                  }}
+                />
+              )}
             </form>
           </Content>
           <Footer>
