@@ -36,3 +36,4 @@ gen
 # env file
 .env
 
+yarn.lock
