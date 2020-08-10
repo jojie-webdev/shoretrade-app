@@ -5,7 +5,10 @@ import Interactions from 'components/base/Interactions';
 import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
+import { ROUTES } from 'routes/index.routes';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -34,6 +37,7 @@ const AddressText = (
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
 
   return (
     <Wrapper>
@@ -52,14 +56,14 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
       <Row className="address-row">
         <InteractionCol md={12}>
           <Interactions
-            onClick={() => {}}
+            onClick={() => history.push(SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS)}
             leftComponent={AddressText('Default Address', 'shade6')}
             iconAlignment="flex-start"
           />
         </InteractionCol>
         <InteractionCol md={12}>
           <Interactions
-            onClick={() => {}}
+            onClick={() => history.push(SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS)}
             leftComponent={AddressText('Approval Pending', 'alert')}
             iconAlignment="flex-start"
           />
