@@ -224,31 +224,31 @@ module.exports = (plop) => {
     actions: [
       {
         type: 'add',
-        path: 'src/routes/Buyer/{{pascalCase name}}/index.tsx',
+        path: 'src/routes/Seller/{{pascalCase name}}/index.tsx',
         templateFile: 'plop-templates/seller-route/index.tsx.hbs',
       },
       {
         type: 'add',
         path:
-          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.props.ts',
         templateFile: 'plop-templates/seller-route/route.props.ts.hbs',
       },
       {
         type: 'add',
         path:
-          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.style.ts',
         templateFile: 'plop-templates/seller-route/route.style.ts.hbs',
       },
       {
         type: 'add',
         path:
-          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
         templateFile: 'plop-templates/seller-route/route.view.tsx.hbs',
       },
       {
         type: 'add',
         path:
-          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
         templateFile: 'plop-templates/seller-route/route.container.tsx.hbs',
       },
     ],
