@@ -8,7 +8,6 @@ import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import { ROUTES } from 'routes/index.routes';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
