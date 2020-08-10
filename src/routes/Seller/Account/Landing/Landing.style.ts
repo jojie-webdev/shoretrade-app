@@ -1,5 +1,6 @@
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
+import { DropdownArrow } from 'components/base/SVG';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
@@ -28,6 +29,15 @@ export const Header = styled.div`
   }
 
   .right-content {
+    position: relative;
+
+    select {
+      padding: 4px 12px;
+      background: ${(props) => props.theme.grey.shade9};
+      color: ${(props) => props.theme.grey.noshade};
+      border-radius: 2px;
+      border: none;
+    }
   }
 `;
 

@@ -4,6 +4,7 @@ import React from 'react';
 
 import Typography from 'components/base/Typography';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { useHistory } from 'react-router-dom';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
 import {
@@ -13,7 +14,7 @@ import {
   AccountSelect,
 } from './Landing.style';
 
-const interactions = [
+const INTERACTIONS = [
   { value: 'Your Details', path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS },
   { value: 'Shipping Addresses', path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS },
   { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
@@ -24,7 +25,7 @@ const interactions = [
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
-  const { goto } = props;
+  const history = useHistory();
 
   return (
     <Container>
@@ -42,15 +43,18 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         </div>
 
         <div className="right-content">
-          <AccountSelect options={['one', 'two', 'three']} />
+          <select name="user" id="">
+            <option value="">Manettas Seafood</option>
+          </select>
+          {/* <AccountSelect options={['one', 'two', 'three']} /> */}
         </div>
       </Header>
 
-      {interactions.map((interaction) => (
+      {INTERACTIONS.map((interaction) => (
         <NavInteraction
           key={interaction.path}
           value={interaction.value}
-          onClick={() => goto(interaction.path)}
+          onClick={() => history.push(interaction.path)}
         />
       ))}
     </Container>
