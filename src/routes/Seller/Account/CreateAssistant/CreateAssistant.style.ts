@@ -25,7 +25,7 @@ export const RoleContainer = styled.div`
 `;
 
 export const TextFieldRow = styled(Row)`
-  margin-bottom: 32px;
+  margin-bottom: 8px;
 
   .textfield-container {
     margin-bottom: 24px;

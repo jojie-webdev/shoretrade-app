@@ -23,7 +23,7 @@ import {
 const Role = ({ children, label, checked }: RoleProps) => (
   <RoleContainer style={{ display: 'flex' }}>
     <div className="radio-container">
-      <Radio checked />
+      <Radio checked={checked} />
     </div>
     <div className="text-container">
       <Typography color="shade6" variant="overline" className="overline">
@@ -67,7 +67,7 @@ const CreateAssistantView = (props: CreateAssistantGeneratedProps) => {
             assistants. Does not appear as a fisherman on your account.
           </Role>
 
-          <Role label="Fisherman" checked>
+          <Role label="Fisherman">
             Can list and edit items as fisherman using your business name. Can
             only view sales for items they have listed. Cannot edit your bank,
             address, password or linked accounts.
