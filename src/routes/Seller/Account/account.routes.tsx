@@ -54,9 +54,9 @@ const SellerAccountRoutes = (): JSX.Element => {
           {r.children}
         </Route>
       ))}
-      <Route>
+      {/* <Route>
         <Redirect to="/seller/account" />
-      </Route>
+      </Route> */}
     </>
   );
 };

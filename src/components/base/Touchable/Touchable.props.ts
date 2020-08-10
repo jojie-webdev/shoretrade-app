@@ -6,4 +6,5 @@ export interface TouchableProps
   height?: number;
   circle?: boolean;
   dark?: boolean;
+  className?: string;
 }

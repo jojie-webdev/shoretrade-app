@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
+import { BrowserRouter } from 'react-router-dom';
 
 import theme from '../../src/utils/Theme';
 
@@ -42,9 +43,13 @@ const Container = ({
   const Wrapper = center ? CenterContainer : BaseContainer;
 
   return (
-    <ThemeProvider theme={{ ...theme, appType }}>
-      <Wrapper style={{ backgroundColor: backgroundColor }}>{children}</Wrapper>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={{ ...theme, appType }}>
+        <Wrapper style={{ backgroundColor: backgroundColor }}>
+          {children}
+        </Wrapper>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
