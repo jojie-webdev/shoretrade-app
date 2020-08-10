@@ -8,6 +8,7 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import Assistants from './Assistants';
 import BankDetails from './BankDetails';
 import ChangePassword from './ChangePassword';
+import CreateAssistant from './CreateAssistant';
 import EditAddress from './EditAddress';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
@@ -38,6 +39,10 @@ const ROUTES: Routes = {
   ASSISTANTS: {
     path: SELLER_ACCOUNT_ROUTES.ASSISTANTS,
     children: <Assistants />,
+  },
+  CREATE_ASSISTANT: {
+    path: SELLER_ACCOUNT_ROUTES.CREATE_ASSISTANT,
+    children: <CreateAssistant />,
   },
   BANK_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,

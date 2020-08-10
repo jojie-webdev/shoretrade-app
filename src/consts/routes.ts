@@ -24,6 +24,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   EDIT_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address/edit-address`,
   CHANGE_PASSWORD: `${SELLER_ROUTES.ACCOUNT}/change-password`,
   ASSISTANTS: `${SELLER_ROUTES.ACCOUNT}/assistants`,
+  CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/assistants/create-assistant`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
 };
