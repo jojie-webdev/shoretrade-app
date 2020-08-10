@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-
 import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -24,7 +23,6 @@ import {
   CodeFieldRow,
   CodeField,
   CodeFieldContainer,
-  Email,
   Verify2FAButtonContainer,
   FooterContainer,
   FooterIcon,

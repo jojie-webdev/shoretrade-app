@@ -29,7 +29,7 @@ import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { login, pending } = props;
+  const { login, pending, goToForgotPassword } = props;
 
   const formikProps = {
     initialValues: {
@@ -68,10 +68,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             </Formik>
           </Content>
           <Footer>
-            <Touchable
-              dark
-              onPress={() => console.log('LOG_ACTION: Forgot Password')}
-            >
+            <Touchable dark onPress={() => goToForgotPassword()}>
               <ForgotPasswordContainer>
                 <ForgotPasswordIcon />
                 <ForgotPasswordText color="noshade">

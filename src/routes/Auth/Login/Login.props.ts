@@ -8,4 +8,5 @@ export interface Credentials {
 export interface LoginGeneratedProps {
   login: (credentials: Credentials) => void;
   pending: boolean;
+  goToForgotPassword: () => void;
 }
