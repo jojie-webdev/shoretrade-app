@@ -8,6 +8,7 @@ export const Container = styled.div`
   &:hover {
     opacity: 0.5;
   }
+  cursor: pointer;
 `;
 
 export const HiddenCheckbox = styled.input`
