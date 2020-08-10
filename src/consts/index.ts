@@ -11,5 +11,3 @@ export const API = {
 };
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
-
-export { MAIN_ROUTES, SELLER_ROUTES, SELLER_ACCOUNT_ROUTES };
