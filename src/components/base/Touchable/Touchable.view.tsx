@@ -6,7 +6,7 @@ import { TouchableBase } from './Touchable.style';
 
 const Touchable = (props: TouchableProps): JSX.Element => {
   // const theme = useTheme();
-  const { children, onPress, width, height, circle, dark } = props;
+  const { children, onPress, width, height, circle, dark, className } = props;
   return (
     <TouchableBase
       onClick={onPress}
@@ -14,6 +14,7 @@ const Touchable = (props: TouchableProps): JSX.Element => {
       height={height}
       circle={circle}
       dark={dark}
+      className={className}
     >
       {children}
     </TouchableBase>

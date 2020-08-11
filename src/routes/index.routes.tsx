@@ -45,6 +45,7 @@ export const ROUTES: Routes = {
     path: SELLER_ROUTES.ONBOARDING,
     children: <Register />,
   },
+  // Nested Routes
   BUYER: {
     path: BUYER_ROUTES.ROOT,
     children: <BuyerRoutes />,

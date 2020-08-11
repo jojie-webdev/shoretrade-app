@@ -8,6 +8,8 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import Assistants from './Assistants';
 import BankDetails from './BankDetails';
 import ChangePassword from './ChangePassword';
+import CreateAssistant from './CreateAssistant';
+import EditAddress from './EditAddress';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import ShippingAddresses from './ShippingAddresses';
@@ -26,6 +28,10 @@ const ROUTES: Routes = {
     path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS,
     children: <ShippingAddresses />,
   },
+  EDIT_ADDRESS: {
+    path: SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS,
+    children: <EditAddress />,
+  },
   CHANGE_PASSWORD: {
     path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
     children: <ChangePassword />,
@@ -33,6 +39,10 @@ const ROUTES: Routes = {
   ASSISTANTS: {
     path: SELLER_ACCOUNT_ROUTES.ASSISTANTS,
     children: <Assistants />,
+  },
+  CREATE_ASSISTANT: {
+    path: SELLER_ACCOUNT_ROUTES.CREATE_ASSISTANT,
+    children: <CreateAssistant />,
   },
   BANK_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
@@ -54,9 +64,9 @@ const SellerAccountRoutes = (): JSX.Element => {
           {r.children}
         </Route>
       ))}
-      <Route>
+      {/* <Route>
         <Redirect to="/seller/account" />
-      </Route>
+      </Route> */}
     </>
   );
 };

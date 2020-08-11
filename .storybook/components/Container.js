@@ -3,6 +3,7 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
+import { BrowserRouter } from 'react-router-dom';
 
 import theme from '../../src/utils/Theme';
 
@@ -48,11 +49,13 @@ const Container = ({
   const defaultBackground = appType === 'seller' ? '#09131D' : '#F9FAFF';
 
   return (
-    <ThemeProvider theme={{ ...theme, appType }}>
-      <Wrapper style={{ backgroundColor: background || defaultBackground }}>
-        {children}
-      </Wrapper>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={{ ...theme, appType }}>
+        <Wrapper style={{ backgroundColor: background || defaultBackground }}>
+          {children}
+        </Wrapper>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
