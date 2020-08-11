@@ -29,10 +29,12 @@ const CenterContainer = styled(BaseContainer)`
 /**
  *
  * @typedef {Object} ContainerProps
+ * @property {Objectt} style
  * @property {Object} children
  * @property {boolean} [center]
  * @property {string} [background]
  * @property {string} [appType]
+ *
  */
 
 /**
@@ -44,6 +46,7 @@ const Container = ({
   background,
   children,
   appType = 'seller',
+  style,
 }) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
   const defaultBackground = appType === 'seller' ? '#09131D' : '#F9FAFF';
@@ -51,7 +54,10 @@ const Container = ({
   return (
     <BrowserRouter>
       <ThemeProvider theme={{ ...theme, appType }}>
-        <Wrapper style={{ backgroundColor: background || defaultBackground }}>
+        <Wrapper
+          style={{ backgroundColor: background || defaultBackground }}
+          style={style}
+        >
           {children}
         </Wrapper>
       </ThemeProvider>

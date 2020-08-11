@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Box,
+  Camera,
   Check,
   Help,
   Crab,
@@ -97,6 +99,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="#fff">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Box">
+          <Box width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Camera">
+          <Camera width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Check">
           <Check width={30} height={30} />
         </Wrapper>
