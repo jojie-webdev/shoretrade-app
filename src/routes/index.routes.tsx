@@ -56,7 +56,7 @@ export const ROUTES: Routes = {
     path: SELLER_ROUTES.ROOT,
     children: <SellerRoutes />,
     nested: true,
-    protected: true,
+    // protected: true,
   },
 };
 

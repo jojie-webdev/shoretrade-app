@@ -30,6 +30,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     LeftComponent = null,
     className = undefined,
     onBlur = () => null,
+    style,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -43,7 +44,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   const defaultInputType = type || 'text';
 
   return (
-    <Container className={className}>
+    <Container className={className} style={style}>
       <Typography variant="overline" color={'shade6'}>
         {label}
       </Typography>

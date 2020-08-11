@@ -1,1 +1,3 @@
-export interface AddProductGeneratedProps {}
+export interface AddProductGeneratedProps {
+  currentPage: number;
+}
