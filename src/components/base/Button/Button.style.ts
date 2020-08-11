@@ -7,12 +7,14 @@ const backgroundColor: Record<Variants, string> = {
   primary: theme.brand.primary,
   outline: theme.grey.noshade,
   disabled: theme.grey.shade3,
+  success: theme.brand.success,
 };
 
 const border: Record<Variants, string> = {
   primary: 'none',
   outline: `1.5px solid ${theme.brand.primary}`,
   disabled: `1px solid ${theme.grey.shade5}`,
+  success: 'none',
 };
 
 export const ButtonContainer = styled.button<
@@ -30,13 +32,6 @@ export const ButtonContainer = styled.button<
   align-items: center;
   justify-content: center;
 
-  svg {
-    margin-left: ${(props) =>
-      props.hasText && props.iconPosition === 'after' ? '8px' : '0'};
-    margin-right: ${(props) =>
-      props.hasText && props.iconPosition === 'before' ? '8px' : '0'};
-  }
-
   :focus {
     outline: none;
   }
@@ -51,7 +46,16 @@ export const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 8px;
-  svg {
-    margin-left: 0;
-  }
+`;
+
+export const IconContainer = styled.div<{
+  hasText: boolean;
+  iconPosition: 'before' | 'after';
+}>`
+  display: flex;
+  align-items: center;
+  margin-left: ${(props) =>
+    props.hasText && props.iconPosition === 'after' ? '8px' : '0'};
+  margin-right: ${(props) =>
+    props.hasText && props.iconPosition === 'before' ? '8px' : '0'};
 `;

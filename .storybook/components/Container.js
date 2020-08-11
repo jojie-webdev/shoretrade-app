@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import styled from '@emotion/styled';
@@ -8,13 +9,18 @@ import theme from '../../src/utils/Theme';
 import '../../src/index.css';
 
 const BaseContainer = styled.div`
+  display: flex;
   flex: 1;
+  flex-direction: column;
   padding: 10px;
-  height: 100%;
   width: 100%;
 `;
 
 const CenterContainer = styled(BaseContainer)`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -32,18 +38,20 @@ const CenterContainer = styled(BaseContainer)`
  *
  * @param {ContainerProps} props
  */
-// eslint-disable-next-line react/prop-types
 const Container = ({
   center = false,
-  backgroundColor,
+  background,
   children,
   appType = 'seller',
 }) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
+  const defaultBackground = appType === 'seller' ? '#09131D' : '#F9FAFF';
 
   return (
     <ThemeProvider theme={{ ...theme, appType }}>
-      <Wrapper style={{ backgroundColor: backgroundColor }}>{children}</Wrapper>
+      <Wrapper style={{ backgroundColor: background || defaultBackground }}>
+        {children}
+      </Wrapper>
     </ThemeProvider>
   );
 };
