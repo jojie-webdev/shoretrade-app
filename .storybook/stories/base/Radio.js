@@ -9,7 +9,7 @@ storiesOf('base/Radio', module).add('Summary', () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Container>
+    <Container background="white">
       <Radio checked={checked} onClick={() => setChecked(!checked)} />
     </Container>
   );

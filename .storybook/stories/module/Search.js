@@ -14,7 +14,7 @@ storiesOf('module/Search', module).add('Summary', () => {
   const [value, setValue] = useState('');
 
   return (
-    <Container>
+    <Container background="white">
       <Wrapper>
         <Search
           value={value}

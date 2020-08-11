@@ -14,7 +14,7 @@ storiesOf('module/DatePickerDropdown', module).add('Summary', () => {
   }
 
   return (
-    <Container>
+    <Container background="white">
       <div>
         <DatePickerDropdown
           date={date}

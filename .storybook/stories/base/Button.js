@@ -9,7 +9,7 @@ import Typography from '../../../src/components/base/Typography';
 import Container from '../../components/Container';
 
 storiesOf('base/Button', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <div style={{ display: 'flex' }}>
       <div style={{ marginRight: '20px' }}>
         <Button text="Primary Button" style={{ marginBottom: '5px' }} />

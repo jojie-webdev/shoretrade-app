@@ -20,7 +20,7 @@ storiesOf('module/Pagination', module).add('Summary', () => {
   const [currentValue, setCurrentValue] = useState(1);
 
   return (
-    <Container>
+    <Container background="white">
       <h5>Current Page Value {currentValue}</h5>
 
       <EditPropsContainer>

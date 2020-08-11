@@ -29,7 +29,7 @@ storiesOf('base/TextField', module).add('Summary', () => {
   const [minimumOrder, setMinimumOrder] = useState('');
 
   return (
-    <Container>
+    <Container background="white">
       <Wrapper>
         <TextField
           label="Email"

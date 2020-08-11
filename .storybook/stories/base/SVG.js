@@ -94,7 +94,7 @@ storiesOf('base/SVG', module).add('Summary', () => {
   };
 
   return (
-    <Container background="#fff">
+    <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
         <Wrapper label="Check">

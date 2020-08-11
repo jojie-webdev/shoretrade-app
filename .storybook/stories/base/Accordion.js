@@ -7,7 +7,7 @@ import Typography from '../../../src/components/base/Typography/Typography.view'
 import Container from '../../components/Container';
 
 storiesOf('base/Accordion', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <Accordion isOpen={false} title="Accordion">
       <Typography variant="body">
         Joining and adding listings on ShoreTrade is free. We only charge a
