@@ -49,9 +49,6 @@ export const Step3Wrapper = styled.div`
 
 //Step 4
 export const Step4Wrapper = styled.div`
-  .select-container {
-  }
-
   .select-row {
     margin-bottom: 12px;
   }
@@ -91,3 +88,6 @@ export const Step4Wrapper = styled.div`
     }
   }
 `;
+
+// Step 5
+export const Step5Wrapper = styled.div``;
