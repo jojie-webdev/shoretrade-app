@@ -9,6 +9,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState('');
 
+  const isInnerRoute = (path: string) =>
+    location.pathname.search(path.split('/')[2]) > 0;
+
   const formatRouteString = (s: string) => {
     let str = s;
     str = s.replace('-', ' ');
@@ -25,7 +28,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const generatedProps = {
     ...props,
     pageTitle,
-    currentPath: location.pathname,
+    isInnerRoute,
   };
 
   return <DashboardView {...generatedProps} />;

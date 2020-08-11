@@ -5,12 +5,16 @@ import Typography from 'components/base/Typography';
 import { Container } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
-import { DashboardGeneratedProps, NavLinkProps } from './Dashboard.props';
+import {
+  DashboardGeneratedProps,
+  NavLinkProps,
+  HeaderProps,
+} from './Dashboard.props';
 import {
   DashboardContainer,
   Sidebar,
   Content,
-  Navbar,
+  HeaderContainer,
   SidebarItem,
 } from './Dashboard.style';
 
@@ -25,9 +29,32 @@ const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
   </SidebarItem>
 );
 
+const Header = ({ pageTitle }: HeaderProps) => (
+  <HeaderContainer className="appbar">
+    <Typography variant="title4" color="noshade">
+      {pageTitle}
+    </Typography>
+
+    <div className="right-content">
+      <div className="text-container">
+        <Typography color="noshade">Manettas Seafood</Typography>
+        <Typography
+          variant="caption"
+          color="shade6"
+          weight="500"
+          style={{ textAlign: 'right' }}
+        >
+          Peter Manettas
+        </Typography>
+      </div>
+      <img src="" alt="" />
+    </div>
+  </HeaderContainer>
+);
+
 const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
-  const { routes, pageTitle, currentPath, children } = props;
+  const { routes, pageTitle, isInnerRoute, children } = props;
 
   return (
     <DashboardContainer>
@@ -40,14 +67,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <NavLink
               key={`sidenav-${route.path}`}
               to={route.path}
-              color={
-                // To handle inner routes
-                currentPath.search(route.path.split('/')[2]) > 0
-                  ? 'primary'
-                  : 'noshade'
-              }
+              color={isInnerRoute(route.path) ? 'primary' : 'noshade'}
               iconColor={
-                currentPath.search(route.path.split('/')[2]) > 0
+                isInnerRoute(route.path)
                   ? theme.brand.primary
                   : theme.grey.noshade
               }
@@ -66,11 +88,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         />
       </Sidebar>
       <Content>
-        <Navbar className="appbar">
-          <h1>{pageTitle}</h1>
-
-          <h3>Manettas Seafood</h3>
-        </Navbar>
+        <Header pageTitle={pageTitle}></Header>
         <div className="screen">
           <Container className="container">{children}</Container>
         </div>
