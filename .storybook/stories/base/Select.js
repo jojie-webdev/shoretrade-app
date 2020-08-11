@@ -7,6 +7,6 @@ import Container from '../../components/Container';
 
 storiesOf('base/Select', module).add('Summary', () => (
   <Container>
-    <Select options={['one', 'two', 'three']} />
+    <Select options={['one', 'two', 'three']} label="Label" />
   </Container>
 ));

@@ -5,9 +5,7 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background-color: ${(props) => props.theme.grey.shade9};
-  opacity: 0.9;
-
+  background-color: rgba(9, 19, 29, 0.9);
   justify-content: center;
   align-items: center;
 `;

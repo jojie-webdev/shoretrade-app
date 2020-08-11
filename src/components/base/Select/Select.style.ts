@@ -1,8 +1,15 @@
+import Typography from 'components/base/Typography/Typography.view';
 import Dropdown from 'react-dropdown';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const PREFIX = 'dropdownSelect';
+
+export const Container = styled.div<{ label?: string }>`
+  width: 100%;
+  position: relative;
+  margin-top: ${({ label }) => (label ? '20px' : 0)};
+`;
 
 const font = `
     font-size: ${pxToRem(14)};
@@ -47,4 +54,10 @@ export const ArrowContainer = styled.div<{ flipped?: boolean }>`
   right: 20px;
   top: 11px;
   transform: rotate(${({ flipped }) => (flipped ? '180deg' : '')});
+`;
+
+export const Label = styled(Typography)`
+  position: absolute;
+  top: -20px;
+  left: 0;
 `;

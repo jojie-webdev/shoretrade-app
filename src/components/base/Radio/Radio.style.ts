@@ -8,6 +8,7 @@ export const Container = styled.div`
   &:hover {
     opacity: 0.5;
   }
+  cursor: pointer;
 `;
 
 export const HiddenRadio = styled.input`
@@ -20,8 +21,8 @@ export const InnerCircle = styled.span<{
 }>`
   border-radius: 50%;
   position: absolute;
-  height: ${({ size }) => `${size * 0.2}px`};
-  width: ${({ size }) => `${size * 0.2}px`};
+  height: ${({ size }) => `${size * 0.25}px`};
+  width: ${({ size }) => `${size * 0.25}px`};
   background-color: #fff;
   left: 50%;
   top: 50%;
