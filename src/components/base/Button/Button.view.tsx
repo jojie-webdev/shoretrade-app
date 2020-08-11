@@ -6,7 +6,11 @@ import { Theme } from 'types/Theme';
 
 import Typography from '../Typography';
 import { ButtonProps } from './Button.props';
-import { ButtonContainer, LoadingContainer } from './Button.style';
+import {
+  ButtonContainer,
+  LoadingContainer,
+  IconContainer,
+} from './Button.style';
 const Button = (props: ButtonProps): JSX.Element => {
   // const theme = useTheme();
   const {
@@ -26,20 +30,28 @@ const Button = (props: ButtonProps): JSX.Element => {
     textColor = 'noshade';
   } else if (variant === 'outline') {
     textColor = 'primary';
+  } else if (variant === 'success') {
+    textColor = 'noshade';
   } else {
     textColor = 'shade5';
   }
+
+  const hasText = text && text?.length > 0 ? true : false;
 
   return (
     <ButtonContainer
       color={color}
       variant={variant}
-      hasText={text && text?.length > 0 ? true : false}
+      hasText={hasText}
       iconPosition={iconPosition}
       takeFullWidth={takeFullWidth}
       {...buttonProps}
     >
-      {iconPosition === 'before' && icon}
+      {iconPosition === 'before' && (
+        <IconContainer hasText={hasText} iconPosition={iconPosition}>
+          {icon}
+        </IconContainer>
+      )}
 
       {text && (
         <Typography variant="overline" color={textColor} weight="900">
@@ -52,7 +64,11 @@ const Button = (props: ButtonProps): JSX.Element => {
         </LoadingContainer>
       )}
 
-      {iconPosition === 'after' && !loading && icon}
+      {iconPosition === 'after' && !loading && (
+        <IconContainer hasText={hasText} iconPosition={iconPosition}>
+          {icon}
+        </IconContainer>
+      )}
     </ButtonContainer>
   );
 };

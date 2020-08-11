@@ -5,8 +5,8 @@ export type Variants = 'default' | 'alert' | 'warning' | 'error' | 'success';
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant: Variants;
   content: string;
-  buttonText: string;
-  onClick: () => void;
+  buttonText?: string;
+  onClick?: () => void;
 }
 
 // Styled Props

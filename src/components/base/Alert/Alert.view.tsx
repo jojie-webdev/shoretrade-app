@@ -1,6 +1,7 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
+
 import {
   CheckFilled,
   CloseFilled,
@@ -13,13 +14,9 @@ import { AlertProps } from './Alert.props';
 import { Container, AlertButton } from './Alert.style';
 
 const Alert = (props: AlertProps): JSX.Element => {
-  const {
-    content,
-    variant,
-    onClick,
-    buttonText = 'Close',
-    ...containerProps
-  } = props;
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+  const { content, variant, onClick, buttonText, ...containerProps } = props;
 
   let Icon = InfoFilled;
 
@@ -35,23 +32,28 @@ const Alert = (props: AlertProps): JSX.Element => {
     Icon = CheckFilled;
   }
 
-  // const theme = useTheme();
   return (
     <Container variant={variant} {...containerProps}>
       <div className="top-content-container">
         <div className="svg-container">
           <Icon />
         </div>
-        <Typography variant="label" color="shade8" weight="500">
+        <Typography
+          variant="label"
+          color={isSeller ? 'noshade' : 'shade8'}
+          weight="500"
+        >
           {content}
         </Typography>
       </div>
 
-      <div className="alert-button-container">
-        <AlertButton variant={variant} onClick={onClick}>
-          <Typography color="noshade">{buttonText}</Typography>
-        </AlertButton>
-      </div>
+      {buttonText !== undefined && onClick !== undefined && (
+        <div className="alert-button-container">
+          <AlertButton variant={variant} onClick={onClick}>
+            <Typography color="noshade">{buttonText}</Typography>
+          </AlertButton>
+        </div>
+      )}
     </Container>
   );
 };

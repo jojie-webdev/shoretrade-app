@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Check } from './Check';
 export { default as Help } from './Help';
 export { default as Crab } from './Crab';
 export { default as Calendar } from './Calendar';

@@ -3,6 +3,7 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 
 import auth from './auth';
+import forgotPassword from './forgotPassword';
 import login from './login';
 import resendVerification from './resendVerification';
 import verify from './verify';
@@ -14,4 +15,5 @@ export default (history: History) =>
     login,
     resendVerification,
     verify,
+    forgotPassword,
   });

@@ -12,6 +12,7 @@ import {
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
 
+import ForgotPassword from './Auth/ForgotPassword';
 import Login from './Auth/Login';
 import Onboarding from './Auth/Onboarding';
 import Register from './Auth/Register';
@@ -30,7 +31,7 @@ export const ROUTES: Routes = {
   },
   SELLER_FORGOT_PASSWORD: {
     path: SELLER_ROUTES.FORGOT_PASSWORD,
-    children: <Login />,
+    children: <ForgotPassword />,
   },
   SELLER_VERIFY2FA: {
     path: SELLER_ROUTES.VERIFY2FA,

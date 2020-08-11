@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import Button from '../../../src/components/base/Button';
+import Check from '../../../src/components/base/SVG/Check';
 import Eye from '../../../src/components/base/SVG/Eye';
 import Typography from '../../../src/components/base/Typography';
 import Container from '../../components/Container';
@@ -87,6 +88,14 @@ storiesOf('base/Button', module).add('Summary', () => (
           variant="disabled"
           icon={<Eye fill="#BBC2DC" height={15} width={20} />}
           style={{ marginBottom: '5px' }}
+        />
+      </div>
+      <div style={{ marginRight: '20px' }}>
+        <Button
+          text="Success Button"
+          style={{ marginBottom: '5px' }}
+          variant="success"
+          icon={<Check fill="#fff" />}
         />
       </div>
     </div>
