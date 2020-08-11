@@ -4,7 +4,7 @@ import { Theme } from 'types/Theme';
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
   pageTitle?: string;
-  currentPath: string;
+  isInnerRoute: (path: string) => boolean;
 }
 
 export interface DashboardPublicProps {
@@ -19,4 +19,8 @@ export type NavLinkProps = {
   linkText?: string;
   iconColor?: string;
   Icon?: React.FC<SVGProps>;
+};
+
+export type HeaderProps = {
+  pageTitle: string | undefined;
 };

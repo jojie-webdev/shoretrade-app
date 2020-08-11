@@ -60,11 +60,28 @@ export const Content = styled.div`
   }
 `;
 
-export const Navbar = styled.nav`
+export const HeaderContainer = styled.nav`
   display: flex;
   flex-direction: row;
   margin-top: 40px;
+  margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  .right-content {
+    display: flex;
+    align-items: center;
+
+    .text-container {
+      margin-right: 8px;
+    }
+
+    img {
+      height: 56px;
+      width: 56px;
+      border-radius: calc(56px / 2);
+      border: 1px solid red;
+    }
+  }
 `;
