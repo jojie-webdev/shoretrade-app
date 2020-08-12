@@ -136,3 +136,37 @@ export const DeleteBadge = styled.button`
 `;
 
 // Step 6
+export const Step6Wrapper = styled.div`
+  .checkbox-row {
+    margin-bottom: 24px;
+
+    .checkbox-col {
+      display: flex;
+
+      .text-container {
+        margin-left: 8px;
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .add-box-row {
+    margin-bottom: 32px;
+  }
+
+  .minimum-row {
+    margin-bottom: 40px;
+
+    .checkbox-col {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+
+      .text {
+        margin-left: 8px;
+      }
+    }
+  }
+`;
+
+export const BoxDetailsContainer = styled.div``;
