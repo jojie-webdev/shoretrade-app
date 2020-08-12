@@ -26,7 +26,7 @@ const Component = () => {
 
 storiesOf('module/FormikTextField', module).add('Summary', () => {
   return (
-    <Container>
+    <Container background="white">
       <Component />
     </Container>
   );

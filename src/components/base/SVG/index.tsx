@@ -1,5 +1,7 @@
 /* PLOP_INJECT_IMPORT */
 export { default as Subtract } from './Subtract';
+export { default as Box } from './Box';
+export { default as Camera } from './Camera';
 export { default as Check } from './Check';
 export { default as Help } from './Help';
 export { default as Crab } from './Crab';

@@ -6,7 +6,7 @@ import Typography from '../../../src/components/base/Typography';
 import Container from '../../components/Container';
 
 storiesOf('base/Typography', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <Typography variant="title1">title1</Typography>
     <Typography variant="title2">title2</Typography>
     <Typography variant="title3">title3</Typography>

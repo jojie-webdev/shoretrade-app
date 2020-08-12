@@ -23,7 +23,7 @@ const Wrapper = ({ dark = false, children }) => {
 };
 
 storiesOf('base/Touchable', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <Wrapper>
       <Touchable
         circle

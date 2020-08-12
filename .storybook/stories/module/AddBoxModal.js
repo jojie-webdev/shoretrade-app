@@ -6,7 +6,7 @@ import AddBoxModal from '../../../src/components/module/AddBoxModal';
 import Container from '../../components/Container';
 
 storiesOf('module/AddBoxModal', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <AddBoxModal isOpen />
   </Container>
 ));
