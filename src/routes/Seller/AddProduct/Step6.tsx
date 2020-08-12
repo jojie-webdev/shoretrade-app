@@ -10,7 +10,11 @@ import AddBoxModal from 'components/module/AddBoxModal';
 import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
 import { Row, Col } from 'react-grid-system';
 
-import { Step6Wrapper, BoxDetailsContainer } from './AddProduct.style';
+import {
+  Step6Wrapper,
+  BoxDetailsContainer,
+  BoxSummaryContainer,
+} from './AddProduct.style';
 
 const MOCK_BOXES: Array<BoxValues & { id: string }> = [
   { weight: '10.00 Kg', quantity: '7', count: '56', id: 'mock-box-1' },
@@ -60,6 +64,52 @@ const BoxDetails = ({ weight, quantity, count }: BoxValues) => (
       <Subtract />
     </button>
   </BoxDetailsContainer>
+);
+
+const BoxSummary = () => (
+  <BoxSummaryContainer>
+    <div className="text-container">
+      <div className="inner-text">
+        <Typography
+          variant="overline"
+          color="shade6"
+          className="overline"
+          weight="900"
+        >
+          Box Weight
+        </Typography>
+        <Typography color="noshade" variant="title5">
+          57.00 Kg
+        </Typography>
+      </div>
+      <div className="inner-text">
+        <Typography
+          variant="overline"
+          color="shade6"
+          className="overline"
+          weight="900"
+        >
+          Box Weight
+        </Typography>
+        <Typography color="noshade" variant="title5">
+          57.00 Kg
+        </Typography>
+      </div>
+      <div className="inner-text">
+        <Typography
+          variant="overline"
+          color="shade6"
+          className="overline"
+          weight="900"
+        >
+          Box Weight
+        </Typography>
+        <Typography color="noshade" variant="title5">
+          57.00 Kg
+        </Typography>
+      </div>
+    </div>
+  </BoxSummaryContainer>
 );
 
 function Step6() {
@@ -120,6 +170,8 @@ function Step6() {
       <Row justify="end" style={{ padding: '0 15px' }}>
         <Button text="Next" />
       </Row>
+
+      <BoxSummary />
 
       {showModal && (
         <AddBoxModal

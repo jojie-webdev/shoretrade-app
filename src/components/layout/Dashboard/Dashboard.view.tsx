@@ -54,7 +54,15 @@ const Header = ({ pageTitle }: HeaderProps) => (
 
 const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
-  const { routes, pageTitle, isInnerRoute, children } = props;
+  const {
+    routes,
+    pageTitle,
+    isInnerRoute,
+    shouldIncludePadding,
+    children,
+  } = props;
+
+  console.log(shouldIncludePadding);
 
   return (
     <DashboardContainer>
@@ -87,10 +95,12 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           iconColor={theme.grey.shade7}
         />
       </Sidebar>
-      <Content>
+      <Content shouldIncludePadding={shouldIncludePadding}>
         <Header pageTitle={pageTitle}></Header>
-        <div className="screen">
-          <Container className="container">{children}</Container>
+        <div className="screen-wrapper">
+          <div className="screen">
+            <Container className="container">{children}</Container>
+          </div>
         </div>
       </Content>
     </DashboardContainer>

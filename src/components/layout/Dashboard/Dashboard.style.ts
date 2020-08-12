@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
-// TODO: Change this basic layout to the figma spec
 export const DashboardContainer = styled.div`
   height: 100vh;
   width: 100vw;
@@ -38,7 +37,7 @@ export const SidebarItem = styled(Link)`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ shouldIncludePadding: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -46,16 +45,21 @@ export const Content = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   color: white;
 
-  .screen {
-    background: ${(props) => props.theme.grey.shade8};
+  .screen-wrapper {
     height: 80%;
-    padding: 40px 80px;
-    border-radius: 2px;
-    overflow-y: auto;
+    position: relative;
 
-    .container {
+    .screen {
+      background: ${(props) => props.theme.grey.shade8};
       height: 100%;
-      width: 100%;
+      padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
+      border-radius: 2px;
+      overflow-y: auto;
+
+      .container {
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 `;

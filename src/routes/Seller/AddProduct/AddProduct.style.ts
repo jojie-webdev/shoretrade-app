@@ -1,6 +1,8 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding: 40px 80px;
+`;
 
 // Step 1
 export const Step1Wrapper = styled.div`
@@ -202,9 +204,18 @@ export const BoxDetailsContainer = styled.div`
 `;
 
 export const BoxSummaryContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
   padding: 25px 80px;
+  width: 100%;
+  background: ${(props) => props.theme.grey.shade7};
 
   .text-container {
+    display: flex;
+
     .inner-text {
       margin-right: 40px;
     }
