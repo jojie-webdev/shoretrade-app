@@ -40,7 +40,7 @@ function Step4() {
         </Col>
       </Row>
 
-      <Row justify="end">
+      <Row justify="end" style={{ padding: '0 15px' }}>
         <Button text="Next"></Button>
       </Row>
     </Step4Wrapper>

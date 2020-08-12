@@ -90,4 +90,49 @@ export const Step4Wrapper = styled.div`
 `;
 
 // Step 5
-export const Step5Wrapper = styled.div``;
+export const Step5Wrapper = styled.div`
+  .preview-row {
+    margin-bottom: 16px;
+
+    .add-col {
+      margin-bottom: 48px;
+
+      .text {
+        margin-bottom: 4px;
+      }
+    }
+
+    .preview-col {
+      display: flex;
+      align-items: center;
+
+      .img-preview {
+        height: 96px;
+        width: 96px;
+        border: 1px solid red;
+        margin-right: 8px;
+        border-radius: 4px;
+      }
+    }
+  }
+`;
+
+export const DeleteBadge = styled.button`
+  padding: 4px 8px;
+  background: ${(props) => props.theme.brand.error};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: none;
+
+  :focus {
+    outline: none;
+  }
+
+  .badge-text {
+    margin-left: 4px;
+  }
+`;
+
+// Step 6
