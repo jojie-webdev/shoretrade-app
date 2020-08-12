@@ -29,7 +29,7 @@ const CenterContainer = styled(BaseContainer)`
 /**
  *
  * @typedef {Object} ContainerProps
- * @property {Objectt} style
+ * @property {Object} style
  * @property {Object} children
  * @property {boolean} [center]
  * @property {string} [background]
