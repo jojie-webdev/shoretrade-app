@@ -2,13 +2,13 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Interaction from 'components/base/Interactions';
-import { Row } from 'react-grid-system';
 
-import { Step3Wrapper } from './AddProduct.style';
+import { Step3Props } from './Step3.props';
+import { Container } from './Step3.style';
 
-function Step3() {
+function Step3({ onClickNext }: Step3Props) {
   return (
-    <Step3Wrapper>
+    <Container>
       <div className="interactions">
         <div className="interaction-container">
           <Interaction type="radio" value="Frozen" onClick={() => {}} />
@@ -19,9 +19,9 @@ function Step3() {
       </div>
 
       <div className="btn-container">
-        <Button text="Next" variant="disabled" />
+        <Button text="Next" variant="disabled" onClick={onClickNext} />
       </div>
-    </Step3Wrapper>
+    </Container>
   );
 }
 

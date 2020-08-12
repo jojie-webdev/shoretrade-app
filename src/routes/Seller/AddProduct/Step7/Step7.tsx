@@ -7,11 +7,12 @@ import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 
-import { Step7Wrapper } from './AddProduct.style';
+import { Step7Props } from './Step7.props';
+import { Container } from './Step7.style';
 
-function Step7() {
+function Step7({ onClickNext }: Step7Props) {
   return (
-    <Step7Wrapper>
+    <Container>
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
@@ -42,9 +43,9 @@ function Step7() {
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Next" />
+        <Button text="Next" onClick={onClickNext} />
       </Row>
-    </Step7Wrapper>
+    </Container>
   );
 }
 

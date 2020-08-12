@@ -10,11 +10,12 @@ import AddBoxModal from 'components/module/AddBoxModal';
 import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
 import { Row, Col } from 'react-grid-system';
 
+import { Step6Props } from './Step6.props';
 import {
-  Step6Wrapper,
+  Container,
   BoxDetailsContainer,
   BoxSummaryContainer,
-} from './AddProduct.style';
+} from './Step6.style';
 
 const MOCK_BOXES: Array<BoxValues & { id: string }> = [
   { weight: '10.00 Kg', quantity: '7', count: '56', id: 'mock-box-1' },
@@ -113,11 +114,11 @@ const BoxSummary = () => (
   </BoxSummaryContainer>
 );
 
-function Step6() {
+function Step6({ onClickNext }: Step6Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Step6Wrapper>
+    <Container>
       <Row className="checkbox-row">
         <Col className="checkbox-col">
           <Checkbox checked />
@@ -169,7 +170,7 @@ function Step6() {
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Skip" />
+        <Button text="Skip" onClick={onClickNext} />
       </Row>
 
       <BoxSummary />
@@ -181,7 +182,7 @@ function Step6() {
           isOpen={showModal}
         />
       )}
-    </Step6Wrapper>
+    </Container>
   );
 }
 

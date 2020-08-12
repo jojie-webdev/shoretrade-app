@@ -6,11 +6,12 @@ import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import { Row, Col } from 'react-grid-system';
 
-import { Step5Wrapper, DeleteBadge } from './AddProduct.style';
+import { Step5Props } from './Step5.props';
+import { Container, DeleteBadge } from './Step5.style';
 
-function Step5() {
+function Step5({ onClickNext }: Step5Props) {
   return (
-    <Step5Wrapper>
+    <Container>
       <Row className="preview-row">
         <Col md={6} className="preview-col">
           <img src="" alt="Product Preview" className="img-preview" />
@@ -42,9 +43,9 @@ function Step5() {
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Skip" />
+        <Button text="Skip" onClick={onClickNext} />
       </Row>
-    </Step5Wrapper>
+    </Container>
   );
 }
 

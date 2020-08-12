@@ -5,11 +5,12 @@ import Typography from 'components/base/Typography';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 
-import { Step2Wrapper } from './AddProduct.style';
+import { Step2Props } from './Step2.props';
+import { Container } from './Step2.style';
 
-function Step2() {
+function Step2({ onClickNext }: Step2Props) {
   return (
-    <Step2Wrapper>
+    <Container>
       <Row className="search-row">
         <Col xs={12}>
           <Search value={''} onChange={() => {}} resetValue={() => {}} />
@@ -24,12 +25,12 @@ function Step2() {
 
           {Array.from('x'.repeat(10)).map((num, ndx) => (
             <div className="item-container" key={'step2-' + ndx}>
-              <Interactions value="Abait Tuna" onClick={() => {}} />
+              <Interactions value="Abait Tuna" onClick={onClickNext} />
             </div>
           ))}
         </Col>
       </Row>
-    </Step2Wrapper>
+    </Container>
   );
 }
 

@@ -6,11 +6,12 @@ import Select from 'components/base/Select';
 import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 
-import { Step4Wrapper } from './AddProduct.style';
+import { Step4Props } from './Step4.props';
+import { Container } from './Step4.style';
 
-function Step4() {
+function Step4({ onClickNext }: Step4Props) {
   return (
-    <Step4Wrapper>
+    <Container>
       <Row className="select-row">
         <Col md={6}>
           <Select options={['One', 'Two']} label="Size From" />
@@ -41,9 +42,9 @@ function Step4() {
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Next"></Button>
+        <Button text="Next" onClick={onClickNext}></Button>
       </Row>
-    </Step4Wrapper>
+    </Container>
   );
 }
 

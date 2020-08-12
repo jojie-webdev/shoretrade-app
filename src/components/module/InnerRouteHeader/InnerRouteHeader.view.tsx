@@ -14,13 +14,18 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
 
-  const { fullRow = true, title } = props;
+  const { fullRow = true, showIcon = true, title, onClickBack } = props;
 
   const content = (
     <>
-      <Touchable className="icon-container" onPress={history.goBack}>
-        <ArrowLeft fill={theme.brand.primary} height={24} width={24} />
-      </Touchable>
+      {showIcon && (
+        <Touchable
+          className="icon-container"
+          onPress={onClickBack || history.goBack}
+        >
+          <ArrowLeft fill={theme.brand.primary} height={24} width={24} />
+        </Touchable>
+      )}
       <Typography variant="title5" color="noshade">
         {title}
       </Typography>

@@ -3,11 +3,12 @@ import React from 'react';
 import Interactions from 'components/base/Interactions';
 import { Row, Col } from 'react-grid-system';
 
-import { Step8Wrapper } from './AddProduct.style';
+import { Step8Props } from './Step8.props';
+import { Container } from './Step8.style';
 
-function Step8() {
+function Step8({ onClickNext }: Step8Props) {
   return (
-    <Step8Wrapper>
+    <Container>
       <Row>
         <Col md={12} className="interaction-col">
           <Interactions
@@ -58,7 +59,7 @@ function Step8() {
           />
         </Col>
       </Row>
-    </Step8Wrapper>
+    </Container>
   );
 }
 
