@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as DollarSign } from './DollarSign';
+export { default as Location } from './Location';
 export { default as Subtract } from './Subtract';
 export { default as Box } from './Box';
 export { default as Camera } from './Camera';

@@ -222,3 +222,7 @@ export const BoxSummaryContainer = styled.div`
     }
   }
 `;
+
+// Step 7
+
+export const Step7Wrapper = styled.div``;
