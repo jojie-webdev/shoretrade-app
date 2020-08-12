@@ -11,6 +11,7 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
+import Step8 from './Step8';
 
 const AddProductView = (props: AddProductGeneratedProps) => {
   // const theme = useTheme();
@@ -22,7 +23,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       {/* <Step4 /> */}
       {/* <Step5 /> */}
       {/* <Step6 /> */}
-      <Step7 />
+      {/* <Step7 /> */}
+      <Step8 />
     </Container>
   );
 };

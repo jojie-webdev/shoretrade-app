@@ -234,3 +234,11 @@ export const Step7Wrapper = styled.div`
     }
   }
 `;
+
+// Step 8
+
+export const Step8Wrapper = styled.div`
+  .interaction-col {
+    margin-bottom: 16px;
+  }
+`;
