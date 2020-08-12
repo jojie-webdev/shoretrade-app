@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from 'components/base/Button';
 import DollarSign from 'components/base/SVG/DollarSign';
 import TextField from 'components/base/TextField';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
@@ -11,7 +12,7 @@ import { Step7Wrapper } from './AddProduct.style';
 function Step7() {
   return (
     <Step7Wrapper>
-      <Row>
+      <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
             label="Price (exluding freight)"
@@ -40,7 +41,9 @@ function Step7() {
         </Col>
       </Row>
 
-      <Row></Row>
+      <Row justify="end" style={{ padding: '0 15px' }}>
+        <Button text="Next" />
+      </Row>
     </Step7Wrapper>
   );
 }

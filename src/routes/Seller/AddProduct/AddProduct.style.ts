@@ -226,7 +226,11 @@ export const BoxSummaryContainer = styled.div`
 // Step 7
 
 export const Step7Wrapper = styled.div`
-  .textfield-col {
-    margin-bottom: 36px;
+  .textfield-row {
+    margin-bottom: 8px;
+
+    .textfield-col {
+      margin-bottom: 36px;
+    }
   }
 `;
