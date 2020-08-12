@@ -53,7 +53,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         </Typography>
         <InnerRouteHeader
           title="Product Type"
-          onClickBack={() => {}}
+          onClickBack={() => onChangeCurrentPage(currentPage - 1)}
           showIcon={currentPage !== 1}
         />
       </div>
