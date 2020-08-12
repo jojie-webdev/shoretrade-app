@@ -19,7 +19,7 @@ import {
 const MOCK_BOXES: Array<BoxValues & { id: string }> = [
   { weight: '10.00 Kg', quantity: '7', count: '56', id: 'mock-box-1' },
   { weight: '25.00 Kg', quantity: '10', count: '25', id: 'mock-box-2' },
-  { weight: '5.00 Kg', quantity: '3', count: '27', id: 'mock-box-3' },
+  //   { weight: '5.00 Kg', quantity: '3', count: '27', id: 'mock-box-3' },
 ];
 
 const BoxDetails = ({ weight, quantity, count }: BoxValues) => (
@@ -89,10 +89,10 @@ const BoxSummary = () => (
           className="overline"
           weight="900"
         >
-          Box Weight
+          Quantity
         </Typography>
         <Typography color="noshade" variant="title5">
-          57.00 Kg
+          8
         </Typography>
       </div>
       <div className="inner-text">
@@ -102,13 +102,14 @@ const BoxSummary = () => (
           className="overline"
           weight="900"
         >
-          Box Weight
+          Count per box
         </Typography>
         <Typography color="noshade" variant="title5">
-          57.00 Kg
+          100
         </Typography>
       </div>
     </div>
+    <Button text="Next" />
   </BoxSummaryContainer>
 );
 
@@ -168,7 +169,7 @@ function Step6() {
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Next" />
+        <Button text="Skip" />
       </Row>
 
       <BoxSummary />

@@ -209,6 +209,7 @@ export const BoxSummaryContainer = styled.div`
   left: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 25px 80px;
   width: 100%;
   background: ${(props) => props.theme.grey.shade7};
