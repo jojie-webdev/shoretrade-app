@@ -45,6 +45,30 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     }
   };
 
+  const pageTitle = () => {
+    switch (currentPage) {
+      case 1:
+        return 'Product Type';
+      case 2:
+        return 'Product Type';
+      case 3:
+        return 'Enter Type';
+      case 4:
+        return 'Enter Size';
+      case 5:
+        return 'Add Photos';
+      case 6:
+        return 'Enter Boxes';
+      case 7:
+        return 'Details';
+      case 8:
+        return 'Summary';
+
+      default:
+        return 'Summary';
+    }
+  };
+
   return (
     <Container>
       <ProgressIndicator style={{ width: `${(currentPage / 8) * 100}%` }} />
@@ -53,7 +77,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           Step {currentPage} / 8
         </Typography>
         <InnerRouteHeader
-          title="Product Type"
+          title={pageTitle()}
           onClickBack={() => onChangeCurrentPage(currentPage - 1)}
           showIcon={currentPage !== 1}
         />
