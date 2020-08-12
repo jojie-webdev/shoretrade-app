@@ -9,7 +9,7 @@ storiesOf('base/Checkbox', module).add('Summary', () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Container>
+    <Container background="white">
       <Checkbox checked={checked} onClick={() => setChecked(!checked)} />
     </Container>
   );

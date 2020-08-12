@@ -19,7 +19,7 @@ const Wrapper = ({ children }) => {
 };
 
 storiesOf('base/Interactions', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <Wrapper>
       <Interactions label="Next " value="Some Value" />
     </Wrapper>

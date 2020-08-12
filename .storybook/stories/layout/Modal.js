@@ -11,7 +11,7 @@ const modalProps = {
 };
 
 storiesOf('layout/Modal', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <Modal {...modalProps}>
       <Typography variant="body" color="noshade" weight="Medium">
         This is the base modal, refer to {'<DialogModal>'}

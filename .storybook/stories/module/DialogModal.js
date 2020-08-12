@@ -16,7 +16,7 @@ const modalProps = {
 };
 
 storiesOf('module/DialogModal', module).add('Summary', () => (
-  <Container>
+  <Container background="white">
     <DialogModal {...modalProps}>
       <Typography variant="body" color="noshade" weight="Medium">
         We need to check a few things before you can start selling.

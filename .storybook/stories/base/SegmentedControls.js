@@ -14,7 +14,7 @@ storiesOf('base/SegmentedControls', module).add('Summary', () => {
   }
 
   return (
-    <Container>
+    <Container background="white">
       <AddState>
         {(state, setState) => (
           <SegmentedControls

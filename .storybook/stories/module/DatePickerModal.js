@@ -35,7 +35,7 @@ storiesOf('module/DatePickerModal', module).add('Summary', () => {
   }
 
   return (
-    <Container>
+    <Container background="white">
       <h5>
         Date range: {startDate && startDate.format('LLL')} to{' '}
         {endDate && endDate.format('LLL')}

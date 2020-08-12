@@ -78,7 +78,7 @@ const ModalComponent = ({ children }) => {
 };
 
 storiesOf('module/FilterModal', module).add('Seller', () => (
-  <Container>
+  <Container background="white">
     <ModalComponent />
   </Container>
 ));
