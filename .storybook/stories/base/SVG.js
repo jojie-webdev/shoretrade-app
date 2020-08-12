@@ -99,13 +99,13 @@ storiesOf('base/SVG', module).add('Summary', () => {
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
         <Wrapper label="Subtract">
-          <Subtract width={30} height={30} />
+          <Subtract width={30} height={30} fill={'#F23742'} />
         </Wrapper>
         <Wrapper label="Check">
-          <Check width={30} height={30} />
+          <Check width={30} height={30} fill="black" />
         </Wrapper>
         <Wrapper label="Help">
-          <Help width={30} height={30} />
+          <Help width={30} height={30} fill="black" />
         </Wrapper>
         <Wrapper label="Crab">
           <Crab width={30} height={30} />
