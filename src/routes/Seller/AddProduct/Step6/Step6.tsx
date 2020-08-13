@@ -169,10 +169,6 @@ function Step6({ onClickNext }: Step6Props) {
         </Col>
       </Row>
 
-      <Row justify="end" style={{ padding: '0 15px' }}>
-        <Button text="Skip" onClick={onClickNext} />
-      </Row>
-
       <BoxSummary />
 
       {showModal && (
