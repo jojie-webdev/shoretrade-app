@@ -19,7 +19,7 @@ function Step5({ onClickNext }: Step5Props) {
         <Col md={6} className="preview-col">
           <img src="" alt="Product Preview" className="img-preview" />
           <DeleteBadge>
-            <Subtract fill={theme.grey.noshade} />
+            <Subtract innerFill={theme.brand.error} fill={theme.grey.noshade} />
             <Typography color="shade2" variant="label" className="badge-text">
               Delete
             </Typography>

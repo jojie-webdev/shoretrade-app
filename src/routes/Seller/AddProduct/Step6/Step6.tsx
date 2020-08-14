@@ -9,6 +9,7 @@ import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
 import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
 import { Row, Col } from 'react-grid-system';
+import { useTheme } from 'utils/Theme';
 
 import { Step6Props } from './Step6.props';
 import {
@@ -23,49 +24,53 @@ const MOCK_BOXES: Array<BoxValues & { id: string }> = [
   //   { weight: '5.00 Kg', quantity: '3', count: '27', id: 'mock-box-3' },
 ];
 
-const BoxDetails = ({ weight, quantity, count }: BoxValues) => (
-  <BoxDetailsContainer>
-    <div className="text-container">
-      <div className="inner-text">
-        <Typography
-          variant="overline"
-          color="shade6"
-          className="overline"
-          weight="900"
-        >
-          Box Weight
-        </Typography>
-        <Typography color="noshade">{weight}</Typography>
-      </div>
-      <div className="inner-text">
-        <Typography
-          variant="overline"
-          color="shade6"
-          className="overline"
-          weight="900"
-        >
-          Quantity
-        </Typography>
-        <Typography color="noshade">{quantity}</Typography>
-      </div>
-      <div className="inner-text">
-        <Typography
-          variant="overline"
-          color="shade6"
-          className="overline"
-          weight="900"
-        >
-          Count per Box
-        </Typography>
-        <Typography color="noshade">{count}</Typography>
-      </div>
-    </div>
+const BoxDetails = ({ weight, quantity, count }: BoxValues) => {
+  const theme = useTheme();
 
-    <button className="cancel-btn">
-      <Subtract />
-    </button>
-  </BoxDetailsContainer>
-);
+  return (
+    <BoxDetailsContainer>
+      <div className="text-container">
+        <div className="inner-text">
+          <Typography
+            variant="overline"
+            color="shade6"
+            className="overline"
+            weight="900"
+          >
+            Box Weight
+          </Typography>
+          <Typography color="noshade">{weight}</Typography>
+        </div>
+        <div className="inner-text">
+          <Typography
+            variant="overline"
+            color="shade6"
+            className="overline"
+            weight="900"
+          >
+            Quantity
+          </Typography>
+          <Typography color="noshade">{quantity}</Typography>
+        </div>
+        <div className="inner-text">
+          <Typography
+            variant="overline"
+            color="shade6"
+            className="overline"
+            weight="900"
+          >
+            Count per Box
+          </Typography>
+          <Typography color="noshade">{count}</Typography>
+        </div>
+      </div>
+
+      <button className="cancel-btn">
+        <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
+      </button>
+    </BoxDetailsContainer>
+  );
+};
 
 const BoxSummary = () => (
   <BoxSummaryContainer>
