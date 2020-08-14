@@ -17,7 +17,7 @@ const SoldView = (props: SoldGeneratedProps) => {
   return (
     <Container>
       {soldData.length === 0 ? (
-        <Row className="row" align="center" justify="center">
+        <Row className="emptystate-row" align="center" justify="center">
           <Col>
             <EmptyState
               title="You have no orders awaiting shipment"
@@ -28,7 +28,7 @@ const SoldView = (props: SoldGeneratedProps) => {
           </Col>
         </Row>
       ) : (
-        <Row>
+        <Row className="controls-row">
           <Col>
             <SegmentedControls
               options={['To Ship', 'In Transit', 'Delivered']}
