@@ -12,6 +12,7 @@ export const SELLER_ROUTES = {
   FORGOT_PASSWORD: `${SELLER_ROOT}/forgot-password`,
   VERIFY2FA: `${SELLER_ROOT}/verify2fa`,
   ONBOARDING: `${SELLER_ROOT}/onboarding`,
+  // Authenticated Routes
   ACCOUNT: `${SELLER_ROOT}/account`,
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,

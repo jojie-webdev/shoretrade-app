@@ -5,6 +5,7 @@ import { Theme } from 'types/Theme';
 export interface DashboardGeneratedProps extends DashboardPublicProps {
   pageTitle?: string;
   isInnerRoute: (path: string) => boolean;
+  shouldIncludePadding: boolean;
 }
 
 export interface DashboardPublicProps {

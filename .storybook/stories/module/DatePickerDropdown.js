@@ -15,11 +15,12 @@ storiesOf('module/DatePickerDropdown', module).add('Summary', () => {
 
   return (
     <Container background="white">
-      <div>
+      <div style={{ width: '280px' }}>
         <DatePickerDropdown
           date={date}
           onDateChange={onDateChange}
           placeholder="Custom placeholder"
+          label="Label"
         />
       </div>
     </Container>

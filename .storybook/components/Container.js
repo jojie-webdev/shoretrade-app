@@ -55,8 +55,7 @@ const Container = ({
     <BrowserRouter>
       <ThemeProvider theme={{ ...theme, appType }}>
         <Wrapper
-          style={{ backgroundColor: background || defaultBackground }}
-          style={style}
+          style={{ backgroundColor: background || defaultBackground, ...style }}
         >
           {children}
         </Wrapper>

@@ -16,10 +16,14 @@ import { Container, NavButton, Dropdown } from './DatePickerDropdown.style';
 const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
   // const theme = useTheme();
   const [show, setShow] = useState<boolean>(false);
-  const { date, onDateChange, placeholder = '' } = props;
+  const { date, onDateChange, label, placeholder = '' } = props;
 
   return (
     <Container>
+      <Typography variant="overline" color="shade6" weight="900">
+        {label}
+      </Typography>
+
       <div className="content">
         <Dropdown onClick={() => setShow(!show)} active={show}>
           <div className="left-content">

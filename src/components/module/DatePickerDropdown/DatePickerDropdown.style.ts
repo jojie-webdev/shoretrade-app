@@ -2,21 +2,26 @@ import styled from 'utils/styled';
 
 export const Container = styled.div`
   display: flex;
-  padding: 16px 8px;
+  flex-direction: column;
+  /* padding: 16px 8px; */
   border-radius: 4px;
   margin: 0;
+  width: 100%;
 
   .content {
+    margin-top: 4px;
     position: relative;
+    width: 100%;
   }
 
   .DayPicker {
     position: absolute;
     /* 48 is the height of the dropdown */
     top: calc(48px + 12px);
-    left: 0;
+    right: 0;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
+    z-index: 999;
   }
 
   .CalendarDay__default {
@@ -44,7 +49,7 @@ export const Dropdown = styled.div<{ active: boolean }>`
   padding: 12px;
   border-radius: 4px;
   height: 48px;
-  width: 280px;
+  width: 100%;
   border: 1px solid
     ${(props) =>
       props.active ? props.theme.brand.primary : props.theme.grey.shade3};

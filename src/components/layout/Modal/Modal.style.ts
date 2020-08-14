@@ -2,12 +2,15 @@ import styled from 'utils/styled';
 
 export const Backdrop = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
-  position: absolute;
+  position: fixed;
   height: 100vh;
   width: 100vw;
   background-color: rgba(9, 19, 29, 0.9);
   justify-content: center;
   align-items: center;
+  top: 0;
+  right: 0;
+  z-index: 1000;
 `;
 
 export const ModalContainer = styled.div`
