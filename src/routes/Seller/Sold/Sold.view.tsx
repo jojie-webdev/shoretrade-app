@@ -9,8 +9,38 @@ import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import { Row, Col } from 'react-grid-system';
 
-import { SoldGeneratedProps, TabOptions } from './Sold.props';
-import { Container, PriorityNumber, StyledInteraction } from './Sold.style';
+import { SoldGeneratedProps, TabOptions, MOCK_SOLD } from './Sold.props';
+import {
+  Container,
+  PriorityNumber,
+  StyledInteraction,
+  DeliveryRow,
+} from './Sold.style';
+
+export const SoldItem = ({ cutoffTime, type }: MOCK_SOLD) => (
+  <StyledInteraction
+    type="accordion"
+    value="Test"
+    onClick={() => {}}
+    leftComponent={
+      <PriorityNumber>
+        <Typography color="noshade" variant="label">
+          1
+        </Typography>
+      </PriorityNumber>
+    }
+  >
+    <div className="content">
+      <PaperPlane height={12} width={12} />
+      <Typography variant="label" color="shade6" className="center-text">
+        {type} Freight Cut Off
+      </Typography>
+      <Typography variant="label" color="noshade">
+        {cutoffTime}
+      </Typography>
+    </div>
+  </StyledInteraction>
+);
 
 const SoldView = (props: SoldGeneratedProps) => {
   // const theme = useTheme();
@@ -44,40 +74,33 @@ const SoldView = (props: SoldGeneratedProps) => {
             </Col>
           </Row>
 
-          <Row>
+          <DeliveryRow className="delivery-row">
             <Col>
               <Typography color="noshade" className="title">
                 Today
               </Typography>
 
-              <StyledInteraction
-                type="accordion"
-                value="Test"
-                onClick={() => {}}
-                leftComponent={
-                  <PriorityNumber>
-                    <Typography color="noshade" variant="label">
-                      1
-                    </Typography>
-                  </PriorityNumber>
-                }
-              >
-                <div className="content">
-                  <PaperPlane height={12} width={12} />
-                  <Typography
-                    variant="label"
-                    color="shade6"
-                    className="center-text"
-                  >
-                    Air Freight Cut Off
-                  </Typography>
-                  <Typography variant="label" color="noshade">
-                    12:00 am
-                  </Typography>
-                </div>
-              </StyledInteraction>
+              {soldData
+                .filter((data) => data.type === 'Air')
+                .map((item, ndx) => (
+                  <SoldItem key={`Air-${ndx}`} {...item} />
+                ))}
             </Col>
-          </Row>
+          </DeliveryRow>
+
+          <DeliveryRow className="delivery-row">
+            <Col>
+              <Typography color="noshade" className="title">
+                Tomorrow
+              </Typography>
+
+              {soldData
+                .filter((data) => data.type === 'Road')
+                .map((item, ndx) => (
+                  <SoldItem key={`Air-${ndx}`} {...item} />
+                ))}
+            </Col>
+          </DeliveryRow>
         </>
       )}
     </Container>
