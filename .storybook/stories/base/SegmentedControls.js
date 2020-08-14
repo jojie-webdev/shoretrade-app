@@ -15,18 +15,20 @@ storiesOf('base/SegmentedControls', module).add('Buyer', () => {
 
   return (
     <Container background="white" appType="buyer">
-      <AddState>
-        {(state, setState) => (
-          <SegmentedControls
-            options={MOCK_OPTIONS}
-            selectedOption={state}
-            onClickControl={(value) => {
-              console.log(value);
-              setState(value);
-            }}
-          />
-        )}
-      </AddState>
+      <div style={{ width: '500px' }}>
+        <AddState>
+          {(state, setState) => (
+            <SegmentedControls
+              options={MOCK_OPTIONS}
+              selectedOption={state}
+              onClickControl={(value) => {
+                console.log(value);
+                setState(value);
+              }}
+            />
+          )}
+        </AddState>
+      </div>
     </Container>
   );
 });
@@ -39,18 +41,20 @@ storiesOf('base/SegmentedControls', module).add('Seller', () => {
 
   return (
     <Container background="white" appType="seller">
-      <AddState>
-        {(state, setState) => (
-          <SegmentedControls
-            options={MOCK_OPTIONS}
-            selectedOption={state}
-            onClickControl={(value) => {
-              console.log(value);
-              setState(value);
-            }}
-          />
-        )}
-      </AddState>
+      <div style={{ width: '500px' }}>
+        <AddState>
+          {(state, setState) => (
+            <SegmentedControls
+              options={MOCK_OPTIONS}
+              selectedOption={state}
+              onClickControl={(value) => {
+                console.log(value);
+                setState(value);
+              }}
+            />
+          )}
+        </AddState>
+      </div>
     </Container>
   );
 });
