@@ -1,13 +1,12 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
 import SegmentedControls from 'components/base/SegmentedControls';
-import { Octopus, ChevronRight, Scale } from 'components/base/SVG';
+import { Octopus, ChevronRight, Scale, InfoFilled } from 'components/base/SVG';
 import PaperPlane from 'components/base/SVG/PaperPlane';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import { Row, Col } from 'react-grid-system';
+import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps, TabOptions, MOCK_SOLD } from './Sold.props';
 import {
@@ -89,7 +88,7 @@ export const PendingItem = () => (
 );
 
 const SoldView = (props: SoldGeneratedProps) => {
-  // const theme = useTheme();
+  const theme = useTheme();
 
   const { toggleSoldData, soldData, currentTab, onChangeCurrentTab } = props;
 
@@ -120,14 +119,20 @@ const SoldView = (props: SoldGeneratedProps) => {
             </Col>
           </Row>
 
-          <Col md={12} className="title-col">
-            <Typography color="alert">Pending Confirmation</Typography>
-          </Col>
           <PendingRow>
-            <PendingItem />
-            <PendingItem />
-            <PendingItem />
-            <PendingItem />
+            <Col md={12} className="title-col">
+              <div className="svg-container">
+                <InfoFilled fill={theme.brand.alert} height={18} width={18} />
+              </div>
+              <Typography color="alert">Pending Confirmation</Typography>
+            </Col>
+
+            <div className="items-container">
+              <PendingItem />
+              <PendingItem />
+              <PendingItem />
+              <PendingItem />
+            </div>
           </PendingRow>
 
           <DeliveryRow className="delivery-row">

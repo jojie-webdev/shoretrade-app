@@ -18,17 +18,30 @@ export const Container = styled.div`
 
 export const PendingRow = styled.div`
   margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  /* white-space: nowrap; */
-  overflow: scroll;
-  max-width: 100%;
-  width: 100%;
 
   .title-col {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+
+    .svg-container {
+      margin-right: 8px;
+    }
+  }
+
+  .items-container {
+    display: flex;
+    align-items: center;
+    /* white-space: nowrap; */
+    overflow: scroll;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: center;
   }
 `;
 
