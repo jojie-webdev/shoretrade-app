@@ -14,4 +14,5 @@ export interface InteractionsProps {
   rightComponent?: ReactNode;
   padding?: string;
   iconAlignment?: IconAlignmentTypes;
+  children?: any;
 }

@@ -25,6 +25,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     leftComponent,
     rightComponent,
     iconAlignment = 'center',
+    children,
   } = props;
 
   const getIcon = () => {
@@ -63,6 +64,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </Label>
       ) : null}
       {leftComponent ? leftComponent : <Value>{value}</Value>}
+      {children}
       {rightComponent ? (
         rightComponent
       ) : (

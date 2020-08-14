@@ -12,3 +12,13 @@ export const Container = styled.div`
     width: 100%;
   }
 `;
+
+export const PriorityNumber = styled.div`
+  background: ${(props) => props.theme.brand.primary};
+  border-radius: 2px;
+  width: 34px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
