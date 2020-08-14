@@ -63,8 +63,10 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
           {label}
         </Label>
       ) : null}
-      {leftComponent ? leftComponent : <Value>{value}</Value>}
-      {children}
+      <div className="left-content">
+        {leftComponent ? leftComponent : <Value>{value}</Value>}
+        {children}
+      </div>
       {rightComponent ? (
         rightComponent
       ) : (

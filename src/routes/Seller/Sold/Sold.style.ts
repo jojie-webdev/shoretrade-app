@@ -1,3 +1,4 @@
+import Interaction from 'components/base/Interactions';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -21,4 +22,16 @@ export const PriorityNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 16px;
+`;
+
+export const StyledInteraction = styled(Interaction)`
+  .content {
+    display: flex;
+    align-items: center;
+
+    .center-text {
+      margin: 0 4px;
+    }
+  }
 `;
