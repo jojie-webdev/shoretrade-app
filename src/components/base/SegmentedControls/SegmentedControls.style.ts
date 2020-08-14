@@ -35,7 +35,7 @@ const ContolButtonTextColor = (
 
 export const ControlButton = styled.button<{ active: boolean }>`
   height: 100%;
-  width: 90px;
+  min-width: 90px;
   border-radius: 4px;
   border: none;
   background: ${(props) =>
