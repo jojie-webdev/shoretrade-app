@@ -3,7 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import SegmentedControls from 'components/base/SegmentedControls';
-import { Octopus } from 'components/base/SVG';
+import { Octopus, ChevronRight, Scale } from 'components/base/SVG';
 import PaperPlane from 'components/base/SVG/PaperPlane';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
@@ -15,6 +15,8 @@ import {
   PriorityNumber,
   StyledInteraction,
   DeliveryRow,
+  PendingItemContainer,
+  PendingRow,
 } from './Sold.style';
 
 export const SoldItem = ({ cutoffTime, type }: MOCK_SOLD) => (
@@ -40,6 +42,50 @@ export const SoldItem = ({ cutoffTime, type }: MOCK_SOLD) => (
       </Typography>
     </div>
   </StyledInteraction>
+);
+
+export const PendingItem = () => (
+  <PendingItemContainer>
+    <div className="top-content">
+      <div className="left">
+        <img src="" alt="Pending Item" />
+        <div className="text-container">
+          <Typography color="noshade" weight="500">
+            King Salmon Manuka Cold Smoked Sliced
+          </Typography>
+          <div className="shipping">
+            <Typography
+              color="shade6"
+              variant="label"
+              className="shipping-text"
+            >
+              Shipping:
+            </Typography>
+            <Typography color="noshade" variant="label">
+              Wed 26 Apr
+            </Typography>
+          </div>
+        </div>
+      </div>
+      <div className="right">
+        <ChevronRight height={16} width={16} />
+      </div>
+    </div>
+
+    <hr className="divider" />
+
+    <div className="bottom">
+      <div className="text-container">
+        <Scale height={16} width={16} />
+        <Typography color="error" className="text" variant="caption">
+          Weight to be Confirmed
+        </Typography>
+      </div>
+      <Typography color="noshade" variant="label" weight="800">
+        $986.50
+      </Typography>
+    </div>
+  </PendingItemContainer>
 );
 
 const SoldView = (props: SoldGeneratedProps) => {
@@ -73,6 +119,19 @@ const SoldView = (props: SoldGeneratedProps) => {
               />
             </Col>
           </Row>
+
+          <PendingRow>
+            <Col md={12} className="title-col">
+              <Typography color="alert">Pending Confirmation</Typography>
+            </Col>
+
+            <Col md={5} className="pending-col">
+              <PendingItem />
+            </Col>
+            <Col md={5} className="pending-col">
+              <PendingItem />
+            </Col>
+          </PendingRow>
 
           <DeliveryRow className="delivery-row">
             <Col>

@@ -15,7 +15,7 @@ const MOCK_DATA: MOCK_SOLD[] = [
 
 const Sold = (): JSX.Element => {
   // START: For TESTING only
-  const [soldData, setSoldData] = useState<MOCK_SOLD[]>([]);
+  const [soldData, setSoldData] = useState<MOCK_SOLD[]>(MOCK_DATA);
   const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
   const toggleSoldData = () => setSoldData(MOCK_DATA);
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
