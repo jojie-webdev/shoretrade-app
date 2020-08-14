@@ -5,7 +5,7 @@ import theme from 'utils/Theme';
 
 export const Container = styled.div`
   height: 40px;
-
+  width: 100%;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
   background: ${(props) =>
     props.theme.appType === 'buyer'
@@ -15,6 +15,10 @@ export const Container = styled.div`
 
   display: inline-flex;
   flex-direction: row;
+
+  .row {
+    width: 100%;
+  }
 `;
 
 const ControlButtonColor: Record<'buyer' | 'seller', string> = {
@@ -36,6 +40,7 @@ const ContolButtonTextColor = (
 export const ControlButton = styled.button<{ active: boolean }>`
   height: 100%;
   min-width: 90px;
+  width: 100%;
   border-radius: 4px;
   border: none;
   background: ${(props) =>

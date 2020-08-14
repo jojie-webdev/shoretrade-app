@@ -13,7 +13,7 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
 
   return (
     <Container>
-      <Row>
+      <Row className="row" nogutter>
         {options.map((option) => (
           <Col key={option}>
             <ControlButton
