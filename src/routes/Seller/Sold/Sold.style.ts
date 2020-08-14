@@ -16,8 +16,14 @@ export const Container = styled.div`
   }
 `;
 
-export const PendingRow = styled(Row)`
+export const PendingRow = styled.div`
   margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  /* white-space: nowrap; */
+  overflow: scroll;
+  max-width: 100%;
+  width: 100%;
 
   .title-col {
     display: flex;
@@ -30,6 +36,7 @@ export const PendingItemContainer = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   margin-right: 16px;
   border-radius: 4px;
+  min-width: 300px;
 
   .top-content {
     padding: 12px;

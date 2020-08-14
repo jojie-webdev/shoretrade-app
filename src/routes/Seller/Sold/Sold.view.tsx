@@ -120,17 +120,14 @@ const SoldView = (props: SoldGeneratedProps) => {
             </Col>
           </Row>
 
+          <Col md={12} className="title-col">
+            <Typography color="alert">Pending Confirmation</Typography>
+          </Col>
           <PendingRow>
-            <Col md={12} className="title-col">
-              <Typography color="alert">Pending Confirmation</Typography>
-            </Col>
-
-            <Col md={5} className="pending-col">
-              <PendingItem />
-            </Col>
-            <Col md={5} className="pending-col">
-              <PendingItem />
-            </Col>
+            <PendingItem />
+            <PendingItem />
+            <PendingItem />
+            <PendingItem />
           </PendingRow>
 
           <DeliveryRow className="delivery-row">
