@@ -88,11 +88,11 @@ const RoutesComponent = (): JSX.Element => {
       if (
         authenticatedUserType === 'buyer' &&
         ([
-          SELLER_ROUTES.LOGIN,
-          SELLER_ROUTES.VERIFY2FA,
-          SELLER_ROUTES.ONBOARDING,
-          SELLER_ROUTES.REGISTER,
-          SELLER_ROUTES.FORGOT_PASSWORD,
+          BUYER_ROUTES.LOGIN,
+          BUYER_ROUTES.VERIFY2FA,
+          BUYER_ROUTES.ONBOARDING,
+          BUYER_ROUTES.REGISTER,
+          BUYER_ROUTES.FORGOT_PASSWORD,
         ].includes(currentPath) ||
           currentPath.includes('seller'))
       ) {

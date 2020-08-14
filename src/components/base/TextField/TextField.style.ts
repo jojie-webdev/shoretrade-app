@@ -1,3 +1,4 @@
+import AlertInfo from 'components/base/AlertInfo';
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
@@ -54,4 +55,8 @@ export const VisibilityContainer = styled.div`
 
 export const Error = styled(Typography)`
   margin-top: 4px;
+`;
+
+export const Alert = styled(AlertInfo)`
+  margin-top: 8px;
 `;

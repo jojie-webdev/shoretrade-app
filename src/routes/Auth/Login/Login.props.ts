@@ -10,4 +10,5 @@ export interface LoginGeneratedProps {
   pending: boolean;
   goToForgotPassword: () => void;
   isError: boolean;
+  goToRegister: () => void;
 }

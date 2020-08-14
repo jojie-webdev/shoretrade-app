@@ -2,14 +2,15 @@ import styled from 'utils/styled';
 
 interface TouchableBaseProps {
   circle?: boolean;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   dark?: boolean;
+  justifyContent?: string;
 }
 
 export const TouchableBase = styled.button<TouchableBaseProps>`
   display: flex;
-  justify-content: center;
+  justify-content: ${({ justifyContent }) => justifyContent || 'center'};
   align-items: center;
   border: none;
   color: white;
