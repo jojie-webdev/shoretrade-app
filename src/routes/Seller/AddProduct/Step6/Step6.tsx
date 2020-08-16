@@ -72,7 +72,7 @@ const BoxDetails = ({ weight, quantity, count }: BoxValues) => {
   );
 };
 
-const BoxSummary = () => (
+const BoxSummary = ({ onClick }: { onClick: () => void }) => (
   <BoxSummaryContainer>
     <div className="text-container">
       <div className="inner-text">
@@ -115,7 +115,7 @@ const BoxSummary = () => (
         </Typography>
       </div>
     </div>
-    <Button text="Next" />
+    <Button text="Next" onClick={onClick} />
   </BoxSummaryContainer>
 );
 
@@ -174,7 +174,7 @@ function Step6({ onClickNext }: Step6Props) {
         </Col>
       </Row>
 
-      <BoxSummary />
+      <BoxSummary onClick={onClickNext} />
 
       {showModal && (
         <AddBoxModal

@@ -9,7 +9,7 @@ import Container from '../../components/Container';
 storiesOf('module/DatePickerDropdown', module).add('Summary', () => {
   const [date, setDate] = useState(null);
 
-  function onDateChange(date: moment.Moment) {
+  function onDateChange(date) {
     setDate(date);
   }
 

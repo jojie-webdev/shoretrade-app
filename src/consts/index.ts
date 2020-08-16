@@ -11,3 +11,9 @@ export const API = {
 };
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
+
+export const GOOGLE_AUTOCOMPLETE =
+  'https://maps.googleapis.com/maps/api/place/autocomplete/json?';
+
+export const GOOGLE_PLACE_DETAILS =
+  'https://maps.googleapis.com/maps/api/place/details/json?';
