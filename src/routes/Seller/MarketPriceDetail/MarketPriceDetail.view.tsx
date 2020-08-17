@@ -3,6 +3,7 @@ import React from 'react';
 import Interactions from 'components/base/Interactions';
 import { Filter, UpArrow } from 'components/base/SVG/';
 import Typography from 'components/base/Typography';
+import FilterModal from 'components/module/FilterModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
 import LinePath from 'components/module/LinePath';
@@ -45,12 +46,14 @@ const MOCK_DATA = {
 const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
   const theme = useTheme();
 
+  const { openFilterModal, ...filterModalProps } = props;
+
   return (
     <Container>
       <Row justify="between" align="center" className="header-row">
         <InnerRouteHeader title="Pale Octopus" fullRow={false} />
 
-        <FilterButton>
+        <FilterButton onClick={openFilterModal}>
           <Typography
             variant="label"
             color="noshade"
@@ -106,6 +109,8 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
           />
         </Col>
       </Row>
+
+      <FilterModal {...filterModalProps} />
     </Container>
   );
 };
