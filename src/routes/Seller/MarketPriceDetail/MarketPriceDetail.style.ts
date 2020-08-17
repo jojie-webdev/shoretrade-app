@@ -1,6 +1,10 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  .header-row {
+    margin-bottom: 32px;
+  }
+`;
 
 export const FilterButton = styled.button`
   background: #09131d;
@@ -13,5 +17,14 @@ export const FilterButton = styled.button`
 
   .btn-text {
     margin-right: 4px;
+  }
+`;
+
+export const StockContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  .text {
+    margin: 0 8px;
   }
 `;

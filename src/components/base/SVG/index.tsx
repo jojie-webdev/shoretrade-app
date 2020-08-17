@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as UpArrow } from './UpArrow';
 export { default as Filter } from './Filter';
 export { default as DollarSign } from './DollarSign';
 export { default as Location } from './Location';
