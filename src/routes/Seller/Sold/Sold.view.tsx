@@ -6,6 +6,7 @@ import EmptyState from 'components/module/EmptyState';
 import { Row, Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
+import Delivered from './Delivered/Delivered.view';
 import InTransit from './InTransit/InTransit';
 import { SoldGeneratedProps, TabOptions } from './Sold.props';
 import { Container } from './Sold.style';
@@ -22,6 +23,8 @@ const SoldView = (props: SoldGeneratedProps) => {
     content = <ToShip {...props} />;
   } else if (currentTab === 'In Transit') {
     content = <InTransit />;
+  } else if (currentTab === 'Delivered') {
+    content = <Delivered />;
   }
 
   return (
