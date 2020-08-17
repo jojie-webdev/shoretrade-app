@@ -15,12 +15,12 @@ const EditPropsContainer = styled.div`
   }
 `;
 
-storiesOf('module/Pagination', module).add('Summary', () => {
+const Content = () => {
   const [numPages, setNumPages] = useState(5);
   const [currentValue, setCurrentValue] = useState(1);
 
   return (
-    <Container background="white">
+    <>
       <h5>Current Page Value {currentValue}</h5>
 
       <EditPropsContainer>
@@ -54,6 +54,28 @@ storiesOf('module/Pagination', module).add('Summary', () => {
         currentValue={currentValue}
         onClickButton={(nextValue) => setCurrentValue(nextValue)}
       />
+    </>
+  );
+};
+
+storiesOf('module/Pagination', module).add('Buyer', () => {
+  const [numPages, setNumPages] = useState(5);
+  const [currentValue, setCurrentValue] = useState(1);
+
+  return (
+    <Container background="white" appType="buyer">
+      <Content />
+    </Container>
+  );
+});
+
+storiesOf('module/Pagination', module).add('Seller', () => {
+  const [numPages, setNumPages] = useState(5);
+  const [currentValue, setCurrentValue] = useState(1);
+
+  return (
+    <Container background="#111E2B" appType="seller">
+      <Content />
     </Container>
   );
 });
