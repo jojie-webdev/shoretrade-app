@@ -14,7 +14,7 @@ const MOCK_DATA: MOCK_SOLD[] = [
 // END: For TESTING only
 
 const Sold = (): JSX.Element => {
-  const [currentTab, setCurrentTab] = useState<TabOptions>('In Transit');
+  const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
   // START: For TESTING only
   const [soldData, setSoldData] = useState<MOCK_SOLD[]>(MOCK_DATA);
