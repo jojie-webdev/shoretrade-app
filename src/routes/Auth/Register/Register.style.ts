@@ -1,6 +1,7 @@
 import AlertInfo from 'components/base/AlertInfo';
 import { Download } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import DropdownLocation from 'components/module/DropdownLocation';
 import FormikTextField from 'components/module/FormikTextField';
 import { Form } from 'formik';
 import styled from 'utils/styled';
@@ -81,4 +82,12 @@ export const DownloadTermsText = styled(Typography)``;
 
 export const ShippingInfo = styled(AlertInfo)`
   margin-top: 24px;
+`;
+
+export const LocationField = styled(DropdownLocation)`
+  margin-top: 48px;
+`;
+
+export const Error = styled(Typography)`
+  margin-top: 4px;
 `;

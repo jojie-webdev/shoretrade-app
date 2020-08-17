@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment, useReducer } from 'react';
 
-import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
+import DialogModal from 'components/module/DialogModal';
 import StepDetails from 'components/module/StepDetails';
 import { Formik } from 'formik';
+import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -33,11 +35,15 @@ import {
   DownloadIcon,
   DownloadTermsText,
   ShippingInfo,
+  LocationField,
+  Error,
 } from './Register.style';
 import {
   validateUserDetails,
   validateBusinessDetails,
   validateBankDetails,
+  validateBusinessAddress,
+  validateAgreement,
 } from './Register.validation';
 
 const MAX_STEP = 3;
@@ -55,6 +61,7 @@ interface StepFormProps extends RegisterGeneratedProps {
     secured?: boolean;
     alert?: string;
     type?: string;
+    prefix?: string;
   }[];
 }
 const StepForm = ({
@@ -63,32 +70,89 @@ const StepForm = ({
   fields,
   registrationDetails,
   updateRegistrationDetails,
+  isPending,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
+  const [otherErrors, setOtherErrors] = useReducer(
+    createUpdateReducer<Record<string, string>>(),
+    {}
+  );
   return (
-    <Formik key={step} {...formikProps}>
+    <Formik
+      key={step}
+      {...formikProps}
+      onSubmit={(values) => {
+        if (step === 2) {
+          const error = validateBusinessAddress({
+            address: registrationDetails.address,
+          });
+          if (error.address) {
+            setOtherErrors({ address: error.address });
+          } else {
+            setOtherErrors({ address: '' });
+            formikProps.onSubmit(values);
+          }
+        } else if (step === 3) {
+          const error = validateAgreement({
+            agreement: registrationDetails.tncAgreement,
+          });
+          if (error.agreement) {
+            setOtherErrors({ agreement: error.agreement });
+          } else {
+            setOtherErrors({ agreement: '' });
+            formikProps.onSubmit(values);
+          }
+        } else {
+          formikProps.onSubmit(values);
+        }
+      }}
+    >
       <FormikContainer>
         <Container>
           <Content>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
             <Title variant="title5">{SELLER_STEPS[step - 1].title}</Title>
-            {fields.map(({ key, type, secured, label, alert }) => (
-              <>
+            {fields.map(({ key, type, secured, label, alert, prefix }) => (
+              <Fragment key={key}>
                 <TextField
-                  key={key}
                   name={key}
                   type={type}
                   label={label}
                   secured={secured}
                   alert={alert}
+                  LeftComponent={
+                    (prefix || '').length > 0 ? (
+                      <Typography variant="label" color="shade6">
+                        {prefix}
+                      </Typography>
+                    ) : undefined
+                  }
                 />
-              </>
+              </Fragment>
             ))}
             {step === 2 && (
-              <ShippingInfo
-                label={isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES}
-              />
+              <>
+                <LocationField
+                  value={registrationDetails.address?.address || ''}
+                  onSelect={(address) =>
+                    updateRegistrationDetails({
+                      address,
+                    })
+                  }
+                  label="Address you will be shipping from"
+                />
+                {(otherErrors.address || '').length > 0 && (
+                  <Error variant="caption" color="error">
+                    {otherErrors.address}
+                  </Error>
+                )}
+                <ShippingInfo
+                  label={
+                    isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
+                  }
+                />
+              </>
             )}
             {step === 3 && (
               <>
@@ -102,6 +166,11 @@ const StepForm = ({
                     }
                     label="I agree to the terms and conditions"
                   />
+                  {(otherErrors.agreement || '').length > 0 && (
+                    <Error variant="caption" color="error">
+                      {otherErrors.agreement}
+                    </Error>
+                  )}
                 </InputContainer>
                 <Touchable
                   dark
@@ -127,7 +196,12 @@ const StepForm = ({
           </Content>
         </Container>
         <Footer>
-          <Button style={{ width: '100%' }} text="NEXT" type="submit" />
+          <Button
+            loading={isPending && step === 3}
+            style={{ width: '100%' }}
+            text={step === 3 ? 'REGISTER' : 'NEXT'}
+            type="submit"
+          />
         </Footer>
       </FormikContainer>
     </Formik>
@@ -135,7 +209,19 @@ const StepForm = ({
 };
 
 const RegisterView = (props: RegisterGeneratedProps) => {
-  const { backToLogin } = props;
+  const theme = useTheme();
+  const {
+    backToLogin,
+    registrationDetails,
+    updateRegistrationDetails,
+    register,
+    isPending,
+    isSuccess,
+  } = props;
+  const [isTriggered, setIsTriggered] = useState(false);
+  const showSuccessModal =
+    theme.appType === 'seller' && isTriggered && isSuccess;
+
   const [step, setStep] = useState(0);
 
   const nextStep = () => {
@@ -148,34 +234,50 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const userDetailsFormikProps = {
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      mobile: '',
+      firstName: registrationDetails.firstName,
+      lastName: registrationDetails.lastName,
+      email: registrationDetails.email,
+      password: registrationDetails.password,
+      passwordConfirm: registrationDetails.passwordConfirm,
+      mobile: registrationDetails.mobile,
     },
-    // validate: validateUserDetails,
-    onSubmit: (values: Record<string, string>) => nextStep(),
+    validate: validateUserDetails,
+    onSubmit: (values: Record<string, string>) => {
+      updateRegistrationDetails(values);
+      nextStep();
+    },
   };
 
   const businessDetailsFormikProps = {
     initialValues: {
-      businessName: '',
-      abn: '',
+      businessName: registrationDetails.businessName,
+      abn: registrationDetails.abn,
     },
-    // validate: validateBusinessDetails,
-    onSubmit: (values: Record<string, string>) => nextStep(),
+    validate: validateBusinessDetails,
+    onSubmit: (values: Record<string, string>) => {
+      updateRegistrationDetails(values);
+      nextStep();
+    },
   };
 
   const bankDetailsFormikProps = {
     initialValues: {
-      accountName: '',
-      bsb: '',
-      accountNumber: '',
+      accountName: registrationDetails.accountName,
+      bsb: registrationDetails.bsb,
+      accountNumber: registrationDetails.accountNumber,
     },
     validate: validateBankDetails,
-    onSubmit: (values: Record<string, string>) => console.log(values),
+    onSubmit: (values: Record<string, string>) => {
+      updateRegistrationDetails(values);
+      // combine previous values to existing registration details
+      // to make sure that we get the updated state
+      register({
+        ...registrationDetails,
+        ...values,
+      });
+
+      setIsTriggered(true);
+    },
   };
 
   const renderCurrentStep = () => {
@@ -247,6 +349,21 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       totalSteps={MAX_STEP + 1}
     >
       {renderCurrentStep()}
+      <DialogModal
+        title="Thanks for signing up!"
+        overline="Your account is pending approval."
+        isOpen={showSuccessModal}
+        onClickClose={() => backToLogin()}
+      >
+        <Typography variant="body" color="noshade" weight="Medium">
+          We need to check a few things before you can start selling.
+        </Typography>
+        <br />
+        <Typography variant="body" color="noshade" weight="Medium">
+          We’ll send you and email and notification when your account is
+          approved. This normally takes less than 24 hours.
+        </Typography>
+      </DialogModal>
     </AuthContainer>
   );
 };

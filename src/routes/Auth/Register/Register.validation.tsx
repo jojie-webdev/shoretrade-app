@@ -80,12 +80,15 @@ const businessDetailsConstraints = {
   abn: {
     maybeNumber: '^Please enter a valid business number',
   },
-  // address: {
-  //   presence: {
-  //     message: '^Please enter address',
-  //     allowEmpty: false,
-  //   },
-  // },
+};
+
+const businessAddressContraints = {
+  address: {
+    presence: {
+      message: '^Please enter address',
+      allowEmpty: false,
+    },
+  },
 };
 
 const bankDetailsConstraints = {
@@ -141,8 +144,19 @@ const bankDetailsConstraints = {
   // },
 };
 
+const agreementConstraints = {
+  agreement: {
+    isTrue: '^You must agree to the terms and conditions',
+  },
+};
+
 export const validateUserDetails = createValidator(userDetailsConstraints);
 export const validateBusinessDetails = createValidator(
   businessDetailsConstraints
 );
+export const validateBusinessAddress = createValidator(
+  businessAddressContraints
+);
 export const validateBankDetails = createValidator(bankDetailsConstraints);
+
+export const validateAgreement = createValidator(agreementConstraints);

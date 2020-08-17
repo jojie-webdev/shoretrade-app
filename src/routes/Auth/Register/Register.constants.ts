@@ -46,6 +46,7 @@ interface Field {
   secured?: boolean;
   alert?: string;
   type?: string;
+  prefix?: string;
 }
 
 export const USER_DETAIL_FIELDS: Field[] = [
@@ -77,6 +78,7 @@ export const USER_DETAIL_FIELDS: Field[] = [
     label: 'Mobile',
     key: 'mobile',
     type: 'tel',
+    prefix: '+61',
   },
 ];
 

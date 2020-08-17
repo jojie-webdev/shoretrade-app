@@ -1,5 +1,7 @@
 import { Dispatch } from 'react';
 
+import { PlaceData } from 'types/PlaceData';
+
 export interface RegistrationDetails {
   // user
   firstName: string;
@@ -12,6 +14,7 @@ export interface RegistrationDetails {
   // business
   businessName: string;
   abn: string;
+  address: PlaceData | null;
 
   // bank
   accountName: string;
@@ -30,4 +33,7 @@ export interface RegisterGeneratedProps {
   backToLogin: () => void;
   registrationDetails: RegistrationDetails;
   updateRegistrationDetails: Dispatch<Partial<RegistrationDetails>>;
+  register: (details: RegistrationDetails) => void;
+  isPending: boolean;
+  isSuccess: boolean;
 }
