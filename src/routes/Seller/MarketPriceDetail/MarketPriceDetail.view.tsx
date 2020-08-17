@@ -97,7 +97,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
       <Row>
         <Col>
           <LineChart
-            title="Title"
+            title="Paid"
             data={MOCK_DATA}
             yAxisLabelFormat={(v) =>
               `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`

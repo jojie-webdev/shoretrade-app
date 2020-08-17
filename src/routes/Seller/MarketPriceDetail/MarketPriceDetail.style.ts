@@ -4,6 +4,10 @@ export const Container = styled.div`
   .header-row {
     margin-bottom: 32px;
   }
+
+  .stock-summary-row {
+    margin-bottom: 40px;
+  }
 `;
 
 export const FilterButton = styled.button`
