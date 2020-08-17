@@ -1,3 +1,4 @@
+import Interaction from 'components/base/Interactions';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -11,5 +12,22 @@ export const Container = styled.div`
   .controls-row {
     width: 100%;
     margin-bottom: 32px;
+  }
+`;
+
+// Shared Between InTransit and Delivered
+export const DeliveryItem = styled(Interaction)`
+  padding: 24px;
+  margin-bottom: 16px;
+
+  .content {
+    .top {
+      display: flex;
+      align-items: center;
+
+      .delivery-date {
+        margin-right: 4px;
+      }
+    }
   }
 `;

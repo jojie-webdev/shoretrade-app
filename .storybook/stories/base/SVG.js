@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Plane,
   Scale,
   Truck,
   PaperPlane,
@@ -106,6 +107,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Plane">
+          <Plane width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Scale">
           <Scale width={30} height={30} />
         </Wrapper>
