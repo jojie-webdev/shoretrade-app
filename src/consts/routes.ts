@@ -16,7 +16,7 @@ export const SELLER_ROUTES = {
   ACCOUNT: `${SELLER_ROOT}/account`,
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,
-  MARKET_PRICE_DETAIL: (id = ':id') => `${SELLER_ROOT}/market-price/${id}`,
+  MARKET_PRICE_DETAIL: (id = ':id') => `${SELLER_ROOT}/market-prices/${id}`,
   MARKET_PRICES: `${SELLER_ROOT}/market-prices`,
   SELLING: `${SELLER_ROOT}/selling`,
   SOLD: `${SELLER_ROOT}/sold`,
