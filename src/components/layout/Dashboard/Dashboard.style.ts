@@ -53,11 +53,8 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
     .screen {
       background: ${(props) => props.theme.grey.shade8};
       height: 100%;
-<<<<<<< HEAD
       max-width: 70vw;
 
-=======
->>>>>>> dev
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-y: auto;
