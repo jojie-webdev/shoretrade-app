@@ -1,4 +1,9 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Plane } from './Plane';
+export { default as Scale } from './Scale';
+export { default as Truck } from './Truck';
+export { default as PaperPlane } from './PaperPlane';
+export { default as Octopus } from './Octopus';
 export { default as DollarSign } from './DollarSign';
 export { default as Location } from './Location';
 export { default as Subtract } from './Subtract';
