@@ -25,7 +25,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
       </MainText>
 
       <SVGContainer circleColor={circleColor}>
-        <Svg height={250} width={250} fill={svgColor} />
+        <Svg height={311} width={311} fill={svgColor} />
       </SVGContainer>
 
       <Button text={buttonText} onClick={onButtonClicked}></Button>

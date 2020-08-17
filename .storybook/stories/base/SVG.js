@@ -6,6 +6,11 @@ import {
   /* PLOP_INJECT_IMPORT */
   UpArrow,
   Filter,
+  Plane,
+  Scale,
+  Truck,
+  PaperPlane,
+  Octopus,
   DollarSign,
   Location,
   Subtract,
@@ -109,6 +114,21 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Filter">
           <Filter width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Plane">
+          <Plane width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Scale">
+          <Scale width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Truck">
+          <Truck width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="PaperPlane">
+          <PaperPlane width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Octopus">
+          <Octopus width={30} height={30} />
         </Wrapper>
         <Wrapper label="DollarSign">
           <DollarSign width={30} height={30} />

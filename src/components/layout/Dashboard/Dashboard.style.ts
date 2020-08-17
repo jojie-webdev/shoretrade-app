@@ -42,6 +42,7 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 0 150px;
+
   background: ${(props) => props.theme.grey.shade9};
   color: white;
 
@@ -52,6 +53,8 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
     .screen {
       background: ${(props) => props.theme.grey.shade8};
       height: 100%;
+      max-width: 70vw;
+
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-y: auto;
