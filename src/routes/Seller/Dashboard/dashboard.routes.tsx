@@ -5,12 +5,17 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
+import CashFlow from './CashFlow';
 import Landing from './Landing';
 
 const ROUTES: Routes = {
   LANDING: {
     path: SELLER_DASHBOARD_ROUTES.LANDING,
     children: <Landing />,
+  },
+  CASH_FLOW: {
+    path: SELLER_DASHBOARD_ROUTES.CASH_FLOW(),
+    children: <CashFlow />,
   },
 };
 
@@ -24,9 +29,6 @@ const SellerAccountRoutes = (): JSX.Element => {
           {r.children}
         </Route>
       ))}
-      {/* <Route>
-        <Redirect to="/seller/account" />
-      </Route> */}
     </>
   );
 };
