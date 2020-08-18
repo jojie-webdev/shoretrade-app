@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import { DashboardGeneratedProps } from './Dashboard.props';
-import DashboardView from './Dashboard.view';
+import { DashboardLandingGeneratedProps } from './Landing.props';
+import DashboardView from './Landing.view';
 
 const Dashboard = (): JSX.Element => {
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
-  const generatedProps: DashboardGeneratedProps = {
+  const generatedProps: DashboardLandingGeneratedProps = {
     // generated props here
     isCalendarModalOpen,
     toggleModal,

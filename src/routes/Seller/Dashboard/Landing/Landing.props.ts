@@ -1,4 +1,4 @@
-export interface DashboardGeneratedProps {
+export interface DashboardLandingGeneratedProps {
   isCalendarModalOpen: boolean;
   toggleModal: () => void;
 }

@@ -10,7 +10,7 @@ import LinePath from 'components/module/LinePath';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 
-import { DashboardGeneratedProps } from './Dashboard.props';
+import { DashboardLandingGeneratedProps } from './Landing.props';
 import {
   Container,
   FilterRow,
@@ -21,7 +21,7 @@ import {
   MonthlyContainer,
   TopCategoriesContainer,
   IllustrationContainer,
-} from './Dashboard.style';
+} from './Landing.style';
 
 const MOCK_DATA = {
   dates: [
@@ -180,7 +180,7 @@ const TopCategories = () => (
   </TopCategoriesContainer>
 );
 
-const DashboardView = (props: DashboardGeneratedProps) => {
+const DashboardView = (props: DashboardLandingGeneratedProps) => {
   // const theme = useTheme();
 
   const { isCalendarModalOpen, toggleModal } = props;
