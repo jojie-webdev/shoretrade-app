@@ -24,6 +24,7 @@ const LinePath = (props: LinePathProps): JSX.Element => {
     width,
     stroke = 'success',
     strokeWidth = 3,
+    cStyle,
   } = props;
 
   const graphData = data.dates.map((d, i) => ({
@@ -52,7 +53,7 @@ const LinePath = (props: LinePathProps): JSX.Element => {
     .curve(shape.curveLinear)(graphData) as string;
 
   return (
-    <Container cHeight={cHeight} cWidth={cWidth}>
+    <Container cHeight={cHeight} cWidth={cWidth} style={cStyle}>
       <svg width={width} height={height}>
         <path
           fill="transparent"
