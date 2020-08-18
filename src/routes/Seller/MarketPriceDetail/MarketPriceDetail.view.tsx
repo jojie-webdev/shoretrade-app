@@ -17,6 +17,7 @@ import {
   FilterButton,
   StockContainer,
   StockSummaryRow,
+  HeaderRow,
 } from './MarketPriceDetail.style';
 
 const MOCK_DATA = {
@@ -51,7 +52,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
 
   return (
     <Container>
-      <Row justify="between" align="center" className="header-row">
+      <HeaderRow justify="between" align="center">
         <InnerRouteHeader title="Pale Octopus" fullRow={false} />
 
         <FilterButton onClick={openFilterModal}>
@@ -66,7 +67,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
 
           <Filter />
         </FilterButton>
-      </Row>
+      </HeaderRow>
 
       <StockSummaryRow>
         <Col>
