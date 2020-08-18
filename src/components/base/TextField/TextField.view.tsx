@@ -13,6 +13,7 @@ import {
   Field,
   VisibilityContainer,
   Error,
+  Prefix,
 } from './TextField.style';
 
 const TextField = (props: TextFieldProps): JSX.Element => {
@@ -27,6 +28,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     placeholder,
     secured,
     error = '',
+    prefix,
     LeftComponent = null,
     className = undefined,
     onBlur = () => null,
@@ -52,6 +54,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         {LeftComponent && (
           <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
         )}
+        {prefix && <Prefix>{prefix}</Prefix>}
         <Field
           id={id}
           type={secured && !showSecuredText ? 'password' : defaultInputType}

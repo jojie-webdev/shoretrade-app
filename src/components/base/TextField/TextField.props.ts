@@ -6,4 +6,5 @@ export interface TextFieldProps
   error?: string;
   LeftComponent?: React.ReactNode;
   className?: string;
+  prefix?: string;
 }
