@@ -2,6 +2,8 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
+import Fish from 'components/base/SVG/Fish';
+import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import LinePath from 'components/module/LinePath';
 import { Row, Col } from 'react-grid-system';
@@ -13,6 +15,10 @@ import {
   SalesCard,
   TotalSalesRow,
   MonthlyRow,
+  ChartContentContainer,
+  MonthlyContainer,
+  TopCategoriesContainer,
+  IllustrationContainer,
 } from './Dashboard.style';
 
 const MOCK_DATA = {
@@ -86,7 +92,7 @@ const TotalSales = () => (
 );
 
 const MonthlySales = () => (
-  <div style={{ overflow: 'auto' }}>
+  <MonthlyContainer>
     <Row>
       <Col md={12} className="title-col">
         <Typography variant="label" color="shade6">
@@ -101,12 +107,12 @@ const MonthlySales = () => (
             <Typography variant="overline" color="shade6" className="overline">
               May
             </Typography>
-            <Typography variant="title4" color="noshade">
+            <Typography variant="title4" color="noshade" className="price">
               $5.5k
             </Typography>
 
-            <div>
-              {/* <UpArrow /> */}
+            <ChartContentContainer>
+              <UpArrow />
 
               <Typography variant="caption" color="success" className="text">
                 +1.25%
@@ -114,18 +120,56 @@ const MonthlySales = () => (
 
               <LinePath
                 width={60}
-                height={15}
+                height={25}
                 data={MOCK_DATA}
-                cHeight={15}
+                cHeight={25}
                 cWidth={60}
                 cStyle={{ alignSelf: 'center' }}
               />
-            </div>
+            </ChartContentContainer>
           </SalesCard>
         </Col>
       ))}
     </MonthlyRow>
-  </div>
+  </MonthlyContainer>
+);
+
+const TopCategories = () => (
+  <TopCategoriesContainer>
+    <Row>
+      <Col md={12} className="title-col">
+        <Typography variant="label" color="shade6">
+          Top Categories
+        </Typography>
+      </Col>
+    </Row>
+    <MonthlyRow nowrap gutterWidth={24}>
+      {[1, 2, 3, 4, 5].map((num) => (
+        <Col md={3} key={num}>
+          <SalesCard>
+            <Typography variant="overline" color="shade6" className="overline">
+              Whole tuna
+            </Typography>
+            <Typography variant="title4" color="noshade" className="price">
+              $5.5k
+            </Typography>
+
+            <IllustrationContainer>
+              <div className="left-content">
+                <UpArrow />
+
+                <Typography variant="caption" color="success" className="text">
+                  +1.25%
+                </Typography>
+              </div>
+
+              <Fish />
+            </IllustrationContainer>
+          </SalesCard>
+        </Col>
+      ))}
+    </MonthlyRow>
+  </TopCategoriesContainer>
 );
 
 const DashboardView = (props: DashboardGeneratedProps) => {
@@ -135,6 +179,7 @@ const DashboardView = (props: DashboardGeneratedProps) => {
       <FilterHeader />
       <TotalSales />
       <MonthlySales />
+      <TopCategories />
     </Container>
   );
 };
