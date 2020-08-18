@@ -56,6 +56,6 @@ export const InputContainer = styled.div`
 `;
 
 export const Scroll = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 50vh;
 `;

@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as UpArrow } from './UpArrow';
+export { default as Filter } from './Filter';
 export { default as Plane } from './Plane';
 export { default as Scale } from './Scale';
 export { default as Truck } from './Truck';
