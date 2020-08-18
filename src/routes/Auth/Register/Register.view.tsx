@@ -5,6 +5,7 @@ import Checkbox from 'components/base/Checkbox';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
+import AddImage from 'components/module/AddImage';
 import DialogModal from 'components/module/DialogModal';
 import StepDetails from 'components/module/StepDetails';
 import { Formik } from 'formik';
@@ -37,6 +38,7 @@ import {
   ShippingInfo,
   LocationField,
   Error,
+  BusinessLogoLabel,
 } from './Register.style';
 import {
   validateUserDetails,
@@ -151,6 +153,18 @@ const StepForm = ({
                   label={
                     isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                   }
+                />
+                <BusinessLogoLabel variant="overline" color={'shade6'}>
+                  Business Logo
+                </BusinessLogoLabel>
+                <AddImage
+                  image={registrationDetails.businessLogo}
+                  onSelectImage={(image) =>
+                    updateRegistrationDetails({ businessLogo: image })
+                  }
+                  onRemoveImage={() => {
+                    updateRegistrationDetails({ businessLogo: null });
+                  }}
                 />
               </>
             )}

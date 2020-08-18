@@ -91,3 +91,8 @@ export const LocationField = styled(DropdownLocation)`
 export const Error = styled(Typography)`
   margin-top: 4px;
 `;
+
+export const BusinessLogoLabel = styled(Typography)`
+  margin-top: 24px;
+  margin-bottom: 4px;
+`;

@@ -15,6 +15,7 @@ export interface RegistrationDetails {
   businessName: string;
   abn: string;
   address: PlaceData | null;
+  businessLogo: File | null;
 
   // bank
   accountName: string;

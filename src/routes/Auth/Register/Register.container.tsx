@@ -34,6 +34,7 @@ const Register = (): JSX.Element => {
       businessName: '',
       abn: '',
       address: null,
+      businessLogo: null,
       // bank
       accountName: '',
       bsb: '',
@@ -57,7 +58,7 @@ const Register = (): JSX.Element => {
             abn: details.abn,
           },
           address: details.address,
-          businessLogo: null, // TODO: Add image picker
+          businessLogo: details.businessLogo, // TODO: Add image picker
           bankAccounts: {
             accountName: details.accountName,
             bsb: details.bsb,
