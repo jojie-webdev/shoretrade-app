@@ -16,6 +16,7 @@ import {
   Container,
   FilterButton,
   StockContainer,
+  StockSummaryRow,
 } from './MarketPriceDetail.style';
 
 const MOCK_DATA = {
@@ -67,7 +68,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
         </FilterButton>
       </Row>
 
-      <Row className="stock-summary-row">
+      <StockSummaryRow>
         <Col>
           <Interactions
             label="Paid"
@@ -95,7 +96,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
             onClick={() => {}}
           />
         </Col>
-      </Row>
+      </StockSummaryRow>
 
       <Row>
         <Col>

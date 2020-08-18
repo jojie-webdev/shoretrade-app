@@ -1,12 +1,9 @@
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
   .header-row {
     margin-bottom: 32px;
-  }
-
-  .stock-summary-row {
-    margin-bottom: 40px;
   }
 `;
 
@@ -22,6 +19,10 @@ export const FilterButton = styled.button`
   .btn-text {
     margin-right: 4px;
   }
+`;
+
+export const StockSummaryRow = styled(Row)`
+  margin-bottom: 40px;
 `;
 
 export const StockContainer = styled.div`
