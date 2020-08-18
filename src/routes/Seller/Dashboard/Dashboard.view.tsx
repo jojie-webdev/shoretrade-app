@@ -5,7 +5,9 @@ import Button from 'components/base/Button';
 import Fish from 'components/base/SVG/Fish';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
+import DatePickerModal from 'components/module/DatePickerModal';
 import LinePath from 'components/module/LinePath';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 
 import { DashboardGeneratedProps } from './Dashboard.props';
@@ -46,10 +48,16 @@ const MOCK_DATA = {
   ],
 };
 
-const FilterHeader = () => (
+const FilterHeader = ({ toggleModal }: { toggleModal: () => void }) => (
   <FilterRow>
     <Col className="filter-col">
-      <Button text="Custom" size="sm" variant="unselected" className="btn" />
+      <Button
+        text="Custom"
+        size="sm"
+        variant="unselected"
+        className="btn"
+        onClick={toggleModal}
+      />
       <Button text="FY19/20" size="sm" variant="unselected" className="btn" />
       <Button text="Q4" size="sm" variant="unselected" className="btn" />
       <Button text="Q3" size="sm" variant="unselected" className="btn" />
@@ -174,12 +182,27 @@ const TopCategories = () => (
 
 const DashboardView = (props: DashboardGeneratedProps) => {
   // const theme = useTheme();
+
+  const { isCalendarModalOpen, toggleModal } = props;
+
   return (
     <Container>
-      <FilterHeader />
+      <FilterHeader toggleModal={toggleModal} />
       <TotalSales />
       <MonthlySales />
       <TopCategories />
+      {isCalendarModalOpen && (
+        <DatePickerModal
+          startDate={moment()}
+          endDate={moment().add('day', 7)}
+          focusedInput="startDate"
+          isOpen={true}
+          onFocusChange={() => {}}
+          onDateChange={() => {}}
+          onClickApply={() => {}}
+          onClickClose={toggleModal}
+        />
+      )}
     </Container>
   );
 };
