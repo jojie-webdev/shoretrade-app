@@ -27,7 +27,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     setShouldIncludePadding(location.pathname !== SELLER_ROUTES.ADD_PRODUCT);
 
     let innerRoute = location.pathname.split('/')[2];
-    innerRoute = formatRouteString(innerRoute);
+    innerRoute = formatRouteString(innerRoute || '');
 
     setPageTitle(innerRoute);
   }, [location]);
