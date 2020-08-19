@@ -18,6 +18,7 @@ import {
   Title,
   HeaderSpacer,
   ProgressIndicator,
+  Scroll,
 } from './AuthContainer.style';
 
 const AuthContainerView = (props: AuthContainerProps): JSX.Element => {

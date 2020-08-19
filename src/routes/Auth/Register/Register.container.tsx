@@ -53,13 +53,13 @@ const Register = (): JSX.Element => {
           email: details.email,
           password: details.password,
           passwordConfirm: details.passwordConfirm,
-          mobile: `+${details.callingCode}${details.mobile}`,
+          mobile: `+${details.callingCode || '61'}${details.mobile}`,
           company: {
             businessName: details.businessName,
             abn: details.abn,
           },
           address: details.address,
-          businessLogo: details.businessLogo, // TODO: Add image picker
+          businessLogo: details.businessLogo,
           bankAccounts: {
             accountName: details.accountName,
             bsb: details.bsb,

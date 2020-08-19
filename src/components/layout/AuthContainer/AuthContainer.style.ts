@@ -88,10 +88,15 @@ export const Content = styled(Col)`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.grey.shade8};
-  min-height: 70%;
+  height: 70%;
   width: 100%;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
   border-radius: 4px;
+`;
+
+export const Scroll = styled.div`
+  overflow-x: hidden;
+  overflow-y: visible;
 `;
 
 export const ProgressIndicator = styled.div`

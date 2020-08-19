@@ -1,9 +1,9 @@
 import AlertInfo from 'components/base/AlertInfo';
-import PhoneTextField from 'components/module/PhoneTextField';
 import { Download } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import DropdownLocation from 'components/module/DropdownLocation';
 import FormikTextField from 'components/module/FormikTextField';
+import PhoneTextField from 'components/module/PhoneTextField';
 import { Form } from 'formik';
 import styled from 'utils/styled';
 
@@ -27,13 +27,18 @@ export const ColumnWrapper = styled.div`
   display: 'flex';
   flex: 1;
   flex-direction: 'column';
-  height: 100%;
+  padding-bottom: 64px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 export const FormikContainer = styled(Form)`
   display: 'flex';
   flex: 1;
   flex-direction: 'column';
+  padding-bottom: 64px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 export const GetStartedTitle = styled(Typography)`
@@ -57,6 +62,10 @@ export const TextField = styled(FormikTextField)`
 `;
 
 export const Footer = styled.div`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   display: flex;
   height: 64px;
   justify-content: center;
