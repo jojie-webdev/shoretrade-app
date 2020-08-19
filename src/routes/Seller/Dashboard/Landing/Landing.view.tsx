@@ -7,8 +7,10 @@ import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import DatePickerModal from 'components/module/DatePickerModal';
 import LinePath from 'components/module/LinePath';
+import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { Link } from 'react-router-dom';
 
 import { DashboardLandingGeneratedProps } from './Landing.props';
 import {
@@ -77,24 +79,28 @@ const TotalSales = () => (
       </Typography>
     </Col>
     <Col md={5}>
-      <SalesCard>
-        <Typography variant="overline" color="shade6" className="overline">
-          Paid
-        </Typography>
-        <Typography variant="title4" color="noshade">
-          $1350k
-        </Typography>
-      </SalesCard>
+      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-10')}>
+        <SalesCard>
+          <Typography variant="overline" color="shade6" className="overline">
+            Paid
+          </Typography>
+          <Typography variant="title4" color="noshade">
+            $1350k
+          </Typography>
+        </SalesCard>
+      </Link>
     </Col>
     <Col md={5}>
-      <SalesCard>
-        <Typography variant="overline" color="shade6" className="overline">
-          Pending
-        </Typography>
-        <Typography variant="title4" color="noshade">
-          $1350k
-        </Typography>
-      </SalesCard>
+      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-10')}>
+        <SalesCard>
+          <Typography variant="overline" color="shade6" className="overline">
+            Pending
+          </Typography>
+          <Typography variant="title4" color="noshade">
+            $10k
+          </Typography>
+        </SalesCard>
+      </Link>
     </Col>
   </TotalSalesRow>
 );
@@ -146,9 +152,11 @@ const TopCategories = () => (
   <TopCategoriesContainer>
     <Row>
       <Col md={12} className="title-col">
-        <Typography variant="label" color="shade6">
-          Top Categories
-        </Typography>
+        <Link to={SELLER_DASHBOARD_ROUTES.CATEGORIES}>
+          <Typography variant="label" color="shade6">
+            Top Categories
+          </Typography>
+        </Link>
       </Col>
     </Row>
     <MonthlyRow nowrap gutterWidth={24}>

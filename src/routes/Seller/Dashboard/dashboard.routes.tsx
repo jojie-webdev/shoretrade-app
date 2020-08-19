@@ -6,6 +6,8 @@ import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
 import CashFlow from './CashFlow';
+import Categories from './Categories';
+import CategoryDetail from './CategoryDetail';
 import Landing from './Landing';
 
 const ROUTES: Routes = {
@@ -16,6 +18,14 @@ const ROUTES: Routes = {
   CASH_FLOW: {
     path: SELLER_DASHBOARD_ROUTES.CASH_FLOW(),
     children: <CashFlow />,
+  },
+  CATEGORIES: {
+    path: SELLER_DASHBOARD_ROUTES.CATEGORIES,
+    children: <Categories />,
+  },
+  CATEGORY_DETAIL: {
+    path: SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(),
+    children: <CategoryDetail />,
   },
 };
 

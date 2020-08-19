@@ -1,13 +1,14 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
 import numeral from 'numeral';
 import { Row, Col } from 'react-grid-system';
 
 import { CashFlowGeneratedProps } from './CashFlow.props';
-import { Container } from './CashFlow.style';
+import { Container, HeaderRow } from './CashFlow.style';
 
 const MOCK_DATA = {
   dates: [
@@ -38,9 +39,12 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
   // const theme = useTheme();
   return (
     <Container>
-      <Row>
-        <InnerRouteHeader title="Cash flow" />
-      </Row>
+      <HeaderRow align="center" justify="between">
+        <InnerRouteHeader title="Cash flow" fullRow={false} />
+        <Typography variant="overline" color="shade6">
+          {'1 may – 16 jun 2020'}
+        </Typography>
+      </HeaderRow>
 
       <Row style={{ marginBottom: '56px' }}>
         <Col>
@@ -51,19 +55,6 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
               `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
             }
             cHeight={263}
-          />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <LineChart
-            title="Pending"
-            data={MOCK_DATA}
-            yAxisLabelFormat={(v) =>
-              `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
-            }
-            cHeight={164}
           />
         </Col>
       </Row>
