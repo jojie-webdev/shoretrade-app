@@ -39,6 +39,9 @@ const SellerAccountRoutes = (): JSX.Element => {
           {r.children}
         </Route>
       ))}
+      <Route>
+        <Redirect to="/seller/dashboard" />
+      </Route>
     </>
   );
 };

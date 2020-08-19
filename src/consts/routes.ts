@@ -40,7 +40,7 @@ export const SELLER_DASHBOARD_ROUTES = {
     `${SELLER_ROUTES.DASHBOARD}/cash-flow/:months`,
   CATEGORIES: `${SELLER_ROUTES.DASHBOARD}/categories/`,
   CATEGORY_DETAIL: (category = 'category') =>
-    `${SELLER_ROUTES.DASHBOARD}/categories/${category}`,
+    `${SELLER_ROUTES.DASHBOARD}/categories/:${category}`,
 };
 
 export const BUYER_ROUTES = {

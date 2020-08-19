@@ -4,7 +4,9 @@ import React from 'react';
 import { UpArrow, Fish } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
+import { Link } from 'react-router-dom';
 
 import { CategoriesGeneratedProps } from './Categories.props';
 import { Container, HeaderRow, CategoryContainer } from './Categories.style';
@@ -23,38 +25,42 @@ const CategoriesView = (props: CategoriesGeneratedProps) => {
       <Row>
         {[1, 2, 3, 4, 5].map((num) => (
           <Col md={12} key={num}>
-            <CategoryContainer>
-              <div className="top">
-                <div className="text-container">
-                  <Typography
-                    variant="overline"
-                    color="shade6"
-                    className="overline"
-                  >
-                    Whole Tuna
-                  </Typography>
-                  <div className="price-container">
-                    <Typography variant="title5" color="noshade">
-                      $55k
+            <Link
+              to={SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(`tunafish-${num}`)}
+            >
+              <CategoryContainer>
+                <div className="top">
+                  <div className="text-container">
+                    <Typography
+                      variant="overline"
+                      color="shade6"
+                      className="overline"
+                    >
+                      Whole Tuna
                     </Typography>
+                    <div className="price-container">
+                      <Typography variant="title5" color="noshade">
+                        $55k
+                      </Typography>
 
-                    <div className="svg-container">
-                      <UpArrow height={8} width={8} />
+                      <div className="svg-container">
+                        <UpArrow height={8} width={8} />
+                      </div>
+
+                      <Typography variant="caption" color="success">
+                        +1.25%
+                      </Typography>
                     </div>
-
-                    <Typography variant="caption" color="success">
-                      +1.25%
-                    </Typography>
                   </div>
+
+                  <Fish />
                 </div>
 
-                <Fish />
-              </div>
-
-              <div className="bottom">
-                <div className="progress-bar"></div>
-              </div>
-            </CategoryContainer>
+                <div className="bottom">
+                  <div className="progress-bar"></div>
+                </div>
+              </CategoryContainer>
+            </Link>
           </Col>
         ))}
       </Row>
