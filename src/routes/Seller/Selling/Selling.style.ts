@@ -47,7 +47,6 @@ export const Tag = styled.div`
 export const ItemImage = styled.img`
   width: 148px;
   height: 148px;
-  border: 1px solid red;
   margin-right: 16px;
   border-radius: 4px;
 `;

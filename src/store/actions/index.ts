@@ -6,3 +6,4 @@ export { default as verifyActions } from './verify';
 export { default as resendVerificationActions } from './resendVerification';
 export { default as forgotPasswordActions } from './forgotPassword';
 export { default as getUserActions } from './getUser';
+export { default as getAllListingsActions } from './getAllListings';
