@@ -100,6 +100,7 @@ const RoutesComponent = (): JSX.Element => {
       }
     }
   }, [isAuthenticated, authenticatedUserType]);
+
   return (
     <Switch>
       {Object.values(ROUTES).map((r) => {

@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import forgotPassword from './forgotPassword';
+import getUser from './getUser';
 import login from './login';
 import resendVerification from './resendVerification';
 import verify from './verify';
@@ -16,4 +17,5 @@ export default (history: History) =>
     resendVerification,
     verify,
     forgotPassword,
+    getUser,
   });
