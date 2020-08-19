@@ -4,9 +4,17 @@ import styled from 'utils/styled';
 
 export const Container = styled.div``;
 
+const fontStyle = `
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+`;
+
 export const FieldContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-top: 4px;
   width: 100%;
   height: 48px;
@@ -22,16 +30,13 @@ export const Field = styled.input`
   flex: 1;
   border-radius: 4px;
   padding: 12px 16px;
-  border: 0px;
+  border: 0;
   height: 100%;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
   color: 1px solid ${({ theme }) => theme.grey.shade9};
   :focus {
     outline: none;
   }
+  ${fontStyle};
 `;
 
 export const LeftComponentContainer = styled.div`
@@ -59,4 +64,9 @@ export const Error = styled(Typography)`
 
 export const Alert = styled(AlertInfo)`
   margin-top: 8px;
+`;
+
+export const Prefix = styled.span`
+  padding-left: 12px;
+  ${fontStyle};
 `;

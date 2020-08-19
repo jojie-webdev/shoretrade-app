@@ -7,4 +7,5 @@ export interface TextFieldProps
   LeftComponent?: React.ReactNode;
   className?: string;
   alert?: string;
+  prefix?: string;
 }

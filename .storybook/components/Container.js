@@ -49,13 +49,18 @@ const Container = ({
   style,
 }) => {
   const Wrapper = center ? CenterContainer : BaseContainer;
-  const defaultBackground = appType === 'seller' ? '#09131D' : '#F9FAFF';
+  const defaultBackground = appType === 'seller' ? '#111E2B' : '#F9FAFF';
+  const textColor = appType === 'seller' ? 'white' : '#09131D';
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={{ ...theme, appType }}>
         <Wrapper
-          style={{ backgroundColor: background || defaultBackground, ...style }}
+          style={{
+            color: textColor,
+            backgroundColor: background || defaultBackground,
+            ...style,
+          }}
         >
           {children}
         </Wrapper>

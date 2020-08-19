@@ -1,8 +1,8 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import { ChevronLeft, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { PaginationProps } from './Pagination.props';
 import {
@@ -13,7 +13,7 @@ import {
 } from './Pagination.style';
 
 const Pagination = (props: PaginationProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
 
   const { numPages, currentValue, onClickButton, variant = 'number' } = props;
 
@@ -38,10 +38,14 @@ const Pagination = (props: PaginationProps): JSX.Element => {
   let pagination;
 
   if (variant === 'number') {
+    const textColor = theme.appType === 'buyer' ? 'primary' : 'noshade';
+    const iconColor =
+      theme.appType === 'buyer' ? theme.brand.primary : theme.grey.noshade;
+
     pagination = (
       <>
         <PaginationButton onClick={() => onClickManualControl('backward')}>
-          <ChevronLeft />
+          <ChevronLeft fill={iconColor} />
         </PaginationButton>
         {numArray.map((value) => (
           <PaginationButton
@@ -51,14 +55,14 @@ const Pagination = (props: PaginationProps): JSX.Element => {
           >
             <Typography
               variant="label"
-              color={currentValue === value ? 'noshade' : 'primary'}
+              color={currentValue === value ? 'noshade' : textColor}
             >
               {value}
             </Typography>
           </PaginationButton>
         ))}
         <PaginationButton onClick={() => onClickManualControl('forward')}>
-          <ChevronRight />
+          <ChevronRight fill={iconColor} />
         </PaginationButton>
       </>
     );

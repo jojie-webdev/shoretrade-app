@@ -37,7 +37,7 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
       <Col className="header">{content}</Col>
     </HeaderRow>
   ) : (
-    content
+    <div style={{ display: 'flex', alignItems: 'center' }}>{content}</div>
   );
 };
 

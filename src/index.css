@@ -4,6 +4,20 @@
     url("res/fonts/Basis Grotesque Pro.woff") format("woff");
 }
 
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Medium.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Medium.woff") format("woff");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Black.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Black.woff") format("woff");
+  font-weight: 900;
+}
+
 body {
   margin: 0;
 }
