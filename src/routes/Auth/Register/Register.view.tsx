@@ -9,6 +9,7 @@ import AddImage from 'components/module/AddImage';
 import DialogModal from 'components/module/DialogModal';
 import StepDetails from 'components/module/StepDetails';
 import { Formik } from 'formik';
+import { props } from 'ramda';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
@@ -39,6 +40,7 @@ import {
   LocationField,
   Error,
   BusinessLogoLabel,
+  MobileField,
 } from './Register.style';
 import {
   validateUserDetails,
@@ -85,7 +87,9 @@ const StepForm = ({
       key={step}
       {...formikProps}
       onSubmit={(values) => {
-        if (step === 2) {
+        if (step === 1) {
+          formikProps.onSubmit(values);
+        } else if (step === 2) {
           const error = validateBusinessAddress({
             address: registrationDetails.address,
           });
@@ -105,8 +109,6 @@ const StepForm = ({
             setOtherErrors({ agreement: '' });
             formikProps.onSubmit(values);
           }
-        } else {
-          formikProps.onSubmit(values);
         }
       }}
     >
@@ -133,6 +135,16 @@ const StepForm = ({
                 />
               </Fragment>
             ))}
+            {step === 1 && (
+              <MobileField
+                name="mobile"
+                label="MOBILE"
+                callingCode={registrationDetails.callingCode}
+                setCallingCode={(value) =>
+                  updateRegistrationDetails({ callingCode: value })
+                }
+              />
+            )}
             {step === 2 && (
               <>
                 <LocationField
@@ -143,12 +155,8 @@ const StepForm = ({
                     })
                   }
                   label="Address you will be shipping from"
+                  error={otherErrors.address}
                 />
-                {(otherErrors.address || '').length > 0 && (
-                  <Error variant="caption" color="error">
-                    {otherErrors.address}
-                  </Error>
-                )}
                 <ShippingInfo
                   label={
                     isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES

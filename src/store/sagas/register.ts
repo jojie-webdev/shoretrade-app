@@ -15,11 +15,14 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
   try {
     let profileImageUrl = '';
     if (action.meta.businessLogo) {
-      const { data: profileImage } = yield call(uploadImageData, {
-        file: action.meta.businessLogo,
-        asset: 'company',
-      });
-      profileImageUrl = profileImage.url;
+      const { status: uploadStatus, data: profileImage } = yield call(
+        uploadImageData,
+        {
+          file: action.meta.businessLogo,
+          asset: 'company',
+        }
+      );
+      profileImageUrl = uploadStatus === 200 ? profileImage.url : '';
     }
 
     const transformMetaToRequest = (
@@ -64,18 +67,16 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
       };
     };
 
-    // const { data } = yield call(
-    //   register,
-    //   action.meta.userGroup,
-    //   transformMetaToRequest(action.meta)
-    // );
+    const { data } = yield call(
+      register,
+      action.meta.userGroup,
+      transformMetaToRequest(action.meta)
+    );
 
-    // yield put(registerActions.success(data));
+    yield put(registerActions.success(data));
 
-    // yield put(registerActions.success(data));
-    console.log('Finished', profileImageUrl);
+    yield put(registerActions.success(data));
   } catch (e) {
-    console.log(e);
     yield put(registerActions.failed(e.message));
   }
 }

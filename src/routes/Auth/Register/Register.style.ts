@@ -1,4 +1,5 @@
 import AlertInfo from 'components/base/AlertInfo';
+import PhoneTextField from 'components/module/PhoneTextField';
 import { Download } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import DropdownLocation from 'components/module/DropdownLocation';
@@ -95,4 +96,8 @@ export const Error = styled(Typography)`
 export const BusinessLogoLabel = styled(Typography)`
   margin-top: 24px;
   margin-bottom: 4px;
+`;
+
+export const MobileField = styled(PhoneTextField)`
+  margin-top: 24px;
 `;

@@ -18,26 +18,25 @@ export const uploadImageData = async ({
   const extension = last(fileName.split('.')) || 'jpg';
   const hashedName = md5(fileName.split('.').slice(0, -1).join(''));
   const newFileName = `${hashedName}.${extension}`;
+  const newFile = new File([file], newFileName, { type });
 
   const { data: uploadURLData } = await axios({
     method: 'get',
-    url: `${BASE_URL}/get-public-signed-url?name=${newFileName}&type=${type}&asset=${asset}`,
+    url: `${BASE_URL}/get-public-signed-url?name=${newFileName}&type=data:${type}&asset=${asset}`,
   });
 
   const uploadUrl = pathOr('', ['data', 'url', 'url'], uploadURLData);
 
   const downloadUrl = uploadUrl.substr(0, uploadUrl.indexOf('?'));
 
-  const { data: uploadResponse } = await axios.put(uploadUrl, file, {
+  const { status: uploadStatus } = await axios.put(uploadUrl, newFile, {
     headers: {
-      'Content-Type': type,
+      'content-type': 'multipart/form-data',
     },
   });
 
-  console.log(uploadResponse);
-
   return {
-    status: 200,
+    status: uploadStatus,
     data: {
       url: downloadUrl,
     },

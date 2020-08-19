@@ -3,6 +3,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { TextFieldProps } from 'components/base/TextField/TextField.props';
 
 export interface PhoneTextFieldProps extends TextFieldProps {
-  callingCode?: string;
-  setCallingCode?: Dispatch<SetStateAction<string>>;
+  label: string;
+  name: string;
+  callingCode: string;
+  setCallingCode: (callingCode: string) => void;
+  onChangeMobile?: (mobile: string, prefix: string) => void;
 }

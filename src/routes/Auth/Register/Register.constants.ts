@@ -74,12 +74,6 @@ export const USER_DETAIL_FIELDS: Field[] = [
     key: 'passwordConfirm',
     secured: true,
   },
-  {
-    label: 'Mobile',
-    key: 'mobile',
-    type: 'tel',
-    prefix: '+61',
-  },
 ];
 
 export const BUSINESS_DETAIL_FIELDS: Field[] = [

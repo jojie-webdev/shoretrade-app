@@ -52,7 +52,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
       <Typography variant="overline" color={'shade6'}>
         {label}
       </Typography>
-      <FieldContainer>
+      <FieldContainer error={(error || '').length > 0}>
         {LeftComponent && (
           <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
         )}

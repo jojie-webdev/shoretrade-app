@@ -30,6 +30,7 @@ const Register = (): JSX.Element => {
       password: '',
       passwordConfirm: '',
       mobile: '',
+      callingCode: '',
       // business
       businessName: '',
       abn: '',
@@ -52,7 +53,7 @@ const Register = (): JSX.Element => {
           email: details.email,
           password: details.password,
           passwordConfirm: details.passwordConfirm,
-          mobile: `+61${details.mobile}`,
+          mobile: `+${details.callingCode}${details.mobile}`,
           company: {
             businessName: details.businessName,
             abn: details.abn,

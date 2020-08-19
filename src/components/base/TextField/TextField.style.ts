@@ -11,7 +11,7 @@ const fontStyle = `
   line-height: 24px;
 `;
 
-export const FieldContainer = styled.div`
+export const FieldContainer = styled.div<{ error: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,7 +20,8 @@ export const FieldContainer = styled.div`
   height: 48px;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.grey.shade5};
+  border: 1px solid
+    ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
   background-color: ${({ theme }) => theme.grey.noshade};
 `;
 

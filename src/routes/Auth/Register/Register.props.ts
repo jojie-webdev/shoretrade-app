@@ -10,6 +10,7 @@ export interface RegistrationDetails {
   password: string;
   passwordConfirm: string;
   mobile: string;
+  callingCode: string;
 
   // business
   businessName: string;
