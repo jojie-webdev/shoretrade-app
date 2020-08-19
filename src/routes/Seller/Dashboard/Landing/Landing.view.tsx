@@ -117,31 +117,39 @@ const MonthlySales = () => (
     <MonthlyRow nowrap gutterWidth={24}>
       {[1, 2, 3, 4, 5].map((num) => (
         <Col md={3} key={num}>
-          <SalesCard>
-            <Typography variant="overline" color="shade6" className="overline">
-              May
-            </Typography>
-            <Typography variant="title4" color="noshade" className="price">
-              $5.5k
-            </Typography>
-
-            <ChartContentContainer>
-              <UpArrow />
-
-              <Typography variant="caption" color="success" className="text">
-                +1.25%
+          <Link
+            to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-20-to-2020-10-10')}
+          >
+            <SalesCard>
+              <Typography
+                variant="overline"
+                color="shade6"
+                className="overline"
+              >
+                May
+              </Typography>
+              <Typography variant="title4" color="noshade" className="price">
+                $5.5k
               </Typography>
 
-              <LinePath
-                width={60}
-                height={25}
-                data={MOCK_DATA}
-                cHeight={25}
-                cWidth={60}
-                cStyle={{ alignSelf: 'center' }}
-              />
-            </ChartContentContainer>
-          </SalesCard>
+              <ChartContentContainer>
+                <UpArrow />
+
+                <Typography variant="caption" color="success" className="text">
+                  +1.25%
+                </Typography>
+
+                <LinePath
+                  width={60}
+                  height={25}
+                  data={MOCK_DATA}
+                  cHeight={25}
+                  cWidth={60}
+                  cStyle={{ alignSelf: 'center' }}
+                />
+              </ChartContentContainer>
+            </SalesCard>
+          </Link>
         </Col>
       ))}
     </MonthlyRow>
