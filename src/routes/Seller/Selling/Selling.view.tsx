@@ -4,8 +4,10 @@ import React from 'react';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
+import { SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 
 import { SellingGeneratedProps, ItemProp } from './Selling.props';
 import {
@@ -73,7 +75,12 @@ const Item = (props: ItemProp) => {
 
 const SellingView = (props: SellingGeneratedProps) => {
   // const theme = useTheme();
+  const history = useHistory();
   const { listings, pending } = props;
+
+  if (pending) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <Container>
@@ -82,9 +89,9 @@ const SellingView = (props: SellingGeneratedProps) => {
           {listings.length === 0 ? (
             <EmptyState
               title="The are no listings here at the moment"
-              buttonText="Toggle Empty State"
+              buttonText="Add a product"
               Svg={Crab}
-              onButtonClicked={() => {}}
+              onButtonClicked={() => history.push(SELLER_ROUTES.ADD_PRODUCT)}
             />
           ) : (
             listings.map((listing) => (
