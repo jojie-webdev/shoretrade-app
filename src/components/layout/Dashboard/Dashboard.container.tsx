@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
 import { SELLER_ROUTES } from 'consts';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { GetUserPayload } from 'types/store/GetUserState';
+import { Store } from 'types/store/Store';
 
-import { DashboardPublicProps } from './Dashboard.props';
+import {
+  DashboardPublicProps,
+  DashboardGeneratedProps,
+} from './Dashboard.props';
 import DashboardView from './Dashboard.view';
-
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState('');
   const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
+  const userData = useSelector((state: Store) => state.getUser.data?.data.user);
 
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
@@ -32,11 +38,12 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     setPageTitle(innerRoute);
   }, [location]);
 
-  const generatedProps = {
+  const generatedProps: DashboardGeneratedProps = {
     ...props,
     pageTitle,
     isInnerRoute,
     shouldIncludePadding,
+    userData,
   };
 
   return <DashboardView {...generatedProps} />;

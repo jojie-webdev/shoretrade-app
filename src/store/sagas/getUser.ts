@@ -1,16 +1,15 @@
-import { put, call, takeLatest, select } from 'redux-saga/effects';
 import pathOr from 'ramda/es/pathOr';
-
-import { VARIANT } from 'config';
+import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { getUser } from 'services/auth';
+import { AsyncAction } from 'types/Action';
 import {
   GetUserMeta,
   GetUserPayload,
   UserCompany,
 } from 'types/store/GetUserState';
-import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
-import { getUser } from 'services/auth';
-import { getUserActions, authActions, getAddressesActions } from '../actions';
+
+import { getUserActions, authActions } from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
@@ -27,15 +26,16 @@ function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
 }
 
 function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
-  if (VARIANT === 'buyer') {
-    const state: Store = yield select();
-    if ((state.getAddresses.data?.data.addresses || []).length === 0) {
-      const { companies } = action.payload.data.user;
-      const companyId: string = pathOr('', ['0', 'id'], companies);
-      if (companyId) {
-        yield put(getAddressesActions.request({ companyId }));
-      }
-    }
+  // TODO: if buyer set to true
+  if (false) {
+    // const state: Store = yield select();
+    // if ((state.getAddresses.data?.data.addresses || []).length === 0) {
+    //   const { companies } = action.payload.data.user;
+    //   const companyId: string = pathOr('', ['0', 'id'], companies);
+    //   if (companyId) {
+    //     yield put(getAddressesActions.request({ companyId }));
+    //   }
+    // }
   }
 }
 

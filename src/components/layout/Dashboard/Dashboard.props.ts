@@ -1,11 +1,13 @@
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { Route } from 'types/Routes';
+import { GetUserPayload } from 'types/store/GetUserState';
 import { Theme } from 'types/Theme';
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
   pageTitle?: string;
   isInnerRoute: (path: string) => boolean;
   shouldIncludePadding: boolean;
+  userData: GetUserPayload['data']['user'] | undefined;
 }
 
 export interface DashboardPublicProps {
@@ -24,4 +26,5 @@ export type NavLinkProps = {
 
 export type HeaderProps = {
   pageTitle: string | undefined;
+  userData: GetUserPayload['data']['user'] | undefined;
 };
