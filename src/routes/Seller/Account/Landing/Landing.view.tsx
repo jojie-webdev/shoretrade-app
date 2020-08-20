@@ -28,7 +28,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
 
-  const { companies, currentCompany, profilePicture, pending } = props;
+  const { companies, currentCompany, profilePicture, loadingUser } = props;
 
   const INTERACTIONS = [
     {
@@ -45,7 +45,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
 
-  if (pending) {
+  if (loadingUser) {
     return <Loading />;
   }
 
