@@ -18,3 +18,11 @@ export const MarketItemContainer = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   padding: 24px;
 `;
+
+export const SpinnerContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+`;

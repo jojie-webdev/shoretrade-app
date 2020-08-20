@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Interactions from 'components/base/Interactions';
-import { Filter, UpArrow } from 'components/base/SVG/';
+import Spinner from 'components/base/Spinner';
+import { DropdownArrow, Filter, UpArrow } from 'components/base/SVG/';
 import Typography from 'components/base/Typography';
 import FilterModal from 'components/module/FilterModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
@@ -20,97 +21,97 @@ import {
   HeaderRow,
 } from './MarketPriceDetail.style';
 
-const MOCK_DATA = {
-  dates: [
-    '2019-06-23',
-    '2019-06-26',
-    '2019-06-30',
-    '2019-07-05',
-    '2019-07-08',
-    '2019-07-14',
-    '2019-07-21',
-    '2019-07-22',
-    '2019-07-27',
-  ],
-  values: [
-    3773.7,
-    6081.6,
-    6081.6,
-    11331.6,
-    10523.6,
-    8263.1,
-    6081.8,
-    10806.7,
-    11856.1,
-  ],
-};
-
 const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
   const theme = useTheme();
 
-  const { openFilterModal, ...filterModalProps } = props;
+  const { openFilterModal, name, data, graphData, ...filterModalProps } = props;
+
+  const hasIncreased = data ? parseFloat(data.percentage) > 0 : false;
+  const price =
+    data && data.minPrice && data.maxPrice
+      ? `$${data.minPrice} - $${data.maxPrice}`
+      : '';
 
   return (
     <Container>
-      <HeaderRow justify="between" align="center">
-        <InnerRouteHeader title="Pale Octopus" fullRow={false} />
+      {!data ? (
+        <HeaderRow justify="center" align="center">
+          <Spinner />
+        </HeaderRow>
+      ) : (
+        <>
+          <HeaderRow justify="between" align="center">
+            <InnerRouteHeader title={name} fullRow={false} />
 
-        <FilterButton onClick={openFilterModal}>
-          <Typography
-            variant="label"
-            color="noshade"
-            weight="500"
-            className="btn-text"
-          >
-            Filters
-          </Typography>
-
-          <Filter />
-        </FilterButton>
-      </HeaderRow>
-
-      <StockSummaryRow>
-        <Col>
-          <Interactions
-            label="Paid"
-            leftComponent={
-              <Typography variant="title4" color="noshade">
-                {'$12.79 – $17.25'}
+            <FilterButton onClick={openFilterModal}>
+              <Typography
+                variant="label"
+                color="noshade"
+                weight="500"
+                className="btn-text"
+              >
+                Filters
               </Typography>
-            }
-            rightComponent={
-              <StockContainer>
-                <UpArrow />
-                <Typography variant="caption" color="success" className="text">
-                  +1.25%
-                </Typography>
-                <LinePath
-                  width={60}
-                  height={15}
-                  data={MOCK_DATA}
-                  cHeight={15}
-                  cWidth={60}
-                  cStyle={{ alignSelf: 'center' }}
-                />
-              </StockContainer>
-            }
-            onClick={() => {}}
-          />
-        </Col>
-      </StockSummaryRow>
 
-      <Row>
-        <Col>
-          <LineChart
-            title="Paid"
-            data={MOCK_DATA}
-            yAxisLabelFormat={(v) =>
-              `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
-            }
-            cHeight={263}
-          />
-        </Col>
-      </Row>
+              <Filter />
+            </FilterButton>
+          </HeaderRow>
+
+          <StockSummaryRow>
+            <Col>
+              <Interactions
+                label="Paid"
+                leftComponent={
+                  <Typography variant="title4" color="noshade">
+                    {price}
+                  </Typography>
+                }
+                rightComponent={
+                  <StockContainer>
+                    {data.percentage !== '' && (
+                      <>
+                        {hasIncreased ? (
+                          <UpArrow />
+                        ) : (
+                          <DropdownArrow fill={theme.brand.error} />
+                        )}
+                        <Typography
+                          variant="caption"
+                          color={hasIncreased ? 'success' : 'error'}
+                          className="text"
+                        >
+                          {data.percentage}%
+                        </Typography>
+                      </>
+                    )}
+                    <LinePath
+                      width={60}
+                      height={15}
+                      data={graphData}
+                      cHeight={15}
+                      cWidth={60}
+                      cStyle={{ alignSelf: 'center' }}
+                    />
+                  </StockContainer>
+                }
+              />
+            </Col>
+          </StockSummaryRow>
+
+          <Row>
+            <Col>
+              <LineChart
+                title="Paid"
+                data={graphData}
+                yAxisLabelFormat={(v) =>
+                  `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
+                }
+                cHeight={263}
+              />
+            </Col>
+          </Row>
+        </>
+      )}
 
       <FilterModal {...filterModalProps} />
     </Container>

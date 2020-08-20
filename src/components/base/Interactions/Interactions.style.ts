@@ -15,13 +15,17 @@ export const Container = styled.div<InteractionsProps>`
 
     return backgroundColor || (isSeller ? theme.grey.shade9 : '#ffffff');
   }};
-  cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }
   margin-top: ${({ label }) => (label ? '20px' : 0)};
   box-shadow: ${({ theme }) =>
     theme.appType === 'buyer' ? '0 6px 12px rgba(41, 43, 50, 0.12)' : 'none'};
+
+  ${({ onClick }) =>
+    onClick
+      ? `cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }`
+      : ''};
 
   .left-content {
     display: flex;
