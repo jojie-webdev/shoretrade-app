@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { MAIN_ROUTES, SELLER_ROUTES, BUYER_ROUTES } from 'consts';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Route,
   Switch,
@@ -9,6 +9,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
+import getUserActions from 'store/actions/getUser';
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
 
@@ -56,30 +57,45 @@ export const ROUTES: Routes = {
     path: SELLER_ROUTES.ROOT,
     children: <SellerRoutes />,
     nested: true,
-    // protected: true,
+    protected: true,
   },
 };
+
+const UNAUTHENTICATED_SELLER_ROUTES = [
+  SELLER_ROUTES.LOGIN,
+  SELLER_ROUTES.VERIFY2FA,
+  SELLER_ROUTES.ONBOARDING,
+  SELLER_ROUTES.REGISTER,
+  SELLER_ROUTES.FORGOT_PASSWORD,
+];
+
+const UNAUTHENTICATED_BUYER_ROUTES = [
+  BUYER_ROUTES.LOGIN,
+  BUYER_ROUTES.VERIFY2FA,
+  BUYER_ROUTES.ONBOARDING,
+  BUYER_ROUTES.REGISTER,
+  BUYER_ROUTES.FORGOT_PASSWORD,
+];
 
 const RoutesComponent = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
   const isAuthenticated =
     (useSelector((state: Store) => state.auth.token) || '').length > 0;
   const authenticatedUserType =
     useSelector((state: Store) => state.auth.type) || '';
-
   const currentPath = location.pathname;
+
   useEffect(() => {
     if (isAuthenticated) {
+      // On authenticated, fetch user.
+      dispatch(getUserActions.request());
+
+      // Redirects
       if (
         authenticatedUserType === 'seller' &&
-        ([
-          SELLER_ROUTES.LOGIN,
-          SELLER_ROUTES.VERIFY2FA,
-          SELLER_ROUTES.ONBOARDING,
-          SELLER_ROUTES.REGISTER,
-          SELLER_ROUTES.FORGOT_PASSWORD,
-        ].includes(currentPath) ||
+        (UNAUTHENTICATED_SELLER_ROUTES.includes(currentPath) ||
           currentPath.includes('buyer'))
       ) {
         history.push(SELLER_ROUTES.ROOT);
@@ -87,19 +103,14 @@ const RoutesComponent = (): JSX.Element => {
 
       if (
         authenticatedUserType === 'buyer' &&
-        ([
-          BUYER_ROUTES.LOGIN,
-          BUYER_ROUTES.VERIFY2FA,
-          BUYER_ROUTES.ONBOARDING,
-          BUYER_ROUTES.REGISTER,
-          BUYER_ROUTES.FORGOT_PASSWORD,
-        ].includes(currentPath) ||
+        (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||
           currentPath.includes('seller'))
       ) {
         history.push(BUYER_ROUTES.ROOT);
       }
     }
   }, [isAuthenticated, authenticatedUserType]);
+
   return (
     <Switch>
       {Object.values(ROUTES).map((r) => {

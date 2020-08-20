@@ -88,7 +88,6 @@ export const HeaderContainer = styled.nav`
       height: 56px;
       width: 56px;
       border-radius: calc(56px / 2);
-      border: 1px solid red;
     }
   }
 `;

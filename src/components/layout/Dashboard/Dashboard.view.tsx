@@ -29,7 +29,7 @@ const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
   </SidebarItem>
 );
 
-const Header = ({ pageTitle }: HeaderProps) => (
+const Header = ({ pageTitle, userData }: HeaderProps) => (
   <HeaderContainer className="appbar">
     <Typography variant="title4" color="noshade">
       {pageTitle}
@@ -37,17 +37,17 @@ const Header = ({ pageTitle }: HeaderProps) => (
 
     <div className="right-content">
       <div className="text-container">
-        <Typography color="noshade">Manettas Seafood</Typography>
+        <Typography color="noshade">{userData?.companies[0].name}</Typography>
         <Typography
           variant="caption"
           color="shade6"
           weight="500"
           style={{ textAlign: 'right' }}
         >
-          Peter Manettas
+          {userData?.firstName} {userData?.lastName}
         </Typography>
       </div>
-      <img src="" alt="" />
+      <img src={userData?.profileImage} alt="" />
     </div>
   </HeaderContainer>
 );
@@ -59,10 +59,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     pageTitle,
     isInnerRoute,
     shouldIncludePadding,
+    userData,
     children,
   } = props;
-
-  console.log(shouldIncludePadding);
 
   return (
     <DashboardContainer>
@@ -96,7 +95,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         />
       </Sidebar>
       <Content shouldIncludePadding={shouldIncludePadding}>
-        <Header pageTitle={pageTitle}></Header>
+        <Header pageTitle={pageTitle} userData={userData}></Header>
         <div className="screen-wrapper">
           <div className="screen">
             <Container className="container">{children}</Container>
