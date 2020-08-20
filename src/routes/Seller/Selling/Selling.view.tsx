@@ -4,9 +4,12 @@ import React from 'react';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
+import { SELLER_ROUTES } from 'consts';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 
-import { SellingGeneratedProps } from './Selling.props';
+import { SellingGeneratedProps, ItemProp } from './Selling.props';
 import {
   ItemImage,
   ItemCard,
@@ -14,79 +17,86 @@ import {
   Tag,
   Container,
 } from './Selling.style';
+import { listingToItem } from './Selling.transform';
 
-const Item = () => (
-  <ItemCard>
-    <ItemImage src="" alt="" />
+const Item = (props: ItemProp) => {
+  const formattedListedOn = () => moment(props.listedOn).format('DD MMMM YYYY');
+  const formattedExpiresIn = () => moment().to(props.expiresIn);
 
-    <div className="content">
-      <Typography variant="title5" color="noshade" className="item-title">
-        King Salmon Manuka Cold Smoked
-      </Typography>
+  return (
+    <ItemCard>
+      <ItemImage src={props.data.images[0]} alt="" />
 
-      <div className="tags-container">
-        <Tag>
-          <Typography variant="caption" color="noshade">
-            Fresh
-          </Typography>
-        </Tag>
-        <Tag>
-          <Typography variant="caption" color="noshade">
-            Farmed
-          </Typography>
-        </Tag>
-        <Tag>
-          <Typography variant="caption" color="noshade">
-            Head on Gutted
-          </Typography>
-        </Tag>
+      <div className="content">
+        <Typography variant="title5" color="noshade" className="item-title">
+          {props.title}
+        </Typography>
+
+        <div className="tags-container">
+          {props.tags &&
+            props.tags.length !== 0 &&
+            props.tags.map((tag) => (
+              <Tag key={tag.label}>
+                <Typography variant="caption" color="noshade">
+                  {tag.label}
+                </Typography>
+              </Tag>
+            ))}
+        </div>
+
+        <ItemDetail variant="caption" color="shade6">
+          Size: <span>{props.size}</span>
+        </ItemDetail>
+
+        <ItemDetail variant="caption" color="shade6">
+          Listed on: <span>{props.listedOn && formattedListedOn()}</span>
+        </ItemDetail>
+
+        <ItemDetail variant="caption" color="shade6">
+          Expires in: <span>{props.expiresIn && formattedExpiresIn()}</span>
+        </ItemDetail>
+
+        <ItemDetail variant="caption" color="shade6">
+          Remaining: <span>{props.remaining}</span>
+        </ItemDetail>
       </div>
 
-      <ItemDetail variant="caption" color="shade6">
-        Size: <span>Baby - Extra Large</span>
-      </ItemDetail>
-
-      <ItemDetail variant="caption" color="shade6">
-        Listed on: <span>21 Apr 20</span>
-      </ItemDetail>
-
-      <ItemDetail variant="caption" color="shade6">
-        Expires in: <span>22 Days, 20 Hours, 33 min</span>
-      </ItemDetail>
-
-      <ItemDetail variant="caption" color="shade6">
-        Remaining: <span>50 Kg</span>
-      </ItemDetail>
-    </div>
-
-    <div className="pricing">
-      <Typography variant="title5" weight="900" color="noshade">
-        $120.00
-      </Typography>
-      <Typography color="shade6" variant="caption">
-        per kg
-      </Typography>
-    </div>
-  </ItemCard>
-);
+      <div className="pricing">
+        <Typography variant="title5" weight="900" color="noshade">
+          {props.price}
+        </Typography>
+        <Typography color="shade6" variant="caption">
+          per {props.unit}
+        </Typography>
+      </div>
+    </ItemCard>
+  );
+};
 
 const SellingView = (props: SellingGeneratedProps) => {
   // const theme = useTheme();
-  const { items, toggleEmptyState } = props;
+  const history = useHistory();
+  const { listings, pending } = props;
+
+  if (pending) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <Container>
       <Row className="row" align="center" justify="center">
         <Col>
-          {items.length === 0 ? (
+          {listings.length === 0 ? (
             <EmptyState
               title="The are no listings here at the moment"
-              buttonText="Toggle Empty State"
+              buttonText="Add a product"
               Svg={Crab}
-              onButtonClicked={toggleEmptyState}
+              onButtonClicked={() => history.push(SELLER_ROUTES.ADD_PRODUCT)}
             />
           ) : (
-            items.map((item: any, ndx) => <Item key={ndx} />)
+            listings.map((listing) => (
+              <Item key={listing.id} {...listingToItem(listing)} />
+            ))
           )}
         </Col>
       </Row>

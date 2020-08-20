@@ -1,4 +1,19 @@
+import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
+
 export interface SellingGeneratedProps {
-  items: any[];
-  toggleEmptyState: () => void; // FOR TESTING
+  listings: GetAllListingsResponseItem[];
+  pending: boolean;
 }
+
+export type ItemProp = {
+  uri?: string;
+  title: string;
+  price: string;
+  tags?: { label: string }[];
+  size?: string;
+  listedOn?: Date;
+  expiresIn?: Date;
+  remaining?: string;
+  data: GetAllListingsResponseItem;
+  unit?: string;
+};
