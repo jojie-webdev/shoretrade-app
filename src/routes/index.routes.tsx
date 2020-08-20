@@ -70,11 +70,11 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
 ];
 
 const UNAUTHENTICATED_BUYER_ROUTES = [
-  SELLER_ROUTES.LOGIN,
-  SELLER_ROUTES.VERIFY2FA,
-  SELLER_ROUTES.ONBOARDING,
-  SELLER_ROUTES.REGISTER,
-  SELLER_ROUTES.FORGOT_PASSWORD,
+  BUYER_ROUTES.LOGIN,
+  BUYER_ROUTES.VERIFY2FA,
+  BUYER_ROUTES.ONBOARDING,
+  BUYER_ROUTES.REGISTER,
+  BUYER_ROUTES.FORGOT_PASSWORD,
 ];
 
 const RoutesComponent = (): JSX.Element => {
@@ -90,7 +90,6 @@ const RoutesComponent = (): JSX.Element => {
   useEffect(() => {
     if (isAuthenticated) {
       // On authenticated, fetch user.
-      console.log('in here');
       dispatch(getUserActions.request());
 
       // Redirects

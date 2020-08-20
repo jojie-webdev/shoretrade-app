@@ -18,7 +18,7 @@ export type RegisterMeta = {
     accountNumber: string;
   };
   address: PlaceData;
-  businessLogo?: any | null; // TODO: Update type
+  businessLogo?: File | null;
   userGroup: 'buyer' | 'seller';
   registerDebtFinancing?: boolean;
   debtFinancingSegment?: string;

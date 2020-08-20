@@ -4,6 +4,7 @@ import forgotPassword from './forgotPassword';
 import getAllListings from './getAllListings';
 import getUser from './getUser';
 import login from './login';
+import register from './register';
 import resendVerification from './resendVerification';
 import verify from './verify';
 
@@ -14,6 +15,8 @@ const sagas = [
   forgotPassword,
   getUser,
   getAllListings,
+  register,
+  getUser,
 ];
 
 export default function* root() {

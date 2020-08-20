@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Download,
   Fish,
   UpArrow,
   Filter,
@@ -110,6 +111,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Download">
+          <Download width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Fish">
           <Fish width={30} height={30} />
         </Wrapper>

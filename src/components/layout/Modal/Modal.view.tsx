@@ -15,7 +15,12 @@ const Modal = (props: ModalProps): JSX.Element => {
   return (
     <Backdrop isOpen={isOpen}>
       <ModalContainer style={props.style}>
-        <ExitButton onClick={onClickClose}>
+        <ExitButton
+          onClick={(e) => {
+            e.preventDefault();
+            onClickClose();
+          }}
+        >
           <Close />
         </ExitButton>
         {children}
