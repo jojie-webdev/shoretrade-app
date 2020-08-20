@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Eye, EyeOff } from 'components/base/SVG';
+import { Eye, EyeOff, InfoFilled } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
@@ -13,6 +13,7 @@ import {
   Field,
   VisibilityContainer,
   Error,
+  Alert,
   Prefix,
 } from './TextField.style';
 
@@ -33,6 +34,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     className = undefined,
     onBlur = () => null,
     style,
+    alert,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -50,7 +52,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
       <Typography variant="overline" color={'shade6'}>
         {label}
       </Typography>
-      <FieldContainer>
+      <FieldContainer error={(error || '').length > 0}>
         {LeftComponent && (
           <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
         )}
@@ -76,6 +78,8 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           {error}
         </Error>
       )}
+
+      {alert && <Alert label={alert} />}
     </Container>
   );
 };

@@ -30,7 +30,7 @@ import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // const theme = useTheme();
-  const { login, pending, goToForgotPassword, isError } = props;
+  const { login, pending, goToForgotPassword, isError, goToRegister } = props;
 
   const formikProps = {
     initialValues: {
@@ -51,10 +51,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             </Title>
             <RegisterLinkContainer>
               <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
-              <Touchable
-                dark
-                onPress={() => console.log('LOG_ACTION: Create account')}
-              >
+              <Touchable dark onPress={() => goToRegister()}>
                 <RegisterLink color="primary">Create an account</RegisterLink>
               </Touchable>
             </RegisterLinkContainer>

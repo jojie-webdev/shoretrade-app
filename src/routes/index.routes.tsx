@@ -90,7 +90,6 @@ const RoutesComponent = (): JSX.Element => {
   useEffect(() => {
     if (isAuthenticated) {
       // On authenticated, fetch user.
-      console.log('in here');
       dispatch(getUserActions.request());
 
       // Redirects

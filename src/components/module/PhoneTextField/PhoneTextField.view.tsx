@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Interactions from 'components/base/Interactions/Interactions.view';
 import TextField from 'components/base/TextField';
 import Modal from 'components/layout/Modal';
 import CALLING_CODES from 'consts/callingCodes';
+import { useField } from 'formik';
 import { useTheme } from 'utils/Theme';
 
 import { PhoneTextFieldProps } from './PhoneTextField.props';
@@ -14,12 +15,11 @@ import {
   Results,
 } from './PhoneTextField.style';
 
-const PhoneTextField = ({
-  callingCode,
-  setCallingCode,
-  ...props
-}: PhoneTextFieldProps): JSX.Element => {
+const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
   const theme = useTheme();
+
+  const { name, callingCode, setCallingCode, ...textFieldProps } = props;
+  const [field, meta] = useField<string>(name);
   const [isOpen, setIsOpen] = useState(false);
 
   const australia = { callingCode: '61', flag: '🇦🇺' };
@@ -33,19 +33,20 @@ const PhoneTextField = ({
     flag: initCountry.flag,
   };
 
-  const [value, setValue] = useState(country);
-
   return (
     <>
       <TextField
+        {...field}
+        {...textFieldProps}
+        id={name}
+        error={meta.touched ? meta.error : undefined}
         type="tel"
-        prefix={`+${value.callingCode}`}
+        prefix={`+${country.callingCode}`}
         LeftComponent={
           <LeftComponent onClick={() => setIsOpen(true)}>
-            <Flag>{value.flag}</Flag>
+            <Flag>{country.flag}</Flag>
           </LeftComponent>
         }
-        {...props}
       />
 
       <Modal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
@@ -56,11 +57,7 @@ const PhoneTextField = ({
                 type="next"
                 value={`${item.flag} ${item.name} +${item.callingCode} `}
                 onClick={() => {
-                  setValue({
-                    callingCode: `${item.callingCode}`,
-                    flag: item.flag,
-                  });
-
+                  setCallingCode(item.callingCode);
                   setIsOpen(false);
                 }}
               />

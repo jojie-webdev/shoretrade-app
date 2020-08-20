@@ -36,6 +36,7 @@ const DropdownLocation = (props: DropdownLocationProps): JSX.Element => {
   return (
     <>
       <Container
+        className={props.className}
         label={props.label}
         isError={!!props.error}
         onClick={() => setIsOpen(!isOpen)}
