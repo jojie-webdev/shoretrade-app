@@ -8,5 +8,3 @@ export { default as forgotPasswordActions } from './forgotPassword';
 export { default as getUserActions } from './getUser';
 export { default as getAllListingsActions } from './getAllListings';
 export { default as registerActions } from './register';
-
-// console.
