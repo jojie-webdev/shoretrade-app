@@ -13,25 +13,24 @@ import { validate } from './YourDetails.validation';
 const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   // const theme = useTheme();
 
-  const {
-    userDetails,
-    businessDetails,
-    onChangeUserDetails,
-    onChangeBusinessDetails,
-  } = props;
+  const { userDetails, businessDetails, onClickSave, updatingUser } = props;
 
   const formikProps = {
     initialValues: {
-      firstName: '',
-      lastName: '',
-      mobile: '',
-      email: '',
-      businessName: '',
-      abn: '',
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      mobile: userDetails.mobile,
+      email: userDetails.email,
+      businessName: businessDetails.businessName,
+      abn: businessDetails.abn,
     },
     validate,
-    onSubmit: () => {},
+    onSubmit: onClickSave,
   };
+
+  if (!userDetails.firstName) {
+    return <></>;
+  }
 
   return (
     <Wrapper>
@@ -40,62 +39,32 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
         <Form>
           <InputRow>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="First Name"
-                name="firstName"
-                onChange={onChangeUserDetails('firstName')}
-                value={userDetails.firstName}
-              />
+              <FormikTextField label="First Name" name="firstName" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="Last Name"
-                name="lastName"
-                onChange={onChangeUserDetails('lastName')}
-                value={userDetails.lastName}
-              />
+              <FormikTextField label="Last Name" name="lastName" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="Mobile"
-                name="mobile"
-                onChange={onChangeUserDetails('mobile')}
-                value={userDetails.mobile}
-              />
+              <FormikTextField label="Mobile" name="mobile" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="Email"
-                name="email"
-                onChange={onChangeUserDetails('email')}
-                value={userDetails.email}
-              />
+              <FormikTextField label="Email" name="email" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="Business"
-                name="businessName"
-                onChange={onChangeBusinessDetails('businessName')}
-                value={businessDetails.businessName}
-              />
+              <FormikTextField label="Business" name="businessName" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField
-                label="Business number (optional)"
-                name="abn"
-                onChange={onChangeBusinessDetails('abn')}
-                value={businessDetails.abn}
-              />
+              <FormikTextField label="Business number (optional)" name="abn" />
             </Col>
           </InputRow>
+
+          <Row>
+            <Col>
+              <Button text="Save" type="submit" loading={updatingUser} />
+            </Col>
+          </Row>
         </Form>
       </Formik>
-
-      <Row>
-        <Col>
-          <Button text="Save"></Button>
-        </Col>
-      </Row>
     </Wrapper>
   );
 };

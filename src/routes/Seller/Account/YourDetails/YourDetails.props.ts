@@ -3,12 +3,8 @@ import { ChangeEvent } from 'react';
 export interface YourDetailsGeneratedProps {
   userDetails: UserDetails;
   businessDetails: BusinessDetails;
-  onChangeUserDetails: (
-    name: keyof UserDetails
-  ) => (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeBusinessDetails: (
-    name: keyof BusinessDetails
-  ) => (event: ChangeEvent<HTMLInputElement>) => void;
+  onClickSave: (updateUserForm: UpdateUserForm) => void;
+  updatingUser: boolean;
 }
 
 export interface UserDetails {
@@ -22,5 +18,7 @@ export interface BusinessDetails {
   businessName: string;
   abn: string;
 }
+
+export type UpdateUserForm = UserDetails & BusinessDetails;
 
 export type QueryParams = { companyId: string };

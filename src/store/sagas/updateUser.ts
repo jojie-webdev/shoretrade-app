@@ -1,3 +1,5 @@
+import { push } from 'connected-react-router';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { uploadImageData } from 'services/upload';
@@ -63,7 +65,8 @@ function* updateUserSuccess(
 
   yield put(getUserActions.request());
   if (!wasUpdatingLogo) {
-    // goBack();
+    // TODO: Change this to fetch user and AlertSuccess
+    yield put(push(SELLER_ACCOUNT_ROUTES.LANDING));
   }
 }
 

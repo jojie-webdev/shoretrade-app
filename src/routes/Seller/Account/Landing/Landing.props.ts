@@ -1,1 +1,6 @@
-export interface AccountLandingGeneratedProps {}
+import { UserCompany } from 'types/store/GetUserState';
+
+export interface AccountLandingGeneratedProps {
+  currentCompany: UserCompany | undefined;
+  companies: UserCompany[];
+}

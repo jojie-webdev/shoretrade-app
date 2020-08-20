@@ -14,6 +14,7 @@ import {
   BusinessDetails,
   YourDetailsGeneratedProps,
   QueryParams,
+  UpdateUserForm,
 } from './YourDetails.props';
 import YourDetailsView from './YourDetails.view';
 
@@ -22,6 +23,9 @@ const YourDetails = (): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
+  const updatingUser = useSelector(
+    (state: Store) => state.updateUser.pending || false
+  );
   const [companyId, setCompanyId] = useState('');
   const [userDetails, setUserDetails] = useState<UserDetails>({
     firstName: '',
@@ -50,12 +54,10 @@ const YourDetails = (): JSX.Element => {
       });
 
       const { companyId } = queryString.parse(location.search) as QueryParams;
-
       if (!companyId) {
         dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
       }
       setCompanyId(companyId);
-
       const currentCompany = user?.companies.find((c) => c.id === companyId);
 
       setBusinessDetails({
@@ -66,35 +68,38 @@ const YourDetails = (): JSX.Element => {
   }, [getUser.pending]);
 
   // MARK:- Methods
-  const onChangeUserDetails = (name: keyof UserDetails) => (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setUserDetails({
-      ...userDetails,
-      [name]: event.target.value,
-    });
-  };
-
-  const onChangeBusinessDetails = (name: keyof BusinessDetails) => (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setBusinessDetails({
-      ...businessDetails,
-      [name]: event.target.value,
-    });
-  };
-
-  const onClickSave = () => {
+  const onClickSave = (updateUserForm: UpdateUserForm) => {
     const user = getUser.data?.data.user;
     const callingCode = getCallingCode(user?.mobile || '');
 
+    const {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      businessName,
+      abn,
+    } = updateUserForm;
+
+    const updatedUserDetails = {
+      firstName,
+      lastName,
+      email,
+      mobile,
+    };
+
+    const updateBusinessDetails = {
+      businessName,
+      abn,
+    };
+
     dispatch(
       updateUserActions.request({
-        ...userDetails,
-        mobile: `+${callingCode}${userDetails.mobile}`,
+        ...updatedUserDetails,
+        mobile: `+${callingCode}${updatedUserDetails.mobile}`,
         company: {
-          name: businessDetails.businessName,
-          abn: businessDetails.abn,
+          name: updateBusinessDetails.businessName,
+          abn: updateBusinessDetails.abn,
         },
         companyId,
       })
@@ -105,8 +110,8 @@ const YourDetails = (): JSX.Element => {
   const generatedProps: YourDetailsGeneratedProps = {
     userDetails,
     businessDetails,
-    onChangeUserDetails,
-    onChangeBusinessDetails,
+    onClickSave,
+    updatingUser,
   };
   return <YourDetailsView {...generatedProps} />;
 };
