@@ -1,20 +1,28 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 
-import { useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import queryString from 'query-string';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useRouteMatch } from 'react-router-dom';
+import { updateUserActions } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { replaceCallingCode } from 'utils/String/callingCode';
+import { replaceCallingCode, getCallingCode } from 'utils/String/callingCode';
 
 import {
   UserDetails,
   BusinessDetails,
   YourDetailsGeneratedProps,
+  QueryParams,
 } from './YourDetails.props';
 import YourDetailsView from './YourDetails.view';
 
 const YourDetails = (): JSX.Element => {
   // MARK:- States
+  const dispatch = useDispatch();
+  const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
-
+  const [companyId, setCompanyId] = useState('');
   const [userDetails, setUserDetails] = useState<UserDetails>({
     firstName: '',
     lastName: '',
@@ -41,8 +49,14 @@ const YourDetails = (): JSX.Element => {
         mobile: replaceCallingCode(user?.mobile || ''),
       });
 
-      // TODO: Get current company id
-      const currentCompany = user?.companies[0];
+      const { companyId } = queryString.parse(location.search) as QueryParams;
+
+      if (!companyId) {
+        dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+      }
+      setCompanyId(companyId);
+
+      const currentCompany = user?.companies.find((c) => c.id === companyId);
 
       setBusinessDetails({
         businessName: currentCompany?.name || '',
@@ -68,6 +82,23 @@ const YourDetails = (): JSX.Element => {
       ...businessDetails,
       [name]: event.target.value,
     });
+  };
+
+  const onClickSave = () => {
+    const user = getUser.data?.data.user;
+    const callingCode = getCallingCode(user?.mobile || '');
+
+    dispatch(
+      updateUserActions.request({
+        ...userDetails,
+        mobile: `+${callingCode}${userDetails.mobile}`,
+        company: {
+          name: businessDetails.businessName,
+          abn: businessDetails.abn,
+        },
+        companyId,
+      })
+    );
   };
 
   // MARK:- Render

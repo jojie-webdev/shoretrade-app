@@ -6,6 +6,7 @@ import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
+import updateUser from './updateUser';
 import verify from './verify';
 
 const sagas = [
@@ -17,6 +18,7 @@ const sagas = [
   getAllListings,
   register,
   getUser,
+  updateUser,
 ];
 
 export default function* root() {

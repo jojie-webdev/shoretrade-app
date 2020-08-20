@@ -9,6 +9,7 @@ import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
+import updateUser from './updateUser';
 import verify from './verify';
 
 export default (history: History) =>
@@ -22,4 +23,5 @@ export default (history: History) =>
     getUser,
     getAllListings,
     register,
+    updateUser,
   });

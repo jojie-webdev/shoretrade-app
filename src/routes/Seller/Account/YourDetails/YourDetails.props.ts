@@ -22,3 +22,5 @@ export interface BusinessDetails {
   businessName: string;
   abn: string;
 }
+
+export type QueryParams = { companyId: string };
