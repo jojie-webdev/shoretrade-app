@@ -1,13 +1,14 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
-import { ButtonStyleProps, Variants } from './Button.props';
+import { ButtonStyleProps, Variants, ButtonSizes } from './Button.props';
 
 const backgroundColor: Record<Variants, string> = {
   primary: theme.brand.primary,
   outline: theme.grey.noshade,
   disabled: theme.grey.shade3,
   success: theme.brand.success,
+  unselected: theme.grey.shade9,
 };
 
 const border: Record<Variants, string> = {
@@ -15,13 +16,20 @@ const border: Record<Variants, string> = {
   outline: `1.5px solid ${theme.brand.primary}`,
   disabled: `1px solid ${theme.grey.shade5}`,
   success: 'none',
+  unselected: 'none',
+};
+
+const padding: Record<ButtonSizes, string> = {
+  sm: '8px 12px',
+  md: '18px 36px',
+  lg: '',
 };
 
 export const ButtonContainer = styled.button<
   ButtonStyleProps & { hasText: boolean }
 >`
   max-height: 48px;
-  padding: 18px 36px;
+  padding: ${({ size }) => padding[size]};
   background-color: ${({ variant }) => backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
   border-radius: 4px;

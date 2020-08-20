@@ -1,5 +1,6 @@
 /* PLOP_INJECT_IMPORT */
 export { default as Download } from './Download';
+export { default as Fish } from './Fish';
 export { default as UpArrow } from './UpArrow';
 export { default as Filter } from './Filter';
 export { default as Plane } from './Plane';

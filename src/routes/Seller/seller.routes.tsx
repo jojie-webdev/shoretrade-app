@@ -16,7 +16,7 @@ import { Routes, Route as TRoute } from 'types/Routes';
 // Screens
 import SellerAccountRoutes from './Account/account.routes';
 import AddProduct from './AddProduct';
-import Dashboard from './Dashboard';
+import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
 import Selling from './Selling';
@@ -26,8 +26,9 @@ const ROUTES: Routes = {
   DASHBOARD: {
     path: SELLER_ROUTES.DASHBOARD,
     title: 'Dashboard',
-    children: <Dashboard />,
+    children: <DashboardRoutes />,
     icon: DashboardSVG,
+    nested: true,
   },
   // Market Prices
   MARKET_PRICES: {

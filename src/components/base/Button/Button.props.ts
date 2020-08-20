@@ -2,8 +2,14 @@ import { ButtonHTMLAttributes } from 'react';
 
 import { Theme } from 'types/Theme';
 
-export type Variants = 'primary' | 'outline' | 'disabled' | 'success';
+export type Variants =
+  | 'primary'
+  | 'outline'
+  | 'disabled'
+  | 'success'
+  | 'unselected';
 export type IconPosition = 'before' | 'after';
+export type ButtonSizes = 'lg' | 'md' | 'sm';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
@@ -13,6 +19,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variants;
   icon?: JSX.Element;
   takeFullWidth?: boolean;
+  size?: ButtonSizes; // defaults to md
 }
 
 // Styles
@@ -21,4 +28,5 @@ export type ButtonStyleProps = {
   variant: Variants;
   iconPosition: IconPosition;
   takeFullWidth?: boolean;
+  size: ButtonSizes;
 };

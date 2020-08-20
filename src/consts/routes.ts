@@ -34,6 +34,15 @@ export const SELLER_ACCOUNT_ROUTES = {
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
 };
 
+export const SELLER_DASHBOARD_ROUTES = {
+  LANDING: SELLER_ROUTES.DASHBOARD,
+  CASH_FLOW: (months = 'months') =>
+    `${SELLER_ROUTES.DASHBOARD}/cash-flow/:months`,
+  CATEGORIES: `${SELLER_ROUTES.DASHBOARD}/categories/`,
+  CATEGORY_DETAIL: (category = 'category') =>
+    `${SELLER_ROUTES.DASHBOARD}/categories/:${category}`,
+};
+
 export const BUYER_ROUTES = {
   ROOT: `${BUYER_ROOT}`,
   LOGIN: `${BUYER_ROOT}/login`,

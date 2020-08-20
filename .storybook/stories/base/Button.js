@@ -10,8 +10,8 @@ import Container from '../../components/Container';
 
 storiesOf('base/Button', module).add('Summary', () => (
   <Container background="white">
-    <div style={{ display: 'flex' }}>
-      <div style={{ marginRight: '20px' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ marginRight: '20px', marginBottom: '30px' }}>
         <Button text="Primary Button" style={{ marginBottom: '5px' }} />
         <Button
           text="Primary Button with Icon"
@@ -34,7 +34,7 @@ storiesOf('base/Button', module).add('Summary', () => (
           loading
         />
       </div>
-      <div style={{ marginRight: '20px' }}>
+      <div style={{ marginRight: '20px', marginBottom: '30px' }}>
         <Button
           text="Outline Button"
           variant="outline"
@@ -65,7 +65,7 @@ storiesOf('base/Button', module).add('Summary', () => (
           style={{ marginBottom: '5px' }}
         />
       </div>
-      <div style={{ marginRight: '20px' }}>
+      <div style={{ marginRight: '20px', marginBottom: '30px' }}>
         <Button
           text="Disabled Button"
           variant="disabled"
@@ -96,6 +96,62 @@ storiesOf('base/Button', module).add('Summary', () => (
           style={{ marginBottom: '5px' }}
           variant="success"
           icon={<Check fill="#fff" />}
+        />
+      </div>
+
+      <div style={{ marginRight: '20px' }}>
+        <Button
+          text="Unselected Button"
+          variant="unselected"
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          text="Unselected Button with Icon"
+          variant="unselected"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          text="Unselected Button with Icon"
+          variant="unselected"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          iconPosition="before"
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          variant="unselected"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          style={{ marginBottom: '5px' }}
+        />
+      </div>
+
+      <div style={{ marginRight: '20px' }}>
+        <Button
+          text="Small Button"
+          variant="unselected"
+          size="sm"
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          text="Small Button with Icon"
+          variant="unselected"
+          size="sm"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          text="Small Button with Icon"
+          variant="unselected"
+          size="sm"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          iconPosition="before"
+          style={{ marginBottom: '5px' }}
+        />
+        <Button
+          variant="unselected"
+          size="sm"
+          icon={<Eye fill="#BBC2DC" height={15} width={20} />}
+          style={{ marginBottom: '5px' }}
         />
       </div>
     </div>

@@ -5,6 +5,7 @@ import Spinner from 'components/base/Spinner';
 import { Theme } from 'types/Theme';
 
 import Typography from '../Typography';
+import { TypographyProps } from '../Typography/Typography.props';
 import { ButtonProps } from './Button.props';
 import {
   ButtonContainer,
@@ -21,6 +22,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     iconPosition = 'after',
     variant = 'primary',
     takeFullWidth = false,
+    size = 'md',
     ...buttonProps
   } = props;
 
@@ -32,14 +34,28 @@ const Button = (props: ButtonProps): JSX.Element => {
     textColor = 'primary';
   } else if (variant === 'success') {
     textColor = 'noshade';
+  } else if (variant === 'unselected') {
+    textColor = 'noshade';
   } else {
     textColor = 'shade5';
+  }
+
+  let textVariant: TypographyProps['variant'];
+  let textWeight = '500';
+
+  if (size === 'sm') {
+    textVariant = 'label';
+    textWeight = '500';
+  } else if (size === 'md') {
+    textVariant = 'overline';
+    textWeight = '900';
   }
 
   const hasText = text && text?.length > 0 ? true : false;
 
   return (
     <ButtonContainer
+      size={size}
       color={color}
       variant={variant}
       hasText={hasText}
@@ -54,7 +70,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       )}
 
       {text && (
-        <Typography variant="overline" color={textColor} weight="900">
+        <Typography variant={textVariant} color={textColor} weight={textWeight}>
           {text}
         </Typography>
       )}
