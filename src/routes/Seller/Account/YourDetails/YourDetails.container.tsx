@@ -112,6 +112,7 @@ const YourDetails = (): JSX.Element => {
     businessDetails,
     onClickSave,
     updatingUser,
+    loadingUser: getUser.pending || true,
   };
   return <YourDetailsView {...generatedProps} />;
 };

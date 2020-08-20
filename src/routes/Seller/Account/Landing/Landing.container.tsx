@@ -23,12 +23,12 @@ const AccountLanding = (): JSX.Element => {
 
   // Mark:- Effects
   useEffect(() => {
-    if (!pending) {
+    if (!loadingUser) {
       const c = companies || [];
 
       setCurrentCompany(c[0]);
     }
-  }, [pending]);
+  }, [loadingUser]);
 
   // Mark:- Render
   const generatedProps: AccountLandingGeneratedProps = {

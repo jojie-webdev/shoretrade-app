@@ -3,6 +3,7 @@ import React from 'react';
 import Button from 'components/base/Button';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import Loading from 'components/module/Loading';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 
@@ -13,7 +14,17 @@ import { validate } from './YourDetails.validation';
 const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   // const theme = useTheme();
 
-  const { userDetails, businessDetails, onClickSave, updatingUser } = props;
+  const {
+    userDetails,
+    businessDetails,
+    onClickSave,
+    updatingUser,
+    loadingUser,
+  } = props;
+
+  if (loadingUser && !userDetails.firstName) {
+    return <Loading />;
+  }
 
   const formikProps = {
     initialValues: {
@@ -27,10 +38,6 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     validate,
     onSubmit: onClickSave,
   };
-
-  if (!userDetails.firstName) {
-    return <></>;
-  }
 
   return (
     <Wrapper>
