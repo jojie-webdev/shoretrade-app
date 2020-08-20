@@ -5,4 +5,6 @@ export interface FormikTextFieldProps
   label: string;
   name: string;
   secured?: boolean;
+  alert?: string;
+  LeftComponent?: React.ReactNode;
 }

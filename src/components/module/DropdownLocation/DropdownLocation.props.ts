@@ -9,4 +9,5 @@ export interface DropdownLocationProps {
   error?: string;
   locationSearchProps?: Partial<LocationSearchProps>;
   modalProps?: ModalProps;
+  className?: string;
 }

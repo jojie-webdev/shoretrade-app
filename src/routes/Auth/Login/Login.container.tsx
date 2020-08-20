@@ -30,11 +30,16 @@ const Login = (): JSX.Element => {
     );
   };
 
+  const goToRegister = () => {
+    dispatch(push(isSeller ? SELLER_ROUTES.REGISTER : BUYER_ROUTES.REGISTER));
+  };
+
   const generatedProps = {
     // generated props here
     login,
     pending,
     goToForgotPassword,
+    goToRegister,
     isError,
   };
   return <LoginView {...generatedProps} />;

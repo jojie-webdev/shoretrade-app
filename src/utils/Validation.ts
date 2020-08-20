@@ -70,7 +70,7 @@ validate.validators.isFutureDate = (value: Date, message: string) => {
 };
 
 export const createValidator = (constraints: Record<string, any>) => {
-  return (attributes: Record<string, any>): Record<string, string[]> => {
+  return (attributes: Record<string, any>): Record<string, string> => {
     const filteredConstraints = pick(Object.keys(attributes), constraints);
 
     const validationErrors = validate(attributes, filteredConstraints) || {};

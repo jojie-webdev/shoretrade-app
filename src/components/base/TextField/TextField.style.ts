@@ -1,3 +1,4 @@
+import AlertInfo from 'components/base/AlertInfo';
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
@@ -10,7 +11,7 @@ const fontStyle = `
   line-height: 24px;
 `;
 
-export const FieldContainer = styled.div`
+export const FieldContainer = styled.div<{ error: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,7 +20,8 @@ export const FieldContainer = styled.div`
   height: 48px;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.grey.shade5};
+  border: 1px solid
+    ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
   background-color: ${({ theme }) => theme.grey.noshade};
 `;
 
@@ -59,6 +61,10 @@ export const VisibilityContainer = styled.div`
 
 export const Error = styled(Typography)`
   margin-top: 4px;
+`;
+
+export const Alert = styled(AlertInfo)`
+  margin-top: 8px;
 `;
 
 export const Prefix = styled.span`
