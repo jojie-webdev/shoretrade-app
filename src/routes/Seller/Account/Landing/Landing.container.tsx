@@ -13,7 +13,7 @@ const AccountLanding = (): JSX.Element => {
     UserCompany | undefined
   >();
 
-  const pending = useSelector((state: Store) => state.getUser.pending);
+  const pending = useSelector((state: Store) => state.getUser.pending || false);
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
 
   const companies = user?.companies || [];
@@ -34,6 +34,7 @@ const AccountLanding = (): JSX.Element => {
     currentCompany,
     companies,
     profilePicture,
+    pending,
   };
   return <AccountLandingView {...generatedProps} />;
 };

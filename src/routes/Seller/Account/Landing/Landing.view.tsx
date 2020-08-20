@@ -3,6 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import Typography from 'components/base/Typography';
+import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
 
-  const { companies, currentCompany, profilePicture } = props;
+  const { companies, currentCompany, profilePicture, pending } = props;
 
   const INTERACTIONS = [
     {
@@ -43,6 +44,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     { value: 'Bank Details', path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS },
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
+
+  if (pending) {
+    return <Loading />;
+  }
 
   return (
     <Container>
