@@ -65,7 +65,7 @@ const YourDetails = (): JSX.Element => {
         abn: currentCompany?.abn || '',
       });
     }
-  }, [getUser.pending]);
+  }, [getUser]);
 
   // MARK:- Methods
   const onClickSave = (updateUserForm: UpdateUserForm) => {

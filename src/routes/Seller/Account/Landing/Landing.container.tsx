@@ -14,9 +14,10 @@ const AccountLanding = (): JSX.Element => {
   >();
 
   const pending = useSelector((state: Store) => state.getUser.pending);
-  const companies: UserCompany[] = useSelector(
-    (state: Store) => state.getUser.data?.data.user.companies || []
-  );
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+
+  const companies = user?.companies || [];
+  const profilePicture = user?.profileImage || '';
 
   // Mark:- Effects
   useEffect(() => {
@@ -32,6 +33,7 @@ const AccountLanding = (): JSX.Element => {
     // generated props here
     currentCompany,
     companies,
+    profilePicture,
   };
   return <AccountLandingView {...generatedProps} />;
 };

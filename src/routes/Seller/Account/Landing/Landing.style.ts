@@ -20,7 +20,6 @@ export const Header = styled.div`
     align-items: center;
 
     img {
-      border: 1px solid red;
       width: 96px;
       height: 96px;
       border-radius: 4px;
