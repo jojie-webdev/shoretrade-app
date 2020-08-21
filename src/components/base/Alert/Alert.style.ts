@@ -42,10 +42,16 @@ export const Container = styled.div<AlertContainerProps>`
   display: flex;
   flex-direction: column;
 
+  /* position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 16px;
+  margin-right: 16px; */
+
   .top-content-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: ${(props) => props.alignText}; // defaults to 'flex-start'
 
     .svg-container {
       margin-right: 8px;

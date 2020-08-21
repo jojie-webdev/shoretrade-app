@@ -6,6 +6,7 @@ export interface YourDetailsGeneratedProps {
   onClickSave: (updateUserForm: UpdateUserForm) => void;
   updatingUser: boolean;
   loadingUser: boolean;
+  updateUserSuccess: boolean;
 }
 
 export interface UserDetails {

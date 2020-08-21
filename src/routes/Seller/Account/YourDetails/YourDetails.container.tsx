@@ -23,9 +23,7 @@ const YourDetails = (): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
-  const updatingUser = useSelector(
-    (state: Store) => state.updateUser.pending || false
-  );
+  const updateUser = useSelector((state: Store) => state.updateUser);
   const [companyId, setCompanyId] = useState('');
   const [userDetails, setUserDetails] = useState<UserDetails>({
     firstName: '',
@@ -111,8 +109,9 @@ const YourDetails = (): JSX.Element => {
     userDetails,
     businessDetails,
     onClickSave,
-    updatingUser,
+    updatingUser: updateUser.pending || false,
     loadingUser: getUser.pending || true,
+    updateUserSuccess: updateUser.data?.status === 200 || false,
   };
   return <YourDetailsView {...generatedProps} />;
 };

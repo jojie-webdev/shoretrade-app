@@ -16,7 +16,14 @@ import { Container, AlertButton } from './Alert.style';
 const Alert = (props: AlertProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { content, variant, onClick, buttonText, ...containerProps } = props;
+  const {
+    content,
+    variant,
+    onClick,
+    buttonText,
+    alignText = 'flex-start',
+    ...containerProps
+  } = props;
 
   let Icon = InfoFilled;
 
@@ -33,7 +40,7 @@ const Alert = (props: AlertProps): JSX.Element => {
   }
 
   return (
-    <Container variant={variant} {...containerProps}>
+    <Container variant={variant} alignText={alignText} {...containerProps}>
       <div className="top-content-container">
         <div className="svg-container">
           <Icon />
