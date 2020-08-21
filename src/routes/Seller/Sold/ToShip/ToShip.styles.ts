@@ -15,16 +15,6 @@ export const PendingRow = styled.div`
     }
   }
 
-  .items-container {
-    display: flex;
-    align-items: center;
-    /* white-space: nowrap; */
-    overflow: auto;
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-
   .pagination-container {
     display: flex;
     justify-content: center;
