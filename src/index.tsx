@@ -16,7 +16,10 @@ import theme from 'utils/Theme';
 
 // Initialize languages
 import './locales/i18n';
+
+// load css
 import './normalize.css';
+import 'swiper/swiper-bundle.min.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
