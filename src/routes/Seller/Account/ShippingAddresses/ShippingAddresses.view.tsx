@@ -6,9 +6,7 @@ import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -39,10 +37,9 @@ const AddressText = (
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
-  const { pending, addresses } = props;
+  const { pending, addresses, onClickAddress } = props;
 
   const theme = useTheme();
-  const history = useHistory();
 
   if (pending) {
     return <Loading />;
@@ -90,7 +87,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
           return (
             <InteractionCol md={12} key={address.id}>
               <Interactions
-                onClick={() => history.push(SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS)}
+                onClick={() => onClickAddress(address.id)}
                 leftComponent={AddressText(
                   title,
                   color,

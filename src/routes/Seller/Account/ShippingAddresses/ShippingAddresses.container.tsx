@@ -27,6 +27,11 @@ const ShippingAddresses = (): JSX.Element => {
 
   // Mark:- Methods
 
+  const onClickAddress = (addressId: string) => {
+    const route = `${SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS}?addressId=${addressId}&companyId=${companyId}`;
+    dispatch(push(route));
+  };
+
   // Mark:- Effects
   useEffect(() => {
     const { companyId } = queryString.parse(location.search) as QueryParams;
@@ -43,12 +48,11 @@ const ShippingAddresses = (): JSX.Element => {
     }
   }, [companyId]);
 
-  console.log(addresses);
-
   // Mark:- Render
   const generatedProps: ShippingAddressesGeneratedProps = {
     addresses,
     pending,
+    onClickAddress,
   };
   return <ShippingAddressesView {...generatedProps} />;
 };
