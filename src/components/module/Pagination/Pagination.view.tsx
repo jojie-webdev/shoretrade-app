@@ -15,7 +15,13 @@ import {
 const Pagination = (props: PaginationProps): JSX.Element => {
   const theme = useTheme();
 
-  const { numPages, currentValue, onClickButton, variant = 'number' } = props;
+  const {
+    spacing,
+    numPages,
+    currentValue,
+    onClickButton,
+    variant = 'number',
+  } = props;
 
   const numArray = [];
 
@@ -73,6 +79,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
           <PaginationDot
             key={`pagination-dot-${value}`}
             active={currentValue === value}
+            spacing={spacing}
           />
         ))}
       </>

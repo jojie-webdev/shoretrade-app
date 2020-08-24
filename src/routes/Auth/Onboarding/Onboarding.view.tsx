@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { ShoretradeLogo, Crab, ArrowRight } from 'components/base/SVG';
+import { ShoretradeLogo, ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import EmptyState from 'components/module/EmptyState';
@@ -18,13 +18,14 @@ import {
 } from './Onboarding.style';
 
 const OnboardingView = (props: OnboardingGeneratedProps) => {
+  const { currentPage, onClickNext, currentData, onClickSkip } = props;
   const theme = useTheme();
   return (
-    <AuthContainer title="Welcome" onCloseAction={() => {}}>
+    <AuthContainer title="Welcome" onCloseAction={onClickSkip}>
       <Container>
         <LogoContainer>
           <ShoretradeLogo width={200} height={24} />
-          <SkipButton>
+          <SkipButton onClick={onClickSkip}>
             <Typography color="noshade" variant="caption" className="text">
               Skip
             </Typography>
@@ -33,27 +34,25 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
         </LogoContainer>
 
         <SvgContainer>
-          <EmptyState Svg={Crab} fluid />
+          <EmptyState Svg={currentData.Svg} fluid />
         </SvgContainer>
 
         <Typography variant="title4" color="noshade">
-          Welcome to ShoreTrade.
+          {currentData.title}
         </Typography>
 
-        <Typography color="shade5">
-          Etiam egestas at viverra id est orci id ut pharetra. Vulputate nibh
-          eros vel dolor, id diam nisi, adipiscing quam.
-        </Typography>
+        <Typography color="shade5">{currentData.description}</Typography>
       </Container>
 
       <Footer>
         <Pagination
           variant="dots"
-          currentValue={0}
+          currentValue={currentPage + 1}
           numPages={4}
+          spacing={8}
           onClickButton={() => {}}
         />
-        <Button text="Next" onClick={() => {}} />
+        <Button text="Next" onClick={onClickNext} />
       </Footer>
     </AuthContainer>
   );

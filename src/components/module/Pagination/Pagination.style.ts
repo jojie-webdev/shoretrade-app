@@ -36,11 +36,14 @@ export const PaginationButton = styled.button<{ active?: boolean }>`
 `;
 
 // Dot Variant
-export const PaginationDot = styled.div<{ active?: boolean }>`
+export const PaginationDot = styled.div<{
+  active?: boolean;
+  spacing?: number;
+}>`
   height: 8px;
   width: 8px;
   border-radius: 4px;
-  margin-right: 24px;
+  margin-right: ${({ spacing }) => (spacing ? `${spacing}px` : '24px')};
   background: ${(props) =>
     props.active ? props.theme.brand.primary : props.theme.grey.shade3};
 `;

@@ -6,4 +6,5 @@ export interface PaginationProps {
   // For numbers variant
   onClickButton: (nextValue: number) => void;
   variant: Variants;
+  spacing?: number;
 }
