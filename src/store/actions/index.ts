@@ -9,3 +9,4 @@ export { default as getUserActions } from './getUser';
 export { default as getAllListingsActions } from './getAllListings';
 export { default as registerActions } from './register';
 export { default as updateUserActions } from './updateUser';
+export { default as getAddressesActions } from './getAddresses';

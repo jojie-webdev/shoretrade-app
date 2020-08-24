@@ -5,6 +5,7 @@ import Interactions from 'components/base/Interactions';
 import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -35,8 +36,14 @@ const AddressText = (
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
+  const { pending } = props;
+
   const theme = useTheme();
   const history = useHistory();
+
+  if (pending) {
+    return <Loading />;
+  }
 
   return (
     <Wrapper>
@@ -71,7 +78,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
 
       <Row>
         <Col>
-          <Button text="Add a new address"></Button>
+          <Button text="Add a new address" />
         </Col>
       </Row>
     </Wrapper>

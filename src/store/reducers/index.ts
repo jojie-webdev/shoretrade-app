@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import forgotPassword from './forgotPassword';
+import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getUser from './getUser';
 import login from './login';
@@ -24,4 +25,5 @@ export default (history: History) =>
     getAllListings,
     register,
     updateUser,
+    getAddresses,
   });

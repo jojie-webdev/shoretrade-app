@@ -1,6 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 
 import forgotPassword from './forgotPassword';
+import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getUser from './getUser';
 import login from './login';
@@ -19,6 +20,7 @@ const sagas = [
   register,
   getUser,
   updateUser,
+  getAddresses,
 ];
 
 export default function* root() {
