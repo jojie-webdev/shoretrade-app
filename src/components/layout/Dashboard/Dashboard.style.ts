@@ -1,3 +1,4 @@
+import Touchable from 'components/base/Touchable';
 import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
@@ -35,6 +36,23 @@ export const SidebarItem = styled(Link)`
   .icon-container {
     margin-right: 12px;
   }
+`;
+
+export const LogoutContainer = styled.div`
+  height: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: none;
+  text-decoration: none;
+
+  .icon-container {
+    margin-right: 12px;
+  }
+`;
+
+export const LogoutButton = styled(Touchable)`
+  margin-bottom: 24px;
 `;
 
 export const Content = styled.div<{ shouldIncludePadding: boolean }>`
