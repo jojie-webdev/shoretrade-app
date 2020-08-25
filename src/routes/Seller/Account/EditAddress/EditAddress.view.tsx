@@ -8,20 +8,24 @@ import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LoadingView from 'components/module/Loading';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 
 import { EditAddressGeneratedProps } from './EditAddress.props';
 import { Container } from './EditAddress.style';
+import { isValid } from './EditAddress.validation';
 
 const EditAddressView = (props: EditAddressGeneratedProps) => {
   // const theme = useTheme();
-  const { address, isDefault } = props;
+  const { address, isDefault, pending, onClickSave, toggleIsDefault } = props;
 
-  const formikInitial = {
-    address: address?.address || '',
-    unitNumber: address?.unitNumber || '',
-    isDefault: isDefault,
+  const formikProps = {
+    initialValues: {
+      address: address?.address || '',
+      unitNumber: address?.unitNumber || '',
+    },
+    validate: isValid,
+    onSubmit: onClickSave,
   };
 
   if (!address) {
@@ -32,8 +36,8 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
     <Container>
       <InnerRouteHeader title="Edit Adresses" />
 
-      <Formik initialValues={formikInitial} onSubmit={() => {}}>
-        <>
+      <Formik {...formikProps}>
+        <Form>
           <Row className="textfield-row">
             <Col>
               <FormikTextField label="Address" name="address" />
@@ -46,7 +50,10 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
           <Row className="checkbox-row">
             <Col className="checkbox-col">
               <div className="checkbox-container">
-                <Checkbox checked />
+                <Checkbox
+                  checked={isDefault || false}
+                  onClick={toggleIsDefault}
+                />
               </div>
               <Typography variant="label" color="noshade">
                 Set as default address
@@ -56,10 +63,10 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
 
           <Row>
             <Col>
-              <Button text="Submit" />
+              <Button text="Submit" type="submit" loading={pending} />
             </Col>
           </Row>
-        </>
+        </Form>
       </Formik>
     </Container>
   );
