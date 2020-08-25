@@ -6,43 +6,18 @@ import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch } from 'react-redux';
 import { useTheme } from 'utils/Theme';
 
+import { BUYER_STEPS, SELLER_STEPS } from './Onboarding.constants';
 import { OnboardingGeneratedProps, Data } from './Onboarding.props';
 import OnboardingView from './Onboarding.view';
-
-const DATA: Data[] = [
-  {
-    Svg: Crab,
-    title: 'Welcome to ShoreTrade.',
-    description:
-      'Etiam egestas at viverra id est orci id ut pharetra. Vulputate nibh eros vel dolor, id diam nisi, adipiscing quam. Adipiscing.',
-  },
-  {
-    Svg: Fish,
-    title: 'Add your products in the App.',
-    description:
-      'Etiam egestas at viverra id est orci id ut pharetra. Vulputate nibh eros vel dolor, id diam nisi, adipiscing quam. Adipiscing.',
-  },
-  {
-    Svg: Oysters,
-    title: 'Get Insights and Analytics.',
-    description:
-      'Etiam egestas at viverra id est orci id ut pharetra. Vulputate nibh eros vel dolor, id diam nisi, adipiscing quam. Adipiscing.',
-  },
-  {
-    Svg: Octopus,
-    title: 'Sell your products and get paid.',
-    description:
-      'Etiam egestas at viverra id est orci id ut pharetra. Vulputate nibh eros vel dolor, id diam nisi, adipiscing quam. Adipiscing.',
-  },
-];
 
 const Onboarding = (): JSX.Element => {
   // MARK:- State / Store
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(0);
-
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
+  const DATA: Data[] = isSeller ? SELLER_STEPS : BUYER_STEPS;
+
   // MARK:- Methods
   const onClickNext = () => {
     if (currentPage !== DATA.length - 1) {
@@ -61,6 +36,7 @@ const Onboarding = (): JSX.Element => {
     currentPage,
     onClickNext,
     currentData: DATA[currentPage],
+
     onClickSkip,
   };
 
