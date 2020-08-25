@@ -5,8 +5,13 @@ import {
   Row as GridRow,
   Col,
 } from 'react-grid-system';
-import BackgroundImage from 'res/images/seller-auth-background.png';
+import BuyerBackgroundImage from 'res/images/buyer-auth-background.png';
+import SellerBackgroundImage from 'res/images/seller-auth-background.png';
 import styled from 'utils/styled';
+
+const getBackgroundImage = (isSeller: boolean) => {
+  return isSeller ? SellerBackgroundImage : BuyerBackgroundImage;
+};
 
 export const Container = styled.div`
   width: 100%;
@@ -17,7 +22,8 @@ export const Container = styled.div`
 export const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${BackgroundImage});
+  background-image: url(${({ theme }) =>
+    getBackgroundImage(theme.appType === 'seller')});
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.32;

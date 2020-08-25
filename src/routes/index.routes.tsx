@@ -22,11 +22,11 @@ import BuyerRoutes from './Buyer/buyer.routes';
 import SellerRoutes from './Seller/seller.routes';
 
 export const ROUTES: Routes = {
-  // Seller Unauthenticated Routes
   ROOT: {
     path: MAIN_ROUTES.LANDING,
     children: <h1>Landing Page if it exists</h1>,
   },
+  // Seller Unauthenticated Routes
   SELLER_LOGIN: {
     path: SELLER_ROUTES.LOGIN,
     children: <Login />,
@@ -55,6 +55,18 @@ export const ROUTES: Routes = {
   BUYER_LOGIN: {
     path: BUYER_ROUTES.LOGIN,
     children: <Login />,
+  },
+  BUYER_FORGOT_PASSWORD: {
+    path: BUYER_ROUTES.FORGOT_PASSWORD,
+    children: <ForgotPassword />,
+  },
+  BUYER_VERIFY2FA: {
+    path: BUYER_ROUTES.VERIFY2FA,
+    children: <Verify2FA />,
+  },
+  BUYER_REGISTER: {
+    path: BUYER_ROUTES.REGISTER,
+    children: <Register />,
   },
 
   // Nested Routes
