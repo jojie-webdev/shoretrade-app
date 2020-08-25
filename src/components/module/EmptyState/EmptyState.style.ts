@@ -1,19 +1,22 @@
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ fluid: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
   width: 100%;
 `;
 
 export const MainText = styled(Typography)``;
 
-export const SVGContainer = styled.div<{ circleColor: string }>`
-  margin-top: 70px;
-  margin-bottom: 60px;
+export const SVGContainer = styled.div<{
+  circleColor: string;
+  fluid: boolean;
+}>`
+  margin-top: ${({ fluid }) => (fluid ? '0' : '70px')};
+  margin-bottom: ${({ fluid }) => (fluid ? '0' : '60px')};
   position: relative;
   height: 245px;
   width: 245px;

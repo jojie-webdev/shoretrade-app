@@ -55,7 +55,8 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   width: 100%;
   height: 64px;
-  background-color: ${({ theme }) => theme.grey.shade9};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   align-items: center;
   padding: 0px 20px;
 `;
@@ -81,13 +82,15 @@ export const BackIcon = styled(ArrowLeft)``;
 
 export const Title = styled(Typography)`
   font-weight: bold;
-  color: ${({ theme }) => theme.grey.noshade};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade8};
 `;
 
 export const Content = styled(Col)`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.grey.shade8};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
   height: 70%;
   width: 100%;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);

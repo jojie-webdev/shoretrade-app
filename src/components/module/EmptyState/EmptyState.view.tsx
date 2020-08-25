@@ -10,7 +10,7 @@ import { Container, MainText, SVGContainer } from './EmptyState.style';
 const EmptyState = (props: EmptyStateProps): JSX.Element => {
   const theme = useTheme();
 
-  const { title, buttonText, onButtonClicked, Svg } = props;
+  const { title, buttonText, onButtonClicked, fluid = false, Svg } = props;
 
   const textColor = theme.appType === 'buyer' ? 'shade9' : 'noshade';
   const svgColor =
@@ -19,16 +19,19 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
     theme.appType === 'buyer' ? theme.grey.shade3 : theme.grey.shade9;
 
   return (
-    <Container>
-      <MainText variant="title5" className="title" color={textColor}>
-        {title}
-      </MainText>
-
-      <SVGContainer circleColor={circleColor}>
+    <Container fluid={fluid}>
+      {title && (
+        <MainText variant="title5" className="title" color={textColor}>
+          {title}
+        </MainText>
+      )}
+      <SVGContainer circleColor={circleColor} fluid={fluid}>
         <Svg height={311} width={311} fill={svgColor} />
       </SVGContainer>
 
-      <Button text={buttonText} onClick={onButtonClicked}></Button>
+      {onButtonClicked && (
+        <Button text={buttonText} onClick={onButtonClicked}></Button>
+      )}
     </Container>
   );
 };
