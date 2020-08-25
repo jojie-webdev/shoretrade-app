@@ -99,25 +99,25 @@ const RoutesComponent = (): JSX.Element => {
   const currentPath = location.pathname;
 
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   // On authenticated, fetch user.
-    //   dispatch(getUserActions.request());
-    //   // Redirects
-    //   if (
-    //     authenticatedUserType === 'seller' &&
-    //     (UNAUTHENTICATED_SELLER_ROUTES.includes(currentPath) ||
-    //       currentPath.includes('buyer'))
-    //   ) {
-    //     history.push(SELLER_ROUTES.ROOT);
-    //   }
-    //   if (
-    //     authenticatedUserType === 'buyer' &&
-    //     (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||
-    //       currentPath.includes('seller'))
-    //   ) {
-    //     history.push(BUYER_ROUTES.ROOT);
-    //   }
-    // }
+    if (isAuthenticated) {
+      // On authenticated, fetch user.
+      dispatch(getUserActions.request());
+      // Redirects
+      if (
+        authenticatedUserType === 'seller' &&
+        (UNAUTHENTICATED_SELLER_ROUTES.includes(currentPath) ||
+          currentPath.includes('buyer'))
+      ) {
+        history.push(SELLER_ROUTES.ROOT);
+      }
+      if (
+        authenticatedUserType === 'buyer' &&
+        (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||
+          currentPath.includes('seller'))
+      ) {
+        history.push(BUYER_ROUTES.ROOT);
+      }
+    }
   }, [isAuthenticated, authenticatedUserType]);
 
   return (
