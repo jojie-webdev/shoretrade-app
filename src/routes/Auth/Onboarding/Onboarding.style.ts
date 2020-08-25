@@ -44,5 +44,6 @@ export const Footer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 32px;
-  background-color: ${({ theme }) => theme.grey.shade9};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
 `;

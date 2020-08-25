@@ -37,11 +37,16 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
           <EmptyState Svg={currentData.Svg} fluid />
         </SvgContainer>
 
-        <Typography variant="title4" color="noshade">
+        <Typography
+          variant="title4"
+          color={theme.appType === 'seller' ? 'noshade' : 'shade8'}
+        >
           {currentData.title}
         </Typography>
 
-        <Typography color="shade5">{currentData.description}</Typography>
+        <Typography color={theme.appType === 'seller' ? 'shade5' : 'shade6'}>
+          {currentData.description}
+        </Typography>
       </Container>
 
       <Footer>

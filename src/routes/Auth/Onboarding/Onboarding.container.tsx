@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import { Crab, Fish, Oysters, Octopus } from 'components/base/SVG';
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES } from 'consts';
+import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch } from 'react-redux';
+import { useTheme } from 'utils/Theme';
 
 import { OnboardingGeneratedProps, Data } from './Onboarding.props';
 import OnboardingView from './Onboarding.view';
@@ -40,17 +41,19 @@ const Onboarding = (): JSX.Element => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState<number>(0);
 
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   // MARK:- Methods
   const onClickNext = () => {
     if (currentPage !== DATA.length - 1) {
       setCurrentPage(currentPage + 1);
     } else {
-      dispatch(push(SELLER_ROUTES.LOGIN));
+      dispatch(push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN));
     }
   };
 
   const onClickSkip = () => {
-    dispatch(push(SELLER_ROUTES.LOGIN));
+    dispatch(push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN));
   };
 
   // MARK:- Render
