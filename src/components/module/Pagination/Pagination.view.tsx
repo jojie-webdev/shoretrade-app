@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ChevronLeft, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -19,27 +19,22 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     spacing,
     numPages,
     currentValue,
-    onClickButton,
+    onClickButton = () => null,
     variant = 'number',
   } = props;
 
-  const numArray = [];
+  const initialOffset = currentValue - 3;
+  const [offset, setOffset] = useState(initialOffset > 0 ? initialOffset : 0);
 
-  for (let x = 0; x < numPages; x++) {
-    numArray.push(x + 1);
-  }
+  const onPrevious = () => {
+    setOffset((n) => n - 1);
+  };
 
-  function onClickManualControl(type: 'forward' | 'backward') {
-    if (type === 'backward' && currentValue - 1 >= 1) {
-      onClickButton(currentValue - 1);
-      return;
-    }
+  const onNext = () => {
+    setOffset((n) => n + 1);
+  };
 
-    if (type === 'forward' && currentValue + 1 <= numPages) {
-      onClickButton(currentValue + 1);
-      return;
-    }
-  }
+  const numArray = [...Array(numPages).keys()].map((v) => v + 1);
 
   let pagination;
 
@@ -50,26 +45,57 @@ const Pagination = (props: PaginationProps): JSX.Element => {
 
     pagination = (
       <>
-        <PaginationButton onClick={() => onClickManualControl('backward')}>
-          <ChevronLeft fill={iconColor} />
+        {numPages > 3 && offset > 0 && (
+          <PaginationButton onClick={() => onPrevious()}>
+            <ChevronLeft fill={iconColor} />
+          </PaginationButton>
+        )}
+
+        <PaginationButton
+          active={currentValue === offset + 1}
+          onClick={() => onClickButton(offset + 1)}
+        >
+          <Typography
+            variant="label"
+            color={currentValue === offset + 1 ? 'noshade' : textColor}
+          >
+            {offset + 1}
+          </Typography>
         </PaginationButton>
-        {numArray.map((value) => (
+
+        {numPages >= offset + 2 && (
           <PaginationButton
-            key={`pagination-${value}`}
-            active={currentValue === value}
-            onClick={() => onClickButton(value)}
+            active={currentValue === offset + 2}
+            onClick={() => onClickButton(offset + 2)}
           >
             <Typography
               variant="label"
-              color={currentValue === value ? 'noshade' : textColor}
+              color={currentValue === offset + 2 ? 'noshade' : textColor}
             >
-              {value}
+              {offset + 2}
             </Typography>
           </PaginationButton>
-        ))}
-        <PaginationButton onClick={() => onClickManualControl('forward')}>
-          <ChevronRight fill={iconColor} />
-        </PaginationButton>
+        )}
+
+        {numPages >= offset + 3 && (
+          <PaginationButton
+            active={currentValue === offset + 3}
+            onClick={() => onClickButton(offset + 3)}
+          >
+            <Typography
+              variant="label"
+              color={currentValue === offset + 3 ? 'noshade' : textColor}
+            >
+              {offset + 3}
+            </Typography>
+          </PaginationButton>
+        )}
+
+        {numPages > 3 && numPages > offset + 3 && (
+          <PaginationButton onClick={() => onNext()}>
+            <ChevronRight fill={iconColor} />
+          </PaginationButton>
+        )}
       </>
     );
   } else if (variant === 'dots') {

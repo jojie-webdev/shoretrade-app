@@ -12,7 +12,7 @@ const toKilograms: Function = (size: string): string =>
 export const sizeToString = (
   typeMetric: string,
   sizeFrom?: string,
-  sizeTo?: string,
+  sizeTo?: string
 ): string => {
   if (!sizeFrom || sizeFrom === '') {
     return 'Ungraded';

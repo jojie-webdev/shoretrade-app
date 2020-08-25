@@ -2,19 +2,22 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
+import Spinner from 'components/base/Spinner';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { MarketPricesGeneratedProps } from './MarketPrices.props';
-import { MarketContainer } from './MarketPrices.style';
+import { MarketContainer, SpinnerContainer } from './MarketPrices.style';
 
 const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
   // const theme = useTheme();
   const {
-    searchValue,
     onChangeSearchValue,
+    searchValue,
     resetSearchValue,
+    loading,
+    results,
     currentPath,
   } = props;
 
@@ -26,21 +29,30 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
             value={searchValue}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
+            placeholder="e.g. Ocean Trout"
           />
         </Col>
       </Row>
       {/* Market Items List */}
       <Row className="items-row">
         <Col xs={12}>
-          {Array.from('x'.repeat(10)).map((num) => (
-            <Link
-              to={`${currentPath}/randomId123123123`}
-              className="market-item"
-              key={num}
-            >
-              <Interactions value="Abait Tuna" onClick={() => {}} />
-            </Link>
-          ))}
+          {loading ? (
+            <SpinnerContainer>
+              <Spinner />
+            </SpinnerContainer>
+          ) : (
+            <>
+              {results.map((r) => (
+                <Link
+                  to={`${currentPath}/${r.typeId}`}
+                  className="market-item"
+                  key={r.typeId}
+                >
+                  <Interactions value={r.typeName} onClick={() => {}} />
+                </Link>
+              ))}
+            </>
+          )}
         </Col>
       </Row>
     </MarketContainer>
