@@ -1,12 +1,16 @@
+import { Dispatch } from 'react';
+
 import { PlaceData } from 'types/PlaceData';
-import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 
 export interface EditAddressGeneratedProps {
   address: PlaceData | null;
   isDefault: boolean | null;
   pending: boolean;
-  onClickSave: (values: EditAddressForm) => void;
+  unitNumber: string;
+  onClickSave: () => void;
   toggleIsDefault: () => void;
+  setAddress: Dispatch<PlaceData | null>;
+  setUnitNumber: Dispatch<string>;
 }
 
 export interface EditAddressForm {

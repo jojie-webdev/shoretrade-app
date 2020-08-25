@@ -31,34 +31,23 @@ const EditAddress = (): JSX.Element => {
     useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
     [];
 
-  // MARK:- States
+  // MARK:- States / Variables
   const [addressId, setAddressId] = useState('');
   const [companyId, setCompanyId] = useState('');
+  const [unitNumber, setUnitNumber] = useState('');
   const [isDefault, setIsDefault] = useState<boolean | null>(null);
-
-  // MARK:- Variables
   const currentAddress = addresses.find((a) => a.id === addressId);
-  const address = currentAddress ? addressToPlaceData(currentAddress) : null;
+  const initialAddress = currentAddress
+    ? addressToPlaceData(currentAddress)
+    : null;
+  const [address, setAddress] = useState<PlaceData | null>(initialAddress);
 
   // MARK:- Methods
-  const onClickSave = (values: EditAddressForm) => {
-    const { unitNumber, address: addressStr } = values;
-
-    const newCurrentAddress: GetAddressesResponseItem = {
-      ...(currentAddress as GetAddressesResponseItem),
-      unitNumber: unitNumber,
-      default: isDefault || false,
-    };
-
-    const newAddress: PlaceData = {
-      ...addressToPlaceData(newCurrentAddress),
-      address: addressStr,
-    };
-
+  const onClickSave = () => {
     dispatch(
       updateAddressActions.request(
         placeDataToUpdateAddressMeta(
-          newAddress,
+          address as PlaceData,
           unitNumber,
           companyId,
           isDefault || false,
@@ -91,6 +80,19 @@ const EditAddress = (): JSX.Element => {
     }
   }, [currentAddress]);
 
+  useEffect(() => {
+    if (currentAddress) {
+      setAddress(addressToPlaceData(currentAddress));
+      if (currentAddress.unitNumber) {
+        setUnitNumber(currentAddress.unitNumber);
+      }
+
+      if (currentAddress.default) {
+        setIsDefault(currentAddress.default);
+      }
+    }
+  }, [currentAddress]);
+
   // MARK:- Render
   const generatedProps: EditAddressGeneratedProps = {
     address,
@@ -98,6 +100,9 @@ const EditAddress = (): JSX.Element => {
     onClickSave,
     pending,
     toggleIsDefault,
+    setAddress,
+    unitNumber,
+    setUnitNumber,
   };
   return <EditAddressView {...generatedProps} />;
 };
