@@ -1,13 +1,12 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import { Formik, Form } from 'formik';
+import { useTheme } from 'utils/Theme';
 
 import { LoginGeneratedProps } from './Login.props';
 import {
@@ -29,7 +28,8 @@ import {
 import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   const { login, pending, goToForgotPassword, isError, goToRegister } = props;
 
   const formikProps = {
@@ -46,12 +46,12 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
       <Container>
         <ContentWrapper>
           <Content>
-            <Title variant="title3" color="noshade">
-              Seller Log in
+            <Title variant="title3" color={isSeller ? 'noshade' : 'shade8'}>
+              {`${isSeller ? 'Seller' : 'Buyer'} Log in`}
             </Title>
             <RegisterLinkContainer>
               <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
-              <Touchable dark onPress={() => goToRegister()}>
+              <Touchable dark={isSeller} onPress={() => goToRegister()}>
                 <RegisterLink color="primary">Create an account</RegisterLink>
               </Touchable>
             </RegisterLinkContainer>
@@ -76,10 +76,12 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             </Formik>
           </Content>
           <Footer>
-            <Touchable dark onPress={() => goToForgotPassword()}>
+            <Touchable dark={isSeller} onPress={() => goToForgotPassword()}>
               <ForgotPasswordContainer>
-                <ForgotPasswordIcon />
-                <ForgotPasswordText color="noshade">
+                <ForgotPasswordIcon
+                  fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+                />
+                <ForgotPasswordText color={isSeller ? 'noshade' : 'shade9'}>
                   Forgot Password?
                 </ForgotPasswordText>
               </ForgotPasswordContainer>

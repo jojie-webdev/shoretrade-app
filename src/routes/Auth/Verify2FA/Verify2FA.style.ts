@@ -39,7 +39,6 @@ export const TitleContainer = styled.div`
 export const BackIcon = styled(ArrowLeft)``;
 
 export const Title = styled(Typography)`
-  font-weight: bold;
   margin-left: 8px;
 `;
 
@@ -116,5 +115,7 @@ export const FooterIcon = styled(Help)`
 export const FooterText = styled(Typography)``;
 
 export const FooterLink = styled(Typography)`
-  border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
+  border-bottom: 1px solid
+    ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.shade6 : theme.brand.primary};
 `;
