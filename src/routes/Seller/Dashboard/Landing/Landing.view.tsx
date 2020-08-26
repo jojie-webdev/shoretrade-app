@@ -178,7 +178,7 @@ const TopCategories = (props: any) => {
                 color="shade6"
                 className="overline"
               >
-                Whole tuna
+                {c.name}
               </Typography>
               <Typography variant="title4" color="noshade" className="price">
                 {numberToShortenAmount(c.total)}
