@@ -5,8 +5,13 @@ import {
   Row as GridRow,
   Col,
 } from 'react-grid-system';
-import BackgroundImage from 'res/images/seller-auth-background.png';
+import BuyerBackgroundImage from 'res/images/buyer-auth-background.png';
+import SellerBackgroundImage from 'res/images/seller-auth-background.png';
 import styled from 'utils/styled';
+
+const getBackgroundImage = (isSeller: boolean) => {
+  return isSeller ? SellerBackgroundImage : BuyerBackgroundImage;
+};
 
 export const Container = styled.div`
   width: 100%;
@@ -17,7 +22,8 @@ export const Container = styled.div`
 export const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${BackgroundImage});
+  background-image: url(${({ theme }) =>
+    getBackgroundImage(theme.appType === 'seller')});
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.32;
@@ -55,7 +61,8 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   width: 100%;
   height: 64px;
-  background-color: ${({ theme }) => theme.grey.shade9};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   align-items: center;
   padding: 0px 20px;
 `;
@@ -81,13 +88,15 @@ export const BackIcon = styled(ArrowLeft)``;
 
 export const Title = styled(Typography)`
   font-weight: bold;
-  color: ${({ theme }) => theme.grey.noshade};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade8};
 `;
 
 export const Content = styled(Col)`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.grey.shade8};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
   height: 70%;
   width: 100%;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);

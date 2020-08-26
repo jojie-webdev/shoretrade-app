@@ -1,14 +1,12 @@
 import React, { useRef } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
 import Button from 'components/base/Button';
 import { Check } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import { Formik, Form } from 'formik';
-import theme from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
 
 import { ForgotPasswordGeneratedProps } from './ForgotPassword.props';
 import {
@@ -33,7 +31,8 @@ import { validate } from './ForgotPassword.validation';
 const ForgotPasswordView = (
   props: ForgotPasswordGeneratedProps
 ): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   const { resetPassword, pending, backToLogin, success } = props;
 
   const formikProps = {
@@ -50,10 +49,10 @@ const ForgotPasswordView = (
         <ContentWrapper>
           <Content>
             <TitleContainer>
-              <Touchable dark onPress={() => backToLogin()}>
+              <Touchable dark={isSeller} onPress={() => backToLogin()}>
                 <BackIcon width={16} height={16} fill={theme.brand.primary} />
               </Touchable>
-              <Title variant="title5" color="noshade">
+              <Title variant="title5" color={isSeller ? 'noshade' : 'shade8'}>
                 Forgot Password?
               </Title>
             </TitleContainer>

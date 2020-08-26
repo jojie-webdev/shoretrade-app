@@ -16,6 +16,8 @@ import {
   Content,
   HeaderContainer,
   SidebarItem,
+  LogoutContainer,
+  LogoutButton,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -61,6 +63,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     shouldIncludePadding,
     userData,
     children,
+    logout,
   } = props;
 
   return (
@@ -86,13 +89,20 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           ))}
         </div>
 
-        <NavLink
-          to={'/'}
-          color="shade7"
-          linkText="Logout"
-          Icon={Exit}
-          iconColor={theme.grey.shade7}
-        />
+        <LogoutButton
+          style={{ marginBottom: 24 }}
+          onPress={() => logout()}
+          dark
+        >
+          <LogoutContainer>
+            <div className="icon-container">
+              <Exit />
+            </div>
+            <Typography color="shade7" className="link" weight="500">
+              Logout
+            </Typography>
+          </LogoutContainer>
+        </LogoutButton>
       </Sidebar>
       <Content shouldIncludePadding={shouldIncludePadding}>
         <Header pageTitle={pageTitle} userData={userData}></Header>

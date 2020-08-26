@@ -11,3 +11,7 @@ export { default as registerActions } from './register';
 export { default as updateUserActions } from './updateUser';
 export { default as getAddressesActions } from './getAddresses';
 export { default as updateAddressActions } from './updateAddress';
+export { default as getSellerOrdersActions } from './getSellerOrders';
+export { default as getSellerOrdersPlacedActions } from './getSellerOrdersPlaced';
+export { default as getSellerOrdersTransitActions } from './getSellerOrdersTransit';
+export { default as getSellerOrdersDeliveredActions } from './getSellerOrdersDelivered';

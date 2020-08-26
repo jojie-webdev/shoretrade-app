@@ -408,7 +408,7 @@ const XAxis = (props: any) => {
   );
 };
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const LineChart = (props: LineChartProps): JSX.Element | null => {
   const theme = useTheme();
 
   const {
@@ -419,6 +419,8 @@ const LineChart = (props: LineChartProps): JSX.Element => {
     stroke = 'success',
     strokeWidth = 3,
   } = props;
+
+  if (data.dates.length === 0) return null;
 
   const graphData = data.dates.map((d, i) => ({
     date: moment(d).toDate().getTime(),

@@ -39,7 +39,6 @@ export const TitleContainer = styled.div`
 export const BackIcon = styled(ArrowLeft)``;
 
 export const Title = styled(Typography)`
-  font-weight: bold;
   margin-left: 8px;
 `;
 
