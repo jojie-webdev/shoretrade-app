@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import qs from 'qs';
 import queryString from 'query-string';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
@@ -51,10 +52,14 @@ const YourDetails = (): JSX.Element => {
         mobile: replaceCallingCode(user?.mobile || ''),
       });
 
-      const { companyId } = queryString.parse(location.search) as QueryParams;
+      const { companyId } = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      }) as QueryParams;
+
       if (!companyId) {
         dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
       }
+
       setCompanyId(companyId);
       const currentCompany = user?.companies.find((c) => c.id === companyId);
 
