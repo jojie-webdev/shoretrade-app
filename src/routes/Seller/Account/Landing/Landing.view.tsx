@@ -9,21 +9,7 @@ import qs from 'qs';
 import { useHistory } from 'react-router-dom';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
-import {
-  Container,
-  NavInteraction,
-  Header,
-  AccountSelect,
-} from './Landing.style';
-
-const INTERACTIONS = [
-  { value: 'Your Details', path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS },
-  { value: 'Shipping Addresses', path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS },
-  { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
-  { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },
-  { value: 'Bank Details', path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS },
-  { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
-];
+import { Container, NavInteraction, Header } from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -41,7 +27,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     },
     {
       value: 'Shipping Addresses',
-      path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS,
+      path: `${SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
     },
     { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },

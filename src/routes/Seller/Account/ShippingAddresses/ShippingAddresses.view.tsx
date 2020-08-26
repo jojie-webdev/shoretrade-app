@@ -5,9 +5,8 @@ import Interactions from 'components/base/Interactions';
 import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import Loading from 'components/module/Loading';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -21,22 +20,30 @@ import {
 
 const AddressText = (
   title: string,
-  color: keyof Theme['brand'] | keyof Theme['grey']
+  color: keyof Theme['brand'] | keyof Theme['grey'],
+  streetNumber: string,
+  street: string,
+  countryCode: string
 ) => (
   <AddressTextContainer>
     <Typography variant="overline" color={color} className="label">
       {title}
     </Typography>
 
-    <Typography color="noshade">1 Infinite Loop</Typography>
-    <Typography color="noshade">Cupertino, CA, 95014</Typography>
-    <Typography color="noshade">USA</Typography>
+    <Typography color="noshade">{streetNumber}</Typography>
+    <Typography color="noshade">{street}</Typography>
+    <Typography color="noshade">{countryCode}</Typography>
   </AddressTextContainer>
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
+  const { pending, addresses, onClickAddress } = props;
+
   const theme = useTheme();
-  const history = useHistory();
+
+  if (pending) {
+    return <Loading />;
+  }
 
   return (
     <Wrapper>
@@ -53,25 +60,51 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
       </SmallAlertContainer>
 
       <Row className="address-row">
-        <InteractionCol md={12}>
-          <Interactions
-            onClick={() => history.push(SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS)}
-            leftComponent={AddressText('Default Address', 'shade6')}
-            iconAlignment="flex-start"
-          />
-        </InteractionCol>
-        <InteractionCol md={12}>
-          <Interactions
-            onClick={() => history.push(SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS)}
-            leftComponent={AddressText('Approval Pending', 'alert')}
-            iconAlignment="flex-start"
-          />
-        </InteractionCol>
+        {addresses.map((address) => {
+          let title = '';
+          let color: keyof Theme['brand'] | keyof Theme['grey'] = 'shade6';
+
+          if (address.default) {
+            title = 'Default Address';
+            color = 'shade6';
+          }
+
+          if (address.approved !== 'APPROVED') {
+            title = 'Approval Pending';
+            color = 'alert';
+          }
+
+          const streetNumber = address.unitNumber
+            ? `${address.unitNumber}/${address.streetNumber}`
+            : address.streetNumber;
+
+          const street = streetNumber
+            ? `${streetNumber} ${address.streetName}\n`
+            : address.streetName;
+
+          const addressString = `${address.suburb}, ${address.state}, ${address.postcode}`;
+
+          return (
+            <InteractionCol md={12} key={address.id}>
+              <Interactions
+                onClick={() => onClickAddress(address.id)}
+                leftComponent={AddressText(
+                  title,
+                  color,
+                  street,
+                  addressString,
+                  address.countryCode
+                )}
+                iconAlignment="flex-start"
+              />
+            </InteractionCol>
+          );
+        })}
       </Row>
 
       <Row>
         <Col>
-          <Button text="Add a new address"></Button>
+          <Button text="Add a new address" />
         </Col>
       </Row>
     </Wrapper>
