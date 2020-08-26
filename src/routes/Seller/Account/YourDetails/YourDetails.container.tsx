@@ -3,7 +3,6 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
-import queryString from 'query-string';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
