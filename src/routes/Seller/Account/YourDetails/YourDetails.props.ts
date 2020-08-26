@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 export interface YourDetailsGeneratedProps {
   userDetails: UserDetails;
@@ -7,6 +7,8 @@ export interface YourDetailsGeneratedProps {
   updatingUser: boolean;
   loadingUser: boolean;
   updateUserSuccess: boolean;
+  callingCode: string;
+  setCallingCode: Dispatch<SetStateAction<string>>;
 }
 
 export interface UserDetails {

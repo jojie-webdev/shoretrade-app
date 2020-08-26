@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { replaceCallingCode, getCallingCode } from 'utils/String/callingCode';
@@ -25,6 +25,8 @@ const YourDetails = (): JSX.Element => {
   const getUser = useSelector((state: Store) => state.getUser);
   const updateUser = useSelector((state: Store) => state.updateUser);
   const [companyId, setCompanyId] = useState('');
+
+  const [callingCode, setCallingCode] = useState('61'); // AU by default
   const [userDetails, setUserDetails] = useState<UserDetails>({
     firstName: '',
     lastName: '',
@@ -116,6 +118,8 @@ const YourDetails = (): JSX.Element => {
     updatingUser: updateUser.pending || false,
     loadingUser: getUser.pending || true,
     updateUserSuccess: updateUser.data?.status === 200 || false,
+    callingCode,
+    setCallingCode,
   };
   return <YourDetailsView {...generatedProps} />;
 };

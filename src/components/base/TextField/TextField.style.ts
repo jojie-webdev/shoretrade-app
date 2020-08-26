@@ -9,6 +9,7 @@ const fontStyle = `
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
+  
 `;
 
 export const FieldContainer = styled.div<{ error: boolean }>`
@@ -69,5 +70,6 @@ export const Alert = styled(AlertInfo)`
 
 export const Prefix = styled.span`
   padding-left: 12px;
+  color: ${(props) => props.theme.grey.shade8};
   ${fontStyle};
 `;
