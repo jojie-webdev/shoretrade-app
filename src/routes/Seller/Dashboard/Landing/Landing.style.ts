@@ -2,9 +2,17 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  height: 100%;
   .title-col {
     margin-bottom: 8px;
   }
+`;
+
+export const SpinnerContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const FilterRow = styled(Row)`
@@ -71,4 +79,9 @@ export const IllustrationContainer = styled.div`
       margin-left: 4px;
     }
   }
+`;
+
+export const CategoryImageContainer = styled.div`
+  margin-left: 10px;
+  height: 40px;
 `;

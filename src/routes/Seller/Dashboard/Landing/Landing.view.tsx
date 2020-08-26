@@ -1,16 +1,20 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
-import Fish from 'components/base/SVG/Fish';
+import Spinner from 'components/base/Spinner';
+import { DropdownArrow } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
+import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
 import LinePath from 'components/module/LinePath';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
+import { getGraphData } from 'routes/Seller/Dashboard/Landing/Landing.transforms';
+import numberToShortenAmount from 'utils/String/numberToShortenAmount';
+import { useTheme } from 'utils/Theme';
 
 import { DashboardLandingGeneratedProps } from './Landing.props';
 import {
@@ -23,32 +27,12 @@ import {
   MonthlyContainer,
   TopCategoriesContainer,
   IllustrationContainer,
+  CategoryImageContainer,
+  SpinnerContainer,
 } from './Landing.style';
 
-const MOCK_DATA = {
-  dates: [
-    '2019-06-23',
-    '2019-06-26',
-    '2019-06-30',
-    '2019-07-05',
-    '2019-07-08',
-    '2019-07-14',
-    '2019-07-21',
-    '2019-07-22',
-    '2019-07-27',
-  ],
-  values: [
-    3773.7,
-    6081.6,
-    6081.6,
-    11331.6,
-    10523.6,
-    8263.1,
-    6081.8,
-    10806.7,
-    11856.1,
-  ],
-};
+const hasIncreased = (percentage: string) =>
+  percentage ? parseFloat(percentage) > 0 : false;
 
 const FilterHeader = ({ toggleModal }: { toggleModal: () => void }) => (
   <FilterRow>
@@ -71,7 +55,7 @@ const FilterHeader = ({ toggleModal }: { toggleModal: () => void }) => (
   </FilterRow>
 );
 
-const TotalSales = () => (
+const TotalSales = (props: any) => (
   <TotalSalesRow gutterWidth={24}>
     <Col md={12} className="title-col">
       <Typography variant="label" color="shade6">
@@ -85,7 +69,7 @@ const TotalSales = () => (
             Paid
           </Typography>
           <Typography variant="title4" color="noshade">
-            $1350k
+            {numberToShortenAmount(props.data.paid)}
           </Typography>
         </SalesCard>
       </Link>
@@ -97,7 +81,7 @@ const TotalSales = () => (
             Pending
           </Typography>
           <Typography variant="title4" color="noshade">
-            $10k
+            {numberToShortenAmount(props.data.pending)}
           </Typography>
         </SalesCard>
       </Link>
@@ -105,119 +89,163 @@ const TotalSales = () => (
   </TotalSalesRow>
 );
 
-const MonthlySales = () => (
-  <MonthlyContainer>
-    <Row>
-      <Col md={12} className="title-col">
-        <Typography variant="label" color="shade6">
-          Total Sales
-        </Typography>
-      </Col>
-    </Row>
-    <MonthlyRow nowrap gutterWidth={24}>
-      {[1, 2, 3, 4, 5].map((num) => (
-        <Col md={3} key={num}>
-          <Link
-            to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-20-to-2020-10-10')}
-          >
+const MonthlySales = (props: any) => {
+  const theme = useTheme();
+
+  return (
+    <MonthlyContainer>
+      <Row>
+        <Col md={12} className="title-col">
+          <Typography variant="label" color="shade6">
+            Monthly Sales
+          </Typography>
+        </Col>
+      </Row>
+      <MonthlyRow nowrap gutterWidth={24}>
+        {props.data.months.map((m: any, i: any) => (
+          <Col md={3} key={i}>
+            <Link
+              to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-20-to-2020-10-10')}
+            >
+              <SalesCard>
+                <Typography
+                  variant="overline"
+                  color="shade6"
+                  className="overline"
+                >
+                  May
+                </Typography>
+                <Typography variant="title4" color="noshade" className="price">
+                  {numberToShortenAmount(m.total)}
+                </Typography>
+
+                <ChartContentContainer>
+                  <div>
+                    {hasIncreased(m.percentage) ? (
+                      <UpArrow />
+                    ) : (
+                      <DropdownArrow fill={theme.brand.error} />
+                    )}
+                  </div>
+
+                  <Typography
+                    variant="caption"
+                    color={hasIncreased(m.percentage) ? 'success' : 'error'}
+                    className="text"
+                  >
+                    {hasIncreased(m.percentage) ? '+' : '-'}
+                    {m.percentage}%
+                  </Typography>
+
+                  <LinePath
+                    width={60}
+                    height={25}
+                    data={getGraphData(m, m.startDate)}
+                    cHeight={25}
+                    cWidth={60}
+                    cStyle={{ alignSelf: 'center' }}
+                  />
+                </ChartContentContainer>
+              </SalesCard>
+            </Link>
+          </Col>
+        ))}
+      </MonthlyRow>
+    </MonthlyContainer>
+  );
+};
+
+const TopCategories = (props: any) => {
+  const theme = useTheme();
+
+  return (
+    <TopCategoriesContainer>
+      <Row>
+        <Col md={12} className="title-col">
+          <Link to={SELLER_DASHBOARD_ROUTES.CATEGORIES}>
+            <Typography variant="label" color="shade6">
+              Top Categories
+            </Typography>
+          </Link>
+        </Col>
+      </Row>
+      <MonthlyRow nowrap gutterWidth={24}>
+        {props.data.categories.map((c: any, i: any) => (
+          <Col md={3} key={i}>
             <SalesCard>
               <Typography
                 variant="overline"
                 color="shade6"
                 className="overline"
               >
-                May
+                {c.name}
               </Typography>
               <Typography variant="title4" color="noshade" className="price">
-                $5.5k
+                {numberToShortenAmount(c.total)}
               </Typography>
 
-              <ChartContentContainer>
-                <UpArrow />
+              <IllustrationContainer>
+                <div className="left-content">
+                  <div>
+                    {hasIncreased(c.percentageChange) ? (
+                      <UpArrow />
+                    ) : (
+                      <DropdownArrow fill={theme.brand.error} />
+                    )}
+                  </div>
 
-                <Typography variant="caption" color="success" className="text">
-                  +1.25%
-                </Typography>
+                  <Typography
+                    variant="caption"
+                    color={
+                      hasIncreased(c.percentageChange) ? 'success' : 'error'
+                    }
+                    className="text"
+                  >
+                    {hasIncreased(c.percentageChange) ? '+' : '-'}
+                    {c.percentageChange}%
+                  </Typography>
+                </div>
 
-                <LinePath
-                  width={60}
-                  height={25}
-                  data={MOCK_DATA}
-                  cHeight={25}
-                  cWidth={60}
-                  cStyle={{ alignSelf: 'center' }}
-                />
-              </ChartContentContainer>
+                <CategoryImageContainer>
+                  <CategoryImage id={c.id} maxHeight={40} />
+                </CategoryImageContainer>
+              </IllustrationContainer>
             </SalesCard>
-          </Link>
-        </Col>
-      ))}
-    </MonthlyRow>
-  </MonthlyContainer>
-);
-
-const TopCategories = () => (
-  <TopCategoriesContainer>
-    <Row>
-      <Col md={12} className="title-col">
-        <Link to={SELLER_DASHBOARD_ROUTES.CATEGORIES}>
-          <Typography variant="label" color="shade6">
-            Top Categories
-          </Typography>
-        </Link>
-      </Col>
-    </Row>
-    <MonthlyRow nowrap gutterWidth={24}>
-      {[1, 2, 3, 4, 5].map((num) => (
-        <Col md={3} key={num}>
-          <SalesCard>
-            <Typography variant="overline" color="shade6" className="overline">
-              Whole tuna
-            </Typography>
-            <Typography variant="title4" color="noshade" className="price">
-              $5.5k
-            </Typography>
-
-            <IllustrationContainer>
-              <div className="left-content">
-                <UpArrow />
-
-                <Typography variant="caption" color="success" className="text">
-                  +1.25%
-                </Typography>
-              </div>
-
-              <Fish />
-            </IllustrationContainer>
-          </SalesCard>
-        </Col>
-      ))}
-    </MonthlyRow>
-  </TopCategoriesContainer>
-);
+          </Col>
+        ))}
+      </MonthlyRow>
+    </TopCategoriesContainer>
+  );
+};
 
 const DashboardView = (props: DashboardLandingGeneratedProps) => {
-  // const theme = useTheme();
-
   const { isCalendarModalOpen, toggleModal } = props;
 
   return (
     <Container>
-      <FilterHeader toggleModal={toggleModal} />
-      <TotalSales />
-      <MonthlySales />
-      <TopCategories />
-      {isCalendarModalOpen && (
-        <DatePickerModal
-          startDate={moment()}
-          endDate={moment().add('day', 7)}
-          focusedInput="startDate"
-          isOpen={true}
-          onFocusChange={() => {}}
-          onDateChange={() => {}}
-          onClickApply={() => {}}
-          onClickClose={toggleModal}
-        />
+      {props.isLoading ? (
+        <SpinnerContainer>
+          <Spinner />
+        </SpinnerContainer>
+      ) : (
+        <>
+          <FilterHeader toggleModal={toggleModal} />
+          <TotalSales data={props.data} />
+          <MonthlySales data={props.data} />
+          <TopCategories data={props.data} />
+          {isCalendarModalOpen && (
+            <DatePickerModal
+              startDate={moment()}
+              endDate={moment().add('day', 7)}
+              focusedInput="startDate"
+              isOpen={true}
+              onFocusChange={() => {}}
+              onDateChange={() => {}}
+              onClickApply={() => {}}
+              onClickClose={toggleModal}
+            />
+          )}
+        </>
       )}
     </Container>
   );
