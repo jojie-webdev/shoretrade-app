@@ -80,6 +80,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
                           color={hasIncreased ? 'success' : 'error'}
                           className="text"
                         >
+                          {hasIncreased ? '+' : '-'}
                           {data.percentage}%
                         </Typography>
                       </>
