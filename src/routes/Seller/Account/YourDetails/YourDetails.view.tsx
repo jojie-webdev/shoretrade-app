@@ -10,7 +10,7 @@ import { Row, Col } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { YourDetailsGeneratedProps } from './YourDetails.props';
-import { Wrapper, InputRow } from './YourDetails.style';
+import { Wrapper, InputRow, StyledAlert } from './YourDetails.style';
 import { validate } from './YourDetails.validation';
 const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   // const theme = useTheme();
@@ -21,6 +21,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     onClickSave,
     updatingUser,
     loadingUser,
+    updateUserSuccess,
   } = props;
 
   if (loadingUser && !userDetails.firstName) {
@@ -42,6 +43,14 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
 
   return (
     <Wrapper>
+      {updateUserSuccess && (
+        <StyledAlert
+          content="Your account details have successfully been updated!"
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      )}
       <InnerRouteHeader title="Your Details" />
       <Formik {...formikProps}>
         <Form>

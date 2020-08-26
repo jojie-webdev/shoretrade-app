@@ -66,7 +66,7 @@ function* updateUserSuccess(
   yield put(getUserActions.request());
   if (!wasUpdatingLogo) {
     // TODO: Change this to fetch user and AlertSuccess
-    yield put(push(SELLER_ACCOUNT_ROUTES.LANDING));
+    // yield put(push(SELLER_ACCOUNT_ROUTES.LANDING));
   }
 }
 
