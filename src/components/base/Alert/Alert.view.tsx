@@ -9,6 +9,7 @@ import {
   QuestionFilled,
   InfoFilled,
 } from '../SVG';
+import { SVGProps } from '../SVG/SVG.props';
 import Typography from '../Typography';
 import { AlertProps } from './Alert.props';
 import { Container, AlertButton } from './Alert.style';
@@ -16,9 +17,17 @@ import { Container, AlertButton } from './Alert.style';
 const Alert = (props: AlertProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { content, variant, onClick, buttonText, ...containerProps } = props;
+  const {
+    content,
+    variant,
+    onClick,
+    buttonText,
+    alignText = 'flex-start',
+    fullWidth,
+    ...containerProps
+  } = props;
 
-  let Icon = InfoFilled;
+  let Icon: React.FC<SVGProps> = InfoFilled;
 
   if (variant === 'default') {
     Icon = InfoFilled;
@@ -33,10 +42,15 @@ const Alert = (props: AlertProps): JSX.Element => {
   }
 
   return (
-    <Container variant={variant} {...containerProps}>
+    <Container
+      variant={variant}
+      alignText={alignText}
+      fullWidth={fullWidth}
+      {...containerProps}
+    >
       <div className="top-content-container">
         <div className="svg-container">
-          <Icon />
+          <Icon fill={isSeller ? theme.grey.noshade : theme.grey.shade8} />
         </div>
         <Typography
           variant="label"
@@ -50,7 +64,9 @@ const Alert = (props: AlertProps): JSX.Element => {
       {buttonText !== undefined && onClick !== undefined && (
         <div className="alert-button-container">
           <AlertButton variant={variant} onClick={onClick}>
-            <Typography color="noshade">{buttonText}</Typography>
+            <Typography color={isSeller ? 'noshade' : 'shade8'}>
+              {buttonText}
+            </Typography>
           </AlertButton>
         </div>
       )}

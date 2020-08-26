@@ -18,6 +18,7 @@ const Login = (): JSX.Element => {
   const pending = useSelector((state: Store) => state.login.pending) || false;
   const isError =
     (useSelector((state: Store) => state.login.error) || '').length > 0;
+
   const login = (credentials: Credentials) => {
     dispatch(loginActions.request(credentials));
   };

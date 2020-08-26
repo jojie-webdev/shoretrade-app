@@ -3,7 +3,9 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import Typography from 'components/base/Typography';
+import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import qs from 'qs';
 import { useHistory } from 'react-router-dom';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
@@ -27,11 +29,35 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
 
+  const { companies, currentCompany, profilePicture, loadingUser } = props;
+
+  const INTERACTIONS = [
+    {
+      value: 'Your Details',
+      path: `${SELLER_ACCOUNT_ROUTES.YOUR_DETAILS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
+    {
+      value: 'Shipping Addresses',
+      path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS,
+    },
+    { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
+    { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },
+    { value: 'Bank Details', path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS },
+    { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
+  ];
+
+  if (loadingUser) {
+    return <Loading />;
+  }
+
   return (
     <Container>
       <Header>
         <div className="left-content">
-          <img src="" alt="profile picture" />
+          <img src={profilePicture} alt="profile picture" />
           <div>
             <Typography variant="overline" color="noshade">
               Owner
@@ -43,8 +69,16 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         </div>
 
         <div className="right-content">
-          <select name="user" id="">
-            <option value="">Manettas Seafood</option>
+          <select name="company">
+            {companies.map((company) => (
+              <option
+                value={company.id}
+                selected={currentCompany?.id === company.id}
+                key={company.id}
+              >
+                {company.name}
+              </option>
+            ))}
           </select>
           {/* <AccountSelect options={['one', 'two', 'three']} /> */}
         </div>

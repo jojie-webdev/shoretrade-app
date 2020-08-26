@@ -9,21 +9,13 @@ const backgroundColor: Record<Variants, string> = {
       ? 'rgba(165, 175, 251, 0.12)'
       : 'rgba(165, 175, 251, 0.08)',
   alert:
-    theme.appType === 'seller'
-      ? 'rgba(255, 207, 92, 0.12)'
-      : 'rgba(255, 207, 92, 0.08)',
+    theme.appType === 'seller' ? 'rgba(255, 207, 92)' : 'rgba(255, 207, 92)',
   error:
-    theme.appType === 'seller'
-      ? 'rgba(255, 100, 124, 0.12)'
-      : 'rgba(255, 100, 124, 0.08)',
+    theme.appType === 'seller' ? 'rgba(255, 100, 124)' : 'rgba(255, 100, 124)',
   success:
-    theme.appType === 'seller'
-      ? 'rgba(0, 196, 140, 0.12)'
-      : 'rgba(0, 196, 140, 0.08)',
+    theme.appType === 'seller' ? 'rgba(0, 196, 140)' : 'rgba(0, 196, 140)',
   warning:
-    theme.appType === 'seller'
-      ? 'rgba(255, 162, 107, 0.12)'
-      : 'rgba(255, 162, 107, 0.08)',
+    theme.appType === 'seller' ? 'rgba(255, 162, 107)' : 'rgba(255, 162, 107)',
 };
 
 const buttonBackgroundColor: Record<Variants, string> = {
@@ -37,15 +29,21 @@ const buttonBackgroundColor: Record<Variants, string> = {
 export const Container = styled.div<AlertContainerProps>`
   background-color: ${({ variant }) => backgroundColor[variant]};
   padding: 24px;
-  width: 488px;
+  width: ${(props) => (props.fullWidth ? '100%' : '488px')};
 
   display: flex;
   flex-direction: column;
 
+  /* position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 16px;
+  margin-right: 16px; */
+
   .top-content-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: ${(props) => props.alignText}; // defaults to 'flex-start'
 
     .svg-container {
       margin-right: 8px;

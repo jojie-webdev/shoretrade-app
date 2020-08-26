@@ -7,11 +7,15 @@ export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   content: string;
   buttonText?: string;
   onClick?: () => void;
+  alignText?: 'flex-start' | 'center';
+  fullWidth?: boolean;
 }
 
 // Styled Props
 export type AlertContainerProps = {
   variant: Variants;
+  alignText?: 'flex-start' | 'center';
+  fullWidth?: boolean;
 };
 
 export interface AlertButtonProps {
