@@ -11,8 +11,7 @@ import LoadingView from 'components/module/Loading';
 import { Row, Col } from 'react-grid-system';
 
 import { EditAddressGeneratedProps } from './EditAddress.props';
-import { Container } from './EditAddress.style';
-import { isValid } from './EditAddress.validation';
+import { Container, StyledAlert } from './EditAddress.style';
 
 const EditAddressView = (props: EditAddressGeneratedProps) => {
   // const theme = useTheme();
@@ -25,6 +24,7 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
     setAddress,
     unitNumber,
     setUnitNumber,
+    updateAddressSuccess,
   } = props;
 
   if (!address) {
@@ -33,6 +33,15 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
 
   return (
     <Container>
+      {updateAddressSuccess && (
+        <StyledAlert
+          content="Your account details have successfully been updated!"
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      )}
+
       <InnerRouteHeader title="Edit Adresses" />
 
       <Row className="textfield-row">

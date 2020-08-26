@@ -25,6 +25,7 @@ const EditAddress = (): JSX.Element => {
   const addresses =
     useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
     [];
+  const updateAddress = useSelector((state: Store) => state.updateAddress);
 
   // MARK:- States / Variables
   const [addressId, setAddressId] = useState('');
@@ -88,6 +89,8 @@ const EditAddress = (): JSX.Element => {
     }
   }, [currentAddress]);
 
+  // MARK:- Watchers
+
   // MARK:- Render
   const generatedProps: EditAddressGeneratedProps = {
     address,
@@ -98,6 +101,7 @@ const EditAddress = (): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
+    updateAddressSuccess: updateAddress.data?.status === 200 || false,
   };
   return <EditAddressView {...generatedProps} />;
 };

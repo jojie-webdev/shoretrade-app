@@ -6,6 +6,7 @@ export interface EditAddressGeneratedProps {
   address: PlaceData | null;
   isDefault: boolean | null;
   pending: boolean;
+  updateAddressSuccess: boolean;
   unitNumber: string;
   onClickSave: () => void;
   toggleIsDefault: () => void;
