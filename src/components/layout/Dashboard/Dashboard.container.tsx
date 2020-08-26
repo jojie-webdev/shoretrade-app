@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { SELLER_ROUTES } from 'consts';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { authActions } from 'store/actions';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
@@ -12,6 +13,7 @@ import {
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState('');
   const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
@@ -38,12 +40,17 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     setPageTitle(innerRoute);
   }, [location]);
 
+  const logout = () => {
+    dispatch(authActions.clear());
+  };
+
   const generatedProps: DashboardGeneratedProps = {
     ...props,
     pageTitle,
     isInnerRoute,
     shouldIncludePadding,
     userData,
+    logout,
   };
 
   return <DashboardView {...generatedProps} />;

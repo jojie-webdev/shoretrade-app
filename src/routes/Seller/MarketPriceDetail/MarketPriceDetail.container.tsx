@@ -1,67 +1,108 @@
 import React, { useState, useEffect } from 'react';
 
+import { isEmpty } from 'ramda';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
-  CheckboxFilter,
-  Filters,
-} from 'components/module/FilterModal/FilterModal.props';
+  getFilters,
+  getGraphData,
+  getRegion,
+  getSize,
+  getStateId,
+} from 'routes/Seller/MarketPriceDetail/MarketPriceDetail.transforms';
+import { getSellerMarketPrice } from 'services/company';
+import { Store } from 'types/store/Store';
 
-import { MarketPriceDetailGeneratedProps } from './MarketPriceDetail.props';
+import {
+  GraphData,
+  MarketPriceDetailGeneratedProps,
+} from './MarketPriceDetail.props';
 import MarketPriceDetailView from './MarketPriceDetail.view';
 
 const MarketPriceDetail = (): JSX.Element => {
+  const { id } = useParams();
+  const token = useSelector((state: Store) => state.auth.token) || '';
+
+  const [name, setName] = useState('');
+  const [data, setData] = useState<any | null>(null);
+  const [graphData, setGraphData] = useState<GraphData>({
+    dates: [],
+    values: [],
+  });
+
+  //modal filter
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedCheckboxFilters, setSelectedCheckboxFilters] = useState<
-    string[]
-  >([]);
+  const [filters, setFilters] = useState<any[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-  const filters: Filters[] = [
-    {
-      label: 'Size',
-      type: 'size_input',
-      values: ['3000', '5000'],
-      unit: 'Kg',
-    },
-    {
-      label: 'Type',
-      values: ['Frozen', 'Fresh'],
-      type: 'choice',
-    },
-  ];
-
-  const checkboxFilters = [
-    { label: 'Show Only Ungraded', value: 'ungraded' },
-    { label: 'Next Day Delivery Only', value: 'nextDay' },
-  ];
+  const fetchData = async (
+    sizeFrom?: any,
+    sizeTo?: any,
+    region?: any,
+    stateIds?: any[]
+  ) => {
+    try {
+      const resp = await getSellerMarketPrice(
+        {
+          typeId: id,
+          ...(sizeFrom ? { sizeFrom } : {}),
+          ...(sizeTo ? { sizeTo } : {}),
+          ...(region ? { region } : {}),
+          ...(stateIds && !isEmpty(stateIds) ? { stateIds } : {}),
+        },
+        token
+      );
+      setData(resp.data.data);
+      setGraphData(getGraphData(resp.data.data));
+      setFilters(getFilters(resp.data.data));
+    } catch (e) {
+      // console.log(e);
+    }
+  };
 
   useEffect(() => {
-    console.log(selectedCheckboxFilters);
-  }, [selectedCheckboxFilters]);
+    fetchData();
+  }, []);
 
-  const onReset = () => {
-    setSelectedFilters([]);
-    setSelectedCheckboxFilters([]);
-  };
-
-  const onApply = () => {
-    console.log(selectedFilters);
-    console.log(selectedSize);
-  };
+  useEffect(() => {
+    if (data && data.typeName) setName(data.typeName);
+  }, [data]);
 
   const openFilterModal = () => setIsFilterModalOpen(true);
   const closeFilterModal = () => setIsFilterModalOpen(false);
+
+  const onApply = () => {
+    closeFilterModal();
+    setData(null);
+
+    const { sizeFrom, sizeTo } = getSize(data, selectedSize);
+    const region = getRegion(data, selectedFilters);
+    const stateIds = [
+      getStateId(data, selectedFilters, 'stateOne'),
+      getStateId(data, selectedFilters, 'stateTwo'),
+      getStateId(data, selectedFilters, 'stateThree'),
+    ].filter((sids) => sids !== null);
+
+    fetchData(sizeFrom, sizeTo, region, stateIds);
+  };
+
+  const onReset = () => {
+    setSelectedFilters([]);
+    setSelectedSize(null);
+    closeFilterModal();
+  };
 
   const generatedProps: MarketPriceDetailGeneratedProps = {
     isOpen: isFilterModalOpen,
     openFilterModal,
     onClickClose: closeFilterModal,
+    name,
+    data,
+    graphData,
     filters,
-    checkboxFilters,
     selectedFilters,
     setSelectedFilters,
-    selectedCheckboxFilters,
-    setSelectedCheckboxFilters,
     selectedSize,
     setSelectedSize,
     onReset,

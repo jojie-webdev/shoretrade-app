@@ -5,6 +5,9 @@ import { combineReducers } from 'redux';
 import auth from './auth';
 import forgotPassword from './forgotPassword';
 import getAllListings from './getAllListings';
+import getSellerOrdersDelivered from './getSellerOrdersDelivered';
+import getSellerOrdersPlaced from './getSellerOrdersPlaced';
+import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getUser from './getUser';
 import login from './login';
 import register from './register';
@@ -24,4 +27,7 @@ export default (history: History) =>
     getAllListings,
     register,
     updateUser,
+    getSellerOrdersPlaced,
+    getSellerOrdersTransit,
+    getSellerOrdersDelivered,
   });

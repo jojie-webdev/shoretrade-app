@@ -26,6 +26,7 @@ export const ROUTES: Routes = {
     path: MAIN_ROUTES.LANDING,
     children: <h1>Landing Page if it exists</h1>,
   },
+  // Seller Unauthenticated Routes
   SELLER_LOGIN: {
     path: SELLER_ROUTES.LOGIN,
     children: <Login />,
@@ -44,8 +45,30 @@ export const ROUTES: Routes = {
   },
   SELLER_ONBOARDING: {
     path: SELLER_ROUTES.ONBOARDING,
+    children: <Onboarding />,
+  },
+  // Buyer Unauthenticated Routes
+  BUYER_ONBOARDING: {
+    path: BUYER_ROUTES.ONBOARDING,
+    children: <Onboarding />,
+  },
+  BUYER_LOGIN: {
+    path: BUYER_ROUTES.LOGIN,
+    children: <Login />,
+  },
+  BUYER_FORGOT_PASSWORD: {
+    path: BUYER_ROUTES.FORGOT_PASSWORD,
+    children: <ForgotPassword />,
+  },
+  BUYER_VERIFY2FA: {
+    path: BUYER_ROUTES.VERIFY2FA,
+    children: <Verify2FA />,
+  },
+  BUYER_REGISTER: {
+    path: BUYER_ROUTES.REGISTER,
     children: <Register />,
   },
+
   // Nested Routes
   BUYER: {
     path: BUYER_ROUTES.ROOT,
@@ -91,7 +114,6 @@ const RoutesComponent = (): JSX.Element => {
     if (isAuthenticated) {
       // On authenticated, fetch user.
       dispatch(getUserActions.request());
-
       // Redirects
       if (
         authenticatedUserType === 'seller' &&
@@ -100,7 +122,6 @@ const RoutesComponent = (): JSX.Element => {
       ) {
         history.push(SELLER_ROUTES.ROOT);
       }
-
       if (
         authenticatedUserType === 'buyer' &&
         (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||

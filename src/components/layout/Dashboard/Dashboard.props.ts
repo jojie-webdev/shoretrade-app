@@ -3,16 +3,17 @@ import { Route } from 'types/Routes';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Theme } from 'types/Theme';
 
+export interface DashboardPublicProps {
+  children: any;
+  routes: Route[];
+}
+
 export interface DashboardGeneratedProps extends DashboardPublicProps {
   pageTitle?: string;
   isInnerRoute: (path: string) => boolean;
   shouldIncludePadding: boolean;
   userData: GetUserPayload['data']['user'] | undefined;
-}
-
-export interface DashboardPublicProps {
-  children: any;
-  routes: Route[];
+  logout: () => void;
 }
 
 // Inner component props
