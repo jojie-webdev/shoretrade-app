@@ -91,7 +91,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
                 leftComponent={AddressText(
                   title,
                   color,
-                  streetNumber,
+                  street,
                   addressString,
                   address.countryCode
                 )}
