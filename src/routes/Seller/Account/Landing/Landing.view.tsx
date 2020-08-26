@@ -5,6 +5,7 @@ import React from 'react';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import qs from 'qs';
 import { useHistory } from 'react-router-dom';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
@@ -33,7 +34,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   const INTERACTIONS = [
     {
       value: 'Your Details',
-      path: `${SELLER_ACCOUNT_ROUTES.YOUR_DETAILS}?companyId=${currentCompany?.id}`,
+      path: `${SELLER_ACCOUNT_ROUTES.YOUR_DETAILS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
     },
     {
       value: 'Shipping Addresses',
