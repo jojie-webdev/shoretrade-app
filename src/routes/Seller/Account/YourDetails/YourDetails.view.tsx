@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
+import PhoneTextField from 'components/module/PhoneTextField';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 
@@ -22,6 +22,8 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     updatingUser,
     loadingUser,
     updateUserSuccess,
+    callingCode,
+    setCallingCode,
   } = props;
 
   if (loadingUser && !userDetails.firstName) {
@@ -62,7 +64,12 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
               <FormikTextField label="Last Name" name="lastName" />
             </Col>
             <Col md={6} className="input-col">
-              <FormikTextField label="Mobile" name="mobile" />
+              <PhoneTextField
+                label="Mobile"
+                name="mobile"
+                callingCode={callingCode}
+                setCallingCode={setCallingCode}
+              />
             </Col>
             <Col md={6} className="input-col">
               <FormikTextField label="Email" name="email" />
