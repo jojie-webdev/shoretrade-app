@@ -28,6 +28,7 @@ const EditAddress = (): JSX.Element => {
   const updateAddress = useSelector((state: Store) => state.updateAddress);
 
   // MARK:- States / Variables
+  const [submitted, setIsSubmitted] = useState(false);
   const [addressId, setAddressId] = useState('');
   const [companyId, setCompanyId] = useState('');
   const [unitNumber, setUnitNumber] = useState('');
@@ -51,6 +52,7 @@ const EditAddress = (): JSX.Element => {
         )
       )
     );
+    setIsSubmitted(true);
   };
 
   const toggleIsDefault = () => setIsDefault(!isDefault);
@@ -101,7 +103,7 @@ const EditAddress = (): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
-    updateAddressSuccess: updateAddress.data?.status === 200 || false,
+    updateAddressSuccess: updateAddress.data?.status === 200 && submitted,
   };
   return <EditAddressView {...generatedProps} />;
 };

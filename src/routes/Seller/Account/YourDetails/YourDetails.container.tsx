@@ -25,7 +25,7 @@ const YourDetails = (): JSX.Element => {
   const getUser = useSelector((state: Store) => state.getUser);
   const updateUser = useSelector((state: Store) => state.updateUser);
   const [companyId, setCompanyId] = useState('');
-
+  const [submitted, setIsSubmitted] = useState(false);
   const [callingCode, setCallingCode] = useState('61'); // AU by default
   const [userDetails, setUserDetails] = useState<UserDetails>({
     firstName: '',
@@ -108,6 +108,8 @@ const YourDetails = (): JSX.Element => {
         companyId,
       })
     );
+
+    setIsSubmitted(true);
   };
 
   // MARK:- Render
@@ -117,7 +119,7 @@ const YourDetails = (): JSX.Element => {
     onClickSave,
     updatingUser: updateUser.pending || false,
     loadingUser: getUser.pending || true,
-    updateUserSuccess: updateUser.data?.status === 200 || false,
+    updateUserSuccess: updateUser.data?.status === 200 && submitted,
     callingCode,
     setCallingCode,
   };
