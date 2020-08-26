@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import queryString from 'query-string';
+import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getAddressesActions } from 'store/actions';
@@ -34,7 +34,9 @@ const ShippingAddresses = (): JSX.Element => {
 
   // Mark:- Effects
   useEffect(() => {
-    const { companyId } = queryString.parse(location.search) as QueryParams;
+    const { companyId } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    }) as QueryParams;
 
     if (!companyId) {
       dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));

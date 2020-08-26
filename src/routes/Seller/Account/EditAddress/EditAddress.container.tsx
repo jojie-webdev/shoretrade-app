@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import queryString from 'query-string';
+import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateAddressActions } from 'store/actions';
@@ -57,9 +57,9 @@ const EditAddress = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    const { companyId, addressId } = queryString.parse(
-      location.search
-    ) as QueryParams;
+    const { companyId, addressId } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    }) as QueryParams;
 
     if (!companyId || !addressId) {
       dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
