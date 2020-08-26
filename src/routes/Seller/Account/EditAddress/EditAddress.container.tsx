@@ -7,14 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateAddressActions } from 'store/actions';
 import { PlaceData } from 'types/PlaceData';
-import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { Store } from 'types/store/Store';
 
-import {
-  QueryParams,
-  EditAddressGeneratedProps,
-  EditAddressForm,
-} from './EditAddress.props';
+import { QueryParams, EditAddressGeneratedProps } from './EditAddress.props';
 import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,

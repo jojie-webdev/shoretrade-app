@@ -13,9 +13,4 @@ export interface EditAddressGeneratedProps {
   setUnitNumber: Dispatch<string>;
 }
 
-export interface EditAddressForm {
-  address: string;
-  unitNumber: string;
-}
-
 export type QueryParams = { companyId: string; addressId: string };
