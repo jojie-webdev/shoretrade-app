@@ -5,7 +5,8 @@ import { InfoFilled, Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Pagination from 'components/module/Pagination';
-import { SELLER_SOLD_ROUTES } from 'consts';
+import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
+import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -24,10 +25,16 @@ import {
   StyledInteraction,
   DeliveryRow,
   PendingRow,
+  CollapsibleContent,
 } from './ToShip.styles';
 
-export const SoldItem = (props: ToShipItemData) => {
-  const { type = 'air', date, orders, id, orderRefNumber } = props;
+export const SoldItem = (
+  props: ToShipItemData & {
+    token: string;
+  }
+) => {
+  const { type = 'air', date, orders, id, orderRefNumber, token } = props;
+  const [isOpen, setIsOpen] = useState(false);
   const desc =
     type.toLowerCase() === 'air'
       ? 'Air Freight Cut Off'
@@ -42,28 +49,42 @@ export const SoldItem = (props: ToShipItemData) => {
       <Truck height={13} width={13} />
     );
   return (
-    <StyledInteraction
-      type="accordion"
-      value="Test"
-      onClick={() => null}
-      leftComponent={
-        <PriorityNumber>
-          <Typography color="noshade" variant="label">
-            {orders.length}
+    <>
+      <StyledInteraction
+        pressed={isOpen}
+        type="accordion"
+        onClick={() => setIsOpen((v) => !v)}
+        leftComponent={
+          <PriorityNumber>
+            <Typography color="noshade" variant="label">
+              {orders.length}
+            </Typography>
+          </PriorityNumber>
+        }
+      >
+        <div className="content">
+          <Icon />
+          <Typography variant="label" color="shade6" className="center-text">
+            {desc}
           </Typography>
-        </PriorityNumber>
-      }
-    >
-      <div className="content">
-        <Icon />
-        <Typography variant="label" color="shade6" className="center-text">
-          {desc}
-        </Typography>
-        <Typography variant="label" color="noshade">
-          {time}
-        </Typography>
-      </div>
-    </StyledInteraction>
+          <Typography variant="label" color="noshade">
+            {time}
+          </Typography>
+        </div>
+      </StyledInteraction>
+      <CollapsibleContent isOpen={isOpen}>
+        <ToShipAccordionContent
+          onDownloadInvoice={() => {
+            window.open(
+              `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
+              '_blank'
+            );
+          }}
+          items={orders}
+          onPress={() => null}
+        />
+      </CollapsibleContent>
+    </>
   );
 };
 
@@ -97,7 +118,14 @@ export const PendingItem = (props: PendingToShipItemData) => {
 const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
-  const { toShip, toShipCount, filters, updateFilters, pendingToShip } = props;
+  const {
+    toShip,
+    toShipCount,
+    filters,
+    updateFilters,
+    pendingToShip,
+    token,
+  } = props;
   const [pendingPage, setPendingPage] = useState(1);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
@@ -143,7 +171,7 @@ const ToShip = (props: SoldGeneratedProps) => {
               </Typography>
 
               {group.data.map((item) => (
-                <SoldItem key={item.id} {...item} />
+                <SoldItem key={item.id} {...item} token={token} />
               ))}
             </Col>
           </DeliveryRow>

@@ -45,6 +45,14 @@ export const StyledInteraction = styled(Interaction)`
   }
 `;
 
+export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
+  width: 100%;
+  overflow: hidden;
+  height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
+  padding: ${({ isOpen }) => (isOpen ? '16px 0' : '0')};
+  transition: all 0.1s ease;
+`;
+
 export const DeliveryRow = styled(Row)`
   margin-bottom: 32px;
 

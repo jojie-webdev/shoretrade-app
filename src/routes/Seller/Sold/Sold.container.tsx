@@ -29,6 +29,9 @@ import SoldView from './Sold.view';
 
 const Sold = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const token = useSelector((state: Store) => state.auth.token) || '';
+
   const getOrdersPlaced = (filter?: {
     page: string;
     dateFrom: string;
@@ -187,6 +190,7 @@ const Sold = (): JSX.Element => {
     deliveredCount,
     filters,
     updateFilters,
+    token,
   };
   return <SoldView {...generatedProps} />;
 };
