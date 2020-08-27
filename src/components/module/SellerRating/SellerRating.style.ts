@@ -34,9 +34,11 @@ export const PreviewDetails = styled.div`
   margin-left: 15px;
 `;
 
-export const StarContainer = styled.span`
+export const StarContainer = styled.span<{
+  hasLocation: boolean;
+}>`
   margin-right: 6px;
-  margin-top: 0;
+  margin-top: ${(props) => (props.hasLocation ? '0' : '22px')};
 `;
 
 export const Favorite = styled.button`
@@ -50,6 +52,6 @@ export const Favorite = styled.button`
   border-width: 0;
   border-radius: 50%;
   background-color: white;
-  padding-top: 8px;
+  padding-top: 6px;
   box-shadow: 0px 4px 10px -5px;
 `;

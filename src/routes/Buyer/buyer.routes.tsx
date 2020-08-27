@@ -50,11 +50,10 @@ const ROUTES: Routes = {
     children: <Search />,
     title: 'Search',
   },
-  SELLER_DETAILS: {
+  SELLER: {
     path: '/buyer/seller-details/:id',
     children: <SellerDetails />,
     title: 'Seller Details',
-    hideFromSidebar: true,
   },
 };
 

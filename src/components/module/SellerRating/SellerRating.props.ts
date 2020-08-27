@@ -1,9 +1,5 @@
-export interface SellerRatingProps {
-  name: string;
-  isSmallName?: boolean;
-  uri?: string;
-  location?: string;
-  rating: string;
-  isFavorite?: boolean;
-  onFavorite: () => Promise<void>;
+import { Seller } from 'types/store/GetSellerByIdState';
+
+export interface SellerRatingProps extends Seller {
+  onFavorite: () => Promise<any>;
 }

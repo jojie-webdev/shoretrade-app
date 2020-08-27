@@ -17,35 +17,40 @@ import {
 
 const SellerRating = (props: SellerRatingProps): JSX.Element => {
   // const theme = useTheme();
-  const { name, location, uri, isFavorite, onFavorite, rating } = props;
+  const {
+    companyName,
+    companyLocation,
+    companyImage,
+    isFavourite,
+    onFavorite,
+    rating,
+  } = props;
+
+  const hasLocation =
+    companyLocation.state !== '' && companyLocation.countryCode !== '';
+
   return (
     <Row>
-      {uri ? (
-        <AvatarContainer>
-          <AvatarPreview src={uri} alt="profile picture"/>
-          <Favorite>
-            {isFavorite ? <HeartFilled /> : <Heart />}
-          </Favorite>
-        </AvatarContainer>
-      ) : (
-        <AvatarContainer>
+      <AvatarContainer>
+        {companyImage ? (
+          <AvatarPreview src={companyImage} alt="profile picture" />
+        ) : (
           <AvatarPlaceholder />
-          <Favorite>
-            {isFavorite ? <HeartFilled /> : <Heart />}
-          </Favorite>
-        </AvatarContainer>
-      )}
+        )}
+        <Favorite> {isFavourite ? <HeartFilled width={22} height={22} /> : <Heart width={22} height={22} />} </Favorite>
+      </AvatarContainer>
 
       <PreviewDetails>
         <Typography variant="title5" color="shade9">
-          {name}
+          {companyName}
         </Typography>
         <Typography variant="label" color="shade5">
-          {location}
+          {companyLocation.state}
+          {companyLocation.countryCode && `, ${companyLocation.countryCode}`}
         </Typography>
         <Row>
           {[...Array(5).keys()].map((r) => (
-            <StarContainer key={r}>
+            <StarContainer hasLocation={hasLocation} key={r}>
               {Number(rating) > r ? <StarFilled /> : <Star />}
             </StarContainer>
           ))}
