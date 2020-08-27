@@ -127,6 +127,7 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="StarFilled">
           <StarFilled width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Oysters">
           <Oysters width={30} height={30} />
         </Wrapper>
