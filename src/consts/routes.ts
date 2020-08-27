@@ -22,6 +22,21 @@ export const SELLER_ROUTES = {
   SOLD: `${SELLER_ROOT}/sold`,
 };
 
+export const SELLER_DASHBOARD_ROUTES = {
+  LANDING: SELLER_ROUTES.DASHBOARD,
+  CASH_FLOW: (months = 'months') =>
+    `${SELLER_ROUTES.DASHBOARD}/cash-flow/:months`,
+  CATEGORIES: `${SELLER_ROUTES.DASHBOARD}/categories/`,
+  CATEGORY_DETAIL: (category = 'category') =>
+    `${SELLER_ROUTES.DASHBOARD}/categories/:${category}`,
+};
+
+export const SELLER_SOLD_ROUTES = {
+  LANDING: `${SELLER_ROUTES.SOLD}`,
+  CONFIRM_LIST: `${SELLER_ROUTES.SOLD}/confirm-list/:orderId`,
+  CONFIRM: `${SELLER_ROUTES.SOLD}/confirm-list/:orderId/:id`,
+};
+
 export const SELLER_ACCOUNT_ROUTES = {
   LANDING: `${SELLER_ROUTES.ACCOUNT}`,
   YOUR_DETAILS: `${SELLER_ROUTES.ACCOUNT}/details`,
@@ -32,15 +47,6 @@ export const SELLER_ACCOUNT_ROUTES = {
   CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/assistants/create-assistant`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
-};
-
-export const SELLER_DASHBOARD_ROUTES = {
-  LANDING: SELLER_ROUTES.DASHBOARD,
-  CASH_FLOW: (months = 'months') =>
-    `${SELLER_ROUTES.DASHBOARD}/cash-flow/:months`,
-  CATEGORIES: `${SELLER_ROUTES.DASHBOARD}/categories/`,
-  CATEGORY_DETAIL: (category = 'category') =>
-    `${SELLER_ROUTES.DASHBOARD}/categories/:${category}`,
 };
 
 export const BUYER_ROUTES = {

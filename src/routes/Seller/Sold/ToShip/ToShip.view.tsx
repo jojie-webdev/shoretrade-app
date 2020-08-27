@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
-import {
-  Octopus,
-  ChevronRight,
-  Scale,
-  InfoFilled,
-  Plane,
-  Truck,
-} from 'components/base/SVG';
+import { InfoFilled, Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Pagination from 'components/module/Pagination';
+import { SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { useTheme } from 'utils/Theme';
@@ -28,7 +23,6 @@ import {
   PriorityNumber,
   StyledInteraction,
   DeliveryRow,
-  PendingItemContainer,
   PendingRow,
 } from './ToShip.styles';
 
@@ -72,58 +66,17 @@ export const SoldItem = (props: ToShipItemData) => {
     </StyledInteraction>
   );
 };
-// TODO: Reuse this component as content of confirm weights screen
-// export const PendingItem = () => (
-//   <PendingItemContainer>
-//     <div className="top-content">
-//       <div className="left">
-//         <img src="" alt="Pending Item" />
-//         <div className="text-container">
-//           <Typography color="noshade" weight="500">
-//             King Salmon Manuka Cold Smoked Sliced
-//           </Typography>
-//           <div className="shipping">
-//             <Typography
-//               color="shade6"
-//               variant="label"
-//               className="shipping-text"
-//             >
-//               Shipping:
-//             </Typography>
-//             <Typography color="noshade" variant="label">
-//               Wed 26 Apr
-//             </Typography>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="right">
-//         <ChevronRight height={16} width={16} />
-//       </div>
-//     </div>
-
-//     <hr className="divider" />
-
-//     <div className="bottom">
-//       <div className="text-container">
-//         <Scale height={16} width={16} />
-//         <Typography color="error" className="text" variant="caption">
-//           Weight to be Confirmed
-//         </Typography>
-//       </div>
-//       <Typography color="noshade" variant="label" weight="800">
-//         $986.50
-//       </Typography>
-//     </div>
-//   </PendingItemContainer>
-// );
 
 export const PendingItem = (props: PendingToShipItemData) => {
   const { id, orderNumber, numberOfOrders } = props;
+
+  const history = useHistory();
   return (
     <StyledInteraction
       type="accordion"
-      value="Test"
-      onClick={() => null}
+      onClick={() =>
+        history.push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', id))
+      }
       leftComponent={
         <PriorityNumber>
           <Typography color="noshade" variant="label">
@@ -163,6 +116,7 @@ const ToShip = (props: SoldGeneratedProps) => {
           spaceBetween={50}
           slidesPerView={1}
           onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
+          loop
         >
           {pendingToShip.map((item) => (
             <SwiperSlide key={item.id}>

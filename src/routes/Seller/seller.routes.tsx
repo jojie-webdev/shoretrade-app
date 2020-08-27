@@ -20,7 +20,7 @@ import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
 import Selling from './Selling';
-import Sold from './Sold';
+import Sold from './Sold/sold.routes';
 
 const ROUTES: Routes = {
   DASHBOARD: {
@@ -62,6 +62,7 @@ const ROUTES: Routes = {
     title: 'Sold',
     children: <Sold />,
     icon: CheckBorder,
+    nested: true,
   },
   ACCOUNT: {
     path: SELLER_ACCOUNT_ROUTES.LANDING,
