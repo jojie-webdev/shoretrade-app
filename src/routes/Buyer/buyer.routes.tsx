@@ -54,7 +54,8 @@ const ROUTES: Routes = {
     path: '/buyer/seller-details/:id',
     children: <SellerDetails />,
     title: 'Seller Details',
-  },
+    hideFromSidebar: true,
+  }
 };
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);

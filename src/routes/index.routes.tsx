@@ -118,14 +118,14 @@ const RoutesComponent = (): JSX.Element => {
       if (
         authenticatedUserType === 'seller' &&
         (UNAUTHENTICATED_SELLER_ROUTES.includes(currentPath) ||
-          currentPath.includes('buyer'))
+          currentPath.startsWith('/buyer'))
       ) {
         history.push(SELLER_ROUTES.ROOT);
       }
       if (
         authenticatedUserType === 'buyer' &&
         (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||
-          currentPath.includes('seller'))
+          currentPath.startsWith('/seller'))
       ) {
         history.push(BUYER_ROUTES.ROOT);
       }

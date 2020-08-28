@@ -10,7 +10,7 @@ import { Container, SpinnerContainer, ListingContainer, ListingCounter } from '.
 
 const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
   // const theme = useTheme();
-const { loading } = props;
+  const { loading, listings } = props;
 
   return (
     <Container>
@@ -24,7 +24,7 @@ const { loading } = props;
 
           <ListingContainer>
             <Typography variant="title5" color="shade9">
-              Active Listing <ListingCounter>32</ListingCounter>
+              Active Listing <ListingCounter>{listings?.length}</ListingCounter>
             </Typography>
           </ListingContainer>
         </>

@@ -22,12 +22,12 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
     companyLocation,
     companyImage,
     isFavourite,
-    onFavorite,
+    onFavourite,
     rating,
   } = props;
 
   const hasLocation =
-    companyLocation.state !== '' && companyLocation.countryCode !== '';
+    companyLocation?.state !== '' && companyLocation?.countryCode !== '';
 
   return (
     <Row>
@@ -37,7 +37,13 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
         ) : (
           <AvatarPlaceholder />
         )}
-        <Favorite> {isFavourite ? <HeartFilled width={22} height={22} /> : <Heart width={22} height={22} />} </Favorite>
+        <Favorite onClick={() => onFavourite(!isFavourite)}>
+          {isFavourite ? (
+            <HeartFilled width={22} height={22} /> 
+          ) : (
+            <Heart width={22} height={22} />
+          )}
+        </Favorite>
       </AvatarContainer>
 
       <PreviewDetails>
@@ -45,8 +51,8 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
           {companyName}
         </Typography>
         <Typography variant="label" color="shade5">
-          {companyLocation.state}
-          {companyLocation.countryCode && `, ${companyLocation.countryCode}`}
+          {companyLocation?.state}
+          {companyLocation?.countryCode && `, ${companyLocation?.countryCode}`}
         </Typography>
         <Row>
           {[...Array(5).keys()].map((r) => (
