@@ -15,3 +15,4 @@ export { default as getSellerOrdersActions } from './getSellerOrders';
 export { default as getSellerOrdersPlacedActions } from './getSellerOrdersPlaced';
 export { default as getSellerOrdersTransitActions } from './getSellerOrdersTransit';
 export { default as getSellerOrdersDeliveredActions } from './getSellerOrdersDelivered';
+export { default as changePasswordActions } from './changePassword';

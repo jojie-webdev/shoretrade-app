@@ -1,3 +1,4 @@
+import Alert from 'components/base/Alert';
 import { Row, Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
@@ -28,4 +29,8 @@ export const SmallAlertContainer = styled.div`
   .text {
     margin-top: 6px;
   }
+`;
+
+export const StyledAlert = styled(Alert)`
+  margin-bottom: 16px;
 `;

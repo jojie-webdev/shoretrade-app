@@ -3,6 +3,7 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 
 import auth from './auth';
+import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -34,4 +35,5 @@ export default (history: History) =>
     getSellerOrdersPlaced,
     getSellerOrdersTransit,
     getSellerOrdersDelivered,
+    changePassword,
   });
