@@ -89,4 +89,5 @@ export interface SoldGeneratedProps {
     updateToShipFilters: Dispatch<Partial<RequestFilters>>;
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
+  token: string;
 }
