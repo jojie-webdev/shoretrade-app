@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { getSellerDashboard } from 'services/company';
@@ -53,15 +54,30 @@ const Dashboard = (): JSX.Element => {
     fetchData();
   }, [dateRange, token]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const toCategories = () => {
+    let pathname = '';
+    if (dateRange === fiscalYearDateRange) {
+      pathname = SELLER_DASHBOARD_ROUTES.CATEGORIES('FY');
+    } else {
+      pathname = SELLER_DASHBOARD_ROUTES.CATEGORIES(
+        `${moment(dateRange.start.dateString).format('MM-DD-YYYY')}_${moment(
+          dateRange.end.dateString
+        ).format('MM-DD-YYYY')}`
+      );
+    }
+
+    return {
+      pathname,
+      state: { data: data.categories },
+    };
+  };
 
   const generatedProps: DashboardLandingGeneratedProps = {
     isCalendarModalOpen,
     toggleModal,
     isLoading,
     data,
+    toCategories: toCategories(),
   };
   return <DashboardView {...generatedProps} />;
 };

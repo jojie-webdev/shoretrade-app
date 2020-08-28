@@ -8,4 +8,5 @@ export interface DashboardLandingGeneratedProps {
     paid: string | number;
     pending: string | number;
   };
+  toCategories: Record<string, unknown>;
 }

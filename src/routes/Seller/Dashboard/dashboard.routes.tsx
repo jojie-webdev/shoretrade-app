@@ -20,7 +20,7 @@ const ROUTES: Routes = {
     children: <CashFlow />,
   },
   CATEGORIES: {
-    path: SELLER_DASHBOARD_ROUTES.CATEGORIES,
+    path: SELLER_DASHBOARD_ROUTES.CATEGORIES(),
     children: <Categories />,
   },
   CATEGORY_DETAIL: {
