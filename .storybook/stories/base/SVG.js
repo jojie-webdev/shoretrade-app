@@ -107,7 +107,7 @@ storiesOf('base/SVG', module).add('Summary', () => {
         }}
       >
         {children}
-        <div style={{ marginTop: '8px' }}>{label}</div>
+        <div style={{ marginTop: '8px', color: '#000' }}>{label}</div>
       </div>
     );
   };

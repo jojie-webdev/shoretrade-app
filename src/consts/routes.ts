@@ -24,11 +24,12 @@ export const SELLER_ROUTES = {
 
 export const SELLER_DASHBOARD_ROUTES = {
   LANDING: SELLER_ROUTES.DASHBOARD,
-  CASH_FLOW: (months = 'months') =>
-    `${SELLER_ROUTES.DASHBOARD}/cash-flow/:months`,
-  CATEGORIES: `${SELLER_ROUTES.DASHBOARD}/categories/`,
-  CATEGORY_DETAIL: (category = 'category') =>
-    `${SELLER_ROUTES.DASHBOARD}/categories/:${category}`,
+  CASH_FLOW: (months = ':months') =>
+    `${SELLER_ROUTES.DASHBOARD}/cash-flow/${months}`,
+  CATEGORIES: (months = ':months') =>
+    `${SELLER_ROUTES.DASHBOARD}/categories/${months}`,
+  CATEGORY_DETAIL: (title = ':title', months = ':months', id = ':id') =>
+    `${SELLER_ROUTES.DASHBOARD}/categories/${title}/${months}/${id}`,
 };
 
 export const SELLER_SOLD_ROUTES = {

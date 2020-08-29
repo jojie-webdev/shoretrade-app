@@ -10,6 +10,7 @@ export const Container = styled.div`
 
 export const SpinnerContainer = styled.div`
   flex: 1;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -52,10 +52,6 @@ const MarketPrices = (): JSX.Element => {
     }
   }, [searchValue.trim()]);
 
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
-
   const generatedProps = {
     onChangeSearchValue,
     searchValue,

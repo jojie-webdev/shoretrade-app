@@ -7,7 +7,13 @@ export const HeaderRow = styled(Row)`
   margin-bottom: 32px;
 `;
 
-export const CategoryContainer = styled.div`
+export const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CategoryContainer = styled.div<{ progress: number }>`
   padding: 16px 24px;
   background: ${(props) => props.theme.grey.shade9};
   border-radius: 4px;
@@ -47,7 +53,7 @@ export const CategoryContainer = styled.div`
 
     .progress-bar {
       height: 2px;
-      width: 20%;
+      width: ${(props) => `${props.progress}%`};
       position: absolute;
       top: 0;
       left: 0;
@@ -55,5 +61,9 @@ export const CategoryContainer = styled.div`
 
       background: ${(props) => props.theme.brand.primary};
     }
+  }
+
+  .image {
+    height: 40px;
   }
 `;

@@ -7,6 +7,12 @@ export const HeaderRow = styled(Row)`
   margin-bottom: 32px;
 `;
 
+export const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const CategoryContainer = styled.div`
   padding: 8px;
   display: flex;
@@ -17,7 +23,6 @@ export const CategoryContainer = styled.div`
   img {
     height: 64px;
     width: 64px;
-    border: 1px solid red;
     border-radius: 4px;
     margin-right: 16px;
   }

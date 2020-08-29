@@ -58,33 +58,31 @@ const FilterHeader = ({ toggleModal }: { toggleModal: () => void }) => (
 const TotalSales = (props: any) => (
   <TotalSalesRow gutterWidth={24}>
     <Col md={12} className="title-col">
-      <Typography variant="label" color="shade6">
-        Total Sales
-      </Typography>
-    </Col>
-    <Col md={5}>
-      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-10')}>
-        <SalesCard>
-          <Typography variant="overline" color="shade6" className="overline">
-            Paid
-          </Typography>
-          <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.paid)}
-          </Typography>
-        </SalesCard>
+      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
+        <Typography variant="label" color="shade6" component="span">
+          Total Sales
+        </Typography>
       </Link>
     </Col>
     <Col md={5}>
-      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-10')}>
-        <SalesCard>
-          <Typography variant="overline" color="shade6" className="overline">
-            Pending
-          </Typography>
-          <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.pending)}
-          </Typography>
-        </SalesCard>
-      </Link>
+      <SalesCard>
+        <Typography variant="overline" color="shade6" className="overline">
+          Paid
+        </Typography>
+        <Typography variant="title4" color="noshade">
+          {numberToShortenAmount(props.data.paid)}
+        </Typography>
+      </SalesCard>
+    </Col>
+    <Col md={5}>
+      <SalesCard>
+        <Typography variant="overline" color="shade6" className="overline">
+          Pending
+        </Typography>
+        <Typography variant="title4" color="noshade">
+          {numberToShortenAmount(props.data.pending)}
+        </Typography>
+      </SalesCard>
     </Col>
   </TotalSalesRow>
 );
@@ -105,7 +103,9 @@ const MonthlySales = (props: any) => {
         {props.data.months.map((m: any, i: any) => (
           <Col md={3} key={i}>
             <Link
-              to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('2020-10-20-to-2020-10-10')}
+              to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
+                `${moment(m.startDate).format('MM-DD-YYYY')}`
+              )}
             >
               <SalesCard>
                 <Typography
@@ -113,7 +113,7 @@ const MonthlySales = (props: any) => {
                   color="shade6"
                   className="overline"
                 >
-                  May
+                  {moment(m.startDate).format('MMMM')}
                 </Typography>
                 <Typography variant="title4" color="noshade" className="price">
                   {numberToShortenAmount(m.total)}
@@ -162,8 +162,8 @@ const TopCategories = (props: any) => {
     <TopCategoriesContainer>
       <Row>
         <Col md={12} className="title-col">
-          <Link to={SELLER_DASHBOARD_ROUTES.CATEGORIES}>
-            <Typography variant="label" color="shade6">
+          <Link to={props.to}>
+            <Typography variant="label" color="shade6" component="span">
               Top Categories
             </Typography>
           </Link>
@@ -232,7 +232,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
           <FilterHeader toggleModal={toggleModal} />
           <TotalSales data={props.data} />
           <MonthlySales data={props.data} />
-          <TopCategories data={props.data} />
+          <TopCategories data={props.data} to={props.toCategories} />
           {isCalendarModalOpen && (
             <DatePickerModal
               startDate={moment()}
