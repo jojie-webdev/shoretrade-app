@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
-
+import { PlaceData } from '../../../types/PlaceData';
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 
-export type FilterType = 'choice' | 'size_dropdown' | 'size_input';
+export type FilterType = 'location' |'choice' | 'size_dropdown' | 'size_input';
 
 export interface Filters {
   label: string;
@@ -28,6 +28,8 @@ export interface FilterModalProps extends ModalProps {
   setSelectedFilters: Dispatch<SetStateAction<string[]>>;
   selectedCheckboxFilters?: string[];
   setSelectedCheckboxFilters?: Dispatch<SetStateAction<string[]>>;
+  selectedLocation?: PlaceData | null;
+  setSelectedLocation?: Dispatch<SetStateAction<PlaceData | null>>;
   selectedSize?: string | null;
   setSelectedSize?: Dispatch<SetStateAction<string | null>>;
   onApply: () => void;

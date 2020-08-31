@@ -13,13 +13,19 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   z-index: 1000;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{backgroundColor? :string}>`
   position: relative;
-  background-color: ${(props) => props.theme.grey.shade8};
   border-radius: 4px;
   padding: 56px 32px;
   min-width: 438px;
+  background-color: ${({ theme, backgroundColor }) => {
+    const isSeller = theme.appType === 'seller';
+
+    return backgroundColor || (isSeller ? theme.grey.shade8 : theme.grey.shade1);
+  }};
 `;
+
+
 
 export const ExitButton = styled.button`
   position: absolute;
