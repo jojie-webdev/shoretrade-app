@@ -2,4 +2,7 @@ import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.p
 
 export interface SellerDetailsGeneratedProps extends SellerRatingProps {
   loading: boolean;
+  categories: Array<any>;
+  search: string;
+  onSearch: (x: string) => void;
 }
