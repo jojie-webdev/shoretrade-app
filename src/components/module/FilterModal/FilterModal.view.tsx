@@ -10,6 +10,8 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import { isEmpty } from 'ramda';
+import { PlaceData } from '../../../types/PlaceData';
+import LocationSearch from "../LocationSearch"
 import { Row } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
@@ -29,6 +31,7 @@ import {
 
 const FilterModal = (props: FilterModalProps): JSX.Element => {
   const theme = useTheme();
+  const isSeller = theme.appType == 'seller';
 
   const {
     filters,
@@ -37,6 +40,8 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     setSelectedFilters,
     selectedCheckboxFilters,
     setSelectedCheckboxFilters,
+    selectedLocation,
+    setSelectedLocation,
     selectedSize,
     setSelectedSize,
     ...modalProps
@@ -53,6 +58,10 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     (filters.find((f) => f.label === selecting) as Filters) || { values: [] };
 
   const getFilterValue = (label: string, fType: FilterType) => {
+    if (fType === 'location') {
+      return selectedLocation ? selectedLocation.address : null;
+    }
+    
     if (fType === 'size_dropdown') {
       const sizeFilter = filters.find((f) => f.label === 'Size');
       const sizeValues = sizeFilter?.sizeDropdownValues;
@@ -110,6 +119,9 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
       );
 
       setCurrentValue('');
+      if (setSelectedLocation) {
+        setSelectedLocation(null);
+      }
       if (setSelectedSize) {
         setSelectedSize(null);
       }
@@ -137,6 +149,14 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     setSelecting(label);
     setType(fType);
   };
+
+   const onSelectLocation = (location?: PlaceData) => {
+    if (location && setSelectedLocation) {
+      setSelectedLocation(location);
+      onBack();
+    }
+  };
+
 
   const onCheckboxPress = (label: string) => {
     if (selectedCheckboxFilters && setSelectedCheckboxFilters) {
@@ -308,6 +328,16 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                 </InputContainer>
               </Scroll>
             )}
+            
+            {type === 'location' && (
+              <LocationSearch
+                onSelect={onSelectLocation}
+                interactionProps={{
+                  backgroundColor: isSeller ? theme.grey.shade8 : theme.grey.shade1,
+                }}
+              />
+            )}
+
           </>
         ) : (
           <Scroll>

@@ -4,12 +4,14 @@ import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getBankDetails from './getBankDetails';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
+import updateBankDetails from './updateBankDetails';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -26,6 +28,8 @@ const sagas = [
   getAddresses,
   updateAddress,
   getSellerOrders,
+  getBankDetails,
+  updateBankDetails,
   changePassword,
 ];
 
