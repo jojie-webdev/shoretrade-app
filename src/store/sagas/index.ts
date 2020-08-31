@@ -12,6 +12,7 @@ import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
 import updateUser from './updateUser';
 import verify from './verify';
+import getBuyerHomepage from './getBuyerHomePage';
 
 const sagas = [
   login,
@@ -27,6 +28,7 @@ const sagas = [
   updateAddress,
   getSellerOrders,
   changePassword,
+  getBuyerHomepage
 ];
 
 export default function* root() {
