@@ -7,6 +7,7 @@ import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getBankDetails from './getBankDetails';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -15,6 +16,7 @@ import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
+import updateBankDetails from './updateBankDetails';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -35,5 +37,7 @@ export default (history: History) =>
     getSellerOrdersPlaced,
     getSellerOrdersTransit,
     getSellerOrdersDelivered,
+    getBankDetails,
+    updateBankDetails,
     changePassword,
   });
