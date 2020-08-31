@@ -57,4 +57,12 @@ export const BUYER_ROUTES = {
   FORGOT_PASSWORD: `${BUYER_ROOT}/forgot-password`,
   VERIFY2FA: `${BUYER_ROOT}/verify2fa`,
   ONBOARDING: `${BUYER_ROOT}/onboarding`,
+  //Authenticated Routes
+  CATEGORIES: `${BUYER_ROOT}/categories`,
+};
+
+export const BUYER_CATEGORIES_ROUTES = {
+  LANDING: `${BUYER_ROUTES.CATEGORIES}`,
+  PRODUCTS: `${BUYER_ROUTES.CATEGORIES}/:categoryId`,
+  PRODUCTS_PREVIEW: `${BUYER_ROUTES.CATEGORIES}/product/:id`,
 };

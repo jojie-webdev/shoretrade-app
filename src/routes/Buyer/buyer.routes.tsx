@@ -4,8 +4,9 @@ import DashboardLayout from 'components/layout/Dashboard';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts'
 import Account from './Account';
-import Categories from './Categories';
+import Categories from './Categories/categories.routes';
 import Checkout from './Checkout';
 import Home from './Home';
 import Orders from './Orders';
@@ -20,9 +21,10 @@ const ROUTES: Routes = {
     title: 'Account',
   },
   CATEGORIES: {
-    path: '/buyer/categories',
+    path: BUYER_ROUTES.CATEGORIES,
     children: <Categories />,
     title: 'Categories',
+    nested: true,
   },
   CHECKOUT: {
     path: '/buyer/checkout',
