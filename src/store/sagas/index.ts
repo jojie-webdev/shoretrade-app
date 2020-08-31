@@ -4,6 +4,7 @@ import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getBuyerHomepage from './getBuyerHomePage';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
 import login from './login';
@@ -12,7 +13,6 @@ import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
 import updateUser from './updateUser';
 import verify from './verify';
-import getBuyerHomepage from './getBuyerHomePage';
 
 const sagas = [
   login,
@@ -28,7 +28,7 @@ const sagas = [
   updateAddress,
   getSellerOrders,
   changePassword,
-  getBuyerHomepage
+  getBuyerHomepage,
 ];
 
 export default function* root() {

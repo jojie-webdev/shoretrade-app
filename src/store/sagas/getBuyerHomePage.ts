@@ -13,7 +13,6 @@ function* getBuyerHomepageRequest(
   action: AsyncAction<GetBuyerHomepageMeta, GetBuyerHomepagePayload>
 ) {
   const state: Store = yield select();
-  console.log(state);
   if (state.auth.token && state.currentAddress.id) {
     try {
       const data = yield call(
