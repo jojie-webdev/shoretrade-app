@@ -8,19 +8,12 @@ import { EditAddressGeneratedProps } from './EditAddress.props';
 
 const EditAddressView = (props: EditAddressGeneratedProps) => {
   // const theme = useTheme();
-  const { address, updateAddressSuccess, ...formProps } = props;
 
-  if (!address) {
+  if (!props.address) {
     return <LoadingView></LoadingView>;
   }
 
-  return (
-    <SellerAddressForm
-      {...formProps}
-      isSuccess={updateAddressSuccess}
-      address={address}
-    />
-  );
+  return <SellerAddressForm {...props} />;
 };
 
 export default EditAddressView;

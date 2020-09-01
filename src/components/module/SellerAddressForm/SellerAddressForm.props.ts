@@ -10,7 +10,7 @@ export interface SellerAddressFormProps {
   unitNumber: string;
   onClickSave: () => void;
   toggleIsDefault: () => void;
-  setAddress: Dispatch<PlaceData | null>;
+  setAddress: Dispatch<PlaceData>;
   setUnitNumber: Dispatch<string>;
 }
 

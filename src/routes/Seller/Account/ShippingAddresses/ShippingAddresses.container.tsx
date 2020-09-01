@@ -7,18 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getAddressesActions } from 'store/actions';
 import { Store } from 'types/store/Store';
+import { useCompany } from 'utils/Hooks';
 
-import {
-  ShippingAddressesGeneratedProps,
-  QueryParams,
-} from './ShippingAddresses.props';
+import { ShippingAddressesGeneratedProps } from './ShippingAddresses.props';
 import ShippingAddressesView from './ShippingAddresses.view';
 
 const ShippingAddresses = (): JSX.Element => {
   // Mark:- State / Stores
   const dispatch = useDispatch();
-  const location = useLocation();
-  const [companyId, setCompanyId] = useState('');
+  const [companyId] = useCompany();
   const getAddress = useSelector((state: Store) => state.getAddresses);
 
   // Mark:- Variables
@@ -27,26 +24,23 @@ const ShippingAddresses = (): JSX.Element => {
 
   // Mark:- Methods
   const onClickAddress = (addressId: string) => {
-    const route = `${SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS}?addressId=${addressId}&companyId=${companyId}`;
+    const route = `${SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS}${qs.stringify(
+      { companyId, addressId },
+      { addQueryPrefix: true }
+    )}`;
     dispatch(push(route));
   };
 
   const onClickAddAddress = () => {
-    dispatch(push(SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS));
+    const route = `${SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS}${qs.stringify(
+      { companyId },
+      { addQueryPrefix: true }
+    )}`;
+
+    dispatch(push(route));
   };
 
   // Mark:- Effects
-  useEffect(() => {
-    const { companyId } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    }) as QueryParams;
-
-    if (!companyId) {
-      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
-    }
-    setCompanyId(companyId);
-  }, []);
-
   useEffect(() => {
     if (companyId !== '') {
       dispatch(getAddressesActions.request({ companyId }));
