@@ -30,4 +30,4 @@ const FormikTextField = (props: FormikTextFieldProps): JSX.Element => {
   );
 };
 
-export default React.memo(FormikTextField);
+export default FormikTextField;

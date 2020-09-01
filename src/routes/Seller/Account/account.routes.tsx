@@ -45,6 +45,10 @@ const ROUTES: Routes = {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ASSISTANT,
     children: <CreateAssistant />,
   },
+  EDIT_ASSISTANT: {
+    path: SELLER_ACCOUNT_ROUTES.EDIT_ASSISTANT(),
+    children: <EditAssistant />,
+  },
   BANK_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
     children: <BankDetails />,
@@ -52,10 +56,6 @@ const ROUTES: Routes = {
   HELP_AND_SUPPORT: {
     path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
     children: <HelpAndSupport />,
-  },
-  EDIT_ASSISTANT: {
-    path: SELLER_ACCOUNT_ROUTES.EDIT_ASSISTANT(),
-    children: <EditAssistant />,
   },
 };
 
