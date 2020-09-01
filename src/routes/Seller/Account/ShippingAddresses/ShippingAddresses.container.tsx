@@ -26,10 +26,13 @@ const ShippingAddresses = (): JSX.Element => {
   const pending = getAddress.pending || false;
 
   // Mark:- Methods
-
   const onClickAddress = (addressId: string) => {
     const route = `${SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS}?addressId=${addressId}&companyId=${companyId}`;
     dispatch(push(route));
+  };
+
+  const onClickAddAddress = () => {
+    dispatch(push(SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS));
   };
 
   // Mark:- Effects
@@ -57,6 +60,7 @@ const ShippingAddresses = (): JSX.Element => {
     addresses,
     pending,
     onClickAddress,
+    onClickAddAddress,
   };
   return <ShippingAddressesView {...generatedProps} />;
 };
