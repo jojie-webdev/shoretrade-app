@@ -1,7 +1,6 @@
-import CategoryImage from 'components/module/CategoryImage';
 import Interactions from 'components/base/Interactions';
+import CategoryImage from 'components/module/CategoryImage';
 import styled, { css } from 'utils/styled';
-
 
 const customScrollbar = (props: any) =>
   css`
