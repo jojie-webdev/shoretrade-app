@@ -17,3 +17,4 @@ export { default as getSellerOrdersTransitActions } from './getSellerOrdersTrans
 export { default as getSellerOrdersDeliveredActions } from './getSellerOrdersDelivered';
 export { default as changePasswordActions } from './changePassword';
 export { default as getBuyerHomepageActions } from './getBuyerHomepage';
+export { default as currentAddressActions } from './currentAddress';
