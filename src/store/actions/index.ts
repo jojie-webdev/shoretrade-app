@@ -19,3 +19,4 @@ export { default as changePasswordActions } from './changePassword';
 export { default as getBuyerHomepageActions } from './getBuyerHomepage';
 export { default as currentAddressActions } from './currentAddress';
 export { default as getListingTypesByCategoryActions } from './getListingTypesByCategory';
+export { default as getBuyerSearchFilterDataActions } from './getBuyerSearchFilterData';

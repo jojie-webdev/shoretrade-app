@@ -16,6 +16,7 @@ function* getListingTypesByCategoryRequest(
   >
 ) {
   const state: Store = yield select();
+  console.log({ token: state.auth.token, addressId: state.currentAddress.id });
   if (state.auth.token && state.currentAddress.id) {
     try {
       const { data } = yield call(

@@ -12,9 +12,11 @@ import { Store } from 'types/store/Store';
 import CategoriesLandingView from './CategoriesLanding.view';
 
 const CategoriesLanding = (): JSX.Element => {
+  // MARK:- States / Variables
   const [search, setSearch] = useState('');
   const location = useLocation();
   const dispatch = useDispatch();
+
   const addresses = GetAddressOptions();
   const selectedAddress =
     useSelectorSafe((state) => state.currentAddress.id) || '';
@@ -26,14 +28,6 @@ const CategoriesLanding = (): JSX.Element => {
     );
   };
 
-  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const resetSearchValue = () => {
-    setSearch('');
-  };
-
   const categories = (
     useSelectorSafe(
       (state) => state.getBuyerHomepage.data?.data.data.categories
@@ -41,6 +35,15 @@ const CategoriesLanding = (): JSX.Element => {
   ).filter((category) =>
     search ? category.name.toLowerCase().includes(search.toLowerCase()) : true
   );
+
+  // MARK:- Methods
+  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const resetSearchValue = () => {
+    setSearch('');
+  };
 
   const generatedProps = {
     // generated props here

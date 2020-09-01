@@ -9,6 +9,7 @@ import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBuyerHomepage from './getBuyerHomepage';
+import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
@@ -20,6 +21,7 @@ import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
 import updateUser from './updateUser';
 import verify from './verify';
+
 export default (history: History) =>
   combineReducers({
     router: connectRouter(history),
@@ -41,4 +43,5 @@ export default (history: History) =>
     currentAddress,
     getBuyerHomepage,
     getListingTypesByCategory,
+    getBuyerSearchFilterData,
   });
