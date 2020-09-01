@@ -43,7 +43,7 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
         type="tel"
         prefix={`+${country.callingCode}`}
         LeftComponent={
-          <LeftComponent onClick={() => setIsOpen(true)}>
+          <LeftComponent onClick={() => !props.readOnly && setIsOpen(true)}>
             <Flag>{country.flag}</Flag>
           </LeftComponent>
         }

@@ -1,1 +1,3 @@
-export interface EditAssistantGeneratedProps {}
+import { SellerAssistantFormProps } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
+
+export interface EditAssistantGeneratedProps extends SellerAssistantFormProps {}
