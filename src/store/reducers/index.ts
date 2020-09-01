@@ -4,9 +4,11 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import changePassword from './changePassword';
+import currentAddress from './currentAddress';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getBuyerHomepage from './getBuyerHomepage';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -36,4 +38,6 @@ export default (history: History) =>
     getSellerOrdersTransit,
     getSellerOrdersDelivered,
     changePassword,
+    currentAddress,
+    getBuyerHomepage,
   });

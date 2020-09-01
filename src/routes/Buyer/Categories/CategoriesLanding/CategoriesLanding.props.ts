@@ -1,3 +1,5 @@
+import { Dispatch, ChangeEvent } from 'react';
+
 export type Results = {
   id: string;
   name: string;
@@ -6,9 +8,9 @@ export type Results = {
 };
 
 export interface CategoriesLandingGeneratedProps {
-  //   search: string;
-  //   categories: Results[];
-  //   addresses: { label: string; value: string }[];
-  //   selectedAddress: string;
-  //   selectAddress: (id: string) => void;
+  categories: Results[];
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  currentPath: string;
+  resetSearchValue: () => void;
 }

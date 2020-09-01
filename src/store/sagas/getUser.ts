@@ -9,7 +9,7 @@ import {
 } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
-import { getUserActions, authActions } from '../actions';
+import { getUserActions, authActions, getAddressesActions } from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
@@ -27,15 +27,15 @@ function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
 
 function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   // TODO: if buyer set to true
-  if (false) {
-    // const state: Store = yield select();
-    // if ((state.getAddresses.data?.data.addresses || []).length === 0) {
-    //   const { companies } = action.payload.data.user;
-    //   const companyId: string = pathOr('', ['0', 'id'], companies);
-    //   if (companyId) {
-    //     yield put(getAddressesActions.request({ companyId }));
-    //   }
-    // }
+  const state: Store = yield select();
+  if (state.auth.type === 'buyer') {
+    if ((state.getAddresses.data?.data.addresses || []).length === 0) {
+      const { companies } = action.payload.data.user;
+      const companyId: string = pathOr('', ['0', 'id'], companies);
+      if (companyId) {
+        yield put(getAddressesActions.request({ companyId }));
+      }
+    }
   }
 }
 

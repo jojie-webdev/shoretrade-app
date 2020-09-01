@@ -15,7 +15,7 @@ function* getBuyerHomepageRequest(
   const state: Store = yield select();
   if (state.auth.token && state.currentAddress.id) {
     try {
-      const data = yield call(
+      const { data } = yield call(
         getBuyerHomepage,
         { addressId: state.currentAddress.id },
         state.auth.token

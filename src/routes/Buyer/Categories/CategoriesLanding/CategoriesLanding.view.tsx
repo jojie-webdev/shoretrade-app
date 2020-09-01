@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
@@ -13,60 +13,38 @@ import { CategoriesContainer } from './CategoriesLanding.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
-  // const {
-  //   onChangeSearchValue,
-  //   searchValue,
-  //   resetSearchValue,
-  //   loading,
-  //   results,
-  //   currentPath,
-  // } = props;
+  const { categories, search, onChangeSearchValue, resetSearchValue } = props;
+
+  if (!categories) {
+    return null;
+  }
 
   return (
     <Container fluid>
       <Row className="search-row">
         <Col xs={12}>
           <Search
-            value={''}
-            // onChange={'onChangeSearchValue'}
-            resetValue={() => {}}
+            value={search}
+            onChange={onChangeSearchValue}
+            resetValue={resetSearchValue}
             placeholder="e.g. Ocean Trout"
           />
         </Col>
       </Row>
       <Row style={{ marginLeft: 20, marginTop: 50 }}>
-        <Col sm={3}>
-          <Card
-            image={
-              'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/category/Whole-Fish.jpg'
-            }
-            label="Fish"
-          />
-        </Col>
-        <Col sm={3}>
-          <Card
-            image={
-              'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/category/Whole-Fish.jpg'
-            }
-            label="Fish"
-          />
-        </Col>
-        <Col sm={3}>
-          <Card
-            image={
-              'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/category/Whole-Fish.jpg'
-            }
-            label="Fish"
-          />
-        </Col>
-        <Col sm={3}>
-          <Card
-            image={
-              'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/category/Whole-Fish.jpg'
-            }
-            label="Fish"
-          />
-        </Col>
+        {categories.length > 0 &&
+          categories.map((category, index) => {
+            return (
+              <Col sm={3} key={index}>
+                <Card
+                  sortIndex={category.sortIndex}
+                  id={category.id}
+                  image={category.thumbnail}
+                  label={category.name}
+                />
+              </Col>
+            );
+          })}
       </Row>
     </Container>
   );
