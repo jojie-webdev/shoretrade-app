@@ -15,7 +15,14 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
 
-  const { companies, currentCompany, profilePicture, loadingUser } = props;
+  const {
+    companies,
+    currentCompany,
+    profilePicture,
+    loadingUser,
+    profileName,
+    companyRelationship,
+  } = props;
 
   const INTERACTIONS = [
     {
@@ -61,10 +68,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
           <img src={profilePicture} alt="profile picture" />
           <div>
             <Typography variant="overline" color="noshade">
-              Owner
+              {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
             <Typography variant="title5" color="noshade">
-              Peter Manettas
+              {profileName}
             </Typography>
           </div>
         </div>

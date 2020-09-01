@@ -5,4 +5,6 @@ export interface AccountLandingGeneratedProps {
   companies: UserCompany[];
   profilePicture: string;
   loadingUser: boolean;
+  profileName: string;
+  companyRelationship: string;
 }

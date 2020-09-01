@@ -43,6 +43,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   YOUR_DETAILS: `${SELLER_ROUTES.ACCOUNT}/details`,
   SHIPPING_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address`,
   EDIT_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address/edit-address`,
+  CREATE_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address/create-address`,
   CHANGE_PASSWORD: `${SELLER_ROUTES.ACCOUNT}/change-password`,
   ASSISTANTS: `${SELLER_ROUTES.ACCOUNT}/assistants`,
   CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/assistants/create-assistant`,
