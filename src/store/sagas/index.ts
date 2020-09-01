@@ -6,6 +6,7 @@ import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBuyerHomepage from './getBuyerHomePage';
+import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
 import login from './login';
@@ -31,6 +32,7 @@ const sagas = [
   changePassword,
   getBuyerHomepage,
   currentAddress,
+  getListingTypesByCategory,
 ];
 
 export default function* root() {

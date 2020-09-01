@@ -41,6 +41,7 @@ const CategoriesLanding = (): JSX.Element => {
   ).filter((category) =>
     search ? category.name.toLowerCase().includes(search.toLowerCase()) : true
   );
+
   const generatedProps = {
     // generated props here
     categories,

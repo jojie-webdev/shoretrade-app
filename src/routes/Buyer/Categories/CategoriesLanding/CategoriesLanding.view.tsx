@@ -40,18 +40,17 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
       <Row style={{ marginLeft: 20, marginTop: 50 }}>
         {categories.length > 0 &&
           categories.map((category, index) => {
-            console.log(`${currentPath}/${category.id}`);
             return (
-              <Link to={`${currentPath}/${category.id}`} key={category.id}>
-                <Col sm={3} key={index}>
+              <Col sm={3} key={index}>
+                <Link to={`${currentPath}/${category.id}`} key={category.id}>
                   <Card
                     sortIndex={category.sortIndex}
                     id={category.id}
                     image={category.thumbnail}
                     label={category.name}
                   />
-                </Col>
-              </Link>
+                </Link>
+              </Col>
             );
           })}
       </Row>
