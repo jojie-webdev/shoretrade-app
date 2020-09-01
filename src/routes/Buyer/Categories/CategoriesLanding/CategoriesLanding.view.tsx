@@ -13,7 +13,13 @@ import { CategoriesContainer } from './CategoriesLanding.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
-  const { categories, search, onChangeSearchValue, resetSearchValue } = props;
+  const {
+    categories,
+    search,
+    onChangeSearchValue,
+    resetSearchValue,
+    currentPath,
+  } = props;
 
   if (!categories) {
     return null;
@@ -34,15 +40,18 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
       <Row style={{ marginLeft: 20, marginTop: 50 }}>
         {categories.length > 0 &&
           categories.map((category, index) => {
+            console.log(`${currentPath}/${category.id}`);
             return (
-              <Col sm={3} key={index}>
-                <Card
-                  sortIndex={category.sortIndex}
-                  id={category.id}
-                  image={category.thumbnail}
-                  label={category.name}
-                />
-              </Col>
+              <Link to={`${currentPath}/${category.id}`} key={category.id}>
+                <Col sm={3} key={index}>
+                  <Card
+                    sortIndex={category.sortIndex}
+                    id={category.id}
+                    image={category.thumbnail}
+                    label={category.name}
+                  />
+                </Col>
+              </Link>
             );
           })}
       </Row>

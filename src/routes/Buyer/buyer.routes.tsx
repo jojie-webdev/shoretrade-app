@@ -1,12 +1,14 @@
 import React from 'react';
 
 import DashboardLayout from 'components/layout/Dashboard';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
-import { BUYER_ROUTES, SELLER_ROUTES } from 'consts'
 import Account from './Account';
-import Categories from './Categories/categories.routes';
+import CategoriesLanding from './Categories/CategoriesLanding';
+import CategoriesPreview from './Categories/CategoriesPreview';
+import CategoriesSearch from './Categories/CategoriesSearch';
 import Checkout from './Checkout';
 import Home from './Home';
 import Orders from './Orders';
@@ -22,9 +24,20 @@ const ROUTES: Routes = {
   },
   CATEGORIES: {
     path: BUYER_ROUTES.CATEGORIES,
-    children: <Categories />,
+    children: <CategoriesLanding />,
     title: 'Categories',
-    nested: true,
+  },
+  CATEGORY_PRODUCTS: {
+    path: BUYER_ROUTES.CATEGORY_PRODUCTS(),
+    children: <CategoriesSearch />,
+    title: '',
+    hideFromSidebar: true,
+  },
+  PRODUCT_PREVIEW: {
+    path: BUYER_ROUTES.PRODUCT_PREVIEW(),
+    children: <CategoriesPreview />,
+    title: '',
+    hideFromSidebar: true,
   },
   CHECKOUT: {
     path: '/buyer/checkout',

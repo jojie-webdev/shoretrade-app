@@ -59,10 +59,6 @@ export const BUYER_ROUTES = {
   ONBOARDING: `${BUYER_ROOT}/onboarding`,
   //Authenticated Routes
   CATEGORIES: `${BUYER_ROOT}/categories`,
-};
-
-export const BUYER_CATEGORIES_ROUTES = {
-  LANDING: `${BUYER_ROUTES.CATEGORIES}`,
-  PRODUCTS: `${BUYER_ROUTES.CATEGORIES}/:categoryId`,
-  PRODUCTS_PREVIEW: `${BUYER_ROUTES.CATEGORIES}/product/:id`,
+  CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
+  PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/product/${id}`,
 };

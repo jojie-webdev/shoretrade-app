@@ -5,7 +5,6 @@ export {
   BUYER_ROUTES,
   SELLER_DASHBOARD_ROUTES,
   SELLER_SOLD_ROUTES,
-  BUYER_CATEGORIES_ROUTES
 } from './routes';
 
 export const API = {
@@ -20,8 +19,8 @@ const proxyURL = 'https://cors-anywhere.herokuapp.com/';
 
 export const GOOGLE_AUTOCOMPLETE = `${
   isDev ? proxyURL : ''
-  }https://maps.googleapis.com/maps/api/place/autocomplete/json?`;
+}https://maps.googleapis.com/maps/api/place/autocomplete/json?`;
 
 export const GOOGLE_PLACE_DETAILS = `${
   isDev ? proxyURL : ''
-  }https://maps.googleapis.com/maps/api/place/details/json?`;
+}https://maps.googleapis.com/maps/api/place/details/json?`;
