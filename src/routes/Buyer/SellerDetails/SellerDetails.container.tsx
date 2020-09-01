@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.props';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getAllCategory } from 'services/category';
 import { getSellerByCompanyId } from 'services/company';
 import { updateFavouriteSeller } from 'services/favourite';
+import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
 
 import SellerDetailsView from './SellerDetails.view';
@@ -13,8 +14,8 @@ const SellerDetails = (): JSX.Element => {
   const { id } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
   const [loading, setLoading] = useState(true);
-  const [seller, setSeller] = useState({});
-  const [categories, setCategories] = useState([]);
+  const [seller, setSeller] = useState<Partial<Seller>>({});
+  const [result, setResult] = useState<any[]>([]);
   const [searchString, setSearchString] = useState('');
 
   // TODO: Decoupling by converting to saga ?
@@ -30,24 +31,22 @@ const SellerDetails = (): JSX.Element => {
     }
   };
 
-  const fetchAllCategory = async () => {
-    const resp = await getAllCategory();
-    const categories = resp.data?.data?.categories || [];
-
-    setCategories(categories);
-  };
-
   // TODO: Decoupling by converting to saga ?
-  const onFavourite = async (
-    sellerId: string,
-    favorite: boolean,
-    token: string
-  ) => {
+  const onFavourite = async (favorite: boolean): Promise<any> => {
     try {
-      await updateFavouriteSeller({ sellerId, favorite }, token);
-      await fetchSellerData(sellerId, token);
+      if (seller) {
+        await updateFavouriteSeller(
+          {
+            sellerId: id || '',
+            favorite,
+          },
+          token
+        );
+      }
     } catch (error) {
       setSeller({});
+    } finally {
+      await fetchSellerData(id, token);
     }
   };
 
@@ -58,30 +57,36 @@ const SellerDetails = (): JSX.Element => {
 
   useEffect(() => {
     fetchSellerData(id, token);
-    fetchAllCategory();
   }, []);
 
   useEffect(() => {
     console.log({ seller });
   }, [seller]);
 
+  useEffect(() => {
+    const listings = seller?.listings || [];
+    const r = listings.filter((r) => r.type.includes(searchString));
+    debugger
+    setResult(r);
+  }, [seller, searchString]);
+
+  const sellerRatingProps: SellerRatingProps = {
+    companyName: seller?.companyName || '',
+    companyImage: seller?.companyImage || '',
+    companyLocation: seller?.companyLocation,
+    rating: seller?.rating || 0,
+    isFavourite: seller?.isFavourite,
+    onFavourite,
+  }
   const generatedProps = {
+    sellerRatingProps,
     loading,
-    companyName: '',
-    companyImage: '',
-    companyLocation: {
-      state: '',
-      countryCode: '',
-    },
-    rating: 0,
-    isFavourite: false,
     search: searchString,
-    categories,
-    ...seller,
+    result,
     onSearch,
-    onFavourite: (favourite: boolean) => {
-      return onFavourite(id, favourite, token);
-    },
+    // onFavourite: (favourite: boolean) => {
+    //   return onFavourite(id, favourite, token);
+    // },
   };
 
   return <SellerDetailsView {...generatedProps} />;

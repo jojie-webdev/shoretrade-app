@@ -45,11 +45,14 @@ export const ListItemInteraction = styled(Interactions)`
   margin-top: 12px;
 `;
 
-export const CategoryImageContainer = styled.div`
+export const ListingImageContainer = styled.div`
   display: flex;
   margin-right: 12px;
-  width: 90px;
-  height: 90px;
+  & > img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+  }
 `;
 
 export const RightComponent = styled.div`

@@ -1,8 +1,9 @@
 import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.props';
 
-export interface SellerDetailsGeneratedProps extends SellerRatingProps {
+export interface SellerDetailsGeneratedProps {
+  sellerRatingProps: SellerRatingProps;
   loading: boolean;
-  categories: Array<any>;
+  result: Array<any>;
   search: string;
   onSearch: (x: string) => void;
 }
