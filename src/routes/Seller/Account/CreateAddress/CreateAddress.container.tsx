@@ -62,6 +62,7 @@ const CreateAddress = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: CreateAddressGeneratedProps = {
+    type: 'CREATE',
     address,
     isDefault,
     pending,

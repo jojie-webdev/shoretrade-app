@@ -12,6 +12,7 @@ export interface SellerAddressFormProps {
   toggleIsDefault: () => void;
   setAddress: Dispatch<PlaceData>;
   setUnitNumber: Dispatch<string>;
+  type: 'EDIT' | 'CREATE';
 }
 
 export type QueryParams = { companyId: string; addressId: string };

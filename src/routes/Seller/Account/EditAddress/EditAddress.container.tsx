@@ -94,6 +94,7 @@ const EditAddress = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: EditAddressGeneratedProps = {
+    type: 'EDIT',
     address: address as PlaceData,
     isDefault,
     onClickSave,

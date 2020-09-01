@@ -23,20 +23,32 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
     unitNumber,
     setUnitNumber,
     isSuccess,
+    type,
   } = props;
+
+  let successContent = '';
+  let routeHeader = '';
+
+  if (type === 'CREATE') {
+    routeHeader = 'Create Address';
+    successContent = 'Address has successfully been created!';
+  } else if (type === 'EDIT') {
+    routeHeader = 'Edit Address';
+    successContent = 'Your account details have successfully been updated!';
+  }
 
   return (
     <Container>
       {isSuccess && (
         <StyledAlert
-          content="Your account details have successfully been updated!"
+          content={successContent}
           variant="success"
           alignText="center"
           fullWidth
         />
       )}
 
-      <InnerRouteHeader title="Edit Adresses" />
+      <InnerRouteHeader title={routeHeader} />
 
       <Row className="textfield-row">
         <Col>
