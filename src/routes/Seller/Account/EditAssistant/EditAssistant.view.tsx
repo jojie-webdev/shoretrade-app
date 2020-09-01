@@ -8,11 +8,11 @@ import { EditAssistantGeneratedProps } from './EditAssistant.props';
 import { Container } from './EditAssistant.style';
 
 const EditAssistantView = (props: EditAssistantGeneratedProps) => {
-  const { pending, ...sellerFormProps } = props;
+  const { loading, ...sellerFormProps } = props;
 
   // const theme = useTheme();
 
-  if (pending) {
+  if (loading) {
     return <Loading />;
   }
 

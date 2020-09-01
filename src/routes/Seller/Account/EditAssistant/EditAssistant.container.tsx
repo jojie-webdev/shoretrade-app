@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { FormikForm } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getLinkedAccountsActions } from 'store/actions';
+import {
+  getLinkedAccountsActions,
+  deleteLinkedAccountActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
 import { replaceCallingCode } from 'utils/String/callingCode';
@@ -19,6 +22,9 @@ const EditAssistant = (): JSX.Element => {
   const getLinkedAccounts = useSelector(
     (store: Store) => store.getLinkedAccounts
   );
+  const deleteLinkedAccount = useSelector(
+    (store: Store) => store.deleteLinkedAccount
+  );
   const currentLinkedAccount = useSelector((state: Store) =>
     (state.getLinkedAccounts.data?.data.accounts || []).find(
       (a) => a.userId === assistantId
@@ -29,13 +35,13 @@ const EditAssistant = (): JSX.Element => {
   const [callingCode, setCallingCode] = useState('61');
 
   // MARK:- Methods
-  const deleteLinkedAccount = () => {
-    // dispatch(
-    //   deleteLinkedAccountActions.request({
-    //     employeeId: currentLinkedAccount?.employeeId || '',
-    //     companyId,
-    //   }),
-    // );
+  const onClickDelete = () => {
+    dispatch(
+      deleteLinkedAccountActions.request({
+        employeeId: currentLinkedAccount?.employeeId || '',
+        companyId,
+      })
+    );
   };
 
   // MARK:- Effects
@@ -62,7 +68,9 @@ const EditAssistant = (): JSX.Element => {
     type: 'EDIT',
     formikInitial,
     callingCode,
-    pending: getLinkedAccounts.pending || false,
+    pending: deleteLinkedAccount.pending || false,
+    loading: getLinkedAccounts.pending || false,
+    onClickDelete,
   };
 
   return <EditAssistantView {...generatedProps} />;

@@ -1,4 +1,6 @@
-import { goBack } from 'connected-react-router';
+import { push } from 'connected-react-router';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import qs from 'qs';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteLinkedAccount } from 'services/company';
@@ -47,12 +49,21 @@ function* deleteLinkedAccountSuccess(
   action: AsyncAction<DeleteLinkedAccountMeta, DeleteLinkedAccountPayload>
 ) {
   const companyId = pathOr('', ['payload', 'data', 'companyId'], action);
+
   yield put(
     getLinkedAccountsActions.request({
       companyId,
     })
   );
-  goBack();
+
+  yield put(
+    push(
+      `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
+        { companyId },
+        { addQueryPrefix: true }
+      )}`
+    )
+  );
 }
 
 function* deleteLinkedAccountWatcher() {
