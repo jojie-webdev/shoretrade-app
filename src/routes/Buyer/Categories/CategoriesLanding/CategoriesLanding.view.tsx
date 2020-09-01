@@ -26,18 +26,18 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   }
 
   return (
-    <Container fluid>
+    <CategoriesContainer>
       <Row className="search-row">
         <Col xs={12}>
           <Search
             value={search}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
-            placeholder="e.g. Ocean Trout"
+            placeholder="e.g. Whole Fish"
           />
         </Col>
       </Row>
-      <Row style={{ marginLeft: 20, marginTop: 50 }}>
+      <Row className="cards" style={{ marginLeft: 20, marginTop: 50 }}>
         {categories.length > 0 &&
           categories.map((category, index) => {
             return (
@@ -54,7 +54,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
             );
           })}
       </Row>
-    </Container>
+    </CategoriesContainer>
   );
 };
 

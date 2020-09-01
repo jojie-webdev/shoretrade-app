@@ -5,29 +5,21 @@ import TypographyView from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 
 import { CardProps } from './Card.props';
-import {
-  CardContainer,
-  TopCardContainer,
-  BottomCardContainer,
-} from './Card.style';
+import { CardContainer } from './Card.style';
 
 const Card = (props: CardProps): JSX.Element => {
   return (
-    <CardContainer>
-      <Row>
-        <TopCardContainer src={props.image}></TopCardContainer>
-      </Row>
-      <Row>
-        <BottomCardContainer>
-          <TypographyView
-            style={{ paddingLeft: '10px' }}
-            variant="label"
-            color="primary"
-          >
+    <CardContainer className="centered">
+      <div className="card">
+        <picture className="thumbnail">
+          <img src={props.image} alt="A banana that looks like a bird" />
+        </picture>
+        <div className="card-content">
+          <TypographyView variant="label" color="primary">
             {props.label}
           </TypographyView>
-        </BottomCardContainer>
-      </Row>
+        </div>
+      </div>
     </CardContainer>
   );
 };

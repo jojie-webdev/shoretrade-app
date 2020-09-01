@@ -1,14 +1,37 @@
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
+
+const customScrollbar = (props: any) =>
+  css`
+    ::-webkit-scrollbar {
+      width: 0.7rem;
+    }
+
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: darkgrey;
+      outline: 1px solid slategrey;
+    }
+  `;
 
 export const CategoriesContainer = styled.div`
-  .search-row {
-    margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  ${customScrollbar}
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .items-row {
-    .market-item {
-      display: block;
-      margin-bottom: 8px;
-    }
+  .search-row {
+    margin-bottom: 24px;
   }
 `;
