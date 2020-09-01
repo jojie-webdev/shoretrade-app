@@ -18,3 +18,5 @@ export { default as getSellerOrdersDeliveredActions } from './getSellerOrdersDel
 export { default as getBankDetailsActions } from './getBankDetails';
 export { default as updateBankDetailsActions } from './updateBankDetails';
 export { default as changePasswordActions } from './changePassword';
+export { default as getLinkedAccountsActions } from './getLinkedAccounts';
+export { default as addLinkedAccountActions } from './addLinkedAccount';

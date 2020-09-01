@@ -1,3 +1,4 @@
+import Alert from 'components/base/Alert';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
@@ -38,4 +39,8 @@ export const RolesRow = styled(Row)`
   .title {
     margin-bottom: 16px;
   }
+`;
+
+export const StyledAlert = styled(Alert)`
+  margin-bottom: 16px;
 `;

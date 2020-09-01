@@ -5,7 +5,6 @@ import Pagination from 'components/module/Pagination';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import getCalendarDate from 'utils/Date/getCalendarDate';
-import { createUpdateReducer } from 'utils/Hooks';
 
 import { SoldGeneratedProps, RequestFilters } from '../Sold.props';
 import { DeliveryItem } from '../Sold.style';

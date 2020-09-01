@@ -33,7 +33,13 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
       )}`,
     },
     { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
-    { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },
+    {
+      value: 'Fisherman / Assistants',
+      path: `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
     {
       value: 'Bank Details',
       path: `${SELLER_ACCOUNT_ROUTES.BANK_DETAILS}${qs.stringify(
