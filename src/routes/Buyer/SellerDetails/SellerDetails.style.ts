@@ -1,12 +1,33 @@
-import Interactions from 'components/base/Interactions';
 import CategoryImage from 'components/module/CategoryImage';
-import Typography from 'components/base/Typography';
-import styled from 'utils/styled';
+import Interactions from 'components/base/Interactions';
+import styled, { css } from 'utils/styled';
+
+
+const customScrollbar = (props: any) =>
+  css`
+    ::-webkit-scrollbar {
+      width: 0.7rem;
+    }
+
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: darkgrey;
+      outline: 1px solid slategrey;
+    }
+  `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`;
+
+export const SellerRatingContainer = styled.div`
+  margin-bottom: 40px;
 `;
 
 export const CategoryContainer = styled.div`
@@ -25,7 +46,8 @@ export const SpinnerContainer = styled.div`
 
 export const ListingContainer = styled.div`
   flex: 1;
-  margin-top: 50px;
+  
+  
 `;
 
 export const ListingCounter = styled.span`
@@ -39,6 +61,11 @@ export const SearchContainer = styled.div`
 
 export const ListContainer = styled.div`
   margin: 24px auto;
+  max-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  
+  ${customScrollbar}
 `;
 
 export const ListItemInteraction = styled(Interactions)`
@@ -51,6 +78,8 @@ export const ListingImageContainer = styled.div`
   & > img {
     width: 90px;
     height: 90px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
     object-fit: cover;
   }
 `;

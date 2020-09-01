@@ -66,7 +66,6 @@ const SellerDetails = (): JSX.Element => {
   useEffect(() => {
     const listings = seller?.listings || [];
     const r = listings.filter((r) => r.type.includes(searchString));
-    debugger
     setResult(r);
   }, [seller, searchString]);
 
