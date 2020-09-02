@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {
+  Search as SearchIcon,
+  Account as AccountIcon,
+  Home as HomeIcon,
+  Category as CategoryIcon,
+  Notepad as OrderIcon,
+} from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
@@ -14,30 +21,41 @@ import Search from './Search';
 import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
-  ACCOUNT: {
-    path: '/buyer/account',
-    children: <Account />,
-    title: 'Account',
+  HOME: {
+    path: '/buyer/home',
+    children: <Home />,
+    title: 'Home',
+    icon: HomeIcon,
+  },
+  SEARCH: {
+    path: '/buyer/search', // use query params here
+    children: <Search />,
+    title: 'Search',
+    icon: SearchIcon,
   },
   CATEGORIES: {
     path: '/buyer/categories',
     children: <Categories />,
     title: 'Categories',
-  },
-  CHECKOUT: {
-    path: '/buyer/checkout',
-    children: <Checkout />,
-    title: 'Checkout',
-  },
-  HOME: {
-    path: '/buyer/home',
-    children: <Home />,
-    title: 'Home',
+    icon: CategoryIcon,
   },
   ORDERS: {
     path: '/buyer/orders',
     children: <Orders />,
     title: 'Orders',
+    icon: OrderIcon,
+  },
+  ACCOUNT: {
+    path: '/buyer/account',
+    children: <Account />,
+    title: 'Account',
+    icon: AccountIcon,
+  },
+  CHECKOUT: {
+    path: '/buyer/checkout',
+    children: <Checkout />,
+    title: 'Checkout',
+    hideFromSidebar: true,
   },
   PRODUCT_DETAILS: {
     path: '/buyer/product/:id',
@@ -45,11 +63,7 @@ const ROUTES: Routes = {
     title: 'Product Details',
     hideFromSidebar: true,
   },
-  SEARCH: {
-    path: '/buyer/search', // use query params here
-    children: <Search />,
-    title: 'Search',
-  },
+
   SELLER_DETAILS: {
     path: '/buyer/seller-details/:id',
     children: <SellerDetails />,

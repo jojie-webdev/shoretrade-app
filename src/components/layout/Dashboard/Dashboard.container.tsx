@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { SELLER_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,21 +13,41 @@ import {
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
+  // MARK:- Store / Hooks
   const dispatch = useDispatch();
   const location = useLocation();
+
+  // MARK:- State
   const [pageTitle, setPageTitle] = useState('');
   const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
-  const userData = useSelector((state: Store) => state.getUser.data?.data.user);
 
+  const getUser = useSelector((state: Store) => state.getUser);
+  const defaultCompany = useMemo(() => {
+    if (!getUser) return null;
+
+    return getUser.data?.data.user.companies.length
+      ? getUser.data?.data.user.companies[0]
+      : null;
+  }, [getUser]);
+
+  // MARK:- Variables
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
 
+  const userData = getUser.data?.data.user;
+
+  // MARK:- Methods
   const formatRouteString = (s: string) => {
     let str = s;
     str = s.replace('-', ' ');
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  const logout = () => {
+    dispatch(authActions.clear());
+  };
+
+  // MARK:- Effects
   useEffect(() => {
     // This is a hacky way for an edge case in add product
     // We need this so that the absolutes such as
@@ -40,10 +60,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     setPageTitle(innerRoute);
   }, [location]);
 
-  const logout = () => {
-    dispatch(authActions.clear());
-  };
-
+  // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {
     ...props,
     pageTitle,
@@ -51,6 +68,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     shouldIncludePadding,
     userData,
     logout,
+    credit: defaultCompany?.credit || '',
   };
 
   return <DashboardView {...generatedProps} />;

@@ -14,6 +14,7 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   shouldIncludePadding: boolean;
   userData: GetUserPayload['data']['user'] | undefined;
   logout: () => void;
+  credit: string;
 }
 
 // Inner component props
@@ -28,4 +29,5 @@ export type NavLinkProps = {
 export type HeaderProps = {
   pageTitle: string | undefined;
   userData: GetUserPayload['data']['user'] | undefined;
+  textColor: keyof Theme['brand'] | keyof Theme['grey'];
 };
