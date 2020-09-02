@@ -7,6 +7,6 @@ export interface SellerRatingProps {
   };
   rating: string | number;
   listings?: Array<any>;
-  isFavourite?: boolean;
-  onFavourite: (x: boolean) => Promise<any>;
+  isFavorite?: boolean;
+  onFavorite: () => Promise<any>;
 }

@@ -21,8 +21,8 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
     companyName,
     companyLocation,
     companyImage,
-    isFavourite,
-    onFavourite,
+    isFavorite,
+    onFavorite,
     rating,
   } = props;
 
@@ -37,9 +37,9 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
         ) : (
           <AvatarPlaceholder />
         )}
-        <Favorite onClick={() => onFavourite(!isFavourite)}>
-          {isFavourite ? (
-            <HeartFilled width={22} height={22} /> 
+        <Favorite onClick={onFavorite}>
+          {isFavorite ? (
+            <HeartFilled width={22} height={22} />
           ) : (
             <Heart width={22} height={22} />
           )}

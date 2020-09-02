@@ -10,6 +10,7 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
 import getLinkedAccounts from './getLinkedAccounts';
+import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -44,4 +45,5 @@ export default (history: History) =>
     changePassword,
     getLinkedAccounts,
     addLinkedAccount,
+    getSellerById,
   });

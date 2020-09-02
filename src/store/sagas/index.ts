@@ -8,12 +8,14 @@ import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
 import getLinkedAccounts from './getLinkedAccounts';
 import getSellerOrders from './getSellerOrders';
+import getSellerById from './getSellerById';
 import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
+import updateFavoriteSeller from './updateFavoriteSeller';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -35,6 +37,8 @@ const sagas = [
   changePassword,
   getLinkedAccounts,
   addLinkedAccount,
+  updateFavoriteSeller,
+  getSellerById,
 ];
 
 export default function* root() {
