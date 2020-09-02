@@ -1,3 +1,4 @@
+import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const CardContainer = styled.div`
@@ -24,9 +25,9 @@ export const CardContainer = styled.div`
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
   }
 
-  .card-content {
+  /* .card-content {
     padding: 1.4em;
-  }
+  } */
 
   .card-content h2 {
     margin-top: 0;
@@ -45,4 +46,37 @@ export const CardContainer = styled.div`
     box-sizing: border-box;
     margin: 1rem 0.25em;
   }
+`;
+
+export const DetailsContainer = styled.div`
+  width: 100%;
+  padding: 12px;
+`;
+
+export const HeaderContainer = styled.div`
+  flex-direction: row;
+  padding: 8px;
+  margin-bottom: 8px;
+`;
+
+export const BodyContainer = styled.div`
+  padding: 8px;
+  margin-bottom: 8px;
+`;
+
+export const PriceContainer = styled.div`
+  align-items: flex-end;
+  width: 30%;
+`;
+
+export const Price = styled(TypographyView)`
+  font-size: 14px;
+  line-height: 18px;
+  text-align: right;
+`;
+
+export const Title = styled(TypographyView)`
+  font-size: 14px;
+  line-height: 18px;
+  width: 70%;
 `;

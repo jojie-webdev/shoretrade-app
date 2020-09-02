@@ -7,7 +7,6 @@ export interface CategoriesPreviewGeneratedProps {
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   searchValue: string;
   resetSearchValue: () => void;
-  loading: boolean;
   onLoad: (typeId: string) => void;
   typeId: string;
   addresses: { label: string; value: string }[];

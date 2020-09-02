@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import Card from 'components/module/CategoryCards/Preview';
 import Search from 'components/module/Search';
-import { Row, Col, Container } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { CategoriesPreviewGeneratedProps } from './Preview.props';
-import { PreviewContainer } from './Preview.style';
+import { PreviewContainer, LoadingContainer } from './Preview.style';
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   // const theme = useTheme();
   const {
@@ -17,13 +17,25 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     onChangeSearchValue,
     searchValue,
     resetSearchValue,
-    loading,
     onLoad,
     typeId,
     addresses,
     selectedAddress,
     selectAddress,
   } = props;
+
+  useEffect(() => {
+    selectAddress(typeId);
+    onLoad(typeId);
+  }, []);
+
+  // if (results.length <= 0) {
+  //   return (
+  //     <LoadingContainer>
+  //       <Spinner width={24} height={24} />
+  //     </LoadingContainer>
+  //   );
+  // }
 
   return (
     <PreviewContainer>
@@ -37,9 +49,34 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           />
         </Col>
       </Row>
-      {results.map((product) => {
-        return <Card />;
-      })}
+      {results.length > 0 ? (
+        <Row className="cards" style={{ marginTop: 20 }}>
+          {results.map((product) => {
+            return (
+              <Col sm={3} key={product.id}>
+                <Link
+                  to={`/buyer/product/${product.id}`}
+                  className="market-item"
+                >
+                  <Card
+                    id={product.id}
+                    images={product.images}
+                    type={product.type}
+                    price={product.price}
+                    remaining={product.remaining}
+                    coop={product.coop}
+                    minimumOrder={product.minimumOrder}
+                  />
+                </Link>
+              </Col>
+            );
+          })}
+        </Row>
+      ) : (
+        <LoadingContainer>
+          <Spinner width={24} height={24} />
+        </LoadingContainer>
+      )}
     </PreviewContainer>
   );
 };

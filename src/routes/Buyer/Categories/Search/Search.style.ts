@@ -4,12 +4,10 @@ export const SearchContainer = styled.div`
   .search-row {
     margin-bottom: 24px;
   }
-
-  .items-row {
-    .market-item {
-      display: block;
-      margin-bottom: 8px;
-    }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 `;
 

@@ -47,13 +47,13 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     </Row>
   );
 
-  if (results.length <= 0) {
-    return (
-      <LoadingContainer>
-        <Spinner width={24} height={24} />
-      </LoadingContainer>
-    );
-  }
+  // if (results.length <= 0) {
+  //   return (
+  //     <LoadingContainer>
+  //       <Spinner width={24} height={24} />
+  //     </LoadingContainer>
+  //   );
+  // }
 
   return (
     <SearchContainer>
@@ -67,24 +67,30 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           />
         </Col>
       </Row>
-      <Row className="items-row">
-        <Col xs={12}>
-          {results &&
-            results.map((r) => (
-              <Link
-                to={`/buyer/categories/products/${r.id}`}
-                className="market-item"
-                key={r.id}
-              >
-                <Interactions
-                  children={children(r)}
-                  // value={r.name}
-                  onClick={() => {}}
-                />
-              </Link>
-            ))}
-        </Col>
-      </Row>
+      {results.length <= 0 ? (
+        <LoadingContainer>
+          <Spinner width={24} height={24} />
+        </LoadingContainer>
+      ) : (
+        <Row className="items-row">
+          <Col xs={12}>
+            {results &&
+              results.map((r) => (
+                <Link
+                  to={`/buyer/categories/products/${r.id}`}
+                  className="market-item"
+                  key={r.id}
+                >
+                  <Interactions
+                    children={children(r)}
+                    // value={r.name}
+                    onClick={() => {}}
+                  />
+                </Link>
+              ))}
+          </Col>
+        </Row>
+      )}
     </SearchContainer>
   );
 };

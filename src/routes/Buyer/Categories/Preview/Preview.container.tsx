@@ -18,9 +18,11 @@ const CategoriesPreview = (): JSX.Element => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
-  const [loading, setLoading] = useState(false);
   const addresses = GetAddressOptions();
-  const id = location.pathname.replace('/buyer/categories/products/', '');
+  const typeIdParsed = location.pathname.replace(
+    '/buyer/categories/products/',
+    ''
+  );
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
   const selectAddress = (id: string) => {
@@ -34,6 +36,7 @@ const CategoriesPreview = (): JSX.Element => {
     useSelector(
       (state: Store) => state.getListingTypesByCategory.request?.categoryId
     ) || '';
+
   const results = (
     useSelector(
       (state: Store) => state.getListingsByType.data?.data.listings
@@ -46,10 +49,8 @@ const CategoriesPreview = (): JSX.Element => {
 
   // MARK:- Methods
   const onLoad = (typeId: string) => {
-    setLoading(true);
     dispatch(getBuyerSearchFilterDataActions.request({ typeId: typeId }));
     dispatch(getListingsByTypeActions.request({ typeId: typeId }));
-    setLoading(false);
   };
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -61,19 +62,18 @@ const CategoriesPreview = (): JSX.Element => {
   };
   // MARK:- Effects
   useEffect(() => {
-    if (id && previousId !== id) {
-      onLoad(id);
+    if (typeIdParsed && previousId !== typeIdParsed) {
+      onLoad(typeIdParsed);
     }
-  }, [id]);
+  }, [typeIdParsed]);
 
   const generatedProps = {
     // generated props here
     onChangeSearchValue,
     searchValue,
     resetSearchValue,
-    loading,
     results,
-    typeId: id,
+    typeId: typeIdParsed,
     onLoad,
     addresses,
     selectedAddress,

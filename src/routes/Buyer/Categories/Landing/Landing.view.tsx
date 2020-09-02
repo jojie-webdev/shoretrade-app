@@ -26,13 +26,13 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     onLoad();
   }, []);
 
-  if (categories.length <= 0) {
-    return (
-      <LoadingContainer>
-        <Spinner width={24} height={24} />
-      </LoadingContainer>
-    );
-  }
+  // if (categories.length <= 0) {
+  //   return (
+  //     <LoadingContainer>
+  //       <Spinner width={24} height={24} />
+  //     </LoadingContainer>
+  //   );
+  // }
 
   return (
     <CategoriesContainer>
@@ -46,23 +46,29 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           />
         </Col>
       </Row>
-      <Row className="cards" style={{ marginTop: 20 }}>
-        {categories.length > 0 &&
-          categories.map((category, index) => {
-            return (
-              <Col sm={3} key={index}>
-                <Link to={`${currentPath}/${category.id}`} key={category.id}>
-                  <Card
-                    sortIndex={category.sortIndex}
-                    id={category.id}
-                    image={category.thumbnail}
-                    label={category.name}
-                  />
-                </Link>
-              </Col>
-            );
-          })}
-      </Row>
+      {categories.length <= 0 ? (
+        <LoadingContainer>
+          <Spinner width={24} height={24} />
+        </LoadingContainer>
+      ) : (
+        <Row className="cards" style={{ marginTop: 20 }}>
+          {categories.length > 0 &&
+            categories.map((category, index) => {
+              return (
+                <Col sm={3} key={index}>
+                  <Link to={`${currentPath}/${category.id}`} key={category.id}>
+                    <Card
+                      sortIndex={category.sortIndex}
+                      id={category.id}
+                      image={category.thumbnail}
+                      label={category.name}
+                    />
+                  </Link>
+                </Col>
+              );
+            })}
+        </Row>
+      )}
     </CategoriesContainer>
   );
 };
