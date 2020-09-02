@@ -10,6 +10,7 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
@@ -44,4 +45,5 @@ export default (history: History) =>
     getBuyerHomepage,
     getListingTypesByCategory,
     getBuyerSearchFilterData,
+    getListingsByType,
   });

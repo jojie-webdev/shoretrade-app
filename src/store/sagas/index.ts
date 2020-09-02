@@ -7,6 +7,7 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
@@ -35,6 +36,7 @@ const sagas = [
   currentAddress,
   getListingTypesByCategory,
   getBuyerSearchFilterData,
+  getListingsByType,
 ];
 
 export default function* root() {

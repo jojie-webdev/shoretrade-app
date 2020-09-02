@@ -6,9 +6,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import Account from './Account';
-import CategoriesLanding from './Categories/CategoriesLanding';
-import CategoriesPreview from './Categories/CategoriesPreview';
-import CategoriesSearch from './Categories/CategoriesSearch';
+import CategoriesLanding from './Categories/Landing';
+import CategoriesPreview from './Categories/Preview';
+import CategoriesSearch from './Categories/Search';
 import Checkout from './Checkout';
 import Home from './Home';
 import Orders from './Orders';

@@ -8,18 +8,22 @@ import {
   currentAddressActions,
 } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/buyer';
-import useSelectorSafe from 'store/selectors/useSelectorSafe';
 import { Store } from 'types/store/Store';
 
-import CategoriesSearchView from './CategoriesSearch.view';
+import CategoriesSearchView from './Search.view';
 
 const CategoriesSearch = (): JSX.Element => {
   // MARK:- States / Variables
+  const dispatch = useDispatch();
   const location = useLocation();
+  const [searchValue, setSearchValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const id = location.pathname.replace('/buyer/categories/', '');
+
   const token = useSelector((state: Store) => state.auth.token) || '';
   const addresses = GetAddressOptions();
   const selectedAddress =
-    useSelectorSafe((state) => state.currentAddress.id) || '';
+    useSelector((state: Store) => state.currentAddress.id) || '';
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -27,21 +31,14 @@ const CategoriesSearch = (): JSX.Element => {
       })
     );
   };
-  const dispatch = useDispatch();
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const [searchValue, setSearchValue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const id = location.pathname.replace('/buyer/categories/', '');
 
-  const cat =
-    useSelector((state: Store) => state.getListingTypesByCategory) || '';
   const previousId =
-    useSelectorSafe(
-      (state) => state.getListingTypesByCategory.request?.categoryId
+    useSelector(
+      (state: Store) => state.getListingTypesByCategory.request?.categoryId
     ) || '';
   const results = (
-    useSelectorSafe(
-      (state) => state.getListingTypesByCategory.data?.data.type
+    useSelector(
+      (state: Store) => state.getListingTypesByCategory.data?.data.type
     ) || []
   ).filter((result) =>
     searchValue
@@ -58,9 +55,11 @@ const CategoriesSearch = (): JSX.Element => {
 
   // MARK:- Methods
   const onLoad = (categoryId: string) => {
+    setLoading(true);
     dispatch(
       getListingTypesByCategoryActions.request({ categoryId: categoryId })
     );
+    setLoading(false);
   };
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +80,9 @@ const CategoriesSearch = (): JSX.Element => {
     results,
     categoryId: id,
     onLoad,
+    addresses,
+    selectedAddress,
+    selectAddress,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };

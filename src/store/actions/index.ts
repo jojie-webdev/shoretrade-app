@@ -20,3 +20,4 @@ export { default as getBuyerHomepageActions } from './getBuyerHomepage';
 export { default as currentAddressActions } from './currentAddress';
 export { default as getListingTypesByCategoryActions } from './getListingTypesByCategory';
 export { default as getBuyerSearchFilterDataActions } from './getBuyerSearchFilterData';
+export { default as getListingsByTypeActions } from './getListingsByType';

@@ -1,15 +1,15 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import { CategoriesPreviewGeneratedProps } from './CategoriesPreview.props';
-import { Container } from './CategoriesPreview.style';
+import { CategoriesPreviewGeneratedProps } from './Preview.props';
+import { PreviewContainer } from './Preview.style';
 
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   // const theme = useTheme();
   return (
-    <Container>
+    <PreviewContainer>
       <h1>CategoriesPreview Screen</h1>
-    </Container>
+    </PreviewContainer>
   );
 };
 

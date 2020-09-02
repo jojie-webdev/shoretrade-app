@@ -7,8 +7,8 @@ import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
-import { CategoriesSearchGeneratedProps } from './CategoriesSearch.props';
-import { CSearchContainer } from './CategoriesSearch.style';
+import { CategoriesSearchGeneratedProps } from './Search.props';
+import { CSearchContainer } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
   const {
@@ -18,7 +18,15 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     resetSearchValue,
     onLoad,
     categoryId,
+    addresses,
+    selectedAddress,
+    selectAddress,
   } = props;
+
+  useEffect(() => {
+    selectAddress(categoryId);
+    onLoad(categoryId);
+  }, []);
 
   const children = (r: any) => (
     <Row>
@@ -30,7 +38,6 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           marginTop: '15%',
         }}
       >
-        {' '}
         {r.name}
       </p>
     </Row>
@@ -53,7 +60,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           {results &&
             results.map((r) => (
               <Link
-                to={`/buyer/categories/product/${r.id}`}
+                to={`/buyer/categories/products/${r.id}`}
                 className="market-item"
                 key={r.id}
               >

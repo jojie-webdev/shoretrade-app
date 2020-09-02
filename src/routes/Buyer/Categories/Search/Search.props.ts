@@ -10,4 +10,7 @@ export interface CategoriesSearchGeneratedProps {
   results: GetListingTypesByCategoryTypeItem[];
   onLoad: (categoryId: string) => void;
   categoryId: string;
+  addresses: { label: string; value: string }[];
+  selectedAddress: string;
+  selectAddress: (id: string) => void;
 }

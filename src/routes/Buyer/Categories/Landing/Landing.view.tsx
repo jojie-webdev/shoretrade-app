@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import Card from 'components/module/Card';
+import Card from 'components/module/CategoryCard';
 import Search from 'components/module/Search';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
-import { CategoriesLandingGeneratedProps } from './CategoriesLanding.props';
-import { CategoriesContainer } from './CategoriesLanding.style';
+import { CategoriesLandingGeneratedProps } from './Landing.props';
+import { CategoriesContainer } from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();

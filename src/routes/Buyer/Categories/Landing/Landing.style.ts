@@ -29,6 +29,7 @@ export const CategoriesContainer = styled.div`
   .cards {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .search-row {
