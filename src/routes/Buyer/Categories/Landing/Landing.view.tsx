@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import Card from 'components/module/CategoryCard';
+import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { CategoriesLandingGeneratedProps } from './Landing.props';
-import { CategoriesContainer } from './Landing.style';
+import { CategoriesContainer, LoadingContainer } from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -19,10 +19,19 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     onChangeSearchValue,
     resetSearchValue,
     currentPath,
+    onLoad,
   } = props;
 
-  if (!categories) {
-    return null;
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  if (categories.length <= 0) {
+    return (
+      <LoadingContainer>
+        <Spinner width={24} height={24} />
+      </LoadingContainer>
+    );
   }
 
   return (
@@ -33,11 +42,11 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
             value={search}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
-            placeholder="e.g. Whole Fish"
+            placeholder="Search for a Product"
           />
         </Col>
       </Row>
-      <Row className="cards" style={{ marginLeft: 20, marginTop: 50 }}>
+      <Row className="cards" style={{ marginTop: 20 }}>
         {categories.length > 0 &&
           categories.map((category, index) => {
             return (

@@ -1,6 +1,6 @@
 import styled from 'utils/styled';
 
-export const CSearchContainer = styled.div`
+export const SearchContainer = styled.div`
   .search-row {
     margin-bottom: 24px;
   }
@@ -25,4 +25,12 @@ export const SpinnerContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 15px;
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  height: 100%;
 `;

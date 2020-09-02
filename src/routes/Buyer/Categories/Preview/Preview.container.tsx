@@ -46,7 +46,7 @@ const CategoriesPreview = (): JSX.Element => {
 
   // MARK:- Methods
   const onLoad = (typeId: string) => {
-    // setLoading(true);
+    setLoading(true);
     dispatch(getBuyerSearchFilterDataActions.request({ typeId: typeId }));
     dispatch(getListingsByTypeActions.request({ typeId: typeId }));
     setLoading(false);

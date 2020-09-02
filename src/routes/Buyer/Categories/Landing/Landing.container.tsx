@@ -3,7 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { currentAddressActions } from 'store/actions';
+import { currentAddressActions, getBuyerHomepageActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
@@ -14,10 +14,11 @@ const CategoriesLanding = (): JSX.Element => {
   const [search, setSearch] = useState('');
   const location = useLocation();
   const dispatch = useDispatch();
-
   const addresses = GetAddressOptions();
+
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
+
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -39,17 +40,24 @@ const CategoriesLanding = (): JSX.Element => {
     setSearch(event.target.value);
   };
 
+  const onLoad = () => {
+    dispatch(getBuyerHomepageActions.request());
+  };
+
   const resetSearchValue = () => {
     setSearch('');
   };
-  console.log(categories);
+
   const generatedProps = {
-    // generated props here
+    addresses,
+    selectedAddress,
+    selectAddress,
     categories,
     search,
     onChangeSearchValue,
     resetSearchValue,
     currentPath: location.pathname,
+    onLoad,
   };
   return <CategoriesLandingView {...generatedProps} />;
 };

@@ -8,7 +8,11 @@ import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
-import { CSearchContainer } from './Search.style';
+import {
+  SearchContainer,
+  SpinnerContainer,
+  LoadingContainer,
+} from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
   const {
@@ -43,15 +47,23 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     </Row>
   );
 
+  if (results.length <= 0) {
+    return (
+      <LoadingContainer>
+        <Spinner width={24} height={24} />
+      </LoadingContainer>
+    );
+  }
+
   return (
-    <CSearchContainer>
+    <SearchContainer>
       <Row className="search-row">
         <Col xs={12}>
           <Search
             value={searchValue}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
-            placeholder="e.g. Ocean Trout"
+            placeholder="Search for a Whole Fish"
           />
         </Col>
       </Row>
@@ -73,7 +85,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             ))}
         </Col>
       </Row>
-    </CSearchContainer>
+    </SearchContainer>
   );
 };
 

@@ -13,4 +13,8 @@ export interface CategoriesLandingGeneratedProps {
   search: string;
   currentPath: string;
   resetSearchValue: () => void;
+  onLoad: () => void;
+  addresses: { label: string; value: string }[];
+  selectedAddress: string;
+  selectAddress: (id: string) => void;
 }

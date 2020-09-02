@@ -36,3 +36,11 @@ export const CategoriesContainer = styled.div`
     margin-bottom: 24px;
   }
 `;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  height: 100%;
+`;

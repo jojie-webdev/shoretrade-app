@@ -21,7 +21,6 @@ function* getListingsByTypeRequest(
         { ...action.meta.filterData },
         state.auth.token
       );
-      console.log(data);
       yield put(getListingsByTypeActions.success(data));
     } catch (e) {
       yield put(getListingsByTypeActions.failed(e.message));
