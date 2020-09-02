@@ -5,3 +5,5 @@ export const createUpdateReducer = <T extends Record<any, any>>() => (
   ...state,
   ...newState,
 });
+
+export default createUpdateReducer;

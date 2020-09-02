@@ -4,10 +4,12 @@ import React from 'react';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { Row, Col } from 'react-grid-system';
+import PhoneTextField from 'components/module/PhoneTextField';
+import { Formik, Form } from 'formik';
+import { Col } from 'react-grid-system';
 
 import {
   CreateAssistantGeneratedProps,
@@ -18,12 +20,14 @@ import {
   RoleContainer,
   TextFieldRow,
   RolesRow,
+  StyledAlert,
 } from './CreateAssistant.style';
+import { isValid } from './CreateAssistant.validation';
 
-const Role = ({ children, label, checked }: RoleProps) => (
+const Role = ({ children, label, checked, onClick }: RoleProps) => (
   <RoleContainer style={{ display: 'flex' }}>
     <div className="radio-container">
-      <Radio checked={checked} />
+      <Radio checked={checked} onClick={onClick} />
     </div>
     <div className="text-container">
       <Typography color="shade6" variant="overline" className="overline">
@@ -36,46 +40,108 @@ const Role = ({ children, label, checked }: RoleProps) => (
 
 const CreateAssistantView = (props: CreateAssistantGeneratedProps) => {
   // const theme = useTheme();
+  const {
+    role,
+    setRole,
+    callingCode,
+    setCallingCode,
+    onClickCreate,
+    success,
+    error,
+    pending,
+  } = props;
+
+  const formikInitial = {
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobile: '',
+    },
+    validate: isValid,
+    onSubmit: onClickCreate,
+  };
+
   return (
     <Container>
       <InnerRouteHeader title="Create Fisherman / Assistant" />
 
-      <TextFieldRow>
-        <Col md={6} className="textfield-container">
-          <TextField label="First Name" />
-        </Col>
-        <Col md={6} className="textfield-container">
-          <TextField label="Last Name" />
-        </Col>
-        <Col md={6} className="textfield-container">
-          <TextField label="Mobile" /> {/* TODO: Add Mobile flags*/}
-        </Col>
-        <Col md={6} className="textfield-container">
-          <TextField label="Email" />
-        </Col>
-      </TextFieldRow>
+      {success && (
+        <StyledAlert
+          content="Fisherman / Assistant successfully created!"
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      )}
 
-      <RolesRow>
-        <Col>
-          <Typography color="noshade" className="title">
-            Roles & Permissions
-          </Typography>
+      {error && (
+        <StyledAlert
+          content="An error has occurred while creating an assistant! Try again later."
+          variant="error"
+          alignText="center"
+          fullWidth
+        />
+      )}
 
-          <Role label="Assistant" checked>
-            Has the same permissions as you, the primary account holder, though
-            they connect edit your bank details or add other fishermen /
-            assistants. Does not appear as a fisherman on your account.
-          </Role>
+      <Formik {...formikInitial}>
+        <Form>
+          <TextFieldRow>
+            <Col md={6} className="textfield-container">
+              <FormikTextField label="First Name" name="firstName" />
+            </Col>
+            <Col md={6} className="textfield-container">
+              <FormikTextField label="Last Name" name="lastName" />
+            </Col>
+            <Col md={6} className="textfield-container">
+              <PhoneTextField
+                label="Mobile"
+                name="mobile"
+                callingCode={callingCode}
+                setCallingCode={setCallingCode}
+              />
+            </Col>
+            <Col md={6} className="textfield-container">
+              <FormikTextField label="Email" name="email" />
+            </Col>
+          </TextFieldRow>
 
-          <Role label="Fisherman">
-            Can list and edit items as fisherman using your business name. Can
-            only view sales for items they have listed. Cannot edit your bank,
-            address, password or linked accounts.
-          </Role>
-        </Col>
-      </RolesRow>
+          <RolesRow>
+            <Col>
+              <Typography color="noshade" className="title">
+                Roles & Permissions
+              </Typography>
 
-      <Button text="Create Linked Account" />
+              <Role
+                label="Assistant"
+                checked={role === 'ASSISTANT'}
+                onClick={() => setRole('ASSISTANT')}
+              >
+                Has the same permissions as you, the primary account holder,
+                though they connect edit your bank details or add other
+                fishermen / assistants. Does not appear as a fisherman on your
+                account.
+              </Role>
+
+              <Role
+                label="Fisherman"
+                checked={role === 'FISHERMAN'}
+                onClick={() => setRole('FISHERMAN')}
+              >
+                Can list and edit items as fisherman using your business name.
+                Can only view sales for items they have listed. Cannot edit your
+                bank, address, password or linked accounts.
+              </Role>
+            </Col>
+          </RolesRow>
+
+          <Button
+            text="Create Linked Account"
+            type="submit"
+            loading={pending}
+          />
+        </Form>
+      </Formik>
     </Container>
   );
 };

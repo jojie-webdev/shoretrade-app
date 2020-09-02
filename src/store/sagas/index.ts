@@ -1,10 +1,12 @@
 import { fork, all } from 'redux-saga/effects';
 
+import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
+import getLinkedAccounts from './getLinkedAccounts';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
 import login from './login';
@@ -31,6 +33,8 @@ const sagas = [
   getBankDetails,
   updateBankDetails,
   changePassword,
+  getLinkedAccounts,
+  addLinkedAccount,
 ];
 
 export default function* root() {

@@ -10,7 +10,6 @@ import {
   forgotPasswordActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { createUpdateReducer } from 'utils/Hooks';
 
 import { ForgotPasswordForm } from './ForgotPassword.props';
 import ForgotPasswordView from './ForgotPassword.view';

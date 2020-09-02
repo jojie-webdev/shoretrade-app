@@ -2,12 +2,14 @@ import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
 
+import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import changePassword from './changePassword';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
+import getLinkedAccounts from './getLinkedAccounts';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -40,4 +42,6 @@ export default (history: History) =>
     getBankDetails,
     updateBankDetails,
     changePassword,
+    getLinkedAccounts,
+    addLinkedAccount,
   });

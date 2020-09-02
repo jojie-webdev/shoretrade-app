@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,6 @@ import {
   resendVerificationActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { createUpdateReducer } from 'utils/Hooks';
 
 import Verify2FAView from './Verify2FA.view';
 

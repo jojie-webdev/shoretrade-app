@@ -3,6 +3,7 @@ import React from 'react';
 import { ShoretradeLogo, Exit } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { Container } from 'react-grid-system';
+import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -18,6 +19,7 @@ import {
   SidebarItem,
   LogoutContainer,
   LogoutButton,
+  CreditBalanceContainer,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -31,15 +33,15 @@ const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
   </SidebarItem>
 );
 
-const Header = ({ pageTitle, userData }: HeaderProps) => (
+const Header = ({ pageTitle, userData, textColor }: HeaderProps) => (
   <HeaderContainer className="appbar">
-    <Typography variant="title4" color="noshade">
+    <Typography variant="title4" color={textColor}>
       {pageTitle}
     </Typography>
 
     <div className="right-content">
       <div className="text-container">
-        <Typography color="noshade">{userData?.companies[0].name}</Typography>
+        <Typography color={textColor}>{userData?.companies[0].name}</Typography>
         <Typography
           variant="caption"
           color="shade6"
@@ -64,7 +66,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     userData,
     children,
     logout,
+    credit,
   } = props;
+
+  const textColor: keyof Theme['grey'] =
+    theme.appType === 'seller' ? 'noshade' : 'shade9';
+
+  const iconColor =
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9;
 
   return (
     <DashboardContainer>
@@ -77,11 +86,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <NavLink
               key={`sidenav-${route.path}`}
               to={route.path}
-              color={isInnerRoute(route.path) ? 'primary' : 'noshade'}
+              color={isInnerRoute(route.path) ? 'primary' : textColor}
               iconColor={
-                isInnerRoute(route.path)
-                  ? theme.brand.primary
-                  : theme.grey.noshade
+                isInnerRoute(route.path) ? theme.brand.primary : iconColor
               }
               linkText={route.title || ''}
               Icon={route.icon}
@@ -89,23 +96,45 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           ))}
         </div>
 
-        <LogoutButton
-          style={{ marginBottom: 24 }}
-          onPress={() => logout()}
-          dark
-        >
-          <LogoutContainer>
-            <div className="icon-container">
-              <Exit />
-            </div>
-            <Typography color="shade7" className="link" weight="500">
-              Logout
-            </Typography>
-          </LogoutContainer>
-        </LogoutButton>
+        <div>
+          {theme.appType === 'buyer' && (
+            <CreditBalanceContainer>
+              <Typography color="shade7" variant="overline" weight="900">
+                Credit balance
+              </Typography>
+              <Typography color="shade9" variant="title5" className="amount">
+                {credit ? credit : '$0.00'}
+              </Typography>
+            </CreditBalanceContainer>
+          )}
+
+          <LogoutButton
+            style={{ marginBottom: 24 }}
+            onPress={() => logout()}
+            dark
+          >
+            <LogoutContainer>
+              <div className="icon-container">
+                <Exit />
+              </div>
+              <Typography color="shade7" className="link" weight="500">
+                Logout
+              </Typography>
+            </LogoutContainer>
+          </LogoutButton>
+        </div>
       </Sidebar>
-      <Content shouldIncludePadding={shouldIncludePadding}>
-        <Header pageTitle={pageTitle} userData={userData}></Header>
+
+      <Content
+        shouldIncludePadding={
+          theme.appType === 'buyer' ? false : shouldIncludePadding
+        }
+      >
+        <Header
+          pageTitle={pageTitle}
+          userData={userData}
+          textColor={textColor}
+        />
         <div className="screen-wrapper">
           <div className="screen">
             <Container className="container">{children}</Container>
