@@ -24,3 +24,5 @@ export { default as addAddressActions } from './addAddress';
 export { default as deleteLinkedAccountActions } from './deleteLinkedAccount';
 export { default as updateFavoriteSellerActions } from './updateFavoriteSeller';
 export { default as getSellerByIdActions } from './getSellerById';
+export { default as searchAndCountProductTypeActions } from './searchAndCountProductType';
+export { default as historyActions } from './history';

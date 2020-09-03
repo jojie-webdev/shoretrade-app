@@ -17,7 +17,7 @@ import Checkout from './Checkout';
 import Home from './Home';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
-import Search from './Search';
+import { SearchLanding } from './Search';
 import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
@@ -29,7 +29,7 @@ const ROUTES: Routes = {
   },
   SEARCH: {
     path: '/buyer/search', // use query params here
-    children: <Search />,
+    children: <SearchLanding />,
     title: 'Search',
     icon: SearchIcon,
   },
