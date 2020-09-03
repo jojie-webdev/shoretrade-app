@@ -1,17 +1,5 @@
-import { Dispatch } from 'react';
+import { SellerAddressFormProps } from 'components/module/SellerAddressForm/SellerAddressForm.props';
 
-import { PlaceData } from 'types/PlaceData';
-
-export interface EditAddressGeneratedProps {
-  address: PlaceData | null;
-  isDefault: boolean | null;
-  pending: boolean;
-  updateAddressSuccess: boolean;
-  unitNumber: string;
-  onClickSave: () => void;
-  toggleIsDefault: () => void;
-  setAddress: Dispatch<PlaceData | null>;
-  setUnitNumber: Dispatch<string>;
-}
+export interface EditAddressGeneratedProps extends SellerAddressFormProps {}
 
 export type QueryParams = { companyId: string; addressId: string };

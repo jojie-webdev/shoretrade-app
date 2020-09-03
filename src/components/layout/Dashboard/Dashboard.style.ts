@@ -12,7 +12,8 @@ export const DashboardContainer = styled.div`
 export const Sidebar = styled.aside`
   width: 235px;
   padding: 0 24px;
-  background: #020a13;
+  background: ${(props) =>
+    props.theme.appType === 'buyer' ? props.theme.grey.shade2 : '#020a13'};
 
   display: flex;
   flex-direction: column;
@@ -61,15 +62,25 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
   flex-direction: column;
   padding: 0 150px;
 
-  background: ${(props) => props.theme.grey.shade9};
-  color: white;
+  background: ${(props) =>
+    props.theme.appType === 'buyer'
+      ? props.theme.grey.shade1
+      : props.theme.grey.shade9};
+
+  color: ${(props) =>
+    props.theme.appType === 'buyer'
+      ? props.theme.grey.shade9
+      : props.theme.grey.shade1};
 
   .screen-wrapper {
     height: 80%;
     position: relative;
 
     .screen {
-      background: ${(props) => props.theme.grey.shade8};
+      background: ${(props) =>
+        props.theme.appType === 'buyer'
+          ? props.theme.grey.shade1
+          : props.theme.grey.shade8};
       height: 100%;
       max-width: 70vw;
 
@@ -107,5 +118,22 @@ export const HeaderContainer = styled.nav`
       width: 56px;
       border-radius: calc(56px / 2);
     }
+  }
+`;
+
+export const CreditBalanceContainer = styled.div`
+  background: ${(props) => props.theme.grey.shade1};
+  padding: 16px;
+  border: 1px solid ${(props) => props.theme.grey.shade2};
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .amount {
+    margin-top: 4px;
   }
 `;

@@ -1,7 +1,6 @@
-export interface CreateAssistantGeneratedProps {}
+import { Dispatch, SetStateAction } from 'react';
 
-export type RoleProps = {
-  children: any;
-  label: string;
-  checked?: boolean;
-};
+import { SellerAssistantFormProps } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
+
+export interface CreateAssistantGeneratedProps
+  extends SellerAssistantFormProps {}

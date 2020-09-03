@@ -5,7 +5,6 @@ import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginActions } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
 import { Credentials } from './Login.props';

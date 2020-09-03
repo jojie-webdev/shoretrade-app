@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {
+  Search as SearchIcon,
+  Account as AccountIcon,
+  Home as HomeIcon,
+  Category as CategoryIcon,
+  Notepad as OrderIcon,
+} from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -17,15 +24,23 @@ import Search from './Search';
 import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
-  ACCOUNT: {
-    path: '/buyer/account',
-    children: <Account />,
-    title: 'Account',
+  HOME: {
+    path: '/buyer/home',
+    children: <Home />,
+    title: 'Home',
+    icon: HomeIcon,
+  },
+  SEARCH: {
+    path: '/buyer/search', // use query params here
+    children: <Search />,
+    title: 'Search',
+    icon: SearchIcon,
   },
   CATEGORIES: {
     path: BUYER_ROUTES.CATEGORIES,
     children: <CategoriesLanding />,
     title: 'Categories',
+    icon: CategoryIcon,
   },
   CATEGORY_PRODUCTS: {
     path: BUYER_ROUTES.CATEGORY_PRODUCTS(),
@@ -39,31 +54,30 @@ const ROUTES: Routes = {
     title: '',
     hideFromSidebar: true,
   },
-  CHECKOUT: {
-    path: '/buyer/checkout',
-    children: <Checkout />,
-    title: 'Checkout',
-  },
-  HOME: {
-    path: '/buyer/home',
-    children: <Home />,
-    title: 'Home',
-  },
+
   ORDERS: {
     path: '/buyer/orders',
     children: <Orders />,
     title: 'Orders',
+    icon: OrderIcon,
+  },
+  ACCOUNT: {
+    path: '/buyer/account',
+    children: <Account />,
+    title: 'Account',
+    icon: AccountIcon,
+  },
+  CHECKOUT: {
+    path: '/buyer/checkout',
+    children: <Checkout />,
+    title: 'Checkout',
+    hideFromSidebar: true,
   },
   PRODUCT_DETAILS: {
     path: '/buyer/product/:id',
     children: <ProductDetails />,
     title: 'Product Details',
     hideFromSidebar: true,
-  },
-  SEARCH: {
-    path: '/buyer/search', // use query params here
-    children: <Search />,
-    title: 'Search',
   },
   SELLER_DETAILS: {
     path: '/buyer/seller-details/:id',

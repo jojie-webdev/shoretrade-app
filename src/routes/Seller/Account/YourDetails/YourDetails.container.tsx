@@ -19,11 +19,13 @@ import {
 import YourDetailsView from './YourDetails.view';
 
 const YourDetails = (): JSX.Element => {
-  // MARK:- States
+  // MARK:- Hooks / Store
   const dispatch = useDispatch();
   const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
   const updateUser = useSelector((state: Store) => state.updateUser);
+
+  // MARK:- State
   const [companyId, setCompanyId] = useState('');
   const [submitted, setIsSubmitted] = useState(false);
   const [callingCode, setCallingCode] = useState('61'); // AU by default
@@ -33,7 +35,6 @@ const YourDetails = (): JSX.Element => {
     email: '',
     mobile: '',
   });
-
   const [businessDetails, setBusinessDetails] = useState<BusinessDetails>({
     businessName: '',
     abn: '',

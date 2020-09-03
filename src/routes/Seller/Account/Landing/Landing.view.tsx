@@ -15,7 +15,14 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
 
-  const { companies, currentCompany, profilePicture, loadingUser } = props;
+  const {
+    companies,
+    currentCompany,
+    profilePicture,
+    loadingUser,
+    profileName,
+    companyRelationship,
+  } = props;
 
   const INTERACTIONS = [
     {
@@ -33,8 +40,20 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
       )}`,
     },
     { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
-    { value: 'Fisherman / Assistants', path: SELLER_ACCOUNT_ROUTES.ASSISTANTS },
-    { value: 'Bank Details', path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS },
+    {
+      value: 'Fisherman / Assistants',
+      path: `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
+    {
+      value: 'Bank Details',
+      path: `${SELLER_ACCOUNT_ROUTES.BANK_DETAILS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
 
@@ -49,10 +68,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
           <img src={profilePicture} alt="profile picture" />
           <div>
             <Typography variant="overline" color="noshade">
-              Owner
+              {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
             <Typography variant="title5" color="noshade">
-              Peter Manettas
+              {profileName}
             </Typography>
           </div>
         </div>

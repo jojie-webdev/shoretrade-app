@@ -27,6 +27,7 @@ export const Reset = styled(Typography)`
 
 export const Filter = styled.div`
   margin-bottom: 16px;
+  color: ${({ theme }) => theme.brand.primary};
 `;
 
 export const RadioContainer = styled.div`

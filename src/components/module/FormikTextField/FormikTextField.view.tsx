@@ -13,14 +13,21 @@ const FormikTextField = (props: FormikTextFieldProps): JSX.Element => {
   const { name, ...textFieldProps } = props;
   const [field, meta] = useField<string>(name);
 
+  const onChange = (event: React.ChangeEvent<any>) => {
+    if (!props.readOnly) {
+      field.onChange(event);
+    }
+  };
+
   return (
     <TextField
       {...field}
       {...textFieldProps}
+      onChange={onChange}
       id={name}
       error={meta.touched ? meta.error : undefined}
     />
   );
 };
 
-export default React.memo(FormikTextField);
+export default FormikTextField;

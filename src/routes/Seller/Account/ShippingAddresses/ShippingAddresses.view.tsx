@@ -37,7 +37,7 @@ const AddressText = (
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
-  const { pending, addresses, onClickAddress } = props;
+  const { pending, addresses, onClickAddress, onClickAddAddress } = props;
 
   const theme = useTheme();
 
@@ -104,7 +104,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
 
       <Row>
         <Col>
-          <Button text="Add a new address" />
+          <Button text="Add a new address" onClick={onClickAddAddress} />
         </Col>
       </Row>
     </Wrapper>
