@@ -12,6 +12,8 @@ import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getLinkedAccounts from './getLinkedAccounts';
+import getListing from './getListing';
+import getListingBoxes from './getListingBoxes';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerById from './getSellerById';
@@ -23,6 +25,7 @@ import resendVerification from './resendVerification';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
+import updateFavouriteProduct from './updateFavouriteProduct';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -53,6 +56,9 @@ const sagas = [
   getListingTypesByCategory,
   getBuyerSearchFilterData,
   getListingsByType,
+  getListing,
+  getListingBoxes,
+  updateFavouriteProduct,
 ];
 
 export default function* root() {
