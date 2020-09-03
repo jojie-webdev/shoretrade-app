@@ -20,5 +20,6 @@ export { default as updateBankDetailsActions } from './updateBankDetails';
 export { default as changePasswordActions } from './changePassword';
 export { default as getLinkedAccountsActions } from './getLinkedAccounts';
 export { default as addLinkedAccountActions } from './addLinkedAccount';
+export { default as deleteLinkedAccountActions } from './deleteLinkedAccount';
 export { default as updateFavoriteSellerActions } from './updateFavoriteSeller';
-export { default as getSellerByIdActions } from  './getSellerById';
+export { default as getSellerByIdActions } from './getSellerById';

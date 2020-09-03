@@ -20,7 +20,7 @@ import {
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
 
-  const { pending, goToCreateAssistant, accounts } = props;
+  const { pending, goToCreateAssistant, accounts, onClickAssistant } = props;
 
   if (pending) {
     return <Loading />;
@@ -46,6 +46,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
       {accounts.map((account) => (
         <StyledInteaction
+          onClick={() => onClickAssistant(account.userId)}
           key={account.userId}
           leftComponent={
             <div>

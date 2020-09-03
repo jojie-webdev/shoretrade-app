@@ -74,7 +74,6 @@ const EditAddress = (): JSX.Element => {
   useEffect(() => {
     if (currentAddress && isDefault === null) {
       setIsDefault(currentAddress?.default);
-      console.log(currentAddress.default);
     }
   }, [currentAddress]);
 
