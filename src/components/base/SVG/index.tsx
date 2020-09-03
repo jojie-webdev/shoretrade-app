@@ -1,4 +1,7 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Notepad } from './Notepad';
+export { default as Category } from './Category';
+export { default as Home } from './Home';
 export { default as Oysters } from './Oysters';
 export { default as Download } from './Download';
 export { default as Fish } from './Fish';

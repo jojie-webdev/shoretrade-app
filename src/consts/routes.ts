@@ -45,8 +45,10 @@ export const SELLER_ACCOUNT_ROUTES = {
   EDIT_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address/edit-address`,
   CREATE_ADDRESS: `${SELLER_ROUTES.ACCOUNT}/shipping-address/create-address`,
   CHANGE_PASSWORD: `${SELLER_ROUTES.ACCOUNT}/change-password`,
+  CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/create-assistant`,
   ASSISTANTS: `${SELLER_ROUTES.ACCOUNT}/assistants`,
-  CREATE_ASSISTANT: `${SELLER_ROUTES.ACCOUNT}/assistants/create-assistant`,
+  EDIT_ASSISTANT: (assitantId = ':assistantId') =>
+    `${SELLER_ROUTES.ACCOUNT}/assistants/${assitantId}`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
 };

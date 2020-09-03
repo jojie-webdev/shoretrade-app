@@ -40,8 +40,10 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   const [showSecuredText, setShowSecuredText] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
-    onChangeText(event.target.value);
+    if (!props.readOnly) {
+      onChange(event);
+      onChangeText(event.target.value);
+    }
   };
 
   const VisibilityIcon = showSecuredText ? EyeOff : Eye;
