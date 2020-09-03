@@ -18,4 +18,5 @@ export interface PreviewProps {
   state?: string[];
   total?: number;
   type?: string;
+  backgroundColor?: string;
 }

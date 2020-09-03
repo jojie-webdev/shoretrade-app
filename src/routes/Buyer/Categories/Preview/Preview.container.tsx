@@ -66,7 +66,6 @@ const CategoriesPreview = (): JSX.Element => {
       onLoad(typeIdParsed);
     }
   }, [typeIdParsed]);
-
   const generatedProps = {
     // generated props here
     onChangeSearchValue,

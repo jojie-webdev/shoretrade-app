@@ -1,6 +1,7 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Badge from 'components/base/Badge';
 import TypographyView from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 
@@ -12,23 +13,33 @@ import {
   PriceContainer,
   Price,
   Title,
+  BadgeContainer,
+  LocationContainer,
+  BodyContainer,
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
-  // const theme = useTheme();
   return (
     <CardContainer className="centered">
       <div className="card">
-        <picture className="thumbnail">
+        <div className="imgContainer">
           <img src={props.images[0]} alt="Product" style={{ maxHeight: 150 }} />
-        </picture>
+          <LocationContainer>
+            <Badge>{props.origin?.countryCode}</Badge>
+          </LocationContainer>
+
+          <BadgeContainer>
+            <Badge>Aquafuture</Badge>
+            <Badge badgeColor="#F23742">Almost Gone</Badge>
+          </BadgeContainer>
+        </div>
 
         <DetailsContainer>
           <HeaderContainer>
             <Row>
               <Title>{props.type}</Title>
               <PriceContainer>
-                <Price>${props.price}.00</Price>
+                <Price>${props.price}</Price>
                 <TypographyView
                   style={{ textAlign: 'end' }}
                   variant="small"
@@ -39,7 +50,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </PriceContainer>
             </Row>
           </HeaderContainer>
-          <HeaderContainer>
+          <BodyContainer>
             <Row>
               <TypographyView variant="small" color="shade6">
                 Remaining:
@@ -69,7 +80,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 {props.minimumOrder}
               </TypographyView>
             </Row>
-          </HeaderContainer>
+          </BodyContainer>
         </DetailsContainer>
       </div>
     </CardContainer>

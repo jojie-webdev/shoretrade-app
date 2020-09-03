@@ -9,6 +9,12 @@ export const CardContainer = styled.div`
     height: auto;
   }
 
+  .imgContainer {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
   .card {
     background: white;
     margin-bottom: 2em;
@@ -48,18 +54,33 @@ export const CardContainer = styled.div`
   }
 `;
 
+export const LocationContainer = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 5%;
+`;
+
+export const BadgeContainer = styled.div`
+  flex-direction: row;
+  display: flex;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+`;
+
 export const DetailsContainer = styled.div`
   width: 100%;
-  padding: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
 `;
 
 export const HeaderContainer = styled.div`
   flex-direction: row;
   padding: 8px;
-  margin-bottom: 8px;
 `;
 
 export const BodyContainer = styled.div`
+  flex-direction: row;
   padding: 8px;
   margin-bottom: 8px;
 `;
@@ -67,6 +88,7 @@ export const BodyContainer = styled.div`
 export const PriceContainer = styled.div`
   align-items: flex-end;
   width: 30%;
+  padding-right: 10px;
 `;
 
 export const Price = styled(TypographyView)`

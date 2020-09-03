@@ -66,6 +66,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                     remaining={product.remaining}
                     coop={product.coop}
                     minimumOrder={product.minimumOrder}
+                    origin={product.origin}
+                    isAquafuture={product.isAquafuture}
                   />
                 </Link>
               </Col>
