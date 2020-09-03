@@ -40,7 +40,6 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
       <Image src={result.thumbnail} />
       <DetailsContainer>
         <TypographyView variant="label" style={{ fontSize: 16 }}>
-          {' '}
           {result.name}
         </TypographyView>
         <div className="result-container">
@@ -107,14 +106,12 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
               <div className="result-container">
                 <TypographyView
                   variant="label"
-                  color="warning"
                   style={{ fontSize: 24, fontWeight: 'normal' }}
                 >
                   Results
                 </TypographyView>
                 <TypographyView
                   variant="label"
-                  color="warning"
                   style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 24 }}
                 >
                   {results.length}
