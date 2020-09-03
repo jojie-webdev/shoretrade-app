@@ -2,6 +2,7 @@ import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
 
+import addAddress from './addAddress';
 import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import changePassword from './changePassword';
@@ -46,6 +47,7 @@ export default (history: History) =>
     changePassword,
     getLinkedAccounts,
     addLinkedAccount,
+    addAddress,
     deleteLinkedAccount,
     getSellerById,
   });

@@ -1,5 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
+import addAddress from './addAddress';
 import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -38,6 +39,7 @@ const sagas = [
   changePassword,
   getLinkedAccounts,
   addLinkedAccount,
+  addAddress,
   deleteLinkedAccount,
   updateFavoriteSeller,
   getSellerById,

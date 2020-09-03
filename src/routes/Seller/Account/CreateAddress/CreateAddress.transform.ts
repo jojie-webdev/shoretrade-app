@@ -1,8 +1,6 @@
 import { PlaceData } from 'types/PlaceData';
+import { AddAddressMeta } from 'types/store/AddAddressState';
 import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
-import { UpdateAddressMeta } from 'types/store/UpdateAddressState';
-
-import { placeDataToAddAddressMeta } from '../CreateAddress/CreateAddress.transform';
 
 export function addressToPlaceData(data: GetAddressesResponseItem): PlaceData {
   const street = data.streetNumber
@@ -25,15 +23,23 @@ export function addressToPlaceData(data: GetAddressesResponseItem): PlaceData {
   };
 }
 
-export function placeDataToUpdateAddressMeta(
+export function placeDataToAddAddressMeta(
   data: PlaceData,
   unitNumber: string,
   companyId: string,
-  isDefault: boolean,
-  addressId: string
-): UpdateAddressMeta {
+  isDefault: boolean
+): AddAddressMeta {
   return {
-    ...placeDataToAddAddressMeta(data, unitNumber, companyId, isDefault),
-    addressId,
+    companyId,
+    address: data.address,
+    default: isDefault,
+    unitNumber,
+    level: data.level,
+    streetName: data.route,
+    streetNumber: data.streetNumber,
+    suburb: data.locality,
+    state: data.administrativeAreaLevel1,
+    postcode: data.postcode,
+    countryCode: data.countryCode,
   };
 }

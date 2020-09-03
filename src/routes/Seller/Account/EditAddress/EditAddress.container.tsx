@@ -94,7 +94,8 @@ const EditAddress = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: EditAddressGeneratedProps = {
-    address,
+    type: 'EDIT',
+    address: address as PlaceData,
     isDefault,
     onClickSave,
     pending,
@@ -102,7 +103,7 @@ const EditAddress = (): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
-    updateAddressSuccess: updateAddress.data?.status === 200 && submitted,
+    isSuccess: updateAddress.data?.status === 200 && submitted,
   };
   return <EditAddressView {...generatedProps} />;
 };

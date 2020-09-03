@@ -8,7 +8,7 @@ import { Store } from 'types/store/Store';
 import { AccountLandingGeneratedProps } from './Landing.props';
 import AccountLandingView from './Landing.view';
 const AccountLanding = (): JSX.Element => {
-  // Mark:- State
+  // Mark:- State / Store
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
@@ -18,8 +18,11 @@ const AccountLanding = (): JSX.Element => {
   );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
 
+  // Mark:- Variables
+  const companyRelationship = currentCompany?.relationship || '';
   const companies = user?.companies || [];
   const profilePicture = user?.profileImage || '';
+  const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
 
   // Mark:- Effects
   useEffect(() => {
@@ -37,6 +40,8 @@ const AccountLanding = (): JSX.Element => {
     companies,
     profilePicture,
     loadingUser,
+    profileName,
+    companyRelationship,
   };
   return <AccountLandingView {...generatedProps} />;
 };
