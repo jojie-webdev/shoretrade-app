@@ -22,9 +22,9 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     onLoad,
   } = props;
 
-  useEffect(() => {
-    onLoad();
-  }, []);
+  // useEffect(() => {
+  //   onLoad();
+  // }, []);
 
   // if (categories.length <= 0) {
   //   return (

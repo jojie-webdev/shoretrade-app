@@ -1,6 +1,5 @@
+import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
-
-import useSelectorSafe from '../useSelectorSafe';
 
 const getBuyerOrdersPlaced = (state: Store) =>
   state.getBuyerOrdersPlaced.data?.data.orders || [];
@@ -12,9 +11,9 @@ const getBuyerOrdersDelivered = (state: Store) =>
   state.getBuyerOrdersDelivered.data?.data.orders || [];
 
 const GetBuyerOrders = (status: 'PLACED' | 'TRANSIT' | 'DELIVERED') => {
-  const sellerOrdersPlaced = useSelectorSafe(getBuyerOrdersPlaced) || [];
-  const sellerOrdersTransit = useSelectorSafe(getBuyerOrdersTransit) || [];
-  const sellerOrdersDelivered = useSelectorSafe(getBuyerOrdersDelivered) || [];
+  const sellerOrdersPlaced = useSelector(getBuyerOrdersPlaced) || [];
+  const sellerOrdersTransit = useSelector(getBuyerOrdersTransit) || [];
+  const sellerOrdersDelivered = useSelector(getBuyerOrdersDelivered) || [];
   return {
     PLACED: sellerOrdersPlaced,
     TRANSIT: sellerOrdersTransit,
