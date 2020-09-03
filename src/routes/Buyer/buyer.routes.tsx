@@ -63,7 +63,6 @@ const ROUTES: Routes = {
     title: 'Product Details',
     hideFromSidebar: true,
   },
-
   SELLER_DETAILS: {
     path: '/buyer/seller-details/:id',
     children: <SellerDetails />,

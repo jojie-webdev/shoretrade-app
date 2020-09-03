@@ -31,7 +31,8 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
   const pathname = useSelector(
     (state: Store) => state.router.location.pathname
   );
-  const isSeller = pathname.includes('seller');
+  const isSeller = pathname.startsWith('/seller');
+
   return (
     <ThemeProvider theme={{ ...theme, appType: isSeller ? 'seller' : 'buyer' }}>
       {children}

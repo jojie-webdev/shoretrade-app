@@ -7,6 +7,10 @@ import {
   Notepad,
   Category,
   Home,
+  HeartFilled,
+  Heart,
+  Star,
+  StarFilled,
   Oysters,
   Download,
   Fish,
@@ -123,6 +127,18 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Home">
           <Home width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="HeartFilled">
+          <HeartFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Heart">
+          <Heart width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Star">
+          <Star width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="StarFilled">
+          <StarFilled width={30} height={30} />
         </Wrapper>
         <Wrapper label="Oysters">
           <Oysters width={30} height={30} />
