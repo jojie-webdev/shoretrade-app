@@ -50,8 +50,6 @@ const ShippingAddresses = (): JSX.Element => {
     }
   }, [companyId]);
 
-  console.log(addresses);
-
   // Mark:- Render
   const generatedProps: ShippingAddressesGeneratedProps = {
     addresses,

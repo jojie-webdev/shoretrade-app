@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
+import SellerAssistantForm from 'components/module/SellerAssistantForm';
+import {
+  Role,
+  AssistantForm,
+} from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLinkedAccountActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
 
-import {
-  Role,
-  CreateAssistantGeneratedProps,
-  AssistantForm,
-} from './CreateAssistant.props';
-import CreateAssistantView from './CreateAssistant.view';
+import { CreateAssistantGeneratedProps } from './CreateAssistant.props';
+import { isValid } from './CreateAssistant.validation';
 
 const CreateAssistant = (): JSX.Element => {
   // MARK:- Store / Hooks
@@ -39,18 +40,33 @@ const CreateAssistant = (): JSX.Element => {
     setSubmitted(true);
   };
 
+  // MARK:- Variables
+
+  const formikInitial = {
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobile: '',
+    },
+    validate: isValid,
+    onSubmit: onClickCreate,
+  };
+
   // MARK:- Render
   const generatedProps: CreateAssistantGeneratedProps = {
+    type: 'CREATE',
     role,
     setRole,
     callingCode,
     setCallingCode,
-    onClickCreate,
+    formikInitial,
     pending: addLinkedAccount.pending || false,
     success: addLinkedAccount.data?.status === 200 && submitted,
     error: addLinkedAccount.error.length > 0,
   };
-  return <CreateAssistantView {...generatedProps} />;
+
+  return <SellerAssistantForm {...generatedProps} />;
 };
 
 export default CreateAssistant;

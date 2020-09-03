@@ -31,6 +31,17 @@ const Assistants = (): JSX.Element => {
     );
   };
 
+  const onClickAssistant = (assistantId: string) => {
+    dispatch(
+      push(
+        `${SELLER_ACCOUNT_ROUTES.EDIT_ASSISTANT(assistantId)}${qs.stringify(
+          { companyId: companyId },
+          { addQueryPrefix: true }
+        )}`
+      )
+    );
+  };
+
   // MARK:- Effects
   useEffect(() => {
     if (companyId) {
@@ -43,6 +54,7 @@ const Assistants = (): JSX.Element => {
     accounts: getLinkedAccounts.data?.data.accounts || [],
     pending: getLinkedAccounts.pending || false,
     goToCreateAssistant,
+    onClickAssistant,
   };
 
   return <AssistantsView {...generatedProps} />;

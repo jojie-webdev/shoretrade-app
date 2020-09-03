@@ -10,6 +10,7 @@ import BankDetails from './BankDetails';
 import ChangePassword from './ChangePassword';
 import CreateAssistant from './CreateAssistant';
 import EditAddress from './EditAddress';
+import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import ShippingAddresses from './ShippingAddresses';
@@ -43,6 +44,10 @@ const ROUTES: Routes = {
   CREATE_ASSISTANT: {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ASSISTANT,
     children: <CreateAssistant />,
+  },
+  EDIT_ASSISTANT: {
+    path: SELLER_ACCOUNT_ROUTES.EDIT_ASSISTANT(),
+    children: <EditAssistant />,
   },
   BANK_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,

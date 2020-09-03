@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import changePassword from './changePassword';
+import deleteLinkedAccount from './deleteLinkedAccount';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -44,4 +45,5 @@ export default (history: History) =>
     changePassword,
     getLinkedAccounts,
     addLinkedAccount,
+    deleteLinkedAccount,
   });
