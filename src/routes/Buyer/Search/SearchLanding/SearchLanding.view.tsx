@@ -64,9 +64,34 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           <PaginateList
             list={data || []}
             labelPath={['label']}
-            maxItemPerPage={2}
-            onClickItem={(item) => console.log(item)}
+            maxItemPerPage={6}
+            onClickItem={(item) => {
+              // TODO: Redirect to
+              saveSearchHistory(item.value, item.label, item.count);
+            }}
           />
+
+          // TODO: convert action navigation.navigate to react-router redirect
+          // <Results
+          //   data={data}
+          //   keyboardDismissMode="on-drag"
+          //   keyExtractor={(item) => item.value}
+          //   renderItem={({ item }) => (
+          //     <InteractionContainer>
+          //       <Interactions
+          //         type="next"
+          //         value={item.label}
+          //         onPress={() => {
+          //           navigation.navigate(ROUTES.BUYER_SEARCH_PREVIEW, {
+          //             typeId: item.value,
+          //             typeTitle: item.label,
+          //           });
+          //           saveSearchHistory(item.value, item.label, item.count);
+          //         }}
+          //       />
+          //     </InteractionContainer>
+          //   )}
+          // />
         )}
       </Content>
     </Container>
