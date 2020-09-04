@@ -3,13 +3,18 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
+import { Filter } from 'components/base/SVG';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { CategoriesLandingGeneratedProps } from './Landing.props';
-import { CategoriesContainer, LoadingContainer } from './Landing.style';
+import {
+  CategoriesContainer,
+  LoadingContainer,
+  FilterButton,
+} from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -37,13 +42,18 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   return (
     <CategoriesContainer>
       <Row className="search-row">
-        <Col xs={12}>
+        <Col xs={10.5}>
           <Search
             value={search}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
             placeholder="Search for a Product"
           />
+        </Col>
+        <Col xs={1.5}>
+          <FilterButton>
+            Filters <Filter></Filter>
+          </FilterButton>
         </Col>
       </Row>
       {categories.length <= 0 ? (

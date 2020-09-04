@@ -44,3 +44,10 @@ export const LoadingContainer = styled.div`
   margin-left: 8px;
   height: 100%;
 `;
+
+export const FilterButton = styled.button`
+  background: #111e2b;
+  border-radius: 4px;
+  color: white;
+  margin-top: 4px;
+`;

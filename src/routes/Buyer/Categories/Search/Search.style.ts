@@ -18,14 +18,6 @@ export const SearchContainer = styled.div`
   .interactions-right {
     padding: 10px;
   }
-
-  .result-container {
-    flex: none;
-    order: 0;
-    align-self: center;
-    flex-direction: row;
-    display: flex;
-  }
 `;
 
 export const Image = styled.img`
@@ -58,4 +50,20 @@ export const LoadingContainer = styled.div`
 export const DetailsContainer = styled.div`
   flex-direction: row;
   padding: 8px;
+`;
+
+export const ResultContainer = styled.div`
+  flex: none;
+  order: 0;
+  align-self: center;
+  flex-direction: row;
+  display: flex;
+`;
+
+export const FilterButton = styled.button`
+  background: #111e2b;
+  border-radius: 4px;
+  color: white;
+  float: right;
+  margin-top: -8px;
 `;

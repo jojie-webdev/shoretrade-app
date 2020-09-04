@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
+import { Filter } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
@@ -15,6 +16,8 @@ import {
   LoadingContainer,
   Image,
   DetailsContainer,
+  FilterButton,
+  ResultContainer,
 } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
@@ -42,7 +45,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
         <TypographyView variant="label" style={{ fontSize: 16 }}>
           {result.name}
         </TypographyView>
-        <div className="result-container">
+        <ResultContainer>
           <TypographyView className="font" variant="label">
             ${result.price.to}
           </TypographyView>
@@ -71,7 +74,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           >
             item
           </TypographyView>
-        </div>
+        </ResultContainer>
       </DetailsContainer>
     </>
   );
@@ -103,20 +106,34 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
         <>
           {results.length > 0 ? (
             <>
-              <div className="result-container">
-                <TypographyView
-                  variant="label"
-                  style={{ fontSize: 24, fontWeight: 'normal' }}
-                >
-                  Results
-                </TypographyView>
-                <TypographyView
-                  variant="label"
-                  style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 24 }}
-                >
-                  {results.length}
-                </TypographyView>
-              </div>
+              <ResultContainer>
+                <Col xs={10}>
+                  <Row>
+                    <TypographyView
+                      variant="label"
+                      style={{ fontSize: 24, fontWeight: 'normal' }}
+                    >
+                      Results
+                    </TypographyView>
+                    <TypographyView
+                      variant="label"
+                      style={{
+                        marginLeft: 10,
+                        fontWeight: 'bold',
+                        fontSize: 24,
+                      }}
+                    >
+                      {results.length}
+                    </TypographyView>
+                  </Row>
+                </Col>
+
+                <Col xs={2}>
+                  <FilterButton>
+                    Filters <Filter></Filter>
+                  </FilterButton>
+                </Col>
+              </ResultContainer>
 
               <Row className="items-row">
                 <Col xs={12}>
