@@ -1,13 +1,16 @@
 import React from 'react';
 
+import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
 import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
 
 // import { useTheme } from 'utils/Theme';
+
 import { SearchLandingGeneratedProps } from './SearchLanding.props';
-import { Container, Content, SearchContainer } from './SearchLanding.style';
+import { Container, Content, SearchContainer, ListContainer, ListItemInteraction } from './SearchLanding.style';
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -34,7 +37,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
         <SearchContainer>
           <Search
             value={searchTerm}
-            resetValue={() => setSearchTerm('')}
+            resetValue={onReset}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </SearchContainer>
@@ -43,6 +46,43 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           <Typography variant="overline" color="shade6">
             {showRecentSearch ? 'Recent Searches' : 'Results'}
           </Typography>
+        )}
+        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+          <EmptyState onButtonClicked={onReset} Svg={Crab} />
+        ) : (
+          <ListContainer>
+            {data.map((item, idx) => {
+              return (
+                <ListItemInteraction
+                  key={idx}
+                  value={item.label}
+                  onClick={()=>
+                    saveSearchHistory(item.value, item.label, item.count)
+                  }
+                />
+              );
+            })}
+          </ListContainer>
+          // <Results
+          //   data={data}
+          //   keyboardDismissMode="on-drag"
+          //   keyExtractor={(item) => item.value}
+          //   renderItem={({ item }) => (
+          //     <InteractionContainer>
+          //       <Interactions
+          //         type="next"
+          //         value={item.label}
+          //         onPress={() => {
+          //           navigation.navigate(ROUTES.BUYER_SEARCH_PREVIEW, {
+          //             typeId: item.value,
+          //             typeTitle: item.label,
+          //           });
+          //           saveSearchHistory(item.value, item.label, item.count);
+          //         }}
+          //       />
+          //     </InteractionContainer>
+          //   )}
+          // />
         )}
       </Content>
     </Container>
