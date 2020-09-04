@@ -9,6 +9,7 @@ import {
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
+import { SearchLandingGeneratedProps } from './SearchLanding.props';
 import SearchLandingView from './SearchLanding.view';
 
 const SearchLanding = (): JSX.Element => {
@@ -86,7 +87,7 @@ const SearchLanding = (): JSX.Element => {
     setTimer(timerId);
   }, [searchTerm]);
 
-  const generatedProps = {
+  const generatedProps: SearchLandingGeneratedProps = {
     search,
     searchTerm,
     setSearchTerm,
