@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Crab } from 'components/base/SVG';
+import PaginateList from 'components/base/PaginateList';
+import { Octopus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
@@ -8,9 +9,14 @@ import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
 
 // import { useTheme } from 'utils/Theme';
-
 import { SearchLandingGeneratedProps } from './SearchLanding.props';
-import { Container, Content, SearchContainer, ListContainer, ListItemInteraction } from './SearchLanding.style';
+import {
+  Container,
+  Content,
+  SearchContainer,
+  ListContainer,
+  ListItemInteraction,
+} from './SearchLanding.style';
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -48,41 +54,19 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           </Typography>
         )}
         {isEmpty(data) && searchTerm.length > 0 && !loading ? (
-          <EmptyState onButtonClicked={onReset} Svg={Crab} />
+          <EmptyState
+            onButtonClicked={onReset}
+            Svg={Octopus}
+            title="No search result"
+            buttonText="Reset Search"
+          />
         ) : (
-          <ListContainer>
-            {data.map((item, idx) => {
-              return (
-                <ListItemInteraction
-                  key={idx}
-                  value={item.label}
-                  onClick={()=>
-                    saveSearchHistory(item.value, item.label, item.count)
-                  }
-                />
-              );
-            })}
-          </ListContainer>
-          // <Results
-          //   data={data}
-          //   keyboardDismissMode="on-drag"
-          //   keyExtractor={(item) => item.value}
-          //   renderItem={({ item }) => (
-          //     <InteractionContainer>
-          //       <Interactions
-          //         type="next"
-          //         value={item.label}
-          //         onPress={() => {
-          //           navigation.navigate(ROUTES.BUYER_SEARCH_PREVIEW, {
-          //             typeId: item.value,
-          //             typeTitle: item.label,
-          //           });
-          //           saveSearchHistory(item.value, item.label, item.count);
-          //         }}
-          //       />
-          //     </InteractionContainer>
-          //   )}
-          // />
+          <PaginateList
+            list={data || []}
+            labelPath={['label']}
+            maxItemPerPage={2}
+            onClickItem={(item) => console.log(item)}
+          />
         )}
       </Content>
     </Container>
