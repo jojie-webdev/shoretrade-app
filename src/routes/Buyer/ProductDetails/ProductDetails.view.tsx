@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import TypographyView from 'components/base/Typography';
+import { Col } from 'react-grid-system';
+
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
-import { Container } from './ProductDetails.style';
+import {
+  Container,
+  Image,
+  BannerContainer,
+  DetailsContainer,
+} from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -21,7 +29,24 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
 
   return (
     <Container>
-      <h1>ProductDetails Screen</h1>
+      {currentListing ? (
+        <>
+          <BannerContainer>
+            <Image src={currentListing.images[0]} />
+          </BannerContainer>
+          <TypographyView variant="label" className="description">
+            {currentListing.description}
+          </TypographyView>
+          <DetailsContainer>
+            <Col xs={6}>
+              <DetailsContainer></DetailsContainer>
+            </Col>
+            <Col xs={6}>
+              <DetailsContainer></DetailsContainer>
+            </Col>
+          </DetailsContainer>
+        </>
+      ) : null}
     </Container>
   );
 };
