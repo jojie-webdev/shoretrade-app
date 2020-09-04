@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ShoretradeLogo, Exit } from 'components/base/SVG';
+import { ShoretradeLogo, Exit, Menu } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { Container } from 'react-grid-system';
 import { Theme } from 'types/Theme';
@@ -20,6 +20,8 @@ import {
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
+  MenuIcon,
+  MenuOverlay,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -58,6 +60,7 @@ const Header = ({ pageTitle, userData, textColor }: HeaderProps) => (
 
 const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
+
   const {
     routes,
     pageTitle,
@@ -67,6 +70,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     children,
     logout,
     credit,
+    openSidebar,
+    setOpenSidebar,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -77,7 +82,15 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   return (
     <DashboardContainer>
-      <Sidebar>
+      <MenuIcon onClick={() => setOpenSidebar(!openSidebar)}>
+        <Menu fill={theme.grey.noshade}></Menu>
+      </MenuIcon>
+      <MenuOverlay
+        openSidebar={openSidebar}
+        onClick={() => setOpenSidebar(!openSidebar)}
+      />
+
+      <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
             <ShoretradeLogo />

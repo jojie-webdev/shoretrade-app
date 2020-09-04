@@ -20,6 +20,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- State
   const [pageTitle, setPageTitle] = useState('');
   const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
+  const [openSidebar, setOpenSidebar] = useState(false);
 
   const getUser = useSelector((state: Store) => state.getUser);
   const defaultCompany = useMemo(() => {
@@ -69,6 +70,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     userData,
     logout,
     credit: defaultCompany?.credit || '',
+    openSidebar,
+    setOpenSidebar,
   };
 
   return <DashboardView {...generatedProps} />;
