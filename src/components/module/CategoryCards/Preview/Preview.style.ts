@@ -68,6 +68,11 @@ export const BadgeContainer = styled.div`
   left: 5%;
 `;
 
+export const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const DetailsContainer = styled.div`
   width: 100%;
   padding-left: 12px;

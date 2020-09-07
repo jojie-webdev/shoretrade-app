@@ -15,6 +15,7 @@ import { GetAddressOptions } from 'store/selectors/buyer';
 import { CartItem } from 'types/store/CartState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Store } from 'types/store/Store';
+import { sizeToString } from 'utils/Listing';
 
 import ProductDetailsView from './ProductDetails.view';
 
@@ -39,18 +40,42 @@ const ProductDetails = (): JSX.Element => {
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
-
+  const [favorite, setFavorite] = useState(currentListing?.isFavourite);
+  const productDetailsCard1Props = {
+    title: currentListing?.type || '',
+    tags: (currentListing?.state || []).map((s) => ({ label: s })),
+    size: sizeToString(
+      currentListing?.size.unit || '',
+      currentListing?.size.from,
+      currentListing?.size.to
+    ),
+    location: `${currentListing?.origin.suburb || ''}, ${
+      currentListing?.origin.state || ''
+    }, ${currentListing?.origin.countryCode || ''}`,
+  };
   // MARK:- Methods
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
+
+  const onFavorite = () => {
+    setFavorite((prevState) => {
+      dispatch(
+        updateFavouriteProductActions.request({
+          listingId: listingId,
+          favourite: !prevState,
+        })
+      );
+      return !prevState;
+    });
+  };
+
   // MARK:- Effects
   useEffect(() => {
     if (listingId && previousId !== listingId) {
       onLoad(listingId);
     }
   }, [listingId]);
-  console.log('currentListing', currentListing);
 
   const generatedProps = {
     onLoad,
@@ -59,6 +84,9 @@ const ProductDetails = (): JSX.Element => {
     addresses,
     selectedAddress,
     selectAddress,
+    favorite,
+    onFavorite,
+    productDetailsCard1Props,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

@@ -17,6 +17,7 @@ import {
   BadgeContainer,
   LocationContainer,
   BodyContainer,
+  StatusContainer,
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
@@ -54,6 +55,17 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </PriceContainer>
             </Row>
           </HeaderContainer>
+          <StatusContainer>
+            {props.state?.map((item) => {
+              return (
+                <Badge fontColor="#09131D" badgeColor="#EDEFFA">
+                  <TypographyView variant="small" weight="bold">
+                    {item}
+                  </TypographyView>
+                </Badge>
+              );
+            })}
+          </StatusContainer>
           <BodyContainer>
             <Row>
               <TypographyView variant="small" color="shade6">

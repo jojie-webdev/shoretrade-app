@@ -26,5 +26,4 @@ export const Image = styled.img`
 export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 8px;
 `;

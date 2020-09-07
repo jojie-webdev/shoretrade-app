@@ -3,7 +3,7 @@ import styled from 'utils/styled';
 import { BadgeProps } from './Badge.props';
 
 export const BadgeContainer = styled.div<BadgeProps>`
-  color: white;
+  color: ${(props) => (props.fontColor ? props.fontColor : 'white')};
   background-color: ${(props) =>
     props.badgeColor ? props.badgeColor : '#09131d'};
   border-radius: 4px;
