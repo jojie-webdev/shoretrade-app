@@ -8,9 +8,8 @@ export interface SearchLandingGeneratedProps {
   results: { count: string; label: string; value: string }[];
   onReset: () => void;
   recent: { count: string; label: string; value: string }[];
-  // TODO: Disabled until necessary
-  // addresses: { label: string; value: string }[];
-  // selectedAddress: string;
-  // selectAddress: (id: string) => void;
+  addresses: { label: string; value: string }[];
+  selectedAddress: string;
+  selectAddress: (id: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
 }

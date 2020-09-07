@@ -4,9 +4,10 @@ import { remove } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   searchAndCountProductTypeActions,
-  // currentAddressActions,
+  currentAddressActions,
   historyActions,
 } from 'store/actions';
+import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import { SearchLandingGeneratedProps } from './SearchLanding.props';
@@ -16,17 +17,17 @@ const SearchLanding = (): JSX.Element => {
   const dispatch = useDispatch();
 
   // TODO: Disabled until necessary
-  // const addresses = GetAddressOptions();
-  // const selectedAddress =
-  //   useSelectorSafe((state) => state.currentAddress.id) || '';
+  const addresses = GetAddressOptions();
+  const selectedAddress =
+    useSelector((state: Store) => state.currentAddress.id) || '';
 
-  // const selectAddress = (id: string) => {
-  //   dispatch(
-  //     currentAddressActions.update({
-  //       id,
-  //     }),
-  //   );
-  // };
+  const selectAddress = (id: string) => {
+    dispatch(
+      currentAddressActions.update({
+        id,
+      })
+    );
+  };
 
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -95,10 +96,9 @@ const SearchLanding = (): JSX.Element => {
     results,
     onReset,
     recent,
-    // TODO: Disabled until necessary
-    // addresses,
-    // selectedAddress,
-    // selectAddress,
+    addresses,
+    selectedAddress,
+    selectAddress,
     saveSearchHistory,
   };
   return <SearchLandingView {...generatedProps} />;

@@ -5,8 +5,10 @@ import { Octopus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
+import { BUYER_ROUTES } from 'consts';
 import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
+import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { SearchLandingGeneratedProps } from './SearchLanding.props';
@@ -20,6 +22,7 @@ import {
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   // const theme = useTheme();
+  const history = useHistory();
   const {
     search,
     searchTerm,
@@ -67,6 +70,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
             maxItemPerPage={6}
             onClickItem={(item) => {
               // TODO: Redirect to
+              history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value))
               saveSearchHistory(item.value, item.label, item.count);
             }}
           />
@@ -82,7 +86,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           //         type="next"
           //         value={item.label}
           //         onPress={() => {
-          //           navigation.navigate(ROUTES.BUYER_SEARCH_PREVIEW, {
+          //           navigation.navigate(BUYER_ROUTES.SEARCH_PREVIEW(item.value), {
           //             typeId: item.value,
           //             typeTitle: item.label,
           //           });
