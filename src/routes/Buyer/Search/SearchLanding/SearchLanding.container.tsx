@@ -16,7 +16,6 @@ import SearchLandingView from './SearchLanding.view';
 const SearchLanding = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  // TODO: Disabled until necessary
   const addresses = GetAddressOptions();
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
