@@ -2,12 +2,13 @@ import Touchable from 'components/base/Touchable';
 import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
-export const DashboardContainer = styled.div`
+export const DashboardContainer = styled.div<{ openSidebar?: boolean }>`
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: row;
   position: relative;
+  overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 `;
 
 export const MenuIcon = styled.div`
@@ -17,13 +18,11 @@ export const MenuIcon = styled.div`
 
   @media (max-width: 992px) {
     display: block;
-    position: absolute;
-    left: 25px;
-    top: 25px;
+    margin-right: 32px;
   }
 
   @media (max-width: 576px) {
-    top: 23px;
+    margin-right: 16px;
   }
 `;
 
@@ -59,9 +58,10 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 
   @media (max-width: 992px) {
+    width: 225px;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-235px')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-225px')};
     z-index: 9999;
     height: 100vh;
   }
@@ -98,13 +98,16 @@ export const LogoutButton = styled(Touchable)`
   margin-bottom: 24px;
 `;
 
-export const Content = styled.div<{ shouldIncludePadding: boolean }>`
+export const Content = styled.div<{
+  shouldIncludePadding: boolean;
+  openSidebar: boolean;
+}>`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 0 150px; */
+  transition: all 0.3s ease-in-out;
 
   background: ${(props) =>
     props.theme.appType === 'buyer'
@@ -140,7 +143,11 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
   }
 
   @media (max-width: 992px) {
+    margin-left: ${(props) => (props.openSidebar ? '225px' : '0')};
+    padding-left: ${(props) => (props.openSidebar ? '50px' : '0')};
+
     .screen-wrapper {
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: 80vw;
       }
@@ -148,6 +155,8 @@ export const Content = styled.div<{ shouldIncludePadding: boolean }>`
   }
 
   @media (max-width: 576px) {
+    padding-left: 0;
+
     .screen-wrapper {
       height: 100%;
 
@@ -168,6 +177,11 @@ export const HeaderContainer = styled.nav`
   align-items: center;
   justify-content: space-between;
   width: 65vw;
+
+  .left-content {
+    display: flex;
+    align-items: center;
+  }
 
   .right-content {
     display: flex;
@@ -190,8 +204,7 @@ export const HeaderContainer = styled.nav`
 
   @media (max-width: 576px) {
     width: 100vw;
-    padding-right: 24px;
-    padding-left: 64px;
+    padding: 0 24px;
     margin-top: 8px;
     margin-bottom: 8px;
   }

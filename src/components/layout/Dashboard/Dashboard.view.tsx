@@ -35,11 +35,22 @@ const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
   </SidebarItem>
 );
 
-const Header = ({ pageTitle, userData, textColor }: HeaderProps) => (
+const Header = ({
+  pageTitle,
+  userData,
+  textColor,
+  setOpenSidebar,
+  openSidebar,
+}: HeaderProps) => (
   <HeaderContainer className="appbar">
-    <Typography variant="title4" color={textColor}>
-      {pageTitle}
-    </Typography>
+    <div className="left-content">
+      <MenuIcon onClick={() => setOpenSidebar(!openSidebar)}>
+        <Menu></Menu>
+      </MenuIcon>
+      <Typography variant="title4" color={textColor}>
+        {pageTitle}
+      </Typography>
+    </div>
 
     <div className="right-content">
       <div className="text-container">
@@ -81,10 +92,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9;
 
   return (
-    <DashboardContainer>
-      <MenuIcon onClick={() => setOpenSidebar(!openSidebar)}>
-        <Menu fill={theme.grey.noshade}></Menu>
-      </MenuIcon>
+    <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
@@ -139,6 +147,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       </Sidebar>
 
       <Content
+        openSidebar={openSidebar}
         shouldIncludePadding={
           theme.appType === 'buyer' ? false : shouldIncludePadding
         }
@@ -147,6 +156,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           pageTitle={pageTitle}
           userData={userData}
           textColor={textColor}
+          setOpenSidebar={setOpenSidebar}
+          openSidebar={openSidebar}
         />
         <div className="screen-wrapper">
           <div className="screen">
