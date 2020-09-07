@@ -10,11 +10,11 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import { isEmpty } from 'ramda';
-import { PlaceData } from '../../../types/PlaceData';
-import LocationSearch from "../LocationSearch"
 import { Row } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
+import { PlaceData } from '../../../types/PlaceData';
+import LocationSearch from '../LocationSearch';
 import { FilterModalProps, Filters, FilterType } from './FilterModal.props';
 import {
   HeaderContainer,
@@ -61,7 +61,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     if (fType === 'location') {
       return selectedLocation ? selectedLocation.address : null;
     }
-    
+
     if (fType === 'size_dropdown') {
       const sizeFilter = filters.find((f) => f.label === 'Size');
       const sizeValues = sizeFilter?.sizeDropdownValues;
@@ -150,13 +150,12 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     setType(fType);
   };
 
-   const onSelectLocation = (location?: PlaceData) => {
+  const onSelectLocation = (location?: PlaceData) => {
     if (location && setSelectedLocation) {
       setSelectedLocation(location);
       onBack();
     }
   };
-
 
   const onCheckboxPress = (label: string) => {
     if (selectedCheckboxFilters && setSelectedCheckboxFilters) {
@@ -328,16 +327,17 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                 </InputContainer>
               </Scroll>
             )}
-            
+
             {type === 'location' && (
               <LocationSearch
                 onSelect={onSelectLocation}
                 interactionProps={{
-                  backgroundColor: isSeller ? theme.grey.shade8 : theme.grey.shade1,
+                  backgroundColor: isSeller
+                    ? theme.grey.shade8
+                    : theme.grey.shade1,
                 }}
               />
             )}
-
           </>
         ) : (
           <Scroll>

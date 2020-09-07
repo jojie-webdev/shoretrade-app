@@ -57,20 +57,29 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   };
 
   return (
-    <Container {...props} onClick={onClick}>
+    <Container className="interactions" {...props} onClick={onClick}>
       {label ? (
         <Label variant="overline" color="shade5">
           {label}
         </Label>
       ) : null}
       <div className="left-content">
-        {leftComponent ? leftComponent : <Value>{value}</Value>}
+        {leftComponent ? (
+          leftComponent
+        ) : (
+          <>{value ? <Value>{value}</Value> : null}</>
+        )}
         {children}
       </div>
       {rightComponent ? (
         rightComponent
       ) : (
-        <IconContainer iconAlignment={iconAlignment}>{getIcon()}</IconContainer>
+        <IconContainer
+          className="interactions-right"
+          iconAlignment={iconAlignment}
+        >
+          {getIcon()}
+        </IconContainer>
       )}
     </Container>
   );

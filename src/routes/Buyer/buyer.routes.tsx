@@ -8,11 +8,14 @@ import {
   Notepad as OrderIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import Account from './Account';
-import Categories from './Categories';
+import CategoriesLanding from './Categories/Landing';
+import CategoriesPreview from './Categories/Preview';
+import CategoriesSearch from './Categories/Search';
 import Checkout from './Checkout';
 import Home from './Home';
 import Orders from './Orders';
@@ -34,11 +37,24 @@ const ROUTES: Routes = {
     icon: SearchIcon,
   },
   CATEGORIES: {
-    path: '/buyer/categories',
-    children: <Categories />,
+    path: BUYER_ROUTES.CATEGORIES,
+    children: <CategoriesLanding />,
     title: 'Categories',
     icon: CategoryIcon,
   },
+  CATEGORY_PRODUCTS: {
+    path: BUYER_ROUTES.CATEGORY_PRODUCTS(),
+    children: <CategoriesSearch />,
+    title: '',
+    hideFromSidebar: true,
+  },
+  PRODUCT_PREVIEW: {
+    path: BUYER_ROUTES.PRODUCT_PREVIEW(),
+    children: <CategoriesPreview />,
+    title: '',
+    hideFromSidebar: true,
+  },
+
   ORDERS: {
     path: '/buyer/orders',
     children: <Orders />,

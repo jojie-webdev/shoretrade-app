@@ -68,3 +68,4 @@ export { default as CtgCaviar } from './CtgCaviar';
 export { default as CtgMussels } from './CtgMussels';
 export { default as CtgScallopMeat } from './CtgScallopMeat';
 export { default as CtgScallopsShell } from './CtgScallopsShell';
+export { default as Expand } from './Expand';

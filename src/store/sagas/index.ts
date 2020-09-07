@@ -3,12 +3,19 @@ import { fork, all } from 'redux-saga/effects';
 import addAddress from './addAddress';
 import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
+import currentAddress from './currentAddress';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
+import getBuyerHomepage from './getBuyerHomePage';
+import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getLinkedAccounts from './getLinkedAccounts';
+import getListing from './getListing';
+import getListingBoxes from './getListingBoxes';
+import getListingsByType from './getListingsByType';
+import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
@@ -19,6 +26,7 @@ import searchAndCountProductType from './searchAndCountProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
+import updateFavouriteProduct from './updateFavouriteProduct';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -44,6 +52,14 @@ const sagas = [
   deleteLinkedAccount,
   updateFavoriteSeller,
   getSellerById,
+  getBuyerHomepage,
+  currentAddress,
+  getListingTypesByCategory,
+  getBuyerSearchFilterData,
+  getListingsByType,
+  getListing,
+  getListingBoxes,
+  updateFavouriteProduct,
   searchAndCountProductType,
 ];
 
