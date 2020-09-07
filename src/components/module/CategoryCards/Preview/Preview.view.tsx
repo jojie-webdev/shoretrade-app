@@ -2,6 +2,7 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
+import { Location } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 
@@ -25,7 +26,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
         <div className="imgContainer">
           <img src={props.images[0]} alt="Product" style={{ maxHeight: 150 }} />
           <LocationContainer>
-            <Badge>{props.origin?.countryCode}</Badge>
+            <Badge>
+              <Location height={10.06} width={8.5}></Location>{' '}
+              {props.origin?.countryCode}
+            </Badge>
           </LocationContainer>
 
           <BadgeContainer>
@@ -39,13 +43,13 @@ const Preview = (props: PreviewProps): JSX.Element => {
             <Row>
               <Title>{props.type}</Title>
               <PriceContainer>
-                <Price>${props.price}</Price>
+                <Price>{props.price}</Price>
                 <TypographyView
                   style={{ textAlign: 'end' }}
                   variant="small"
                   color="shade6"
                 >
-                  per kg
+                  per {props.unit}
                 </TypographyView>
               </PriceContainer>
             </Row>
@@ -55,14 +59,16 @@ const Preview = (props: PreviewProps): JSX.Element => {
               <TypographyView variant="small" color="shade6">
                 Remaining:
               </TypographyView>
-              <TypographyView variant="small">{props.remaining}</TypographyView>
+              <TypographyView variant="small">
+                {props.remaining} {props.unit}
+              </TypographyView>
             </Row>
             <Row style={{ marginTop: 5 }}>
               <TypographyView variant="small" color="shade6">
                 Weight:
               </TypographyView>
               {/* Need Weight Transformer */}
-              <TypographyView variant="small">{props.remaining}</TypographyView>
+              <TypographyView variant="small">{props.weight}</TypographyView>
             </Row>
             <Row style={{ marginTop: 5 }}>
               <TypographyView variant="small" color="shade6">
@@ -77,7 +83,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 Min Order:
               </TypographyView>
               <TypographyView variant="small">
-                {props.minimumOrder}
+                {props.minimumOrder} {props.unit}
               </TypographyView>
             </Row>
           </BodyContainer>

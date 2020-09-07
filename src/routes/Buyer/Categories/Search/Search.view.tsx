@@ -9,6 +9,8 @@ import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesByCategoryState';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
 import {
@@ -47,7 +49,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
         </TypographyView>
         <ResultContainer>
           <TypographyView className="font" variant="label">
-            ${result.price.to}
+            {toPrice(result.price.to)}
           </TypographyView>
           <TypographyView
             className="font"
@@ -62,7 +64,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             color="shade6"
             style={{ marginLeft: 4 }}
           >
-            {result.measurementUnit}
+            {formatMeasurementUnit(result.measurementUnit)}
           </TypographyView>
           <TypographyView variant="label" style={{ marginLeft: 1 }}>
             {result.count}

@@ -3,13 +3,16 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import Card from 'components/module/CategoryCards/Preview';
+import PreviewCard from 'components/module/CategoryCards/Preview';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
+import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesPreviewGeneratedProps } from './Preview.props';
 import { PreviewContainer, LoadingContainer } from './Preview.style';
+
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   // const theme = useTheme();
   const {
@@ -52,22 +55,29 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       {results.length > 0 ? (
         <Row className="cards" style={{ marginTop: 20 }}>
           {results.map((product) => {
+            console.log(product);
             return (
               <Col sm={3} key={product.id}>
                 <Link
                   to={`/buyer/product/${product.id}`}
                   className="market-item"
                 >
-                  <Card
+                  <PreviewCard
                     id={product.id}
                     images={product.images}
                     type={product.type}
-                    price={product.price}
-                    remaining={product.remaining}
+                    price={toPrice(product.price)}
+                    remaining={product.remaining.toFixed(2)}
                     coop={product.coop}
                     minimumOrder={product.minimumOrder}
                     origin={product.origin}
+                    weight={sizeToString(
+                      product.size.unit,
+                      product.size.from,
+                      product.size.to
+                    )}
                     isAquafuture={product.isAquafuture}
+                    unit={product.measurementUnit}
                   />
                 </Link>
               </Col>

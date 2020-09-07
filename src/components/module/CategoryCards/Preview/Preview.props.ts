@@ -12,11 +12,13 @@ export interface PreviewProps {
   minimumOrder?: string;
   origin?: { state: string; suburb: string; countryCode: string };
   price?: string;
-  remaining?: number;
+  remaining?: string;
   sellInMultiplesOf?: boolean;
   size?: { from: string; to: string; unit: string };
   state?: string[];
   total?: number;
   type?: string;
   backgroundColor?: string;
+  weight: string;
+  unit?: string;
 }
