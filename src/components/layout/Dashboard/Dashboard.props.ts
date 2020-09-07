@@ -35,5 +35,5 @@ export type HeaderProps = {
   userData: GetUserPayload['data']['user'] | undefined;
   textColor: keyof Theme['brand'] | keyof Theme['grey'];
   openSidebar: boolean;
-  setOpenSidebar: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 };

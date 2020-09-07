@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ShoretradeLogo, Exit, Menu } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import Hamburger from 'components/module/Hamburger';
 import { Container } from 'react-grid-system';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
@@ -39,14 +40,15 @@ const Header = ({
   pageTitle,
   userData,
   textColor,
-  setOpenSidebar,
+  onClick,
   openSidebar,
 }: HeaderProps) => (
   <HeaderContainer className="appbar">
     <div className="left-content">
-      <MenuIcon onClick={() => setOpenSidebar(!openSidebar)}>
-        <Menu></Menu>
+      <MenuIcon onClick={onClick}>
+        <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
       </MenuIcon>
+
       <Typography variant="title4" color={textColor}>
         {pageTitle}
       </Typography>
@@ -156,7 +158,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           pageTitle={pageTitle}
           userData={userData}
           textColor={textColor}
-          setOpenSidebar={setOpenSidebar}
+          onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
         />
         <div className="screen-wrapper">

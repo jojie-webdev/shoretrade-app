@@ -1,4 +1,5 @@
 import Touchable from 'components/base/Touchable';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
@@ -16,13 +17,14 @@ export const MenuIcon = styled.div`
   height: 24px;
   width: 24px;
 
-  @media (max-width: 992px) {
+  @media ${BREAKPOINTS['md']} {
     display: block;
     margin-right: 32px;
   }
 
-  @media (max-width: 576px) {
-    margin-right: 16px;
+  @media ${BREAKPOINTS['sm']} {
+    display: block;
+    margin-right: 24px;
   }
 `;
 
@@ -36,7 +38,12 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   height: 100vh;
   width: 100vw;
 
-  @media (max-width: 992px) {
+  @media ${BREAKPOINTS['md']} {
+    z-index: 999;
+    display: ${(props) => (props.openSidebar ? 'block' : 'none')};
+  }
+
+  @media ${BREAKPOINTS['sm']} {
     z-index: 999;
     display: ${(props) => (props.openSidebar ? 'block' : 'none')};
   }
@@ -57,7 +64,16 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     margin-bottom: 60px;
   }
 
-  @media (max-width: 992px) {
+  @media ${BREAKPOINTS['md']} {
+    width: 225px;
+    position: absolute;
+    top: 0;
+    left: ${(props) => (props.openSidebar ? '0px' : '-225px')};
+    z-index: 9999;
+    height: 100vh;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
     width: 225px;
     position: absolute;
     top: 0;
@@ -142,7 +158,7 @@ export const Content = styled.div<{
     }
   }
 
-  @media (max-width: 992px) {
+  @media ${BREAKPOINTS['md']} {
     margin-left: ${(props) => (props.openSidebar ? '225px' : '0')};
     padding-left: ${(props) => (props.openSidebar ? '50px' : '0')};
 
@@ -154,11 +170,13 @@ export const Content = styled.div<{
     }
   }
 
-  @media (max-width: 576px) {
+  @media ${BREAKPOINTS['sm']} {
+    margin-left: ${(props) => (props.openSidebar ? '225px' : '0')};
     padding-left: 0;
 
     .screen-wrapper {
       height: 100%;
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 
       .screen {
         height: 100%;
@@ -180,7 +198,7 @@ export const HeaderContainer = styled.nav`
 
   .left-content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .right-content {
@@ -198,11 +216,11 @@ export const HeaderContainer = styled.nav`
     }
   }
 
-  @media (max-width: 992px) {
+  @media ${BREAKPOINTS['md']} {
     width: 80vw;
   }
 
-  @media (max-width: 576px) {
+  @media ${BREAKPOINTS['sm']} {
     width: 100vw;
     padding: 0 24px;
     margin-top: 8px;
