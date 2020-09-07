@@ -1,5 +1,6 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
+import { FilterModalProps } from 'components/module/FilterModal/FilterModal.props';
 import { GetListingsByTypeResponseListingItem } from 'types/store/GetListingsByTypeState';
 
 export interface CategoriesPreviewGeneratedProps {
@@ -12,4 +13,6 @@ export interface CategoriesPreviewGeneratedProps {
   addresses: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
+  // setVisible: Dispatch<SetStateAction<boolean>>;
+  modalFilterProps: FilterModalProps;
 }

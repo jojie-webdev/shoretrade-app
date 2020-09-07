@@ -3,6 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { CategoriesGeneratedProps } from 'routes/Seller/Dashboard/Categories/Categories.props';
 import {
   getBuyerSearchFilterDataActions,
   getListingsByTypeActions,
@@ -11,6 +12,12 @@ import {
 import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
+import {
+  getFilters,
+  getSize,
+  getSpecifications,
+  getCatchmentArea,
+} from './Preview.transform';
 import CategoriesPreviewView from './Preview.view';
 
 const CategoriesPreview = (): JSX.Element => {
@@ -66,16 +73,78 @@ const CategoriesPreview = (): JSX.Element => {
       onLoad(typeIdParsed);
     }
   }, [typeIdParsed]);
+
+  //Filters
+  const [isOpen, setVisible] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedCheckboxFilters, setSelectedCheckboxFilters] = useState<any[]>(
+    []
+  );
+
+  const filterData =
+    useSelector((state: Store) => state.getBuyerSearchFilterData) || {};
+  const filters = getFilters(filterData);
+  const checkboxFilters = [
+    { label: 'Show Only Ungraded', value: 'showUngraded' },
+  ];
+
+  const onReset = () => {
+    setSelectedFilters([]);
+    setSelectedSize(null);
+    setSelectedCheckboxFilters([]);
+  };
+
+  const onClickClose = () => {
+    setVisible(!isOpen);
+  };
+
+  const onApply = () => {
+    setVisible(false);
+
+    const { sizeRangeFrom, sizeRangeTo } = getSize(filterData, selectedSize);
+    const catchmentArea = getCatchmentArea(filterData, selectedFilters);
+    const specifications = getSpecifications(filterData, selectedFilters);
+
+    dispatch(
+      getListingsByTypeActions.request({
+        typeId: typeIdParsed,
+        filterData: {
+          ...(sizeRangeFrom ? { sizeRangeFrom } : {}),
+          ...(sizeRangeTo ? { sizeRangeTo } : {}),
+          ...(catchmentArea ? { catchmentArea } : {}),
+          ...(specifications ? { specifications } : {}),
+          ...(selectedCheckboxFilters[0] ? { showUngraded: true } : {}),
+        },
+      })
+    );
+  };
+
   const generatedProps = {
     onChangeSearchValue,
     searchValue,
     resetSearchValue,
     results,
     typeId: typeIdParsed,
-    onLoad,
     addresses,
     selectedAddress,
     selectAddress,
+    onLoad,
+    setVisible,
+    modalFilterProps: {
+      isOpen,
+      filters,
+      selectedFilters,
+      checkboxFilters,
+      selectedCheckboxFilters,
+      setSelectedCheckboxFilters,
+      setSelectedFilters,
+      selectedSize,
+      setSelectedSize,
+      onApply,
+      onReset,
+      onClickClose,
+    },
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };

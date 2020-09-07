@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
-import { PlaceData } from '../../../types/PlaceData';
+
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 
-export type FilterType = 'location' |'choice' | 'size_dropdown' | 'size_input';
+import { PlaceData } from '../../../types/PlaceData';
+
+export type FilterType = 'location' | 'choice' | 'size_dropdown' | 'size_input';
 
 export interface Filters {
   label: string;
