@@ -91,6 +91,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       )}
                       isAquafuture={product.isAquafuture}
                       unit={product.measurementUnit}
+                      state={product.state}
                     />
                   </Link>
                 </Col>

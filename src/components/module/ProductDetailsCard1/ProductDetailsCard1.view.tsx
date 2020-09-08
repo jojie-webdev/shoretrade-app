@@ -32,7 +32,7 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
     <Container {...props}>
       <Header>
         <Row>
-          <Title variant="title3">
+          <Title variant="title3" weight="bold">
             {title}
             {onFavorite && (
               <div style={{ float: 'right' }} onClick={onFavorite}>

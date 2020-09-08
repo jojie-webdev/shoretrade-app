@@ -7,6 +7,7 @@ import { SVGProps } from './SVG.props';
 const Expand = (props: SVGProps): JSX.Element => {
   const theme = useTheme();
   const { width, height, fill } = props;
+
   return (
     <svg width={width || 25} height={height || 16} viewBox="0 0 22 16">
       <path

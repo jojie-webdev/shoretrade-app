@@ -1,4 +1,4 @@
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
 import { ProductDetailsCard1Props } from './ProductDetailsCard1.props';
@@ -21,7 +21,7 @@ export const Header = styled.div`
   display: flex;
 `;
 
-export const Title = styled(TypographyView)`
+export const Title = styled(Typography)`
   margin-bottom: 4px;
 `;
 
@@ -40,13 +40,13 @@ export const TagsContainer = styled(Row)`
   margin-bottom: 21px;
 `;
 
-export const Size = styled(TypographyView)`
+export const Size = styled(Typography)`
   color: ${({ theme }) => theme.grey.shade9};
   margin-left: 6px;
   margin-right: 10px;
 `;
 
-export const LocationText = styled(TypographyView)`
+export const LocationText = styled(Typography)`
   color: ${({ theme }) => theme.grey.shade9};
   margin-left: 6px;
 `;

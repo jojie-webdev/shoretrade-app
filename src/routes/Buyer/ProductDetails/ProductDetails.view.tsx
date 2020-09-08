@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import TypographyView from 'components/base/Typography';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
+import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
+import ProductSellerRating from 'components/module/ProductSellerRating';
 import { Col } from 'react-grid-system';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
@@ -11,6 +13,7 @@ import {
   Image,
   BannerContainer,
   DetailsContainer,
+  SellerRatingContainer,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -24,6 +27,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     favorite,
     onFavorite,
     productDetailsCard1Props,
+    productDetailsCard6Props,
+    sellerRatingProps,
   } = props;
 
   useEffect(() => {
@@ -51,7 +56,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 onFavorite={onFavorite}
                 {...productDetailsCard1Props}
               />
-              <DetailsContainer>xx</DetailsContainer>
+              <ProductDetailsCard6View
+                cBorderRadius="0"
+                cBorderWidth="1px 2px 1px 2px"
+                {...productDetailsCard6Props}
+              />
+              <SellerRatingContainer>
+                <ProductSellerRating isSmallName {...sellerRatingProps} />
+              </SellerRatingContainer>
             </Col>
             <Col xs={6}>
               <DetailsContainer>xx</DetailsContainer>
