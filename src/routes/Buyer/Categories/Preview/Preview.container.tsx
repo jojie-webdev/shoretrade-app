@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { CategoriesGeneratedProps } from 'routes/Seller/Dashboard/Categories/Categories.props';
 import {
   getBuyerSearchFilterDataActions,
@@ -26,10 +26,8 @@ const CategoriesPreview = (): JSX.Element => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
   const addresses = GetAddressOptions();
-  const typeIdParsed = location.pathname.replace(
-    '/buyer/categories/products/',
-    ''
-  );
+  const { id } = useParams();
+  const typeIdParsed = id; // consider removing this and use `id` instead
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
   const selectAddress = (id: string) => {

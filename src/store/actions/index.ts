@@ -33,3 +33,5 @@ export { default as updateFavouriteProductActions } from './updateFavouriteProdu
 export { default as cartActions } from './cart';
 export { default as getListingActions } from './getListing';
 export { default as getListingBoxesActions } from './getListingBoxes';
+export { default as searchAndCountProductTypeActions } from './searchAndCountProductType';
+export { default as historyActions } from './history';

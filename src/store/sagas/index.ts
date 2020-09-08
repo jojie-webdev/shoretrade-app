@@ -22,6 +22,7 @@ import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
+import searchAndCountProductType from './searchAndCountProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
@@ -59,6 +60,7 @@ const sagas = [
   getListing,
   getListingBoxes,
   updateFavouriteProduct,
+  searchAndCountProductType,
 ];
 
 export default function* root() {

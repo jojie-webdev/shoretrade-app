@@ -25,9 +25,11 @@ import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getUser from './getUser';
+import history from './history';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
+import searchAndCountProductType from './searchAndCountProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
@@ -35,9 +37,9 @@ import updateFavouriteProduct from './updateFavouriteProduct';
 import updateUser from './updateUser';
 import verify from './verify';
 
-export default (history: History) =>
+export default (routeHistory: History) =>
   combineReducers({
-    router: connectRouter(history),
+    router: connectRouter(routeHistory),
     auth,
     login,
     resendVerification,
@@ -70,4 +72,6 @@ export default (history: History) =>
     getListingBoxes,
     updateFavoriteSeller,
     updateFavouriteProduct,
+    searchAndCountProductType,
+    history,
   });
