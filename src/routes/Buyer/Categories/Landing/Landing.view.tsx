@@ -42,7 +42,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   return (
     <CategoriesContainer>
       <Row className="search-row">
-        <Col xs={10.5}>
+        <Col xs={12}>
           <Search
             value={search}
             onChange={onChangeSearchValue}
@@ -50,11 +50,11 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
             placeholder="Search for a Product"
           />
         </Col>
-        <Col xs={1.5}>
+        {/* <Col xs={1.5}>
           <FilterButton>
             Filters <Filter></Filter>
           </FilterButton>
-        </Col>
+        </Col> */}
       </Row>
       {categories.length <= 0 ? (
         <LoadingContainer>

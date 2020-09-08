@@ -108,33 +108,34 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
         <>
           {results.length > 0 ? (
             <>
-              <ResultContainer>
-                <Col xs={10}>
-                  <Row>
-                    <TypographyView
-                      variant="label"
-                      style={{ fontSize: 24, fontWeight: 'normal' }}
-                    >
-                      Results
-                    </TypographyView>
-                    <TypographyView
-                      variant="label"
-                      style={{
-                        marginLeft: 10,
-                        fontWeight: 'bold',
-                        fontSize: 24,
-                      }}
-                    >
-                      {results.length}
-                    </TypographyView>
-                  </Row>
-                </Col>
+              <ResultContainer style={{ paddingLeft: 15 }}>
+                <Row>
+                  <TypographyView
+                    variant="label"
+                    style={{ fontSize: 24, fontWeight: 'normal' }}
+                  >
+                    Results
+                  </TypographyView>
+                  <TypographyView
+                    variant="label"
+                    style={{
+                      marginLeft: 10,
+                      fontWeight: 'bold',
+                      fontSize: 24,
+                    }}
+                  >
+                    {results.length}
+                  </TypographyView>
+                </Row>
+                {/* <Col xs={10}>
+                  
+                </Col> */}
 
-                <Col xs={2}>
+                {/* <Col xs={2}>
                   <FilterButton>
                     Filters <Filter></Filter>
                   </FilterButton>
-                </Col>
+                </Col> */}
               </ResultContainer>
 
               <Row className="items-row">

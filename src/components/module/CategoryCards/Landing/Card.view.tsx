@@ -13,7 +13,11 @@ const Card = (props: CardProps): JSX.Element => {
     <CardContainer className="centered">
       <div className="card">
         <picture className="thumbnail">
-          <CategoryImageView id={props.id} maxHeight={150} />
+          <CategoryImageView
+            id={props.id}
+            maxHeight={150}
+            cBorderRadius={'4px'}
+          />
         </picture>
         <div className="card-content">
           <TypographyView variant="label">{props.label}</TypographyView>

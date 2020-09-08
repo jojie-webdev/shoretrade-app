@@ -44,5 +44,6 @@ export const CardContainer = styled.div`
     flex: 1 0 500px;
     box-sizing: border-box;
     margin: 1rem 0.25em;
+    border-radius: 4px;
   }
 `;

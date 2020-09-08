@@ -75,8 +75,8 @@ export const StatusContainer = styled.div`
 
 export const DetailsContainer = styled.div`
   width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 export const HeaderContainer = styled.div`
