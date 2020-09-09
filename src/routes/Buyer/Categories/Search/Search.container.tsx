@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   getListingTypesByCategoryActions,
   currentAddressActions,
@@ -15,11 +15,9 @@ import CategoriesSearchView from './Search.view';
 const CategoriesSearch = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
-  const location = useLocation();
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const id = location.pathname.replace('/buyer/categories/', '');
-
+  const { id } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
   const addresses = GetAddressOptions();
   const selectedAddress =
