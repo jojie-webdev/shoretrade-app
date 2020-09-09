@@ -1,8 +1,17 @@
 import Alert from 'components/base/Alert';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  @media ${BREAKPOINTS['md']} {
+    padding-bottom: 32px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 32px;
+  }
+`;
 
 export const RoleContainer = styled.div`
   display: flex;

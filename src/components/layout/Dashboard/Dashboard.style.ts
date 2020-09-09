@@ -166,6 +166,7 @@ export const Content = styled.div<{
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: 80vw;
+        padding: ${(props) => (props.shouldIncludePadding ? '40px' : '0')};
       }
     }
   }

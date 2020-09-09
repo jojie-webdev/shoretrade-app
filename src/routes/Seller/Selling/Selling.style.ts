@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -34,6 +35,16 @@ export const ItemCard = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    border: 1px solid red;
+    padding-bottom: 32px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    border: 1px solid red;
+    padding-bottom: 32px;
   }
 `;
 
