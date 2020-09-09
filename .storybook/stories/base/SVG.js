@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Menu,
   Expand,
   PlaceholderIcon,
   Notepad,
@@ -121,6 +122,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Menu">
+          <Menu width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Expand">
           <Expand width={30} height={30} />
         </Wrapper>

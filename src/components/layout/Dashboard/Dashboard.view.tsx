@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ShoretradeLogo, Exit } from 'components/base/SVG';
+import { ShoretradeLogo, Exit, Menu } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import Hamburger from 'components/module/Hamburger';
 import { Container } from 'react-grid-system';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
@@ -20,6 +21,8 @@ import {
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
+  MenuIcon,
+  MenuOverlay,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -33,11 +36,23 @@ const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
   </SidebarItem>
 );
 
-const Header = ({ pageTitle, userData, textColor }: HeaderProps) => (
+const Header = ({
+  pageTitle,
+  userData,
+  textColor,
+  onClick,
+  openSidebar,
+}: HeaderProps) => (
   <HeaderContainer className="appbar">
-    <Typography variant="title4" color={textColor}>
-      {pageTitle}
-    </Typography>
+    <div className="left-content">
+      <MenuIcon onClick={onClick}>
+        <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
+      </MenuIcon>
+
+      <Typography variant="title4" color={textColor}>
+        {pageTitle}
+      </Typography>
+    </div>
 
     <div className="right-content">
       <div className="text-container">
@@ -58,6 +73,7 @@ const Header = ({ pageTitle, userData, textColor }: HeaderProps) => (
 
 const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
+
   const {
     routes,
     pageTitle,
@@ -67,6 +83,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     children,
     logout,
     credit,
+    openSidebar,
+    setOpenSidebar,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -76,8 +94,13 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9;
 
   return (
-    <DashboardContainer>
-      <Sidebar>
+    <DashboardContainer openSidebar={openSidebar}>
+      <MenuOverlay
+        openSidebar={openSidebar}
+        onClick={() => setOpenSidebar(!openSidebar)}
+      />
+
+      <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
             <ShoretradeLogo />
@@ -126,6 +149,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       </Sidebar>
 
       <Content
+        openSidebar={openSidebar}
         shouldIncludePadding={
           theme.appType === 'buyer' ? false : shouldIncludePadding
         }
@@ -134,6 +158,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           pageTitle={pageTitle}
           userData={userData}
           textColor={textColor}
+          onClick={() => setOpenSidebar(!openSidebar)}
+          openSidebar={openSidebar}
         />
         <div className="screen-wrapper">
           <div className="screen">

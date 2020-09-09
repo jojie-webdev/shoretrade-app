@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { Route } from 'types/Routes';
 import { GetUserPayload } from 'types/store/GetUserState';
@@ -15,6 +17,8 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   userData: GetUserPayload['data']['user'] | undefined;
   logout: () => void;
   credit: string;
+  openSidebar: boolean;
+  setOpenSidebar: Dispatch<SetStateAction<boolean>>;
 }
 
 // Inner component props
@@ -30,4 +34,6 @@ export type HeaderProps = {
   pageTitle: string | undefined;
   userData: GetUserPayload['data']['user'] | undefined;
   textColor: keyof Theme['brand'] | keyof Theme['grey'];
+  openSidebar: boolean;
+  onClick: () => void;
 };
