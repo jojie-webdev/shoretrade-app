@@ -37,3 +37,29 @@ export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
   border-radius: ${({ fishermanNotes }) =>
     fishermanNotes ? '0' : '0 0 8px 8px'};
 `;
+
+export const BoxContainer = styled.div`
+  padding: 16px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  border-color: ${({ theme }) => theme.grey.shade2};
+  border-width: 1px 2px 2px 2px;
+  border-radius: 0 0 8px 8px;
+  border: 2px solid #edeffa;
+`;
+
+export const DesiredQuantityContainer = styled.div`
+  padding: 24px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  border-color: ${({ theme }) => theme.grey.shade2};
+  border-width: 2px 2px 1px 1px;
+  border-radius: 8px 8px 0 0;
+  border: 2px solid #edeffa;
+`;
+
+export const TextFieldWrapper = styled.div`
+  margin-top: 16px;
+`;
+
+export const RemainingWrapper = styled.div`
+  margin-top: 8px;
+`;

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import TypographyView from 'components/base/Typography';
+import Alert from 'components/base/Alert';
+import TextField from 'components/base/TextField';
+import Typography from 'components/base/Typography';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
@@ -14,6 +16,10 @@ import {
   BannerContainer,
   DetailsContainer,
   SellerRatingContainer,
+  BoxContainer,
+  DesiredQuantityContainer,
+  TextFieldWrapper,
+  RemainingWrapper,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -29,6 +35,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     productDetailsCard1Props,
     productDetailsCard6Props,
     sellerRatingProps,
+    weight,
+    setWeight,
+    getBoxes,
+    remainingWeight,
+    unit,
   } = props;
 
   useEffect(() => {
@@ -44,9 +55,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           <BannerContainer>
             <Image src={currentListing.images[0]} />
           </BannerContainer>
-          <TypographyView variant="label" className="description">
+          <Typography variant="label" className="description">
             Image Description
-          </TypographyView>
+          </Typography>
           <DetailsContainer>
             <Col xs={6}>
               <ProductDetailsCard1View
@@ -66,7 +77,28 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               </SellerRatingContainer>
             </Col>
             <Col xs={6}>
-              <DetailsContainer>xx</DetailsContainer>
+              <DesiredQuantityContainer>
+                <TextFieldWrapper>
+                  <TextField
+                    label="Desired Quantity"
+                    LeftComponent={
+                      <Typography color="shade6">{unit}</Typography>
+                    }
+                    value={weight}
+                    onChangeText={setWeight}
+                    type="numeric"
+                    onChange={() => getBoxes()}
+                  />
+                </TextFieldWrapper>
+                <RemainingWrapper>
+                  <Alert
+                    variant="alert"
+                    content={`Remaining ${remainingWeight} ${unit}`}
+                    style={{ borderRadius: 4, padding: 10 }}
+                    fullWidth
+                  />
+                </RemainingWrapper>
+              </DesiredQuantityContainer>
             </Col>
           </DetailsContainer>
         </>
