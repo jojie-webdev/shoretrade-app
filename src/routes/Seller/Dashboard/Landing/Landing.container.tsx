@@ -24,7 +24,8 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear(fiscalYear);
 
 const Dashboard = (): JSX.Element => {
   const token = useSelector((state: Store) => state.auth.token) || '';
-
+  const state = useSelector((state: Store) => state) || '';
+  console.log(state);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [dateRange, setDateRange] = useState(fiscalYearDateRange);

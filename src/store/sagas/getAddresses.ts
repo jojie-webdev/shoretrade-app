@@ -8,8 +8,8 @@ import {
 } from 'types/store/GetAddressesState';
 import { Store } from 'types/store/Store';
 
-import { getAddressesActions } from '../actions';
-// import {currentAddressActions} from '../actions'
+import { getAddressesActions, currentAddressActions } from '../actions';
+
 function* getAddressesRequest(
   action: AsyncAction<GetAddressesMeta, GetAddressesPayload>
 ) {
@@ -40,11 +40,11 @@ function* getAddressesSuccess(
       const { addresses } = action.payload.data;
       const addressId = pathOr('', ['0', 'id'], addresses);
       if (addressId) {
-        // yield put(
-        //   currentAddressActions.update({
-        //     id: addressId,
-        //   })
-        // );
+        yield put(
+          currentAddressActions.update({
+            id: addressId,
+          })
+        );
       }
     }
   }
