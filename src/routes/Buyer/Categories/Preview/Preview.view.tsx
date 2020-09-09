@@ -68,7 +68,6 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
         <>
           <Row className="cards" style={{ marginTop: 20 }}>
             {results.map((product) => {
-              console.log(product);
               return (
                 <Col sm={3} key={product.id}>
                   <Link

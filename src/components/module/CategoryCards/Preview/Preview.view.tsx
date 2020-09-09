@@ -38,8 +38,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </LocationContainer>
 
           <BadgeContainer>
-            <Badge>Aquafuture</Badge>
-            <Badge badgeColor="#F23742">Almost Gone</Badge>
+            {props.isAquafuture ? <Badge>Aquafuture</Badge> : null}
+            {parseInt(props.remaining || '0') <= 50 ? (
+              <Badge badgeColor="#F23742">Almost Gone!</Badge>
+            ) : null}
           </BadgeContainer>
         </div>
 

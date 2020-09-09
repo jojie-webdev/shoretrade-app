@@ -65,7 +65,7 @@ export const BadgeContainer = styled.div`
   display: flex;
   position: absolute;
   bottom: 5%;
-  left: 5%;
+  left: 2%;
 `;
 
 export const StatusContainer = styled.div`
