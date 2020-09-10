@@ -52,6 +52,10 @@ export const DetailsContainer = styled.div`
   flex-direction: row;
   padding: 8px;
   margin-left: 24px;
+
+  .title {
+    font-size: 16;
+  }
 `;
 
 export const ResultContainer = styled.div`
@@ -61,6 +65,16 @@ export const ResultContainer = styled.div`
   flex-direction: row;
   display: flex;
 
+  .result-label {
+    font-size: 24px;
+    font-weight: regular;
+  }
+
+  .result-length {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 24px;
+  }
   .font {
     font-size: 12px;
   }

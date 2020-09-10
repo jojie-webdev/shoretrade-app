@@ -44,7 +44,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     <>
       <Image src={result.thumbnail} />
       <DetailsContainer>
-        <Typography style={{ fontSize: 16 }}>{result.name}</Typography>
+        <Typography className="title">{result.name}</Typography>
         <ResultContainer>
           <Typography className="font bold" variant="label">
             {toPrice(result.price.to)}
@@ -114,27 +114,13 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             <>
               <ResultContainer style={{ paddingLeft: 15 }}>
                 <Row>
-                  <Typography
-                    variant="label"
-                    style={{ fontSize: 24, fontWeight: 'normal' }}
-                  >
+                  <Typography variant="label" className="result-label">
                     Results
                   </Typography>
-                  <Typography
-                    variant="label"
-                    style={{
-                      marginLeft: 10,
-                      fontWeight: 'bold',
-                      fontSize: 24,
-                    }}
-                  >
+                  <Typography variant="label" className="result-length">
                     {results.length}
                   </Typography>
                 </Row>
-                {/* <Col xs={10}>
-                  
-                </Col> */}
-
                 {/* <Col xs={2}>
                   <FilterButton>
                     Filters <Filter></Filter>
