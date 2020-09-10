@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
+import Button from 'components/base/Button';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import BoxRadio from 'components/module/BoxRadio';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
+import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
@@ -20,6 +23,8 @@ import {
   DesiredQuantityContainer,
   TextFieldWrapper,
   RemainingWrapper,
+  BoxRadioContainer,
+  ButtonContainer,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -40,6 +45,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     getBoxes,
     remainingWeight,
     unit,
+    boxRadios,
+    pressedBoxRadio,
+    setPressedBoxRadio,
+    onAddToCard,
   } = props;
 
   useEffect(() => {
@@ -47,7 +56,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     onLoad(listingId);
   }, []);
 
-  console.log(currentListing);
   return (
     <Container>
       {currentListing ? (
@@ -94,10 +102,51 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   <Alert
                     variant="alert"
                     content={`Remaining ${remainingWeight} ${unit}`}
-                    style={{ borderRadius: 4, padding: 10 }}
+                    style={{ borderRadius: 4, padding: 8 }}
                     fullWidth
                   />
                 </RemainingWrapper>
+
+                {!isEmpty(boxRadios) && (
+                  <BoxContainer>
+                    <Typography
+                      variant="overline"
+                      color="shade6"
+                      style={{ paddingTop: 56 }}
+                    >
+                      BEST BOX WEIGHT MATCH
+                    </Typography>
+                    {boxRadios.map((p) => (
+                      <BoxRadioContainer key={p.id}>
+                        <BoxRadio
+                          checked={p.id === pressedBoxRadio}
+                          {...p}
+                          onClick={() =>
+                            setPressedBoxRadio((prevState) =>
+                              p.id === prevState ? '' : p.id
+                            )
+                          }
+                        />
+                      </BoxRadioContainer>
+                    ))}
+                  </BoxContainer>
+                )}
+                <ButtonContainer>
+                  {pressedBoxRadio ? (
+                    <Button
+                      style={{ float: 'right' }}
+                      text="Add to Cart"
+                      onClick={onAddToCard}
+                    />
+                  ) : (
+                    <Button
+                      style={{ float: 'right' }}
+                      text="Add to Cart"
+                      onClick={onAddToCard}
+                      variant="disabled"
+                    />
+                  )}
+                </ButtonContainer>
               </DesiredQuantityContainer>
             </Col>
           </DetailsContainer>

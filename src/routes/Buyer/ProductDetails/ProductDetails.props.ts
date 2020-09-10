@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
+import { BoxRadioProps } from 'components/module/BoxRadio/BoxRadio.props';
 import { ProductDetailsCard1Props } from 'components/module/ProductDetailsCard1/ProductDetailsCard1.props';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
-// import { BoxRadioProps } from 'components/modules/BoxRadio/BoxRadio.props';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 
 export interface ProductDetailsGeneratedProps {
@@ -20,11 +20,11 @@ export interface ProductDetailsGeneratedProps {
   sellerRatingProps: ProductSellerRatingProps;
   unit?: string;
   remainingWeight?: string;
-  // boxRadios: BoxRadioProps[];
+  boxRadios: BoxRadioProps[];
   pressedBoxRadio: string;
   setPressedBoxRadio: Dispatch<SetStateAction<string>>;
   isAquafuture?: boolean;
-  // onAddToCard: () => void;
+  onAddToCard: () => void;
   weight: string;
   setWeight: Dispatch<string>;
   getBoxes: () => void;

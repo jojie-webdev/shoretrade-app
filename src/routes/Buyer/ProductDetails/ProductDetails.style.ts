@@ -26,6 +26,7 @@ export const Image = styled.img`
 export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  height: 100%;
 `;
 
 export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
@@ -39,12 +40,7 @@ export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
 `;
 
 export const BoxContainer = styled.div`
-  padding: 16px;
   background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-  border-width: 1px 2px 2px 2px;
-  border-radius: 0 0 8px 8px;
-  border: 2px solid #edeffa;
 `;
 
 export const DesiredQuantityContainer = styled.div`
@@ -54,6 +50,7 @@ export const DesiredQuantityContainer = styled.div`
   border-width: 2px 2px 1px 1px;
   border-radius: 8px 8px 0 0;
   border: 2px solid #edeffa;
+  height: 100%;
 `;
 
 export const TextFieldWrapper = styled.div`
@@ -62,4 +59,14 @@ export const TextFieldWrapper = styled.div`
 
 export const RemainingWrapper = styled.div`
   margin-top: 8px;
+`;
+
+export const BoxRadioContainer = styled.div`
+  margin-top: 8px;
+`;
+
+export const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
 `;

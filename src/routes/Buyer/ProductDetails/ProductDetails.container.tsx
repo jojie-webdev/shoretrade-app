@@ -135,6 +135,7 @@ const ProductDetails = (): JSX.Element => {
           const totalWeight = box.weight * (box.quantity || 0);
           return {
             id: box.id,
+            pressedBoxRadio,
             weight: box.weight,
             quantity: box.quantity || 0,
             totalWeight,
@@ -165,7 +166,53 @@ const ProductDetails = (): JSX.Element => {
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
-
+  const onAddToCard = () => {
+    const currentBox = getListingBoxesResponse.find(
+      (box) => box.id === pressedBoxRadio
+    );
+    if (currentBox) {
+      const payload: CartItem = {
+        companyId: currentListing.coop?.id || '',
+        companyName: currentListing.coop?.name || '',
+        listing: {
+          id: currentListing.id,
+          type: currentListing.type,
+          fisherman: currentListing.fisherman,
+          metric: currentListing.size.unit,
+          sizeFrom: currentListing.size.from,
+          sizeTo: currentListing.size.to,
+          price: currentListing.price,
+          origin: currentListing.origin,
+          description: currentListing.description,
+          caught: currentListing.caught,
+          ends: currentListing.ends,
+          specifications: currentListing.state,
+          image: currentListing.images[0] || '',
+          minimumOrder: currentListing.minimumOrder,
+          sellInMultiplesOf: currentListing.sellInMultiplesOf,
+          remaining: currentListing.remaining,
+          average: currentListing.average,
+          isAquafuture: currentListing.isAquafuture,
+          allowedWeightAdjustment: currentListing.allowedWeightAdjustment,
+          isFavourite: currentListing.isFavourite,
+          address: currentListing.address,
+          measurementUnit: currentListing.measurementUnit,
+        },
+        orderBoxes: [
+          {
+            id: currentBox.id,
+            weight: currentBox.weight,
+            quantity: currentBox.quantity || 0,
+            count: currentBox.count || 0,
+          },
+        ],
+        subTotal: currentBox.weight * price,
+        weight: currentBox.weight,
+      };
+      dispatch(cartActions.add(payload));
+      // props.navigation.navigate(ROUTES.BUYER_CHECKOUT);
+    }
+  };
   // MARK:- Effects
   useEffect(() => {
     if (listingId && previousId !== listingId) {
@@ -194,6 +241,7 @@ const ProductDetails = (): JSX.Element => {
     weight,
     setWeight,
     getBoxes,
+    onAddToCard,
   };
   return <ProductDetailsView {...generatedProps} />;
 };
