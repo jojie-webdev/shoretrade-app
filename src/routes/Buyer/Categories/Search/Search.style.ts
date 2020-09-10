@@ -23,6 +23,7 @@ export const SearchContainer = styled.div`
 export const Image = styled.img`
   width: 100px;
   height: 100px;
+  border-radius: 4px;
 `;
 
 export const ItemContainer = styled.div`
@@ -50,6 +51,7 @@ export const LoadingContainer = styled.div`
 export const DetailsContainer = styled.div`
   flex-direction: row;
   padding: 8px;
+  margin-left: 24px;
 `;
 
 export const ResultContainer = styled.div`
@@ -58,6 +60,14 @@ export const ResultContainer = styled.div`
   align-self: center;
   flex-direction: row;
   display: flex;
+
+  .font {
+    font-size: 12px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
 `;
 
 export const FilterButton = styled.button`
