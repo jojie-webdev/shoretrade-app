@@ -6,14 +6,12 @@ import { useParams } from 'react-router-dom';
 import { getGraphData } from 'routes/Seller/Dashboard/CashFlow/CashFlow.transforms';
 import { getSellerGraphDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
+import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CashFlowView from './CashFlow.view';
 
-const fiscalYear =
-  moment().get('month') < 7 ? moment().get('year') - 1 : moment().get('year');
-
-const fiscalYearDateRange = getValidDateRangeByFinancialYear(fiscalYear);
+const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CashFlow = (): JSX.Element => {
   const { months = 'FY' } = useParams();
@@ -26,6 +24,8 @@ const CashFlow = (): JSX.Element => {
   });
 
   const name = () => {
+    const fiscalYear = getFiscalYear();
+
     if (months === 'FY')
       return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
 
