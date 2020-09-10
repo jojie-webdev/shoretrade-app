@@ -7,7 +7,7 @@ import { getSellerDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
-import { DashboardLandingGeneratedProps } from './Landing.props';
+import { DashboardLandingGeneratedProps, onApply } from './Landing.props';
 import DashboardView from './Landing.view';
 
 const DEFAULT_DATA = {
@@ -17,10 +17,7 @@ const DEFAULT_DATA = {
   pending: '',
 };
 
-const fiscalYear =
-  moment().get('month') < 7 ? moment().get('year') - 1 : moment().get('year');
-
-const fiscalYearDateRange = getValidDateRangeByFinancialYear(fiscalYear);
+const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const Dashboard = (): JSX.Element => {
   const token = useSelector((state: Store) => state.auth.token) || '';
@@ -32,6 +29,30 @@ const Dashboard = (): JSX.Element => {
   const [data, setData] = useState(DEFAULT_DATA);
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
+
+  const onApplyCustom = ({ start, end }: onApply) => {
+    const startDate = {
+      id: 'custom',
+      dateString: start.format('YYYY-MM-DD'),
+      year: start.get('year'),
+      month: start.get('month') + 1,
+      day: start.get('date'),
+    };
+
+    const endDate = {
+      id: 'custom',
+      dateString: end.format('YYYY-MM-DD'),
+      year: end.get('year'),
+      month: end.get('month') + 1,
+      day: end.get('date'),
+    };
+
+    setDateRange({
+      start: startDate,
+      end: endDate,
+    });
+    toggleModal();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +100,9 @@ const Dashboard = (): JSX.Element => {
     isLoading,
     data,
     toCategories: toCategories(),
+    dateRange,
+    setDateRange,
+    onApplyCustom,
   };
   return <DashboardView {...generatedProps} />;
 };

@@ -6,14 +6,12 @@ import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { getSellerDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
+import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CategoriesView from './Categories.view';
 
-const fiscalYear =
-  moment().get('month') < 7 ? moment().get('year') - 1 : moment().get('year');
-
-const fiscalYearDateRange = getValidDateRangeByFinancialYear(fiscalYear);
+const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const Categories = (): JSX.Element => {
   const location = useLocation();
@@ -25,6 +23,8 @@ const Categories = (): JSX.Element => {
   const [isLoading, setLoading] = useState(false);
 
   const dateRange = () => {
+    const fiscalYear = getFiscalYear();
+
     if (months === 'FY')
       return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
 
