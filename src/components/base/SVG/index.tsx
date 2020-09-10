@@ -1,6 +1,7 @@
 /* PLOP_INJECT_IMPORT */
 export { default as Menu } from './Menu';
 export { default as Expand } from './Expand';
+export { default as CarouselChevronRight } from './CarouselChevronRight';
 export { default as PlaceholderIcon } from './PlaceholderIcon';
 export { default as Notepad } from './Notepad';
 export { default as Category } from './Category';
@@ -71,3 +72,4 @@ export { default as CtgCaviar } from './CtgCaviar';
 export { default as CtgMussels } from './CtgMussels';
 export { default as CtgScallopMeat } from './CtgScallopMeat';
 export { default as CtgScallopsShell } from './CtgScallopsShell';
+export { default as CarouselChevronLeft } from './CarouselChevronLeft';
