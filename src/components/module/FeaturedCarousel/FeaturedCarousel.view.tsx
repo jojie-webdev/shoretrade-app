@@ -43,7 +43,7 @@ const FeaturedCarousel = (props: FeaturedCarouselProps) => {
           className={previewContainerClass}
           style={{ transform: `translateX(${start}%)` }}
         >
-          <Preview className={previewClass} src={slide} />
+          <Preview src={slide} className={previewClass} />
         </PreviewContainer>
       ))}
 
