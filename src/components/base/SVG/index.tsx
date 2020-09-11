@@ -1,6 +1,6 @@
 /* PLOP_INJECT_IMPORT */
-export { default as Expand } from './Expand'; 
-export { default as CarouselChevronRight } from './CarouselChevronRight'; 
+export { default as Expand } from './Expand';
+export { default as CarouselChevronRight } from './CarouselChevronRight';
 export { default as PlaceholderIcon } from './PlaceholderIcon';
 export { default as Notepad } from './Notepad';
 export { default as Category } from './Category';

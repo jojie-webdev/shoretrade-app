@@ -81,7 +81,8 @@
     "eject": "react-scripts eject",
     "generate": "plop",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "lint": "eslint --fix './src/**/*.{ts,tsx}' && echo 'lint completed successfully'"
   },
   "eslintConfig": {
     "extends": "react-app"

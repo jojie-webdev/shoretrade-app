@@ -1,6 +1,5 @@
 import styled from 'utils/styled';
 
-
 export const MainContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
@@ -11,9 +10,7 @@ export const MainContainer = styled.div`
   position: relative;
   overflow: hidden;
   // background: #F9FAFF;
-
 `;
-
 
 export const PreviewContainer = styled.div`
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
@@ -39,7 +36,6 @@ const Btn = styled.button`
   transform: translateY(-50%);
   z-index: 1000;
   right: 0;
-  
 `;
 
 export const ButtonRight = styled(Btn)`
@@ -49,4 +45,3 @@ export const ButtonRight = styled(Btn)`
 export const ButtonLeft = styled(Btn)`
   left: 0;
 `;
-
