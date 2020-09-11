@@ -18,6 +18,10 @@ export { default as getSellerOrdersDeliveredActions } from './getSellerOrdersDel
 export { default as getBankDetailsActions } from './getBankDetails';
 export { default as updateBankDetailsActions } from './updateBankDetails';
 export { default as changePasswordActions } from './changePassword';
+export { default as getBuyerOrdersActions } from './getBuyerOrders';
+export { default as getBuyerOrdersPlacedActions } from './getBuyerOrdersPlaced';
+export { default as getBuyerOrdersTransitActions } from './getBuyerOrdersTransit';
+export { default as getBuyerOrdersDeliveredActions } from './getBuyerOrdersDelivered';
 export { default as getLinkedAccountsActions } from './getLinkedAccounts';
 export { default as addLinkedAccountActions } from './addLinkedAccount';
 export { default as addAddressActions } from './addAddress';

@@ -13,7 +13,7 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   z-index: 1000;
 `;
 
-export const ModalContainer = styled.div<{backgroundColor? :string}>`
+export const ModalContainer = styled.div<{ backgroundColor?: string }>`
   position: relative;
   border-radius: 4px;
   padding: 56px 32px;
@@ -21,11 +21,11 @@ export const ModalContainer = styled.div<{backgroundColor? :string}>`
   background-color: ${({ theme, backgroundColor }) => {
     const isSeller = theme.appType === 'seller';
 
-    return backgroundColor || (isSeller ? theme.grey.shade8 : theme.grey.shade1);
+    return (
+      backgroundColor || (isSeller ? theme.grey.shade8 : theme.grey.shade1)
+    );
   }};
 `;
-
-
 
 export const ExitButton = styled.button`
   position: absolute;

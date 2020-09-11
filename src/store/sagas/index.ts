@@ -29,6 +29,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateUser from './updateUser';
 import verify from './verify';
+import getBuyerOrders from './getBuyerOrders';
 
 const sagas = [
   login,
@@ -46,6 +47,7 @@ const sagas = [
   getBankDetails,
   updateBankDetails,
   changePassword,
+  getBuyerOrders,
   getLinkedAccounts,
   addLinkedAccount,
   addAddress,

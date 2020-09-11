@@ -22,7 +22,7 @@ export const Container = styled.div`
 `;
 
 const ControlButtonColor: Record<'buyer' | 'seller', string> = {
-  buyer: theme.brand.primary,
+  buyer: theme.grey.shade8,
   seller: theme.grey.noshade,
 };
 
