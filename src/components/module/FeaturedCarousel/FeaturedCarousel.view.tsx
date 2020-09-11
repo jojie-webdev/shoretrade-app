@@ -5,14 +5,16 @@ import CarouselChevronLeft from '../../base/SVG/CarouselChevronLeft';
 import CarouselChevronRight from '../../base/SVG/CarouselChevronRight';
 import { FeaturedCarouselProps } from './FeaturedCarousel.props';
 import {
-  Button,
+  ButtonLeft,
+  ButtonRight,
   MainContainer,
   PreviewContainer,
+  Preview,
 } from './FeaturedCarousel.style';
 
 const FeaturedCarousel = (props: FeaturedCarouselProps) => {
   // const theme = useTheme();
-  const { slides, children } = props;
+  const { slides } = props;
   const [start, setStart] = useState(0);
 
   const isControlsVisible = slides.length > 1;
@@ -20,33 +22,33 @@ const FeaturedCarousel = (props: FeaturedCarouselProps) => {
     ? slides.concat(slides.slice(0, 1)).slice(start, start + 1)
     : slides;
 
-  const onNextClick = () => {
-    setStart(start + 1 >= slides.length ? 0 : start + 1);
-    console.log('next');
-  };
-
   const onPrevClick = () => {
-    setStart(start - 1 >= 0 ? start - 1 : slides.length - 1);
-    console.log('prev');
+    start === 0 ? setStart(-100 * (slides.length - 1)) : setStart(start + 100);
+    console.log(start);
+  };
+  const onNextClick = () => {
+    start === -100 * (slides.length - 1) ? setStart(0) : setStart(start - 100);
+    console.log(start);
   };
 
   return (
     <MainContainer>
-      {isControlsVisible && (
-        <Button onClick={onPrevClick}>
-          <CarouselChevronLeft />
-        </Button>
-      )}
+      <ButtonLeft onClick={onPrevClick}>
+        <CarouselChevronLeft />
+      </ButtonLeft>
 
-      <PreviewContainer>
-        {visibleItems.map((slide: any) => (children ? children(slide) : null))}
-      </PreviewContainer>
+      {slides.map((slide, index) => (
+        <PreviewContainer
+          key={index}
+          style={{ transform: `translateX(${start}%)` }}
+        >
+          <Preview src={slide} />
+        </PreviewContainer>
+      ))}
 
-      {isControlsVisible && (
-        <Button onClick={onNextClick}>
-          <CarouselChevronRight />
-        </Button>
-      )}
+      <ButtonRight onClick={onNextClick}>
+        <CarouselChevronRight />
+      </ButtonRight>
     </MainContainer>
   );
 };
