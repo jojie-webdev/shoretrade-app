@@ -1,5 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface FeaturedCarouselProps {
-    slides: any[];
+  slides: any[];
+  previewClass?: string;
+  previewContainerClass?: string;
 }

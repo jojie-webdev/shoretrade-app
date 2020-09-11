@@ -28,6 +28,7 @@ export const Preview = styled.img`
   object-fit: contain;
   border-radius: 4px;
 `;
+
 const Btn = styled.button`
   border: none;
   padding: 0;

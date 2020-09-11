@@ -14,7 +14,7 @@ import {
 
 const FeaturedCarousel = (props: FeaturedCarouselProps) => {
   // const theme = useTheme();
-  const { slides } = props;
+  const { slides, previewContainerClass, previewClass } = props;
   const [start, setStart] = useState(0);
 
   const isControlsVisible = slides.length > 1;
@@ -40,9 +40,10 @@ const FeaturedCarousel = (props: FeaturedCarouselProps) => {
       {slides.map((slide, index) => (
         <PreviewContainer
           key={index}
+          className={previewContainerClass}
           style={{ transform: `translateX(${start}%)` }}
         >
-          <Preview src={slide} />
+          <Preview className={previewClass} src={slide} />
         </PreviewContainer>
       ))}
 

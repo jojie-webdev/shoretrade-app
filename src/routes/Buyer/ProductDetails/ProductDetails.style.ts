@@ -13,6 +13,12 @@ export const Container = styled.div`
 export const BannerContainer = styled.div`
   width: 100%;
   max-width: 100%;
+
+  .test {
+    padding: 16px;
+    box-shadow: 0px 0px 0px;
+  }
+
   /* height: 297px; */
 `;
 

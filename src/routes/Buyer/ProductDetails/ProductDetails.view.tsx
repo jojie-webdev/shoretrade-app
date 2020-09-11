@@ -56,15 +56,17 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     selectAddress(listingId);
     onLoad(listingId);
   }, []);
-  console.log(currentListing);
+
   return (
     <Container>
       {currentListing ? (
         <>
           <BannerContainer>
-            <FeaturedCarousel slides={currentListing.images}>
-              {(slide) => <Image id={slide.id} src={slide} />}
-            </FeaturedCarousel>
+            <FeaturedCarousel
+              previewClass="test"
+              previewContainerClass="test"
+              slides={currentListing.images}
+            />
           </BannerContainer>
           <Typography variant="label" className="description">
             Image Description
