@@ -6,6 +6,7 @@ import Button from 'components/base/Button';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
+import FeaturedCarousel from 'components/module/FeaturedCarousel';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
@@ -55,13 +56,15 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     selectAddress(listingId);
     onLoad(listingId);
   }, []);
-
+  console.log(currentListing);
   return (
     <Container>
       {currentListing ? (
         <>
           <BannerContainer>
-            <Image src={currentListing.images[0]} />
+            <FeaturedCarousel slides={currentListing.images}>
+              {(slide) => <Image id={slide.id} src={slide} />}
+            </FeaturedCarousel>
           </BannerContainer>
           <Typography variant="label" className="description">
             Image Description
