@@ -18,6 +18,7 @@ import CategoriesPreview from './Categories/Preview';
 import CategoriesSearch from './Categories/Search';
 import Checkout from './Checkout';
 import Home from './Home';
+import Favourites from './Home/Favourites';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -29,6 +30,12 @@ const ROUTES: Routes = {
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,
+  },
+  FAVOURITES: {
+    path: BUYER_ROUTES.FAVOURITES,
+    children: <Favourites />,
+    title: '',
+    hideFromSidebar: true,
   },
   SEARCH: {
     path: '/buyer/search',
