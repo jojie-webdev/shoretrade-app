@@ -12,6 +12,8 @@ import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
@@ -27,6 +29,8 @@ import {
   BoxRadioContainer,
   ButtonContainer,
 } from './ProductDetails.style';
+
+SwiperCore.use([Navigation, Pagination]);
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -61,12 +65,33 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     <Container>
       {currentListing ? (
         <>
+          {console.log(currentListing.images)}
           <BannerContainer>
-            <FeaturedCarousel
+            <Swiper
+              id="product-details"
+              spaceBetween={50}
+              tag="section"
+              wrapperTag="ul"
+              slidesPerView={1}
+              onSlideChange={() => console.log('slide change')}
+              onSwiper={(swiper) => console.log(swiper)}
+              navigation
+              pagination
+            >
+              {currentListing.images &&
+                currentListing.images.map((image, key) => {
+                  return (
+                    <SwiperSlide key={key} style={{ width: '100%' }}>
+                      <Image style={{ listStyle: 'none' }} src={image} />
+                    </SwiperSlide>
+                  );
+                })}
+            </Swiper>
+            {/* <FeaturedCarousel
               previewClass="test"
               previewContainerClass="test"
               slides={currentListing.images}
-            />
+            /> */}
           </BannerContainer>
           <Typography variant="label" className="description">
             Image Description

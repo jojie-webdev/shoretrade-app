@@ -14,12 +14,20 @@ export const BannerContainer = styled.div`
   width: 100%;
   max-width: 100%;
 
-  .test {
+  .swiper-container {
+    width: 100%;
+  }
+  .swiper-wrapper {
+    padding-inline-start: 0;
+  }
+  .swiper-slide {
+    width: 100% !important ;
+    height: 297px;
     padding: 16px;
     box-shadow: 0px 0px 0px;
   }
 
-  /* height: 297px; */
+  height: 297px;
 `;
 
 export const Image = styled.img`
