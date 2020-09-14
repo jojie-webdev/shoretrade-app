@@ -1,27 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import Modal from 'components/layout/Modal';
-import { DayPickerRangeController } from 'react-dates';
-
-// import { useTheme } from 'utils/Theme';
+import { DayPickerRangeController, FocusedInputShape } from 'react-dates';
 
 import { DatePickerModalProps } from './DatePickerModal.props';
 import { Container } from './DatePickerModal.style';
 
-const DatePickerModal = (props: DatePickerModalProps): JSX.Element => {
-  // const theme = useTheme();
-
-  const {
-    startDate,
-    endDate,
-    onDateChange,
-    focusedInput,
-    onFocusChange,
-    onClickApply,
-    ...modalProps
-  } = props;
-
+const DatePickerModal = ({
+  startDate,
+  endDate,
+  onDateChange,
+  focusedInput,
+  onFocusChange,
+  onClickApply,
+  ...modalProps
+}: DatePickerModalProps): JSX.Element => {
   return (
     <Modal {...modalProps}>
       <Container>

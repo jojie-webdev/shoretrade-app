@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Menu } from './Menu';
 export { default as Expand } from './Expand';
 export { default as CarouselChevronRight } from './CarouselChevronRight';
 export { default as PlaceholderIcon } from './PlaceholderIcon';

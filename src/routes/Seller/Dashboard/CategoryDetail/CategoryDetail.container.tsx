@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
-import { props } from 'ramda';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSellerTypeDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
+import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CategoryDetailView from './CategoryDetail.view';
 
-const fiscalYear =
-  moment().get('month') < 7 ? moment().get('year') - 1 : moment().get('year');
-
-const fiscalYearDateRange = getValidDateRangeByFinancialYear(fiscalYear);
+const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CategoryDetail = (): JSX.Element => {
   const {
@@ -27,6 +24,8 @@ const CategoryDetail = (): JSX.Element => {
   const [isLoading, setLoading] = useState(false);
 
   const dateRange = () => {
+    const fiscalYear = getFiscalYear();
+
     if (months === 'FY')
       return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
 

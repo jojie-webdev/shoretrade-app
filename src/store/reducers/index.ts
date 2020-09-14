@@ -13,6 +13,9 @@ import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
+import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
+import getBuyerOrdersPlaced from './getBuyerOrdersPlaced';
+import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getLinkedAccounts from './getLinkedAccounts';
@@ -57,6 +60,9 @@ export default (routeHistory: History) =>
     getBankDetails,
     updateBankDetails,
     changePassword,
+    getBuyerOrdersPlaced,
+    getBuyerOrdersTransit,
+    getBuyerOrdersDelivered,
     currentAddress,
     getBuyerHomepage,
     getListingTypesByCategory,

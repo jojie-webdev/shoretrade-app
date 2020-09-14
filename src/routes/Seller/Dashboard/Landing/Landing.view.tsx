@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
@@ -10,9 +10,13 @@ import DatePickerModal from 'components/module/DatePickerModal';
 import LinePath from 'components/module/LinePath';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
+import { FocusedInputShape } from 'react-dates';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { getGraphData } from 'routes/Seller/Dashboard/Landing/Landing.transforms';
+import getFiscalQuarter from 'utils/Date/getFiscalQuarter';
+import getFiscalYear from 'utils/Date/getFiscalYear';
+import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
 
@@ -34,26 +38,65 @@ import {
 const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
 
-const FilterHeader = ({ toggleModal }: { toggleModal: () => void }) => (
-  <FilterRow>
-    <Col className="filter-col">
-      <Button
-        text="Custom"
-        size="sm"
-        variant="unselected"
-        className="btn"
-        onClick={toggleModal}
-      />
-      <Button text="FY19/20" size="sm" variant="unselected" className="btn" />
-      <Button text="Q4" size="sm" variant="unselected" className="btn" />
-      <Button text="Q3" size="sm" variant="unselected" className="btn" />
-      <Button text="Q2" size="sm" variant="unselected" className="btn" />
-      <Button text="Q1" size="sm" variant="unselected" className="btn" />
-      <Button text="FY18/19" size="sm" variant="unselected" className="btn" />
-      <Button text="FY17/18" size="sm" variant="unselected" className="btn" />
-    </Col>
-  </FilterRow>
-);
+const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
+  const getYearText = (year: number) => {
+    return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
+  };
+
+  return (
+    <FilterRow>
+      <Col className="filter-col">
+        <Button
+          text="Custom"
+          size="sm"
+          variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
+          className="btn"
+          onClick={props.toggleModal}
+        />
+        <Button
+          text={getYearText(getFiscalYear())}
+          variant={
+            getValidDateRangeByFinancialYear().start.id === dateRange.start.id
+              ? 'primary'
+              : 'unselected'
+          }
+          size="sm"
+          className="btn"
+          onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+        />
+        {[4, 3, 2, 1].map((v) => (
+          <Button
+            key={v}
+            text={`Q${v}`}
+            variant={
+              getFiscalQuarter(v).start.id === dateRange.start.id
+                ? 'primary'
+                : 'unselected'
+            }
+            size="sm"
+            onClick={() => setDateRange(getFiscalQuarter(v))}
+            className="btn"
+          />
+        ))}
+        {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
+          <Button
+            key={v}
+            text={getYearText(v)}
+            variant={
+              getValidDateRangeByFinancialYear(v).start.id ===
+              dateRange.start.id
+                ? 'primary'
+                : 'unselected'
+            }
+            size="sm"
+            className="btn"
+            onClick={() => setDateRange(getValidDateRangeByFinancialYear(v))}
+          />
+        ))}
+      </Col>
+    </FilterRow>
+  );
+};
 
 const TotalSales = (props: any) => (
   <TotalSalesRow gutterWidth={24}>
@@ -218,30 +261,50 @@ const TopCategories = (props: any) => {
   );
 };
 
-const DashboardView = (props: DashboardLandingGeneratedProps) => {
-  const { isCalendarModalOpen, toggleModal } = props;
+const DashboardView = ({
+  data,
+  isLoading,
+  isCalendarModalOpen,
+  toggleModal,
+  toCategories,
+  ...props
+}: DashboardLandingGeneratedProps) => {
+  const [startDate, setStartDate] = useState(moment());
+  const [endDate, setEndDate] = useState(moment().add('day', 7));
+  const [focus, setFocus] = useState<FocusedInputShape>('startDate');
+
+  const onDateChange = (newDates: any) => {
+    setStartDate(newDates.startDate);
+    setEndDate(newDates.endDate);
+  };
+
+  const onFocusChange = (arg: any) => {
+    setFocus(!arg ? 'startDate' : arg);
+  };
 
   return (
     <Container>
-      {props.isLoading ? (
+      {isLoading ? (
         <SpinnerContainer>
           <Spinner />
         </SpinnerContainer>
       ) : (
         <>
-          <FilterHeader toggleModal={toggleModal} />
-          <TotalSales data={props.data} />
-          <MonthlySales data={props.data} />
-          <TopCategories data={props.data} to={props.toCategories} />
+          <FilterHeader toggleModal={toggleModal} {...props} />
+          <TotalSales data={data} />
+          <MonthlySales data={data} />
+          <TopCategories data={data} to={toCategories} />
           {isCalendarModalOpen && (
             <DatePickerModal
-              startDate={moment()}
-              endDate={moment().add('day', 7)}
-              focusedInput="startDate"
+              startDate={startDate}
+              endDate={endDate}
+              focusedInput={focus}
               isOpen={true}
-              onFocusChange={() => {}}
-              onDateChange={() => {}}
-              onClickApply={() => {}}
+              onFocusChange={onFocusChange}
+              onDateChange={onDateChange}
+              onClickApply={() =>
+                props.onApplyCustom({ start: startDate, end: endDate })
+              }
               onClickClose={toggleModal}
             />
           )}
