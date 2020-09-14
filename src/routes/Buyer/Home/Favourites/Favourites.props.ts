@@ -7,7 +7,5 @@ export interface FavouritesGeneratedProps {
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   search: string;
   resetSearchValue: () => void;
-  addresses: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
+  
 }

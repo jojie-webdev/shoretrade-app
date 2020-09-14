@@ -9,6 +9,7 @@ import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
+import EmptyState from 'components/module/EmptyState';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
 import { PreviewContainer, LoadingContainer } from './Favourites.style';
@@ -20,9 +21,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     onChangeSearchValue,
     search,
     resetSearchValue,
-    addresses,
-    selectedAddress,
-    selectAddress,
+    
   } = props;
 
   return (
@@ -68,11 +67,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
             })}
           </Row>
         </>
-      ) : (
-        <LoadingContainer>
-          <Spinner width={24} height={24} />
-        </LoadingContainer>
-      )}
+      ) : null}
     </PreviewContainer>
   );
 };

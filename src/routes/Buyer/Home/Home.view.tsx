@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import Button from 'components/base/Button';
 import { InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
@@ -28,15 +29,11 @@ import {
   FavouritesContainer,
 } from './Home.style';
 
-const slides = [
-  'https://images.unsplash.com/photo-1565157076139-3485a12a85b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1789&q=80',
-  'https://images.unsplash.com/photo-1522720833375-9c27ffb02a5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80',
-  'https://images.unsplash.com/photo-1534160506865-310486faffbf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80',
-];
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
+  const history = useHistory();
 
   if (loading) {
     return <Loading />;
@@ -45,7 +42,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
       <CreditContainer
-        onClick={() => console.log('to credi acct')}
+        onClick={() => history.push('/buyer/account/bank-details/add-credit')} //todo
         style={{ cursor: 'pointer' }}
       >
         <InfoContainer>
@@ -83,23 +80,22 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   return null;
 };
 
+
+
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
-    addresses,
     categories,
-    currentPath,
     onChangeSearchValue,
     resetSearchValue,
     search,
-    selectAddress,
-    selectedAddress,
     creditState,
     loading,
+    featured,
     favourites,
   } = props;
+  
 
-  console.log('favourites', favourites);
 
   return (
     <Container>
@@ -115,7 +111,9 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </Row>
 
-      <FeaturedCarousel slides={slides} />
+      {/* Swiper here */}
+    
+      <FeaturedCarousel slides={featured} />
       <Col>
         <FavouritesHeader>
           <Typography variant="title5" color="shade8">
@@ -159,7 +157,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               );
             })
           ) : (
-            <Loading />
+            null
           )}
         </FavouritesContainer>
       </Col>

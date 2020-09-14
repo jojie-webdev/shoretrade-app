@@ -16,19 +16,6 @@ import FavouritesView from './Favourites.view';
 const Favourites = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const addresses = GetAddressOptions();
-
-  const selectedAddress =
-    useSelector((state: Store) => state.currentAddress.id) || '';
-
-  const selectAddress = (id: string) => {
-    dispatch(
-      currentAddressActions.update({
-        id,
-      })
-    );
-  };
-
   const [search, setSearch] = useState('');
 
   const results = (
@@ -52,9 +39,7 @@ const Favourites = (): JSX.Element => {
     onChangeSearchValue,
     search,
     resetSearchValue,
-    addresses,
-    selectedAddress,
-    selectAddress,
+    
   };
 
   return <FavouritesView {...generatedProps} />;

@@ -104,7 +104,6 @@ const Home = (): JSX.Element => {
     search,
     onChangeSearchValue,
     resetSearchValue,
-    currentPath: location.pathname,
     loading,
     creditState,
     creditBalance,
