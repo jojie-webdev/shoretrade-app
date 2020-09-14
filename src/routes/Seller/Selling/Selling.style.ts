@@ -38,12 +38,10 @@ export const ItemCard = styled.div`
   }
 
   @media ${BREAKPOINTS['md']} {
-    border: 1px solid red;
     padding-bottom: 32px;
   }
 
   @media ${BREAKPOINTS['sm']} {
-    border: 1px solid red;
     padding-bottom: 32px;
   }
 `;
@@ -53,6 +51,9 @@ export const Tag = styled.div`
   padding: 4px 8px;
   margin-right: 8px;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ItemImage = styled.img`
