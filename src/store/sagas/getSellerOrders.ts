@@ -1,11 +1,12 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { getSellerOrders } from 'services/orders';
+import { AsyncAction } from 'types/Action';
 import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
 } from 'types/store/GetSellerOrdersState';
-import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
-import { getSellerOrders } from 'services/orders';
+
 import {
   getSellerOrdersActions,
   getSellerOrdersPlacedActions,
@@ -14,7 +15,7 @@ import {
 } from '../actions';
 
 function* getSellerOrdersActionsRequest(
-  action: AsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>,
+  action: AsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>
 ) {
   yield put(getSellerOrdersPlacedActions.request());
   yield put(getSellerOrdersTransitActions.request());
@@ -22,10 +23,10 @@ function* getSellerOrdersActionsRequest(
 }
 
 const createGetSellerOrdersRequest = (
-  actionCreator: typeof getSellerOrdersActions,
+  actionCreator: typeof getSellerOrdersActions
 ) => {
   return function* request(
-    action: AsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>,
+    action: AsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>
   ) {
     const state: Store = yield select();
     if (state.auth.token) {
@@ -33,7 +34,7 @@ const createGetSellerOrdersRequest = (
         const { data } = yield call(
           getSellerOrders,
           action.meta,
-          state.auth.token,
+          state.auth.token
         );
         yield put(actionCreator.success(data));
       } catch (e) {
@@ -48,19 +49,19 @@ const createGetSellerOrdersRequest = (
 function* getSellerOrdersWatcher() {
   yield takeLatest(
     getSellerOrdersActions.REQUEST,
-    getSellerOrdersActionsRequest,
+    getSellerOrdersActionsRequest
   );
   yield takeLatest(
     getSellerOrdersPlacedActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersPlacedActions),
+    createGetSellerOrdersRequest(getSellerOrdersPlacedActions)
   );
   yield takeLatest(
     getSellerOrdersTransitActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersTransitActions),
+    createGetSellerOrdersRequest(getSellerOrdersTransitActions)
   );
   yield takeLatest(
     getSellerOrdersDeliveredActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersDeliveredActions),
+    createGetSellerOrdersRequest(getSellerOrdersDeliveredActions)
   );
 }
 

@@ -62,7 +62,7 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
           ))}
         </Row>
       </PreviewDetails>
-  </Row>
+    </Row>
   );
 };
 

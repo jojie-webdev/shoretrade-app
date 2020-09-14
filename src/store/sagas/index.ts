@@ -10,6 +10,7 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
+import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -29,7 +30,6 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateUser from './updateUser';
 import verify from './verify';
-import getBuyerOrders from './getBuyerOrders';
 
 const sagas = [
   login,

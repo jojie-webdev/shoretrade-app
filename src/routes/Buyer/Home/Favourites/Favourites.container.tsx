@@ -39,7 +39,6 @@ const Favourites = (): JSX.Element => {
     onChangeSearchValue,
     search,
     resetSearchValue,
-    
   };
 
   return <FavouritesView {...generatedProps} />;

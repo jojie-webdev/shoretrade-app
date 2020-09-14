@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import Button from 'components/base/Button';
 import { InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
@@ -29,7 +28,6 @@ import {
   FavouritesContainer,
 } from './Home.style';
 
-
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
@@ -42,7 +40,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
       <CreditContainer
-        onClick={() => history.push('/buyer/account/bank-details/add-credit')} //todo
+        onClick={() => history.push('/buyer/account/bank-details/add-credit')}
         style={{ cursor: 'pointer' }}
       >
         <InfoContainer>
@@ -80,8 +78,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   return null;
 };
 
-
-
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
@@ -94,8 +90,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     featured,
     favourites,
   } = props;
-  
-
 
   return (
     <Container>
@@ -112,7 +106,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       </Row>
 
       {/* Swiper here */}
-    
+
       <FeaturedCarousel slides={featured} />
       <Col>
         <FavouritesHeader>
@@ -129,36 +123,34 @@ const HomeView = (props: HomeGeneratedProps) => {
           />
         </FavouritesHeader>
         <FavouritesContainer>
-          {favourites.length > 0 ? (
-            favourites.slice(0, 3).map((fav, index) => {
-              return (
-                <Col sm={4} key={fav.id}>
-                  <Link to={`BUYER_ROUTES.PRODUCT_PREVIEW(${fav.id})`}>
-                    <PreviewCard
-                      id={fav.id}
-                      images={fav.images}
-                      type={fav.type}
-                      price={toPrice(fav.price)}
-                      remaining={fav.remaining.toFixed(2)}
-                      coop={fav.coop}
-                      minimumOrder={fav.minimumOrder}
-                      origin={fav.origin}
-                      weight={sizeToString(
-                        fav.size.unit,
-                        fav.size.from,
-                        fav.size.to
-                      )}
-                      isAquafuture={fav.isAquafuture}
-                      unit={fav.measurementUnit}
-                      state={fav.state}
-                    />
-                  </Link>
-                </Col>
-              );
-            })
-          ) : (
-            null
-          )}
+          {favourites.length > 0
+            ? favourites.slice(0, 3).map((fav, index) => {
+                return (
+                  <Col sm={4} key={fav.id}>
+                    <Link to={`BUYER_ROUTES.PRODUCT_PREVIEW(${fav.id})`}>
+                      <PreviewCard
+                        id={fav.id}
+                        images={fav.images}
+                        type={fav.type}
+                        price={toPrice(fav.price)}
+                        remaining={fav.remaining.toFixed(2)}
+                        coop={fav.coop}
+                        minimumOrder={fav.minimumOrder}
+                        origin={fav.origin}
+                        weight={sizeToString(
+                          fav.size.unit,
+                          fav.size.from,
+                          fav.size.to
+                        )}
+                        isAquafuture={fav.isAquafuture}
+                        unit={fav.measurementUnit}
+                        state={fav.state}
+                      />
+                    </Link>
+                  </Col>
+                );
+              })
+            : null}
         </FavouritesContainer>
       </Col>
 

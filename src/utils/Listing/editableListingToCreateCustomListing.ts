@@ -1,9 +1,9 @@
-import { EditableListingState } from 'types/store/EditableListingState';
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
+import { EditableListingState } from 'types/store/EditableListingState';
 
 export const editableListingToCreateCustomListing = (
   data: EditableListingState,
-  images: { url: string; requirementId: string }[],
+  images: { url: string; requirementId: string }[]
 ): CreateCustomListingRequestData => ({
   employee: data?.employee || '',
   type: data?.customTypeData?.name || '',

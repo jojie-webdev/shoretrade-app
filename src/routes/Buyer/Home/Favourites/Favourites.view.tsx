@@ -4,25 +4,19 @@ import React, { useEffect } from 'react';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
-import EmptyState from 'components/module/EmptyState';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
 import { PreviewContainer, LoadingContainer } from './Favourites.style';
 
 const FavouritesView = (props: FavouritesGeneratedProps) => {
   // const theme = useTheme();
-  const {
-    results,
-    onChangeSearchValue,
-    search,
-    resetSearchValue,
-    
-  } = props;
+  const { results, onChangeSearchValue, search, resetSearchValue } = props;
 
   return (
     <PreviewContainer>
