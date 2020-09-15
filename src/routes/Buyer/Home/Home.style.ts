@@ -4,9 +4,8 @@ import styled, { css } from 'utils/styled';
 import 'swiper/swiper-bundle.css';
 
 export const SwiperContainer = styled.div`
-
   .swiper-pagination-bullet-active {
-    background: ${({theme})=> theme.grey.shade7};
+    background: ${({ theme }) => theme.grey.shade7};
   }
 
   .swiper-container {
@@ -21,21 +20,19 @@ export const SwiperContainer = styled.div`
   .swiper-wrapper {
     justify-content: center;
     align-items: center;
-    object-fit: container
+    object-fit: container;
   }
 
   img {
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   object-fit: fill;
-   left: 50%;
-   top: 50%;
-   -webkit-transform: translateY(-50%) translateX(-50%);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
   }
 `;
-
-
 
 const customScrollbar = (props: any) =>
   css`
