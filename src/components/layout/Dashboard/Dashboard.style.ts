@@ -211,6 +211,15 @@ export const HeaderContainer = styled.nav`
     display: flex;
     align-items: center;
 
+    .cart-container {
+      margin-right: 45px;
+    }
+
+    .cart-wrapper {
+      cursor: pointer;
+      position: relative;
+    }
+
     .text-container {
       margin-right: 8px;
     }
@@ -249,4 +258,19 @@ export const CreditBalanceContainer = styled.div`
   .amount {
     margin-top: 4px;
   }
+`;
+
+export const CheckoutCount = styled.div`
+  background: ${(props) => props.theme.brand.primary};
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-right: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -10px;
+  right: -10px;
 `;

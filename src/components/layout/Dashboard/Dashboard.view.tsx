@@ -1,9 +1,12 @@
 import React from 'react';
 
-import { ShoretradeLogo, Exit, Menu } from 'components/base/SVG';
+import { ShoretradeLogo, Exit, Menu, Cart } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
+import { BUYER_ROUTES } from 'consts';
 import { Container } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -23,6 +26,7 @@ import {
   CreditBalanceContainer,
   MenuIcon,
   MenuOverlay,
+  CheckoutCount,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -42,34 +46,57 @@ const Header = ({
   textColor,
   onClick,
   openSidebar,
-}: HeaderProps) => (
-  <HeaderContainer className="appbar">
-    <div className="left-content">
-      <MenuIcon onClick={onClick}>
-        <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
-      </MenuIcon>
+}: HeaderProps) => {
+  const theme = useTheme();
+  const history = useHistory();
 
-      <Typography variant="title4" color={textColor}>
-        {pageTitle}
-      </Typography>
-    </div>
+  return (
+    <HeaderContainer className="appbar">
+      <div className="left-content">
+        <MenuIcon onClick={onClick}>
+          <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
+        </MenuIcon>
 
-    <div className="right-content">
-      <div className="text-container">
-        <Typography color={textColor}>{userData?.companies[0].name}</Typography>
-        <Typography
-          variant="caption"
-          color="shade6"
-          weight="500"
-          style={{ textAlign: 'right' }}
-        >
-          {userData?.firstName} {userData?.lastName}
+        <Typography variant="title4" color={textColor}>
+          {pageTitle}
         </Typography>
       </div>
-      <img src={userData?.profileImage} alt="" />
-    </div>
-  </HeaderContainer>
-);
+
+      <div className="right-content">
+        {theme.appType === 'buyer' && (
+          <div className="cart-container">
+            <div
+              className="cart-wrapper"
+              onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
+            >
+              <Cart fill={theme.grey.shade8} />
+              <CheckoutCount>
+                <Typography color="noshade" variant="small" weight="900">
+                  3
+                </Typography>
+              </CheckoutCount>
+            </div>
+          </div>
+        )}
+
+        <div className="text-container">
+          <Typography color={textColor}>
+            {userData?.companies[0].name}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="shade6"
+            weight="500"
+            style={{ textAlign: 'right' }}
+          >
+            {userData?.firstName} {userData?.lastName}
+          </Typography>
+        </div>
+        <img src={userData?.profileImage} alt="" />
+      </div>
+    </HeaderContainer>
+  );
+};
 
 const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const theme = useTheme();
