@@ -15,6 +15,10 @@ import { useHistory, Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
+// import Pagination from 'components/module/Pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Pagination} from 'swiper';
+
 
 import { HomeGeneratedProps, CreditState } from './Home.props';
 import {
@@ -26,6 +30,7 @@ import {
   InfoContainer,
   FavouritesHeader,
   FavouritesContainer,
+  SwiperContainer
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -78,6 +83,9 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   return null;
 };
 
+SwiperCore.use([Pagination]);
+
+
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
@@ -106,8 +114,17 @@ const HomeView = (props: HomeGeneratedProps) => {
       </Row>
 
       {/* Swiper here */}
+      <SwiperContainer>
+        <Swiper  autoplay={{delay: 2000}} pagination={{type: 'bullets', clickable: true}} spaceBetween={0} slidesPerView={1} loop>
+          {featured.map((f,i)=> (
+            <SwiperSlide key={i}>
+              <img src={f} alt={f+i}/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </SwiperContainer>
 
-      <FeaturedCarousel slides={featured} />
+      {/* <FeaturedCarousel slides={featured} /> */}
       <Col>
         <FavouritesHeader>
           <Typography variant="title5" color="shade8">

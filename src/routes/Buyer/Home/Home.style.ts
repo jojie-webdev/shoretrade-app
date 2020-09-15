@@ -1,7 +1,41 @@
 import Typography from 'components/base/Typography';
 import { Row } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
-import theme from 'utils/Theme';
+import 'swiper/swiper-bundle.css';
+
+export const SwiperContainer = styled.div`
+
+  .swiper-pagination-bullet-active {
+    background: ${({theme})=> theme.grey.shade7};
+  }
+
+  .swiper-container {
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    height: 357px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .swiper-wrapper {
+    justify-content: center;
+    align-items: center;
+    object-fit: container
+  }
+
+  img {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   object-fit: fill;
+   left: 50%;
+   top: 50%;
+   -webkit-transform: translateY(-50%) translateX(-50%);
+  }
+`;
+
+
 
 const customScrollbar = (props: any) =>
   css`
