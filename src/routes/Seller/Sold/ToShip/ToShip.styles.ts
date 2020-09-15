@@ -1,4 +1,5 @@
 import Interaction from 'components/base/Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 

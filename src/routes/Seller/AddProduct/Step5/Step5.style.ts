@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -22,6 +23,10 @@ export const Container = styled.div`
         border: 1px solid red;
         margin-right: 8px;
         border-radius: 4px;
+      }
+
+      @media ${BREAKPOINTS['sm']} {
+        margin-bottom: 16px;
       }
     }
   }

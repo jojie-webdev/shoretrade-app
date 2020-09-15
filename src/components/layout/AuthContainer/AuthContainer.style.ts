@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import {
   Container as GridContainer,
   Row as GridRow,
@@ -97,7 +98,7 @@ export const Content = styled(Col)`
   flex-direction: column;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
-  height: 70%;
+  height: auto;
   width: 100%;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
   border-radius: 4px;

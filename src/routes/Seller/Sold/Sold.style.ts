@@ -1,8 +1,8 @@
 import Interaction from 'components/base/Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  height: 100%;
   width: 100%;
 
   .emptystate-row {
@@ -12,6 +12,14 @@ export const Container = styled.div`
   .controls-row {
     width: 100%;
     margin-bottom: 32px;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    padding-bottom: 32px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 32px;
   }
 `;
 

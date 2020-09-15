@@ -50,15 +50,14 @@ const SoldView = (props: SoldGeneratedProps) => {
 
   return (
     <Container>
-      <Row className="controls-row">
-        <Col>
-          <SegmentedControls
-            options={['To Ship', 'In Transit', 'Delivered']}
-            selectedOption={currentTab}
-            onClickControl={(value) => onChangeCurrentTab(value as TabOptions)}
-          />
-        </Col>
-      </Row>
+      <div className="controls-row">
+        <SegmentedControls
+          options={['To Ship', 'In Transit', 'Delivered']}
+          selectedOption={currentTab}
+          onClickControl={(value) => onChangeCurrentTab(value as TabOptions)}
+        />
+      </div>
+
       {content}
     </Container>
   );

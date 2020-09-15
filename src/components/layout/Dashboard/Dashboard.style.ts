@@ -166,6 +166,7 @@ export const Content = styled.div<{
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: 80vw;
+        padding: ${(props) => (props.shouldIncludePadding ? '40px' : '0')};
       }
     }
   }
@@ -177,11 +178,16 @@ export const Content = styled.div<{
     .screen-wrapper {
       height: 100%;
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+      position: relative;
 
       .screen {
         height: 100%;
         width: 100vw;
         padding: 40px 20px;
+
+        .container {
+          position: static !important; // needed to override react-grid-system .container
+        }
       }
     }
   }
