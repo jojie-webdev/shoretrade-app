@@ -64,24 +64,6 @@ export const ResultContainer = styled.div`
   align-self: center;
   flex-direction: row;
   display: flex;
-
-  .result-label {
-    font-size: 24px;
-    font-weight: regular;
-  }
-
-  .result-length {
-    margin-left: 10px;
-    font-weight: bold;
-    font-size: 24px;
-  }
-  .font {
-    font-size: 12px;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
 `;
 
 export const FilterButton = styled.button`

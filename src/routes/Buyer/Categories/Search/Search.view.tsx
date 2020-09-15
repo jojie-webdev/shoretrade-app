@@ -46,35 +46,28 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
       <DetailsContainer>
         <Typography className="title">{result.name}</Typography>
         <ResultContainer>
-          <Typography className="font bold" variant="label">
+          <Typography variant="caption" weight="bold">
             {toPrice(result.price.to)}
           </Typography>
           <Typography
-            className="font"
-            variant="label"
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 1 }}
           >
             per
           </Typography>
           <Typography
-            className="font"
-            variant="label"
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 4 }}
           >
             {formatMeasurementUnit(result.measurementUnit)}
           </Typography>
-          <Typography
-            className="font bold"
-            variant="label"
-            style={{ marginLeft: 1 }}
-          >
+          <Typography weight="bold" variant="caption" style={{ marginLeft: 1 }}>
             {result.count}
           </Typography>
           <Typography
-            className="font"
-            variant="label"
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 1 }}
           >
@@ -114,10 +107,14 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             <>
               <ResultContainer style={{ paddingLeft: 15 }}>
                 <Row>
-                  <Typography variant="label" className="result-label">
+                  <Typography variant="title5" weight="regular">
                     Results
                   </Typography>
-                  <Typography variant="label" className="result-length">
+                  <Typography
+                    style={{ marginLeft: 10 }}
+                    variant="title5"
+                    weight="bold"
+                  >
                     {results.length}
                   </Typography>
                 </Row>
