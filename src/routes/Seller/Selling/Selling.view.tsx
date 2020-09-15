@@ -84,7 +84,7 @@ const SellingView = (props: SellingGeneratedProps) => {
 
   return (
     <Container>
-      <Row className="row" align="center" justify="center">
+      <Row className="row" justify="center">
         <Col>
           {listings.length === 0 ? (
             <EmptyState

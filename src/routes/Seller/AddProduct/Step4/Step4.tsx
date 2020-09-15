@@ -13,7 +13,7 @@ function Step4({ onClickNext }: Step4Props) {
   return (
     <Container>
       <Row className="select-row">
-        <Col md={6}>
+        <Col md={6} className="select-col">
           <Select options={['One', 'Two']} label="Size From" />
         </Col>
         <Col md={6}>

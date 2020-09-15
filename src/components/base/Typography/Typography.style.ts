@@ -51,6 +51,7 @@ const styles: Record<Variants, string> = {
 const weights: Record<string, string> = {
   Regular: '400',
   Medium: '500',
+  Bold: '700',
   Black: '900',
 };
 

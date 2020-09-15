@@ -13,6 +13,13 @@
 
 @font-face {
   font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Bold.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Bold.woff") format("woff");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Basis Grotesque Pro";
   src: url("res/fonts/Basis Grotesque Pro Black.woff2") format("woff2"),
     url("res/fonts/Basis Grotesque Pro Black.woff") format("woff");
   font-weight: 900;
