@@ -15,6 +15,7 @@ export interface ProductDetailsGeneratedProps {
   selectAddress: (id: string) => void;
   favorite: boolean;
   onFavorite: () => void;
+  setFavorite: Dispatch<SetStateAction<boolean>>;
   productDetailsCard1Props: ProductDetailsCard1Props;
   productDetailsCard6Props: ProductDetailsCard6Props;
   sellerRatingProps: ProductSellerRatingProps;

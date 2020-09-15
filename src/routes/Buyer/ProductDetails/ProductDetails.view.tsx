@@ -42,6 +42,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     selectAddress,
     favorite,
     onFavorite,
+    setFavorite,
     productDetailsCard1Props,
     productDetailsCard6Props,
     sellerRatingProps,
@@ -58,14 +59,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
 
   useEffect(() => {
     selectAddress(listingId);
-    onLoad(listingId);
-  }, []);
+    // onLoad(listingId);
+    setFavorite(currentListing?.isFavourite);
+  }, [currentListing]);
 
   return (
     <Container>
-      {currentListing ? (
+      {currentListing !== undefined ? (
         <>
-          {console.log(currentListing.images)}
           <BannerContainer>
             <Swiper
               id="product-details"
@@ -73,8 +74,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               tag="section"
               wrapperTag="ul"
               slidesPerView={1}
-              onSlideChange={() => console.log('slide change')}
-              onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => {}}
+              // onSwiper={(swiper) => {}}
               navigation
               pagination
             >

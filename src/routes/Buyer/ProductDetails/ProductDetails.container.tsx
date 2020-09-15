@@ -87,7 +87,7 @@ const ProductDetails = (): JSX.Element => {
       );
     }
   };
-
+  const price = Number(currentListing?.price || '0');
   const productDetailsCard1Props = {
     title: currentListing?.type || '',
     tags: (currentListing?.state || []).map((s) => ({ label: s })),
@@ -100,8 +100,6 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.origin.state || ''
     }, ${currentListing?.origin.countryCode || ''}`,
   };
-  const price = Number(currentListing?.price || '0');
-
   const productDetailsCard6Props = {
     price: price.toFixed(2),
     minOrder: currentListing?.minimumOrder || '0',
@@ -112,7 +110,6 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.caught ? 'YYYY-MM-DD' : undefined
     ).toDate(),
   };
-
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
     rating: currentListing?.coop.rating || '',
@@ -166,10 +163,12 @@ const ProductDetails = (): JSX.Element => {
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
+
   const onAddToCard = () => {
     const currentBox = getListingBoxesResponse.find(
       (box) => box.id === pressedBoxRadio
     );
+
     if (currentBox) {
       const payload: CartItem = {
         companyId: currentListing.coop?.id || '',
@@ -229,6 +228,7 @@ const ProductDetails = (): JSX.Element => {
     selectAddress,
     favorite,
     onFavorite,
+    setFavorite,
     productDetailsCard1Props,
     productDetailsCard6Props,
     sellerRatingProps,
