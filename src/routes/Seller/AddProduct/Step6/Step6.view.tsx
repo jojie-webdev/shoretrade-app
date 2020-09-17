@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { Box, Subtract } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
 import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
+import remove from 'ramda/es/remove';
 import { Row, Col } from 'react-grid-system';
+import { GetCategoryData } from 'store/selectors/seller/categories';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
-import { Step6Props } from './Step6.props';
+import { Step6Props, BoxType } from './Step6.props';
 import {
   Container,
   BoxDetailsContainer,
   BoxSummaryContainer,
 } from './Step6.style';
 
-const MOCK_BOXES: Array<BoxValues & { id: string }> = [
-  { weight: '10.00 Kg', quantity: '7', count: '56', id: 'mock-box-1' },
-  { weight: '25.00 Kg', quantity: '10', count: '25', id: 'mock-box-2' },
-  //   { weight: '5.00 Kg', quantity: '3', count: '27', id: 'mock-box-3' },
-];
-
-const BoxDetails = ({ weight, quantity, count }: BoxValues) => {
+const BoxDetails = ({
+  weight,
+  quantity,
+  count,
+  onRemove,
+  unit,
+}: BoxType & {
+  unit: string;
+  onRemove: () => void;
+}) => {
   const theme = useTheme();
 
   return (
@@ -39,7 +47,9 @@ const BoxDetails = ({ weight, quantity, count }: BoxValues) => {
           >
             Box Weight
           </Typography>
-          <Typography color="noshade">{weight}</Typography>
+          <Typography color="noshade">
+            {weight} {unit}
+          </Typography>
         </div>
         <div className="inner-text">
           <Typography
@@ -65,14 +75,22 @@ const BoxDetails = ({ weight, quantity, count }: BoxValues) => {
         </div>
       </div>
 
-      <button className="cancel-btn">
+      <Touchable onPress={() => onRemove()} circle dark>
         <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
-      </button>
+      </Touchable>
     </BoxDetailsContainer>
   );
 };
 
-const BoxSummary = ({ onClick }: { onClick: () => void }) => (
+const BoxSummary = ({
+  summary,
+  unit,
+  onClick,
+}: {
+  summary: { total: number; quantities: number; average: number };
+  unit: string;
+  onClick: () => void;
+}) => (
   <BoxSummaryContainer>
     <div className="text-container">
       <div className="inner-text">
@@ -82,10 +100,10 @@ const BoxSummary = ({ onClick }: { onClick: () => void }) => (
           className="overline"
           weight="900"
         >
-          Box Weight
+          Total
         </Typography>
         <Typography color="noshade" variant="title5">
-          57.00 Kg
+          {summary.total} {unit}
         </Typography>
       </div>
       <div className="inner-text">
@@ -95,10 +113,10 @@ const BoxSummary = ({ onClick }: { onClick: () => void }) => (
           className="overline"
           weight="900"
         >
-          Quantity
+          Quantities
         </Typography>
         <Typography color="noshade" variant="title5">
-          8
+          {summary.quantities}
         </Typography>
       </div>
       <div className="inner-text">
@@ -108,10 +126,10 @@ const BoxSummary = ({ onClick }: { onClick: () => void }) => (
           className="overline"
           weight="900"
         >
-          Count per box
+          Average
         </Typography>
         <Typography color="noshade" variant="title5">
-          100
+          {summary.average.toFixed(2)}
         </Typography>
       </div>
     </div>
@@ -119,14 +137,71 @@ const BoxSummary = ({ onClick }: { onClick: () => void }) => (
   </BoxSummaryContainer>
 );
 
-function Step6({ onClickNext }: Step6Props) {
+function Step6({
+  editableListing,
+  listingFormData,
+  isCustomType,
+  onAddBoxes,
+}: Step6Props) {
   const [showModal, setShowModal] = useState(false);
+
+  const categoryData = GetCategoryData(
+    editableListing?.customTypeData?.categoryId || ''
+  );
+
+  const measurementUnit = formatMeasurementUnit(
+    isCustomType
+      ? categoryData?.measurementUnit
+      : listingFormData?.measurementUnit
+  );
+
+  const [isAquafuture, setIsAquafuture] = useState<boolean>(
+    editableListing?.isAquafuture || false
+  );
+
+  const [boxes, setBoxes] = useState<BoxType[]>(editableListing?.boxes || []);
+
+  const [minimumOrder, setMinimumOrder] = useState(
+    editableListing?.minOrder ? editableListing.minOrder.toString() : ''
+  );
+  const [sellInMultiples, setSellInMultiples] = useState<boolean>(
+    editableListing?.sellInMultiplesOfMinOrder || false
+  );
+
+  const summary = boxes.reduce(
+    (computed, current) => {
+      const currentTotal = current.weight * current.quantity + computed.total;
+      const currentQuantities = computed.quantities + current.quantity;
+      const currentAverage = currentTotal / currentQuantities;
+      return {
+        total: currentTotal,
+        quantities: currentQuantities,
+        average: currentAverage,
+      };
+    },
+    {
+      total: 0,
+      quantities: 0,
+      average: 0,
+    }
+  );
+
+  const [showError, setShowError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (boxes.length > 0 && minimumOrder) {
+      setShowError(false);
+    }
+  }, [boxes, minimumOrder]);
 
   return (
     <Container>
       <Row className="checkbox-row">
         <Col className="checkbox-col">
-          <Checkbox checked />
+          <Checkbox
+            checked={isAquafuture}
+            onClick={() => setIsAquafuture((a) => !a)}
+          />
           <div className="text-container">
             <Typography color="noshade" variant="label">
               This is an Aquafuture Listing.
@@ -140,9 +215,15 @@ function Step6({ onClickNext }: Step6Props) {
       </Row>
 
       <Row className="add-box-row">
-        {MOCK_BOXES.map((box) => (
+        {boxes.map((box, index) => (
           <Col md={12} key={box.id}>
-            <BoxDetails {...box} />
+            <BoxDetails
+              {...box}
+              unit={measurementUnit}
+              onRemove={() => {
+                setBoxes(remove(index, 1, boxes));
+              }}
+            />
           </Col>
         ))}
 
@@ -155,30 +236,71 @@ function Step6({ onClickNext }: Step6Props) {
         <Col md={6} lg={5}>
           <TextField
             label="Minimum Order"
-            // value={minimumOrder}
-            // onChangeText={setMinimumOrder}
+            value={minimumOrder}
+            onChangeText={(v) => {
+              if (!Number.isNaN(Number(v))) {
+                setMinimumOrder(v);
+              }
+            }}
             placeholder="0"
             LeftComponent={
               <Typography variant="label" color="shade6">
-                Kg
+                {measurementUnit}
               </Typography>
             }
           />
         </Col>
 
         <Col md={6} lg={4} offset={{ lg: 1, md: 0 }} className="checkbox-col">
-          <Checkbox checked className="checkbox" />
+          <Checkbox
+            checked={sellInMultiples}
+            onClick={() => setSellInMultiples((s) => !s)}
+            className="checkbox"
+          />
           <Typography color="noshade" className="text">
             Sell in multiples of the minimum
           </Typography>
         </Col>
       </Row>
 
-      <BoxSummary onClick={onClickNext} />
+      {showError && (
+        <Alert
+          variant="error"
+          content="Please include at least 1 box and set minimum order"
+        />
+      )}
+
+      <BoxSummary
+        unit={measurementUnit}
+        summary={summary}
+        onClick={() => {
+          if (boxes.length > 0 && minimumOrder) {
+            onAddBoxes({
+              isAquafuture,
+              sellInMultiples,
+              boxes,
+              minimumOrder,
+            });
+          } else {
+            setShowError(true);
+          }
+        }}
+      />
 
       {showModal && (
         <AddBoxModal
-          onAdd={() => {}}
+          unit={measurementUnit}
+          onAdd={(values) => {
+            if (values.weight && values.quantity) {
+              const box: BoxType = {
+                weight: Number(values.weight),
+                quantity: Number(values.quantity),
+                count: values.count !== '' ? Number(values.count) : undefined,
+                id: new Date().getTime().toString(),
+              };
+              setBoxes([...boxes, box]);
+            }
+          }}
           onClickClose={() => setShowModal(false)}
           isOpen={showModal}
         />

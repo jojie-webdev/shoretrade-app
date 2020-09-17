@@ -5,7 +5,7 @@ import { ButtonStyleProps, Variants, ButtonSizes } from './Button.props';
 
 const backgroundColor: Record<Variants, string> = {
   primary: theme.brand.primary,
-  outline: theme.grey.noshade,
+  outline: 'transparent',
   disabled: theme.grey.shade3,
   success: theme.brand.success,
   unselected: theme.grey.shade9,

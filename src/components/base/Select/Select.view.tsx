@@ -12,13 +12,19 @@ import {
   PREFIX,
   ArrowContainer,
   StyledDropdown,
+  Error,
 } from './Select.style';
 
-const Select = ({ label, ...props }: SelectProps): JSX.Element => {
+const Select = ({ label, error, ...props }: SelectProps): JSX.Element => {
   const theme = useTheme();
 
   return (
     <Container label={label}>
+      {label ? (
+        <Label variant="overline" color="shade6">
+          {label}
+        </Label>
+      ) : null}
       <StyledDropdown
         {...props}
         controlClassName={`${PREFIX}Container`}
@@ -37,11 +43,12 @@ const Select = ({ label, ...props }: SelectProps): JSX.Element => {
           </ArrowContainer>
         }
       />
-      {label ? (
-        <Label variant="overline" color="shade5">
-          {label}
-        </Label>
-      ) : null}
+
+      {(error || '').length > 0 && (
+        <Error variant="caption" color="error">
+          {error}
+        </Error>
+      )}
     </Container>
   );
 };

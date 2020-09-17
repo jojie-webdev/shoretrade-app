@@ -26,7 +26,12 @@ const isDevMode =
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: [
+    'auth',
+    'editableListing',
+    'getCustomFormData',
+    'getListingFormData',
+  ],
 };
 
 const reducer = persistReducer(persistConfig, createRootReducer(history));

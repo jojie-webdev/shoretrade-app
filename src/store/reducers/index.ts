@@ -7,8 +7,11 @@ import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import cart from './cart';
 import changePassword from './changePassword';
+import createCustomListing from './createCustomListing';
+import createListing from './createListing';
 import currentAddress from './currentAddress';
 import deleteLinkedAccount from './deleteLinkedAccount';
+import editableListing from './editableListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -18,9 +21,12 @@ import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
 import getBuyerOrdersPlaced from './getBuyerOrdersPlaced';
 import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getCoopUsers from './getCoopUsers';
+import getCustomFormData from './getCustomFormData';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
+import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerById from './getSellerById';
@@ -33,51 +39,65 @@ import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
 import searchAndCountProductType from './searchAndCountProductType';
+import searchProductType from './searchProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
+import updateListing from './updateListing';
 import updateUser from './updateUser';
 import verify from './verify';
 
 export default (routeHistory: History) =>
-  combineReducers({
-    router: connectRouter(routeHistory),
-    auth,
-    login,
-    resendVerification,
-    verify,
-    forgotPassword,
-    getUser,
-    getAllListings,
-    register,
-    updateUser,
-    getAddresses,
-    updateAddress,
-    getSellerOrdersPlaced,
-    getSellerOrdersTransit,
-    getSellerOrdersDelivered,
-    getBankDetails,
-    updateBankDetails,
-    changePassword,
-    getBuyerOrdersPlaced,
-    getBuyerOrdersTransit,
-    getBuyerOrdersDelivered,
-    currentAddress,
-    getBuyerHomepage,
-    getListingTypesByCategory,
-    getBuyerSearchFilterData,
-    getListingsByType,
-    getLinkedAccounts,
-    addLinkedAccount,
-    addAddress,
-    deleteLinkedAccount,
-    getSellerById,
-    cart,
-    getListing,
-    getListingBoxes,
-    updateFavoriteSeller,
-    updateFavouriteProduct,
-    searchAndCountProductType,
-    history,
-  });
+  combineReducers(
+    Object.fromEntries(
+      Object.entries({
+        router: connectRouter(routeHistory),
+        auth,
+        login,
+        resendVerification,
+        verify,
+        forgotPassword,
+        getUser,
+        getAllListings,
+        register,
+        updateUser,
+        getAddresses,
+        updateAddress,
+        getSellerOrdersPlaced,
+        getSellerOrdersTransit,
+        getSellerOrdersDelivered,
+        getCoopUsers,
+        editableListing,
+        searchProductType,
+        getListingFormData,
+        getCustomFormData,
+        getBankDetails,
+        updateBankDetails,
+        changePassword,
+        getLinkedAccounts,
+        addLinkedAccount,
+        addAddress,
+        deleteLinkedAccount,
+        getSellerById,
+        updateListing,
+        createListing,
+        createCustomListing,
+        getBuyerOrdersPlaced,
+        getBuyerOrdersTransit,
+        getBuyerOrdersDelivered,
+        currentAddress,
+        getBuyerHomepage,
+        getListingTypesByCategory,
+        getBuyerSearchFilterData,
+        getListingsByType,
+        cart,
+        getListing,
+        getListingBoxes,
+        updateFavoriteSeller,
+        updateFavouriteProduct,
+        searchAndCountProductType,
+        history,
+      }).sort()
+    )
+  );

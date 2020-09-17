@@ -46,17 +46,17 @@ const App = () => {
     setRehydrated(true);
   };
   return (
-    <React.StrictMode>
-      <ReduxProvider store={store}>
-        <PersistGate loading={null} persistor={persistor(onRehydate)}>
-          <ConnectedRouter history={history}>
+    <ReduxProvider store={store}>
+      <PersistGate loading={null} persistor={persistor(onRehydate)}>
+        <ConnectedRouter history={history}>
+          <React.StrictMode>
             <Theme>
               <Routes />
             </Theme>
-          </ConnectedRouter>
-        </PersistGate>
-      </ReduxProvider>
-    </React.StrictMode>
+          </React.StrictMode>
+        </ConnectedRouter>
+      </PersistGate>
+    </ReduxProvider>
   );
 };
 

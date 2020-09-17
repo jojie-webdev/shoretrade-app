@@ -1,4 +1,4 @@
-import { createValidator } from 'utils/Validation';
+import { createFormikValidator } from 'utils/Validation';
 
 const userDetailsConstraints = {
   firstName: {
@@ -150,13 +150,13 @@ const agreementConstraints = {
   },
 };
 
-export const validateUserDetails = createValidator(userDetailsConstraints);
-export const validateBusinessDetails = createValidator(
+export const validateUserDetails = createFormikValidator(userDetailsConstraints);
+export const validateBusinessDetails = createFormikValidator(
   businessDetailsConstraints
 );
-export const validateBusinessAddress = createValidator(
+export const validateBusinessAddress = createFormikValidator(
   businessAddressContraints
 );
-export const validateBankDetails = createValidator(bankDetailsConstraints);
+export const validateBankDetails = createFormikValidator(bankDetailsConstraints);
 
-export const validateAgreement = createValidator(agreementConstraints);
+export const validateAgreement = createFormikValidator(agreementConstraints);

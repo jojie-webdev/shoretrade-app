@@ -1,4 +1,5 @@
 export type EditableListingState = Partial<{
+  currentStep: number;
   currentListingId?: string; // passed with type to control form data flow
   company: string; // company name, to get shipping address later on
   employee: string; // employee id
@@ -8,7 +9,11 @@ export type EditableListingState = Partial<{
   sizeFrom: string | null;
   sizeTo: string | null;
   images: {
-    image: any | null; // TODO: Update type
+    image: {
+      name: string;
+      type: string;
+      data: string | ArrayBuffer | null; // base64 image data
+    };
     requirementId: string;
   }[];
   existingImages: {
@@ -24,14 +29,14 @@ export type EditableListingState = Partial<{
   }[];
   minOrder: number;
   sellInMultiplesOfMinOrder?: boolean;
-  catchDate: Date;
+  catchDate: Date | string;
   description: string;
   origin: {
     suburb: string;
     state: string;
     countryCode: string;
   };
-  ends: Date;
+  ends: Date | string;
   isAquafuture: boolean;
   addressId: string;
   isCustomType?: boolean;
