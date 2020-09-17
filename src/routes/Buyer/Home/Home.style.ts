@@ -17,10 +17,16 @@ export const SwiperContainer = styled.div`
     overflow: hidden;
   }
 
-  .swiper-wrapper {
-    justify-content: center;
-    align-items: center;
-    object-fit: container;
+  .swiper-button-prev {
+    color: ${({theme})=> theme.grey.shade7};
+    width: 18px;
+    height: 11px;
+  }
+  
+  .swiper-button-next {
+    color: ${({theme})=> theme.grey.shade7};
+    width: 18px;
+    height: 11px;
   }
 
   img {

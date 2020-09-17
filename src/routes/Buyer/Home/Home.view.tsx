@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 
 import Button from 'components/base/Button';
 import { InfoFilled, ChevronRight } from 'components/base/SVG';
@@ -12,8 +12,10 @@ import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { useHistory, Link } from 'react-router-dom';
-import SwiperCore, { Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/swiper-bundle.css';
+import Swiper, {Pagination, Navigation } from 'swiper';
+
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -31,6 +33,9 @@ import {
   FavouritesContainer,
   SwiperContainer,
 } from './Home.style';
+
+Swiper.use([Pagination, Navigation]);
+
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -82,7 +87,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   return null;
 };
 
-SwiperCore.use([Pagination]);
 
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
@@ -96,6 +100,28 @@ const HomeView = (props: HomeGeneratedProps) => {
     featured,
     favourites,
   } = props;
+
+  const swiper = useRef<any>(null);
+  useEffect(() => {
+    swiper.current = new Swiper('.swiper-container' , {
+      loop: true,
+      // autoplay: {
+      //   delay: 2000
+      // },
+      speed: 600,
+      // pagination: {
+      //   clickable: true,
+      //   el: '.swiper-pagination',
+        
+      // },
+      navigation: {
+        prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next'
+      },
+      touchRatio: 0,
+    })
+  }, [featured])
+
 
   return (
     <Container>
@@ -113,21 +139,23 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       {/* Swiper here */}
       <SwiperContainer>
-        <Swiper
-          autoplay={{ delay: 2000 }}
-          pagination={{ type: 'bullets', clickable: true }}
-          spaceBetween={0}
-          slidesPerView={1}
-          loop
-        >
-          {featured.map((f, i) => (
-            <SwiperSlide key={i}>
-              <img src={f} alt={f + i} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </SwiperContainer>
+        <div className="swiper-container">
+          <div className="swiper-wrapper">
+            {featured.map((f,key)=> {
+              return (
+                  <div className="swiper-slide" key={key}>
+                    <img src={f} alt='images'/>
+                  </div>
 
+              )
+            })}
+          </div>
+          {/* <div className="swiper-pagination"></div> */}
+          <div className="swiper-button-prev"></div>
+          <div className="swiper-button-next"></div>
+       
+        </div>
+      </SwiperContainer>
       {/* <FeaturedCarousel slides={featured} /> */}
       <Col>
         <FavouritesHeader>
