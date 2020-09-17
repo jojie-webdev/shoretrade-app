@@ -1,9 +1,10 @@
-import { EditableListingState } from 'types/store/EditableListingState';
+import moment from 'moment';
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
+import { EditableListingState } from 'types/store/EditableListingState';
 
 export const editableListingToCreateCustomListing = (
   data: EditableListingState,
-  images: { url: string; requirementId: string }[],
+  images: { url: string; requirementId: string }[]
 ): CreateCustomListingRequestData => ({
   employee: data?.employee || '',
   type: data?.customTypeData?.name || '',
@@ -18,14 +19,14 @@ export const editableListingToCreateCustomListing = (
   boxes: (data?.boxes || []).map((b) => ({ ...b, id: `new-${b.id}` })),
   minOrder: data?.minOrder || 0,
   sellInMultiplesOfMinOrder: data?.sellInMultiplesOfMinOrder || false,
-  catchDate: data?.catchDate ? data.catchDate.toISOString() : null,
+  catchDate: data?.catchDate ? moment(data.catchDate).toISOString() : null,
   description: data?.description || '',
   origin: data?.origin || {
     suburb: '',
     state: '',
     countryCode: '',
   },
-  ends: data?.ends ? data.ends.toISOString() : null,
+  ends: data?.ends ? moment(data.ends).toISOString() : null,
   isAquafuture: data?.isAquafuture || false,
   addressId: data?.addressId || '',
 });

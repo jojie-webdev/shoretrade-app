@@ -3,17 +3,24 @@ import { fork, all } from 'redux-saga/effects';
 import addAddress from './addAddress';
 import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
+import createCustomListing from './createCustomListing';
+import createListing from './createListing';
 import currentAddress from './currentAddress';
 import deleteLinkedAccount from './deleteLinkedAccount';
+import editableListing from './editableListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
+import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getCoopUsers from './getCoopUsers';
+import getCustomFormData from './getCustomFormData';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
+import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getSellerById from './getSellerById';
@@ -22,14 +29,16 @@ import getUser from './getUser';
 import login from './login';
 import register from './register';
 import resendVerification from './resendVerification';
+import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
+import searchProductType from './searchProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
+import updateListing from './updateListing';
 import updateUser from './updateUser';
 import verify from './verify';
-import getBuyerOrders from './getBuyerOrders';
 
 const sagas = [
   login,
@@ -39,11 +48,16 @@ const sagas = [
   getUser,
   getAllListings,
   register,
-  getUser,
   updateUser,
   getAddresses,
   updateAddress,
   getSellerOrders,
+  getCoopUsers,
+  router,
+  searchProductType,
+  editableListing,
+  getListingFormData,
+  getCustomFormData,
   getBankDetails,
   updateBankDetails,
   changePassword,
@@ -54,6 +68,9 @@ const sagas = [
   deleteLinkedAccount,
   updateFavoriteSeller,
   getSellerById,
+  createCustomListing,
+  createListing,
+  updateListing,
   getBuyerHomepage,
   currentAddress,
   getListingTypesByCategory,

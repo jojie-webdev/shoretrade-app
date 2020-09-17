@@ -1,4 +1,4 @@
-export const formatMeasurementUnit = (unit: string = '') => {
+export const formatMeasurementUnit = (unit = '') => {
   if (unit.toUpperCase() === 'DOZEN' || unit.toUpperCase() === 'DOZ') {
     return 'doz';
   }

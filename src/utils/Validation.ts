@@ -69,12 +69,12 @@ validate.validators.isFutureDate = (value: Date, message: string) => {
   return message;
 };
 
-export const createValidator = (constraints: Record<string, any>) => {
+// used for validating formik
+// only returns attributes with error value
+export const createFormikValidator = (constraints: Record<string, any>) => {
   return (attributes: Record<string, any>): Record<string, string> => {
     const filteredConstraints = pick(Object.keys(attributes), constraints);
-
     const validationErrors = validate(attributes, filteredConstraints) || {};
-
     const filteredValidationErrors = Object.keys(validationErrors).reduce(
       (accumulator, current) => {
         return {
@@ -86,5 +86,29 @@ export const createValidator = (constraints: Record<string, any>) => {
     );
 
     return filteredValidationErrors;
+  };
+};
+
+// used for validating when createUpdateReducer error handler is used instead of formik
+// returns all attributes
+// errors are in an array
+export const createValidator = (constraints: Record<string, any>) => {
+  return (attributes: Record<string, any>): Record<string, string[]> => {
+    const filteredConstraints = pick(Object.keys(attributes), constraints);
+    const emptyErrors = Object.keys(attributes).reduce(
+      (accumulator, current) => {
+        return {
+          ...accumulator,
+          [current]: [],
+        };
+      },
+      {}
+    );
+    const validationErrors = validate(attributes, filteredConstraints) || {};
+
+    return {
+      ...emptyErrors,
+      ...validationErrors,
+    };
   };
 };

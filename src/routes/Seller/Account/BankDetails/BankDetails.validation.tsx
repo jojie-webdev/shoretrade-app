@@ -1,4 +1,4 @@
-import { createValidator } from 'utils/Validation';
+import { createFormikValidator } from 'utils/Validation';
 
 const constraints = {
   accountName: {
@@ -41,4 +41,4 @@ const constraints = {
   },
 };
 
-export const isValid = createValidator(constraints);
+export const isValid = createFormikValidator(constraints);

@@ -20,4 +20,12 @@ export const Container = styled.div`
       margin-bottom: 8px;
     }
   }
+
+  .textfield-row {
+    margin-bottom: 8px;
+
+    .textfield-col {
+      margin-bottom: 36px;
+    }
+  }
 `;

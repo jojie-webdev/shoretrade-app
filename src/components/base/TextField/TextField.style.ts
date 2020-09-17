@@ -33,6 +33,7 @@ export const Field = styled.input`
   border-radius: 4px;
   padding: 12px 16px;
   border: 0;
+  width: 100%;
   height: 100%;
   color: 1px solid ${({ theme }) => theme.grey.shade9};
   :focus {
