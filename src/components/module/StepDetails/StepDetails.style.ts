@@ -29,9 +29,11 @@ export const StepInfo = styled.div`
 `;
 
 export const StepTitle = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade1};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
 `;
 
 export const StepDescription = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade5};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade5 : theme.grey.shade7};
 `;
