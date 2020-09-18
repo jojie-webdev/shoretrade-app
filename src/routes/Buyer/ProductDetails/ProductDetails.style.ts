@@ -63,6 +63,7 @@ export const DesiredQuantityContainer = styled.div`
   border-color: ${({ theme }) => theme.grey.shade2};
   border-width: 2px 2px 1px 1px;
   border-radius: 8px 8px 0 0;
+  border-top-left-radius: 0px;
   border: 2px solid #edeffa;
   height: 100%;
 `;

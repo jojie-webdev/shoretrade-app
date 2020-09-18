@@ -62,7 +62,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     // onLoad(listingId);
     setFavorite(currentListing?.isFavourite);
   }, [currentListing]);
-
   return (
     <Container>
       {currentListing !== undefined ? (
@@ -95,12 +94,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             /> */}
           </BannerContainer>
           <Typography variant="label" className="description">
-            Image Description
+            {currentListing.description}
           </Typography>
           <DetailsContainer>
             <Col xs={6}>
               <ProductDetailsCard1View
-                cBorderRadius="8px 8px 0 0"
+                cBorderRadius="8px 0px 0px 0px"
                 cBorderWidth="2px 2px 1px 2px"
                 isFavorite={favorite}
                 onFavorite={onFavorite}
