@@ -145,18 +145,30 @@ const ProductDetails = (): JSX.Element => {
   const [weight, setWeight] = useState('');
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
   const getBoxes = () => {
-    if (
-      (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
-      id !== previousWeightRequest?.listingId
-    )
-      dispatch(
-        getListingBoxesActions.request({
-          listingId: id,
-          weight,
-        })
-      );
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    const timerId = setTimeout(() => {
+      if (
+        (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
+        id !== previousWeightRequest?.listingId
+      )
+        dispatch(
+          getListingBoxesActions.request({
+            listingId: id,
+            weight,
+          })
+        );
+    }, 800);
+    setTimer(timerId);
   };
+
+  useEffect(() => {
+    getBoxes();
+  }, [weight]);
 
   const isAquafuture = currentListing?.isAquafuture || false;
   // MARK:- Methods
