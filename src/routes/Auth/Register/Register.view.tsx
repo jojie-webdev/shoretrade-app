@@ -363,7 +363,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const showSuccessModal =
     theme.appType === 'seller' && isTriggered && isSuccess;
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(0);
   const MAX_STEP = isApplicationForLineCredit ? 4 : 3;
 
   const nextStep = () => {

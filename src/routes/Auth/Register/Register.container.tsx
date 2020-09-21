@@ -81,7 +81,29 @@ const Register = (): JSX.Element => {
   };
 
   const registerBuyer = (details: RegistrationDetails) => {
-    console.log('REGISTER BUYER EVENT', details);
+    if (details.address) {
+      dispatch(
+        registerActions.request({
+          firstName: details.firstName,
+          lastName: details.lastName,
+          email: details.email,
+          password: details.password,
+          passwordConfirm: details.passwordConfirm,
+          mobile: `+${details.callingCode || '61'}${details.mobile}`,
+          company: {
+            businessName: details.businessName,
+            abn: details.abn,
+          },
+          address: details.address,
+          businessLogo: details.businessLogo,
+          registerDebtFinancing:
+            details.selectedPaymentMethod === PAYMENT_METHOD_OPTIONS[0].value,
+          debtFinancingSegment: details.selectedMarketSector,
+          debtFinancingEstRevenue: details.estimatedAnnualRevenue,
+          userGroup: 'buyer',
+        })
+      );
+    }
   };
 
   const register = (details: RegistrationDetails) => {
