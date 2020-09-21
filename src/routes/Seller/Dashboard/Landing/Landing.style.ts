@@ -1,8 +1,10 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
   height: 100%;
+
   .title-col {
     margin-bottom: 8px;
   }
@@ -22,15 +24,26 @@ export const FilterRow = styled(Row)`
   .filter-col {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
     .btn {
       margin-right: 12px;
+
+      @media ${BREAKPOINTS['sm']} {
+        margin-bottom: 8px;
+      }
     }
   }
 `;
 
 export const TotalSalesRow = styled(Row)`
   margin-bottom: 32px;
+
+  .paid-col {
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 8px;
+    }
+  }
 `;
 
 export const MonthlyRow = styled(Row)``;
@@ -42,6 +55,10 @@ export const MonthlyContainer = styled.div`
 
 export const TopCategoriesContainer = styled.div`
   overflow: auto;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 40px;
+  }
 `;
 
 export const SalesCard = styled.div`
