@@ -14,25 +14,48 @@ export const BannerContainer = styled.div`
   width: 100%;
   max-width: 100%;
 
+  .swiper-pagination-bullets {
+    background: ${({ theme }) => theme.grey.shade7};
+    display: none;
+  }
+
   .swiper-container {
     width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 24px;
   }
+
   .swiper-wrapper {
     padding-inline-start: 0;
   }
+
   .swiper-slide {
     width: 100% !important ;
     height: 297px;
     padding: 16px;
+    border-radius: 4px;
     box-shadow: 0px 0px 0px;
   }
+  height: 297px; /**Controls the height of carousel */
+  margin-bottom: 16px;
 
-  height: 297px;
+  .swiper-button-prev {
+    color: ${({ theme }) => theme.grey.shade7};
+    width: 18px;
+    height: 11px;
+  }
+
+  .swiper-button-next {
+    color: ${({ theme }) => theme.grey.shade7};
+    width: 18px;
+    height: 11px;
+  }
 `;
 
 export const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: 295px;
   object-fit: cover;
   border-radius: 4px;
 `;

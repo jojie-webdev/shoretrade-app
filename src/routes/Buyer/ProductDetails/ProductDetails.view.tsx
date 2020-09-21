@@ -62,6 +62,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     // onLoad(listingId);
     setFavorite(currentListing?.isFavourite);
   }, [currentListing]);
+
   return (
     <Container>
       {currentListing !== undefined ? (
@@ -73,6 +74,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               tag="section"
               wrapperTag="ul"
               slidesPerView={1}
+              loop={true}
+              autoplay={true}
               // onSlideChange={() => {}}
               // onSwiper={(swiper) => {}}
               navigation
