@@ -8,13 +8,19 @@ import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { InnerRouteHeaderProps } from './InnerRouteHeader.props';
-import { HeaderRow } from './InnerRouteHeader.style';
+import { HeaderRow, TitleRow } from './InnerRouteHeader.style';
 
 const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
 
-  const { fullRow = true, showIcon = true, title, onClickBack } = props;
+  const {
+    fullRow = true,
+    showIcon = true,
+    title,
+    onClickBack,
+    subtitle = '',
+  } = props;
 
   const content = (
     <>
@@ -26,9 +32,14 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
           <ArrowLeft fill={theme.brand.primary} height={24} width={24} />
         </Touchable>
       )}
-      <Typography variant="title5" color="noshade">
-        {title}
-      </Typography>
+      <TitleRow>
+        <Typography variant="title5" color="shade1">
+          {title}
+        </Typography>
+        <Typography variant="label" color="shade1">
+          {subtitle}
+        </Typography>
+      </TitleRow>
     </>
   );
 

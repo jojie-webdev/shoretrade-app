@@ -8,7 +8,6 @@ export const PREFIX = 'dropdownSelect';
 export const Container = styled.div<{ label?: string }>`
   width: 100%;
   position: relative;
-  margin-top: ${({ label }) => (label ? '20px' : 0)};
 `;
 
 const font = `
@@ -26,6 +25,7 @@ export const StyledDropdown = styled(Dropdown)`
     border: 1px solid ${({ theme }) => theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
+    margin-top: 4px;
   }
 
   .${PREFIX}Placeholder {
@@ -56,8 +56,8 @@ export const ArrowContainer = styled.div<{ flipped?: boolean }>`
   transform: rotate(${({ flipped }) => (flipped ? '180deg' : '')});
 `;
 
-export const Label = styled(Typography)`
-  position: absolute;
-  top: -20px;
-  left: 0;
+export const Label = styled(Typography)``;
+
+export const Error = styled(Typography)`
+  margin-top: 4px;
 `;

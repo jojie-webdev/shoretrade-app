@@ -1,3 +1,4 @@
+import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -44,15 +45,19 @@ export const Container = styled.div`
   }
 `;
 
-export const Dropdown = styled.div<{ active: boolean }>`
+export const Dropdown = styled.div<{ active: boolean; error?: boolean }>`
   background: ${(props) => props.theme.grey.noshade};
   padding: 12px;
   border-radius: 4px;
   height: 48px;
   width: 100%;
   border: 1px solid
-    ${(props) =>
-      props.active ? props.theme.brand.primary : props.theme.grey.shade3};
+    ${({ theme, active, error }) =>
+      error
+        ? theme.brand.error
+        : active
+        ? theme.brand.primary
+        : theme.grey.shade3};
 
   display: flex;
   align-items: center;
@@ -77,4 +82,8 @@ export const NavButton = styled.div<{ direction: 'left' | 'right' }>`
 
   right: ${(props) => (props.direction === 'right' ? '15px' : '')};
   left: ${(props) => (props.direction === 'left' ? '15px' : '')};
+`;
+
+export const Error = styled(Typography)`
+  margin-top: 4px;
 `;

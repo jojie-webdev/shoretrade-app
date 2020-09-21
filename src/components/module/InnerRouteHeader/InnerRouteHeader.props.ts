@@ -3,4 +3,5 @@ export interface InnerRouteHeaderProps {
   title: string;
   onClickBack?: () => void;
   showIcon?: boolean;
+  subtitle?: string;
 }

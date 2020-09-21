@@ -30,7 +30,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
 
   const getIcon = () => {
     if (type === 'accordion') {
-      const Dropdown = () => <DropdownArrow fill={theme.brand.primary} />;
+      const Dropdown = () => <DropdownArrow fill={theme.grey.shade8} />;
 
       return pressed ? (
         <DropdownFlipped>

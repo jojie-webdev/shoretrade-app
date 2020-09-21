@@ -1,8 +1,20 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  .metric-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+  }
   .select-row {
     margin-bottom: 12px;
+  }
+
+  .select-col {
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 24px;
+    }
   }
 
   .or-row {

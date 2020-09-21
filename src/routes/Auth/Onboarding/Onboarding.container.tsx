@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { Crab, Fish, Oysters, Octopus } from 'components/base/SVG';
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch } from 'react-redux';
