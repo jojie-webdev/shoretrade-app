@@ -37,7 +37,7 @@ export type UserCompany = {
       };
       createdAt: string;
       updatedAt: string;
-    },
+    }
   ];
 };
 

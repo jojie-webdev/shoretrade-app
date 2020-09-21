@@ -6,5 +6,5 @@ import {
 import { createAsyncReducer } from 'utils/Redux';
 
 export default createAsyncReducer<GetSellerByIdMeta, GetSellerByIdPayload>(
-  getSellerByIdActions,
+  getSellerByIdActions
 );

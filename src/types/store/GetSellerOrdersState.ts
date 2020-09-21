@@ -103,7 +103,7 @@ export type GetSellerOrdersResponseItem = {
         weightConfirmed: boolean;
         priceDelta: number | null;
       };
-    },
+    }
   ];
 };
 

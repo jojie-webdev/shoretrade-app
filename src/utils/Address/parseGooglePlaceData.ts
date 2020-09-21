@@ -6,7 +6,7 @@ const findParam = (
     short_name: string;
     types: string[];
   }[],
-  param: string,
+  param: string
 ) =>
   components.find((comp): boolean => comp.types.indexOf(param) !== -1) || {
     short_name: '',
@@ -40,7 +40,7 @@ export default (place: {
       .short_name,
   administrativeAreaLevel1: findParam(
     place.address_components,
-    'administrative_area_level_1',
+    'administrative_area_level_1'
   ).short_name,
   postcode: findParam(place.address_components, 'postal_code').short_name,
   countryCode: findParam(place.address_components, 'country').short_name,
