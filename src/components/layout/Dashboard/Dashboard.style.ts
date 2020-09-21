@@ -207,6 +207,16 @@ export const HeaderContainer = styled.nav`
     align-items: flex-start;
   }
 
+  .title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .back-button-container {
+    margin-right: 8px;
+  }
+
   .right-content {
     display: flex;
     align-items: center;

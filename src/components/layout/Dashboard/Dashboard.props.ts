@@ -8,6 +8,7 @@ import { Theme } from 'types/Theme';
 export interface DashboardPublicProps {
   children: any;
   routes: Route[];
+  onBack?: () => void;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
@@ -36,4 +37,5 @@ export type HeaderProps = {
   textColor: keyof Theme['brand'] | keyof Theme['grey'];
   openSidebar: boolean;
   onClick: () => void;
+  onBack?: () => void;
 };

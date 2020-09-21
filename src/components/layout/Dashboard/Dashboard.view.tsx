@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { ShoretradeLogo, Exit, Menu, Cart } from 'components/base/SVG';
+import {
+  ShoretradeLogo,
+  Exit,
+  Menu,
+  Cart,
+  ArrowLeft,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
@@ -46,6 +52,7 @@ const Header = ({
   textColor,
   onClick,
   openSidebar,
+  onBack,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -57,9 +64,19 @@ const Header = ({
           <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
         </MenuIcon>
 
-        <Typography variant="title4" color={textColor}>
-          {pageTitle}
-        </Typography>
+        <div className="title-container">
+          {onBack && (
+            <div className="back-button-container">
+              <Touchable circle onPress={() => onBack()}>
+                <ArrowLeft width={14} height={14} fill={theme.grey.shade7} />
+              </Touchable>
+            </div>
+          )}
+
+          <Typography variant="title4" color={textColor}>
+            {pageTitle}
+          </Typography>
+        </div>
       </div>
 
       <div className="right-content">
@@ -112,6 +129,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     credit,
     openSidebar,
     setOpenSidebar,
+    onBack,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -187,6 +205,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           textColor={textColor}
           onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
+          onBack={onBack}
         />
         <div className="screen-wrapper">
           <div className="screen">
