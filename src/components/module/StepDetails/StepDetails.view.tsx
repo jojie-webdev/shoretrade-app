@@ -1,6 +1,7 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
+
 import { StepDetailsProps } from './StepDetails.props';
 import {
   Container,
@@ -12,7 +13,8 @@ import {
 } from './StepDetails.style';
 
 const StepDetails = (props: StepDetailsProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   const { className, step, title, description, style } = props;
   return (
     <Container className={className} style={style}>

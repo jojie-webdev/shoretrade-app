@@ -2,24 +2,34 @@ import React, { useState, Fragment, useReducer } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import Select from 'components/base/Select';
+import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import AddImage from 'components/module/AddImage';
 import DialogModal from 'components/module/DialogModal';
+import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { Formik } from 'formik';
-import { props } from 'ramda';
+import { is, props } from 'ramda';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
 import {
+  BUYER_STEPS,
   SELLER_STEPS,
   USER_DETAIL_FIELDS,
   BUSINESS_DETAIL_FIELDS,
   BANK_DETAIL_FIELDS,
   SELLER_LOCATION_NOTES,
   BUYER_LOCATION_NOTES,
+  PAYMENT_METHOD_OPTIONS,
+  BUYER_MARKET_STEP,
+  CREDIT_LINE_NOTES,
+  CREDIT_LINE_TERMS,
+  CREDIT_LINE_TERMS_LABEL,
+  MARKET_SECTORS,
 } from './Register.constants';
 import { RegisterGeneratedProps } from './Register.props';
 import {
@@ -41,6 +51,8 @@ import {
   Error,
   BusinessLogoLabel,
   MobileField,
+  PaymentMethodDetails,
+  PaymentMethodOverline,
 } from './Register.style';
 import {
   validateUserDetails,
@@ -48,9 +60,9 @@ import {
   validateBankDetails,
   validateBusinessAddress,
   validateAgreement,
+  validateAnnualRevenue,
+  validateMarketSector,
 } from './Register.validation';
-
-const MAX_STEP = 3;
 
 interface StepFormProps extends RegisterGeneratedProps {
   formikProps: {
@@ -75,9 +87,15 @@ const StepForm = ({
   registrationDetails,
   updateRegistrationDetails,
   isPending,
+  isApplicationForLineCredit,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
+  const buyerSteps = isApplicationForLineCredit
+    ? [...BUYER_STEPS, BUYER_MARKET_STEP]
+    : BUYER_STEPS;
+  const steps = isSeller ? SELLER_STEPS : buyerSteps;
+  const MAX_STEP = isApplicationForLineCredit ? 4 : 3;
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
     {}
@@ -100,13 +118,32 @@ const StepForm = ({
             formikProps.onSubmit(values);
           }
         } else if (step === 3) {
-          const error = validateAgreement({
-            agreement: registrationDetails.tncAgreement,
-          });
-          if (error.agreement) {
-            setOtherErrors({ agreement: error.agreement });
+          const error = {
+            ...validateAgreement({
+              agreement: registrationDetails.tncAgreement,
+            }),
+            ...(isApplicationForLineCredit
+              ? validateAnnualRevenue({
+                  estimatedAnnualRevenue:
+                    registrationDetails.estimatedAnnualRevenue,
+                })
+              : {}),
+          };
+          if (error.agreement || error.estimatedAnnualRevenue) {
+            setOtherErrors(error);
           } else {
-            setOtherErrors({ agreement: '' });
+            setOtherErrors({ agreement: '', estimatedAnnualRevenue: '' });
+            formikProps.onSubmit(values);
+          }
+        } else if (step === 4) {
+          const error = validateMarketSector({
+            selectedMarketSector: registrationDetails.selectedMarketSector,
+          });
+
+          if (error.selectedMarketSector) {
+            setOtherErrors(error);
+          } else {
+            setOtherErrors({ selectedMarketSector: '' });
             formikProps.onSubmit(values);
           }
         }
@@ -116,7 +153,7 @@ const StepForm = ({
         <Container>
           <Content>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
-            <Title variant="title5">{SELLER_STEPS[step - 1].title}</Title>
+            <Title variant="title5">{steps[step - 1].title}</Title>
             {fields.map(({ key, type, secured, label, alert, prefix }) => (
               <Fragment key={key}>
                 <TextField
@@ -162,22 +199,70 @@ const StepForm = ({
                     isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                   }
                 />
-                <BusinessLogoLabel variant="overline" color={'shade6'}>
-                  Business Logo
-                </BusinessLogoLabel>
-                <AddImage
-                  image={registrationDetails.businessLogo}
-                  onSelectImage={(image) =>
-                    updateRegistrationDetails({ businessLogo: image })
-                  }
-                  onRemoveImage={() => {
-                    updateRegistrationDetails({ businessLogo: null });
-                  }}
-                />
+                {isSeller && (
+                  <>
+                    <BusinessLogoLabel variant="overline" color={'shade6'}>
+                      Business Logo
+                    </BusinessLogoLabel>
+                    <AddImage
+                      image={registrationDetails.businessLogo}
+                      onSelectImage={(image) =>
+                        updateRegistrationDetails({ businessLogo: image })
+                      }
+                      onRemoveImage={() => {
+                        updateRegistrationDetails({ businessLogo: null });
+                      }}
+                    />
+                  </>
+                )}
               </>
             )}
             {step === 3 && (
               <>
+                {!isSeller && (
+                  <div className="select-container">
+                    <Select
+                      value={registrationDetails.selectedPaymentMethod}
+                      onChange={(option) => {
+                        updateRegistrationDetails({
+                          selectedPaymentMethod: option.value,
+                        });
+                      }}
+                      options={PAYMENT_METHOD_OPTIONS}
+                      label="SELECT FROM THE OPTIONS BELOW"
+                    />
+                  </div>
+                )}
+
+                {isApplicationForLineCredit && (
+                  <div className="credit-line-info">
+                    <PaymentMethodDetails variant="label">
+                      {CREDIT_LINE_NOTES}
+                    </PaymentMethodDetails>
+                    <PaymentMethodOverline variant="overline">
+                      {CREDIT_LINE_TERMS_LABEL}
+                    </PaymentMethodOverline>
+
+                    {CREDIT_LINE_TERMS.map((term) => (
+                      <PaymentMethodDetails key={term} variant="label">
+                        {term}
+                      </PaymentMethodDetails>
+                    ))}
+
+                    <BaseTextField
+                      value={registrationDetails.estimatedAnnualRevenue}
+                      onChangeText={(v) =>
+                        updateRegistrationDetails({
+                          estimatedAnnualRevenue: v,
+                        })
+                      }
+                      label="Estimated annual revenue"
+                      LeftComponent={<Typography color="shade6">$</Typography>}
+                      type="number"
+                      error={otherErrors.estimatedAnnualRevenue || ''}
+                    />
+                  </div>
+                )}
                 <InputContainer>
                   <Checkbox
                     checked={registrationDetails.tncAgreement}
@@ -215,13 +300,44 @@ const StepForm = ({
                 </Touchable>
               </>
             )}
+            {step === 4 && (
+              <>
+                <div className="market-sector-description">
+                  <PaymentMethodDetails variant="label">
+                    {BUYER_MARKET_STEP.description}
+                  </PaymentMethodDetails>
+                </div>
+                <div className="market-sector-list">
+                  {MARKET_SECTORS.map((variant) => (
+                    <div key={variant} className="market-sector-item">
+                      <MarketSectorItem
+                        variant={variant}
+                        selected={
+                          registrationDetails.selectedMarketSector === variant
+                        }
+                        onPress={() => {
+                          updateRegistrationDetails({
+                            selectedMarketSector: variant,
+                          });
+                        }}
+                      />
+                    </div>
+                  ))}
+                  {(otherErrors.selectedMarketSector || '').length > 0 && (
+                    <Error variant="caption" color="error">
+                      {otherErrors.selectedMarketSector}
+                    </Error>
+                  )}
+                </div>
+              </>
+            )}
           </Content>
         </Container>
         <Footer>
           <Button
-            loading={isPending && step === 3}
+            loading={isPending && step === MAX_STEP}
             style={{ width: '100%' }}
-            text={step === 3 ? 'REGISTER' : 'NEXT'}
+            text={step === MAX_STEP ? 'REGISTER' : 'NEXT'}
             type="submit"
           />
         </Footer>
@@ -232,6 +348,8 @@ const StepForm = ({
 
 const RegisterView = (props: RegisterGeneratedProps) => {
   const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+  const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
   const {
     backToLogin,
     registrationDetails,
@@ -239,12 +357,14 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     register,
     isPending,
     isSuccess,
+    isApplicationForLineCredit,
   } = props;
   const [isTriggered, setIsTriggered] = useState(false);
   const showSuccessModal =
     theme.appType === 'seller' && isTriggered && isSuccess;
 
   const [step, setStep] = useState(0);
+  const MAX_STEP = isApplicationForLineCredit ? 4 : 3;
 
   const nextStep = () => {
     setStep((s) => (s < MAX_STEP ? ++s : MAX_STEP));
@@ -302,6 +422,40 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     },
   };
 
+  const paymentMethodFormikProps = {
+    initialValues: {},
+    onSubmit: (values: Record<string, string>) => {
+      updateRegistrationDetails(values);
+
+      if (isApplicationForLineCredit) {
+        nextStep();
+      } else {
+        // combine previous values to existing registration details
+        // to make sure that we get the updated state
+        register({
+          ...registrationDetails,
+          ...values,
+        });
+        setIsTriggered(true);
+      }
+    },
+  };
+
+  const marketSectorFormikProps = {
+    initialValues: {},
+    onSubmit: (values: Record<string, string>) => {
+      updateRegistrationDetails(values);
+
+      // combine previous values to existing registration details
+      // to make sure that we get the updated state
+      register({
+        ...registrationDetails,
+        ...values,
+      });
+      setIsTriggered(true);
+    },
+  };
+
   const renderCurrentStep = () => {
     if (step === 1) {
       return (
@@ -325,9 +479,20 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <StepForm
           {...props}
-          formikProps={bankDetailsFormikProps}
+          formikProps={
+            isSeller ? bankDetailsFormikProps : paymentMethodFormikProps
+          }
           step={step}
-          fields={BANK_DETAIL_FIELDS}
+          fields={isSeller ? BANK_DETAIL_FIELDS : []}
+        />
+      );
+    } else if (step === 4) {
+      return (
+        <StepForm
+          {...props}
+          formikProps={marketSectorFormikProps}
+          step={step}
+          fields={[]}
         />
       );
     } else {
@@ -339,7 +504,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 Signing up is <b>free</b> and complete with <b>3 simple</b>{' '}
                 steps
               </GetStartedTitle>
-              {SELLER_STEPS.map((step, index) => (
+              {steps.map((step, index) => (
                 <StepDetails
                   key={step.title}
                   step={index + 1}
@@ -371,21 +536,23 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       totalSteps={MAX_STEP + 1}
     >
       {renderCurrentStep()}
-      <DialogModal
-        title="Thanks for signing up!"
-        overline="Your account is pending approval."
-        isOpen={showSuccessModal}
-        onClickClose={() => backToLogin()}
-      >
-        <Typography variant="body" color="noshade" weight="Medium">
-          We need to check a few things before you can start selling.
-        </Typography>
-        <br />
-        <Typography variant="body" color="noshade" weight="Medium">
-          We’ll send you and email and notification when your account is
-          approved. This normally takes less than 24 hours.
-        </Typography>
-      </DialogModal>
+      {isSeller && (
+        <DialogModal
+          title="Thanks for signing up!"
+          overline="Your account is pending approval."
+          isOpen={showSuccessModal}
+          onClickClose={() => backToLogin()}
+        >
+          <Typography variant="body" color="noshade" weight="Medium">
+            We need to check a few things before you can start selling.
+          </Typography>
+          <br />
+          <Typography variant="body" color="noshade" weight="Medium">
+            We’ll send you and email and notification when your account is
+            approved. This normally takes less than 24 hours.
+          </Typography>
+        </DialogModal>
+      )}
     </AuthContainer>
   );
 };

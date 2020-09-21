@@ -22,6 +22,12 @@ export interface RegistrationDetails {
   accountName: string;
   bsb: string;
   accountNumber: string;
+
+  // payment method
+  selectedPaymentMethod: string;
+  estimatedAnnualRevenue: string;
+  selectedMarketSector: string;
+
   tncAgreement: boolean;
 }
 
@@ -38,4 +44,5 @@ export interface RegisterGeneratedProps {
   register: (details: RegistrationDetails) => void;
   isPending: boolean;
   isSuccess: boolean;
+  isApplicationForLineCredit: boolean;
 }

@@ -8,6 +8,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
+import { PAYMENT_METHOD_OPTIONS } from './Register.constants';
 import { RegistrationDetails } from './Register.props';
 import RegisterView from './Register.view';
 
@@ -40,9 +41,17 @@ const Register = (): JSX.Element => {
       accountName: '',
       bsb: '',
       accountNumber: '',
+      selectedPaymentMethod: '',
+      estimatedAnnualRevenue: '',
+      selectedMarketSector: '',
       tncAgreement: false,
     }
   );
+
+  const isApplicationForLineCredit =
+    !isSeller &&
+    registrationDetails.selectedPaymentMethod ===
+      PAYMENT_METHOD_OPTIONS[0].value;
 
   const registerSeller = (details: RegistrationDetails) => {
     if (details.address) {
@@ -71,8 +80,38 @@ const Register = (): JSX.Element => {
     }
   };
 
+  const registerBuyer = (details: RegistrationDetails) => {
+    if (details.address) {
+      dispatch(
+        registerActions.request({
+          firstName: details.firstName,
+          lastName: details.lastName,
+          email: details.email,
+          password: details.password,
+          passwordConfirm: details.passwordConfirm,
+          mobile: `+${details.callingCode || '61'}${details.mobile}`,
+          company: {
+            businessName: details.businessName,
+            abn: details.abn,
+          },
+          address: details.address,
+          businessLogo: details.businessLogo,
+          registerDebtFinancing:
+            details.selectedPaymentMethod === PAYMENT_METHOD_OPTIONS[0].value,
+          debtFinancingSegment: details.selectedMarketSector,
+          debtFinancingEstRevenue: details.estimatedAnnualRevenue,
+          userGroup: 'buyer',
+        })
+      );
+    }
+  };
+
   const register = (details: RegistrationDetails) => {
-    registerSeller(details);
+    if (isSeller) {
+      registerSeller(details);
+    } else {
+      registerBuyer(details);
+    }
   };
 
   const isPending =
@@ -89,6 +128,7 @@ const Register = (): JSX.Element => {
     register,
     isPending,
     isSuccess,
+    isApplicationForLineCredit,
   };
   return <RegisterView {...generatedProps} />;
 };
