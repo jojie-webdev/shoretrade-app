@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
+import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { pathOr, splitEvery, take } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   getListingActions,
   getListingBoxesActions,
@@ -29,6 +30,7 @@ const ProductDetails = (): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { id } = useParams();
+  const history = useHistory();
   const listingId = id;
   const addresses = GetAddressOptions();
   const previousId =
@@ -221,7 +223,7 @@ const ProductDetails = (): JSX.Element => {
         weight: currentBox.weight,
       };
       dispatch(cartActions.add(payload));
-      // props.navigation.navigate(ROUTES.BUYER_CHECKOUT);
+      history.push(BUYER_ROUTES.CHECKOUT);
     }
   };
   // MARK:- Effects
