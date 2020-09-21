@@ -44,12 +44,14 @@ export const BannerContainer = styled.div`
     color: ${({ theme }) => theme.grey.shade7};
     width: 18px;
     height: 11px;
+    margin-top: 4px;
   }
 
   .swiper-button-next {
     color: ${({ theme }) => theme.grey.shade7};
     width: 18px;
     height: 11px;
+    margin-top: 4px;
   }
 `;
 
