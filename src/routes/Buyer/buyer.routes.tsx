@@ -114,8 +114,13 @@ const BuyerRoutes = (): JSX.Element => {
   const { pathname } = location;
   const getBackAction = () => {
     if (
-      pathname.includes('/buyer/categories/') &&
-      pathname.replace('/buyer/categories/', '').length > 0
+      (
+        pathname.includes('/buyer/categories/')
+        &&
+        pathname.replace('/buyer/categories/', '').length > 0
+      ) || (
+        pathname.includes('/buyer/favourites')
+        )
     ) {
       return history.goBack;
     }
