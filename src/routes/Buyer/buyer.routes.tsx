@@ -9,7 +9,13 @@ import {
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import Account from './Account';
@@ -103,9 +109,27 @@ const ROUTES: Routes = {
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
 
 const BuyerRoutes = (): JSX.Element => {
+  const history = useHistory();
+  const location = useLocation();
+  const { pathname } = location;
+  const getBackAction = () => {
+    if (
+      (
+        pathname.includes('/buyer/categories/')
+        &&
+        pathname.replace('/buyer/categories/', '').length > 0
+      ) || (
+        pathname.includes('/buyer/favourites')
+        )
+    ) {
+      return history.goBack;
+    }
+    return undefined;
+  };
   return (
     <DashboardLayout
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
+      onBack={getBackAction()}
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (

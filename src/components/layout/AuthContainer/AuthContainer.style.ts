@@ -62,8 +62,7 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   width: 100%;
   height: 64px;
-  background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
+  background-color: ${({ theme }) => theme.grey.shade9};
   align-items: center;
   padding: 0px 20px;
 `;
@@ -89,8 +88,7 @@ export const BackIcon = styled(ArrowLeft)``;
 
 export const Title = styled(Typography)`
   font-weight: bold;
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade8};
+  color: ${({ theme }) => theme.grey.noshade};
 `;
 
 export const Content = styled(Col)`

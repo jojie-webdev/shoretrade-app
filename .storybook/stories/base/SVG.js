@@ -4,6 +4,12 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  MarketSectorWholesaler,
+  MarketSectorWetShop,
+  MarketSectorRetailer,
+  MarketSectorRestaurantBar,
+  MarketSectorProcessor,
+  MarketSectorHotel,
   Clock,
   Menu,
   Expand,
@@ -125,6 +131,24 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="MarketSectorWholesaler">
+          <MarketSectorWholesaler width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketSectorWetShop">
+          <MarketSectorWetShop width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketSectorRetailer">
+          <MarketSectorRetailer width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketSectorRestaurantBar">
+          <MarketSectorRestaurantBar width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketSectorProcessor">
+          <MarketSectorProcessor width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketSectorHotel">
+          <MarketSectorHotel width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Clock">
           <Clock width={30} height={30} />
         </Wrapper>
