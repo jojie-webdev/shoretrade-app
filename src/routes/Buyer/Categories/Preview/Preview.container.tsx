@@ -46,11 +46,11 @@ const CategoriesPreview = (): JSX.Element => {
     useSelector(
       (state: Store) => state.getListingsByType.data?.data.listings
     ) || []
-  ).filter((result) =>
-    searchValue
-      ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
-      : true
-  );
+  ).filter((result) => {
+    return searchValue
+      ? result.type.toLowerCase().includes(searchValue.toLowerCase())
+      : true;
+  });
 
   // MARK:- Methods
   const onLoad = (typeId: string) => {
