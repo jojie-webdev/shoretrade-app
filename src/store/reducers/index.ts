@@ -7,6 +7,7 @@ import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import cart from './cart';
 import changePassword from './changePassword';
+import confirmWeight from './confirmWeight';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -36,6 +37,7 @@ import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getUser from './getUser';
 import history from './history';
 import login from './login';
+import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
 import searchAndCountProductType from './searchAndCountProductType';
@@ -67,30 +69,19 @@ export default (routeHistory: History) =>
         getSellerOrdersPlaced,
         getSellerOrdersTransit,
         getSellerOrdersDelivered,
-        getCoopUsers,
-        editableListing,
-        searchProductType,
-        getListingFormData,
-        getCustomFormData,
         getBankDetails,
         updateBankDetails,
         changePassword,
-        getLinkedAccounts,
-        addLinkedAccount,
-        addAddress,
-        deleteLinkedAccount,
-        getSellerById,
-        updateListing,
-        createListing,
-        createCustomListing,
-        getBuyerOrdersPlaced,
-        getBuyerOrdersTransit,
-        getBuyerOrdersDelivered,
         currentAddress,
         getBuyerHomepage,
         getListingTypesByCategory,
         getBuyerSearchFilterData,
         getListingsByType,
+        getLinkedAccounts,
+        addLinkedAccount,
+        addAddress,
+        deleteLinkedAccount,
+        getSellerById,
         cart,
         getListing,
         getListingBoxes,
@@ -98,6 +89,19 @@ export default (routeHistory: History) =>
         updateFavouriteProduct,
         searchAndCountProductType,
         history,
+        confirmWeight,
+        placeOrder,
+        getCoopUsers,
+        editableListing,
+        searchProductType,
+        getListingFormData,
+        getCustomFormData,
+        updateListing,
+        createListing,
+        createCustomListing,
+        getBuyerOrdersPlaced,
+        getBuyerOrdersTransit,
+        getBuyerOrdersDelivered,
       }).sort()
     )
   );

@@ -45,3 +45,5 @@ export { default as getListingActions } from './getListing';
 export { default as getListingBoxesActions } from './getListingBoxes';
 export { default as searchAndCountProductTypeActions } from './searchAndCountProductType';
 export { default as historyActions } from './history';
+export { default as confirmWeightActions } from './confirmWeight';
+export { default as placeOrderActions } from './placeOrder';

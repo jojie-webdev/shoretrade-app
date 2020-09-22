@@ -18,6 +18,13 @@ export const PendingItemContainer = styled.div`
   margin-right: 16px;
   border-radius: 4px;
   min-width: 300px;
+  ${({ onClick }) =>
+    onClick
+      ? `cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }`
+      : ''};
 
   .top-content {
     padding: 12px;

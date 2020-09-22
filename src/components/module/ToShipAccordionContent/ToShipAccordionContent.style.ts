@@ -37,6 +37,13 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.grey.shade9};
   border-radius: 4px;
   margin-bottom: 2px;
+  ${({ onClick }) =>
+    onClick
+      ? `cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }`
+      : ''};
 `;
 
 export const ValuesRow = styled.div`

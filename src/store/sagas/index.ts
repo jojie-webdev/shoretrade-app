@@ -3,6 +3,7 @@ import { fork, all } from 'redux-saga/effects';
 import addAddress from './addAddress';
 import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
+import confirmWeight from './confirmWeight';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -27,6 +28,7 @@ import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
 import login from './login';
+import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
 import router from './router';
@@ -80,6 +82,8 @@ const sagas = [
   getListingBoxes,
   updateFavouriteProduct,
   searchAndCountProductType,
+  confirmWeight,
+  placeOrder,
 ];
 
 export default function* root() {

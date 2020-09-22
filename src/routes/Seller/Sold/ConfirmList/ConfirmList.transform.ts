@@ -18,5 +18,6 @@ export const sellerOrderToConfirmList = (
         uri: lineItem.listing.images[0],
         price: toPrice(lineItem.price),
         weightConfirmed: lineItem.weightConfirmed,
+        onPress: () => null,
       }))
     : [];
