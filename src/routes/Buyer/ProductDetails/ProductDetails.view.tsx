@@ -84,8 +84,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               {currentListing.images &&
                 currentListing.images.map((image, key) => {
                   return (
-                    <SwiperSlide key={key} style={{ width: '100%' }}>
-                      <Image style={{ listStyle: 'none' }} src={image} />
+                    <SwiperSlide key={key}>
+                      <Image
+                        style={{
+                          listStyle: 'none',
+                        }}
+                        src={image}
+                      />
                     </SwiperSlide>
                   );
                 })}
@@ -96,93 +101,95 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               slides={currentListing.images}
             /> */}
           </BannerContainer>
-          <Typography variant="label" className="description">
-            {currentListing.description}
-          </Typography>
-          <DetailsContainer>
-            <Col xs={6}>
-              <ProductDetailsCard1View
-                cBorderRadius="8px 0px 0px 0px"
-                cBorderWidth="2px 2px 1px 2px"
-                isFavorite={favorite}
-                onFavorite={onFavorite}
-                {...productDetailsCard1Props}
-              />
-              <ProductDetailsCard6View
-                cBorderRadius="0"
-                cBorderWidth="1px 2px 1px 2px"
-                {...productDetailsCard6Props}
-              />
-              <SellerRatingContainer>
-                <ProductSellerRating isSmallName {...sellerRatingProps} />
-              </SellerRatingContainer>
-            </Col>
-            <Col xs={6}>
-              <DesiredQuantityContainer>
-                <TextFieldWrapper>
-                  <TextField
-                    label="Desired Quantity"
-                    LeftComponent={
-                      <Typography color="shade6">{unit}</Typography>
-                    }
-                    value={weight}
-                    onChangeText={setWeight}
-                    type="numeric"
-                    onChange={() => getBoxes()}
-                  />
-                </TextFieldWrapper>
-                <RemainingWrapper>
-                  <Alert
-                    variant="alert"
-                    content={`Remaining ${remainingWeight} ${unit}`}
-                    style={{ borderRadius: 4, padding: 8 }}
-                    fullWidth
-                  />
-                </RemainingWrapper>
+          <div style={{ width: '65vw', margin: 'auto' }}>
+            <Typography variant="label" className="description">
+              {currentListing.description}
+            </Typography>
+            <DetailsContainer>
+              <Col xs={6}>
+                <ProductDetailsCard1View
+                  cBorderRadius="8px 0px 0px 0px"
+                  cBorderWidth="2px 2px 1px 2px"
+                  isFavorite={favorite}
+                  onFavorite={onFavorite}
+                  {...productDetailsCard1Props}
+                />
+                <ProductDetailsCard6View
+                  cBorderRadius="0"
+                  cBorderWidth="1px 2px 1px 2px"
+                  {...productDetailsCard6Props}
+                />
+                <SellerRatingContainer>
+                  <ProductSellerRating isSmallName {...sellerRatingProps} />
+                </SellerRatingContainer>
+              </Col>
+              <Col xs={6}>
+                <DesiredQuantityContainer>
+                  <TextFieldWrapper>
+                    <TextField
+                      label="Desired Quantity"
+                      LeftComponent={
+                        <Typography color="shade6">{unit}</Typography>
+                      }
+                      value={weight}
+                      onChangeText={setWeight}
+                      type="numeric"
+                      onChange={() => getBoxes()}
+                    />
+                  </TextFieldWrapper>
+                  <RemainingWrapper>
+                    <Alert
+                      variant="alert"
+                      content={`Remaining ${remainingWeight} ${unit}`}
+                      style={{ borderRadius: 4, padding: 8 }}
+                      fullWidth
+                    />
+                  </RemainingWrapper>
 
-                {!isEmpty(boxRadios) && (
-                  <BoxContainer>
-                    <Typography
-                      variant="overline"
-                      color="shade6"
-                      style={{ paddingTop: 56 }}
-                    >
-                      BEST BOX WEIGHT MATCH
-                    </Typography>
-                    {boxRadios.map((p) => (
-                      <BoxRadioContainer key={p.id}>
-                        <BoxRadio
-                          checked={p.id === pressedBoxRadio}
-                          {...p}
-                          onClick={() =>
-                            setPressedBoxRadio((prevState) =>
-                              p.id === prevState ? '' : p.id
-                            )
-                          }
-                        />
-                      </BoxRadioContainer>
-                    ))}
-                  </BoxContainer>
-                )}
-                <ButtonContainer>
-                  {pressedBoxRadio ? (
-                    <Button
-                      style={{ float: 'right' }}
-                      text="Add to Cart"
-                      onClick={onAddToCard}
-                    />
-                  ) : (
-                    <Button
-                      style={{ float: 'right' }}
-                      text="Add to Cart"
-                      onClick={onAddToCard}
-                      variant="disabled"
-                    />
+                  {!isEmpty(boxRadios) && (
+                    <BoxContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade6"
+                        style={{ paddingTop: 56 }}
+                      >
+                        BEST BOX WEIGHT MATCH
+                      </Typography>
+                      {boxRadios.map((p) => (
+                        <BoxRadioContainer key={p.id}>
+                          <BoxRadio
+                            checked={p.id === pressedBoxRadio}
+                            {...p}
+                            onClick={() =>
+                              setPressedBoxRadio((prevState) =>
+                                p.id === prevState ? '' : p.id
+                              )
+                            }
+                          />
+                        </BoxRadioContainer>
+                      ))}
+                    </BoxContainer>
                   )}
-                </ButtonContainer>
-              </DesiredQuantityContainer>
-            </Col>
-          </DetailsContainer>
+                  <ButtonContainer>
+                    {pressedBoxRadio ? (
+                      <Button
+                        style={{ float: 'right' }}
+                        text="Add to Cart"
+                        onClick={onAddToCard}
+                      />
+                    ) : (
+                      <Button
+                        style={{ float: 'right' }}
+                        text="Add to Cart"
+                        onClick={onAddToCard}
+                        variant="disabled"
+                      />
+                    )}
+                  </ButtonContainer>
+                </DesiredQuantityContainer>
+              </Col>
+            </DetailsContainer>
+          </div>
         </>
       ) : null}
     </Container>

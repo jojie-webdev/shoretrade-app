@@ -126,7 +126,6 @@ const BuyerRoutes = (): JSX.Element => {
   if (pathname.includes('/buyer/product')) {
     fullWidthRoutes.push(pathname);
   }
-  console.log(fullWidthRoutes, pathname);
 
   return (
     <DashboardLayout

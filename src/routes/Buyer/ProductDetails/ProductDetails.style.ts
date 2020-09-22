@@ -23,7 +23,6 @@ export const BannerContainer = styled.div`
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
-    padding: 24px;
   }
 
   .swiper-wrapper {
@@ -31,7 +30,6 @@ export const BannerContainer = styled.div`
   }
 
   .swiper-slide {
-    width: 100% !important ;
     height: 297px;
     padding: 16px;
     border-radius: 4px;
@@ -56,8 +54,9 @@ export const BannerContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 100%;
+  width: 65vw;
   height: 295px;
+  margin-left: 103px;
   object-fit: cover;
   border-radius: 4px;
 `;
