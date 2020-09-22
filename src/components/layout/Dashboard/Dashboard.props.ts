@@ -10,6 +10,10 @@ export interface DashboardPublicProps {
   routes: Route[];
   onBack?: () => void;
   shouldUseFullWidth?: boolean;
+  background?: string;
+  screenBackground?: string;
+  color?: string;
+  headerTextColor?: keyof Theme['grey'];
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {

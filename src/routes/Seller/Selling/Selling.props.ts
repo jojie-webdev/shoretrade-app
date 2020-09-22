@@ -3,6 +3,7 @@ import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
 export interface SellingGeneratedProps {
   listings: GetAllListingsResponseItem[];
   pending: boolean;
+  goToListingDetails: (id: string) => void;
 }
 
 export type ItemProp = {
@@ -16,4 +17,5 @@ export type ItemProp = {
   remaining?: string;
   data: GetAllListingsResponseItem;
   unit?: string;
+  onClick?: () => void;
 };

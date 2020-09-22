@@ -39,6 +39,11 @@ export const SELLER_SOLD_ROUTES = {
   DETAILS: `${SELLER_ROUTES.SOLD}/details/:status/:orderId`,
 };
 
+export const SELLING_ROUTES = {
+  LANDING: `${SELLER_ROUTES.SELLING}`,
+  LISTING_DETAILS: `${SELLER_ROUTES.SELLING}/details/:listingId`,
+};
+
 export const SELLER_ACCOUNT_ROUTES = {
   LANDING: `${SELLER_ROUTES.ACCOUNT}`,
   YOUR_DETAILS: `${SELLER_ROUTES.ACCOUNT}/details`,

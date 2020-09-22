@@ -130,6 +130,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     openSidebar,
     setOpenSidebar,
     onBack,
+    background,
+    screenBackground,
+    color,
+    headerTextColor,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -201,11 +205,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         shouldUseFullWidth={
           props.shouldUseFullWidth ? props.shouldUseFullWidth : false
         }
+        background={background}
+        screenBackground={screenBackground}
+        color={color}
       >
         <Header
           pageTitle={pageTitle}
           userData={userData}
-          textColor={textColor}
+          textColor={headerTextColor || textColor}
           onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
           onBack={onBack}

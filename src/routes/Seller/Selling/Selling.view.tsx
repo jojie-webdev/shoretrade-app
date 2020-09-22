@@ -24,7 +24,7 @@ const Item = (props: ItemProp) => {
   const formattedExpiresIn = () => moment().to(props.expiresIn);
 
   return (
-    <ItemCard>
+    <ItemCard onClick={props.onClick}>
       <ItemImage src={props.data.images[0]} alt="" />
 
       <div className="content">
@@ -76,7 +76,7 @@ const Item = (props: ItemProp) => {
 const SellingView = (props: SellingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
-  const { listings, pending } = props;
+  const { listings, pending, goToListingDetails } = props;
 
   if (pending) {
     return <h1>Loading...</h1>;
@@ -95,7 +95,11 @@ const SellingView = (props: SellingGeneratedProps) => {
             />
           ) : (
             listings.map((listing) => (
-              <Item key={listing.id} {...listingToItem(listing)} />
+              <Item
+                key={listing.id}
+                {...listingToItem(listing)}
+                onClick={() => goToListingDetails(listing.id)}
+              />
             ))
           )}
         </Col>

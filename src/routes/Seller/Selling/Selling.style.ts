@@ -17,6 +17,13 @@ export const ItemCard = styled.div`
   display: flex;
   justify-content: space-around;
   border-radius: 4px;
+  ${({ onClick }) =>
+    onClick
+      ? `cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }`
+      : ''};
 
   .content {
     margin-right: 24px;

@@ -118,6 +118,9 @@ export const Content = styled.div<{
   shouldIncludePadding: boolean;
   openSidebar: boolean;
   shouldUseFullWidth: boolean;
+  background?: string;
+  screenBackground?: string;
+  color?: string;
 }>`
   flex: 1;
   display: flex;
@@ -127,12 +130,12 @@ export const Content = styled.div<{
   transition: all 0.3s ease-in-out;
 
   background: ${(props) =>
-    props.theme.appType === 'buyer'
+    props.background || props.theme.appType === 'buyer'
       ? props.theme.grey.shade1
       : props.theme.grey.shade9};
 
   color: ${(props) =>
-    props.theme.appType === 'buyer'
+    props.color || props.theme.appType === 'buyer'
       ? props.theme.grey.shade9
       : props.theme.grey.shade1};
 
@@ -142,7 +145,7 @@ export const Content = styled.div<{
 
     .screen {
       background: ${(props) =>
-        props.theme.appType === 'buyer'
+        props.screenBackground || props.theme.appType === 'buyer'
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
