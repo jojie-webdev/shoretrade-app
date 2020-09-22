@@ -30,7 +30,6 @@ export const BannerContainer = styled.div`
   }
 
   .swiper-slide {
-    height: 297px;
     padding: 16px;
     border-radius: 4px;
     box-shadow: 0px 0px 0px;
@@ -56,9 +55,9 @@ export const BannerContainer = styled.div`
 export const Image = styled.img`
   width: 65vw;
   height: 295px;
-  margin-left: 103px;
   object-fit: cover;
   border-radius: 4px;
+  margin-left: 7%;
 `;
 
 export const DetailsContainer = styled.div`
