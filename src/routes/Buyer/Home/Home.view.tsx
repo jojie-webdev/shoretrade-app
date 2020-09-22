@@ -128,11 +128,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
 
   return (
-    // <ViewContainer>
-    <GridContainer>
+    <ViewContainer>
+    <div style={{ width: '65vw', margin: 'auto' }}>
       <Credit creditState={creditState} loading={loading} />
-        <Col xs={12} style={{marginLeft: '7%', width: '65vw'}}>
-        {/* <Col xs={12}> */}
+        <Col xs={12}>
           <Search
             value={search}
             onChange={onChangeSearchValue}
@@ -140,6 +139,7 @@ const HomeView = (props: HomeGeneratedProps) => {
             placeholder="Search.."
           />
         </Col>
+        </div>
 
       {/* Swiper here */}
       <SwiperContainer>
@@ -154,13 +154,12 @@ const HomeView = (props: HomeGeneratedProps) => {
               )
             })}
           </div>
-          {/* <div className="swiper-pagination"></div> */}
           <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div>
        
         </div>
       </SwiperContainer>
-      {/* <FeaturedCarousel slides={featured} /> */}
+    <div style={{ width: '65vw', margin: 'auto' }}>
       <ViewCol>
         <FavouritesHeader>
           <Typography variant="title5" color="shade8">
@@ -246,8 +245,8 @@ const HomeView = (props: HomeGeneratedProps) => {
           )}
         </CategoriesContainer>
       </ViewCol>
-    </GridContainer>
-    // {/* </ViewContainer> */}
+      </div>
+    </ViewContainer>
   );
 };
 
