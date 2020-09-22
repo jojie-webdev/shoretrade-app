@@ -9,8 +9,10 @@ import {
   Truck,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 
 import { SoldGeneratedProps } from '../Sold.props';
 import { DeliveryItem } from '../Sold.style';
@@ -18,6 +20,7 @@ import { TransitRow } from './InTransit.styles';
 
 const InTransit = (props: SoldGeneratedProps) => {
   const { inTransit } = props;
+  const history = useHistory();
   return (
     <TransitRow>
       {inTransit.map((group) => {
@@ -42,7 +45,14 @@ const InTransit = (props: SoldGeneratedProps) => {
               return (
                 <DeliveryItem
                   key={id}
-                  onClick={() => null}
+                  onClick={() =>
+                    history.push(
+                      SELLER_SOLD_ROUTES.DETAILS.replace(
+                        ':orderId',
+                        id
+                      ).replace(':status', 'TRANSIT')
+                    )
+                  }
                   iconAlignment="flex-start"
                 >
                   <div className="content">

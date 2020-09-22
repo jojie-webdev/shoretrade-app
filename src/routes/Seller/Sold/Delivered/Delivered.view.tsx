@@ -2,8 +2,10 @@ import React, { useReducer, useEffect } from 'react';
 
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
+import { SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 
 import { SoldGeneratedProps, RequestFilters } from '../Sold.props';
@@ -13,6 +15,7 @@ import { DeliveredRow } from './Delivered.styles';
 const Delivered = (props: SoldGeneratedProps) => {
   const { delivered, deliveredCount, filters, updateFilters } = props;
   const deliveredPagesTotal = Math.ceil(Number(deliveredCount) / 10);
+  const history = useHistory();
   return (
     <>
       <DeliveredRow>
@@ -30,7 +33,14 @@ const Delivered = (props: SoldGeneratedProps) => {
                 return (
                   <DeliveryItem
                     key={item.id}
-                    onClick={() => null}
+                    onClick={() =>
+                      history.push(
+                        SELLER_SOLD_ROUTES.DETAILS.replace(
+                          ':orderId',
+                          item.id
+                        ).replace(':status', 'DELIVERED')
+                      )
+                    }
                     iconAlignment="flex-start"
                   >
                     <div className="content">

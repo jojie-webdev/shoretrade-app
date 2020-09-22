@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getSellerOrdersPlacedActions } from 'store/actions';
+import { getSellerOrdersPlacedActions, placeOrderActions } from 'store/actions';
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
@@ -42,10 +42,45 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
   const title = formatOrderReferenceNumber(order?.orderRefNumber || 0);
 
   const items = sellerOrderToConfirmList(order);
+
+  const isPending =
+    useSelector((state: Store) => state.placeOrder.pending) || false;
+
+  const placeOrder = (config: { isPartial: boolean }) => {
+    dispatch(
+      placeOrderActions.request({
+        orderId: order?.orderId || '',
+        buyerCompanyId: order?.buyerCompanyId || '',
+        sellerCompanyId: order?.sellerCompanyId || '',
+        buyerId: order?.buyerId || '',
+        sellerId: order?.sellerId || '',
+        deliveryMethod: order?.deliveryMethod || '',
+        deliveryOption: order?.deliveryOption || '',
+        fromAddressId: order?.fromAddress.id || '',
+        toAddressId: order?.toAddress.id || '',
+        isPartial: config.isPartial,
+        orderLineItem: order?.orderLineItem
+          ? order?.orderLineItem.map((lineItem) => ({
+              id: lineItem.id,
+              weight: lineItem.weight,
+              price: lineItem.price,
+              weightConfirmed: lineItem.weightConfirmed,
+              priceDelta: lineItem.priceDelta,
+              listingBoxes: lineItem.listingBoxes,
+              listing: lineItem.listing,
+            }))
+          : [],
+      })
+    );
+  };
+
   const generatedProps: ConfirmListGeneratedProps = {
     // generated props here
     title,
     items,
+    orderId,
+    placeOrder,
+    isPending,
   };
   return <ConfirmListView {...props} {...generatedProps} />;
 };

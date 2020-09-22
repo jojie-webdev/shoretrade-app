@@ -4,7 +4,9 @@ import { SELLER_SOLD_ROUTES } from 'consts';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 // Screens
+import Confirm from './Confirm';
 import ConfirmList from './ConfirmList';
+import Details from './Details';
 import Landing from './Sold.container';
 
 const ROUTES = {
@@ -15,6 +17,14 @@ const ROUTES = {
   CONFIRM_LIST: {
     path: SELLER_SOLD_ROUTES.CONFIRM_LIST,
     children: ConfirmList,
+  },
+  CONFIRM: {
+    path: SELLER_SOLD_ROUTES.CONFIRM,
+    children: Confirm,
+  },
+  DETAILS: {
+    path: SELLER_SOLD_ROUTES.DETAILS,
+    children: Details,
   },
 };
 
