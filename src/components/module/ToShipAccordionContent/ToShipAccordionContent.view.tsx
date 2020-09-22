@@ -27,7 +27,7 @@ const ToShipAccordionContent = (
   props: ToShipAccordionContentProps
 ): JSX.Element => {
   const theme = useTheme();
-  const { items, onDownloadInvoice } = props;
+  const { items, onDownloadInvoice, onPress } = props;
   return (
     <>
       <ActionsContainer>
@@ -50,7 +50,7 @@ const ToShipAccordionContent = (
           <ActionContainer>
             <FileCheck width={13} height={13} fill={theme.grey.noshade} />
             <ActionText variant="caption" color="noshade">
-              Invoices
+              Invoice
             </ActionText>
           </ActionContainer>
         </Touchable>
@@ -67,7 +67,7 @@ const ToShipAccordionContent = (
       </ActionsContainer>
       {items.map(
         ({ orderNumber, buyer, uri, price, weight, name, tags, size }) => (
-          <Container key={orderNumber + name}>
+          <Container key={orderNumber + name} onClick={() => onPress()}>
             <ValuesRow>
               <Value>
                 <Typography variant="overline" color="shade6">

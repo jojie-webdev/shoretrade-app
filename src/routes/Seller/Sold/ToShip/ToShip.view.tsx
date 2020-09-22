@@ -33,6 +33,7 @@ export const SoldItem = (
     token: string;
   }
 ) => {
+  const history = useHistory();
   const { type = 'air', date, orders, id, orderRefNumber, token } = props;
   const [isOpen, setIsOpen] = useState(false);
   const desc =
@@ -81,7 +82,14 @@ export const SoldItem = (
             );
           }}
           items={orders}
-          onPress={() => null}
+          onPress={() =>
+            history.push(
+              SELLER_SOLD_ROUTES.DETAILS.replace(':orderId', id).replace(
+                ':status',
+                'PLACED'
+              )
+            )
+          }
         />
       </CollapsibleContent>
     </>

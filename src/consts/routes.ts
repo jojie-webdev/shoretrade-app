@@ -34,8 +34,9 @@ export const SELLER_DASHBOARD_ROUTES = {
 
 export const SELLER_SOLD_ROUTES = {
   LANDING: `${SELLER_ROUTES.SOLD}`,
-  CONFIRM_LIST: `${SELLER_ROUTES.SOLD}/confirm-list/:orderId`,
-  CONFIRM: `${SELLER_ROUTES.SOLD}/confirm-list/:orderId/:id`,
+  CONFIRM_LIST: `${SELLER_ROUTES.SOLD}/confirm/:orderId`,
+  CONFIRM: `${SELLER_ROUTES.SOLD}/confirm/:orderId/:lineItemId`,
+  DETAILS: `${SELLER_ROUTES.SOLD}/details/:status/:orderId`,
 };
 
 export const SELLER_ACCOUNT_ROUTES = {
