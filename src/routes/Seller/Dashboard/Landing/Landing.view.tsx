@@ -107,7 +107,7 @@ const TotalSales = (props: any) => (
         </Typography>
       </Link>
     </Col>
-    <Col md={5}>
+    <Col md={5} className="paid-col">
       <SalesCard>
         <Typography variant="overline" color="shade6" className="overline">
           Paid
