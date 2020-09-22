@@ -9,6 +9,7 @@ export interface DashboardPublicProps {
   children: any;
   routes: Route[];
   onBack?: () => void;
+  shouldUseFullWidth?: boolean;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {

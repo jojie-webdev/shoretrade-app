@@ -114,22 +114,25 @@ const BuyerRoutes = (): JSX.Element => {
   const { pathname } = location;
   const getBackAction = () => {
     if (
-      (
-        pathname.includes('/buyer/categories/')
-        &&
-        pathname.replace('/buyer/categories/', '').length > 0
-      ) || (
-        pathname.includes('/buyer/favourites')
-        )
+      (pathname.includes('/buyer/categories/') &&
+        pathname.replace('/buyer/categories/', '').length > 0) ||
+      pathname.includes('/buyer/favourites')
     ) {
       return history.goBack;
     }
     return undefined;
   };
+  const fullWidthRoutes = ['/buyer/home'];
+  if (pathname.includes('/buyer/product')) {
+    fullWidthRoutes.push(pathname);
+  }
+  console.log(fullWidthRoutes, pathname);
+
   return (
     <DashboardLayout
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
       onBack={getBackAction()}
+      shouldUseFullWidth={fullWidthRoutes.includes(pathname) ? true : false}
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (

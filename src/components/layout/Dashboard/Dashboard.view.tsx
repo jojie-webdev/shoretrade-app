@@ -198,6 +198,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         shouldIncludePadding={
           theme.appType === 'buyer' ? false : shouldIncludePadding
         }
+        shouldUseFullWidth={
+          props.shouldUseFullWidth ? props.shouldUseFullWidth : false
+        }
       >
         <Header
           pageTitle={pageTitle}
