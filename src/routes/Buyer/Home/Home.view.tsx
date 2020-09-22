@@ -32,6 +32,10 @@ import {
   FavouritesHeader,
   FavouritesContainer,
   SwiperContainer,
+  GridContainer,
+  SearchRow,
+  ViewCol,
+  ViewContainer
 } from './Home.style';
 
 Swiper.use([Pagination, Navigation]);
@@ -124,10 +128,11 @@ const HomeView = (props: HomeGeneratedProps) => {
 
 
   return (
-    <Container>
+    // <ViewContainer>
+    <GridContainer>
       <Credit creditState={creditState} loading={loading} />
-      <Row>
-        <Col xs={12}>
+        <Col xs={12} style={{marginLeft: '7%', width: '65vw'}}>
+        {/* <Col xs={12}> */}
           <Search
             value={search}
             onChange={onChangeSearchValue}
@@ -135,7 +140,6 @@ const HomeView = (props: HomeGeneratedProps) => {
             placeholder="Search.."
           />
         </Col>
-      </Row>
 
       {/* Swiper here */}
       <SwiperContainer>
@@ -157,7 +161,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         </div>
       </SwiperContainer>
       {/* <FeaturedCarousel slides={featured} /> */}
-      <Col>
+      <ViewCol>
         <FavouritesHeader>
           <Typography variant="title5" color="shade8">
             Favourites
@@ -201,9 +205,9 @@ const HomeView = (props: HomeGeneratedProps) => {
               })
             : null}
         </FavouritesContainer>
-      </Col>
+      </ViewCol>
 
-      <Col>
+      <ViewCol>
         <CategoriesHeader>
           <Typography variant="title5" color="shade8">
             Categories
@@ -241,8 +245,9 @@ const HomeView = (props: HomeGeneratedProps) => {
             <Loading />
           )}
         </CategoriesContainer>
-      </Col>
-    </Container>
+      </ViewCol>
+    </GridContainer>
+    // {/* </ViewContainer> */}
   );
 };
 

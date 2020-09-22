@@ -1,26 +1,46 @@
 import Typography from 'components/base/Typography';
-import { Row } from 'react-grid-system';
+import { Row, Container, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
 import 'swiper/swiper-bundle.css';
 
+export const ViewContainer = styled.div`
+  flex-direction: row;
+  padding: 8px;
+`;
+
 export const SwiperContainer = styled.div`
+  
+
   .swiper-pagination-bullet-active {
     background: ${({ theme }) => theme.grey.shade7};
   }
 
   .swiper-container {
     position: relative;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     height: 357px;
     width: 100%;
-    border-radius: 4px;
     overflow: hidden;
+    margin-left: 3%;
   }
+
+  .swiper-wrapper {
+    padding-inline-start: 0;
+  }
+  
+  .swiper-slide {
+    height: 357px;
+    padding: 16px;
+    border-radius: 4px;
+    // box-shadow: 0px 0px 0px;
+    // position: relative;
+  }
+
 
   .swiper-button-prev {
     color: ${({theme})=> theme.grey.shade7};
     width: 18px;
     height: 11px;
+    // left: -10px;
   }
   
   .swiper-button-next {
@@ -30,8 +50,10 @@ export const SwiperContainer = styled.div`
   }
 
   img {
-    position: absolute;
-    width: 100%;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    width: 65vw;
     height: 100%;
     object-fit: fill;
     left: 50%;
@@ -40,38 +62,26 @@ export const SwiperContainer = styled.div`
   }
 `;
 
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
-
-export const Container = styled.div`
-  ${customScrollbar}
+export const GridContainer = styled(Container)`
+  width: 100%;
+  max-width: 100%;
+  // overflow-x: hidden;
 `;
 
 export const CategoriesContainer = styled.div`
   display: flex;
+  width: 65vw;
+  margin-left: 7%;
+
 `;
 
 export const CategoriesHeader = styled.div`
   display: flex;
-  // border: 2px solid blue;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 48px;
+  width: 65vw;
+  margin-left: 7%;
 `;
 
 export const CreditContainer = styled.div`
@@ -82,6 +92,9 @@ export const CreditContainer = styled.div`
   background-color: #ffcf5c;
   height: 3.5em;
   margin-bottom: 24px;
+  width: 65vw;
+  margin-left: 7%;
+  
 `;
 
 export const Text = styled(Typography)`
@@ -103,3 +116,9 @@ export const InfoContainer = styled.span`
 export const FavouritesHeader = styled(CategoriesHeader)``;
 
 export const FavouritesContainer = styled(CategoriesContainer)``;
+
+export const SearchRow = styled(Row)`
+`;
+
+export const ViewCol = styled(Col)`
+`;
