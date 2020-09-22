@@ -23,7 +23,7 @@ const Star = (props: SVGProps): JSX.Element => {
         fill={props.fill || theme.grey.shade5}
       />
     </svg>
-  )
+  );
 };
 
 export default Star;

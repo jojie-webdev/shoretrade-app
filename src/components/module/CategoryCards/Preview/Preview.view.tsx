@@ -3,7 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import { Location } from 'components/base/SVG';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 
 import { PreviewProps } from './Preview.props';
@@ -22,7 +22,7 @@ import {
 
 const Preview = (props: PreviewProps): JSX.Element => {
   return (
-    <CardContainer className="centered">
+    <CardContainer>
       <div className="card">
         <div className="imgContainer">
           <img
@@ -38,69 +38,75 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </LocationContainer>
 
           <BadgeContainer>
-            <Badge>Aquafuture</Badge>
-            <Badge badgeColor="#F23742">Almost Gone</Badge>
+            {props.isAquafuture ? <Badge>Aquafuture</Badge> : null}
+            {parseInt(props.remaining || '0') <= 50 ? (
+              <Badge badgeColor="#F23742">Almost Gone!</Badge>
+            ) : null}
           </BadgeContainer>
         </div>
 
         <DetailsContainer>
           <HeaderContainer>
             <Row>
-              <Title>{props.type}</Title>
+              <Title variant="body" weight="bold">
+                {props.type}
+              </Title>
               <PriceContainer>
-                <Price>{props.price}</Price>
-                <TypographyView
+                <Price variant="body" weight="bold">
+                  {props.price}
+                </Price>
+                <Typography
                   style={{ textAlign: 'end' }}
                   variant="small"
                   color="shade6"
                 >
                   per {props.unit}
-                </TypographyView>
+                </Typography>
               </PriceContainer>
             </Row>
           </HeaderContainer>
-          <StatusContainer>
-            {props.state?.map((item) => {
-              return (
-                <Badge fontColor="#09131D" badgeColor="#EDEFFA">
-                  <TypographyView variant="small" weight="bold">
-                    {item}
-                  </TypographyView>
-                </Badge>
-              );
-            })}
-          </StatusContainer>
+          <Row>
+            <StatusContainer>
+              {props.state?.map((item) => {
+                return (
+                  <Badge fontColor="#09131D" badgeColor="#EDEFFA">
+                    <Typography variant="caption" weight="bold">
+                      {item}
+                    </Typography>
+                  </Badge>
+                );
+              })}
+            </StatusContainer>
+          </Row>
           <BodyContainer>
             <Row>
-              <TypographyView variant="small" color="shade6">
+              <Typography variant="small" color="shade6">
                 Remaining:
-              </TypographyView>
-              <TypographyView variant="small">
+              </Typography>
+              <Typography variant="small">
                 {props.remaining} {props.unit}
-              </TypographyView>
+              </Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <TypographyView variant="small" color="shade6">
+              <Typography variant="small" color="shade6">
                 Weight:
-              </TypographyView>
+              </Typography>
               {/* Need Weight Transformer */}
-              <TypographyView variant="small">{props.weight}</TypographyView>
+              <Typography variant="small">{props.weight}</Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <TypographyView variant="small" color="shade6">
+              <Typography variant="small" color="shade6">
                 Vendor:
-              </TypographyView>
-              <TypographyView variant="small">
-                {props.coop?.name}
-              </TypographyView>
+              </Typography>
+              <Typography variant="small">{props.coop?.name}</Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <TypographyView variant="small" color="shade6">
+              <Typography variant="small" color="shade6">
                 Min Order:
-              </TypographyView>
-              <TypographyView variant="small">
+              </Typography>
+              <Typography variant="small">
                 {props.minimumOrder} {props.unit}
-              </TypographyView>
+              </Typography>
             </Row>
           </BodyContainer>
         </DetailsContainer>

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -44,38 +44,35 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     <>
       <Image src={result.thumbnail} />
       <DetailsContainer>
-        <TypographyView variant="label" style={{ fontSize: 16 }}>
-          {result.name}
-        </TypographyView>
+        <Typography className="title">{result.name}</Typography>
         <ResultContainer>
-          <TypographyView className="font" variant="label">
+          <Typography variant="caption" weight="bold">
             {toPrice(result.price.to)}
-          </TypographyView>
-          <TypographyView
-            className="font"
-            variant="label"
+          </Typography>
+          <Typography
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 1 }}
           >
             per
-          </TypographyView>
-          <TypographyView
-            variant="label"
+          </Typography>
+          <Typography
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 4 }}
           >
             {formatMeasurementUnit(result.measurementUnit)}
-          </TypographyView>
-          <TypographyView variant="label" style={{ marginLeft: 1 }}>
+          </Typography>
+          <Typography weight="bold" variant="caption" style={{ marginLeft: 1 }}>
             {result.count}
-          </TypographyView>
-          <TypographyView
-            variant="label"
+          </Typography>
+          <Typography
+            variant="caption"
             color="shade6"
             style={{ marginLeft: 1 }}
           >
             item
-          </TypographyView>
+          </Typography>
         </ResultContainer>
       </DetailsContainer>
     </>
@@ -110,27 +107,17 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             <>
               <ResultContainer style={{ paddingLeft: 15 }}>
                 <Row>
-                  <TypographyView
-                    variant="label"
-                    style={{ fontSize: 24, fontWeight: 'normal' }}
-                  >
+                  <Typography variant="title5" weight="regular">
                     Results
-                  </TypographyView>
-                  <TypographyView
-                    variant="label"
-                    style={{
-                      marginLeft: 10,
-                      fontWeight: 'bold',
-                      fontSize: 24,
-                    }}
+                  </Typography>
+                  <Typography
+                    style={{ marginLeft: 10 }}
+                    variant="title5"
+                    weight="bold"
                   >
                     {results.length}
-                  </TypographyView>
+                  </Typography>
                 </Row>
-                {/* <Col xs={10}>
-                  
-                </Col> */}
-
                 {/* <Col xs={2}>
                   <FilterButton>
                     Filters <Filter></Filter>

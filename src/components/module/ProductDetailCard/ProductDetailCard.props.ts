@@ -7,5 +7,4 @@ export interface ProductDetailCardProps {
   location?: string;
   vendor?: string;
   unit?: string;
-  
 }

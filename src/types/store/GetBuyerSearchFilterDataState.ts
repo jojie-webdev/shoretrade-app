@@ -19,7 +19,7 @@ export type GetBuyerSearchFilterDataPayload = GenericResponse<{
       id: string;
       name: string;
       stateOptionId: string;
-    },
+    }
   ][];
   stateRules: Record<string, string[]>;
   typeMetric: string;

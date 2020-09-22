@@ -24,6 +24,7 @@ import CategoriesPreview from './Categories/Preview';
 import CategoriesSearch from './Categories/Search';
 import Checkout from './Checkout';
 import Home from './Home';
+import Favourites from './Home/Favourites';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -35,6 +36,12 @@ const ROUTES: Routes = {
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,
+  },
+  FAVOURITES: {
+    path: BUYER_ROUTES.FAVOURITES,
+    children: <Favourites />,
+    title: '',
+    hideFromSidebar: true,
   },
   SEARCH: {
     path: '/buyer/search',
@@ -107,17 +114,24 @@ const BuyerRoutes = (): JSX.Element => {
   const { pathname } = location;
   const getBackAction = () => {
     if (
-      pathname.includes('/buyer/categories/') &&
-      pathname.replace('/buyer/categories/', '').length > 0
+      (pathname.includes('/buyer/categories/') &&
+        pathname.replace('/buyer/categories/', '').length > 0) ||
+      pathname.includes('/buyer/favourites')
     ) {
       return history.goBack;
     }
     return undefined;
   };
+  const fullWidthRoutes = ['/buyer/home'];
+  if (pathname.includes('/buyer/product')) {
+    fullWidthRoutes.push(pathname);
+  }
+
   return (
     <DashboardLayout
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
       onBack={getBackAction()}
+      shouldUseFullWidth={fullWidthRoutes.includes(pathname) ? true : false}
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (

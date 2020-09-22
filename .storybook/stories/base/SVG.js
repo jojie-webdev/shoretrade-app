@@ -65,6 +65,8 @@ import {
   Close,
   Eye,
   EyeOff,
+  CarouselChevronRight,
+  CarouselChevronLeft,
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
@@ -155,6 +157,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Expand">
           <Expand width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CarouselChevronRight">
+          <CarouselChevronRight width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CarouselChevronLeft">
+          <CarouselChevronLeft width={30} height={30} />
         </Wrapper>
         <Wrapper label="PlaceholderIcon">
           <PlaceholderIcon width={30} height={30} />

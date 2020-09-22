@@ -117,6 +117,7 @@ export const LogoutButton = styled(Touchable)`
 export const Content = styled.div<{
   shouldIncludePadding: boolean;
   openSidebar: boolean;
+  shouldUseFullWidth: boolean;
 }>`
   flex: 1;
   display: flex;
@@ -145,7 +146,7 @@ export const Content = styled.div<{
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
-      width: 65vw;
+      width: ${(props) => (props.shouldUseFullWidth ? '100%' : '65vw')};
       height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;

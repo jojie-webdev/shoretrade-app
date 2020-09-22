@@ -3,6 +3,8 @@ import React from 'react';
 import { Expand, Heart, HeartFilled, Location } from 'components/base/SVG';
 
 // import Tag from '../../primitives/Tag';
+import Typography from 'components/base/Typography';
+
 import { ProductDetailsCard1Props } from './ProductDetailsCard1.props';
 import {
   Container,
@@ -13,6 +15,7 @@ import {
   TagsContainer,
   Size,
   LocationText,
+  TestContainer,
 } from './ProductDetailsCard1.style';
 
 const tagProps = {
@@ -32,7 +35,7 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
     <Container {...props}>
       <Header>
         <Row>
-          <Title variant="title3" weight="bold">
+          <Title variant="title5" weight="900">
             {title}
             {onFavorite && (
               <div style={{ float: 'right' }} onClick={onFavorite}>
@@ -43,10 +46,23 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
         </Row>
       </Header>
       <Row>
-        <Row>
-          <Expand />
-          {size} <Location width={14} height={16} /> {location}
-        </Row>
+        <TestContainer>
+          <div style={{ marginRight: -6 }}>
+            <Expand />
+          </div>
+          <Typography
+            variant="label"
+            style={{ fontWeight: 500, marginRight: 10 }}
+          >
+            {size}
+          </Typography>
+          <div style={{ marginRight: 6 }}>
+            <Location width={14} height={16} />
+          </div>
+          <Typography variant="label" style={{ fontWeight: 500 }}>
+            {location}
+          </Typography>
+        </TestContainer>
       </Row>
     </Container>
   );

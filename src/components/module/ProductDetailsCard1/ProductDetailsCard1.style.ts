@@ -50,3 +50,9 @@ export const LocationText = styled(Typography)`
   color: ${({ theme }) => theme.grey.shade9};
   margin-left: 6px;
 `;
+
+export const TestContainer = styled.div`
+  display: flex;
+  padding: 8px;
+  flex-direction: row;
+`;

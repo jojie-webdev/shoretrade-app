@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
+import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
+import { pathOr, splitEvery, take } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   getListingActions,
   getListingBoxesActions,
@@ -19,6 +21,7 @@ import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
 import { sizeToString } from 'utils/Listing';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import ProductDetailsView from './ProductDetails.view';
 
@@ -26,7 +29,9 @@ const ProductDetails = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
   const location = useLocation();
-  const listingId = location.pathname.replace('/buyer/product/', '');
+  const { id } = useParams();
+  const history = useHistory();
+  const listingId = id;
   const addresses = GetAddressOptions();
   const previousId =
     useSelector((state: Store) => state.getListing.request?.listingId) || '';
@@ -48,8 +53,18 @@ const ProductDetails = (): JSX.Element => {
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
-
+  const [pressedBoxRadio, setPressedBoxRadio] = useState('');
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
+  const unit = formatMeasurementUnit(currentListing?.measurementUnit);
+  const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
+  const uri = currentListing?.images[0] || '';
+
+  const imageTags = [
+    ...(currentListing?.isAquafuture ? [{ label: 'Aquafuture' }] : []),
+    ...(pathOr('', ['images', '0'], currentListing).includes('type-default')
+      ? [{ label: 'Not Actual Product Image' }]
+      : []),
+  ];
 
   const onFavorite = () => {
     setFavorite((prevState) => {
@@ -74,7 +89,7 @@ const ProductDetails = (): JSX.Element => {
       );
     }
   };
-
+  const price = Number(currentListing?.price || '0');
   const productDetailsCard1Props = {
     title: currentListing?.type || '',
     tags: (currentListing?.state || []).map((s) => ({ label: s })),
@@ -87,7 +102,6 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.origin.state || ''
     }, ${currentListing?.origin.countryCode || ''}`,
   };
-  const price = Number(currentListing?.price || '0');
   const productDetailsCard6Props = {
     price: price.toFixed(2),
     minOrder: currentListing?.minimumOrder || '0',
@@ -105,11 +119,113 @@ const ProductDetails = (): JSX.Element => {
     isFavorite: isSellerFavorite || false,
     onFavorite: onFavoriteSeller,
   };
+
+  const getListingBoxesResponse =
+    (useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) ||
+      [])[0] || [];
+
+  const previousWeightRequest = useSelector(
+    (state: Store) => state.getListingBoxes.request
+  );
+
+  const boxRadios =
+    previousWeightRequest?.listingId === listingId
+      ? getListingBoxesResponse.map((box) => {
+          const totalWeight = box.weight * (box.quantity || 0);
+          return {
+            id: box.id,
+            pressedBoxRadio,
+            weight: box.weight,
+            quantity: box.quantity || 0,
+            totalWeight,
+            cost: price * totalWeight,
+            unit,
+          };
+        })
+      : [];
+
+  const [weight, setWeight] = useState('');
+
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const getBoxes = () => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    const timerId = setTimeout(() => {
+      if (
+        (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
+        id !== previousWeightRequest?.listingId
+      )
+        dispatch(
+          getListingBoxesActions.request({
+            listingId: id,
+            weight,
+          })
+        );
+    }, 800);
+    setTimer(timerId);
+  };
+
+  useEffect(() => {
+    getBoxes();
+  }, [weight]);
+
+  const isAquafuture = currentListing?.isAquafuture || false;
   // MARK:- Methods
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
 
+  const onAddToCard = () => {
+    const currentBox = getListingBoxesResponse.find(
+      (box) => box.id === pressedBoxRadio
+    );
+
+    if (currentBox) {
+      const payload: CartItem = {
+        companyId: currentListing.coop?.id || '',
+        companyName: currentListing.coop?.name || '',
+        listing: {
+          id: currentListing.id,
+          type: currentListing.type,
+          fisherman: currentListing.fisherman,
+          metric: currentListing.size.unit,
+          sizeFrom: currentListing.size.from,
+          sizeTo: currentListing.size.to,
+          price: currentListing.price,
+          origin: currentListing.origin,
+          description: currentListing.description,
+          caught: currentListing.caught,
+          ends: currentListing.ends,
+          specifications: currentListing.state,
+          image: currentListing.images[0] || '',
+          minimumOrder: currentListing.minimumOrder,
+          sellInMultiplesOf: currentListing.sellInMultiplesOf,
+          remaining: currentListing.remaining,
+          average: currentListing.average,
+          isAquafuture: currentListing.isAquafuture,
+          allowedWeightAdjustment: currentListing.allowedWeightAdjustment,
+          isFavourite: currentListing.isFavourite,
+          address: currentListing.address,
+          measurementUnit: currentListing.measurementUnit,
+        },
+        orderBoxes: [
+          {
+            id: currentBox.id,
+            weight: currentBox.weight,
+            quantity: currentBox.quantity || 0,
+            count: currentBox.count || 0,
+          },
+        ],
+        subTotal: currentBox.weight * price,
+        weight: currentBox.weight,
+      };
+      dispatch(cartActions.add(payload));
+      history.push(BUYER_ROUTES.CHECKOUT);
+    }
+  };
   // MARK:- Effects
   useEffect(() => {
     if (listingId && previousId !== listingId) {
@@ -126,9 +242,20 @@ const ProductDetails = (): JSX.Element => {
     selectAddress,
     favorite,
     onFavorite,
+    setFavorite,
     productDetailsCard1Props,
     productDetailsCard6Props,
     sellerRatingProps,
+    unit,
+    boxRadios,
+    pressedBoxRadio,
+    setPressedBoxRadio,
+    remainingWeight,
+    isAquafuture,
+    weight,
+    setWeight,
+    getBoxes,
+    onAddToCard,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

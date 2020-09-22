@@ -29,13 +29,13 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   return (
     <Container {...props}>
       <Row>
-        <Price variant="title5" weight="bold">
+        <Price variant="title5" weight="900">
           {toPrice(price)}
         </Price>
         <Label
-          variant="label"
+          variant="caption"
           color="shade6"
-          style={{ marginLeft: 4, marginTop: 4 }}
+          style={{ marginLeft: 6.5, marginTop: 8 }}
         >
           per kg
         </Label>
@@ -44,27 +44,36 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Time Left:
         </Label>
-        {timeLeft && formattedTimeLeft()}
+        <Label variant="label" weight="bold">
+          {timeLeft && formattedTimeLeft()}
+        </Label>
       </Row>
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Average Box Size:
         </Label>
-        {avgBoxSize} {unit}
+        <Label variant="label" weight="bold">
+          {avgBoxSize} {unit}
+        </Label>
       </Row>
 
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Catch Date:
         </Label>
-        {catchDate && formattedCatchDate()}
+        <Label variant="label" weight="bold">
+          {catchDate && formattedCatchDate()}
+        </Label>
       </Row>
 
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Minimum Order:
         </Label>
-        {minOrder} {unit}
+        <Label variant="label" weight="bold">
+          {' '}
+          {minOrder} {unit}
+        </Label>
       </Row>
     </Container>
   );

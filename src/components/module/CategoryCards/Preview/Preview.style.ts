@@ -20,6 +20,8 @@ export const CardContainer = styled.div`
     margin-bottom: 2em;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
+    max-width: 300px;
+    min-width: 281px;
   }
 
   .card a {
@@ -65,12 +67,13 @@ export const BadgeContainer = styled.div`
   display: flex;
   position: absolute;
   bottom: 5%;
-  left: 5%;
+  left: 2%;
 `;
 
 export const StatusContainer = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 8px;
 `;
 
 export const DetailsContainer = styled.div`
@@ -97,13 +100,10 @@ export const PriceContainer = styled.div`
 `;
 
 export const Price = styled(TypographyView)`
-  font-size: 14px;
-  line-height: 18px;
   text-align: right;
 `;
 
 export const Title = styled(TypographyView)`
   font-size: 14px;
-  line-height: 18px;
   width: 70%;
 `;

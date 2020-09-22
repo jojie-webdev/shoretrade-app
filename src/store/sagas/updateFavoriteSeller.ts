@@ -10,7 +10,7 @@ import {
 } from 'types/store/UpdateFavoriteSellerState';
 
 export function* updateFavoriteSellerRequest(
-  action: AsyncAction<UpdateFavoriteSellerMeta, UpdateFavoriteSellerPayload>,
+  action: AsyncAction<UpdateFavoriteSellerMeta, UpdateFavoriteSellerPayload>
 ) {
   const state: Store = yield select();
 

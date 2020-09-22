@@ -9,7 +9,7 @@ import {
 import { Store } from 'types/store/Store';
 
 export function* getSellerByIdRequest(
-  action: AsyncAction<GetSellerByIdMeta, GetSellerByIdPayload>,
+  action: AsyncAction<GetSellerByIdMeta, GetSellerByIdPayload>
 ) {
   const state: Store = yield select();
 
@@ -20,7 +20,7 @@ export function* getSellerByIdRequest(
     const { data } = yield call(
       getSellerByCompanyId,
       action.meta,
-      state.auth.token,
+      state.auth.token
     );
 
     if (data) {
@@ -33,7 +33,7 @@ export function* getSellerByIdRequest(
 }
 
 function* getSellerByIdSuccess(
-  action: AsyncAction<GetSellerByIdMeta, GetSellerByIdPayload>,
+  action: AsyncAction<GetSellerByIdMeta, GetSellerByIdPayload>
 ) {
   // TODO: Add functionality
 }

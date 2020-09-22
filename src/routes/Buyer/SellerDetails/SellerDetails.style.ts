@@ -45,8 +45,6 @@ export const SpinnerContainer = styled.div`
 
 export const ListingContainer = styled.div`
   flex: 1;
-  
-  
 `;
 
 export const ListingCounter = styled.span`
@@ -63,7 +61,7 @@ export const ListContainer = styled.div`
   max-height: 400px;
   overflow: scroll;
   overflow-x: hidden;
-  
+
   ${customScrollbar}
 `;
 
