@@ -1,4 +1,10 @@
 /* PLOP_INJECT_IMPORT */
+export { default as MarketSectorWholesaler } from './MarketSectorWholesaler';
+export { default as MarketSectorWetShop } from './MarketSectorWetShop';
+export { default as MarketSectorRetailer } from './MarketSectorRetailer';
+export { default as MarketSectorRestaurantBar } from './MarketSectorRestaurantBar';
+export { default as MarketSectorProcessor } from './MarketSectorProcessor';
+export { default as MarketSectorHotel } from './MarketSectorHotel';
 export { default as Clock } from './Clock';
 export { default as Menu } from './Menu';
 export { default as Expand } from './Expand';

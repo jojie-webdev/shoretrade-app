@@ -39,11 +39,39 @@ export const FormikContainer = styled(Form)`
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: scroll;
+
+  .select-container {
+    margin-top: 24px;
+  }
+
+  .credit-line-info {
+    margin-top: 24px;
+  }
+
+  .market-sector-description {
+    margin-top: 8px;
+  }
+  .market-sector-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .market-sector-item {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
 `;
 
 export const GetStartedTitle = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade1};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade7};
   font-weight: 400;
+  b {
+    color: ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+  }
 `;
 
 export const StepCount = styled(Typography)`
@@ -52,7 +80,8 @@ export const StepCount = styled(Typography)`
 `;
 
 export const Title = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade1};
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
   font-weight: 400;
   margin-top: 4px;
 `;
@@ -109,4 +138,14 @@ export const BusinessLogoLabel = styled(Typography)`
 
 export const MobileField = styled(PhoneTextField)`
   margin-top: 24px;
+`;
+
+export const PaymentMethodOverline = styled(Typography)`
+  margin-top: 24px;
+  color: ${({ theme }) => theme.grey.shade6};
+  margin-bottom: 8px;
+`;
+
+export const PaymentMethodDetails = styled(Typography)`
+  color: ${({ theme }) => theme.grey.shade8};
 `;

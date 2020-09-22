@@ -130,18 +130,12 @@ const bankDetailsConstraints = {
       message: '^Invalid account number',
     },
   },
-  // estimatedAnnualRevenue: {
-  //   isValidPrice: '^Please enter a valid amount',
-  // },
-  // selectedMarketSector: {
-  //   presence: {
-  //     message: '^Please select a market sector',
-  //     allowEmpty: false,
-  //   },
-  // },
-  // agreement: {
-  //   isTrue: '^You must agree to the terms and conditions',
-  // },
+};
+
+const estimatedAnnualRevenueContraints = {
+  estimatedAnnualRevenue: {
+    isValidPrice: '^Please enter a valid amount',
+  },
 };
 
 const agreementConstraints = {
@@ -150,13 +144,34 @@ const agreementConstraints = {
   },
 };
 
-export const validateUserDetails = createFormikValidator(userDetailsConstraints);
+const selectedMarketSectorContstraints = {
+  selectedMarketSector: {
+    presence: {
+      message: '^Please select a market sector',
+      allowEmpty: false,
+    },
+  },
+};
+
+export const validateUserDetails = createFormikValidator(
+  userDetailsConstraints
+);
 export const validateBusinessDetails = createFormikValidator(
   businessDetailsConstraints
 );
 export const validateBusinessAddress = createFormikValidator(
   businessAddressContraints
 );
-export const validateBankDetails = createFormikValidator(bankDetailsConstraints);
+export const validateBankDetails = createFormikValidator(
+  bankDetailsConstraints
+);
+
+export const validateAnnualRevenue = createFormikValidator(
+  estimatedAnnualRevenueContraints
+);
+
+export const validateMarketSector = createFormikValidator(
+  selectedMarketSectorContstraints
+);
 
 export const validateAgreement = createFormikValidator(agreementConstraints);
