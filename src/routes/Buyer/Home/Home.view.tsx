@@ -220,8 +220,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                 return (
                   <Col sm={3} key={index}>
                     <Link
-                      // to={`${BUYER_ROUTES.CATEGORIES}/${category.id}`}
-                      to={BUYER_ROUTES.CATEGORY_PRODUCTS(`${category.id}`)}
+                      to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
                       key={category.id}
                     >
                       <Card
