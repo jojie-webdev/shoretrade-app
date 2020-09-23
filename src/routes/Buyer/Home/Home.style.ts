@@ -57,7 +57,6 @@ export const GridContainer = styled(Container)`
 
 export const CategoriesContainer = styled.div`
   display: flex;
-
 `;
 
 export const CategoriesHeader = styled.div`
@@ -97,8 +96,6 @@ export const FavouritesHeader = styled(CategoriesHeader)``;
 
 export const FavouritesContainer = styled(CategoriesContainer)``;
 
-export const SearchRow = styled(Row)`
-`;
+export const SearchRow = styled(Row)``;
 
-export const ViewCol = styled(Col)`
-`;
+export const ViewCol = styled(Col)``;
