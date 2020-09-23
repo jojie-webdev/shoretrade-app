@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { getAllListingsActions } from 'store/actions';
 import { GetListingSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
 
@@ -17,7 +18,7 @@ const ListingDetailsContainer = (
   props: ListingDetailsPublicProps
 ): JSX.Element => {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
 
   const { listingId } = props.match.params;
 
@@ -34,9 +35,11 @@ const ListingDetailsContainer = (
   //   );
   // };
 
-  // if (!currentListing) {
-  //   history.push(SELLING_ROUTES.LANDING);
-  // }
+  useEffect(() => {
+    if (!currentListing) {
+      dispatch(getAllListingsActions.request());
+    }
+  }, []);
 
   const generatedProps: ListingDetailsGeneratedProps = {
     // generated props here

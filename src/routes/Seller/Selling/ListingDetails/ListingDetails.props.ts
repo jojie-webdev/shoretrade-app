@@ -24,16 +24,27 @@ export interface ListingProps {
     tags: { label: string }[];
     size: string;
     location: string;
+    vendor: {
+      uri?: string;
+      name?: string;
+      rating?: any;
+    };
   };
   orderDetails: {
     price: string;
     minOrder: string;
     remaining: string;
-  };
-  boxDetails: {
-    avgBoxSize: string;
+    unit: string;
     validUntil: Date;
     catchDate: Date;
+  };
+  boxDetails: {
+    boxes?: {
+      id: string;
+      weight: number;
+      count: number;
+      quantity: number;
+    }[];
     unit: string;
   };
 }

@@ -19,7 +19,7 @@ export const listingToListingProps = (
       })),
     },
     sales: {
-      sales: sales.toFixed(2),
+      sales: toPrice(sales),
       soldWeight: sales.toFixed(2),
       totalWeight: (data?.originalWeight || 0).toFixed(2),
       unit: formatMeasurementUnit(data?.measurementUnit),
@@ -33,16 +33,22 @@ export const listingToListingProps = (
         : [],
       size: sizeToString(data?.typeMetric || '', data?.sizeFrom, data?.sizeTo),
       location: `${data?.origin.suburb}, ${data?.origin.state}, ${data?.origin.countryCode}`,
+      vendor: {
+        uri: data?.coopImage,
+        name: data?.coopName,
+        rating: data?.rating,
+      },
     },
     orderDetails: {
       price: toPrice(data?.pricePerKilo || 0, false),
       minOrder: data?.minimumOrder || '',
       remaining: (data?.remaining || 0).toFixed(2),
-    },
-    boxDetails: {
-      avgBoxSize: (data?.average || 0).toFixed(2),
+      unit: formatMeasurementUnit(data?.measurementUnit),
       validUntil: moment(data?.ends).toDate(),
       catchDate: moment(data?.catchDate).toDate(),
+    },
+    boxDetails: {
+      boxes: data?.boxes,
       unit: formatMeasurementUnit(data?.measurementUnit),
     },
   };

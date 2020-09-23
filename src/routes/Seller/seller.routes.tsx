@@ -96,6 +96,7 @@ const SellerRoutes = (): JSX.Element => {
     screenBackground?: string;
     color?: string;
     headerTextColor?: keyof Theme['grey'];
+    shouldUseFullWidth?: boolean;
   } => {
     if (pathname.includes('/seller/selling/details')) {
       return {
@@ -103,6 +104,7 @@ const SellerRoutes = (): JSX.Element => {
         background: theme.grey.shade1,
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
+        shouldUseFullWidth: true,
       };
     }
     return {};

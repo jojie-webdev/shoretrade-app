@@ -141,6 +141,7 @@ export const Content = styled.div<{
 
   .screen-wrapper {
     height: 80%;
+    width: 100%;
     position: relative;
 
     .screen {

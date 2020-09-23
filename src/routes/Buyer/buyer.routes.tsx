@@ -122,16 +122,13 @@ const BuyerRoutes = (): JSX.Element => {
     }
     return undefined;
   };
-  const fullWidthRoutes = ['/buyer/home'];
-  if (pathname.includes('/buyer/product')) {
-    fullWidthRoutes.push(pathname);
-  }
+  const fullWidthRoutes = ['/buyer/home', 'buyer/product'];
 
   return (
     <DashboardLayout
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
       onBack={getBackAction()}
-      shouldUseFullWidth={fullWidthRoutes.includes(pathname) ? true : false}
+      shouldUseFullWidth={fullWidthRoutes.includes(pathname)}
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (
