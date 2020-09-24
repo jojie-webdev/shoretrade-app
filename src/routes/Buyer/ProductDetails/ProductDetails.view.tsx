@@ -6,7 +6,9 @@ import Button from 'components/base/Button';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
+import Carousel from 'components/module/Carousel';
 import FeaturedCarousel from 'components/module/FeaturedCarousel';
+import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
@@ -29,7 +31,6 @@ import {
   BoxRadioContainer,
   ButtonContainer,
 } from './ProductDetails.style';
-
 SwiperCore.use([Navigation, Pagination]);
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -68,38 +69,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       {currentListing !== undefined ? (
         <>
           <BannerContainer>
-            <Swiper
-              id="product-details"
-              spaceBetween={50}
-              tag="section"
-              wrapperTag="ul"
-              slidesPerView={1}
-              loop={true}
-              autoplay={true}
-              // onSlideChange={() => {}}
-              // onSwiper={(swiper) => {}}
-              navigation
-              pagination
-            >
-              {currentListing.images &&
-                currentListing.images.map((image, key) => {
-                  return (
-                    <SwiperSlide key={key}>
-                      <Image
-                        style={{
-                          listStyle: 'none',
-                        }}
-                        src={image}
-                      />
-                    </SwiperSlide>
-                  );
-                })}
-            </Swiper>
-            {/* <FeaturedCarousel
-              previewClass="test"
-              previewContainerClass="test"
-              slides={currentListing.images}
-            /> */}
+            <Carousel id={'productDetails'} images={currentListing.images} />
           </BannerContainer>
           <div style={{ width: '65vw', margin: 'auto' }}>
             <Typography variant="label" className="description">
@@ -191,7 +161,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </DetailsContainer>
           </div>
         </>
-      ) : null}
+      ) : (
+        <Loading />
+      )}
     </Container>
   );
 };
