@@ -18,7 +18,7 @@ import {
 } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
-import Account from './Account';
+import Account from './Account/accounts.routes';
 import CategoriesLanding from './Categories/Landing';
 import CategoriesPreview from './Categories/Preview';
 import CategoriesSearch from './Categories/Search';
@@ -85,6 +85,7 @@ const ROUTES: Routes = {
     children: <Account />,
     title: 'Account',
     icon: AccountIcon,
+    nested: true,
   },
   CHECKOUT: {
     path: '/buyer/checkout',
@@ -135,7 +136,7 @@ const BuyerRoutes = (): JSX.Element => {
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (
-          <Route key={`${r.path}`} path={`${r.path}`} exact>
+          <Route key={`${r.path}`} path={`${r.path}`} exact={!r.nested}>
             {r.children}
           </Route>
         ))}

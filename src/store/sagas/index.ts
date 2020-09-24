@@ -1,12 +1,15 @@
 import { fork, all } from 'redux-saga/effects';
 
 import addAddress from './addAddress';
+import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
 import changePassword from './changePassword';
+import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
+import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
 import forgotPassword from './forgotPassword';
@@ -24,6 +27,7 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
+import getPaymentMethods from  './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
@@ -36,6 +40,7 @@ import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
+import udpateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
@@ -50,6 +55,7 @@ const sagas = [
   getUser,
   getAllListings,
   register,
+  getUser,
   updateUser,
   getAddresses,
   updateAddress,
@@ -84,6 +90,11 @@ const sagas = [
   searchAndCountProductType,
   confirmWeight,
   placeOrder,
+  getPaymentMethods,
+  chargeCard,
+  addCardToken,
+  udpateDefaultCard,
+  deleteCard,
 ];
 
 export default function* root() {

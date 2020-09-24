@@ -3,14 +3,17 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 
 import addAddress from './addAddress';
+import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
 import auth from './auth';
 import cart from './cart';
 import changePassword from './changePassword';
+import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
+import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
 import forgotPassword from './forgotPassword';
@@ -30,6 +33,7 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
+import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
@@ -44,6 +48,7 @@ import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
+import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
@@ -102,6 +107,11 @@ export default (routeHistory: History) =>
         getBuyerOrdersPlaced,
         getBuyerOrdersTransit,
         getBuyerOrdersDelivered,
+        getPaymentMethods,
+        chargeCard,
+        addCardToken,
+        updateDefaultCard,
+        deleteCard,
       }).sort()
     )
   );

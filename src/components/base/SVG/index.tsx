@@ -6,6 +6,12 @@ export { default as MarketSectorRestaurantBar } from './MarketSectorRestaurantBa
 export { default as MarketSectorProcessor } from './MarketSectorProcessor';
 export { default as MarketSectorHotel } from './MarketSectorHotel';
 export { default as Clock } from './Clock';
+export { default as Paypal } from './Paypal';
+export { default as Zippay } from './Zippay';
+export { default as Mastercard } from './Mastercard';
+export { default as Visa } from './Visa';
+export { default as RoundedTickInactive } from './RoundedTickInactive';
+export { default as RoundedTickActive } from './RoundedTickActive';
 export { default as Menu } from './Menu';
 export { default as Expand } from './Expand';
 export { default as CarouselChevronRight } from './CarouselChevronRight';

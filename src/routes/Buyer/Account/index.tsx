@@ -1,1 +1,3 @@
-export { default } from './Account.container';
+import Account from './accounts.routes';
+
+export default Account;
