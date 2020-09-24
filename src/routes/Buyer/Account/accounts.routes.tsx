@@ -6,8 +6,9 @@ import { Routes, Route as TRoute } from 'types/Routes';
 
 import AddCredit from './AddCredit';
 import Balance from './Balance';
-import Landing from './Landing';
 import Card from './Card';
+import Landing from './Landing';
+import YourDetails from './YourDetails';
 
 const ROUTES: Routes = {
   LANDING: {
@@ -20,7 +21,7 @@ const ROUTES: Routes = {
   },
   DETAILS: {
     path: BUYER_ACCOUNT_ROUTES.DETAILS,
-    children: <Landing />,
+    children: <YourDetails />,
   },
   DELIVERY: {
     path: BUYER_ACCOUNT_ROUTES.DELIVERY,

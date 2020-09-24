@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
+import { LandingGeneratedProps } from './Landing.props';
 import LandingView from './Landing.view';
 
 const Landing = (): JSX.Element => {
@@ -16,9 +17,10 @@ const Landing = (): JSX.Element => {
       : null;
   }, [getUser]);
 
-  const generatedProps = {
+  const generatedProps: LandingGeneratedProps = {
     // generated props here
     credit: defaultCompany ? defaultCompany.credit : '',
+    company: defaultCompany ? defaultCompany : {},
   };
   return <LandingView {...generatedProps} />;
 };

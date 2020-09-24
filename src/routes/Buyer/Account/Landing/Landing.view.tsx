@@ -11,7 +11,10 @@ import { Container, Header, NavInteraction, } from './Landing.style';
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
     { value: 'Balance & Payment', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
-    { value: 'Your Details', path: BUYER_ACCOUNT_ROUTES.DETAILS },
+    {
+      value: 'Your Details',
+      path: BUYER_ACCOUNT_ROUTES.DETAILS + `?companyId=${props.company?.id}`,
+    },
     { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.DELIVERY },
     { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },

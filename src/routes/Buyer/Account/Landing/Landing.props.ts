@@ -1,1 +1,4 @@
-export interface LandingGeneratedProps {}
+export interface LandingGeneratedProps {
+  credit?: string;
+  company?: Record<string, any>;
+}
