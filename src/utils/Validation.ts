@@ -1,3 +1,4 @@
+import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import pick from 'ramda/es/pick';
 import validate from 'validate.js';
@@ -62,6 +63,14 @@ validate.validators.isValidPrice = (value: string, message: string) => {
 };
 
 validate.validators.isFutureDate = (value: Date, message: string) => {
+  if (`${value}`.includes('/')) {
+    const split: string[] = `${value}`.split('/');
+    const MM: number = +split[0];
+    const YY: number = +split[1];
+
+    value = new Date(2000 + YY, MM - 1);
+  }
+
   if (value && value > new Date()) {
     return null;
   }

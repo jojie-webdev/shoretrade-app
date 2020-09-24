@@ -47,3 +47,8 @@ export { default as searchAndCountProductTypeActions } from './searchAndCountPro
 export { default as historyActions } from './history';
 export { default as confirmWeightActions } from './confirmWeight';
 export { default as placeOrderActions } from './placeOrder';
+export { default as getPaymentMethodsActions } from './getPaymentMethods';
+export { default as chargeCardActions } from './chargeCard';
+export { default as addCardTokenActions } from './addCardToken';
+export { default as updateDefaultCardActions } from './updateDefaultCard';
+export { default as deleteCardActions } from './deleteCard';

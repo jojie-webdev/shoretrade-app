@@ -11,6 +11,12 @@ import {
   MarketSectorProcessor,
   MarketSectorHotel,
   Clock,
+  Paypal,
+  Zippay,
+  Mastercard,
+  Visa,
+  RoundedTickInactive,
+  RoundedTickActive,
   Menu,
   Expand,
   PlaceholderIcon,
@@ -151,6 +157,24 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Clock">
           <Clock width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Paypal">
+          <Paypal width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Zippay">
+          <Zippay width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Mastercard">
+          <Mastercard width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Visa">
+          <Visa width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="RoundedTickInactive">
+          <RoundedTickInactive width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="RoundedTickActive">
+          <RoundedTickActive width={30} height={30} />
         </Wrapper>
         <Wrapper label="Menu">
           <Menu width={30} height={30} />

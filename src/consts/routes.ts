@@ -73,4 +73,19 @@ export const BUYER_ROUTES = {
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
+  ACCOUNT: `${BUYER_ROOT}/account`,
+};
+
+export const BUYER_ACCOUNT_ROUTES = {
+  LANDING: `${BUYER_ROUTES.ACCOUNT}`,
+  BANK_DETAILS: `${BUYER_ROUTES.ACCOUNT}/bank-details`,
+  DETAILS: `${BUYER_ROUTES.ACCOUNT}/details`,
+  DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
+  LINKED_ACCOUNTS: `${BUYER_ROUTES.ACCOUNT}/linked-accounts`,
+  CHANGE_PASSWORD: `${BUYER_ROUTES.ACCOUNT}/change-password`,
+  HELP: `${BUYER_ROUTES.ACCOUNT}/help`,
+  ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
+  CREDIT_HISORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
+  CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
+  ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
 };

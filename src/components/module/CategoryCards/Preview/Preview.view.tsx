@@ -1,10 +1,10 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import { Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
+import { useTheme } from 'utils/Theme';
 
 import { PreviewProps } from './Preview.props';
 import {
@@ -21,6 +21,7 @@ import {
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
+  const theme = useTheme();
   return (
     <CardContainer>
       <div className="card">
@@ -69,7 +70,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
             <StatusContainer>
               {props.state?.map((item) => {
                 return (
-                  <Badge fontColor="#09131D" badgeColor="#EDEFFA">
+                  <Badge
+                    fontColor={theme.grey.shade9}
+                    badgeColor={theme.grey.shade2}
+                  >
                     <Typography variant="caption" weight="bold">
                       {item}
                     </Typography>
