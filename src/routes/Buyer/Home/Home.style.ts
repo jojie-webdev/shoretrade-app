@@ -1,64 +1,58 @@
 import Typography from 'components/base/Typography';
-import { Row } from 'react-grid-system';
+import { Row, Container, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
 import 'swiper/swiper-bundle.css';
 
+export const ViewContainer = styled.div`
+  flex-direction: row;
+  padding: 8px;
+`;
+
 export const SwiperContainer = styled.div`
-  .swiper-pagination-bullet-active {
-    background: ${({ theme }) => theme.grey.shade7};
-  }
+  width: 100%;
+  max-width: 100%;
+  height: 357px;
+  margin-bottom: 16px;
 
   .swiper-container {
-    position: relative;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-    height: 357px;
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
   }
 
   .swiper-button-prev {
-    color: ${({theme})=> theme.grey.shade7};
-    width: 18px;
-    height: 11px;
-  }
-  
-  .swiper-button-next {
-    color: ${({theme})=> theme.grey.shade7};
+    color: ${({ theme }) => theme.grey.shade7};
     width: 18px;
     height: 11px;
   }
 
+  .swiper-button-next {
+    color: ${({ theme }) => theme.grey.shade7};
+    width: 18px;
+    height: 11px;
+  }
+
+  .swiper-slide {
+    height: 357px;
+    padding: 16px;
+  }
+
   img {
-    position: absolute;
-    width: 100%;
+    position: relative;
+    width: 65vw;
     height: 100%;
     object-fit: fill;
     left: 50%;
     top: 50%;
+    border-radius: 4px;
     -webkit-transform: translateY(-50%) translateX(-50%);
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   }
 `;
 
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
-
-export const Container = styled.div`
-  ${customScrollbar}
+export const GridContainer = styled(Container)`
+  width: 100%;
+  max-width: 100%;
 `;
 
 export const CategoriesContainer = styled.div`
@@ -66,8 +60,6 @@ export const CategoriesContainer = styled.div`
 `;
 
 export const CategoriesHeader = styled.div`
-  display: flex;
-  // border: 2px solid blue;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -103,3 +95,7 @@ export const InfoContainer = styled.span`
 export const FavouritesHeader = styled(CategoriesHeader)``;
 
 export const FavouritesContainer = styled(CategoriesContainer)``;
+
+export const SearchRow = styled(Row)``;
+
+export const ViewCol = styled(Col)``;
