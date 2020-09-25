@@ -199,9 +199,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
       <Content
         openSidebar={openSidebar}
-        shouldIncludePadding={
-          theme.appType === 'buyer' ? false : shouldIncludePadding
-        }
+        shouldIncludePadding={shouldIncludePadding}
         shouldUseFullWidth={
           props.shouldUseFullWidth ? props.shouldUseFullWidth : false
         }
@@ -219,7 +217,18 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         />
         <div className="screen-wrapper">
           <div className="screen">
-            <Container className="container">{children}</Container>
+            <Container
+              className="container"
+              style={{
+                padding: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                width: '100%',
+                maxWidth: '100%',
+              }}
+            >
+              {children}
+            </Container>
           </div>
         </div>
       </Content>

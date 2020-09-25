@@ -97,6 +97,7 @@ const SellerRoutes = (): JSX.Element => {
     color?: string;
     headerTextColor?: keyof Theme['grey'];
     shouldUseFullWidth?: boolean;
+    shouldIncludePadding?: boolean;
   } => {
     if (pathname.includes('/seller/selling/details')) {
       return {
@@ -105,6 +106,13 @@ const SellerRoutes = (): JSX.Element => {
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
         shouldUseFullWidth: true,
+        shouldIncludePadding: false,
+      };
+    }
+
+    if (pathname.includes(SELLER_ROUTES.ADD_PRODUCT)) {
+      return {
+        shouldIncludePadding: false,
       };
     }
     return {};

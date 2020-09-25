@@ -7,20 +7,16 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
 import Carousel from 'components/module/Carousel';
-import FeaturedCarousel from 'components/module/FeaturedCarousel';
 import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
   Container,
-  Image,
   BannerContainer,
   DetailsContainer,
   SellerRatingContainer,
@@ -31,7 +27,6 @@ import {
   BoxRadioContainer,
   ButtonContainer,
 } from './ProductDetails.style';
-SwiperCore.use([Navigation, Pagination]);
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -71,7 +66,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           <BannerContainer>
             <Carousel id={'productDetails'} images={currentListing.images} />
           </BannerContainer>
-          <div style={{ width: '65vw', margin: 'auto' }}>
+          <div style={{ width: '65%', margin: 'auto' }}>
             <Typography variant="label" className="description">
               {currentListing.description}
             </Typography>

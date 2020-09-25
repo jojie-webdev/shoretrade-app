@@ -3,6 +3,7 @@ import React from 'react';
 import { Expand, Location, StarFilled, Star } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { API } from 'consts';
 import { Row, Col } from 'react-grid-system';
@@ -22,12 +23,19 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
   const { listing } = props;
 
-  const { productDetails, sales, orderDetails } = listing;
+  const { productDetails, sales, orderDetails, carousel } = listing;
+  const images = carousel.items.map((i) => i.uri);
   return (
-    <Wrapper fluid style={{ padding: 0 }}>
-      <Row>
-        <Col sm={12} md={12} lg={6}>
+    <Wrapper>
+      <Row nogutter style={{ width: '75%', paddingRight: '5%' }}>
+        <Col sm={12} md={12} lg={7}>
           <DetailsCard>
+            <Carousel
+              id="product-carousel"
+              images={images}
+              height={'200px'}
+              swiperWidth="75%"
+            />
             <div className="details-container">
               <Typography variant="title5" color="shade9" weight="bold">
                 {productDetails.title}
@@ -75,7 +83,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
           </DetailsCard>
         </Col>
-        <Col sm={12} md={12} lg={6}>
+        <Col sm={12} md={12} lg={5}>
           <SalesCard>
             <Typography variant="overline" color="shade9">
               SALES

@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { authActions } from 'store/actions';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import { useTheme } from 'utils/Theme';
 
 import {
   DashboardPublicProps,
@@ -14,12 +15,17 @@ import {
 import DashboardView from './Dashboard.view';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
+  const theme = useTheme();
   const dispatch = useDispatch();
   const location = useLocation();
 
   // MARK:- State
   const [pageTitle, setPageTitle] = useState('');
-  const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
+  const shouldIncludePadding =
+    props.shouldIncludePadding !== undefined
+      ? props.shouldIncludePadding
+      : theme.appType === 'seller';
+
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const getUser = useSelector((state: Store) => state.getUser);
@@ -53,7 +59,6 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     // This is a hacky way for an edge case in add product
     // We need this so that the absolutes such as
     // progress indicator and box summary can fit in the screen
-    setShouldIncludePadding(location.pathname !== SELLER_ROUTES.ADD_PRODUCT);
 
     let innerRoute = location.pathname.split('/')[2];
     innerRoute = formatRouteString(innerRoute || '');

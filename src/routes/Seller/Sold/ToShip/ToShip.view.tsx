@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SegmentedControls from 'components/base/SegmentedControls';
 import { InfoFilled, Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import SwiperContainer from 'components/layout/SwiperContainer';
 import EmptyState from 'components/module/EmptyState';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
@@ -13,6 +14,8 @@ import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { useTheme } from 'utils/Theme';
+
+import 'swiper/swiper-bundle.min.css';
 
 import {
   TabOptions,
@@ -147,19 +150,20 @@ const ToShip = (props: SoldGeneratedProps) => {
           </div>
           <Typography color="alert">Pending Confirmation</Typography>
         </Col>
-
-        <Swiper
-          spaceBetween={50}
-          slidesPerView={1}
-          onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
-          loop
-        >
-          {pendingToShip.map((item) => (
-            <SwiperSlide key={item.id}>
-              <PendingItem {...item} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <SwiperContainer height={'100px'}>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
+            loop
+          >
+            {pendingToShip.map((item) => (
+              <SwiperSlide key={item.id}>
+                <PendingItem {...item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </SwiperContainer>
         <div className="pagination-container">
           <Pagination
             variant="infinite-dots"

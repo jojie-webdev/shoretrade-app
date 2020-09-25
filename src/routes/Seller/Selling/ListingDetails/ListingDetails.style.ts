@@ -1,7 +1,9 @@
-import { Container } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Wrapper = styled(Container)`
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
   .separator {
     width: 100%;
     height: 2px;
@@ -17,7 +19,7 @@ export const DetailsCard = styled.div`
   .details-container {
     padding: 24px;
     background-color: ${({ theme }) => theme.grey.noshade};
-    width: calc(100% - 96px);
+    width: calc(75%);
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
   }
