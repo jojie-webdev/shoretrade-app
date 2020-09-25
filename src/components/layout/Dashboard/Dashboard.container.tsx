@@ -20,7 +20,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const location = useLocation();
 
   // MARK:- State
-  const [pageTitle, setPageTitle] = useState('');
+  const [pageTitle, setPageTitle] = useState(props.pageTitle || '');
   const shouldIncludePadding =
     props.shouldIncludePadding !== undefined
       ? props.shouldIncludePadding
@@ -59,12 +59,19 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     // This is a hacky way for an edge case in add product
     // We need this so that the absolutes such as
     // progress indicator and box summary can fit in the screen
+    if (!props.pageTitle) {
+      let innerRoute = location.pathname.split('/')[2];
+      innerRoute = formatRouteString(innerRoute || '');
 
-    let innerRoute = location.pathname.split('/')[2];
-    innerRoute = formatRouteString(innerRoute || '');
-
-    setPageTitle(innerRoute);
+      setPageTitle(innerRoute);
+    }
   }, [location]);
+
+  useEffect(() => {
+    if (props.pageTitle) {
+      setPageTitle(props.pageTitle);
+    }
+  }, [props.pageTitle]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

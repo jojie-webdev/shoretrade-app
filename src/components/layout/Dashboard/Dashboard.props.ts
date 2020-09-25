@@ -15,6 +15,7 @@ export interface DashboardPublicProps {
   color?: string;
   headerTextColor?: keyof Theme['grey'];
   shouldIncludePadding?: boolean;
+  pageTitle?: string;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {

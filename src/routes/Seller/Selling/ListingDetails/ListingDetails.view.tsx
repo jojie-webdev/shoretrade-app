@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from 'components/base/Button';
 import { Expand, Location, StarFilled, Star } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -17,13 +18,14 @@ import {
   SellerPreview,
   SalesCard,
   OrderBoxCard,
+  ActionsContainer,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
-  const { listing } = props;
+  const { listing, onRemove } = props;
 
-  const { productDetails, sales, orderDetails, carousel } = listing;
+  const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
   const images = carousel.items.map((i) => i.uri);
   return (
     <Wrapper>
@@ -135,7 +137,28 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 Count per Box
               </Typography>
             </div>
+            {boxDetails.boxes &&
+              boxDetails.boxes?.map((b) => (
+                <div key={b.id} className="box-details-row">
+                  <Typography color="shade9" weight="bold">
+                    {b.weight} {boxDetails.unit}
+                  </Typography>
+                  <Typography color="shade9" weight="bold">
+                    x{b.quantity}
+                  </Typography>
+                  <Typography color="shade9" weight="bold">
+                    {b.quantity * b.weight} {boxDetails.unit}
+                  </Typography>
+                  <Typography color="shade9" weight="bold">
+                    {b.count}
+                  </Typography>
+                </div>
+              ))}
           </OrderBoxCard>
+          <ActionsContainer>
+            <Button text="Edit" variant="outline" onClick={() => null} />
+            <Button text="Remove" onClick={onRemove} />
+          </ActionsContainer>
         </Col>
       </Row>
     </Wrapper>

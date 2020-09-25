@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getAllListingsActions } from 'store/actions';
+import { endListingActions, getAllListingsActions } from 'store/actions';
 import { GetListingSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
 
@@ -26,14 +26,14 @@ const ListingDetailsContainer = (
 
   const listing = listingToListingProps(currentListing);
 
-  // const onRemove = () => {
-  //   dispatch(
-  //     endListingActions.request({
-  //       listingId,
-  //       companyId: currentListing?.coopId || '',
-  //     })
-  //   );
-  // };
+  const onRemove = () => {
+    dispatch(
+      endListingActions.request({
+        listingId,
+        companyId: currentListing?.coopId || '',
+      })
+    );
+  };
 
   useEffect(() => {
     if (!currentListing) {
@@ -44,6 +44,7 @@ const ListingDetailsContainer = (
   const generatedProps: ListingDetailsGeneratedProps = {
     // generated props here
     listing,
+    onRemove,
   };
   return <ListingDetailsView {...props} {...generatedProps} />;
 };

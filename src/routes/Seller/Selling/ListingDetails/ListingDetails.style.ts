@@ -122,8 +122,23 @@ export const OrderBoxCard = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 16px;
-    & p:not(:last-child) {
+    justify-content: space-between;
+    /* & p:not(:last-child) {
       margin-right: 24px;
-    }
+    } */
+  }
+`;
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+
+  & button {
+    width: 50%;
+  }
+
+  & button:not(:last-child) {
+    margin-right: 16px;
   }
 `;

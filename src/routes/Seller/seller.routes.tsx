@@ -98,6 +98,8 @@ const SellerRoutes = (): JSX.Element => {
     headerTextColor?: keyof Theme['grey'];
     shouldUseFullWidth?: boolean;
     shouldIncludePadding?: boolean;
+    onBack?: () => void;
+    pageTitle?: string;
   } => {
     if (pathname.includes('/seller/selling/details')) {
       return {
@@ -107,6 +109,8 @@ const SellerRoutes = (): JSX.Element => {
         headerTextColor: 'shade9',
         shouldUseFullWidth: true,
         shouldIncludePadding: false,
+        onBack: history.goBack,
+        pageTitle: 'Selling Details',
       };
     }
 
