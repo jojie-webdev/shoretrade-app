@@ -14,7 +14,6 @@ pipelines:
           caches:
             - node
           script:
-            - cd pwa
             - npm install --silent
             - CI=false npm run build
             - pipe: atlassian/aws-s3-deploy:0.3.2
