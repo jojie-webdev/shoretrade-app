@@ -1,0 +1,33 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:8.15.0
+
+pipelines:
+  branches:
+    "staging":
+      - step:
+          name: FE - Build and deploy
+          deployment: Staging
+          caches:
+            - node
+          script:
+            - cd pwa
+            - npm install --silent
+            - CI=false npm run build
+            - pipe: atlassian/aws-s3-deploy:0.3.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'ap-southeast-2'
+                S3_BUCKET: $S3_BUCKET
+                ACL: 'public-read'
+                DELETE_FLAG: 'true'
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-2'
+                DISTRIBUTION_ID: $CLOUDFRONT_DISTRIBUTION_ID
