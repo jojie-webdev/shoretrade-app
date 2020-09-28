@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { SELLER_ROUTES } from 'consts';
+import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
 import pathOr from 'ramda/src/pathOr';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
@@ -319,6 +319,10 @@ const AddProduct = (): JSX.Element => {
     dispatch(editableListingActions.clear());
   };
 
+  const preview = () => {
+    history.push(ADD_PRODUCT_ROUTES.PREVIEW);
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -345,6 +349,7 @@ const AddProduct = (): JSX.Element => {
     saveListing,
     isExisting,
     discardChanges,
+    preview,
   };
 
   return <AddProductView {...generatedProps} />;

@@ -45,6 +45,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     saveListing,
     isExisting,
     discardChanges,
+    preview,
   } = props;
 
   const currentStep = () => {
@@ -125,6 +126,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             saveListing={saveListing}
+            preview={preview}
           />
         );
     }

@@ -24,7 +24,7 @@ const ListingDetailsContainer = (
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { listingId } = props.match.params;
+  const listingId = props.match?.params.listingId || '';
 
   const currentListing = GetListingSelector(listingId);
 

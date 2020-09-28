@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import { Expand, Location, StarFilled, Star } from 'components/base/SVG';
@@ -8,6 +8,7 @@ import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { API } from 'consts';
 import { Row, Col } from 'react-grid-system';
+import { base64ToFile } from 'utils/File';
 import { useTheme } from 'utils/Theme';
 
 import { ListingDetailsProps } from './ListingDetails.props';
@@ -19,14 +20,37 @@ import {
   SalesCard,
   OrderBoxCard,
   ActionsContainer,
+  ActionContainer,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
-  const { listing, onRemove, onEdit } = props;
+  const { listing, onRemove, onEdit, onCreate, isExisting, isPending } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
-  const images = carousel.items.map((i) => i.uri);
+
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (carousel.items) {
+      Promise.all(
+        carousel.items
+          .filter((item) => !item.uri && item.data)
+          .map((item) =>
+            // ignore errors at this point since we already done the filter
+            // @ts-ignore
+            base64ToFile(item.data?.data, item.data?.name, item.data?.type)
+          )
+      ).then((imageFiles) => {
+        const imageURLs = carousel.items
+          .filter((item) => item.uri)
+          .map((item) => item.uri || '');
+        const convertedImageURLs = imageFiles.map(URL.createObjectURL);
+        setImages([...imageURLs, ...convertedImageURLs]);
+      });
+    }
+  }, [carousel.items]);
+
   return (
     <Wrapper>
       <Row nogutter style={{ width: '75%', paddingRight: '5%' }}>
@@ -155,10 +179,22 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </div>
               ))}
           </OrderBoxCard>
-          <ActionsContainer>
-            <Button text="Edit" variant="outline" onClick={onEdit} />
-            <Button text="Remove" onClick={onRemove} />
-          </ActionsContainer>
+          {onRemove && (
+            <ActionsContainer>
+              <Button text="Edit" variant="outline" onClick={onEdit} />
+              <Button text="Remove" onClick={onRemove} />
+            </ActionsContainer>
+          )}
+
+          {onCreate && (
+            <ActionContainer>
+              <Button
+                text={isExisting ? 'Update' : 'Create Listing'}
+                onClick={onCreate}
+                loading={isPending}
+              />
+            </ActionContainer>
+          )}
         </Col>
       </Row>
     </Wrapper>
