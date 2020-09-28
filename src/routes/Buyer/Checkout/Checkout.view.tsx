@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
@@ -9,60 +8,38 @@ import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
+import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
-import { CheckoutGeneratedProps } from './Checkout.props';
+import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
 import { Container, Footer } from './Checkout.style';
 
-const MOCK_ORDER = {
-  name: 'King Salmon Manuka Cold...',
-  image: 'https://picsum.photos/80',
-  vendor: 'Peter Manettas',
-  size: '12',
-  unit: 'Kg',
-  type: 'Baby — Extra Large',
-  price: '624.50',
-  onDelete: () => {},
-};
+const Orders = (props: CheckoutGeneratedProps) => {
+  const {
+    groupedOrders,
+    selectedShippingId,
+    setSelectedShippingId,
+    removeItem,
+  } = props;
 
-const MOCK_SHIPPING = [
-  {
-    priceId: 1,
-    name: 'Road freight delivery to door',
-    est: 'Est. delivery: 21 Apr',
-    price: '22.00',
-  },
-  {
-    priceId: 2,
-    name: 'Road freight pickup at airport',
-    est: 'Est. delivery: 23 Apr – 24 Apr',
-    price: '84.70',
-  },
-];
+  const orders = Object.keys(groupedOrders).reduce(
+    (data: { id: string; listings: OrderItem[] }[], vendorId) => [
+      ...data,
+      { id: vendorId, listings: groupedOrders[vendorId] },
+    ],
+    []
+  );
 
-const CheckoutView = (props: CheckoutGeneratedProps) => {
-  const theme = useTheme();
-  const history = useHistory();
-
-  return (
-    <Container>
-      {/*<Row className="row" align="center" justify="center">*/}
-      {/*  <Col>*/}
-      {/*    <EmptyState*/}
-      {/*      title="No orders yet"*/}
-      {/*      buttonText="Start an order"*/}
-      {/*      Svg={Crab}*/}
-      {/*      onButtonClicked={() => history.push(BUYER_ROUTES.ROOT)}*/}
-      {/*    />*/}
-
-      {/*    <Loading label="Loading Shipping Quotes" />*/}
-      {/*  </Col>*/}
-      {/*</Row>*/}
-
+  return orders.map((item, i) => (
+    <>
       <Row>
-        <Col>
+        <Col
+          style={{
+            marginTop: i !== 0 ? 32 : 0,
+          }}
+        >
           <Typography
             className="order-summary"
             variant="overline"
@@ -71,7 +48,13 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             ORDER SUMMARY
           </Typography>
 
-          <CheckoutCard {...MOCK_ORDER} />
+          {item.listings.map((listing) => (
+            <CheckoutCard
+              key={listing.cartId}
+              onRemove={() => removeItem(listing.cartId)}
+              {...listing}
+            />
+          ))}
         </Col>
       </Row>
 
@@ -86,28 +69,88 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
           </Typography>
 
           <ShippingCard
-            selectedPriceId={1}
-            options={MOCK_SHIPPING}
-            onPress={(option) => {
-              console.log(option);
-            }}
+            selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
+            options={item.listings[0].shippingOptions}
+            onPress={(priceId) =>
+              setSelectedShippingId({
+                [item.listings[0].vendorId]: priceId,
+              })
+            }
           />
         </Col>
       </Row>
+    </>
+  ));
+};
 
-      <Footer>
-        <Typography color="shade6">Total</Typography>
-        <Typography variant="title5" color="shade8" weight="900">
-          $8,462.00
-        </Typography>
-        <div className="footer-separator">
-          <div className="keep-shopping-wrapper">
-            <Button text="Keep Shopping" variant="outline" />
+const CheckoutView = (props: CheckoutGeneratedProps) => {
+  const theme = useTheme();
+  const history = useHistory();
+  const {
+    groupedOrders,
+    total,
+    keepShopping,
+    placeOrder,
+    loadingShippingQuotes,
+    selectedShippingId,
+    processingOrder,
+  } = props;
+
+  const totalCartGroups = Object.keys(groupedOrders).length;
+  const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
+    (sum, companyId) => sum + (selectedShippingId[companyId] === 0 ? 0 : 1),
+    0
+  );
+  const disablePlaceOrder = totalSelectedShipping < totalCartGroups;
+
+  return (
+    <Container>
+      {loadingShippingQuotes ? (
+        <Loading label="Loading Shipping Quotes" />
+      ) : (
+        <>
+          {isEmpty(groupedOrders) ? (
+            <Row className="row" align="center" justify="center">
+              <Col>
+                <EmptyState
+                  title="No orders yet"
+                  buttonText="Start an order"
+                  Svg={Crab}
+                  onButtonClicked={() => history.push(BUYER_ROUTES.ROOT)}
+                />
+              </Col>
+            </Row>
+          ) : (
+            //  @ts-ignore
+            <Orders {...props} />
+          )}
+        </>
+      )}
+
+      {!isEmpty(groupedOrders) && !loadingShippingQuotes && (
+        <Footer>
+          <Typography color="shade6">Total</Typography>
+          <Typography variant="title5" color="shade8" weight="900">
+            ${total}
+          </Typography>
+          <div className="footer-separator">
+            <div className="keep-shopping-wrapper">
+              <Button
+                text="Keep Shopping"
+                variant="outline"
+                onClick={keepShopping}
+              />
+            </div>
+
+            <Button
+              text="Place Order"
+              disabled={disablePlaceOrder}
+              onClick={placeOrder}
+              loading={processingOrder}
+            />
           </div>
-
-          <Button text="Place Order" />
-        </div>
-      </Footer>
+        </Footer>
+      )}
     </Container>
   );
 };

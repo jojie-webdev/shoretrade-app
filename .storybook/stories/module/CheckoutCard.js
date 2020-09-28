@@ -7,11 +7,11 @@ import Container from '../../components/Container';
 
 const props = {
   name: 'King Salmon Manuka Cold...',
-  image: 'https://picsum.photos/80',
+  uri: 'https://picsum.photos/80',
   vendor: 'Peter Manettas',
-  size: '12',
+  weight: '12',
   unit: 'Kg',
-  type: 'Baby — Extra Large',
+  size: 'Baby — Extra Large',
   price: '624.50',
 };
 
