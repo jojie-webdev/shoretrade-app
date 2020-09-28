@@ -45,7 +45,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
       <CreditContainer
-        onClick={() => history.push('/buyer/account/bank-details/add-credit')}
+        onClick={() => history.push('/buyer/account/bank-details')}
         style={{ cursor: 'pointer' }}
       >
         <InfoContainer>
@@ -132,7 +132,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               ? favourites.slice(0, 3).map((fav, index) => {
                   return (
                     <Col sm={4} key={fav.id}>
-                      <Link to={BUYER_ROUTES.PRODUCT_PREVIEW(fav.id)}>
+                      <Link to={`/buyer/product/${fav.id}`}>
                         <PreviewCard
                           id={fav.id}
                           images={fav.images}
