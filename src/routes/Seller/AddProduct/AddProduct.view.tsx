@@ -43,6 +43,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     onAddBoxes,
     onUpdateDetails,
     saveListing,
+    isExisting,
+    discardChanges,
   } = props;
 
   const currentStep = () => {
@@ -161,7 +163,17 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         </Typography>
         <InnerRouteHeader
           title={pageTitle()}
-          onClickBack={() => onChangeCurrentPage(currentPage - 1)}
+          onClickBack={() => {
+            if (isExisting) {
+              if (currentPage === 8) {
+                discardChanges();
+              } else {
+                onChangeCurrentPage(8);
+              }
+            } else {
+              onChangeCurrentPage(currentPage - 1);
+            }
+          }}
           showIcon={currentPage !== 1}
           subtitle={currentPage > 2 ? typeName : undefined}
         />

@@ -1,7 +1,6 @@
 import Typography from 'components/base/Typography';
 import { Row, Container, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
-import 'swiper/swiper-bundle.css';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
@@ -39,7 +38,7 @@ export const SwiperContainer = styled.div`
 
   img {
     position: relative;
-    width: 65vw;
+    width: 100%;
     height: 100%;
     object-fit: fill;
     left: 50%;

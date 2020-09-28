@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_ROUTES } from 'consts';
 import pathOr from 'ramda/src/pathOr';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   editableListingActions,
   searchProductTypeActions,
@@ -19,6 +21,7 @@ import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
 
 const AddProduct = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const currentPage =
     useSelector((state: Store) => state.editableListing.currentStep) || 1;
@@ -218,7 +221,7 @@ const AddProduct = (): JSX.Element => {
       );
 
       if (isExisting) {
-        onChangeCurrentPage(6); // should redirect to review
+        onChangeCurrentPage(8); // should redirect to review
       } else {
         onChangeCurrentPage(6);
       }
@@ -311,6 +314,11 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const discardChanges = () => {
+    history.push(SELLER_ROUTES.SELLING);
+    dispatch(editableListingActions.clear());
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -335,6 +343,8 @@ const AddProduct = (): JSX.Element => {
     onAddBoxes,
     onUpdateDetails,
     saveListing,
+    isExisting,
+    discardChanges,
   };
 
   return <AddProductView {...generatedProps} />;

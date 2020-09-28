@@ -97,7 +97,7 @@ function Step5({
               {requirement.title}
             </Typography>
             <AddImage
-              image={images[requirement.id]}
+              image={images[requirement.id] || existingImages[requirement.id]}
               onSelectImage={(data) => {
                 setImages({ [requirement.id]: data });
               }}

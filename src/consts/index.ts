@@ -6,6 +6,7 @@ export {
   BUYER_ACCOUNT_ROUTES,
   SELLER_DASHBOARD_ROUTES,
   SELLER_SOLD_ROUTES,
+  SELLING_ROUTES,
 } from './routes';
 
 export const API = {

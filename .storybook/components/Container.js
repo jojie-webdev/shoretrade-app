@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter } from 'react-router-dom';
 
+import 'swiper/swiper-bundle.min.css';
+
 import theme from '../../src/utils/Theme';
 
 import '../../src/index.css';

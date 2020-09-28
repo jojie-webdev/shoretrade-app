@@ -5,7 +5,7 @@ import styled from 'utils/styled';
 
 export const DashboardContainer = styled.div<{ openSidebar?: boolean }>`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -36,7 +36,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 
   @media ${BREAKPOINTS['md']} {
     z-index: 999;
@@ -118,6 +118,9 @@ export const Content = styled.div<{
   shouldIncludePadding: boolean;
   openSidebar: boolean;
   shouldUseFullWidth: boolean;
+  background?: string;
+  screenBackground?: string;
+  color?: string;
 }>`
   flex: 1;
   display: flex;
@@ -127,26 +130,34 @@ export const Content = styled.div<{
   transition: all 0.3s ease-in-out;
 
   background: ${(props) =>
-    props.theme.appType === 'buyer'
+    props.background
+      ? props.background
+      : props.theme.appType === 'buyer'
       ? props.theme.grey.shade1
       : props.theme.grey.shade9};
 
   color: ${(props) =>
-    props.theme.appType === 'buyer'
+    props.color
+      ? props.color
+      : props.theme.appType === 'buyer'
       ? props.theme.grey.shade9
       : props.theme.grey.shade1};
 
   .screen-wrapper {
     height: 80%;
     position: relative;
-
+    display: flex;
+    width: 100%;
+    justify-content: center;
     .screen {
       background: ${(props) =>
-        props.theme.appType === 'buyer'
+        props.screenBackground
+          ? props.screenBackground
+          : props.theme.appType === 'buyer'
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
-      width: ${(props) => (props.shouldUseFullWidth ? '100%' : '65vw')};
+      width: ${(props) => (props.shouldUseFullWidth ? '100%' : '65%')};
       height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
@@ -166,7 +177,7 @@ export const Content = styled.div<{
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
-        width: 80vw;
+        width: 100%;
         padding: ${(props) => (props.shouldIncludePadding ? '40px' : '0')};
       }
     }
@@ -180,10 +191,9 @@ export const Content = styled.div<{
       height: 100%;
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       position: relative;
-
       .screen {
         height: 100%;
-        width: 100vw;
+        width: 100%;
         padding: 40px 20px;
 
         .container {
@@ -201,7 +211,7 @@ export const HeaderContainer = styled.nav`
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: 65vw;
+  width: 65%;
 
   .left-content {
     display: flex;
@@ -243,11 +253,11 @@ export const HeaderContainer = styled.nav`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: 80vw;
+    width: 80%;
   }
 
   @media ${BREAKPOINTS['sm']} {
-    width: 100vw;
+    width: 100%;
     padding: 0 24px;
     margin-top: 8px;
     margin-bottom: 8px;

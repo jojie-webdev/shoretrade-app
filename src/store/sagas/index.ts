@@ -12,6 +12,8 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
+import editSelectedListing from './editSelectedListing';
+import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -27,7 +29,7 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
-import getPaymentMethods from  './getPaymentMethods';
+import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getUser from './getUser';
@@ -95,6 +97,8 @@ const sagas = [
   addCardToken,
   udpateDefaultCard,
   deleteCard,
+  endListing,
+  editSelectedListing,
 ];
 
 export default function* root() {

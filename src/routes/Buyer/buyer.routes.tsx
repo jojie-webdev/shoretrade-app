@@ -17,6 +17,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
+import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
 import CategoriesLanding from './Categories/Landing';
@@ -113,26 +114,43 @@ const BuyerRoutes = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
-  const getBackAction = () => {
+
+  const getThemeOverride = (): {
+    background?: string;
+    screenBackground?: string;
+    color?: string;
+    headerTextColor?: keyof Theme['grey'];
+    shouldUseFullWidth?: boolean;
+    shouldIncludePadding?: boolean;
+    onBack?: () => void;
+  } => {
+    if (
+      pathname.includes('/buyer/home') ||
+      pathname.includes('/buyer/product')
+    ) {
+      return {
+        shouldUseFullWidth: true,
+        shouldIncludePadding: false,
+      };
+    }
+
     if (
       (pathname.includes('/buyer/categories/') &&
         pathname.replace('/buyer/categories/', '').length > 0) ||
       pathname.includes('/buyer/favourites')
     ) {
-      return history.goBack;
+      return {
+        onBack: history.goBack,
+      };
     }
-    return undefined;
+
+    return {};
   };
-  const fullWidthRoutes = ['/buyer/home'];
-  if (pathname.includes('/buyer/product')) {
-    fullWidthRoutes.push(pathname);
-  }
 
   return (
     <DashboardLayout
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
-      onBack={getBackAction()}
-      shouldUseFullWidth={fullWidthRoutes.includes(pathname) ? true : false}
+      {...getThemeOverride()}
     >
       <Switch>
         {ROUTES_ARRAY.map((r) => (

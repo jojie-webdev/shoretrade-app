@@ -3,16 +3,16 @@ import styled from 'utils/styled';
 
 // Step 3
 export const Container = styled.div`
-  .interactions {
+  .interaction-group {
     margin-bottom: 32px;
 
     .interaction-container:not(:last-child) {
       margin-bottom: 8px;
     }
 
-    @media ${BREAKPOINTS['sm']} {
+    /* @media ${BREAKPOINTS['sm']} {
       margin-bottom: 8px;
-    }
+    } */
   }
 
   .btn-container {

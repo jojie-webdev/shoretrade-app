@@ -16,6 +16,7 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
+import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -112,6 +113,7 @@ export default (routeHistory: History) =>
         addCardToken,
         updateDefaultCard,
         deleteCard,
+        endListing,
       }).sort()
     )
   );
