@@ -53,6 +53,7 @@ const Header = ({
   onClick,
   openSidebar,
   onBack,
+  cartItems,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -87,11 +88,13 @@ const Header = ({
               onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
             >
               <Cart fill={theme.grey.shade8} />
-              <CheckoutCount>
-                <Typography color="noshade" variant="small" weight="900">
-                  3
-                </Typography>
-              </CheckoutCount>
+              {cartItems > 0 && (
+                <CheckoutCount>
+                  <Typography color="noshade" variant="small" weight="900">
+                    {cartItems}
+                  </Typography>
+                </CheckoutCount>
+              )}
             </div>
           </div>
         )}
@@ -134,6 +137,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     screenBackground,
     color,
     headerTextColor,
+    cartItems,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -214,6 +218,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
           onBack={onBack}
+          cartItems={cartItems}
         />
         <div className="screen-wrapper">
           <div className="screen">

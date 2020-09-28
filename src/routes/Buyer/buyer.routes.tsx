@@ -76,7 +76,7 @@ const ROUTES: Routes = {
   },
 
   ORDERS: {
-    path: '/buyer/orders',
+    path: BUYER_ROUTES.ORDERS,
     children: <Orders />,
     title: 'Orders',
     icon: OrderIcon,
