@@ -3,4 +3,5 @@ export type CategoryImageProps = {
   cBorderRadius?: string;
   circled?: boolean;
   maxHeight?: number;
+  customSVGSize?: number;
 };
