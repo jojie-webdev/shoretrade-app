@@ -7,6 +7,7 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import AddCredit from './AddCredit';
 import Balance from './Balance';
 import Card from './Card';
+import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import YourDetails from './YourDetails';
 
@@ -37,7 +38,7 @@ const ROUTES: Routes = {
   },
   HELP: {
     path: BUYER_ACCOUNT_ROUTES.HELP,
-    children: <Landing />,
+    children: <HelpAndSupport />,
   },
   ASSISTANT: {
     path: BUYER_ACCOUNT_ROUTES.ASSISTANT,
