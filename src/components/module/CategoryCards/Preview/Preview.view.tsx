@@ -26,7 +26,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
     <CardContainer>
       <div className="card">
         <div className="imgContainer">
-          <img src={props.images[0]} alt="Product" style={{ maxHeight: 150 }} />
+          <img src={props.images[0]} alt="Product" style={{ maxHeight: 200 }} />
           <LocationContainer>
             <Badge>
               <Location height={10.06} width={8.5}></Location>{' '}
@@ -80,31 +80,51 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </Row>
           <BodyContainer>
             <Row>
-              <Typography variant="small" color="shade6">
+              <Typography
+                style={{ paddingRight: 4 }}
+                variant="small"
+                color="shade6"
+              >
                 Remaining:
               </Typography>
-              <Typography variant="small">
+              <Typography variant="small" weight="bold">
                 {props.remaining} {props.unit}
               </Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <Typography variant="small" color="shade6">
+              <Typography
+                variant="small"
+                color="shade6"
+                style={{ paddingRight: 4 }}
+              >
                 Weight:
               </Typography>
               {/* Need Weight Transformer */}
-              <Typography variant="small">{props.weight}</Typography>
+              <Typography variant="small" weight="bold">
+                {props.weight}
+              </Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <Typography variant="small" color="shade6">
+              <Typography
+                variant="small"
+                color="shade6"
+                style={{ paddingRight: 4 }}
+              >
                 Vendor:
               </Typography>
-              <Typography variant="small">{props.coop?.name}</Typography>
+              <Typography variant="small" weight="bold">
+                {props.coop?.name}
+              </Typography>
             </Row>
             <Row style={{ marginTop: 5 }}>
-              <Typography variant="small" color="shade6">
+              <Typography
+                variant="small"
+                color="shade6"
+                style={{ paddingRight: 4 }}
+              >
                 Min Order:
               </Typography>
-              <Typography variant="small">
+              <Typography variant="small" weight="bold">
                 {props.minimumOrder} {props.unit}
               </Typography>
             </Row>

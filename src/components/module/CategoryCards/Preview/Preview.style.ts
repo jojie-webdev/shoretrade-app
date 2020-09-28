@@ -7,7 +7,6 @@ export const CardContainer = styled.div`
     border: 0;
     width: 100%;
     height: auto;
-
     border-radius: 4px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
