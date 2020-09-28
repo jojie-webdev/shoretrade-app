@@ -23,7 +23,7 @@ import {
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
-  const { listing, onRemove } = props;
+  const { listing, onRemove, onEdit } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
   const images = carousel.items.map((i) => i.uri);
@@ -156,7 +156,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               ))}
           </OrderBoxCard>
           <ActionsContainer>
-            <Button text="Edit" variant="outline" onClick={() => null} />
+            <Button text="Edit" variant="outline" onClick={onEdit} />
             <Button text="Remove" onClick={onRemove} />
           </ActionsContainer>
         </Col>

@@ -52,6 +52,7 @@ export interface ListingProps {
 export interface ListingDetailsGeneratedProps {
   listing: ListingProps;
   onRemove?: () => void;
+  onEdit?: () => void;
   onCreate?: () => void;
   isExisting?: boolean;
   isPending?: boolean;

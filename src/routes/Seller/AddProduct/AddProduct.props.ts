@@ -24,4 +24,6 @@ export interface AddProductGeneratedProps
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
   saveListing: () => void;
+  isExisting: boolean;
+  discardChanges: () => void;
 }

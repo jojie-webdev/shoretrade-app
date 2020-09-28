@@ -12,6 +12,7 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
+import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
@@ -97,6 +98,7 @@ const sagas = [
   udpateDefaultCard,
   deleteCard,
   endListing,
+  editSelectedListing,
 ];
 
 export default function* root() {
