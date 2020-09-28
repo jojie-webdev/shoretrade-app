@@ -26,11 +26,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
     <CardContainer>
       <div className="card">
         <div className="imgContainer">
-          <img
-            src={props.images[0]}
-            alt="Product"
-            style={{ maxHeight: 150, borderRadius: 4 }}
-          />
+          <img src={props.images[0]} alt="Product" style={{ maxHeight: 150 }} />
           <LocationContainer>
             <Badge>
               <Location height={10.06} width={8.5}></Location>{' '}
