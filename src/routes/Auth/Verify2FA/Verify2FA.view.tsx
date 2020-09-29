@@ -117,7 +117,9 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
           </Content>
           <Footer>
             <FooterContainer>
-              <FooterIcon fill={isSeller ? 'noshade' : 'shade9'} />
+              <FooterIcon
+                fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+              />
               <FooterText color={isSeller ? 'noshade' : 'shade9'}>
                 Haven’t received the code?
               </FooterText>

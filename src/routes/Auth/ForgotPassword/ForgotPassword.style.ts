@@ -6,17 +6,17 @@ import styled from 'utils/styled';
 export const Container = styled.div`
   padding: 40px;
   width: 100%;
-  height: 100%;
+  min-height: 60vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
 `;
 
 export const ContentWrapper = styled.div`
-  width: 360px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 `;
 
 export const Content = styled.div`
@@ -26,7 +26,10 @@ export const Content = styled.div`
 `;
 
 export const Footer = styled.div`
-  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
 `;
 
 export const TitleContainer = styled.div`
