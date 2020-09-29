@@ -4,4 +4,5 @@ export type CategoryImageProps = {
   circled?: boolean;
   maxHeight?: number;
   customSVGSize?: number;
+  containerHeight?: number;
 };
