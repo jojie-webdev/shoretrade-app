@@ -21,10 +21,13 @@ export const PreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
   display: table;
   clear: both;
+  width: 100%;
+  padding: 0 6px;
+
   ${customScrollbar}
 
   .cards {
@@ -78,5 +81,5 @@ export const FilterButton = styled.button`
   background: #111e2b;
   border-radius: 4px;
   color: white;
-  margin-top: 4px;
+  margin-top: 20%;
 `;

@@ -7,9 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
-  margin-top: 24px;
+  padding: 0 6px;
 `;
 
 export const SearchContainer = styled.div`

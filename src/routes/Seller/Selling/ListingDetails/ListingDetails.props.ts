@@ -1,5 +1,5 @@
 export interface ListingDetailsPublicProps {
-  match: {
+  match?: {
     params: {
       listingId: string;
     };
@@ -9,7 +9,12 @@ export interface ListingDetailsPublicProps {
 export interface ListingProps {
   carousel: {
     items: {
-      uri: string;
+      uri?: string;
+      data?: {
+        name: string;
+        type: string;
+        data: string | ArrayBuffer | null;
+      };
       tags: { label: string }[];
     }[];
   };
@@ -42,7 +47,7 @@ export interface ListingProps {
     boxes?: {
       id: string;
       weight: number;
-      count: number;
+      count?: number | null;
       quantity: number;
     }[];
     unit: string;

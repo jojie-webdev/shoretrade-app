@@ -20,6 +20,7 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
+import Categories from './Categories/categories.routes';
 import CategoriesLanding from './Categories/Landing';
 import CategoriesPreview from './Categories/Preview';
 import CategoriesSearch from './Categories/Search';
@@ -57,26 +58,14 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   CATEGORIES: {
-    path: BUYER_ROUTES.CATEGORIES,
-    children: <CategoriesLanding />,
+    path: '/buyer/categories',
+    children: <Categories />,
     title: 'Categories',
     icon: CategoryIcon,
+    nested: true,
   },
-  CATEGORY_PRODUCTS: {
-    path: BUYER_ROUTES.CATEGORY_PRODUCTS(),
-    children: <CategoriesSearch />,
-    title: '',
-    hideFromSidebar: true,
-  },
-  PRODUCT_PREVIEW: {
-    path: BUYER_ROUTES.PRODUCT_PREVIEW(),
-    children: <CategoriesPreview />,
-    title: '',
-    hideFromSidebar: true,
-  },
-
   ORDERS: {
-    path: '/buyer/orders',
+    path: BUYER_ROUTES.ORDERS,
     children: <Orders />,
     title: 'Orders',
     icon: OrderIcon,

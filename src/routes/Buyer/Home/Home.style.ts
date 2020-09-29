@@ -4,7 +4,7 @@ import styled, { css } from 'utils/styled';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
-  padding: 8px;
+  padding: 0 8px 8px 8px;
 `;
 
 export const SwiperContainer = styled.div`

@@ -37,11 +37,14 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       : null;
   }, [getUser]);
 
+  const cart = useSelector((store: Store) => store.cart) || {};
+
   // MARK:- Variables
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
 
   const userData = getUser.data?.data.user;
+  const cartItems = Object.keys(cart).length;
 
   // MARK:- Methods
   const formatRouteString = (s: string) => {
@@ -84,6 +87,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     credit: defaultCompany?.credit || '',
     openSidebar,
     setOpenSidebar,
+    cartItems,
   };
 
   return <DashboardView {...generatedProps} />;

@@ -32,8 +32,10 @@ import getListingTypesByCategory from './getListingTypesByCategory';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
+import getShippingQuote from './getShippingQuote';
 import getUser from './getUser';
 import login from './login';
+import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
@@ -89,6 +91,8 @@ const sagas = [
   getListing,
   getListingBoxes,
   updateFavouriteProduct,
+  getShippingQuote,
+  order,
   searchAndCountProductType,
   confirmWeight,
   placeOrder,

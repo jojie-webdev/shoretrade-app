@@ -17,6 +17,7 @@ function Step8({
   listingFormData,
   saveListing,
   onChangeCurrentPage,
+  preview,
 }: Step8Props) {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
@@ -152,7 +153,7 @@ function Step8({
           style={{ marginRight: 16, width: 200 }}
           text="Preview"
           variant="outline"
-          onClick={() => null}
+          onClick={() => preview()}
         />
         <Button
           style={{ width: 200 }}

@@ -27,6 +27,7 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   credit: string;
   openSidebar: boolean;
   setOpenSidebar: Dispatch<SetStateAction<boolean>>;
+  cartItems: number;
 }
 
 // Inner component props
@@ -45,4 +46,5 @@ export type HeaderProps = {
   openSidebar: boolean;
   onClick: () => void;
   onBack?: () => void;
+  cartItems: number;
 };

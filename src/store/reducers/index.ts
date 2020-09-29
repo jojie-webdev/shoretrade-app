@@ -39,9 +39,11 @@ import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
+import getShippingQuote from './getShippingQuote';
 import getUser from './getUser';
 import history from './history';
 import login from './login';
+import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
@@ -89,6 +91,8 @@ export default (routeHistory: History) =>
         deleteLinkedAccount,
         getSellerById,
         cart,
+        order,
+        getShippingQuote,
         getListing,
         getListingBoxes,
         updateFavoriteSeller,

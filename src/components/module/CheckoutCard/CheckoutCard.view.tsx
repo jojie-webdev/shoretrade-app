@@ -10,14 +10,14 @@ import { Container, Image, TextValue } from './CheckoutCard.style';
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();
-  const { name, image, vendor, size, unit, type, price, onDelete } = props;
+  const { name, uri, vendor, size, unit, weight, price, onRemove } = props;
 
   return (
     <Container>
       <Row align="center">
         <Col>
           <div className="checkout-row">
-            <Image alt="checkout-image" src={image} />
+            <Image alt="checkout-image" src={uri} />
             <div className="checkout-card-texts">
               <Typography color="shade9" weight="700">
                 {name}
@@ -34,17 +34,17 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
 
               <div className="checkout-row">
                 <Typography variant="caption" color="shade6">
-                  Size
+                  Weight
                 </Typography>
                 <TextValue variant="caption" color="shade8" weight="400">
-                  {size} {unit}
+                  {weight} {unit}
                 </TextValue>
 
                 <Typography variant="caption" color="shade6">
-                  Type
+                  Size
                 </Typography>
                 <TextValue variant="caption" color="shade8" weight="400">
-                  {type}
+                  {size}
                 </TextValue>
               </div>
             </div>
@@ -56,7 +56,7 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
             <Typography className="checkout-card-price" color="shade8">
               ${price}
             </Typography>
-            <div className="checkout-card-delete" onClick={onDelete}>
+            <div className="checkout-card-delete" onClick={onRemove}>
               <Subtract />
             </div>
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { FormikForm } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   getLinkedAccountsActions,
   deleteLinkedAccountActions,
@@ -17,6 +17,7 @@ import EditAssistantView from './EditAssistant.view';
 const EditAssistant = (): JSX.Element => {
   // MARK:- Store / Hooks
   const dispatch = useDispatch();
+  const history = useHistory();
   const [companyId] = useCompany();
   const { assistantId } = useParams<{ assistantId: string }>();
   const getLinkedAccounts = useSelector(
@@ -42,6 +43,9 @@ const EditAssistant = (): JSX.Element => {
         companyId,
       })
     );
+    if (deleteLinkedAccountActions.SUCCESS) {
+      history.goBack();
+    }
   };
 
   // MARK:- Effects
@@ -60,6 +64,7 @@ const EditAssistant = (): JSX.Element => {
       email: currentLinkedAccount?.email || '',
       mobile: replaceCallingCode(currentLinkedAccount?.mobile || ''),
     },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSubmit: () => {},
   };
 

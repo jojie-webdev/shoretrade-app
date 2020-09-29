@@ -1,7 +1,12 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
-import { ButtonStyleProps, Variants, ButtonSizes } from './Button.props';
+import {
+  ButtonStyleProps,
+  Variants,
+  ButtonSizes,
+  ButtonProps,
+} from './Button.props';
 
 const backgroundColor: Record<Variants, string> = {
   primary: theme.brand.primary,
@@ -26,7 +31,7 @@ const padding: Record<ButtonSizes, string> = {
 };
 
 export const ButtonContainer = styled.button<
-  ButtonStyleProps & { hasText: boolean }
+  ButtonStyleProps & ButtonProps & { hasText: boolean }
 >`
   max-height: 48px;
   padding: ${({ size }) => padding[size]};
@@ -34,6 +39,7 @@ export const ButtonContainer = styled.button<
   border: ${({ variant }) => border[variant]};
   border-radius: 4px;
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
   display: flex;
   flex-direction: row;

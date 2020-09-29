@@ -44,6 +44,11 @@ export const SELLING_ROUTES = {
   LISTING_DETAILS: `${SELLER_ROUTES.SELLING}/details/:listingId`,
 };
 
+export const ADD_PRODUCT_ROUTES = {
+  LANDING: `${SELLER_ROUTES.ADD_PRODUCT}`,
+  PREVIEW: `${SELLER_ROUTES.ADD_PRODUCT}/preview`,
+};
+
 export const SELLER_ACCOUNT_ROUTES = {
   LANDING: `${SELLER_ROUTES.ACCOUNT}`,
   YOUR_DETAILS: `${SELLER_ROUTES.ACCOUNT}/details`,
@@ -72,6 +77,7 @@ export const BUYER_ROUTES = {
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
+  ORDERS: `${BUYER_ROOT}/orders`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
 };
@@ -80,10 +86,15 @@ export const BUYER_ACCOUNT_ROUTES = {
   LANDING: `${BUYER_ROUTES.ACCOUNT}`,
   BANK_DETAILS: `${BUYER_ROUTES.ACCOUNT}/bank-details`,
   DETAILS: `${BUYER_ROUTES.ACCOUNT}/details`,
-  DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
+  ADDRESS: `${BUYER_ROUTES.ACCOUNT}/address`,
+  ADD_ADDRESS: `${BUYER_ROUTES.ACCOUNT}/address/add`,
+  EDIT_ADDRESS: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/address/${id}`,
   LINKED_ACCOUNTS: `${BUYER_ROUTES.ACCOUNT}/linked-accounts`,
   CHANGE_PASSWORD: `${BUYER_ROUTES.ACCOUNT}/change-password`,
   HELP: `${BUYER_ROUTES.ACCOUNT}/help`,
+  ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,
+  EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
+  DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
   CREDIT_HISORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
