@@ -18,13 +18,12 @@ import {
   useHistory,
 } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
-
 // Screens
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
 import SellerAccountRoutes from './Account/account.routes';
-import AddProduct from './AddProduct';
+import AddProduct from './AddProduct/addProduct.routes';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
@@ -59,6 +58,7 @@ const ROUTES: Routes = {
     title: 'Add Product',
     children: <AddProduct />,
     icon: AddBorder,
+    nested: true,
   },
   SELLING: {
     path: SELLER_ROUTES.SELLING,
@@ -111,6 +111,19 @@ const SellerRoutes = (): JSX.Element => {
         shouldIncludePadding: false,
         onBack: history.goBack,
         pageTitle: 'Selling Details',
+      };
+    }
+
+    if (pathname.includes('/seller/add-product/preview')) {
+      return {
+        color: theme.grey.shade9,
+        background: theme.grey.shade1,
+        screenBackground: theme.grey.shade1,
+        headerTextColor: 'shade9',
+        shouldUseFullWidth: true,
+        shouldIncludePadding: false,
+        onBack: history.goBack,
+        pageTitle: 'Product Preview',
       };
     }
 

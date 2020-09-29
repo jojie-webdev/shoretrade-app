@@ -142,3 +142,13 @@ export const ActionsContainer = styled.div`
     margin-right: 16px;
   }
 `;
+
+export const ActionContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+
+  & button {
+    width: 100%;
+  }
+`;
