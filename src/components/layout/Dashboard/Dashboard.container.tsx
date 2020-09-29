@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { authActions } from 'store/actions';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import { useTheme } from 'utils/Theme';
 
 import {
   DashboardPublicProps,
@@ -14,12 +15,17 @@ import {
 import DashboardView from './Dashboard.view';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
+  const theme = useTheme();
   const dispatch = useDispatch();
   const location = useLocation();
 
   // MARK:- State
-  const [pageTitle, setPageTitle] = useState('');
-  const [shouldIncludePadding, setShouldIncludePadding] = useState(true);
+  const [pageTitle, setPageTitle] = useState(props.pageTitle || '');
+  const shouldIncludePadding =
+    props.shouldIncludePadding !== undefined
+      ? props.shouldIncludePadding
+      : theme.appType === 'seller';
+
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const getUser = useSelector((state: Store) => state.getUser);
@@ -31,11 +37,14 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       : null;
   }, [getUser]);
 
+  const cart = useSelector((store: Store) => store.cart) || {};
+
   // MARK:- Variables
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
 
   const userData = getUser.data?.data.user;
+  const cartItems = Object.keys(cart).length;
 
   // MARK:- Methods
   const formatRouteString = (s: string) => {
@@ -53,13 +62,19 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     // This is a hacky way for an edge case in add product
     // We need this so that the absolutes such as
     // progress indicator and box summary can fit in the screen
-    setShouldIncludePadding(location.pathname !== SELLER_ROUTES.ADD_PRODUCT);
+    if (!props.pageTitle) {
+      let innerRoute = location.pathname.split('/')[2];
+      innerRoute = formatRouteString(innerRoute || '');
 
-    let innerRoute = location.pathname.split('/')[2];
-    innerRoute = formatRouteString(innerRoute || '');
-
-    setPageTitle(innerRoute);
+      setPageTitle(innerRoute);
+    }
   }, [location]);
+
+  useEffect(() => {
+    if (props.pageTitle) {
+      setPageTitle(props.pageTitle);
+    }
+  }, [props.pageTitle]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {
@@ -72,6 +87,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     credit: defaultCompany?.credit || '',
     openSidebar,
     setOpenSidebar,
+    cartItems,
   };
 
   return <DashboardView {...generatedProps} />;

@@ -108,7 +108,7 @@ const LineChartView = (props: any) => {
     <div style={style} ref={componentRef}>
       <div style={{ flex: 1 }}>
         {height > 0 && width > 0 && (
-          <svg style={{ height, width }}>
+          <svg style={{ width: '100%', height: height, maxWidth: width }}>
             {React.Children.map(children, (child) => {
               if (child && child.props.belowChart) {
                 return React.cloneElement(child, extraProps);

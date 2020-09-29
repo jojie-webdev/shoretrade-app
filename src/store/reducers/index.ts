@@ -16,6 +16,7 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
+import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
@@ -38,9 +39,11 @@ import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
+import getShippingQuote from './getShippingQuote';
 import getUser from './getUser';
 import history from './history';
 import login from './login';
+import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
@@ -88,6 +91,8 @@ export default (routeHistory: History) =>
         deleteLinkedAccount,
         getSellerById,
         cart,
+        order,
+        getShippingQuote,
         getListing,
         getListingBoxes,
         updateFavoriteSeller,
@@ -112,6 +117,7 @@ export default (routeHistory: History) =>
         addCardToken,
         updateDefaultCard,
         deleteCard,
+        endListing,
       }).sort()
     )
   );

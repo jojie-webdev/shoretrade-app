@@ -39,6 +39,16 @@ export const SELLER_SOLD_ROUTES = {
   DETAILS: `${SELLER_ROUTES.SOLD}/details/:status/:orderId`,
 };
 
+export const SELLING_ROUTES = {
+  LANDING: `${SELLER_ROUTES.SELLING}`,
+  LISTING_DETAILS: `${SELLER_ROUTES.SELLING}/details/:listingId`,
+};
+
+export const ADD_PRODUCT_ROUTES = {
+  LANDING: `${SELLER_ROUTES.ADD_PRODUCT}`,
+  PREVIEW: `${SELLER_ROUTES.ADD_PRODUCT}/preview`,
+};
+
 export const SELLER_ACCOUNT_ROUTES = {
   LANDING: `${SELLER_ROUTES.ACCOUNT}`,
   YOUR_DETAILS: `${SELLER_ROUTES.ACCOUNT}/details`,
@@ -67,6 +77,7 @@ export const BUYER_ROUTES = {
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
+  ORDERS: `${BUYER_ROOT}/orders`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
 };

@@ -27,7 +27,7 @@ export type GetAllListingsResponseItem = {
   coopName: string;
   coopImage: string; // image uri
   coopId: string;
-  rating?: any;
+  rating?: string; // ex. "5.0"
   createdAt: string; // ex. "yyyy-mm-ddThh:mm:ss.000Z"
   specifications: string[]; // Ex. ['Frozen','Bone Out','Skin On']
   stateIds: string[];

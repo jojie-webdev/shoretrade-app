@@ -4,21 +4,17 @@ import Button from 'components/base/Button';
 import { InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
 import Typography from 'components/base/Typography';
+import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
-import FeaturedCarousel from 'components/module/FeaturedCarousel';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { useHistory, Link } from 'react-router-dom';
-
-import 'swiper/swiper-bundle.css';
-import Swiper, { Pagination, Navigation } from 'swiper';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
-// import Pagination from 'components/module/Pagination';
 
 import { HomeGeneratedProps, CreditState } from './Home.props';
 import {
@@ -37,8 +33,6 @@ import {
   ViewContainer,
 } from './Home.style';
 
-Swiper.use([Pagination, Navigation]);
-
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
@@ -51,7 +45,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
       <CreditContainer
-        onClick={() => history.push('/buyer/account/bank-details/add-credit')}
+        onClick={() => history.push('/buyer/account/bank-details')}
         style={{ cursor: 'pointer' }}
       >
         <InfoContainer>
@@ -102,30 +96,9 @@ const HomeView = (props: HomeGeneratedProps) => {
     favourites,
   } = props;
 
-  const swiper = useRef<any>(null);
-  useEffect(() => {
-    swiper.current = new Swiper('.swiper-container', {
-      loop: true,
-      // autoplay: {
-      //   delay: 2000
-      // },
-      speed: 600,
-      // pagination: {
-      //   clickable: true,
-      //   el: '.swiper-pagination',
-
-      // },
-      navigation: {
-        prevEl: '.swiper-button-prev',
-        nextEl: '.swiper-button-next',
-      },
-      touchRatio: 0,
-    });
-  }, [featured]);
-
   return (
     <ViewContainer>
-      <div style={{ width: '65vw', margin: 'auto' }}>
+      <div style={{ width: '65%', margin: 'auto' }}>
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <Search
@@ -137,23 +110,9 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </div>
 
-      {/* Swiper here */}
-      <SwiperContainer>
-        <div className="swiper-container">
-          <div className="swiper-wrapper">
-            {featured.map((f, key) => {
-              return (
-                <div className="swiper-slide" key={key}>
-                  <img src={f} alt="images" />
-                </div>
-              );
-            })}
-          </div>
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
-        </div>
-      </SwiperContainer>
-      <div style={{ width: '65vw', margin: 'auto' }}>
+      <Carousel id="featured-carousel" images={featured} loop />
+
+      <div style={{ width: '65%', margin: 'auto' }}>
         <ViewCol>
           <FavouritesHeader>
             <Typography variant="title5" color="shade8">
@@ -173,7 +132,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               ? favourites.slice(0, 3).map((fav, index) => {
                   return (
                     <Col sm={4} key={fav.id}>
-                      <Link to={BUYER_ROUTES.PRODUCT_PREVIEW(fav.id)}>
+                      <Link to={`/buyer/product/${fav.id}`}>
                         <PreviewCard
                           id={fav.id}
                           images={fav.images}

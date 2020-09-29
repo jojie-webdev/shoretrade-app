@@ -62,7 +62,7 @@ function Step3({
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
-        <div key={group[0].groupOrder} className="interactions">
+        <div key={group[0].groupOrder} className="interaction-group">
           {group.map(
             (item) =>
               !disabledOptions.includes(item.label.toUpperCase()) && (

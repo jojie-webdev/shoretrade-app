@@ -17,6 +17,7 @@ function Step8({
   listingFormData,
   saveListing,
   onChangeCurrentPage,
+  preview,
 }: Step8Props) {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
@@ -71,7 +72,11 @@ function Step8({
             label="Type"
             value={title}
             type={isExisting ? undefined : 'edit'}
-            onClick={() => onChangeCurrentPage(2)}
+            onClick={() => {
+              if (!isExisting) {
+                onChangeCurrentPage(2);
+              }
+            }}
           />
         </Col>
         <Col md={12} className="interaction-col">
@@ -79,7 +84,11 @@ function Step8({
             label="Specifications"
             value={specifications.join(', ')}
             type={isExisting ? undefined : 'edit'}
-            onClick={() => onChangeCurrentPage(3)}
+            onClick={() => {
+              if (!isExisting) {
+                onChangeCurrentPage(3);
+              }
+            }}
           />
         </Col>
         <Col md={12} className="interaction-col">
@@ -87,15 +96,23 @@ function Step8({
             label="Size"
             value={size}
             type={isExisting ? undefined : 'edit'}
-            onClick={() => onChangeCurrentPage(4)}
+            onClick={() => {
+              if (!isExisting) {
+                onChangeCurrentPage(4);
+              }
+            }}
           />
         </Col>
         <Col md={12} className="interaction-col">
           <Interactions
             label="Boxes"
             value={boxes}
-            type="edit"
-            onClick={() => onChangeCurrentPage(6)}
+            type={isExisting ? undefined : 'edit'}
+            onClick={() => {
+              if (!isExisting) {
+                onChangeCurrentPage(6);
+              }
+            }}
           />
         </Col>
         <Col md={12} className="interaction-col">
@@ -136,11 +153,11 @@ function Step8({
           style={{ marginRight: 16, width: 200 }}
           text="Preview"
           variant="outline"
-          onClick={() => null}
+          onClick={() => preview()}
         />
         <Button
           style={{ width: 200 }}
-          text="Add"
+          text={isExisting ? 'Update' : 'Add'}
           onClick={() => saveListing()}
         />
       </Row>

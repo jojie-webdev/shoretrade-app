@@ -1,10 +1,10 @@
 export interface CheckoutCardProps {
+  uri?: string;
   name: string;
-  image?: string;
-  vendor?: string;
-  size?: string;
-  unit?: string;
-  type?: string;
   price: string;
-  onDelete: () => void;
+  weight?: string;
+  size?: string;
+  vendor?: string;
+  unit?: string;
+  onRemove?: () => void;
 }

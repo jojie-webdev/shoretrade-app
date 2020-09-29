@@ -53,6 +53,7 @@ const Header = ({
   onClick,
   openSidebar,
   onBack,
+  cartItems,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -87,11 +88,13 @@ const Header = ({
               onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
             >
               <Cart fill={theme.grey.shade8} />
-              <CheckoutCount>
-                <Typography color="noshade" variant="small" weight="900">
-                  3
-                </Typography>
-              </CheckoutCount>
+              {cartItems > 0 && (
+                <CheckoutCount>
+                  <Typography color="noshade" variant="small" weight="900">
+                    {cartItems}
+                  </Typography>
+                </CheckoutCount>
+              )}
             </div>
           </div>
         )}
@@ -130,6 +133,11 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     openSidebar,
     setOpenSidebar,
     onBack,
+    background,
+    screenBackground,
+    color,
+    headerTextColor,
+    cartItems,
   } = props;
 
   const textColor: keyof Theme['grey'] =
@@ -195,24 +203,37 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
       <Content
         openSidebar={openSidebar}
-        shouldIncludePadding={
-          theme.appType === 'buyer' ? false : shouldIncludePadding
-        }
+        shouldIncludePadding={shouldIncludePadding}
         shouldUseFullWidth={
           props.shouldUseFullWidth ? props.shouldUseFullWidth : false
         }
+        background={background}
+        screenBackground={screenBackground}
+        color={color}
       >
         <Header
           pageTitle={pageTitle}
           userData={userData}
-          textColor={textColor}
+          textColor={headerTextColor || textColor}
           onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
           onBack={onBack}
+          cartItems={cartItems}
         />
         <div className="screen-wrapper">
           <div className="screen">
-            <Container className="container">{children}</Container>
+            <Container
+              className="container"
+              style={{
+                padding: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                width: '100%',
+                maxWidth: '100%',
+              }}
+            >
+              {children}
+            </Container>
           </div>
         </div>
       </Content>

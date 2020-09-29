@@ -10,6 +10,12 @@ export interface DashboardPublicProps {
   routes: Route[];
   onBack?: () => void;
   shouldUseFullWidth?: boolean;
+  background?: string;
+  screenBackground?: string;
+  color?: string;
+  headerTextColor?: keyof Theme['grey'];
+  shouldIncludePadding?: boolean;
+  pageTitle?: string;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
@@ -21,6 +27,7 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   credit: string;
   openSidebar: boolean;
   setOpenSidebar: Dispatch<SetStateAction<boolean>>;
+  cartItems: number;
 }
 
 // Inner component props
@@ -39,4 +46,5 @@ export type HeaderProps = {
   openSidebar: boolean;
   onClick: () => void;
   onBack?: () => void;
+  cartItems: number;
 };
