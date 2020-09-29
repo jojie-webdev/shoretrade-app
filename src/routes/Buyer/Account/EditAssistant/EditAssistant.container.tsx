@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
-import { FormikForm } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { FormikForm } from 'components/module/BuyerAssistantForm/BuyerAssistantForm.props';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  getLinkedAccountsActions,
   deleteLinkedAccountActions,
+  getLinkedAccountsActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
-import { useCompany } from 'utils/Hooks';
 import { replaceCallingCode } from 'utils/String/callingCode';
 
-import { EditAssistantGeneratedProps } from './EditAssistant.props';
+import {
+  EditAssistantGeneratedProps,
+  QueryParams,
+} from './EditAssistant.props';
 import EditAssistantView from './EditAssistant.view';
 
 const EditAssistant = (): JSX.Element => {
-  // MARK:- Store / Hooks
-  const dispatch = useDispatch();
+  // MARK:- Variables
   const history = useHistory();
-  const [companyId] = useCompany();
-  const { assistantId } = useParams<{ assistantId: string }>();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { companyId, assistantId } = location.state as QueryParams;
+
   const getLinkedAccounts = useSelector(
     (store: Store) => store.getLinkedAccounts
   );
@@ -50,7 +54,6 @@ const EditAssistant = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    // Fetch if linkedAccounts directly goes to this link
     if (companyId && !getLinkedAccounts.data) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
@@ -64,7 +67,6 @@ const EditAssistant = (): JSX.Element => {
       email: currentLinkedAccount?.email || '',
       mobile: replaceCallingCode(currentLinkedAccount?.mobile || ''),
     },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSubmit: () => {},
   };
 

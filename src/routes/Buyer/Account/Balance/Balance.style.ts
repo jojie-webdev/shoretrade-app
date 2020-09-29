@@ -12,7 +12,9 @@ export const Content = styled.div`
   /* padding: 24px;
   margin: -24px;
   margin-bottom: 8px;
-  background-color: ${(props) => props.theme.grey.noshade}; */
+  background-color: ${(
+    props
+  ) => props.theme.grey.noshade}; */
 
   & > * {
     display: flex;
@@ -35,8 +37,7 @@ export const ContentRight = styled.div`
   }
 `;
 
-export const CreditBalance = styled.div`
-`;
+export const CreditBalance = styled.div``;
 
 export const TopContainer = styled.div`
   padding: 24px;

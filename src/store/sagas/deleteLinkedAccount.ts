@@ -56,14 +56,18 @@ function* deleteLinkedAccountSuccess(
     })
   );
 
-  yield put(
-    push(
-      `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
-        { companyId },
-        { addQueryPrefix: true }
-      )}`
-    )
-  );
+  const state: Store = yield select();
+  const userGroup = state.getUser.data?.data.user.userGroup;
+  if (userGroup === 'SELLER_ADMIN') {
+    yield put(
+      push(
+        `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
+          { companyId },
+          { addQueryPrefix: true }
+        )}`
+      )
+    );
+  }
 }
 
 function* deleteLinkedAccountWatcher() {
