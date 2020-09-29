@@ -24,12 +24,29 @@ import SellerRoutes from './Seller/seller.routes';
 export const ROUTES: Routes = {
   ROOT: {
     path: MAIN_ROUTES.LANDING,
-    children: <h1>Landing Page if it exists</h1>,
+    children: (
+      <Redirect
+        to={{
+          pathname: MAIN_ROUTES.LOGIN,
+        }}
+      />
+    ),
+  },
+  LOGIN: {
+    path: MAIN_ROUTES.LOGIN,
+    children: <Login />,
   },
   // Seller Unauthenticated Routes
   SELLER_LOGIN: {
     path: SELLER_ROUTES.LOGIN,
-    children: <Login />,
+    // children: <Login />,
+    children: (
+      <Redirect
+        to={{
+          pathname: MAIN_ROUTES.LOGIN,
+        }}
+      />
+    ),
   },
   SELLER_FORGOT_PASSWORD: {
     path: SELLER_ROUTES.FORGOT_PASSWORD,
@@ -54,7 +71,14 @@ export const ROUTES: Routes = {
   },
   BUYER_LOGIN: {
     path: BUYER_ROUTES.LOGIN,
-    children: <Login />,
+    // children: <Login />,
+    children: (
+      <Redirect
+        to={{
+          pathname: MAIN_ROUTES.LOGIN,
+        }}
+      />
+    ),
   },
   BUYER_FORGOT_PASSWORD: {
     path: BUYER_ROUTES.FORGOT_PASSWORD,
@@ -85,6 +109,7 @@ export const ROUTES: Routes = {
 };
 
 const UNAUTHENTICATED_SELLER_ROUTES = [
+  MAIN_ROUTES.LANDING,
   SELLER_ROUTES.LOGIN,
   SELLER_ROUTES.VERIFY2FA,
   SELLER_ROUTES.ONBOARDING,
@@ -93,6 +118,7 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
 ];
 
 const UNAUTHENTICATED_BUYER_ROUTES = [
+  MAIN_ROUTES.LANDING,
   BUYER_ROUTES.LOGIN,
   BUYER_ROUTES.VERIFY2FA,
   BUYER_ROUTES.ONBOARDING,

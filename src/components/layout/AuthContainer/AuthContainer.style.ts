@@ -20,7 +20,10 @@ export const Container = styled.div`
 export const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${({ theme }) => getBackgroundImage(theme)});
+  /*
+    background-image: url(${({ theme }) => getBackgroundImage(theme)});
+  */
+  background-image: url(${SellerBackgroundImage});
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.32;
@@ -89,12 +92,14 @@ export const Title = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ background?: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
+  /* background-color: ${({ theme }) =>
+    theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8}; */
+  background-color: ${({ theme, background }) =>
+    background || theme.grey.shade8};
   min-height: 598px;
   max-height: 660px;
   width: 442px;

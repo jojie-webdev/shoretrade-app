@@ -3,6 +3,7 @@ import React, { useReducer } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { loginActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
@@ -11,6 +12,7 @@ import { Credentials } from './Login.props';
 import LoginView from './Login.view';
 
 const Login = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -23,15 +25,15 @@ const Login = (): JSX.Element => {
   };
 
   const goToForgotPassword = () => {
-    dispatch(
-      push(
-        isSeller ? SELLER_ROUTES.FORGOT_PASSWORD : BUYER_ROUTES.FORGOT_PASSWORD
-      )
-    );
+    history.push(SELLER_ROUTES.FORGOT_PASSWORD);
   };
 
-  const goToRegister = () => {
-    dispatch(push(isSeller ? SELLER_ROUTES.REGISTER : BUYER_ROUTES.REGISTER));
+  const goToSellerRegister = () => {
+    history.push(SELLER_ROUTES.REGISTER);
+  };
+
+  const goToBuyerRegister = () => {
+    history.push(BUYER_ROUTES.REGISTER);
   };
 
   const generatedProps = {
@@ -39,7 +41,8 @@ const Login = (): JSX.Element => {
     login,
     pending,
     goToForgotPassword,
-    goToRegister,
+    goToSellerRegister,
+    goToBuyerRegister,
     isError,
   };
   return <LoginView {...generatedProps} />;

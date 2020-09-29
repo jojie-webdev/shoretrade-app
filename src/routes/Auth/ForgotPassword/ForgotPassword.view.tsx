@@ -32,7 +32,8 @@ const ForgotPasswordView = (
   props: ForgotPasswordGeneratedProps
 ): JSX.Element => {
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
+  const isSeller = true;
+  // const isSeller = theme.appType === 'seller';
   const { resetPassword, pending, backToLogin, success } = props;
 
   const formikProps = {

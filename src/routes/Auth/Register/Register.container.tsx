@@ -3,6 +3,7 @@ import React, { useReducer, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { registerActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -13,12 +14,13 @@ import { RegistrationDetails } from './Register.props';
 import RegisterView from './Register.view';
 
 const Register = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const backToLogin = () => {
-    dispatch(push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN));
+    history.goBack();
   };
 
   const [registrationDetails, updateRegistrationDetails] = useReducer(

@@ -23,15 +23,15 @@ function* verifySuccess(action: AsyncAction<VerifyMeta, VerifyPayload>) {
     ['payload', 'data', 'user', 'userGroup'],
     action
   );
-  const pathname: string = yield select(
-    (state: Store) => state.router.location.pathname
-  );
-  const isSeller = pathname.includes('seller');
-  if (userGroup === 'BUYER_ADMIN' && !isSeller) {
+  // const pathname: string = yield select(
+  //   (state: Store) => state.router.location.pathname
+  // );
+  // const isSeller = pathname.includes('seller');
+  if (userGroup === 'BUYER_ADMIN') {
     yield put(
       authActions.update({ token: action.payload.data.token, type: 'buyer' })
     );
-  } else if (userGroup === 'SELLER_ADMIN' && isSeller) {
+  } else if (userGroup === 'SELLER_ADMIN') {
     yield put(
       authActions.update({ token: action.payload.data.token, type: 'seller' })
     );

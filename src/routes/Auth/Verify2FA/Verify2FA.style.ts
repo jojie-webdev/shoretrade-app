@@ -121,7 +121,9 @@ export const FooterIcon = styled(Help)`
 export const FooterText = styled(Typography)``;
 
 export const FooterLink = styled(Typography)`
-  border-bottom: 1px solid
+border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
+  /* border-bottom: 1px solid
     ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.shade6 : theme.brand.primary};
+      theme.appType === 'seller' ? theme.grey.shade6 : theme.brand.primary}; */
+  
 `;

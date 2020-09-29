@@ -549,6 +549,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       onBackAction={step > 0 ? () => previousStep() : undefined}
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
+      containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
     >
       {renderCurrentStep()}
       {isSeller && (

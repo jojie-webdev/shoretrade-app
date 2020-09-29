@@ -44,6 +44,7 @@ export const RegisterLinkContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const RegisterLinkPrefix = styled(Typography)`

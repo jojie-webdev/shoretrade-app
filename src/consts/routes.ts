@@ -3,6 +3,7 @@ const BUYER_ROOT = '/buyer';
 
 export const MAIN_ROUTES = {
   LANDING: '/',
+  LOGIN: '/login',
 };
 
 export const SELLER_ROUTES = {

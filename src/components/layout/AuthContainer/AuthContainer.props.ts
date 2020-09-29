@@ -5,4 +5,5 @@ export interface AuthContainerProps {
   onBackAction?: () => void;
   currentStep?: number;
   totalSteps?: number;
+  containerBackground?: string;
 }

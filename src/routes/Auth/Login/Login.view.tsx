@@ -29,8 +29,18 @@ import { validate } from './Login.validation';
 
 const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
-  const { login, pending, goToForgotPassword, isError, goToRegister } = props;
+  // preserve logic just in case a separate buyer login
+  // is implemented.
+  // const isSeller = theme.appType === 'seller';
+  const isSeller = true;
+  const {
+    login,
+    pending,
+    goToForgotPassword,
+    isError,
+    goToBuyerRegister,
+    goToSellerRegister,
+  } = props;
 
   const formikProps = {
     initialValues: {
@@ -47,13 +57,20 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
         <ContentWrapper>
           <Content>
             <Title variant="title3" color={isSeller ? 'noshade' : 'shade8'}>
-              {`${isSeller ? 'Seller' : 'Buyer'} Log in`}
+              Log in
             </Title>
             <RegisterLinkContainer>
-              <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
-              <Touchable dark={isSeller} onPress={() => goToRegister()}>
-                <RegisterLink color="primary">Create an account</RegisterLink>
+              <RegisterLinkPrefix color="shade6">
+                New user? Create a
+              </RegisterLinkPrefix>
+              <Touchable dark={isSeller} onPress={() => goToBuyerRegister()}>
+                <RegisterLink color="primary">Buyer</RegisterLink>
               </Touchable>
+              <RegisterLinkPrefix color="shade6">or</RegisterLinkPrefix>
+              <Touchable dark={isSeller} onPress={() => goToSellerRegister()}>
+                <RegisterLink color="primary">Seller</RegisterLink>
+              </Touchable>
+              <RegisterLinkPrefix color="shade6">account</RegisterLinkPrefix>
             </RegisterLinkContainer>
             <Formik {...formikProps}>
               <Form>

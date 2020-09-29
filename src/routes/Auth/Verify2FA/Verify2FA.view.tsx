@@ -41,7 +41,8 @@ const initialValues = [...Array(CODE_LENGTH).keys()].reduce(
 
 const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
+  const isSeller = true;
+  // const isSeller = theme.appType === 'seller';
   const { verify, pending, backToLogin, resendCode, isError } = props;
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
