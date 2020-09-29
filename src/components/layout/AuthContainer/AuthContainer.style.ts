@@ -1,17 +1,14 @@
 import { ArrowLeft } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import {
-  Container as GridContainer,
-  Row as GridRow,
-  Col,
-} from 'react-grid-system';
 import BuyerBackgroundImage from 'res/images/buyer-auth-background.png';
 import SellerBackgroundImage from 'res/images/seller-auth-background.png';
 import styled from 'utils/styled';
 
-const getBackgroundImage = (isSeller: boolean) => {
-  return isSeller ? SellerBackgroundImage : BuyerBackgroundImage;
+const getBackgroundImage = (theme: { appType: 'seller' | 'buyer' }) => {
+  return theme.appType === 'seller'
+    ? SellerBackgroundImage
+    : BuyerBackgroundImage;
 };
 
 export const Container = styled.div`
@@ -23,8 +20,7 @@ export const Container = styled.div`
 export const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${({ theme }) =>
-    getBackgroundImage(theme.appType === 'seller')});
+  background-image: url(${({ theme }) => getBackgroundImage(theme)});
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.32;
@@ -36,12 +32,13 @@ export const Background = styled.div`
   right: 0;
 `;
 
-export const Grid = styled(GridContainer)`
+export const Wrapper = styled.div`
   height: 100%;
-`;
-
-export const Row = styled(GridRow)`
-  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const CloseButtonContainer = styled.div`
@@ -78,6 +75,7 @@ export const HeaderContent = styled.div`
 
 export const HeaderSpacer = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 36px;
@@ -91,20 +89,22 @@ export const Title = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const Content = styled(Col)`
+export const Content = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
-  height: auto;
-  width: 100%;
+  min-height: 598px;
+  max-height: 660px;
+  width: 442px;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
   border-radius: 4px;
-`;
-
-export const Scroll = styled.div`
-  overflow-x: hidden;
-  overflow-y: visible;
+  z-index: 999;
+  @media ${BREAKPOINTS['sm']} {
+    max-height: 100%;
+    max-width: 100%;
+  }
 `;
 
 export const ProgressIndicator = styled.div`

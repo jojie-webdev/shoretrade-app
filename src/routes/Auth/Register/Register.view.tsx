@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useReducer } from 'react';
+import React, { useState, Fragment, useReducer, useRef } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
@@ -11,8 +11,7 @@ import AddImage from 'components/module/AddImage';
 import DialogModal from 'components/module/DialogModal';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
-import { Formik } from 'formik';
-import { is, props } from 'ramda';
+import { Formik, FormikProps } from 'formik';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
@@ -100,249 +99,263 @@ const StepForm = ({
     createUpdateReducer<Record<string, string>>(),
     {}
   );
+
+  const formRef = useRef<FormikProps<Record<string, string>> | null>(null);
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  };
+
   return (
-    <Formik
-      key={step}
-      {...formikProps}
-      onSubmit={(values) => {
-        if (step === 1) {
-          formikProps.onSubmit(values);
-        } else if (step === 2) {
-          const error = validateBusinessAddress({
-            address: registrationDetails.address,
-          });
-          if (error.address) {
-            setOtherErrors({ address: error.address });
-          } else {
-            setOtherErrors({ address: '' });
+    <>
+      <Formik
+        key={step}
+        innerRef={formRef}
+        {...formikProps}
+        onSubmit={(values) => {
+          if (step === 1) {
             formikProps.onSubmit(values);
-          }
-        } else if (step === 3) {
-          const error = {
-            ...validateAgreement({
-              agreement: registrationDetails.tncAgreement,
-            }),
-            ...(isApplicationForLineCredit
-              ? validateAnnualRevenue({
-                  estimatedAnnualRevenue:
-                    registrationDetails.estimatedAnnualRevenue,
-                })
-              : {}),
-          };
-          if (error.agreement || error.estimatedAnnualRevenue) {
-            setOtherErrors(error);
-          } else {
-            setOtherErrors({ agreement: '', estimatedAnnualRevenue: '' });
-            formikProps.onSubmit(values);
-          }
-        } else if (step === 4) {
-          const error = validateMarketSector({
-            selectedMarketSector: registrationDetails.selectedMarketSector,
-          });
+          } else if (step === 2) {
+            const error = validateBusinessAddress({
+              address: registrationDetails.address,
+            });
+            if (error.address) {
+              setOtherErrors({ address: error.address });
+            } else {
+              setOtherErrors({ address: '' });
+              formikProps.onSubmit(values);
+            }
+          } else if (step === 3) {
+            const error = {
+              ...validateAgreement({
+                agreement: registrationDetails.tncAgreement,
+              }),
+              ...(isApplicationForLineCredit
+                ? validateAnnualRevenue({
+                    estimatedAnnualRevenue:
+                      registrationDetails.estimatedAnnualRevenue,
+                  })
+                : {}),
+            };
+            if (error.agreement || error.estimatedAnnualRevenue) {
+              setOtherErrors(error);
+            } else {
+              setOtherErrors({ agreement: '', estimatedAnnualRevenue: '' });
+              formikProps.onSubmit(values);
+            }
+          } else if (step === 4) {
+            const error = validateMarketSector({
+              selectedMarketSector: registrationDetails.selectedMarketSector,
+            });
 
-          if (error.selectedMarketSector) {
-            setOtherErrors(error);
-          } else {
-            setOtherErrors({ selectedMarketSector: '' });
-            formikProps.onSubmit(values);
+            if (error.selectedMarketSector) {
+              setOtherErrors(error);
+            } else {
+              setOtherErrors({ selectedMarketSector: '' });
+              formikProps.onSubmit(values);
+            }
           }
-        }
-      }}
-    >
-      <FormikContainer>
-        <Container>
-          <Content>
-            <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
-            <Title variant="title5">{steps[step - 1].title}</Title>
-            {fields.map(({ key, type, secured, label, alert, prefix }) => (
-              <Fragment key={key}>
-                <TextField
-                  name={key}
-                  type={type}
-                  label={label}
-                  secured={secured}
-                  alert={alert}
-                  LeftComponent={
-                    (prefix || '').length > 0 ? (
-                      <Typography variant="label" color="shade6">
-                        {prefix}
-                      </Typography>
-                    ) : undefined
+        }}
+      >
+        <FormikContainer>
+          <Container>
+            <Content>
+              <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
+              <Title variant="title5">{steps[step - 1].title}</Title>
+              {fields.map(({ key, type, secured, label, alert, prefix }) => (
+                <Fragment key={key}>
+                  <TextField
+                    name={key}
+                    type={type}
+                    label={label}
+                    secured={secured}
+                    alert={alert}
+                    LeftComponent={
+                      (prefix || '').length > 0 ? (
+                        <Typography variant="label" color="shade6">
+                          {prefix}
+                        </Typography>
+                      ) : undefined
+                    }
+                  />
+                </Fragment>
+              ))}
+              {step === 1 && (
+                <MobileField
+                  name="mobile"
+                  label="MOBILE"
+                  callingCode={registrationDetails.callingCode}
+                  setCallingCode={(value) =>
+                    updateRegistrationDetails({ callingCode: value })
                   }
                 />
-              </Fragment>
-            ))}
-            {step === 1 && (
-              <MobileField
-                name="mobile"
-                label="MOBILE"
-                callingCode={registrationDetails.callingCode}
-                setCallingCode={(value) =>
-                  updateRegistrationDetails({ callingCode: value })
-                }
-              />
-            )}
-            {step === 2 && (
-              <>
-                <LocationField
-                  value={registrationDetails.address?.address || ''}
-                  onSelect={(address) =>
-                    updateRegistrationDetails({
-                      address,
-                    })
-                  }
-                  label="Address you will be shipping from"
-                  error={otherErrors.address}
-                />
-                <ShippingInfo
-                  label={
-                    isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
-                  }
-                />
-                {isSeller && (
-                  <>
-                    <BusinessLogoLabel variant="overline" color={'shade6'}>
-                      Business Logo
-                    </BusinessLogoLabel>
-                    <AddImage
-                      image={registrationDetails.businessLogo}
-                      onSelectImage={(image) =>
-                        updateRegistrationDetails({ businessLogo: image })
-                      }
-                      onRemoveImage={() => {
-                        updateRegistrationDetails({ businessLogo: null });
-                      }}
-                    />
-                  </>
-                )}
-              </>
-            )}
-            {step === 3 && (
-              <>
-                {!isSeller && (
-                  <div className="select-container">
-                    <Select
-                      value={registrationDetails.selectedPaymentMethod}
-                      onChange={(option) => {
-                        updateRegistrationDetails({
-                          selectedPaymentMethod: option.value,
-                        });
-                      }}
-                      options={PAYMENT_METHOD_OPTIONS}
-                      label="SELECT FROM THE OPTIONS BELOW"
-                    />
-                  </div>
-                )}
-
-                {isApplicationForLineCredit && (
-                  <div className="credit-line-info">
-                    <PaymentMethodDetails variant="label">
-                      {CREDIT_LINE_NOTES}
-                    </PaymentMethodDetails>
-                    <PaymentMethodOverline variant="overline">
-                      {CREDIT_LINE_TERMS_LABEL}
-                    </PaymentMethodOverline>
-
-                    {CREDIT_LINE_TERMS.map((term) => (
-                      <PaymentMethodDetails key={term} variant="label">
-                        {term}
-                      </PaymentMethodDetails>
-                    ))}
-
-                    <BaseTextField
-                      value={registrationDetails.estimatedAnnualRevenue}
-                      onChangeText={(v) =>
-                        updateRegistrationDetails({
-                          estimatedAnnualRevenue: v,
-                        })
-                      }
-                      label="Estimated annual revenue"
-                      LeftComponent={<Typography color="shade6">$</Typography>}
-                      type="number"
-                      error={otherErrors.estimatedAnnualRevenue || ''}
-                    />
-                  </div>
-                )}
-                <InputContainer>
-                  <Checkbox
-                    checked={registrationDetails.tncAgreement}
-                    onClick={() =>
+              )}
+              {step === 2 && (
+                <>
+                  <LocationField
+                    value={registrationDetails.address?.address || ''}
+                    onSelect={(address) =>
                       updateRegistrationDetails({
-                        tncAgreement: !registrationDetails.tncAgreement,
+                        address,
                       })
                     }
-                    label="I agree to the terms and conditions"
+                    label="Address you will be shipping from"
+                    error={otherErrors.address}
                   />
-                  {(otherErrors.agreement || '').length > 0 && (
-                    <Error variant="caption" color="error">
-                      {otherErrors.agreement}
-                    </Error>
-                  )}
-                </InputContainer>
-                <Touchable
-                  dark
-                  onPress={() => {
-                    window.open(
-                      `https://www.shoretrade.com/terms_${
-                        isSeller ? 'seller' : 'buyer'
-                      }.pdf`,
-                      '_blank'
-                    );
-                  }}
-                  justifyContent={'flex-start'}
-                >
-                  <DownloadTermsContainer>
-                    <DownloadIcon />
-                    <DownloadTermsText variant="label" color="shade6">
-                      Download terms and conditions here
-                    </DownloadTermsText>
-                  </DownloadTermsContainer>
-                </Touchable>
-              </>
-            )}
-            {step === 4 && (
-              <>
-                <div className="market-sector-description">
-                  <PaymentMethodDetails variant="label">
-                    {BUYER_MARKET_STEP.description}
-                  </PaymentMethodDetails>
-                </div>
-                <div className="market-sector-list">
-                  {MARKET_SECTORS.map((variant) => (
-                    <div key={variant} className="market-sector-item">
-                      <MarketSectorItem
-                        variant={variant}
-                        selected={
-                          registrationDetails.selectedMarketSector === variant
+                  <ShippingInfo
+                    label={
+                      isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
+                    }
+                  />
+                  {isSeller && (
+                    <>
+                      <BusinessLogoLabel variant="overline" color={'shade6'}>
+                        Business Logo
+                      </BusinessLogoLabel>
+                      <AddImage
+                        image={registrationDetails.businessLogo}
+                        onSelectImage={(image) =>
+                          updateRegistrationDetails({ businessLogo: image })
                         }
-                        onPress={() => {
-                          updateRegistrationDetails({
-                            selectedMarketSector: variant,
-                          });
+                        onRemoveImage={() => {
+                          updateRegistrationDetails({ businessLogo: null });
                         }}
                       />
-                    </div>
-                  ))}
-                  {(otherErrors.selectedMarketSector || '').length > 0 && (
-                    <Error variant="caption" color="error">
-                      {otherErrors.selectedMarketSector}
-                    </Error>
+                    </>
                   )}
-                </div>
-              </>
-            )}
-          </Content>
-        </Container>
-        <Footer>
-          <Button
-            loading={isPending && step === MAX_STEP}
-            style={{ width: '100%' }}
-            text={step === MAX_STEP ? 'REGISTER' : 'NEXT'}
-            type="submit"
-          />
-        </Footer>
-      </FormikContainer>
-    </Formik>
+                </>
+              )}
+              {step === 3 && (
+                <>
+                  {!isSeller && (
+                    <div className="select-container">
+                      <Select
+                        value={registrationDetails.selectedPaymentMethod}
+                        onChange={(option) => {
+                          updateRegistrationDetails({
+                            selectedPaymentMethod: option.value,
+                          });
+                        }}
+                        options={PAYMENT_METHOD_OPTIONS}
+                        label="SELECT FROM THE OPTIONS BELOW"
+                      />
+                    </div>
+                  )}
+
+                  {isApplicationForLineCredit && (
+                    <div className="credit-line-info">
+                      <PaymentMethodDetails variant="label">
+                        {CREDIT_LINE_NOTES}
+                      </PaymentMethodDetails>
+                      <PaymentMethodOverline variant="overline">
+                        {CREDIT_LINE_TERMS_LABEL}
+                      </PaymentMethodOverline>
+
+                      {CREDIT_LINE_TERMS.map((term) => (
+                        <PaymentMethodDetails key={term} variant="label">
+                          {term}
+                        </PaymentMethodDetails>
+                      ))}
+
+                      <BaseTextField
+                        value={registrationDetails.estimatedAnnualRevenue}
+                        onChangeText={(v) =>
+                          updateRegistrationDetails({
+                            estimatedAnnualRevenue: v,
+                          })
+                        }
+                        label="Estimated annual revenue"
+                        LeftComponent={
+                          <Typography color="shade6">$</Typography>
+                        }
+                        type="number"
+                        error={otherErrors.estimatedAnnualRevenue || ''}
+                      />
+                    </div>
+                  )}
+                  <InputContainer>
+                    <Checkbox
+                      checked={registrationDetails.tncAgreement}
+                      onClick={() =>
+                        updateRegistrationDetails({
+                          tncAgreement: !registrationDetails.tncAgreement,
+                        })
+                      }
+                      label="I agree to the terms and conditions"
+                    />
+                    {(otherErrors.agreement || '').length > 0 && (
+                      <Error variant="caption" color="error">
+                        {otherErrors.agreement}
+                      </Error>
+                    )}
+                  </InputContainer>
+                  <Touchable
+                    dark
+                    onPress={() => {
+                      window.open(
+                        `https://www.shoretrade.com/terms_${
+                          isSeller ? 'seller' : 'buyer'
+                        }.pdf`,
+                        '_blank'
+                      );
+                    }}
+                    justifyContent={'flex-start'}
+                  >
+                    <DownloadTermsContainer>
+                      <DownloadIcon />
+                      <DownloadTermsText variant="label" color="shade6">
+                        Download terms and conditions here
+                      </DownloadTermsText>
+                    </DownloadTermsContainer>
+                  </Touchable>
+                </>
+              )}
+              {step === 4 && (
+                <>
+                  <div className="market-sector-description">
+                    <PaymentMethodDetails variant="label">
+                      {BUYER_MARKET_STEP.description}
+                    </PaymentMethodDetails>
+                  </div>
+                  <div className="market-sector-list">
+                    {MARKET_SECTORS.map((variant) => (
+                      <div key={variant} className="market-sector-item">
+                        <MarketSectorItem
+                          variant={variant}
+                          selected={
+                            registrationDetails.selectedMarketSector === variant
+                          }
+                          onPress={() => {
+                            updateRegistrationDetails({
+                              selectedMarketSector: variant,
+                            });
+                          }}
+                        />
+                      </div>
+                    ))}
+                    {(otherErrors.selectedMarketSector || '').length > 0 && (
+                      <Error variant="caption" color="error">
+                        {otherErrors.selectedMarketSector}
+                      </Error>
+                    )}
+                  </div>
+                </>
+              )}
+            </Content>
+          </Container>
+        </FormikContainer>
+      </Formik>
+      <Footer>
+        <Button
+          loading={isPending && step === MAX_STEP}
+          style={{ width: '100%' }}
+          text={step === MAX_STEP ? 'REGISTER' : 'NEXT'}
+          onClick={() => handleSubmit()}
+        />
+      </Footer>
+    </>
   );
 };
 
@@ -497,24 +510,26 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       );
     } else {
       return (
-        <ColumnWrapper>
-          <Container>
-            <Content>
-              <GetStartedTitle variant="title5">
-                Signing up is <b>free</b> and complete with <b>3 simple</b>{' '}
-                steps
-              </GetStartedTitle>
-              {steps.map((step, index) => (
-                <StepDetails
-                  key={step.title}
-                  step={index + 1}
-                  title={step.title}
-                  description={step.description}
-                  style={{ marginTop: index === 0 ? 24 : 32 }}
-                />
-              ))}
-            </Content>
-          </Container>
+        <>
+          <ColumnWrapper>
+            <Container>
+              <Content>
+                <GetStartedTitle variant="title5">
+                  Signing up is <b>free</b> and complete with <b>3 simple</b>{' '}
+                  steps
+                </GetStartedTitle>
+                {steps.map((step, index) => (
+                  <StepDetails
+                    key={step.title}
+                    step={index + 1}
+                    title={step.title}
+                    description={step.description}
+                    style={{ marginTop: index === 0 ? 24 : 32 }}
+                  />
+                ))}
+              </Content>
+            </Container>
+          </ColumnWrapper>
           <Footer>
             <Button
               style={{ width: '100%' }}
@@ -522,7 +537,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
               onClick={() => nextStep()}
             />
           </Footer>
-        </ColumnWrapper>
+        </>
       );
     }
   };

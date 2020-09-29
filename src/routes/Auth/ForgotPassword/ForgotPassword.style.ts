@@ -6,10 +6,12 @@ import styled from 'utils/styled';
 export const Container = styled.div`
   padding: 40px;
   width: 100%;
-  min-height: 60vh;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const ContentWrapper = styled.div`

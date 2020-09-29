@@ -1,10 +1,11 @@
 import Alert from 'components/base/Alert';
-import { Row } from 'components/layout/AuthContainer/AuthContainer.style';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
 
-export const TextFieldRow = styled(Row)`
+export const TextFieldRow = styled.div`
+  display: flex;
+  flex-direction: row;
   margin-top: 16px;
 
   .textfield-col {
