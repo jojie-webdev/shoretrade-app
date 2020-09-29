@@ -21,8 +21,9 @@ export const PreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
+  padding: 0 6px;
 
   ${customScrollbar}
 

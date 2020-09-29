@@ -59,7 +59,7 @@ export const SearchContainer = styled.div`
 export const ListContainer = styled.div`
   margin: 24px auto;
   max-height: 400px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 
   ${customScrollbar}

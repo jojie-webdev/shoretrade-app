@@ -1,6 +1,8 @@
 import styled from 'utils/styled';
 
 export const SearchContainer = styled.div`
+  padding: 0 6px;
+
   .search-row {
     margin-bottom: 24px;
   }
