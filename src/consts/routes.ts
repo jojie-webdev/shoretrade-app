@@ -4,6 +4,8 @@ const BUYER_ROOT = '/buyer';
 export const MAIN_ROUTES = {
   LANDING: '/',
   LOGIN: '/login',
+  VERIFY: '/verify',
+  FORGOT_PASSWORD: '/forgot-password',
 };
 
 export const SELLER_ROUTES = {

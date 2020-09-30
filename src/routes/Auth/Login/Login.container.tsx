@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
+import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { loginActions } from 'store/actions';
@@ -25,7 +25,7 @@ const Login = (): JSX.Element => {
   };
 
   const goToForgotPassword = () => {
-    history.push(SELLER_ROUTES.FORGOT_PASSWORD);
+    history.push(MAIN_ROUTES.FORGOT_PASSWORD);
   };
 
   const goToSellerRegister = () => {

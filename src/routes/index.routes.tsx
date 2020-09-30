@@ -36,6 +36,14 @@ export const ROUTES: Routes = {
     path: MAIN_ROUTES.LOGIN,
     children: <Login />,
   },
+  VERIFY: {
+    path: MAIN_ROUTES.VERIFY,
+    children: <Verify2FA />,
+  },
+  FORGOT_PASSWORD: {
+    path: MAIN_ROUTES.FORGOT_PASSWORD,
+    children: <ForgotPassword />,
+  },
   // Seller Unauthenticated Routes
   SELLER_LOGIN: {
     path: SELLER_ROUTES.LOGIN,
@@ -48,14 +56,14 @@ export const ROUTES: Routes = {
       />
     ),
   },
-  SELLER_FORGOT_PASSWORD: {
-    path: SELLER_ROUTES.FORGOT_PASSWORD,
-    children: <ForgotPassword />,
-  },
-  SELLER_VERIFY2FA: {
-    path: SELLER_ROUTES.VERIFY2FA,
-    children: <Verify2FA />,
-  },
+  // SELLER_FORGOT_PASSWORD: {
+  //   path: SELLER_ROUTES.FORGOT_PASSWORD,
+  //   children: <ForgotPassword />,
+  // },
+  // SELLER_VERIFY2FA: {
+  //   path: SELLER_ROUTES.VERIFY2FA,
+  //   children: <Verify2FA />,
+  // },
   SELLER_REGISTER: {
     path: SELLER_ROUTES.REGISTER,
     children: <Register />,
@@ -80,14 +88,14 @@ export const ROUTES: Routes = {
       />
     ),
   },
-  BUYER_FORGOT_PASSWORD: {
-    path: BUYER_ROUTES.FORGOT_PASSWORD,
-    children: <ForgotPassword />,
-  },
-  BUYER_VERIFY2FA: {
-    path: BUYER_ROUTES.VERIFY2FA,
-    children: <Verify2FA />,
-  },
+  // BUYER_FORGOT_PASSWORD: {
+  //   path: BUYER_ROUTES.FORGOT_PASSWORD,
+  //   children: <ForgotPassword />,
+  // },
+  // BUYER_VERIFY2FA: {
+  //   path: BUYER_ROUTES.VERIFY2FA,
+  //   children: <Verify2FA />,
+  // },
   BUYER_REGISTER: {
     path: BUYER_ROUTES.REGISTER,
     children: <Register />,
@@ -110,6 +118,9 @@ export const ROUTES: Routes = {
 
 const UNAUTHENTICATED_SELLER_ROUTES = [
   MAIN_ROUTES.LANDING,
+  MAIN_ROUTES.LOGIN,
+  MAIN_ROUTES.VERIFY,
+  MAIN_ROUTES.FORGOT_PASSWORD,
   SELLER_ROUTES.LOGIN,
   SELLER_ROUTES.VERIFY2FA,
   SELLER_ROUTES.ONBOARDING,
@@ -119,6 +130,9 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
 
 const UNAUTHENTICATED_BUYER_ROUTES = [
   MAIN_ROUTES.LANDING,
+  MAIN_ROUTES.LOGIN,
+  MAIN_ROUTES.VERIFY,
+  MAIN_ROUTES.FORGOT_PASSWORD,
   BUYER_ROUTES.LOGIN,
   BUYER_ROUTES.VERIFY2FA,
   BUYER_ROUTES.ONBOARDING,
