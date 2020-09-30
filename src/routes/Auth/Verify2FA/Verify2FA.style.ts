@@ -116,6 +116,7 @@ export const FooterContainer = styled.div`
 
 export const FooterIcon = styled(Help)`
   margin-right: 11px;
+  margin-bottom: 2px;
 `;
 
 export const FooterText = styled(Typography)``;
