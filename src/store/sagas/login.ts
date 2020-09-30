@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
+import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { login } from 'services/auth';
 import { AsyncAction } from 'types/Action';
@@ -18,15 +18,16 @@ function* loginRequest(action: AsyncAction<LoginMeta, LoginPayload>) {
 }
 
 function* loginSuccess(action: AsyncAction<LoginMeta, LoginPayload>) {
-  const pathname: string = yield select(
-    (state: Store) => state.router.location.pathname
-  );
-  const isSeller = pathname.includes('seller');
-  if (isSeller) {
-    yield put(push(SELLER_ROUTES.VERIFY2FA));
-  } else {
-    yield put(push(BUYER_ROUTES.VERIFY2FA));
-  }
+  // const pathname: string = yield select(
+  //   (state: Store) => state.router.location.pathname
+  // );
+  // const isSeller = pathname.includes('seller');
+  // if (isSeller) {
+  //   yield put(push(SELLER_ROUTES.VERIFY2FA));
+  // } else {
+  //   yield put(push(BUYER_ROUTES.VERIFY2FA));
+  // }
+  yield put(push(MAIN_ROUTES.VERIFY));
 }
 
 function* loginWatcher() {

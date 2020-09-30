@@ -4,20 +4,19 @@ import Typography from 'components/base/Typography';
 import DropdownLocation from 'components/module/DropdownLocation';
 import FormikTextField from 'components/module/FormikTextField';
 import PhoneTextField from 'components/module/PhoneTextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
   padding: 40px;
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex: 1;
+  height: 100%;
 `;
 
 export const Content = styled.div`
-  width: 360px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -27,9 +26,8 @@ export const ColumnWrapper = styled.div`
   display: 'flex';
   flex: 1;
   flex-direction: 'column';
-  padding-bottom: 64px;
+  overflow-y: auto;
   overflow-x: hidden;
-  overflow-y: scroll;
 `;
 
 export const FormikContainer = styled(Form)`
@@ -38,7 +36,7 @@ export const FormikContainer = styled(Form)`
   flex-direction: 'column';
   padding-bottom: 64px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .select-container {
     margin-top: 24px;
@@ -91,10 +89,6 @@ export const TextField = styled(FormikTextField)`
 `;
 
 export const Footer = styled.div`
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
   display: flex;
   height: 64px;
   justify-content: center;

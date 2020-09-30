@@ -41,7 +41,8 @@ const initialValues = [...Array(CODE_LENGTH).keys()].reduce(
 
 const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
+  const isSeller = true;
+  // const isSeller = theme.appType === 'seller';
   const { verify, pending, backToLogin, resendCode, isError } = props;
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -117,7 +118,9 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
           </Content>
           <Footer>
             <FooterContainer>
-              <FooterIcon fill={isSeller ? 'noshade' : 'shade9'} />
+              <FooterIcon
+                fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+              />
               <FooterText color={isSeller ? 'noshade' : 'shade9'}>
                 Haven’t received the code?
               </FooterText>
