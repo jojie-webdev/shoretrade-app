@@ -54,7 +54,13 @@ const LinePath = (props: LinePathProps): JSX.Element => {
 
   return (
     <Container cHeight={cHeight} cWidth={cWidth} style={cStyle}>
-      <svg width={width} height={height}>
+      <svg
+        style={{
+          width: '100%',
+          maxWidth: width,
+          height: height,
+        }}
+      >
         <path
           fill="transparent"
           stroke={theme.brand[stroke]}

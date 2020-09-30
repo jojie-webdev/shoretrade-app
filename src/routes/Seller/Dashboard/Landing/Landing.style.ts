@@ -55,10 +55,7 @@ export const MonthlyContainer = styled.div`
 
 export const TopCategoriesContainer = styled.div`
   overflow: auto;
-
-  @media ${BREAKPOINTS['sm']} {
-    margin-bottom: 40px;
-  }
+  margin-bottom: 40px;
 `;
 
 export const SalesCard = styled.div`
