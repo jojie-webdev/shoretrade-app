@@ -5,6 +5,7 @@ import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
 import { useHistory } from 'react-router-dom';
+import { toPrice } from 'utils/String/toPrice';
 
 // import { useTheme } from 'utils/Theme';
 import { BalanceGeneratedProps } from './Balance.props';
@@ -37,7 +38,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
             </Typography>
             <CreditWrapper>
               <Typography variant="title2" color="shade9">
-                ${props.credit}
+                {toPrice(props.credit)}
               </Typography>
             </CreditWrapper>
           </CreditBalance>
