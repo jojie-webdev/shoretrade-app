@@ -22,6 +22,7 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
     subtitle = '',
   } = props;
 
+  const isSeller = theme.appType === 'seller';
   const content = (
     <>
       {showIcon && (
@@ -33,10 +34,10 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
         </Touchable>
       )}
       <TitleRow>
-        <Typography variant="title5" color="shade1">
+        <Typography variant="title5" color={isSeller ? 'shade1' : 'shade8'}>
           {title}
         </Typography>
-        <Typography variant="label" color="shade1">
+        <Typography variant="label" color={isSeller ? 'shade1' : 'shade8'}>
           {subtitle}
         </Typography>
       </TitleRow>
