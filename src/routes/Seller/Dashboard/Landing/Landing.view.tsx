@@ -144,54 +144,52 @@ const MonthlySales = (props: any) => {
       </Row>
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.months.map((m: any, i: any) => (
-          <Col md={3} key={i}>
-            <Link
-              to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
-                `${moment(m.startDate).format('MM-DD-YYYY')}`
-              )}
-            >
-              <SalesCard>
+          <Link
+            to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
+              `${moment(m.startDate).format('MM-DD-YYYY')}`
+            )}
+          >
+            <SalesCard>
+              <Typography
+                variant="overline"
+                color="shade6"
+                className="overline"
+              >
+                {moment(m.startDate).format('MMMM')}
+              </Typography>
+              <Typography variant="title4" color="noshade" className="price">
+                {numberToShortenAmount(m.total)}
+              </Typography>
+
+              <ChartContentContainer>
+                <div>
+                  {hasIncreased(m.percentage) ? (
+                    <UpArrow />
+                  ) : (
+                    <DropdownArrow fill={theme.brand.error} />
+                  )}
+                </div>
+
                 <Typography
-                  variant="overline"
-                  color="shade6"
-                  className="overline"
+                  variant="caption"
+                  color={hasIncreased(m.percentage) ? 'success' : 'error'}
+                  className="text"
                 >
-                  {moment(m.startDate).format('MMMM')}
-                </Typography>
-                <Typography variant="title4" color="noshade" className="price">
-                  {numberToShortenAmount(m.total)}
+                  {hasIncreased(m.percentage) ? '+' : '-'}
+                  {m.percentage}%
                 </Typography>
 
-                <ChartContentContainer>
-                  <div>
-                    {hasIncreased(m.percentage) ? (
-                      <UpArrow />
-                    ) : (
-                      <DropdownArrow fill={theme.brand.error} />
-                    )}
-                  </div>
-
-                  <Typography
-                    variant="caption"
-                    color={hasIncreased(m.percentage) ? 'success' : 'error'}
-                    className="text"
-                  >
-                    {hasIncreased(m.percentage) ? '+' : '-'}
-                    {m.percentage}%
-                  </Typography>
-
-                  <LinePath
-                    width={60}
-                    height={25}
-                    data={getGraphData(m, m.startDate)}
-                    cHeight={25}
-                    cWidth={60}
-                    cStyle={{ alignSelf: 'center' }}
-                  />
-                </ChartContentContainer>
-              </SalesCard>
-            </Link>
-          </Col>
+                <LinePath
+                  width={60}
+                  height={25}
+                  data={getGraphData(m, m.startDate)}
+                  cHeight={25}
+                  cWidth={60}
+                  cStyle={{ alignSelf: 'center' }}
+                />
+              </ChartContentContainer>
+            </SalesCard>
+          </Link>
         ))}
       </MonthlyRow>
     </MonthlyContainer>
@@ -214,47 +212,39 @@ const TopCategories = (props: any) => {
       </Row>
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.categories.map((c: any, i: any) => (
-          <Col md={3} key={i}>
-            <SalesCard>
-              <Typography
-                variant="overline"
-                color="shade6"
-                className="overline"
-              >
-                {c.name}
-              </Typography>
-              <Typography variant="title4" color="noshade" className="price">
-                {numberToShortenAmount(c.total)}
-              </Typography>
+          <SalesCard key={i}>
+            <Typography variant="overline" color="shade6" className="overline">
+              {c.name}
+            </Typography>
+            <Typography variant="title4" color="noshade" className="price">
+              {numberToShortenAmount(c.total)}
+            </Typography>
 
-              <IllustrationContainer>
-                <div className="left-content">
-                  <div>
-                    {hasIncreased(c.percentageChange) ? (
-                      <UpArrow />
-                    ) : (
-                      <DropdownArrow fill={theme.brand.error} />
-                    )}
-                  </div>
-
-                  <Typography
-                    variant="caption"
-                    color={
-                      hasIncreased(c.percentageChange) ? 'success' : 'error'
-                    }
-                    className="text"
-                  >
-                    {hasIncreased(c.percentageChange) ? '+' : '-'}
-                    {c.percentageChange}%
-                  </Typography>
+            <IllustrationContainer>
+              <div className="left-content">
+                <div>
+                  {hasIncreased(c.percentageChange) ? (
+                    <UpArrow />
+                  ) : (
+                    <DropdownArrow fill={theme.brand.error} />
+                  )}
                 </div>
 
-                <CategoryImageContainer>
-                  <CategoryImage id={c.id} maxHeight={40} />
-                </CategoryImageContainer>
-              </IllustrationContainer>
-            </SalesCard>
-          </Col>
+                <Typography
+                  variant="caption"
+                  color={hasIncreased(c.percentageChange) ? 'success' : 'error'}
+                  className="text"
+                >
+                  {hasIncreased(c.percentageChange) ? '+' : '-'}
+                  {c.percentageChange}%
+                </Typography>
+              </div>
+
+              <CategoryImageContainer>
+                <CategoryImage id={c.id} maxHeight={40} />
+              </CategoryImageContainer>
+            </IllustrationContainer>
+          </SalesCard>
         ))}
       </MonthlyRow>
     </TopCategoriesContainer>

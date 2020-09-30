@@ -62,6 +62,8 @@ export const SalesCard = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.grey.shade9};
   border-radius: 4px;
+  margin-right: 24px;
+  min-width: 200px;
 
   .price {
     margin-bottom: 16px;
