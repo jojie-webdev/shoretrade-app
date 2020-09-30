@@ -2,6 +2,7 @@ import { Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   padding: 40px 40px 24px;
@@ -78,6 +79,9 @@ export const ForgotPasswordContainer = styled.div`
 
 export const ForgotPasswordIcon = styled(Lock)`
   margin-right: 11px;
+  margin-bottom: 2px;
 `;
 
-export const ForgotPasswordText = styled(Typography)``;
+export const ForgotPasswordText = styled(Typography)`
+  font-size: ${pxToRem(14)};
+`;
