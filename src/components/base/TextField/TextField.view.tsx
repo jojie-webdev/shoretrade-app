@@ -35,6 +35,9 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     onBlur = () => null,
     style,
     alert,
+    readOnly,
+    variant,
+    color,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -51,7 +54,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
 
   return (
     <Container className={className} style={style}>
-      <Typography variant="overline" color={'shade6'}>
+      <Typography variant={variant || 'overline'} color={color || 'shade6'}>
         {label}
       </Typography>
       <FieldContainer error={(error || '').length > 0}>
@@ -66,6 +69,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
+          readOnly={readOnly}
         />
         {secured && (
           <VisibilityContainer>

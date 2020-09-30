@@ -1,4 +1,6 @@
+import { Variants } from 'components/base/Typography/Typography.props';
 import { FieldInputProps } from 'formik';
+import { Theme } from 'types/Theme';
 
 export interface FormikTextFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -7,4 +9,6 @@ export interface FormikTextFieldProps
   secured?: boolean;
   alert?: string;
   LeftComponent?: React.ReactNode;
+  variant?: Variants;
+  color?: keyof Theme['brand'] | keyof Theme['grey'];
 }

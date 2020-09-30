@@ -1,3 +1,7 @@
+
+import { Variants } from 'components/base/Typography/Typography.props';
+import { Theme } from 'types/Theme';
+
 export interface TextFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,4 +12,6 @@ export interface TextFieldProps
   className?: string;
   alert?: string;
   prefix?: string;
+  variant?: Variants;
+  color?: keyof Theme['brand'] | keyof Theme['grey'];
 }

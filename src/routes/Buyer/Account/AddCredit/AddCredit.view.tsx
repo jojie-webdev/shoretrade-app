@@ -72,7 +72,9 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
                 name="amount"
                 id="amount"
                 label="How much credit would you like to add?"
-                placeholder="0"
+                placeholder="$10,000.00"
+                variant="label"
+                color="shade8"
               />
             </Col>
 

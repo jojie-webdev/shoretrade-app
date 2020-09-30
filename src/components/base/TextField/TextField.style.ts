@@ -27,7 +27,8 @@ export const FieldContainer = styled.div<{ error: boolean }>`
 `;
 
 export const Field = styled.input`
-  background-color: ${({ theme }) => theme.grey.noshade};
+  background-color: ${({ readOnly, theme }) =>
+    readOnly ? theme.grey.shade3 : theme.grey.noshade};
   display: flex;
   flex: 1;
   border-radius: 4px;

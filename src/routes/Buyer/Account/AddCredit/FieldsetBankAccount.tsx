@@ -13,7 +13,7 @@ export const FieldsetBankAccount = () => (
       <Typography variant="body" color="shade9">
         It is very important that you enter the correct details into your bank
         transfer page, or your deposit will not go through. We use the reference
-        number to match deposits toyour ShoreTrade account. Bank transfers
+        number to match deposits to your ShoreTrade account. Bank transfers
         normally take 2 days to clear.
       </Typography>
     </Col>
@@ -25,7 +25,7 @@ export const FieldsetBankAccount = () => (
         id="acctName"
         label="BANK ACCOUNT NAME OR PAYEE"
         value="ShoreTrade Pty Ltd"
-        disabled
+        readOnly
       />
     </Col>
 
@@ -36,7 +36,7 @@ export const FieldsetBankAccount = () => (
         id="bsb"
         label="BSB NUMBER"
         value="062-000"
-        disabled
+        readOnly
       />
     </Col>
 
@@ -47,7 +47,7 @@ export const FieldsetBankAccount = () => (
         id="acctNum"
         label="ACCOUNT NUMBER"
         value="17215848"
-        disabled
+        readOnly
       />
     </Col>
 
@@ -59,7 +59,7 @@ export const FieldsetBankAccount = () => (
         label="DESCRIPTION OR REFERENCE"
         placeholder=""
         value="005140"
-        disabled
+        readOnly
       />
     </Col>
   </>
