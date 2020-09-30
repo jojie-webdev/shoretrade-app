@@ -14,6 +14,7 @@ import { BUYER_ROUTES } from 'consts';
 import { Container } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -179,7 +180,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 Credit balance
               </Typography>
               <Typography color="shade9" variant="title5" className="amount">
-                {credit ? credit : '$0.00'}
+                {credit ? toPrice(credit) : '$0.00'}
               </Typography>
             </CreditBalanceContainer>
           )}
