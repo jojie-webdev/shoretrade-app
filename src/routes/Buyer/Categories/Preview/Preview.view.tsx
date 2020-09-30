@@ -66,10 +66,14 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       </Row>
       {results.length > 0 ? (
         <>
-          <Row className="cards" style={{ marginTop: 20 }}>
+          <div className="row cards" style={{ marginTop: 20 }}>
             {results.map((product) => {
               return (
-                <Col sm={3} key={product.id}>
+                <div
+                  style={{ width: window.innerWidth * (25 / 100) }}
+                  className="column"
+                  key={product.id}
+                >
                   <Link
                     to={`/buyer/product/${product.id}`}
                     className="market-item"
@@ -93,10 +97,10 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       state={product.state}
                     />
                   </Link>
-                </Col>
+                </div>
               );
             })}
-          </Row>
+          </div>
           <FilterModal {...modalFilterProps} />
         </>
       ) : (

@@ -15,8 +15,11 @@ const Card = (props: CardProps): JSX.Element => {
         <picture className="thumbnail">
           <CategoryImageView
             id={props.id}
-            maxHeight={150}
-            cBorderRadius={'4px'}
+            maxHeight={100}
+            containerHeight={130}
+            cBorderRadius={'4px 4px 0px 0px'}
+            customSVGSize={2}
+            circled={true}
           />
         </picture>
         <div className="card-content">
