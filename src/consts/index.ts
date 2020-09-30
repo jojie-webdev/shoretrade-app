@@ -17,13 +17,6 @@ export const API = {
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
 
-const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 const proxyURL = 'https://cors-anywhere.herokuapp.com/';
-
-export const GOOGLE_AUTOCOMPLETE = `${
-  isDev ? proxyURL : ''
-}https://maps.googleapis.com/maps/api/place/autocomplete/json?`;
-
-export const GOOGLE_PLACE_DETAILS = `${
-  isDev ? proxyURL : ''
-}https://maps.googleapis.com/maps/api/place/details/json?`;
+export const GOOGLE_AUTOCOMPLETE = `${proxyURL}https://maps.googleapis.com/maps/api/place/autocomplete/json?`;
+export const GOOGLE_PLACE_DETAILS = `${proxyURL}https://maps.googleapis.com/maps/api/place/details/json?`;

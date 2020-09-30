@@ -207,7 +207,7 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
           <DropdownLocation
             value={origin?.address || ''}
             onSelect={setOrigin}
-            label="Catchment Origin (TODO: Google Search Modal)"
+            label="Catchment Origin"
             error={pathOr('', ['origin', '0'], errors)}
           />
         </Col>

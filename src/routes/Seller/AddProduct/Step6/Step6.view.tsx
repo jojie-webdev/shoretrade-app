@@ -103,7 +103,7 @@ const BoxSummary = ({
           Total
         </Typography>
         <Typography color="noshade" variant="title5">
-          {summary.total} {unit}
+          {summary.total.toFixed(2)} {unit}
         </Typography>
       </div>
       <div className="inner-text">
