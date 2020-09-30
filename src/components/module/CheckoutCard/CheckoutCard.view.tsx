@@ -27,7 +27,7 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                 <Typography variant="caption" color="shade6">
                   Vendor
                 </Typography>
-                <TextValue variant="caption" color="shade8" weight="400">
+                <TextValue variant="caption" color="shade8">
                   {vendor}
                 </TextValue>
               </div>
@@ -36,14 +36,14 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                 <Typography variant="caption" color="shade6">
                   Weight
                 </Typography>
-                <TextValue variant="caption" color="shade8" weight="400">
+                <TextValue variant="caption" color="shade8">
                   {weight} {unit}
                 </TextValue>
 
                 <Typography variant="caption" color="shade6">
                   Size
                 </Typography>
-                <TextValue variant="caption" color="shade8" weight="400">
+                <TextValue variant="caption" color="shade8">
                   {size}
                 </TextValue>
               </div>
