@@ -11,4 +11,6 @@ export interface FormikTextFieldProps
   LeftComponent?: React.ReactNode;
   variant?: Variants;
   color?: keyof Theme['brand'] | keyof Theme['grey'];
+  onChange?: (value: any) => void;
+  onChangeText?: (value: string) => void;
 }
