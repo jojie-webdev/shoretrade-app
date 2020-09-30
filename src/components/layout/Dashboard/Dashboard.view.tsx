@@ -141,11 +141,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     cartItems,
   } = props;
 
-  const textColor: keyof Theme['grey'] =
-    theme.appType === 'seller' ? 'noshade' : 'shade9';
+  const isSeller = theme.appType === 'seller';
+  const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'shade9';
 
-  const iconColor =
-    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9;
+  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade9;
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -188,7 +187,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           <LogoutButton
             style={{ marginBottom: 24 }}
             onPress={() => logout()}
-            dark
+            dark={isSeller}
           >
             <LogoutContainer>
               <div className="icon-container">

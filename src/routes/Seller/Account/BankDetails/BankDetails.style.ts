@@ -1,11 +1,10 @@
 import Alert from 'components/base/Alert';
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
 
-export const TextFieldRow = styled.div`
-  display: flex;
-  flex-direction: row;
+export const TextFieldRow = styled(Row)`
   margin-top: 16px;
 
   .textfield-col {

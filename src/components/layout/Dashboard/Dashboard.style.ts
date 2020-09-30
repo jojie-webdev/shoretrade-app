@@ -122,12 +122,13 @@ export const Content = styled.div<{
   screenBackground?: string;
   color?: string;
 }>`
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-in-out;
+  overflow-x: hidden;
 
   background: ${(props) =>
     props.background
@@ -161,6 +162,7 @@ export const Content = styled.div<{
       height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
+      overflow-x: hidden;
       overflow-y: auto;
 
       .container {
