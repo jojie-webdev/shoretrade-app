@@ -57,13 +57,16 @@ const Item = (props: ItemProp) => {
         </ItemDetail>
 
         <ItemDetail variant="caption" color="shade6">
-          Remaining: <span>{props.remaining}</span>
+          Remaining:{' '}
+          <span>
+            {props.remaining} {props.unit}
+          </span>
         </ItemDetail>
       </div>
 
       <div className="pricing">
         <Typography variant="title5" weight="900" color="noshade">
-          {props.price}
+          ${props.price}
         </Typography>
         <Typography color="shade6" variant="caption">
           per {props.unit}
