@@ -23,12 +23,6 @@ const Landing = (): JSX.Element => {
   const profilePicture = user?.profileImage || '';
   const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
 
-  // const getUser = useSelector((state: Store) => state.getUser.data);
-  // const defaultCompany = useMemo(() => {
-  //   if (!user) return null;
-  //   return user?.companies.length ? user?.companies[0] : null;
-  // }, [user]);
-
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,
     currentCompany,
