@@ -47,7 +47,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   //     </LoadingContainer>
   //   );
   // }
-
+  console.log(window.innerWidth);
   return (
     <PreviewContainer>
       <Row className="search-row">
@@ -72,7 +72,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           </FilterButton>
         </Col>
       </Row>
-      {results.length > 0 ? (
+      {results && results.length > 0 ? (
         <>
           <div className="row cards" style={{ marginTop: 20 }}>
             {results.map((product) => {

@@ -68,7 +68,8 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
 
       if (sizeValues) {
         const from = sizeValues.from.find((f) => f.value === sizeFrom);
-        const to = sizeValues.to.find((t) => t.value === sizeTo);
+        const to =
+          sizeValues.to && sizeValues.to.find((t) => t.value === sizeTo);
 
         return from && to ? `${from.label} - ${to.label}` : null;
       }

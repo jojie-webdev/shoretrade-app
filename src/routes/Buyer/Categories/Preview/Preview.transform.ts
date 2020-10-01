@@ -27,11 +27,11 @@ export const getFilters = (data: any) => {
     return {
       from:
         typeof sizeFrom === 'object'
-          ? sizeFrom.map((sf: any) => ({ label: sf, value: sf }))
+          ? sizeFrom && sizeFrom.map((sf: any) => ({ label: sf, value: sf }))
           : [],
       to:
         typeof sizeTo === 'object'
-          ? sizeTo.map((st: any) => ({ label: st, value: st }))
+          ? sizeTo && sizeTo.map((st: any) => ({ label: st, value: st }))
           : [],
     };
   };
