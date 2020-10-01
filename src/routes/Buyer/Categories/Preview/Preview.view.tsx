@@ -78,7 +78,10 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
             {results.map((product) => {
               return (
                 <div
-                  style={{ width: window.innerWidth * (25 / 100) }}
+                  style={{
+                    width: window.innerWidth * (18 / 100),
+                    // marginLeft: 30,
+                  }}
                   className="column"
                   key={product.id}
                 >

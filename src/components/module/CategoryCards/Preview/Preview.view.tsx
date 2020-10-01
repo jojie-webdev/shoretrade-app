@@ -21,10 +21,11 @@ import {
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
+  const { cardContainerStyle } = props;
   const theme = useTheme();
   return (
     <CardContainer>
-      <div className="card">
+      <div className={`card ${cardContainerStyle}`}>
         <div className="imgContainer">
           <img src={props.images[0]} alt="Product" style={{ maxHeight: 200 }} />
           <LocationContainer>

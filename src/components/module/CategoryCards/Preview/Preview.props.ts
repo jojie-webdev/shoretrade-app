@@ -21,4 +21,5 @@ export interface PreviewProps {
   backgroundColor?: string;
   weight: string;
   unit?: string;
+  cardContainerStyle?: any;
 }
