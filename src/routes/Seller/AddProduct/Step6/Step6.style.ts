@@ -10,6 +10,10 @@ export const Container = styled.div`
       .text-container {
         margin-left: 8px;
         margin-top: 16px;
+
+        @media screen and (min-width: 1249px) {
+          padding-bottom: 10px;
+        }
       }
     }
   }
@@ -30,6 +34,10 @@ export const Container = styled.div`
         margin-left: 8px;
       }
     }
+  }
+
+  .box-error-container {
+    margin-bottom: 32px;
   }
 `;
 
