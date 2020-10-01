@@ -71,7 +71,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
               return (
                 <div
                   style={{
-                    width: window.innerWidth * (18 / 100),
+                    // width: window.innerWidth * (18 / 100),
+                    marginRight: 32,
                   }}
                   className="column"
                   key={product.id}
@@ -84,7 +85,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       cardContainerStyle={{
                         maxWidth: '100%',
                         minWidth: '60%',
-                        marginRight: 30,
+                        // marginRight: 30,
                       }}
                       id={product.id}
                       images={product.images}

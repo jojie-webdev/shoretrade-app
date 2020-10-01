@@ -25,6 +25,9 @@ export const CardContainer = styled.div`
     border-radius: 4px;
     max-width: 300px;
     min-width: 281px;
+    height: 364px;
+    width: 281px;
+    flex-wrap: wrap;
   }
 
   .card a {
