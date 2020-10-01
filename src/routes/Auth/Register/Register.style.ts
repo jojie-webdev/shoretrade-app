@@ -90,7 +90,8 @@ export const TextField = styled(FormikTextField)`
 
 export const Footer = styled.div`
   display: flex;
-  height: 64px;
+  min-height: 64px;
+  max-height: 64px;
   justify-content: center;
   align-items: center;
   padding: 0px 32px;

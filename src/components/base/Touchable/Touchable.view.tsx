@@ -18,6 +18,7 @@ const Touchable = (props: TouchableProps): JSX.Element => {
   } = props;
   return (
     <TouchableBase
+      type="button"
       onClick={onPress}
       width={width}
       height={height}

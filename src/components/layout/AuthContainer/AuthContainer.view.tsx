@@ -32,6 +32,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
     currentStep,
     totalSteps,
     containerBackground,
+    minHeight,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -39,7 +40,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
     <Container>
       <Background />
       <Wrapper>
-        <Content background={containerBackground}>
+        <Content background={containerBackground} minHeight={minHeight}>
           {!isSmallScreen && onCloseAction && (
             <CloseButtonContainer>
               <Touchable circle width={'100%'} onPress={() => onCloseAction()}>
