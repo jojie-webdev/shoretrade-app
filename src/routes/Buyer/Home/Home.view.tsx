@@ -98,7 +98,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      <div style={{ width: '65%', margin: 'auto' }}>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <Search
@@ -110,9 +110,9 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </div>
 
-      <Carousel id="featured-carousel" images={featured} loop />
+      <Carousel id="featured-carousel" images={featured} loop autoplay />
 
-      <div style={{ width: '65%', margin: 'auto' }}>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <ViewCol>
           <FavouritesHeader>
             <Typography variant="title5" color="shade8">
