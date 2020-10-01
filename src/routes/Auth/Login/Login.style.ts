@@ -52,6 +52,11 @@ export const RegisterLinkPrefix = styled(Typography)`
   margin-right: 4px;
 `;
 
+export const RegisterLinkAction = styled.div`
+  cursor: pointer;
+  margin-right: 4px;
+`;
+
 export const RegisterLink = styled(Typography)`
   font-weight: bold;
 `;

@@ -24,6 +24,7 @@ import {
   ForgotPasswordContainer,
   ForgotPasswordIcon,
   ForgotPasswordText,
+  RegisterLinkAction,
 } from './Login.style';
 import { validate } from './Login.validation';
 
@@ -63,13 +64,13 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
               <RegisterLinkPrefix color="shade6">
                 New user? Create a
               </RegisterLinkPrefix>
-              <Touchable dark={isSeller} onPress={() => goToBuyerRegister()}>
+              <RegisterLinkAction onClick={() => goToBuyerRegister()}>
                 <RegisterLink color="primary">Buyer</RegisterLink>
-              </Touchable>
+              </RegisterLinkAction>
               <RegisterLinkPrefix color="shade6">or</RegisterLinkPrefix>
-              <Touchable dark={isSeller} onPress={() => goToSellerRegister()}>
+              <RegisterLinkAction onClick={() => goToSellerRegister()}>
                 <RegisterLink color="primary">Seller</RegisterLink>
-              </Touchable>
+              </RegisterLinkAction>
               <RegisterLinkPrefix color="shade6">account</RegisterLinkPrefix>
             </RegisterLinkContainer>
             <Formik {...formikProps}>
