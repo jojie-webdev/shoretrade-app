@@ -38,7 +38,9 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
           <div className="left-content">
             <Calendar fill={theme.grey.shade6} />
             {date ? (
-              <Typography variant="label">{date.format('M.D.yyyy')}</Typography>
+              <Typography variant="label">
+                {date.format('DD.MM.yyyy')}
+              </Typography>
             ) : (
               <Typography variant="label" color="shade5">
                 {placeholder}

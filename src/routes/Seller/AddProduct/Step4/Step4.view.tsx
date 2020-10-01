@@ -59,6 +59,7 @@ const SizeInput = (props: SizeInputProps) => {
                 setToSize(fromSize);
               }
             }}
+            readOnly={disabled}
           />
         </Col>
         <Col md={6}>
@@ -80,6 +81,7 @@ const SizeInput = (props: SizeInputProps) => {
                 setFromSize(toSize);
               }
             }}
+            readOnly={disabled}
           />
         </Col>
       </Row>

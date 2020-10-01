@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
 import { LandingGeneratedProps } from './Landing.props';
@@ -9,18 +10,27 @@ import LandingView from './Landing.view';
 const Landing = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const getUser = useSelector((state: Store) => state.getUser.data);
-  const defaultCompany = useMemo(() => {
-    if (!getUser) return null;
-    return getUser.data.user.companies.length
-      ? getUser.data.user.companies[0]
-      : null;
-  }, [getUser]);
+  const [currentCompany, setCurrentCompany] = useState<
+    UserCompany | undefined
+  >();
+
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const companies = user?.companies || [];
+  const companyRelationship = currentCompany?.relationship || '';
+  const profilePicture = user?.profileImage || '';
+  const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
 
   const generatedProps: LandingGeneratedProps = {
-    // generated props here
-    credit: defaultCompany ? defaultCompany.credit : '',
-    company: defaultCompany ? defaultCompany : {},
+    credit: currentCompany?.credit,
+    currentCompany,
+    companyRelationship,
+    companies,
+    profilePicture,
+    profileName,
+    loadingUser,
   };
   return <LandingView {...generatedProps} />;
 };
