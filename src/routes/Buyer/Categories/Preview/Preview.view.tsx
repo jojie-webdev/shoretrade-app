@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
+import TypographyView from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Search from 'components/module/Search';
@@ -60,7 +61,14 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
         </Col>
         <Col xs={1.5}>
           <FilterButton onClick={modalFilterProps.onClickClose}>
-            Filters <Filter></Filter>
+            <div style={{ flexDirection: 'row', display: 'flex' }}>
+              <TypographyView color="secondary" variant="label">
+                Filters
+              </TypographyView>
+              <div style={{ paddingLeft: 4 }}>
+                <Filter></Filter>
+              </div>
+            </div>
           </FilterButton>
         </Col>
       </Row>
