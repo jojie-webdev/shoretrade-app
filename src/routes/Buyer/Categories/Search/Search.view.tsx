@@ -52,24 +52,28 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           <Typography
             variant="caption"
             color="shade6"
-            style={{ marginLeft: 1 }}
+            style={{ marginLeft: 3 }}
           >
             per
           </Typography>
           <Typography
             variant="caption"
             color="shade6"
-            style={{ marginLeft: 4 }}
+            style={{ marginLeft: 2 }}
           >
             {formatMeasurementUnit(result.measurementUnit)}
           </Typography>
-          <Typography weight="bold" variant="caption" style={{ marginLeft: 1 }}>
+          <Typography
+            weight="bold"
+            variant="caption"
+            style={{ marginLeft: 10 }}
+          >
             {result.count}
           </Typography>
           <Typography
             variant="caption"
             color="shade6"
-            style={{ marginLeft: 1 }}
+            style={{ marginLeft: 3 }}
           >
             item
           </Typography>
