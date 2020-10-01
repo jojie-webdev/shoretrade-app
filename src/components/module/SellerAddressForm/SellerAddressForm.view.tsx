@@ -50,7 +50,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
 
       <InnerRouteHeader title={routeHeader} />
 
-      <Row className="textfield-row">
+      <Row nogutter className="textfield-row">
         <Col>
           <DropdownLocation
             value={address.address}
@@ -68,7 +68,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
         </Col>
       </Row>
 
-      <Row className="checkbox-row">
+      <Row nogutter className="checkbox-row">
         <Col className="checkbox-col">
           <div className="checkbox-container">
             <Checkbox checked={isDefault || false} onClick={toggleIsDefault} />
@@ -79,7 +79,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
         </Col>
       </Row>
 
-      <Row>
+      <Row nogutter>
         <Col>
           <Button text="Submit" onClick={onClickSave} loading={pending} />
         </Col>

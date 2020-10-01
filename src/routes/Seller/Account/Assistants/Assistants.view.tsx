@@ -30,7 +30,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     <Container>
       <InnerRouteHeader title="Fisherman / Assistant" />
 
-      <Row>
+      <Row nogutter>
         <Col>
           <SmallAlertContainer>
             <div className="icon-container">
@@ -64,7 +64,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
         />
       ))}
 
-      <Row>
+      <Row nogutter>
         <Col>
           <Button
             text="Add a fisherman / assistant"
