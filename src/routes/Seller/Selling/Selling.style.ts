@@ -1,5 +1,6 @@
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -11,12 +12,10 @@ export const Container = styled.div`
   }
 `;
 
-export const ItemCard = styled.div`
+export const ItemCard = styled(Row)`
   background: ${(props) => props.theme.grey.shade9};
   padding: 24px;
   margin-bottom: 16px;
-  display: flex;
-  justify-content: space-around;
   border-radius: 4px;
   ${({ onClick }) =>
     onClick
@@ -27,6 +26,7 @@ export const ItemCard = styled.div`
       : ''};
 
   .content {
+    flex: 1;
     margin-right: 24px;
 
     .item-title {
@@ -40,6 +40,7 @@ export const ItemCard = styled.div`
   }
 
   .pricing {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -65,10 +66,16 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 148px;
-  height: 148px;
+  width: 176px;
+  height: 176px;
+
   margin-right: 16px;
   border-radius: 4px;
+
+  @media ${BREAKPOINTS['md']} {
+    width: 148px;
+    height: 148px;
+  }
 `;
 
 export const ItemDetail = styled(Typography)`
