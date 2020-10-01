@@ -24,7 +24,7 @@ const Item = (props: ItemProp) => {
   const formattedExpiresIn = () => moment().to(props.expiresIn);
 
   return (
-    <ItemCard onClick={props.onClick}>
+    <ItemCard onClick={props.onClick} nogutter>
       <ItemImage src={props.data.images[0]} alt="" />
 
       <div className="content">
