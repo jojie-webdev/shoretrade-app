@@ -10,7 +10,7 @@ import { Container } from './FormikTextField.style';
 
 const FormikTextField = (props: FormikTextFieldProps): JSX.Element => {
   // const theme = useTheme();
-  const { name, ...textFieldProps } = props;
+  const { name } = props;
   const [field, meta] = useField<string>(name);
 
   const onChange = (event: React.ChangeEvent<any>) => {
@@ -22,7 +22,7 @@ const FormikTextField = (props: FormikTextFieldProps): JSX.Element => {
   return (
     <TextField
       {...field}
-      {...textFieldProps}
+      {...props}
       onChange={onChange}
       id={name}
       error={meta.touched ? meta.error : undefined}

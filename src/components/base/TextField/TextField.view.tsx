@@ -38,6 +38,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     readOnly,
     variant,
     color,
+    onKeyUp,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -70,6 +71,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           onBlur={onBlur}
           placeholder={placeholder}
           readOnly={readOnly}
+          onKeyUp={onKeyUp}
         />
         {secured && (
           <VisibilityContainer>
