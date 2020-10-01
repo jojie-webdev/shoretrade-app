@@ -49,32 +49,16 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           <Typography variant="caption" weight="bold">
             {toPrice(result.price.to)}
           </Typography>
-          <Typography
-            variant="caption"
-            color="shade6"
-            style={{ marginLeft: 3 }}
-          >
+          <Typography variant="caption" color="shade6" className="per">
             per
           </Typography>
-          <Typography
-            variant="caption"
-            color="shade6"
-            style={{ marginLeft: 2 }}
-          >
+          <Typography variant="caption" color="shade6" className="measure">
             {formatMeasurementUnit(result.measurementUnit)}
           </Typography>
-          <Typography
-            weight="bold"
-            variant="caption"
-            style={{ marginLeft: 10 }}
-          >
+          <Typography weight="bold" variant="caption" className="result-count">
             {result.count}
           </Typography>
-          <Typography
-            variant="caption"
-            color="shade6"
-            style={{ marginLeft: 3 }}
-          >
+          <Typography variant="caption" color="shade6" className="per">
             item
           </Typography>
         </ResultContainer>
@@ -115,7 +99,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                     Results
                   </Typography>
                   <Typography
-                    style={{ marginLeft: 10 }}
+                    className="result-length"
                     variant="title5"
                     weight="bold"
                   >

@@ -66,6 +66,22 @@ export const ResultContainer = styled.div`
   align-self: center;
   flex-direction: row;
   display: flex;
+
+  .per {
+    margin-left: 3px;
+  }
+
+  .result-count {
+    margin-left: 10px;
+  }
+
+  .measure {
+    margin-left: 2px;
+  }
+
+  .result-length {
+    margin-left: 10px;
+  }
 `;
 
 export const FilterButton = styled.button`
