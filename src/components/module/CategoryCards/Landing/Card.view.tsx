@@ -6,7 +6,7 @@ import CategoryImageView from 'components/module/CategoryImage';
 import { Row, Col } from 'react-grid-system';
 
 import { CardProps } from './Card.props';
-import { CardContainer } from './Card.style';
+import { CardContainer, Typography } from './Card.style';
 
 const Card = (props: CardProps): JSX.Element => {
   return (
@@ -15,15 +15,15 @@ const Card = (props: CardProps): JSX.Element => {
         <picture className="thumbnail">
           <CategoryImageView
             id={props.id}
-            maxHeight={100}
-            containerHeight={130}
+            maxHeight={112}
+            containerHeight={112}
             cBorderRadius={'4px 4px 0px 0px'}
             customSVGSize={2}
             circled={true}
           />
         </picture>
         <div className="card-content">
-          <TypographyView variant="label">{props.label}</TypographyView>
+          <Typography variant="label">{props.label}</Typography>
         </div>
       </div>
     </CardContainer>

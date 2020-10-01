@@ -30,7 +30,7 @@ export const CategoriesContainer = styled.div`
   .cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: row;
   }
 
   .search-row {
