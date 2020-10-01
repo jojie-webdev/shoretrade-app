@@ -112,14 +112,21 @@ const BuyerRoutes = (): JSX.Element => {
     shouldUseFullWidth?: boolean;
     shouldIncludePadding?: boolean;
     onBack?: () => void;
+    pageTitle?: string;
   } => {
-    if (
-      pathname.includes('/buyer/home') ||
-      pathname.includes('/buyer/product')
-    ) {
+    if (pathname.includes('/buyer/home')) {
       return {
         shouldUseFullWidth: true,
         shouldIncludePadding: false,
+      };
+    }
+
+    if (pathname.includes('/buyer/product')) {
+      return {
+        shouldUseFullWidth: true,
+        shouldIncludePadding: false,
+        pageTitle: 'Product Details',
+        onBack: history.goBack,
       };
     }
 
