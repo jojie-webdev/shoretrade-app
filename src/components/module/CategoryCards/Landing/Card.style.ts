@@ -4,8 +4,8 @@ export const CardContainer = styled.div`
   img {
     display: block;
     border: 0;
-    width: 100%;
-    height: auto;
+    width: 203px;
+    height: 160px;
   }
 
   .card {
