@@ -31,7 +31,7 @@ const ContolButtonTextColor = (
   appType: 'buyer' | 'seller'
 ): string => {
   if (appType === 'buyer') {
-    return active ? theme.grey.noshade : theme.grey.shade5;
+    return active ? theme.grey.noshade : theme.grey.shade8;
   } else {
     return active ? theme.grey.shade9 : theme.grey.noshade;
   }
@@ -53,6 +53,8 @@ export const ControlButton = styled.button<{ active: boolean }>`
   /* Text Properties */
   font-size: 14px;
   color: ${(props) => ContolButtonTextColor(props.active, props.theme.appType)};
+  font-weight: 500;
+  line-height: 24px;
 
   :focus {
     outline: none;

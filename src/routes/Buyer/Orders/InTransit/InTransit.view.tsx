@@ -64,11 +64,12 @@ const InTransit = (props: OrdersGeneratedProps) => {
     <>
       {inTransitOrders.map((item) => {
         return (
-          <AccordionContainer>
-            <InTransitItems key={item.id} {...item} />
+          <AccordionContainer key={item.id}>
+            <InTransitItems {...item} />
           </AccordionContainer>
         );
       })}
+
     </>
   );
 };

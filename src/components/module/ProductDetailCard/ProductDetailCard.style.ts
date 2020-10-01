@@ -61,7 +61,7 @@ export const TagsContainer = styled(Row)`
 export const Tag = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 2px 8px;
+  padding: 4px 8px 2px;
   background: ${({ theme }) => theme.grey.shade2};
   align-items: center;
   min-height: 16px;
