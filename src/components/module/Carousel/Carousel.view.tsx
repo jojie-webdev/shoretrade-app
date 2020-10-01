@@ -69,7 +69,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             }
           }}
         >
-          <CarouselChevronLeft width={18} height={18} />
+          {images.length > 1 ? (
+            <CarouselChevronLeft width={18} height={18} />
+          ) : null}
         </Touchable>
       </ArrowArea>
       <SwiperArea style={{ width: swiperAreaWidth }}>
@@ -106,7 +108,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             }
           }}
         >
-          <CarouselChevronRight width={18} height={18} />
+          {images.length > 1 ? (
+            <CarouselChevronRight width={18} height={18} />
+          ) : null}
         </Touchable>
       </ArrowArea>
     </SwiperContainer>

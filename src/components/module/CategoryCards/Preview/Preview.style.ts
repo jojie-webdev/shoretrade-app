@@ -66,6 +66,10 @@ export const LocationContainer = styled.div`
   position: absolute;
   top: 5%;
   right: 5%;
+
+  .location-font {
+    padding-left: 5.75px;
+  }
 `;
 
 export const BadgeContainer = styled.div`

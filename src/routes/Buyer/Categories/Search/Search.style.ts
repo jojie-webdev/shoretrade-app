@@ -18,7 +18,8 @@ export const SearchContainer = styled.div`
   }
 
   .interactions-right {
-    padding: 10px;
+    padding: 16px;
+    padding-right: 32px;
   }
 `;
 

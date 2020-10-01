@@ -33,8 +33,16 @@ const Preview = (props: PreviewProps): JSX.Element => {
           <img src={props.images[0]} alt="Product" style={{ maxHeight: 200 }} />
           <LocationContainer>
             <Badge>
-              <Location height={10.06} width={8.5}></Location>{' '}
-              {props.origin?.countryCode}
+              <div style={{ flexDirection: 'row', display: 'flex' }}>
+                <Location height={10.06} width={8.5}></Location>
+                <Typography
+                  className="location-font"
+                  variant="small"
+                  color="noshade"
+                >
+                  {props.origin?.countryCode}
+                </Typography>
+              </div>
             </Badge>
           </LocationContainer>
 

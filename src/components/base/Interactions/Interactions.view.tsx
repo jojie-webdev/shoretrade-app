@@ -53,7 +53,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
       return pressed ? <Checkbox checked /> : <Checkbox />;
     }
 
-    return <ChevronRight width={8} height={12} />;
+    return <ChevronRight width={16} height={24} />;
   };
 
   return (
