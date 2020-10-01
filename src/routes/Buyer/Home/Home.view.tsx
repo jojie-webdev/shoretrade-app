@@ -11,6 +11,7 @@ import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
@@ -96,9 +97,27 @@ const HomeView = (props: HomeGeneratedProps) => {
     favourites,
   } = props;
 
+  const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
+
+  const isFavouriteMD = useMediaQuery({
+    query: `(min-width: 1040px) and (max-width: 1364px)`,
+  });
+
+  const getMaxFavouritesDisplay = () => {
+    if (isFavouriteSM) {
+      return 1;
+    }
+
+    if (isFavouriteMD) {
+      return 2;
+    }
+
+    return 3;
+  };
+
   return (
     <ViewContainer>
-      <div style={{ width: '65%', margin: 'auto' }}>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <Search
@@ -110,9 +129,9 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </div>
 
-      <Carousel id="featured-carousel" images={featured} loop />
+      <Carousel id="featured-carousel" images={featured} loop autoplay />
 
-      <div style={{ width: '65%', margin: 'auto' }}>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <ViewCol>
           <FavouritesHeader>
             <Typography variant="title5" color="shade8">
@@ -129,10 +148,11 @@ const HomeView = (props: HomeGeneratedProps) => {
           </FavouritesHeader>
           <FavouritesContainer>
             {favourites.length > 0
-              ? favourites.slice(0, 3).map((fav, index) => {
-                  return (
-                    <Col sm={4} key={fav.id}>
-                      <Link to={`/buyer/product/${fav.id}`}>
+              ? favourites
+                  .slice(0, getMaxFavouritesDisplay())
+                  .map((fav, index) => {
+                    return (
+                      <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
                         <PreviewCard
                           id={fav.id}
                           images={fav.images}
@@ -152,9 +172,8 @@ const HomeView = (props: HomeGeneratedProps) => {
                           state={fav.state}
                         />
                       </Link>
-                    </Col>
-                  );
-                })
+                    );
+                  })
               : null}
           </FavouritesContainer>
         </ViewCol>
@@ -177,19 +196,17 @@ const HomeView = (props: HomeGeneratedProps) => {
             {categories.length > 0 ? (
               categories.slice(0, 4).map((category, index) => {
                 return (
-                  <Col sm={3} key={index}>
-                    <Link
-                      to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                      key={category.id}
-                    >
-                      <Card
-                        sortIndex={category.sortIndex}
-                        id={category.id}
-                        image={category.thumbnail}
-                        label={category.name}
-                      />
-                    </Link>
-                  </Col>
+                  <Link
+                    to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
+                    key={category.id}
+                  >
+                    <Card
+                      sortIndex={category.sortIndex}
+                      id={category.id}
+                      image={category.thumbnail}
+                      label={category.name}
+                    />
+                  </Link>
                 );
               })
             ) : (

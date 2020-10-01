@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
-import SegmentedControls from 'components/base/SegmentedControls';
 import { InfoFilled, Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
-import EmptyState from 'components/module/EmptyState';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
@@ -56,7 +54,6 @@ export const SoldItem = (
     <>
       <StyledInteraction
         pressed={isOpen}
-        type="accordion"
         onClick={() => setIsOpen((v) => !v)}
         leftComponent={
           <PriorityNumber>
@@ -105,7 +102,6 @@ export const PendingItem = (props: PendingToShipItemData) => {
   const history = useHistory();
   return (
     <StyledInteraction
-      type="accordion"
       onClick={() =>
         history.push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', id))
       }
@@ -148,7 +144,9 @@ const ToShip = (props: SoldGeneratedProps) => {
           <div className="svg-container">
             <InfoFilled fill={theme.brand.alert} height={18} width={18} />
           </div>
-          <Typography color="alert">Pending Confirmation</Typography>
+          <Typography color="alert">
+            Pending Confirmation - {pendingToShip.length}
+          </Typography>
         </Col>
         <SwiperContainer height={'100px'}>
           <Swiper
@@ -173,6 +171,7 @@ const ToShip = (props: SoldGeneratedProps) => {
           />
         </div>
       </PendingRow>
+
       {toShip.map((group) => {
         const calendarDateString = getCalendarDate(group.title);
         return (
@@ -189,18 +188,21 @@ const ToShip = (props: SoldGeneratedProps) => {
           </DeliveryRow>
         );
       })}
-      <Row justify="center">
-        <Pagination
-          numPages={toShipPagesTotal}
-          currentValue={Number(filters.toShipFilters.page)}
-          onClickButton={(value) =>
-            updateFilters.updateToShipFilters({
-              page: value.toFixed(0),
-            })
-          }
-          variant="number"
-        />
-      </Row>
+
+      {toShipPagesTotal > 1 && (
+        <Row justify="center">
+          <Pagination
+            numPages={toShipPagesTotal}
+            currentValue={Number(filters.toShipFilters.page)}
+            onClickButton={(value) =>
+              updateFilters.updateToShipFilters({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        </Row>
+      )}
     </>
   );
 };

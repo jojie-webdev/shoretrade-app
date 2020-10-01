@@ -20,3 +20,7 @@ export interface CardPrivateProps {
 }
 
 export interface CardGeneratedProps extends CardPrivateProps {}
+
+export interface FieldsetCardProps extends CardGeneratedProps {
+  formik?: any;
+}

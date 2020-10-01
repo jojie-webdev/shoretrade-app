@@ -73,18 +73,20 @@ const Delivered = (props: SoldGeneratedProps) => {
         })}
       </DeliveredRow>
 
-      <Row justify="center">
-        <Pagination
-          numPages={deliveredPagesTotal}
-          currentValue={Number(filters.deliveredFilters.page)}
-          onClickButton={(value) =>
-            updateFilters.updateDeliveredFilters({
-              page: value.toFixed(0),
-            })
-          }
-          variant="number"
-        />
-      </Row>
+      {deliveredPagesTotal > 1 && (
+        <Row justify="center">
+          <Pagination
+            numPages={deliveredPagesTotal}
+            currentValue={Number(filters.deliveredFilters.page)}
+            onClickButton={(value) =>
+              updateFilters.updateDeliveredFilters({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        </Row>
+      )}
     </>
   );
 };

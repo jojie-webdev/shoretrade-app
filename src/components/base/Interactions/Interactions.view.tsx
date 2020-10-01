@@ -63,6 +63,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
           {label}
         </Label>
       ) : null}
+
       <div className="left-content">
         {leftComponent ? (
           leftComponent
@@ -71,6 +72,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         )}
         {children}
       </div>
+
       {rightComponent ? (
         rightComponent
       ) : (

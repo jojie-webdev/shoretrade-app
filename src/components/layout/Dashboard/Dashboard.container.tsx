@@ -1,8 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-import { SELLER_ROUTES } from 'consts';
+import { push } from 'connected-react-router';
+import {
+  BUYER_ACCOUNT_ROUTES,
+  SELLER_ACCOUNT_ROUTES,
+  SELLER_ROUTES,
+} from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { ROUTES } from 'routes/index.routes';
 import { authActions } from 'store/actions';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -43,6 +49,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
 
+  const userType = useSelector((state: Store) => state.auth.type) || '';
+
   const userData = getUser.data?.data.user;
   const cartItems = Object.keys(cart).length;
 
@@ -55,6 +63,18 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const logout = () => {
     dispatch(authActions.clear());
+  };
+
+  const onClickAccount = () => {
+    if (userType === 'seller') {
+      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+      return;
+    }
+
+    if (userType === 'buyer') {
+      dispatch(push(BUYER_ACCOUNT_ROUTES.LANDING));
+      return;
+    }
   };
 
   // MARK:- Effects
@@ -88,6 +108,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     openSidebar,
     setOpenSidebar,
     cartItems,
+    onClickAccount,
   };
 
   return <DashboardView {...generatedProps} />;

@@ -39,6 +39,8 @@ const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
 
 const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
+  const theme = useTheme();
+
   const getYearText = (year: number) => {
     return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
   };
@@ -52,6 +54,8 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
           className="btn"
           onClick={props.toggleModal}
+          icon={<DropdownArrow fill={theme.grey.shade6} />}
+          iconPosition="after"
         />
         <Button
           text={getYearText(getFiscalYear())}
@@ -99,7 +103,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
 };
 
 const TotalSales = (props: any) => (
-  <TotalSalesRow gutterWidth={24}>
+  <TotalSalesRow gutterWidth={24} justify="between">
     <Col md={12} className="title-col">
       <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
         <Typography variant="label" color="shade6" component="span">
@@ -107,17 +111,19 @@ const TotalSales = (props: any) => (
         </Typography>
       </Link>
     </Col>
-    <Col md={5} className="paid-col">
-      <SalesCard>
-        <Typography variant="overline" color="shade6" className="overline">
-          Paid
-        </Typography>
-        <Typography variant="title4" color="noshade">
-          {numberToShortenAmount(props.data.paid)}
-        </Typography>
-      </SalesCard>
+    <Col md={6} className="paid-col">
+      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
+        <SalesCard>
+          <Typography variant="overline" color="shade6" className="overline">
+            Paid
+          </Typography>
+          <Typography variant="title4" color="noshade">
+            {numberToShortenAmount(props.data.paid)}
+          </Typography>
+        </SalesCard>
+      </Link>
     </Col>
-    <Col md={5}>
+    <Col md={6}>
       <SalesCard>
         <Typography variant="overline" color="shade6" className="overline">
           Pending
@@ -145,6 +151,7 @@ const MonthlySales = (props: any) => {
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.months.map((m: any, i: any) => (
           <Link
+            key={i}
             to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
               `${moment(m.startDate).format('MM-DD-YYYY')}`
             )}
@@ -212,39 +219,47 @@ const TopCategories = (props: any) => {
       </Row>
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.categories.map((c: any, i: any) => (
-          <SalesCard key={i}>
-            <Typography variant="overline" color="shade6" className="overline">
-              {c.name}
-            </Typography>
-            <Typography variant="title4" color="noshade" className="price">
-              {numberToShortenAmount(c.total)}
-            </Typography>
+          <Link key={i} to={props.toDetails(c.id, c.name)}>
+            <SalesCard>
+              <Typography
+                variant="overline"
+                color="shade6"
+                className="overline"
+              >
+                {c.name}
+              </Typography>
+              <Typography variant="title4" color="noshade" className="price">
+                {numberToShortenAmount(c.total)}
+              </Typography>
 
-            <IllustrationContainer>
-              <div className="left-content">
-                <div>
-                  {hasIncreased(c.percentageChange) ? (
-                    <UpArrow />
-                  ) : (
-                    <DropdownArrow fill={theme.brand.error} />
-                  )}
+              <IllustrationContainer>
+                <div className="left-content">
+                  <div>
+                    {hasIncreased(c.percentageChange) ? (
+                      <UpArrow />
+                    ) : (
+                      <DropdownArrow fill={theme.brand.error} />
+                    )}
+                  </div>
+
+                  <Typography
+                    variant="caption"
+                    color={
+                      hasIncreased(c.percentageChange) ? 'success' : 'error'
+                    }
+                    className="text"
+                  >
+                    {hasIncreased(c.percentageChange) ? '+' : '-'}
+                    {c.percentageChange}%
+                  </Typography>
                 </div>
 
-                <Typography
-                  variant="caption"
-                  color={hasIncreased(c.percentageChange) ? 'success' : 'error'}
-                  className="text"
-                >
-                  {hasIncreased(c.percentageChange) ? '+' : '-'}
-                  {c.percentageChange}%
-                </Typography>
-              </div>
-
-              <CategoryImageContainer>
-                <CategoryImage id={c.id} maxHeight={40} />
-              </CategoryImageContainer>
-            </IllustrationContainer>
-          </SalesCard>
+                <CategoryImageContainer>
+                  <CategoryImage id={c.id} maxHeight={40} />
+                </CategoryImageContainer>
+              </IllustrationContainer>
+            </SalesCard>
+          </Link>
         ))}
       </MonthlyRow>
     </TopCategoriesContainer>
@@ -257,6 +272,7 @@ const DashboardView = ({
   isCalendarModalOpen,
   toggleModal,
   toCategories,
+  toCategoryDetails,
   ...props
 }: DashboardLandingGeneratedProps) => {
   const [startDate, setStartDate] = useState(moment());
@@ -283,7 +299,11 @@ const DashboardView = ({
           <FilterHeader toggleModal={toggleModal} {...props} />
           <TotalSales data={data} />
           <MonthlySales data={data} />
-          <TopCategories data={data} to={toCategories} />
+          <TopCategories
+            data={data}
+            to={toCategories}
+            toDetails={toCategoryDetails}
+          />
           {isCalendarModalOpen && (
             <DatePickerModal
               startDate={startDate}

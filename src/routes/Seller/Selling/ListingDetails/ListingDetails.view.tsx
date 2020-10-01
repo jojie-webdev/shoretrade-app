@@ -53,14 +53,14 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
   return (
     <Wrapper>
-      <Row nogutter style={{ width: '75%', paddingRight: '5%' }}>
-        <Col sm={12} md={12} lg={7}>
+      <Row nogutter style={{ width: 'calc(100% - 100px)', paddingRight: 50 }}>
+        <Col sm={12} md={12} lg={7} xl={5}>
           <DetailsCard>
             <Carousel
               id="product-carousel"
               images={images}
               height={'200px'}
-              swiperWidth="75%"
+              arrowWidth={50}
             />
             <div className="details-container">
               <Typography variant="title5" color="shade9" weight="bold">
@@ -109,7 +109,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
           </DetailsCard>
         </Col>
-        <Col sm={12} md={12} lg={5}>
+        <Col sm={12} md={12} lg={5} xl={7} style={{ paddingLeft: 100 }}>
           <SalesCard>
             <Typography variant="overline" color="shade9">
               SALES

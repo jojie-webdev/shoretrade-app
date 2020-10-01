@@ -32,6 +32,9 @@ export const DeliveryItem = styled(Interaction)`
     .top {
       display: flex;
       align-items: center;
+      /* Due to the typography having extra white space on the top and bottom
+        This is needed to compensate and align the icon and text */
+      margin-top: -5px;
 
       .delivery-date {
         margin-right: 4px;

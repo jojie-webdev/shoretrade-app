@@ -20,7 +20,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
 
   return (
     <PreviewContainer>
-      <Row>
+      <Row nogutter>
         <Col xs={12}>
           <Search
             value={search}
@@ -32,31 +32,33 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
       </Row>
       {results.length > 0 ? (
         <>
-          <Row className="cards" style={{ marginTop: 20 }}>
+          <Row nogutter className="cards" style={{ marginTop: 20 }}>
             {results.map((fav) => {
               return (
-                <Col sm={3} key={fav.id}>
-                  <Link to={`/buyer/product/${fav.id}`} className="market-item">
-                    <PreviewCard
-                      id={fav.id}
-                      images={fav.images}
-                      type={fav.type}
-                      price={toPrice(fav.price)}
-                      remaining={fav.remaining.toFixed(2)}
-                      coop={fav.coop}
-                      minimumOrder={fav.minimumOrder}
-                      origin={fav.origin}
-                      weight={sizeToString(
-                        fav.size.unit,
-                        fav.size.from,
-                        fav.size.to
-                      )}
-                      isAquafuture={fav.isAquafuture}
-                      unit={fav.measurementUnit}
-                      state={fav.state}
-                    />
-                  </Link>
-                </Col>
+                <Link
+                  key={fav.id}
+                  to={`/buyer/product/${fav.id}`}
+                  className="market-item"
+                >
+                  <PreviewCard
+                    id={fav.id}
+                    images={fav.images}
+                    type={fav.type}
+                    price={toPrice(fav.price)}
+                    remaining={fav.remaining.toFixed(2)}
+                    coop={fav.coop}
+                    minimumOrder={fav.minimumOrder}
+                    origin={fav.origin}
+                    weight={sizeToString(
+                      fav.size.unit,
+                      fav.size.from,
+                      fav.size.to
+                    )}
+                    isAquafuture={fav.isAquafuture}
+                    unit={fav.measurementUnit}
+                    state={fav.state}
+                  />
+                </Link>
               );
             })}
           </Row>

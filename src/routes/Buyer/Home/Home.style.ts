@@ -56,6 +56,16 @@ export const GridContainer = styled(Container)`
 
 export const CategoriesContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .card {
+    width: 203px;
+  }
+
+  a:not(:last-child) {
+    margin-right: 32px;
+  }
 `;
 
 export const CategoriesHeader = styled.div`
@@ -93,7 +103,14 @@ export const InfoContainer = styled.span`
 
 export const FavouritesHeader = styled(CategoriesHeader)``;
 
-export const FavouritesContainer = styled(CategoriesContainer)``;
+export const FavouritesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  a:not(:last-child) {
+    margin-right: 32px;
+  }
+`;
 
 export const SearchRow = styled(Row)``;
 

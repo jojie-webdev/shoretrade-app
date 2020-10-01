@@ -28,20 +28,40 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     loadingCurrentTab,
     onChangeCurrentTab,
     pendingOrders,
+    completedOrders,
+    inTransitOrders,
   } = props;
 
   let content;
+  let title;
+  switch (currentTab) {
+    case PENDING:
+      title = 'awaiting shipment';
+      break;
+    case IN_TRANSIT:
+      title = 'in transit';
+      break;
+    case COMPLETE:
+      title = 'completed';
+      break;
 
+    default:
+      break;
+  }
   if (loadingCurrentTab) {
     content = <Loading />;
-  } else if (pendingOrders.length === 0 && currentTab === PENDING) {
+  } else if (
+    (pendingOrders.length === 0 && currentTab === PENDING) ||
+    (inTransitOrders.length === 0 && currentTab === IN_TRANSIT) ||
+    (completedOrders.length === 0 && currentTab === COMPLETE)
+  ) {
     content = (
       <Row className="emptystate-row" align="center" justify="center">
         <Col>
           <EmptyState
-            title="You have no orders awaiting shipment"
+            title={`You have no orders ${title}`}
             buttonText="START AN ORDER"
-            onButtonClicked={() => history.push(BUYER_ROUTES.ROOT)} //create a route going to buyer/home?
+            onButtonClicked={() => history.push('/buyer/search')}
             Svg={Oysters}
           />
         </Col>

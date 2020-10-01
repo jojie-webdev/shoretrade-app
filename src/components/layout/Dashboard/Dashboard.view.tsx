@@ -55,6 +55,7 @@ const Header = ({
   openSidebar,
   onBack,
   cartItems,
+  onClickAccount,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -100,20 +101,22 @@ const Header = ({
           </div>
         )}
 
-        <div className="text-container">
-          <Typography color={textColor}>
-            {userData?.companies[0].name}
-          </Typography>
-          <Typography
-            variant="caption"
-            color="shade6"
-            weight="500"
-            style={{ textAlign: 'right' }}
-          >
-            {userData?.firstName} {userData?.lastName}
-          </Typography>
-        </div>
-        <img src={userData?.profileImage} alt="" />
+        <Touchable onPress={onClickAccount}>
+          <div className="text-container">
+            <Typography color={textColor}>
+              {userData?.companies[0].name}
+            </Typography>
+            <Typography
+              variant="caption"
+              color="shade6"
+              weight="500"
+              style={{ textAlign: 'right' }}
+            >
+              {userData?.firstName} {userData?.lastName}
+            </Typography>
+          </div>
+          <img src={userData?.profileImage} alt="" />
+        </Touchable>
       </div>
     </HeaderContainer>
   );
@@ -139,8 +142,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     color,
     headerTextColor,
     cartItems,
+    onClickAccount,
   } = props;
 
+  const history = useHistory();
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'shade9';
 
@@ -174,7 +179,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
         <div>
           {theme.appType === 'buyer' && (
-            <CreditBalanceContainer>
+            <CreditBalanceContainer
+              onClick={() => history.push(BUYER_ROUTES.ACCOUNT)}
+            >
               <Typography color="shade7" variant="overline" weight="900">
                 Credit balance
               </Typography>
@@ -219,6 +226,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           openSidebar={openSidebar}
           onBack={onBack}
           cartItems={cartItems}
+          onClickAccount={onClickAccount}
         />
         <div className="screen-wrapper">
           <div className="screen">
