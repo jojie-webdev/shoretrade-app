@@ -233,7 +233,7 @@ function Step6({
       </Row>
 
       <Row className="minimum-row" align="center">
-        <Col md={6} lg={5}>
+        <Col md={6}>
           <TextField
             label="Minimum Order"
             value={minimumOrder}
@@ -251,7 +251,7 @@ function Step6({
           />
         </Col>
 
-        <Col md={6} lg={4} offset={{ lg: 1, md: 0 }} className="checkbox-col">
+        <Col md={6} className="checkbox-col">
           <Checkbox
             checked={sellInMultiples}
             onClick={() => setSellInMultiples((s) => !s)}
@@ -264,10 +264,14 @@ function Step6({
       </Row>
 
       {showError && (
-        <Alert
-          variant="error"
-          content="Please include at least 1 box and set minimum order"
-        />
+        <div className="box-error-container">
+          <Alert
+            fullWidth
+            alignText="center"
+            variant="error"
+            content="Please include at least 1 box and set minimum order"
+          />
+        </div>
       )}
 
       <BoxSummary
