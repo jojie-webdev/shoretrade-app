@@ -12,7 +12,16 @@ import { SwiperArea, ArrowArea, Image, ImageContainer } from './Carousel.style';
 SwiperCore.use([Autoplay]);
 
 const Carousel = (props: CarouselProps): JSX.Element => {
-  const { images, id, height, swiperWidth, loop, autoplay } = props;
+  const {
+    images,
+    id,
+    height,
+    swiperWidth,
+    loop,
+    autoplay,
+    arrowWidth,
+    justifyArrows,
+  } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
   const swiperItems = images.map((image) => {
@@ -29,16 +38,29 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   // useful when image data comes from BE
   useEffect(() => {
     if (swiperRef) {
-      swiperRef.update();
+      setTimeout(() => {
+        swiperRef.update();
+      }, 1000);
     }
   }, [images]);
 
-  const swiperAreaWidth = swiperWidth || '65%';
-  const arrowAreaWidth = `${(100 - parseFloat(swiperAreaWidth)) / 2}%`;
+  const swiperAreaWidth =
+    swiperWidth ||
+    `calc(100% - ${arrowWidth ? `${arrowWidth * 2}px` : '200px'})`;
+  const arrowAreaWidth = arrowWidth
+    ? `${arrowWidth}px`
+    : swiperWidth
+    ? `calc((100% - ${swiperWidth})/2)`
+    : 100;
 
   return (
     <SwiperContainer height={height}>
-      <ArrowArea style={{ width: arrowAreaWidth }}>
+      <ArrowArea
+        style={{
+          width: arrowAreaWidth,
+          justifyContent: justifyArrows ? 'flex-start' : undefined,
+        }}
+      >
         <Touchable
           circle
           onPress={() => {
@@ -70,7 +92,12 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           {swiperItems}
         </Swiper>
       </SwiperArea>
-      <ArrowArea style={{ width: arrowAreaWidth }}>
+      <ArrowArea
+        style={{
+          width: arrowAreaWidth,
+          justifyContent: justifyArrows ? 'flex-end' : undefined,
+        }}
+      >
         <Touchable
           circle
           onPress={() => {

@@ -29,6 +29,14 @@ export const PreviewContainer = styled.div`
   .cards {
     display: flex;
     flex-wrap: wrap;
+
+    a {
+      margin-right: 32px;
+
+      .card {
+        width: 364px;
+      }
+    }
   }
 
   .search-row {

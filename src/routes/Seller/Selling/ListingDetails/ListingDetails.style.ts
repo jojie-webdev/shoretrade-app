@@ -19,7 +19,7 @@ export const DetailsCard = styled.div`
   .details-container {
     padding: 24px;
     background-color: ${({ theme }) => theme.grey.noshade};
-    width: calc(75%);
+    width: calc(100% - 100px);
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
   }

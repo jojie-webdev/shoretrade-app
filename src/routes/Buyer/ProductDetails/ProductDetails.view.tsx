@@ -66,7 +66,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           <BannerContainer>
             <Carousel id={'productDetails'} images={currentListing.images} />
           </BannerContainer>
-          <div style={{ width: '65%', margin: 'auto' }}>
+          <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
             <Typography variant="label" className="description">
               {currentListing.description}
             </Typography>

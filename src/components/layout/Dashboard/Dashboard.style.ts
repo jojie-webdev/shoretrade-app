@@ -158,7 +158,8 @@ export const Content = styled.div<{
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
-      width: ${(props) => (props.shouldUseFullWidth ? '100%' : '65%')};
+      width: ${(props) =>
+        props.shouldUseFullWidth ? '100%' : 'calc(100% - 200px)'};
       height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
@@ -179,7 +180,8 @@ export const Content = styled.div<{
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
-        width: 100%;
+        width: ${(props) =>
+          props.shouldUseFullWidth ? '100%' : 'calc(100% - 150px)'};
         padding: ${(props) => (props.shouldIncludePadding ? '40px' : '0')};
       }
     }
@@ -213,7 +215,7 @@ export const HeaderContainer = styled.nav`
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: 65%;
+  width: calc(100% - 200px);
 
   .left-content {
     display: flex;
@@ -255,7 +257,7 @@ export const HeaderContainer = styled.nav`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: 80%;
+    width: calc(100% - 150px);
   }
 
   @media ${BREAKPOINTS['sm']} {
@@ -281,6 +283,8 @@ export const CreditBalanceContainer = styled.div`
   .amount {
     margin-top: 4px;
   }
+
+  cursor: pointer;
 `;
 
 export const CheckoutCount = styled.div`

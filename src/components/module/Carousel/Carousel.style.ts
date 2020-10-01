@@ -4,13 +4,13 @@ export const SwiperArea = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 65%;
+  width: calc(100% - 200px);
   overflow-x: hidden;
 `;
 
 export const ArrowArea = styled.div`
   display: flex;
-  width: 17.5%;
+  width: 100px;
   height: 100%;
   display: flex;
   justify-content: center;

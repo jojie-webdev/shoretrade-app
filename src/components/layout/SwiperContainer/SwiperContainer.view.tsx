@@ -13,7 +13,6 @@ const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
   return () => {
     if (timer) {
-      console.log('test');
       clearTimeout(timer);
     }
     timer = setTimeout(() => {

@@ -23,7 +23,7 @@ export const CardContainer = styled.div`
     margin-bottom: 2em;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
-    max-width: 300px;
+    max-width: 364px;
     min-width: 281px;
   }
 
