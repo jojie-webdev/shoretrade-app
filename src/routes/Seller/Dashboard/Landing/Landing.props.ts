@@ -24,6 +24,7 @@ export interface DashboardLandingGeneratedProps {
     pending: string | number;
   };
   toCategories: Record<string, unknown>;
+  toCategoryDetails: (id: string, title: string) => Record<string, unknown>;
   dateRange: {
     end: RangeObject;
     start: RangeObject;

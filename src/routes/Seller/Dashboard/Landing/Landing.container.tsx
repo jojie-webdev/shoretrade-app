@@ -21,8 +21,7 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const Dashboard = (): JSX.Element => {
   const token = useSelector((state: Store) => state.auth.token) || '';
-  const state = useSelector((state: Store) => state) || '';
-  console.log(state);
+
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [dateRange, setDateRange] = useState(fiscalYearDateRange);
@@ -94,12 +93,32 @@ const Dashboard = (): JSX.Element => {
     };
   };
 
+  const toCategoryDetails = (id: string, title: string) => {
+    let pathname = '';
+    if (dateRange === fiscalYearDateRange) {
+      pathname = SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(title, 'FY', id);
+    } else {
+      pathname = SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(
+        title,
+        `${moment(dateRange.start.dateString).format('MM-DD-YYYY')}_${moment(
+          dateRange.end.dateString
+        ).format('MM-DD-YYYY')}`,
+        id
+      );
+    }
+
+    return {
+      pathname,
+    };
+  };
+
   const generatedProps: DashboardLandingGeneratedProps = {
     isCalendarModalOpen,
     toggleModal,
     isLoading,
     data,
     toCategories: toCategories(),
+    toCategoryDetails,
     dateRange,
     setDateRange,
     onApplyCustom,
