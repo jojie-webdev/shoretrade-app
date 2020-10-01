@@ -283,6 +283,8 @@ export const CreditBalanceContainer = styled.div`
   .amount {
     margin-top: 4px;
   }
+
+  cursor: pointer;
 `;
 
 export const CheckoutCount = styled.div`

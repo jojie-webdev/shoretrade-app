@@ -141,6 +141,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     cartItems,
   } = props;
 
+  const history = useHistory();
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'shade9';
 
@@ -174,7 +175,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
         <div>
           {theme.appType === 'buyer' && (
-            <CreditBalanceContainer>
+            <CreditBalanceContainer
+              onClick={() => history.push(BUYER_ROUTES.ACCOUNT)}
+            >
               <Typography color="shade7" variant="overline" weight="900">
                 Credit balance
               </Typography>
