@@ -127,7 +127,6 @@ export const Content = styled.div<{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease-in-out;
   overflow-x: hidden;
 
   background: ${(props) =>
