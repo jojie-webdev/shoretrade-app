@@ -40,14 +40,6 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     onLoad(typeId);
   }, []);
 
-  // if (results.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
-  console.log(window.innerWidth);
   return (
     <PreviewContainer>
       <Row className="search-row">
@@ -75,12 +67,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       {results && results.length > 0 ? (
         <>
           <div className="row cards" style={{ marginTop: 20 }}>
-            {results.map((product) => {
+            {results.map((product, index) => {
               return (
                 <div
                   style={{
                     width: window.innerWidth * (18 / 100),
-                    // marginLeft: 30,
                   }}
                   className="column"
                   key={product.id}
@@ -90,6 +81,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                     className="market-item"
                   >
                     <PreviewCard
+                      cardContainerStyle={{
+                        maxWidth: '100%',
+                        minWidth: '60%',
+                        marginRight: 30,
+                      }}
                       id={product.id}
                       images={product.images}
                       type={product.type}
