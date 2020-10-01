@@ -74,23 +74,25 @@ const Pending = (props: OrdersGeneratedProps) => {
     <>
       {pendingOrders.map((item) => {
         return (
-          <AccordionContainer>
-            <PendingItems key={item.id} {...item} />
+          <AccordionContainer key={item.id}>
+            <PendingItems {...item} />
           </AccordionContainer>
         );
       })}
 
       <Row justify="center">
-        <Pagination
-          numPages={pendingPagesTotal}
-          currentValue={Number(filters.pendingOrdersFilter.page)}
-          onClickButton={(value) =>
-            updateFilters.updatePendingOrdersFilter({
-              page: value.toFixed(0),
-            })
-          }
-          variant="number"
-        />
+        {pendingOrders.length > 10 && (
+          <Pagination
+            numPages={pendingPagesTotal}
+            currentValue={Number(filters.pendingOrdersFilter.page)}
+            onClickButton={(value) =>
+              updateFilters.updatePendingOrdersFilter({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        )}
       </Row>
     </>
   );

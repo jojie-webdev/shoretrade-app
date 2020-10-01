@@ -31,7 +31,7 @@ export const AccordionContainer = styled.div`
   shadow-radius: 6.27;
   shadow-offset: 0 5px;
   elevation: 5;
-  margin-left: 16px;
-  margin-right: 16px;
+  // margin-left: 16px;
+  // margin-right: 16px;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
 `;

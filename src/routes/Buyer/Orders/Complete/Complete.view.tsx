@@ -71,22 +71,24 @@ const Complete = (props: OrdersGeneratedProps) => {
     <>
       {completedOrders.map((item, index) => {
         return (
-          <AccordionContainer>
-            <CompletedItems key={item.id} {...item} />
+          <AccordionContainer key={item.id}>
+            <CompletedItems {...item} />
           </AccordionContainer>
         );
       })}
       <Row justify="center">
-        <Pagination
-          numPages={completedPagesTotal}
-          currentValue={Number(filters.completedOrdersFilter.page)}
-          onClickButton={(value) =>
-            updateFilters.updateCompletedOrdersFilter({
-              page: value.toFixed(0),
-            })
-          }
-          variant="number"
-        />
+        {completedOrders.length > 10 && (
+          <Pagination
+            numPages={completedPagesTotal}
+            currentValue={Number(filters.completedOrdersFilter.page)}
+            onClickButton={(value) =>
+              updateFilters.updateCompletedOrdersFilter({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        )}
       </Row>
     </>
   );
