@@ -22,7 +22,7 @@ export const Container = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.grey.noshade};
   border-radius: 4px;
-  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  // box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
 `;
 
 export const HorizontalRule = styled.div`

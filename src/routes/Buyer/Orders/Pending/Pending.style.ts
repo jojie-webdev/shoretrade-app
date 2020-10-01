@@ -10,6 +10,7 @@ export const Confirmed = styled(Typography)`
 export const StyledInteraction = styled(Interaction)`
   // margin-bottom: 12px;
   border-radius: 4px;
+  box-shadow: none;
 `;
 
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
@@ -34,4 +35,6 @@ export const AccordionContainer = styled.div`
   // margin-left: 16px;
   // margin-right: 16px;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+
+  // border: 1px solid blue;
 `;
