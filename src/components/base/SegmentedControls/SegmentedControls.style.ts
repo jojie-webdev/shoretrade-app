@@ -6,7 +6,8 @@ import theme from 'utils/Theme';
 export const Container = styled.div`
   height: 40px;
   width: 100%;
-  box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+  // box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   background: ${(props) =>
     props.theme.appType === 'buyer'
       ? props.theme.grey.noshade
