@@ -24,7 +24,7 @@ export const CardContainer = styled.div`
     text-decoration: none;
   }
 
-  .card a:hover {
+  .card:hover {
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
   }
 
