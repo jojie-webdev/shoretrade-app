@@ -18,6 +18,8 @@ import {
   LocationContainer,
   BodyContainer,
   StatusContainer,
+  BadgeText,
+  ResultText,
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
@@ -56,10 +58,12 @@ const Preview = (props: PreviewProps): JSX.Element => {
 
         <DetailsContainer>
           <HeaderContainer>
-            <Row>
-              <Title variant="body" weight="bold">
-                {props.type}
-              </Title>
+            <Row nogutter>
+              <div style={{ flex: 1, height: 48 }}>
+                <Title style={{ width: '100%' }} variant="body" weight="bold">
+                  {props.type}
+                </Title>
+              </div>
               <PriceContainer>
                 <Price variant="body" weight="bold">
                   {props.price}
@@ -74,7 +78,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </PriceContainer>
             </Row>
           </HeaderContainer>
-          <Row>
+          <Row nogutter>
             <StatusContainer>
               {props.state?.map((item) => {
                 return (
@@ -82,63 +86,63 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     fontColor={theme.grey.shade9}
                     badgeColor={theme.grey.shade2}
                   >
-                    <Typography variant="caption" weight="bold">
+                    <BadgeText variant="caption" weight="bold">
                       {item}
-                    </Typography>
+                    </BadgeText>
                   </Badge>
                 );
               })}
             </StatusContainer>
           </Row>
           <BodyContainer>
-            <Row>
-              <Typography
-                style={{ paddingRight: 4 }}
+            <Row nogutter style={{ height: 24, alignItems: 'center' }}>
+              <ResultText
+                style={{ paddingRight: 8 }}
                 variant="small"
                 color="shade6"
               >
                 Remaining:
-              </Typography>
-              <Typography variant="small" weight="bold">
+              </ResultText>
+              <ResultText variant="small" weight="bold">
                 {props.remaining} {props.unit}
-              </Typography>
+              </ResultText>
             </Row>
-            <Row style={{ marginTop: 5 }}>
-              <Typography
+            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+              <ResultText
                 variant="small"
                 color="shade6"
-                style={{ paddingRight: 4 }}
+                style={{ paddingRight: 8 }}
               >
                 Weight:
-              </Typography>
+              </ResultText>
               {/* Need Weight Transformer */}
-              <Typography variant="small" weight="bold">
+              <ResultText variant="small" weight="bold">
                 {props.weight}
-              </Typography>
+              </ResultText>
             </Row>
-            <Row style={{ marginTop: 5 }}>
-              <Typography
+            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+              <ResultText
                 variant="small"
                 color="shade6"
-                style={{ paddingRight: 4 }}
+                style={{ paddingRight: 8 }}
               >
                 Vendor:
-              </Typography>
-              <Typography variant="small" weight="bold">
+              </ResultText>
+              <ResultText variant="small" weight="700">
                 {props.coop?.name}
-              </Typography>
+              </ResultText>
             </Row>
-            <Row style={{ marginTop: 5 }}>
-              <Typography
+            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+              <ResultText
                 variant="small"
                 color="shade6"
-                style={{ paddingRight: 4 }}
+                style={{ paddingRight: 8 }}
               >
                 Min Order:
-              </Typography>
-              <Typography variant="small" weight="bold">
+              </ResultText>
+              <ResultText variant="small" weight="bold">
                 {props.minimumOrder} {props.unit}
-              </Typography>
+              </ResultText>
             </Row>
           </BodyContainer>
         </DetailsContainer>

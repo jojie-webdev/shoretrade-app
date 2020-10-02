@@ -1,12 +1,13 @@
 import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const CardContainer = styled.div`
   img {
     display: block;
     border: 0;
     width: 100%;
-    height: auto;
+    height: 148px;
     border-radius: 4px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -64,26 +65,32 @@ export const CardContainer = styled.div`
 
 export const LocationContainer = styled.div`
   position: absolute;
-  top: 5%;
-  right: 5%;
+  top: 10px;
+  right: 10px;
 
   .location-font {
     padding-left: 5.75px;
   }
 `;
 
+export const BadgeText = styled(TypographyView)`
+  font-size: ${pxToRem(12)};
+  padding-left: 8px;
+  padding-right: 8px;
+`;
+
 export const BadgeContainer = styled.div`
   flex-direction: row;
   display: flex;
   position: absolute;
-  bottom: 5%;
-  left: 2%;
+  bottom: 12px;
+  left: 16px;
 `;
 
 export const StatusContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 8px;
+  margin-top: 10px;
 `;
 
 export const DetailsContainer = styled.div`
@@ -93,20 +100,23 @@ export const DetailsContainer = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  flex-direction: row;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
 `;
 
 export const BodyContainer = styled.div`
-  flex-direction: row;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
   margin-bottom: 8px;
 `;
 
 export const PriceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: flex-end;
-  width: 30%;
-  padding-right: 10px;
+  padding-left: 8px;
 `;
 
 export const Price = styled(TypographyView)`
@@ -114,6 +124,10 @@ export const Price = styled(TypographyView)`
 `;
 
 export const Title = styled(TypographyView)`
-  font-size: 14px;
+  font-size: ${pxToRem(16)};
   width: 70%;
+`;
+
+export const ResultText = styled(TypographyView)`
+  font-size: ${pxToRem(14)};
 `;
