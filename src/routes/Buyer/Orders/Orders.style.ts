@@ -5,7 +5,7 @@ export const Container = styled.div`
   .controls-row {
     margin-bottom: 48px;
   }
-  padding: 3px 6px 0px;
+  padding: 3px 8px 0px;
   margin: auto;
 
   // border: 1px solid red;
