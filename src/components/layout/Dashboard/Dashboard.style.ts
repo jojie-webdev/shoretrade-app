@@ -230,6 +230,7 @@ export const HeaderContainer = styled.nav`
 
   .back-button-container {
     margin-right: 8px;
+    margin-bottom: 4px;
   }
 
   .right-content {
@@ -243,6 +244,12 @@ export const HeaderContainer = styled.nav`
     .cart-wrapper {
       cursor: pointer;
       position: relative;
+    }
+
+    .dashboard-account-container {
+      :hover {
+        background-color: transparent;
+      }
     }
 
     .text-container {
