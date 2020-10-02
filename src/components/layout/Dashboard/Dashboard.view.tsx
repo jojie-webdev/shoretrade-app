@@ -115,7 +115,10 @@ const Header = ({
               {userData?.firstName} {userData?.lastName}
             </Typography>
           </div>
-          <img src={userData?.profileImage} alt="" />
+
+          {userData?.profileImage && (
+            <img src={userData?.profileImage} alt="" />
+          )}
         </Touchable>
       </div>
     </HeaderContainer>
