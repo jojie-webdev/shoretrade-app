@@ -24,10 +24,6 @@ export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
   padding: 16px;
   background-color: ${({ theme }) => theme.grey.noshade};
   border: 2px solid #edeffa;
-  border-width: ${({ fishermanNotes }) =>
-    fishermanNotes ? '1px 2px 1px 2px' : '1px 2px 2px 2px'};
-  border-radius: ${({ fishermanNotes }) =>
-    fishermanNotes ? '0' : '0 0 8px 8px'};
 `;
 
 export const BoxContainer = styled.div`
