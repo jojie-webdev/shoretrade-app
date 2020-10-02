@@ -30,13 +30,13 @@ export const CardContainer = styled.div`
     flex-wrap: wrap;
   }
 
+  .card:hover {
+    box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
+  }
+
   .card a {
     color: black;
     text-decoration: none;
-  }
-
-  .card a:hover {
-    box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
   }
 
   /* .card-content {
