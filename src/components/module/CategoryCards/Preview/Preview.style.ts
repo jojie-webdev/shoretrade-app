@@ -25,15 +25,18 @@ export const CardContainer = styled.div`
     border-radius: 4px;
     max-width: 281px;
     min-width: 281px;
+    height: 364px;
+    width: 281px;
+    flex-wrap: wrap;
+  }
+
+  .card:hover {
+    box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
   }
 
   .card a {
     color: black;
     text-decoration: none;
-  }
-
-  .card a:hover {
-    box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
   }
 
   /* .card-content {
@@ -63,6 +66,10 @@ export const LocationContainer = styled.div`
   position: absolute;
   top: 5%;
   right: 5%;
+
+  .location-font {
+    padding-left: 5.75px;
+  }
 `;
 
 export const BadgeContainer = styled.div`

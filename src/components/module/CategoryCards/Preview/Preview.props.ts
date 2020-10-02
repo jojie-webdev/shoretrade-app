@@ -1,3 +1,5 @@
+import { CSSProperties, HTMLAttributes } from 'react';
+
 export interface PreviewProps {
   caught?: string;
   coop?: { name: string };
@@ -21,4 +23,6 @@ export interface PreviewProps {
   backgroundColor?: string;
   weight: string;
   unit?: string;
+  cardContainerStyle?: CSSProperties;
+  cardContainerClass?: any;
 }

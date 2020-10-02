@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
+import TypographyView from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Search from 'components/module/Search';
@@ -39,14 +40,6 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     onLoad(typeId);
   }, []);
 
-  // if (results.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
-
   return (
     <PreviewContainer>
       <Row className="search-row">
@@ -60,17 +53,27 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
         </Col>
         <Col xs={1.5}>
           <FilterButton onClick={modalFilterProps.onClickClose}>
-            Filters <Filter></Filter>
+            <div style={{ flexDirection: 'row', display: 'flex' }}>
+              <TypographyView color="secondary" variant="label">
+                Filters
+              </TypographyView>
+              <div style={{ paddingLeft: 4 }}>
+                <Filter></Filter>
+              </div>
+            </div>
           </FilterButton>
         </Col>
       </Row>
-      {results.length > 0 ? (
+      {results && results.length > 0 ? (
         <>
           <div className="row cards" style={{ marginTop: 20 }}>
-            {results.map((product) => {
+            {results.map((product, index) => {
               return (
                 <div
-                  style={{ width: window.innerWidth * (25 / 100) }}
+                  style={{
+                    // width: window.innerWidth * (18 / 100),
+                    marginRight: 32,
+                  }}
                   className="column"
                   key={product.id}
                 >
@@ -79,6 +82,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                     className="market-item"
                   >
                     <PreviewCard
+                      cardContainerStyle={{
+                        maxWidth: '100%',
+                        minWidth: '60%',
+                        // marginRight: 30,
+                      }}
                       id={product.id}
                       images={product.images}
                       type={product.type}

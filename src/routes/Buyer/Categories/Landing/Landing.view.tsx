@@ -41,7 +41,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
 
   return (
     <CategoriesContainer>
-      <Row className="search-row">
+      <Row nogutter className="search-row">
         <Col xs={12}>
           <Search
             value={search}
@@ -61,20 +61,18 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           <Spinner width={24} height={24} />
         </LoadingContainer>
       ) : (
-        <Row className="cards" style={{ marginTop: 20 }}>
+        <Row nogutter className="cards" style={{ marginTop: 20 }}>
           {categories.length > 0 &&
             categories.map((category, index) => {
               return (
-                <Col sm={3} key={index}>
-                  <Link to={`${currentPath}/${category.id}`} key={category.id}>
-                    <Card
-                      sortIndex={category.sortIndex}
-                      id={category.id}
-                      image={category.thumbnail}
-                      label={category.name}
-                    />
-                  </Link>
-                </Col>
+                <Link to={`${currentPath}/${category.id}`} key={category.id}>
+                  <Card
+                    sortIndex={category.sortIndex}
+                    id={category.id}
+                    image={category.thumbnail}
+                    label={category.name}
+                  />
+                </Link>
               );
             })}
         </Row>

@@ -7,7 +7,7 @@ export const BadgeContainer = styled.div<BadgeProps>`
   background-color: ${(props) =>
     props.badgeColor ? props.badgeColor : '#09131d'};
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 4px 8px 2px;
   font-size: 10px;
   margin: 0px 2px;
 `;
