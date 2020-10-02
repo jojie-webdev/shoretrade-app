@@ -15,4 +15,5 @@ export interface InteractionsProps {
   padding?: string;
   iconAlignment?: IconAlignmentTypes;
   children?: any;
+  isHover?: boolean;
 }

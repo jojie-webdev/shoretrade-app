@@ -27,6 +27,13 @@ export const Container = styled.div<InteractionsProps>`
   }`
       : ''};
 
+  ${({ isHover }) =>
+    isHover
+      ? `:hover {
+    box-shadow: none;
+  }`
+      : ''};
+
   .left-content {
     display: flex;
     align-items: center;

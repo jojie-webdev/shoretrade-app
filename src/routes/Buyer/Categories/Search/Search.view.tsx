@@ -123,6 +123,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                     >
                       <Interactions
                         children={children(result)}
+                        isHover
                         // value={r.name}
                         onClick={() => {}}
                       />
