@@ -61,7 +61,8 @@ export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 64px;
+  min-height: 64px;
+  max-height: 64px;
   background-color: ${({ theme }) => theme.grey.shade9};
   align-items: center;
   padding: 0px 20px;
@@ -92,7 +93,7 @@ export const Title = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const Content = styled.div<{ background?: string }>`
+export const Content = styled.div<{ background?: string; minHeight?: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -100,7 +101,7 @@ export const Content = styled.div<{ background?: string }>`
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8}; */
   background-color: ${({ theme, background }) =>
     background || theme.grey.shade8};
-  min-height: 598px;
+  min-height: ${({ minHeight }) => minHeight || '598px'};
   max-height: 660px;
   width: 442px;
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);

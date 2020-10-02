@@ -9,6 +9,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex: 1;
   flex-direction: row;
   justify-content: center;
   overflow-y: auto;
@@ -95,6 +96,7 @@ export const CodeField = styled.input`
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
+  text-align: center;
   color: 1px solid ${({ theme }) => theme.appType};
   :focus {
     outline: none;

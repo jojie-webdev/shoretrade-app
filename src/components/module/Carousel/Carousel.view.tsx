@@ -61,18 +61,20 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           justifyContent: justifyArrows ? 'flex-start' : undefined,
         }}
       >
-        <Touchable
-          circle
-          onPress={() => {
-            if (swiperRef) {
-              swiperRef.slidePrev();
-            }
-          }}
-        >
-          {images.length > 1 ? (
-            <CarouselChevronLeft width={18} height={18} />
-          ) : null}
-        </Touchable>
+        {images.length > 2 && (
+          <Touchable
+            circle
+            onPress={() => {
+              if (swiperRef) {
+                swiperRef.slidePrev();
+              }
+            }}
+          >
+            {images.length > 1 ? (
+              <CarouselChevronLeft width={18} height={18} />
+            ) : null}
+          </Touchable>
+        )}
       </ArrowArea>
       <SwiperArea style={{ width: swiperAreaWidth }}>
         <Swiper
@@ -100,18 +102,20 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           justifyContent: justifyArrows ? 'flex-end' : undefined,
         }}
       >
-        <Touchable
-          circle
-          onPress={() => {
-            if (swiperRef) {
-              swiperRef.slideNext();
-            }
-          }}
-        >
-          {images.length > 1 ? (
-            <CarouselChevronRight width={18} height={18} />
-          ) : null}
-        </Touchable>
+        {images.length > 2 && (
+          <Touchable
+            circle
+            onPress={() => {
+              if (swiperRef) {
+                swiperRef.slideNext();
+              }
+            }}
+          >
+            {images.length > 1 ? (
+              <CarouselChevronRight width={18} height={18} />
+            ) : null}
+          </Touchable>
+        )}
       </ArrowArea>
     </SwiperContainer>
   );
