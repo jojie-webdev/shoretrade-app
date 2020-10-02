@@ -77,6 +77,7 @@ export const BUYER_ROUTES = {
   //Authenticated Routes
   CATEGORIES: `${BUYER_ROOT}/categories`,
   CHECKOUT: `${BUYER_ROOT}/checkout`,
+  SEARCH: `${BUYER_ROOT}/search`,
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,

@@ -61,7 +61,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
           <EmptyState
             title={`You have no orders ${title}`}
             buttonText="START AN ORDER"
-            onButtonClicked={() => history.push('/buyer/search')}
+            onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
             Svg={Oysters}
           />
         </Col>
