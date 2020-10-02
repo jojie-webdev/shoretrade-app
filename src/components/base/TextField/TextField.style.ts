@@ -41,6 +41,11 @@ export const Field = styled.input`
     outline: none;
   }
   ${fontStyle};
+
+  ::placeholder {
+    color: ${({ theme }) => theme.grey.shade5};
+    opacity: 1;
+  }
 `;
 
 export const LeftComponentContainer = styled.div`

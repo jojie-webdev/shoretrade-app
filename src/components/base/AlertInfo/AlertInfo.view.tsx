@@ -8,11 +8,15 @@ import { Container, Text } from './AlertInfo.style';
 
 const AlertInfo = (props: AlertInfoProps): JSX.Element => {
   const theme = useTheme();
-  const { label, className } = props;
+  const { label, className, dark } = props;
   return (
-    <Container className={className}>
-      <InfoFilled width={13.33} height={13.33} fill={theme.brand.alert} />
-      <Text variant="caption" color="alert">
+    <Container className={className} dark={dark}>
+      <InfoFilled
+        width={13.33}
+        height={13.33}
+        fill={dark ? theme.grey.shade9 : theme.brand.alert}
+      />
+      <Text variant="caption" color={dark ? 'shade9' : 'alert'}>
         {label}
       </Text>
     </Container>

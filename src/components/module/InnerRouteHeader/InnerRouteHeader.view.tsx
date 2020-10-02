@@ -45,7 +45,7 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
   );
 
   return fullRow ? (
-    <HeaderRow>
+    <HeaderRow nogutter>
       <Col className="header">{content}</Col>
     </HeaderRow>
   ) : (

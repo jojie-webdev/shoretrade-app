@@ -50,15 +50,15 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
 
       <InnerRouteHeader title={routeHeader} />
 
-      <Row nogutter className="textfield-row">
-        <Col>
+      <Row className="textfield-row">
+        <Col md={12}>
           <DropdownLocation
-            value={address.address}
+            value={address?.address || ''}
             label="Address"
             onSelect={setAddress}
           />
         </Col>
-        <Col>
+        <Col md={12} style={{ marginTop: 24 }}>
           <TextField
             label="Unit number (optional)"
             name="unitNumber"
@@ -68,7 +68,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
         </Col>
       </Row>
 
-      <Row nogutter className="checkbox-row">
+      <Row className="checkbox-row">
         <Col className="checkbox-col">
           <div className="checkbox-container">
             <Checkbox checked={isDefault || false} onClick={toggleIsDefault} />

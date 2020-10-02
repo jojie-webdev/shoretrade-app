@@ -27,35 +27,23 @@ const CreateAddress = (): JSX.Element => {
 
   const [unitNumber, setUnitNumber] = useState('');
   const [isDefault, setIsDefault] = useState<boolean>(false);
-  const [address, setAddress] = useState<PlaceData>({
-    address: '',
-    coordinates: {
-      lat: null,
-      lng: null,
-    },
-    unitNumber: '',
-    level: '',
-    streetNumber: '',
-    route: '',
-    locality: '',
-    administrativeAreaLevel1: '',
-    postcode: '',
-    countryCode: '',
-  });
+  const [address, setAddress] = useState<PlaceData | null>(null);
 
   // MARK:- Methods
   const onClickSave = () => {
-    dispatch(
-      addAddressActions.request(
-        placeDataToAddAddressMeta(
-          address as PlaceData,
-          unitNumber,
-          companyId,
-          isDefault
+    if (address) {
+      dispatch(
+        addAddressActions.request(
+          placeDataToAddAddressMeta(
+            address as PlaceData,
+            unitNumber,
+            companyId,
+            isDefault
+          )
         )
-      )
-    );
-    setIsSubmitted(true);
+      );
+      setIsSubmitted(true);
+    }
   };
 
   const toggleIsDefault = () => setIsDefault(!isDefault);

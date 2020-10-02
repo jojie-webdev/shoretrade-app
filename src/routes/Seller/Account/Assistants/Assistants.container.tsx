@@ -15,6 +15,11 @@ const Assistants = (): JSX.Element => {
   // MARK:- Store / Hooks
   const dispatch = useDispatch();
   const [companyId] = useCompany();
+  const companies =
+    useSelector((state: Store) => state.getUser.data?.data.user.companies) ||
+    [];
+  const currentCompany = companies.find((company) => company.id === companyId);
+  const currentCompanyName = currentCompany?.name || 'Your Company';
   const getLinkedAccounts = useSelector(
     (store: Store) => store.getLinkedAccounts
   );
@@ -55,6 +60,7 @@ const Assistants = (): JSX.Element => {
     pending: getLinkedAccounts.pending || false,
     goToCreateAssistant,
     onClickAssistant,
+    currentCompanyName,
   };
 
   return <AssistantsView {...generatedProps} />;

@@ -15,10 +15,6 @@ export const Container = styled.div`
   .checkbox-container {
     margin-right: 8px;
   }
-  .address {
-    width: 100%;
-    margin-top: 10px;
-  }
 
   .checkbox-col {
     padding-left: 0px !important;

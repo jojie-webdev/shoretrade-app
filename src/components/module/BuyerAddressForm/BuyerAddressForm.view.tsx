@@ -51,19 +51,22 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       <InnerRouteHeader title={routeHeader} />
 
       <Row nogutter className="textfield-row">
-        <DropdownLocation
-          value={address.address}
-          label="Address"
-          onSelect={setAddress}
-          className="address"
-        />
-        <TextField
-          className="address"
-          label="Unit number (optional)"
-          name="unitNumber"
-          value={unitNumber}
-          onChange={(e) => setUnitNumber(e.target.value)}
-        />
+        <Col md={12}>
+          <DropdownLocation
+            value={address?.address || ''}
+            label="Address"
+            onSelect={setAddress}
+          />
+        </Col>
+        <Col md={12} style={{ marginTop: 24 }}>
+          <TextField
+            className="address"
+            label="Unit number (optional)"
+            name="unitNumber"
+            value={unitNumber}
+            onChange={(e) => setUnitNumber(e.target.value)}
+          />
+        </Col>
       </Row>
 
       <Row nogutter className="checkbox-row">

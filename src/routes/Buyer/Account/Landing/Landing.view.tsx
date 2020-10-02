@@ -43,10 +43,10 @@ const LandingView = (props: LandingGeneratedProps) => {
         <div className="left-content">
           <img src={profilePicture} alt="profile picture" />
           <div>
-            <Typography variant="overline" color="noshade">
+            <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
-            <Typography variant="title5" color="noshade">
+            <Typography variant="title5" color="shade8">
               {profileName}
             </Typography>
           </div>
