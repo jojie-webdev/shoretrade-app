@@ -58,7 +58,14 @@ const InTransitItems = (props: OrderItem) => {
 
 const InTransit = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
-  const { inTransitOrders } = props;
+  const {
+    inTransitOrders,
+    inTransitOrdersCount,
+    filters,
+    updateFilters,
+  } = props;
+
+  const inTransitPagesTotal = Math.ceil(Number(inTransitOrdersCount) / 10);
 
   return (
     <>
@@ -70,6 +77,20 @@ const InTransit = (props: OrdersGeneratedProps) => {
         );
       })}
 
+      <Row justify="center">
+        {inTransitOrders.length > 10 && (
+          <Pagination
+            numPages={inTransitPagesTotal}
+            currentValue={Number(filters.inTransitOrdersFilter.page)}
+            onClickButton={(value) =>
+              updateFilters.updateInTransitOrdersFilter({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        )}
+      </Row>
     </>
   );
 };
