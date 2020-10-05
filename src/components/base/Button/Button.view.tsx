@@ -51,7 +51,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     textWeight = '900';
   }
 
-  const hasText = text && text?.length > 0 ? true : false;
+  const hasText = !!(text && text?.length > 0);
 
   return (
     <ButtonContainer
@@ -63,7 +63,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       takeFullWidth={takeFullWidth}
       {...buttonProps}
     >
-      {iconPosition === 'before' && (
+      {icon && iconPosition === 'before' && (
         <IconContainer hasText={hasText} iconPosition={iconPosition}>
           {icon}
         </IconContainer>
@@ -74,13 +74,14 @@ const Button = (props: ButtonProps): JSX.Element => {
           {text}
         </Typography>
       )}
+
       {loading && (
         <LoadingContainer>
           <Spinner width={24} height={24} />
         </LoadingContainer>
       )}
 
-      {iconPosition === 'after' && !loading && (
+      {icon && iconPosition === 'after' && !loading && (
         <IconContainer hasText={hasText} iconPosition={iconPosition}>
           {icon}
         </IconContainer>

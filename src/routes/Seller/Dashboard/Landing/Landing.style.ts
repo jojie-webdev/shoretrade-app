@@ -19,8 +19,6 @@ export const SpinnerContainer = styled.div`
 `;
 
 export const FilterRow = styled(Row)`
-  margin-bottom: 24px;
-
   .filter-col {
     display: flex;
     align-items: center;
@@ -28,6 +26,7 @@ export const FilterRow = styled(Row)`
 
     .btn {
       margin-right: 12px;
+      margin-bottom: 24px;
 
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;

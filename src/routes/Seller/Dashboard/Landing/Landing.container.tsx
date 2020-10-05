@@ -30,6 +30,8 @@ const Dashboard = (): JSX.Element => {
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
   const onApplyCustom = ({ start, end }: onApply) => {
+    if (!start || !end) return;
+
     const startDate = {
       id: 'custom',
       dateString: start.format('YYYY-MM-DD'),
@@ -50,6 +52,7 @@ const Dashboard = (): JSX.Element => {
       start: startDate,
       end: endDate,
     });
+
     toggleModal();
   };
 

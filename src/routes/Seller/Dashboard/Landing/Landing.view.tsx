@@ -54,7 +54,15 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
           className="btn"
           onClick={props.toggleModal}
-          icon={<DropdownArrow fill={theme.grey.shade6} />}
+          icon={
+            <DropdownArrow
+              fill={
+                dateRange.start.id === 'custom'
+                  ? theme.grey.noshade
+                  : theme.grey.shade6
+              }
+            />
+          }
           iconPosition="after"
         />
         <Button
@@ -112,26 +120,30 @@ const TotalSales = (props: any) => (
       </Link>
     </Col>
     <Col md={6} className="paid-col">
-      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
-        <SalesCard>
-          <Typography variant="overline" color="shade6" className="overline">
-            Paid
-          </Typography>
-          <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.paid)}
-          </Typography>
-        </SalesCard>
-      </Link>
+      {props.data.paid && (
+        <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
+          <SalesCard>
+            <Typography variant="overline" color="shade6" className="overline">
+              Paid
+            </Typography>
+            <Typography variant="title4" color="noshade">
+              {numberToShortenAmount(props.data.paid)}
+            </Typography>
+          </SalesCard>
+        </Link>
+      )}
     </Col>
     <Col md={6}>
-      <SalesCard>
-        <Typography variant="overline" color="shade6" className="overline">
-          Pending
-        </Typography>
-        <Typography variant="title4" color="noshade">
-          {numberToShortenAmount(props.data.pending)}
-        </Typography>
-      </SalesCard>
+      {props.data.pending && (
+        <SalesCard>
+          <Typography variant="overline" color="shade6" className="overline">
+            Pending
+          </Typography>
+          <Typography variant="title4" color="noshade">
+            {numberToShortenAmount(props.data.pending)}
+          </Typography>
+        </SalesCard>
+      )}
     </Col>
   </TotalSalesRow>
 );
@@ -255,7 +267,7 @@ const TopCategories = (props: any) => {
                 </div>
 
                 <CategoryImageContainer>
-                  <CategoryImage id={c.id} maxHeight={40} />
+                  <CategoryImage id={c.id} maxHeight={40} customSVGSize={1} />
                 </CategoryImageContainer>
               </IllustrationContainer>
             </SalesCard>
