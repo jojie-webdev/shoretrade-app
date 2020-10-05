@@ -65,11 +65,13 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         {LeftComponent && (
           <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
         )}
-        {!readOnly && prefix && <Prefix>{prefix}</Prefix>}
+        {!readOnly && (prefix || '').length > 0 && <Prefix>{prefix}</Prefix>}
         <Field
           id={id}
           type={secured && !showSecuredText ? 'password' : defaultInputType}
-          value={readOnly ? `${prefix} ${value}` : value}
+          value={
+            readOnly && (prefix || '').length > 0 ? `${prefix} ${value}` : value
+          }
           onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
