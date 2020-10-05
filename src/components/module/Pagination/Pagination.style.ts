@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/core';
 import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
@@ -48,6 +49,12 @@ export const PaginationDot = styled.div<{
     props.active ? props.theme.brand.primary : props.theme.grey.shade3};
 `;
 
+const expand = keyframes`
+  0%   { transform: scale(0.4, 0.4); }
+  50%   { transform: scale(0.8, 0.8); }
+  100%   { transform: scale(1, 1); }
+`;
+
 // Infinite Dot Variant
 export const InfiniteDot = styled.div<{ active?: boolean }>`
   height: ${(props) => (props.active ? '8px' : '4px')};
@@ -58,4 +65,7 @@ export const InfiniteDot = styled.div<{ active?: boolean }>`
 
   background: ${(props) =>
     props.active ? props.theme.brand.primary : props.theme.grey.shade3};
+
+  transition: 0.3s;
+  animation: ${expand} 2s linear;
 `;

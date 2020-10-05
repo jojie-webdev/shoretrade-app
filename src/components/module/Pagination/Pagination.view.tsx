@@ -111,13 +111,23 @@ const Pagination = (props: PaginationProps): JSX.Element => {
       </>
     );
   } else if (variant === 'infinite-dots') {
-    pagination = (
-      <>
-        <InfiniteDot active={currentValue === 1} />
-        <InfiniteDot active={currentValue !== 1 && currentValue !== numPages} />
-        <InfiniteDot active={currentValue === numPages} />
-      </>
-    );
+    if (numPages < 3) {
+      pagination = (
+        <>
+          {numArray.map((value, idx) => (
+            <InfiniteDot key={idx} active={currentValue === value} />
+          ))}
+        </>
+      );
+    } else {
+      pagination = (
+        <>
+          <InfiniteDot active={currentValue === 1} />
+          <InfiniteDot active={currentValue !== 1 && currentValue !== numPages} />
+          <InfiniteDot active={currentValue === numPages} />
+        </>
+      );
+    }
   }
 
   return <Container>{pagination}</Container>;
