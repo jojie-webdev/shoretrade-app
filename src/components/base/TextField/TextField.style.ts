@@ -12,7 +12,10 @@ const fontStyle = `
   
 `;
 
-export const FieldContainer = styled.div<{ error: boolean }>`
+export const FieldContainer = styled.div<{
+  error: boolean;
+  readOnly?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -23,7 +26,8 @@ export const FieldContainer = styled.div<{ error: boolean }>`
   border-radius: 4px;
   border: 1px solid
     ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
-  background-color: ${({ theme }) => theme.grey.noshade};
+  background-color: ${({ readOnly, theme }) =>
+    readOnly ? theme.grey.shade3 : theme.grey.noshade};
 `;
 
 export const Field = styled.input`
