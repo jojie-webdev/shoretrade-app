@@ -7,4 +7,6 @@ export interface AccountLandingGeneratedProps {
   loadingUser: boolean;
   profileName: string;
   companyRelationship: string;
+  updateImage: (image: File) => void;
+  updatingImage: boolean;
 }

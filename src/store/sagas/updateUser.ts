@@ -29,16 +29,17 @@ function* updateUserRequest(
     try {
       // If we're updating the user/company logo
       if ('logo' in action.meta) {
-        // const { data: profileImage } = yield call(uploadImageData, {
-        //   fileName: action.meta.logo.fileName || '',
-        //   data: action.meta.logo.data,
-        //   type: action.meta.logo.type || '',
-        //   asset: 'company',
-        // });
+        const { status: uploadStatus, data: profileImage } = yield call(
+          uploadImageData,
+          {
+            file: action.meta.logo,
+            asset: 'company',
+          }
+        );
 
         metaData = {
           userId,
-          logo: '', // profileImage.url,
+          logo: uploadStatus === 200 ? profileImage.url : '',
           companyId: action.meta.companyId,
         };
 
@@ -61,13 +62,8 @@ function* updateUserRequest(
 function* updateUserSuccess(
   action: AsyncAction<UpdateUserMeta, UpdateUserPayload>
 ) {
-  const wasUpdatingLogo = pathOr(false, ['payload', 'wasUpdatingLogo'], action);
-
+  // const wasUpdatingLogo = pathOr(false, ['payload', 'wasUpdatingLogo'], action);
   yield put(getUserActions.request());
-  if (!wasUpdatingLogo) {
-    // TODO: Change this to fetch user and AlertSuccess
-    // yield put(push(SELLER_ACCOUNT_ROUTES.LANDING));
-  }
 }
 
 function* updateUserWatcher() {

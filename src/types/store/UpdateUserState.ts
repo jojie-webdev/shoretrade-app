@@ -10,7 +10,7 @@ export type UpdateUserMeta =
       companyId: string;
     }
   | {
-      logo: any; // TODO: Update data type
+      logo: File; // TODO: Update data type
       companyId: string;
     };
 

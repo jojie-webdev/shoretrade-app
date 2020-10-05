@@ -60,7 +60,7 @@ const Header = ({
   const theme = useTheme();
   const history = useHistory();
 
-  const [hideBrokenProfileImage, setHideBorkenProfileImage] = useState(false);
+  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
 
   return (
     <HeaderContainer className="appbar">
@@ -129,7 +129,7 @@ const Header = ({
                 src={userData?.profileImage}
                 onError={() => {
                   // do something
-                  setHideBorkenProfileImage(true);
+                  setHideBrokenProfileImage(true);
                 }}
                 alt=""
               />

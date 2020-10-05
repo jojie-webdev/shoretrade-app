@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 
 import Select from 'components/base/Select';
+import Spinner from 'components/base/Spinner';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useHistory } from 'react-router-dom';
+import DefaultProfileImage from 'res/images/seller-profile-default.png';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
-import { Container, NavInteraction, Header, DropdownContainer } from './Landing.style';
+import {
+  Container,
+  NavInteraction,
+  Header,
+  DropdownContainer,
+} from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -23,6 +30,8 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     loadingUser,
     profileName,
     companyRelationship,
+    updateImage,
+    updatingImage,
   } = props;
 
   const INTERACTIONS = [
@@ -58,6 +67,29 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
 
+  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
+  const imagePicker = useRef<HTMLInputElement | null>(null);
+
+  const handleOnClick = () => {
+    // handle image
+    if (imagePicker && imagePicker.current) {
+      imagePicker.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    // accept ony jpg and png
+    const imageFiles = files.filter(
+      ({ type }) => type === 'image/jpeg' || type === 'image/png'
+    );
+
+    if (imageFiles.length > 0) {
+      updateImage(imageFiles[0]);
+    }
+  };
+
   if (loadingUser) {
     return <Loading />;
   }
@@ -73,7 +105,34 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     <Container>
       <Header>
         <div className="left-content">
-          <img src={profilePicture} alt="profile picture" />
+          <input
+            ref={imagePicker}
+            type="file"
+            hidden
+            name="profileImage"
+            onChange={handleFileChange}
+          />
+          {updatingImage ? (
+            <div className="loading-indicator">
+              <Spinner />
+            </div>
+          ) : (
+            <img
+              src={
+                hideBrokenProfileImage
+                  ? DefaultProfileImage
+                  : profilePicture || DefaultProfileImage
+              }
+              alt="profile picture"
+              onError={() => {
+                setHideBrokenProfileImage(true);
+              }}
+              onClick={() => {
+                handleOnClick();
+              }}
+            />
+          )}
+
           <div>
             <Typography variant="overline" color="noshade">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}

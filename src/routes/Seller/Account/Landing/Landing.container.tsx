@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { updateUserActions } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
@@ -9,6 +10,7 @@ import { AccountLandingGeneratedProps } from './Landing.props';
 import AccountLandingView from './Landing.view';
 const AccountLanding = (): JSX.Element => {
   // Mark:- State / Store
+  const dispatch = useDispatch();
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
@@ -23,6 +25,17 @@ const AccountLanding = (): JSX.Element => {
   const companies = user?.companies || [];
   const profilePicture = user?.profileImage || '';
   const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
+  const updatingImage =
+    useSelector((state: Store) => state.updateUser.pending) || false;
+
+  const updateImage = (image: File) => {
+    dispatch(
+      updateUserActions.request({
+        logo: image,
+        companyId: currentCompany?.id || '',
+      })
+    );
+  };
 
   // Mark:- Effects
   useEffect(() => {
@@ -42,6 +55,8 @@ const AccountLanding = (): JSX.Element => {
     loadingUser,
     profileName,
     companyRelationship,
+    updateImage,
+    updatingImage,
   };
   return <AccountLandingView {...generatedProps} />;
 };

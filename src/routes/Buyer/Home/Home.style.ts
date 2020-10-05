@@ -60,7 +60,7 @@ export const CategoriesContainer = styled.div`
   flex-wrap: wrap;
 
   .card {
-    width: 203px;
+    margin-right: 0px !important;
   }
 
   a:not(:last-child) {

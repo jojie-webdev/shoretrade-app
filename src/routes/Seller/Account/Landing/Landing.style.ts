@@ -24,6 +24,15 @@ export const Header = styled.div`
       height: 96px;
       border-radius: 4px;
       margin-right: 16px;
+      cursor: pointer;
+    }
+
+    .loading-indicator {
+      width: 96px;
+      height: 96px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
