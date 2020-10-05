@@ -35,15 +35,15 @@ const DropdownLocation = (props: DropdownLocationProps): JSX.Element => {
 
   return (
     <>
+      <Label variant="overline" color="shade6">
+        {props.label}
+      </Label>
       <Container
         className={props.className}
         label={props.label}
         isError={!!props.error}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Label variant="overline" color="shade6">
-          {props.label}
-        </Label>
         <LeftIconContainer>
           <Location />
         </LeftIconContainer>

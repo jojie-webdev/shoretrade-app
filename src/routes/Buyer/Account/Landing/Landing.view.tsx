@@ -49,7 +49,6 @@ const LandingView = (props: LandingGeneratedProps) => {
     <Container>
       <Header>
         <div className="left-content">
-          <img src={profilePicture} alt="profile picture" />
           <div>
             <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}

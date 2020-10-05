@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
@@ -7,10 +7,13 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import DropdownLocation from 'components/module/DropdownLocation';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
+import { createUpdateReducer } from 'utils/Hooks';
 
 import { BuyerAddressFormProps } from './BuyerAddressForm.props';
 import { Container, StyledAlert } from './BuyerAddressForm.style';
+import { isValid } from './BuyerAddressForm.validation';
 
 const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
   const {
@@ -37,6 +40,25 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     successContent = 'Your account details have successfully been updated!';
   }
 
+  const [errors, setErrors] = useReducer(
+    createUpdateReducer<Record<string, string[]>>(),
+    {}
+  );
+
+  const validate = () => {
+    const addressError = isValid({
+      address: address?.address || '',
+      unitNumber,
+    });
+    const isEmptyError = Object.keys(addressError).every(
+      (k) => addressError[k].length === 0
+    );
+    setErrors(addressError);
+    if (isEmptyError) {
+      onClickSave();
+    }
+  };
+
   return (
     <Container>
       {isSuccess && (
@@ -51,19 +73,24 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       <InnerRouteHeader title={routeHeader} />
 
       <Row nogutter className="textfield-row">
-        <DropdownLocation
-          value={address.address}
-          label="Address"
-          onSelect={setAddress}
-          className="address"
-        />
-        <TextField
-          className="address"
-          label="Unit number (optional)"
-          name="unitNumber"
-          value={unitNumber}
-          onChange={(e) => setUnitNumber(e.target.value)}
-        />
+        <Col md={12}>
+          <DropdownLocation
+            value={address?.address || ''}
+            label="Address"
+            onSelect={setAddress}
+            error={pathOr('', ['address', '0'], errors)}
+          />
+        </Col>
+        <Col md={12} style={{ marginTop: 24 }}>
+          <TextField
+            className="address"
+            label="Unit number (optional)"
+            name="unitNumber"
+            value={unitNumber}
+            onChange={(e) => setUnitNumber(e.target.value)}
+            error={pathOr('', ['unitNumber', '0'], errors)}
+          />
+        </Col>
       </Row>
 
       <Row nogutter className="checkbox-row">
@@ -76,7 +103,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       </Row>
 
       <Row nogutter>
-        <Button text="Submit" onClick={onClickSave} loading={pending} />
+        <Button text="Submit" onClick={validate} loading={pending} />
       </Row>
     </Container>
   );

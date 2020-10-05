@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
 import Radio from 'components/base/Radio';
 import Typography from 'components/base/Typography';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import PhoneTextField from 'components/module/PhoneTextField';
@@ -63,6 +64,8 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
     routeHeader = 'Update Fisherman / Assistant';
     buttonText = 'Delete Linked Account';
   }
+
+  const [showDelete, setShowDelete] = useState(false);
 
   return (
     <Container>
@@ -161,10 +164,25 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
             text={buttonText}
             type={type === 'CREATE' ? 'submit' : 'button'}
             loading={pending}
-            onClick={() => onClickDelete && onClickDelete()}
+            onClick={() => {
+              if (type === 'EDIT') {
+                setShowDelete(true);
+              }
+            }}
           />
         </Form>
       </Formik>
+
+      <ConfirmationModal
+        isOpen={showDelete}
+        title="Delete Linked Account"
+        description="Are you sure you want to delete this linked account?"
+        action={() => {
+          onClickDelete && onClickDelete();
+        }}
+        actionText="DELETE"
+        onClickClose={() => setShowDelete(false)}
+      />
     </Container>
   );
 };

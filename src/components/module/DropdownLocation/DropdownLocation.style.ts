@@ -8,20 +8,20 @@ export const Container = styled.div<{ label?: string; isError: boolean }>`
     ${(props) =>
       props.isError ? props.theme.brand.error : props.theme.grey.shade5};
   border-radius: 4px;
-  height: 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-right: 21px;
   cursor: pointer;
   position: relative;
-  margin-top: ${({ label }) => (label ? '20px' : 0)};
+  margin-top: ${({ label }) => (label ? '4px' : 0)};
+  height: 48px;
 `;
 
 export const LeftIconContainer = styled.div`
   width: 47px;
   border-right: 1px solid ${({ theme }) => theme.grey.shade5};
-  height: 100%;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,11 +37,7 @@ export const Text = styled(Typography)`
   padding-right: 12px;
 `;
 
-export const Label = styled(Typography)`
-  position: absolute;
-  top: -20px;
-  left: 0;
-`;
+export const Label = styled(Typography)``;
 
 export const ErrorContainer = styled.div`
   margin-top: 4px;

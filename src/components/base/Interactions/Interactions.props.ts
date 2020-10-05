@@ -16,4 +16,5 @@ export interface InteractionsProps {
   iconAlignment?: IconAlignmentTypes;
   children?: any;
   isHover?: boolean;
+  iconColor?: string;
 }

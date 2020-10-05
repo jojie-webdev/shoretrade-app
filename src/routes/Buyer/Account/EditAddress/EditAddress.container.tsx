@@ -35,18 +35,20 @@ const EditAddress = (): JSX.Element => {
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
   // MARK:- Methods
   const onClickSave = () => {
-    dispatch(
-      updateAddressActions.request(
-        placeDataToUpdateAddressMeta(
-          address as PlaceData,
-          unitNumber,
-          companyId,
-          isDefault || false,
-          addressId
+    if (address) {
+      dispatch(
+        updateAddressActions.request(
+          placeDataToUpdateAddressMeta(
+            address as PlaceData,
+            unitNumber,
+            companyId,
+            isDefault || false,
+            addressId
+          )
         )
-      )
-    );
-    setIsSubmitted(true);
+      );
+      setIsSubmitted(true);
+    }
   };
   const toggleIsDefault = () => setIsDefault(!isDefault);
   // MARK:- Effects

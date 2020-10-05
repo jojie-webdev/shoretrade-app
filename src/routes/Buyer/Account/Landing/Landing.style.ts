@@ -1,8 +1,18 @@
 import Interactions from 'components/base/Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 0px 8px;
+  width: 100%;
+  padding: 0px 100px;
+
+  @media ${BREAKPOINTS['md']} {
+    padding: 0px 75px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 0px 0px;
+  }
 `;
 
 export const Header = styled.div`

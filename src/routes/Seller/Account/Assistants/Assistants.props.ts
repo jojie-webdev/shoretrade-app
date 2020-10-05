@@ -5,4 +5,5 @@ export interface AssistantsGeneratedProps {
   accounts: GetLinkedAccountsResponseItem[];
   goToCreateAssistant: () => void;
   onClickAssistant: (assistantId: string) => void;
+  currentCompanyName: string;
 }

@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 import { PlaceData } from 'types/PlaceData';
 
 export interface BuyerAddressFormProps {
-  address: PlaceData;
+  address: PlaceData | null;
   isDefault: boolean | null;
   pending: boolean;
   isSuccess: boolean;
