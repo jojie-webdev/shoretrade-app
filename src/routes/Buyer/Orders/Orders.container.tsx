@@ -102,12 +102,26 @@ const OrdersContainer = (): JSX.Element => {
       (state: Store) => state.getBuyerOrdersPlaced.data?.data.count
     ) || '1';
 
+  const inTransitOrdersCount =
+    useSelector(
+      (state: Store) => state.getBuyerOrdersTransit.data?.data.count
+    ) || '1';
+
   const completedOrdersCount =
     useSelector(
       (state: Store) => state.getBuyerOrdersDelivered.data?.data.count
     ) || '1';
 
   const [pendingOrdersFilter, updatePendingOrdersFilter] = useReducer(
+    createUpdateReducer<RequestFilters>(),
+    {
+      page: '1',
+      dateFrom: '',
+      dateTo: '',
+    }
+  );
+
+  const [inTransitOrdersFilter, updateInTransitOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
@@ -136,6 +150,12 @@ const OrdersContainer = (): JSX.Element => {
   }, [pendingOrdersFilter.page, pendingOrdersFilter.dateFrom]);
 
   useEffect(() => {
+    if (currentTab === 'In Transit') {
+      getOrders.placed(inTransitOrdersFilter);
+    }
+  }, [inTransitOrdersFilter.page, inTransitOrdersFilter.dateFrom]);
+
+  useEffect(() => {
     if (currentTab === 'Complete') {
       getOrders.delivered(completedOrdersFilter);
     }
@@ -144,11 +164,13 @@ const OrdersContainer = (): JSX.Element => {
   const filters = {
     pendingOrdersFilter,
     completedOrdersFilter,
+    inTransitOrdersFilter,
   };
 
   const updateFilters = {
     updatePendingOrdersFilter,
     updateCompletedOrdersFilter,
+    updateInTransitOrdersFilter,
   };
 
   const pendingGetOrders: Record<TabOptions, boolean> = {
@@ -167,6 +189,7 @@ const OrdersContainer = (): JSX.Element => {
     getAllOrders,
     pendingOrdersCount,
     completedOrdersCount,
+    inTransitOrdersCount,
     filters,
     updateFilters,
     currentTab,

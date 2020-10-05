@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
@@ -8,8 +8,6 @@ import { LandingGeneratedProps } from './Landing.props';
 import LandingView from './Landing.view';
 
 const Landing = (): JSX.Element => {
-  const dispatch = useDispatch();
-
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
@@ -22,6 +20,14 @@ const Landing = (): JSX.Element => {
   const companyRelationship = currentCompany?.relationship || '';
   const profilePicture = user?.profileImage || '';
   const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
+
+  useEffect(() => {
+    if (!loadingUser) {
+      const c = companies || [];
+
+      setCurrentCompany(c[0]);
+    }
+  }, [loadingUser]);
 
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,

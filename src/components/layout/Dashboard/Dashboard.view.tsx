@@ -10,7 +10,7 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
-import { BUYER_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { Container } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
@@ -69,11 +69,12 @@ const Header = ({
 
         <div className="title-container">
           {onBack && (
-            <div className="back-button-container">
-              <Touchable circle onPress={() => onBack()}>
-                <ArrowLeft width={14} height={14} fill={theme.grey.shade7} />
-              </Touchable>
-            </div>
+            <Touchable
+              className="back-button-container"
+              onPress={() => onBack()}
+            >
+              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
+            </Touchable>
           )}
 
           <Typography variant="title4" color={textColor}>
@@ -101,7 +102,10 @@ const Header = ({
           </div>
         )}
 
-        <Touchable onPress={onClickAccount}>
+        <Touchable
+          className="dashboard-account-container"
+          onPress={onClickAccount}
+        >
           <div className="text-container">
             <Typography color={textColor}>
               {userData?.companies[0].name}
@@ -183,7 +187,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         <div>
           {theme.appType === 'buyer' && (
             <CreditBalanceContainer
-              onClick={() => history.push(BUYER_ROUTES.ACCOUNT)}
+              onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
             >
               <Typography color="shade7" variant="overline" weight="900">
                 Credit balance

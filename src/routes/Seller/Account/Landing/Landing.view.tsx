@@ -2,6 +2,7 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 
+import Select from 'components/base/Select';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
@@ -9,7 +10,7 @@ import qs from 'qs';
 import { useHistory } from 'react-router-dom';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
-import { Container, NavInteraction, Header } from './Landing.style';
+import { Container, NavInteraction, Header, DropdownContainer } from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   // const theme = useTheme();
@@ -61,6 +62,13 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     return <Loading />;
   }
 
+  const companyOptions = companies.map((company) => {
+    return {
+      value: company.id,
+      label: company.name,
+    };
+  });
+
   return (
     <Container>
       <Header>
@@ -77,17 +85,15 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         </div>
 
         <div className="right-content">
-          <select name="company">
-            {companies.map((company) => (
-              <option
-                value={company.id}
-                selected={currentCompany?.id === company.id}
-                key={company.id}
-              >
-                {company.name}
-              </option>
-            ))}
-          </select>
+          <DropdownContainer>
+            <Select
+              label=""
+              options={companyOptions}
+              value={currentCompany?.id}
+              size="small"
+              dark={true}
+            />
+          </DropdownContainer>
           {/* <AccountSelect options={['one', 'two', 'three']} /> */}
         </div>
       </Header>

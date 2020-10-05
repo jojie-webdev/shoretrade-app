@@ -48,13 +48,16 @@ export interface OrdersGeneratedProps {
   getAllOrders: () => void;
   pendingOrdersCount: string;
   completedOrdersCount: string;
+  inTransitOrdersCount: string;
   filters: {
     pendingOrdersFilter: RequestFilters;
     completedOrdersFilter: RequestFilters;
+    inTransitOrdersFilter: RequestFilters;
   };
   updateFilters: {
     updatePendingOrdersFilter: Dispatch<Partial<RequestFilters>>;
     updateCompletedOrdersFilter: Dispatch<Partial<RequestFilters>>;
+    updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
 }
