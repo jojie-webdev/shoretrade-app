@@ -1,7 +1,9 @@
 import { Form } from 'formik';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding: 0px 8px;
+`;
 
 export const Content = styled.div``;
 

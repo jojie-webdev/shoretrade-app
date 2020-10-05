@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Select from 'components/base/Select';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -7,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { LandingGeneratedProps } from './Landing.props';
-import { Container, Header, NavInteraction } from './Landing.style';
+import { Container, Header, NavInteraction, DropdownContainer } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
@@ -37,34 +38,39 @@ const LandingView = (props: LandingGeneratedProps) => {
     return <Loading />;
   }
 
+  const companyOptions = companies.map((company) => {
+    return {
+      value: company.id,
+      label: company.name,
+    };
+  });
+
   return (
     <Container>
       <Header>
         <div className="left-content">
           <img src={profilePicture} alt="profile picture" />
           <div>
-            <Typography variant="overline" color="noshade">
+            <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
-            <Typography variant="title5" color="noshade">
+            <Typography variant="title5" color="shade8">
               {profileName}
             </Typography>
           </div>
         </div>
 
         <div className="right-content">
-          <select name="company">
-            {companies.map((company) => (
-              <option
-                value={company.id}
-                selected={currentCompany?.id === company.id}
-                key={company.id}
-              >
-                {company.name}
-              </option>
-            ))}
-          </select>
-          {/* <AccountSelect options={['one', 'two', 'three']} /> */}
+
+          <DropdownContainer>
+            <Select
+              label=""
+              options={companyOptions}
+              value={currentCompany?.id}
+              size="small"
+              dark={true}
+            />
+          </DropdownContainer>
         </div>
       </Header>
 

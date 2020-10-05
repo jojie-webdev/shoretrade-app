@@ -15,21 +15,48 @@ const font = `
     line-height: 24px;
     font-weight: 500;`;
 
-export const StyledDropdown = styled(Dropdown)`
+export const StyledDropdown = styled(Dropdown)<{
+  dark?: boolean;
+  disabled?: boolean;
+}>`
   .${PREFIX}Container {
     height: 48px;
-    background: ${({ theme, disabled }) =>
-      disabled ? theme.grey.shade3 : '#ffffff'};
-    color: ${({ theme, disabled }) =>
-      disabled ? theme.grey.shade6 : theme.grey.shade9};
-    border: 1px solid ${({ theme }) => theme.grey.shade5};
+    background: ${({ theme, disabled, dark }) =>
+      disabled ? theme.grey.shade3 : dark ? theme.grey.shade9 : '#ffffff'};
+    color: ${({ theme, disabled, dark }) =>
+      disabled
+        ? theme.grey.shade6
+        : dark
+        ? theme.grey.noshade
+        : theme.grey.shade9};
+    border: ${({ theme, dark }) =>
+      `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
     margin-top: 4px;
   }
 
+  /* TODO: Should extend .${PREFIX}Container */
+  .${PREFIX}ContainerThin {
+    height: 30px;
+    background: ${({ theme, disabled, dark }) =>
+      disabled ? theme.grey.shade3 : dark ? theme.grey.shade9 : '#ffffff'};
+    color: ${({ theme, disabled, dark }) =>
+      disabled
+        ? theme.grey.shade6
+        : dark
+        ? theme.grey.noshade
+        : theme.grey.shade9};
+    border: ${({ theme, dark }) =>
+      `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
+    border-radius: 4px;
+    padding: 4px 16px;
+    margin-top: 4px;
+  }
+
   .${PREFIX}Placeholder {
     ${font};
+    margin-right: 8px;
   }
 
   .${PREFIX}Menu {
@@ -49,11 +76,12 @@ export const StyledDropdown = styled(Dropdown)`
   }
 `;
 
-export const ArrowContainer = styled.div<{ flipped?: boolean }>`
+export const ArrowContainer = styled.div<{ size?: string; flipped?: boolean }>`
   position: absolute;
-  right: 20px;
-  top: 11px;
+  right: ${({ size }) => (size === 'small' ? '9px' : '20px')};
+  top: ${({ size }) => (size === 'small' ? '4px' : '11px')};
   transform: rotate(${({ flipped }) => (flipped ? '180deg' : '')});
+  color: ${({ theme }) => theme.brand.primary};
 `;
 
 export const Label = styled(Typography)``;

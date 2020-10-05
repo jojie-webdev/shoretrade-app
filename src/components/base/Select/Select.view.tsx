@@ -27,19 +27,23 @@ const Select = ({ label, error, ...props }: SelectProps): JSX.Element => {
       ) : null}
       <StyledDropdown
         {...props}
-        controlClassName={`${PREFIX}Container`}
+        controlClassName={
+          props.size === 'small'
+            ? `${PREFIX}ContainerThin`
+            : `${PREFIX}Container`
+        }
         placeholderClassName={`${PREFIX}Placeholder`}
         menuClassName={`${PREFIX}Menu`}
         arrowClosed={
-          <ArrowContainer>
+          <ArrowContainer size={props.size}>
             <DropdownArrow
-              fill={props.disabled ? theme.grey.shade6 : undefined}
+              fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
             />
           </ArrowContainer>
         }
         arrowOpen={
-          <ArrowContainer flipped>
-            <DropdownArrow />
+          <ArrowContainer size={props.size} flipped>
+            <DropdownArrow fill={theme.brand.primary} />
           </ArrowContainer>
         }
       />

@@ -44,3 +44,8 @@ export const AccountSelect = styled(Select)`
   height: 28px;
   min-width: 120px;
 `;
+
+export const DropdownContainer = styled.div`
+  /* height: 30px;
+  padding: 4px 12px; */
+`;

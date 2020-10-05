@@ -1,7 +1,9 @@
 import Interactions from 'components/base/Interactions';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding: 0px 8px;
+`;
 
 export const Header = styled.div`
   display: flex;
@@ -36,4 +38,9 @@ export const Header = styled.div`
 
 export const NavInteraction = styled(Interactions)`
   margin-bottom: 16px;
+`;
+
+export const DropdownContainer = styled.div`
+  /* height: 30px;
+  padding: 4px 12px; */
 `;
