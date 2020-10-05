@@ -25,12 +25,15 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     leftComponent,
     rightComponent,
     iconAlignment = 'center',
+    iconColor,
     children,
   } = props;
 
   const getIcon = () => {
     if (type === 'accordion') {
-      const Dropdown = () => <DropdownArrow fill={theme.grey.shade8} />;
+      const Dropdown = () => (
+        <DropdownArrow fill={iconColor || theme.grey.shade8} />
+      );
 
       return pressed ? (
         <DropdownFlipped>

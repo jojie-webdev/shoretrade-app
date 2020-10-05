@@ -1,10 +1,9 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
 import Accordion from 'components/base/Accordion';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { useTheme } from 'utils/Theme';
 
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
 import { Container } from './HelpAndSupport.style';
@@ -55,7 +54,7 @@ const HELP_AND_SUPPORT = [
 ];
 
 const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
-  // const theme = useTheme();
+  const theme = useTheme();
 
   return (
     <Container>
@@ -69,7 +68,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
 
       {HELP_AND_SUPPORT.map((help, ndx) => (
         <div className="accordion-container" key={`help${ndx}`}>
-          <Accordion title={help.title}>
+          <Accordion title={help.title} iconColor={theme.brand.primary}>
             <Typography variant="label" color="noshade">
               {help.description}
             </Typography>
