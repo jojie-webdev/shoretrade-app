@@ -23,6 +23,7 @@ const MarketPrices = (): JSX.Element => {
 
   const resetSearchValue = () => {
     setSearchValue('');
+    setResults([]);
   };
 
   const search = async () => {
@@ -38,6 +39,8 @@ const MarketPrices = (): JSX.Element => {
   };
 
   useEffect(() => {
+    setSearchValue(searchValue.trim());
+
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -50,7 +53,7 @@ const MarketPrices = (): JSX.Element => {
     } else if (searchValue.length <= 2 && isEmpty(results)) {
       search();
     }
-  }, [searchValue.trim()]);
+  }, [searchValue]);
 
   const generatedProps = {
     onChangeSearchValue,
