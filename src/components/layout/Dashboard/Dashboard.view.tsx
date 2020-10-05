@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   ShoretradeLogo,
@@ -60,6 +60,8 @@ const Header = ({
   const theme = useTheme();
   const history = useHistory();
 
+  const [hideBrokenProfileImage, setHideBorkenProfileImage] = useState(false);
+
   return (
     <HeaderContainer className="appbar">
       <div className="left-content">
@@ -120,9 +122,18 @@ const Header = ({
             </Typography>
           </div>
 
-          {userData?.profileImage && (
-            <img src={userData?.profileImage} alt="" />
-          )}
+          {!hideBrokenProfileImage &&
+            userData?.profileImage &&
+            theme.appType === 'seller' && (
+              <img
+                src={userData?.profileImage}
+                onError={() => {
+                  // do something
+                  setHideBorkenProfileImage(true);
+                }}
+                alt=""
+              />
+            )}
         </Touchable>
       </div>
     </HeaderContainer>
