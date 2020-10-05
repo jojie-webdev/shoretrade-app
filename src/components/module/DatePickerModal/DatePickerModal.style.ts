@@ -1,4 +1,7 @@
+import calendarDayEnd from 'res/images/calendar-day-end.svg';
+import calendarStartDay from 'res/images/calendar-day-start.svg';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;
@@ -6,8 +9,13 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  .calendar-title {
+    width: 90%;
+  }
+
   .button-container {
-    width: 100%;
+    margin-top: 32px;
+    width: 90%;
   }
 
   /* Calendar Overrides */
@@ -35,8 +43,32 @@ export const Container = styled.div`
     box-shadow: none;
   }
 
+  .DayPicker_weekHeader {
+    border-radius: 4px;
+    background: ${(props) => props.theme.grey.shade9};
+  }
+
+  .DayPicker_weekHeader_li {
+    padding: 6px 0;
+  }
+
+  .CalendarMonth_table {
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    margin-top: 8px;
+  }
+
   .CalendarMonth_caption {
     color: ${(props) => props.theme.grey.noshade};
+    font-size: ${pxToRem(14)};
+    font-weight: 500;
+  }
+
+  .DayPicker_weekHeader_li,
+  .CalendarDay {
+    font-size: ${pxToRem(12)};
+    font-weight: 500;
+    color: ${(props) => props.theme.grey.shade7};
   }
 
   /* Will edit everything selected including everything between a range of dates */
@@ -69,16 +101,37 @@ export const Container = styled.div`
 
   /*  Will edit selected date or the endpoints of a range of dates */
   .CalendarDay__selected {
-    background: ${(props) => props.theme.brand.primary};
-    border: ${(props) => props.theme.brand.primary};
-    border-radius: 100px;
     color: ${(props) => props.theme.grey.noshade};
-    position: relative;
-    z-index: 2;
 
     :hover {
       color: ${(props) => props.theme.grey.noshade};
       border: none;
     }
+  }
+
+  .CalendarDay__selected_start {
+    background-size: 102% 100%;
+    background-image: url(${() => calendarStartDay});
+  }
+
+  .CalendarDay__selected_end {
+    background-position-x: -1px;
+    background-size: 102% 100%;
+    background-image: url(${() => calendarDayEnd});
+  }
+
+  .CalendarDay__lastDayOfWeek {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .CalendarDay__lastDayOfWeek {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .CalendarDay__firstDayOfWeek {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
 `;

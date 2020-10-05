@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import { DayPickerRangeController, FocusedInputShape } from 'react-dates';
 
@@ -19,9 +20,13 @@ const DatePickerModal = ({
   return (
     <Modal {...modalProps}>
       <Container>
+        <Typography className="calendar-title" variant="title5" color="noshade">
+          Calendar
+        </Typography>
+
         <DayPickerRangeController
           horizontalMonthPadding={0}
-          verticalHeight={350}
+          verticalHeight={500}
           startDate={startDate}
           endDate={endDate}
           onDatesChange={onDateChange}
