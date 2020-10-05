@@ -116,7 +116,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                   title="No orders yet"
                   buttonText="Start an order"
                   Svg={Crab}
-                  onButtonClicked={() => history.push(BUYER_ROUTES.ROOT)}
+                  onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
                 />
               </Col>
             </Row>

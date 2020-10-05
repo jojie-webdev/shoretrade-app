@@ -2,7 +2,7 @@ import styled from 'utils/styled';
 
 export const Container = styled.div`
   height: 100%;
-  padding-bottom: 48px;
+  padding: 0 8px 48px 8px;
   position: relative;
 
   .row {
@@ -10,19 +10,18 @@ export const Container = styled.div`
   }
 
   .order-summary {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .checkout-shipping {
     margin-top: 32px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 `;
 
 export const Footer = styled.div`
-  position: absolute;
+  margin-top: 32px;
   width: 100%;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

@@ -46,7 +46,7 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   SEARCH: {
-    path: '/buyer/search',
+    path: BUYER_ROUTES.SEARCH,
     children: <SearchLanding />,
     title: 'Search',
     icon: SearchIcon,
