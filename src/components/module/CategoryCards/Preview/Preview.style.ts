@@ -75,8 +75,6 @@ export const LocationContainer = styled.div`
 
 export const BadgeText = styled(TypographyView)`
   font-size: ${pxToRem(12)};
-  padding-left: 8px;
-  padding-right: 8px;
 `;
 
 export const BadgeContainer = styled.div`
