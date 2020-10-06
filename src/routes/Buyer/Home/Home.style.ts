@@ -72,7 +72,8 @@ export const CategoriesHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 48px;
+  padding-top: 16px;
+  margin-bottom: 16px;
 `;
 
 export const CreditContainer = styled.div`
@@ -101,7 +102,10 @@ export const InfoContainer = styled.span`
   margin-left: 18px;
 `;
 
-export const FavouritesHeader = styled(CategoriesHeader)``;
+export const FavouritesHeader = styled(CategoriesHeader)`
+  margin-bottom: 16px;
+  padding-top: 48px;
+`;
 
 export const FavouritesContainer = styled.div`
   display: flex;
@@ -115,3 +119,18 @@ export const FavouritesContainer = styled.div`
 export const SearchRow = styled(Row)``;
 
 export const ViewCol = styled(Col)``;
+
+export const RecentHeader = styled(CategoriesHeader)``;
+
+export const RecentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  a:not(:last-child) {
+    margin-right: 32px;
+  }
+`;
+
+export const SellerHeader = styled(CategoriesHeader)``;
+
+export const SellerContainer = styled(CategoriesContainer)``;

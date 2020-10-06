@@ -32,6 +32,10 @@ import {
   SearchRow,
   ViewCol,
   ViewContainer,
+  RecentHeader,
+  RecentContainer,
+  SellerHeader,
+  SellerContainer,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -95,6 +99,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     loading,
     featured,
     favourites,
+    recentlyAdded,
+    sellers,
   } = props;
 
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
@@ -119,7 +125,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     <ViewContainer>
       <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>
+        <Col xs={12} style={{ marginBottom: '46px' }}>
           <Search
             value={search}
             onChange={onChangeSearchValue}
@@ -213,6 +219,89 @@ const HomeView = (props: HomeGeneratedProps) => {
               <Loading />
             )}
           </CategoriesContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <RecentHeader>
+            <Typography variant="title5" color="shade8">
+              Recently Added
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+            />
+          </RecentHeader>
+          <RecentContainer>
+            {recentlyAdded.length > 0
+              ? recentlyAdded
+                  .slice(0, getMaxFavouritesDisplay())
+                  .map((recent, index) => {
+                    return (
+                      <Link key={recent.id} to={`/buyer/product/${recent.id}`}>
+                        <PreviewCard
+                          id={recent.id}
+                          images={recent.images}
+                          type={recent.type}
+                          price={toPrice(recent.price)}
+                          remaining={recent.remaining.toFixed(2)}
+                          coop={recent.coop}
+                          minimumOrder={recent.minimumOrder}
+                          origin={recent.origin}
+                          weight={sizeToString(
+                            recent.size.unit,
+                            recent.size.from,
+                            recent.size.to
+                          )}
+                          isAquafuture={recent.isAquafuture}
+                          unit={recent.measurementUnit}
+                          state={recent.state}
+                        />
+                      </Link>
+                    );
+                  })
+              : null}
+          </RecentContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              // onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {sellers.length > 0 ? (
+              sellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <Card
+                      id={s.id}
+                      image={s.companyImage}
+                      label={s.companyName}
+                      sortIndex={+s.id}
+                    />
+                    {/* <img src={s.companyImage} alt={s.companyName} /> */}
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
         </ViewCol>
       </div>
     </ViewContainer>
