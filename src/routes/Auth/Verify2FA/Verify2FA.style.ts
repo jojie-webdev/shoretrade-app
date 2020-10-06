@@ -74,7 +74,6 @@ export const CodeFieldRow = styled.div`
 export const CodeFieldContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   height: 48px;
   width: 48px;
   box-sizing: border-box;
@@ -91,7 +90,8 @@ export const CodeField = styled.input`
   padding: 12px 16px;
   border: 0px;
   height: 100%;
-  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

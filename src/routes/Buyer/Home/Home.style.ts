@@ -1,10 +1,23 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Container, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
-  padding: 0 8px 8px 8px;
+
+  .wrapper {
+    width: calc(100% - 200px);
+    margin: auto;
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+    }
+
+    @media ${BREAKPOINTS['md']} {
+      width: calc(100% - 150px);
+    }
+  }
 `;
 
 export const SwiperContainer = styled.div`
@@ -58,6 +71,7 @@ export const CategoriesContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 16px;
 
   .card {
     margin-right: 0px !important;
@@ -106,6 +120,7 @@ export const FavouritesHeader = styled(CategoriesHeader)``;
 export const FavouritesContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 16px;
 
   a:not(:last-child) {
     margin-right: 32px;
