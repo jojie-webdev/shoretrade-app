@@ -32,7 +32,16 @@ function* addLinkedAccountRequest(
         })
       );
     } catch (e) {
-      yield put(addLinkedAccountActions.failed(e.message));
+      if (e.response) {
+        const errorMessage = pathOr(
+          e.message,
+          ['response', 'data', 'message'],
+          e
+        );
+        yield put(addLinkedAccountActions.failed(errorMessage));
+      } else {
+        yield put(addLinkedAccountActions.failed(e.message));
+      }
     }
   } else {
     yield put(addLinkedAccountActions.failed('Token not found'));

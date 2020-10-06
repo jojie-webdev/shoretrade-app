@@ -10,7 +10,7 @@ export interface SellerAssistantFormProps {
 
   // Specific to Create Linked Account
   success?: boolean;
-  error?: boolean;
+  error?: string;
   pending?: boolean;
   role?: Role;
   setRole?: Dispatch<SetStateAction<Role>>;

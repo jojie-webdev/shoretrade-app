@@ -10,7 +10,7 @@ export interface BuyerAssistantFormProps {
 
   // Specific to Create Linked Account
   success?: boolean;
-  error?: boolean;
+  error?: string;
   pending?: boolean;
   setCallingCode?: Dispatch<SetStateAction<string>>;
 }
