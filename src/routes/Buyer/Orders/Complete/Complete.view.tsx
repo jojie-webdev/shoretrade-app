@@ -19,7 +19,7 @@ import {
 } from '../Pending/Pending.style';
 
 const CompletedItems = (props: OrderItem) => {
-  const { confirmed, data, date, id, price } = props;
+  const { confirmed, data, deliveredDate, id, price } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +41,7 @@ const CompletedItems = (props: OrderItem) => {
                 Delivered On:
               </Typography>
               <Typography variant="label" color="shade8" weight="bold">
-                {moment(date).format('ddd DD MMM')}
+                {moment(deliveredDate).format('ddd DD MMM')}
               </Typography>
             </Row>
             <Typography variant="title5" weight="900">
@@ -65,8 +65,7 @@ const Complete = (props: OrdersGeneratedProps) => {
     updateFilters,
   } = props;
   const theme = useTheme();
-
-  const completedPagesTotal = Math.ceil(Number(completedOrdersCount) / 10);
+  const completedPagesTotal = Math.ceil(Number(completedOrdersCount) / 5);
   return (
     <>
       {completedOrders.map((item, index) => {
@@ -77,7 +76,7 @@ const Complete = (props: OrdersGeneratedProps) => {
         );
       })}
       <Row justify="center">
-        {completedOrders.length > 10 && (
+        {completedPagesTotal > 1 && (
           <Pagination
             numPages={completedPagesTotal}
             currentValue={Number(filters.completedOrdersFilter.page)}

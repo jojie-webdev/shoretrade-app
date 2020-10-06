@@ -42,7 +42,7 @@ const OrderAccordionContent = ({
             <OrderValue variant="overline" color="shade6">
               ORDER
             </OrderValue>
-            <OrderNumber>#{orderNumber}</OrderNumber>
+            <OrderNumber>{orderNumber}</OrderNumber>
           </OrderContainer>
           <Value>
             <Typography variant="body" color="shade6">
