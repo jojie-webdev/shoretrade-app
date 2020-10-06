@@ -81,7 +81,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 />
                 <ProductDetailsCard6View
                   cBorderRadius="0"
-                  cBorderWidth="1px 2px 1px 2px"
+                  cBorderWidth="1px 2px 0px 2px"
                   {...productDetailsCard6Props}
                 />
                 <SellerRatingContainer>
