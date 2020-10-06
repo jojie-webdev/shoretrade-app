@@ -34,7 +34,6 @@ const tagProps = {
 const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
   const { title, tags, size, location, isFavorite, onFavorite } = props;
   const theme = useTheme();
-  console.log({ title, tags, size, location, isFavorite });
   return (
     <Container {...props}>
       <Header>
