@@ -3,6 +3,7 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const CardContainer = styled.div`
+  width: 281px;
   img {
     display: block;
     border: 0;
@@ -24,10 +25,8 @@ export const CardContainer = styled.div`
     margin-bottom: 2em;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
-    max-width: 281px;
-    min-width: 281px;
     height: 364px;
-    width: 281px;
+    width: 100%;
     flex-wrap: wrap;
   }
 
@@ -40,10 +39,6 @@ export const CardContainer = styled.div`
     text-decoration: none;
   }
 
-  /* .card-content {
-    padding: 1.4em;
-  } */
-
   .card-content h2 {
     margin-top: 0;
     margin-bottom: 0.5em;
@@ -52,14 +47,6 @@ export const CardContainer = styled.div`
 
   .card-content p {
     font-size: 80%;
-  }
-
-  /* Flexbox stuff */
-
-  .card {
-    flex: 1 0 500px;
-    box-sizing: border-box;
-    margin: 1rem 0.25em;
   }
 `;
 
