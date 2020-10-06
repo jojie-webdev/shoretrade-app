@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import Search from 'components/module/Search/Search.view';
-import { GOOGLE_AUTOCOMPLETE, GOOGLE_PLACE_DETAILS } from 'consts';
 import { isEmpty } from 'ramda';
 import parseGooglePlaceData from 'utils/Address/parseGooglePlaceData';
+import useScript from 'utils/Hooks/useScript';
 import { useTheme } from 'utils/Theme';
 
 import { LocationSearchProps } from './LocationSearch.props';
@@ -31,12 +31,13 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
 
-  const search = async (text: string) => {
-    setLoading(true);
+  const [hasMap, error] = useScript(
+    `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY}`
+  );
 
-    const replaceSpaces = (string: string) => {
-      return string.replace(/\s+/gi, '%');
-    };
+  const search = async (text: string) => {
+    if (!hasMap) return;
+    setLoading(true);
 
     const transformResults = (predictions: any[], error?: boolean) => {
       if (error) {
@@ -48,7 +49,7 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
         ];
       }
 
-      if (isEmpty(predictions)) {
+      if (isEmpty(predictions) || !predictions) {
         return [
           {
             id: '1',
@@ -65,24 +66,26 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
       });
     };
 
-    const URL = `${GOOGLE_AUTOCOMPLETE}types=${
-      props.autocompleteType ? props.autocompleteType : 'address'
-    }&input=${replaceSpaces(text)}&key=${
-      process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY
-    }`;
+    const placesService = new google.maps.places.AutocompleteService();
 
     try {
-      const response = await fetch(URL);
-      const { status, predictions } = await response.json();
-
       await new Promise((r) => setTimeout(r, 3000));
 
-      if (status === 'OK' || status === 'ZERO_RESULTS') {
-        setSearchData(transformResults(predictions));
-      } else {
-        setSearchData(transformResults([], true));
-      }
-      setLoading(false);
+      placesService.getPlacePredictions(
+        {
+          input: text,
+          types: [props.autocompleteType ? props.autocompleteType : 'address'],
+        },
+        (predictions, status) => {
+          if (status === 'OK' || status === 'ZERO_RESULTS') {
+            setSearchData(transformResults(predictions));
+          } else {
+            setSearchData(transformResults([], true));
+          }
+
+          setLoading(false);
+        }
+      );
     } catch (e) {
       setSearchData(transformResults([], true));
       setLoading(false);
@@ -92,9 +95,9 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
   const getLocationData = async (placeId: string, placeTitle: string) => {
     if (placeTitle === NO_RESULTS || placeTitle === API_ERROR) return;
 
-    const URL =
-      `${GOOGLE_PLACE_DETAILS}fields=address_component,formatted_address,geometry&place_id=${placeId}` +
-      `&key=${process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY}`;
+    const placesService = new google.maps.places.PlacesService(
+      document.createElement('div')
+    );
 
     setLoadingData(true);
     setLoading(true);
@@ -106,16 +109,21 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
         setLoading(false);
         setLoadingData(false);
       } else {
-        const response = await fetch(URL);
-        const { status, result } = await response.json();
+        placesService.getDetails(
+          {
+            placeId: placeId,
+            fields: ['address_component', 'formatted_address', 'geometry'],
+          },
+          (result: any, status) => {
+            if (status === 'OK') {
+              props.onSelect(parseGooglePlaceData(result));
+            }
 
-        if (status === 'OK') {
-          props.onSelect(parseGooglePlaceData(result));
-        }
+            setLoading(false);
+            setLoadingData(false);
+          }
+        );
       }
-
-      setLoading(false);
-      setLoadingData(false);
     } catch (e) {
       setLoading(false);
       setLoadingData(false);
