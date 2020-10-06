@@ -57,7 +57,11 @@ export const transformOrder = (
     estCatchmentDate: moment(
       orderItem.orderLineItem[0].listing.catchDate
     ).toDate(),
-    estDeliveryDate: moment(orderItem.originalExpectedDeliveryDate).toDate(), //original_expected_delivery_date --> from database
+    estDeliveryDate: moment(
+      orderItem.latestExpectedDeliveryDate
+        ? orderItem.latestExpectedDeliveryDate
+        : orderItem.originalExpectedDeliveryDate
+    ).toDate(), //original_expected_delivery_date --> from database
     deliveredDate: moment(orderItem.deliveryDate).toDate(), // date_delivered --> from database
     price: totalPrice,
   };
