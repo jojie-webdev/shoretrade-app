@@ -41,6 +41,13 @@ export const PreviewContainer = styled.div`
     display: flex;
   }
 
+  .filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
   /* Float four columns side by side */
   .column {
     float: left;
@@ -82,7 +89,8 @@ export const FilterButton = styled.button`
   background: #111e2b;
   border-radius: 4px;
   color: white;
-  width: 69;
-  min-width: 69 !important;
-  margin-top: 20%;
+  width: 69px;
+  min-width: 69px !important;
+  align-content: 'center';
+  justify-content: 'center';
 `;
