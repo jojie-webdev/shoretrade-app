@@ -179,14 +179,12 @@ function Step4({
       )}
 
       <Row className="checkbox-row">
-        <Col className="checkbox-col">
+        <Col>
           <Checkbox
             checked={isUngraded}
             onClick={() => setIsUngraded((v) => !v)}
+            label="Ungraded"
           />
-          <Typography color="noshade" className="text">
-            Ungraded
-          </Typography>
         </Col>
       </Row>
 
