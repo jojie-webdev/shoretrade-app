@@ -1,9 +1,10 @@
 import React from 'react';
 
+import Badge from 'components/base/Badge';
 import { Expand, Heart, HeartFilled, Location } from 'components/base/SVG';
-
 // import Tag from '../../primitives/Tag';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { ProductDetailsCard1Props } from './ProductDetailsCard1.props';
 import {
@@ -15,7 +16,9 @@ import {
   TagsContainer,
   Size,
   LocationText,
-  TestContainer,
+  EstimationsContainer,
+  StatusContainer,
+  BadgeText,
 } from './ProductDetailsCard1.style';
 
 const tagProps = {
@@ -30,7 +33,7 @@ const tagProps = {
 
 const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
   const { title, tags, size, location, isFavorite, onFavorite } = props;
-
+  const theme = useTheme();
   return (
     <Container {...props}>
       <Header>
@@ -46,7 +49,7 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
         </Row>
       </Header>
       <Row>
-        <TestContainer>
+        <EstimationsContainer>
           <div style={{ marginRight: -6 }}>
             <Expand />
           </div>
@@ -62,7 +65,24 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
           <Typography variant="label" style={{ fontWeight: 500 }}>
             {location}
           </Typography>
-        </TestContainer>
+        </EstimationsContainer>
+      </Row>
+
+      <Row>
+        <StatusContainer>
+          {tags?.map((item) => {
+            return (
+              <Badge
+                fontColor={theme.grey.shade9}
+                badgeColor={theme.grey.shade2}
+              >
+                <BadgeText variant="caption" weight="bold">
+                  {item.label}
+                </BadgeText>
+              </Badge>
+            );
+          })}
+        </StatusContainer>
       </Row>
     </Container>
   );

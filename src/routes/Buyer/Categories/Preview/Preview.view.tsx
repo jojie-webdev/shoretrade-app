@@ -51,9 +51,9 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
             placeholder="Search for an Atlantic Salmon"
           />
         </Col>
-        <Col xs={1.5}>
+        <Col xs={1.5} className="filter-container">
           <FilterButton onClick={modalFilterProps.onClickClose}>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
+            <div className="search-container">
               <TypographyView color="secondary" variant="label">
                 Filters
               </TypographyView>

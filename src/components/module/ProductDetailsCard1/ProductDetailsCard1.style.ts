@@ -1,5 +1,6 @@
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 import { ProductDetailsCard1Props } from './ProductDetailsCard1.props';
 
@@ -51,8 +52,20 @@ export const LocationText = styled(Typography)`
   margin-left: 6px;
 `;
 
-export const TestContainer = styled.div`
+export const EstimationsContainer = styled.div`
   display: flex;
   padding: 8px;
   flex-direction: row;
+`;
+
+export const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 `;
