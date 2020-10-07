@@ -58,9 +58,12 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
         />
       )}
 
-      {error && (
+      {(error || '')?.length > 0 && (
         <StyledAlert
-          content="An error has occurred while creating an assistant! Try again later."
+          content={
+            error ||
+            'An error has occurred while creating an assistant! Try again later.'
+          }
           variant="error"
           alignText="center"
           fullWidth

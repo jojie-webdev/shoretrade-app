@@ -12,6 +12,7 @@ import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { Container } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
 import { toPrice } from 'utils/String/toPrice';
@@ -61,16 +62,25 @@ const Header = ({
   const history = useHistory();
 
   const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
+  const isMenuVisible = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
   return (
     <HeaderContainer className="appbar">
       <div className="left-content">
-        <MenuIcon onClick={onClick}>
-          <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
-        </MenuIcon>
+        {onBack && isMenuVisible ? (
+          <Touchable className="back-button-container" onPress={() => onBack()}>
+            <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
+          </Touchable>
+        ) : (
+          <MenuIcon onClick={onClick}>
+            <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
+          </MenuIcon>
+        )}
 
         <div className="title-container">
-          {onBack && (
+          {!isMenuVisible && onBack && (
             <Touchable
               className="back-button-container"
               onPress={() => onBack()}
@@ -109,7 +119,7 @@ const Header = ({
           onPress={onClickAccount}
         >
           <div className="text-container">
-            <Typography color={textColor}>
+            <Typography color={textColor} style={{ textAlign: 'right' }}>
               {userData?.companies[0].name}
             </Typography>
             <Typography

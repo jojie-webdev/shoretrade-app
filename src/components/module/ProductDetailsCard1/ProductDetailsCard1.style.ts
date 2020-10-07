@@ -66,6 +66,4 @@ export const StatusContainer = styled.div`
 
 export const BadgeText = styled(Typography)`
   font-size: 12px;
-  padding-left: 8px;
-  padding-right: 8px;
 `;
