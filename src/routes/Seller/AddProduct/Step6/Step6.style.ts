@@ -18,6 +18,13 @@ export const Container = styled.div`
     }
   }
 
+  .checkbox-alt-label {
+    &:hover {
+      opacity: 0.5;
+    }
+    cursor: pointer;
+  }
+
   .add-box-row {
     margin-bottom: 32px;
   }
@@ -29,10 +36,6 @@ export const Container = styled.div`
       margin-top: 16px;
       display: flex;
       align-items: center;
-
-      .text {
-        margin-left: 8px;
-      }
     }
   }
 

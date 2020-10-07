@@ -203,7 +203,13 @@ function Step6({
             onClick={() => setIsAquafuture((a) => !a)}
           />
           <div className="text-container">
-            <Typography color="noshade" variant="label">
+            <Typography
+              className="checkbox-alt-label"
+              component="span"
+              color="noshade"
+              variant="label"
+              onClick={() => setIsAquafuture((a) => !a)}
+            >
               This is an Aquafuture Listing.
             </Typography>
             <Typography color="shade5" variant="caption">
@@ -255,11 +261,8 @@ function Step6({
           <Checkbox
             checked={sellInMultiples}
             onClick={() => setSellInMultiples((s) => !s)}
-            className="checkbox"
+            label="Sell in multiples of the minimum"
           />
-          <Typography color="noshade" className="text">
-            Sell in multiples of the minimum
-          </Typography>
         </Col>
       </Row>
 

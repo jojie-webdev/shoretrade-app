@@ -87,6 +87,7 @@ const SizeInput = (props: SizeInputProps) => {
       </Row>
     );
   }
+
   return (
     <Row className="select-row">
       <Col md={6}>
@@ -95,6 +96,7 @@ const SizeInput = (props: SizeInputProps) => {
           value={fromSize}
           onChange={(o) => setFromSize(o.value)}
           label="Size From"
+          disabled={disabled}
         />
       </Col>
       <Col md={6}>
@@ -103,6 +105,7 @@ const SizeInput = (props: SizeInputProps) => {
           value={toSize}
           onChange={(o) => setToSize(o.value)}
           label="Size To"
+          disabled={disabled}
         />
       </Col>
     </Row>
@@ -176,14 +179,12 @@ function Step4({
       )}
 
       <Row className="checkbox-row">
-        <Col className="checkbox-col">
+        <Col>
           <Checkbox
             checked={isUngraded}
             onClick={() => setIsUngraded((v) => !v)}
+            label="Ungraded"
           />
-          <Typography color="noshade" className="text">
-            Ungraded
-          </Typography>
         </Col>
       </Row>
 
@@ -200,7 +201,7 @@ function Step4({
               });
             }
           }}
-        ></Button>
+        />
       </Row>
     </Container>
   );
