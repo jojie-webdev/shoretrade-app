@@ -36,6 +36,8 @@ import {
   RecentContainer,
   SellerHeader,
   SellerContainer,
+  CardContainer,
+  SellerCardTypography,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -280,7 +282,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               size="sm"
               icon={<ArrowRight fill="#E35D32" />}
               style={{ padding: '4px 8px' }}
-              // onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+              onClick={() => history.push(BUYER_ROUTES.SELLERS)}
             />
           </SellerHeader>
           <SellerContainer>
@@ -288,13 +290,19 @@ const HomeView = (props: HomeGeneratedProps) => {
               sellers.slice(0, 4).map((s, index) => {
                 return (
                   <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                    <Card
-                      id={s.id}
-                      image={s.companyImage}
-                      label={s.companyName}
-                      sortIndex={+s.id}
-                    />
-                    {/* <img src={s.companyImage} alt={s.companyName} /> */}
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
+                          >
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
                   </Link>
                 );
               })
