@@ -209,6 +209,7 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
             onSelect={setOrigin}
             label="Catchment Origin"
             error={pathOr('', ['origin', '0'], errors)}
+            locationSearchProps={{ autocompleteType: '(cities)' }}
           />
         </Col>
         <Col md={6} className="textfield-col">
