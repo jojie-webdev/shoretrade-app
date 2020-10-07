@@ -129,23 +129,24 @@ export const BoxSummaryContainer = styled.div`
     margin-bottom: 16px;
 
     .inner-text {
-      width: 120px;
-      margin-right: 32px;
+      width: 150px;
+      margin-right: 16px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
     }
 
     .left-text {
-      width: 120px;
-      margin-right: 32px;
+      width: 150px;
       display: flex;
+      margin-right: 16px;
       flex-direction: column;
       align-items: flex-start;
     }
 
     .right-text {
       display: flex;
+      min-width: 150px;
       flex-direction: column;
       flex: 1;
       align-items: flex-end;
