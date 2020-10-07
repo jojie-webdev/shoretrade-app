@@ -35,8 +35,10 @@ const ProductDetails = (): JSX.Element => {
   const addresses = GetAddressOptions();
   const previousId =
     useSelector((state: Store) => state.getListing.request?.listingId) || '';
+
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
+
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -44,81 +46,38 @@ const ProductDetails = (): JSX.Element => {
       })
     );
   };
+
   const currentSeller: Seller | undefined = useSelector(
     (state: Store) => state.getSellerById.data?.data.seller
   );
-  const [isSellerFavorite, setIsSellerFavorite] = useState<boolean | undefined>(
-    false
+
+  const updateFavoriteSeller = useSelector(
+    (state: Store) => state.updateFavoriteSeller
+  );
+
+  const [isSellerFavorite, setIsSellerFavorite] = useState(
+    currentSeller?.isFavourite
   );
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
+
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [pressedBoxRadio, setPressedBoxRadio] = useState('');
+  const [weight, setWeight] = useState('');
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
   const uri = currentListing?.images[0] || '';
 
+  const price = Number(currentListing?.price || '0');
+  const isAquafuture = currentListing?.isAquafuture || false;
   const imageTags = [
     ...(currentListing?.isAquafuture ? [{ label: 'Aquafuture' }] : []),
     ...(pathOr('', ['images', '0'], currentListing).includes('type-default')
       ? [{ label: 'Not Actual Product Image' }]
       : []),
   ];
-
-  const onFavorite = () => {
-    setFavorite((prevState) => {
-      dispatch(
-        updateFavouriteProductActions.request({
-          listingId: listingId,
-          favourite: !prevState,
-        })
-      );
-      return !prevState;
-    });
-  };
-
-  const onFavoriteSeller = async () => {
-    if (currentSeller) {
-      setIsSellerFavorite((prevState) => !prevState);
-      dispatch(
-        updateFavoriteSellerActions.request({
-          sellerId: currentSeller.id,
-          favorite: !currentSeller.isFavourite,
-        })
-      );
-    }
-  };
-  const price = Number(currentListing?.price || '0');
-  const productDetailsCard1Props = {
-    title: currentListing?.type || '',
-    tags: (currentListing?.state || []).map((s) => ({ label: s })),
-    size: sizeToString(
-      currentListing?.size.unit || '',
-      currentListing?.size.from,
-      currentListing?.size.to
-    ),
-    location: `${currentListing?.origin.suburb || ''}, ${
-      currentListing?.origin.state || ''
-    }, ${currentListing?.origin.countryCode || ''}`,
-  };
-  const productDetailsCard6Props = {
-    price: price.toFixed(2),
-    minOrder: currentListing?.minimumOrder || '0',
-    avgBoxSize: (currentListing?.average || 0).toFixed(2),
-    timeLeft: moment(currentListing?.ends || undefined).toDate(),
-    catchDate: moment(
-      currentListing?.caught || undefined,
-      currentListing?.caught ? 'YYYY-MM-DD' : undefined
-    ).toDate(),
-  };
-  const sellerRatingProps: ProductSellerRatingProps = {
-    name: currentListing?.coop.name || '',
-    rating: currentListing?.coop.rating || '',
-    uri: currentListing?.coop.image || '',
-    isFavorite: isSellerFavorite || false,
-    onFavorite: onFavoriteSeller,
-  };
 
   const getListingBoxesResponse =
     (useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) ||
@@ -144,40 +103,10 @@ const ProductDetails = (): JSX.Element => {
         })
       : [];
 
-  const [weight, setWeight] = useState('');
-
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-
-  const getBoxes = () => {
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-    const timerId = setTimeout(() => {
-      if (
-        (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
-        id !== previousWeightRequest?.listingId
-      )
-        dispatch(
-          getListingBoxesActions.request({
-            listingId: id,
-            weight,
-          })
-        );
-    }, 800);
-    setTimer(timerId);
-  };
-
-  useEffect(() => {
-    getBoxes();
-  }, [weight]);
-
-  const isAquafuture = currentListing?.isAquafuture || false;
   // MARK:- Methods
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
-
   const onAddToCard = () => {
     const currentBox = getListingBoxesResponse.find(
       (box) => box.id === pressedBoxRadio
@@ -226,12 +155,113 @@ const ProductDetails = (): JSX.Element => {
       history.push(BUYER_ROUTES.CHECKOUT);
     }
   };
+
+  const getBoxes = () => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    const timerId = setTimeout(() => {
+      if (
+        (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
+        id !== previousWeightRequest?.listingId
+      )
+        dispatch(
+          getListingBoxesActions.request({
+            listingId: id,
+            weight,
+          })
+        );
+    }, 800);
+    setTimer(timerId);
+  };
+
+  const onFavorite = () => {
+    setFavorite((prevState) => {
+      dispatch(
+        updateFavouriteProductActions.request({
+          listingId: listingId,
+          favourite: !prevState,
+        })
+      );
+      return !prevState;
+    });
+  };
+
+  const onFavoriteSeller = async () => {
+    if (currentSeller) {
+      setIsSellerFavorite((prevState) => !prevState);
+      dispatch(
+        updateFavoriteSellerActions.request({
+          sellerId: currentSeller.id,
+          favorite: !currentSeller.isFavourite,
+        })
+      );
+    }
+  };
+
   // MARK:- Effects
   useEffect(() => {
     if (listingId && previousId !== listingId) {
       onLoad(listingId);
     }
   }, [listingId]);
+
+  useEffect(() => {
+    if (currentListing?.coop) {
+      dispatch(
+        getSellerByIdActions.request({ sellerId: currentListing.coop.id })
+      );
+    }
+  }, [currentListing?.coop]);
+
+  useEffect(() => {
+    getBoxes();
+  }, [weight]);
+
+  useEffect(() => {
+    if (currentSeller) {
+      setIsSellerFavorite(currentSeller.isFavourite);
+    }
+  }, [currentSeller?.isFavourite]);
+
+  // On error, set favorite back to what it originally was
+  // useEffect(() => {
+  //   if (updateFavoriteSeller?.error !== '') {
+  //     setIsSellerFavorite(currentSeller?.isFavourite || false);
+  //   }
+  // }, [updateFavoriteSeller]);
+
+  // MARK: - Props
+  const productDetailsCard1Props = {
+    title: currentListing?.type || '',
+    tags: (currentListing?.state || []).map((s) => ({ label: s })),
+    size: sizeToString(
+      currentListing?.size.unit || '',
+      currentListing?.size.from,
+      currentListing?.size.to
+    ),
+    location: `${currentListing?.origin.suburb || ''}, ${
+      currentListing?.origin.state || ''
+    }, ${currentListing?.origin.countryCode || ''}`,
+  };
+  const productDetailsCard6Props = {
+    price: price.toFixed(2),
+    minOrder: currentListing?.minimumOrder || '0',
+    avgBoxSize: (currentListing?.average || 0).toFixed(2),
+    timeLeft: moment(currentListing?.ends || undefined).toDate(),
+    catchDate: moment(
+      currentListing?.caught || undefined,
+      currentListing?.caught ? 'YYYY-MM-DD' : undefined
+    ).toDate(),
+  };
+  const sellerRatingProps: ProductSellerRatingProps = {
+    name: currentListing?.coop.name || '',
+    rating: currentListing?.coop.rating || '',
+    uri: currentListing?.coop.image || '',
+    isFavorite: isSellerFavorite || false,
+    onFavorite: onFavoriteSeller,
+  };
 
   const generatedProps = {
     onLoad,

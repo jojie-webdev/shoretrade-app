@@ -82,6 +82,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                     className="market-item"
                   >
                     <PreviewCard
+                      key={product.id}
                       cardContainerStyle={{
                         maxWidth: '100%',
                         minWidth: '60%',

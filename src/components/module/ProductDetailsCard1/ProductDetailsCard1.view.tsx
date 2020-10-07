@@ -70,9 +70,10 @@ const ProductDetailsCard1View = (props: ProductDetailsCard1Props) => {
 
       <Row>
         <StatusContainer>
-          {tags?.map((item) => {
+          {tags?.map((item, index) => {
             return (
               <Badge
+                key={index}
                 fontColor={theme.grey.shade9}
                 badgeColor={theme.grey.shade2}
               >
