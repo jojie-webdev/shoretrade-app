@@ -19,7 +19,7 @@ import {
 } from './Pending.style';
 
 const PendingItems = (props: OrderItem) => {
-  const { confirmed, data, date, id, price } = props;
+  const { confirmed, data, estCatchmentDate, id, price } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -47,7 +47,7 @@ const PendingItems = (props: OrderItem) => {
                 Est. Catchment:
               </Typography>
               <Typography variant="label" color="shade8" weight="bold">
-                {moment(date).format('ddd DD MMM')}
+                {moment(estCatchmentDate).format('ddd DD MMM')}
               </Typography>
             </Row>
             <Typography variant="title5" weight="900">
@@ -81,7 +81,7 @@ const Pending = (props: OrdersGeneratedProps) => {
       })}
 
       <Row justify="center">
-        {pendingOrders.length > 10 && (
+        {pendingPagesTotal > 1 && (
           <Pagination
             numPages={pendingPagesTotal}
             currentValue={Number(filters.pendingOrdersFilter.page)}
