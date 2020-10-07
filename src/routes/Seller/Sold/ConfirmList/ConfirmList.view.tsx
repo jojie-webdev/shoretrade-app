@@ -16,6 +16,15 @@ import {
   Wrapper,
   InteractionCol,
   PendingItemContainer,
+  ValuesRow,
+  Value,
+  OrderNumber,
+  Preview,
+  TagsContainer,
+  Tag,
+  TagText,
+  Size,
+  Details,
 } from './ConfirmList.style';
 
 export const Item = (props: PendingItem) => (
@@ -32,23 +41,50 @@ export const Item = (props: PendingItem) => (
   >
     <div className="top-content">
       <div className="left">
-        <img src={props.uri} alt="Pending Item" />
-        <div className="text-container">
-          <Typography color="noshade" weight="500">
-            {props.name}
-          </Typography>
-          <div className="shipping">
-            <Typography
-              color="shade6"
-              variant="label"
-              className="shipping-text"
-            >
+        <ValuesRow>
+          <Value>
+            <Typography variant="overline" color="shade6">
               Shipping:
             </Typography>
-            <Typography color="noshade" variant="label">
-              {props.shipping}
+            <OrderNumber>{props.shipping}</OrderNumber>
+          </Value>
+        </ValuesRow>
+        <ValuesRow>
+          <Value>
+            <Typography variant="overline" color="shade6">
+              Weight
             </Typography>
-          </div>
+            <Typography color="noshade">{props.weight}</Typography>
+          </Value>
+        </ValuesRow>
+        <div className="row">
+          <Preview src={props.uri} alt="Pending Item" />
+          <Details>
+            <Typography variant="label" color="noshade">
+              {props.name}
+            </Typography>
+            <TagsContainer>
+              {props.tags.map((t) => (
+                <Tag key={t.label}>
+                  <TagText variant="small" color="noshade">
+                    {t.label}
+                  </TagText>
+                </Tag>
+              ))}
+            </TagsContainer>
+            {props.size ? (
+              <div className="row">
+                <Typography variant="small" color="shade6">
+                  Size:
+                </Typography>
+                <Size variant="small">{props.size}</Size>
+              </div>
+            ) : (
+              <Typography variant="small" color="shade6">
+                Ungraded
+              </Typography>
+            )}
+          </Details>
         </div>
       </div>
       <div className="right">
@@ -85,7 +121,7 @@ export const Item = (props: PendingItem) => (
 
 const ConfirmListView = (props: ConfirmListProps) => {
   const theme = useTheme();
-  const { title, items, orderId, placeOrder, isPending } = props;
+  const { title, items, orderId, placeOrder, isPending, buyer } = props;
   const history = useHistory();
 
   const allowPartialShipment = items.some((i) => i.weightConfirmed);
@@ -93,7 +129,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
 
   return (
     <Wrapper>
-      <InnerRouteHeader title={title} />
+      <InnerRouteHeader title={title} subtitle={buyer} />
 
       <Row className="items-row">
         {items.map((item) => (

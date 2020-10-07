@@ -40,6 +40,7 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
   const order = GetSellerOrder(orderId, 'PENDING');
 
   const title = formatOrderReferenceNumber(order?.orderRefNumber || 0);
+  const buyer = order?.buyerCompanyName || '';
 
   const items = sellerOrderToConfirmList(order);
 
@@ -81,6 +82,7 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
     orderId,
     placeOrder,
     isPending,
+    buyer,
   };
   return <ConfirmListView {...props} {...generatedProps} />;
 };

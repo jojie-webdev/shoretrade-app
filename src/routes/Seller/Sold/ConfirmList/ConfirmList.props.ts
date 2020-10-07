@@ -6,6 +6,11 @@ export interface PendingItem {
   price: string;
   weightConfirmed: boolean;
   onPress: () => void;
+  size: string;
+  weight: string;
+  tags: {
+    label: string;
+  }[];
 }
 
 export interface ConfirmListPublicProps {
@@ -22,6 +27,7 @@ export interface ConfirmListGeneratedProps {
   orderId: string;
   placeOrder: (config: { isPartial: boolean }) => void;
   isPending: boolean;
+  buyer: string;
 }
 
 export interface ConfirmListProps
