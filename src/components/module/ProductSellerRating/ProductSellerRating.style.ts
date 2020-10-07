@@ -4,6 +4,7 @@ import styled from 'utils/styled';
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
 `;
 
 export const PreviewContainer = styled.div`

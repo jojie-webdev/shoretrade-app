@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PlaceholderImage from 'components/base/PlaceholderImage';
-import { Star, StarFilled } from 'components/base/SVG';
+import { Star, StarFilled, HeartFilled, Heart } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 import { ProductSellerRatingProps } from './ProductSellerRating.props';
@@ -30,7 +30,7 @@ const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
       {uri ? (
         <PreviewContainer>
           <Row>
-            <Preview src={uri} />{' '}
+            <Preview src={uri} />
             <FlexShrinked>
               {isSmallName ? (
                 <Typography
@@ -60,6 +60,11 @@ const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
                 ))}
               </Row>
             </FlexShrinked>
+            {onFavorite && (
+              <div style={{ float: 'right' }} onClick={onFavorite}>
+                {isFavorite ? <HeartFilled /> : <Heart />}
+              </div>
+            )}
           </Row>
         </PreviewContainer>
       ) : (

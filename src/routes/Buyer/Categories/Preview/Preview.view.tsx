@@ -52,16 +52,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           />
         </Col>
         <Col xs={1.5} className="filter-container">
-          <FilterButton onClick={modalFilterProps.onClickClose}>
-            <div className="search-container">
-              <TypographyView color="secondary" variant="label">
-                Filters
-              </TypographyView>
-              <div style={{ paddingLeft: 4 }}>
-                <Filter></Filter>
-              </div>
-            </div>
-          </FilterButton>
+          <FilterButton
+            onClick={modalFilterProps.onClickClose}
+            text="Filters"
+            icon={<Filter></Filter>}
+          ></FilterButton>
         </Col>
       </Row>
       {results && results.length > 0 ? (
@@ -82,6 +77,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                     className="market-item"
                   >
                     <PreviewCard
+                      key={product.id}
                       cardContainerStyle={{
                         maxWidth: '100%',
                         minWidth: '60%',

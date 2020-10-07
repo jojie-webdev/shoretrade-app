@@ -83,6 +83,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
               {props.state?.map((item) => {
                 return (
                   <Badge
+                    key={item}
                     fontColor={theme.grey.shade9}
                     badgeColor={theme.grey.shade2}
                   >
