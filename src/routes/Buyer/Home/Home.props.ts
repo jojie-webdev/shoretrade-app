@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
@@ -18,6 +18,17 @@ export type SellerResults = {
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
+  search: () => void;
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  results: { count: string; label: string; value: string }[];
+  onReset: () => void;
+  recent: { count: string; label: string; value: string }[];
+  addresses: { label: string; value: string }[];
+  selectedAddress: string;
+  selectAddress: (id: string) => void;
+  saveSearchHistory: (id: string, label: string, count: string) => void;
   categories: CategoryResults[];
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
@@ -25,12 +36,5 @@ export interface HomeGeneratedProps {
   creditBalance: string;
   favourites: GetBuyerHomepageResponseListingItem[];
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-  resetSearchValue: () => void;
-  addresses: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
-  loading: boolean;
   featured: string[];
 }
