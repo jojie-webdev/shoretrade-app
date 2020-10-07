@@ -28,6 +28,7 @@ import Checkout from './Checkout';
 import Home from './Home';
 import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';
+import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
@@ -45,6 +46,12 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.FAVOURITES,
     children: <Favourites />,
     title: 'Favourites',
+    hideFromSidebar: true,
+  },
+  FAVOURITE_SELLERS: {
+    path: BUYER_ROUTES.FAVOURITE_SELLERS,
+    children: <SellerFavouritesContainer />,
+    title: 'Favourite Sellers',
     hideFromSidebar: true,
   },
   RECENTLY_ADDED: {
@@ -155,8 +162,9 @@ const BuyerRoutes = (): JSX.Element => {
       (pathname.includes('/buyer/categories/') &&
         pathname.replace('/buyer/categories/', '').length > 0) ||
       pathname.includes('/buyer/favourites') ||
-      pathname.includes('buyer/recently-added') ||
-      pathname.includes('buyer/sellers')
+      pathname.includes('/buyer/recently-added') ||
+      pathname.includes('/buyer/sellers') ||
+      pathname.includes('/buyer/favourite-sellers')
     ) {
       return {
         onBack: history.goBack,

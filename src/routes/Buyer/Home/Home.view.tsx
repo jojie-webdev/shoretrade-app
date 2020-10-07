@@ -104,6 +104,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     favourites,
     recentlyAdded,
     sellers,
+    favouriteSellers,
   } = props;
 
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
@@ -284,6 +285,48 @@ const HomeView = (props: HomeGeneratedProps) => {
                   })
               : null}
           </RecentContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Favourite Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {favouriteSellers.length > 0 ? (
+              favouriteSellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
+                          >
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
         </ViewCol>
       </div>
       <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
