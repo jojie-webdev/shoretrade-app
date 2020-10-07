@@ -5,6 +5,7 @@ import styled, { css } from 'utils/styled';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
+  padding: 0 8px 8px 8px;
 
   .wrapper {
     width: calc(100% - 200px);
