@@ -156,266 +156,261 @@ const HomeView = (props: HomeGeneratedProps) => {
             placeholder="Search.."
           />
         </Col>
+        {!isEmpty(data) && (
+          <Typography variant="overline" color="shade6">
+            {showRecentSearch ? 'Recent Searches' : 'Results'}
+          </Typography>
+        )}
+        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+          <>
+            <EmptyState
+              onButtonClicked={onReset}
+              Svg={Octopus}
+              title="No search result"
+              buttonText="Reset Search"
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        ) : (
+          <>
+            <PaginateList
+              list={data || []}
+              labelPath={['label']}
+              maxItemPerPage={6}
+              onClickItem={(item) => {
+                history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                saveSearchHistory(item.value, item.label, item.count);
+              }}
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        )}
       </div>
-      {searchTerm ? (
-        <>
-          <div className="wrapper">
-            {!isEmpty(data) && (
-              <Typography variant="overline" color="shade6">
-                {showRecentSearch ? 'Recent Searches' : 'Results'}
-              </Typography>
-            )}
-            {isEmpty(data) && searchTerm.length > 0 && !loading ? (
-              <EmptyState
-                onButtonClicked={onReset}
-                Svg={Octopus}
-                title="No search result"
-                buttonText="Reset Search"
-              />
-            ) : (
-              <PaginateList
-                list={data || []}
-                labelPath={['label']}
-                maxItemPerPage={6}
-                onClickItem={(item) => {
-                  history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-                  saveSearchHistory(item.value, item.label, item.count);
-                }}
-              />
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <Carousel
-            id="featured-carousel"
-            images={featured}
-            loop
-            autoplay
-            hideArrowArea={hideCarouselArrowArea}
-            arrowWidth={mediumArrowWidth ? 75 : undefined}
-          />
 
-          <div className="wrapper">
-            <ViewCol>
-              <FavouritesHeader>
-                <Typography variant="title5" color="shade8">
-                  Favourites
-                </Typography>
-                <Button
-                  text="See All"
-                  variant="unselected"
-                  size="sm"
-                  icon={<ArrowRight fill="#E35D32" />}
-                  style={{ padding: '4px 8px' }}
-                  onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-                />
-              </FavouritesHeader>
-              <FavouritesContainer>
-                {favourites.length > 0
-                  ? favourites
-                      .slice(0, getMaxFavouritesDisplay())
-                      .map((fav, index) => {
-                        return (
-                          <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
-                            <PreviewCard
-                              id={fav.id}
-                              images={fav.images}
-                              type={fav.type}
-                              price={toPrice(fav.price)}
-                              remaining={fav.remaining.toFixed(2)}
-                              coop={fav.coop}
-                              minimumOrder={fav.minimumOrder}
-                              origin={fav.origin}
-                              weight={sizeToString(
-                                fav.size.unit,
-                                fav.size.from,
-                                fav.size.to
-                              )}
-                              isAquafuture={fav.isAquafuture}
-                              unit={fav.measurementUnit}
-                              state={fav.state}
-                            />
-                          </Link>
-                        );
-                      })
-                  : null}
-              </FavouritesContainer>
-            </ViewCol>
+      <Carousel
+        id="featured-carousel"
+        images={featured}
+        loop
+        autoplay
+        hideArrowArea={hideCarouselArrowArea}
+        arrowWidth={mediumArrowWidth ? 75 : undefined}
+      />
 
-            <ViewCol>
-              <CategoriesHeader>
-                <Typography variant="title5" color="shade8">
-                  Categories
-                </Typography>
-                <Button
-                  text="See All"
-                  variant="unselected"
-                  size="sm"
-                  icon={<ArrowRight fill="#E35D32" />}
-                  style={{ padding: '4px 8px' }}
-                  onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-                />
-              </CategoriesHeader>
-              <CategoriesContainer>
-                {categories.length > 0 ? (
-                  categories.slice(0, 4).map((category, index) => {
+      <div className="wrapper">
+        <ViewCol>
+          <FavouritesHeader>
+            <Typography variant="title5" color="shade8">
+              Favourites
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+            />
+          </FavouritesHeader>
+          <FavouritesContainer>
+            {favourites.length > 0
+              ? favourites
+                  .slice(0, getMaxFavouritesDisplay())
+                  .map((fav, index) => {
                     return (
-                      <Link
-                        to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                        key={category.id}
-                      >
-                        <Card
-                          sortIndex={category.sortIndex}
-                          id={category.id}
-                          image={category.thumbnail}
-                          label={category.name}
+                      <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
+                        <PreviewCard
+                          id={fav.id}
+                          images={fav.images}
+                          type={fav.type}
+                          price={toPrice(fav.price)}
+                          remaining={fav.remaining.toFixed(2)}
+                          coop={fav.coop}
+                          minimumOrder={fav.minimumOrder}
+                          origin={fav.origin}
+                          weight={sizeToString(
+                            fav.size.unit,
+                            fav.size.from,
+                            fav.size.to
+                          )}
+                          isAquafuture={fav.isAquafuture}
+                          unit={fav.measurementUnit}
+                          state={fav.state}
                         />
                       </Link>
                     );
                   })
-                ) : (
-                  <Loading />
-                )}
-              </CategoriesContainer>
-            </ViewCol>
-          </div>
-          <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
-            <ViewCol>
-              <RecentHeader>
-                <Typography variant="title5" color="shade8">
-                  Recently Added
-                </Typography>
-                <Button
-                  text="See All"
-                  variant="unselected"
-                  size="sm"
-                  icon={<ArrowRight fill="#E35D32" />}
-                  style={{ padding: '4px 8px' }}
-                  onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
-                />
-              </RecentHeader>
-              <RecentContainer>
-                {recentlyAdded.length > 0
-                  ? recentlyAdded
-                      .slice(0, getMaxFavouritesDisplay())
-                      .map((recent, index) => {
-                        return (
-                          <Link
-                            key={recent.id}
-                            to={`/buyer/product/${recent.id}`}
+              : null}
+          </FavouritesContainer>
+        </ViewCol>
+
+        <ViewCol>
+          <CategoriesHeader>
+            <Typography variant="title5" color="shade8">
+              Categories
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+            />
+          </CategoriesHeader>
+          <CategoriesContainer>
+            {categories.length > 0 ? (
+              categories.slice(0, 4).map((category, index) => {
+                return (
+                  <Link
+                    to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
+                    key={category.id}
+                  >
+                    <Card
+                      sortIndex={category.sortIndex}
+                      id={category.id}
+                      image={category.thumbnail}
+                      label={category.name}
+                    />
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </CategoriesContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <RecentHeader>
+            <Typography variant="title5" color="shade8">
+              Recently Added
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+            />
+          </RecentHeader>
+          <RecentContainer>
+            {recentlyAdded.length > 0
+              ? recentlyAdded
+                  .slice(0, getMaxFavouritesDisplay())
+                  .map((recent, index) => {
+                    return (
+                      <Link key={recent.id} to={`/buyer/product/${recent.id}`}>
+                        <PreviewCard
+                          id={recent.id}
+                          images={recent.images}
+                          type={recent.type}
+                          price={toPrice(recent.price)}
+                          remaining={recent.remaining.toFixed(2)}
+                          coop={recent.coop}
+                          minimumOrder={recent.minimumOrder}
+                          origin={recent.origin}
+                          weight={sizeToString(
+                            recent.size.unit,
+                            recent.size.from,
+                            recent.size.to
+                          )}
+                          isAquafuture={recent.isAquafuture}
+                          unit={recent.measurementUnit}
+                          state={recent.state}
+                        />
+                      </Link>
+                    );
+                  })
+              : null}
+          </RecentContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Favourite Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {favouriteSellers.length > 0 ? (
+              favouriteSellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
                           >
-                            <PreviewCard
-                              id={recent.id}
-                              images={recent.images}
-                              type={recent.type}
-                              price={toPrice(recent.price)}
-                              remaining={recent.remaining.toFixed(2)}
-                              coop={recent.coop}
-                              minimumOrder={recent.minimumOrder}
-                              origin={recent.origin}
-                              weight={sizeToString(
-                                recent.size.unit,
-                                recent.size.from,
-                                recent.size.to
-                              )}
-                              isAquafuture={recent.isAquafuture}
-                              unit={recent.measurementUnit}
-                              state={recent.state}
-                            />
-                          </Link>
-                        );
-                      })
-                  : null}
-              </RecentContainer>
-            </ViewCol>
-          </div>
-          <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
-            <ViewCol>
-              <SellerHeader>
-                <Typography variant="title5" color="shade8">
-                  Favourite Sellers
-                </Typography>
-                <Button
-                  text="See All"
-                  variant="unselected"
-                  size="sm"
-                  icon={<ArrowRight fill="#E35D32" />}
-                  style={{ padding: '4px 8px' }}
-                  onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
-                />
-              </SellerHeader>
-              <SellerContainer>
-                {favouriteSellers.length > 0 ? (
-                  favouriteSellers.slice(0, 4).map((s, index) => {
-                    return (
-                      <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                        <CardContainer className="centered">
-                          <div className="card">
-                            <img src={s.companyImage} alt={s.companyImage} />
-                            <div className="card-content">
-                              <SellerCardTypography
-                                variant="label"
-                                style={{ lineHeight: '-24px' }}
-                              >
-                                {s.companyName}
-                              </SellerCardTypography>
-                            </div>
-                          </div>
-                        </CardContainer>
-                      </Link>
-                    );
-                  })
-                ) : (
-                  <Loading />
-                )}
-              </SellerContainer>
-            </ViewCol>
-          </div>
-          <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
-            <ViewCol>
-              <SellerHeader>
-                <Typography variant="title5" color="shade8">
-                  Sellers
-                </Typography>
-                <Button
-                  text="See All"
-                  variant="unselected"
-                  size="sm"
-                  icon={<ArrowRight fill="#E35D32" />}
-                  style={{ padding: '4px 8px' }}
-                  onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-                />
-              </SellerHeader>
-              <SellerContainer>
-                {sellers.length > 0 ? (
-                  sellers.slice(0, 4).map((s, index) => {
-                    return (
-                      <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                        <CardContainer className="centered">
-                          <div className="card">
-                            <img src={s.companyImage} alt={s.companyImage} />
-                            <div className="card-content">
-                              <SellerCardTypography
-                                variant="label"
-                                style={{ lineHeight: '-24px' }}
-                              >
-                                {s.companyName}
-                              </SellerCardTypography>
-                            </div>
-                          </div>
-                        </CardContainer>
-                      </Link>
-                    );
-                  })
-                ) : (
-                  <Loading />
-                )}
-              </SellerContainer>
-            </ViewCol>
-          </div>
-        </>
-      )}
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {sellers.length > 0 ? (
+              sellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
+                          >
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
+        </ViewCol>
+      </div>
     </ViewContainer>
   );
 };
