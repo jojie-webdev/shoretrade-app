@@ -257,4 +257,5 @@ export interface Store {
     UpdateFavoriteSellerMeta,
     UpdateFavoriteSellerPayload
   >;
+  sellerDashboardDate: any;
 }

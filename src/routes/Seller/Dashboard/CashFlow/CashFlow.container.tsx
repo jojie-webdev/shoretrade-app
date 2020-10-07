@@ -14,7 +14,7 @@ import CashFlowView from './CashFlow.view';
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CashFlow = (): JSX.Element => {
-  const { months = 'FY' } = useParams();
+  const { months = 'FY' }: { months: string } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const [isLoading, setLoading] = useState(false);
@@ -29,10 +29,23 @@ const CashFlow = (): JSX.Element => {
     if (months === 'FY')
       return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
 
-    const start = moment(months).format('D MMM');
-    const end = moment(months).endOf('month').format('D MMM YYYY');
+    if (months.includes('_')) {
+      const monthsParam = months.split('_');
 
-    return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
+      if (monthsParam.length === 2) {
+        const start = moment(monthsParam[0]).format('D MMM');
+        const end = moment(monthsParam[1]).format('D MMM YYYY');
+
+        return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
+      } else {
+        return 'Invalid Date';
+      }
+    } else {
+      const start = moment(months).format('D MMM');
+      const end = moment(months).endOf('month').format('D MMM YYYY');
+
+      return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
+    }
   };
 
   useEffect(() => {
@@ -44,8 +57,19 @@ const CashFlow = (): JSX.Element => {
         dateFrom = fiscalYearDateRange.start.dateString.replace(/-/g, '');
         dateTo = fiscalYearDateRange.end.dateString.replace(/-/g, '');
       } else {
-        dateFrom = moment(months).format('YYYYMMDD');
-        dateTo = moment(months).endOf('month').format('YYYYMMDD');
+        if (months.includes('_')) {
+          const monthsParam = months.split('_');
+
+          if (monthsParam.length !== 2) {
+            return;
+          }
+
+          dateFrom = moment(monthsParam[0]).format('YYYYMMDD');
+          dateTo = moment(monthsParam[1]).format('YYYYMMDD');
+        } else {
+          dateFrom = moment(months).format('YYYYMMDD');
+          dateTo = moment(months).endOf('month').format('YYYYMMDD');
+        }
       }
 
       if (dateFrom.includes('Invalid')) return;
