@@ -9,13 +9,22 @@ export type CategoryResults = {
   thumbnail: string;
 };
 
+export type SellerResults = {
+  companyImage: string;
+  companyName: string;
+  id: string;
+};
+
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
   categories: CategoryResults[];
+  favouriteSellers: SellerResults[];
+  sellers: SellerResults[];
   creditState: CreditState;
   creditBalance: string;
   favourites: GetBuyerHomepageResponseListingItem[];
+  recentlyAdded: GetBuyerHomepageResponseListingItem[];
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   search: string;
   resetSearchValue: () => void;

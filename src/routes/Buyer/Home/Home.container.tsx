@@ -43,6 +43,24 @@ const Home = (): JSX.Element => {
     search ? category.name.toLowerCase().includes(search.toLowerCase()) : true
   );
 
+  const recentlyAdded = (
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.recentListing
+    ) || []
+  ).filter((recent) =>
+    search ? recent.type.toLowerCase().includes(search.toLowerCase()) : true
+  );
+
+  const sellers =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.sellers
+    ) || [];
+
+  const favouriteSellers =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteSellers
+    ) || [];
+
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
@@ -108,6 +126,9 @@ const Home = (): JSX.Element => {
     creditState,
     creditBalance,
     featured,
+    recentlyAdded,
+    favouriteSellers,
+    sellers,
   };
 
   return <HomeView {...generatedProps} />;

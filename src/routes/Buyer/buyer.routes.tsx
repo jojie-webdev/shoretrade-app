@@ -27,6 +27,8 @@ import CategoriesSearch from './Categories/Search';
 import Checkout from './Checkout';
 import Home from './Home';
 import Favourites from './Home/Favourites';
+import RecentlyAdded from './Home/RecentlyAdded';
+import SellerLanding from './Home/SellerLanding';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -42,7 +44,13 @@ const ROUTES: Routes = {
   FAVOURITES: {
     path: BUYER_ROUTES.FAVOURITES,
     children: <Favourites />,
-    title: '',
+    title: 'Favourites',
+    hideFromSidebar: true,
+  },
+  RECENTLY_ADDED: {
+    path: BUYER_ROUTES.RECENTLY_ADDED,
+    children: <RecentlyAdded />,
+    title: 'Recently Added',
     hideFromSidebar: true,
   },
   SEARCH: {
@@ -95,6 +103,12 @@ const ROUTES: Routes = {
     title: 'Seller Details',
     hideFromSidebar: true,
   },
+  SELLERS: {
+    path: BUYER_ROUTES.SELLERS,
+    children: <SellerLanding />,
+    title: 'Sellers',
+    hideFromSidebar: true,
+  },
 };
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
@@ -140,7 +154,9 @@ const BuyerRoutes = (): JSX.Element => {
     if (
       (pathname.includes('/buyer/categories/') &&
         pathname.replace('/buyer/categories/', '').length > 0) ||
-      pathname.includes('/buyer/favourites')
+      pathname.includes('/buyer/favourites') ||
+      pathname.includes('buyer/recently-added') ||
+      pathname.includes('buyer/sellers')
     ) {
       return {
         onBack: history.goBack,
