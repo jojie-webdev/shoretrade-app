@@ -51,6 +51,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   }, []);
 
   const [boxes, setBoxes] = useState<Box[]>([]);
+  const [initialBoxes, setInitialBoxes] = useState<Box[]>([]);
 
   const pricePerKilo = selectedLineItem?.listing.pricePerKilo || 0;
 
@@ -92,16 +93,16 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
 
   useEffect(() => {
     if (selectedLineItem) {
-      setBoxes(
-        selectedLineItem?.listingBoxes
-          ? selectedLineItem?.listingBoxes.map((b) => ({
-              id: b.id,
-              weight: b.weight,
-              quantity: b.quantity,
-              ...(b.count ? { count: b.count } : {}),
-            }))
-          : []
-      );
+      const boxes = selectedLineItem?.listingBoxes
+        ? selectedLineItem?.listingBoxes.map((b) => ({
+            id: b.id,
+            weight: b.weight,
+            quantity: b.quantity,
+            ...(b.count ? { count: b.count } : {}),
+          }))
+        : [];
+      setBoxes(boxes);
+      setInitialBoxes(boxes);
     }
   }, [selectedLineItem]);
 
@@ -114,6 +115,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     measurementUnit,
     onCancel,
     onConfirm,
+    initialBoxes,
   };
   return <ConfirmView {...props} {...generatedProps} />;
 };

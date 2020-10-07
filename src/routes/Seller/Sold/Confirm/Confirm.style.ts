@@ -116,16 +116,39 @@ export const BoxDetailsContainer = styled.div`
 export const BoxSummaryContainer = styled.div`
   margin-top: 32px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   padding: 24px;
   width: 100%;
   background: ${(props) => props.theme.grey.shade9};
 
   .text-container {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 16px;
 
     .inner-text {
+      width: 120px;
       margin-right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .left-text {
+      width: 120px;
+      margin-right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .right-text {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      align-items: flex-end;
     }
   }
 `;
