@@ -16,7 +16,3 @@ export const API = {
 };
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
-
-const proxyURL = 'https://cors-anywhere.herokuapp.com/';
-export const GOOGLE_AUTOCOMPLETE = `${proxyURL}https://maps.googleapis.com/maps/api/place/autocomplete/json?`;
-export const GOOGLE_PLACE_DETAILS = `${proxyURL}https://maps.googleapis.com/maps/api/place/details/json?`;

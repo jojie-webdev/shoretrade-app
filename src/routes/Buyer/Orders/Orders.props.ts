@@ -26,7 +26,9 @@ export interface OrderItem {
     shippingPrice: string;
     total: string;
   };
-  date: Date;
+  estDeliveryDate: Date;
+  estCatchmentDate: Date;
+  deliveredDate: Date;
   price: string;
 }
 
