@@ -63,7 +63,7 @@ const CreateAssistant = (): JSX.Element => {
     formikInitial,
     pending: addLinkedAccount.pending || false,
     success: addLinkedAccount.data?.status === 200 && submitted,
-    error: addLinkedAccount.error.length > 0 && submitted,
+    error: submitted ? addLinkedAccount.error : undefined,
   };
 
   return <SellerAssistantForm {...generatedProps} />;

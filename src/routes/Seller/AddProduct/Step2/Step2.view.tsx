@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 
 import { Step2Props } from './Step2.props';
@@ -31,6 +32,8 @@ function Step2({
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    setSearchKey(searchKey.trim());
+
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -41,6 +44,8 @@ function Step2({
         setIsTriggered(true);
       }, 800);
       setTimer(timerId);
+    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+      search('');
     }
   }, [searchKey]);
 
@@ -83,8 +88,6 @@ function Step2({
       setSelectedMetric(metricOptions[0].value);
     }
   }, [selectedCategory]);
-
-  console.log(customTypeName);
 
   if (showCustomTypeSettings) {
     return (

@@ -41,14 +41,5 @@ export const Container = styled.div`
 
   .checkbox-row {
     margin-bottom: 48px;
-
-    .checkbox-col {
-      display: flex;
-      align-items: center;
-
-      .text {
-        margin-left: 8px;
-      }
-    }
   }
 `;

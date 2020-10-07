@@ -21,6 +21,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     autoplay,
     arrowWidth,
     justifyArrows,
+    hideArrowArea,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
@@ -55,28 +56,30 @@ const Carousel = (props: CarouselProps): JSX.Element => {
 
   return (
     <SwiperContainer height={height}>
-      <ArrowArea
-        style={{
-          width: arrowAreaWidth,
-          justifyContent: justifyArrows ? 'flex-start' : undefined,
-        }}
-      >
-        {images.length > 2 && (
-          <Touchable
-            circle
-            onPress={() => {
-              if (swiperRef) {
-                swiperRef.slidePrev();
-              }
-            }}
-          >
-            {images.length > 1 ? (
-              <CarouselChevronLeft width={18} height={18} />
-            ) : null}
-          </Touchable>
-        )}
-      </ArrowArea>
-      <SwiperArea style={{ width: swiperAreaWidth }}>
+      {!hideArrowArea && (
+        <ArrowArea
+          style={{
+            width: arrowAreaWidth,
+            justifyContent: justifyArrows ? 'flex-start' : undefined,
+          }}
+        >
+          {images.length > 2 && (
+            <Touchable
+              circle
+              onPress={() => {
+                if (swiperRef) {
+                  swiperRef.slidePrev();
+                }
+              }}
+            >
+              {images.length > 1 ? (
+                <CarouselChevronLeft width={18} height={18} />
+              ) : null}
+            </Touchable>
+          )}
+        </ArrowArea>
+      )}
+      <SwiperArea style={{ width: hideArrowArea ? '100%' : swiperAreaWidth }}>
         <Swiper
           id={id}
           spaceBetween={10}
@@ -96,27 +99,29 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           {swiperItems}
         </Swiper>
       </SwiperArea>
-      <ArrowArea
-        style={{
-          width: arrowAreaWidth,
-          justifyContent: justifyArrows ? 'flex-end' : undefined,
-        }}
-      >
-        {images.length > 2 && (
-          <Touchable
-            circle
-            onPress={() => {
-              if (swiperRef) {
-                swiperRef.slideNext();
-              }
-            }}
-          >
-            {images.length > 1 ? (
-              <CarouselChevronRight width={18} height={18} />
-            ) : null}
-          </Touchable>
-        )}
-      </ArrowArea>
+      {!hideArrowArea && (
+        <ArrowArea
+          style={{
+            width: arrowAreaWidth,
+            justifyContent: justifyArrows ? 'flex-end' : undefined,
+          }}
+        >
+          {images.length > 2 && (
+            <Touchable
+              circle
+              onPress={() => {
+                if (swiperRef) {
+                  swiperRef.slideNext();
+                }
+              }}
+            >
+              {images.length > 1 ? (
+                <CarouselChevronRight width={18} height={18} />
+              ) : null}
+            </Touchable>
+          )}
+        </ArrowArea>
+      )}
     </SwiperContainer>
   );
 };

@@ -10,6 +10,7 @@ import PreviewCard from 'components/module/CategoryCards/Preview';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
@@ -103,6 +104,14 @@ const HomeView = (props: HomeGeneratedProps) => {
     query: `(min-width: 1040px) and (max-width: 1364px)`,
   });
 
+  const hideCarouselArrowArea = useMediaQuery({
+    query: `(max-width: 565px)`,
+  });
+
+  const mediumArrowWidth = useMediaQuery({
+    query: BREAKPOINTS['md'],
+  });
+
   const getMaxFavouritesDisplay = () => {
     if (isFavouriteSM) {
       return 1;
@@ -117,7 +126,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+      <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <Search
@@ -129,9 +138,16 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </div>
 
-      <Carousel id="featured-carousel" images={featured} loop autoplay />
+      <Carousel
+        id="featured-carousel"
+        images={featured}
+        loop
+        autoplay
+        hideArrowArea={hideCarouselArrowArea}
+        arrowWidth={mediumArrowWidth ? 75 : undefined}
+      />
 
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+      <div className="wrapper">
         <ViewCol>
           <FavouritesHeader>
             <Typography variant="title5" color="shade8">

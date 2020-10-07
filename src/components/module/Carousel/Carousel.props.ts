@@ -7,4 +7,5 @@ export interface CarouselProps {
   justifyArrows?: boolean;
   loop?: boolean;
   autoplay?: boolean;
+  hideArrowArea?: boolean;
 }

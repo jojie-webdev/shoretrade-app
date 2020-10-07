@@ -18,7 +18,7 @@ import {
 // import Items from '../Complete/Complete.view';
 
 const InTransitItems = (props: OrderItem) => {
-  const { data, date, price } = props;
+  const { data, estDeliveryDate, price } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,7 +40,7 @@ const InTransitItems = (props: OrderItem) => {
                 Dispatched On:
               </Typography>
               <Typography variant="label" color="shade8" weight="bold">
-                {moment(date).format('ddd DD MMM')}
+                {moment(estDeliveryDate).format('ddd DD MMM')}
               </Typography>
             </Row>
             <Typography variant="title5" weight="900">
@@ -78,7 +78,7 @@ const InTransit = (props: OrdersGeneratedProps) => {
       })}
 
       <Row justify="center">
-        {inTransitOrders.length > 10 && (
+        {inTransitPagesTotal > 1 && (
           <Pagination
             numPages={inTransitPagesTotal}
             currentValue={Number(filters.inTransitOrdersFilter.page)}

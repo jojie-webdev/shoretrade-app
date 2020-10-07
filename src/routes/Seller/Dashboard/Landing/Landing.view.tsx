@@ -110,43 +110,51 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   );
 };
 
-const TotalSales = (props: any) => (
-  <TotalSalesRow gutterWidth={24} justify="between">
-    <Col md={12} className="title-col">
-      <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
-        <Typography variant="label" color="shade6" component="span">
-          Total Sales
+const TotalSales = (props: any) => {
+  const PaidCard = (ownProps: any) => {
+    return (
+      <SalesCard>
+        <Typography variant="overline" color="shade6" className="overline">
+          Paid
         </Typography>
-      </Link>
-    </Col>
-    <Col md={6} className="paid-col">
-      {props.data.paid && (
+        <Typography variant="title4" color="noshade">
+          {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
+        </Typography>
+      </SalesCard>
+    );
+  };
+
+  return (
+    <TotalSalesRow gutterWidth={24} justify="between">
+      <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
-          <SalesCard>
-            <Typography variant="overline" color="shade6" className="overline">
-              Paid
-            </Typography>
-            <Typography variant="title4" color="noshade">
-              {numberToShortenAmount(props.data.paid)}
-            </Typography>
-          </SalesCard>
+          <Typography variant="label" color="shade6" component="span">
+            Total Sales
+          </Typography>
         </Link>
-      )}
-    </Col>
-    <Col md={6}>
-      {props.data.pending && (
+      </Col>
+      <Col md={6} className="paid-col">
+        {props.data.paid ? (
+          <Link to={props.toPaid}>
+            <PaidCard {...props} />
+          </Link>
+        ) : (
+          <PaidCard {...props} />
+        )}
+      </Col>
+      <Col md={6}>
         <SalesCard>
           <Typography variant="overline" color="shade6" className="overline">
             Pending
           </Typography>
           <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.pending)}
+            {numberToShortenAmount(props.data.pending ? props.data.pending : 0)}
           </Typography>
         </SalesCard>
-      )}
-    </Col>
-  </TotalSalesRow>
-);
+      </Col>
+    </TotalSalesRow>
+  );
+};
 
 const MonthlySales = (props: any) => {
   const theme = useTheme();
@@ -283,6 +291,7 @@ const DashboardView = ({
   isLoading,
   isCalendarModalOpen,
   toggleModal,
+  toPaidGraph,
   toCategories,
   toCategoryDetails,
   ...props
@@ -309,13 +318,19 @@ const DashboardView = ({
       ) : (
         <>
           <FilterHeader toggleModal={toggleModal} {...props} />
-          <TotalSales data={data} />
-          <MonthlySales data={data} />
-          <TopCategories
-            data={data}
-            to={toCategories}
-            toDetails={toCategoryDetails}
-          />
+          <TotalSales data={data} toPaid={toPaidGraph} />
+
+          {(data.paid || data.pending) && (
+            <>
+              <MonthlySales data={data} />
+              <TopCategories
+                data={data}
+                to={toCategories}
+                toDetails={toCategoryDetails}
+              />
+            </>
+          )}
+
           {isCalendarModalOpen && (
             <DatePickerModal
               startDate={startDate}

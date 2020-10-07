@@ -23,6 +23,7 @@ export interface DashboardLandingGeneratedProps {
     paid: string | number;
     pending: string | number;
   };
+  toPaidGraph: Record<string, unknown>;
   toCategories: Record<string, unknown>;
   toCategoryDetails: (id: string, title: string) => Record<string, unknown>;
   dateRange: {
