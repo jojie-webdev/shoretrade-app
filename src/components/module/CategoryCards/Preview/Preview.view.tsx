@@ -28,7 +28,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
   return (
     <CardContainer>
       <div
-        className={`card ${cardContainerClass ? cardContainerClass : ''}`}
+        className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}
       >
         <div className="imgContainer">

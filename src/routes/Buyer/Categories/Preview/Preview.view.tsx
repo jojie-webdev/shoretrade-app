@@ -61,7 +61,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       </Row>
       {results && results.length > 0 ? (
         <>
-          <div className="row cards" style={{ marginTop: 20 }}>
+          <div className="row cards" style={{ marginTop: 20, marginLeft: 10 }}>
             {results.map((product, index) => {
               return (
                 <div

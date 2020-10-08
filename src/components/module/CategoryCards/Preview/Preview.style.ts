@@ -4,7 +4,6 @@ import { pxToRem } from 'utils/Theme';
 
 export const CardContainer = styled.div`
   width: 267.5px;
-
   img {
     display: block;
     border: 0;
@@ -31,10 +30,12 @@ export const CardContainer = styled.div`
     padding-bottom: 16px;
     width: 100%;
     flex-wrap: wrap;
+    transition: transform 0.2s;
   }
 
   .card:hover {
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
+    transform: scale(1.1);
   }
 
   .card a {

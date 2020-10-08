@@ -1,7 +1,7 @@
 import styled from 'utils/styled';
 
 export const SearchContainer = styled.div`
-  padding: 0 6px;
+  padding: 0px 6px;
 
   .search-row {
     margin-bottom: 24px;
@@ -57,7 +57,7 @@ export const DetailsContainer = styled.div`
   margin-left: 24px;
 
   .title {
-    font-size: 16;
+    font-size: 16px;
   }
 `;
 
