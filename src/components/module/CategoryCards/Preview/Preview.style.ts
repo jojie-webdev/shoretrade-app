@@ -3,15 +3,18 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const CardContainer = styled.div`
-  width: 281px;
+  width: 267.5px;
+
   img {
     display: block;
     border: 0;
     width: 100%;
-    height: 148px;
+    height: 205px;
     border-radius: 4px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    object-fit: contain;
+    background: ${(props) => props.theme.grey.shade7};
   }
 
   .imgContainer {
@@ -25,7 +28,7 @@ export const CardContainer = styled.div`
     margin-bottom: 2em;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
-    height: 364px;
+    padding-bottom: 16px;
     width: 100%;
     flex-wrap: wrap;
   }

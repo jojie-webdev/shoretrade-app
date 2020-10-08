@@ -68,6 +68,8 @@ export const Tag = styled.div`
 export const ItemImage = styled.img`
   width: 176px;
   height: 176px;
+  object-fit: contain;
+  background: ${(props) => props.theme.grey.shade7};
 
   margin-right: 16px;
   border-radius: 4px;
