@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { push } from 'connected-react-router';
+import { SELLER_SOLD_ROUTES } from 'consts';
+import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
   getSellerOrdersPlacedActions,
   getSellerOrdersTransitActions,
@@ -26,9 +30,9 @@ import {
   groupDeliveredOrders,
 } from './Sold.tranform';
 import SoldView from './Sold.view';
-
 const Sold = (): JSX.Element => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const token = useSelector((state: Store) => state.auth.token) || '';
 
@@ -108,7 +112,25 @@ const Sold = (): JSX.Element => {
     ) || '1';
 
   const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
-  const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
+
+  const onChangeCurrentTab = (newTab: TabOptions) => {
+    dispatch(
+      push(
+        `${SELLER_SOLD_ROUTES.LANDING}${qs.stringify(
+          { tab: newTab },
+          { addQueryPrefix: true }
+        )}`
+      )
+    );
+  };
+
+  useEffect(() => {
+    const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
+      tab: TabOptions;
+    };
+
+    setCurrentTab(tab);
+  }, [location.search]);
 
   useEffect(() => {
     if (currentTab === 'To Ship') {
@@ -116,11 +138,13 @@ const Sold = (): JSX.Element => {
         getOrders.placed();
       }
     }
+
     if (currentTab === 'In Transit') {
       if (inTransit.length === 0) {
         getOrders.transit();
       }
     }
+
     if (currentTab === 'Delivered') {
       if (delivered.length === 0) {
         getOrders.delivered();
