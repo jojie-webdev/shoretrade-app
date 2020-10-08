@@ -20,6 +20,7 @@ export const listingToItem = (data: GetAllListingsResponseItem): ItemProp => {
     expiresIn: moment(data.ends).toDate(),
     remaining: Number(data.remaining).toFixed(2),
     unit: formatMeasurementUnit(data.measurementUnit),
+    originalWeight: Number(data.originalWeight).toFixed(2),
     data,
   };
 };
