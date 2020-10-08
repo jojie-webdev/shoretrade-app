@@ -84,6 +84,9 @@ export const BUYER_ROUTES = {
   ORDERS: `${BUYER_ROOT}/orders`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
+  RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
+  SELLERS: `${BUYER_ROOT}/sellers`,
+  FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

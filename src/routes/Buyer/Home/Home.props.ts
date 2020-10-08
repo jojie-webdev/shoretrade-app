@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
@@ -9,19 +9,32 @@ export type CategoryResults = {
   thumbnail: string;
 };
 
+export type SellerResults = {
+  companyImage: string;
+  companyName: string;
+  id: string;
+};
+
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
-  categories: CategoryResults[];
-  creditState: CreditState;
-  creditBalance: string;
-  favourites: GetBuyerHomepageResponseListingItem[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-  resetSearchValue: () => void;
+  search: () => void;
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  results: { count: string; label: string; value: string }[];
+  onReset: () => void;
+  recent: { count: string; label: string; value: string }[];
   addresses: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
-  loading: boolean;
+  saveSearchHistory: (id: string, label: string, count: string) => void;
+  categories: CategoryResults[];
+  favouriteSellers: SellerResults[];
+  sellers: SellerResults[];
+  creditState: CreditState;
+  creditBalance: string;
+  favourites: GetBuyerHomepageResponseListingItem[];
+  recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
 }
