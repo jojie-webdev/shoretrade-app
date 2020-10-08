@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.props';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getSellerByCompanyId } from 'services/company';
 import {
   getSellerByIdActions,
   updateFavoriteSellerActions,
@@ -20,8 +19,6 @@ const SellerDetails = (): JSX.Element => {
   const [result, setResult] = useState<any[]>([]);
   const [searchString, setSearchString] = useState('');
 
-  const [isFavorite, setIsFavorite] = useState(false);
-
   const loading: boolean | undefined = useSelector(
     (state: Store) => state.getSellerById.pending || false
   );
@@ -30,17 +27,16 @@ const SellerDetails = (): JSX.Element => {
     (state: Store) => state.getSellerById.data?.data?.seller || undefined
   );
 
-  const updateFavoriteSeller = useSelector(
-    (state: Store) => state.updateFavoriteSeller
-  );
+  const [isFavorite, setIsFavorite] = useState(seller?.isFavourite);
 
   const onFavorite = async (): Promise<any> => {
     if (seller) {
       setIsFavorite((prevState) => !prevState);
+
       dispatch(
         updateFavoriteSellerActions.request({
-          sellerId: seller.id || '',
-          favorite: !seller.isFavourite,
+          sellerId: seller.id,
+          favorite: !seller?.isFavourite,
         })
       );
     }
@@ -55,26 +51,15 @@ const SellerDetails = (): JSX.Element => {
   }, [id]);
 
   useEffect(() => {
-    setIsFavorite(seller?.isFavourite || false);
+    setIsFavorite(seller?.isFavourite);
     setResult(seller?.listings || []);
   }, [seller]);
-
-  useEffect(() => {
-    setIsFavorite(seller?.isFavourite || false);
-  }, [updateFavoriteSeller]);
 
   useEffect(() => {
     const listings = seller?.listings || [];
     const result = listings.filter((r) => r.type.includes(searchString));
     setResult(result);
   }, [searchString]);
-
-  // On error, set favorite back to what it originally was
-  useEffect(() => {
-    if (updateFavoriteSeller?.error !== '') {
-      setIsFavorite(seller?.isFavourite || false);
-    }
-  }, [updateFavoriteSeller]);
 
   const sellerRatingProps: SellerRatingProps = {
     companyName: seller?.companyName || '',

@@ -39,9 +39,9 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
         )}
         <Favorite onClick={onFavorite}>
           {isFavorite ? (
-            <HeartFilled width={22} height={18} viewBox="0 0 22 18" />
+            <HeartFilled width={22} height={22} />
           ) : (
-            <Heart width={22} height={22} viewBox="0 0 22 18" />
+            <Heart width={22} height={22} />
           )}
         </Favorite>
       </AvatarContainer>
