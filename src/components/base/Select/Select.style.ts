@@ -60,19 +60,33 @@ export const StyledDropdown = styled(Dropdown)<{
   }
 
   .${PREFIX}Menu {
-    border: 1px solid ${({ theme }) => theme.grey.shade5};
+    border: 1px solid ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     border-radius: 4px;
-    padding: 0 16px;
+    box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+    // padding: 0 16px;
     margin-top: 8px;
+    background-color: ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+    
   }
 
   .Dropdown-option {
     ${font};
-    color: ${({ theme }) => theme.grey.shade9};
-    padding: 12px 0;
+    background-color: ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+    color: ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+    padding: 12px 16px;
     &:hover {
-      background-color: transparent;
+      background-color: ${({ theme }) =>
+        theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
     }
+  }
+
+  .Dropdown-option.is-selected {
+    color: ${({ theme }) => theme.grey.noshade};
+    background-color: ${({ theme }) => theme.brand.primary};
   }
 `;
 
