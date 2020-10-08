@@ -38,7 +38,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     if (containerRef.current) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
-  }, [containerRef, windowWidth]);
+  }, [containerRef?.current?.offsetWidth, windowWidth]);
 
   // helps to trigger recalculation of width
   useEffect(() => {

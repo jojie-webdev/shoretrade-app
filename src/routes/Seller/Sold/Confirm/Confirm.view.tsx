@@ -93,37 +93,81 @@ const BoxDetails = ({
 };
 
 const BoxSummary = ({
+  originalWeight,
+  differenceWeight,
   weight,
+  originalQuantity,
+  differenceQuantity,
   quantities,
+  originalAmount,
+  differenceAmount,
   amount,
+  differencePercentage,
 }: {
+  originalWeight: string;
+  differenceWeight: string;
   weight: string;
+  originalQuantity: string;
+  differenceQuantity: string;
   quantities: string;
+  originalAmount: string;
+  differenceAmount: string;
   amount: string;
+  differencePercentage: string;
 }) => (
   <BoxSummaryContainer>
     <div className="text-container">
-      <div className="inner-text">
+      <div className="left-text">
         <Typography variant="label" color="shade6" className="overline">
-          Box Weight
+          Original Order
         </Typography>
         <Typography color="noshade" weight="bold">
-          {weight}
+          {`Difference ${differencePercentage}`}
         </Typography>
       </div>
       <div className="inner-text">
         <Typography variant="label" color="shade6" className="overline">
-          Quantity
+          {originalQuantity}
         </Typography>
+        <Typography color="noshade" weight="bold">
+          {differenceQuantity}
+        </Typography>
+      </div>
+      <div className="inner-text">
+        <Typography variant="label" color="shade6" className="overline">
+          {originalWeight}
+        </Typography>
+        <Typography color="noshade" weight="bold">
+          {differenceWeight}
+        </Typography>
+      </div>
+      <div className="right-text">
+        <Typography variant="label" color="shade6" className="overline">
+          {originalAmount}
+        </Typography>
+        <Typography color="noshade" weight="bold">
+          {differenceAmount}
+        </Typography>
+      </div>
+    </div>
+    <div className="text-container">
+      <div className="left-text">
+        <Typography color="noshade" weight="bold">
+          New Total
+        </Typography>
+      </div>
+      <div className="inner-text">
         <Typography color="noshade" weight="bold">
           {quantities}
         </Typography>
       </div>
       <div className="inner-text">
-        <Typography variant="label" color="shade6" className="overline">
-          New Total
-        </Typography>
         <Typography color="noshade" weight="bold">
+          {weight}
+        </Typography>
+      </div>
+      <div className="right-text">
+        <Typography variant="title5" color="noshade" weight="bold">
           {amount}
         </Typography>
       </div>
@@ -141,26 +185,58 @@ const ConfirmView = (props: ConfirmProps) => {
     pricePerKilo,
     onCancel,
     onConfirm,
+    initialBoxes,
   } = props;
 
   const { orderNumber, buyer, uri, price, name, tags, size } = details;
 
   const [showModal, setShowModal] = useState(false);
 
-  const totalWeight = boxes.reduce((t, box) => {
-    return t + box.weight * box.quantity;
-  }, 0);
+  const getTotalWeight = (b: Box[]) =>
+    b.reduce((t, box) => {
+      return t + box.weight * box.quantity;
+    }, 0);
 
-  const totalBoxes = boxes.reduce((t, box) => {
-    return t + box.quantity;
-  }, 0);
+  const getTotalBoxes = (b: Box[]) =>
+    b.reduce((t, box) => {
+      return t + box.quantity;
+    }, 0);
 
-  const totalAmount = totalWeight * pricePerKilo;
+  const initialWeight = getTotalWeight(initialBoxes);
+  const initialBoxesQuantity = getTotalBoxes(initialBoxes);
+  const initialPrice = initialWeight * pricePerKilo;
+
+  const totalWeight = getTotalWeight(boxes);
+
+  const totalBoxes = getTotalBoxes(boxes);
+  const totalPrice = totalWeight * pricePerKilo;
+
+  const differenceWeight = totalWeight - initialWeight;
+  const differenceQuantity = totalBoxes - initialBoxesQuantity;
+  const differenceAmount = totalPrice - initialPrice;
+  const differencePercentage = (differenceQuantity / totalBoxes) * 100;
 
   const summary = {
+    originalWeight: `${initialWeight.toFixed(2)} ${measurementUnit}`,
+    differenceWeight: `${
+      differenceWeight > 0 ? '+' : ''
+    }${differenceWeight.toFixed(2)} ${measurementUnit}`,
     weight: `${totalWeight.toFixed(2)} ${measurementUnit}`,
+    originalQuantity: `${initialBoxesQuantity} ${
+      initialBoxesQuantity > 1 ? 'Boxes' : 'Box'
+    }`,
+    differenceQuantity: `${
+      differenceQuantity > 0 ? '+' : ''
+    }${differenceQuantity} ${differenceQuantity > 1 ? 'Boxes' : 'Box'}`,
     quantities: `${totalBoxes} ${totalBoxes > 1 ? 'Boxes' : 'Box'}`,
-    amount: toPrice(totalAmount),
+    originalAmount: toPrice(initialPrice),
+    differenceAmount: `${differenceAmount > 0 ? '+' : ''}${toPrice(
+      differenceAmount
+    )}`,
+    amount: toPrice(totalPrice),
+    differencePercentage: `${
+      differenceQuantity > 0 ? '+' : ''
+    }${differencePercentage}%`,
   };
 
   return (

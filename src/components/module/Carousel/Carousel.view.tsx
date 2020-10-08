@@ -63,7 +63,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             justifyContent: justifyArrows ? 'flex-start' : undefined,
           }}
         >
-          {images.length > 2 && (
+          {images.length > 1 && (
             <Touchable
               circle
               onPress={() => {
@@ -72,9 +72,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                 }
               }}
             >
-              {images.length > 1 ? (
-                <CarouselChevronLeft width={18} height={18} />
-              ) : null}
+              <CarouselChevronLeft width={18} height={18} />
             </Touchable>
           )}
         </ArrowArea>
@@ -106,7 +104,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             justifyContent: justifyArrows ? 'flex-end' : undefined,
           }}
         >
-          {images.length > 2 && (
+          {images.length > 1 && (
             <Touchable
               circle
               onPress={() => {
@@ -115,9 +113,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                 }
               }}
             >
-              {images.length > 1 ? (
-                <CarouselChevronRight width={18} height={18} />
-              ) : null}
+              <CarouselChevronRight width={18} height={18} />
             </Touchable>
           )}
         </ArrowArea>

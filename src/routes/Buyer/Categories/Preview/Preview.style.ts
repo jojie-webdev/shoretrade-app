@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import styled, { css } from 'utils/styled';
 
 const customScrollbar = (props: any) =>
@@ -85,11 +86,10 @@ export const LoadingContainer = styled.div`
   height: 100%;
 `;
 
-export const FilterButton = styled.button`
+export const FilterButton = styled(Button)`
   background: #111e2b;
   border-radius: 4px;
   color: white;
-  width: 69px;
   min-width: 69px !important;
   align-content: 'center';
   justify-content: 'center';

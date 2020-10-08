@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSellerDashboard } from 'services/company';
+import { sellerDashboardActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
@@ -19,12 +20,17 @@ const DEFAULT_DATA = {
 
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
+//TODO: refactor other dashboard data since dateRange is on redux
 const Dashboard = (): JSX.Element => {
+  const dispatch = useDispatch();
   const token = useSelector((state: Store) => state.auth.token) || '';
+
+  const dateRange =
+    useSelector((state: Store) => state.sellerDashboardDate) ||
+    fiscalYearDateRange;
 
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [dateRange, setDateRange] = useState(fiscalYearDateRange);
   const [data, setData] = useState(DEFAULT_DATA);
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
@@ -48,10 +54,12 @@ const Dashboard = (): JSX.Element => {
       day: end.get('date'),
     };
 
-    setDateRange({
-      start: startDate,
-      end: endDate,
-    });
+    dispatch(
+      sellerDashboardActions.set({
+        start: startDate,
+        end: endDate,
+      })
+    );
 
     toggleModal();
   };
@@ -78,9 +86,30 @@ const Dashboard = (): JSX.Element => {
     fetchData();
   }, [dateRange, token]);
 
+  const setDateRange = (dateRange: any) => {
+    dispatch(sellerDashboardActions.set(dateRange));
+  };
+
+  const toPaidGraph = () => {
+    let pathname = '';
+    if (dateRange.start.id === fiscalYearDateRange.start.id) {
+      pathname = SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY');
+    } else {
+      pathname = SELLER_DASHBOARD_ROUTES.CASH_FLOW(
+        `${moment(dateRange.start.dateString).format('MM-DD-YYYY')}_${moment(
+          dateRange.end.dateString
+        ).format('MM-DD-YYYY')}`
+      );
+    }
+
+    return {
+      pathname,
+    };
+  };
+
   const toCategories = () => {
     let pathname = '';
-    if (dateRange === fiscalYearDateRange) {
+    if (dateRange.start.id === fiscalYearDateRange.start.id) {
       pathname = SELLER_DASHBOARD_ROUTES.CATEGORIES('FY');
     } else {
       pathname = SELLER_DASHBOARD_ROUTES.CATEGORIES(
@@ -98,7 +127,7 @@ const Dashboard = (): JSX.Element => {
 
   const toCategoryDetails = (id: string, title: string) => {
     let pathname = '';
-    if (dateRange === fiscalYearDateRange) {
+    if (dateRange.start.id === fiscalYearDateRange.start.id) {
       pathname = SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(title, 'FY', id);
     } else {
       pathname = SELLER_DASHBOARD_ROUTES.CATEGORY_DETAIL(
@@ -120,6 +149,7 @@ const Dashboard = (): JSX.Element => {
     toggleModal,
     isLoading,
     data,
+    toPaidGraph: toPaidGraph(),
     toCategories: toCategories(),
     toCategoryDetails,
     dateRange,

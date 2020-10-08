@@ -83,6 +83,8 @@ export const ItemImage = styled.img`
   height: 148px;
   margin-right: 16px;
   border-radius: 4px;
+  object-fit: contain;
+  background: ${(props) => props.theme.grey.shade7};
 `;
 
 export const Box = styled.div`

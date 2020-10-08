@@ -1,3 +1,4 @@
+import Typography from 'components/base/Typography';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
@@ -33,8 +34,14 @@ export const PendingItemContainer = styled.div`
 
     .left {
       display: flex;
+      flex-direction: column;
       /* align-items: center; */
       padding-right: 16px;
+
+      .row {
+        display: flex;
+        flex-direction: row;
+      }
 
       img {
         height: 64px;
@@ -83,4 +90,56 @@ export const PendingItemContainer = styled.div`
       }
     }
   }
+`;
+
+export const ValuesRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 12px;
+`;
+
+export const Value = styled.div`
+  margin-right: 56px;
+  padding: 0 4px 0 4px;
+  min-width: 120px;
+`;
+
+export const OrderNumber = styled(Typography)`
+  color: ${({ theme }) => theme.brand.primary};
+  font-weight: bold;
+`;
+
+export const Preview = styled.img`
+  width: 72px;
+  height: 72px;
+  margin-right: 12px;
+  border-radius: 4px;
+`;
+
+export const Details = styled.div``;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+`;
+
+export const Tag = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  background: ${({ theme }) => theme.grey.shade8};
+  align-items: center;
+  min-height: 16px;
+  border-radius: 2px;
+  margin-right: 4px;
+`;
+
+export const TagText = styled(Typography)``;
+
+export const Size = styled(Typography)`
+  color: ${({ theme }) => theme.grey.noshade};
+  font-weight: bold;
+  margin-left: 4px;
 `;

@@ -49,6 +49,7 @@ import register from './register';
 import resendVerification from './resendVerification';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import sellerDashboardDate from './sellerDashboardDate';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -103,6 +104,7 @@ export default (routeHistory: History) =>
         placeOrder,
         getCoopUsers,
         editableListing,
+        sellerDashboardDate,
         searchProductType,
         getListingFormData,
         getCustomFormData,
