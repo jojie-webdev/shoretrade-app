@@ -7,6 +7,7 @@ import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 
 import { Step8Props } from './Step8.props';
 import { Container } from './Step8.style';
@@ -63,6 +64,8 @@ function Step8({
     'HH:mm ddd DD MMM yyyy'
   );
 
+  const price = editableListing?.pricePerKilo || 0;
+
   const notes = editableListing?.description || '';
   return (
     <Container>
@@ -113,6 +116,14 @@ function Step8({
                 onChangeCurrentPage(6);
               }
             }}
+          />
+        </Col>
+        <Col md={12} className="interaction-col">
+          <Interactions
+            label="Price"
+            value={toPrice(price)}
+            type="edit"
+            onClick={() => onChangeCurrentPage(7)}
           />
         </Col>
         <Col md={12} className="interaction-col">
