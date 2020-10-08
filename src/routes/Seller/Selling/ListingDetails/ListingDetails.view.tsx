@@ -7,7 +7,9 @@ import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { API } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { base64ToFile } from 'utils/File';
 import { useTheme } from 'utils/Theme';
 
@@ -51,17 +53,29 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     }
   }, [carousel.items]);
 
+  const addSeperatorSpacing = useMediaQuery({
+    query: '(min-width: 1270px)',
+  });
+
+  const hideCarouselArrowArea = useMediaQuery({
+    query: `(max-width: 991px)`,
+  });
+
   return (
     <Wrapper>
-      <Row nogutter style={{ width: 'calc(100% - 100px)', paddingRight: 50 }}>
-        <Col sm={12} md={12} lg={7} xl={5}>
+      <Row nogutter className="wrapper">
+        <Col sm={12} md={12} lg={5} xl={5}>
           <DetailsCard>
-            <Carousel
-              id="product-carousel"
-              images={images}
-              height={'200px'}
-              arrowWidth={50}
-            />
+            <div style={{ width: '100%' }}>
+              <Carousel
+                id="product-carousel"
+                images={images}
+                height={'200px'}
+                arrowWidth={50}
+                hideArrowArea={hideCarouselArrowArea}
+                loop
+              />
+            </div>
             <div className="details-container">
               <Typography variant="title5" color="shade9" weight="bold">
                 {productDetails.title}
@@ -109,7 +123,13 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
           </DetailsCard>
         </Col>
-        <Col sm={12} md={12} lg={5} xl={7} style={{ paddingLeft: 100 }}>
+        <Col
+          sm={12}
+          md={12}
+          lg={7}
+          xl={7}
+          style={{ paddingLeft: addSeperatorSpacing ? 100 : 0 }}
+        >
           <SalesCard>
             <Typography variant="overline" color="shade9">
               SALES

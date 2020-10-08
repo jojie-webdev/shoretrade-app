@@ -1,9 +1,33 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
+  .wrapper {
+    width: calc(100% - 100px);
+    margin: auto;
+
+    @media (min-width: 992px) {
+      padding-right: 50px;
+    }
+
+    @media (min-width: 769px) and (max-width: 991px) {
+      width: calc(100% - 200px);
+    }
+
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+
+    @media (max-width: 576px) {
+      width: 100%;
+      padding: 0 24px;
+    }
+  }
+
   .separator {
     width: 100%;
     height: 2px;
@@ -16,12 +40,25 @@ export const DetailsCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .carousel-container {
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .details-container {
     padding: 24px;
     background-color: ${({ theme }) => theme.grey.noshade};
     width: calc(100% - 100px);
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
+
+    @media (max-width: 991px) {
+      width: 100%;
+    }
   }
   .size-location-container {
     display: flex;
@@ -91,6 +128,10 @@ export const SalesCard = styled.div`
   border-radius: 4px;
   & p:not(:first-child) {
     margin-top: 4px;
+  }
+
+  @media (max-width: 991px) {
+    margin-top: 32px;
   }
 `;
 
