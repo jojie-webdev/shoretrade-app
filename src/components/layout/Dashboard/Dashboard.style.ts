@@ -160,14 +160,12 @@ export const Content = styled.div<{
 
       width: ${(props) =>
         props.shouldUseFullWidth ? '100%' : 'calc(100% - 200px)'};
-      height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-x: hidden;
       overflow-y: auto;
 
       .container {
-        height: 100%;
         width: 100%;
       }
     }
