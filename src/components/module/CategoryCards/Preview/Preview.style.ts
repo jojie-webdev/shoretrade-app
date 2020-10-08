@@ -56,8 +56,8 @@ export const CardContainer = styled.div`
 
 export const LocationContainer = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 8px;
 
   .location-font {
     padding-left: 5.75px;
