@@ -1,23 +1,6 @@
 import Button from 'components/base/Button';
 import styled, { css } from 'utils/styled';
 
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
-
 export const PreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,8 +11,6 @@ export const PreviewContainer = styled.div`
   clear: both;
   width: 100%;
   padding: 0 6px;
-
-  ${customScrollbar}
 
   .cards {
     display: flex;
