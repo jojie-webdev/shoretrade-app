@@ -138,7 +138,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               {sales.sales}
             </Typography>
             <Typography color="shade6">
-              {`${sales.soldWeight} / ${sales.totalWeight} ${sales.unit}`}
+              {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit}`}
             </Typography>
           </SalesCard>
           <OrderBoxCard>
