@@ -6,7 +6,7 @@ export type BoxType = {
   weight: number;
   quantity: number;
   count?: number;
-  immutable?: boolean;
+  fixed?: boolean;
 };
 
 export type Step6PublicProps = {

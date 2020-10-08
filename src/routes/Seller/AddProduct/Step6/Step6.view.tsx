@@ -29,7 +29,7 @@ const BoxDetails = ({
   count,
   onRemove,
   unit,
-  immutable,
+  fixed,
 }: BoxType & {
   unit: string;
   onRemove: () => void;
@@ -76,7 +76,7 @@ const BoxDetails = ({
         </div>
       </div>
 
-      {!immutable && (
+      {!fixed && (
         <Touchable
           onPress={() => {
             onRemove();
@@ -172,7 +172,7 @@ function Step6({
   const initialBoxes: BoxType[] = isExisting
     ? (editableListing?.boxes || []).map((b) => ({
         ...b,
-        immutable: true,
+        fixed: true,
       }))
     : editableListing?.boxes || [];
 

@@ -41,7 +41,7 @@ export const transform = (
   },
   boxes: (data?.boxes || []).map((b) => ({
     ...b,
-    id: b.immutable ? b.id : `new-${b.id}`,
+    id: b.fixed ? b.id : `new-${b.id}`,
   })),
   ends: data?.ends ? moment(data.ends).toISOString() : null,
   addressId: data?.addressId || '',
