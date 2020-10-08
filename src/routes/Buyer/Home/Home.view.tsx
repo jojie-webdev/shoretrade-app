@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
+import Select from 'components/base/Select';
 import { InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
@@ -39,7 +41,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
   const history = useHistory();
-
   if (loading) {
     return <Loading />;
   }
@@ -96,8 +97,10 @@ const HomeView = (props: HomeGeneratedProps) => {
     loading,
     featured,
     favourites,
+    addresses,
   } = props;
-
+  const [addressModalChange, setAddressModalChange] = useState(false);
+  const [currentAddressSelected, setCurrentAddressSelected] = useState();
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
 
   const isFavouriteMD = useMediaQuery({
@@ -124,8 +127,22 @@ const HomeView = (props: HomeGeneratedProps) => {
     return 3;
   };
 
+  useEffect(() => {
+    setCurrentAddressSelected(addresses[0]); //Todo: will be change to default address
+  }, [addresses]);
+
   return (
     <ViewContainer>
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change Buying Address"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => console.log('DELETE ACTION')}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
@@ -135,6 +152,19 @@ const HomeView = (props: HomeGeneratedProps) => {
             resetValue={resetSearchValue}
             placeholder="Search.."
           />
+          <div className="buying-for">
+            <Select
+              options={addresses}
+              label="Buying For"
+              size="small"
+              onFocus={() => {}}
+              onChange={(e) => {
+                console.log(e);
+                // setAddressModalChange(true);
+              }}
+              value={currentAddressSelected}
+            />
+          </div>
         </Col>
       </div>
 

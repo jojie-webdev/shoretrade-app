@@ -15,7 +15,6 @@ const Home = (): JSX.Element => {
   const location = useLocation();
   const dispatch = useDispatch();
   const addresses = GetAddressOptions();
-
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
 
