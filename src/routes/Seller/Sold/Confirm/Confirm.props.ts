@@ -36,6 +36,7 @@ export interface ConfirmGeneratedProps {
   details: Details;
   boxes: Box[];
   setBoxes: Dispatch<Box[]>;
+  initialBoxes: Box[];
   pricePerKilo: number;
   onCancel: () => void;
   onConfirm: () => void;
