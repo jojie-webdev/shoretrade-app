@@ -31,7 +31,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
   const { loading, search, onSearch, result, sellerRatingProps } = props;
-  console.log({sellerRatingProps})
+
   return (
     <Container>
       {loading ? (
