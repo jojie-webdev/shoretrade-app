@@ -107,11 +107,9 @@ function Step8({
           <Interactions
             label="Boxes"
             value={boxes}
-            type={isExisting ? undefined : 'edit'}
+            type={'edit'}
             onClick={() => {
-              if (!isExisting) {
-                onChangeCurrentPage(6);
-              }
+              onChangeCurrentPage(6);
             }}
           />
         </Col>

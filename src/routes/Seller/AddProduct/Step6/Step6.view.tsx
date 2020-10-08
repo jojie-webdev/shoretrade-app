@@ -29,6 +29,7 @@ const BoxDetails = ({
   count,
   onRemove,
   unit,
+  immutable,
 }: BoxType & {
   unit: string;
   onRemove: () => void;
@@ -75,9 +76,17 @@ const BoxDetails = ({
         </div>
       </div>
 
-      <Touchable onPress={() => onRemove()} circle dark>
-        <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
-      </Touchable>
+      {!immutable && (
+        <Touchable
+          onPress={() => {
+            onRemove();
+          }}
+          circle
+          dark
+        >
+          <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
+        </Touchable>
+      )}
     </BoxDetailsContainer>
   );
 };
@@ -142,6 +151,7 @@ function Step6({
   listingFormData,
   isCustomType,
   onAddBoxes,
+  isExisting,
 }: Step6Props) {
   const [showModal, setShowModal] = useState(false);
 
@@ -159,7 +169,14 @@ function Step6({
     editableListing?.isAquafuture || false
   );
 
-  const [boxes, setBoxes] = useState<BoxType[]>(editableListing?.boxes || []);
+  const initialBoxes: BoxType[] = isExisting
+    ? (editableListing?.boxes || []).map((b) => ({
+        ...b,
+        immutable: true,
+      }))
+    : editableListing?.boxes || [];
+
+  const [boxes, setBoxes] = useState<BoxType[]>(initialBoxes);
 
   const [minimumOrder, setMinimumOrder] = useState(
     editableListing?.minOrder ? editableListing.minOrder.toString() : ''

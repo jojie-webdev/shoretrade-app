@@ -107,6 +107,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             onAddBoxes={onAddBoxes}
+            isExisting={isExisting}
           />
         );
       case 7:

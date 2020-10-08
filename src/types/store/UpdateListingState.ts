@@ -14,6 +14,12 @@ export type UpdateListingRequestData = {
     state: string;
     countryCode: string;
   };
+  boxes: {
+    id: string;
+    weight: number;
+    quantity: number;
+    count?: number;
+  }[];
   ends: string | null; // date iso string
   addressId: string;
 };
