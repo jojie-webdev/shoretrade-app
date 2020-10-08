@@ -213,6 +213,17 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
           />
         </Col>
         <Col md={6} className="textfield-col">
+          <Select
+            value={shippingAddress}
+            onChange={(option) => {
+              setShippingAddress(option.value);
+            }}
+            options={shippingAddressOptions}
+            label="Shipping Address"
+            error={pathOr('', ['shippingAddress', '0'], errors)}
+          />
+        </Col>
+        <Col md={6} className="textfield-col">
           <DatePickerDropdown
             className="date-picker"
             placeholder=""
@@ -223,17 +234,6 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
-          />
-        </Col>
-        <Col md={6} className="textfield-col">
-          <Select
-            value={shippingAddress}
-            onChange={(option) => {
-              setShippingAddress(option.value);
-            }}
-            options={shippingAddressOptions}
-            label="Shipping Address"
-            error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
         <Col md={6} className="textfield-col">
