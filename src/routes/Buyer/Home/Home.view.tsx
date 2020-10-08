@@ -158,7 +158,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : 'Results'}
+            {showRecentSearch ? 'Recent Searches' : `Results ${results.length}`}
           </Typography>
         )}
         {isEmpty(data) && searchTerm.length > 0 && !loading ? (

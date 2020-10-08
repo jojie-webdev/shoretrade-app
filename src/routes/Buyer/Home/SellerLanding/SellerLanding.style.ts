@@ -26,6 +26,7 @@ export const PreviewContainer = styled.div`
   height: 100%;
   overflow: auto;
   overflow-x: hidden;
+  padding: 0 8px 8px 8px;
 
   ${customScrollbar}
 
