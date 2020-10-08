@@ -5,8 +5,14 @@ import { storiesOf } from '@storybook/react';
 import Select from '../../../src/components/base/Select';
 import Container from '../../components/Container';
 
-storiesOf('base/Select', module).add('Normal', () => (
-  <Container background="white">
+storiesOf('base/Select', module).add('Buyer', () => (
+  <Container appType="buyer">
+    <Select options={['one', 'two', 'three']} label="Label" />
+  </Container>
+));
+
+storiesOf('base/Select', module).add('Seller', () => (
+  <Container appType="seller">
     <Select options={['one', 'two', 'three']} label="Label" />
   </Container>
 ));
