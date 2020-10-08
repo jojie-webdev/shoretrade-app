@@ -59,7 +59,8 @@ const Item = (props: ItemProp) => {
         <ItemDetail variant="caption" color="shade6">
           Remaining:{' '}
           <span>
-            {props.remaining} {props.unit}
+            {props.remaining} / {props.originalWeight}{' '}
+            {props.unit?.toLowerCase()}
           </span>
         </ItemDetail>
       </div>
