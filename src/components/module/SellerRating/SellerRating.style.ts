@@ -19,7 +19,7 @@ export const AvatarPreview = styled.img`
   height: 96px;
   border-radius: 5px;
   border-color: grey;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const AvatarPlaceholder = styled.img`
