@@ -16,7 +16,7 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
     totalWeight,
     weight,
     cost,
-    unit = 'Kg',
+    unit = 'kg',
   } = props;
   // const theme = useTheme();
   return (

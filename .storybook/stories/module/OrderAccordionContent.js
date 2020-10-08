@@ -21,7 +21,7 @@ const detailsProps = [{
       },
     ],
     weight: '12',
-    unit: 'Kg',
+    unit: 'kg',
     size: 'Baby – Extra Large',
     location: 'NSW',
     vendor: 'Peter Manettas',
