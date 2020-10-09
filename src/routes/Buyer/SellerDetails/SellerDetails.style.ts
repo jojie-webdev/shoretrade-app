@@ -23,6 +23,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 0 8px 8px 8px;
 `;
 
 export const SellerRatingContainer = styled.div`
