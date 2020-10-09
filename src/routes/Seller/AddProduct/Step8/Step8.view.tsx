@@ -74,7 +74,7 @@ function Step8({
           <Interactions
             label="Type"
             value={title}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(2);
@@ -86,7 +86,7 @@ function Step8({
           <Interactions
             label="Specifications"
             value={specifications.join(', ')}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(3);
@@ -98,7 +98,7 @@ function Step8({
           <Interactions
             label="Size"
             value={size}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(4);
@@ -110,7 +110,7 @@ function Step8({
           <Interactions
             label="Boxes"
             value={boxes}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(6);

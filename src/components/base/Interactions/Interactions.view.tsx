@@ -76,16 +76,16 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         {children}
       </div>
 
-      {rightComponent ? (
-        rightComponent
-      ) : (
-        <IconContainer
-          className="interactions-right"
-          iconAlignment={iconAlignment}
-        >
-          {getIcon()}
-        </IconContainer>
-      )}
+      {rightComponent
+        ? rightComponent
+        : type !== 'none' && (
+            <IconContainer
+              className="interactions-right"
+              iconAlignment={iconAlignment}
+            >
+              {getIcon()}
+            </IconContainer>
+          )}
     </Container>
   );
 };

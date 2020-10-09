@@ -20,7 +20,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     avgBoxSize,
     catchDate,
     minOrder,
-    unit = 'Kg',
+    unit = 'kg',
   } = props;
 
   const formattedTimeLeft = () => moment().to(timeLeft);
