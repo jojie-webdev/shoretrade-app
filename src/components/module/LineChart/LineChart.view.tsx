@@ -408,6 +408,8 @@ const XAxis = (props: any) => {
   );
 };
 
+// this component is a port of
+// https://github.com/JesperLekland/react-native-svg-charts
 const LineChart = (props: LineChartProps): JSX.Element | null => {
   const theme = useTheme();
 
@@ -435,12 +437,23 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
 
   const xTick = graphData.length >= 5 ? 5 : 3;
 
+  // check if horizontal
+  const isValuesTheSame = data.values.every((v, i, a) => {
+    return i === 0 || v === a[i - 1];
+  });
+
+  // either put in middle or add 25% buffer at top
+  const yMax = isValuesTheSame
+    ? data.values[0] * 2
+    : Math.max(...data.values) * 1.25;
+
   return (
     <Container>
       <Title variant="overline">{title}</Title>
       <YAxisContainer cHeight={cHeight}>
         <YAxis
           min={0}
+          max={yMax}
           style={{ paddingLeft: 10 }}
           data={graphData}
           yAccessor={({ item }: any) => item.value}
@@ -451,6 +464,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
         />
         <LineChartView
           yMin={0}
+          gridMax={yMax}
           style={{ flex: 1 }}
           data={graphData}
           xScale={d3Scale.scaleTime}
