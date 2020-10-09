@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import Search from 'components/module/Search/Search.view';
+import { Location } from 'components/base/SVG';
+import TextField from 'components/base/TextField';
+import Typography from 'components/base/Typography';
 import { isEmpty } from 'ramda';
 import parseGooglePlaceData from 'utils/Address/parseGooglePlaceData';
 import useScript from 'utils/Hooks/useScript';
-import { useTheme } from 'utils/Theme';
 
 import { LocationSearchProps } from './LocationSearch.props';
 import {
-  LocationItemContainer,
+  Container,
+  SearchLocationContainer,
   SpinnerContainer,
   Results,
+  Item,
 } from './LocationSearch.style';
 
 const NO_RESULTS = 'No results';
 const API_ERROR = 'Please try again';
 
-const LocationSearch = (props: LocationSearchProps): JSX.Element => {
-  const theme = useTheme();
-  const [searchValue, setSearchValue] = useState('');
+const LocationSearch = ({
+  textFieldProps,
+  ...props
+}: LocationSearchProps): JSX.Element => {
+  const [searchValue, setSearchValue] = useState(
+    textFieldProps?.value ? String(textFieldProps.value) : ''
+  );
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [searchData, setSearchData] = useState<{ id: string; title: string }[]>(
     (props.initialResult || []).map((v) => ({
@@ -30,6 +36,7 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
   );
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
+  const [doSearch, setDoSearch] = useState(!!textFieldProps?.value);
 
   const [hasMap, error] = useScript(
     `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY}`
@@ -116,11 +123,15 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
           },
           (result: any, status) => {
             if (status === 'OK') {
-              props.onSelect(parseGooglePlaceData(result));
+              const parsedResult = parseGooglePlaceData(result);
+              props.onSelect(parsedResult);
+              setSearchValue(parsedResult.address);
             }
 
             setLoading(false);
             setLoadingData(false);
+            setSearchData([]);
+            setDoSearch(true);
           }
         );
       }
@@ -148,7 +159,7 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
       setTimer(null);
     }
 
-    if (searchValue.length > 2 && !loading && !loadingData) {
+    if (searchValue.length > 2 && !loading && !loadingData && !doSearch) {
       const timerId = setTimeout(() => {
         search(searchValue);
       }, 800);
@@ -157,38 +168,51 @@ const LocationSearch = (props: LocationSearchProps): JSX.Element => {
   }, [searchValue]);
 
   return (
-    <>
-      <Search
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        resetValue={() => setSearchValue('')}
+    <Container>
+      <TextField
+        {...textFieldProps}
+        LeftComponent={<Location />}
+        RightComponent={
+          doSearch ? (
+            <SearchLocationContainer onClick={() => setDoSearch(false)}>
+              <Typography variant="label">Search</Typography>
+            </SearchLocationContainer>
+          ) : null
+        }
         placeholder="Search for a Location"
         onKeyUp={onKeyUp}
+        value={searchValue}
+        onChangeText={(val) => setSearchValue(val)}
+        disabled={doSearch}
       />
 
-      {loading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
-      ) : (
+      {loading && (
+        <Results>
+          <SpinnerContainer>
+            <Spinner width={32} height={32} />
+          </SpinnerContainer>
+        </Results>
+      )}
+
+      {!loading && !isEmpty(searchData) && (
         <Results>
           {searchData.map((item) => (
-            <LocationItemContainer key={item.id}>
-              <Interactions
-                type="next"
-                value={item.title}
-                onClick={() => {
-                  if (!loadingData) {
-                    getLocationData(item.id, item.title);
-                  }
-                }}
-                {...props.interactionProps}
-              />
-            </LocationItemContainer>
+            <Item
+              key={item.id}
+              isSelected={item.title === searchValue}
+              className="item"
+              onClick={() => {
+                if (!loadingData) {
+                  getLocationData(item.id, item.title);
+                }
+              }}
+            >
+              {item.title}
+            </Item>
           ))}
         </Results>
       )}
-    </>
+    </Container>
   );
 };
 

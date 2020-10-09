@@ -30,8 +30,6 @@ export interface FilterModalProps extends ModalProps {
   setSelectedFilters: Dispatch<SetStateAction<string[]>>;
   selectedCheckboxFilters?: string[];
   setSelectedCheckboxFilters?: Dispatch<SetStateAction<string[]>>;
-  selectedLocation?: PlaceData | null;
-  setSelectedLocation?: Dispatch<SetStateAction<PlaceData | null>>;
   selectedSize?: string | null;
   setSelectedSize?: Dispatch<SetStateAction<string | null>>;
   onApply: () => void;

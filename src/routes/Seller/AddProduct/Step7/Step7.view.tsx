@@ -6,7 +6,7 @@ import { DollarSign, Clock } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
-import DropdownLocation from 'components/module/DropdownLocation';
+import LocationSearch from 'components/module/LocationSearch';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
@@ -205,12 +205,18 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
           />
         </Col>
         <Col md={6} className="textfield-col">
-          <DropdownLocation
-            value={origin?.address || ''}
-            onSelect={setOrigin}
-            label="Catchment Origin"
-            error={pathOr('', ['origin', '0'], errors)}
-            locationSearchProps={{ autocompleteType: '(cities)' }}
+          <LocationSearch
+            onSelect={(location) => {
+              if (location) {
+                setOrigin(location);
+              }
+            }}
+            autocompleteType={'(cities)'}
+            textFieldProps={{
+              value: origin?.address || '',
+              label: 'Catchment Origin',
+              error: pathOr('', ['origin', '0'], errors),
+            }}
           />
         </Col>
         <Col md={6} className="textfield-col">
