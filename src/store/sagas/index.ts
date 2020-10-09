@@ -33,6 +33,7 @@ import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
+import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import login from './login';
 import order from './order';
@@ -103,6 +104,7 @@ const sagas = [
   deleteCard,
   endListing,
   editSelectedListing,
+  getTransactionHistory,
 ];
 
 export default function* root() {
