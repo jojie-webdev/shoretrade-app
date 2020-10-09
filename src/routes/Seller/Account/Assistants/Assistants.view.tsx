@@ -37,13 +37,20 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     <Container>
       <InnerRouteHeader title="Fisherman / Assistant" />
 
-      <Row nogutter style={{ marginBottom: 24 }}>
-        <Col>
-          <AlertInfoView
-            label={`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+      <SmallAlertContainer>
+        <div className="icon-container">
+          <InfoFilled
+            fill={
+              theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade8
+            }
+            height={14}
+            width={14}
           />
-        </Col>
-      </Row>
+        </div>
+        <Typography variant="caption" className="text" color="alert">
+          {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+        </Typography>
+      </SmallAlertContainer>
 
       {accounts.map((account) => (
         <StyledInteaction

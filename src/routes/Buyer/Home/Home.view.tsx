@@ -43,6 +43,7 @@ import {
   SellerContainer,
   CardContainer,
   SellerCardTypography,
+  SmallAlertContainer,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -56,13 +57,13 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
 
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
-      <CreditContainer
+      <SmallAlertContainer
         onClick={() => history.push('/buyer/account/bank-details')}
         style={{ cursor: 'pointer' }}
       >
-        <InfoContainer>
+        <div className="icon-container">
           <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
-        </InfoContainer>
+        </div>
         <Text variant="label" color="shade8">
           {creditState === 'empty' ? (
             <>
@@ -89,7 +90,41 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
         <span style={{ paddingRight: '20px' }}>
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
         </span>
-      </CreditContainer>
+      </SmallAlertContainer>
+      // <CreditContainer
+      //   onClick={() => history.push('/buyer/account/bank-details')}
+      //   style={{ cursor: 'pointer' }}
+      // >
+      //   <InfoContainer>
+      //     <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
+      //   </InfoContainer>
+      //   <Text variant="label" color="shade8">
+      //     {creditState === 'empty' ? (
+      //       <>
+      //         You need to add credit to your account in order to make purchases.
+      //         <Bold variant="label" weight="bold">
+      //           {' '}
+      //           Click here
+      //         </Bold>{' '}
+      //         to add credit to your account.
+      //       </>
+      //     ) : (
+      //       <>
+      //         <>
+      //           You have{' '}
+      //           <Bold variant="label" weight="bold">
+      //             less than $250
+      //           </Bold>{' '}
+      //           in your account. Please fill it up if you want to continue
+      //           making purchases.
+      //         </>
+      //       </>
+      //     )}
+      //   </Text>
+      //   <span style={{ paddingRight: '20px' }}>
+      //     <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
+      //   </span>
+      // </CreditContainer>
     );
   }
   return null;
