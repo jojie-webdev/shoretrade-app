@@ -30,6 +30,7 @@ const PaginateList = (props: PaginateListProps): JSX.Element => {
               key={idx}
               value={label}
               onClick={() => onClickItem(item)}
+              resultCount={item.count}
             />
           );
         })}
