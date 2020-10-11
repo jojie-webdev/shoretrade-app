@@ -1,4 +1,5 @@
 export interface CashFlowGeneratedProps {
+  innerRouteTitle: string;
   name: string;
   isLoading: boolean;
   data: {

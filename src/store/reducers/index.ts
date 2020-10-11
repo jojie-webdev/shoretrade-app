@@ -40,6 +40,7 @@ import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
+import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import history from './history';
 import login from './login';
@@ -120,6 +121,7 @@ export default (routeHistory: History) =>
         updateDefaultCard,
         deleteCard,
         endListing,
+        getTransactionHistory,
       }).sort()
     )
   );

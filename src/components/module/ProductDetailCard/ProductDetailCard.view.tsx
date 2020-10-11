@@ -29,7 +29,7 @@ const ProductDetailCard = (props: ProductDetailCardProps): JSX.Element => {
     size,
     location,
     vendor,
-    unit = 'Kg',
+    unit = 'kg',
   } = props;
 
   return (

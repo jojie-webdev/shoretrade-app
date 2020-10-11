@@ -14,7 +14,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
   return (
     <Container>
       <HeaderRow align="center" justify="between">
-        <InnerRouteHeader title="Cash flow" fullRow={false} />
+        <InnerRouteHeader title={props.innerRouteTitle} fullRow={false} />
         <Typography variant="overline" color="shade6">
           {props.name}
         </Typography>

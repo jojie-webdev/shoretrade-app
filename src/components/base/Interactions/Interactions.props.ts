@@ -1,6 +1,12 @@
 import { ReactNode } from 'react';
 
-export type Types = 'next' | 'accordion' | 'edit' | 'radio' | 'checkbox';
+export type Types =
+  | 'next'
+  | 'accordion'
+  | 'edit'
+  | 'radio'
+  | 'checkbox'
+  | 'none';
 export type IconAlignmentTypes = 'flex-start' | 'center' | 'flex-end';
 
 export interface InteractionsProps {

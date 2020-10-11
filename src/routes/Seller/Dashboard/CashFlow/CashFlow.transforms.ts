@@ -29,7 +29,10 @@ export const getGraphData = (data: any, from: string) => {
       finalValues = [finalValues[0], ...finalValues];
     }
 
-    if (!lastDayFound) {
+    if (
+      !lastDayFound &&
+      moment(lastDay).isAfter(moment(finalDates[finalDates.length - 1]))
+    ) {
       finalDates = [...finalDates, lastDay];
       finalValues = [...finalValues, finalValues[finalValues.length - 1]];
     }

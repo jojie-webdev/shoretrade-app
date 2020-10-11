@@ -3,6 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { DollarSign, Clock } from 'components/base/SVG';
+import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import DropdownLocation from 'components/module/DropdownLocation';
@@ -213,6 +214,17 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
           />
         </Col>
         <Col md={6} className="textfield-col">
+          <Select
+            value={shippingAddress}
+            onChange={(option) => {
+              setShippingAddress(option.value);
+            }}
+            options={shippingAddressOptions}
+            label="Shipping Address"
+            error={pathOr('', ['shippingAddress', '0'], errors)}
+          />
+        </Col>
+        <Col md={6} className="textfield-col">
           <DatePickerDropdown
             className="date-picker"
             placeholder=""
@@ -223,17 +235,6 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
-          />
-        </Col>
-        <Col md={6} className="textfield-col">
-          <Select
-            value={shippingAddress}
-            onChange={(option) => {
-              setShippingAddress(option.value);
-            }}
-            options={shippingAddressOptions}
-            label="Shipping Address"
-            error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
         <Col md={6} className="textfield-col">
@@ -282,10 +283,11 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
         </Col>
 
         <Col md={12} className="textfield-col">
-          <TextField
+          <TextArea
             label="Additional notes (Optional)"
             value={description}
             onChangeText={setDescription}
+            autoHeight
           />
         </Col>
       </Row>

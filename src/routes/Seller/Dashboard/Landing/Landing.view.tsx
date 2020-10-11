@@ -115,7 +115,7 @@ const TotalSales = (props: any) => {
     return (
       <SalesCard>
         <Typography variant="overline" color="shade6" className="overline">
-          Paid
+          Total Paid
         </Typography>
         <Typography variant="title4" color="noshade">
           {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
@@ -129,7 +129,7 @@ const TotalSales = (props: any) => {
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
-            Total Sales
+            Payment
           </Typography>
         </Link>
       </Col>
@@ -145,7 +145,7 @@ const TotalSales = (props: any) => {
       <Col md={6}>
         <SalesCard>
           <Typography variant="overline" color="shade6" className="overline">
-            Pending
+            Pending Payment
           </Typography>
           <Typography variant="title4" color="noshade">
             {numberToShortenAmount(props.data.pending ? props.data.pending : 0)}

@@ -25,10 +25,11 @@ import {
 const Preview = (props: PreviewProps): JSX.Element => {
   const { cardContainerStyle, cardContainerClass } = props;
   const theme = useTheme();
+  console.log(props.origin);
   return (
     <CardContainer>
       <div
-        className={`card ${cardContainerClass ? cardContainerClass : ''}`}
+        className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}
       >
         <div className="imgContainer">
@@ -42,7 +43,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   variant="small"
                   color="noshade"
                 >
-                  {props.origin?.countryCode}
+                  {props.origin?.state}, {props.origin?.countryCode}
                 </Typography>
               </div>
             </Badge>

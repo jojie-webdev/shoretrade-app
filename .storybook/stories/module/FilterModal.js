@@ -31,7 +31,7 @@ const ModalComponent = ({ children }) => {
       label: 'Size',
       type: 'size_input',
       values: ['3000', '5000'],
-      unit: 'Kg',
+      unit: 'kg',
     },
     {
       label: 'Type',
