@@ -166,6 +166,7 @@ export const Content = styled.div<{
       overflow-y: auto;
 
       .container {
+        min-height: 100%;
         width: 100%;
       }
     }

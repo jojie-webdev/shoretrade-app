@@ -102,7 +102,7 @@ const BoxSummary = ({
         >
           Total
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.total.toFixed(2)} {unit}
         </Typography>
       </div>
@@ -115,7 +115,7 @@ const BoxSummary = ({
         >
           Quantities
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.quantities}
         </Typography>
       </div>
@@ -128,7 +128,7 @@ const BoxSummary = ({
         >
           Average
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.average.toFixed(2)}
         </Typography>
       </div>
