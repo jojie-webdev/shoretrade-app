@@ -225,6 +225,13 @@ export const HeaderContainer = styled.nav`
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media ${BREAKPOINTS.sm} {
+      p {
+        font-size: 1.75rem;
+        line-height: 34px;
+      }
+    }
   }
 
   .back-button-container {
