@@ -10,7 +10,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { Step8Props } from './Step8.props';
-import { Container } from './Step8.style';
+import { Container, ButtonRow } from './Step8.style';
 
 function Step8({
   isCustomType,
@@ -159,19 +159,19 @@ function Step8({
           />
         </Col>
       </Row>
-      <Row justify="end" style={{ padding: '0 15px' }}>
+      <ButtonRow justify="end">
         <Button
-          style={{ marginRight: 16, width: 200 }}
           text="Preview"
           variant="outline"
           onClick={() => preview()}
+          className="button"
         />
         <Button
-          style={{ width: 200 }}
           text={isExisting ? 'Update' : 'Add'}
           onClick={() => saveListing()}
+          className="button"
         />
-      </Row>
+      </ButtonRow>
     </Container>
   );
 }
