@@ -129,6 +129,11 @@ const Sold = (): JSX.Element => {
       tab: TabOptions;
     };
 
+    if (!tab) {
+      setCurrentTab('To Ship');
+      return;
+    }
+
     setCurrentTab(tab);
   }, [location.search]);
 
