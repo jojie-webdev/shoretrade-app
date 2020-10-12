@@ -14,7 +14,7 @@ export const CardContainer = styled.div`
     border-radius: 4px;
     box-sizing: border-box;
     border-radius: 4px;
-    width: 203px;
+    width: 100%;
     height: 160px;
     margin-right: 32px;
     transition: transform 0.2s;
