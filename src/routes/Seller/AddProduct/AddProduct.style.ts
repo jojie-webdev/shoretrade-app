@@ -21,5 +21,6 @@ export const ProgressIndicator = styled.div`
   @media ${BREAKPOINTS['sm']} {
     top: 0px;
     height: 5px;
+    z-index: 100;
   }
 `;

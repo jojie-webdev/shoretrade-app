@@ -7,8 +7,13 @@ export const Container = styled.div`
     flex-direction: row;
     margin-bottom: 16px;
   }
+
   .select-row {
     margin-bottom: 12px;
+
+    & > div:not(:last-child) {
+      margin-bottom: 16px;
+    }
   }
 
   .select-col {

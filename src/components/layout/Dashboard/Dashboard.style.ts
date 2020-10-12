@@ -166,6 +166,7 @@ export const Content = styled.div<{
       overflow-y: auto;
 
       .container {
+        min-height: 100%;
         width: 100%;
       }
     }
@@ -224,6 +225,13 @@ export const HeaderContainer = styled.nav`
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media ${BREAKPOINTS.sm} {
+      p {
+        font-size: 1.75rem;
+        line-height: 34px;
+      }
+    }
   }
 
   .back-button-container {

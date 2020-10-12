@@ -62,6 +62,7 @@ const SizeInput = (props: SizeInputProps) => {
             readOnly={disabled}
           />
         </Col>
+
         <Col md={6}>
           <TextField
             label={`Size To\n(Optional)`}
