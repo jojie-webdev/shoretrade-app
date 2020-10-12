@@ -74,6 +74,10 @@ export const CategoriesContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 16px;
 
+  .row {
+    width: 100%;
+  }
+
   .card {
     margin-right: 0px !important;
   }
@@ -162,11 +166,11 @@ export const CardContainer = styled.div`
 
   .card {
     background: white;
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
     box-sizing: border-box;
-    width: 203px;
+    width: 100%;
     height: 170px;
     margin-right: 32px;
     transition: transform 0.2s;

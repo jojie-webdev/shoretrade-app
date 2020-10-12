@@ -37,4 +37,8 @@ export interface HomeGeneratedProps {
   favourites: GetBuyerHomepageResponseListingItem[];
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
+  chunkedCategories: CategoryResults[][];
+  chunkedFavorites: GetBuyerHomepageResponseListingItem[][];
+  chunkedRecentlyAdded: GetBuyerHomepageResponseListingItem[][];
+  chunkedSellers: SellerResults[][];
 }

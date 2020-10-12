@@ -3,7 +3,9 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const CardContainer = styled.div`
-  width: 267.5px;
+  /* width: 267.5px; */
+  width: 100%;
+
   img {
     display: block;
     border: 0;

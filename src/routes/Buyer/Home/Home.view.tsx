@@ -18,6 +18,7 @@ import reverse from 'ramda/es/reverse';
 import { Row, Col, Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -212,34 +213,40 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </FavouritesHeader>
           <FavouritesContainer>
-            {favourites.length > 0
-              ? favourites
-                  .slice(0, getMaxFavouritesDisplay())
-                  .map((fav, index) => {
-                    return (
-                      <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
-                        <PreviewCard
-                          id={fav.id}
-                          images={fav.images}
-                          type={fav.type}
-                          price={toPrice(fav.price)}
-                          remaining={fav.remaining.toFixed(2)}
-                          coop={fav.coop}
-                          minimumOrder={fav.minimumOrder}
-                          origin={fav.origin}
-                          weight={sizeToString(
-                            fav.size.unit,
-                            fav.size.from,
-                            fav.size.to
-                          )}
-                          isAquafuture={fav.isAquafuture}
-                          unit={fav.measurementUnit}
-                          state={fav.state}
-                        />
-                      </Link>
-                    );
-                  })
-              : null}
+            <Swiper style={{ width: '100%' }}>
+              {props.chunkedFavorites.map((chunked, ndx) => {
+                return (
+                  <SwiperSlide key={`favorite${ndx}`}>
+                    <Row style={{ width: '100%' }}>
+                      {chunked.map((fav) => (
+                        <Col md={4} lg={3} key={fav.id}>
+                          <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
+                            <PreviewCard
+                              id={fav.id}
+                              images={fav.images}
+                              type={fav.type}
+                              price={toPrice(fav.price)}
+                              remaining={fav.remaining.toFixed(2)}
+                              coop={fav.coop}
+                              minimumOrder={fav.minimumOrder}
+                              origin={fav.origin}
+                              weight={sizeToString(
+                                fav.size.unit,
+                                fav.size.from,
+                                fav.size.to
+                              )}
+                              isAquafuture={fav.isAquafuture}
+                              unit={fav.measurementUnit}
+                              state={fav.state}
+                            />
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
           </FavouritesContainer>
         </ViewCol>
 
@@ -258,25 +265,34 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </CategoriesHeader>
           <CategoriesContainer>
-            {categories.length > 0 ? (
-              categories.slice(0, 4).map((category, index) => {
-                return (
-                  <Link
-                    to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                    key={category.id}
-                  >
-                    <Card
-                      sortIndex={category.sortIndex}
-                      id={category.id}
-                      image={category.thumbnail}
-                      label={category.name}
-                    />
-                  </Link>
-                );
-              })
-            ) : (
-              <Loading />
-            )}
+            <Swiper style={{ width: '100%' }}>
+              {!loading ? (
+                props.chunkedCategories.map((chunked, ndx) => {
+                  return (
+                    <SwiperSlide key={`category${ndx}`}>
+                      <Row style={{ width: '100%' }}>
+                        {chunked.map((category) => (
+                          <Col md={3} key={category.id}>
+                            <Link
+                              to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
+                            >
+                              <Card
+                                sortIndex={category.sortIndex}
+                                id={category.id}
+                                image={category.thumbnail}
+                                label={category.name}
+                              />
+                            </Link>
+                          </Col>
+                        ))}
+                      </Row>
+                    </SwiperSlide>
+                  );
+                })
+              ) : (
+                <Loading />
+              )}
+            </Swiper>
           </CategoriesContainer>
         </ViewCol>
       </div>
@@ -295,35 +311,42 @@ const HomeView = (props: HomeGeneratedProps) => {
               onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
             />
           </RecentHeader>
+
           <RecentContainer>
-            {recentlyAdded.length > 0
-              ? recentlyAdded
-                  .slice(0, getMaxFavouritesDisplay())
-                  .map((recent, index) => {
-                    return (
-                      <Link key={recent.id} to={`/buyer/product/${recent.id}`}>
-                        <PreviewCard
-                          id={recent.id}
-                          images={recent.images}
-                          type={recent.type}
-                          price={toPrice(recent.price)}
-                          remaining={recent.remaining.toFixed(2)}
-                          coop={recent.coop}
-                          minimumOrder={recent.minimumOrder}
-                          origin={recent.origin}
-                          weight={sizeToString(
-                            recent.size.unit,
-                            recent.size.from,
-                            recent.size.to
-                          )}
-                          isAquafuture={recent.isAquafuture}
-                          unit={recent.measurementUnit}
-                          state={recent.state}
-                        />
-                      </Link>
-                    );
-                  })
-              : null}
+            <Swiper style={{ width: '100%' }}>
+              {props.chunkedRecentlyAdded.map((chunked, ndx) => {
+                return (
+                  <SwiperSlide key={`recentlyAdded${ndx}`}>
+                    <Row style={{ width: '100%' }}>
+                      {chunked.map((recent) => (
+                        <Col md={4} lg={3} key={recent.id}>
+                          <Link to={`/buyer/product/${recent.id}`}>
+                            <PreviewCard
+                              id={recent.id}
+                              images={recent.images}
+                              type={recent.type}
+                              price={toPrice(recent.price)}
+                              remaining={recent.remaining.toFixed(2)}
+                              coop={recent.coop}
+                              minimumOrder={recent.minimumOrder}
+                              origin={recent.origin}
+                              weight={sizeToString(
+                                recent.size.unit,
+                                recent.size.from,
+                                recent.size.to
+                              )}
+                              isAquafuture={recent.isAquafuture}
+                              unit={recent.measurementUnit}
+                              state={recent.state}
+                            />
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
           </RecentContainer>
         </ViewCol>
       </div>
@@ -343,29 +366,38 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </SellerHeader>
           <SellerContainer>
-            {favouriteSellers.length > 0 ? (
-              favouriteSellers.slice(0, 4).map((s, index) => {
+            <Swiper style={{ width: '100%' }}>
+              {props.chunkedSellers.map((chunked, ndx) => {
                 return (
-                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                    <CardContainer className="centered">
-                      <div className="card">
-                        <img src={s.companyImage} alt={s.companyImage} />
-                        <div className="card-content">
-                          <SellerCardTypography
-                            variant="label"
-                            style={{ lineHeight: '-24px' }}
-                          >
-                            {s.companyName}
-                          </SellerCardTypography>
-                        </div>
-                      </div>
-                    </CardContainer>
-                  </Link>
+                  <SwiperSlide key={`favoriteSellers${ndx}`}>
+                    <Row style={{ width: '100%' }}>
+                      {chunked.map((s) => (
+                        <Col md={4} lg={3} key={s.id}>
+                          <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                            <CardContainer className="centered">
+                              <div className="card">
+                                <img
+                                  src={s.companyImage}
+                                  alt={s.companyImage}
+                                />
+                                <div className="card-content">
+                                  <SellerCardTypography
+                                    variant="label"
+                                    style={{ lineHeight: '-24px' }}
+                                  >
+                                    {s.companyName}
+                                  </SellerCardTypography>
+                                </div>
+                              </div>
+                            </CardContainer>
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  </SwiperSlide>
                 );
-              })
-            ) : (
-              <Loading />
-            )}
+              })}
+            </Swiper>
           </SellerContainer>
         </ViewCol>
       </div>

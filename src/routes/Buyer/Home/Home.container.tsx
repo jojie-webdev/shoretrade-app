@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { remove } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useLocation } from 'react-router-dom';
 import {
   searchAndCountProductTypeActions,
@@ -12,6 +14,7 @@ import {
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import chunkArray from 'utils/chunkArray';
 
 import { HomeGeneratedProps, CreditState } from './Home.props';
 import HomeView from './Home.view';
@@ -154,6 +157,10 @@ const Home = (): JSX.Element => {
       (state: Store) => state.getBuyerHomepage.data?.data.data.categories
     ) || [];
 
+  const mdBreakpoint = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
+
   const generatedProps: HomeGeneratedProps = {
     search,
     searchTerm,
@@ -174,6 +181,10 @@ const Home = (): JSX.Element => {
     recentlyAdded,
     favouriteSellers,
     sellers,
+    chunkedCategories: chunkArray(categories, mdBreakpoint ? 3 : 4),
+    chunkedFavorites: chunkArray(favourites, 3),
+    chunkedRecentlyAdded: chunkArray(recentlyAdded, mdBreakpoint ? 3 : 4),
+    chunkedSellers: chunkArray(sellers, mdBreakpoint ? 3 : 4),
   };
 
   return <HomeView {...generatedProps} />;
