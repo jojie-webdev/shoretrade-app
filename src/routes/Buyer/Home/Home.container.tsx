@@ -1,8 +1,14 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 
+import { remove } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { currentAddressActions, getBuyerHomepageActions } from 'store/actions';
+import {
+  searchAndCountProductTypeActions,
+  currentAddressActions,
+  historyActions,
+  getBuyerHomepageActions,
+} from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -11,13 +17,10 @@ import { HomeGeneratedProps, CreditState } from './Home.props';
 import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
-  const [search, setSearch] = useState('');
-  const location = useLocation();
   const dispatch = useDispatch();
   const addresses = GetAddressOptions();
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
-
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -25,37 +28,84 @@ const Home = (): JSX.Element => {
       })
     );
   };
+  const [searchTerm, setSearchTerm] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const location = useLocation(); // check this out
 
-  const favourites = (
+  const loading =
+    useSelector((state: Store) => state.searchAndCountProductType.pending) ||
+    false;
+
+  const results =
     useSelector(
-      (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteListing
-    ) || []
-  ).filter((result) =>
-    search ? result.type.toLowerCase().includes(search.toLowerCase()) : true
-  );
+      (state: Store) => state.searchAndCountProductType.data?.data.types
+    ) || [];
 
-  const categories = (
+  const recentlyAdded =
     useSelector(
-      (state: Store) => state.getBuyerHomepage.data?.data.data.categories
-    ) || []
-  ).filter((category) =>
-    search ? category.name.toLowerCase().includes(search.toLowerCase()) : true
-  );
+      (state: Store) => state.getBuyerHomepage.data?.data.data.recentListing
+    ) || [];
 
-  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+  const sellers =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.sellers
+    ) || [];
+
+  const favouriteSellers =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteSellers
+    ) || [];
+
+  const search = () => {
+    dispatch(
+      searchAndCountProductTypeActions.request({
+        term: searchTerm,
+        address: '',
+      })
+    );
   };
 
-  const onLoad = () => {
-    dispatch(getBuyerHomepageActions.request());
+  const onReset = () => {
+    setSearchTerm('');
   };
 
-  const resetSearchValue = () => {
-    setSearch('');
+  const recent =
+    useSelector((state: Store) => state.history.buyerRecentSearch) || [];
+
+  const saveSearchHistory = (id: string, label: string, count: string) => {
+    const historyLimit = 20;
+    const isExisting = recent.findIndex((r) => r.value === id) !== -1;
+    if (!isExisting) {
+      dispatch(
+        historyActions.update({
+          buyerRecentSearch: [
+            ...(recent.length === historyLimit ? remove(0, 1, recent) : recent),
+            {
+              value: id,
+              label,
+              count,
+            },
+          ],
+        })
+      );
+    }
   };
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    const timerId = setTimeout(() => {
+      search();
+    }, 800);
+
+    setTimer(timerId);
+  }, [searchTerm]);
 
   const company = GetDefaultCompany();
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
@@ -63,7 +113,7 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     if (company) {
       setCurrentCompany(company);
-      setLoading(false);
+      // setLoading(false);
     }
   });
 
@@ -93,20 +143,36 @@ const Home = (): JSX.Element => {
   const creditState: CreditState = getCreditState();
 
   const featured: string[] = bannerData;
+  const favourites =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteListing
+    ) || [];
+
+  const categories =
+    useSelector(
+      (state: Store) => state.getBuyerHomepage.data?.data.data.categories
+    ) || [];
 
   const generatedProps: HomeGeneratedProps = {
+    search,
+    searchTerm,
+    setSearchTerm,
+    loading,
+    results,
+    onReset,
+    recent,
     addresses,
     selectedAddress,
     selectAddress,
+    saveSearchHistory,
     favourites,
     categories,
-    search,
-    onChangeSearchValue,
-    resetSearchValue,
-    loading,
     creditState,
     creditBalance,
     featured,
+    recentlyAdded,
+    favouriteSellers,
+    sellers,
   };
 
   return <HomeView {...generatedProps} />;

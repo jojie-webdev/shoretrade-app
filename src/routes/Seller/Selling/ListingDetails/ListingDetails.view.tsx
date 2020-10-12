@@ -138,7 +138,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               {sales.sales}
             </Typography>
             <Typography color="shade6">
-              {`${sales.soldWeight} / ${sales.totalWeight} ${sales.unit}`}
+              {`${orderDetails.remaining} / ${sales.totalWeight}${sales.unit}`}
             </Typography>
           </SalesCard>
           <OrderBoxCard>
@@ -151,7 +151,8 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Min. Order
                 </Typography>
                 <Typography color="shade9" weight="bold">
-                  {orderDetails.minOrder} {orderDetails.unit}
+                  {orderDetails.minOrder}
+                  {orderDetails.unit}
                 </Typography>
               </div>
               <div className="order-details-item">
@@ -159,7 +160,8 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Remaining
                 </Typography>
                 <Typography color="shade9" weight="bold">
-                  {orderDetails.remaining} {orderDetails.unit}
+                  {orderDetails.remaining}
+                  {orderDetails.unit}
                 </Typography>
               </div>
             </div>
@@ -185,13 +187,15 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               boxDetails.boxes?.map((b) => (
                 <div key={b.id} className="box-details-row">
                   <Typography color="shade9" weight="bold">
-                    {b.weight} {boxDetails.unit}
+                    {b.weight}
+                    {boxDetails.unit}
                   </Typography>
                   <Typography color="shade9" weight="bold">
-                    x{b.quantity}
+                    x {b.quantity}
                   </Typography>
                   <Typography color="shade9" weight="bold">
-                    {b.quantity * b.weight} {boxDetails.unit}
+                    {b.quantity * b.weight}
+                    {boxDetails.unit}
                   </Typography>
                   <Typography color="shade9" weight="bold">
                     {b.count}

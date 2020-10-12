@@ -19,7 +19,7 @@ export const AvatarPreview = styled.img`
   height: 96px;
   border-radius: 5px;
   border-color: grey;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const AvatarPlaceholder = styled.img`
@@ -52,6 +52,6 @@ export const Favorite = styled.button`
   border-width: 0;
   border-radius: 50%;
   background-color: white;
-  padding-top: 6px;
+  padding-top: 8px;
   box-shadow: 0px 4px 10px -5px;
 `;

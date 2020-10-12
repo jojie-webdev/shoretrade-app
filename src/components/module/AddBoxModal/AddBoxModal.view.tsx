@@ -8,7 +8,7 @@ import { AddBoxModalProps, BoxValues } from './AddBoxModal.props';
 import { Inputs, ButtonContainer, StyledTextField } from './AddBoxModal.style';
 
 const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
-  const { onAdd, unit = 'Kg', ...modalProps } = props;
+  const { onAdd, unit = 'kg', ...modalProps } = props;
   const [values, setValues] = useState<BoxValues>({
     weight: '',
     quantity: '',

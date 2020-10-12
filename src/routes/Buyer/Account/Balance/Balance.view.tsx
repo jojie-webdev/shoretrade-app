@@ -45,7 +45,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
           <LinkCreditHistory
             value="Credit History"
             onClick={() => {
-              history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_HISORY}`);
+              history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
             }}
           />
           <Button

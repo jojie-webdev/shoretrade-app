@@ -59,7 +59,7 @@ storiesOf('base/TextField', module).add('Summary', () => {
           placeholder="0"
           LeftComponent={
             <Typography variant="label" color="shade6">
-              Kg
+              kg
             </Typography>
           }
         />

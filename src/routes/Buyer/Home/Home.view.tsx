@@ -1,18 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
+import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
-import { InfoFilled, ChevronRight } from 'components/base/SVG';
+import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isEmpty } from 'ramda';
+import reverse from 'ramda/es/reverse';
 import { Row, Col, Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
@@ -35,6 +39,12 @@ import {
   SearchRow,
   ViewCol,
   ViewContainer,
+  RecentHeader,
+  RecentContainer,
+  SellerHeader,
+  SellerContainer,
+  CardContainer,
+  SellerCardTypography,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -90,13 +100,20 @@ const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
     categories,
-    onChangeSearchValue,
-    resetSearchValue,
     search,
-    creditState,
+    searchTerm,
+    setSearchTerm,
     loading,
+    results,
+    onReset,
+    recent,
+    saveSearchHistory,
+    creditState,
     featured,
     favourites,
+    recentlyAdded,
+    sellers,
+    favouriteSellers,
     addresses,
   } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
@@ -127,9 +144,10 @@ const HomeView = (props: HomeGeneratedProps) => {
     return 3;
   };
 
-  useEffect(() => {
-    setCurrentAddressSelected(addresses[0]); //Todo: will be change to default address
-  }, [addresses]);
+  useEffect(() => setCurrentAddressSelected(addresses[0]), [addresses]);
+
+  const showRecentSearch = searchTerm.length === 0;
+  const data = showRecentSearch ? reverse(recent) : results;
 
   return (
     <ViewContainer>
@@ -145,11 +163,11 @@ const HomeView = (props: HomeGeneratedProps) => {
       />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>
+        <Col xs={12} style={{ marginBottom: '46px' }}>
           <Search
-            value={search}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            resetValue={onReset}
             placeholder="Search.."
           />
           <div className="buying-for">
@@ -166,6 +184,35 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </div>
         </Col>
+        {!isEmpty(data) && (
+          <Typography variant="overline" color="shade6">
+            {showRecentSearch ? 'Recent Searches' : `Results ${results.length}`}
+          </Typography>
+        )}
+        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+          <>
+            <EmptyState
+              onButtonClicked={onReset}
+              Svg={Octopus}
+              title="No search result"
+              buttonText="Reset Search"
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        ) : (
+          <>
+            <PaginateList
+              list={data || []}
+              labelPath={['label']}
+              maxItemPerPage={6}
+              onClickItem={(item) => {
+                history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                saveSearchHistory(item.value, item.label, item.count);
+              }}
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        )}
       </div>
 
       <Carousel
@@ -259,6 +306,137 @@ const HomeView = (props: HomeGeneratedProps) => {
               <Loading />
             )}
           </CategoriesContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <RecentHeader>
+            <Typography variant="title5" color="shade8">
+              Recently Added
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+            />
+          </RecentHeader>
+          <RecentContainer>
+            {recentlyAdded.length > 0
+              ? recentlyAdded
+                  .slice(0, getMaxFavouritesDisplay())
+                  .map((recent, index) => {
+                    return (
+                      <Link key={recent.id} to={`/buyer/product/${recent.id}`}>
+                        <PreviewCard
+                          id={recent.id}
+                          images={recent.images}
+                          type={recent.type}
+                          price={toPrice(recent.price)}
+                          remaining={recent.remaining.toFixed(2)}
+                          coop={recent.coop}
+                          minimumOrder={recent.minimumOrder}
+                          origin={recent.origin}
+                          weight={sizeToString(
+                            recent.size.unit,
+                            recent.size.from,
+                            recent.size.to
+                          )}
+                          isAquafuture={recent.isAquafuture}
+                          unit={recent.measurementUnit}
+                          state={recent.state}
+                        />
+                      </Link>
+                    );
+                  })
+              : null}
+          </RecentContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Favourite Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {favouriteSellers.length > 0 ? (
+              favouriteSellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
+                          >
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
+        </ViewCol>
+      </div>
+      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+        <ViewCol>
+          <SellerHeader>
+            <Typography variant="title5" color="shade8">
+              Sellers
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+            />
+          </SellerHeader>
+          <SellerContainer>
+            {sellers.length > 0 ? (
+              sellers.slice(0, 4).map((s, index) => {
+                return (
+                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                    <CardContainer className="centered">
+                      <div className="card">
+                        <img src={s.companyImage} alt={s.companyImage} />
+                        <div className="card-content">
+                          <SellerCardTypography
+                            variant="label"
+                            style={{ lineHeight: '-24px' }}
+                          >
+                            {s.companyName}
+                          </SellerCardTypography>
+                        </div>
+                      </div>
+                    </CardContainer>
+                  </Link>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </SellerContainer>
         </ViewCol>
       </div>
     </ViewContainer>

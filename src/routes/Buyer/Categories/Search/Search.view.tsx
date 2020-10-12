@@ -46,9 +46,15 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
       <DetailsContainer>
         <Typography className="title">{result.name}</Typography>
         <ResultContainer>
-          <Typography variant="caption" weight="bold">
-            {toPrice(result.price.to)}
-          </Typography>
+          {result.price.from != result.price.to ? (
+            <Typography variant="caption" weight="bold">
+              {toPrice(result.price.from)} - {toPrice(result.price.to)}
+            </Typography>
+          ) : (
+            <Typography variant="caption" weight="bold">
+              {toPrice(result.price.from)}
+            </Typography>
+          )}
           <Typography variant="caption" color="shade6" className="per">
             per
           </Typography>

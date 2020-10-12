@@ -30,10 +30,19 @@ const transform = (
     isUngraded: data?.sizeFrom === null,
     sizeFrom: data?.sizeFrom,
     sizeTo: data?.sizeTo,
-    existingImages: data?.images.map((image, index) => ({
-      image,
-      requirementId: formData.photoRequirements[index].id,
-    })),
+    existingImages: data?.images
+      .map((image, index) => ({
+        image,
+        requirementId: formData.photoRequirements[index].id,
+      }))
+      // removes images that came from default gallery
+      .filter(
+        (image) =>
+          // for common types
+          !image.image.includes('type-default') &&
+          // for custom types
+          !image.image.includes('No-Image-Placeholder')
+      ),
     pricePerKilo: Number(data?.pricePerKilo || 0),
     boxes: data?.boxes,
     minOrder: Number(data?.minimumOrder || 0),

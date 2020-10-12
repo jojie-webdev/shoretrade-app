@@ -84,6 +84,9 @@ export const BUYER_ROUTES = {
   ORDERS: `${BUYER_ROOT}/orders`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
+  RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
+  SELLERS: `${BUYER_ROOT}/sellers`,
+  FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {
@@ -100,7 +103,7 @@ export const BUYER_ACCOUNT_ROUTES = {
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
-  CREDIT_HISORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
+  BALANCE_HISTORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
 };

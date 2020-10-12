@@ -23,6 +23,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 0 8px 8px 8px;
 `;
 
 export const SellerRatingContainer = styled.div`
@@ -58,11 +59,8 @@ export const SearchContainer = styled.div`
 
 export const ListContainer = styled.div`
   margin: 24px auto;
-  max-height: 400px;
   overflow: auto;
   overflow-x: hidden;
-
-  ${customScrollbar}
 `;
 
 export const ListItemInteraction = styled(Interactions)`

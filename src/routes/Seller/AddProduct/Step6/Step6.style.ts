@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -78,7 +79,7 @@ export const BoxDetailsContainer = styled.div`
 
 export const BoxSummaryContainer = styled.div`
   position: absolute;
-  /* bottom: 0; */
+  bottom: 0;
   left: 0;
   display: flex;
   align-items: center;
@@ -92,6 +93,24 @@ export const BoxSummaryContainer = styled.div`
 
     .inner-text {
       margin-right: 40px;
+    }
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    padding: 16px;
+
+    .text-container {
+      flex: 1;
+      display: flex;
+
+      .inner-text {
+        flex: 1;
+        margin-right: 0;
+
+        .value {
+          margin-top: 4px;
+        }
+      }
     }
   }
 `;

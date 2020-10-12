@@ -17,6 +17,7 @@ export const CardContainer = styled.div`
     width: 203px;
     height: 160px;
     margin-right: 32px;
+    transition: transform 0.2s;
   }
 
   .card a {
@@ -26,6 +27,7 @@ export const CardContainer = styled.div`
 
   .card:hover {
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
+    transform: scale(1.1);
   }
 
   .card-content {

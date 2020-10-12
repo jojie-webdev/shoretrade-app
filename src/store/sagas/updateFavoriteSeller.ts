@@ -1,7 +1,7 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { updateFavouriteSeller } from 'services/favourite';
+import { getBuyerHomepageActions } from 'store/actions';
 import updateFavoriteSellerActions from 'store/actions/updateFavoriteSeller';
-// import { getBuyerHomepageActions } from 'store/actions';
 import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import {
@@ -47,7 +47,7 @@ function* updateFavoriteSellerSuccess(
   action: AsyncAction<UpdateFavoriteSellerMeta, UpdateFavoriteSellerPayload>
 ) {
   // TODO: Disabled until getBuyerHomepageActions is supported
-  // yield put(getBuyerHomepageActions.request());
+  yield put(getBuyerHomepageActions.request());
 }
 
 function* updateFavoriteSellerWatcher() {

@@ -160,14 +160,13 @@ export const Content = styled.div<{
 
       width: ${(props) =>
         props.shouldUseFullWidth ? '100%' : 'calc(100% - 200px)'};
-      height: 100%;
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-x: hidden;
       overflow-y: auto;
 
       .container {
-        height: 100%;
+        min-height: 100%;
         width: 100%;
       }
     }
@@ -226,6 +225,13 @@ export const HeaderContainer = styled.nav`
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media ${BREAKPOINTS.sm} {
+      p {
+        font-size: 1.75rem;
+        line-height: 34px;
+      }
+    }
   }
 
   .back-button-container {

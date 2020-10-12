@@ -10,7 +10,7 @@ const props = {
   uri: 'https://picsum.photos/80',
   vendor: 'Peter Manettas',
   weight: '12',
-  unit: 'Kg',
+  unit: 'kg',
   size: 'Baby — Extra Large',
   price: '624.50',
 };
