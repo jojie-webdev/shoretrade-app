@@ -25,7 +25,6 @@ import {
 const Preview = (props: PreviewProps): JSX.Element => {
   const { cardContainerStyle, cardContainerClass } = props;
   const theme = useTheme();
-  console.log(props.origin);
   return (
     <CardContainer>
       <div

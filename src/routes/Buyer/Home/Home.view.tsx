@@ -114,7 +114,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     recentlyAdded,
     sellers,
     favouriteSellers,
-    addresses,
+    addressOptions,
+    selectedAddress,
   } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
@@ -144,8 +145,19 @@ const HomeView = (props: HomeGeneratedProps) => {
     return 3;
   };
 
-  useEffect(() => setCurrentAddressSelected(addresses[0]), [addresses]);
+  useEffect(() => {
+    const load = async () => {
+      if (addressOptions) {
+        const filteredArray = await addressOptions.find(
+          (a) => a.value === selectedAddress
+        );
+        setCurrentAddressSelected(filteredArray);
+      }
+    };
+    load();
+  }, [addressOptions]);
 
+  // console.log({ addresses, addressOptions });
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
 
@@ -172,7 +184,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           />
           <div className="buying-for">
             <Select
-              options={addresses}
+              options={addressOptions}
               label="Buying For"
               size="small"
               onFocus={() => {}}

@@ -18,7 +18,7 @@ import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
   const dispatch = useDispatch();
-  const addresses = GetAddressOptions();
+  const addressOptions = GetAddressOptions();
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
   const selectAddress = (id: string) => {
@@ -31,7 +31,6 @@ const Home = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const location = useLocation(); // check this out
-
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
@@ -162,6 +161,7 @@ const Home = (): JSX.Element => {
     onReset,
     recent,
     addresses,
+    addressOptions,
     selectedAddress,
     selectAddress,
     saveSearchHistory,
