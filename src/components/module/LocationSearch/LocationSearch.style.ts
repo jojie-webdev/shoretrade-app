@@ -12,11 +12,14 @@ export const SearchLocationContainer = styled.div`
 
 export const Results = styled.div`
   overflow-y: auto;
-  border: 1px solid ${({ theme }) => theme.grey.shade9};
+  border: 1px solid
+    ${({ theme }) =>
+      theme.appType === 'buyer' ? theme.grey.shade5 : theme.grey.shade9};
   border-radius: 4px;
   box-shadow: 0 12px 24px rgba(41, 43, 50, 0.25);
   margin-top: 8px;
-  background-color: ${({ theme }) => theme.grey.shade9};
+  background-color: ${({ theme }) =>
+    theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9};
   max-height: 200px;
   position: absolute;
   top: 100%;
