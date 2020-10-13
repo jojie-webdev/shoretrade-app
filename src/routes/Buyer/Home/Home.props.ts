@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
+import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
 export type CategoryResults = {
@@ -25,6 +26,7 @@ export interface HomeGeneratedProps {
   results: { count: string; label: string; value: string }[];
   onReset: () => void;
   recent: { count: string; label: string; value: string }[];
+  addresses: GetAddressesResponseItem[];
   addressOptions: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
@@ -37,4 +39,5 @@ export interface HomeGeneratedProps {
   favourites: GetBuyerHomepageResponseListingItem[];
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
+  changeDefaultAddress: (id: string) => void;
 }

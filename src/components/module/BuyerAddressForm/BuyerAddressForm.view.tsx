@@ -44,7 +44,6 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     createUpdateReducer<Record<string, string[]>>(),
     {}
   );
-
   const validate = () => {
     const addressError = isValid({
       address: address?.address || '',

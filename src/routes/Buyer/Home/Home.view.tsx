@@ -116,6 +116,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     favouriteSellers,
     addressOptions,
     selectedAddress,
+    changeDefaultAddress,
   } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
@@ -189,7 +190,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               size="small"
               onFocus={() => {}}
               onChange={(e) => {
-                console.log(e);
+                changeDefaultAddress(e.value);
                 // setAddressModalChange(true);
               }}
               value={currentAddressSelected}
