@@ -53,7 +53,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
   background: ${(props) =>
     props.theme.appType === 'buyer' ? props.theme.grey.shade2 : '#020a13'};
-
+  width: 235px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -284,7 +284,6 @@ export const HeaderContainer = styled.nav`
 export const CreditBalanceContainer = styled.div`
   background: ${(props) => props.theme.grey.shade1};
   padding: 16px;
-  border: 1px solid ${(props) => props.theme.grey.shade2};
   box-sizing: border-box;
   border-radius: 4px;
   margin-bottom: 24px;

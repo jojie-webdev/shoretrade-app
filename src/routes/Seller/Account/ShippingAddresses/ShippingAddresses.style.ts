@@ -20,7 +20,7 @@ export const InteractionCol = styled(Col)`
 `;
 
 export const SmallAlertContainer = styled.div`
-  padding: 8px;
+  padding: 8px 0px 8px 10px;
   width: 100%;
   background: rgba(255, 207, 92, 0.12);
   border-radius: 4px;
@@ -30,6 +30,7 @@ export const SmallAlertContainer = styled.div`
   align-items: center;
 
   .icon-container {
-    margin-right: 8px;
+    margin-right: 10px;
+    line-height: 0.875 !important;
   }
 `;

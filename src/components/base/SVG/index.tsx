@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ShoretradeLogo2 } from './ShoretradeLogo2';
 export { default as MarketSectorWholesaler } from './MarketSectorWholesaler';
 export { default as MarketSectorWetShop } from './MarketSectorWetShop';
 export { default as MarketSectorRetailer } from './MarketSectorRetailer';

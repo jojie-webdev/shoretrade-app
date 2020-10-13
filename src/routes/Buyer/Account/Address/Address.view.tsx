@@ -56,6 +56,12 @@ const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
         </Typography>
       </SmallAlertContainer> */}
 
+      <Row className="btn-add-address">
+        <Col>
+          <Button text="Add a new address" onClick={goToAddAddress} />
+        </Col>
+      </Row>
+
       <Row className="address-row">
         {addresses.map((address) => {
           let title = '';
@@ -97,11 +103,6 @@ const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
             </InteractionCol>
           );
         })}
-      </Row>
-      <Row>
-        <Col>
-          <Button text="Add a new address" onClick={goToAddAddress} />
-        </Col>
       </Row>
     </Container>
   );
