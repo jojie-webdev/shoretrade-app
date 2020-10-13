@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  ShoretradeLogo,
+  ShoretradeLogo2,
   Exit,
   Menu,
   Cart,
@@ -189,7 +189,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
-            <ShoretradeLogo />
+            <ShoretradeLogo2 />
           </div>
           {routes.map((route) => (
             <NavLink

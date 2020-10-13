@@ -6,8 +6,8 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
-import DropdownLocation from 'components/module/DropdownLocation';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import LocationSearch from 'components/module/LocationSearch/LocationSearch.view';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -75,11 +75,17 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
       <Col md={5}>
         <Row className="textfield-row">
           <Col md={12}>
-            <DropdownLocation
-              value={address?.address || ''}
-              label="Address"
-              onSelect={setAddress}
-              error={pathOr('', ['address', '0'], errors)}
+            <LocationSearch
+              onSelect={(location) => {
+                if (location) {
+                  setAddress(location);
+                }
+              }}
+              textFieldProps={{
+                value: address?.address || '',
+                label: 'Address',
+                error: pathOr('', ['address', '0'], errors),
+              }}
             />
           </Col>
           <Col md={12} style={{ marginTop: 24 }}>
