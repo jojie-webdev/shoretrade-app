@@ -45,6 +45,8 @@ export type DeliveredItemData = {
   id: string;
   date: Date;
   amount: string;
+  buyer: string;
+  orderRefNumber: number;
 };
 
 export type DeliveredItem = {
