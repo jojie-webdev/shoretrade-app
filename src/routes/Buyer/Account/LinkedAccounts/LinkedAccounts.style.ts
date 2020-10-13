@@ -6,9 +6,10 @@ import styled from 'utils/styled';
 export const Container = styled.div``;
 
 export const SmallAlertContainer = styled.div`
-  padding: 8px;
+  // padding: 8px;
+  padding: 16px 0px 16px 18px;
   width: 100%;
-  background: rgba(255, 207, 92, 0.12);
+  background: ${({ theme }) => theme.brand.alert};
   border-radius: 4px;
   margin-bottom: 24px;
 
@@ -20,7 +21,7 @@ export const SmallAlertContainer = styled.div`
   }
 
   .text {
-    margin-top: 6px;
+    // margin-top: 6px;
   }
 `;
 

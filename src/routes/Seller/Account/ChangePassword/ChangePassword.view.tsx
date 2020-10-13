@@ -58,9 +58,19 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
       <Col md={5}>
         <SmallAlertContainer>
           <div className="icon-container">
-            <InfoFilled fill={theme.brand.alert} height={16} width={16} />
+            <InfoFilled
+              fill={
+                theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade8
+              }
+              height={theme.appType === 'seller' ? 14 : 20}
+              width={theme.appType === 'seller' ? 14 : 20}
+            />
           </div>
-          <Typography color="alert" variant="caption" className="text">
+          <Typography
+            variant="caption"
+            className="text"
+            color={theme.appType === 'seller' ? 'alert' : 'shade8'}
+          >
             Your Password must: <br />
             • Be at least 8 characters long <br />
             • Include at least 1 number <br />
@@ -81,14 +91,14 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
                   secured
                 />
               </Col>
-              <Col md={12} className="textfield-col">
+              <Col md={6} className="textfield-col">
                 <FormikTextField
                   label="New Password"
                   name="newPassword"
                   secured
                 />
               </Col>
-              <Col md={12} className="textfield-col">
+              <Col md={6} className="textfield-col">
                 <FormikTextField
                   label="Confirm New Password"
                   name="confirmNewPassword"

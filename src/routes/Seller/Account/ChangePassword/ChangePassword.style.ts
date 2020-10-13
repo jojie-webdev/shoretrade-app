@@ -13,21 +13,27 @@ export const TextFieldRow = styled(Row)`
 `;
 
 export const SmallAlertContainer = styled.div`
-  padding: 8px;
+  padding: ${({ theme }) =>
+    theme.appType === 'seller' ? '8px 0px 8px 10px' : '16px 0px 16px 18px'};
   width: 100%;
-  background: rgba(255, 207, 92, 0.12);
+  background: ${({ theme }) =>
+    theme.appType === 'seller'
+      ? 'rgba(255, 207, 92, 0.12)'
+      : theme.brand.alert};
   border-radius: 4px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 
   display: flex;
   align-items: flex-start;
 
   .icon-container {
-    margin-right: 8px;
+    margin-right: 10px;
+    // margin-top: 0px;
+    line-height: 0.875 !important;
   }
 
   .text {
-    margin-top: 6px;
+    // margin-top: 8px;
   }
 `;
 

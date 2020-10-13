@@ -25,21 +25,21 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
         <Col>
           <Radio checked={checked} onClick={onClick} />
         </Col>
-        <Col style={{ paddingLeft: 20 }}>
-          <Typography variant="label" color="shade6">{`${weight.toFixed(
+        <Col style={{ paddingLeft: 20, paddingTop: 4 }}>
+          <Typography variant="caption" color="shade6">{`${weight.toFixed(
             2
           )} ${unit}`}</Typography>
         </Col>
 
-        <Col style={{ paddingLeft: 16 }}>
-          <Typography variant="label" color="shade6">
+        <Col style={{ paddingLeft: 16, paddingTop: 4 }}>
+          <Typography variant="caption" color="shade6">
             {quantity}x
           </Typography>
         </Col>
 
         <Col style={{ paddingLeft: 16 }}>
           {totalWeight !== undefined && (
-            <Typography variant="label" color="shade6">
+            <Typography variant="body" color="shade6">
               {totalWeight.toFixed(2)} {unit}
             </Typography>
           )}
