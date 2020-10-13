@@ -35,14 +35,15 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
   return (
     <Container>
       <InnerRouteHeader title="Linked Accounts" />
-      <Row nogutter style={{ marginBottom: 24 }}>
-        <Col>
-          <AlertInfoView
-            dark
-            label={`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
-          />
-        </Col>
-      </Row>
+
+      <SmallAlertContainer>
+        <div className="icon-container">
+          <InfoFilled fill={theme.grey.shade8} height={20} width={20} />
+        </div>
+        <Typography variant="caption" className="text" color="shade8">
+          {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+        </Typography>
+      </SmallAlertContainer>
 
       {accounts.map((account) => (
         <StyledInteaction
