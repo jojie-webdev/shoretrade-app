@@ -9,6 +9,7 @@ import {
   historyActions,
   getBuyerHomepageActions,
   updateAddressActions,
+  cartActions,
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { PlaceData } from 'types/PlaceData';
@@ -55,7 +56,7 @@ const Home = (): JSX.Element => {
       (addr) => addr.id === id
     )[0];
     const isDefault = true;
-    dispatch(
+    await dispatch(
       updateAddressActions.request(
         placeDataToUpdateAddressMeta(
           addressToPlaceData(filtererdAddress) as PlaceData,
@@ -66,6 +67,7 @@ const Home = (): JSX.Element => {
         )
       )
     );
+    await dispatch(cartActions.clear());
   };
 
   useEffect(() => {

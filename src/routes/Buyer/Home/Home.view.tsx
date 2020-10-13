@@ -182,7 +182,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     <ViewContainer>
       <ConfirmationModal
         isOpen={addressModalChange}
-        title="Change Buying Address"
+        title="Change your Buying Address?"
         description="Are you sure you want to change your buying address? This will reset your current cart."
         action={() => {
           confirmChangeAddress();
