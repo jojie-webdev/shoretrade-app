@@ -29,13 +29,8 @@ export interface HomeGeneratedProps {
   selectedAddress: string;
   selectAddress: (id: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
-  categories: CategoryResults[];
-  favouriteSellers: SellerResults[];
-  sellers: SellerResults[];
   creditState: CreditState;
   creditBalance: string;
-  favourites: GetBuyerHomepageResponseListingItem[];
-  recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
   chunkedCategories: CategoryResults[][];
   chunkedFavorites: GetBuyerHomepageResponseListingItem[][];

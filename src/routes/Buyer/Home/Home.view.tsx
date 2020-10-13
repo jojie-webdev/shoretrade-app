@@ -151,12 +151,12 @@ const HomeView = (props: HomeGeneratedProps) => {
     saveSearchHistory,
     creditState,
     featured,
-    categories,
+    chunkedCategories,
     search,
-    favourites,
-    recentlyAdded,
-    sellers,
-    favouriteSellers,
+    chunkedFavorites,
+    chunkedRecentlyAdded,
+    chunkedSellers,
+    chunkedFavouriteSellers,
   } = props;
 
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
@@ -276,7 +276,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                 setFavouritesRef(ref);
               }}
             >
-              {props.chunkedFavorites.map((chunked, ndx) => {
+              {chunkedFavorites.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favorite${ndx}`}>
                     <Row style={{ width: '100%' }}>
@@ -346,7 +346,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               onSwiper={(ref) => setCategoriesRef(ref)}
             >
               {!loading ? (
-                props.chunkedCategories.map((chunked, ndx) => {
+                chunkedCategories.map((chunked, ndx) => {
                   return (
                     <SwiperSlide key={`category${ndx}`}>
                       <Row style={{ width: '100%' }}>
@@ -408,7 +408,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               style={{ width: '100%' }}
               onSwiper={(ref) => setRecentlyAddedRef(ref)}
             >
-              {props.chunkedRecentlyAdded.map((chunked, ndx) => {
+              {chunkedRecentlyAdded.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`recentlyAdded${ndx}`}>
                     <Row style={{ width: '100%' }}>
@@ -475,7 +475,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               id="favouriteSellers"
               onSwiper={(ref) => setFavouriteSellersRef(ref)}
             >
-              {props.chunkedFavouriteSellers.map((chunked, ndx) => {
+              {chunkedFavouriteSellers.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
                     <Row style={{ width: '100%' }}>
@@ -540,7 +540,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               id="sellers"
               onSwiper={(ref) => setSellersRef(ref)}
             >
-              {props.chunkedSellers.map((chunked, ndx) => {
+              {chunkedSellers.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
                     <Row style={{ width: '100%' }}>
