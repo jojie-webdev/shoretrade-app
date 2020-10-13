@@ -74,6 +74,7 @@ export const CategoriesContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 16px;
+  position: relative;
 
   .row {
     width: 100%;
@@ -134,7 +135,7 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 16px;
+  bottom: 24px;
   left: ${(props) => (props.left ? '-64px' : '')};
   right: ${(props) => (props.right ? '-64px' : '')};
   padding: 4px;

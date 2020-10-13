@@ -155,6 +155,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   // CarouselRefs
   const [favouritesRef, setFavouritesRef] = useState<any>(null);
+  const [categoriesRef, setCategoriesRef] = useState<any>(null);
+  const [recentlyAddedRef, setRecentlyAddedRef] = useState<any>(null);
+  const [favouriteSellersRef, setFavouriteSellersRef] = useState<any>(null);
+  const [sellersRef, setSellersRef] = useState<any>(null);
 
   return (
     <ViewContainer>
@@ -280,51 +284,68 @@ const HomeView = (props: HomeGeneratedProps) => {
         </ViewCol>
       </div>
 
-      <ViewCol>
-        <CategoriesHeader>
-          <Typography variant="title5" color="shade8">
-            Categories
-          </Typography>
-          <Button
-            text="See All"
-            variant="unselected"
-            size="sm"
-            icon={<ArrowRight fill="#E35D32" />}
-            style={{ padding: '4px 8px' }}
-            onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-          />
-        </CategoriesHeader>
-        <CategoriesContainer>
-          <Swiper style={{ width: '100%' }}>
-            {!loading ? (
-              props.chunkedCategories.map((chunked, ndx) => {
-                return (
-                  <SwiperSlide key={`category${ndx}`}>
-                    <Row style={{ width: '100%' }}>
-                      {chunked.map((category) => (
-                        <Col md={3} key={category.id}>
-                          <Link
-                            to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                          >
-                            <Card
-                              sortIndex={category.sortIndex}
-                              id={category.id}
-                              image={category.thumbnail}
-                              label={category.name}
-                            />
-                          </Link>
-                        </Col>
-                      ))}
-                    </Row>
-                  </SwiperSlide>
-                );
-              })
-            ) : (
-              <Loading />
-            )}
-          </Swiper>
-        </CategoriesContainer>
-      </ViewCol>
+      <div className="wrapper">
+        <ViewCol>
+          <CategoriesHeader>
+            <Typography variant="title5" color="shade8">
+              Categories
+            </Typography>
+            <Button
+              text="See All"
+              variant="unselected"
+              size="sm"
+              icon={<ArrowRight fill="#E35D32" />}
+              style={{ padding: '4px 8px' }}
+              onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+            />
+          </CategoriesHeader>
+          <CategoriesContainer>
+            <ArrowArea left>
+              <Touchable onPress={() => categoriesRef.slidePrev()}>
+                <CarouselChevronLeft width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+
+            <Swiper
+              style={{ width: '100%' }}
+              onSwiper={(ref) => setCategoriesRef(ref)}
+            >
+              {!loading ? (
+                props.chunkedCategories.map((chunked, ndx) => {
+                  return (
+                    <SwiperSlide key={`category${ndx}`}>
+                      <Row style={{ width: '100%' }}>
+                        {chunked.map((category) => (
+                          <Col md={3} key={category.id}>
+                            <Link
+                              to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
+                            >
+                              <Card
+                                sortIndex={category.sortIndex}
+                                id={category.id}
+                                image={category.thumbnail}
+                                label={category.name}
+                              />
+                            </Link>
+                          </Col>
+                        ))}
+                      </Row>
+                    </SwiperSlide>
+                  );
+                })
+              ) : (
+                <Loading />
+              )}
+            </Swiper>
+
+            <ArrowArea right>
+              <Touchable onPress={() => categoriesRef.slideNext()}>
+                <CarouselChevronRight width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+          </CategoriesContainer>
+        </ViewCol>
+      </div>
 
       <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <ViewCol>
@@ -343,7 +364,15 @@ const HomeView = (props: HomeGeneratedProps) => {
           </RecentHeader>
 
           <RecentContainer>
-            <Swiper style={{ width: '100%' }}>
+            <ArrowArea left>
+              <Touchable onPress={() => recentlyAddedRef.slidePrev()}>
+                <CarouselChevronLeft width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+            <Swiper
+              style={{ width: '100%' }}
+              onSwiper={(ref) => setRecentlyAddedRef(ref)}
+            >
               {props.chunkedRecentlyAdded.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`recentlyAdded${ndx}`}>
@@ -377,6 +406,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                 );
               })}
             </Swiper>
+            <ArrowArea right>
+              <Touchable onPress={() => recentlyAddedRef.slideNext()}>
+                <CarouselChevronRight width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
           </RecentContainer>
         </ViewCol>
       </div>
@@ -396,7 +430,16 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </SellerHeader>
           <SellerContainer>
-            <Swiper style={{ width: '100%' }} id="favouriteSellers">
+            <ArrowArea left>
+              <Touchable onPress={() => favouriteSellersRef.slidePrev()}>
+                <CarouselChevronLeft width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+            <Swiper
+              style={{ width: '100%' }}
+              id="favouriteSellers"
+              onSwiper={(ref) => setFavouriteSellersRef(ref)}
+            >
               {props.chunkedFavouriteSellers.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
@@ -428,6 +471,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                 );
               })}
             </Swiper>
+            <ArrowArea right>
+              <Touchable onPress={() => favouriteSellersRef.slidePrev()}>
+                <CarouselChevronRight width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
           </SellerContainer>
         </ViewCol>
       </div>
@@ -447,7 +495,16 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </SellerHeader>
           <SellerContainer>
-            <Swiper style={{ width: '100%' }} id="sellers">
+            <ArrowArea left>
+              <Touchable onPress={() => sellersRef.slidePrev()}>
+                <CarouselChevronLeft width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+            <Swiper
+              style={{ width: '100%' }}
+              id="sellers"
+              onSwiper={(ref) => setSellersRef(ref)}
+            >
               {props.chunkedSellers.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
@@ -479,6 +536,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                 );
               })}
             </Swiper>
+            <ArrowArea right>
+              <Touchable onPress={() => sellersRef.slideNext()}>
+                <CarouselChevronRight width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
           </SellerContainer>
         </ViewCol>
       </div>
