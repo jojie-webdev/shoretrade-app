@@ -5,6 +5,10 @@ export const Container = styled.div`
   .address-row {
     margin-bottom: 24px;
   }
+
+  .btn-add-address {
+    margin-bottom: 24px;
+  }
 `;
 
 export const AddressTextContainer = styled.div`
