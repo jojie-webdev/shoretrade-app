@@ -14,5 +14,15 @@ export const TransitRow = styled(Row)`
         margin-left: 4px;
       }
     }
+
+    .order-price {
+      & > p {
+        display: inline-block;
+        vertical-align: sub;
+      }
+      & > svg {
+        margin-left: 16px;
+      }
+    }
   }
 `;
