@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Pagination from 'components/module/Pagination';
 import { pathOr, splitEvery, take } from 'ramda';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { PaginateListProps } from './PaginateList.props';
@@ -28,31 +28,14 @@ const PaginateList = (props: PaginateListProps): JSX.Element => {
       <ListContainer>
         {culledList[currentPage].map((item: any, idx: number) => {
           const label = pathOr(item, labelPath || [], item);
-          if (pathname.includes('/buyer/home')) {
-            return (
-              <ListItemInteraction
-                key={idx}
-                value={label}
-                onClick={() => onClickItem(item)}
-                resultCount={item.count}
-              />
-            );
-          } else {
-            return (
-              <ListItemInteraction
-                key={idx}
-                value={label}
-                onClick={() => onClickItem(item)}
-              />
-            );
-          }
-          // return (
-          //   <ListItemInteraction
-          //     key={idx}
-          //     value={label}
-          //     onClick={() => onClickItem(item)}
-          //   />
-          // );
+          return (
+            <ListItemInteraction
+              key={idx}
+              value={label}
+              onClick={() => onClickItem(item)}
+              resultCount={item.count}
+            />
+          );
         })}
       </ListContainer>
 
