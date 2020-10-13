@@ -2,8 +2,15 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import PaginateList from 'components/base/PaginateList';
-import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
+import {
+  Octopus,
+  InfoFilled,
+  ChevronRight,
+  CarouselChevronLeft,
+  CarouselChevronRight,
+} from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
@@ -44,6 +51,7 @@ import {
   SellerContainer,
   CardContainer,
   SellerCardTypography,
+  ArrowArea,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
@@ -99,8 +107,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
-    categories,
-    search,
     searchTerm,
     setSearchTerm,
     loading,
@@ -110,6 +116,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     saveSearchHistory,
     creditState,
     featured,
+    categories,
+    search,
     favourites,
     recentlyAdded,
     sellers,
@@ -144,6 +152,9 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
+
+  // CarouselRefs
+  const [favouritesRef, setFavouritesRef] = useState<any>(null);
 
   return (
     <ViewContainer>
@@ -212,8 +223,20 @@ const HomeView = (props: HomeGeneratedProps) => {
               onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
             />
           </FavouritesHeader>
+
           <FavouritesContainer>
-            <Swiper style={{ width: '100%' }}>
+            <ArrowArea left>
+              <Touchable onPress={() => favouritesRef.slidePrev()}>
+                <CarouselChevronLeft width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
+
+            <Swiper
+              style={{ width: '100%' }}
+              onSwiper={(ref) => {
+                setFavouritesRef(ref);
+              }}
+            >
               {props.chunkedFavorites.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favorite${ndx}`}>
@@ -247,55 +270,62 @@ const HomeView = (props: HomeGeneratedProps) => {
                 );
               })}
             </Swiper>
+
+            <ArrowArea right>
+              <Touchable onPress={() => favouritesRef.slideNext()}>
+                <CarouselChevronRight width={18} height={18} />
+              </Touchable>
+            </ArrowArea>
           </FavouritesContainer>
         </ViewCol>
-
-        <ViewCol>
-          <CategoriesHeader>
-            <Typography variant="title5" color="shade8">
-              Categories
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-            />
-          </CategoriesHeader>
-          <CategoriesContainer>
-            <Swiper style={{ width: '100%' }}>
-              {!loading ? (
-                props.chunkedCategories.map((chunked, ndx) => {
-                  return (
-                    <SwiperSlide key={`category${ndx}`}>
-                      <Row style={{ width: '100%' }}>
-                        {chunked.map((category) => (
-                          <Col md={3} key={category.id}>
-                            <Link
-                              to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                            >
-                              <Card
-                                sortIndex={category.sortIndex}
-                                id={category.id}
-                                image={category.thumbnail}
-                                label={category.name}
-                              />
-                            </Link>
-                          </Col>
-                        ))}
-                      </Row>
-                    </SwiperSlide>
-                  );
-                })
-              ) : (
-                <Loading />
-              )}
-            </Swiper>
-          </CategoriesContainer>
-        </ViewCol>
       </div>
+
+      <ViewCol>
+        <CategoriesHeader>
+          <Typography variant="title5" color="shade8">
+            Categories
+          </Typography>
+          <Button
+            text="See All"
+            variant="unselected"
+            size="sm"
+            icon={<ArrowRight fill="#E35D32" />}
+            style={{ padding: '4px 8px' }}
+            onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+          />
+        </CategoriesHeader>
+        <CategoriesContainer>
+          <Swiper style={{ width: '100%' }}>
+            {!loading ? (
+              props.chunkedCategories.map((chunked, ndx) => {
+                return (
+                  <SwiperSlide key={`category${ndx}`}>
+                    <Row style={{ width: '100%' }}>
+                      {chunked.map((category) => (
+                        <Col md={3} key={category.id}>
+                          <Link
+                            to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
+                          >
+                            <Card
+                              sortIndex={category.sortIndex}
+                              id={category.id}
+                              image={category.thumbnail}
+                              label={category.name}
+                            />
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  </SwiperSlide>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </Swiper>
+        </CategoriesContainer>
+      </ViewCol>
+
       <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
         <ViewCol>
           <RecentHeader>
@@ -366,8 +396,8 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </SellerHeader>
           <SellerContainer>
-            <Swiper style={{ width: '100%' }}>
-              {props.chunkedSellers.map((chunked, ndx) => {
+            <Swiper style={{ width: '100%' }} id="favouriteSellers">
+              {props.chunkedFavouriteSellers.map((chunked, ndx) => {
                 return (
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
                     <Row style={{ width: '100%' }}>
@@ -417,29 +447,38 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </SellerHeader>
           <SellerContainer>
-            {sellers.length > 0 ? (
-              sellers.slice(0, 4).map((s, index) => {
+            <Swiper style={{ width: '100%' }} id="sellers">
+              {props.chunkedSellers.map((chunked, ndx) => {
                 return (
-                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                    <CardContainer className="centered">
-                      <div className="card">
-                        <img src={s.companyImage} alt={s.companyImage} />
-                        <div className="card-content">
-                          <SellerCardTypography
-                            variant="label"
-                            style={{ lineHeight: '-24px' }}
-                          >
-                            {s.companyName}
-                          </SellerCardTypography>
-                        </div>
-                      </div>
-                    </CardContainer>
-                  </Link>
+                  <SwiperSlide key={`favoriteSellers${ndx}`}>
+                    <Row style={{ width: '100%' }}>
+                      {chunked.map((s) => (
+                        <Col md={4} lg={3} key={s.id}>
+                          <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
+                            <CardContainer className="centered">
+                              <div className="card">
+                                <img
+                                  src={s.companyImage}
+                                  alt={s.companyImage}
+                                />
+                                <div className="card-content">
+                                  <SellerCardTypography
+                                    variant="label"
+                                    style={{ lineHeight: '-24px' }}
+                                  >
+                                    {s.companyName}
+                                  </SellerCardTypography>
+                                </div>
+                              </div>
+                            </CardContainer>
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  </SwiperSlide>
                 );
-              })
-            ) : (
-              <Loading />
-            )}
+              })}
+            </Swiper>
           </SellerContainer>
         </ViewCol>
       </div>

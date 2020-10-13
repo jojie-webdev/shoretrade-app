@@ -184,6 +184,7 @@ const Home = (): JSX.Element => {
     chunkedCategories: chunkArray(categories, mdBreakpoint ? 3 : 4),
     chunkedFavorites: chunkArray(favourites, 3),
     chunkedRecentlyAdded: chunkArray(recentlyAdded, mdBreakpoint ? 3 : 4),
+    chunkedFavouriteSellers: chunkArray(favouriteSellers, mdBreakpoint ? 3 : 4),
     chunkedSellers: chunkArray(sellers, mdBreakpoint ? 3 : 4),
   };
 

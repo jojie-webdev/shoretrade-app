@@ -40,5 +40,6 @@ export interface HomeGeneratedProps {
   chunkedCategories: CategoryResults[][];
   chunkedFavorites: GetBuyerHomepageResponseListingItem[][];
   chunkedRecentlyAdded: GetBuyerHomepageResponseListingItem[][];
+  chunkedFavouriteSellers: SellerResults[][];
   chunkedSellers: SellerResults[][];
 }

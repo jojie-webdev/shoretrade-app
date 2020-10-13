@@ -10,6 +10,7 @@ export const ViewContainer = styled.div`
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
+    position: relative;
 
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
@@ -126,10 +127,27 @@ export const FavouritesHeader = styled(CategoriesHeader)`
   padding-top: 48px;
 `;
 
+export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
+  display: flex;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 16px;
+  left: ${(props) => (props.left ? '-64px' : '')};
+  right: ${(props) => (props.right ? '-64px' : '')};
+  padding: 4px;
+`;
+
 export const FavouritesContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 16px;
+  position: relative;
+
+  .swiper-button-prev {
+  }
 
   a:not(:last-child) {
     margin-right: 32px;
