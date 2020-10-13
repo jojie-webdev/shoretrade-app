@@ -60,10 +60,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
           enableReinitialize
         >
           <FormAddCredit>
-            <Col
-              md={activeTab == TABS.BANK ? 6 : 12}
-              className="textfield-container"
-            >
+            <Col md={5} className="textfield-container">
               <FormikTextField
                 type="text"
                 name="amount"

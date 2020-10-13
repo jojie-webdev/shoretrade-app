@@ -72,32 +72,33 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
       )}
 
       <InnerRouteHeader title={routeHeader} />
-
-      <Row className="textfield-row">
-        <Col md={12}>
-          <LocationSearch
-            onSelect={(location) => {
-              if (location) {
-                setAddress(location);
-              }
-            }}
-            textFieldProps={{
-              value: address?.address || '',
-              label: 'Address',
-              error: pathOr('', ['address', '0'], errors),
-            }}
-          />
-        </Col>
-        <Col md={12} style={{ marginTop: 24 }}>
-          <TextField
-            label="Unit number (optional)"
-            name="unitNumber"
-            value={unitNumber}
-            onChange={(e) => setUnitNumber(e.target.value)}
-            error={pathOr('', ['unitNumber', '0'], errors)}
-          />
-        </Col>
-      </Row>
+      <Col md={5}>
+        <Row className="textfield-row">
+          <Col md={12}>
+            <LocationSearch
+              onSelect={(location) => {
+                if (location) {
+                  setAddress(location);
+                }
+              }}
+              textFieldProps={{
+                value: address?.address || '',
+                label: 'Address',
+                error: pathOr('', ['address', '0'], errors),
+              }}
+            />
+          </Col>
+          <Col md={12} style={{ marginTop: 24 }}>
+            <TextField
+              label="Unit number (optional)"
+              name="unitNumber"
+              value={unitNumber}
+              onChange={(e) => setUnitNumber(e.target.value)}
+              error={pathOr('', ['unitNumber', '0'], errors)}
+            />
+          </Col>
+        </Row>
+      </Col>
 
       <Row className="checkbox-row">
         <Col className="checkbox-col">

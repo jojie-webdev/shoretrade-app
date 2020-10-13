@@ -4,6 +4,7 @@ import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
+import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -11,13 +12,10 @@ import { toPrice } from 'utils/String/toPrice';
 import { BalanceGeneratedProps } from './Balance.props';
 import {
   Container,
-  Content,
   ContentLeft,
   ContentRight,
   CreditBalance,
-  TopContainer,
   CreditWrapper,
-  Footer,
   LinkCreditHistory,
   LinkCreditCard,
 } from './Balance.style';
@@ -30,8 +28,8 @@ const BalanceView = (props: BalanceGeneratedProps) => {
     <Container>
       <InnerRouteHeader title="Balance & Payments" />
 
-      <Content>
-        <ContentLeft>
+      <Row>
+        <ContentLeft md={6}>
           <CreditBalance>
             <Typography variant="overline" color="shade6">
               Credit Balance
@@ -56,7 +54,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
           />
         </ContentLeft>
 
-        <ContentRight>
+        <ContentRight md={6}>
           {cards.map((card) => (
             <LinkCreditCard
               key={card.id}
@@ -73,7 +71,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
             }}
           />
         </ContentRight>
-      </Content>
+      </Row>
     </Container>
   );
 };

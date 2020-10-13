@@ -55,62 +55,66 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
         />
       )}
 
-      <SmallAlertContainer>
-        <div className="icon-container">
-          <InfoFilled
-            fill={
-              theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade8
-            }
-            height={theme.appType === 'seller' ? 14 : 20}
-            width={theme.appType === 'seller' ? 14 : 20}
-          />
-        </div>
-        <Typography
-          variant="caption"
-          className="text"
-          color={theme.appType === 'seller' ? 'alert' : 'shade8'}
-        >
-          Your Password must: <br />
-          • Be at least 8 characters long <br />
-          • Include at least 1 number <br />
-          • Include at least 1 upper case character <br />
-          • Include at least 1 special character <br />
-        </Typography>
-      </SmallAlertContainer>
+      <Col md={5}>
+        <SmallAlertContainer>
+          <div className="icon-container">
+            <InfoFilled
+              fill={
+                theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade8
+              }
+              height={theme.appType === 'seller' ? 14 : 20}
+              width={theme.appType === 'seller' ? 14 : 20}
+            />
+          </div>
+          <Typography
+            variant="caption"
+            className="text"
+            color={theme.appType === 'seller' ? 'alert' : 'shade8'}
+          >
+            Your Password must: <br />
+            • Be at least 8 characters long <br />
+            • Include at least 1 number <br />
+            • Include at least 1 upper case character <br />
+            • Include at least 1 special character <br />
+          </Typography>
+        </SmallAlertContainer>
+      </Col>
 
-      <Formik {...formikProps}>
-        <Form>
-          <TextFieldRow>
-            <Col md={12} className="textfield-col">
-              <FormikTextField
-                label="Current Password"
-                name="oldPassword"
-                secured
-              />
-            </Col>
-            <Col md={6} className="textfield-col">
-              <FormikTextField
-                label="New Password"
-                name="newPassword"
-                secured
-              />
-            </Col>
-            <Col md={6} className="textfield-col">
-              <FormikTextField
-                label="Confirm New Password"
-                name="confirmNewPassword"
-                secured
-              />
-            </Col>
-          </TextFieldRow>
+      <Col md={5}>
+        <Formik {...formikProps}>
+          <Form>
+            <TextFieldRow>
+              <Col md={12} className="textfield-col">
+                <FormikTextField
+                  label="Current Password"
+                  name="oldPassword"
+                  secured
+                />
+              </Col>
+              <Col md={6} className="textfield-col">
+                <FormikTextField
+                  label="New Password"
+                  name="newPassword"
+                  secured
+                />
+              </Col>
+              <Col md={6} className="textfield-col">
+                <FormikTextField
+                  label="Confirm New Password"
+                  name="confirmNewPassword"
+                  secured
+                />
+              </Col>
+            </TextFieldRow>
 
-          <Row>
-            <Col>
-              <Button text="Save" type="submit" loading={pending} />
-            </Col>
-          </Row>
-        </Form>
-      </Formik>
+            <Row>
+              <Col>
+                <Button text="Save" type="submit" loading={pending} />
+              </Col>
+            </Row>
+          </Form>
+        </Formik>
+      </Col>
     </Wrapper>
   );
 };

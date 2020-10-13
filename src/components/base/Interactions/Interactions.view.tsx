@@ -3,6 +3,7 @@ import React from 'react';
 import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
 import { ChevronRight, DropdownArrow, Pen } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 
 import { InteractionsProps } from './Interactions.props';
@@ -27,6 +28,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     iconAlignment = 'center',
     iconColor,
     children,
+    resultCount,
   } = props;
 
   const getIcon = () => {
@@ -76,16 +78,27 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         {children}
       </div>
 
-      {rightComponent
-        ? rightComponent
-        : type !== 'none' && (
-            <IconContainer
-              className="interactions-right"
-              iconAlignment={iconAlignment}
+      {rightComponent ? (
+        rightComponent
+      ) : (
+        <>
+          {/* <Typography>{text}</Typography> */}
+          <IconContainer
+            className="interactions-right"
+            iconAlignment={iconAlignment}
+          >
+            <Typography
+              variant="overline"
+              weight="bold"
+              color="shade6"
+              style={{ marginRight: '8px' }}
             >
-              {getIcon()}
-            </IconContainer>
-          )}
+              {resultCount}
+            </Typography>
+            {getIcon()}
+          </IconContainer>
+        </>
+      )}
     </Container>
   );
 };
