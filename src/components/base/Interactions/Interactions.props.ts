@@ -23,4 +23,5 @@ export interface InteractionsProps {
   children?: any;
   isHover?: boolean;
   iconColor?: string;
+  resultCount?: any;
 }

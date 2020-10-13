@@ -255,7 +255,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : `Results ${results.length}`}
+            {showRecentSearch ? 'Recent Searches' : 'Results'}
           </Typography>
         )}
         {isEmpty(data) && searchTerm.length > 0 && !loading ? (
@@ -274,6 +274,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               list={data || []}
               labelPath={['label']}
               maxItemPerPage={6}
+              // resultCount="3"
               onClickItem={(item) => {
                 history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
                 saveSearchHistory(item.value, item.label, item.count);

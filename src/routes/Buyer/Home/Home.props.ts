@@ -30,6 +30,7 @@ export interface HomeGeneratedProps {
   addressOptions: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
+  changeDefaultAddress: (id: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
   categories: CategoryResults[];
   favouriteSellers: SellerResults[];
@@ -39,5 +40,4 @@ export interface HomeGeneratedProps {
   favourites: GetBuyerHomepageResponseListingItem[];
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
-  changeDefaultAddress: (id: string) => void;
 }

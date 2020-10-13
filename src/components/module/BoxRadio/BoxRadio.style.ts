@@ -5,7 +5,8 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* padding: 12px; */
+  padding: 16px 12px 16px 12px;
+  border-style: solid;
   border-radius: 4px;
   border-width: 1px;
   border-color: ${({ theme }) => theme.grey.shade5};

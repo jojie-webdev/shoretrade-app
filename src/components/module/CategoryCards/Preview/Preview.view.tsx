@@ -114,9 +114,8 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 color="shade6"
                 style={{ paddingRight: 8 }}
               >
-                Weight:
+                Size:
               </ResultText>
-              {/* Need Weight Transformer */}
               <ResultText variant="small" weight="bold">
                 {props.weight}
               </ResultText>

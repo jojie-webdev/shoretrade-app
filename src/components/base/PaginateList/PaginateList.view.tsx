@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Pagination from 'components/module/Pagination';
 import { pathOr, splitEvery, take } from 'ramda';
+import { useLocation } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { PaginateListProps } from './PaginateList.props';
@@ -14,6 +15,8 @@ import {
 const PaginateList = (props: PaginateListProps): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(0);
   const { list, labelPath, onClickItem, maxItemPerPage } = props;
+  const location = useLocation();
+  const { pathname } = location;
 
   const numPages = Math.ceil(list.length / maxItemPerPage);
   const culledList: any[] = splitEvery(maxItemPerPage, list);
@@ -30,6 +33,7 @@ const PaginateList = (props: PaginateListProps): JSX.Element => {
               key={idx}
               value={label}
               onClick={() => onClickItem(item)}
+              resultCount={item.count}
             />
           );
         })}
