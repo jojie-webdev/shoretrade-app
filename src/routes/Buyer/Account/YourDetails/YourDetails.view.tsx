@@ -56,31 +56,33 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
       <InnerRouteHeader title="Your Details" />
       <Formik {...formikProps}>
         <Form>
-          <InputRow>
-            <Col md={12} className="input-col">
-              <FormikTextField label="First Name" name="firstName" />
-            </Col>
-            <Col md={12} className="input-col">
-              <FormikTextField label="Last Name" name="lastName" />
-            </Col>
-            <Col md={12} className="input-col">
-              <PhoneTextField
-                label="Mobile"
-                name="mobile"
-                callingCode={callingCode}
-                setCallingCode={setCallingCode}
-              />
-            </Col>
-            <Col md={12} className="input-col">
-              <FormikTextField label="Email" name="email" />
-            </Col>
-            <Col md={12} className="input-col">
-              <FormikTextField label="Business" name="businessName" />
-            </Col>
-            <Col md={12} className="input-col">
-              <FormikTextField label="Business number (optional)" name="abn" />
-            </Col>
-          </InputRow>
+          <Col md={5}>
+            <InputRow>
+              <Col md={12} className="input-col">
+                <FormikTextField label="First Name" name="firstName" />
+              </Col>
+              <Col md={12} className="input-col">
+                <FormikTextField label="Last Name" name="lastName" />
+              </Col>
+              <Col md={12} className="input-col">
+                <PhoneTextField
+                  label="Mobile"
+                  name="mobile"
+                  callingCode={callingCode}
+                  setCallingCode={setCallingCode}
+                />
+              </Col>
+              <Col md={12} className="input-col">
+                <FormikTextField label="Email" name="email" />
+              </Col>
+              <Col md={12} className="input-col">
+                <FormikTextField label="Business" name="businessName" />
+              </Col>
+              <Col md={12} className="input-col">
+                <FormikTextField label="Business number (optional)" name="abn" />
+              </Col>
+            </InputRow>
+          </Col>
 
           <Row>
             <Col>
