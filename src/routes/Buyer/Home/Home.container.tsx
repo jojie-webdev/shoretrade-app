@@ -24,6 +24,7 @@ import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
   const dispatch = useDispatch();
+
   //#region Address Related
   const companyAdressDefault = GetDefaultCompany();
   const [companyId, setCompanyId] = useState('');
@@ -33,6 +34,7 @@ const Home = (): JSX.Element => {
 
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
+
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -42,6 +44,7 @@ const Home = (): JSX.Element => {
   };
 
   const currentAddress = addresses.find((a) => a.id === selectedAddress);
+
   const initialAddress = currentAddress
     ? addressToPlaceData(currentAddress)
     : null;
@@ -70,6 +73,7 @@ const Home = (): JSX.Element => {
       setAddress(addressToPlaceData(currentAddress));
     }
   }, [currentAddress]);
+
   useEffect(() => {
     setCompanyId(companyAdressDefault?.id || '');
   }, [companyAdressDefault]);

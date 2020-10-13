@@ -114,6 +114,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     recentlyAdded,
     sellers,
     favouriteSellers,
+    addresses,
     addressOptions,
     selectedAddress,
     changeDefaultAddress,
@@ -121,6 +122,10 @@ const HomeView = (props: HomeGeneratedProps) => {
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
+  const [changeAddress, setChangeAddress] = useState({
+    currentAddress: '',
+    newChangeAddress: '',
+  });
 
   const isFavouriteMD = useMediaQuery({
     query: `(min-width: 1040px) and (max-width: 1364px)`,
@@ -149,16 +154,27 @@ const HomeView = (props: HomeGeneratedProps) => {
   useEffect(() => {
     const load = async () => {
       if (addressOptions) {
+        const filterAddressDefault = await addresses.filter((i) => i.default);
         const filteredArray = await addressOptions.find(
-          (a) => a.value === selectedAddress
+          (a) => a.value === filterAddressDefault[0].id
         );
         setCurrentAddressSelected(filteredArray);
       }
     };
     load();
-  }, [addressOptions]);
+  }, [addressOptions, addresses]);
 
-  // console.log({ addresses, addressOptions });
+  useEffect(() => {
+    setChangeAddress({
+      ...changeAddress,
+      currentAddress: currentAddressSelected || '',
+    });
+  }, [currentAddressSelected]);
+
+  const confirmChangeAddress = async () => {
+    await changeDefaultAddress(changeAddress.newChangeAddress);
+  };
+
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
 
@@ -168,7 +184,10 @@ const HomeView = (props: HomeGeneratedProps) => {
         isOpen={addressModalChange}
         title="Change Buying Address"
         description="Are you sure you want to change your buying address? This will reset your current cart."
-        action={() => console.log('DELETE ACTION')}
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
         actionText="Okay"
         onClickClose={() => {
           setAddressModalChange(false);
@@ -188,10 +207,12 @@ const HomeView = (props: HomeGeneratedProps) => {
               options={addressOptions}
               label="Buying For"
               size="small"
-              onFocus={() => {}}
               onChange={(e) => {
-                changeDefaultAddress(e.value);
-                // setAddressModalChange(true);
+                setAddressModalChange(true);
+                setChangeAddress({
+                  ...changeAddress,
+                  newChangeAddress: e.value,
+                });
               }}
               value={currentAddressSelected}
             />
