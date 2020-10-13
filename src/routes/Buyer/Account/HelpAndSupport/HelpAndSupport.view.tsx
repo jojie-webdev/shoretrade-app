@@ -64,7 +64,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
       <p className="help-text">
         You’ll find answers to common questions below. <br />
         For everything else contact us on <span>1300 095 746</span> or{' '}
-        <span>sellers@shoretrade.com</span>
+        <span>buyers@shoretrade.com</span>
       </p>
 
       {HELP_AND_SUPPORT.map((help, ndx) => (

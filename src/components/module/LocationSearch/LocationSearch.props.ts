@@ -1,10 +1,9 @@
-import { InteractionsProps } from 'components/base/Interactions/Interactions.props';
+import { TextFieldProps } from 'components/base/TextField/TextField.props';
 import { PlaceData } from 'types/PlaceData';
 
 export interface LocationSearchProps {
   onSelect: (location?: PlaceData) => void;
-  backgroundColor?: string;
-  interactionProps?: Partial<InteractionsProps>;
   initialResult?: string[];
   autocompleteType?: string;
+  textFieldProps?: TextFieldProps;
 }
