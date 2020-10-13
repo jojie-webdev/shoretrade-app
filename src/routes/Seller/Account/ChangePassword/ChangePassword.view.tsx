@@ -57,9 +57,19 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
 
       <SmallAlertContainer>
         <div className="icon-container">
-          <InfoFilled fill={theme.brand.alert} height={16} width={16} />
+          <InfoFilled
+            fill={
+              theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade8
+            }
+            height={theme.appType === 'seller' ? 14 : 20}
+            width={theme.appType === 'seller' ? 14 : 20}
+          />
         </div>
-        <Typography color="alert" variant="caption" className="text">
+        <Typography
+          variant="caption"
+          className="text"
+          color={theme.appType === 'seller' ? 'alert' : 'shade8'}
+        >
           Your Password must: <br />
           • Be at least 8 characters long <br />
           • Include at least 1 number <br />

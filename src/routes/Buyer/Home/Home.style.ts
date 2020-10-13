@@ -25,6 +25,26 @@ export const ViewContainer = styled.div`
   }
 `;
 
+export const SmallAlertContainer = styled.div`
+  // padding: 8px;
+  padding: 16px 0px 16px 18px;
+  width: 100%;
+  background: ${({ theme }) => theme.brand.alert};
+  border-radius: 4px;
+  margin-bottom: 24px;
+
+  display: flex;
+  align-items: center;
+
+  .icon-container {
+    margin-right: 8px;
+  }
+
+  .text {
+    // margin-top: 6px;
+  }
+`;
+
 export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
@@ -100,7 +120,7 @@ export const CreditContainer = styled.div`
   flex-direction: row;
   align-items: center;
   border-radius: 4px;
-  background-color: #ffcf5c;
+  background-color: ${({ theme }) => theme.brand.alert};
   height: 3.5em;
   margin-bottom: 24px;
 `;

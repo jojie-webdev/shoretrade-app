@@ -15,6 +15,7 @@ const AlertInfo = (props: AlertInfoProps): JSX.Element => {
         width={13.33}
         height={13.33}
         fill={dark ? theme.grey.shade9 : theme.brand.alert}
+        {...props}
       />
       <Text variant="caption" color={dark ? 'shade9' : 'alert'}>
         {label}

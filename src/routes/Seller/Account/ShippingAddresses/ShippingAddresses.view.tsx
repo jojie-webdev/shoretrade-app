@@ -51,7 +51,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
 
       <SmallAlertContainer>
         <div className="icon-container">
-          <InfoFilled fill={theme.brand.alert} height={16} width={16} />
+          <InfoFilled fill={theme.brand.alert} height={14} width={14} />
         </div>
         <Typography color="alert" variant="caption">
           New and updated addresses require approval before they can be used.
