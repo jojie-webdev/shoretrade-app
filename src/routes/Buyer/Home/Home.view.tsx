@@ -187,16 +187,13 @@ const HomeView = (props: HomeGeneratedProps) => {
   };
 
   useEffect(() => {
-    const load = async () => {
-      if (addressOptions) {
-        const filterAddressDefault = await addresses.filter((i) => i.default);
-        const filteredArray = await addressOptions.find(
-          (a) => a.value === filterAddressDefault[0].id
-        );
-        setCurrentAddressSelected(filteredArray);
-      }
-    };
-    load();
+    if (addressOptions) {
+      const filterAddressDefault = addresses.filter((i) => i.default);
+      const filteredArray = addressOptions.find(
+        (a) => a.value === filterAddressDefault[0].id
+      );
+      setCurrentAddressSelected(filteredArray);
+    }
   }, [addressOptions, addresses]);
 
   useEffect(() => {
@@ -206,8 +203,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     });
   }, [currentAddressSelected]);
 
-  const confirmChangeAddress = async () => {
-    await changeDefaultAddress(changeAddress.newChangeAddress);
+  const confirmChangeAddress = () => {
+    changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
   const showRecentSearch = searchTerm.length === 0;
