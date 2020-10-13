@@ -6,6 +6,7 @@ import {
   Menu,
   Cart,
   ArrowLeft,
+  PlaceholderProfile,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -61,7 +62,6 @@ const Header = ({
   const theme = useTheme();
   const history = useHistory();
 
-  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
   });
@@ -132,18 +132,11 @@ const Header = ({
             </Typography>
           </div>
 
-          {!hideBrokenProfileImage &&
-            userData?.profileImage &&
-            theme.appType === 'seller' && (
-              <img
-                src={userData?.profileImage}
-                onError={() => {
-                  // do something
-                  setHideBrokenProfileImage(true);
-                }}
-                alt=""
-              />
-            )}
+          {userData?.profileImage ? (
+            <img src={userData?.profileImage} alt="Profile" />
+          ) : (
+            <PlaceholderProfile />
+          )}
         </Touchable>
       </div>
     </HeaderContainer>
