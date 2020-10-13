@@ -15,7 +15,7 @@ const CardView = (props: FieldsetCardProps) => {
   return (
     <>
       <Row>
-        <Col md={4}>
+        <Col md={5}>
           <FormikTextField
             readOnly={isExisting}
             type="text"
@@ -37,45 +37,53 @@ const CardView = (props: FieldsetCardProps) => {
             }}
           />
         </Col>
-        <Col md={4}>
-          <FormikTextField
-            readOnly={isExisting}
-            type="text"
-            name="exp"
-            id="exp"
-            label="EXPIRY DATE"
-            placeholder="MM / YY"
-            onChangeText={(value) => {
-              const text = value.trim().replace(/\s/g, '');
-              const isFirstHalf = value.length === 2;
-              const isMaxLen = text.replace('/', '').length >= 4;
+      </Row>
 
-              if (isFirstHalf) {
-                formik.setFieldValue('exp', value + ' / ', false);
-              } else if (isMaxLen) {
-                formik.setFieldValue('exp', value.substr(0, 7), false);
-              }
-            }}
-            onKeyUp={(e) => {
-              if (e.key === 'Backspace' || e.key === 'Delete') {
-                formik.setFieldValue('exp', '', false);
-              }
-            }}
-          />
-        </Col>
-        <Col md={4}>
-          <FormikTextField
-            readOnly={isExisting}
-            type="text"
-            name="cvc"
-            id="cvc"
-            label="CVC"
-            placeholder="CVC"
-          />
+      <Row>
+        <Col md={5}>
+          <Row>
+            <Col md={6}>
+              <FormikTextField
+                readOnly={isExisting}
+                type="text"
+                name="exp"
+                id="exp"
+                label="EXPIRY DATE"
+                placeholder="MM / YY"
+                onChangeText={(value) => {
+                  const text = value.trim().replace(/\s/g, '');
+                  const isFirstHalf = value.length === 2;
+                  const isMaxLen = text.replace('/', '').length >= 4;
+
+                  if (isFirstHalf) {
+                    formik.setFieldValue('exp', value + ' / ', false);
+                  } else if (isMaxLen) {
+                    formik.setFieldValue('exp', value.substr(0, 7), false);
+                  }
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === 'Backspace' || e.key === 'Delete') {
+                    formik.setFieldValue('exp', '', false);
+                  }
+                }}
+              />
+            </Col>
+            <Col md={6}>
+              <FormikTextField
+                readOnly={isExisting}
+                type="text"
+                name="cvc"
+                id="cvc"
+                label="CVC"
+                placeholder="CVC"
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
+
       <Row>
-        <Col md={12}>
+        <Col md={5}>
           <FormikTextField
             readOnly={isExisting}
             type="text"

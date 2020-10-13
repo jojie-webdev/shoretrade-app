@@ -71,33 +71,35 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       )}
 
       <InnerRouteHeader title={routeHeader} />
-
-      <Row nogutter className="textfield-row">
-        <Col md={12}>
-          <LocationSearch
-            onSelect={(location) => {
-              if (location) {
-                setAddress(location);
-              }
-            }}
-            textFieldProps={{
-              value: address?.address || '',
-              label: 'Address',
-              error: pathOr('', ['address', '0'], errors),
-            }}
-          />
-        </Col>
-        <Col md={12} style={{ marginTop: 24 }}>
-          <TextField
-            className="address"
-            label="Unit number (optional)"
-            name="unitNumber"
-            value={unitNumber}
-            onChange={(e) => setUnitNumber(e.target.value)}
-            error={pathOr('', ['unitNumber', '0'], errors)}
-          />
-        </Col>
-      </Row>
+      
+      <Col md={5}>
+        <Row nogutter className="textfield-row">
+          <Col md={12}>
+            <LocationSearch
+              onSelect={(location) => {
+                if (location) {
+                  setAddress(location);
+                }
+              }}
+              textFieldProps={{
+                value: address?.address || '',
+                label: 'Address',
+                error: pathOr('', ['address', '0'], errors),
+              }}
+            />
+          </Col>
+          <Col md={12} style={{ marginTop: 24 }}>
+            <TextField
+              className="address"
+              label="Unit number (optional)"
+              name="unitNumber"
+              value={unitNumber}
+              onChange={(e) => setUnitNumber(e.target.value)}
+              error={pathOr('', ['unitNumber', '0'], errors)}
+            />
+          </Col>
+        </Row>
+      </Col>
 
       <Row nogutter className="checkbox-row">
         <Col className="checkbox-col">

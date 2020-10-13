@@ -11,7 +11,10 @@ export const Transx = styled.div`
   flex-flow: row nowrap;
   justify-content: space-between;
   background-color: white;
+  border: 1px solid ${({ theme }) => theme.grey.shade2};
   border-radius: 4px;
+  margin-left: 0px;
+  margin-right: 0px;
   margin-bottom: 16px;
 `;
 
