@@ -31,7 +31,7 @@ const Home = (): JSX.Element => {
   };
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const location = useLocation(); // check this out
+  // const location = useLocation(); // comment this out
 
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||

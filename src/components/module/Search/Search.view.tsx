@@ -8,10 +8,19 @@ import { InputContainer } from './Search.style';
 const Search = (props: SearchProps): JSX.Element => {
   const theme = useTheme();
 
-  const { value, containerStyle, resetValue, ...inputProps } = props;
+  const {
+    value,
+    containerStyle,
+    resetValue,
+    isSellerProduct,
+    ...inputProps
+  } = props;
 
   return (
-    <InputContainer className={containerStyle}>
+    <InputContainer
+      className={containerStyle}
+      isSellerProduct={isSellerProduct}
+    >
       <SearchSVG height={16} width={16} />
       <input
         type="text"

@@ -1,16 +1,24 @@
 import styled from 'utils/styled';
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<{ isSellerProduct?: boolean }>`
   background: #ffffff;
   border: ${(props) =>
     props.theme.appType === 'buyer'
       ? 'none'
       : `1px solid ${props.theme.grey.shade5}`};
   border-radius: ${(props) =>
-    props.theme.appType === 'buyer' ? '4px' : '100px'};
+    props.isSellerProduct && props.theme.appType === 'buyer'
+      ? '100px'
+      : props.theme.appType === 'buyer'
+      ? '4px'
+      : '100px'};
   width: 100%;
   padding: ${(props) =>
-    props.theme.appType === 'buyer' ? '24px' : '10px 15px'};
+    props.isSellerProduct && props.theme.appType === 'buyer'
+      ? '10px 10px 10px 15px'
+      : props.theme.appType === 'buyer'
+      ? '24px'
+      : '10px 15px'};
   margin-bottom: 16px;
   box-shadow: ${(props) =>
     props.theme.appType === 'buyer'
@@ -40,6 +48,10 @@ export const InputContainer = styled.div`
 
     ::placeholder {
       color: ${(props) => props.theme.grey.shade5}};
+      font-size: ${(props) =>
+        props.isSellerProduct && props.theme.appType === 'buyer'
+          ? '14px'
+          : '16px'}
     }
   }
 `;

@@ -1,33 +1,57 @@
 import Interactions from 'components/base/Interactions';
+import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
-
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 8px 8px 8px;
+  overflow: auto;
+  overflow-x: hidden;
+  display: table;
+  clear: both;
+  width: 100%;
+  padding: 0 6px;
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    clear: both;
+  }
+
+  /* Float four columns side by side */
+  .column {
+    float: left;
+    /* width: 30%; */
+    padding: 0;
+  }
+
+  /* Remove extra left and right margins, due to padding */
+  .row {
+    margin: 0 -5px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  /* Responsive columns */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 export const SellerRatingContainer = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 `;
 
 export const CategoryContainer = styled.div`
@@ -45,7 +69,7 @@ export const SpinnerContainer = styled.div`
 `;
 
 export const ListingContainer = styled.div`
-  flex: 1;
+  // flex: 1;
 `;
 
 export const ListingCounter = styled.span`
@@ -86,4 +110,9 @@ export const RightComponent = styled.div`
   align-items: center;
   flex-direction: row;
   padding-right: 24px;
+`;
+
+export const ListingHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
