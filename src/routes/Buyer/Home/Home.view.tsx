@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import PaginateList from 'components/base/PaginateList';
+import Select from 'components/base/Select';
 import {
   Octopus,
   InfoFilled,

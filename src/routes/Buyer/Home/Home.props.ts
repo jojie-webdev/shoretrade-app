@@ -26,7 +26,8 @@ export interface HomeGeneratedProps {
   results: { count: string; label: string; value: string }[];
   onReset: () => void;
   recent: { count: string; label: string; value: string }[];
-  addresses: { label: string; value: string }[];
+  addresses: GetAddressesResponseItem[];
+  addressOptions: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
