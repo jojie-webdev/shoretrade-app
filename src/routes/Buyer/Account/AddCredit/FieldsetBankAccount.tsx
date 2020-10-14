@@ -1,13 +1,14 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import { Col, Row } from 'react-grid-system';
 
 import { Field } from './AddCredit.style';
 
 export const FieldsetBankAccount = () => (
-  <Col md={5}>
+  <FixedWidthContainer width={436}>
     <Row>
       <Field md={12}>
         <Typography variant="overline" color="shade6">
@@ -66,5 +67,5 @@ export const FieldsetBankAccount = () => (
         />
       </Field>
     </Row>
-  </Col>
+  </FixedWidthContainer>
 );

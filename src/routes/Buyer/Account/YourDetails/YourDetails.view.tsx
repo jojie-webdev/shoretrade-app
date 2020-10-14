@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -56,7 +57,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
       <InnerRouteHeader title="Your Details" />
       <Formik {...formikProps}>
         <Form>
-          <Col md={5}>
+          <FixedWidthContainer>
             <InputRow>
               <Col md={12} className="input-col">
                 <FormikTextField label="First Name" name="firstName" />
@@ -82,7 +83,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
                 <FormikTextField label="Business number (optional)" name="abn" />
               </Col>
             </InputRow>
-          </Col>
+          </FixedWidthContainer>
 
           <Row>
             <Col>
