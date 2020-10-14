@@ -29,7 +29,15 @@ export const DeliveryItem = styled(Interaction)`
   margin-bottom: 16px;
 
   .content {
-    .top {
+    .order-details-top {
+      margin-bottom: 8px;
+      & > div {
+        display: inline-block;
+        margin-right: 48px;
+      }
+    }
+
+    .order-details-bottom {
       display: flex;
       align-items: center;
       /* Due to the typography having extra white space on the top and bottom

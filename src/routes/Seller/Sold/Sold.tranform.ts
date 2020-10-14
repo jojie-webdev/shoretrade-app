@@ -122,6 +122,8 @@ export const orderItemToInTransitItemData = (
     ).toDate(),
     amount: toPrice(order.totalPrice, false),
     type: order.deliveryMethod.toLowerCase(),
+    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
+    orderRefNumber: order.orderRefNumber,
   }));
 };
 
@@ -149,5 +151,7 @@ export const orderItemToDeliveredItemData = (
     ).toDate(),
     amount: toPrice(order.totalPrice, false),
     type: order.deliveryMethod.toLowerCase(),
+    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
+    orderRefNumber: order.orderRefNumber,
   }));
 };
