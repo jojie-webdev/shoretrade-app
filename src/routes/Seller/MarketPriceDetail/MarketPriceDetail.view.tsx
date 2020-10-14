@@ -105,7 +105,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
                 title="Paid"
                 data={graphData}
                 yAxisLabelFormat={(v) =>
-                  `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
+                  `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
                 }
                 cHeight={263}
               />
