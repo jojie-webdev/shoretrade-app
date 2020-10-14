@@ -15,10 +15,7 @@ import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
-import {
-  SearchGeneratedProps,
-  SearchAddressProps,
-} from './SearchAddress.props';
+import { SearchAddressProps } from './SearchAddress.props';
 import {
   InputContainer,
   Container,

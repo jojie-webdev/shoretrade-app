@@ -8,11 +8,3 @@ export interface SearchAddressProps
   containerStyle?: any;
   resetValue: () => void;
 }
-
-export interface SearchGeneratedProps {
-  addresses: GetAddressesResponseItem[];
-  addressOptions: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
-  changeDefaultAddress: (id: string) => void;
-}
