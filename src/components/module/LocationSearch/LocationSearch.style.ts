@@ -8,6 +8,7 @@ export const Container = styled.div`
 export const SearchLocationContainer = styled.div`
   padding: 0 8px;
   cursor: pointer;
+  disaply: none;
 `;
 
 export const Results = styled.div`
@@ -66,4 +67,5 @@ export const Item = styled.div<{ isSelected?: boolean }>`
     background-color: ${({ theme }) =>
       theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
   }
+
 `;

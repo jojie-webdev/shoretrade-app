@@ -172,18 +172,18 @@ const LocationSearch = ({
       <TextField
         {...textFieldProps}
         LeftComponent={<Location />}
-        RightComponent={
-          doSearch ? (
-            <SearchLocationContainer onClick={() => setDoSearch(false)}>
-              <Typography variant="label">Search</Typography>
-            </SearchLocationContainer>
-          ) : null
-        }
+        // RightComponent={
+        //   doSearch ? (
+        //     <SearchLocationContainer onClick={() => setDoSearch(false)}>
+        //       <Typography variant="label">Search</Typography>
+        //     </SearchLocationContainer>
+        //   ) : null
+        // }
         placeholder="Search for a Location"
         onKeyUp={onKeyUp}
         value={searchValue}
         onChangeText={(val) => setSearchValue(val)}
-        disabled={doSearch}
+        // disabled={doSearch}
       />
 
       {loading && (
