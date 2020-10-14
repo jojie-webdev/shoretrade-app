@@ -3,7 +3,7 @@ import styled from 'utils/styled';
 
 export const Wrapper = styled.div`
   .address-row {
-    margin-bottom: 24px;
+    margin-top: 24px;
   }
 `;
 

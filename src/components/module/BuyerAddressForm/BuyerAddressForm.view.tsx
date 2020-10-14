@@ -5,6 +5,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LocationSearch from 'components/module/LocationSearch';
 import pathOr from 'ramda/es/pathOr';
@@ -70,8 +71,8 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       )}
 
       <InnerRouteHeader title={routeHeader} />
-      
-      <Col md={5}>
+
+      <FixedWidthContainer>
         <Row nogutter className="textfield-row">
           <Col md={12}>
             <LocationSearch
@@ -98,7 +99,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
             />
           </Col>
         </Row>
-      </Col>
+      </FixedWidthContainer>
 
       <Row nogutter className="checkbox-row">
         <Col className="checkbox-col">
