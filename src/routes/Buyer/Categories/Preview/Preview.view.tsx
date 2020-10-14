@@ -8,6 +8,7 @@ import TypographyView from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
@@ -44,7 +45,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     <PreviewContainer>
       <Row className="search-row">
         <Col xs={10.5}>
-          <Search
+          <SearchAddressView
             value={searchValue}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}

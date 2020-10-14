@@ -6,6 +6,7 @@ import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesByCategoryState';
@@ -83,7 +84,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     <SearchContainer>
       <Row className="search-row">
         <Col xs={12}>
-          <Search
+          <SearchAddressView
             value={searchValue}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
@@ -128,10 +129,10 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                       key={result.id}
                     >
                       <Interactions
+                        // eslint-disable-next-line react/no-children-prop
                         children={children(result)}
                         isHover
                         // value={r.name}
-                        onClick={() => {}}
                       />
                     </Link>
                   ))}
