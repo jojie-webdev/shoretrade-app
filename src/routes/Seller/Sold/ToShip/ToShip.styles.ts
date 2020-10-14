@@ -33,6 +33,55 @@ export const PriorityNumber = styled.div`
   margin-right: 16px;
 `;
 
+export const PendingItemContainer = styled.div`
+  border-radius: 4px;
+  width: 100%;
+  background: ${(props) => props.theme.grey.shade9};
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .bottom-content {
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+  }
+
+  .divider {
+    height: 2px;
+    background: ${(props) => props.theme.grey.shade8};
+    margin: 16px 0;
+  }
+
+  .content {
+    padding: 12px 12px 0 12px;
+    display: flex;
+
+    .center-text {
+      margin: 0 4px;
+    }
+
+    img {
+      height: 64px;
+      width: 64px;
+      border-radius: 8px;
+      margin-right: 8px;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+`;
+
 export const StyledInteraction = styled(Interaction)`
   margin-bottom: 12px;
 
