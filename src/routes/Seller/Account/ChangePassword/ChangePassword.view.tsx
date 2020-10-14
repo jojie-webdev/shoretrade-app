@@ -4,6 +4,7 @@ import Button from 'components/base/Button';
 import { InfoFilled } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { Formik, Form } from 'formik';
@@ -55,7 +56,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
         />
       )}
 
-      <Col md={5}>
+      <FixedWidthContainer width={320}>
         <SmallAlertContainer>
           <div className="icon-container">
             <InfoFilled
@@ -78,9 +79,9 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             • Include at least 1 special character <br />
           </Typography>
         </SmallAlertContainer>
-      </Col>
+      </FixedWidthContainer>
 
-      <Col md={5}>
+      <FixedWidthContainer width={320}>
         <Formik {...formikProps}>
           <Form>
             <TextFieldRow>
@@ -91,14 +92,14 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
                   secured
                 />
               </Col>
-              <Col md={6} className="textfield-col">
+              <Col md={12} className="textfield-col">
                 <FormikTextField
                   label="New Password"
                   name="newPassword"
                   secured
                 />
               </Col>
-              <Col md={6} className="textfield-col">
+              <Col md={12} className="textfield-col">
                 <FormikTextField
                   label="Confirm New Password"
                   name="confirmNewPassword"
@@ -114,7 +115,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             </Row>
           </Form>
         </Formik>
-      </Col>
+      </FixedWidthContainer>
     </Wrapper>
   );
 };
