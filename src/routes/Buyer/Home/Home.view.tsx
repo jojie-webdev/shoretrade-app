@@ -282,7 +282,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   <SwiperSlide key={`favorite${ndx}`}>
                     <Row style={{ width: '100%' }}>
                       {chunked.map((fav) => (
-                        <Col md={4} lg={3} key={fav.id}>
+                        <Col lg={4} key={fav.id}>
                           <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
                             <PreviewCard
                               id={fav.id}
@@ -352,7 +352,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     <SwiperSlide key={`category${ndx}`}>
                       <Row style={{ width: '100%' }}>
                         {chunked.map((category) => (
-                          <Col md={3} key={category.id}>
+                          <Col lg={3} key={category.id}>
                             <Link
                               to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
                             >
@@ -383,7 +383,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         </ViewCol>
       </div>
 
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+      <div className="wrapper">
         <ViewCol>
           <RecentHeader>
             <Typography variant="title5" color="shade8">
@@ -414,7 +414,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   <SwiperSlide key={`recentlyAdded${ndx}`}>
                     <Row style={{ width: '100%' }}>
                       {chunked.map((recent) => (
-                        <Col md={4} lg={3} key={recent.id}>
+                        <Col lg={3} key={recent.id}>
                           <Link to={`/buyer/product/${recent.id}`}>
                             <PreviewCard
                               id={recent.id}
@@ -450,7 +450,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           </RecentContainer>
         </ViewCol>
       </div>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+      <div className="wrapper">
         <ViewCol>
           <SellerHeader>
             <Typography variant="title5" color="shade8">
@@ -481,7 +481,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
                     <Row style={{ width: '100%' }}>
                       {chunked.map((s) => (
-                        <Col md={4} lg={3} key={s.id}>
+                        <Col lg={3} key={s.id}>
                           <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
                             <CardContainer className="centered">
                               <div className="card">
@@ -515,7 +515,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           </SellerContainer>
         </ViewCol>
       </div>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+      <div className="wrapper">
         <ViewCol>
           <SellerHeader>
             <Typography variant="title5" color="shade8">
@@ -546,7 +546,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   <SwiperSlide key={`favoriteSellers${ndx}`}>
                     <Row style={{ width: '100%' }}>
                       {chunked.map((s) => (
-                        <Col md={4} lg={3} key={s.id}>
+                        <Col lg={3} key={s.id}>
                           <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
                             <CardContainer className="centered">
                               <div className="card">

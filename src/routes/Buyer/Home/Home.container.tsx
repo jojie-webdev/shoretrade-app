@@ -157,9 +157,25 @@ const Home = (): JSX.Element => {
       (state: Store) => state.getBuyerHomepage.data?.data.data.categories
     ) || [];
 
-  const mdBreakpoint = useMediaQuery({
-    query: BREAKPOINTS.md,
+  const xlBreakpoint = useMediaQuery({
+    query: BREAKPOINTS.xl,
   });
+
+  const xxlBreakpoint = useMediaQuery({
+    query: BREAKPOINTS.xxl,
+  });
+
+  const lgBreakpoint = useMediaQuery({
+    query: BREAKPOINTS.lg,
+  });
+
+  const chunkNumber = (): number => {
+    if (lgBreakpoint || xlBreakpoint || xxlBreakpoint) return 4;
+
+    return 1;
+  };
+
+  const laptop = lgBreakpoint || xlBreakpoint || xxlBreakpoint;
 
   const generatedProps: HomeGeneratedProps = {
     search,
@@ -176,11 +192,11 @@ const Home = (): JSX.Element => {
     saveSearchHistory,
     creditState,
     creditBalance,
-    chunkedCategories: chunkArray(categories, mdBreakpoint ? 3 : 4),
-    chunkedFavorites: chunkArray(favourites, 3),
-    chunkedRecentlyAdded: chunkArray(recentlyAdded, mdBreakpoint ? 3 : 4),
-    chunkedFavouriteSellers: chunkArray(favouriteSellers, mdBreakpoint ? 3 : 4),
-    chunkedSellers: chunkArray(sellers, mdBreakpoint ? 3 : 4),
+    chunkedCategories: chunkArray(categories, laptop ? 4 : 1),
+    chunkedFavorites: chunkArray(favourites, chunkNumber()),
+    chunkedRecentlyAdded: chunkArray(recentlyAdded, chunkNumber()),
+    chunkedFavouriteSellers: chunkArray(favouriteSellers, chunkNumber()),
+    chunkedSellers: chunkArray(sellers, chunkNumber()),
   };
 
   return <HomeView {...generatedProps} />;
