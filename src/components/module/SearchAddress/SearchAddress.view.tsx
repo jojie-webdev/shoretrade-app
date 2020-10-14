@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Select from 'components/base/Select';
 import { Search as SearchSVG, CloseFilled } from 'components/base/SVG';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import { Row, Col } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -14,7 +15,10 @@ import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
-import { SearchAddressProps } from './SearchAddress.props';
+import {
+  SearchGeneratedProps,
+  SearchAddressProps,
+} from './SearchAddress.props';
 import {
   InputContainer,
   Container,
@@ -25,12 +29,19 @@ import {
   placeDataToUpdateAddressMeta,
 } from './SearchAddress.transfrom';
 
-const SearchAddress = (props: SearchAddressProps): JSX.Element => {
+const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const { value, containerStyle, resetValue, ...inputProps } = props;
-  const dispatch = useDispatch();
+  const [addressModalChange, setAddressModalChange] = useState(false);
+  const [currentAddressSelected, setCurrentAddressSelected] = useState();
+  const [changeAddress, setChangeAddress] = useState({
+    currentAddress: '',
+    newChangeAddress: '',
+  });
 
   //#region
+  const dispatch = useDispatch();
+
   const companyAdressDefault = GetDefaultCompany();
   const [companyId, setCompanyId] = useState('');
   const getAddress = useSelector((state: Store) => state.getAddresses);
@@ -84,9 +95,43 @@ const SearchAddress = (props: SearchAddressProps): JSX.Element => {
     setCompanyId(companyAdressDefault?.id || '');
   }, [companyAdressDefault]);
   //#endregion
+  const confirmChangeAddress = () => {
+    changeDefaultAddress(changeAddress.newChangeAddress);
+  };
+
+  useEffect(() => {
+    if (addressOptions && addresses && !currentAddressSelected) {
+      const filterAddressDefault = addresses.filter((i) => i.default);
+      const filteredArray = addressOptions.find(
+        (a) => a.value === filterAddressDefault[0].id
+      );
+      setCurrentAddressSelected(filteredArray);
+    }
+  }, [addressOptions, addresses, currentAddressSelected]);
+
+  useEffect(() => {
+    setChangeAddress({
+      ...changeAddress,
+      currentAddress: currentAddressSelected || '',
+    });
+  }, [currentAddressSelected]);
 
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change your Buying Address?"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
+
       <Row>
         <Col xs={9} style={{ paddingRight: 0 }}>
           <InputContainer>
@@ -112,12 +157,17 @@ const SearchAddress = (props: SearchAddressProps): JSX.Element => {
         <Col xs={3} style={{ paddingLeft: 0 }}>
           <AddressContainer>
             <Select
-              label="Buying For"
-              className="dropdown"
               options={addressOptions}
+              label="Buying For"
               size="small"
-              // onChange={(e) => {}}
-              // value={currentAddress}
+              onChange={(e) => {
+                setAddressModalChange(true);
+                setChangeAddress({
+                  ...changeAddress,
+                  newChangeAddress: e.value,
+                });
+              }}
+              value={currentAddressSelected}
             />
           </AddressContainer>
         </Col>
@@ -126,4 +176,4 @@ const SearchAddress = (props: SearchAddressProps): JSX.Element => {
   );
 };
 
-export default React.memo(SearchAddress);
+export default SearchAddressView;

@@ -203,8 +203,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       currentAddress: currentAddressSelected || '',
     });
   }, [currentAddressSelected]);
-  console.log(JSON.stringify(addressOptions));
-  console.log(JSON.stringify(currentAddressSelected));
+
   const confirmChangeAddress = () => {
     changeDefaultAddress(changeAddress.newChangeAddress);
   };
