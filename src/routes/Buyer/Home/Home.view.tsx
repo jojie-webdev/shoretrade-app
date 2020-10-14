@@ -2,12 +2,14 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import PaginateList from 'components/base/PaginateList';
+import Select from 'components/base/Select';
 import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
 import ArrowRight from 'components/base/SVG/ArrowRight';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -43,26 +45,26 @@ import {
   SellerContainer,
   CardContainer,
   SellerCardTypography,
+  SmallAlertContainer,
 } from './Home.style';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
   const history = useHistory();
-
   if (loading) {
     return <Loading />;
   }
 
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
-      <CreditContainer
+      <SmallAlertContainer
         onClick={() => history.push('/buyer/account/bank-details')}
         style={{ cursor: 'pointer' }}
       >
-        <InfoContainer>
+        <div className="icon-container">
           <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
-        </InfoContainer>
+        </div>
         <Text variant="label" color="shade8">
           {creditState === 'empty' ? (
             <>
@@ -89,7 +91,41 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
         <span style={{ paddingRight: '20px' }}>
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
         </span>
-      </CreditContainer>
+      </SmallAlertContainer>
+      // <CreditContainer
+      //   onClick={() => history.push('/buyer/account/bank-details')}
+      //   style={{ cursor: 'pointer' }}
+      // >
+      //   <InfoContainer>
+      //     <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
+      //   </InfoContainer>
+      //   <Text variant="label" color="shade8">
+      //     {creditState === 'empty' ? (
+      //       <>
+      //         You need to add credit to your account in order to make purchases.
+      //         <Bold variant="label" weight="bold">
+      //           {' '}
+      //           Click here
+      //         </Bold>{' '}
+      //         to add credit to your account.
+      //       </>
+      //     ) : (
+      //       <>
+      //         <>
+      //           You have{' '}
+      //           <Bold variant="label" weight="bold">
+      //             less than $250
+      //           </Bold>{' '}
+      //           in your account. Please fill it up if you want to continue
+      //           making purchases.
+      //         </>
+      //       </>
+      //     )}
+      //   </Text>
+      //   <span style={{ paddingRight: '20px' }}>
+      //     <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
+      //   </span>
+      // </CreditContainer>
     );
   }
   return null;
@@ -113,9 +149,18 @@ const HomeView = (props: HomeGeneratedProps) => {
     recentlyAdded,
     sellers,
     favouriteSellers,
+    addresses,
+    addressOptions,
+    selectedAddress,
+    changeDefaultAddress,
   } = props;
-
+  const [addressModalChange, setAddressModalChange] = useState(false);
+  const [currentAddressSelected, setCurrentAddressSelected] = useState();
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
+  const [changeAddress, setChangeAddress] = useState({
+    currentAddress: '',
+    newChangeAddress: '',
+  });
 
   const isFavouriteMD = useMediaQuery({
     query: `(min-width: 1040px) and (max-width: 1364px)`,
@@ -141,11 +186,45 @@ const HomeView = (props: HomeGeneratedProps) => {
     return 3;
   };
 
+  useEffect(() => {
+    if (addressOptions) {
+      const filterAddressDefault = addresses.filter((i) => i.default);
+      const filteredArray = addressOptions.find(
+        (a) => a.value === filterAddressDefault[0].id
+      );
+      setCurrentAddressSelected(filteredArray);
+    }
+  }, [addressOptions, addresses]);
+
+  useEffect(() => {
+    setChangeAddress({
+      ...changeAddress,
+      currentAddress: currentAddressSelected || '',
+    });
+  }, [currentAddressSelected]);
+
+  const confirmChangeAddress = () => {
+    changeDefaultAddress(changeAddress.newChangeAddress);
+  };
+
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
 
   return (
     <ViewContainer>
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change your Buying Address?"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
@@ -155,6 +234,21 @@ const HomeView = (props: HomeGeneratedProps) => {
             resetValue={onReset}
             placeholder="Search.."
           />
+          <div className="buying-for">
+            <Select
+              options={addressOptions}
+              label="Buying For"
+              size="small"
+              onChange={(e) => {
+                setAddressModalChange(true);
+                setChangeAddress({
+                  ...changeAddress,
+                  newChangeAddress: e.value,
+                });
+              }}
+              value={currentAddressSelected}
+            />
+          </div>
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">

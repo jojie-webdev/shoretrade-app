@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import {
-  ShoretradeLogo,
+  ShoretradeLogo2,
   Exit,
   Menu,
   Cart,
   ArrowLeft,
+  PlaceholderProfile,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -61,7 +62,6 @@ const Header = ({
   const theme = useTheme();
   const history = useHistory();
 
-  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
   });
@@ -132,18 +132,11 @@ const Header = ({
             </Typography>
           </div>
 
-          {!hideBrokenProfileImage &&
-            userData?.profileImage &&
-            theme.appType === 'seller' && (
-              <img
-                src={userData?.profileImage}
-                onError={() => {
-                  // do something
-                  setHideBrokenProfileImage(true);
-                }}
-                alt=""
-              />
-            )}
+          {userData?.profileImage ? (
+            <img src={userData?.profileImage} alt="Profile" />
+          ) : (
+            <PlaceholderProfile />
+          )}
         </Touchable>
       </div>
     </HeaderContainer>
@@ -175,9 +168,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const history = useHistory();
   const isSeller = theme.appType === 'seller';
-  const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'shade9';
+  const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
-  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade9;
+  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -189,7 +182,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
-            <ShoretradeLogo />
+            <ShoretradeLogo2 />
           </div>
           {routes.map((route) => (
             <NavLink
@@ -210,10 +203,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <CreditBalanceContainer
               onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
             >
-              <Typography color="shade7" variant="overline" weight="900">
+              <Typography color="shade6" variant="overline" weight="900">
                 Credit balance
               </Typography>
-              <Typography color="shade9" variant="title5" className="amount">
+              <Typography color="noshade" variant="title5" className="amount">
                 {credit ? toPrice(credit) : '$0.00'}
               </Typography>
             </CreditBalanceContainer>
@@ -249,7 +242,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         <Header
           pageTitle={pageTitle}
           userData={userData}
-          textColor={headerTextColor || textColor}
+          textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
           onClick={() => setOpenSidebar(!openSidebar)}
           openSidebar={openSidebar}
           onBack={onBack}

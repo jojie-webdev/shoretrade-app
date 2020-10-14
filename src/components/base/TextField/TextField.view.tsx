@@ -9,6 +9,7 @@ import { TextFieldProps } from './TextField.props';
 import {
   Container,
   LeftComponentContainer,
+  RightComponentContainer,
   FieldContainer,
   Field,
   VisibilityContainer,
@@ -31,6 +32,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     error = '',
     prefix,
     LeftComponent = null,
+    RightComponent = null,
     className = undefined,
     onBlur = () => null,
     style,
@@ -39,6 +41,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     variant,
     color,
     onKeyUp,
+    disabled,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -77,7 +80,11 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           placeholder={placeholder}
           readOnly={readOnly}
           onKeyUp={onKeyUp}
+          disabled={disabled}
         />
+        {RightComponent && (
+          <RightComponentContainer>{RightComponent}</RightComponentContainer>
+        )}
         {secured && (
           <VisibilityContainer>
             <Touchable onPress={() => setShowSecuredText((v) => !v)}>

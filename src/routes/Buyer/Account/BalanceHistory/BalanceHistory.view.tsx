@@ -4,7 +4,7 @@ import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
 import moment from 'moment';
-import { Col, Row } from 'react-grid-system';
+import { Col } from 'react-grid-system';
 import { toPrice } from 'utils/String/toPrice';
 
 // import { useTheme } from 'utils/Theme';
@@ -21,26 +21,24 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
         {props.isLoading && <Loading />}
         {props.transactions.map((transaction, idx) => {
           return (
-            <Row key={idx}>
-              <Transx>
-                <TransxLeft>
-                  <Typography variant="body" color="shade9">
-                    {transaction.description}
-                  </Typography>
-                  <Typography variant="caption" color="shade6">
-                    {moment(transaction.createdAt).format('DD MMM YYYY')}
-                  </Typography>
-                </TransxLeft>
-                <TransxRight>
-                  <Typography variant="body" color="shade9">
-                    {toPrice(transaction.adjustmentAmount)}
-                  </Typography>
-                  <Typography variant="caption" color="shade6">
-                    Balance: {toPrice(transaction.balance)}
-                  </Typography>
-                </TransxRight>
-              </Transx>
-            </Row>
+            <Transx key={idx}>
+              <TransxLeft>
+                <Typography variant="body" color="shade9">
+                  {transaction.description}
+                </Typography>
+                <Typography variant="caption" color="shade6">
+                  {moment(transaction.createdAt).format('DD MMM YYYY')}
+                </Typography>
+              </TransxLeft>
+              <TransxRight>
+                <Typography variant="body" color="shade9">
+                  {toPrice(transaction.adjustmentAmount)}
+                </Typography>
+                <Typography variant="caption" color="shade6">
+                  Balance: {toPrice(transaction.balance)}
+                </Typography>
+              </TransxRight>
+            </Transx>
           );
         })}
       </Col>

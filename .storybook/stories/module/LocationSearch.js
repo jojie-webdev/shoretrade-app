@@ -7,6 +7,11 @@ import Container from '../../components/Container';
 
 storiesOf('module/LocationSearch', module).add('Summary', () => (
   <Container background="white">
-    <LocationSearch />
+    <LocationSearch
+      onSelect={(location) => {
+        console.log(location);
+      }}
+      textFieldProps={{ value: 'Some Address' }}
+    />
   </Container>
 ));

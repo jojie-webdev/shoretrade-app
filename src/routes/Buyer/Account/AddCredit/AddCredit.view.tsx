@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
 import SegmentedControls from 'components/base/SegmentedControls';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
@@ -60,10 +61,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
           enableReinitialize
         >
           <FormAddCredit>
-            <Col
-              md={activeTab == TABS.BANK ? 6 : 12}
-              className="textfield-container"
-            >
+            <FixedWidthContainer width={436} className="textfield-container">
               <FormikTextField
                 type="text"
                 name="amount"
@@ -73,7 +71,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
                 variant="label"
                 color="shade8"
               />
-            </Col>
+            </FixedWidthContainer>
 
             {activeTab == TABS.BANK && <FieldsetBankAccount />}
 

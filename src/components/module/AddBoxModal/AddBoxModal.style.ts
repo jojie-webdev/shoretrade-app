@@ -9,6 +9,7 @@ export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
 export const Inputs = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   padding: 24px 0 36px 0;
 `;
 
