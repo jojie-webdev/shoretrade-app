@@ -13,6 +13,7 @@ import { SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import { SoldGeneratedProps } from '../Sold.props';
 import { DeliveryItem } from '../Sold.style';
@@ -40,7 +41,7 @@ const InTransit = (props: SoldGeneratedProps) => {
               </Typography>
             </div>
             {data.map((item) => {
-              const { date, amount, id } = item;
+              const { date, amount, id, buyer, orderRefNumber } = item;
               const deliveryDate = moment(date).format('ddd DD MMM');
               return (
                 <DeliveryItem
@@ -54,12 +55,38 @@ const InTransit = (props: SoldGeneratedProps) => {
                     )
                   }
                   iconAlignment="flex-start"
+                  rightComponent={
+                    <span className="order-price" >
+                      <Typography variant="title5" weight="900" color="noshade">
+                        ${amount}
+                      </Typography>
+                      <ChevronRight width={16} height={24}/>
+                    </span>
+                  }
                 >
                   <div className="content">
-                    <div className="top">
+                    <div className="order-details-top">
+                      <div>
+                        <Typography color="shade6" variant="overline">
+                          Order:
+                        </Typography>
+                        <Typography color="primary" weight="900" variant="label">
+                          {formatOrderReferenceNumber(orderRefNumber)}
+                        </Typography>
+                      </div>
+                      <div>
+                        <Typography color="shade6" variant="overline">
+                          Buyer:
+                        </Typography>
+                        <Typography color="noshade" weight="900" variant="label">
+                          {buyer}
+                        </Typography>
+                      </div>
+                    </div>
+                    <div className="order-details-bottom">
                       <Typography
                         color="shade6"
-                        weight="500"
+                        weight="900"
                         variant="label"
                         className="delivery-date"
                       >
@@ -69,9 +96,6 @@ const InTransit = (props: SoldGeneratedProps) => {
                         {deliveryDate}
                       </Typography>
                     </div>
-                    <Typography variant="title5" weight="900" color="noshade">
-                      ${amount}
-                    </Typography>
                   </div>
                 </DeliveryItem>
               );
