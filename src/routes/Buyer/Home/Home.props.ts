@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
+import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
 export type CategoryResults = {
@@ -37,4 +38,5 @@ export interface HomeGeneratedProps {
   chunkedRecentlyAdded: GetBuyerHomepageResponseListingItem[][];
   chunkedFavouriteSellers: SellerResults[][];
   chunkedSellers: SellerResults[][];
+  changeDefaultAddress: (id: string) => void;
 }

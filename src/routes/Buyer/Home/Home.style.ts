@@ -20,6 +20,10 @@ export const ViewContainer = styled.div`
       width: calc(100% - 150px);
     }
   }
+
+  .buying-for {
+    padding: 4px 16px 16px 16px;
+  }
 `;
 
 export const SmallAlertContainer = styled.div`

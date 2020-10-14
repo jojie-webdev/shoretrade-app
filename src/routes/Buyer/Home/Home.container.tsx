@@ -10,21 +10,35 @@ import {
   currentAddressActions,
   historyActions,
   getBuyerHomepageActions,
+  updateAddressActions,
+  cartActions,
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import { PlaceData } from 'types/PlaceData';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import chunkArray from 'utils/chunkArray';
 
 import { HomeGeneratedProps, CreditState } from './Home.props';
+import {
+  addressToPlaceData,
+  placeDataToUpdateAddressMeta,
+} from './Home.transform';
 import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const addresses = GetAddressOptions();
+  //#region Address Related
+  const companyAdressDefault = GetDefaultCompany();
+  const [companyId, setCompanyId] = useState('');
+  const getAddress = useSelector((state: Store) => state.getAddresses);
+  const addresses = getAddress.data?.data.addresses || [];
+  const addressOptions = GetAddressOptions();
+
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
+
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -32,10 +46,47 @@ const Home = (): JSX.Element => {
       })
     );
   };
+
+  const currentAddress = addresses.find((a) => a.id === selectedAddress);
+
+  const initialAddress = currentAddress
+    ? addressToPlaceData(currentAddress)
+    : null;
+  const [address, setAddress] = useState<PlaceData | null>(initialAddress);
+
+  const changeDefaultAddress = async (id: string) => {
+    const filtererdAddress = await addresses.filter(
+      (addr) => addr.id === id
+    )[0];
+    const isDefault = true;
+    await dispatch(
+      updateAddressActions.request(
+        placeDataToUpdateAddressMeta(
+          addressToPlaceData(filtererdAddress) as PlaceData,
+          filtererdAddress.unitNumber,
+          companyId,
+          isDefault,
+          id
+        )
+      )
+    );
+    await dispatch(cartActions.clear());
+  };
+
+  useEffect(() => {
+    if (currentAddress) {
+      setAddress(addressToPlaceData(currentAddress));
+    }
+  }, [currentAddress]);
+
+  useEffect(() => {
+    setCompanyId(companyAdressDefault?.id || '');
+  }, [companyAdressDefault]);
+  //#endregion
+
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const location = useLocation(); // check this out
-
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
@@ -186,7 +237,7 @@ const Home = (): JSX.Element => {
     onReset,
     recent,
     featured,
-    addresses,
+    // addresses,
     selectedAddress,
     selectAddress,
     saveSearchHistory,
@@ -197,6 +248,7 @@ const Home = (): JSX.Element => {
     chunkedRecentlyAdded: chunkArray(recentlyAdded, chunkNumber()),
     chunkedFavouriteSellers: chunkArray(favouriteSellers, chunkNumber()),
     chunkedSellers: chunkArray(sellers, chunkNumber()),
+    changeDefaultAddress,
   };
 
   return <HomeView {...generatedProps} />;

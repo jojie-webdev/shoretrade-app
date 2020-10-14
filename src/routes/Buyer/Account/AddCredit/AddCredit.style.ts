@@ -1,4 +1,5 @@
 import { Form } from 'formik';
+import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -31,4 +32,8 @@ export const Footer = styled.div`
   padding: 16px 24px 16px 24px;
   flex-direction: row;
   background-color: ${({ theme }) => theme.grey.shade2};
+`;
+
+export const Field = styled(Col)`
+  margin-bottom: 24px;
 `;

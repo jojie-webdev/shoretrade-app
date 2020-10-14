@@ -15,6 +15,7 @@ import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -59,7 +60,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
   const history = useHistory();
-
   if (loading) {
     return <Loading />;
   }
@@ -157,9 +157,18 @@ const HomeView = (props: HomeGeneratedProps) => {
     chunkedRecentlyAdded,
     chunkedSellers,
     chunkedFavouriteSellers,
+    addresses,
+    addressOptions,
+    selectedAddress,
+    changeDefaultAddress,
   } = props;
-
+  const [addressModalChange, setAddressModalChange] = useState(false);
+  const [currentAddressSelected, setCurrentAddressSelected] = useState();
   const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
+  const [changeAddress, setChangeAddress] = useState({
+    currentAddress: '',
+    newChangeAddress: '',
+  });
 
   const isFavouriteMD = useMediaQuery({
     query: `(min-width: 1040px) and (max-width: 1364px)`,
@@ -185,6 +194,27 @@ const HomeView = (props: HomeGeneratedProps) => {
     return 3;
   };
 
+  useEffect(() => {
+    if (addressOptions) {
+      const filterAddressDefault = addresses.filter((i) => i.default);
+      const filteredArray = addressOptions.find(
+        (a) => a.value === filterAddressDefault[0].id
+      );
+      setCurrentAddressSelected(filteredArray);
+    }
+  }, [addressOptions, addresses]);
+
+  useEffect(() => {
+    setChangeAddress({
+      ...changeAddress,
+      currentAddress: currentAddressSelected || '',
+    });
+  }, [currentAddressSelected]);
+
+  const confirmChangeAddress = () => {
+    changeDefaultAddress(changeAddress.newChangeAddress);
+  };
+
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
 
@@ -197,6 +227,19 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change your Buying Address?"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
@@ -206,6 +249,21 @@ const HomeView = (props: HomeGeneratedProps) => {
             resetValue={onReset}
             placeholder="Search.."
           />
+          <div className="buying-for">
+            <Select
+              options={addressOptions}
+              label="Buying For"
+              size="small"
+              onChange={(e) => {
+                setAddressModalChange(true);
+                setChangeAddress({
+                  ...changeAddress,
+                  newChangeAddress: e.value,
+                });
+              }}
+              value={currentAddressSelected}
+            />
+          </div>
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">
