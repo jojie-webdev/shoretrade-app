@@ -280,14 +280,17 @@ const HomeView = (props: HomeGeneratedProps) => {
         )}
       </div>
 
-      <Carousel
-        id="featured-carousel"
-        images={featured}
-        loop
-        autoplay
-        hideArrowArea={hideCarouselArrowArea}
-        arrowWidth={mediumArrowWidth ? 75 : undefined}
-      />
+      <SwiperContainer>
+        <Carousel
+          id="featured-carousel"
+          images={featured}
+          loop
+          autoplay
+          hideArrowArea={hideCarouselArrowArea}
+          arrowWidth={mediumArrowWidth ? 75 : undefined}
+          height="357px"
+        />
+      </SwiperContainer>
 
       <div className="wrapper">
         <ViewCol>

@@ -48,36 +48,38 @@ export const SmallAlertContainer = styled.div`
 export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
-  height: 357px;
-  margin-bottom: 16px;
+  // height: 357px;
+  // margin-bottom: 16px;
 
-  .swiper-container {
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-  }
+  // .swiper-container {
+  //   width: 100%;
+  //   border-radius: 4px;
+  //   overflow: hidden;
+  // }
 
-  .swiper-button-prev {
-    color: ${({ theme }) => theme.grey.shade7};
-    width: 18px;
-    height: 11px;
-  }
+  // .swiper-button-prev {
+  //   color: ${({ theme }) => theme.grey.shade7};
+  //   width: 18px;
+  //   height: 11px;
+  // }
 
-  .swiper-button-next {
-    color: ${({ theme }) => theme.grey.shade7};
-    width: 18px;
-    height: 11px;
-  }
+  // .swiper-button-next {
+  //   color: ${({ theme }) => theme.grey.shade7};
+  //   width: 18px;
+  //   height: 11px;
+  // }
 
-  .swiper-slide {
-    height: 357px;
-    padding: 16px;
-  }
+  // .swiper-slide {
+  //   height: 357px;
+  //   padding: 16px;
+  // }
 
   img {
     position: relative;
     width: 100%;
-    height: 100%;
+    // height: 100%;
+    // width: 1125px;
+    height: 633px;
     object-fit: fill;
     left: 50%;
     top: 50%;
