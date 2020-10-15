@@ -1,11 +1,13 @@
 import { Col, Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-
-export const TransitGrp = styled(Col)``;
+export const TransitGrp = styled(Col)`
+  .section-title {
+    margin-bottom: 8px;
+  }
+`;
 
 export const TransitRow = styled(Row)`
-  padding-left: 28px;
   margin-bottom: 16px;
 
   .section-header {
