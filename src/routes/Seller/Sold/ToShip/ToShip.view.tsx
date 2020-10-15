@@ -8,6 +8,7 @@ import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
@@ -51,6 +52,7 @@ export const SoldItem = (
     ) : (
       <Truck height={13} width={13} />
     );
+
   return (
     <>
       <StyledInteraction
@@ -168,6 +170,26 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
 
+  const twoSlides = useMediaQuery({
+    query: '(max-width: 1340px)',
+  });
+
+  const oneSlide = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
+  function numSlides(): number {
+    if (oneSlide) {
+      return 1;
+    }
+
+    if (twoSlides) {
+      return 2;
+    }
+
+    return 3;
+  }
+
   return (
     <>
       <PendingRow>
@@ -182,7 +204,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         <SwiperContainer height="160px">
           <Swiper
             spaceBetween={16}
-            slidesPerView={3}
+            slidesPerView={numSlides()}
             onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
             loop
           >
