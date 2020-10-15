@@ -203,14 +203,12 @@ const HomeView = (props: HomeGeneratedProps) => {
       currentAddress: currentAddressSelected || '',
     });
   }, [currentAddressSelected]);
-
   const confirmChangeAddress = () => {
     changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
-
   return (
     <ViewContainer>
       <ConfirmationModal
@@ -460,7 +458,15 @@ const HomeView = (props: HomeGeneratedProps) => {
                 );
               })
             ) : (
-              <Loading />
+              <>
+                {categories.length > 0 && favouriteSellers.length <= 0 ? (
+                  <Typography>
+                    You currently have no favourite sellers.
+                  </Typography>
+                ) : (
+                  <Loading />
+                )}
+              </>
             )}
           </SellerContainer>
         </ViewCol>

@@ -72,6 +72,9 @@ export const orderItemToPendingToShipItem = (
     id: order.orderId,
     orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
     numberOfOrders: order.orderLineItem.length,
+    total: order.totalPrice,
+    buyerCompanyName: order.buyerCompanyName,
+    orderImage: order.orderLineItem[0].listing.images[0],
   }));
 };
 
