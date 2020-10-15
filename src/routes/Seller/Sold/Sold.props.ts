@@ -4,6 +4,9 @@ export type PendingToShipItemData = {
   id: string;
   orderNumber: string;
   numberOfOrders: number;
+  total: string;
+  buyerCompanyName: string;
+  orderImage: string;
 };
 
 export type ToShipItemData = {

@@ -8,6 +8,7 @@ import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
@@ -27,6 +28,7 @@ import {
   DeliveryRow,
   PendingRow,
   CollapsibleContent,
+  PendingItemContainer,
 } from './ToShip.styles';
 
 export const SoldItem = (
@@ -50,6 +52,7 @@ export const SoldItem = (
     ) : (
       <Truck height={13} width={13} />
     );
+
   return (
     <>
       <StyledInteraction
@@ -97,28 +100,58 @@ export const SoldItem = (
 };
 
 export const PendingItem = (props: PendingToShipItemData) => {
-  const { id, orderNumber, numberOfOrders } = props;
+  const {
+    id,
+    orderNumber,
+    numberOfOrders,
+    buyerCompanyName,
+    orderImage,
+    total,
+  } = props;
 
   const history = useHistory();
   return (
-    <StyledInteraction
+    <PendingItemContainer
       onClick={() =>
         history.push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', id))
       }
-      leftComponent={
-        <PriorityNumber>
-          <Typography color="noshade" variant="label">
-            {numberOfOrders}
-          </Typography>
-        </PriorityNumber>
-      }
     >
       <div className="content">
-        <Typography variant="label" color="shade6" className="center-text">
-          {orderNumber}
+        <img src={orderImage} />
+
+        <div className="details">
+          <div>
+            <Typography variant="label" color="shade6">
+              Order:
+            </Typography>
+            <Typography variant="label" color="noshade" className="center-text">
+              {orderNumber}
+            </Typography>
+          </div>
+
+          <div>
+            <Typography variant="label" color="shade6">
+              Buyer:
+            </Typography>
+            <Typography variant="label" color="noshade" className="center-text">
+              {buyerCompanyName}
+            </Typography>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider"></div>
+
+      <div className="bottom-content">
+        <Typography variant="label" color="error">
+          Weight to be Confirmed
+        </Typography>
+
+        <Typography variant="label" color="noshade">
+          ${total}
         </Typography>
       </div>
-    </StyledInteraction>
+    </PendingItemContainer>
   );
 };
 
@@ -137,6 +170,26 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
 
+  const twoSlides = useMediaQuery({
+    query: '(max-width: 1340px)',
+  });
+
+  const oneSlide = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
+  function numSlides(): number {
+    if (oneSlide) {
+      return 1;
+    }
+
+    if (twoSlides) {
+      return 2;
+    }
+
+    return 3;
+  }
+
   return (
     <>
       <PendingRow>
@@ -148,10 +201,10 @@ const ToShip = (props: SoldGeneratedProps) => {
             Pending Confirmation - {pendingToShip.length}
           </Typography>
         </Col>
-        <SwiperContainer height={'100px'}>
+        <SwiperContainer height="160px">
           <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
+            spaceBetween={16}
+            slidesPerView={numSlides()}
             onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
             loop
           >
