@@ -31,7 +31,7 @@ const CardView = (props: FieldsetCardProps) => {
                 const isFourDigits = digits.length > 0 && digits.length % 4 === 0;
                 const isMaxLen = digits.length >= 16;
 
-                if (isFourDigits) {
+                if (isFourDigits && digits.length < 16) {
                   formik.setFieldValue('number', value + ' ', false);
                 } else if (isMaxLen) {
                   formik.setFieldValue('number', value.substr(0, 19), false);
