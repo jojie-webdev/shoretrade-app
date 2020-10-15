@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // import { useTheme } from 'utils/Theme';
 import { MultipleCarouselProps } from './MultipleCarousel.props';
-import { Container, ArrowArea } from './MultipleCarousel.style';
+import { ArrowArea } from './MultipleCarousel.style';
 
 function MultipleCarousel<T extends { id: string }, CP>(
   props: MultipleCarouselProps<T, CP>
@@ -15,7 +15,7 @@ function MultipleCarousel<T extends { id: string }, CP>(
   const [ref, setRef] = useState<any>(null);
   // const theme = useTheme();
 
-  const { Component, data, transform, link } = props;
+  const { Component, data, transform, link, slidesPerView } = props;
 
   return (
     <>
@@ -27,7 +27,7 @@ function MultipleCarousel<T extends { id: string }, CP>(
       <Swiper
         style={{ width: '100%' }}
         onSwiper={(ref) => setRef(ref)}
-        slidesPerView={4}
+        slidesPerView={slidesPerView || 4}
         spaceBetween={16}
       >
         {data.map((d) => {

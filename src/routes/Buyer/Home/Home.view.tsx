@@ -172,6 +172,28 @@ const HomeView = (props: HomeGeneratedProps) => {
     query: BREAKPOINTS['md'],
   });
 
+  const showThreeItems = useMediaQuery({
+    query: '(max-width: 1480px)',
+  });
+
+  const showTwoItems = useMediaQuery({
+    query: '(max-width: 1200px)',
+  });
+
+  const showOneItem = useMediaQuery({
+    query: '(max-width: 650px)',
+  });
+
+  function slidesPerView() {
+    if (showOneItem) return 1;
+
+    if (showTwoItems) return 2;
+
+    if (showThreeItems) return 3;
+
+    return 4;
+  }
+
   useEffect(() => {
     if (addressOptions) {
       const filterAddressDefault = addresses.filter((i) => i.default);
@@ -198,19 +220,6 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      <ConfirmationModal
-        isOpen={addressModalChange}
-        title="Change your Buying Address?"
-        description="Are you sure you want to change your buying address? This will reset your current cart."
-        action={() => {
-          confirmChangeAddress();
-          setAddressModalChange(false);
-        }}
-        actionText="Okay"
-        onClickClose={() => {
-          setAddressModalChange(false);
-        }}
-      />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
@@ -290,6 +299,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               transform={favouritesToPreviewProps}
               Component={PreviewCard}
               link={BUYER_ROUTES.PRODUCT_DETAIL}
+              slidesPerView={slidesPerView()}
             />
           </FavouritesContainer>
         </ViewCol>
@@ -308,6 +318,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               transform={categoriesToCardProps}
               Component={Card}
               link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+              slidesPerView={slidesPerView()}
             />
           </CategoriesContainer>
         </ViewCol>
@@ -326,6 +337,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               transform={recentlyAddedToPreviewProps}
               Component={PreviewCard}
               link={BUYER_ROUTES.PRODUCT_DETAIL}
+              slidesPerView={slidesPerView()}
             />
           </RecentContainer>
         </ViewCol>
@@ -344,6 +356,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               transform={favouriteSellersToSellerCardProps}
               Component={SellerCard}
               link={BUYER_ROUTES.SELLER_DETAILS}
+              slidesPerView={slidesPerView()}
             />
           </SellerContainer>
         </ViewCol>
@@ -362,10 +375,26 @@ const HomeView = (props: HomeGeneratedProps) => {
               transform={favouriteSellersToSellerCardProps}
               Component={SellerCard}
               link={BUYER_ROUTES.SELLER_DETAILS}
+              slidesPerView={slidesPerView()}
             />
           </SellerContainer>
         </ViewCol>
       </div>
+
+      {/* Modals */}
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change your Buying Address?"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
     </ViewContainer>
   );
 };
