@@ -9,8 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { MultipleCarouselProps } from './MultipleCarousel.props';
 import { ArrowArea } from './MultipleCarousel.style';
 
-function MultipleCarousel<T extends { id: string }, CP>(
-  props: MultipleCarouselProps<T, CP>
+function MultipleCarousel<D extends { id: string }, CP>(
+  props: MultipleCarouselProps<D, CP>
 ) {
   const [ref, setRef] = useState<any>(null);
   // const theme = useTheme();
