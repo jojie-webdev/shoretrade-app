@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Select from 'components/base/Select';
 import { Search as SearchSVG, CloseFilled } from 'components/base/SVG';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import { Row, Col } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   currentAddressActions,
@@ -149,7 +148,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       <div style={{ flexDirection: 'column', flex: 1 }}>
         <AddressContainer>
           <Select
-            className="select"
+            className="search-address-select"
             options={addressOptions}
             label="Buying For"
             size="small"

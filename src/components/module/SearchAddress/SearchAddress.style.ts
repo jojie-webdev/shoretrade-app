@@ -63,17 +63,19 @@ export const AddressContainer = styled.div`
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
   border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
   width: 100%;
   margin-bottom: 16px;
-  padding: 13px;
+  padding: 12.5px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .Dropdown-placeholder {
-    background: #f9faff;
+  .search-address-select {
+    .dropdownSelectContainerThin {
+      background: ${(props) => props.theme.grey.shade1};
+    }
   }
 `;
 
