@@ -8,7 +8,6 @@ export const Container = styled.div`
 export const SearchLocationContainer = styled.div`
   padding: 0 8px;
   cursor: pointer;
-  disaply: none;
 `;
 
 export const Results = styled.div`
