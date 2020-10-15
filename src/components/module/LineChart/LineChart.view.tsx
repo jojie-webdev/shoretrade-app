@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Typography from 'components/base/Typography';
 import * as array from 'd3-array';
 import * as d3Scale from 'd3-scale';
 import * as shape from 'd3-shape';
 import moment from 'moment';
+import numeral from 'numeral';
 import { useTheme } from 'utils/Theme';
 import useResize from 'utils/useResize';
 
@@ -108,7 +109,14 @@ const LineChartView = (props: any) => {
     <div style={style} ref={componentRef}>
       <div style={{ flex: 1 }}>
         {height > 0 && width > 0 && (
-          <svg style={{ width: '100%', height: height, maxWidth: width }}>
+          <svg
+            style={{
+              width: '100%',
+              height: height,
+              maxWidth: width,
+              overflow: 'visible',
+            }}
+          >
             {React.Children.map(children, (child) => {
               if (child && child.props.belowChart) {
                 return React.cloneElement(child, extraProps);
@@ -127,6 +135,49 @@ const LineChartView = (props: any) => {
       </div>
     </div>
   );
+};
+
+const Tooltip = (props: any) => {
+  const theme = useTheme();
+  const { data = [], x, y, svg } = props;
+  const [shown, setShown] = useState(-1);
+
+  return data.map((value: any, index: any) => (
+    <g key={index}>
+      <circle
+        id={`data-tick${index}`}
+        cx={x(value.date)}
+        cy={y(value.value)}
+        onMouseEnter={() => setShown(index)}
+        onMouseLeave={() => setShown(-1)}
+        {...svg}
+      />
+      {shown === index && (
+        <svg x={x(value.date) - 50} y={y(value.value) - 40}>
+          <rect
+            width="75px"
+            height="32px"
+            rx="4"
+            ry="4"
+            style={{
+              fill: theme.grey.shade8,
+              stroke: theme.grey.shade9,
+              strokeWidth: 1,
+            }}
+          />
+          <text
+            y={20}
+            x={36}
+            textAnchor="middle"
+            fill="white"
+            style={{ fontSize: 12 }}
+          >
+            {numeral(value.value).format('$0.0a')}
+          </text>
+        </svg>
+      )}
+    </g>
+  ));
 };
 
 const Grid = (props: any) => {
@@ -475,6 +526,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           contentInset={{ left: 5, top: 20 }}
           curve={shape.curveLinear}
         >
+          <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />
         </LineChartView>
       </YAxisContainer>
