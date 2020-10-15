@@ -71,6 +71,10 @@ export const AddressContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .Dropdown-placeholder {
+    background: #f9faff;
+  }
 `;
 
 export const Row = styled.div`
