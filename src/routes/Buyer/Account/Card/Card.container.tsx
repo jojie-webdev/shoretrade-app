@@ -67,7 +67,7 @@ const Card = (): JSX.Element => {
         addCardTokenActions.request({
           card: {
             number: Number(formCardDetails.number.replace(/\D/g, '')),
-            exp_month: formCardDetails.exp.split('/')[0],
+            exp_month: formCardDetails.exp.split('/')[0].trim(),
             exp_year: moment(formCardDetails.exp.split('/')[1], 'YY').format(
               'YYYY'
             ),
