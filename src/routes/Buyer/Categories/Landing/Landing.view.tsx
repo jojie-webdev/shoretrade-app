@@ -65,7 +65,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           {categories.length > 0 &&
             categories.map((category, index) => {
               return (
-                <Col sm={4} md={3} key={category.id}>
+                <Col sm={4} md={4} lg={3} key={category.id}>
                   <Link to={`${currentPath}/${category.id}`}>
                     <Card
                       sortIndex={category.sortIndex}

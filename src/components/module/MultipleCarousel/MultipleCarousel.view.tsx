@@ -14,13 +14,15 @@ function MultipleCarousel<D extends { id: string }, CP>(
 ) {
   const [ref, setRef] = useState<any>(null);
   // const theme = useTheme();
-
+  const [currentNdx, setCurrentNdx] = useState(0);
   const { Component, data, transform, link, slidesPerView } = props;
 
   return (
     <>
       <ArrowArea left>
-        <Touchable onPress={() => ref.slidePrev()}>
+        <Touchable
+          onPress={() => ref.slideTo(currentNdx - (slidesPerView || 4))}
+        >
           <CarouselChevronLeft width={18} height={18} />
         </Touchable>
       </ArrowArea>
@@ -29,6 +31,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
         onSwiper={(ref) => setRef(ref)}
         slidesPerView={slidesPerView || 4}
         spaceBetween={16}
+        onSlideChange={(swiper) => setCurrentNdx(swiper.activeIndex)}
       >
         {data.map((d) => {
           return (
@@ -41,7 +44,9 @@ function MultipleCarousel<D extends { id: string }, CP>(
         })}
       </Swiper>
       <ArrowArea right>
-        <Touchable onPress={() => ref.slideNext()}>
+        <Touchable
+          onPress={() => ref.slideTo(currentNdx + (slidesPerView || 4))}
+        >
           <CarouselChevronRight width={18} height={18} />
         </Touchable>
       </ArrowArea>
@@ -50,4 +55,4 @@ function MultipleCarousel<D extends { id: string }, CP>(
 }
 
 // Needed so we can pass generics to a memoized component
-export default React.memo(MultipleCarousel) as typeof MultipleCarousel;
+export default MultipleCarousel as typeof MultipleCarousel;
