@@ -1,5 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -192,4 +192,22 @@ export const ActionContainer = styled.div`
   & button {
     width: 100%;
   }
+`;
+
+// TODO :- should be a layout
+const imgStyle = css`
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  margin-right: 16px;
+  cursor: pointer;
+`;
+
+
+export const NoProfilePic = styled.div`
+  ${imgStyle}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edeffa;
 `;
