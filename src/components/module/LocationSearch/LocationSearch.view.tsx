@@ -158,7 +158,6 @@ const LocationSearch = ({
       clearTimeout(timer);
       setTimer(null);
     }
-
     if (searchValue.length > 2 && !loading && !loadingData && !doSearch) {
       const timerId = setTimeout(() => {
         search(searchValue);
@@ -168,22 +167,22 @@ const LocationSearch = ({
   }, [searchValue]);
 
   return (
-    <Container>
+    <Container onClick={() => setDoSearch(false)}>
       <TextField
         {...textFieldProps}
         LeftComponent={<Location />}
-        RightComponent={
-          doSearch ? (
-            <SearchLocationContainer onClick={() => setDoSearch(false)}>
-              <Typography variant="label">Search</Typography>
-            </SearchLocationContainer>
-          ) : null
-        }
+        // RightComponent={
+        //   doSearch ? (
+        //     <SearchLocationContainer onClick={() => setDoSearch(false)}>
+        //       <Typography variant="label">Search</Typography>
+        //     </SearchLocationContainer>
+        //   ) : null
+        // }
+        // disabled={doSearch}
         placeholder="Search for a Location"
         onKeyUp={onKeyUp}
         value={searchValue}
         onChangeText={(val) => setSearchValue(val)}
-        disabled={doSearch}
       />
 
       {loading && (

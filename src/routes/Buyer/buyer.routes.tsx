@@ -164,12 +164,18 @@ const BuyerRoutes = (): JSX.Element => {
       pathname.includes('/buyer/favourites') ||
       pathname.includes('/buyer/recently-added') ||
       pathname.includes('/buyer/sellers') ||
-      pathname.includes('/buyer/favourite-sellers') ||
-      pathname.includes('/buyer/seller-details')
+      pathname.includes('/buyer/favourite-sellers')
     ) {
       return {
         onBack: history.goBack,
       };
+    }
+
+    if (pathname.includes('/buyer/seller-details')) {
+      return {
+        pageTitle: 'Seller',
+        onBack: history.goBack,
+      }
     }
 
     return {};
