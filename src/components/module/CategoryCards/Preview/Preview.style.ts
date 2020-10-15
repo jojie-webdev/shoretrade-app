@@ -13,7 +13,7 @@ export const CardContainer = styled.div`
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     object-fit: contain;
-    background: ${(props) => props.theme.grey.shade7};
+    background: ${(props) => props.theme.grey.noshade};
   }
 
   .imgContainer {
