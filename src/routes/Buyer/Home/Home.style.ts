@@ -76,10 +76,13 @@ export const SwiperContainer = styled.div`
 
   img {
     position: relative;
-    width: 100%;
+    // width: 100%;
     // height: 100%;
     // width: 1125px;
-    height: 633px;
+    max-width:1125px;
+    width: 100%;
+    max-height: 633px;
+    height: auto;
     object-fit: fill;
     left: 50%;
     top: 50%;
