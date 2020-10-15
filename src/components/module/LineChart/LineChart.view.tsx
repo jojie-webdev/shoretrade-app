@@ -129,6 +129,21 @@ const LineChartView = (props: any) => {
   );
 };
 
+const Tooltip = (props: any) => {
+  const { data = [], x, y, svg } = props;
+
+  //TODO: show graph data
+  return data.map((value: any, index: string | number | undefined) => (
+    <circle
+      key={index}
+      cx={x(value.date)}
+      cy={y(value.value)}
+      onMouseOver={() => console.log(value.value)}
+      {...svg}
+    />
+  ));
+};
+
 const Grid = (props: any) => {
   const { ticks = [], y, svg } = props;
 
@@ -476,6 +491,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           curve={shape.curveLinear}
         >
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />
+          <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
         </LineChartView>
       </YAxisContainer>
       <XAxisContainer>
