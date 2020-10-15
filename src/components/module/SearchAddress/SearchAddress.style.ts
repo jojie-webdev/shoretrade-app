@@ -5,6 +5,8 @@ export const InputContainer = styled.div`
   border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   width: 100%;
   padding: ${(props) =>
     props.theme.appType === 'buyer' ? '24px' : '10px 15px'};
@@ -36,7 +38,11 @@ export const InputContainer = styled.div`
     }
   }
 `;
+
 export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
@@ -50,19 +56,23 @@ export const Container = styled.div`
     }
   }
 `;
+
 export const AddressContainer = styled.div`
   background: #f9faff;
   border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
-  border-left: 0px;
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   width: 100%;
-  padding: 13px;
   margin-bottom: 16px;
+  padding: 13px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
+
 export const Row = styled.div`
   display: flex;
   flex-direction: row;

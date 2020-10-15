@@ -128,47 +128,42 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           setAddressModalChange(false);
         }}
       />
-
-      <Row>
-        <Col xs={9} style={{ paddingRight: 0 }}>
-          <InputContainer>
-            <SearchSVG height={16} width={16} />
-            <input
-              type="text"
-              placeholder="Placeholder"
-              {...inputProps}
-              value={value}
+      <div style={{ flexDirection: 'column', flex: 3 }}>
+        <InputContainer>
+          <SearchSVG height={16} width={16} />
+          <input
+            type="text"
+            placeholder="Placeholder"
+            {...inputProps}
+            value={value}
+          />
+          <div onClick={resetValue} className="close-svg-container">
+            <CloseFilled
+              fill={value.length === 0 ? theme.grey.shade3 : theme.grey.shade6}
+              height={20}
+              width={20}
             />
-            <div onClick={resetValue} className="close-svg-container">
-              <CloseFilled
-                fill={
-                  value.length === 0 ? theme.grey.shade3 : theme.grey.shade6
-                }
-                height={20}
-                width={20}
-              />
-            </div>
-          </InputContainer>
-        </Col>
-
-        <Col xs={3} style={{ paddingLeft: 0 }}>
-          <AddressContainer>
-            <Select
-              options={addressOptions}
-              label="Buying For"
-              size="small"
-              onChange={(e) => {
-                setAddressModalChange(true);
-                setChangeAddress({
-                  ...changeAddress,
-                  newChangeAddress: e.value,
-                });
-              }}
-              value={currentAddressSelected}
-            />
-          </AddressContainer>
-        </Col>
-      </Row>
+          </div>
+        </InputContainer>
+      </div>
+      <div style={{ flexDirection: 'column', flex: 1 }}>
+        <AddressContainer>
+          <Select
+            className="select"
+            options={addressOptions}
+            label="Buying For"
+            size="small"
+            onChange={(e) => {
+              setAddressModalChange(true);
+              setChangeAddress({
+                ...changeAddress,
+                newChangeAddress: e.value,
+              });
+            }}
+            value={currentAddressSelected}
+          />
+        </AddressContainer>
+      </div>
     </Container>
   );
 };
