@@ -65,9 +65,11 @@ validate.validators.isValidPrice = (value: string, message: string) => {
 validate.validators.isFutureDate = (value: Date, message: string) => {
   if (`${value}`.includes('/')) {
     const split: string[] = `${value}`.split('/');
-    const MM: number = +split[0];
+    const MM: number = +split[0]; // typecast to number
     const YY: number = +split[1];
-
+    if (MM < 1 || MM > 12) {
+      return message;
+    }
     value = new Date(2000 + YY, MM - 1);
   }
 
