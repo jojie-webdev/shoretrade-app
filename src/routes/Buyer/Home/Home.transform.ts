@@ -1,5 +1,6 @@
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
+import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { PlaceData } from 'types/PlaceData';
 import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
@@ -8,7 +9,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { placeDataToAddAddressMeta } from '../Account/AddAddress/AddAddress.transform';
-import { CategoryResults } from './Home.props';
+import { CategoryResults, SellerResults } from './Home.props';
 
 export function addressToPlaceData(data: GetAddressesResponseItem): PlaceData {
   const street = data.streetNumber
@@ -88,5 +89,14 @@ export function favouritesToPreviewProps(
     isAquafuture: data.isAquafuture,
     unit: data.measurementUnit,
     state: data.state,
+  };
+}
+
+export function favouriteSellersToSellerCardProps(
+  data: SellerResults
+): SellerCardProps {
+  return {
+    companyName: data.companyName,
+    companyImage: data.companyImage,
   };
 }

@@ -247,11 +247,8 @@ const Home = (): JSX.Element => {
     recentlyAdded,
     categories,
     favourites,
-    chunkedCategories: chunkArray(categories, laptop ? 4 : 1),
-    chunkedFavorites: chunkArray(favourites, chunkNumber()),
-    chunkedRecentlyAdded: chunkArray(recentlyAdded, chunkNumber()),
-    chunkedFavouriteSellers: chunkArray(favouriteSellers, chunkNumber()),
-    chunkedSellers: chunkArray(sellers, chunkNumber()),
+    favouriteSellers,
+    sellers,
     changeDefaultAddress,
   };
 

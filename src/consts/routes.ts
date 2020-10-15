@@ -78,7 +78,7 @@ export const BUYER_ROUTES = {
   CATEGORIES: `${BUYER_ROOT}/categories`,
   CHECKOUT: `${BUYER_ROOT}/checkout`,
   SEARCH: `${BUYER_ROOT}/search`,
-  PRODUCT_DETAIL: (id = ':id') => `/buyer/product/${id}`,
+  PRODUCT_DETAIL: (id = ':id') => `${BUYER_ROOT}/product/${id}`,
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
@@ -88,6 +88,7 @@ export const BUYER_ROUTES = {
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
   SELLERS: `${BUYER_ROOT}/sellers`,
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
+  SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

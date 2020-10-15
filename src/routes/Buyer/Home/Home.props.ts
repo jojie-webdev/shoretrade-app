@@ -37,10 +37,7 @@ export interface HomeGeneratedProps {
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
   categories: CategoryResults[];
   favourites: GetBuyerHomepageResponseListingItem[];
-  chunkedCategories: CategoryResults[][];
-  chunkedFavorites: GetBuyerHomepageResponseListingItem[][];
-  chunkedRecentlyAdded: GetBuyerHomepageResponseListingItem[][];
-  chunkedFavouriteSellers: SellerResults[][];
-  chunkedSellers: SellerResults[][];
+  favouriteSellers: SellerResults[];
+  sellers: SellerResults[];
   changeDefaultAddress: (id: string) => void;
 }
