@@ -5,5 +5,4 @@ export interface MultipleCarouselProps<D, CP> {
   data: D[];
   Component: React.FC<CP>;
   link: (id?: string) => string;
-  slidesPerView?: number;
 }
