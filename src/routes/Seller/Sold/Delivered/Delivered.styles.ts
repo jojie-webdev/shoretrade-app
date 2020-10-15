@@ -16,6 +16,8 @@ export const DeliveredRow = styled(Row)`
     }
 
     .order-price {
+      display: flex;
+      justify-content: flex-start;
       & > p {
         display: inline-block;
         vertical-align: sub;
