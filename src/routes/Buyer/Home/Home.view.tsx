@@ -1,17 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import Button from 'components/base/Button';
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
-import {
-  Octopus,
-  InfoFilled,
-  ChevronRight,
-  CarouselChevronLeft,
-  CarouselChevronRight,
-} from 'components/base/SVG';
-import ArrowRight from 'components/base/SVG/ArrowRight';
-import Touchable from 'components/base/Touchable';
+import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
@@ -20,6 +11,7 @@ import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
+import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import Search from 'components/module/Search';
@@ -29,10 +21,9 @@ import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
-import { Row, Col } from 'react-grid-system';
+import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { useTheme } from 'utils/Theme';
 
@@ -44,25 +35,13 @@ import {
 } from './Home.props';
 import {
   CategoriesContainer,
-  CategoriesHeader,
-  CreditContainer,
   Text,
   Bold,
-  InfoContainer,
-  FavouritesHeader,
   FavouritesContainer,
-  SwiperContainer,
-  GridContainer,
-  SearchRow,
   ViewCol,
   ViewContainer,
-  RecentHeader,
   RecentContainer,
-  SellerHeader,
   SellerContainer,
-  CardContainer,
-  SellerCardTypography,
-  ArrowArea,
   SmallAlertContainer,
 } from './Home.style';
 import {
@@ -300,19 +279,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       <div className="wrapper">
         <ViewCol>
-          <FavouritesHeader>
-            <Typography variant="title5" color="shade8">
-              Favourites
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-            />
-          </FavouritesHeader>
+          <HomeSectionHeader
+            title="Favourites"
+            onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+          />
 
           <FavouritesContainer>
             <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
@@ -327,19 +297,11 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       <div className="wrapper">
         <ViewCol>
-          <CategoriesHeader>
-            <Typography variant="title5" color="shade8">
-              Categories
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-            />
-          </CategoriesHeader>
+          <HomeSectionHeader
+            title="Categories"
+            onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+          />
+
           <CategoriesContainer>
             <MultipleCarousel<CategoryResults, CardProps>
               data={categories}
@@ -353,19 +315,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       <div className="wrapper">
         <ViewCol>
-          <RecentHeader>
-            <Typography variant="title5" color="shade8">
-              Recently Added
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
-            />
-          </RecentHeader>
+          <HomeSectionHeader
+            title="Recently Added"
+            onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+          />
 
           <RecentContainer>
             <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
@@ -380,19 +333,11 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       <div className="wrapper">
         <ViewCol>
-          <SellerHeader>
-            <Typography variant="title5" color="shade8">
-              Favourite Sellers
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
-            />
-          </SellerHeader>
+          <HomeSectionHeader
+            title="Favourite Sellers"
+            onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+          />
+
           <SellerContainer>
             <MultipleCarousel<SellerResults, SellerCardProps>
               data={favouriteSellers}
@@ -406,19 +351,11 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       <div className="wrapper">
         <ViewCol>
-          <SellerHeader>
-            <Typography variant="title5" color="shade8">
-              Sellers
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-            />
-          </SellerHeader>
+          <HomeSectionHeader
+            title="Sellers"
+            onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+          />
+
           <SellerContainer>
             <MultipleCarousel<SellerResults, SellerCardProps>
               data={sellers}
