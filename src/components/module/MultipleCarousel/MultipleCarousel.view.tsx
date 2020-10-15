@@ -30,6 +30,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
     query: '(max-width: 650px)',
   });
 
+  // These breakpoints are specific to home page, once this gets used
+  // in another screen feel free to extract this code to make it more reusable
   function slidesPerView() {
     if (showOneItem) return 1;
 
@@ -56,6 +58,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
         spaceBetween={16}
         style={{ width: '100%' }}
         onSlideChange={(swiper) => setCurrentNdx(swiper.activeIndex)}
+        // These breakpoints are specific to home page, once this gets used
+        // in another screen feel free to extract this code to make it more reusable
         breakpoints={{
           1480: {
             slidesPerView: 4,
