@@ -244,6 +244,7 @@ const Home = (): JSX.Element => {
     saveSearchHistory,
     creditState,
     creditBalance,
+    recentlyAdded,
     chunkedCategories: chunkArray(categories, laptop ? 4 : 1),
     chunkedFavorites: chunkArray(favourites, chunkNumber()),
     chunkedRecentlyAdded: chunkArray(recentlyAdded, chunkNumber()),

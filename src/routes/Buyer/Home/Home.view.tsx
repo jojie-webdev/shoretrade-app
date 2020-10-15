@@ -16,9 +16,11 @@ import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
+import MultipleCarousel from 'components/module/MultipleCarousel';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -28,6 +30,7 @@ import { Row, Col, Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -56,6 +59,7 @@ import {
   ArrowArea,
   SmallAlertContainer,
 } from './Home.style';
+import { recentlyAddedToPreviewProps } from './Home.transform';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -225,6 +229,9 @@ const HomeView = (props: HomeGeneratedProps) => {
   const [recentlyAddedRef, setRecentlyAddedRef] = useState<any>(null);
   const [favouriteSellersRef, setFavouriteSellersRef] = useState<any>(null);
   const [sellersRef, setSellersRef] = useState<any>(null);
+
+  // Carousel current index
+  // const;
 
   return (
     <ViewContainer>
@@ -459,53 +466,11 @@ const HomeView = (props: HomeGeneratedProps) => {
           </RecentHeader>
 
           <RecentContainer>
-            <ArrowArea left>
-              <Touchable onPress={() => recentlyAddedRef.slidePrev()}>
-                <CarouselChevronLeft width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
-            <Swiper
-              style={{ width: '100%' }}
-              onSwiper={(ref) => setRecentlyAddedRef(ref)}
-            >
-              {chunkedRecentlyAdded.map((chunked, ndx) => {
-                return (
-                  <SwiperSlide key={`recentlyAdded${ndx}`}>
-                    <Row style={{ width: '100%' }}>
-                      {chunked.map((recent) => (
-                        <Col lg={3} key={recent.id}>
-                          <Link to={`/buyer/product/${recent.id}`}>
-                            <PreviewCard
-                              id={recent.id}
-                              images={recent.images}
-                              type={recent.type}
-                              price={toPrice(recent.price)}
-                              remaining={recent.remaining.toFixed(2)}
-                              coop={recent.coop}
-                              minimumOrder={recent.minimumOrder}
-                              origin={recent.origin}
-                              weight={sizeToString(
-                                recent.size.unit,
-                                recent.size.from,
-                                recent.size.to
-                              )}
-                              isAquafuture={recent.isAquafuture}
-                              unit={recent.measurementUnit}
-                              state={recent.state}
-                            />
-                          </Link>
-                        </Col>
-                      ))}
-                    </Row>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-            <ArrowArea right>
-              <Touchable onPress={() => recentlyAddedRef.slideNext()}>
-                <CarouselChevronRight width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
+            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
+              data={props.recentlyAdded}
+              transform={recentlyAddedToPreviewProps}
+              Component={PreviewCard}
+            />
           </RecentContainer>
         </ViewCol>
       </div>

@@ -34,6 +34,7 @@ export interface HomeGeneratedProps {
   creditState: CreditState;
   creditBalance: string;
   featured: string[];
+  recentlyAdded: GetBuyerHomepageResponseListingItem[];
   chunkedCategories: CategoryResults[][];
   chunkedFavorites: GetBuyerHomepageResponseListingItem[][];
   chunkedRecentlyAdded: GetBuyerHomepageResponseListingItem[][];
