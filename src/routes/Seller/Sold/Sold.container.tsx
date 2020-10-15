@@ -88,10 +88,25 @@ const Sold = (): JSX.Element => {
   );
 
   const inTransit = groupInTransitOrders(GetSellerOrdersInTransit()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToInTransitItemData(orderGroup.data),
-    })
+    (orderGroup) => {
+      const { state, deliveryMethod } = orderGroup;
+      const inTransitOrder = {
+        state,
+        deliveryMethod: {
+          'Air Freight': orderItemToInTransitItemData(
+            deliveryMethod['Air Freight'] || []
+          ),
+          'Road Freight': orderItemToInTransitItemData(
+            deliveryMethod['Road Freight'] || []
+          ),
+        },
+      };
+      return inTransitOrder;
+      // return {
+      //   state: orderGroup.title,
+      //   data: orderItemToInTransitItemData(orderGroup.data),
+      // };
+    }
   );
 
   const delivered = groupDeliveredOrders(GetSellerOrdersDelivered()).map(

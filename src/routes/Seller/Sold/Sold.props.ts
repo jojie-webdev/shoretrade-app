@@ -40,8 +40,8 @@ export type InTransitItemData = {
 };
 
 export type InTransitItem = {
-  title: string;
-  data: InTransitItemData[];
+  state: string;
+  deliveryMethod: Record<string, any>;
 };
 
 export type DeliveredItemData = {
