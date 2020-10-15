@@ -13,6 +13,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import SearchAddress from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
@@ -226,13 +227,13 @@ const HomeView = (props: HomeGeneratedProps) => {
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
-          <Search
+          <SearchAddress
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             resetValue={onReset}
             placeholder="Search.."
           />
-          <div className="buying-for">
+          {/* <div className="buying-for">
             <Select
               options={addressOptions}
               label="Buying For"
@@ -246,7 +247,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               }}
               value={currentAddressSelected}
             />
-          </div>
+          </div> */}
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">

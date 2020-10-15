@@ -5,6 +5,7 @@ import { Octopus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
@@ -44,7 +45,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
     <Container>
       <Content>
         <SearchContainer>
-          <Search
+          <SearchAddressView
             value={searchTerm}
             resetValue={onReset}
             onChange={(e) => setSearchTerm(e.target.value)}
