@@ -4,4 +4,5 @@ export interface MultipleCarouselProps<T, CP> {
   transform: (data: T) => CP;
   data: T[];
   Component: React.FC<CP>;
+  link: (id?: string) => string;
 }

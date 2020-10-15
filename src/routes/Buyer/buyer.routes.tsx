@@ -101,7 +101,7 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   PRODUCT_DETAILS: {
-    path: '/buyer/product/:id',
+    path: BUYER_ROUTES.PRODUCT_DETAIL(),
     children: <ProductDetails />,
     title: 'Product Details',
     hideFromSidebar: true,

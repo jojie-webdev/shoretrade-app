@@ -78,6 +78,7 @@ export const BUYER_ROUTES = {
   CATEGORIES: `${BUYER_ROOT}/categories`,
   CHECKOUT: `${BUYER_ROOT}/checkout`,
   SEARCH: `${BUYER_ROOT}/search`,
+  PRODUCT_DETAIL: (id = ':id') => `/buyer/product/${id}`,
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,

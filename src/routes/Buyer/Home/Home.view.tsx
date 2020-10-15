@@ -229,9 +229,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const data = showRecentSearch ? reverse(recent) : results;
 
   // CarouselRefs
-  const [favouritesRef, setFavouritesRef] = useState<any>(null);
-  const [categoriesRef, setCategoriesRef] = useState<any>(null);
-  const [recentlyAddedRef, setRecentlyAddedRef] = useState<any>(null);
   const [favouriteSellersRef, setFavouriteSellersRef] = useState<any>(null);
   const [sellersRef, setSellersRef] = useState<any>(null);
 
@@ -340,6 +337,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               data={props.favourites}
               transform={favouritesToPreviewProps}
               Component={PreviewCard}
+              link={BUYER_ROUTES.PRODUCT_DETAIL}
             />
           </FavouritesContainer>
         </ViewCol>
@@ -365,6 +363,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               data={props.categories}
               transform={categoriesToCardProps}
               Component={Card}
+              link={BUYER_ROUTES.CATEGORY_PRODUCTS}
             />
           </CategoriesContainer>
         </ViewCol>
@@ -391,6 +390,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               data={props.recentlyAdded}
               transform={recentlyAddedToPreviewProps}
               Component={PreviewCard}
+              link={BUYER_ROUTES.PRODUCT_DETAIL}
             />
           </RecentContainer>
         </ViewCol>

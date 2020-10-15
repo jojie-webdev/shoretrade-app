@@ -15,7 +15,7 @@ function MultipleCarousel<T extends { id: string }, CP>(
   const [ref, setRef] = useState<any>(null);
   // const theme = useTheme();
 
-  const { Component, data, transform } = props;
+  const { Component, data, transform, link } = props;
 
   return (
     <>
@@ -27,13 +27,13 @@ function MultipleCarousel<T extends { id: string }, CP>(
       <Swiper
         style={{ width: '100%' }}
         onSwiper={(ref) => setRef(ref)}
-        slidesPerView={3}
+        slidesPerView={4}
         spaceBetween={16}
       >
         {data.map((d) => {
           return (
             <SwiperSlide key={d.id}>
-              <Link to={`/buyer/product/${d.id}`}>
+              <Link to={link(d.id)}>
                 <Component {...transform(d)} />
               </Link>
             </SwiperSlide>
@@ -41,7 +41,7 @@ function MultipleCarousel<T extends { id: string }, CP>(
         })}
       </Swiper>
       <ArrowArea right>
-        <Touchable onPress={() => ref.slideNext(3)}>
+        <Touchable onPress={() => ref.slideNext()}>
           <CarouselChevronRight width={18} height={18} />
         </Touchable>
       </ArrowArea>
