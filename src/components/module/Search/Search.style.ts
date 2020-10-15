@@ -28,13 +28,13 @@ export const InputContainer = styled.div<{ isSellerProduct?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-   
+
   .close-svg-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   input {
     flex: 1;
     border: 0;
@@ -47,11 +47,11 @@ export const InputContainer = styled.div<{ isSellerProduct?: boolean }>`
     }
 
     ::placeholder {
-      color: ${(props) => props.theme.grey.shade5}};
+      color: ${(props) => props.theme.grey.shade5};
       font-size: ${(props) =>
         props.isSellerProduct && props.theme.appType === 'buyer'
           ? '14px'
-          : '16px'}
+          : '16px'};
     }
   }
 `;
