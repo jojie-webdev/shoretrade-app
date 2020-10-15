@@ -34,7 +34,7 @@ const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
             <Preview src={uri} />
           ) : (
             <NoProfilePic>
-              <PlaceholderProfile />
+              <PlaceholderProfile width={90} height={90} />
             </NoProfilePic>
           )}
 

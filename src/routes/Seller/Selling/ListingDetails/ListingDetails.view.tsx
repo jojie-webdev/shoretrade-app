@@ -111,7 +111,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   <SellerPreview src={productDetails.vendor.uri} />
                 ) : (
                   <NoProfilePic>
-                    <PlaceholderProfile />
+                    <PlaceholderProfile width={90} height={90} />
                   </NoProfilePic>
                 )}
                 <Typography color="shade9" weight="bold">
