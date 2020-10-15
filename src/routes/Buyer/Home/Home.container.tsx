@@ -245,6 +245,8 @@ const Home = (): JSX.Element => {
     creditState,
     creditBalance,
     recentlyAdded,
+    categories,
+    favourites,
     chunkedCategories: chunkArray(categories, laptop ? 4 : 1),
     chunkedFavorites: chunkArray(favourites, chunkNumber()),
     chunkedRecentlyAdded: chunkArray(recentlyAdded, chunkNumber()),

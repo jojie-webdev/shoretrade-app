@@ -15,6 +15,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
+import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -35,7 +36,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
-import { HomeGeneratedProps, CreditState } from './Home.props';
+import { HomeGeneratedProps, CreditState, CategoryResults } from './Home.props';
 import {
   CategoriesContainer,
   CategoriesHeader,
@@ -59,7 +60,11 @@ import {
   ArrowArea,
   SmallAlertContainer,
 } from './Home.style';
-import { recentlyAddedToPreviewProps } from './Home.transform';
+import {
+  categoriesToCardProps,
+  favouritesToPreviewProps,
+  recentlyAddedToPreviewProps,
+} from './Home.transform';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -331,57 +336,11 @@ const HomeView = (props: HomeGeneratedProps) => {
           </FavouritesHeader>
 
           <FavouritesContainer>
-            <ArrowArea left>
-              <Touchable onPress={() => favouritesRef.slidePrev()}>
-                <CarouselChevronLeft width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
-
-            <Swiper
-              style={{ width: '100%' }}
-              onSwiper={(ref) => {
-                setFavouritesRef(ref);
-              }}
-            >
-              {chunkedFavorites.map((chunked, ndx) => {
-                return (
-                  <SwiperSlide key={`favorite${ndx}`}>
-                    <Row style={{ width: '100%' }}>
-                      {chunked.map((fav) => (
-                        <Col lg={4} key={fav.id}>
-                          <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
-                            <PreviewCard
-                              id={fav.id}
-                              images={fav.images}
-                              type={fav.type}
-                              price={toPrice(fav.price)}
-                              remaining={fav.remaining.toFixed(2)}
-                              coop={fav.coop}
-                              minimumOrder={fav.minimumOrder}
-                              origin={fav.origin}
-                              weight={sizeToString(
-                                fav.size.unit,
-                                fav.size.from,
-                                fav.size.to
-                              )}
-                              isAquafuture={fav.isAquafuture}
-                              unit={fav.measurementUnit}
-                              state={fav.state}
-                            />
-                          </Link>
-                        </Col>
-                      ))}
-                    </Row>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-
-            <ArrowArea right>
-              <Touchable onPress={() => favouritesRef.slideNext()}>
-                <CarouselChevronRight width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
+            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
+              data={props.favourites}
+              transform={favouritesToPreviewProps}
+              Component={PreviewCard}
+            />
           </FavouritesContainer>
         </ViewCol>
       </div>
@@ -402,49 +361,11 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </CategoriesHeader>
           <CategoriesContainer>
-            <ArrowArea left>
-              <Touchable onPress={() => categoriesRef.slidePrev()}>
-                <CarouselChevronLeft width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
-
-            <Swiper
-              style={{ width: '100%' }}
-              onSwiper={(ref) => setCategoriesRef(ref)}
-            >
-              {!loading ? (
-                chunkedCategories.map((chunked, ndx) => {
-                  return (
-                    <SwiperSlide key={`category${ndx}`}>
-                      <Row style={{ width: '100%' }}>
-                        {chunked.map((category) => (
-                          <Col lg={3} key={category.id}>
-                            <Link
-                              to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                            >
-                              <Card
-                                sortIndex={category.sortIndex}
-                                id={category.id}
-                                image={category.thumbnail}
-                                label={category.name}
-                              />
-                            </Link>
-                          </Col>
-                        ))}
-                      </Row>
-                    </SwiperSlide>
-                  );
-                })
-              ) : (
-                <Loading />
-              )}
-            </Swiper>
-
-            <ArrowArea right>
-              <Touchable onPress={() => categoriesRef.slideNext()}>
-                <CarouselChevronRight width={18} height={18} />
-              </Touchable>
-            </ArrowArea>
+            <MultipleCarousel<CategoryResults, CardProps>
+              data={props.categories}
+              transform={categoriesToCardProps}
+              Component={Card}
+            />
           </CategoriesContainer>
         </ViewCol>
       </div>

@@ -49,4 +49,5 @@ function MultipleCarousel<T extends { id: string }, CP>(
   );
 }
 
-export default MultipleCarousel;
+// Needed so we can pass generics to a memoized component
+export default React.memo(MultipleCarousel) as typeof MultipleCarousel;
