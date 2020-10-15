@@ -294,6 +294,7 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
             value={description}
             onChangeText={setDescription}
             autoHeight
+            style={{ height: '100px' }}
           />
         </Col>
       </Row>

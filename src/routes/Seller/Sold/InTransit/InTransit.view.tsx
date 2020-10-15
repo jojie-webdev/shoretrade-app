@@ -14,31 +14,37 @@ const InTransit = (props: SoldGeneratedProps) => {
   return (
     <>
       {inTransit.map((order, idx) => {
+        const hasAir = order.deliveryMethod['Air Freight']?.length > 0 || false;
+        const hasRoad = order.deliveryMethod['Road Freight']?.length > 0 || false;
         return (
           <TransitGrp key={idx}>
-            <Typography color="noshade" weight="900" className="overline">
+            <Typography className="section-title" color="noshade" weight="900">
               {order.state}
             </Typography>
             <TransitRow>
               <Col>
-                <div className="section-header">
-                  <Plane height={13} width={13} />
-                  <Typography color="noshade" className="title">
-                    Air Freight
-                  </Typography>
-                </div>
+                {hasAir && (
+                  <div className="section-header">
+                    <Plane height={13} width={13} />
+                    <Typography color="noshade" className="title">
+                      Air Freight
+                    </Typography>
+                  </div>
+                )}
                 {order.deliveryMethod['Air Freight'].map(
                   (item: InTransitItemData, idx: number) => (
                     <InTransitItem {...item} key={idx} />
                   )
                 )}
 
-                <div className="section-header">
-                  <Truck height={13} width={13} />
-                  <Typography color="noshade" className="title">
-                    Road Freight
-                  </Typography>
-                </div>
+                {hasRoad && (
+                  <div className="section-header">
+                    <Truck height={13} width={13} />
+                    <Typography color="noshade" className="title">
+                      Road Freight
+                    </Typography>
+                  </div>
+                )}
                 {order.deliveryMethod['Road Freight'].map(
                   (item: InTransitItemData, idx: number) => (
                     <InTransitItem {...item} key={idx} />
