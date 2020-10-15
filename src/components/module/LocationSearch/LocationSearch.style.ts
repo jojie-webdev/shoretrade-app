@@ -66,4 +66,5 @@ export const Item = styled.div<{ isSelected?: boolean }>`
     background-color: ${({ theme }) =>
       theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
   }
+
 `;
