@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import { Expand, Location, StarFilled, Star } from 'components/base/SVG';
+import { Expand, Location, StarFilled, Star, PlaceholderProfile } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import ProductSellerRating from 'components/module/ProductSellerRating'
 import { API } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
@@ -23,6 +24,7 @@ import {
   OrderBoxCard,
   ActionsContainer,
   ActionContainer,
+  NoProfilePic,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
@@ -105,7 +107,13 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               </div>
               <div className="separator" />
               <div className="seller-container">
-                <SellerPreview src={productDetails.vendor.uri} />
+                {productDetails.vendor.uri ? (
+                  <SellerPreview src={productDetails.vendor.uri} />
+                ) : (
+                  <NoProfilePic>
+                    <PlaceholderProfile />
+                  </NoProfilePic>
+                )}
                 <Typography color="shade9" weight="bold">
                   {productDetails.vendor.name}
                 </Typography>
