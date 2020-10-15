@@ -94,10 +94,10 @@ const Sold = (): JSX.Element => {
         state,
         deliveryMethod: {
           'Air Freight': orderItemToInTransitItemData(
-            deliveryMethod['Air Freight']
+            deliveryMethod['Air Freight'] || []
           ),
           'Road Freight': orderItemToInTransitItemData(
-            deliveryMethod['Road Freight']
+            deliveryMethod['Road Freight'] || []
           ),
         },
       };

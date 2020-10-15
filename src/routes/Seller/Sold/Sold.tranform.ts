@@ -108,8 +108,6 @@ export const orderItemToToShipItemData = (
 
 export const groupInTransitOrders = (orders: GetSellerOrdersResponseItem[]) => {
   const groupedByState = groupByToAddressState(orders);
-  const groupedOrders = groupByDeliveryMethod(orders);
-
   const nestedGrouping = Object.keys(groupedByState)
     .filter((key) => key !== '0')
     .map((key) => {
@@ -125,15 +123,6 @@ export const groupInTransitOrders = (orders: GetSellerOrdersResponseItem[]) => {
         deliveryMethod: regrouped,
       };
     });
-
-  const orderItems = Object.keys(groupedOrders)
-    .filter((k) => k !== '0')
-    .map((k) => ({
-      title: k,
-      data: groupedOrders[k],
-    }));
-
-  console.log({ orderItems, groupedByState, nestedGrouping })
 
   return nestedGrouping;
 };
