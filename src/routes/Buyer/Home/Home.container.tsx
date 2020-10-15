@@ -1,9 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { remove } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
 import { useLocation } from 'react-router-dom';
 import {
   searchAndCountProductTypeActions,
@@ -17,7 +15,6 @@ import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { PlaceData } from 'types/PlaceData';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
-import chunkArray from 'utils/chunkArray';
 
 import { HomeGeneratedProps, CreditState } from './Home.props';
 import {
@@ -207,26 +204,6 @@ const Home = (): JSX.Element => {
     useSelector(
       (state: Store) => state.getBuyerHomepage.data?.data.data.categories
     ) || [];
-
-  const xlBreakpoint = useMediaQuery({
-    query: BREAKPOINTS.xl,
-  });
-
-  const xxlBreakpoint = useMediaQuery({
-    query: BREAKPOINTS.xxl,
-  });
-
-  const lgBreakpoint = useMediaQuery({
-    query: BREAKPOINTS.lg,
-  });
-
-  const chunkNumber = (): number => {
-    if (lgBreakpoint || xlBreakpoint || xxlBreakpoint) return 4;
-
-    return 1;
-  };
-
-  const laptop = lgBreakpoint || xlBreakpoint || xxlBreakpoint;
 
   const generatedProps: HomeGeneratedProps = {
     search,
