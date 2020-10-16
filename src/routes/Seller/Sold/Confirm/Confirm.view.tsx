@@ -217,6 +217,10 @@ const ConfirmView = (props: ConfirmProps) => {
   // const differencePercentage = (differenceQuantity / totalBoxes) * 100;
   // const differencePercentage = (differenceWeight / totalWeight) * 100;
   const differencePercentage = (totalWeight / initialWeight) * 100;
+  const increasedPercentage =
+    ((totalWeight - initialWeight) / initialWeight) * 100;
+  const decreasePercentage =
+    ((initialWeight - totalWeight) / initialWeight) * 100;
 
   const summary = {
     originalWeight: `${initialWeight.toFixed(2)} ${measurementUnit}`,
@@ -236,9 +240,16 @@ const ConfirmView = (props: ConfirmProps) => {
       differenceAmount
     )}`,
     amount: toPrice(totalPrice),
+    //this calculates the percentage of weight that has been "Added" , "Decreased", "Deleted" or "Kept as is"
     differencePercentage: `${
-      differenceWeight > 0 ? '+' : ''
-    }${differencePercentage.toFixed(0)}%`,
+      totalWeight > initialWeight
+        ? `+${increasedPercentage.toFixed(0)}%`
+        : totalWeight < initialWeight
+        ? `-${decreasePercentage.toFixed(0)}%`
+        : totalWeight === 0
+        ? '-100%'
+        : '0%'
+    }`,
     // differencePercentage: `${
     //   differenceQuantity > 0 ? '+' : ''
     // }${differencePercentage}%`,
