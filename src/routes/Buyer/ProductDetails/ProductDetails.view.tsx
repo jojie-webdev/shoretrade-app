@@ -80,6 +80,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           <BannerContainer>
             <Carousel
               id={'productDetails'}
+              loop
+              autoplay
               images={currentListing.images}
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
