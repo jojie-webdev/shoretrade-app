@@ -12,6 +12,7 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
     <Container className="centered">
       <div className="card">
         <img src={companyImage} alt={companyImage} />
+
         <div className="card-content">
           <StyledTypography variant="label">{companyName}</StyledTypography>
         </div>

@@ -4,6 +4,23 @@ export const Parent = styled.div<{ height?: string }>`
   display: flex;
   height: ${({ height }) => height || '295px'};
   width: 100%;
+
+  @media (min-width: 375px) {
+    height: 220px;
+    margin-top: 120px;
+  }
+
+  @media (min-width: 1024px) {
+    height: 300px;
+  }
+
+  @media (min-width: 1366px) {
+    height: 325px;
+  }
+
+  @media (min-width: 1440px) {
+    height: 350px;
+  }
 `;
 
 export const Container = styled.div`
