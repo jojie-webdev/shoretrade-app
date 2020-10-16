@@ -1,3 +1,4 @@
+import TouchableView from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
@@ -142,4 +143,25 @@ export const Size = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
   font-weight: bold;
   margin-left: 4px;
+`;
+
+export const StyledTouchable = styled(TouchableView)`
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const CustomBadge = styled.div`
+  padding: 4px 8px 4px;
+  border-radius: 4px;
+  background: ${(props) => props.theme.grey.shade3};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    margin-top: 4px;
+    margin-right: 8px;
+  }
 `;
