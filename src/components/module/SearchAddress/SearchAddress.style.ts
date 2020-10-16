@@ -43,6 +43,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-height: 60px;
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
