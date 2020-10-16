@@ -1,21 +1,24 @@
-import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
 
-export const CardContainer = styled.div`
+import { Typography } from '../CategoryCards/Landing/Card.style';
+
+export const Container = styled.div`
   img {
     display: block;
     border: 0;
+    border-radius: 4px;
+    height: 112px;
+    width: 100%;
   }
 
   .card {
     background: white;
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
     box-sizing: border-box;
-    border-radius: 4px;
     width: 100%;
-    height: 160px;
+    height: 170px;
     margin-right: 32px;
     transition: transform 0.2s;
   }
@@ -32,6 +35,10 @@ export const CardContainer = styled.div`
 
   .card-content {
     padding: 12px 12px 0px 12px;
+    object-fit: contain;
+    height: 58px;
+    display: flex;
+    align-items: center;
   }
 
   .card-content h2 {
@@ -45,6 +52,7 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const Typography = styled(TypographyView)`
+export const StyledTypography = styled(Typography)`
   margin-bottom: 4px;
+  line-height: -24px;
 `;
