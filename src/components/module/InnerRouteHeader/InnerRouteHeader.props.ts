@@ -4,4 +4,5 @@ export interface InnerRouteHeaderProps {
   onClickBack?: () => void;
   showIcon?: boolean;
   subtitle?: string;
+  rightContent?: React.ReactNode;
 }
