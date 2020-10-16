@@ -215,7 +215,8 @@ const ConfirmView = (props: ConfirmProps) => {
   const differenceQuantity = totalBoxes - initialBoxesQuantity;
   const differenceAmount = totalPrice - initialPrice;
   // const differencePercentage = (differenceQuantity / totalBoxes) * 100;
-  const differencePercentage = (differenceWeight / totalWeight) * 100;
+  // const differencePercentage = (differenceWeight / totalWeight) * 100;
+  const differencePercentage = (totalWeight / initialWeight) * 100;
 
   const summary = {
     originalWeight: `${initialWeight.toFixed(2)} ${measurementUnit}`,
