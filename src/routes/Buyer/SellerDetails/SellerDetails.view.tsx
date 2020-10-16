@@ -137,51 +137,35 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
             </div>
           </ListingHeader>
           {results && (
-            <>
-              <div
-                className="row cards"
-                style={{ marginTop: 20, marginLeft: 10 }}
-              >
-                {results.map((r, idx) => {
-                  return (
-                    <div
-                      style={{ marginRight: 32 }}
-                      className="column"
-                      key={r.id}
-                    >
-                      <Link
-                        to={`/buyer/product/${r.id}`}
-                        className="market-item"
-                      >
-                        <PreviewCard
-                          key={r.id}
-                          cardContainerStyle={{
-                            maxWidth: '100%',
-                            minWidth: '60%',
-                          }}
-                          id={r.id}
-                          images={r.images}
-                          type={r.type}
-                          price={toPrice(r.pricePerKilo)}
-                          remaining={r.remaining.toFixed(2)}
-                          coop={{ name: r.coopName }}
-                          minimumOrder={r.minimumOrder}
-                          origin={r.origin}
-                          weight={sizeToString(
-                            r.typeMetric,
-                            r.sizeFrom,
-                            r.sizeTo
-                          )}
-                          isAquafuture={r.isAquafuture}
-                          unit={r.measurementUnit}
-                          state={r.specifications}
-                        />
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
+            <Row>
+              {results.map((r, idx) => {
+                return (
+                  <Col key={r.id} xxl={3} xl={4} lg={6} md={6} sm={6}>
+                    <Link to={`/buyer/product/${r.id}`} className="market-item">
+                      <PreviewCard
+                        key={r.id}
+                        id={r.id}
+                        images={r.images}
+                        type={r.type}
+                        price={toPrice(r.pricePerKilo)}
+                        remaining={r.remaining.toFixed(2)}
+                        coop={{ name: r.coopName }}
+                        minimumOrder={r.minimumOrder}
+                        origin={r.origin}
+                        weight={sizeToString(
+                          r.typeMetric,
+                          r.sizeFrom,
+                          r.sizeTo
+                        )}
+                        isAquafuture={r.isAquafuture}
+                        unit={r.measurementUnit}
+                        state={r.specifications}
+                      />
+                    </Link>
+                  </Col>
+                );
+              })}
+            </Row>
           )}
         </>
       )}

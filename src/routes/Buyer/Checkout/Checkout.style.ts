@@ -26,6 +26,10 @@ export const Footer = styled.div`
   flex-direction: column;
   align-items: flex-end;
 
+  .box-error-container {
+    margin-bottom: 24px;
+  }
+
   .footer-separator {
     margin-top: 24px;
     padding-top: 24px;

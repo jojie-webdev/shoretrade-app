@@ -12,8 +12,6 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   const theme = useTheme();
   const { options, onPress, selectedPriceId } = props;
 
-  console.log(options);
-
   return (
     <Container>
       {options.length === 0 && (

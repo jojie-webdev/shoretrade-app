@@ -9,6 +9,7 @@ import {
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
+import { useSelector } from 'react-redux';
 import {
   Route,
   Switch,
@@ -17,6 +18,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
+import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
@@ -99,7 +101,7 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   PRODUCT_DETAILS: {
-    path: '/buyer/product/:id',
+    path: BUYER_ROUTES.PRODUCT_DETAIL(),
     children: <ProductDetails />,
     title: 'Product Details',
     hideFromSidebar: true,
@@ -125,6 +127,10 @@ const BuyerRoutes = (): JSX.Element => {
   const location = useLocation();
   const { pathname } = location;
 
+  const firstName =
+    useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
+    '';
+
   const getThemeOverride = (): {
     background?: string;
     screenBackground?: string;
@@ -146,6 +152,7 @@ const BuyerRoutes = (): JSX.Element => {
       return {
         shouldUseFullWidth: true,
         shouldIncludePadding: false,
+        pageTitle: firstName ? `Hello, ${firstName}` : '',
       };
     }
 

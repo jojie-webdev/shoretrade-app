@@ -1,14 +1,13 @@
 import React from 'react';
 
+import BadgeView from 'components/base/Badge';
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { ChevronRight, Scale } from 'components/base/SVG';
+import { ChevronRight, Scale, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { SELLER_ACCOUNT_ROUTES, SELLER_SOLD_ROUTES } from 'consts';
+import { SELLER_SOLD_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Theme } from 'types/Theme';
+import { useHistory } from 'react-router-dom';
 import theme, { useTheme } from 'utils/Theme';
 
 import { ConfirmListProps, PendingItem } from './ConfirmList.props';
@@ -25,6 +24,8 @@ import {
   TagText,
   Size,
   Details,
+  StyledTouchable,
+  CustomBadge,
 } from './ConfirmList.style';
 
 export const Item = (props: PendingItem) => (
@@ -41,14 +42,14 @@ export const Item = (props: PendingItem) => (
   >
     <div className="top-content">
       <div className="left">
-        <ValuesRow>
+        {/* <ValuesRow>
           <Value>
             <Typography variant="overline" color="shade6">
               Shipping:
             </Typography>
             <OrderNumber>{props.shipping}</OrderNumber>
           </Value>
-        </ValuesRow>
+        </ValuesRow> */}
         <ValuesRow>
           <Value>
             <Typography variant="overline" color="shade6">
@@ -97,12 +98,19 @@ export const Item = (props: PendingItem) => (
     <div className="bottom">
       <div className="text-container">
         {props.weightConfirmed ? (
-          <>
-            <Scale height={16} width={16} fill={theme.brand.secondary} />
-            <Typography color="secondary" className="text" variant="caption">
+          <CustomBadge>
+            <Typography
+              color="shade9"
+              className="text"
+              variant="caption"
+              weight="bold"
+              style={{ lineHeight: '0px' }}
+            >
               Weight Confirmed
             </Typography>
-          </>
+
+            <Lock height={16} width={16} fill={theme.grey.shade9} />
+          </CustomBadge>
         ) : (
           <>
             <Scale height={16} width={16} />
@@ -129,7 +137,19 @@ const ConfirmListView = (props: ConfirmListProps) => {
 
   return (
     <Wrapper>
-      <InnerRouteHeader title={title} subtitle={buyer} />
+      <InnerRouteHeader
+        title={title}
+        rightContent={
+          <StyledTouchable onPress={() => {}}>
+            <Typography variant="body" color="noshade">
+              {buyer}
+            </Typography>
+            <Typography variant="caption" color="success">
+              Message Buyer
+            </Typography>
+          </StyledTouchable>
+        }
+      />
 
       <Row className="items-row">
         {items.map((item) => (

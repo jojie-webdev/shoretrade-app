@@ -2,7 +2,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 export const InputContainer = styled.div`
   background: #ffffff;
-  border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
+  border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
   border-top-right-radius: 0px;
@@ -43,6 +43,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-height: 60px;
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
@@ -58,8 +59,10 @@ export const Container = styled.div`
 `;
 
 export const AddressContainer = styled.div`
+  flex-direction: column;
+  flex: 1;
   background: #f9faff;
-  border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
+  border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
   border-top-left-radius: 0px;

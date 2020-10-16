@@ -1,54 +1,58 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-import Button from 'components/base/Button';
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
 import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
-import ArrowRight from 'components/base/SVG/ArrowRight';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
+import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
+import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
+import MultipleCarousel from 'components/module/MultipleCarousel';
 import Search from 'components/module/Search';
 import SearchAddress from 'components/module/SearchAddress';
+import SellerCard from 'components/module/SellerCard';
+import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import reverse from 'ramda/es/reverse';
-import { Row, Col, Container } from 'react-grid-system';
+import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, Link } from 'react-router-dom';
-import { sizeToString } from 'utils/Listing';
+import { useHistory } from 'react-router-dom';
 import { autoScrollToTop } from 'utils/scrollToTop';
-import { toPrice } from 'utils/String/toPrice';
+import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { useTheme } from 'utils/Theme';
 
-import { HomeGeneratedProps, CreditState } from './Home.props';
+import {
+  HomeGeneratedProps,
+  CreditState,
+  CategoryResults,
+  SellerResults,
+} from './Home.props';
 import {
   CategoriesContainer,
-  CategoriesHeader,
-  CreditContainer,
   Text,
   Bold,
-  InfoContainer,
-  FavouritesHeader,
   FavouritesContainer,
-  SwiperContainer,
-  GridContainer,
-  SearchRow,
   ViewCol,
   ViewContainer,
-  RecentHeader,
   RecentContainer,
-  SellerHeader,
   SellerContainer,
-  CardContainer,
-  SellerCardTypography,
   SmallAlertContainer,
+  SwiperContainer,
 } from './Home.style';
+import {
+  categoriesToCardProps,
+  favouriteSellersToSellerCardProps,
+  favouritesToPreviewProps,
+  recentlyAddedToPreviewProps,
+} from './Home.transform';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -79,14 +83,12 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
             </>
           ) : (
             <>
-              <>
-                You have{' '}
-                <Bold variant="label" weight="bold">
-                  less than $250
-                </Bold>{' '}
-                in your account. Please fill it up if you want to continue
-                making purchases.
-              </>
+              You have{' '}
+              <Bold variant="label" weight="bold">
+                less than $250
+              </Bold>{' '}
+              in your account. Please fill it up if you want to continue making
+              purchases.
             </>
           )}
         </Text>
@@ -136,8 +138,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
-    categories,
-    search,
     searchTerm,
     setSearchTerm,
     loading,
@@ -147,25 +147,22 @@ const HomeView = (props: HomeGeneratedProps) => {
     saveSearchHistory,
     creditState,
     featured,
-    favourites,
-    recentlyAdded,
-    sellers,
-    favouriteSellers,
+    search,
     addresses,
     addressOptions,
     selectedAddress,
     changeDefaultAddress,
+    recentlyAdded,
+    categories,
+    favourites,
+    favouriteSellers,
+    sellers,
   } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
-  const isFavouriteSM = useMediaQuery({ query: `(max-width: 1023px)` });
   const [changeAddress, setChangeAddress] = useState({
     currentAddress: '',
     newChangeAddress: '',
-  });
-
-  const isFavouriteMD = useMediaQuery({
-    query: `(min-width: 1040px) and (max-width: 1364px)`,
   });
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -175,18 +172,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const mediumArrowWidth = useMediaQuery({
     query: BREAKPOINTS['md'],
   });
-
-  const getMaxFavouritesDisplay = () => {
-    if (isFavouriteSM) {
-      return 1;
-    }
-
-    if (isFavouriteMD) {
-      return 2;
-    }
-
-    return 3;
-  };
 
   useEffect(() => {
     if (addressOptions) {
@@ -214,19 +199,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   return (
     <ViewContainer ref={winRef}>
       {autoScrollToTop(history, winRef)}
-      <ConfirmationModal
-        isOpen={addressModalChange}
-        title="Change your Buying Address?"
-        description="Are you sure you want to change your buying address? This will reset your current cart."
-        action={() => {
-          confirmChangeAddress();
-          setAddressModalChange(false);
-        }}
-        actionText="Okay"
-        onClickClose={() => {
-          setAddressModalChange(false);
-        }}
-      />
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
@@ -295,230 +267,110 @@ const HomeView = (props: HomeGeneratedProps) => {
           height="357px"
         />
       </SwiperContainer>
+      <div className="wrapper">
+        <ViewCol style={{ paddingTop: '48px' }}>
+          <HomeSectionHeader
+            title="Favourites"
+            onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+          />
+
+          <FavouritesContainer>
+            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
+              data={favourites}
+              transform={favouritesToPreviewProps}
+              Component={PreviewCard}
+              link={BUYER_ROUTES.PRODUCT_DETAIL}
+            />
+          </FavouritesContainer>
+        </ViewCol>
+      </div>
 
       <div className="wrapper">
         <ViewCol>
-          <FavouritesHeader>
-            <Typography variant="title5" color="shade8">
-              Favourites
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-            />
-          </FavouritesHeader>
-          <FavouritesContainer>
-            {favourites.length > 0
-              ? favourites
-                  .slice(0, getMaxFavouritesDisplay())
-                  .map((fav, index) => {
-                    return (
-                      <Link key={fav.id} to={`/buyer/product/${fav.id}`}>
-                        <PreviewCard
-                          id={fav.id}
-                          images={fav.images}
-                          type={fav.type}
-                          price={toPrice(fav.price)}
-                          remaining={fav.remaining.toFixed(2)}
-                          coop={fav.coop}
-                          minimumOrder={fav.minimumOrder}
-                          origin={fav.origin}
-                          weight={sizeToString(
-                            fav.size.unit,
-                            fav.size.from,
-                            fav.size.to
-                          )}
-                          isAquafuture={fav.isAquafuture}
-                          unit={fav.measurementUnit}
-                          state={fav.state}
-                        />
-                      </Link>
-                    );
-                  })
-              : null}
-          </FavouritesContainer>
-        </ViewCol>
+          <HomeSectionHeader
+            title="Categories"
+            onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+          />
 
-        <ViewCol>
-          <CategoriesHeader>
-            <Typography variant="title5" color="shade8">
-              Categories
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-            />
-          </CategoriesHeader>
           <CategoriesContainer>
-            {categories.length > 0 ? (
-              categories.slice(0, 4).map((category, index) => {
-                return (
-                  <Link
-                    to={BUYER_ROUTES.CATEGORY_PRODUCTS(category.id)}
-                    key={category.id}
-                  >
-                    <Card
-                      sortIndex={category.sortIndex}
-                      id={category.id}
-                      image={category.thumbnail}
-                      label={category.name}
-                    />
-                  </Link>
-                );
-              })
-            ) : (
-              <Loading />
-            )}
+            <MultipleCarousel<CategoryResults, CardProps>
+              data={categories}
+              transform={categoriesToCardProps}
+              Component={Card}
+              link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+            />
           </CategoriesContainer>
         </ViewCol>
       </div>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+
+      <div className="wrapper">
         <ViewCol>
-          <RecentHeader>
-            <Typography variant="title5" color="shade8">
-              Recently Added
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
-            />
-          </RecentHeader>
+          <HomeSectionHeader
+            title="Recently Added"
+            onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+          />
+
           <RecentContainer>
-            {recentlyAdded.length > 0
-              ? recentlyAdded
-                  .slice(0, getMaxFavouritesDisplay())
-                  .map((recent, index) => {
-                    return (
-                      <Link key={recent.id} to={`/buyer/product/${recent.id}`}>
-                        <PreviewCard
-                          id={recent.id}
-                          images={recent.images}
-                          type={recent.type}
-                          price={toPrice(recent.price)}
-                          remaining={recent.remaining.toFixed(2)}
-                          coop={recent.coop}
-                          minimumOrder={recent.minimumOrder}
-                          origin={recent.origin}
-                          weight={sizeToString(
-                            recent.size.unit,
-                            recent.size.from,
-                            recent.size.to
-                          )}
-                          isAquafuture={recent.isAquafuture}
-                          unit={recent.measurementUnit}
-                          state={recent.state}
-                        />
-                      </Link>
-                    );
-                  })
-              : null}
+            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
+              data={recentlyAdded}
+              transform={recentlyAddedToPreviewProps}
+              Component={PreviewCard}
+              link={BUYER_ROUTES.PRODUCT_DETAIL}
+            />
           </RecentContainer>
         </ViewCol>
       </div>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+
+      <div className="wrapper">
         <ViewCol>
-          <SellerHeader>
-            <Typography variant="title5" color="shade8">
-              Favourite Sellers
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
-            />
-          </SellerHeader>
+          <HomeSectionHeader
+            title="Favourite Sellers"
+            onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+          />
+
           <SellerContainer>
-            {favouriteSellers.length > 0 ? (
-              favouriteSellers.slice(0, 4).map((s, index) => {
-                return (
-                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                    <CardContainer className="centered">
-                      <div className="card">
-                        <img src={s.companyImage} alt={s.companyImage} />
-                        <div className="card-content">
-                          <SellerCardTypography
-                            variant="label"
-                            style={{ lineHeight: '-24px' }}
-                          >
-                            {s.companyName}
-                          </SellerCardTypography>
-                        </div>
-                      </div>
-                    </CardContainer>
-                  </Link>
-                );
-              })
-            ) : (
-              <>
-                {categories.length > 0 && favouriteSellers.length <= 0 ? (
-                  <Typography>
-                    You currently have no favourite sellers.
-                  </Typography>
-                ) : (
-                  <Loading />
-                )}
-              </>
-            )}
+            <MultipleCarousel<SellerResults, SellerCardProps>
+              data={favouriteSellers}
+              transform={favouriteSellersToSellerCardProps}
+              Component={SellerCard}
+              link={BUYER_ROUTES.SELLER_DETAILS}
+            />
           </SellerContainer>
         </ViewCol>
       </div>
-      <div style={{ width: 'calc(100% - 200px)', margin: 'auto' }}>
+
+      <div className="wrapper">
         <ViewCol>
-          <SellerHeader>
-            <Typography variant="title5" color="shade8">
-              Sellers
-            </Typography>
-            <Button
-              text="See All"
-              variant="unselected"
-              size="sm"
-              icon={<ArrowRight fill="#E35D32" />}
-              style={{ padding: '4px 8px' }}
-              onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-            />
-          </SellerHeader>
+          <HomeSectionHeader
+            title="Sellers"
+            onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+          />
+
           <SellerContainer>
-            {sellers.length > 0 ? (
-              sellers.slice(0, 4).map((s, index) => {
-                return (
-                  <Link to={`/buyer/seller-details/${s.id}`} key={s.id}>
-                    <CardContainer className="centered">
-                      <div className="card">
-                        <img src={s.companyImage} alt={s.companyImage} />
-                        <div className="card-content">
-                          <SellerCardTypography
-                            variant="label"
-                            style={{ lineHeight: '-24px' }}
-                          >
-                            {s.companyName}
-                          </SellerCardTypography>
-                        </div>
-                      </div>
-                    </CardContainer>
-                  </Link>
-                );
-              })
-            ) : (
-              <Loading />
-            )}
+            <MultipleCarousel<SellerResults, SellerCardProps>
+              data={sellers}
+              transform={favouriteSellersToSellerCardProps}
+              Component={SellerCard}
+              link={BUYER_ROUTES.SELLER_DETAILS}
+            />
           </SellerContainer>
         </ViewCol>
       </div>
+
+      {/* Modals */}
+      <ConfirmationModal
+        isOpen={addressModalChange}
+        title="Change your Buying Address?"
+        description="Are you sure you want to change your buying address? This will reset your current cart."
+        action={() => {
+          confirmChangeAddress();
+          setAddressModalChange(false);
+        }}
+        actionText="Okay"
+        onClickClose={() => {
+          setAddressModalChange(false);
+        }}
+      />
     </ViewContainer>
   );
 };

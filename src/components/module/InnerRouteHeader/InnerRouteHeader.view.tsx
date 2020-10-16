@@ -19,10 +19,18 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
     showIcon = true,
     title,
     onClickBack,
-    subtitle = '',
+    subtitle,
+    rightContent,
   } = props;
 
   const isSeller = theme.appType === 'seller';
+
+  if (rightContent && subtitle) {
+    throw new Error(
+      'rightContent and subtitle cannot co-exist, only use one or none'
+    );
+  }
+
   const content = (
     <>
       {showIcon && (
@@ -37,9 +45,14 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
         <Typography variant="title5" color={isSeller ? 'shade1' : 'shade8'}>
           {title}
         </Typography>
-        <Typography variant="label" color={isSeller ? 'shade1' : 'shade8'}>
-          {subtitle}
-        </Typography>
+
+        {subtitle && (
+          <Typography variant="label" color={isSeller ? 'shade1' : 'shade8'}>
+            {subtitle}
+          </Typography>
+        )}
+
+        {rightContent}
       </TitleRow>
     </>
   );

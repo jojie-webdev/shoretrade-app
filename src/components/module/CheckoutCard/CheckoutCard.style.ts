@@ -25,6 +25,11 @@ export const Container = styled.div`
     margin: 0 34px;
   }
 
+  .checkout-tags {
+    display: flex;
+    margin: 4px 0 4px -2px;
+  }
+
   .checkout-card-delete {
     cursor: pointer;
     &:hover {
@@ -36,8 +41,7 @@ export const Container = styled.div`
 export const Image = styled.img`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  height: 80px;
-  width: 80px;
+  width: 120px;
   overflow: hidden;
 `;
 

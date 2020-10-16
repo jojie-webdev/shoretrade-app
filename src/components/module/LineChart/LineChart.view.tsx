@@ -144,14 +144,6 @@ const Tooltip = (props: any) => {
 
   return data.map((value: any, index: any) => (
     <g key={index}>
-      <circle
-        id={`data-tick${index}`}
-        cx={x(value.date)}
-        cy={y(value.value)}
-        onMouseEnter={() => setShown(index)}
-        onMouseLeave={() => setShown(-1)}
-        {...svg}
-      />
       {shown === index && (
         <svg x={x(value.date) - 50} y={y(value.value) - 40}>
           <rect
@@ -176,6 +168,22 @@ const Tooltip = (props: any) => {
           </text>
         </svg>
       )}
+      <rect
+        width="3px"
+        height="40px"
+        x={x(value.date) - 1}
+        y={y(value.value) - 30}
+        fill="transparent"
+        onMouseEnter={() => setShown(index)}
+        onMouseLeave={() => setShown(-1)}
+      />
+      <circle
+        cx={x(value.date)}
+        cy={y(value.value)}
+        {...svg}
+        onMouseEnter={() => setShown(index)}
+        onMouseLeave={() => setShown(-1)}
+      />
     </g>
   ));
 };
