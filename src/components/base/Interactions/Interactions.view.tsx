@@ -32,6 +32,8 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   } = props;
 
   const getIcon = () => {
+    if (type === 'none') return <></>;
+
     if (type === 'accordion') {
       const Dropdown = () => (
         <DropdownArrow fill={iconColor || theme.grey.shade8} />
