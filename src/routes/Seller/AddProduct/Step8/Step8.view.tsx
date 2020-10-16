@@ -136,7 +136,7 @@ function Step8({
         </Col>
         <Col md={12} className="interaction-col">
           <Interactions
-            label="Catch details"
+            label="Catch Date"
             value={catchDate}
             type="edit"
             onClick={() => onChangeCurrentPage(7)}
