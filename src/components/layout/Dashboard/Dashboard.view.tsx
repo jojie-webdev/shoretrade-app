@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import {
   ShoretradeLogo2,
@@ -173,9 +173,15 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
+  const cbRef = useCallback(
+    (node: any) => {
+      if (node !== null) autoScrollToTop(history, node);
+    },
+    [history.location]
+  );
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
-      {autoScrollToTop(history, null)}
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
@@ -240,6 +246,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         background={background}
         screenBackground={screenBackground}
         color={color}
+        ref={cbRef}
       >
         <Header
           pageTitle={pageTitle}

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
@@ -53,6 +53,7 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
+import { nullFormat } from 'numeral';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -195,10 +196,18 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
-  const winRef = useRef(null);
+
+  const cbRef = useCallback(
+    (node: any) => {
+      if (node !== null) {
+        autoScrollToTop(history, node);
+      }
+    },
+    [history.location]
+  );
+
   return (
-    <ViewContainer ref={winRef}>
-      {autoScrollToTop(history, winRef)}
+    <ViewContainer ref={cbRef}>
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
