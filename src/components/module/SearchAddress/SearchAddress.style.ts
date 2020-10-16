@@ -58,6 +58,8 @@ export const Container = styled.div`
 `;
 
 export const AddressContainer = styled.div`
+  flex-direction: column;
+  flex: 1;
   background: #f9faff;
   border: ${(props) => `1px solid #7F8498`};
   border-radius: ${(props) =>
@@ -66,7 +68,7 @@ export const AddressContainer = styled.div`
   border-bottom-left-radius: 0px;
   width: 100%;
   margin-bottom: 16px;
-  padding: 13px;
+  padding: 12.5px;
 
   display: flex;
   justify-content: space-between;
