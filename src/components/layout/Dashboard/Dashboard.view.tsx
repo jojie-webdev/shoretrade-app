@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   ShoretradeLogo2,
@@ -16,6 +16,7 @@ import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
+import { autoScrollToTop } from 'utils/scrollToTop';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -174,6 +175,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
+      {autoScrollToTop(history)}
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
