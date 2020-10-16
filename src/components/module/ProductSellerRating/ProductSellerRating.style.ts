@@ -1,5 +1,5 @@
 import Typography from 'components/base/Typography';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Row = styled.div`
   display: flex;
@@ -47,4 +47,22 @@ export const Favorite = styled.button`
     shadow-radius: 6.27;
     shadow-offset: 0 5px;
     elevation: 3;`};
+`;
+
+// TODO :- should be a layout
+const imgStyle = css`
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  margin-right: 16px;
+  cursor: pointer;
+`;
+
+
+export const NoProfilePic = styled.div`
+  ${imgStyle}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edeffa;
 `;

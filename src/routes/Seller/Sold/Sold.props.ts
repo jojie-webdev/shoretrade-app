@@ -4,6 +4,9 @@ export type PendingToShipItemData = {
   id: string;
   orderNumber: string;
   numberOfOrders: number;
+  total: string;
+  buyerCompanyName: string;
+  orderImage: string;
 };
 
 export type ToShipItemData = {
@@ -32,17 +35,21 @@ export type InTransitItemData = {
   id: string;
   date: Date;
   amount: string;
+  buyer: string;
+  orderRefNumber: number;
 };
 
 export type InTransitItem = {
-  title: string;
-  data: InTransitItemData[];
+  state: string;
+  deliveryMethod: Record<string, any>;
 };
 
 export type DeliveredItemData = {
   id: string;
   date: Date;
   amount: string;
+  buyer: string;
+  orderRefNumber: number;
 };
 
 export type DeliveredItem = {

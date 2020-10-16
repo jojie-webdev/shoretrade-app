@@ -6,6 +6,7 @@ import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
@@ -43,7 +44,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     <CategoriesContainer>
       <Row nogutter className="search-row">
         <Col xs={12}>
-          <Search
+          <SearchAddressView
             value={search}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}

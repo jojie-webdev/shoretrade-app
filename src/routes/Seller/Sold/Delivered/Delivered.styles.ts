@@ -14,5 +14,17 @@ export const DeliveredRow = styled(Row)`
         margin-left: 4px;
       }
     }
+
+    .order-price {
+      display: flex;
+      justify-content: flex-start;
+      & > p {
+        display: inline-block;
+        vertical-align: sub;
+      }
+      & > svg {
+        margin-left: 16px;
+      }
+    }
   }
 `;

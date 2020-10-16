@@ -1,7 +1,15 @@
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import { DropdownArrow } from 'components/base/SVG';
-import styled from 'utils/styled';
+import { DropdownArrow, PlaceholderProfile } from 'components/base/SVG';
+import styled, { css } from 'utils/styled';
+
+const imgStyle = css`
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  margin-right: 16px;
+  cursor: pointer;
+`;
 
 export const Container = styled.div``;
 
@@ -20,11 +28,7 @@ export const Header = styled.div`
     align-items: center;
 
     img {
-      width: 96px;
-      height: 96px;
-      border-radius: 4px;
-      margin-right: 16px;
-      cursor: pointer;
+      ${imgStyle}
     }
 
     .loading-indicator {
@@ -47,6 +51,14 @@ export const Header = styled.div`
       border: none;
     }
   }
+`;
+
+export const NoProfilePic = styled.div`
+  ${imgStyle}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edeffa;
 `;
 
 export const AccountSelect = styled(Select)`

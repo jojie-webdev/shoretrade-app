@@ -1,85 +1,61 @@
 import React from 'react';
 
-import {
-  Octopus,
-  ChevronRight,
-  Scale,
-  InfoFilled,
-  Plane,
-  Truck,
-} from 'components/base/SVG';
+import { Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { SELLER_SOLD_ROUTES } from 'consts';
-import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 
-import { SoldGeneratedProps } from '../Sold.props';
-import { DeliveryItem } from '../Sold.style';
-import { TransitRow } from './InTransit.styles';
+import { SoldGeneratedProps, InTransitItemData } from '../Sold.props';
+import { TransitGrp, TransitRow } from './InTransit.styles';
+import InTransitItem from './InTransitItem.view';
 
 const InTransit = (props: SoldGeneratedProps) => {
   const { inTransit } = props;
-  const history = useHistory();
   return (
-    <TransitRow>
-      {inTransit.map((group) => {
-        const { title, data } = group;
-        const Icon = () =>
-          title.toLowerCase().includes('air') ? (
-            <Plane height={13} width={13} />
-          ) : (
-            <Truck height={13} width={13} />
-          );
+    <>
+      {inTransit.map((order, idx) => {
+        const hasAir = order.deliveryMethod['Air Freight']?.length > 0 || false;
+        const hasRoad = order.deliveryMethod['Road Freight']?.length > 0 || false;
         return (
-          <Col key={title} className="transit-col" md={12}>
-            <div className="section-header">
-              <Icon />
-              <Typography color="noshade" className="title">
-                {title}
-              </Typography>
-            </div>
-            {data.map((item) => {
-              const { date, amount, id } = item;
-              const deliveryDate = moment(date).format('ddd DD MMM');
-              return (
-                <DeliveryItem
-                  key={id}
-                  onClick={() =>
-                    history.push(
-                      SELLER_SOLD_ROUTES.DETAILS.replace(
-                        ':orderId',
-                        id
-                      ).replace(':status', 'TRANSIT')
-                    )
-                  }
-                  iconAlignment="flex-start"
-                >
-                  <div className="content">
-                    <div className="top">
-                      <Typography
-                        color="shade6"
-                        weight="500"
-                        variant="label"
-                        className="delivery-date"
-                      >
-                        Delivery Date
-                      </Typography>
-                      <Typography color="noshade" weight="bold" variant="label">
-                        {deliveryDate}
-                      </Typography>
-                    </div>
-                    <Typography variant="title5" weight="900" color="noshade">
-                      ${amount}
+          <TransitGrp key={idx}>
+            <Typography className="section-title" color="noshade" weight="900">
+              {order.state}
+            </Typography>
+            <TransitRow>
+              <Col>
+                {hasAir && (
+                  <div className="section-header">
+                    <Plane height={13} width={13} />
+                    <Typography color="noshade" className="title">
+                      Air Freight
                     </Typography>
                   </div>
-                </DeliveryItem>
-              );
-            })}
-          </Col>
+                )}
+                {order.deliveryMethod['Air Freight'].map(
+                  (item: InTransitItemData, idx: number) => (
+                    <InTransitItem {...item} key={idx} />
+                  )
+                )}
+
+                {hasRoad && (
+                  <div className="section-header">
+                    <Truck height={13} width={13} />
+                    <Typography color="noshade" className="title">
+                      Road Freight
+                    </Typography>
+                  </div>
+                )}
+                {order.deliveryMethod['Road Freight'].map(
+                  (item: InTransitItemData, idx: number) => (
+                    <InTransitItem {...item} key={idx} />
+                  )
+                )}
+              </Col>
+            </TransitRow>
+          </TransitGrp>
         );
       })}
-    </TransitRow>
+    </>
   );
 };
 

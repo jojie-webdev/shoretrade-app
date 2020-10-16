@@ -63,6 +63,8 @@ export const CardContainer = styled.div`
     border-radius: 4px;
     height: 112px;
     width: 100%;
+    object-fit: contain;
+    background: ${(props) => props.theme.grey.noshade};
   }
 
   .card {

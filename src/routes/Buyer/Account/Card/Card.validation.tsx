@@ -7,8 +7,11 @@ const constraints = {
       allowEmpty: false,
     },
     length: {
-      is: 19,
+      is: 16,
       wrongLength: '^Card number must contain 16 digits',
+      tokenizer: function (value: string) {
+        return value.trim().replace(/\s/g, '');
+      },
     },
   },
   exp: {
@@ -17,11 +20,11 @@ const constraints = {
       allowEmpty: false,
     },
     isFutureDate: '^Invalid card expiry date',
-    format: {
-      pattern: `\\d+ / \\d+`,
-      flags: 'i',
-      message: '^Invalid card expiry date',
-    },
+    // format: {
+    //   pattern: `\\d+ / \\d+`,
+    //   flags: 'i',
+    //   message: '^Invalid card expiry date',
+    // },
   },
   cvc: {
     presence: {

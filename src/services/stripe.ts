@@ -16,10 +16,7 @@ export const createCardToken = (card: {
     method: 'post',
     url: BASE_URL,
     headers: {
-      Authorization: createBasicToken({
-        email: STRIPE_PUBLIC_KEY,
-        password: '',
-      }),
+      Authorization: `Bearer ${STRIPE_PUBLIC_KEY}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     data: qs.stringify({

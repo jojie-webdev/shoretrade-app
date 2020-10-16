@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import CreditCardRow from 'components/module/CreditCardRow';
 import { Col, Row } from 'react-grid-system';
 
@@ -8,7 +9,7 @@ import { FieldsetCreditCardProps } from './AddCredit.props';
 import { Field } from './AddCredit.style';
 
 export const FieldsetCreditCard = (props: FieldsetCreditCardProps) => (
-  <Col md={5}>
+  <FixedWidthContainer width={436}>
     <Row>
       <Field md={12}>
         {props.cards.map((card) => (
@@ -27,5 +28,5 @@ export const FieldsetCreditCard = (props: FieldsetCreditCardProps) => (
         </Typography>
       </Field>
     </Row>
-  </Col>
+  </FixedWidthContainer>
 );

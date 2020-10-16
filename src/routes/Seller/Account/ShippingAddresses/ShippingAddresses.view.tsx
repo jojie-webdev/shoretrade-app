@@ -58,6 +58,11 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
           This process should take less than 24 hours.
         </Typography>
       </SmallAlertContainer>
+      <Row>
+        <Col>
+          <Button text="Add a new address" onClick={onClickAddAddress} />
+        </Col>
+      </Row>
 
       <Row className="address-row">
         {addresses.map((address) => {
@@ -100,12 +105,6 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
             </InteractionCol>
           );
         })}
-      </Row>
-
-      <Row>
-        <Col>
-          <Button text="Add a new address" onClick={onClickAddAddress} />
-        </Col>
       </Row>
     </Wrapper>
   );

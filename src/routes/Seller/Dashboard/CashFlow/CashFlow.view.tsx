@@ -31,7 +31,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
               title="Paid"
               data={props.data}
               yAxisLabelFormat={(v) =>
-                `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
+                `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
               }
               cHeight={263}
             />

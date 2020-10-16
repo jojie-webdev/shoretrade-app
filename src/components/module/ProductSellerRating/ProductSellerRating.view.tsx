@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PlaceholderImage from 'components/base/PlaceholderImage';
-import { Star, StarFilled, HeartFilled, Heart } from 'components/base/SVG';
+import { Star, StarFilled, HeartFilled, Heart, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 import { ProductSellerRatingProps } from './ProductSellerRating.props';
@@ -13,6 +13,7 @@ import {
   Preview,
   StarContainer,
   Favorite,
+  NoProfilePic,
 } from './ProductSellerRating.style';
 
 const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
@@ -27,51 +28,52 @@ const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
   } = props;
   return (
     <Row>
-      {uri ? (
-        <PreviewContainer>
-          <Row>
+      <PreviewContainer>
+        <Row>
+          {uri ? (
             <Preview src={uri} />
-            <FlexShrinked>
-              {isSmallName ? (
-                <Typography
-                  variant="title5"
-                  weight="bold"
-                  color="shade9"
-                  style={{ marginTop: 16, marginLeft: 8 }}
-                >
-                  {name}
-                </Typography>
-              ) : (
-                <Typography
-                  style={{ marginTop: 16, marginLeft: 8 }}
-                  variant="title5"
-                  weight="bold"
-                  color="shade9"
-                >
-                  {name}
-                </Typography>
-              )}
+          ) : (
+            <NoProfilePic>
+              <PlaceholderProfile width={90} height={90} />
+            </NoProfilePic>
+          )}
 
-              <Row style={{ marginLeft: 10 }}>
-                {[...Array(5).keys()].map((r) => (
-                  <StarContainer key={r} location={location}>
-                    {Number(rating) > r ? <StarFilled /> : <Star />}
-                  </StarContainer>
-                ))}
-              </Row>
-            </FlexShrinked>
-            {onFavorite && (
-              <div style={{ float: 'right' }} onClick={onFavorite}>
-                {isFavorite ? <HeartFilled /> : <Heart />}
-              </div>
+          <FlexShrinked>
+            {isSmallName ? (
+              <Typography
+                variant="title5"
+                weight="bold"
+                color="shade9"
+                style={{ marginTop: 16, marginLeft: 8 }}
+              >
+                {name}
+              </Typography>
+            ) : (
+              <Typography
+                style={{ marginTop: 16, marginLeft: 8 }}
+                variant="title5"
+                weight="bold"
+                color="shade9"
+              >
+                {name}
+              </Typography>
             )}
-          </Row>
-        </PreviewContainer>
-      ) : (
-        <PreviewContainer>
-          <PlaceholderImage width="96px" height="96px" cBorderRadius="4px" />
-        </PreviewContainer>
-      )}
+
+            <Row style={{ marginLeft: 10 }}>
+              {[...Array(5).keys()].map((r) => (
+                <StarContainer key={r} location={location}>
+                  {Number(rating) > r ? <StarFilled /> : <Star />}
+                </StarContainer>
+              ))}
+            </Row>
+          </FlexShrinked>
+          {onFavorite && (
+            <div style={{ float: 'right' }} onClick={onFavorite}>
+              {isFavorite ? <HeartFilled /> : <Heart />}
+            </div>
+          )}
+        </Row>
+      </PreviewContainer>
     </Row>
   );
 };

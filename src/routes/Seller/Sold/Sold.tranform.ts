@@ -48,6 +48,10 @@ const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
   return deliveryMoment.format(momentDateFormat);
 });
 
+const groupByToAddressState = groupBy(
+  (order: GetSellerOrdersResponseItem) => order.toAddress.state
+);
+
 const groupByDeliveryMethod = groupBy((order: GetSellerOrdersResponseItem) => {
   if (order.deliveryMethod === 'AIR') {
     return 'Air Freight';
@@ -72,6 +76,9 @@ export const orderItemToPendingToShipItem = (
     id: order.orderId,
     orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
     numberOfOrders: order.orderLineItem.length,
+    total: order.totalPrice,
+    buyerCompanyName: order.buyerCompanyName,
+    orderImage: order.orderLineItem[0].listing.images[0],
   }));
 };
 
@@ -103,13 +110,24 @@ export const orderItemToToShipItemData = (
 };
 
 export const groupInTransitOrders = (orders: GetSellerOrdersResponseItem[]) => {
-  const groupedOrders = groupByDeliveryMethod(orders);
-  return Object.keys(groupedOrders)
-    .filter((k) => k !== '0')
-    .map((k) => ({
-      title: k,
-      data: groupedOrders[k],
-    }));
+  const groupedByState = groupByToAddressState(orders);
+  const nestedGrouping = Object.keys(groupedByState)
+    .filter((key) => key !== '0')
+    .map((key) => {
+      return {
+        key,
+        data: groupedByState[key],
+      };
+    })
+    .map((group) => {
+      const regrouped = groupByDeliveryMethod(group.data);
+      return {
+        state: group.key,
+        deliveryMethod: regrouped,
+      };
+    });
+
+  return nestedGrouping;
 };
 
 export const orderItemToInTransitItemData = (
@@ -122,6 +140,8 @@ export const orderItemToInTransitItemData = (
     ).toDate(),
     amount: toPrice(order.totalPrice, false),
     type: order.deliveryMethod.toLowerCase(),
+    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
+    orderRefNumber: order.orderRefNumber,
   }));
 };
 
@@ -149,5 +169,7 @@ export const orderItemToDeliveredItemData = (
     ).toDate(),
     amount: toPrice(order.totalPrice, false),
     type: order.deliveryMethod.toLowerCase(),
+    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
+    orderRefNumber: order.orderRefNumber,
   }));
 };

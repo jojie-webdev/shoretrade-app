@@ -15,6 +15,7 @@ import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import Search from 'components/module/Search';
+import SearchAddress from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
@@ -188,26 +189,24 @@ const HomeView = (props: HomeGeneratedProps) => {
       currentAddress: currentAddressSelected || '',
     });
   }, [currentAddressSelected]);
-
   const confirmChangeAddress = () => {
     changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
-
   return (
     <ViewContainer>
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>
-          <Search
+          <SearchAddress
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             resetValue={onReset}
             placeholder="Search.."
           />
-          <div className="buying-for">
+          {/* <div className="buying-for">
             <Select
               options={addressOptions}
               label="Buying For"
@@ -221,7 +220,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               }}
               value={currentAddressSelected}
             />
-          </div>
+          </div> */}
         </Col>
         {!isEmpty(data) && (
           <Typography variant="overline" color="shade6">
@@ -255,14 +254,17 @@ const HomeView = (props: HomeGeneratedProps) => {
         )}
       </div>
 
-      <Carousel
-        id="featured-carousel"
-        images={featured}
-        loop
-        autoplay
-        hideArrowArea={hideCarouselArrowArea}
-        arrowWidth={mediumArrowWidth ? 75 : undefined}
-      />
+      <SwiperContainer>
+        <Carousel
+          id="featured-carousel"
+          images={featured}
+          loop
+          autoplay
+          hideArrowArea={hideCarouselArrowArea}
+          arrowWidth={mediumArrowWidth ? 75 : undefined}
+          height="357px"
+        />
+      </SwiperContainer>
 
       <div className="wrapper">
         <ViewCol>
