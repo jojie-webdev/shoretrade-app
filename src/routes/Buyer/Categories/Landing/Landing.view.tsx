@@ -62,18 +62,20 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           <Spinner width={24} height={24} />
         </LoadingContainer>
       ) : (
-        <Row nogutter className="cards" style={{ marginTop: 20 }}>
+        <Row className="cards" style={{ marginTop: 20 }}>
           {categories.length > 0 &&
             categories.map((category, index) => {
               return (
-                <Link to={`${currentPath}/${category.id}`} key={category.id}>
-                  <Card
-                    sortIndex={category.sortIndex}
-                    id={category.id}
-                    image={category.thumbnail}
-                    label={category.name}
-                  />
-                </Link>
+                <Col sm={4} md={4} lg={3} key={category.id}>
+                  <Link to={`${currentPath}/${category.id}`}>
+                    <Card
+                      sortIndex={category.sortIndex}
+                      id={category.id}
+                      image={category.thumbnail}
+                      label={category.name}
+                    />
+                  </Link>
+                </Col>
               );
             })}
         </Row>

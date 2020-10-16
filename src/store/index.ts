@@ -31,6 +31,7 @@ const persistConfig = {
     'editableListing',
     'getCustomFormData',
     'getListingFormData',
+    'cart',
   ],
 };
 

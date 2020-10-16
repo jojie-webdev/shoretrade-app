@@ -25,7 +25,7 @@ export interface ProductDetailsGeneratedProps {
   pressedBoxRadio: string;
   setPressedBoxRadio: Dispatch<SetStateAction<string>>;
   isAquafuture?: boolean;
-  onAddToCard: () => void;
+  onAddToCart: () => void;
   weight: string;
   setWeight: Dispatch<string>;
   getBoxes: () => void;

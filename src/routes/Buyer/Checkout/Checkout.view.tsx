@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -94,6 +95,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     loadingShippingQuotes,
     selectedShippingId,
     processingOrder,
+    orderError,
   } = props;
 
   const totalCartGroups = Object.keys(groupedOrders).length;
@@ -129,6 +131,17 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
       {!isEmpty(groupedOrders) && !loadingShippingQuotes && (
         <Footer>
+          {orderError && (
+            <div className="box-error-container">
+              <Alert
+                fullWidth
+                alignText="center"
+                variant="error"
+                content={orderError}
+              />
+            </div>
+          )}
+
           <Typography color="shade6">Total</Typography>
           <Typography variant="title5" color="shade8" weight="900">
             ${total}

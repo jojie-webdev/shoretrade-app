@@ -19,8 +19,8 @@ export const Container = styled.div<InteractionsProps>`
   box-shadow: ${({ theme }) =>
     theme.appType === 'buyer' ? '0 6px 12px rgba(41, 43, 50, 0.12)' : 'none'};
 
-  ${({ onClick }) =>
-    onClick
+  ${({ onClick, type }) =>
+    onClick && type !== 'none'
       ? `cursor: pointer;
   &:hover {
     opacity: 0.9;

@@ -30,14 +30,14 @@ export interface HomeGeneratedProps {
   addressOptions: { label: string; value: string }[];
   selectedAddress: string;
   selectAddress: (id: string) => void;
-  changeDefaultAddress: (id: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
-  categories: CategoryResults[];
-  favouriteSellers: SellerResults[];
-  sellers: SellerResults[];
   creditState: CreditState;
   creditBalance: string;
-  favourites: GetBuyerHomepageResponseListingItem[];
-  recentlyAdded: GetBuyerHomepageResponseListingItem[];
   featured: string[];
+  recentlyAdded: GetBuyerHomepageResponseListingItem[];
+  categories: CategoryResults[];
+  favourites: GetBuyerHomepageResponseListingItem[];
+  favouriteSellers: SellerResults[];
+  sellers: SellerResults[];
+  changeDefaultAddress: (id: string) => void;
 }

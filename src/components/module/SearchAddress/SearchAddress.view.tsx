@@ -145,24 +145,22 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </div>
         </InputContainer>
       </div>
-      <div style={{ flexDirection: 'column', flex: 1 }}>
-        <AddressContainer>
-          <Select
-            className="search-address-select"
-            options={addressOptions}
-            label="Buying For"
-            size="small"
-            onChange={(e) => {
-              setAddressModalChange(true);
-              setChangeAddress({
-                ...changeAddress,
-                newChangeAddress: e.value,
-              });
-            }}
-            value={currentAddressSelected}
-          />
-        </AddressContainer>
-      </div>
+      <AddressContainer>
+        <Select
+          className="search-address-select"
+          options={addressOptions}
+          label="Buying For"
+          size="small"
+          onChange={(e) => {
+            setAddressModalChange(true);
+            setChangeAddress({
+              ...changeAddress,
+              newChangeAddress: e.value,
+            });
+          }}
+          value={currentAddressSelected}
+        />
+      </AddressContainer>
     </Container>
   );
 };

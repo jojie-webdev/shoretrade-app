@@ -31,4 +31,5 @@ export interface CheckoutGeneratedProps {
   setSelectedShippingId: Dispatch<Partial<Record<string, number>>>;
   processingOrder: boolean;
   removeItem: (id: string) => void;
+  orderError: string;
 }
