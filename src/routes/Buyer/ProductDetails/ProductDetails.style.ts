@@ -29,14 +29,7 @@ export const BannerContainer = styled.div`
   margin-bottom: 16px;
   img {
     position: relative;
-    // width: 100%;
-    // height: 100%;
-    // width: 1125px;
-    max-width: 1125px;
-    width: 100%;
-    max-height: 633px;
-    height: auto;
-    object-fit: fill;
+    object-fit: contain;
     left: 50%;
     top: 50%;
     border-radius: 4px;
