@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import Interactions from 'components/base/Interactions';
+
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
-import TypographyView from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
-import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -56,63 +54,56 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           <FilterButton
             onClick={modalFilterProps.onClickClose}
             text="Filters"
-            icon={<Filter></Filter>}
-          ></FilterButton>
+            icon={<Filter />}
+          />
         </Col>
       </Row>
+
       {results && results.length > 0 ? (
-        <>
-          <div className="row cards" style={{ marginTop: 20, marginLeft: 10 }}>
-            {results.map((product, index) => {
-              return (
-                <div
-                  style={{
-                    // width: window.innerWidth * (18 / 100),
-                    marginRight: 32,
-                  }}
-                  className="column"
-                  key={product.id}
-                >
-                  <Link
-                    to={`/buyer/product/${product.id}`}
-                    className="market-item"
-                  >
-                    <PreviewCard
-                      key={product.id}
-                      cardContainerStyle={{
-                        maxWidth: '100%',
-                        minWidth: '60%',
-                        // marginRight: 30,
-                      }}
-                      id={product.id}
-                      images={product.images}
-                      type={product.type}
-                      price={toPrice(product.price)}
-                      remaining={product.remaining.toFixed(2)}
-                      coop={product.coop}
-                      minimumOrder={product.minimumOrder}
-                      origin={product.origin}
-                      weight={sizeToString(
-                        product.size.unit,
-                        product.size.from,
-                        product.size.to
-                      )}
-                      isAquafuture={product.isAquafuture}
-                      unit={product.measurementUnit}
-                      state={product.state}
-                    />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-          <FilterModal {...modalFilterProps} />
-        </>
+        <Row>
+          {results.map((product) => {
+            return (
+              <Col
+                xxl={3}
+                xl={4}
+                lg={4}
+                md={4}
+                sm={6}
+                key={product.id}
+                className="market-item"
+              >
+                <Link to={`/buyer/product/${product.id}`}>
+                  <PreviewCard
+                    key={product.id}
+                    id={product.id}
+                    images={product.images}
+                    type={product.type}
+                    price={toPrice(product.price)}
+                    remaining={product.remaining.toFixed(2)}
+                    coop={product.coop}
+                    minimumOrder={product.minimumOrder}
+                    origin={product.origin}
+                    weight={sizeToString(
+                      product.size.unit,
+                      product.size.from,
+                      product.size.to
+                    )}
+                    isAquafuture={product.isAquafuture}
+                    unit={product.measurementUnit}
+                    state={product.state}
+                  />
+                </Link>
+              </Col>
+            );
+          })}
+        </Row>
       ) : (
         <LoadingContainer>
           <Spinner width={24} height={24} />
         </LoadingContainer>
       )}
+
+      <FilterModal {...modalFilterProps} />
     </PreviewContainer>
   );
 };
