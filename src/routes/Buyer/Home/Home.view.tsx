@@ -44,6 +44,7 @@ import {
   RecentContainer,
   SellerContainer,
   SmallAlertContainer,
+  SwiperContainer,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -254,18 +255,19 @@ const HomeView = (props: HomeGeneratedProps) => {
         )}
       </div>
 
-      <Carousel
-        id="featured-carousel"
-        images={featured}
-        loop
-        autoplay
-        hideArrowArea={hideCarouselArrowArea}
-        arrowWidth={mediumArrowWidth ? 75 : undefined}
-        height="357px"
-      />
-
+      <SwiperContainer>
+        <Carousel
+          id="featured-carousel"
+          images={featured}
+          loop
+          autoplay
+          hideArrowArea={hideCarouselArrowArea}
+          arrowWidth={mediumArrowWidth ? 75 : undefined}
+          height="357px"
+        />
+      </SwiperContainer>
       <div className="wrapper">
-        <ViewCol>
+        <ViewCol style={{ paddingTop: '48px' }}>
           <HomeSectionHeader
             title="Favourites"
             onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
