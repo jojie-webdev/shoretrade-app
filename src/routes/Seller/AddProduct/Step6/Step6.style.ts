@@ -44,7 +44,7 @@ export const Container = styled.div`
     width: 100%;
     padding: 90px 0px;
     position: absolute;
-    bottom: 0;
+    bottom: 0.5%;
     left: 0;
     display: flex;
   }
