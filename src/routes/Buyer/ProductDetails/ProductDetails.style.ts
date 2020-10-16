@@ -27,14 +27,16 @@ export const Container = styled.div`
 
 export const BannerContainer = styled.div`
   margin-bottom: 16px;
+
   img {
     position: relative;
     object-fit: contain;
+    max-width: 844px;
+    max-height: 633px;
     left: 50%;
     top: 50%;
     border-radius: 4px;
     -webkit-transform: translateY(-50%) translateX(-50%);
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   }
 `;
 
