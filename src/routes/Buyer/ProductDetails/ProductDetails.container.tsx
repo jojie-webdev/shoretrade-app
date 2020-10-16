@@ -107,7 +107,8 @@ const ProductDetails = (): JSX.Element => {
   const onLoad = (listingId: string) => {
     dispatch(getListingActions.request({ listingId: listingId }));
   };
-  const onAddToCard = () => {
+
+  const onAddToCart = () => {
     const currentBox = getListingBoxesResponse.find(
       (box) => box.id === pressedBoxRadio
     );
@@ -148,7 +149,7 @@ const ProductDetails = (): JSX.Element => {
             count: currentBox.count || 0,
           },
         ],
-        subTotal: currentBox.weight * price,
+        subTotal: currentBox.weight * price * (currentBox.quantity || 0),
         weight: currentBox.weight,
       };
       dispatch(cartActions.add(payload));
@@ -285,7 +286,7 @@ const ProductDetails = (): JSX.Element => {
     weight,
     setWeight,
     getBoxes,
-    onAddToCard,
+    onAddToCart,
   };
   return <ProductDetailsView {...generatedProps} />;
 };
