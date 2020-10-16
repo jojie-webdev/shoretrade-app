@@ -41,7 +41,12 @@ export const Container = styled.div`
   }
 
   .box-error-container {
-    margin-bottom: 32px;
+    width: 100%;
+    padding: 90px 0px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
   }
 `;
 
