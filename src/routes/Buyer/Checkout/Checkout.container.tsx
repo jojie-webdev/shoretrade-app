@@ -46,7 +46,6 @@ const Checkout = (): JSX.Element => {
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
 
-  //TODO: remove default on buying for implementation
   const currentAddress = addresses.find(
     (a) => a.id === currentAddressId || a.default
   );
@@ -56,6 +55,8 @@ const Checkout = (): JSX.Element => {
 
   const shippingQuotes =
     useSelector((store: Store) => store.getShippingQuote.data?.data) || {};
+
+  const orderError = useSelector((store: Store) => store.order.error) || '';
 
   useEffect(() => {
     if (!loadingShippingQuotes) {
@@ -275,6 +276,7 @@ const Checkout = (): JSX.Element => {
     setSelectedShippingId,
     processingOrder,
     removeItem,
+    orderError,
   };
 
   return <CheckoutView {...generatedProps} />;

@@ -52,7 +52,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     boxRadios,
     pressedBoxRadio,
     setPressedBoxRadio,
-    onAddToCard,
+    onAddToCart,
   } = props;
 
   useEffect(() => {
@@ -159,20 +159,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     )}
                   </div>
                   <ButtonContainer>
-                    {pressedBoxRadio ? (
-                      <Button
-                        style={{ float: 'right', width: '50%' }}
-                        text="Add to Cart"
-                        onClick={onAddToCard}
-                      />
-                    ) : (
-                      <Button
-                        style={{ float: 'right', width: '50%' }}
-                        text="Add to Cart"
-                        onClick={onAddToCard}
-                        variant="disabled"
-                      />
-                    )}
+                    <Button
+                      style={{ float: 'right', width: '50%' }}
+                      text="Add to Cart"
+                      onClick={onAddToCart}
+                      variant={pressedBoxRadio ? undefined : 'disabled'}
+                    />
                   </ButtonContainer>
                 </DesiredQuantityContainer>
               </Col>
