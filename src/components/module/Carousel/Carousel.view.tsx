@@ -28,9 +28,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer>
-          <Image src={image} />
-        </ImageContainer>
+        <ImageContainer img={image} />
       </SwiperSlide>
     );
   });
@@ -77,7 +75,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           )}
         </ArrowArea>
       )}
-      <SwiperArea style={{ width: hideArrowArea ? '100%' : swiperAreaWidth }}>
+      <SwiperArea
+        style={{
+          width: hideArrowArea ? '100%' : swiperAreaWidth,
+        }}
+      >
         <Swiper
           id={id}
           spaceBetween={10}
