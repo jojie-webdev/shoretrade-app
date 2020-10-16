@@ -74,21 +74,13 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
           {creditState === 'empty' ? (
             <>
               You need to add credit to your account in order to make purchases.
-              <Bold variant="label" weight="bold">
-                {' '}
-                Click here
-              </Bold>{' '}
-              to add credit to your account.
+              <Bold> Click here </Bold> to add credit to your account.
             </>
           ) : (
             <>
               <>
-                You have{' '}
-                <Bold variant="label" weight="bold">
-                  less than $250
-                </Bold>{' '}
-                in your account. Please fill it up if you want to continue
-                making purchases.
+                You have <Bold> less than $250 </Bold> in your account. Please
+                fill it up if you want to continue making purchases.
               </>
             </>
           )}
