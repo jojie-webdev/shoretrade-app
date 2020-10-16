@@ -42,6 +42,10 @@ function MultipleCarousel<D extends { id: string }, CP>(
     return 4;
   }
 
+  if (data.length === 0) {
+    return <></>;
+  }
+
   return (
     <>
       <ArrowArea left>
@@ -53,6 +57,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
       <Swiper
         onSwiper={(swiper) => {
           setRef(swiper);
+          swiper.update();
         }}
         slidesPerView={1}
         spaceBetween={16}
