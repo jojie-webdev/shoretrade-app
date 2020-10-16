@@ -50,6 +50,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 `;
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
+  display: none;
   padding: 0 24px;
   background: ${(props) =>
     props.theme.appType === 'buyer' ? props.theme.grey.shade9 : '#020a13'};
@@ -65,6 +66,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 
   @media ${BREAKPOINTS['md']} {
+    display: static;
     width: 225px;
     position: absolute;
     top: 0;
@@ -74,6 +76,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 
   @media ${BREAKPOINTS['sm']} {
+    display: static;
     width: 225px;
     position: absolute;
     top: 0;
@@ -173,9 +176,6 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['md']} {
-    margin-left: ${(props) => (props.openSidebar ? '225px' : '0')};
-    padding-left: ${(props) => (props.openSidebar ? '50px' : '0')};
-
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
@@ -187,7 +187,6 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['sm']} {
-    margin-left: ${(props) => (props.openSidebar ? '225px' : '0')};
     padding-left: 0;
 
     .screen-wrapper {
