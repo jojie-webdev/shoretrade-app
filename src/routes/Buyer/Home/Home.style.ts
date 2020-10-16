@@ -36,7 +36,7 @@ export const SwiperContainer = styled.div`
     width: 100%;
     max-height: 633px;
     height: auto;
-    object-fit: fill;
+    object-fit: cover;
     left: 50%;
     top: 50%;
     border-radius: 4px;
