@@ -6,6 +6,7 @@ import Spinner from 'components/base/Spinner';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
@@ -28,7 +29,7 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
     <PreviewContainer>
       <Row nogutter>
         <Col xs={12}>
-          <Search
+          <SearchAddressView
             value={search}
             onChange={onChangeSearchValue}
             resetValue={resetSearchValue}
