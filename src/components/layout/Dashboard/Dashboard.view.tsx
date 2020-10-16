@@ -175,7 +175,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
-      {autoScrollToTop(history)}
+      {autoScrollToTop(history, null)}
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}

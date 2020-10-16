@@ -22,6 +22,7 @@ import { Row, Col, Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
+import { autoScrollToTop } from 'utils/scrollToTop';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -209,8 +210,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
+  const winRef = useRef(null);
   return (
-    <ViewContainer>
+    <ViewContainer ref={winRef}>
+      {autoScrollToTop(history, winRef)}
       <ConfirmationModal
         isOpen={addressModalChange}
         title="Change your Buying Address?"
