@@ -27,6 +27,22 @@ export const Container = styled.div`
 
 export const BannerContainer = styled.div`
   margin-bottom: 16px;
+  img {
+    position: relative;
+    // width: 100%;
+    // height: 100%;
+    // width: 1125px;
+    max-width: 1125px;
+    width: 100%;
+    max-height: 633px;
+    height: auto;
+    object-fit: fill;
+    left: 50%;
+    top: 50%;
+    border-radius: 4px;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  }
 `;
 
 export const DetailsContainer = styled(Row)`
