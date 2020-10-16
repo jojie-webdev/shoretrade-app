@@ -14,40 +14,6 @@ export const Container = styled.div`
   clear: both;
   width: 100%;
   padding: 0 6px;
-
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    clear: both;
-  }
-
-  /* Float four columns side by side */
-  .column {
-    float: left;
-    /* width: 30%; */
-    padding: 0;
-  }
-
-  /* Remove extra left and right margins, due to padding */
-  .row {
-    margin: 0 -5px;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
-  /* Responsive columns */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
-    }
-  }
 `;
 
 export const SellerRatingContainer = styled.div`
