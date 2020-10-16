@@ -15,7 +15,7 @@ const ROUTES = {
     children: Landing,
   },
   CONFIRM_LIST: {
-    path: SELLER_SOLD_ROUTES.CONFIRM_LIST,
+    path: SELLER_SOLD_ROUTES.CONFIRM_LIST(),
     children: ConfirmList,
   },
   CONFIRM: {

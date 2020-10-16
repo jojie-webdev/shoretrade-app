@@ -110,3 +110,8 @@ export const DeliveryRow = styled(Row)`
     margin-bottom: 8px;
   }
 `;
+
+export const CarouselContainer = styled.div`
+  position: relative;
+  margin-bottom: 16px;
+`;

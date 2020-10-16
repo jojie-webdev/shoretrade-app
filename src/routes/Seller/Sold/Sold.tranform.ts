@@ -85,6 +85,8 @@ export const orderItemToPendingToShipItem = (
 export const orderItemToToShipItemData = (
   data: GetSellerOrdersResponseItem[]
 ): ToShipItemData[] => {
+  console.log(data[0].status);
+
   return data.map((order) => ({
     id: order.orderId,
     date: moment(order.orderDate).toDate(),
