@@ -1,6 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Container = styled.div`
   flex-direction: row;
@@ -27,11 +27,14 @@ export const Container = styled.div`
 
 export const BannerContainer = styled.div`
   margin-bottom: 16px;
+  width: 100%;
+  max-width: 100%;
 
   img {
     position: relative;
     object-fit: contain;
     max-width: 844px;
+    width: 100%;
     max-height: 633px;
     left: 50%;
     top: 50%;
