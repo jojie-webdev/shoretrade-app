@@ -85,7 +85,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               autoplay
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
-              height="500px"
+              height="295px"
             />
           </BannerContainer>
           <div className="wrapper">
