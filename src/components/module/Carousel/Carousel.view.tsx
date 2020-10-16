@@ -52,6 +52,10 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     ? `calc((100% - ${swiperWidth})/2)`
     : 100;
 
+  if (images.length === 0) {
+    return <></>;
+  }
+
   return (
     <SwiperContainer height={height}>
       {!hideArrowArea && (
@@ -85,6 +89,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           spaceBetween={10}
           slidesPerView={1}
           loop={loop}
+          initialSlide={0}
           autoplay={
             autoplay
               ? {
