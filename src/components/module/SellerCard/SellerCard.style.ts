@@ -18,7 +18,7 @@ export const Container = styled.div`
     border-radius: 4px;
     box-sizing: border-box;
     width: 100%;
-    height: 204px;
+    height: 230px;
     margin-right: 32px;
     transition: transform 0.2s;
   }
@@ -60,8 +60,14 @@ export const StyledTypography = styled(Typography)`
 export const ImageContainer = styled.div<{ img: string }>`
   width: 100%;
   background-image: url(${(props) => props.img});
-  background-size: cover;
+  /* background-size: cover;
   background-position: 50% 50%;
-  height: 148px;
+  height: 148px; */
   border-radius: 4px;
+
+  background-size: contain;
+  background-position: 50% 50%;
+  height: 170px;
+  border-radius: 4px;
+  background-repeat: no-repeat;
 `;
