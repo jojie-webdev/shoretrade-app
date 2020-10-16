@@ -7,6 +7,7 @@ export const Parent = styled.div<{ height?: string }>`
 
   @media (min-width: 375px) {
     height: 220px;
+    margin-top: 120px;
   }
 
   @media (min-width: 1024px) {

@@ -29,20 +29,6 @@ export const ViewContainer = styled.div`
 export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
-
-  img {
-    position: relative;
-    max-width: 1125px;
-    width: 100%;
-    max-height: 633px;
-    height: auto;
-    object-fit: cover;
-    left: 50%;
-    top: 50%;
-    border-radius: 4px;
-    -webkit-transform: translateY(-50%) translateX(-50%);
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-  }
 `;
 
 export const SmallAlertContainer = styled.div`
