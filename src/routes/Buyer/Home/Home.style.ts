@@ -51,25 +51,7 @@ export const SmallAlertContainer = styled.div`
   }
 `;
 
-export const CategoriesContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  position: relative;
-
-  .row {
-    width: 100%;
-  }
-
-  .card {
-    margin-right: 0px !important;
-  }
-
-  a:not(:last-child) {
-    margin-right: 32px;
-  }
-`;
+export const CategoriesContainer = styled.div``;
 
 export const Text = styled(Typography)`
   display: flex;
@@ -98,26 +80,10 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
 export const FavouritesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 16px;
-  position: relative;
-
-  .swiper-button-prev {
-  }
-
-  a:not(:last-child) {
-    margin-right: 32px;
-  }
 `;
 
 export const ViewCol = styled(Col)``;
 
-export const RecentContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  a:not(:last-child) {
-    margin-right: 32px;
-  }
-`;
+export const RecentContainer = styled.div``;
 
 export const SellerContainer = styled(CategoriesContainer)``;

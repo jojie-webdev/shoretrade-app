@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // import { useTheme } from 'utils/Theme';
 import { MultipleCarouselProps } from './MultipleCarousel.props';
-import { ArrowArea } from './MultipleCarousel.style';
+import { ArrowArea, Container } from './MultipleCarousel.style';
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
@@ -47,7 +47,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
   }
 
   return (
-    <>
+    <Container>
       <ArrowArea left>
         <Touchable onPress={() => ref.slideTo(currentNdx - slidesPerView())}>
           <CarouselChevronLeft width={18} height={18} />
@@ -60,7 +60,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
           swiper.update();
         }}
         slidesPerView={1}
-        spaceBetween={16}
+        spaceBetween={0}
         style={{ width: '100%' }}
         onSlideChange={(swiper) => setCurrentNdx(swiper.activeIndex)}
         // These breakpoints are specific to home page, once this gets used
@@ -79,7 +79,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
       >
         {data.map((d) => {
           return (
-            <SwiperSlide key={d.id}>
+            <SwiperSlide key={d.id} style={{ padding: '8px 16px' }}>
               <Link to={link(d.id)}>
                 <Component {...transform(d)} />
               </Link>
@@ -93,7 +93,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
           <CarouselChevronRight width={18} height={18} />
         </Touchable>
       </ArrowArea>
-    </>
+    </Container>
   );
 }
 

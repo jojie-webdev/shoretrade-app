@@ -29,6 +29,7 @@ import {
   PendingRow,
   CollapsibleContent,
   PendingItemContainer,
+  CarouselContainer,
 } from './ToShip.styles';
 
 export const SoldItem = (
@@ -210,7 +211,7 @@ const ToShip = (props: SoldGeneratedProps) => {
             Pending Confirmation - {pendingToShip.length}
           </Typography>
         </Col>
-        <SwiperContainer height="160px">
+        <CarouselContainer>
           <Swiper
             spaceBetween={16}
             slidesPerView={numSlides()}
@@ -223,7 +224,7 @@ const ToShip = (props: SoldGeneratedProps) => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </SwiperContainer>
+        </CarouselContainer>
         <div className="pagination-container">
           <Pagination
             variant="infinite-dots"

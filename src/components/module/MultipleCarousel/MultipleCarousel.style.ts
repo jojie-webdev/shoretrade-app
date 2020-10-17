@@ -1,6 +1,16 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: 100%;
+  width: 100%;
+
+  /* Needed to compensate for the padding on the items */
+  margin-left: -16px;
+
+  .swiper-wrapper {
+    padding-top: 16px;
+  }
+`;
 
 export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
   display: flex;
