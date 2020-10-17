@@ -22,13 +22,15 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowWidth,
     justifyArrows,
     hideArrowArea,
+    aspectRatio = '16:9',
+    addMargin,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer img={image} />
+        <ImageContainer img={image} aspectRatio={aspectRatio} />
       </SwiperSlide>
     );
   });
@@ -57,7 +59,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   }
 
   return (
-    <SwiperContainer height={height}>
+    <SwiperContainer
+      height={height}
+      aspectRatio={aspectRatio}
+      addMargin={addMargin}
+    >
       {!hideArrowArea && (
         <ArrowArea
           style={{
