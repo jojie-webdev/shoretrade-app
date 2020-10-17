@@ -84,12 +84,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     <SearchContainer>
       <Row className="search-row">
         <Col xs={12}>
-          <SearchAddressView
-            // value={searchValue}
-            // onChange={onChangeSearchValue}
-            // resetValue={resetSearchValue}
-            placeholder="Search for a Whole Fish"
-          />
+          <SearchAddressView />
         </Col>
       </Row>
       {results.length <= 0 ? (

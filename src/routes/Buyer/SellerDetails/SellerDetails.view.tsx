@@ -77,12 +77,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
         <>
           <div>
             <Col xs={12} style={{ marginBottom: '24px' }}>
-              <SearchAddressView
-                // value={searchWord}
-                // onChange={(e) => setSearchWord(e.target.value)}
-                // resetValue={onReset}
-                placeholder="Search.."
-              />
+              <SearchAddressView />
             </Col>
             {!isEmpty(data) && (
               <Typography variant="overline" color="shade6">

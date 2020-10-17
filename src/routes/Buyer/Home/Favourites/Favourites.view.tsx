@@ -23,12 +23,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     <PreviewContainer>
       <Row nogutter>
         <Col xs={12}>
-          <SearchAddressView
-            // value={search}
-            // onChange={onChangeSearchValue}
-            // resetValue={resetSearchValue}
-            placeholder="Search.."
-          />
+          <SearchAddressView />
         </Col>
       </Row>
       {results.length > 0 ? (

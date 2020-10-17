@@ -45,12 +45,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
     <Container>
       <Content>
         <SearchContainer>
-          <SearchAddressView
-            // value={searchTerm}
-            // resetValue={onReset}
-            // onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search.."
-          />
+          <SearchAddressView />
         </SearchContainer>
 
         {!isEmpty(data) && (
