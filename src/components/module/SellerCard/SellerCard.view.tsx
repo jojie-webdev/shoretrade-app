@@ -2,7 +2,7 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import { SellerCardProps } from './SellerCard.props';
-import { Container, StyledTypography, ImageContainer } from './SellerCard.style';
+import { Container, StyledTypography } from './SellerCard.style';
 
 const SellerCard = (props: SellerCardProps): JSX.Element => {
   // const theme = useTheme();
@@ -11,7 +11,8 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
   return (
     <Container className="centered">
       <div className="card">
-        <ImageContainer img={companyImage} />
+        <img src={companyImage} alt={companyImage} />
+
         <div className="card-content">
           <StyledTypography variant="label">{companyName}</StyledTypography>
         </div>

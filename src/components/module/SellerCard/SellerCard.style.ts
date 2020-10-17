@@ -7,8 +7,9 @@ export const Container = styled.div`
     display: block;
     border: 0;
     border-radius: 4px;
-    height: 112px;
+    height: 150px;
     width: 100%;
+    object-fit: contain;
   }
 
   .card {
@@ -16,10 +17,9 @@ export const Container = styled.div`
     margin-bottom: 2rem;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
-    box-sizing: border-box;
     width: 100%;
-    height: 230px;
-    margin-right: 32px;
+    box-sizing: border-box;
+    max-height: 205px;
     transition: transform 0.2s;
   }
 
@@ -55,19 +55,4 @@ export const Container = styled.div`
 export const StyledTypography = styled(Typography)`
   margin-bottom: 4px;
   line-height: -24px;
-`;
-
-export const ImageContainer = styled.div<{ img: string }>`
-  width: 100%;
-  background-image: url(${(props) => props.img});
-  /* background-size: cover;
-  background-position: 50% 50%;
-  height: 148px; */
-  border-radius: 4px;
-
-  background-size: contain;
-  background-position: 50% 50%;
-  height: 170px;
-  border-radius: 4px;
-  background-repeat: no-repeat;
 `;
