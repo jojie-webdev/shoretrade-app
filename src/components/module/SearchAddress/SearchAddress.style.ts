@@ -42,22 +42,23 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: 60px;
   margin-bottom: 32px;
+
   .wrapper {
     // width: calc(100% - 200px);
     width: 100%;
     margin: auto;
-    position: relative;
-    padding-top: 32px;
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
 
-    // @media ${BREAKPOINTS['sm']} {
-    //   width: 100%;
-    // }
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+    }
 
-    // @media ${BREAKPOINTS['md']} {
-    //   width: calc(100% - 150px);
-    // }
+    @media ${BREAKPOINTS['md']} {
+      width: calc(100% - 150px);
+    }
   }
 `;
 

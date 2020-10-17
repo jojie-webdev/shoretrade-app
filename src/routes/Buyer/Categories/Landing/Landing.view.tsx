@@ -57,7 +57,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           <Spinner width={24} height={24} />
         </LoadingContainer>
       ) : (
-        <Row className="cards" style={{ marginTop: 20 }}>
+        <Row className="cards">
           {categories.length > 0 &&
             categories.map((category, index) => {
               return (

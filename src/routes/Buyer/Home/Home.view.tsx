@@ -211,12 +211,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
-          <SearchAddress
-            value={searchTerm}
-            // onChange={(e) => setSearchTerm(e.target.value)}
-            // resetValue={onReset}
-            placeholder="Search.."
-          />
+          <SearchAddress />
           {/* <div className="buying-for">
             <Select
               options={addressOptions}
@@ -233,36 +228,6 @@ const HomeView = (props: HomeGeneratedProps) => {
             />
           </div> */}
         </Col>
-        {!isEmpty(data) && (
-          <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : 'Results'}
-          </Typography>
-        )}
-        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
-          <>
-            <EmptyState
-              onButtonClicked={onReset}
-              Svg={Octopus}
-              title="No search result"
-              buttonText="Reset Search"
-            />
-            <div style={{ marginBottom: '48px' }}></div>
-          </>
-        ) : (
-          <>
-            <PaginateList
-              list={data || []}
-              labelPath={['label']}
-              maxItemPerPage={6}
-              // resultCount="3"
-              onClickItem={(item) => {
-                history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-                saveSearchHistory(item.value, item.label, item.count);
-              }}
-            />
-            <div style={{ marginBottom: '48px' }}></div>
-          </>
-        )}
       </div>
 
       <SwiperContainer>

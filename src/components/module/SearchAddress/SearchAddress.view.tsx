@@ -200,7 +200,6 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           setAddressModalChange(false);
         }}
       />
-
       <div style={{ flexDirection: 'column', flex: 3 }}>
         <InputContainer>
           <SearchSVG height={16} width={16} />
@@ -251,23 +250,19 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               title="No search result"
               buttonText="Reset Search"
             />
-            <div style={{ marginBottom: '48px' }}></div>
           </>
         ) : (
-          <>
-            <PaginateList
-              list={data || []}
-              labelPath={['label']}
-              maxItemPerPage={6}
-              // resultCount="3"
-              onClickItem={(item) => {
-                history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-                saveSearchHistory(item.value, item.label, item.count);
-                window.location.reload();
-              }}
-            />
-            <div style={{ marginBottom: '48px' }}></div>
-          </>
+          <PaginateList
+            list={data || []}
+            labelPath={['label']}
+            maxItemPerPage={6}
+            // resultCount="3"
+            onClickItem={(item) => {
+              history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+              saveSearchHistory(item.value, item.label, item.count);
+              window.location.reload();
+            }}
+          />
         )}
       </div>
     </Container>
