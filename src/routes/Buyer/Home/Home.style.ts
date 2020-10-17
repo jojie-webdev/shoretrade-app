@@ -78,7 +78,7 @@ export const Text = styled(Typography)`
   margin-left: 5px;
 `;
 
-export const Bold = styled.text`
+export const Bold = styled.span`
   margin-left: 0.4em;
   margin-right: 0.4em;
 
