@@ -110,6 +110,7 @@ export const orderItemToToShipItemData = (
         lineItem.listing.sizeTo || ''
       ),
     })),
+    toAddressState: order.toAddress.state,
   }));
 };
 

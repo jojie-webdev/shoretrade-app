@@ -25,8 +25,10 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
   right: ${(props) => (props.right ? '-64px' : '')};
   padding: 4px;
 
+  @media ${BREAKPOINTS.sm} {
+    display: none;
+  }
   @media ${BREAKPOINTS.md} {
-    left: ${(props) => (props.left ? '-48px' : '')};
-    right: ${(props) => (props.right ? '-48px' : '')};
+    display: none;
   }
 `;

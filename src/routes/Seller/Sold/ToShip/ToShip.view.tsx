@@ -39,7 +39,7 @@ export const SoldItem = (
   }
 ) => {
   const history = useHistory();
-  const { type = 'air', date, orders, id, orderRefNumber, token } = props;
+  const { type = 'air', date, orders, id, orderRefNumber, token, toAddressState } = props;
   const [isOpen, setIsOpen] = useState(false);
   const desc =
     type.toLowerCase() === 'air'
@@ -54,7 +54,7 @@ export const SoldItem = (
     ) : (
       <Truck height={13} width={13} />
     );
-
+  const toAddress = toAddressState ? `(${toAddressState})` : '';
   return (
     <>
       <StyledInteraction
@@ -71,7 +71,7 @@ export const SoldItem = (
         <div className="content">
           <Icon />
           <Typography variant="label" color="shade6" className="center-text">
-            {desc}
+            {desc} {toAddress}
           </Typography>
           <Typography variant="label" color="noshade">
             {time}
@@ -135,13 +135,6 @@ export const PendingItem = (props: PendingToShipItemData) => {
             </Typography>
             <Typography variant="label" color="noshade" className="center-text">
               {buyerCompanyName}
-            </Typography>
-          </div>
-
-          <div>
-            <Typography variant="label" color="noshade" className="details-delivery">
-              {type === 'air' ? 'Air Freight ' : 'Road Freight '}
-              Pick Up ({toAddressState})
             </Typography>
           </div>
         </div>
