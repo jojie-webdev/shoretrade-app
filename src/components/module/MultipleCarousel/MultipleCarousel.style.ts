@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -23,4 +24,11 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
   left: ${(props) => (props.left ? '-64px' : '')};
   right: ${(props) => (props.right ? '-64px' : '')};
   padding: 4px;
+
+  @media ${BREAKPOINTS.sm} {
+    display: none;
+  }
+  @media ${BREAKPOINTS.md} {
+    display: none;
+  }
 `;

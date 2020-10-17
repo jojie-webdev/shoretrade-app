@@ -112,15 +112,6 @@ export const DeliveryRow = styled(Row)`
 `;
 
 export const CarouselContainer = styled.div`
-  height: 160px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-
-  .swiper-container {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    border-radius: 4px;
-  }
+  position: relative;
+  margin-bottom: 16px;
 `;
