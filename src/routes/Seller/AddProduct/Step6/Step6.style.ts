@@ -31,8 +31,6 @@ export const Container = styled.div`
   }
 
   .minimum-row {
-    margin-bottom: 40px;
-
     .checkbox-col {
       margin-top: 16px;
       display: flex;

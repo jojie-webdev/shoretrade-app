@@ -238,7 +238,13 @@ function Step6({
         </Col>
       </Row>
 
-      <Row className="minimum-row" align="center">
+      <Row
+        className="minimum-row"
+        align="center"
+        style={{
+          marginBottom: showError ? 200 : 40,
+        }}
+      >
         <Col md={6}>
           <TextField
             label="Minimum Order"
