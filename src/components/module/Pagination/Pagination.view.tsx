@@ -123,7 +123,9 @@ const Pagination = (props: PaginationProps): JSX.Element => {
       pagination = (
         <>
           <InfiniteDot active={currentValue === 1} />
-          <InfiniteDot active={currentValue !== 1 && currentValue !== numPages} />
+          <InfiniteDot
+            active={currentValue !== 1 && currentValue !== numPages}
+          />
           <InfiniteDot active={currentValue === numPages} />
         </>
       );
