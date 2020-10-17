@@ -263,6 +263,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               onClickItem={(item) => {
                 history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
                 saveSearchHistory(item.value, item.label, item.count);
+                window.location.reload();
               }}
             />
             <div style={{ marginBottom: '48px' }}></div>
