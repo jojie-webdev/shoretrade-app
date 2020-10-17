@@ -69,45 +69,45 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
 
   return (
     <Container>
-      {loadingProductSearch ? (
+      {/* { loadingProductSearch ? (
         <SpinnerContainer>
           <Spinner />
         </SpinnerContainer>
-      ) : (
-        <>
-          <div>
-            <Col xs={12} style={{ marginBottom: '24px' }}>
-              <SearchAddressView />
-            </Col>
-            {!isEmpty(data) && (
-              <Typography variant="overline" color="shade6">
-                {showRecentSearch ? 'Recent Searches' : 'Results'}
-              </Typography>
-            )}
-            {isEmpty(data) && searchWord.length > 0 && !loadingProductSearch ? (
-              <EmptyState
-                onButtonClicked={onReset}
-                Svg={Octopus}
-                title="No search result"
-                buttonText="Reset Search"
+      ) : ( */}
+      <>
+        <div>
+          <Col xs={12} style={{ marginBottom: '24px' }}>
+            <SearchAddressView />
+          </Col>
+          {/* {!isEmpty(data) && (
+            <Typography variant="overline" color="shade6">
+              {showRecentSearch ? 'Recent Searches' : 'Results'}
+            </Typography>
+          )}
+          {isEmpty(data) && searchWord.length > 0 && !loadingProductSearch ? (
+            <EmptyState
+              onButtonClicked={onReset}
+              Svg={Octopus}
+              title="No search result"
+              buttonText="Reset Search"
+            />
+          ) : (
+            <>
+              <PaginateList
+                list={data || []}
+                labelPath={['label']}
+                maxItemPerPage={6}
+                onClickItem={(item) => {
+                  history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                  saveSearchHistory(item.value, item.label, item.count);
+                }}
               />
-            ) : (
-              <>
-                <PaginateList
-                  list={data || []}
-                  labelPath={['label']}
-                  maxItemPerPage={6}
-                  onClickItem={(item) => {
-                    history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-                    saveSearchHistory(item.value, item.label, item.count);
-                  }}
-                />
-                <div style={{ marginBottom: '24px' }}></div>
-              </>
-            )}
-          </div>
-        </>
-      )}
+              <div style={{ marginBottom: '24px' }}></div>
+            </>
+          )} */}
+        </div>
+      </>
+      {/* )} */}
       {loading ? (
         <SpinnerContainer>
           <Spinner />
