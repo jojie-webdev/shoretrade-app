@@ -1,6 +1,25 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
+import { AspectRatio, MediaQueries } from './Carousel.props';
+
+const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
+  '16:9': {
+    '1440': 350,
+    '1366': 325,
+    '1024': 300,
+    '768': 220,
+    '375': 220,
+  },
+  '9:4': {
+    '1440': 440,
+    '1366': 408,
+    '1024': 256,
+    '768': 240,
+    '375': 156,
+  },
+};
+
 export const SwiperArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,28 +37,42 @@ export const ArrowArea = styled.div`
   align-items: center;
 `;
 
-export const ImageContainer = styled.div<{ img: string }>`
+export const ImageContainer = styled.div<{
+  img: string;
+  aspectRatio: AspectRatio;
+}>`
   width: 100%;
   background-image: url(${(props) => props.img});
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: ${(props) =>
+    props.aspectRatio === '16:9' ? '50% 50%' : '50% 65%'};
   height: 295px;
   border-radius: 4px;
 
   @media (min-width: 375px) {
-    height: 220px;
+    height: ${({ aspectRatio }) =>
+      `${ImageContainerHeight[aspectRatio][375]}px`};
+  }
+
+  @media (min-width: 768px) {
+    height: ${({ aspectRatio }) =>
+      `${ImageContainerHeight[aspectRatio][768]}px`};
+    margin-top: 0px;
   }
 
   @media (min-width: 1024px) {
-    height: 300px;
+    height: ${({ aspectRatio }) =>
+      `${ImageContainerHeight[aspectRatio][1024]}px`};
   }
 
   @media (min-width: 1366px) {
-    height: 325px;
+    height: ${({ aspectRatio }) =>
+      `${ImageContainerHeight[aspectRatio][1366]}px`};
   }
 
   @media (min-width: 1440px) {
-    height: 350px;
+    height: ${({ aspectRatio }) =>
+      `${ImageContainerHeight[aspectRatio][1440]}px`};
   }
 `;
 
