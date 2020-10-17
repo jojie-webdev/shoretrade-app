@@ -2,6 +2,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Container, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
@@ -54,14 +55,18 @@ export const SmallAlertContainer = styled.div`
 export const CategoriesContainer = styled.div``;
 
 export const Text = styled(Typography)`
-  display: flex;
+  display: inline;
   flex: 1;
   margin-left: 5px;
 `;
 
-export const Bold = styled(Typography)`
+export const Bold = styled.span`
   margin-left: 0.4em;
   margin-right: 0.4em;
+
+  font-weight: 700; // bold
+  font-size: ${pxToRem(14)}; // label
+  line-height: 24px; // label
 `;
 
 export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
