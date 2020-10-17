@@ -140,6 +140,7 @@ const BuyerRoutes = (): JSX.Element => {
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
+    useOuterWrapper?: boolean;
   } => {
     if (pathname === '/buyer/account') {
       return {
@@ -153,6 +154,7 @@ const BuyerRoutes = (): JSX.Element => {
         shouldUseFullWidth: true,
         shouldIncludePadding: false,
         pageTitle: firstName ? `Hello, ${firstName}` : '',
+        useOuterWrapper: true,
       };
     }
 
@@ -182,7 +184,7 @@ const BuyerRoutes = (): JSX.Element => {
       return {
         pageTitle: 'Seller',
         onBack: history.goBack,
-      }
+      };
     }
 
     return {};
