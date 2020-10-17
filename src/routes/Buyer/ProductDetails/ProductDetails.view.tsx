@@ -79,12 +79,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         <>
           <BannerContainer>
             <Carousel
-              id={'productDetails'}
+              id={'product-details-carousel'}
+              images={currentListing.images}
               loop
               autoplay
-              images={currentListing.images}
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
+              height="295px"
             />
           </BannerContainer>
           <div className="wrapper">
