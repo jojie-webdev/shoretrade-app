@@ -32,7 +32,6 @@ export const ArrowArea = styled.div`
   display: flex;
   width: 100px;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
