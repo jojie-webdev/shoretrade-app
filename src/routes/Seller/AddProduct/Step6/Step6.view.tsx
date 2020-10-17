@@ -266,33 +266,35 @@ function Step6({
         </Col>
       </Row>
 
-      {showError && (
-        <div className="box-error-container">
-          <Alert
-            fullWidth
-            alignText="center"
-            variant="error"
-            content="Please include at least 1 box and set minimum order"
-          />
-        </div>
-      )}
+      <div className="absolute-container">
+        {showError && (
+          <div className="box-error-container">
+            <Alert
+              fullWidth
+              alignText="center"
+              variant="error"
+              content="Please include at least 1 box and set minimum order"
+            />
+          </div>
+        )}
 
-      <BoxSummary
-        unit={measurementUnit}
-        summary={summary}
-        onClick={() => {
-          if (boxes.length > 0 && minimumOrder) {
-            onAddBoxes({
-              isAquafuture,
-              sellInMultiples,
-              boxes,
-              minimumOrder,
-            });
-          } else {
-            setShowError(true);
-          }
-        }}
-      />
+        <BoxSummary
+          unit={measurementUnit}
+          summary={summary}
+          onClick={() => {
+            if (boxes.length > 0 && minimumOrder) {
+              onAddBoxes({
+                isAquafuture,
+                sellInMultiples,
+                boxes,
+                minimumOrder,
+              });
+            } else {
+              setShowError(true);
+            }
+          }}
+        />
+      </div>
 
       {showModal && (
         <AddBoxModal
