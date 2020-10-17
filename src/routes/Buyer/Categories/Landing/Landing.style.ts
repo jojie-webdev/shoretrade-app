@@ -13,10 +13,6 @@ export const CategoriesContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
   }
-
-  .search-row {
-    margin-bottom: 24px;
-  }
 `;
 
 export const LoadingContainer = styled.div`

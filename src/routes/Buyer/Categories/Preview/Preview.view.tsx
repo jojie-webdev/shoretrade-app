@@ -43,12 +43,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     <PreviewContainer>
       <Row className="search-row">
         <Col xs={10.5}>
-          <SearchAddressView
-            value={searchValue}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
-            placeholder="Search for an Atlantic Salmon"
-          />
+          <SearchAddressView />
         </Col>
         <Col xs={1.5} className="filter-container">
           <FilterButton

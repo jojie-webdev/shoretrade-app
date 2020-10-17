@@ -42,13 +42,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: 60px;
   margin-bottom: 32px;
 
   .wrapper {
-    width: calc(100% - 200px);
+    // width: calc(100% - 200px);
+    width: 100%;
     margin: auto;
-
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
     }
