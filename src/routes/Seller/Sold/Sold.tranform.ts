@@ -79,6 +79,8 @@ export const orderItemToPendingToShipItem = (
     total: order.totalPrice,
     buyerCompanyName: order.buyerCompanyName,
     orderImage: order.orderLineItem[0].listing.images[0],
+    toAddressState: order.toAddress.state,
+    type: order.deliveryMethod.toLowerCase(),
   }));
 };
 
