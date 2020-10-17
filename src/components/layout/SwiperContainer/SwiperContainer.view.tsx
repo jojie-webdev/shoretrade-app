@@ -45,7 +45,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
 
     const debouncedHandler = debounce(handleResize, 200);
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', debouncedHandler);
 
     return () => {
       window.removeEventListener('resize', debouncedHandler);
