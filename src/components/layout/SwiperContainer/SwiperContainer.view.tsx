@@ -1,13 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-
-import Touchable from 'components/base/Touchable';
-// import SwiperCore, { Autoplay } from 'swiper';
-// import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { SwiperContainerProps } from './SwiperContainer.props';
 import { Parent, Container } from './SwiperContainer.style';
-
-// SwiperCore.use([Autoplay]);
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -35,7 +29,10 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
 
   // calculate a definite width so that it won't overflow
   useEffect(() => {
-    if (containerRef.current) {
+    if (
+      containerRef.current &&
+      containerWidth !== containerRef.current.offsetWidth
+    ) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
   }, [containerRef?.current?.offsetWidth, windowWidth]);
@@ -43,13 +40,12 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
   // helps to trigger recalculation of width
   useEffect(() => {
     const handleResize = () => {
-      setContainerWidth(null);
       setWindowWidth(window.innerWidth);
     };
 
     const debouncedHandler = debounce(handleResize, 200);
 
-    window.addEventListener('resize', debouncedHandler);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', debouncedHandler);
