@@ -78,6 +78,12 @@ export const PendingItemContainer = styled.div`
         display: flex;
         align-items: center;
       }
+
+      .details-delivery {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 `;

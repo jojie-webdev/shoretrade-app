@@ -142,7 +142,7 @@ export const PendingItem = (props: PendingToShipItemData) => {
           </div>
 
           <div>
-            <Typography variant="label" color="noshade">
+            <Typography variant="label" color="noshade" className="details-delivery">
               {type === 'air' ? 'Air Freight ' : 'Road Freight '}
               Pick Up ({toAddressState})
             </Typography>
