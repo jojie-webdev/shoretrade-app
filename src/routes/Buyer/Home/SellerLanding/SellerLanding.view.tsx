@@ -19,9 +19,9 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
       <Row nogutter>
         <Col xs={12}>
           <SearchAddressView
-            value={search}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
+            // value={search}
+            // onChange={onChangeSearchValue}
+            // resetValue={resetSearchValue}
             placeholder="Search.."
           />
         </Col>

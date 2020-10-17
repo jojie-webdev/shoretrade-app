@@ -44,9 +44,9 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       <Row className="search-row">
         <Col xs={10.5}>
           <SearchAddressView
-            value={searchValue}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
+            // value={searchValue}
+            // onChange={onChangeSearchValue}
+            // resetValue={resetSearchValue}
             placeholder="Search for an Atlantic Salmon"
           />
         </Col>

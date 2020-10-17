@@ -46,9 +46,9 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
       <Content>
         <SearchContainer>
           <SearchAddressView
-            value={searchTerm}
-            resetValue={onReset}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            // value={searchTerm}
+            // resetValue={onReset}
+            // onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search.."
           />
         </SearchContainer>

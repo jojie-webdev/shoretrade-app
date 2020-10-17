@@ -213,8 +213,8 @@ const HomeView = (props: HomeGeneratedProps) => {
         <Col xs={12} style={{ marginBottom: '46px' }}>
           <SearchAddress
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            resetValue={onReset}
+            // onChange={(e) => setSearchTerm(e.target.value)}
+            // resetValue={onReset}
             placeholder="Search.."
           />
           {/* <div className="buying-for">

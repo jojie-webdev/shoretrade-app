@@ -24,9 +24,9 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
       <Row nogutter>
         <Col xs={12}>
           <SearchAddressView
-            value={search}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
+            // value={search}
+            // onChange={onChangeSearchValue}
+            // resetValue={resetSearchValue}
             placeholder="Search.."
           />
         </Col>

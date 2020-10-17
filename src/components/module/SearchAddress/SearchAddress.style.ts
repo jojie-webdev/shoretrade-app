@@ -43,12 +43,10 @@ export const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   max-height: 60px;
-  margin-bottom: 32px;
 
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
-
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
     }
