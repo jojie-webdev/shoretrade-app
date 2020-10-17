@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
@@ -25,6 +25,7 @@ import reverse from 'ramda/es/reverse';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { autoScrollToTop } from 'utils/scrollToTop';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { useTheme } from 'utils/Theme';
 
@@ -52,6 +53,7 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
+import { nullFormat } from 'numeral';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
@@ -82,14 +84,12 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
             </>
           ) : (
             <>
-              <>
-                You have{' '}
-                <Bold variant="label" weight="bold">
-                  less than $250
-                </Bold>{' '}
-                in your account. Please fill it up if you want to continue
-                making purchases.
-              </>
+              You have{' '}
+              <Bold variant="label" weight="bold">
+                less than $250
+              </Bold>{' '}
+              in your account. Please fill it up if you want to continue making
+              purchases.
             </>
           )}
         </Text>
@@ -196,8 +196,18 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   const showRecentSearch = searchTerm.length === 0;
   const data = showRecentSearch ? reverse(recent) : results;
+
+  const cbRef = useCallback(
+    (node: any) => {
+      if (node !== null) {
+        autoScrollToTop(history, node);
+      }
+    },
+    [history.location]
+  );
+
   return (
-    <ViewContainer>
+    <ViewContainer ref={cbRef}>
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12} style={{ marginBottom: '46px' }}>

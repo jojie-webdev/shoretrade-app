@@ -1,11 +1,9 @@
-function autoScrollToTop(history: any) {
-  const unlisten = history.listen(() => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+function autoScrollToTop(history: any, winRef: any) {
+  history.listen(() => {
+    // pre-scroll to top on url change
+    winRef?.scrollIntoView?.();
   });
+  winRef?.scrollIntoView?.();
 }
 
 export { autoScrollToTop };

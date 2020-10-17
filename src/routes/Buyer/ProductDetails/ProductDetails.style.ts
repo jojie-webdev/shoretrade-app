@@ -1,6 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Container = styled.div`
   flex-direction: row;
