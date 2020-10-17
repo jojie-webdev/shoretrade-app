@@ -88,9 +88,11 @@ export const Item = (props: PendingItem) => (
           </Details>
         </div>
       </div>
-      <div className="right">
-        <ChevronRight height={16} width={16} />
-      </div>
+      {!props.weightConfirmed && (
+        <div className="right">
+          <ChevronRight height={16} width={16} />
+        </div>
+      )}
     </div>
 
     <hr className="divider" />
