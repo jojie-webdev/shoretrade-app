@@ -107,6 +107,8 @@ export const PendingItem = (props: PendingToShipItemData) => {
     buyerCompanyName,
     orderImage,
     total,
+    type,
+    toAddressState,
   } = props;
 
   const history = useHistory();
@@ -135,6 +137,13 @@ export const PendingItem = (props: PendingToShipItemData) => {
             </Typography>
             <Typography variant="label" color="noshade" className="center-text">
               {buyerCompanyName}
+            </Typography>
+          </div>
+
+          <div>
+            <Typography variant="label" color="noshade">
+              {type === 'air' ? 'Air Freight ' : 'Road Freight '}
+              Pick Up ({toAddressState})
             </Typography>
           </div>
         </div>

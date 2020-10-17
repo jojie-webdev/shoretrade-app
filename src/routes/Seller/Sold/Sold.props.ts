@@ -7,6 +7,8 @@ export type PendingToShipItemData = {
   total: string;
   buyerCompanyName: string;
   orderImage: string;
+  type: string;
+  toAddressState: string;
 };
 
 export type ToShipItemData = {
