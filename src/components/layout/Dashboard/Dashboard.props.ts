@@ -6,6 +6,7 @@ import { GetUserPayload } from 'types/store/GetUserState';
 import { Theme } from 'types/Theme';
 
 export interface DashboardPublicProps {
+  ref?: any;
   children: any;
   routes: Route[];
   onBack?: () => void;
