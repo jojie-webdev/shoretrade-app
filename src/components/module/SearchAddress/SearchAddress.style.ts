@@ -45,17 +45,19 @@ export const Container = styled.div`
   max-height: 60px;
   margin-bottom: 32px;
   .wrapper {
-    width: calc(100% - 200px);
+    // width: calc(100% - 200px);
+    width: 100%;
     margin: auto;
     position: relative;
+    padding-top: 32px;
 
-    @media ${BREAKPOINTS['sm']} {
-      width: 100%;
-    }
+    // @media ${BREAKPOINTS['sm']} {
+    //   width: 100%;
+    // }
 
-    @media ${BREAKPOINTS['md']} {
-      width: calc(100% - 150px);
-    }
+    // @media ${BREAKPOINTS['md']} {
+    //   width: calc(100% - 150px);
+    // }
   }
 `;
 
