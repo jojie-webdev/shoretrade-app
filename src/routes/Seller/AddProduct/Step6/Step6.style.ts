@@ -31,8 +31,6 @@ export const Container = styled.div`
   }
 
   .minimum-row {
-    margin-bottom: 40px;
-
     .checkbox-col {
       margin-top: 16px;
       display: flex;
@@ -40,8 +38,17 @@ export const Container = styled.div`
     }
   }
 
+  .absolute-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .box-error-container {
-    margin-bottom: 32px;
+    width: 100%;
+    display: flex;
   }
 `;
 
@@ -78,16 +85,12 @@ export const BoxDetailsContainer = styled.div`
 `;
 
 export const BoxSummaryContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 25px 80px;
   width: 100%;
   background: ${(props) => props.theme.grey.shade7};
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   .text-container {
     display: flex;
 
