@@ -11,10 +11,10 @@ import { Container } from './HomeSectionHeader.style';
 const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
   // const theme = useTheme();
 
-  const { title, onClick } = props;
+  const { title, onClick, noMargin } = props;
 
   return (
-    <Container>
+    <Container noMargin={noMargin}>
       <Typography variant="title5" color="shade8">
         {title}
       </Typography>
