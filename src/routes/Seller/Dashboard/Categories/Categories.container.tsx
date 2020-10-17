@@ -31,8 +31,8 @@ const Categories = (): JSX.Element => {
     const monthsParam = months.split('_');
 
     if (monthsParam.length === 2) {
-      const start = moment(monthsParam[0]).format('D MMM');
-      const end = moment(monthsParam[1]).format('D MMM YYYY');
+      const start = moment(monthsParam[0], 'MM-DD-YYYY').format('D MMM');
+      const end = moment(monthsParam[1], 'MM-DD-YYYY').format('D MMM YYYY');
 
       return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
     } else {
@@ -56,8 +56,8 @@ const Categories = (): JSX.Element => {
             return;
           }
 
-          dateFrom = moment(monthsParam[0]).format('YYYYMMDD');
-          dateTo = moment(monthsParam[1]).format('YYYYMMDD');
+          dateFrom = moment(monthsParam[0], 'MM-DD-YYYY').format('YYYYMMDD');
+          dateTo = moment(monthsParam[1], 'MM-DD-YYYY').format('YYYYMMDD');
         }
 
         if (dateFrom.includes('Invalid')) return;
