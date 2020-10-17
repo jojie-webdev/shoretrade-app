@@ -9,6 +9,7 @@ import PreviewCard from 'components/module/CategoryCards/Preview';
 import CategoryImage from 'components/module/CategoryImage';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import SellerRating from 'components/module/SellerRating';
 import { BUYER_ROUTES } from 'consts/routes';
 import { isEmpty } from 'ramda';
@@ -76,7 +77,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
         <>
           <div>
             <Col xs={12} style={{ marginBottom: '24px' }}>
-              <Search
+              <SearchAddressView
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}
                 resetValue={onReset}
