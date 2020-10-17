@@ -37,9 +37,7 @@ function* confirmWeightSuccess(
 
   const orderId = pathOr('', ['payload', 'orderId'], action);
   if (orderId) {
-    yield put(
-      push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', orderId))
-    );
+    yield put(push(SELLER_SOLD_ROUTES.CONFIRM_LIST(orderId)));
   } else {
     yield put(push(SELLER_SOLD_ROUTES.LANDING));
   }

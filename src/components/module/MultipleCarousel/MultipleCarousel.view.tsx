@@ -5,8 +5,8 @@ import Touchable from 'components/base/Touchable';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useTheme } from 'utils/Theme';
 
-// import { useTheme } from 'utils/Theme';
 import { MultipleCarouselProps } from './MultipleCarousel.props';
 import { ArrowArea, Container } from './MultipleCarousel.style';
 
@@ -14,9 +14,16 @@ function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
 ) {
   const [ref, setRef] = useState<any>(null);
-  // const theme = useTheme();
+  const theme = useTheme();
   const [currentNdx, setCurrentNdx] = useState(0);
-  const { Component, data, transform, link } = props;
+  const {
+    Component,
+    data,
+    transform,
+    link,
+    breakpoints,
+    onSlideChange,
+  } = props;
 
   const showThreeItems = useMediaQuery({
     query: '(max-width: 1480px)',
@@ -46,11 +53,14 @@ function MultipleCarousel<D extends { id: string }, CP>(
     return <></>;
   }
 
+  const arrowColor =
+    theme.appType === 'seller' ? theme.brand.primary : theme.grey.noshade;
+
   return (
     <Container>
       <ArrowArea left>
         <Touchable onPress={() => ref.slideTo(currentNdx - slidesPerView())}>
-          <CarouselChevronLeft width={18} height={18} />
+          <CarouselChevronLeft width={18} height={18} fill={arrowColor} />
         </Touchable>
       </ArrowArea>
 
@@ -62,20 +72,28 @@ function MultipleCarousel<D extends { id: string }, CP>(
         slidesPerView={1}
         spaceBetween={0}
         style={{ width: '100%' }}
-        onSlideChange={(swiper) => setCurrentNdx(swiper.activeIndex)}
+        onSlideChange={(swiper) => {
+          setCurrentNdx(swiper.activeIndex);
+
+          if (onSlideChange) {
+            onSlideChange(swiper.activeIndex);
+          }
+        }}
         // These breakpoints are specific to home page, once this gets used
         // in another screen feel free to extract this code to make it more reusable
-        breakpoints={{
-          1480: {
-            slidesPerView: 4,
-          },
-          1200: {
-            slidesPerView: 3,
-          },
-          650: {
-            slidesPerView: 2,
-          },
-        }}
+        breakpoints={
+          breakpoints || {
+            1480: {
+              slidesPerView: 4,
+            },
+            1200: {
+              slidesPerView: 3,
+            },
+            650: {
+              slidesPerView: 2,
+            },
+          }
+        }
       >
         {data.map((d) => {
           return (
@@ -90,7 +108,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
 
       <ArrowArea right>
         <Touchable onPress={() => ref.slideTo(currentNdx + slidesPerView())}>
-          <CarouselChevronRight width={18} height={18} />
+          <CarouselChevronRight width={18} height={18} fill={arrowColor} />
         </Touchable>
       </ArrowArea>
     </Container>

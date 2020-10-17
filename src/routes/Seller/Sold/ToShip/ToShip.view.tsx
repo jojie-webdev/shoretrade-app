@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { InfoFilled, Plane, Truck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
+import MultipleCarousel from 'components/module/MultipleCarousel';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
@@ -114,11 +115,7 @@ export const PendingItem = (props: PendingToShipItemData) => {
 
   const history = useHistory();
   return (
-    <PendingItemContainer
-      onClick={() =>
-        history.push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', id))
-      }
-    >
+    <PendingItemContainer>
       <div className="content">
         <img src={orderImage} />
 
@@ -165,6 +162,15 @@ export const PendingItem = (props: PendingToShipItemData) => {
   );
 };
 
+const breakPoints = {
+  1340: {
+    slidesPerView: 3,
+  },
+  1024: {
+    slidesPerView: 2,
+  },
+};
+
 const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
@@ -180,25 +186,6 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
 
-  const twoSlides = useMediaQuery({
-    query: '(max-width: 1340px)',
-  });
-
-  const oneSlide = useMediaQuery({
-    query: '(max-width: 1024px)',
-  });
-
-  function numSlides(): number {
-    if (oneSlide) {
-      return 1;
-    }
-
-    if (twoSlides) {
-      return 2;
-    }
-
-    return 3;
-  }
 
   return (
     <>
@@ -211,20 +198,18 @@ const ToShip = (props: SoldGeneratedProps) => {
             Pending Confirmation - {pendingToShip.length}
           </Typography>
         </Col>
+
         <CarouselContainer>
-          <Swiper
-            spaceBetween={16}
-            slidesPerView={numSlides()}
-            onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
-            loop
-          >
-            {pendingToShip.map((item) => (
-              <SwiperSlide key={item.id}>
-                <PendingItem {...item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <MultipleCarousel<PendingToShipItemData, PendingToShipItemData>
+            data={pendingToShip}
+            transform={(data: PendingToShipItemData) => data}
+            Component={PendingItem}
+            link={SELLER_SOLD_ROUTES.CONFIRM_LIST}
+            breakpoints={breakPoints}
+            onSlideChange={(ndx) => setPendingPage(ndx + 1)}
+          />
         </CarouselContainer>
+
         <div className="pagination-container">
           <Pagination
             variant="infinite-dots"
