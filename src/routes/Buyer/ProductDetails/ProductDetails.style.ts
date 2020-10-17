@@ -29,18 +29,6 @@ export const BannerContainer = styled.div`
   margin-bottom: 16px;
   width: 100%;
   max-width: 100%;
-
-  img {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    max-height: 297px;
-    left: 50%;
-    top: 50%;
-    border-radius: 4px;
-    -webkit-transform: translateY(-50%) translateX(-50%);
-  }
 `;
 
 export const DetailsContainer = styled(Row)`

@@ -263,7 +263,6 @@ const HomeView = (props: HomeGeneratedProps) => {
           autoplay
           hideArrowArea={hideCarouselArrowArea}
           arrowWidth={mediumArrowWidth ? 75 : undefined}
-          height="357px"
         />
       </SwiperContainer>
       <div className="wrapper">
