@@ -34,10 +34,6 @@ export const PreviewContainer = styled.div`
 
     a {
       margin-right: 32px;
-
-      .card {
-        width: 203px;
-      }
     }
   }
 
@@ -73,7 +69,6 @@ export const CardContainer = styled.div`
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
     box-sizing: border-box;
-    width: 203px;
     height: 170px;
     margin-right: 32px;
     transition: transform 0.2s;
