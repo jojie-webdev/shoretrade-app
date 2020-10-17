@@ -44,7 +44,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     <CategoriesContainer>
       <Row nogutter className="search-row">
         <Col xs={12}>
-          <SearchAddressView placeholder="Search for a Product" />
+          <SearchAddressView />
         </Col>
         {/* <Col xs={1.5}>
           <FilterButton>

@@ -210,7 +210,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     <ViewContainer ref={cbRef}>
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12} style={{ marginBottom: '46px' }}>
+        <Col xs={12}>
           <SearchAddress
             value={searchTerm}
             // onChange={(e) => setSearchTerm(e.target.value)}

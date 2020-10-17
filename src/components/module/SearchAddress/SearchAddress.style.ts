@@ -47,6 +47,8 @@ export const Container = styled.div`
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
+    position: relative;
+
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
     }

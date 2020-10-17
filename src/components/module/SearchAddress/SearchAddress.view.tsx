@@ -200,12 +200,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           setAddressModalChange(false);
         }}
       />
+
       <div style={{ flexDirection: 'column', flex: 3 }}>
         <InputContainer>
           <SearchSVG height={16} width={16} />
           <input
             type="text"
-            placeholder="Placeholder"
+            placeholder="Search for a product"
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />
@@ -236,37 +237,38 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           value={currentAddressSelected}
         />
       </AddressContainer>
-
-      {!isEmpty(data) && (
-        <Typography variant="overline" color="shade6">
-          {showRecentSearch ? 'Recent Searches' : 'Results'}
-        </Typography>
-      )}
-      {isEmpty(data) && searchTerm.length > 0 && !loading ? (
-        <>
-          <EmptyState
-            onButtonClicked={onReset}
-            Svg={Octopus}
-            title="No search result"
-            buttonText="Reset Search"
-          />
-          <div style={{ marginBottom: '48px' }}></div>
-        </>
-      ) : (
-        <>
-          <PaginateList
-            list={data || []}
-            labelPath={['label']}
-            maxItemPerPage={6}
-            // resultCount="3"
-            onClickItem={(item) => {
-              history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-              saveSearchHistory(item.value, item.label, item.count);
-            }}
-          />
-          <div style={{ marginBottom: '48px' }}></div>
-        </>
-      )}
+      <div className="wrapper">
+        {!isEmpty(data) && (
+          <Typography variant="overline" color="shade6">
+            {showRecentSearch ? 'Recent Searches' : 'Results'}
+          </Typography>
+        )}
+        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+          <>
+            <EmptyState
+              onButtonClicked={onReset}
+              Svg={Octopus}
+              title="No search result"
+              buttonText="Reset Search"
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        ) : (
+          <>
+            <PaginateList
+              list={data || []}
+              labelPath={['label']}
+              maxItemPerPage={6}
+              // resultCount="3"
+              onClickItem={(item) => {
+                history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                saveSearchHistory(item.value, item.label, item.count);
+              }}
+            />
+            <div style={{ marginBottom: '48px' }}></div>
+          </>
+        )}
+      </div>
     </Container>
   );
 };
