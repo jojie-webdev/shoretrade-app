@@ -73,8 +73,8 @@ export const CategoriesContainer = styled.div`
 `;
 
 export const Text = styled(Typography)`
-  /* display: inline;
-  flex: 1; */
+  display: inline;
+  flex: 1;
   margin-left: 5px;
 `;
 
