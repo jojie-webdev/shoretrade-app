@@ -206,14 +206,14 @@ export const Content = styled.div<{
   }
 `;
 
-export const HeaderContainer = styled.nav`
+export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
   margin-top: 40px;
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 200px);
+  width: ${(props) => (props.useOuterWrapper ? '100%' : 'calc(100% - 200px)')};
 
   .left-content {
     display: flex;
@@ -311,4 +311,18 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
+`;
+
+export const HeaderWrapper = styled.div`
+  width: calc(100% - 200px);
+  margin: auto;
+  position: relative;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    width: calc(100% - 150px);
+  }
 `;

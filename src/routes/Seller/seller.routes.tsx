@@ -9,7 +9,7 @@ import {
   CheckBorder,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import {
   Route,
   Switch,

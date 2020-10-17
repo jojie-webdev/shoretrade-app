@@ -10,7 +10,6 @@ export const InputContainer = styled.div`
   width: 100%;
   padding: ${(props) =>
     props.theme.appType === 'buyer' ? '24px' : '10px 15px'};
-  margin-bottom: 16px;
 
   display: flex;
   justify-content: space-between;
@@ -44,6 +43,8 @@ export const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   max-height: 60px;
+  margin-bottom: 32px;
+
   .wrapper {
     width: calc(100% - 200px);
     margin: auto;
@@ -68,7 +69,6 @@ export const AddressContainer = styled.div`
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   width: 100%;
-  margin-bottom: 16px;
   padding: 12.5px;
 
   display: flex;
