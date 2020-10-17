@@ -26,6 +26,7 @@ export type ToShipItemData = {
     tags: { label: string }[];
     size: string;
   }[];
+  toAddressState: string;
 };
 
 export type ToShipItem = {

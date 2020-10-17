@@ -87,6 +87,8 @@ export const orderItemToPendingToShipItem = (
 export const orderItemToToShipItemData = (
   data: GetSellerOrdersResponseItem[]
 ): ToShipItemData[] => {
+  console.log(data[0].status);
+
   return data.map((order) => ({
     id: order.orderId,
     date: moment(order.orderDate).toDate(),
@@ -108,6 +110,7 @@ export const orderItemToToShipItemData = (
         lineItem.listing.sizeTo || ''
       ),
     })),
+    toAddressState: order.toAddress.state,
   }));
 };
 
