@@ -290,14 +290,18 @@ export const CreditBalanceContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 
   .amount {
     margin-top: 4px;
   }
 
-  svg {
-    margin-left: 11px;
+  .balance-arrow {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-left: 11px;
+    }
   }
 
   cursor: pointer;

@@ -218,10 +218,12 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               <Typography color="shade6" variant="overline" weight="900">
                 Credit balance
               </Typography>
-              <Typography color="noshade" variant="title5" className="amount">
-                {credit ? toPrice(credit) : '$0.00'}
+              <div className="balance-arrow">
+                <Typography color="noshade" variant="title5" className="amount">
+                  {credit ? toPrice(credit) : '$0.00'}
+                </Typography>
                 <CreditChevronRight />
-              </Typography>
+              </div>
             </CreditBalanceContainer>
           )}
 
