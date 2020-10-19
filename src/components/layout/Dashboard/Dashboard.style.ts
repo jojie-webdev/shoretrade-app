@@ -1,7 +1,7 @@
 import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const DashboardContainer = styled.div<{ openSidebar?: boolean }>`
   height: 100vh;
@@ -290,12 +290,24 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
     width: calc(100% - 150px);
   }
 
-  @media ${BREAKPOINTS['sm']} {
-    width: 100%;
-    padding: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
+  ${(props) =>
+    props.useOuterWrapper
+      ? css`
+          @media ${BREAKPOINTS['sm']} {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
+        `
+      : css`
+          @media ${BREAKPOINTS['sm']} {
+            width: 85%;
+            padding: 8px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
+        `}
 `;
 
 export const CreditBalanceContainer = styled.div`
