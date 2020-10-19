@@ -226,6 +226,8 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
     align-items: center;
 
     @media ${BREAKPOINTS.sm} {
+      display: none;
+
       p {
         font-size: 1.75rem;
         line-height: 34px;
@@ -244,6 +246,10 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
 
     .cart-container {
       margin-right: 45px;
+
+      @media ${BREAKPOINTS.sm} {
+        margin-right: 8px;
+      }
     }
 
     .cart-wrapper {
@@ -254,6 +260,18 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
     .dashboard-account-container {
       :hover {
         background-color: transparent;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        padding-right: 0;
+
+        img {
+          display: none;
+        }
+
+        svg {
+          display: none;
+        }
       }
     }
 
@@ -274,7 +292,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
 
   @media ${BREAKPOINTS['sm']} {
     width: 100%;
-    padding: 0 24px;
+    padding: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
   }
