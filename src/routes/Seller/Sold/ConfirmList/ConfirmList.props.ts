@@ -28,6 +28,7 @@ export interface ConfirmListGeneratedProps {
   placeOrder: (config: { isPartial: boolean }) => void;
   isPending: boolean;
   buyer: string;
+  sendMessage: (message: string) => void;
 }
 
 export interface ConfirmListProps
