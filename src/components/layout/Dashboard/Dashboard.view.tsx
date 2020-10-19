@@ -7,6 +7,7 @@ import {
   Cart,
   ArrowLeft,
   PlaceholderProfile,
+  CreditChevronRight,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -219,6 +220,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               </Typography>
               <Typography color="noshade" variant="title5" className="amount">
                 {credit ? toPrice(credit) : '$0.00'}
+                <CreditChevronRight />
               </Typography>
             </CreditBalanceContainer>
           )}
