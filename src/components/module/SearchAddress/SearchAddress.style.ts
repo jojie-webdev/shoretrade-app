@@ -48,7 +48,6 @@ export const Container = styled.div`
     // width: calc(100% - 200px);
     width: 100%;
     margin: auto;
-    padding-bottom: 32px;
     display: flex;
     flex-direction: column;
     padding-top: 10px;
