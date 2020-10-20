@@ -70,7 +70,11 @@ const Button = (props: ButtonProps): JSX.Element => {
       )}
 
       {text && (
-        <Typography variant={textVariant} color={textColor} weight={textWeight}>
+        <Typography
+          variant={props.textVariant || textVariant}
+          color={textColor}
+          weight={props.textWeight || textWeight}
+        >
           {text}
         </Typography>
       )}

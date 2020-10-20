@@ -48,18 +48,37 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   return (
     <PreviewContainer>
       <Row className="search-row">
-        <Col xs={10.5} sm={12}>
+        <Col md={12}>
           <SearchAddressView />
         </Col>
-        <Visible xs sm>
-          <Col xs={1.5} className="filter-container">
-            <FilterButton
-              onClick={modalFilterProps.onClickClose}
-              text="Filters"
-              icon={<Filter />}
-            />
-          </Col>
-        </Visible>
+      </Row>
+
+      <Row>
+        <Col>
+          <div className="subheader">
+            <div className="result-count-container">
+              <Typography variant="title5" weight="regular">
+                Results
+              </Typography>
+              <Typography
+                style={{ marginLeft: 10 }}
+                variant="title5"
+                weight="bold"
+              >
+                {results.length}
+              </Typography>
+            </div>
+            <Visible xs sm>
+              <FilterButton
+                onClick={modalFilterProps.onClickClose}
+                text="Filters"
+                icon={<Filter />}
+                textVariant="caption"
+                textWeight="500"
+              />
+            </Visible>
+          </div>
+        </Col>
       </Row>
 
       <Row>
