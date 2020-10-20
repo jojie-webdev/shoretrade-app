@@ -269,7 +269,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </Typography>
         ) : null}
 
-        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+        {isEmpty(data) && searchTerm.length > 2 && !loading ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
