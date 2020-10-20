@@ -25,6 +25,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
   return (
     <Modal
       style={{
+        width: 'unset',
         padding: '48px 80px',
       }}
       {...modalProps}
