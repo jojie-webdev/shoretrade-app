@@ -29,6 +29,15 @@ export const BannerContainer = styled.div`
   margin-bottom: 16px;
   width: 100%;
   max-width: 100%;
+
+  .placeholder {
+    margin: auto;
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 295px;
+    object-fit: contain;
+  }
 `;
 
 export const DetailsContainer = styled(Row)`
