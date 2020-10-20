@@ -22,7 +22,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
 
   return (
-    <Modal {...modalProps} style={{ maxWidth: '438px' }}>
+    <Modal {...modalProps}>
       <Content>
         <Typography
           variant="title4"

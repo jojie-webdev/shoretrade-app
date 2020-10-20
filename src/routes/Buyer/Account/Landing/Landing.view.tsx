@@ -8,7 +8,12 @@ import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { LandingGeneratedProps } from './Landing.props';
-import { Container, Header, NavInteraction, DropdownContainer } from './Landing.style';
+import {
+  Container,
+  Header,
+  NavInteraction,
+  DropdownContainer,
+} from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
@@ -60,7 +65,6 @@ const LandingView = (props: LandingGeneratedProps) => {
         </div>
 
         <div className="right-content">
-
           <DropdownContainer>
             <Select
               label=""

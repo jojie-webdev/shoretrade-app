@@ -43,6 +43,7 @@ import resendVerification from './resendVerification';
 import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import udpateDefaultCard from './updateDefaultCard';
@@ -105,6 +106,7 @@ const sagas = [
   endListing,
   editSelectedListing,
   getTransactionHistory,
+  sendMessage,
 ];
 
 export default function* root() {

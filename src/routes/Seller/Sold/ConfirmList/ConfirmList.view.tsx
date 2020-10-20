@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import BadgeView from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { ChevronRight, Scale, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import MessageModal from 'components/module/MessageModal';
 import { SELLER_SOLD_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -131,18 +132,40 @@ export const Item = (props: PendingItem) => (
 
 const ConfirmListView = (props: ConfirmListProps) => {
   const theme = useTheme();
-  const { title, items, orderId, placeOrder, isPending, buyer } = props;
+  const {
+    title,
+    items,
+    orderId,
+    placeOrder,
+    isPending,
+    buyer,
+    sendMessage,
+    isSendingMessage,
+  } = props;
   const history = useHistory();
 
+  const [showMessageModal, setShowMessageModal] = useState(false);
   const allowPartialShipment = items.some((i) => i.weightConfirmed);
   const allowFullShipment = items.every((i) => i.weightConfirmed);
 
   return (
     <Wrapper>
+      <MessageModal
+        isOpen={isSendingMessage || showMessageModal}
+        recipient={buyer}
+        onSend={(message) => {
+          sendMessage(message);
+          setShowMessageModal(false);
+        }}
+        onClickClose={() => {
+          setShowMessageModal(false);
+        }}
+        loading={isSendingMessage}
+      />
       <InnerRouteHeader
         title={title}
         rightContent={
-          <StyledTouchable onPress={() => {}}>
+          <StyledTouchable onPress={() => setShowMessageModal(true)}>
             <Typography variant="body" color="noshade">
               {buyer}
             </Typography>

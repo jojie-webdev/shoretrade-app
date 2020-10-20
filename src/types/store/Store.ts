@@ -115,6 +115,7 @@ import {
   SearchProductTypeMeta,
   SearchProductTypePayload,
 } from './SearchProductTypeState';
+import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -258,4 +259,5 @@ export interface Store {
     UpdateFavoriteSellerPayload
   >;
   sellerDashboardDate: any;
+  sendMessage: AsyncState<SendMessageMeta, SendMessagePayload>;
 }

@@ -10,7 +10,7 @@ export const PreviewContainer = styled.div`
   display: table;
   clear: both;
   width: 100%;
-  padding: 0 6px;
+  padding: 0 16px;
 
   .search-row {
     margin-bottom: 24px;

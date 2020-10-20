@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Backdrop = styled.div<{ isOpen: boolean }>`
@@ -17,7 +18,7 @@ export const ModalContainer = styled.div<{ backgroundColor?: string }>`
   position: relative;
   border-radius: 4px;
   padding: 56px 32px;
-  min-width: 438px;
+  width: 438px;
   background-color: ${({ theme, backgroundColor }) => {
     const isSeller = theme.appType === 'seller';
 
@@ -25,6 +26,10 @@ export const ModalContainer = styled.div<{ backgroundColor?: string }>`
       backgroundColor || (isSeller ? theme.grey.shade8 : theme.grey.shade1)
     );
   }};
+
+  @media ${BREAKPOINTS.sm} {
+    max-width: 90%;
+  }
 `;
 
 export const ExitButton = styled.button`

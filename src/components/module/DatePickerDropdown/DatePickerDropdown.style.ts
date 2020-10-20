@@ -32,6 +32,7 @@ export const Container = styled.div`
 
     :hover {
       border-radius: 100px;
+      color: ${(props) => props.theme.brand.primary};
     }
   }
 
