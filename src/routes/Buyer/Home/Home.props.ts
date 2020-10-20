@@ -20,8 +20,6 @@ export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
   loading: boolean;
-  results: { count: string; label: string; value: string }[];
-  recent: { count: string; label: string; value: string }[];
   addresses: GetAddressesResponseItem[];
   addressOptions: { label: string; value: string }[];
   creditState: CreditState;

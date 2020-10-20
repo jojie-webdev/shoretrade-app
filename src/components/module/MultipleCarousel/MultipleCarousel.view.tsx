@@ -49,7 +49,11 @@ function MultipleCarousel<D extends { id: string }, CP>(
     return 4;
   }
 
-  if ((data || []).length === 0) {
+  if (!data) {
+    return <></>;
+  }
+
+  if (data.length === 0) {
     return <></>;
   }
 

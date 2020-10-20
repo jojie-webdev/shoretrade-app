@@ -23,11 +23,6 @@ const Home = (): JSX.Element => {
     (state: Store) => state.getBuyerHomepage
   );
 
-  const results =
-    useSelector(
-      (state: Store) => state.searchAndCountProductType.data?.data.types
-    ) || [];
-
   const companyAdressDefault = GetDefaultCompany();
 
   const getAddress = useSelector((state: Store) => state.getAddresses);
@@ -35,9 +30,6 @@ const Home = (): JSX.Element => {
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
-
-  const recent =
-    useSelector((state: Store) => state.history.buyerRecentSearch) || [];
 
   // MARK:- Variables
   const {
@@ -53,7 +45,7 @@ const Home = (): JSX.Element => {
   const company = GetDefaultCompany();
   const addresses = getAddress.data?.data.addresses || [];
   const featured: string[] = bannerData?.web || [];
-  const loadingHomePage = buyerHomePageData.pending || false;
+  const loadingHomePage = buyerHomePageData.pending === null ? true : false;
 
   // MARK:- State
   const [companyId, setCompanyId] = useState('');
@@ -115,19 +107,18 @@ const Home = (): JSX.Element => {
 
   const generatedProps: HomeGeneratedProps = {
     loading,
-    results,
-    recent,
     featured,
     addresses,
     addressOptions,
     creditState,
     creditBalance,
+    changeDefaultAddress,
+    // Carousel Data
     recentlyAdded: recentListing,
     categories,
     favourites: favouriteListing,
     favouriteSellers,
     sellers,
-    changeDefaultAddress,
     loadingHomePage,
   };
 

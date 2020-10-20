@@ -1,9 +1,6 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
-import PaginateList from 'components/base/PaginateList';
-import Select from 'components/base/Select';
 import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -13,17 +10,12 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
-import LoadingView from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
-import Search from 'components/module/Search';
 import SearchAddress from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { nullFormat } from 'numeral';
-import { isEmpty } from 'ramda';
-import reverse from 'ramda/es/reverse';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -99,8 +91,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
     loading,
-    results,
-    recent,
     creditState,
     featured,
     addresses,
@@ -113,6 +103,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
   } = props;
+
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
   const [changeAddress, setChangeAddress] = useState({
@@ -148,9 +139,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
-  const showRecentSearch = searchTerm.length === 0;
-  const data = showRecentSearch ? reverse(recent) : results;
-
   const cbRef = useCallback(
     (node: any) => {
       if (node !== null) {
@@ -166,27 +154,12 @@ const HomeView = (props: HomeGeneratedProps) => {
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <SearchAddress />
-          {/* <div className="buying-for">
-            <Select
-              options={addressOptions}
-              label="Buying For"
-              size="small"
-              onChange={(e) => {
-                setAddressModalChange(true);
-                setChangeAddress({
-                  ...changeAddress,
-                  newChangeAddress: e.value,
-                });
-              }}
-              value={currentAddressSelected}
-            />
-          </div> */}
         </Col>
       </div>
 
       {/* Main Content */}
       {loadingHomePage ? (
-        <LoadingView />
+        <Loading />
       ) : (
         <>
           <SwiperContainer>
