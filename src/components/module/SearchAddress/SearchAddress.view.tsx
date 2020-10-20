@@ -95,6 +95,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       )
     );
     await dispatch(cartActions.clear());
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -107,8 +108,8 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     setCompanyId(companyAdressDefault?.id || '');
   }, [companyAdressDefault]);
 
-  const confirmChangeAddress = () => {
-    changeDefaultAddress(changeAddress.newChangeAddress);
+  const confirmChangeAddress =  () => {
+     changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
   useEffect(() => {
