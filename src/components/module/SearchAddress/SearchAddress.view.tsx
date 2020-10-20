@@ -113,13 +113,17 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   useEffect(() => {
     if (addressOptions && addresses && !currentAddressSelected) {
-      const filterAddressDefault = addresses.filter((i) => i.default);
-      const filteredArray = addressOptions.find(
-        (a) => a.value === filterAddressDefault[0].id
-      );
-      setCurrentAddressSelected(filteredArray);
+      setDefaultAddress();
     }
-  }, [addressOptions, addresses, currentAddressSelected]);
+  }, [addressOptions, addresses]);
+
+  const setDefaultAddress = () => {
+    const filterAddressDefault = addresses.filter((i) => i.default);
+    const filteredArray = addressOptions.find(
+      (a) => a.value === filterAddressDefault[0].id
+    );
+    setCurrentAddressSelected(filteredArray);
+  };
 
   useEffect(() => {
     setChangeAddress({
@@ -204,9 +208,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         }}
         actionText="Okay"
         onClickClose={() => {
-          console.log(currentAddressSelected);
-          setCurrentAddressSelected(currentAddressSelected);
-
+          setDefaultAddress();
           setAddressModalChange(false);
         }}
       />
