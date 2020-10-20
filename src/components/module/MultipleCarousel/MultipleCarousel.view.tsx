@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
 
 import { MultipleCarouselProps } from './MultipleCarousel.props';
-import { ArrowArea, Container } from './MultipleCarousel.style';
+import { ArrowArea, Container, EmptyContainer } from './MultipleCarousel.style';
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
@@ -23,6 +24,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
     link,
     breakpoints,
     onSlideChange,
+    emptyText,
   } = props;
 
   const showThreeItems = useMediaQuery({
@@ -49,20 +51,35 @@ function MultipleCarousel<D extends { id: string }, CP>(
     return 4;
   }
 
-  if (data.length === 0) {
+  if (!data) {
     return <></>;
   }
 
+  if (data.length === 0 && emptyText) {
+    return (
+      <EmptyContainer>
+        <Typography variant="title5">{emptyText}</Typography>
+      </EmptyContainer>
+    );
+  }
+
   const arrowColor =
-    theme.appType === 'seller' ? theme.brand.primary : theme.grey.noshade;
+    theme.appType === 'seller' ? theme.brand.primary : theme.grey.shade9;
+
+  const showArrow = data.length > slidesPerView();
 
   return (
     <Container>
-      <ArrowArea left>
-        <Touchable onPress={() => ref.slideTo(currentNdx - slidesPerView())}>
-          <CarouselChevronLeft width={18} height={18} fill={arrowColor} />
-        </Touchable>
-      </ArrowArea>
+      {showArrow && (
+        <ArrowArea left>
+          <Touchable
+            onPress={() => ref.slideTo(currentNdx - slidesPerView())}
+            circle
+          >
+            <CarouselChevronLeft width={18} height={18} fill={arrowColor} />
+          </Touchable>
+        </ArrowArea>
+      )}
 
       <Swiper
         onSwiper={(swiper) => {
@@ -70,7 +87,6 @@ function MultipleCarousel<D extends { id: string }, CP>(
           swiper.update();
         }}
         slidesPerView={1}
-        spaceBetween={0}
         style={{ width: '100%' }}
         onSlideChange={(swiper) => {
           setCurrentNdx(swiper.activeIndex);
@@ -84,13 +100,13 @@ function MultipleCarousel<D extends { id: string }, CP>(
         breakpoints={
           breakpoints || {
             1480: {
-              slidesPerView: 4,
+              slidesPerView: 4.35,
             },
             1200: {
-              slidesPerView: 3,
+              slidesPerView: 3.35,
             },
             650: {
-              slidesPerView: 2,
+              slidesPerView: 2.35,
             },
           }
         }
@@ -106,11 +122,16 @@ function MultipleCarousel<D extends { id: string }, CP>(
         })}
       </Swiper>
 
-      <ArrowArea right>
-        <Touchable onPress={() => ref.slideTo(currentNdx + slidesPerView())}>
-          <CarouselChevronRight width={18} height={18} fill={arrowColor} />
-        </Touchable>
-      </ArrowArea>
+      {showArrow && (
+        <ArrowArea right>
+          <Touchable
+            onPress={() => ref.slideTo(currentNdx + slidesPerView())}
+            circle
+          >
+            <CarouselChevronRight width={18} height={18} fill={arrowColor} />
+          </Touchable>
+        </ArrowArea>
+      )}
     </Container>
   );
 }
