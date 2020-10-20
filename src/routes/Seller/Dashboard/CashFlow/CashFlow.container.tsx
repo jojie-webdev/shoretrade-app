@@ -81,8 +81,6 @@ const CashFlow = (): JSX.Element => {
 
       if (dateFrom.includes('Invalid')) return;
 
-      console.log(dateFrom);
-      console.log(dateTo);
       setLoading(true);
       try {
         const resp = await getSellerGraphDashboard(
