@@ -50,9 +50,9 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState, loading } = props;
   const theme = useTheme();
   const history = useHistory();
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (

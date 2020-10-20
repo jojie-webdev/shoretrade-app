@@ -50,7 +50,7 @@ export const Container = styled.div`
     margin: auto;
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
+    padding-top: 24px;
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
     }
