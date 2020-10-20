@@ -19,18 +19,17 @@ export type SellerResults = {
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
+  // Credit Data
   loading: boolean;
-  addresses: GetAddressesResponseItem[];
-  addressOptions: { label: string; value: string }[];
   creditState: CreditState;
   creditBalance: string;
+  // Carousel Data
   featured: string[];
   recentlyAdded: GetBuyerHomepageResponseListingItem[];
   categories: CategoryResults[];
   favourites: GetBuyerHomepageResponseListingItem[];
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
-  changeDefaultAddress: (id: string) => void;
   loadingHomePage: boolean;
 }
 

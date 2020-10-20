@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { Octopus, InfoFilled, ChevronRight } from 'components/base/SVG';
+import { InfoFilled, ChevronRight } from 'components/base/SVG';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
-import ConfirmationModal from 'components/module/ConfirmationModal';
-import EmptyState from 'components/module/EmptyState';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
@@ -93,9 +91,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     loading,
     creditState,
     featured,
-    addresses,
-    addressOptions,
-    changeDefaultAddress,
     recentlyAdded,
     categories,
     favourites,
@@ -104,13 +99,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     loadingHomePage,
   } = props;
 
-  const [addressModalChange, setAddressModalChange] = useState(false);
-  const [currentAddressSelected, setCurrentAddressSelected] = useState();
-  const [changeAddress, setChangeAddress] = useState({
-    currentAddress: '',
-    newChangeAddress: '',
-  });
-
   const hideCarouselArrowArea = useMediaQuery({
     query: `(max-width: 565px)`,
   });
@@ -118,27 +106,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const mediumArrowWidth = useMediaQuery({
     query: BREAKPOINTS['md'],
   });
-
-  useEffect(() => {
-    if (addressOptions) {
-      const filterAddressDefault = addresses.filter((i) => i.default);
-      const filteredArray = addressOptions.find(
-        (a) => a.value === filterAddressDefault[0].id
-      );
-      setCurrentAddressSelected(filteredArray);
-    }
-  }, [addressOptions, addresses]);
-
-  useEffect(() => {
-    setChangeAddress({
-      ...changeAddress,
-      currentAddress: currentAddressSelected || '',
-    });
-  }, [currentAddressSelected]);
-
-  const confirmChangeAddress = () => {
-    changeDefaultAddress(changeAddress.newChangeAddress);
-  };
 
   const cbRef = useCallback(
     (node: any) => {
@@ -278,21 +245,6 @@ const HomeView = (props: HomeGeneratedProps) => {
           </div>
         </>
       )}
-
-      {/* Modals */}
-      <ConfirmationModal
-        isOpen={addressModalChange}
-        title="Change your Buying Address?"
-        description="Are you sure you want to change your buying address? This will reset your current cart."
-        action={() => {
-          confirmChangeAddress();
-          setAddressModalChange(false);
-        }}
-        actionText="Okay"
-        onClickClose={() => {
-          setAddressModalChange(false);
-        }}
-      />
     </ViewContainer>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { updateAddressActions, cartActions } from 'store/actions';
-import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { PlaceData } from 'types/PlaceData';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -41,7 +41,6 @@ const Home = (): JSX.Element => {
     bannerData,
   } = (buyerHomePageData.data?.data.data || {}) as HomeData;
 
-  const addressOptions = GetAddressOptions();
   const company = GetDefaultCompany();
   const addresses = getAddress.data?.data.addresses || [];
   const featured: string[] = bannerData?.web || [];
@@ -97,22 +96,19 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     if (company) {
       setCurrentCompany(company);
-      // setLoading(false);
     }
-  });
+  }, [company]);
 
   // MARK:- Bottom Variables
   const creditBalance = currentCompany?.credit || '0';
   const creditState: CreditState = getCreditState();
 
   const generatedProps: HomeGeneratedProps = {
+    // Credit Data
     loading,
     featured,
-    addresses,
-    addressOptions,
     creditState,
     creditBalance,
-    changeDefaultAddress,
     // Carousel Data
     recentlyAdded: recentListing,
     categories,
