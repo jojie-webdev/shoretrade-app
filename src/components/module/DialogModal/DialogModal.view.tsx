@@ -13,7 +13,7 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
   const { children, title, overline, ...modalProps } = props;
 
   return (
-    <Modal {...modalProps} style={{ maxWidth: '438px' }}>
+    <Modal {...modalProps}>
       <Content>
         <Typography variant="title4" color="noshade" className="title">
           {title}

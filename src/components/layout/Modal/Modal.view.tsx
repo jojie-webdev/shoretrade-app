@@ -2,7 +2,6 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import { Close } from 'components/base/SVG';
-import { Row, Col } from 'react-grid-system';
 
 import { ModalProps } from './Modal.props';
 import { Backdrop, ModalContainer, ExitButton } from './Modal.style';

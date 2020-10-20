@@ -4,9 +4,7 @@ export const CategoriesContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
-  padding: 0px 6px 0px 10px;
+  padding: 0 16px;
 
   .cards {
     display: flex;
