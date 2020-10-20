@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
@@ -11,10 +11,12 @@ import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
+import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { GetListingResponseItem } from 'types/store/GetListingState';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
@@ -29,7 +31,6 @@ import {
   BoxRadioContainer,
   ButtonContainer,
 } from './ProductDetails.style';
-
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
     currentListing,
@@ -54,12 +55,23 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     setPressedBoxRadio,
     onAddToCart,
   } = props;
+  const [images, setImages] = useState<string[]>([]);
+  const [newCurrentListing, setNewCurrentListing] = useState<
+    GetListingResponseItem
+  >();
 
   useEffect(() => {
     selectAddress(listingId);
     // onLoad(listingId);
+    setNewCurrentListing(currentListing);
     setFavorite(currentListing?.isFavourite);
   }, [currentListing]);
+
+  useEffect(() => {
+    if (newCurrentListing !== undefined) {
+      setImages(newCurrentListing?.images);
+    }
+  }, [newCurrentListing, newCurrentListing?.images]);
 
   const hideCarouselArrowArea = useMediaQuery({
     query: `(max-width: 565px)`,
@@ -72,27 +84,32 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
   });
-
   return (
     <Container>
-      {currentListing !== undefined ? (
+      {newCurrentListing !== undefined ? (
         <>
           <BannerContainer>
-            <Carousel
-              id={'product-details-carousel'}
-              images={currentListing.images}
-              loop
-              autoplay
-              hideArrowArea={hideCarouselArrowArea}
-              arrowWidth={mediumArrowWidth ? 75 : undefined}
-              // height="295px"
-              aspectRatio="9:4"
-            />
+            {images.includes(placeholderImage) ? (
+              <img className="placeholder" src={images[0]} alt="Product" />
+            ) : (
+              <Carousel
+                id={'product-details-carousel'}
+                images={images}
+                loop
+                autoplay
+                hideArrowArea={hideCarouselArrowArea}
+                arrowWidth={mediumArrowWidth ? 75 : undefined}
+                // height="295px"
+                aspectRatio="9:4"
+              />
+            )}
           </BannerContainer>
           <div className="wrapper">
-            <Typography variant="label" className="description">
-              {currentListing.description}
-            </Typography>
+            {newCurrentListing.description ? (
+              <Typography variant="label" className="description">
+                {newCurrentListing.description}
+              </Typography>
+            ) : null}
             <DetailsContainer nogutter>
               <Col xs={12} sm={12} md={12} lg={6}>
                 <ProductDetailsCard1View
@@ -137,7 +154,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       />
                     </RemainingWrapper>
 
-                    {!isEmpty(boxRadios) && (
+                    {!isEmpty(boxRadios) ? (
                       <BoxContainer>
                         <Typography
                           variant="overline"
@@ -160,6 +177,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                           </BoxRadioContainer>
                         ))}
                       </BoxContainer>
+                    ) : (
+                      <Loading />
                     )}
                   </div>
                   <ButtonContainer>

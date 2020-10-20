@@ -97,7 +97,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           loop={loop}
           initialSlide={0}
           autoplay={
-            autoplay
+            images.length !== 0 && autoplay
               ? {
                   delay: 5000,
                 }

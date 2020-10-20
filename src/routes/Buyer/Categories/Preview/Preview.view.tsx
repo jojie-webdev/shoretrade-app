@@ -55,7 +55,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
       </Row>
 
       {results && results.length > 0 ? (
-        <Row>
+        <Row className="results-row">
           {results.map((product) => {
             return (
               <Col
