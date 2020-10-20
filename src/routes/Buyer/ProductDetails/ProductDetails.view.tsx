@@ -11,6 +11,7 @@ import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerRating from 'components/module/ProductSellerRating';
+import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
@@ -88,9 +89,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       {newCurrentListing !== undefined ? (
         <>
           <BannerContainer>
-            {images.includes(
-              'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/No-Image-Placeholder-(blue).png'
-            ) ? (
+            {images.includes(placeholderImage) ? (
               <img className="placeholder" src={images[0]} alt="Product" />
             ) : (
               <Carousel
