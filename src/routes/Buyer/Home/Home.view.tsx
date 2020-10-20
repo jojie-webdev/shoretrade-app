@@ -135,6 +135,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       currentAddress: currentAddressSelected || '',
     });
   }, [currentAddressSelected]);
+
   const confirmChangeAddress = () => {
     changeDefaultAddress(changeAddress.newChangeAddress);
   };
@@ -190,6 +191,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={favouritesToPreviewProps}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}
+                  emptyText="No Favourite Products"
                 />
               </FavouritesContainer>
             </ViewCol>
@@ -250,6 +252,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={favouriteSellersToSellerCardProps}
                   Component={SellerCard}
                   link={BUYER_ROUTES.SELLER_DETAILS}
+                  emptyText="No Favourite Sellers"
                 />
               </SellerContainer>
             </ViewCol>

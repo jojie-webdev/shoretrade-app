@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
 
 import { MultipleCarouselProps } from './MultipleCarousel.props';
-import { ArrowArea, Container } from './MultipleCarousel.style';
+import { ArrowArea, Container, EmptyContainer } from './MultipleCarousel.style';
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
@@ -23,6 +24,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
     link,
     breakpoints,
     onSlideChange,
+    emptyText,
   } = props;
 
   const showThreeItems = useMediaQuery({
@@ -53,8 +55,12 @@ function MultipleCarousel<D extends { id: string }, CP>(
     return <></>;
   }
 
-  if (data.length === 0) {
-    return <></>;
+  if (data.length === 0 && emptyText) {
+    return (
+      <EmptyContainer>
+        <Typography variant="title5">{emptyText}</Typography>
+      </EmptyContainer>
+    );
   }
 
   const arrowColor =
