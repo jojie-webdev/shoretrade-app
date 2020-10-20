@@ -190,6 +190,8 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     const data = searchTerm.length === 0 ? reverse(recent) : results;
     if (data.length > 0) {
       setData(data);
+    } else if (data.length <= 0 && !loading) {
+      setData(data);
     }
   }, [results]);
 
@@ -261,13 +263,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(newData) && searchTerm.length > 1 ? (
+        {!isEmpty(newData) && searchTerm.length > 2 ? (
           <Typography variant="overline" color="shade6">
             {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
           </Typography>
         ) : null}
 
-        {isEmpty(newData) && searchTerm.length > 1 && !loading ? (
+        {isEmpty(newData) && searchTerm.length > 0 && !loading ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
@@ -278,7 +280,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={searchTerm.length > 1 ? newData || [] : []}
+            list={searchTerm.length > 2 ? newData || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
