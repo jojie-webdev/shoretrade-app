@@ -239,11 +239,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           label="Buying For"
           size="small"
           onChange={(e) => {
-            setAddressModalChange(true);
-            setChangeAddress({
-              ...changeAddress,
-              newChangeAddress: e.value,
-            });
+            if (e.value !== currentAddressSelected?.value) {
+              setAddressModalChange(true);
+              setChangeAddress({
+                ...changeAddress,
+                newChangeAddress: e.value,
+              });
+            }
           }}
           value={currentAddressSelected}
         />
