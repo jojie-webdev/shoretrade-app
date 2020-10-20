@@ -32,3 +32,12 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
     display: none;
   }
 `;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 64px 0;
+`;

@@ -12,4 +12,5 @@ export interface MultipleCarouselProps<D, CP> {
     [ratio: string]: SwiperOptions;
     [width: number]: SwiperOptions;
   };
+  emptyText?: string;
 }

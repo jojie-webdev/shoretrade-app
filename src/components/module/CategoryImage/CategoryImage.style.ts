@@ -15,8 +15,8 @@ export const Container = styled.div<{
 `;
 
 export const Circle = styled.div`
-  height: 64px;
-  width: 64px;
+  height: 75px;
+  width: 75px;
   border-radius: 32px;
   background-color: ${({ theme }) => theme.grey.shade9};
   display: flex;

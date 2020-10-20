@@ -30,7 +30,6 @@ export const Parent = styled.div<{
 
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375]}px`};
-    margin-top: ${(props) => (props.addMargin ? '120px' : '0px')};
   }
 
   @media (min-width: 768px) {

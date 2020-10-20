@@ -34,14 +34,21 @@ import {
   placeDataToUpdateAddressMeta,
 } from './SearchAddress.transfrom';
 
+interface addressSelectionOption {
+  label: string;
+  value: string;
+}
+
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const dispatch = useDispatch();
   // const { value, containerStyle, resetValue, ...inputProps } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
-  const [currentAddressSelected, setCurrentAddressSelected] = useState();
+  const [currentAddressSelected, setCurrentAddressSelected] = useState<
+    addressSelectionOption
+  >();
   const [changeAddress, setChangeAddress] = useState({
-    currentAddress: '',
+    currentAddress: currentAddressSelected,
     newChangeAddress: '',
   });
   const history = useHistory();
@@ -106,18 +113,22 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   useEffect(() => {
     if (addressOptions && addresses && !currentAddressSelected) {
-      const filterAddressDefault = addresses.filter((i) => i.default);
-      const filteredArray = addressOptions.find(
-        (a) => a.value === filterAddressDefault[0].id
-      );
-      setCurrentAddressSelected(filteredArray);
+      setDefaultAddress();
     }
-  }, [addressOptions, addresses, currentAddressSelected]);
+  }, [addressOptions, addresses]);
+
+  const setDefaultAddress = () => {
+    const filterAddressDefault = addresses.filter((i) => i.default);
+    const filteredArray = addressOptions.find(
+      (a) => a.value === filterAddressDefault[0].id
+    );
+    setCurrentAddressSelected(filteredArray);
+  };
 
   useEffect(() => {
     setChangeAddress({
       ...changeAddress,
-      currentAddress: currentAddressSelected || '',
+      currentAddress: currentAddressSelected,
     });
   }, [currentAddressSelected]);
   //#endregion
@@ -197,6 +208,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         }}
         actionText="Okay"
         onClickClose={() => {
+          setDefaultAddress();
           setAddressModalChange(false);
         }}
       />
@@ -227,20 +239,24 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           label="Buying For"
           size="small"
           onChange={(e) => {
-            setAddressModalChange(true);
-            setChangeAddress({
-              ...changeAddress,
-              newChangeAddress: e.value,
-            });
+            if (e.value !== currentAddressSelected?.value) {
+              setAddressModalChange(true);
+              setChangeAddress({
+                ...changeAddress,
+                newChangeAddress: e.value,
+              });
+            }
           }}
           value={currentAddressSelected}
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(data) && (
+        {!isEmpty(data) && searchTerm.length > 2 ? (
           <Typography variant="overline" color="shade6">
             {showRecentSearch ? 'Recent Searches' : 'Results'}
           </Typography>
+        ) : (
+          ''
         )}
         {isEmpty(data) && searchTerm.length > 0 && !loading ? (
           <>
@@ -253,7 +269,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={data || []}
+            list={searchTerm.length > 2 ? data || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
