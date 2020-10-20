@@ -154,8 +154,6 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
 
-  const [testSearchStore, setTestSearchStore] = useState();
-
   const search = () => {
     dispatch(
       searchAndCountProductTypeActions.request({
