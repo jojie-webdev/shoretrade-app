@@ -83,7 +83,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
   });
-
   return (
     <Container>
       {newCurrentListing !== undefined ? (
@@ -156,7 +155,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       />
                     </RemainingWrapper>
 
-                    {!isEmpty(boxRadios) && (
+                    {!isEmpty(boxRadios) ? (
                       <BoxContainer>
                         <Typography
                           variant="overline"
@@ -179,6 +178,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                           </BoxRadioContainer>
                         ))}
                       </BoxContainer>
+                    ) : (
+                      <Loading />
                     )}
                   </div>
                   <ButtonContainer>
