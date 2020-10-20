@@ -5,6 +5,7 @@ import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import { GetSellerOrdersMeta } from 'types/store/GetSellerOrdersState';
 import { OrderMeta } from 'types/store/OrderState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
+import { SendMessageMeta } from 'types/store/SendMessageState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const ORDER_URL = `${BASE_URL}/order`;
@@ -67,5 +68,16 @@ export const getBuyerOrders = (data: GetSellerOrdersMeta, token: string) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const sendMessage = (data: SendMessageMeta, token: string) => {
+  return axios({
+    method: 'post',
+    url: `${ORDER_URL}/aquafuture-messages/${data.buyerId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: omit(['buyerId'], data),
   });
 };

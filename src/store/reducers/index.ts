@@ -51,6 +51,7 @@ import resendVerification from './resendVerification';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
+import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -122,6 +123,7 @@ export default (routeHistory: History) =>
         deleteCard,
         endListing,
         getTransactionHistory,
+        sendMessage,
       }).sort()
     )
   );

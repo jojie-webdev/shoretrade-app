@@ -14,6 +14,7 @@ const TextArea = (props: TextAreaProps): JSX.Element => {
     onChange,
     onChangeText,
     autoHeight,
+    height,
     ...textAreaProps
   } = props;
 
@@ -36,7 +37,7 @@ const TextArea = (props: TextAreaProps): JSX.Element => {
         height={
           autoHeight
             ? ((value || '').split('\n').length - 1) * 24 + 48
-            : undefined
+            : props.height
         }
       ></Field>
     </Container>
