@@ -325,6 +325,15 @@ export const CreditBalanceContainer = styled.div`
     margin-top: 4px;
   }
 
+  .balance-arrow {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-left: 11px;
+    }
+  }
+
   cursor: pointer;
 `;
 
