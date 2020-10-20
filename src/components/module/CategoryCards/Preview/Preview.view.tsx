@@ -26,13 +26,14 @@ const Preview = (props: PreviewProps): JSX.Element => {
   const { cardContainerStyle, cardContainerClass } = props;
   const theme = useTheme();
   return (
-    <CardContainer>
+    <CardContainer img={props.images[0]}>
       <div
         className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}
       >
         <div className="imgContainer">
-          <img src={props.images[0]} alt="Product" style={{ maxHeight: 200 }} />
+          <div className="img" style={{ maxHeight: 200 }} />
+
           <LocationContainer>
             <Badge>
               <div style={{ flexDirection: 'row', display: 'flex' }}>
@@ -78,7 +79,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </PriceContainer>
             </Row>
           </HeaderContainer>
-          <Row nogutter>
+          <div style={{ display: 'flex' }}>
             <StatusContainer>
               {props.state?.map((item) => {
                 return (
@@ -87,14 +88,22 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     fontColor={theme.grey.shade9}
                     badgeColor={theme.grey.shade2}
                   >
-                    <BadgeText variant="caption" weight="bold">
+                    <BadgeText
+                      variant="caption"
+                      weight="bold"
+                      style={{
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                      }}
+                    >
                       {item}
                     </BadgeText>
                   </Badge>
                 );
               })}
             </StatusContainer>
-          </Row>
+          </div>
           <BodyContainer>
             <Row nogutter style={{ height: 24, alignItems: 'center' }}>
               <ResultText
