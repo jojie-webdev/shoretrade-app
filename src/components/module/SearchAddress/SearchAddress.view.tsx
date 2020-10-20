@@ -34,14 +34,21 @@ import {
   placeDataToUpdateAddressMeta,
 } from './SearchAddress.transfrom';
 
+interface addressSelectionOption {
+  label: string;
+  value: string;
+}
+
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const dispatch = useDispatch();
   // const { value, containerStyle, resetValue, ...inputProps } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
-  const [currentAddressSelected, setCurrentAddressSelected] = useState();
+  const [currentAddressSelected, setCurrentAddressSelected] = useState<
+    addressSelectionOption
+  >();
   const [changeAddress, setChangeAddress] = useState({
-    currentAddress: '',
+    currentAddress: currentAddressSelected,
     newChangeAddress: '',
   });
   const history = useHistory();
@@ -117,7 +124,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   useEffect(() => {
     setChangeAddress({
       ...changeAddress,
-      currentAddress: currentAddressSelected || '',
+      currentAddress: currentAddressSelected,
     });
   }, [currentAddressSelected]);
   //#endregion
@@ -197,6 +204,9 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         }}
         actionText="Okay"
         onClickClose={() => {
+          console.log(currentAddressSelected);
+          setCurrentAddressSelected(currentAddressSelected);
+
           setAddressModalChange(false);
         }}
       />
