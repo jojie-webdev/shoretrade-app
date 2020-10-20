@@ -4,4 +4,5 @@ export interface TextAreaProps
   value?: string;
   label?: string;
   autoHeight?: boolean;
+  height?: number;
 }
