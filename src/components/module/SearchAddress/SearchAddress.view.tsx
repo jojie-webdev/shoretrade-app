@@ -138,7 +138,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-
+  const [newData, setData] = useState();
   const results =
     useSelector(
       (state: Store) => state.searchAndCountProductType.data?.data.types
@@ -180,7 +180,11 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     }
   };
   const showRecentSearch = searchTerm.length === 0;
-  const data = showRecentSearch ? reverse(recent) : results;
+
+  useEffect(() => {
+    const data = showRecentSearch ? reverse(recent) : results;
+    setData(data);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (timer) {
@@ -190,12 +194,12 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
     const timerId = setTimeout(() => {
       search();
-    }, 800);
+    }, 200);
 
     setTimer(timerId);
   }, [searchTerm]);
   //#endregion
-
+  console.log(newData);
   return (
     <Container>
       <ConfirmationModal
@@ -251,14 +255,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(data) && searchTerm.length > 2 ? (
+        {!isEmpty(newData) && searchTerm.length > 2 ? (
           <Typography variant="overline" color="shade6">
             {showRecentSearch ? 'Recent Searches' : 'Results'}
           </Typography>
-        ) : (
-          ''
-        )}
-        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+        ) : null}
+
+        {isEmpty(newData) && searchTerm.length > 2 && !loading ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
@@ -269,7 +272,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={searchTerm.length > 2 ? data || [] : []}
+            list={searchTerm.length > 2 ? newData || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
