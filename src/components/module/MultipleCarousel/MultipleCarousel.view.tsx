@@ -87,8 +87,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
           swiper.update();
         }}
         slidesPerView={1.3}
-        spaceBetween={16}
-        style={{ width: '100%' }}
+        spaceBetween={32}
+        style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
           setCurrentNdx(swiper.activeIndex);
 
@@ -120,7 +120,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
       >
         {data.map((d) => {
           return (
-            <SwiperSlide key={d.id} style={{ width: '265px' }}>
+            <SwiperSlide key={d.id}>
               <Link to={link(d.id)}>
                 <Component {...transform(d)} />
               </Link>
