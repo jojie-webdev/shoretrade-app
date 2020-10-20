@@ -39,6 +39,11 @@ interface addressSelectionOption {
   value: string;
 }
 
+interface searchTest {
+  count: string;
+  label: string;
+  value: string;
+}
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -108,8 +113,8 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     setCompanyId(companyAdressDefault?.id || '');
   }, [companyAdressDefault]);
 
-  const confirmChangeAddress =  () => {
-     changeDefaultAddress(changeAddress.newChangeAddress);
+  const confirmChangeAddress = () => {
+    changeDefaultAddress(changeAddress.newChangeAddress);
   };
 
   useEffect(() => {
@@ -139,7 +144,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-  const [newData, setData] = useState();
+  const [newData, setData] = useState<searchTest[]>();
   const results =
     useSelector(
       (state: Store) => state.searchAndCountProductType.data?.data.types
@@ -148,6 +153,8 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
+
+  const [testSearchStore, setTestSearchStore] = useState();
 
   const search = () => {
     dispatch(
@@ -180,12 +187,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       );
     }
   };
-  const showRecentSearch = searchTerm.length === 0;
 
   useEffect(() => {
-    const data = showRecentSearch ? reverse(recent) : results;
-    setData(data);
-  }, [searchTerm]);
+    const data = searchTerm.length === 0 ? reverse(recent) : results;
+    if (data.length > 0) {
+      setData(data);
+    }
+  }, [results]);
 
   useEffect(() => {
     if (timer) {
@@ -195,7 +203,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
     const timerId = setTimeout(() => {
       search();
-    }, 200);
+    }, 800);
 
     setTimer(timerId);
   }, [searchTerm]);
@@ -255,13 +263,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(newData) && searchTerm.length > 2 ? (
+        {!isEmpty(newData) && searchTerm.length > 1 ? (
           <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : 'Results'}
+            {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
           </Typography>
         ) : null}
 
-        {isEmpty(newData) && searchTerm.length > 0 && !loading ? (
+        {isEmpty(newData) && searchTerm.length > 1 && !loading ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
@@ -272,7 +280,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={searchTerm.length > 2 ? newData || [] : []}
+            list={searchTerm.length > 1 ? newData || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
