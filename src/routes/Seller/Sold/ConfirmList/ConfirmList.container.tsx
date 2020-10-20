@@ -79,6 +79,9 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
     );
   };
 
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
   const sendMessage = (message: string) => {
     dispatch(
       sendMessageActions.request({
@@ -97,6 +100,7 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
     isPending,
     buyer,
     sendMessage,
+    isSendingMessage,
   };
   return <ConfirmListView {...props} {...generatedProps} />;
 };

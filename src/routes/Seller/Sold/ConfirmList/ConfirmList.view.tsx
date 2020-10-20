@@ -140,6 +140,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
     isPending,
     buyer,
     sendMessage,
+    isSendingMessage,
   } = props;
   const history = useHistory();
 
@@ -150,7 +151,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
   return (
     <Wrapper>
       <MessageModal
-        isOpen={showMessageModal}
+        isOpen={isSendingMessage || showMessageModal}
         recipient={buyer}
         onSend={(message) => {
           sendMessage(message);
@@ -159,6 +160,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
         onClickClose={() => {
           setShowMessageModal(false);
         }}
+        loading={isSendingMessage}
       />
       <InnerRouteHeader
         title={title}

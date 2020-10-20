@@ -29,6 +29,7 @@ export interface ConfirmListGeneratedProps {
   isPending: boolean;
   buyer: string;
   sendMessage: (message: string) => void;
+  isSendingMessage: boolean;
 }
 
 export interface ConfirmListProps

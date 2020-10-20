@@ -4,16 +4,12 @@ import Button from 'components/base/Button';
 import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
-import { useTheme } from 'utils/Theme';
 
 import { MessageModalProps } from './MessageModal.props';
 import { Content } from './MessageModal.style';
 
 const MessageModal = (props: MessageModalProps): JSX.Element => {
-  const theme = useTheme();
-  const { children, recipient, onSend, ...modalProps } = props;
-
-  const isSeller = theme.appType === 'seller';
+  const { children, recipient, onSend, loading, ...modalProps } = props;
 
   const [message, setMessage] = useState('');
 
@@ -26,20 +22,12 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
   return (
     <Modal {...modalProps} style={{ maxWidth: '438px' }}>
       <Content>
-        <Typography
-          variant="title4"
-          color={isSeller ? 'noshade' : 'shade8'}
-          className="title"
-        >
+        <Typography variant="title4" color={'noshade'} className="title">
           Message: {recipient}
         </Typography>
 
         <div className="content-container">
-          <Typography
-            variant="body"
-            color={isSeller ? 'shade5' : 'shade7'}
-            weight="Medium"
-          >
+          <Typography variant="body" color={'shade5'} weight="Medium">
             Consider messaging the buyer directly to update them on the progress
             of an order. If you think you&apos;ll be unable to fulfill all the
             orders, please contact Shoretrade for assistance instead.
@@ -64,6 +52,7 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
             style={{ flex: 1, marginLeft: 8 }}
             variant="primary"
             text={'Send'}
+            loading={loading}
             onClick={() => {
               if (message.length > 0) {
                 onSend(message);
