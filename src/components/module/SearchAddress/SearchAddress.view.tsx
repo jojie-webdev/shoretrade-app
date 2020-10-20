@@ -188,7 +188,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   useEffect(() => {
     const data = searchTerm.length === 0 ? reverse(recent) : results;
-    if (data.length > 0) {
+    if (data.length > 0 && !loading) {
       setData(data);
     } else if (data.length <= 0 && !loading) {
       setData(data);
@@ -263,7 +263,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(newData) && searchTerm.length > 2 ? (
+        {!isEmpty(newData) && searchTerm.length >= 2 ? (
           <Typography variant="overline" color="shade6">
             {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
           </Typography>
@@ -280,7 +280,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={searchTerm.length > 2 ? newData || [] : []}
+            list={searchTerm.length >= 2 ? newData || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
