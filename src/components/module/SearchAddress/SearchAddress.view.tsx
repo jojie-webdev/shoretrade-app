@@ -237,10 +237,12 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         />
       </AddressContainer>
       <div className="wrapper">
-        {!isEmpty(data) && (
+        {!isEmpty(data) && searchTerm.length > 2 ? (
           <Typography variant="overline" color="shade6">
             {showRecentSearch ? 'Recent Searches' : 'Results'}
           </Typography>
+        ) : (
+          ''
         )}
         {isEmpty(data) && searchTerm.length > 0 && !loading ? (
           <>
@@ -253,7 +255,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </>
         ) : (
           <PaginateList
-            list={data || []}
+            list={searchTerm.length > 2 ? data || [] : []}
             labelPath={['label']}
             maxItemPerPage={6}
             // resultCount="3"
