@@ -71,7 +71,7 @@ export const AddressContainer = styled.div`
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   width: 100%;
-  padding: 13px 16px;
+  padding: 12.5px 16px;
 
   display: flex;
   justify-content: space-between;
