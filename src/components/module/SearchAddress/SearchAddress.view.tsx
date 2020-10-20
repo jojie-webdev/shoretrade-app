@@ -199,7 +199,6 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     setTimer(timerId);
   }, [searchTerm]);
   //#endregion
-  console.log(newData);
   return (
     <Container>
       <ConfirmationModal
