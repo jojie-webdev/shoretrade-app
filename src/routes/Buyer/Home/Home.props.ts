@@ -41,3 +41,28 @@ export interface HomeGeneratedProps {
   sellers: SellerResults[];
   changeDefaultAddress: (id: string) => void;
 }
+
+export interface HomeData {
+  bannerData: {
+    app: string[];
+    web: string[];
+  };
+  categories: {
+    id: string;
+    name: string;
+    sortIndex: number;
+    thumbnail: string;
+  }[];
+  favouriteListing: GetBuyerHomepageResponseListingItem[];
+  favouriteSellers: {
+    companyImage: string;
+    companyName: string;
+    id: string;
+  }[];
+  recentListing: GetBuyerHomepageResponseListingItem[];
+  sellers: {
+    companyImage: string;
+    companyName: string;
+    id: string;
+  }[];
+}
