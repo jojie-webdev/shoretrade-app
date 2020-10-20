@@ -62,7 +62,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                 xxl={3}
                 xl={4}
                 lg={4}
-                md={4}
+                md={6}
                 sm={6}
                 key={product.id}
                 className="market-item"
