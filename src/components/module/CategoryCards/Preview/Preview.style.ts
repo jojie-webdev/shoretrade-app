@@ -2,21 +2,11 @@ import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const CardContainer = styled.div`
-  /* width: 267.5px; */
-  width: 100%;
+const imgUrl = (url: string) => `"${url}"`;
 
-  img {
-    display: block;
-    border: 0;
-    width: 100%;
-    height: 205px;
-    border-radius: 4px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    object-fit: contain;
-    background: ${(props) => props.theme.grey.noshade};
-  }
+export const CardContainer = styled.div<{ img: string }>`
+  /* width: 265px; */
+  width: 100%;
 
   .imgContainer {
     position: relative;
@@ -31,7 +21,7 @@ export const CardContainer = styled.div`
     border-radius: 4px;
     padding-bottom: 16px;
     width: 100%;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     transition: transform 0.2s;
   }
 
@@ -53,6 +43,19 @@ export const CardContainer = styled.div`
 
   .card-content p {
     font-size: 80%;
+  }
+
+  .img {
+    background-image: url(${(props) => imgUrl(props.img)});
+    background-size: cover;
+    background-position: 50% 50%;
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 200px;
+    border-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 `;
 
