@@ -13,6 +13,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
+import LoadingView from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import Search from 'components/module/Search';
 import SearchAddress from 'components/module/SearchAddress';
@@ -89,40 +90,6 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
         </span>
       </SmallAlertContainer>
-      // <CreditContainer
-      //   onClick={() => history.push('/buyer/account/bank-details')}
-      //   style={{ cursor: 'pointer' }}
-      // >
-      //   <InfoContainer>
-      //     <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
-      //   </InfoContainer>
-      //   <Text variant="label" color="shade8">
-      //     {creditState === 'empty' ? (
-      //       <>
-      //         You need to add credit to your account in order to make purchases.
-      //         <Bold variant="label" weight="bold">
-      //           {' '}
-      //           Click here
-      //         </Bold>{' '}
-      //         to add credit to your account.
-      //       </>
-      //     ) : (
-      //       <>
-      //         <>
-      //           You have{' '}
-      //           <Bold variant="label" weight="bold">
-      //             less than $250
-      //           </Bold>{' '}
-      //           in your account. Please fill it up if you want to continue
-      //           making purchases.
-      //         </>
-      //       </>
-      //     )}
-      //   </Text>
-      //   <span style={{ paddingRight: '20px' }}>
-      //     <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
-      //   </span>
-      // </CreditContainer>
     );
   }
   return null;
@@ -131,25 +98,20 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
   const {
-    searchTerm,
-    setSearchTerm,
     loading,
     results,
-    onReset,
     recent,
-    saveSearchHistory,
     creditState,
     featured,
-    search,
     addresses,
     addressOptions,
-    selectedAddress,
     changeDefaultAddress,
     recentlyAdded,
     categories,
     favourites,
     favouriteSellers,
     sellers,
+    loadingHomePage,
   } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState();
@@ -222,111 +184,124 @@ const HomeView = (props: HomeGeneratedProps) => {
         </Col>
       </div>
 
-      <SwiperContainer>
-        <Carousel
-          id="featured-carousel"
-          images={featured}
-          loop
-          autoplay
-          hideArrowArea={hideCarouselArrowArea}
-          arrowWidth={mediumArrowWidth ? 75 : undefined}
-          addMargin
-        />
-      </SwiperContainer>
-      <div className="wrapper">
-        <ViewCol style={{ paddingTop: '48px' }}>
-          <HomeSectionHeader
-            title="Favourites"
-            onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-            noMargin
-          />
-
-          <FavouritesContainer>
-            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
-              data={favourites}
-              transform={favouritesToPreviewProps}
-              Component={PreviewCard}
-              link={BUYER_ROUTES.PRODUCT_DETAIL}
+      {/* Main Content */}
+      {loadingHomePage ? (
+        <LoadingView />
+      ) : (
+        <>
+          <SwiperContainer>
+            <Carousel
+              id="featured-carousel"
+              images={featured}
+              loop
+              autoplay
+              hideArrowArea={hideCarouselArrowArea}
+              arrowWidth={mediumArrowWidth ? 75 : undefined}
+              addMargin
             />
-          </FavouritesContainer>
-        </ViewCol>
-      </div>
+          </SwiperContainer>
+          <div className="wrapper">
+            <ViewCol style={{ paddingTop: '48px' }}>
+              <HomeSectionHeader
+                title="Favourites"
+                onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                noMargin
+              />
 
-      <div className="wrapper">
-        <ViewCol>
-          <HomeSectionHeader
-            title="Categories"
-            onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
-            noMargin
-          />
+              <FavouritesContainer>
+                <MultipleCarousel<
+                  GetBuyerHomepageResponseListingItem,
+                  PreviewProps
+                >
+                  data={favourites}
+                  transform={favouritesToPreviewProps}
+                  Component={PreviewCard}
+                  link={BUYER_ROUTES.PRODUCT_DETAIL}
+                />
+              </FavouritesContainer>
+            </ViewCol>
+          </div>
 
-          <CategoriesContainer>
-            <MultipleCarousel<CategoryResults, CardProps>
-              data={categories}
-              transform={categoriesToCardProps}
-              Component={Card}
-              link={BUYER_ROUTES.CATEGORY_PRODUCTS}
-            />
-          </CategoriesContainer>
-        </ViewCol>
-      </div>
+          <div className="wrapper">
+            <ViewCol>
+              <HomeSectionHeader
+                title="Categories"
+                onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+                noMargin
+              />
 
-      <div className="wrapper">
-        <ViewCol>
-          <HomeSectionHeader
-            title="Recently Added"
-            onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
-            noMargin
-          />
+              <CategoriesContainer>
+                <MultipleCarousel<CategoryResults, CardProps>
+                  data={categories}
+                  transform={categoriesToCardProps}
+                  Component={Card}
+                  link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+                />
+              </CategoriesContainer>
+            </ViewCol>
+          </div>
 
-          <RecentContainer>
-            <MultipleCarousel<GetBuyerHomepageResponseListingItem, PreviewProps>
-              data={recentlyAdded}
-              transform={recentlyAddedToPreviewProps}
-              Component={PreviewCard}
-              link={BUYER_ROUTES.PRODUCT_DETAIL}
-            />
-          </RecentContainer>
-        </ViewCol>
-      </div>
+          <div className="wrapper">
+            <ViewCol>
+              <HomeSectionHeader
+                title="Recently Added"
+                onClick={() => history.push(BUYER_ROUTES.RECENTLY_ADDED)}
+                noMargin
+              />
 
-      <div className="wrapper">
-        <ViewCol>
-          <HomeSectionHeader
-            title="Favourite Sellers"
-            onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
-            noMargin
-          />
+              <RecentContainer>
+                <MultipleCarousel<
+                  GetBuyerHomepageResponseListingItem,
+                  PreviewProps
+                >
+                  data={recentlyAdded}
+                  transform={recentlyAddedToPreviewProps}
+                  Component={PreviewCard}
+                  link={BUYER_ROUTES.PRODUCT_DETAIL}
+                />
+              </RecentContainer>
+            </ViewCol>
+          </div>
 
-          <SellerContainer>
-            <MultipleCarousel<SellerResults, SellerCardProps>
-              data={favouriteSellers}
-              transform={favouriteSellersToSellerCardProps}
-              Component={SellerCard}
-              link={BUYER_ROUTES.SELLER_DETAILS}
-            />
-          </SellerContainer>
-        </ViewCol>
-      </div>
+          <div className="wrapper">
+            <ViewCol>
+              <HomeSectionHeader
+                title="Favourite Sellers"
+                onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+                noMargin
+              />
 
-      <div className="wrapper">
-        <ViewCol>
-          <HomeSectionHeader
-            title="Sellers"
-            onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-            noMargin
-          />
+              <SellerContainer>
+                <MultipleCarousel<SellerResults, SellerCardProps>
+                  data={favouriteSellers}
+                  transform={favouriteSellersToSellerCardProps}
+                  Component={SellerCard}
+                  link={BUYER_ROUTES.SELLER_DETAILS}
+                />
+              </SellerContainer>
+            </ViewCol>
+          </div>
 
-          <SellerContainer>
-            <MultipleCarousel<SellerResults, SellerCardProps>
-              data={sellers}
-              transform={favouriteSellersToSellerCardProps}
-              Component={SellerCard}
-              link={BUYER_ROUTES.SELLER_DETAILS}
-            />
-          </SellerContainer>
-        </ViewCol>
-      </div>
+          <div className="wrapper">
+            <ViewCol>
+              <HomeSectionHeader
+                title="Sellers"
+                onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+                noMargin
+              />
+
+              <SellerContainer>
+                <MultipleCarousel<SellerResults, SellerCardProps>
+                  data={sellers}
+                  transform={favouriteSellersToSellerCardProps}
+                  Component={SellerCard}
+                  link={BUYER_ROUTES.SELLER_DETAILS}
+                />
+              </SellerContainer>
+            </ViewCol>
+          </div>
+        </>
+      )}
 
       {/* Modals */}
       <ConfirmationModal

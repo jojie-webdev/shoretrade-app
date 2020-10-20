@@ -19,18 +19,11 @@ export type SellerResults = {
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
-  search: () => void;
-  searchTerm: string;
-  setSearchTerm: Dispatch<SetStateAction<string>>;
   loading: boolean;
   results: { count: string; label: string; value: string }[];
-  onReset: () => void;
   recent: { count: string; label: string; value: string }[];
   addresses: GetAddressesResponseItem[];
   addressOptions: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
-  saveSearchHistory: (id: string, label: string, count: string) => void;
   creditState: CreditState;
   creditBalance: string;
   featured: string[];
@@ -40,6 +33,7 @@ export interface HomeGeneratedProps {
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
   changeDefaultAddress: (id: string) => void;
+  loadingHomePage: boolean;
 }
 
 export interface HomeData {
