@@ -21,6 +21,7 @@ import {
   Container,
   BoxDetailsContainer,
   BoxSummaryContainer,
+  FooterPadding,
 } from './Step6.style';
 
 const BoxDetails = ({
@@ -271,6 +272,8 @@ function Step6({
           />
         </Col>
       </Row>
+
+      <FooterPadding />
 
       <div className="absolute-container">
         {showError && (

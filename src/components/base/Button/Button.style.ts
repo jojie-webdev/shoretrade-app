@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
@@ -52,6 +53,10 @@ export const ButtonContainer = styled.button<
 
   :hover {
     opacity: 0.5;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 18px;
   }
 `;
 

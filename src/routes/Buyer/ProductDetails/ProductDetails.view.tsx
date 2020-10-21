@@ -30,6 +30,7 @@ import {
   RemainingWrapper,
   BoxRadioContainer,
   ButtonContainer,
+  AddToCartButton,
 } from './ProductDetails.style';
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -182,8 +183,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     )}
                   </div>
                   <ButtonContainer>
-                    <Button
-                      style={{ float: 'right', width: '50%' }}
+                    <AddToCartButton
                       text="Add to Cart"
                       onClick={onAddToCart}
                       variant={pressedBoxRadio ? undefined : 'disabled'}
