@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 
+import { clickAndCollectAddress } from 'consts';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';
@@ -108,7 +109,7 @@ const Checkout = (): JSX.Element => {
               priceId: data.priceId,
               name:
                 data.serviceName === 'CLICK AND COLLECT'
-                  ? `${serviceName} ${currentAddress}`
+                  ? `${serviceName} ${clickAndCollectAddress}`
                   : `${shipmentMode} ${serviceName}`,
               price: toPrice(data.grossPrice, false),
               est: estimatedDeliveryToString(
