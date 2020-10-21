@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import PlaceholderImage from 'components/base/PlaceholderImage';
-import { Star, StarFilled, HeartFilled, Heart, PlaceholderProfile } from 'components/base/SVG';
+import {
+  Star,
+  StarFilled,
+  HeartFilled,
+  Heart,
+  PlaceholderProfile,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 import { ProductSellerRatingProps } from './ProductSellerRating.props';
 import {
   Row,
-  PreviewContainer,
   FlexShrinked,
   Bold,
-  Preview,
   StarContainer,
   Favorite,
-  NoProfilePic,
+  AvatarContainer,
+  AvatarPreview,
+  AvatarPlaceholder,
 } from './ProductSellerRating.style';
 
 const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
@@ -25,55 +31,65 @@ const ProductSellerRating = (props: ProductSellerRatingProps): JSX.Element => {
     rating,
     isFavorite,
     onFavorite,
+    onClickSeller,
   } = props;
+
+  const [defaultImage, setDefaultImage] = useState(uri);
   return (
     <Row>
-      <PreviewContainer>
-        <Row>
-          {uri ? (
-            <Preview src={uri} />
+      <AvatarContainer>
+        {(defaultImage || '').length > 0 ? (
+          <AvatarPreview
+            src={defaultImage}
+            alt={`${name}-image`}
+            onError={() => {
+              setDefaultImage('');
+            }}
+          />
+        ) : (
+          <AvatarPlaceholder>
+            <PlaceholderProfile width={96} height={96} />
+          </AvatarPlaceholder>
+        )}
+
+        <Favorite onClick={onFavorite}>
+          {isFavorite ? (
+            <HeartFilled width={22} height={22} />
           ) : (
-            <NoProfilePic>
-              <PlaceholderProfile width={90} height={90} />
-            </NoProfilePic>
+            <Heart width={22} height={22} />
           )}
+        </Favorite>
+      </AvatarContainer>
 
-          <FlexShrinked>
-            {isSmallName ? (
-              <Typography
-                variant="title5"
-                weight="bold"
-                color="shade9"
-                style={{ marginTop: 16, marginLeft: 8 }}
-              >
-                {name}
-              </Typography>
-            ) : (
-              <Typography
-                style={{ marginTop: 16, marginLeft: 8 }}
-                variant="title5"
-                weight="bold"
-                color="shade9"
-              >
-                {name}
-              </Typography>
-            )}
+      <FlexShrinked onClick={() => onClickSeller()}>
+        {isSmallName ? (
+          <Typography
+            variant="title5"
+            weight="bold"
+            color="shade9"
+            style={{ marginTop: 16, marginLeft: 8 }}
+          >
+            {name}
+          </Typography>
+        ) : (
+          <Typography
+            style={{ marginTop: 16, marginLeft: 8 }}
+            variant="title5"
+            weight="bold"
+            color="shade9"
+          >
+            {name}
+          </Typography>
+        )}
 
-            <Row style={{ marginLeft: 10 }}>
-              {[...Array(5).keys()].map((r) => (
-                <StarContainer key={r} location={location}>
-                  {Number(rating) > r ? <StarFilled /> : <Star />}
-                </StarContainer>
-              ))}
-            </Row>
-          </FlexShrinked>
-          {onFavorite && (
-            <div style={{ float: 'right' }} onClick={onFavorite}>
-              {isFavorite ? <HeartFilled /> : <Heart />}
-            </div>
-          )}
+        <Row style={{ marginLeft: 10 }}>
+          {[...Array(5).keys()].map((r) => (
+            <StarContainer key={r} location={location}>
+              {Number(rating) > r ? <StarFilled /> : <Star />}
+            </StarContainer>
+          ))}
         </Row>
-      </PreviewContainer>
+      </FlexShrinked>
     </Row>
   );
 };

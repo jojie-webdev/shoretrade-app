@@ -18,16 +18,17 @@ export const AvatarPreview = styled.img`
   width: 96px;
   height: 96px;
   border-radius: 5px;
-  border-color: grey;
   object-fit: contain;
 `;
 
-export const AvatarPlaceholder = styled.img`
+export const AvatarPlaceholder = styled.div`
+  border-radius: 5px;
   width: 96px;
   height: 96px;
-  border-radius: 5px;
-  border-color: grey;
-  background-color: grey;
+  background-color: ${({ theme }) => theme.grey.shade2};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const PreviewDetails = styled.div`

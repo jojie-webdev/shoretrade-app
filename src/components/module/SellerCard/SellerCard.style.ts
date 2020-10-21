@@ -51,6 +51,15 @@ export const Container = styled.div`
   .card-content p {
     font-size: 80%;
   }
+
+  .placeholder-image {
+    width: 100%;
+    height: 150px;
+    background-color: ${({ theme }) => theme.grey.shade2};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const StyledTypography = styled(Typography)`
