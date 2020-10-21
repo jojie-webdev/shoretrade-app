@@ -39,6 +39,11 @@ interface addressSelectionOption {
   value: string;
 }
 
+interface searchInterface {
+  count: string;
+  label: string;
+  value: string;
+}
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -95,6 +100,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       )
     );
     await dispatch(cartActions.clear());
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -138,12 +144,12 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-
+  const [data, setData] = useState<searchInterface[]>();
+  const [load, setLoad] = useState(false);
   const results =
     useSelector(
       (state: Store) => state.searchAndCountProductType.data?.data.types
     ) || [];
-
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
@@ -179,10 +185,20 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       );
     }
   };
-  const showRecentSearch = searchTerm.length === 0;
-  const data = showRecentSearch ? reverse(recent) : results;
 
   useEffect(() => {
+    setLoad(true);
+    const filterData = searchTerm.length === 0 ? reverse(recent) : results;
+    if (filterData.length > 0 && !loading) {
+      setData(filterData);
+    } else if (filterData.length <= 0 && !loading) {
+      setData([]);
+    }
+    setLoad(false);
+  }, [results]);
+
+  useEffect(() => {
+    setLoad(true);
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -190,12 +206,11 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
     const timerId = setTimeout(() => {
       search();
-    }, 800);
+    }, 200);
 
     setTimer(timerId);
   }, [searchTerm]);
   //#endregion
-
   return (
     <Container>
       <ConfirmationModal
@@ -253,12 +268,11 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       <div className="wrapper">
         {!isEmpty(data) && searchTerm.length > 2 ? (
           <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : 'Results'}
+            {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
           </Typography>
-        ) : (
-          ''
-        )}
-        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
+        ) : null}
+
+        {isEmpty(data) && searchTerm.length > 2 && !load ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
