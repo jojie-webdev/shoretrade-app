@@ -22,7 +22,7 @@ export interface SearchAddressProps {
   //#region Address
   addressModalChange: boolean;
   addressOptions: addressSelectionOption[];
-  currentAddressSelected: addressSelectionOption;
+  currentAddressSelected: addressSelectionOption | undefined;
   changeAddressModal: (value: boolean) => void;
   changeAddressFunc: (value: string) => void;
   changeAddress: {

@@ -62,8 +62,6 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     data,
     load,
   } = props;
-  const dispatch = useDispatch();
-  // const { value, containerStyle, resetValue, ...inputProps } = props;
 
   const history = useHistory();
   return (

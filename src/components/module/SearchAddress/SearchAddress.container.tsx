@@ -47,7 +47,7 @@ const SearchAddress = (): JSX.Element => {
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState<
     addressSelectionOption
-  >({ label: '', value: '' });
+  >();
   const [changeAddress, setChangeAddress] = useState({
     currentAddress: currentAddressSelected,
     newChangeAddress: '',
@@ -106,7 +106,7 @@ const SearchAddress = (): JSX.Element => {
     const filterAddressDefault = addresses.filter((i) => i.default);
     const filteredArray = addressOptions.find(
       (a) => a.value === filterAddressDefault[0].id
-    ) || { label: '', value: '' };
+    );
     setCurrentAddressSelected(filteredArray);
   };
 
