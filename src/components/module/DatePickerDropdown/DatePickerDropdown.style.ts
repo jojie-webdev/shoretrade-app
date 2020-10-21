@@ -44,6 +44,11 @@ export const Container = styled.div`
     background: ${(props) => props.theme.brand.primary};
     border-radius: 100px;
   }
+  .CalendarDay__today {
+    color: ${(props) => props.theme.brand.primary};
+    border-radius: 100px;
+    background-color: #e4e7e7;
+  }
 `;
 
 export const Dropdown = styled.div<{ active: boolean; error?: boolean }>`
