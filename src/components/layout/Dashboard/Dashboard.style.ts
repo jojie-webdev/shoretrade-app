@@ -209,7 +209,7 @@ export const Content = styled.div<{
 export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.theme.appType === 'seller' ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
