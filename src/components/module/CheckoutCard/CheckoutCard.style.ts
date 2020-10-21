@@ -41,7 +41,9 @@ export const Container = styled.div`
 export const Image = styled.img`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+  min-width: 120px;
   width: 120px;
+  height: 120px;
   overflow: hidden;
 `;
 
