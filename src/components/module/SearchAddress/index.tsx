@@ -1,1 +1,1 @@
-export { default } from './SearchAddress.view';
+export { default } from './SearchAddress.container';
