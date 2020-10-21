@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { PlaceholderProfile } from 'components/base/SVG';
 
 // import { useTheme } from 'utils/Theme';
 import { SellerCardProps } from './SellerCard.props';
@@ -7,11 +9,24 @@ import { Container, StyledTypography } from './SellerCard.style';
 const SellerCard = (props: SellerCardProps): JSX.Element => {
   // const theme = useTheme();
   const { companyName, companyImage } = props;
+  const [defaultImage, setDefaultImage] = useState(props.companyImage);
 
   return (
     <Container className="centered">
       <div className="card">
-        <img src={companyImage} alt={companyImage} />
+        {(defaultImage || '').length > 0 ? (
+          <img
+            src={defaultImage}
+            alt={`${companyName}-image`}
+            onError={() => {
+              setDefaultImage('');
+            }}
+          />
+        ) : (
+          <div className="placeholder-image">
+            <PlaceholderProfile width={120} height={120} />
+          </div>
+        )}
 
         <div className="card-content">
           <StyledTypography variant="label">{companyName}</StyledTypography>

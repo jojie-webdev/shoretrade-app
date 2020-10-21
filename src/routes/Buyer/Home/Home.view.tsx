@@ -159,6 +159,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}
                   emptyText="No Favourite Products"
+                  id="favourites"
                 />
               </FavouritesContainer>
             </ViewCol>
@@ -178,6 +179,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={categoriesToCardProps}
                   Component={Card}
                   link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+                  id="categories"
                 />
               </CategoriesContainer>
             </ViewCol>
@@ -200,6 +202,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={recentlyAddedToPreviewProps}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}
+                  id="recentlyAdded"
                 />
               </RecentContainer>
             </ViewCol>
@@ -220,6 +223,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   Component={SellerCard}
                   link={BUYER_ROUTES.SELLER_DETAILS}
                   emptyText="No Favourite Sellers"
+                  id="favouriteSellers"
                 />
               </SellerContainer>
             </ViewCol>
@@ -239,6 +243,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={favouriteSellersToSellerCardProps}
                   Component={SellerCard}
                   link={BUYER_ROUTES.SELLER_DETAILS}
+                  id="sellers"
                 />
               </SellerContainer>
             </ViewCol>

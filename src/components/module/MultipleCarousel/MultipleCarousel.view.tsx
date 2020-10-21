@@ -18,6 +18,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const theme = useTheme();
   const [currentNdx, setCurrentNdx] = useState(0);
   const {
+    id,
     Component,
     data,
     transform,
@@ -82,12 +83,13 @@ function MultipleCarousel<D extends { id: string }, CP>(
       )}
 
       <Swiper
+        id={id}
         onSwiper={(swiper) => {
           setRef(swiper);
           swiper.update();
         }}
-        slidesPerView={1.3}
-        spaceBetween={32}
+        slidesPerView={1.2}
+        spaceBetween={16}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
           setCurrentNdx(swiper.activeIndex);
@@ -110,7 +112,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
               slidesPerView: 3.2,
             },
             768: {
-              slidesPerView: 2.2,
+              slidesPerView: 2.1,
             },
             650: {
               slidesPerView: 1.3,

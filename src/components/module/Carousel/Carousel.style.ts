@@ -36,12 +36,17 @@ export const ArrowArea = styled.div`
   align-items: center;
 `;
 
+const safeEncodeUri = (img: string) => {
+  // target parenthesis only
+  return img.replace(/\(/g, '%28').replace(/\)/g, '%29');
+};
+
 export const ImageContainer = styled.div<{
   img: string;
   aspectRatio: AspectRatio;
 }>`
   width: 100%;
-  background-image: url(${(props) => props.img});
+  background-image: url(${(props) => safeEncodeUri(props.img)});
   background-size: cover;
   background-position: ${(props) =>
     props.aspectRatio === '16:9' ? '50% 50%' : '50% 65%'};
