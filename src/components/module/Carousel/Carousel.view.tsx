@@ -35,6 +35,8 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     );
   });
 
+  const [showSwiperItems, setShowSwiperItems] = useState(true);
+
   // initialize swiper
   // useful when image data comes from BE
   useEffect(() => {
@@ -44,6 +46,18 @@ const Carousel = (props: CarouselProps): JSX.Element => {
       }, 1000);
     }
   }, [images]);
+
+  // logic to rerender the items,
+  // this allows images to resize properly
+  useEffect(() => {
+    if (!showSwiperItems) {
+      setShowSwiperItems(true);
+    } else {
+      if (swiperRef) {
+        swiperRef.update();
+      }
+    }
+  }, [showSwiperItems]);
 
   const swiperAreaWidth =
     swiperWidth ||
@@ -63,6 +77,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
       height={height}
       aspectRatio={aspectRatio}
       addMargin={addMargin}
+      onResize={() => {
+        setShowSwiperItems(false);
+      }}
     >
       {!hideArrowArea && (
         <ArrowArea
@@ -107,7 +124,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             setSwiperRef(swiper);
           }}
         >
-          {swiperItems}
+          {showSwiperItems && swiperItems}
         </Swiper>
       </SwiperArea>
       {!hideArrowArea && (

@@ -22,8 +22,9 @@ const debounce = (fn: () => void, ms: number) => {
  *
  */
 const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
-  const { children, height, aspectRatio = '16:9', addMargin } = props;
+  const { children, height, aspectRatio = '16:9', addMargin, onResize } = props;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
   const [containerWidth, setContainerWidth] = useState<number | null>(null);
 
@@ -51,6 +52,19 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
       window.removeEventListener('resize', debouncedHandler);
     };
   });
+
+  useEffect(() => {
+    // prevent onResize to fire on initialization
+    if (containerWidth !== null) {
+      if (!isInitialized) {
+        setIsInitialized(true);
+      } else {
+        if (onResize) {
+          onResize();
+        }
+      }
+    }
+  }, [containerWidth]);
 
   return (
     <Parent

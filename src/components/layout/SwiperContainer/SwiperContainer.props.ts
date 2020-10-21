@@ -3,6 +3,7 @@ export interface SwiperContainerProps {
   children: React.ReactNode;
   aspectRatio?: AspectRatio;
   addMargin?: boolean;
+  onResize?: () => void;
 }
 
 export type AspectRatio = '16:9' | '9:4';
