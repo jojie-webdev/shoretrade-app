@@ -42,7 +42,9 @@ const SearchAddress = (): JSX.Element => {
   const addressOptions = GetAddressOptions();
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
-
+  const statusAddress = useSelector(
+    (state: Store) => state.updateAddress.data?.status
+  );
   const selectAddress = (id: string) => {
     dispatch(
       currentAddressActions.update({
@@ -63,7 +65,7 @@ const SearchAddress = (): JSX.Element => {
       (addr) => addr.id === id
     )[0];
     const isDefault = true;
-    const successRequest = await dispatch(
+    dispatch(
       updateAddressActions.request(
         placeDataToUpdateAddressMeta(
           addressToPlaceData(filtererdAddress) as PlaceData,
@@ -74,11 +76,8 @@ const SearchAddress = (): JSX.Element => {
         )
       )
     );
-
-    await dispatch(cartActions.clear());
-    if (successRequest.meta) {
-      window.location.reload();
-    }
+    dispatch(cartActions.clear());
+    window.location.reload();
   };
 
   const confirmChangeAddress = () => {
