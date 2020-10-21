@@ -111,7 +111,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           id={id}
           spaceBetween={10}
           slidesPerView={1}
-          loop={loop}
+          loop={loop && images.length > 1}
           initialSlide={0}
           autoplay={
             images.length !== 0 && autoplay
