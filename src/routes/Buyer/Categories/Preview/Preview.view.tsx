@@ -81,7 +81,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
         </Col>
       </Row>
 
-      <Row>
+      <Row style={{ paddingLeft: 8 }}>
         <Hidden xs sm>
           <Col md={6} lg={6} xl={4}>
             <FilterArea
