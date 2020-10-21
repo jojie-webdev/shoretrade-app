@@ -39,7 +39,7 @@ interface addressSelectionOption {
   value: string;
 }
 
-interface searchTest {
+interface searchInterface {
   count: string;
   label: string;
   value: string;
@@ -144,12 +144,12 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-  const [data, setData] = useState<searchTest[]>();
+  const [data, setData] = useState<searchInterface[]>();
+  const [load, setLoad] = useState(false);
   const results =
     useSelector(
       (state: Store) => state.searchAndCountProductType.data?.data.types
     ) || [];
-
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
@@ -187,12 +187,14 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   };
 
   useEffect(() => {
+    setLoad(true);
     const filterData = searchTerm.length === 0 ? reverse(recent) : results;
     if (filterData.length > 0 && !loading) {
       setData(filterData);
     } else if (filterData.length <= 0 && !loading) {
-      setData(filterData);
+      setData([]);
     }
+    setLoad(false);
   }, [results]);
 
   useEffect(() => {
@@ -269,7 +271,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           </Typography>
         ) : null}
 
-        {isEmpty(data) && searchTerm.length > 2 && !loading ? (
+        {isEmpty(data) && searchTerm.length > 2 && !load ? (
           <>
             <EmptyState
               onButtonClicked={onReset}
