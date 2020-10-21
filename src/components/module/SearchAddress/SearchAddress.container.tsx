@@ -76,9 +76,14 @@ const SearchAddress = (): JSX.Element => {
         )
       )
     );
-    dispatch(cartActions.clear());
-    window.location.reload();
   };
+
+  useEffect(() => {
+    if (statusAddress === 200) {
+      dispatch(cartActions.clear());
+      window.location.reload();
+    }
+  }, [statusAddress]);
 
   const confirmChangeAddress = () => {
     changeDefaultAddress(changeAddress.newChangeAddress);

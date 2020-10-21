@@ -72,15 +72,15 @@ export const AddressContainer = styled.div`
   border-bottom-left-radius: 0px;
   width: 100%;
   padding: 12.5px 16px;
-
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 
   .search-address-select {
     .dropdownSelectContainerThin {
       background: ${(props) => props.theme.grey.shade1};
     }
+    margin-left: -16px;
   }
 `;
 
