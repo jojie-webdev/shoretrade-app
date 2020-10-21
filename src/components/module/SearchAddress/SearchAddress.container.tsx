@@ -148,8 +148,9 @@ const SearchAddress = (): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-  const [data, setData] = useState<searchInterface[]>();
+  const [data, setData] = useState<searchInterface[]>([]);
   const [load, setLoad] = useState(false);
+
   const results =
     useSelector(
       (state: Store) => state.searchAndCountProductType.data?.data.types
@@ -190,6 +191,10 @@ const SearchAddress = (): JSX.Element => {
     }
   };
 
+  const onSearchChange = (value: string) => {
+    setSearchTerm(value);
+  };
+
   useEffect(() => {
     setLoad(true);
     const filterData = searchTerm.length === 0 ? reverse(recent) : results;
@@ -217,13 +222,19 @@ const SearchAddress = (): JSX.Element => {
   //#endregion
 
   const generatedProps = {
+    //#region Address
     addressOptions,
     currentAddressSelected,
     changeAddressModal,
     changeAddressFunc,
     changeAddress,
+    //#endregion
+    //#region Search
+    onSearchChange,
     searchTerm,
     onReset,
+    data,
+    //#endregion
   };
 
   return <SearchAddressView {...generatedProps} />;

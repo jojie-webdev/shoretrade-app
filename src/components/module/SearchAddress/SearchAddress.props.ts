@@ -27,10 +27,13 @@ export interface SearchAddressProps {
     currentAddress: addressSelectionOption | undefined;
     newChangeAddress: string;
   };
-  searchTerm: string;
-  onReset: () => void;
+
   //#endregion
 
   //#region Search
+  onSearchChange: (value: string) => void;
+  searchTerm: string;
+  onReset: () => void;
+  data: searchInterface[];
   //#endregion
 }
