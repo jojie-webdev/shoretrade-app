@@ -53,6 +53,7 @@ const FilterArea = (props: FilterAreaProps): JSX.Element => {
   })();
 
   const [sizeRange, setSizeRange] = useState([0, maxRange]);
+  const [isSizeModified, setIsSizeModified] = useState(false);
 
   useEffect(() => {
     setSizeRange([0, maxRange]);
@@ -79,8 +80,12 @@ const FilterArea = (props: FilterAreaProps): JSX.Element => {
       []
     );
     const payload = {
-      ...(sizeFrom ? { sizeRangeFrom: maskSizeValue(sizeRange[0]) } : {}),
-      ...(sizeTo ? { sizeRangeTo: maskSizeValue(sizeRange[1]) } : {}),
+      ...(sizeFrom && isSizeModified
+        ? { sizeRangeFrom: maskSizeValue(sizeRange[0]) }
+        : {}),
+      ...(sizeTo && isSizeModified
+        ? { sizeRangeTo: maskSizeValue(sizeRange[1]) }
+        : {}),
       ...(selectedSpecifications.length > 0
         ? { specifications: selectedSpecifications.join() }
         : {}),
@@ -95,7 +100,7 @@ const FilterArea = (props: FilterAreaProps): JSX.Element => {
 
   useEffect(() => {
     handleUpdate();
-  }, [specifications, showOnlyUngraded, currentRegion]);
+  }, [specifications, showOnlyUngraded, currentRegion, isSizeModified]);
   return (
     <Container>
       <FilterLabel variant="overline">Product Specifications</FilterLabel>
@@ -142,7 +147,18 @@ const FilterArea = (props: FilterAreaProps): JSX.Element => {
               max={maxRange}
               maskValue={maskSizeValue}
               onAfterChange={() => {
-                handleUpdate();
+                if (!isSizeModified) {
+                  setIsSizeModified(true);
+                } else {
+                  if (
+                    sizeFrom.toString() === maskSizeValue(sizeRange[0]) &&
+                    sizeTo.toString() === maskSizeValue(sizeRange[1])
+                  ) {
+                    setIsSizeModified(false);
+                  } else {
+                    handleUpdate();
+                  }
+                }
               }}
             />
           )}
