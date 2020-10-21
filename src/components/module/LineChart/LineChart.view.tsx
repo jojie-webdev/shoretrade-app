@@ -169,9 +169,9 @@ const Tooltip = (props: any) => {
         </svg>
       )}
       <rect
-        width="3px"
+        width="10px"
         height="40px"
-        x={x(value.date) - 1}
+        x={x(value.date) - 5}
         y={y(value.value) - 30}
         fill="transparent"
         onMouseEnter={() => setShown(index)}
