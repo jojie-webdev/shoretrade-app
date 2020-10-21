@@ -22,6 +22,17 @@ export const PreviewContainer = styled.div`
     align-items: center;
     margin-bottom: 5px;
   }
+
+  .subheader {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+  }
+  .result-count-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  }
 `;
 
 export const LoadingContainer = styled.div`
@@ -33,10 +44,13 @@ export const LoadingContainer = styled.div`
 `;
 
 export const FilterButton = styled(Button)`
+  min-width: 64px !important;
+  max-width: 64px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
   background: #111e2b;
   border-radius: 4px;
   color: white;
-  min-width: 69px !important;
   align-content: 'center';
   justify-content: 'center';
 `;
