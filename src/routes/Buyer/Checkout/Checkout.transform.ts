@@ -11,6 +11,8 @@ export const shipmentModeToString = (shipmentMode: string) => {
 };
 
 export const serviceNameToString = (serviceName: string) => {
+  if (serviceName === 'CLICK AND COLLECT') return 'Pick Up at';
+
   return serviceName.indexOf('TO DOOR') !== -1 ||
     serviceName.indexOf('METRO TO METRO') !== -1 ||
     serviceName.indexOf('MANAGED') !== -1

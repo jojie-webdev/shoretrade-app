@@ -106,7 +106,10 @@ const Checkout = (): JSX.Element => {
             const serviceName = serviceNameToString(data.serviceName);
             return {
               priceId: data.priceId,
-              name: `${shipmentMode} ${serviceName}`,
+              name:
+                data.serviceName === 'CLICK AND COLLECT'
+                  ? `${serviceName} ${currentAddress}`
+                  : `${shipmentMode} ${serviceName}`,
               price: toPrice(data.grossPrice, false),
               est: estimatedDeliveryToString(
                 data.minTransitTime,
