@@ -206,7 +206,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
     const timerId = setTimeout(() => {
       search();
-    }, 800);
+    }, 200);
 
     setTimer(timerId);
   }, [searchTerm]);
