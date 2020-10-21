@@ -117,3 +117,7 @@ export const BoxSummaryContainer = styled.div`
     }
   }
 `;
+
+export const FooterPadding = styled.div`
+  height: 35px;
+`;
