@@ -46,171 +46,26 @@ interface searchInterface {
 }
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
+  const {
+    addressModalChange,
+    addressOptions,
+    currentAddressSelected,
+    changeAddressModal,
+    changeAddressFunc,
+    changeAddress,
+    setDefaultAddress,
+    confirmChangeAddress,
+    onSearchChange,
+    saveSearchHistory,
+    searchTerm,
+    onReset,
+    data,
+    load,
+  } = props;
   const dispatch = useDispatch();
   // const { value, containerStyle, resetValue, ...inputProps } = props;
-  const [addressModalChange, setAddressModalChange] = useState(false);
-  const [currentAddressSelected, setCurrentAddressSelected] = useState<
-    addressSelectionOption
-  >();
-  const [changeAddress, setChangeAddress] = useState({
-    currentAddress: currentAddressSelected,
-    newChangeAddress: '',
-  });
+
   const history = useHistory();
-  //#region Address
-
-  const companyAdressDefault = GetDefaultCompany();
-  const [companyId, setCompanyId] = useState('');
-  const getAddress = useSelector((state: Store) => state.getAddresses);
-  const addresses = getAddress.data?.data.addresses || [];
-  const addressOptions = GetAddressOptions();
-
-  const selectedAddress =
-    useSelector((state: Store) => state.currentAddress.id) || '';
-
-  const selectAddress = (id: string) => {
-    dispatch(
-      currentAddressActions.update({
-        id,
-      })
-    );
-  };
-
-  const currentAddress = addresses.find((a) => a.id === selectedAddress);
-
-  const initialAddress = currentAddress
-    ? addressToPlaceData(currentAddress)
-    : null;
-  const [address, setAddress] = useState<PlaceData | null>(initialAddress);
-
-  const changeDefaultAddress = async (id: string) => {
-    const filtererdAddress = await addresses.filter(
-      (addr) => addr.id === id
-    )[0];
-    const isDefault = true;
-    await dispatch(
-      updateAddressActions.request(
-        placeDataToUpdateAddressMeta(
-          addressToPlaceData(filtererdAddress) as PlaceData,
-          filtererdAddress.unitNumber,
-          companyId,
-          isDefault,
-          id
-        )
-      )
-    );
-    await dispatch(cartActions.clear());
-    window.location.reload();
-  };
-
-  useEffect(() => {
-    if (currentAddress) {
-      setAddress(addressToPlaceData(currentAddress));
-    }
-  }, [currentAddress]);
-
-  useEffect(() => {
-    setCompanyId(companyAdressDefault?.id || '');
-  }, [companyAdressDefault]);
-
-  const confirmChangeAddress = () => {
-    changeDefaultAddress(changeAddress.newChangeAddress);
-  };
-
-  useEffect(() => {
-    if (addressOptions && addresses && !currentAddressSelected) {
-      setDefaultAddress();
-    }
-  }, [addressOptions, addresses]);
-
-  const setDefaultAddress = () => {
-    const filterAddressDefault = addresses.filter((i) => i.default);
-    const filteredArray = addressOptions.find(
-      (a) => a.value === filterAddressDefault[0].id
-    );
-    setCurrentAddressSelected(filteredArray);
-  };
-
-  useEffect(() => {
-    setChangeAddress({
-      ...changeAddress,
-      currentAddress: currentAddressSelected,
-    });
-  }, [currentAddressSelected]);
-  //#endregion
-
-  //#region Search
-  const [searchTerm, setSearchTerm] = useState('');
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const recent =
-    useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-  const [data, setData] = useState<searchInterface[]>();
-  const [load, setLoad] = useState(false);
-  const results =
-    useSelector(
-      (state: Store) => state.searchAndCountProductType.data?.data.types
-    ) || [];
-  const loading =
-    useSelector((state: Store) => state.searchAndCountProductType.pending) ||
-    false;
-
-  const search = () => {
-    dispatch(
-      searchAndCountProductTypeActions.request({
-        term: searchTerm,
-        address: '',
-      })
-    );
-  };
-
-  const onReset = () => {
-    setSearchTerm('');
-  };
-
-  const saveSearchHistory = (id: string, label: string, count: string) => {
-    const historyLimit = 20;
-    const isExisting = recent.findIndex((r) => r.value === id) !== -1;
-    if (!isExisting) {
-      dispatch(
-        historyActions.update({
-          buyerRecentSearch: [
-            ...(recent.length === historyLimit ? remove(0, 1, recent) : recent),
-            {
-              value: id,
-              label,
-              count,
-            },
-          ],
-        })
-      );
-    }
-  };
-
-  useEffect(() => {
-    setLoad(true);
-    const filterData = searchTerm.length === 0 ? reverse(recent) : results;
-    if (filterData.length > 0 && !loading) {
-      setData(filterData);
-    } else if (filterData.length <= 0 && !loading) {
-      setData([]);
-    }
-    setLoad(false);
-  }, [results]);
-
-  useEffect(() => {
-    setLoad(true);
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-
-    const timerId = setTimeout(() => {
-      search();
-    }, 200);
-
-    setTimer(timerId);
-  }, [searchTerm]);
-  //#endregion
   return (
     <Container>
       <ConfirmationModal
@@ -219,12 +74,12 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         description="Are you sure you want to change your buying address? This will reset your current cart."
         action={() => {
           confirmChangeAddress();
-          setAddressModalChange(false);
+          changeAddressModal(false);
         }}
         actionText="Okay"
         onClickClose={() => {
           setDefaultAddress();
-          setAddressModalChange(false);
+          changeAddressModal(false);
         }}
       />
       <div style={{ flexDirection: 'column', flex: 3 }}>
@@ -233,7 +88,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           <input
             type="text"
             placeholder="Search for a product"
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => onSearchChange(e.target.value)}
             value={searchTerm}
           />
           <div onClick={onReset} className="close-svg-container">
@@ -255,11 +110,8 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           size="small"
           onChange={(e) => {
             if (e.value !== currentAddressSelected?.value) {
-              setAddressModalChange(true);
-              setChangeAddress({
-                ...changeAddress,
-                newChangeAddress: e.value,
-              });
+              changeAddressModal(true);
+              changeAddressFunc(e.value);
             }
           }}
           value={currentAddressSelected}

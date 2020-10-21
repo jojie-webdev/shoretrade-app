@@ -114,8 +114,8 @@ const SearchAddress = (): JSX.Element => {
     setAddressModalChange(value);
   };
 
-  const changeAddressFunc = (value: changeAddress) => {
-    setChangeAddress(value);
+  const changeAddressFunc = (value: string) => {
+    setChangeAddress({ ...changeAddress, newChangeAddress: value });
   };
 
   useEffect(() => {
@@ -222,15 +222,20 @@ const SearchAddress = (): JSX.Element => {
   //#endregion
 
   const generatedProps = {
+    load,
     //#region Address
+    addressModalChange,
     addressOptions,
     currentAddressSelected,
     changeAddressModal,
     changeAddressFunc,
     changeAddress,
+    setDefaultAddress,
+    confirmChangeAddress,
     //#endregion
     //#region Search
     onSearchChange,
+    saveSearchHistory,
     searchTerm,
     onReset,
     data,
