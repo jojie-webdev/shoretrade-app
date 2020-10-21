@@ -198,6 +198,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   }, [results]);
 
   useEffect(() => {
+    setLoad(true);
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
