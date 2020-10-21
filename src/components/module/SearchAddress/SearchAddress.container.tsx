@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import PaginateList from 'components/base/PaginateList';
-import Select from 'components/base/Select';
-import { Search as SearchSVG, CloseFilled, Octopus } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
-import ConfirmationModal from 'components/module/ConfirmationModal';
-import EmptyState from 'components/module/EmptyState';
-import { BUYER_ROUTES } from 'consts';
-import { isEmpty, remove } from 'ramda';
+import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -23,17 +16,7 @@ import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
-import {
-  SearchAddressProps,
-  addressSelectionOption,
-  changeAddress,
-  searchInterface,
-} from './SearchAddress.props';
-import {
-  InputContainer,
-  Container,
-  AddressContainer,
-} from './SearchAddress.style';
+import { addressSelectionOption, searchInterface } from './SearchAddress.props';
 import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,
@@ -43,7 +26,6 @@ import SearchAddressView from './SearchAddress.view';
 const SearchAddress = (): JSX.Element => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  // const { value, containerStyle, resetValue, ...inputProps } = props;
   const [addressModalChange, setAddressModalChange] = useState(false);
   const [currentAddressSelected, setCurrentAddressSelected] = useState<
     addressSelectionOption
@@ -52,7 +34,6 @@ const SearchAddress = (): JSX.Element => {
     currentAddress: currentAddressSelected,
     newChangeAddress: '',
   });
-  const history = useHistory();
   //#region Address
   const companyAdressDefault = GetDefaultCompany();
   const [companyId, setCompanyId] = useState('');

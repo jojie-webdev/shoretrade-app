@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
@@ -7,20 +7,8 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
-import { isEmpty, remove } from 'ramda';
-import reverse from 'ramda/es/reverse';
-import { useSelector, useDispatch } from 'react-redux';
+import { isEmpty } from 'ramda';
 import { useHistory } from 'react-router-dom';
-import {
-  currentAddressActions,
-  updateAddressActions,
-  cartActions,
-  searchAndCountProductTypeActions,
-  historyActions,
-} from 'store/actions';
-import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
-import { PlaceData } from 'types/PlaceData';
-import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
 import { SearchAddressProps } from './SearchAddress.props';
@@ -29,21 +17,6 @@ import {
   Container,
   AddressContainer,
 } from './SearchAddress.style';
-import {
-  addressToPlaceData,
-  placeDataToUpdateAddressMeta,
-} from './SearchAddress.transfrom';
-
-interface addressSelectionOption {
-  label: string;
-  value: string;
-}
-
-interface searchInterface {
-  count: string;
-  label: string;
-  value: string;
-}
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const {
