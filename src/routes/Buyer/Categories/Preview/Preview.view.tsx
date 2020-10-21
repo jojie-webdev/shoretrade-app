@@ -83,14 +83,14 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
 
       <Row style={{ paddingLeft: 8 }}>
         <Hidden xs sm>
-          <Col md={6} lg={6} xl={4}>
+          <Col md={4} lg={4} xl={3}>
             <FilterArea
               filterData={filterData}
               onChangeFilter={onChangeFilter}
             />
           </Col>
         </Hidden>
-        <Col xs={12} sm={12} md={6} lg={6} xl={8}>
+        <Col xs={12} sm={12} md={8} lg={8} xl={9}>
           {!isLoadingResults && results && results.length > 0 && (
             <Row>
               {results.map((product) => {
