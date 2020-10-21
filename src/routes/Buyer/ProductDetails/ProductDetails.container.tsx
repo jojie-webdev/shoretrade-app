@@ -189,6 +189,12 @@ const ProductDetails = (): JSX.Element => {
     });
   };
 
+  const onClickSeller = () => {
+    if (currentSeller) {
+      history.push(BUYER_ROUTES.SELLER_DETAILS(currentSeller.id));
+    }
+  };
+
   const onFavoriteSeller = async () => {
     if (currentSeller) {
       setIsSellerFavorite((prevState) => !prevState);
@@ -262,6 +268,7 @@ const ProductDetails = (): JSX.Element => {
     uri: currentListing?.coop.image || '',
     isFavorite: isSellerFavorite || false,
     onFavorite: onFavoriteSeller,
+    onClickSeller,
   };
 
   const generatedProps = {
