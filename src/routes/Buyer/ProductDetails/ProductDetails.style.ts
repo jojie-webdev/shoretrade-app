@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
@@ -22,6 +23,11 @@ export const Container = styled.div`
     @media ${BREAKPOINTS['md']} {
       width: calc(100% - 150px);
     }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 0px;
+    margin: 0 -16px;
   }
 `;
 
@@ -112,4 +118,12 @@ export const BoxRadioContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const AddToCartButton = styled(Button)`
+  @media ${BREAKPOINTS['sm']} {
+    width: 50%;
+  }
 `;
