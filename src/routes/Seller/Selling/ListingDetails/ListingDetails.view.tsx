@@ -136,7 +136,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           md={12}
           lg={7}
           xl={7}
-          style={{ paddingLeft: addSeperatorSpacing ? 100 : 0 }}
+          style={{ paddingLeft: addSeperatorSpacing ? 20 : 0 }}
         >
           <SalesCard>
             <Typography variant="overline" color="shade9">
