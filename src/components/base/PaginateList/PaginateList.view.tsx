@@ -31,9 +31,12 @@ const PaginateList = (props: PaginateListProps): JSX.Element => {
           return (
             <ListItemInteraction
               key={idx}
-              value={label}
+              value={`${label}`}
               onClick={() => onClickItem(item)}
-              resultCount={item.count}
+              resultCount={`${item.count} ${
+                item.count > 1 ? 'results' : 'result'
+              }`}
+              customFontSize={15}
             />
           );
         })}
