@@ -6,7 +6,7 @@ const imgUrl = (url: string) => `"${url}"`;
 
 export const CardContainer = styled.div<{ img: string }>`
   /* width: 265px; */
-  width: 100%;
+  width: 281px;
 
   .imgContainer {
     position: relative;
@@ -20,7 +20,7 @@ export const CardContainer = styled.div<{ img: string }>`
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
     padding-bottom: 16px;
-    width: 100%;
+    width: 281px;
     /* flex-wrap: wrap; */
     transition: transform 0.2s;
   }
@@ -51,7 +51,7 @@ export const CardContainer = styled.div<{ img: string }>`
     background-position: 50% 50%;
     display: block;
     border: 0;
-    width: 100%;
+    width: 281px;
     height: 200px;
     border-radius: 4px;
     border-bottom-left-radius: 0px;

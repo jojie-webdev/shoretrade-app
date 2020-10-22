@@ -88,7 +88,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
           setRef(swiper);
           swiper.update();
         }}
-        slidesPerView={1.2}
+        slidesPerView={1}
         spaceBetween={16}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
@@ -102,20 +102,62 @@ function MultipleCarousel<D extends { id: string }, CP>(
         // in another screen feel free to extract this code to make it more reusable
         breakpoints={
           breakpoints || {
-            1480: {
-              slidesPerView: 4.35,
+            1800: {
+              slidesPerView: 4,
             },
-            1320: {
+            1600: {
               slidesPerView: 3.5,
             },
-            1240: {
-              slidesPerView: 3.2,
+            1480: {
+              slidesPerView: 3,
             },
-            768: {
+            1250: {
+              slidesPerView: 2.5,
+            },
+            1200: {
+              slidesPerView: 2.4,
+            },
+            1136: {
+              slidesPerView: 2.3,
+            },
+            1110: {
+              slidesPerView: 2.2,
+            },
+            1090: {
               slidesPerView: 2.1,
             },
-            650: {
-              slidesPerView: 1.3,
+            1057: {
+            slidesPerView: 2,
+             },
+            1029: {
+            slidesPerView: 1.9,
+             },
+            1001: {
+            slidesPerView: 1.8,
+             },
+            973: {
+            slidesPerView: 1.7,
+             },
+            945: {
+            slidesPerView: 1.6,
+             },
+            917: {
+            slidesPerView: 1.5,
+             },
+            888: {
+            slidesPerView: 1.4,
+             },
+            850: {
+            slidesPerView: 1.3,
+             },
+            832: {
+            slidesPerView: 1.2,
+             },
+            804: {
+            slidesPerView: 1.1,
+             },
+            790: {
+              slidesPerView: 1,
             },
           }
         }
