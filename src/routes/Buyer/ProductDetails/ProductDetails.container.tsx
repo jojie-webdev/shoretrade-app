@@ -65,6 +65,7 @@ const ProductDetails = (): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [pressedBoxRadio, setPressedBoxRadio] = useState('');
   const [weight, setWeight] = useState('');
+  const [shouldHideResult, setShouldHideResult] = useState(true);
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
@@ -82,13 +83,15 @@ const ProductDetails = (): JSX.Element => {
   const getListingBoxesResponse =
     (useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) ||
       [])[0] || [];
+  const isLoadingListingBoxes =
+    useSelector((state: Store) => state.getListingBoxes.pending) || false;
 
   const previousWeightRequest = useSelector(
     (state: Store) => state.getListingBoxes.request
   );
 
   const boxRadios =
-    previousWeightRequest?.listingId === listingId
+    previousWeightRequest?.listingId === listingId && !shouldHideResult
       ? getListingBoxesResponse.map((box) => {
           const totalWeight = box.weight * (box.quantity || 0);
           return {
@@ -158,21 +161,28 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const getBoxes = () => {
+    if (!shouldHideResult) {
+      setShouldHideResult(true);
+      setPressedBoxRadio('');
+    }
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
     }
     const timerId = setTimeout(() => {
       if (
-        (weight.length > 0 && weight !== previousWeightRequest?.weight) ||
-        id !== previousWeightRequest?.listingId
-      )
+        weight.length > 0 &&
+        (weight !== previousWeightRequest?.weight ||
+          id !== previousWeightRequest?.listingId)
+      ) {
+        setShouldHideResult(false);
         dispatch(
           getListingBoxesActions.request({
             listingId: id,
             weight,
           })
         );
+      }
     }, 800);
     setTimer(timerId);
   };
@@ -294,6 +304,7 @@ const ProductDetails = (): JSX.Element => {
     setWeight,
     getBoxes,
     onAddToCart,
+    isLoadingListingBoxes,
   };
   return <ProductDetailsView {...generatedProps} />;
 };
