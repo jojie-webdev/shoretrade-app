@@ -88,7 +88,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
           setRef(swiper);
           swiper.update();
         }}
-        slidesPerView={1}
+        slidesPerView={1.05}
         spaceBetween={16}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
@@ -103,13 +103,19 @@ function MultipleCarousel<D extends { id: string }, CP>(
         breakpoints={
           breakpoints || {
             1800: {
+              slidesPerView: 4.2,
+            },
+            1740: {
               slidesPerView: 4,
             },
             1600: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.8,
             },
-            1480: {
+            1400: {
               slidesPerView: 3,
+            },
+            1300: {
+              slidesPerView: 2.8,
             },
             1250: {
               slidesPerView: 2.5,
@@ -127,37 +133,58 @@ function MultipleCarousel<D extends { id: string }, CP>(
               slidesPerView: 2.1,
             },
             1057: {
-            slidesPerView: 2,
-             },
+              slidesPerView: 2,
+            },
             1029: {
-            slidesPerView: 1.9,
-             },
+              slidesPerView: 1.9,
+            },
             1001: {
-            slidesPerView: 1.8,
-             },
+              slidesPerView: 1.8,
+            },
             973: {
-            slidesPerView: 1.7,
-             },
+              slidesPerView: 1.7,
+            },
             945: {
-            slidesPerView: 1.6,
-             },
+              slidesPerView: 1.6,
+            },
             917: {
-            slidesPerView: 1.5,
-             },
+              slidesPerView: 1.5,
+            },
             888: {
-            slidesPerView: 1.4,
-             },
+              slidesPerView: 1.4,
+            },
             850: {
-            slidesPerView: 1.3,
-             },
+              slidesPerView: 1.3,
+            },
             832: {
-            slidesPerView: 1.2,
-             },
+              slidesPerView: 1.2,
+            },
             804: {
-            slidesPerView: 1.1,
-             },
+              slidesPerView: 1.1,
+            },
             790: {
               slidesPerView: 1,
+            },
+            577: {
+              slidesPerView: 1.1,
+            },
+            569: {
+              slidesPerView: 1.2,
+            },
+            540: {
+              slidesPerView: 1.6,
+            },
+            500: {
+              slidesPerView: 1.45,
+            },
+            480: {
+              slidesPerView: 1.35,
+            },
+            460: {
+              slidesPerView: 1.3,
+            },
+            425: {
+              slidesPerView: 1.2,
             },
           }
         }
