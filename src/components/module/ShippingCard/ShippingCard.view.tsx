@@ -46,6 +46,11 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                   <Typography color="shade9" weight="700">
                     {o.name}
                   </Typography>
+                  {o.secondName && (
+                    <Typography color="shade9" weight="700">
+                      {o.secondName}
+                    </Typography>
+                  )}
                   <Spacer />
                   <Typography variant="caption" color="shade6">
                     {o.est}
