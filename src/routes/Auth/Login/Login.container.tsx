@@ -1,6 +1,5 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 
-import { push } from 'connected-react-router';
 import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -15,8 +14,8 @@ const Login = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
   const pending = useSelector((state: Store) => state.login.pending) || false;
+
   const isError =
     (useSelector((state: Store) => state.login.error) || '').length > 0;
 

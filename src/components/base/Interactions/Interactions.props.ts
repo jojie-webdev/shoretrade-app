@@ -24,4 +24,5 @@ export interface InteractionsProps {
   isHover?: boolean;
   iconColor?: string;
   resultCount?: any;
+  customFontSize?: number;
 }

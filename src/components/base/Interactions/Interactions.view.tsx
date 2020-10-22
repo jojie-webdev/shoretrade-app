@@ -29,6 +29,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     iconColor,
     children,
     resultCount,
+    customFontSize,
   } = props;
 
   const getIcon = () => {
@@ -93,7 +94,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
               variant="overline"
               weight="bold"
               color="shade6"
-              style={{ marginRight: '8px' }}
+              style={{ marginRight: '8px', fontSize: customFontSize }}
             >
               {resultCount}
             </Typography>
