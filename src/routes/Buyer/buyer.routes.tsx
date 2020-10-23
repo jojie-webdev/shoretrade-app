@@ -126,6 +126,10 @@ const BuyerRoutes = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
+  const locationState: {
+    ref?: string;
+    title?: string;
+  } = location.state || {};
 
   const firstName =
     useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
@@ -163,6 +167,22 @@ const BuyerRoutes = (): JSX.Element => {
         shouldUseFullWidth: true,
         shouldIncludePadding: false,
         pageTitle: 'Product Details',
+        onBack: history.goBack,
+      };
+    }
+
+    if (pathname === '/buyer/categories' && locationState.ref === 'home') {
+      return {
+        onBack: history.goBack,
+      };
+    }
+
+    if (
+      pathname.includes('/buyer/categories/') &&
+      pathname.replace('/buyer/categories/', '').length > 0
+    ) {
+      return {
+        pageTitle: locationState.title || 'Categories',
         onBack: history.goBack,
       };
     }

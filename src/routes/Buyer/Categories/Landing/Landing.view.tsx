@@ -62,7 +62,12 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
             categories.map((category, index) => {
               return (
                 <Col sm={4} md={4} lg={3} key={category.id}>
-                  <Link to={`${currentPath}/${category.id}`}>
+                  <Link
+                    to={{
+                      pathname: `${currentPath}/${category.id}`,
+                      state: { title: category.name },
+                    }}
+                  >
                     <Card
                       sortIndex={category.sortIndex}
                       id={category.id}

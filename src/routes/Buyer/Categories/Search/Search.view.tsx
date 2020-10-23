@@ -119,7 +119,12 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                 <Col xs={12}>
                   {results.map((result) => (
                     <Link
-                      to={`/buyer/categories/products/${result.id}`}
+                      to={{
+                        pathname: `/buyer/categories/products/${result.id}`,
+                        state: {
+                          title: result.name,
+                        },
+                      }}
                       className="market-item"
                       key={result.id}
                     >
