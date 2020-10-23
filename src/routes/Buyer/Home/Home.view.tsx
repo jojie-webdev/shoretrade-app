@@ -169,7 +169,9 @@ const HomeView = (props: HomeGeneratedProps) => {
             <ViewCol>
               <HomeSectionHeader
                 title="Categories"
-                onClick={() => history.push(BUYER_ROUTES.CATEGORIES)}
+                onClick={() =>
+                  history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
+                }
                 noMargin
               />
 
