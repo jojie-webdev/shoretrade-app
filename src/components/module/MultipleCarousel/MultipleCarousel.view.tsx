@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
@@ -17,6 +16,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const [ref, setRef] = useState<any>(null);
   const theme = useTheme();
   const [currentNdx, setCurrentNdx] = useState(0);
+  const containerWidthRef = useRef<HTMLDivElement | null>(null);
+
   const {
     id,
     Component,
@@ -28,28 +29,14 @@ function MultipleCarousel<D extends { id: string }, CP>(
     emptyText,
   } = props;
 
-  const showThreeItems = useMediaQuery({
-    query: '(max-width: 1480px)',
-  });
-
-  const showTwoItems = useMediaQuery({
-    query: '(max-width: 1200px)',
-  });
-
-  const showOneItem = useMediaQuery({
-    query: '(max-width: 650px)',
-  });
-
-  // These breakpoints are specific to home page, once this gets used
-  // in another screen feel free to extract this code to make it more reusable
   function slidesPerView() {
-    if (showOneItem) return 1;
+    if (containerWidthRef.current) {
+      const num =
+        containerWidthRef.current.getBoundingClientRect().width / (265 + 32);
+      return +num.toFixed(1);
+    }
 
-    if (showTwoItems) return 2;
-
-    if (showThreeItems) return 3;
-
-    return 4;
+    return 1;
   }
 
   if (!data) {
@@ -70,7 +57,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const showArrow = data.length > slidesPerView();
 
   return (
-    <Container>
+    <Container ref={containerWidthRef}>
       {showArrow && (
         <ArrowArea left>
           <Touchable
@@ -86,10 +73,9 @@ function MultipleCarousel<D extends { id: string }, CP>(
         id={id}
         onSwiper={(swiper) => {
           setRef(swiper);
-          swiper.update();
         }}
-        slidesPerView={1.2}
-        spaceBetween={16}
+        slidesPerView="auto"
+        spaceBetween={32}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
           setCurrentNdx(swiper.activeIndex);
@@ -98,27 +84,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
             onSlideChange(swiper.activeIndex);
           }
         }}
-        // These breakpoints are specific to home page, once this gets used
-        // in another screen feel free to extract this code to make it more reusable
-        breakpoints={
-          breakpoints || {
-            1480: {
-              slidesPerView: 4.35,
-            },
-            1320: {
-              slidesPerView: 3.5,
-            },
-            1240: {
-              slidesPerView: 3.2,
-            },
-            768: {
-              slidesPerView: 2.1,
-            },
-            650: {
-              slidesPerView: 1.3,
-            },
-          }
-        }
+        breakpoints={breakpoints}
       >
         {data.map((d) => {
           return (
