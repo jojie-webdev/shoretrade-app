@@ -22,12 +22,15 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     isDefault,
     pending,
     onClickSave,
+    onDeleteAddress,
     toggleIsDefault,
     setAddress,
     unitNumber,
     setUnitNumber,
     isSuccess,
     type,
+    isDelete,
+    toggleisDelete,
   } = props;
 
   let successContent = '';
@@ -36,9 +39,12 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
   if (type === 'CREATE') {
     routeHeader = 'Add Address';
     successContent = 'Address has successfully been created!';
-  } else if (type === 'EDIT') {
+  } else if (type === 'EDIT' && !isDelete) {
     routeHeader = 'Edit Address';
     successContent = 'Your account details have successfully been updated!';
+  } else if (type === 'EDIT' && isDelete) {
+    routeHeader = 'Edit Address';
+    successContent = 'Your address has been deleted!';
   }
 
   const [errors, setErrors] = useReducer(
@@ -61,15 +67,6 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
 
   return (
     <Container>
-      {isSuccess && (
-        <StyledAlert
-          content={successContent}
-          variant="success"
-          alignText="center"
-          fullWidth
-        />
-      )}
-
       <InnerRouteHeader title={routeHeader} />
 
       <FixedWidthContainer>
@@ -85,6 +82,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
                 value: address?.address || '',
                 label: 'Address',
                 error: pathOr('', ['address', '0'], errors),
+                disabled: type === 'EDIT' ? true : false,
               }}
             />
           </Col>
@@ -96,6 +94,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
               value={unitNumber}
               onChange={(e) => setUnitNumber(e.target.value)}
               error={pathOr('', ['unitNumber', '0'], errors)}
+              disabled={type === 'EDIT' ? true : false}
             />
           </Col>
         </Row>
@@ -112,6 +111,21 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
 
       <Row nogutter>
         <Button text="Submit" onClick={validate} loading={pending} />
+        {type === 'EDIT' ? (
+          <Button
+            className="delete-btn"
+            text="Delete"
+            onClick={() => {
+              if (toggleisDelete) {
+                toggleisDelete();
+              }
+              if (onDeleteAddress) {
+                onDeleteAddress();
+              }
+            }}
+            loading={pending}
+          />
+        ) : null}
       </Row>
     </Container>
   );

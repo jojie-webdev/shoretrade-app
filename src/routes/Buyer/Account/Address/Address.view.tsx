@@ -15,7 +15,7 @@ import {
   Container,
   AddressTextContainer,
   InteractionCol,
-  SmallAlertContainer,
+  Notification,
 } from './Address.style';
 
 const AddressText = (
@@ -36,9 +36,14 @@ const AddressText = (
   </AddressTextContainer>
 );
 const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
-  const { pending, addresses, goToEditAddress, goToAddAddress } = props;
+  const {
+    pending,
+    addresses,
+    goToEditAddress,
+    goToAddAddress,
+    notificationMessage,
+  } = props;
   const theme = useTheme();
-
   if (pending) {
     return <Loading />;
   }
@@ -46,16 +51,15 @@ const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
   return (
     <Container>
       <InnerRouteHeader title="Delivery Addresses" />
-      {/* <SmallAlertContainer>
-        <div className="icon-container">
-          <InfoFilled fill={theme.brand.alert} height={16} width={16} />
-        </div>
-        <Typography color="alert" variant="caption">
-          New and updated addresses require approval before they can be used.
-          This process should take less than 24 hours.
-        </Typography>
-      </SmallAlertContainer> */}
 
+      {notificationMessage ? (
+        <Notification
+          content={notificationMessage}
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      ) : null}
       <Row className="btn-add-address">
         <Col>
           <Button text="Add a new address" onClick={goToAddAddress} />

@@ -91,10 +91,14 @@ const SearchAddress = (): JSX.Element => {
 
   const setDefaultAddress = () => {
     const filterAddressDefault = addresses.filter((i) => i.default);
-    const filteredArray = addressOptions.find(
-      (a) => a.value === filterAddressDefault[0].id
-    );
-    setCurrentAddressSelected(filteredArray);
+    if (filterAddressDefault.length > 0) {
+      const filteredArray = addressOptions.find(
+        (a) => a.value === filterAddressDefault[0].id
+      );
+      setCurrentAddressSelected(filteredArray);
+    } else {
+      setCurrentAddressSelected({ label: '', value: '' });
+    }
   };
 
   const changeAddressModal = (value: boolean) => {

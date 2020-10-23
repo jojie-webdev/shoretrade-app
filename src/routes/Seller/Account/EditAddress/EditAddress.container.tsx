@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { updateAddressActions } from 'store/actions';
 import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
@@ -17,6 +17,7 @@ import {
 import EditAddressView from './EditAddress.view';
 const EditAddress = (): JSX.Element => {
   // MARK:- Store
+  const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
   const pending = useSelector(
@@ -38,7 +39,7 @@ const EditAddress = (): JSX.Element => {
     ? addressToPlaceData(currentAddress)
     : null;
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
-
+  const [isDelete, setIsDelete] = useState(false);
   // MARK:- Methods
   const onClickSave = () => {
     if (address) {
@@ -54,11 +55,31 @@ const EditAddress = (): JSX.Element => {
         )
       );
       setIsSubmitted(true);
+      history.goBack();
     }
   };
 
+  const onDeleteAddress = () => {
+    if (address) {
+      const approved = 'DECLINED';
+      dispatch(
+        updateAddressActions.request(
+          placeDataToUpdateAddressMeta(
+            address as PlaceData,
+            unitNumber,
+            companyId,
+            isDefault || false,
+            addressId,
+            approved
+          )
+        )
+      );
+      setIsSubmitted(true);
+      history.goBack();
+    }
+  };
   const toggleIsDefault = () => setIsDefault(!isDefault);
-
+  const toggleisDelete = () => setIsDelete(!isDelete);
   // MARK:- Effects
   useEffect(() => {
     const { companyId, addressId } = qs.parse(location.search, {
@@ -105,7 +126,10 @@ const EditAddress = (): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
+    onDeleteAddress,
     isSuccess: updateAddress.data?.status === 200 && submitted,
+    isDelete,
+    toggleisDelete,
   };
   return <EditAddressView {...generatedProps} />;
 };

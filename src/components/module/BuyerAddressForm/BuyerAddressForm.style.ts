@@ -19,6 +19,9 @@ export const Container = styled.div`
   .checkbox-col {
     padding-left: 0px !important;
   }
+  .delete-btn {
+    margin-left: 8px;
+  }
 `;
 
 export const StyledCheckbox = styled(Checkbox)`

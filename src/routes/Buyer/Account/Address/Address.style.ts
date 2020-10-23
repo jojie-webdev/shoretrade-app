@@ -1,6 +1,6 @@
+import Alert from 'components/base/Alert';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
-
 export const Container = styled.div`
   .address-row {
     margin-bottom: 24px;
@@ -36,4 +36,8 @@ export const SmallAlertContainer = styled.div`
   .icon-container {
     margin-right: 8px;
   }
+`;
+
+export const Notification = styled(Alert)`
+  margin-bottom: 16px;
 `;

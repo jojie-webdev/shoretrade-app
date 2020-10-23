@@ -30,10 +30,17 @@ export function placeDataToUpdateAddressMeta(
   unitNumber: string,
   companyId: string,
   isDefault: boolean,
-  addressId: string
+  addressId: string,
+  approved?: string
 ): UpdateAddressMeta {
   return {
-    ...placeDataToAddAddressMeta(data, unitNumber, companyId, isDefault),
+    ...placeDataToAddAddressMeta(
+      data,
+      unitNumber,
+      companyId,
+      isDefault,
+      approved
+    ),
     addressId,
   };
 }

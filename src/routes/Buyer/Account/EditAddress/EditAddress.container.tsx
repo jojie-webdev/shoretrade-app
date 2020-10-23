@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { updateAddressActions } from 'store/actions';
 import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
@@ -15,6 +15,7 @@ import EditAddresView from './EditAddress.view';
 
 const EditAddress = (): JSX.Element => {
   // MARK:- Variables
+  const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
   const { companyId, addressId } = location.state as QueryParams;
@@ -27,6 +28,7 @@ const EditAddress = (): JSX.Element => {
   const updateAddress = useSelector((state: Store) => state.updateAddress);
   const [submitted, setIsSubmitted] = useState(false);
   const [unitNumber, setUnitNumber] = useState('');
+  const [isDelete, setIsDelete] = useState(false);
   const [isDefault, setIsDefault] = useState<boolean | null>(null);
   const currentAddress = addresses.find((a) => a.id === addressId);
   const initialAddress = currentAddress
@@ -48,8 +50,30 @@ const EditAddress = (): JSX.Element => {
         )
       );
       setIsSubmitted(true);
+      history.goBack();
     }
   };
+
+  const onDeleteAddress = () => {
+    if (address) {
+      const approved = 'DECLINED';
+      dispatch(
+        updateAddressActions.request(
+          placeDataToUpdateAddressMeta(
+            address as PlaceData,
+            unitNumber,
+            companyId,
+            isDefault || false,
+            addressId,
+            approved
+          )
+        )
+      );
+      setIsSubmitted(true);
+      history.goBack();
+    }
+  };
+  const toggleisDelete = () => setIsDelete(!isDelete);
   const toggleIsDefault = () => setIsDefault(!isDefault);
   // MARK:- Effects
   useEffect(() => {
@@ -77,12 +101,15 @@ const EditAddress = (): JSX.Element => {
     address: address as PlaceData,
     isDefault,
     onClickSave,
+    onDeleteAddress,
     pending,
     toggleIsDefault,
     setAddress,
     unitNumber,
     setUnitNumber,
     isSuccess: updateAddress.data?.status === 200 && submitted,
+    toggleisDelete,
+    isDelete,
   };
   return <EditAddresView {...generatedProps} />;
 };

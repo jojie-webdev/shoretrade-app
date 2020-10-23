@@ -12,6 +12,7 @@ export type AddAddressMeta = {
   streetNumber: string;
   suburb: string;
   unitNumber: string;
+  approved?: string;
 };
 
 export type AddAddressPayload = GenericResponse;
