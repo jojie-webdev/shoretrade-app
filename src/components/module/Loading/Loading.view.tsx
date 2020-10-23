@@ -1,18 +1,21 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Spinner from 'components/base/Spinner';
+import { useTheme } from 'utils/Theme';
 
 import { LoadingProps } from './Loading.props';
 import { Container, Label } from './Loading.style';
 
 const Loading = (props: LoadingProps): JSX.Element => {
-  // const theme = useTheme();
-  const { label = 'Loading...' } = props;
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+  const { label = 'Loading...', color = 'shade2' } = props;
+  const defaultColor = isSeller ? 'shade2' : 'shade6';
+
   return (
     <Container>
       <Spinner />
-      <Label variant="label" color="shade2">
+      <Label variant="label" color={color || defaultColor}>
         {label}
       </Label>
     </Container>

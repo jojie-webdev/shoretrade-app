@@ -108,7 +108,9 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   return (
     <Container>
       {loadingShippingQuotes ? (
-        <Loading label="Loading Shipping Quotes" />
+        <div className="center">
+          <Loading label="Loading Shipping Quotes" color="shade6" />
+        </div>
       ) : (
         <>
           {isEmpty(groupedOrders) ? (

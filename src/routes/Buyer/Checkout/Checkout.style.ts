@@ -17,6 +17,11 @@ export const Container = styled.div`
     margin-top: 32px;
     margin-bottom: 16px;
   }
+  .center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
 `;
 
 export const Footer = styled.div`
