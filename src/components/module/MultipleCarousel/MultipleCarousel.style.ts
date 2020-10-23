@@ -11,6 +11,10 @@ export const Container = styled.div`
   .swiper-wrapper {
     padding-top: 16px;
   }
+
+  .swiper-slide {
+    width: ${(props) => (props.theme.appType === 'buyer' ? '265px' : 'auto')};
+  }
 `;
 
 export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`

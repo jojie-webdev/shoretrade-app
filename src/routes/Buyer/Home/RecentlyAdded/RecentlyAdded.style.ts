@@ -33,7 +33,7 @@ export const PreviewContainer = styled.div`
       margin-right: 32px;
 
       .card {
-        width: 281px;
+        width: 265px;
       }
     }
   }
