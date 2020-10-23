@@ -10,6 +10,7 @@ export interface CarouselProps {
   hideArrowArea?: boolean;
   aspectRatio?: AspectRatio;
   addMargin?: boolean;
+  arrowInside?: boolean;
 }
 
 export type AspectRatio = '16:9' | '9:4';

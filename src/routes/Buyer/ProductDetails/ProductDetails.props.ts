@@ -29,4 +29,5 @@ export interface ProductDetailsGeneratedProps {
   weight: string;
   setWeight: Dispatch<string>;
   getBoxes: () => void;
+  isLoadingListingBoxes: boolean,
 }

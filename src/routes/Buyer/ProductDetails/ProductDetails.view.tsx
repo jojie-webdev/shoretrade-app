@@ -55,6 +55,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     pressedBoxRadio,
     setPressedBoxRadio,
     onAddToCart,
+    isLoadingListingBoxes,
   } = props;
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
@@ -74,14 +75,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     }
   }, [newCurrentListing, newCurrentListing?.images]);
 
-  const hideCarouselArrowArea = useMediaQuery({
-    query: `(max-width: 565px)`,
-  });
-
-  const mediumArrowWidth = useMediaQuery({
-    query: BREAKPOINTS['md'],
-  });
-
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
   });
@@ -89,110 +82,111 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     <Container>
       {newCurrentListing !== undefined ? (
         <>
-          <BannerContainer>
-            {images.includes(placeholderImage) ? (
-              <img className="placeholder" src={images[0]} alt="Product" />
-            ) : (
-              <Carousel
-                id={'product-details-carousel'}
-                images={images}
-                loop
-                autoplay
-                hideArrowArea={hideCarouselArrowArea}
-                arrowWidth={mediumArrowWidth ? 75 : undefined}
-                // height="295px"
-                aspectRatio="9:4"
-              />
-            )}
-          </BannerContainer>
-          <div className="wrapper">
-            {newCurrentListing.description ? (
-              <Typography variant="label" className="description">
-                {newCurrentListing.description}
-              </Typography>
-            ) : null}
-            <DetailsContainer nogutter>
-              <Col xs={12} sm={12} md={12} lg={6}>
-                <ProductDetailsCard1View
-                  cBorderRadius={
-                    verticalView ? '8px 8px 0px 0px' : '8px 0px 0px 0px'
-                  }
-                  cBorderWidth={'2px 2px 1px 2px'}
-                  isFavorite={favorite}
-                  onFavorite={onFavorite}
-                  {...productDetailsCard1Props}
+          <DetailsContainer>
+            <Col xs={12} sm={12} md={12} lg={6}>
+              <BannerContainer>
+                <Carousel
+                  id={'product-details-carousel'}
+                  images={images}
+                  loop
+                  autoplay
+                  aspectRatio="9:4"
+                  arrowInside
                 />
-                <ProductDetailsCard6View
-                  cBorderRadius="0"
-                  cBorderWidth="1px 2px 0px 2px"
-                  {...productDetailsCard6Props}
-                />
-                <SellerRatingContainer>
-                  <ProductSellerRating isSmallName {...sellerRatingProps} />
-                </SellerRatingContainer>
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={6}>
-                <DesiredQuantityContainer>
-                  <div className="content">
-                    <TextFieldWrapper>
-                      <TextField
-                        label="Desired Quantity"
-                        LeftComponent={
-                          <Typography color="shade6">{unit}</Typography>
-                        }
-                        value={weight}
-                        onChangeText={setWeight}
-                        type="numeric"
-                        onChange={() => getBoxes()}
-                      />
-                    </TextFieldWrapper>
-                    <RemainingWrapper>
-                      <Alert
-                        variant="alert"
-                        content={`Remaining ${remainingWeight} ${unit}`}
-                        style={{ borderRadius: 4, padding: 8 }}
-                        fullWidth
-                      />
-                    </RemainingWrapper>
+              </BannerContainer>
 
-                    {!isEmpty(boxRadios) ? (
-                      <BoxContainer>
-                        <Typography
-                          variant="overline"
-                          color="shade6"
-                          style={{ paddingTop: 56 }}
-                        >
-                          BEST BOX WEIGHT MATCH
-                        </Typography>
-                        {boxRadios.map((p) => (
-                          <BoxRadioContainer key={p.id}>
-                            <BoxRadio
-                              checked={p.id === pressedBoxRadio}
-                              {...p}
-                              onClick={() =>
-                                setPressedBoxRadio((prevState) =>
-                                  p.id === prevState ? '' : p.id
-                                )
-                              }
-                            />
-                          </BoxRadioContainer>
-                        ))}
-                      </BoxContainer>
-                    ) : (
-                      <Loading />
-                    )}
-                  </div>
-                  <ButtonContainer>
-                    <AddToCartButton
-                      text="Add to Cart"
-                      onClick={onAddToCart}
-                      variant={pressedBoxRadio ? undefined : 'disabled'}
+              {newCurrentListing.description ? (
+                <Typography variant="label" className="description">
+                  {newCurrentListing.description}
+                </Typography>
+              ) : null}
+              <ProductDetailsCard1View
+                cBorderRadius={
+                  verticalView ? '8px 8px 0px 0px' : '8px 8px 0px 0px'
+                }
+                cBorderWidth={'2px 2px 1px 2px'}
+                isFavorite={favorite}
+                onFavorite={onFavorite}
+                {...productDetailsCard1Props}
+              />
+              <ProductDetailsCard6View
+                cBorderRadius="0"
+                cBorderWidth="1px 2px 0px 2px"
+                {...productDetailsCard6Props}
+              />
+              <SellerRatingContainer>
+                <ProductSellerRating isSmallName {...sellerRatingProps} />
+              </SellerRatingContainer>
+            </Col>
+            <Col xs={12} sm={12} md={12} lg={6}>
+              <DesiredQuantityContainer>
+                <div className="content">
+                  <TextFieldWrapper>
+                    <TextField
+                      label="Desired Quantity"
+                      LeftComponent={
+                        <Typography color="shade6">{unit}</Typography>
+                      }
+                      value={weight}
+                      onChangeText={setWeight}
+                      type="numeric"
                     />
-                  </ButtonContainer>
-                </DesiredQuantityContainer>
-              </Col>
-            </DetailsContainer>
-          </div>
+                  </TextFieldWrapper>
+                  <RemainingWrapper>
+                    <Alert
+                      variant="alert"
+                      content={`Remaining ${remainingWeight} ${unit}`}
+                      style={{
+                        borderRadius: 4,
+                        padding: 8,
+                      }}
+                      fullWidth
+                      alignText="center"
+                      small
+                    />
+                  </RemainingWrapper>
+
+                  {!isEmpty(boxRadios) ? (
+                    <BoxContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade6"
+                        style={{ paddingTop: 32 }}
+                      >
+                        BEST BOX WEIGHT MATCH
+                      </Typography>
+                      {boxRadios.map((p) => (
+                        <BoxRadioContainer key={p.id}>
+                          <BoxRadio
+                            checked={p.id === pressedBoxRadio}
+                            {...p}
+                            onClick={() =>
+                              setPressedBoxRadio((prevState) =>
+                                p.id === prevState ? '' : p.id
+                              )
+                            }
+                          />
+                        </BoxRadioContainer>
+                      ))}
+                    </BoxContainer>
+                  ) : (
+                    isLoadingListingBoxes && (
+                      <div className="box-loading">
+                        <Loading />
+                      </div>
+                    )
+                  )}
+                </div>
+                <ButtonContainer>
+                  <AddToCartButton
+                    text="Add to Cart"
+                    onClick={onAddToCart}
+                    variant={pressedBoxRadio ? undefined : 'disabled'}
+                  />
+                </ButtonContainer>
+              </DesiredQuantityContainer>
+            </Col>
+          </DetailsContainer>
         </>
       ) : (
         <Loading />

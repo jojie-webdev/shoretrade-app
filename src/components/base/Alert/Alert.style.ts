@@ -46,8 +46,12 @@ export const Container = styled.div<AlertContainerProps>`
     align-items: ${(props) => props.alignText}; // defaults to 'flex-start'
 
     .svg-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin-right: 8px;
-      padding-top: 2px;
+      height: ${({ small }) => (small ? '13.3px' : '20px')};
+      width: ${({ small }) => (small ? '13.3px' : '20px')};
     }
   }
 

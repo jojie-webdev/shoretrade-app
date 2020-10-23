@@ -24,6 +24,7 @@ const Alert = (props: AlertProps): JSX.Element => {
     buttonText,
     alignText = 'flex-start',
     fullWidth,
+    small,
     ...containerProps
   } = props;
 
@@ -46,14 +47,19 @@ const Alert = (props: AlertProps): JSX.Element => {
       variant={variant}
       alignText={alignText}
       fullWidth={fullWidth}
+      small={small}
       {...containerProps}
     >
       <div className="top-content-container">
         <div className="svg-container">
-          <Icon fill={isSeller ? theme.grey.noshade : theme.grey.shade8} />
+          <Icon
+            width={small ? 13.13 : 20}
+            height={small ? 13.13 : 20}
+            fill={isSeller ? theme.grey.noshade : theme.grey.shade8}
+          />
         </div>
         <Typography
-          variant="label"
+          variant={small ? 'caption' : 'label'}
           color={isSeller ? 'noshade' : 'shade8'}
           weight="500"
         >

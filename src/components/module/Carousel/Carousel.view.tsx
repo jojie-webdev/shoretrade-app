@@ -7,7 +7,15 @@ import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { CarouselProps } from './Carousel.props';
-import { SwiperArea, ArrowArea, Image, ImageContainer } from './Carousel.style';
+import {
+  SwiperArea,
+  ArrowArea,
+  Image,
+  ImageContainer,
+  LeftInsideArrowArea,
+  RightInsideArrowArea,
+  ArrowButton,
+} from './Carousel.style';
 
 SwiperCore.use([Autoplay]);
 
@@ -24,6 +32,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     hideArrowArea,
     aspectRatio = '16:9',
     addMargin,
+    arrowInside,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
@@ -72,6 +81,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     return <></>;
   }
 
+  const hideOutsideArrows = arrowInside || hideArrowArea || false;
   return (
     <SwiperContainer
       height={height}
@@ -81,7 +91,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         setShowSwiperItems(false);
       }}
     >
-      {!hideArrowArea && (
+      {!hideOutsideArrows && (
         <ArrowArea
           style={{
             width: arrowAreaWidth,
@@ -104,9 +114,35 @@ const Carousel = (props: CarouselProps): JSX.Element => {
       )}
       <SwiperArea
         style={{
-          width: hideArrowArea ? '100%' : swiperAreaWidth,
+          width: hideOutsideArrows ? '100%' : swiperAreaWidth,
         }}
       >
+        {arrowInside && (
+          <>
+            <LeftInsideArrowArea>
+              <ArrowButton
+                onClick={() => {
+                  if (swiperRef) {
+                    swiperRef.slidePrev();
+                  }
+                }}
+              >
+                <CarouselChevronLeft width={14} height={14} />
+              </ArrowButton>
+            </LeftInsideArrowArea>
+            <RightInsideArrowArea>
+              <ArrowButton
+                onClick={() => {
+                  if (swiperRef) {
+                    swiperRef.slideNext();
+                  }
+                }}
+              >
+                <CarouselChevronRight width={14} height={14} />
+              </ArrowButton>
+            </RightInsideArrowArea>
+          </>
+        )}
         <Swiper
           id={id}
           spaceBetween={10}
@@ -127,7 +163,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           {showSwiperItems && swiperItems}
         </Swiper>
       </SwiperArea>
-      {!hideArrowArea && (
+      {!hideOutsideArrows && (
         <ArrowArea
           style={{
             width: arrowAreaWidth,

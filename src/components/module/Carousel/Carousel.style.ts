@@ -26,6 +26,40 @@ export const SwiperArea = styled.div`
   height: 100%;
   width: calc(100% - 200px);
   overflow-x: hidden;
+  position: relative;
+`;
+
+export const LeftInsideArrowArea = styled.div`
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  width: 40px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+export const RightInsideArrowArea = styled(LeftInsideArrowArea)`
+  left: auto;
+  right: 8px;
+`;
+
+export const ArrowButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  cursor: pointer;
+
+  :hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
 `;
 
 export const ArrowArea = styled.div`
