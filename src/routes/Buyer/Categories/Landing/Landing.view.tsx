@@ -19,26 +19,7 @@ import {
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
-  const {
-    categories,
-    search,
-    onChangeSearchValue,
-    resetSearchValue,
-    currentPath,
-    onLoad,
-  } = props;
-
-  // useEffect(() => {
-  //   onLoad();
-  // }, []);
-
-  // if (categories.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
+  const { categories, currentPath } = props;
 
   return (
     <CategoriesContainer>
@@ -46,11 +27,6 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
         <Col xs={12}>
           <SearchAddressView />
         </Col>
-        {/* <Col xs={1.5}>
-          <FilterButton>
-            Filters <Filter></Filter>
-          </FilterButton>
-        </Col> */}
       </Row>
       {categories.length <= 0 ? (
         <LoadingContainer>
@@ -59,9 +35,9 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
       ) : (
         <Row className="cards">
           {categories.length > 0 &&
-            categories.map((category, index) => {
+            categories.map((category) => {
               return (
-                <Col sm={4} md={4} lg={3} key={category.id}>
+                <Col xs={6} sm={6} md={6} lg={4} xl={3} key={category.id}>
                   <Link
                     to={{
                       pathname: `${currentPath}/${category.id}`,
