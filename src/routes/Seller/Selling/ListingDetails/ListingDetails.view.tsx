@@ -56,7 +56,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   }, [carousel.items]);
 
   const addSeperatorSpacing = useMediaQuery({
-    query: '(min-width: 1270px)',
+    query: '(min-width: 992px)',
   });
 
   const hideCarouselArrowArea = useMediaQuery({

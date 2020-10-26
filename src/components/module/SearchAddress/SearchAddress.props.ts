@@ -1,44 +1,29 @@
-import { InputHTMLAttributes } from 'react';
+import { Dispatch, InputHTMLAttributes } from 'react';
 
 import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
-export type addressSelectionOption = {
-  label: string;
-  value: string;
-};
 
-export type searchInterface = {
+export type SearchInterface = {
   count: string;
   label: string;
   value: string;
 };
 
-export type changeAddress = {
-  currentAddress: addressSelectionOption;
-  newChangeAddress: string;
-};
-
 export interface SearchAddressProps {
-  load: boolean;
   //#region Address
-  addressModalChange: boolean;
-  addressOptions: addressSelectionOption[];
-  currentAddressSelected: addressSelectionOption | undefined;
-  changeAddressModal: (value: boolean) => void;
-  changeAddressFunc: (value: string) => void;
-  changeAddress: {
-    currentAddress: addressSelectionOption | undefined;
-    newChangeAddress: string;
-  };
-  setDefaultAddress: () => void;
-  confirmChangeAddress: () => void;
+  addressOptions: { label: string; value: string }[];
+  currentDefaultAddressId: string;
+  targetAddress: string;
+  setTargetAddress: Dispatch<string>;
+  setDefaultAddress: (addressId: string) => void;
   //#endregion
 
   //#region Search
-  onSearchChange: (value: string) => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
-
+  isSearching: boolean;
   searchTerm: string;
+  setSearchTerm: Dispatch<string>;
   onReset: () => void;
-  data: searchInterface[];
+  data: SearchInterface[];
+  shouldHideResult: boolean;
   //#endregion
 }

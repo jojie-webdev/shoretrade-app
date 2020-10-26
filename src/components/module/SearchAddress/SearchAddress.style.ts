@@ -44,20 +44,12 @@ export const Container = styled.div`
   flex-wrap: wrap;
   margin-bottom: 32px;
 
-  .wrapper {
-    // width: calc(100% - 200px);
+  .search-result {
     width: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;
     padding-top: 24px;
-    @media ${BREAKPOINTS['sm']} {
-      width: 100%;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: calc(100% - 150px);
-    }
   }
 `;
 

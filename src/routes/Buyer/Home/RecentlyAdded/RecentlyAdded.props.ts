@@ -4,7 +4,4 @@ import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepag
 
 export interface RecentlyAddedGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-  resetSearchValue: () => void;
 }

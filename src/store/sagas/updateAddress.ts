@@ -13,6 +13,7 @@ import {
   updateAddressActions,
   getUserActions,
   getAddressesActions,
+  cartActions,
 } from '../actions';
 
 function* updateAddressRequest(
@@ -44,6 +45,7 @@ function* updateAddressSuccess(
   action: AsyncAction<UpdateAddressMeta, UpdateAddressPayload>
 ) {
   const companyId = pathOr('', ['payload', 'data', 'companyId'], action);
+  yield put(cartActions.clear());
   yield put(
     getAddressesActions.request({
       companyId,

@@ -17,7 +17,7 @@ import { PreviewContainer, LoadingContainer } from './RecentlyAdded.style';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   // const theme = useTheme();
-  const { results, onChangeSearchValue, search, resetSearchValue } = props;
+  const { results } = props;
 
   return (
     <PreviewContainer>

@@ -44,12 +44,12 @@ const SellerDetails = (): JSX.Element => {
     useSelector((state: Store) => state.getSellerById.request?.sellerId) || '';
 
   const searching = () => {
-    dispatch(
-      searchAndCountProductTypeActions.request({
-        term: searchWord,
-        address: '',
-      })
-    );
+    // dispatch(
+    //   searchAndCountProductTypeActions.request({
+    //     term: searchWord,
+    //     address: '',
+    //   })
+    // );
   };
 
   const results = (

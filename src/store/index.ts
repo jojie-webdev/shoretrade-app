@@ -32,6 +32,7 @@ const persistConfig = {
     'getCustomFormData',
     'getListingFormData',
     'cart',
+    'history',
   ],
 };
 

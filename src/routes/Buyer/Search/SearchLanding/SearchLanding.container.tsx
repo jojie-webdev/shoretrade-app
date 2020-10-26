@@ -40,12 +40,12 @@ const SearchLanding = (): JSX.Element => {
     ) || [];
 
   const search = () => {
-    dispatch(
-      searchAndCountProductTypeActions.request({
-        term: searchTerm,
-        address: '',
-      })
-    );
+    // dispatch(
+    //   searchAndCountProductTypeActions.request({
+    //     term: searchTerm,
+    //     address: '',
+    //   })
+    // );
   };
 
   const onReset = () => {

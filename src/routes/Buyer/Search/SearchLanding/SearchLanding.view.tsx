@@ -32,9 +32,6 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
     results,
     onReset,
     recent,
-    // addresses,
-    // selectedAddress,
-    // selectAddress,
     saveSearchHistory,
   } = props;
 
@@ -47,30 +44,6 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
         <SearchContainer>
           <SearchAddressView />
         </SearchContainer>
-
-        {!isEmpty(data) && (
-          <Typography variant="overline" color="shade6">
-            {showRecentSearch ? 'Recent Searches' : `Results ${results.length}`}
-          </Typography>
-        )}
-        {isEmpty(data) && searchTerm.length > 0 && !loading ? (
-          <EmptyState
-            onButtonClicked={onReset}
-            Svg={Octopus}
-            title="No search result"
-            buttonText="Reset Search"
-          />
-        ) : (
-          <PaginateList
-            list={data || []}
-            labelPath={['label']}
-            maxItemPerPage={6}
-            onClickItem={(item) => {
-              history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-              saveSearchHistory(item.value, item.label, item.count);
-            }}
-          />
-        )}
       </Content>
     </Container>
   );

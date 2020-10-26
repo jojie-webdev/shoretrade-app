@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
@@ -7,7 +7,6 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
-import { isEmpty } from 'ramda';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
@@ -20,37 +19,35 @@ import {
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const theme = useTheme();
   const {
-    addressModalChange,
     addressOptions,
-    currentAddressSelected,
-    changeAddressModal,
-    changeAddressFunc,
-    changeAddress,
+    currentDefaultAddressId,
+    targetAddress,
+    setTargetAddress,
     setDefaultAddress,
-    confirmChangeAddress,
-    onSearchChange,
     saveSearchHistory,
     searchTerm,
+    setSearchTerm,
     onReset,
     data,
-    load,
+    isSearching,
+    shouldHideResult,
   } = props;
 
   const history = useHistory();
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <Container>
       <ConfirmationModal
-        isOpen={addressModalChange}
+        isOpen={targetAddress.length > 0}
         title="Change your Buying Address?"
         description="Are you sure you want to change your buying address? This will reset your current cart."
         action={() => {
-          confirmChangeAddress();
-          changeAddressModal(false);
+          setDefaultAddress(targetAddress);
         }}
         actionText="Okay"
         onClickClose={() => {
-          setDefaultAddress();
-          changeAddressModal(false);
+          setTargetAddress('');
         }}
       />
       <div style={{ flexDirection: 'column', flex: 3 }}>
@@ -59,8 +56,11 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           <input
             type="text"
             placeholder="Search for a product"
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onFocus={() => {
+              setIsFocused(true);
+            }}
           />
           <div onClick={onReset} className="close-svg-container">
             <CloseFilled
@@ -80,42 +80,39 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           label="Buying For"
           size="small"
           onChange={(e) => {
-            if (e.value !== currentAddressSelected?.value) {
-              changeAddressModal(true);
-              changeAddressFunc(e.value);
-            }
+            setTargetAddress(e.value);
           }}
-          value={currentAddressSelected}
+          value={currentDefaultAddressId}
         />
       </AddressContainer>
-      <div className="wrapper">
-        {!isEmpty(data) && searchTerm.length > 2 ? (
-          <Typography variant="overline" color="shade6">
-            {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
-          </Typography>
-        ) : null}
-
-        {isEmpty(data) && searchTerm.length > 2 && !load ? (
+      <div className="search-result">
+        {!shouldHideResult && !isSearching && (
           <>
-            <EmptyState
-              onButtonClicked={onReset}
-              Svg={Octopus}
-              title="No search result"
-              buttonText="Reset Search"
-            />
+            {data.length === 0 && searchTerm.length > 2 && (
+              <EmptyState
+                onButtonClicked={onReset}
+                Svg={Octopus}
+                title="No search result"
+                buttonText="Reset Search"
+              />
+            )}
+            {isFocused && data.length > 0 && (
+              <>
+                <Typography variant="overline" color="shade6">
+                  {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
+                </Typography>
+                <PaginateList
+                  list={data}
+                  labelPath={['label']}
+                  maxItemPerPage={6}
+                  onClickItem={(item) => {
+                    saveSearchHistory(item.value, item.label, item.count);
+                    history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                  }}
+                />
+              </>
+            )}
           </>
-        ) : (
-          <PaginateList
-            list={searchTerm.length > 2 ? data || [] : []}
-            labelPath={['label']}
-            maxItemPerPage={6}
-            // resultCount="3"
-            onClickItem={(item) => {
-              history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-              saveSearchHistory(item.value, item.label, item.count);
-              window.location.reload();
-            }}
-          />
         )}
       </div>
     </Container>
