@@ -19,25 +19,13 @@ import {
   LoadingContainer,
   Image,
   DetailsContainer,
-  FilterButton,
   ResultContainer,
 } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
-  const {
-    results,
-    searchValue,
-    onChangeSearchValue,
-    resetSearchValue,
-    onLoad,
-    categoryId,
-    addresses,
-    selectedAddress,
-    selectAddress,
-  } = props;
+  const { results, onLoad, categoryId } = props;
 
   useEffect(() => {
-    selectAddress(categoryId);
     onLoad(categoryId);
   }, []);
 
@@ -73,13 +61,6 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     </>
   );
 
-  // if (results.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
   return (
     <SearchContainer>
       <Row className="search-row">
@@ -108,11 +89,6 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                     {results.length}
                   </Typography>
                 </Row>
-                {/* <Col xs={2}>
-                  <FilterButton>
-                    Filters <Filter></Filter>
-                  </FilterButton>
-                </Col> */}
               </ResultContainer>
 
               <Row className="items-row">
@@ -132,7 +108,6 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                         // eslint-disable-next-line react/no-children-prop
                         children={children(result)}
                         isHover
-                        // value={r.name}
                       />
                     </Link>
                   ))}

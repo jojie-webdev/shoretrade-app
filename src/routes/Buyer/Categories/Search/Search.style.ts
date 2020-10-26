@@ -84,11 +84,3 @@ export const ResultContainer = styled.div`
     margin-left: 10px;
   }
 `;
-
-export const FilterButton = styled.button`
-  background: #111e2b;
-  border-radius: 4px;
-  color: white;
-  float: right;
-  margin-top: -8px;
-`;
