@@ -4,6 +4,7 @@ import BadgeView from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { ChevronRight, Scale, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import MessageModal from 'components/module/MessageModal';
 import { SELLER_SOLD_ROUTES } from 'consts';
@@ -144,12 +145,28 @@ const ConfirmListView = (props: ConfirmListProps) => {
   } = props;
   const history = useHistory();
 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const allowPartialShipment = items.some((i) => i.weightConfirmed);
   const allowFullShipment = items.every((i) => i.weightConfirmed);
 
   return (
     <Wrapper>
+      <ConfirmationModal
+        title="Are you sure?"
+        description="Are you sure you want to place this order?"
+        isOpen={showConfirmationModal}
+        onClickClose={() => {
+          setShowConfirmationModal(false);
+        }}
+        action={() => {
+          if (allowPartialShipment) {
+            setShowConfirmationModal(false);
+            placeOrder({ isPartial: !allowFullShipment });
+          }
+        }}
+        actionText="Proceed"
+      />
       <MessageModal
         isOpen={isSendingMessage || showMessageModal}
         recipient={buyer}
@@ -198,7 +215,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
         <Col>
           {allowPartialShipment && !allowFullShipment && (
             <Button
-              onClick={() => placeOrder({ isPartial: true })}
+              onClick={() => setShowConfirmationModal(true)}
               text="Ship Partial"
               loading={isPending}
             />
@@ -206,7 +223,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
 
           {allowPartialShipment && allowFullShipment && (
             <Button
-              onClick={() => placeOrder({ isPartial: false })}
+              onClick={() => setShowConfirmationModal(true)}
               text="Ship Order"
               loading={isPending}
             />

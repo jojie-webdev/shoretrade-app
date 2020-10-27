@@ -19,6 +19,7 @@ export const Container = styled.div`
   }
 
   /* Calendar Overrides */
+
   .CalendarDay__default,
   .DayPickerNavigation_button__default,
   .CalendarMonth,
@@ -31,6 +32,10 @@ export const Container = styled.div`
     :hover {
       color: ${(props) => props.theme.grey.noshade};
     }
+  }
+
+  .DayPicker_transitionContainer {
+    height: 369px !important;
   }
 
   .DayPickerNavigation_button__default {
