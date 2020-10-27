@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import { Expand, Location, StarFilled, Star, PlaceholderProfile } from 'components/base/SVG';
+import {
+  Expand,
+  Location,
+  StarFilled,
+  Star,
+  PlaceholderProfile,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import ProductSellerRating from 'components/module/ProductSellerRating'
+import ProductSellerRating from 'components/module/ProductSellerRating';
 import { API } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
@@ -59,10 +65,6 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     query: '(min-width: 992px)',
   });
 
-  const hideCarouselArrowArea = useMediaQuery({
-    query: `(max-width: 991px)`,
-  });
-
   return (
     <Wrapper>
       <Row nogutter className="wrapper">
@@ -72,10 +74,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               <Carousel
                 id="product-carousel"
                 images={images}
-                height={'200px'}
-                arrowWidth={50}
-                hideArrowArea={hideCarouselArrowArea}
                 loop
+                arrowInside
+                aspectRatio="9:4"
               />
             </div>
             <div className="details-container">
