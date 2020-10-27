@@ -15,14 +15,21 @@ import { PlaceData } from 'types/PlaceData';
 import { originToPlaceData } from 'utils/Address/originToPlaceData';
 import { placeDataToOrigin } from 'utils/Address/placeDataToOrigin';
 import { createUpdateReducer } from 'utils/Hooks';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
 import { Step7Props } from './Step7.props';
-import { Container } from './Step7.style';
+import { Container, PriceAlertInfo } from './Step7.style';
 import { combineDateTime } from './Step7.transform';
 import { isValid, isDateRangeValid } from './Step7.validation';
 
-function Step7({ editableListing, onUpdateDetails }: Step7Props) {
+function Step7({
+  editableListing,
+  onUpdateDetails,
+  marketEstimate,
+  listingFormData,
+}: Step7Props) {
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
     {}
@@ -173,8 +180,24 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
     }
   };
 
+  const priceAlertMessage =
+    marketEstimate.min !== null && marketEstimate.max !== null
+      ? `${toPrice(marketEstimate.min)} - ${toPrice(
+          marketEstimate.max
+        )} per ${formatMeasurementUnit(
+          listingFormData?.measurementUnit
+        )} in the past 14 days`
+      : 'No Data Available';
+
   return (
     <Container>
+      <Row>
+        <Col>
+          <PriceAlertInfo
+            label={`Like products sold for: ${priceAlertMessage}`}
+          />
+        </Col>
+      </Row>
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField

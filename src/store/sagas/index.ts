@@ -29,6 +29,7 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
+import getMarketEstimate from './getMarketEstimate';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
@@ -83,6 +84,7 @@ const sagas = [
   getListingFormData,
   getListingTypesByCategory,
   getListingsByType,
+  getMarketEstimate,
   getPaymentMethods,
   getSellerById,
   getSellerOrders,
@@ -98,9 +100,9 @@ const sagas = [
   searchAndCountProductType,
   searchProductType,
   sendMessage,
-  updateDefaultCard,
   updateAddress,
   updateBankDetails,
+  updateDefaultCard,
   updateFavoriteSeller,
   updateFavouriteProduct,
   updateListing,

@@ -21,6 +21,10 @@ export type Step7PublicProps = {
     description: string;
     addressId: string;
   }) => void;
+  marketEstimate: {
+    min: number | null;
+    max: number | null;
+  };
 };
 
 export type Step7Props = Step7PublicProps & {
