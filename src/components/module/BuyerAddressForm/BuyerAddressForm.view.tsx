@@ -94,7 +94,6 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
               value={unitNumber}
               onChange={(e) => setUnitNumber(e.target.value)}
               error={pathOr('', ['unitNumber', '0'], errors)}
-              disabled={type === 'EDIT' ? true : false}
             />
           </Col>
         </Row>
