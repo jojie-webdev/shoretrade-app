@@ -39,7 +39,15 @@ export const SoldItem = (
   }
 ) => {
   const history = useHistory();
-  const { type = 'air', date, orders, id, orderRefNumber, token, toAddressState } = props;
+  const {
+    type = 'air',
+    date,
+    orders,
+    id,
+    orderRefNumber,
+    token,
+    toAddressState,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const desc =
     type.toLowerCase() === 'air'
@@ -117,7 +125,7 @@ export const PendingItem = (props: PendingToShipItemData) => {
   return (
     <PendingItemContainer>
       <div className="content">
-        <img src={orderImage} />
+        {/* <img src={orderImage} /> */}
 
         <div className="details">
           <div>
@@ -135,6 +143,14 @@ export const PendingItem = (props: PendingToShipItemData) => {
             </Typography>
             <Typography variant="label" color="noshade" className="center-text">
               {buyerCompanyName}
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="label" color="shade6">
+              {numberOfOrders > 1 ? 'Number of Items: ' : 'Number of Item: '}
+            </Typography>
+            <Typography variant="label" color="noshade" className="center-text">
+              {numberOfOrders}
             </Typography>
           </div>
         </div>
@@ -178,7 +194,6 @@ const ToShip = (props: SoldGeneratedProps) => {
   const [pendingPage, setPendingPage] = useState(1);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
-
 
   return (
     <>
