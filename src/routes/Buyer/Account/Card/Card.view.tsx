@@ -37,7 +37,7 @@ const CardView = (props: CardGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Add Card" />
+      <InnerRouteHeader title={isExisting ? 'Update Card' : 'Add Card'} />
 
       {addCardResult?.error && (
         <Notification>
@@ -75,11 +75,16 @@ const CardView = (props: CardGeneratedProps) => {
           isDefault: isExisting ? cardDetails.isDefault : false,
         }}
         onSubmit={(values: CardDetails) => {
-          setCardDetails({ ...values });
+          const payload = {
+            ...cardDetails,
+            ...values,
+            // overrides, since this is not using formik logic
+            isDefault: cardDetails.isDefault,
+          };
           if (isExisting) {
-            onUpdateCard(values);
+            onUpdateCard(payload);
           } else {
-            onAddCard(values);
+            onAddCard(payload);
           }
         }}
         validate={isValid}
