@@ -147,10 +147,10 @@ export const PendingItem = (props: PendingToShipItemData) => {
           </div>
           <div>
             <Typography variant="label" color="shade6">
-              {numberOfOrders > 1 ? 'Number of Items: ' : 'Number of Item: '}
+              Items:
             </Typography>
             <Typography variant="label" color="noshade" className="center-text">
-              {numberOfOrders}
+              {numberOfOrders} {numberOfOrders > 1 ? 'items' : 'item'}
             </Typography>
           </div>
         </div>
