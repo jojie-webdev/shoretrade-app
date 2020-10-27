@@ -15,6 +15,7 @@ export type ItemProp = {
   listedOn?: Date;
   expiresIn?: Date;
   remaining?: string;
+  sales?: string;
   data: GetAllListingsResponseItem;
   unit?: string;
   originalWeight?: string;

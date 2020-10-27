@@ -5,17 +5,16 @@ import styled from 'utils/styled';
 
 export const Container = styled.div`
   height: 100%;
-  margin: 0 -40px;
 
   .row {
     height: 100%;
   }
 `;
 
-export const ItemCard = styled(Row)`
+export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  padding: 24px;
-  margin-bottom: 16px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
   border-radius: 4px;
   ${({ onClick }) =>
     onClick
@@ -25,17 +24,42 @@ export const ItemCard = styled(Row)`
   }`
       : ''};
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .left-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .tags-container {
+    display: flex;
+    margin: 2px 0;
+  }
+
+  .item-data {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+  }
+
   .content {
     flex: 1;
     margin-right: 24px;
 
     .item-title {
       margin-bottom: 16px;
-    }
-
-    .tags-container {
-      margin-bottom: 16px;
-      display: flex;
     }
   }
 
@@ -66,27 +90,23 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 176px;
-  height: 176px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   background: ${(props) => props.theme.grey.noshade};
 
   margin-right: 16px;
   border-radius: 4px;
-
-  @media ${BREAKPOINTS['md']} {
-    width: 148px;
-    height: 148px;
-  }
 `;
 
-export const ItemDetail = styled(Typography)`
-  &:not(:last-child) {
-    margin-bottom: 8px;
-  }
+export const ItemDetail = styled(Typography)<{ row?: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.row ? 'row' : 'column')};
+  margin-right: 24px;
 
   span {
     font-weight: 900;
     color: ${(props) => props.theme.grey.noshade};
+    margin-left: ${(props) => (props.row ? '8px' : '0')};
   }
 `;
