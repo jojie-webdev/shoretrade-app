@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React from 'react';
 
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -10,10 +10,9 @@ import { useHistory } from 'react-router-dom';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
-import { SoldGeneratedProps, RequestFilters } from '../Sold.props';
+import { SoldGeneratedProps } from '../Sold.props';
 import { DeliveryItem } from '../Sold.style';
 import { DeliveredRow } from './Delivered.styles';
-
 
 const Delivered = (props: SoldGeneratedProps) => {
   const { delivered, deliveredCount, filters, updateFilters } = props;
@@ -47,7 +46,11 @@ const Delivered = (props: SoldGeneratedProps) => {
                     iconAlignment="flex-start"
                     rightComponent={
                       <span className="order-price">
-                        <Typography variant="title5" weight="900" color="noshade">
+                        <Typography
+                          variant="title5"
+                          weight="900"
+                          color="noshade"
+                        >
                           ${item.amount}
                         </Typography>
                         <ChevronRight width={16} height={24} />
@@ -60,7 +63,11 @@ const Delivered = (props: SoldGeneratedProps) => {
                           <Typography color="shade6" variant="overline">
                             Order:
                           </Typography>
-                          <Typography color="primary" weight="900" variant="label">
+                          <Typography
+                            color="primary"
+                            weight="900"
+                            variant="label"
+                          >
                             {formatOrderReferenceNumber(item.orderRefNumber)}
                           </Typography>
                         </div>
@@ -68,7 +75,11 @@ const Delivered = (props: SoldGeneratedProps) => {
                           <Typography color="shade6" variant="overline">
                             Buyer:
                           </Typography>
-                          <Typography color="noshade" weight="900" variant="label">
+                          <Typography
+                            color="noshade"
+                            weight="900"
+                            variant="label"
+                          >
                             {item.buyer}
                           </Typography>
                         </div>

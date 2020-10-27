@@ -4,7 +4,7 @@ import styled from 'utils/styled';
 // Step 3
 export const Container = styled.div`
   .interaction-group {
-    margin-bottom: 32px;
+    margin-bottom: 64px;
 
     .interaction-container:not(:last-child) {
       margin-bottom: 8px;

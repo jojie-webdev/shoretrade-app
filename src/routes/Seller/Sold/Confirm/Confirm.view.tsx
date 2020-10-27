@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import {
-  Box as BoxSVG,
-  Subtract,
-  ChevronRight,
-  Scale,
-} from 'components/base/SVG';
+import { Box as BoxSVG, Subtract } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ROUTES } from 'consts';
+import qs from 'qs';
 import remove from 'ramda/es/remove';
-import { Row, Col } from 'react-grid-system';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Theme } from 'types/Theme';
+import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -188,6 +181,8 @@ const ConfirmView = (props: ConfirmProps) => {
     initialBoxes,
   } = props;
 
+  const history = useHistory();
+
   const { orderNumber, buyer, uri, price, name, tags, size } = details;
 
   const [showModal, setShowModal] = useState(false);
@@ -257,7 +252,17 @@ const ConfirmView = (props: ConfirmProps) => {
 
   return (
     <Wrapper>
-      <InnerRouteHeader title={'Confirm Weights'} />
+      <InnerRouteHeader
+        title={'Confirm Weights'}
+        onClickBack={() =>
+          history.push(
+            `${SELLER_ROUTES.SOLD}${qs.stringify(
+              { tab: 'To Ship' },
+              { addQueryPrefix: true }
+            )}`
+          )
+        }
+      />
       <Typography color="shade5">
         Confirming this order will move it into:
       </Typography>
