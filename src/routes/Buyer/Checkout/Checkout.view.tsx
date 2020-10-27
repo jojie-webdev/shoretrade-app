@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
@@ -98,6 +99,8 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     orderError,
   } = props;
 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
   const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
     (sum, companyId) => sum + (selectedShippingId[companyId] === 0 ? 0 : 1),
@@ -107,6 +110,20 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        title="Are you sure?"
+        description="Are you sure you want to place this order?"
+        isOpen={showConfirmationModal}
+        onClickClose={() => {
+          setShowConfirmationModal(false);
+        }}
+        action={() => {
+          setShowConfirmationModal(false);
+          placeOrder();
+        }}
+        actionText="Proceed"
+        cancelText="Keep Shopping"
+      />
       {loadingShippingQuotes ? (
         <div className="center">
           <Loading label="Loading Shipping Quotes" color="shade6" />
@@ -160,7 +177,9 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             <Button
               text="Place Order"
               disabled={disablePlaceOrder}
-              onClick={placeOrder}
+              onClick={() => {
+                setShowConfirmationModal(true);
+              }}
               loading={processingOrder}
             />
           </div>
