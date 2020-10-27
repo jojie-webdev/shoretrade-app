@@ -25,16 +25,40 @@ const CardView = (props: FieldsetCardProps) => {
               id="number"
               label="CARD NUMBER"
               placeholder="•••• •••• •••• ••••"
-              maxLength={16}
+              maxLength={19}
               onChangeText={(value) => {
                 const digits = value.trim().replace(/\s/g, '');
-                const isFourDigits = digits.length > 0 && digits.length % 4 === 0;
-                const isMaxLen = digits.length >= 16;
+                const isMaxLen = digits.length > 16;
 
-                if (isFourDigits && digits.length < 16) {
-                  formik.setFieldValue('number', value + ' ', false);
+                if (digits.length == 16) {
+                  // formik.setFieldValue('number', value, false);
+                  const visaString =
+                    digits.substring(0, 4) +
+                    ' ' +
+                    digits.substring(4, 8) +
+                    ' ' +
+                    digits.substring(8, 12) +
+                    ' ' +
+                    digits.substring(12);
+                  formik.setFieldValue('number', visaString.trim(), false);
+                } else if (digits.length === 15) {
+                  const amexString =
+                    digits.substring(0, 4) +
+                    ' ' +
+                    digits.substring(4, 10) +
+                    ' ' +
+                    digits.substring(10, 15) +
+                    ' ' +
+                    digits.substring(15);
+                  formik.setFieldValue('number', amexString.trim(), false);
                 } else if (isMaxLen) {
-                  formik.setFieldValue('number', value.substr(0, 19), false);
+                  // Prevent value to exceed 16 digits + 3 spaces
+                  console.log(value.slice(0, 19).trim());
+                  formik.setFieldValue(
+                    'number',
+                    value.slice(0, 19).trim(),
+                    false
+                  );
                 }
               }}
             />

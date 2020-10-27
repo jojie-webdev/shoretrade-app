@@ -32,3 +32,13 @@ export const LinkCreditHistory = styled(Interactions)`
 export const LinkCreditCard = styled(InteractionCreditCard)`
   max-height: 70px;
 `;
+
+export const Notification = styled.div`
+  display: flex;
+  border-radius: 4px;
+  border: transparent;
+  margin: 12px auto;
+  & > div {
+    flex: 1;
+  }
+`;

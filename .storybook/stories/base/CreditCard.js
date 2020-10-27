@@ -14,5 +14,7 @@ storiesOf('base/CreditCard', module).add('Summary', () => (
     <CreditCard lastFour="1235" brand="Paypal" />
     <br />
     <CreditCard lastFour="1235" brand="Zippay" />
+    <br />
+    <CreditCard lastFour="1235" brand="American Express" />
   </Container>
 ));

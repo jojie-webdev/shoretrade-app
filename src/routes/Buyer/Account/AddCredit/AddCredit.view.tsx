@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import SegmentedControls from 'components/base/SegmentedControls';
 import FixedWidthContainer from 'components/layout/FixedWidthContainer';
@@ -8,11 +9,15 @@ import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
 import { Formik } from 'formik';
-import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 
 import { AddCreditGeneratedProps } from './AddCredit.props';
-import { Container, Content, FormAddCredit } from './AddCredit.style';
+import {
+  Container,
+  Content,
+  FormAddCredit,
+  Notification,
+} from './AddCredit.style';
 import { validate } from './AddCredit.validation';
 import { FieldsetBankAccount } from './FieldsetBankAccount';
 import { FieldsetCreditCard } from './FieldsetCreditCard';
@@ -30,6 +35,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
     setSelectedCardId,
     addCredit,
     isPending,
+    chargeCardResult,
   } = props;
 
   const [activeTab, setActiveTab] = useState(TABS.CC);
@@ -49,6 +55,12 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
             setActiveTab(value == TABS.BANK ? TABS.BANK : TABS.CC);
           }}
         />
+
+        {chargeCardResult?.error && (
+          <Notification>
+            <Alert variant="error" content="Cannot add Credit at the moment." />
+          </Notification>
+        )}
 
         <Formik
           initialValues={{

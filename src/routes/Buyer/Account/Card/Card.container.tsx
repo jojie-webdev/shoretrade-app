@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
@@ -60,6 +60,13 @@ const Card = (): JSX.Element => {
   const isLoading = pendingAddCard || pendingUpdateDefaultCard;
   const isRemoving =
     useSelector((state: Store) => state.deleteCard.pending) || false;
+  const addCardResult = useSelector((state: Store) => state.addCardToken);
+
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (addCardResult.data && submitted) history.goBack();
+  }, [addCardResult]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
@@ -78,6 +85,7 @@ const Card = (): JSX.Element => {
           default: formCardDetails.isDefault,
         })
       );
+      setSubmitted(true);
     }
   };
 
@@ -118,7 +126,9 @@ const Card = (): JSX.Element => {
     onUpdateCard,
     onRemoveCard,
     isRemoving,
+    addCardResult,
   };
+
   return <CardView {...generatedProps} />;
 };
 

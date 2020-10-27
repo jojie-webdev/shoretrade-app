@@ -1,8 +1,9 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Visa, Mastercard, Zippay, Paypal } from 'components/base/SVG';
+import { Visa, Mastercard, Zippay, Paypal, Amex } from 'components/base/SVG';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { Formik } from 'formik';
@@ -10,7 +11,13 @@ import { Col, Row } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { CardGeneratedProps, CardDetails } from './Card.props';
-import { Container, FormAddCard, CCImageRow, CCImage } from './Card.style';
+import {
+  Container,
+  FormAddCard,
+  CCImageRow,
+  CCImage,
+  Notification,
+} from './Card.style';
 import { isValid } from './Card.validation';
 import FieldsetCard from './FieldsetCard';
 
@@ -25,11 +32,22 @@ const CardView = (props: CardGeneratedProps) => {
     onUpdateCard,
     onRemoveCard,
     isRemoving,
+    addCardResult,
   } = props;
 
   return (
     <Container>
       <InnerRouteHeader title="Add Card" />
+
+      {addCardResult?.error && (
+        <Notification>
+          <Alert
+            variant="error"
+            content="Cannot add Credit Card at the moment."
+          />
+        </Notification>
+      )}
+
       <CCImageRow>
         <CCImage>
           <Visa height={32} />
@@ -42,6 +60,9 @@ const CardView = (props: CardGeneratedProps) => {
         </CCImage>
         <CCImage>
           <Paypal height={32} />
+        </CCImage>
+        <CCImage>
+          <Amex height={32} />
         </CCImage>
       </CCImageRow>
 
