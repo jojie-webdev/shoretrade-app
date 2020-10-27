@@ -49,15 +49,6 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
     <Container>
       <InnerRouteHeader title={routeHeader} />
 
-      {success && (
-        <StyledAlert
-          content={successContent}
-          variant="success"
-          alignText="center"
-          fullWidth
-        />
-      )}
-
       {(error || '')?.length > 0 && (
         <StyledAlert
           content={

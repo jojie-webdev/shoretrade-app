@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import BuyerAssistantFormView from 'components/module/BuyerAssistantForm';
 import { AssistantForm } from 'components/module/BuyerAssistantForm/BuyerAssistantForm.props';
@@ -38,6 +38,9 @@ const AddAssistant = (): JSX.Element => {
     setSubmitted(true);
   };
   // MARK:- Variables
+  useEffect(() => {
+    if (submitted && addLinkedAccount.data) history.goBack();
+  }, [addLinkedAccount]);
 
   const formikInitial = {
     initialValues: {

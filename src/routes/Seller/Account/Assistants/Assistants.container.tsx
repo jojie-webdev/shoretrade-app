@@ -4,7 +4,10 @@ import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useDispatch, useStore, useSelector } from 'react-redux';
-import { getLinkedAccountsActions } from 'store/actions';
+import {
+  getLinkedAccountsActions,
+  addLinkedAccountActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
 
@@ -23,6 +26,10 @@ const Assistants = (): JSX.Element => {
   const getLinkedAccounts = useSelector(
     (store: Store) => store.getLinkedAccounts
   );
+  const addLinkedAccount = useSelector(
+    (store: Store) => store.addLinkedAccount
+  );
+  const [notifMsg, setNotifMsg] = useState('');
 
   // MARK:- Methods
   const goToCreateAssistant = () => {
@@ -54,6 +61,13 @@ const Assistants = (): JSX.Element => {
     }
   }, [companyId]);
 
+  useEffect(() => {
+    if (!addLinkedAccount.pending && addLinkedAccount.data) {
+      setNotifMsg('Fisherman / Assistant successfully created!');
+      dispatch(addLinkedAccountActions.clear());
+    }
+  }, [addLinkedAccount]);
+
   // MARK:- Render
   const generatedProps: AssistantsGeneratedProps = {
     accounts: getLinkedAccounts.data?.data.accounts || [],
@@ -61,6 +75,7 @@ const Assistants = (): JSX.Element => {
     goToCreateAssistant,
     onClickAssistant,
     currentCompanyName,
+    notifMsg,
   };
 
   return <AssistantsView {...generatedProps} />;

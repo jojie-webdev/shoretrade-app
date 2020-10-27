@@ -16,6 +16,7 @@ import {
   SmallAlertContainer,
   AccountName,
   StyledInteaction,
+  StyledAlert,
 } from './LinkedAccounts.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
@@ -26,6 +27,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     accounts,
     editAssistant,
     currentCompanyName,
+    notifMsg
   } = props;
 
   if (pending) {
@@ -36,14 +38,20 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     <Container>
       <InnerRouteHeader title="Linked Accounts" />
 
-      <SmallAlertContainer>
-        <div className="icon-container">
-          <InfoFilled fill={theme.grey.shade8} height={20} width={20} />
-        </div>
-        <Typography variant="caption" className="text" color="shade8">
-          {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
-        </Typography>
-      </SmallAlertContainer>
+      {notifMsg && (
+        <StyledAlert content={notifMsg} variant="success" fullWidth />
+      )}
+
+      {!notifMsg && (
+        <SmallAlertContainer>
+          <div className="icon-container">
+            <InfoFilled fill={theme.grey.shade8} height={20} width={20} />
+          </div>
+          <Typography variant="caption" className="text" color="shade8">
+            {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+          </Typography>
+        </SmallAlertContainer>
+      )}
 
       {accounts.map((account) => (
         <StyledInteaction

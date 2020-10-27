@@ -6,4 +6,5 @@ export interface AssistantsGeneratedProps {
   addAssistant: () => void;
   editAssistant: (assistantId: string) => void;
   currentCompanyName: string;
+  notifMsg: string;
 }

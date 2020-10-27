@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getLinkedAccountsActions } from 'store/actions';
+import {
+  getLinkedAccountsActions,
+  addLinkedAccountActions,
+} from 'store/actions';
 import getLinkedAccounts from 'store/reducers/getLinkedAccounts';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -24,6 +27,10 @@ const Assistants = (): JSX.Element => {
 
   const currentCompanyName = currentCompany?.name || 'Your Company';
   const linkedAccounts = useSelector((state: Store) => state.getLinkedAccounts);
+  const addLinkedAccount = useSelector(
+    (store: Store) => store.addLinkedAccount
+  );
+  const [notifMsg, setNotifMsg] = useState('');
 
   // MARK:- Methods
   const addAssistant = () => {
@@ -47,12 +54,20 @@ const Assistants = (): JSX.Element => {
     }
   }, [companyId]);
 
+  useEffect(() => {
+    if (!addLinkedAccount.pending && addLinkedAccount.data) {
+      setNotifMsg('Assistant successfully created!');
+      dispatch(addLinkedAccountActions.clear());
+    }
+  }, [addLinkedAccount]);
+
   const generatedProps = {
     accounts: linkedAccounts.data?.data.accounts || [],
     pending: linkedAccounts.pending || false,
     addAssistant,
     editAssistant,
     currentCompanyName,
+    notifMsg,
   };
   return <AssistantsView {...generatedProps} />;
 };
