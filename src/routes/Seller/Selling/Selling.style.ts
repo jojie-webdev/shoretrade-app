@@ -46,18 +46,41 @@ export const ItemCard = styled.div`
     }
   }
 
-  .item-data {
+  .right-content {
     display: flex;
     align-items: center;
     flex: 1;
-    justify-content: space-between;
+
+    .item-data {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0.3;
+    }
   }
 
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex: 0.3;
+  /* @media (max-width: 1300px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  } */
+
+  @media (max-width: 1222px) {
+    .right-content {
+      margin-top: 8px;
+      flex-wrap: wrap;
+
+      .buttons {
+        justify-content: flex-start;
+      }
+    }
   }
 
   @media ${BREAKPOINTS['md']} {
@@ -81,6 +104,7 @@ export const Tag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
 `;
 
 export const ItemImage = styled.img`
@@ -98,6 +122,9 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   flex-direction: ${(props) => (props.row ? 'row' : 'column')};
   margin-right: 16px;
   width: auto;
+
+  white-space: nowrap;
+
   span {
     font-weight: 900;
     color: ${(props) => props.theme.grey.noshade};

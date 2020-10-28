@@ -54,40 +54,42 @@ const Item = (props: ItemProp) => {
         </div>
       </div>
 
-      <div className="item-data">
-        <ItemDetail variant="small" color="shade6">
-          Remaining Stock:{' '}
-          <span>
-            {Number(props.remaining).toFixed(0)} /{' '}
-            {Number(props.originalWeight).toFixed(0)}{' '}
-            {props.unit?.toLowerCase()}
-          </span>
-        </ItemDetail>
+      <div className="right-content">
+        <div className="item-data">
+          <ItemDetail variant="small" color="shade6">
+            Remaining Stock:{' '}
+            <span>
+              {Number(props.remaining).toFixed(0)} /{' '}
+              {Number(props.originalWeight).toFixed(0)}{' '}
+              {props.unit?.toLowerCase()}
+            </span>
+          </ItemDetail>
 
-        <ItemDetail variant="small" color="shade6">
-          Price:{' '}
-          <span>
-            ${props.price} per {props.unit}
-          </span>
-        </ItemDetail>
+          <ItemDetail variant="small" color="shade6">
+            Price:{' '}
+            <span>
+              ${props.price} per {props.unit}
+            </span>
+          </ItemDetail>
 
-        <ItemDetail variant="small" color="shade6">
-          Sold: <span>{props.sales}</span>
-        </ItemDetail>
+          <ItemDetail variant="small" color="shade6">
+            Sold: <span>{props.sales}</span>
+          </ItemDetail>
 
-        <ItemDetail variant="small" color="shade6">
-          Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
-        </ItemDetail>
-      </div>
+          <ItemDetail variant="small" color="shade6">
+            Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
+          </ItemDetail>
+        </div>
 
-      <div className="buttons">
-        <StyledTouchable onPress={props.onClick} dark>
-          <Pen height={13} width={13}></Pen>
-        </StyledTouchable>
+        <div className="buttons">
+          <StyledTouchable onPress={props.onClick} dark>
+            <Pen height={13} width={13}></Pen>
+          </StyledTouchable>
 
-        <StyledTouchable onPress={props.onRemove} dark>
-          <TrashCan></TrashCan>
-        </StyledTouchable>
+          <StyledTouchable onPress={props.onRemove} dark>
+            <TrashCan></TrashCan>
+          </StyledTouchable>
+        </div>
       </div>
     </ItemCard>
   );
