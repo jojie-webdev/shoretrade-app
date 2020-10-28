@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import BadgeView from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { ChevronRight, Scale, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import MessageModal from 'components/module/MessageModal';
-import { SELLER_SOLD_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLER_SOLD_ROUTES } from 'consts';
+import qs from 'qs';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import theme, { useTheme } from 'utils/Theme';
@@ -173,6 +173,14 @@ const ConfirmListView = (props: ConfirmListProps) => {
               Message Buyer
             </Typography>
           </StyledTouchable>
+        }
+        onClickBack={() =>
+          history.push(
+            `${SELLER_ROUTES.SOLD}${qs.stringify(
+              { tab: 'To Ship' },
+              { addQueryPrefix: true }
+            )}`
+          )
         }
       />
 
