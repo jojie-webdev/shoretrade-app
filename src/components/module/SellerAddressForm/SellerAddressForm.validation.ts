@@ -11,7 +11,6 @@ const constraints = {
     presence: {
       allowEmpty: true,
     },
-    // maybeNumber: '^Please enter a valid unit number',
   },
 };
 
