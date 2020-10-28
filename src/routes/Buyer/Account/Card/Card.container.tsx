@@ -62,11 +62,19 @@ const Card = (): JSX.Element => {
     useSelector((state: Store) => state.deleteCard.pending) || false;
   const addCardResult = useSelector((state: Store) => state.addCardToken);
 
+  const updateDefaultCardResult = useSelector(
+    (state: Store) => state.updateDefaultCard
+  );
+
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (addCardResult.data && submitted) history.goBack();
   }, [addCardResult]);
+
+  useEffect(() => {
+    if (updateDefaultCardResult.data && submitted) history.goBack();
+  }, [updateDefaultCardResult]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
@@ -100,6 +108,7 @@ const Card = (): JSX.Element => {
             card: card?.id || '',
           })
         );
+        setSubmitted(true);
       } else {
         history.goBack();
       }
