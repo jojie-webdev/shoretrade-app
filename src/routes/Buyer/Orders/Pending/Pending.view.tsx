@@ -35,7 +35,7 @@ const PendingItems = (props: OrderItem) => {
               variant="overline"
               color={confirmed ? 'success' : 'warning'}
             >
-              {confirmed ? 'Confirmed' : 'Pending Confirmation'}
+              {confirmed ? 'Weights Confirmed' : 'Pending Confirmation'}
             </Confirmed>
             <Row>
               <Typography
