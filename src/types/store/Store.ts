@@ -81,6 +81,10 @@ import {
   GetListingTypesByCategoryPayload,
 } from './GetListingTypesByCategoryState';
 import {
+  GetMarketEstimateMeta,
+  GetMarketEstimatePayload,
+} from './GetMarketEstimateState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -260,4 +264,5 @@ export interface Store {
   >;
   sellerDashboardDate: any;
   sendMessage: AsyncState<SendMessageMeta, SendMessagePayload>;
+  getMarketEstimate: AsyncState<GetMarketEstimateMeta, GetMarketEstimatePayload>;
 }
