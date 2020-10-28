@@ -1,3 +1,4 @@
+import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -9,6 +10,11 @@ export const Container = styled.div`
   .row {
     height: 100%;
   }
+`;
+
+export const StyledAlert = styled(Alert)`
+  margin-bottom: 16px;
+  width: 100%;
 `;
 
 export const ItemCard = styled.div`

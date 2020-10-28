@@ -4,6 +4,8 @@ export interface SellingGeneratedProps {
   listings: GetAllListingsResponseItem[];
   pending: boolean;
   goToListingDetails: (id: string) => void;
+  onRemove: (listingId: string, companyId: string) => void;
+  showDeletedSuccess: boolean;
 }
 
 export type ItemProp = {
@@ -20,4 +22,5 @@ export type ItemProp = {
   unit?: string;
   originalWeight?: string;
   onClick: () => void;
+  onRemove: () => void;
 };

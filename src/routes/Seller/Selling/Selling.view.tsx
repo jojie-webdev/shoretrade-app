@@ -1,9 +1,11 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+
 import { Crab, Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
+import LoadingView from 'components/module/Loading';
 import { SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -17,6 +19,7 @@ import {
   Tag,
   Container,
   StyledTouchable,
+  StyledAlert,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -82,7 +85,7 @@ const Item = (props: ItemProp) => {
           <Pen height={13} width={13}></Pen>
         </StyledTouchable>
 
-        <StyledTouchable onPress={() => {}} dark>
+        <StyledTouchable onPress={props.onRemove} dark>
           <TrashCan></TrashCan>
         </StyledTouchable>
       </div>
@@ -93,14 +96,27 @@ const Item = (props: ItemProp) => {
 const SellingView = (props: SellingGeneratedProps) => {
   // const theme = useTheme();
   const history = useHistory();
-  const { listings, pending, goToListingDetails } = props;
+  const {
+    listings,
+    pending,
+    goToListingDetails,
+    onRemove,
+    showDeletedSuccess,
+  } = props;
 
   if (pending) {
-    return <h1>Loading...</h1>;
+    return <LoadingView></LoadingView>;
   }
 
   return (
     <Container>
+      {showDeletedSuccess && (
+        <StyledAlert
+          variant="success"
+          content="Your listing has successfully been removed"
+        />
+      )}
+
       <Row className="row" justify="center">
         <Col>
           {listings.length === 0 ? (
@@ -116,6 +132,7 @@ const SellingView = (props: SellingGeneratedProps) => {
                 key={listing.id}
                 {...listingToItem(listing)}
                 onClick={() => goToListingDetails(listing.id)}
+                onRemove={() => onRemove(listing.id, listing.coopId)}
               />
             ))
           )}
