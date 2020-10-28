@@ -58,11 +58,18 @@ export const transformOrder = (
       orderItem.orderLineItem[0].listing.catchDate
     ).toDate(),
     estDeliveryDate: moment(
-      orderItem.latestExpectedDeliveryDate
+      orderItem.latestExpectedDeliveryDate != null
         ? orderItem.latestExpectedDeliveryDate
         : orderItem.originalExpectedDeliveryDate
     ).toDate(), //original_expected_delivery_date --> from database
-    deliveredDate: moment(orderItem.deliveryDate).toDate(), // date_delivered --> from database
+    deliveredDate: moment(
+      orderItem.deliveryDate != null
+        ? orderItem.deliveryDate
+        : orderItem.latestExpectedDeliveryDate != null
+        ? orderItem.latestExpectedDeliveryDate
+        : orderItem.originalExpectedDeliveryDate
+    ).toDate(), // date_delivered --> from database
     price: totalPrice,
+    isAquafuture: orderItem.orderLineItem[0].listing.isAquafuture,
   };
 };

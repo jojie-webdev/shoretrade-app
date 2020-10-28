@@ -19,7 +19,15 @@ import {
 } from './Pending.style';
 
 const PendingItems = (props: OrderItem) => {
-  const { confirmed, data, estCatchmentDate, id, price } = props;
+  const {
+    confirmed,
+    data,
+    estCatchmentDate,
+    id,
+    price,
+    isAquafuture,
+    estDeliveryDate,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -38,17 +46,35 @@ const PendingItems = (props: OrderItem) => {
               {confirmed ? 'Confirmed' : 'Pending Confirmation'}
             </Confirmed>
             <Row>
-              <Typography
-                style={{ marginRight: '4px', marginLeft: '16px' }}
-                variant="label"
-                color="shade6"
-                weight="500"
-              >
-                Est. Catchment:
-              </Typography>
-              <Typography variant="label" color="shade8" weight="bold">
-                {moment(estCatchmentDate).format('ddd DD MMM')}
-              </Typography>
+              {!isAquafuture ? (
+                <>
+                  <Typography
+                    style={{ marginRight: '4px', marginLeft: '16px' }}
+                    variant="label"
+                    color="shade6"
+                    weight="500"
+                  >
+                    Estimated Catchment:
+                  </Typography>
+                  <Typography variant="label" color="shade8" weight="bold">
+                    {moment(estCatchmentDate).format('ddd DD MMM')}
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    style={{ marginRight: '4px', marginLeft: '16px' }}
+                    variant="label"
+                    color="shade6"
+                    weight="500"
+                  >
+                    Estimated Delivery:
+                  </Typography>
+                  <Typography variant="label" color="shade8" weight="bold">
+                    {moment(estDeliveryDate).format('ddd DD MMM')}
+                  </Typography>
+                </>
+              )}
             </Row>
             <Typography variant="title5" weight="900">
               ${price}
