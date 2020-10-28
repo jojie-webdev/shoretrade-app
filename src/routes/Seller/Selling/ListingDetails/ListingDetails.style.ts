@@ -7,25 +7,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .wrapper {
-    width: calc(100% - 100px);
-    margin: auto;
-
-    @media (min-width: 992px) {
-      padding-right: 50px;
-    }
-
-    @media (min-width: 769px) and (max-width: 991px) {
-      width: calc(100% - 200px);
-    }
-
-    @media (max-width: 768px) {
-      width: 80%;
-    }
-
-    @media (max-width: 576px) {
-      width: 100%;
-      padding: 0 24px;
-    }
+    width: 100%;
   }
 
   .separator {
@@ -52,7 +34,7 @@ export const DetailsCard = styled.div`
   .details-container {
     padding: 24px;
     background-color: ${({ theme }) => theme.grey.noshade};
-    width: calc(100% - 100px);
+    width: 100%;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 4px;
 
