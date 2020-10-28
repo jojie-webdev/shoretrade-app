@@ -8,7 +8,10 @@ const constraints = {
     },
   },
   unitNumber: {
-    maybeNumber: '^Please enter a valid unit number',
+    presence: {
+      allowEmpty: true,
+    },
+    // maybeNumber: '^Please enter a valid unit number',
   },
 };
 
