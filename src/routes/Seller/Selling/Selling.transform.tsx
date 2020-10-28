@@ -7,7 +7,9 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { ItemProp } from './Selling.props';
 
-export const listingToItem = (data: GetAllListingsResponseItem): ItemProp => {
+export const listingToItem = (
+  data: GetAllListingsResponseItem
+): Omit<ItemProp, 'onClick'> => {
   const soldWeight = (data?.originalWeight || 0) - (data?.remaining || 0);
   const sales = soldWeight * Number(data?.pricePerKilo || 0);
 

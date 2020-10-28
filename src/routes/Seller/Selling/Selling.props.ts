@@ -19,5 +19,5 @@ export type ItemProp = {
   data: GetAllListingsResponseItem;
   unit?: string;
   originalWeight?: string;
-  onClick?: () => void;
+  onClick: () => void;
 };

@@ -1,6 +1,6 @@
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -16,13 +16,6 @@ export const ItemCard = styled.div`
   padding: 8px 12px;
   margin-bottom: 8px;
   border-radius: 4px;
-  ${({ onClick }) =>
-    onClick
-      ? `cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }`
-      : ''};
 
   display: flex;
   align-items: center;
@@ -40,34 +33,25 @@ export const ItemCard = styled.div`
       flex-direction: column;
       justify-content: center;
     }
-  }
 
-  .tags-container {
-    display: flex;
-    margin: 2px 0;
+    .tags-container {
+      display: flex;
+      margin: 2px 0;
+    }
   }
 
   .item-data {
     display: flex;
     align-items: center;
     flex: 1;
-    justify-content: flex-start;
+    justify-content: space-between;
   }
 
-  .content {
-    flex: 1;
-    margin-right: 24px;
-
-    .item-title {
-      margin-bottom: 16px;
-    }
-  }
-
-  .pricing {
-    flex: 1;
+  .buttons {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0.3;
   }
 
   @media ${BREAKPOINTS['md']} {
@@ -77,6 +61,10 @@ export const ItemCard = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 32px;
   }
+`;
+
+export const StyledTouchable = styled(Touchable)`
+  margin-right: 6px;
 `;
 
 export const Tag = styled.div`
@@ -102,11 +90,12 @@ export const ItemImage = styled.img`
 export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.row ? 'row' : 'column')};
-  margin-right: 24px;
-
+  margin-right: 16px;
+  width: auto;
   span {
     font-weight: 900;
     color: ${(props) => props.theme.grey.noshade};
+
     margin-left: ${(props) => (props.row ? '8px' : '0')};
   }
 `;

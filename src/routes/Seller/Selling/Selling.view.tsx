@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import { Crab } from 'components/base/SVG';
+import { Crab, Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import { SELLER_ROUTES } from 'consts';
@@ -16,15 +16,15 @@ import {
   ItemDetail,
   Tag,
   Container,
+  StyledTouchable,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
 const Item = (props: ItemProp) => {
-  const formattedListedOn = () => moment(props.listedOn).format('DD MMMM YYYY');
   const formattedExpiresIn = () => moment().to(props.expiresIn);
 
   return (
-    <ItemCard onClick={props.onClick}>
+    <ItemCard>
       <div className="left-content">
         <ItemImage src={props.data.images[0]} alt="" />
 
@@ -52,28 +52,39 @@ const Item = (props: ItemProp) => {
       </div>
 
       <div className="item-data">
-        <ItemDetail variant="caption" color="shade6">
+        <ItemDetail variant="small" color="shade6">
           Remaining Stock:{' '}
           <span>
-            {props.remaining} / {props.originalWeight}{' '}
+            {Number(props.remaining).toFixed(0)} /{' '}
+            {Number(props.originalWeight).toFixed(0)}{' '}
             {props.unit?.toLowerCase()}
           </span>
         </ItemDetail>
 
-        <ItemDetail variant="caption" color="shade6">
+        <ItemDetail variant="small" color="shade6">
           Price:{' '}
           <span>
             ${props.price} per {props.unit}
           </span>
         </ItemDetail>
 
-        <ItemDetail variant="caption" color="shade6">
+        <ItemDetail variant="small" color="shade6">
           Sold: <span>{props.sales}</span>
         </ItemDetail>
 
-        <ItemDetail variant="caption" color="shade6">
+        <ItemDetail variant="small" color="shade6">
           Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
         </ItemDetail>
+      </div>
+
+      <div className="buttons">
+        <StyledTouchable onPress={props.onClick} dark>
+          <Pen height={13} width={13}></Pen>
+        </StyledTouchable>
+
+        <StyledTouchable onPress={() => {}} dark>
+          <TrashCan></TrashCan>
+        </StyledTouchable>
       </div>
     </ItemCard>
   );
