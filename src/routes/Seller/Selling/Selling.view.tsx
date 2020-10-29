@@ -4,6 +4,8 @@ import React from 'react';
 
 import { Crab, Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import Modal from 'components/layout/Modal';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import { SELLER_ROUTES } from 'consts';
@@ -108,9 +110,12 @@ const SellingView = (props: SellingGeneratedProps) => {
     listings,
     pending,
     goToListingDetails,
-    onRemove,
+    onClickRemoveListing,
     showDeletedSuccess,
     onClickEdit,
+    showModal,
+    onRemove,
+    clearListingData,
   } = props;
 
   if (pending) {
@@ -118,37 +123,51 @@ const SellingView = (props: SellingGeneratedProps) => {
   }
 
   return (
-    <Container>
-      {showDeletedSuccess && (
-        <StyledAlert
-          variant="success"
-          content="Your listing has successfully been removed"
-        />
-      )}
+    <>
+      <Container>
+        {showDeletedSuccess && (
+          <StyledAlert
+            variant="success"
+            content="Your listing has successfully been removed"
+          />
+        )}
 
-      <Row className="row" justify="center">
-        <Col>
-          {listings.length === 0 ? (
-            <EmptyState
-              title="The are no listings here at the moment"
-              buttonText="Add a product"
-              Svg={Crab}
-              onButtonClicked={() => history.push(SELLER_ROUTES.ADD_PRODUCT)}
-            />
-          ) : (
-            listings.map((listing) => (
-              <Item
-                key={listing.id}
-                {...listingToItem(listing)}
-                onClick={() => goToListingDetails(listing.id)}
-                onClickEdit={() => onClickEdit(listing.id)}
-                onRemove={() => onRemove(listing.id, listing.coopId)}
+        <Row className="row" justify="center">
+          <Col>
+            {listings.length === 0 ? (
+              <EmptyState
+                title="The are no listings here at the moment"
+                buttonText="Add a product"
+                Svg={Crab}
+                onButtonClicked={() => history.push(SELLER_ROUTES.ADD_PRODUCT)}
               />
-            ))
-          )}
-        </Col>
-      </Row>
-    </Container>
+            ) : (
+              listings.map((listing) => (
+                <Item
+                  key={listing.id}
+                  {...listingToItem(listing)}
+                  onClick={() => goToListingDetails(listing.id)}
+                  onClickEdit={() => onClickEdit(listing.id)}
+                  onRemove={() =>
+                    onClickRemoveListing(listing.id, listing.coopId)
+                  }
+                />
+              ))
+            )}
+          </Col>
+        </Row>
+      </Container>
+
+      <ConfirmationModal
+        title="Delete Listing"
+        description="Are you sure you want to remove the listing? This cannot be undone."
+        isOpen={showModal}
+        onClickClose={clearListingData}
+        action={onRemove}
+        actionText="Delete"
+        cancelText="Cancel"
+      />
+    </>
   );
 };
 

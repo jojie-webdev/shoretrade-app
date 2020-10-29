@@ -30,9 +30,31 @@ const Selling = (): JSX.Element => {
 
   // MARK:- State
   const [pressed, setPressed] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [listingData, setListingData] = useState({
+    listingId: '',
+    companyId: '',
+  });
 
   // MARK:- Method
-  const onRemove = (listingId: string, companyId: string) => {
+  const onClickRemoveListing = (listingId: string, companyId: string) => {
+    setShowModal(true);
+
+    setListingData({ listingId, companyId });
+  };
+
+  const clearListingData = () => {
+    setListingData({
+      listingId: '',
+      companyId: '',
+    });
+
+    setShowModal(false);
+  };
+
+  const onRemove = () => {
+    const { listingId, companyId } = listingData;
+
     dispatch(
       endListingActions.request({
         listingId,
@@ -40,6 +62,7 @@ const Selling = (): JSX.Element => {
       })
     );
 
+    setShowModal(false);
     setPressed(true);
   };
 
@@ -66,15 +89,18 @@ const Selling = (): JSX.Element => {
     if (isDeleted && pressed) {
       dispatch(getAllListingsActions.request());
     }
-  }, [isDeleted, pressed]);
+  }, [isDeleted, pressed, pending]);
 
   const generatedProps: SellingGeneratedProps = {
     // generated props here
     listings,
     goToListingDetails,
     pending,
-    onRemove,
+    onClickRemoveListing,
     onClickEdit,
+    showModal,
+    clearListingData,
+    onRemove,
     showDeletedSuccess: pressed && isDeleted,
   };
   return <SellingView {...generatedProps} />;
