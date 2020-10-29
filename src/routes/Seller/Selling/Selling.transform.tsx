@@ -7,7 +7,12 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { ItemProp } from './Selling.props';
 
-export const listingToItem = (data: GetAllListingsResponseItem): ItemProp => {
+export const listingToItem = (
+  data: GetAllListingsResponseItem
+): Omit<ItemProp, 'onClick' | 'onRemove'> => {
+  const soldWeight = (data?.originalWeight || 0) - (data?.remaining || 0);
+  const sales = soldWeight * Number(data?.pricePerKilo || 0);
+
   return {
     uri: pathOr(undefined, ['images', '0'], data),
     title: data.type,
@@ -21,6 +26,7 @@ export const listingToItem = (data: GetAllListingsResponseItem): ItemProp => {
     remaining: Number(data.remaining).toFixed(2),
     unit: formatMeasurementUnit(data.measurementUnit),
     originalWeight: Number(data.originalWeight).toFixed(2),
+    sales: toPrice(sales),
     data,
   };
 };

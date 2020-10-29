@@ -1,49 +1,86 @@
+import Alert from 'components/base/Alert';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
   height: 100%;
-  margin: 0 -40px;
 
   .row {
     height: 100%;
   }
 `;
 
-export const ItemCard = styled(Row)`
-  background: ${(props) => props.theme.grey.shade9};
-  padding: 24px;
+export const StyledAlert = styled(Alert)`
   margin-bottom: 16px;
+  width: 100%;
+`;
+
+export const ItemCard = styled.div`
+  background: ${(props) => props.theme.grey.shade9};
+  padding: 8px 12px;
+  margin-bottom: 8px;
   border-radius: 4px;
-  ${({ onClick }) =>
-    onClick
-      ? `cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }`
-      : ''};
 
-  .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .left-content {
+    display: flex;
+    align-items: center;
     flex: 1;
-    margin-right: 24px;
 
-    .item-title {
-      margin-bottom: 16px;
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .tags-container {
-      margin-bottom: 16px;
       display: flex;
+      margin: 2px 0;
     }
   }
 
-  .pricing {
-    flex: 1;
+  .right-content {
     display: flex;
+    align-items: center;
+    flex: 1;
+
+    .item-data {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0.3;
+    }
+  }
+
+  /* @media (max-width: 1300px) {
     flex-direction: column;
-    align-items: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
+  } */
+
+  @media (max-width: 1222px) {
+    .right-content {
+      margin-top: 8px;
+      flex-wrap: wrap;
+
+      .buttons {
+        justify-content: flex-start;
+      }
+    }
   }
 
   @media ${BREAKPOINTS['md']} {
@@ -55,6 +92,10 @@ export const ItemCard = styled(Row)`
   }
 `;
 
+export const StyledTouchable = styled(Touchable)`
+  margin-right: 6px;
+`;
+
 export const Tag = styled.div`
   background: ${(props) => props.theme.grey.shade8};
   padding: 4px 8px;
@@ -63,30 +104,31 @@ export const Tag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
 `;
 
 export const ItemImage = styled.img`
-  width: 176px;
-  height: 176px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   background: ${(props) => props.theme.grey.noshade};
 
   margin-right: 16px;
   border-radius: 4px;
-
-  @media ${BREAKPOINTS['md']} {
-    width: 148px;
-    height: 148px;
-  }
 `;
 
-export const ItemDetail = styled(Typography)`
-  &:not(:last-child) {
-    margin-bottom: 8px;
-  }
+export const ItemDetail = styled(Typography)<{ row?: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.row ? 'row' : 'column')};
+  margin-right: 16px;
+  width: auto;
+
+  white-space: nowrap;
 
   span {
     font-weight: 900;
     color: ${(props) => props.theme.grey.noshade};
+
+    margin-left: ${(props) => (props.row ? '8px' : '0')};
   }
 `;

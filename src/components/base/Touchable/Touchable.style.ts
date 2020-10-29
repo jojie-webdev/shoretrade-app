@@ -19,6 +19,7 @@ export const TouchableBase = styled.button<TouchableBaseProps>`
   width: ${({ width }) => width};
   height: ${({ width, height, circle }) => (circle ? width : height)};
   border-radius: ${({ circle }) => (circle ? '50%' : '4px')};
+
   :hover {
     background-color: ${({ dark }) => (dark ? '#ffffff25' : '#00000010')};
   }
