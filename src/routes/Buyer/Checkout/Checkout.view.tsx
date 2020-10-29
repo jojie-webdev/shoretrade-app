@@ -38,7 +38,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
 
   return orders.map((item, i) => (
     <div className="accordion-container" key={`orders-${i}`}>
-      <Accordion title={item.listings[0].vendor} isOrders>
+      <Accordion title={item.listings[0].vendor} isCheckout>
         <div className="accordion-content-container">
           <Row>
             <Col
@@ -69,7 +69,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
               <ShippingCard
                 selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
                 options={item.listings[0].shippingOptions.sort((a, b) => {
-                  if (a.est < b.est)  return -1;
+                  if (a.est < b.est) return -1;
                   if (a.est > b.est) return 1;
                   return 0;
                 })}

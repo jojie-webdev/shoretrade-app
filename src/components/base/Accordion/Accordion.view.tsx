@@ -21,7 +21,7 @@ const Accordion = ({
         type="accordion"
         iconColor={iconColor}
       />
-      <Content isOpen={isOpen} isOrders={props.isOrders}>
+      <Content isOpen={isOpen} isCheckout={props.isCheckout}>
         {props.children}
       </Content>
     </Container>

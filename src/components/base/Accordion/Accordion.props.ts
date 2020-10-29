@@ -5,5 +5,5 @@ export interface AccordionProps {
   title: string;
   iconColor?: string;
   children: ReactNode;
-  isOrders?: boolean;
+  isCheckout?: boolean;
 }
