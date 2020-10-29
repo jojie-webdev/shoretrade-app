@@ -29,6 +29,18 @@ export const ItemCard = styled.div`
   flex-wrap: wrap;
   width: 100%;
 
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 75%;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
   .left-content {
     display: flex;
     align-items: center;
@@ -57,20 +69,15 @@ export const ItemCard = styled.div`
       flex: 1;
       justify-content: space-between;
     }
-
-    .buttons {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex: 0.3;
-    }
   }
 
-  /* @media (max-width: 1300px) {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-  } */
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0.3;
+    z-index: 1000;
+  }
 
   @media (max-width: 1222px) {
     .right-content {
@@ -98,7 +105,7 @@ export const StyledTouchable = styled(Touchable)`
 
 export const Tag = styled.div`
   background: ${(props) => props.theme.grey.shade8};
-  padding: 4px 8px;
+  padding: 2px 6px;
   margin-right: 8px;
   border-radius: 4px;
   display: flex;

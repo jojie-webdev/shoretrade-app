@@ -9,7 +9,7 @@ import { ItemProp } from './Selling.props';
 
 export const listingToItem = (
   data: GetAllListingsResponseItem
-): Omit<ItemProp, 'onClick' | 'onRemove'> => {
+): Omit<ItemProp, 'onClick' | 'onRemove' | 'onClickEdit'> => {
   const soldWeight = (data?.originalWeight || 0) - (data?.remaining || 0);
   const sales = soldWeight * Number(data?.pricePerKilo || 0);
 
