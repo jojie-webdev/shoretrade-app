@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Accordion from 'components/base/Accordion/Accordion.view';
 import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
@@ -25,6 +26,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
     setSelectedShippingId,
     removeItem,
   } = props;
+  const theme = useTheme();
 
   const orders = Object.keys(groupedOrders).reduce(
     (data: { id: string; listings: OrderItem[] }[], vendorId) => [
@@ -35,53 +37,53 @@ const Orders = (props: CheckoutGeneratedProps) => {
   );
 
   return orders.map((item, i) => (
-    <>
-      <Row>
-        <Col
-          style={{
-            marginTop: i !== 0 ? 32 : 0,
-          }}
-        >
-          <Typography
-            className="order-summary"
-            variant="overline"
-            color="shade6"
-          >
-            ORDER SUMMARY
-          </Typography>
+    <div className="accordion-container" key={`orders-${i}`}>
+      <Accordion title={item.listings[0].vendor} isOrders>
+        <div className="accordion-content-container">
+          <Row>
+            <Col
+              style={{
+                marginTop: i !== 0 ? 32 : 0,
+              }}
+            >
+              {item.listings.map((listing) => (
+                <CheckoutCard
+                  key={listing.cartId}
+                  onRemove={() => removeItem(listing.cartId)}
+                  {...listing}
+                />
+              ))}
+            </Col>
+          </Row>
 
-          {item.listings.map((listing) => (
-            <CheckoutCard
-              key={listing.cartId}
-              onRemove={() => removeItem(listing.cartId)}
-              {...listing}
-            />
-          ))}
-        </Col>
-      </Row>
+          <Row>
+            <Col>
+              <Typography
+                className="checkout-shipping"
+                variant="overline"
+                color="shade6"
+              >
+                Shipping
+              </Typography>
 
-      <Row>
-        <Col>
-          <Typography
-            className="checkout-shipping"
-            variant="overline"
-            color="shade6"
-          >
-            Shipping
-          </Typography>
-
-          <ShippingCard
-            selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
-            options={item.listings[0].shippingOptions}
-            onPress={(priceId) =>
-              setSelectedShippingId({
-                [item.listings[0].vendorId]: priceId,
-              })
-            }
-          />
-        </Col>
-      </Row>
-    </>
+              <ShippingCard
+                selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
+                options={item.listings[0].shippingOptions.sort((a, b) => {
+                  if (a.est < b.est)  return -1;
+                  if (a.est > b.est) return 1;
+                  return 0;
+                })}
+                onPress={(priceId) =>
+                  setSelectedShippingId({
+                    [item.listings[0].vendorId]: priceId,
+                  })
+                }
+              />
+            </Col>
+          </Row>
+        </div>
+      </Accordion>
+    </div>
   ));
 };
 
