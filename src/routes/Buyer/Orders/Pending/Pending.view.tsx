@@ -46,35 +46,19 @@ const PendingItems = (props: OrderItem) => {
               {confirmed ? 'Confirmed' : 'Pending Confirmation'}
             </Confirmed>
             <Row>
-              {!isAquafuture ? (
-                <>
-                  <Typography
-                    style={{ marginRight: '4px', marginLeft: '16px' }}
-                    variant="label"
-                    color="shade6"
-                    weight="500"
-                  >
-                    Estimated Catchment:
-                  </Typography>
-                  <Typography variant="label" color="shade8" weight="bold">
-                    {moment(estCatchmentDate).format('ddd DD MMM')}
-                  </Typography>
-                </>
-              ) : (
-                <>
-                  <Typography
-                    style={{ marginRight: '4px', marginLeft: '16px' }}
-                    variant="label"
-                    color="shade6"
-                    weight="500"
-                  >
-                    Estimated Delivery:
-                  </Typography>
-                  <Typography variant="label" color="shade8" weight="bold">
-                    {moment(estDeliveryDate).format('ddd DD MMM')}
-                  </Typography>
-                </>
-              )}
+              <Typography
+                style={{ marginRight: '4px', marginLeft: '16px' }}
+                variant="label"
+                color="shade6"
+                weight="500"
+              >
+                Estimated {isAquafuture ? 'Catchment:' : 'Delivery:'}{' '}
+              </Typography>
+              <Typography variant="label" color="shade8" weight="bold">
+                {moment(
+                  isAquafuture ? estCatchmentDate : estDeliveryDate
+                ).format('ddd DD MMM')}
+              </Typography>
             </Row>
             <Typography variant="title5" weight="900">
               ${price}
