@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { endListingActions, getAllListingsActions } from 'store/actions';
+import {
+  editSelectedListingActions,
+  endListingActions,
+  getAllListingsActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import { SellingGeneratedProps } from './Selling.props';
@@ -43,6 +47,14 @@ const Selling = (): JSX.Element => {
     history.push(SELLING_ROUTES.LISTING_DETAILS.replace(':listingId', id));
   };
 
+  const onClickEdit = (listingId: string) => {
+    dispatch(
+      editSelectedListingActions.update({
+        id: listingId,
+      })
+    );
+  };
+
   // MARK:- Effects
   useEffect(() => {
     // On Mount
@@ -62,6 +74,7 @@ const Selling = (): JSX.Element => {
     goToListingDetails,
     pending,
     onRemove,
+    onClickEdit,
     showDeletedSuccess: pressed && isDeleted,
   };
   return <SellingView {...generatedProps} />;

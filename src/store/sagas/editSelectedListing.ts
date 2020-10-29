@@ -89,13 +89,16 @@ function* editSelectedListingStep2(
     const getAllListings: GetAllListingsResponseItem[] = yield select(
       (state: Store) => state.getAllListings.data?.data?.orders || []
     );
+
     const currentListing =
       getAllListings.find(
         (data) => data.id === action.payload.data.currentListingId
       ) || null;
+
     const listingFormData: GetListingFormDataResponse = yield select(
       (state: Store) => state.getListingFormData.data?.data || null
     );
+
     yield put(
       editableListingActions.update(transform(currentListing, listingFormData))
     );

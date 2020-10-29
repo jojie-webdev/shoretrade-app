@@ -28,68 +28,74 @@ const Item = (props: ItemProp) => {
 
   return (
     <ItemCard>
-      <div className="left-content">
-        <ItemImage src={props.data.images[0]} alt="" />
+      <div className="wrapper" onClick={props.onClick}>
+        <div className="left-content">
+          <ItemImage src={props.data.images[0]} alt="" />
 
-        <div className="text-content">
-          <Typography variant="caption" color="noshade" className="item-title">
-            {props.title}
-          </Typography>
+          <div className="text-content">
+            <Typography
+              variant="caption"
+              color="noshade"
+              className="item-title"
+            >
+              {props.title}
+            </Typography>
 
-          <div className="tags-container">
-            {props.tags &&
-              props.tags.length !== 0 &&
-              props.tags.map((tag) => (
-                <Tag key={tag.label}>
-                  <Typography variant="caption" color="noshade">
-                    {tag.label}
-                  </Typography>
-                </Tag>
-              ))}
+            <div className="tags-container">
+              {props.tags &&
+                props.tags.length !== 0 &&
+                props.tags.map((tag) => (
+                  <Tag key={tag.label}>
+                    <Typography variant="small" color="noshade">
+                      {tag.label}
+                    </Typography>
+                  </Tag>
+                ))}
+            </div>
+
+            <ItemDetail variant="small" color="shade6" row>
+              Size: <span>{props.size}</span>
+            </ItemDetail>
           </div>
+        </div>
 
-          <ItemDetail variant="caption" color="shade6" row>
-            Size: <span>{props.size}</span>
-          </ItemDetail>
+        <div className="right-content">
+          <div className="item-data">
+            <ItemDetail variant="small" color="shade6">
+              Remaining Stock:{' '}
+              <span>
+                {Number(props.remaining).toFixed(0)} /{' '}
+                {Number(props.originalWeight).toFixed(0)}{' '}
+                {props.unit?.toLowerCase()}
+              </span>
+            </ItemDetail>
+
+            <ItemDetail variant="small" color="shade6">
+              Price:{' '}
+              <span>
+                ${props.price} per {props.unit}
+              </span>
+            </ItemDetail>
+
+            <ItemDetail variant="small" color="shade6">
+              Sold: <span>{props.sales}</span>
+            </ItemDetail>
+
+            <ItemDetail variant="small" color="shade6">
+              Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
+            </ItemDetail>
+          </div>
         </div>
       </div>
 
-      <div className="right-content">
-        <div className="item-data">
-          <ItemDetail variant="small" color="shade6">
-            Remaining Stock:{' '}
-            <span>
-              {Number(props.remaining).toFixed(0)} /{' '}
-              {Number(props.originalWeight).toFixed(0)}{' '}
-              {props.unit?.toLowerCase()}
-            </span>
-          </ItemDetail>
+      <div className="buttons">
+        <StyledTouchable onPress={props.onClickEdit} dark>
+          <Pen height={13} width={13}></Pen>
+        </StyledTouchable>
 
-          <ItemDetail variant="small" color="shade6">
-            Price:{' '}
-            <span>
-              ${props.price} per {props.unit}
-            </span>
-          </ItemDetail>
-
-          <ItemDetail variant="small" color="shade6">
-            Sold: <span>{props.sales}</span>
-          </ItemDetail>
-
-          <ItemDetail variant="small" color="shade6">
-            Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
-          </ItemDetail>
-        </div>
-
-        <div className="buttons">
-          <StyledTouchable onPress={props.onClick} dark>
-            <Pen height={13} width={13}></Pen>
-          </StyledTouchable>
-
-          <StyledTouchable onPress={props.onRemove} dark>
-            <TrashCan></TrashCan>
-          </StyledTouchable>
-        </div>
+        <StyledTouchable onPress={props.onRemove} dark>
+          <TrashCan></TrashCan>
+        </StyledTouchable>
       </div>
     </ItemCard>
   );
@@ -104,6 +110,7 @@ const SellingView = (props: SellingGeneratedProps) => {
     goToListingDetails,
     onRemove,
     showDeletedSuccess,
+    onClickEdit,
   } = props;
 
   if (pending) {
@@ -134,6 +141,7 @@ const SellingView = (props: SellingGeneratedProps) => {
                 key={listing.id}
                 {...listingToItem(listing)}
                 onClick={() => goToListingDetails(listing.id)}
+                onClickEdit={() => onClickEdit(listing.id)}
                 onRemove={() => onRemove(listing.id, listing.coopId)}
               />
             ))
