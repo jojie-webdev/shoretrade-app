@@ -89,7 +89,7 @@ const Selling = (): JSX.Element => {
     if (isDeleted && pressed) {
       dispatch(getAllListingsActions.request());
     }
-  }, [isDeleted, pressed, pending]);
+  }, [isDeleted, pressed]);
 
   const generatedProps: SellingGeneratedProps = {
     // generated props here
