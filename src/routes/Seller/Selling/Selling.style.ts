@@ -24,6 +24,7 @@ export const ItemCard = styled.div`
   border-radius: 4px;
 
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -79,23 +80,18 @@ export const ItemCard = styled.div`
     z-index: 1000;
   }
 
-  @media (max-width: 1222px) {
+  @media (max-width: 1252px) {
     .right-content {
       margin-top: 8px;
+      margin-left: 48px;
       flex-wrap: wrap;
-
-      .buttons {
-        justify-content: flex-start;
-      }
     }
-  }
 
-  @media ${BREAKPOINTS['md']} {
-    padding-bottom: 32px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 32px;
+    .buttons {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
   }
 `;
 
