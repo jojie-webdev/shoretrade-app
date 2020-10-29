@@ -3,7 +3,7 @@ import React from 'react';
 import AlertInfoView from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
+import { InfoFilled, CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -17,6 +17,8 @@ import {
   AccountName,
   StyledInteaction,
   StyledAlert,
+  Label,
+  TextContainer,
 } from './LinkedAccounts.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
@@ -27,7 +29,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     accounts,
     editAssistant,
     currentCompanyName,
-    notifMsg
+    notifMsg,
   } = props;
 
   if (pending) {
@@ -44,12 +46,34 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
       {!notifMsg && (
         <SmallAlertContainer>
-          <div className="icon-container">
-            <InfoFilled fill={theme.grey.shade8} height={20} width={20} />
-          </div>
-          <Typography variant="caption" className="text" color="shade8">
-            {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
-          </Typography>
+          <Label variant="caption" color="shade8">
+            {`If you want to give others access to you account, you can add a “linked account”`}
+          </Label>
+          <Label variant="caption" className="text-people" color="shade8">
+            {`People with linked account…`}
+          </Label>
+          <TextContainer>
+            <CheckFilled
+              fill={theme.brand.success}
+              height={16.67}
+              width={16.67}
+            />
+            <Label variant="caption" className="text" color="shade8">
+              {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
+            </Label>
+          </TextContainer>
+
+          <TextContainer>
+            <CloseFilled
+              css={'margin-right:5.67px'}
+              fill={theme.brand.error}
+              height={16.67}
+              width={16.67}
+            />
+            <Label variant="caption" className="text" color="shade8">
+              {`Cannot add other linked accounts`}
+            </Label>
+          </TextContainer>
         </SmallAlertContainer>
       )}
 
