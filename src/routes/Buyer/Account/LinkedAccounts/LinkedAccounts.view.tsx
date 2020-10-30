@@ -75,7 +75,6 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
           <TextContainer>
             <CloseFilled
-              css={'margin-right:5.67px'}
               fill={theme.brand.error}
               height={16.67}
               width={16.67}
