@@ -76,7 +76,7 @@ const LocationSearch = ({
     const placesService = new google.maps.places.AutocompleteService();
 
     try {
-      await new Promise((r) => setTimeout(r, 3000));
+      // await new Promise((r) => setTimeout(r, 3000));
 
       placesService.getPlacePredictions(
         {
