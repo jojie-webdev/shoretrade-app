@@ -1,9 +1,7 @@
 import React from 'react';
 
-import AlertInfoView from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { InfoFilled, CheckFilled, CloseFilled } from 'components/base/SVG';
+import { CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -17,20 +15,12 @@ import {
   AccountName,
   StyledInteaction,
   StyledAlert,
-  Label,
   TextContainer,
 } from './LinkedAccounts.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
-  const {
-    pending,
-    addAssistant,
-    accounts,
-    editAssistant,
-    currentCompanyName,
-    notifMsg,
-  } = props;
+  const { pending, addAssistant, accounts, editAssistant, notifMsg } = props;
 
   if (pending) {
     return <Loading />;
@@ -46,31 +36,31 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
       {!notifMsg && (
         <SmallAlertContainer>
-          <Label variant="caption" weight="bold" color="shade8">
+          <Typography variant="body" weight="500" color="shade8">
             {`If you want to give others access to you account, you can add a “linked account”`}
-          </Label>
-          <Label
-            variant="caption"
-            weight="bold"
+          </Typography>
+          <Typography
+            variant="body"
+            weight="500"
             className="text-people"
             color="shade8"
           >
             {`People with linked account…`}
-          </Label>
+          </Typography>
           <TextContainer>
             <CheckFilled
               fill={theme.brand.success}
               height={16.67}
               width={16.67}
             />
-            <Label
-              variant="caption"
-              weight="bold"
+            <Typography
+              variant="body"
+              weight="500"
               className="text"
               color="shade8"
             >
               {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
-            </Label>
+            </Typography>
           </TextContainer>
 
           <TextContainer>
@@ -79,14 +69,14 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
               height={16.67}
               width={16.67}
             />
-            <Label
-              variant="caption"
-              weight="bold"
+            <Typography
+              variant="body"
+              weight="500"
               className="text"
               color="shade8"
             >
               {`Cannot add other linked accounts`}
-            </Label>
+            </Typography>
           </TextContainer>
         </SmallAlertContainer>
       )}

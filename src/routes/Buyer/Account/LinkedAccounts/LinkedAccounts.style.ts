@@ -45,10 +45,6 @@ export const AccountName = styled(Typography)`
   margin: 4px 0;
 `;
 
-export const Label = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade8};
-`;
-
 export const StyledInteaction = styled(Interactions)`
   margin-bottom: 8px;
 `;
