@@ -7,7 +7,7 @@ export const Container = styled.div``;
 
 export const SmallAlertContainer = styled.div`
   // padding: 8px;
-  padding: 16px 0px 16px 18px;
+  padding: 24px 24px 25px 24px;
   width: 100%;
   background: ${({ theme }) => theme.grey.shade2};
   border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
