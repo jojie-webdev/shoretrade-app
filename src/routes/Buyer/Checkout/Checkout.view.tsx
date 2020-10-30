@@ -38,7 +38,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
 
   return orders.map((item, i) => (
     <div className="accordion-container" key={`orders-${i}`}>
-      <Accordion title={item.listings[0].vendor} isCheckout>
+      <Accordion title={item.listings[0].vendor} withBackground>
         <div className="accordion-content-container">
           <Row>
             <Col
