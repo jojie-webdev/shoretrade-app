@@ -29,6 +29,7 @@ const Selling = (): JSX.Element => {
     useSelector((state: Store) => state.endListing.data?.status) === 200;
 
   // MARK:- State
+  const [search, setSearch] = useState('');
   const [pressed, setPressed] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [listingData, setListingData] = useState({
@@ -36,11 +37,26 @@ const Selling = (): JSX.Element => {
     companyId: '',
   });
 
+  // MARK: Variables
+  const filteredListings = !search
+    ? listings
+    : listings.filter((listing) =>
+        listing.type.toLowerCase().includes(search.toLowerCase())
+      );
+
   // MARK:- Method
   const onClickRemoveListing = (listingId: string, companyId: string) => {
     setShowModal(true);
 
     setListingData({ listingId, companyId });
+  };
+
+  const onChangeSearch = (value: string) => {
+    setSearch(value);
+  };
+
+  const resetSearch = () => {
+    setSearch('');
   };
 
   const clearListingData = () => {
@@ -93,7 +109,7 @@ const Selling = (): JSX.Element => {
 
   const generatedProps: SellingGeneratedProps = {
     // generated props here
-    listings,
+    listings: filteredListings,
     goToListingDetails,
     pending,
     onClickRemoveListing,
@@ -102,6 +118,9 @@ const Selling = (): JSX.Element => {
     clearListingData,
     onRemove,
     showDeletedSuccess: pressed && isDeleted,
+    search,
+    onChangeSearch,
+    resetSearch,
   };
   return <SellingView {...generatedProps} />;
 };

@@ -1,7 +1,7 @@
 import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import { BREAKPOINTS } from 'consts/breakpoints';
+import Search from 'components/module/Search';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -15,6 +15,10 @@ export const Container = styled.div`
 export const StyledAlert = styled(Alert)`
   margin-bottom: 16px;
   width: 100%;
+`;
+
+export const StyledSearch = styled(Search)`
+  margin-bottom: 24px;
 `;
 
 export const ItemCard = styled.div`

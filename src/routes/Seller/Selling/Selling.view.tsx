@@ -4,7 +4,6 @@ import React from 'react';
 
 import { Crab, Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import Modal from 'components/layout/Modal';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
@@ -22,6 +21,7 @@ import {
   Container,
   StyledTouchable,
   StyledAlert,
+  StyledSearch,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -117,6 +117,9 @@ const SellingView = (props: SellingGeneratedProps) => {
     showModal,
     onRemove,
     clearListingData,
+    search,
+    onChangeSearch,
+    resetSearch,
   } = props;
 
   if (pending) {
@@ -133,9 +136,20 @@ const SellingView = (props: SellingGeneratedProps) => {
           />
         )}
 
+        <Row>
+          <Col>
+            <StyledSearch
+              value={search}
+              resetValue={resetSearch}
+              onChange={(e) => onChangeSearch(e.target.value)}
+              placeholder="e.g. Ocean Trout"
+            />
+          </Col>
+        </Row>
+
         <Row className="row" justify="center">
           <Col>
-            {listings.length === 0 ? (
+            {listings.length === 0 && !search ? (
               <EmptyState
                 title="The are no listings here at the moment"
                 buttonText="Add a product"

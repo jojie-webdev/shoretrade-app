@@ -10,6 +10,9 @@ export interface SellingGeneratedProps {
   clearListingData: () => void;
   showModal: boolean;
   onRemove: () => void;
+  search: string;
+  onChangeSearch: (value: string) => void;
+  resetSearch: () => void;
 }
 
 export type ItemProp = {
