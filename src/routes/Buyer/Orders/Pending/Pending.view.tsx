@@ -86,7 +86,7 @@ const Pending = (props: OrdersGeneratedProps) => {
           key={key}
           noBg
           title={key}
-          padding="0"
+          padding="16px 8px"
           marginBottom="16px"
         >
           {data[key].map((d) => (

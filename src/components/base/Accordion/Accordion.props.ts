@@ -8,4 +8,5 @@ export interface AccordionProps {
   noBg?: boolean;
   padding?: string;
   marginBottom?: string;
+  innerContentPadding?: string;
 }

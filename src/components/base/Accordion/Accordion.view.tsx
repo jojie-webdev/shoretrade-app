@@ -11,6 +11,7 @@ const Accordion = ({
   noBg,
   padding,
   marginBottom = '0px',
+  innerContentPadding,
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
@@ -26,7 +27,9 @@ const Accordion = ({
         noBg={noBg}
         padding={padding}
       />
-      <Content isOpen={isOpen}>{props.children}</Content>
+      <Content isOpen={isOpen} padding={padding}>
+        {props.children}
+      </Content>
     </Container>
   );
 };

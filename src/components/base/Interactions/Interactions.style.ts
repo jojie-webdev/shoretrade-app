@@ -27,7 +27,7 @@ export const Container = styled.div<InteractionsProps>`
     }
 
     return theme.appType === 'buyer'
-      ? '0 6px 12px rgba(41, 43, 50, 0.12)'
+      ? '0px 4px 12px rgba(41, 43, 50, 0.04);'
       : 'none';
   }};
 
