@@ -19,7 +19,15 @@ import {
 } from './Pending.style';
 
 const PendingItems = (props: OrderItem) => {
-  const { confirmed, data, estCatchmentDate, id, price } = props;
+  const {
+    confirmed,
+    data,
+    estCatchmentDate,
+    id,
+    price,
+    isAquafuture,
+    estDeliveryDate,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -44,10 +52,12 @@ const PendingItems = (props: OrderItem) => {
                 color="shade6"
                 weight="500"
               >
-                Est. Catchment:
+                Estimated {isAquafuture ? 'Catchment:' : 'Delivery:'}{' '}
               </Typography>
               <Typography variant="label" color="shade8" weight="bold">
-                {moment(estCatchmentDate).format('ddd DD MMM')}
+                {moment(
+                  isAquafuture ? estCatchmentDate : estDeliveryDate
+                ).format('ddd DD MMM')}
               </Typography>
             </Row>
             <Typography variant="title5" weight="900">
