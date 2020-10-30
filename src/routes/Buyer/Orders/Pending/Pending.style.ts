@@ -1,3 +1,4 @@
+import AccordionView from 'components/base/Accordion';
 import Interaction from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
@@ -26,7 +27,7 @@ export const LeftContainer = styled(Col)``;
 
 export const AccordionContainer = styled.div`
   background-color: #fff;
-  margin-bottom: 16px;
+
   // shadow-color: rgba(41, 43, 50, 0.12);
   shadow-opacity: 0.34;
   shadow-radius: 6.27;
@@ -37,4 +38,12 @@ export const AccordionContainer = styled.div`
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
 
   // border: 1px solid blue;
+
+  :not(:last-child) {
+    margin-bottom: 16px;
+  }
+`;
+
+export const StyledAccordion = styled(AccordionView)`
+  margin-bottom: 16px;
 `;

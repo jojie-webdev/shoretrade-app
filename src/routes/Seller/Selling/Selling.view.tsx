@@ -39,6 +39,7 @@ const Item = (props: ItemProp) => {
               variant="caption"
               color="noshade"
               className="item-title"
+              weight="bold"
             >
               {props.title}
             </Typography>
@@ -55,7 +56,7 @@ const Item = (props: ItemProp) => {
                 ))}
             </div>
 
-            <ItemDetail variant="small" color="shade6" row>
+            <ItemDetail variant="small" color="shade6" row weight="bold">
               Size: <span>{props.size}</span>
             </ItemDetail>
           </div>
@@ -63,7 +64,7 @@ const Item = (props: ItemProp) => {
 
         <div className="right-content">
           <div className="item-data">
-            <ItemDetail variant="small" color="shade6">
+            <ItemDetail variant="small" color="shade6" weight="bold">
               Remaining Stock:{' '}
               <span>
                 {Number(props.remaining).toFixed(0)} /{' '}
@@ -72,18 +73,18 @@ const Item = (props: ItemProp) => {
               </span>
             </ItemDetail>
 
-            <ItemDetail variant="small" color="shade6">
+            <ItemDetail variant="small" color="shade6" weight="bold">
               Price:{' '}
               <span>
                 ${props.price} per {props.unit}
               </span>
             </ItemDetail>
 
-            <ItemDetail variant="small" color="shade6">
+            <ItemDetail variant="small" color="shade6" weight="bold">
               Sold: <span>{props.sales}</span>
             </ItemDetail>
 
-            <ItemDetail variant="small" color="shade6">
+            <ItemDetail variant="small" color="shade6" weight="bold">
               Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
             </ItemDetail>
           </div>

@@ -175,13 +175,22 @@ export const Content = styled.div<{
     }
   }
 
+  @media (max-width: 935px) {
+    .screen-wrapper {
+      .screen {
+        width: 90%;
+        padding: 24px;
+      }
+    }
+  }
+
   @media ${BREAKPOINTS['md']} {
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: ${(props) =>
           props.shouldUseFullWidth ? '100%' : 'calc(100% - 150px)'};
-        padding: ${(props) => (props.shouldIncludePadding ? '40px' : '0')};
+        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
     }
   }
