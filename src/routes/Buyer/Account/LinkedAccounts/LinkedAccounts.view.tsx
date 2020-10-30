@@ -46,10 +46,15 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
       {!notifMsg && (
         <SmallAlertContainer>
-          <Label variant="caption" color="shade8">
+          <Label variant="caption" weight="bold" color="shade8">
             {`If you want to give others access to you account, you can add a “linked account”`}
           </Label>
-          <Label variant="caption" className="text-people" color="shade8">
+          <Label
+            variant="caption"
+            weight="bold"
+            className="text-people"
+            color="shade8"
+          >
             {`People with linked account…`}
           </Label>
           <TextContainer>
@@ -58,7 +63,12 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
               height={16.67}
               width={16.67}
             />
-            <Label variant="caption" className="text" color="shade8">
+            <Label
+              variant="caption"
+              weight="bold"
+              className="text"
+              color="shade8"
+            >
               {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
             </Label>
           </TextContainer>
@@ -70,7 +80,12 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
               height={16.67}
               width={16.67}
             />
-            <Label variant="caption" className="text" color="shade8">
+            <Label
+              variant="caption"
+              weight="bold"
+              className="text"
+              color="shade8"
+            >
               {`Cannot add other linked accounts`}
             </Label>
           </TextContainer>

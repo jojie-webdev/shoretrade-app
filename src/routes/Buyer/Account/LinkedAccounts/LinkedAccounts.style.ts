@@ -10,6 +10,7 @@ export const SmallAlertContainer = styled.div`
   padding: 16px 0px 16px 18px;
   width: 100%;
   background: ${({ theme }) => theme.grey.shade2};
+  border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
   border-radius: 4px;
   margin-bottom: 24px;
   flex-direction: column;
