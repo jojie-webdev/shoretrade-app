@@ -93,6 +93,14 @@ export const ItemCard = styled.div`
       right: 8px;
     }
   }
+
+  @media (max-width: 375px) {
+    .right-content {
+      .item-data {
+        flex-wrap: wrap;
+      }
+    }
+  }
 `;
 
 export const StyledTouchable = styled(Touchable)`
