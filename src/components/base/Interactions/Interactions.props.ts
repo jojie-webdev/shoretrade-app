@@ -25,4 +25,5 @@ export interface InteractionsProps {
   iconColor?: string;
   resultCount?: any;
   customFontSize?: number;
+  noBg?: boolean;
 }

@@ -8,20 +8,28 @@ import { Container, Content } from './Accordion.style';
 const Accordion = ({
   title,
   iconColor,
+  noBg,
+  padding,
+  marginBottom = '0px',
+  innerContentPadding,
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
 
   return (
-    <Container>
+    <Container marginBottom={marginBottom}>
       <Interactions
         pressed={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         value={title}
         type="accordion"
         iconColor={iconColor}
+        noBg={noBg}
+        padding={padding}
       />
-      <Content isOpen={isOpen}>{props.children}</Content>
+      <Content isOpen={isOpen} padding={padding}>
+        {props.children}
+      </Content>
     </Container>
   );
 };
