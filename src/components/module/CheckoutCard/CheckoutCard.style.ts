@@ -5,8 +5,7 @@ export const Container = styled.div`
   margin-bottom: 16px;
   background: #ffffff;
   border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(41, 43, 50, 0.12);
-
+  border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
   .checkout-row {
     display: flex;
   }
