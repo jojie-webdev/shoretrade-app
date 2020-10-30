@@ -30,6 +30,7 @@ export interface OrderItem {
   estCatchmentDate: Date;
   deliveredDate: Date;
   price: string;
+  isAquafuture: boolean;
 }
 
 export type RequestFilters = {
