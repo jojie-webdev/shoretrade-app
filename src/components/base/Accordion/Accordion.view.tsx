@@ -11,9 +11,8 @@ const Accordion = ({
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
-
   return (
-    <Container>
+    <Container isCheckout={props.isCheckout} isOpen={isOpen}>
       <Interactions
         pressed={isOpen}
         onClick={() => setIsOpen(!isOpen)}
@@ -22,6 +21,7 @@ const Accordion = ({
         iconColor={iconColor}
       />
       <Content isOpen={isOpen} isCheckout={props.isCheckout}>
+        {props.isCheckout && <div className="border" />}
         {props.children}
       </Content>
     </Container>
