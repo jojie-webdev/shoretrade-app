@@ -51,8 +51,8 @@ export const SoldItem = (
   const [isOpen, setIsOpen] = useState(false);
   const desc =
     type.toLowerCase() === 'air'
-      ? 'Air Freight Cut Off'
-      : 'Road Freight Pick Up';
+      ? 'Air Freight Cut Off'.toUpperCase()
+      : 'Road Freight Pick Up'.toUpperCase();
   const time =
     type.toLowerCase() === 'air' ? moment(date).format('hh:mm a') : '';
 
@@ -62,7 +62,7 @@ export const SoldItem = (
     ) : (
       <Truck height={13} width={13} />
     );
-  const toAddress = toAddressState ? `(${toAddressState})` : '';
+  const toAddress = toAddressState ? `${toAddressState}` : '';
   return (
     <>
       <StyledInteraction
@@ -79,7 +79,7 @@ export const SoldItem = (
         <div className="content">
           <Icon />
           <Typography variant="label" color="shade6" className="center-text">
-            {desc} {toAddress}
+            {desc} - {toAddress}
           </Typography>
           <Typography variant="label" color="noshade">
             {time}
@@ -229,7 +229,11 @@ const ToShip = (props: SoldGeneratedProps) => {
       </PendingRow>
 
       {toShip.map((group) => {
-        const calendarDateString = getCalendarDate(group.title);
+        // const calendarDateString = getCalendarDate(group.title);
+        const calendarDateString = moment(group.title)
+          .format('Do MMM')
+          .toUpperCase();
+
         return (
           <DeliveryRow key={calendarDateString} className="delivery-row">
             <Col>
