@@ -3,7 +3,9 @@ import styled from 'utils/styled';
 export const Container = styled.div<{
   isOpen?: boolean;
   withBackground?: boolean;
+  marginBottom: string;
 }>`
+  margin-bottom: ${(props) => props.marginBottom};
   .interactions {
     box-shadow: ${({ withBackground }) => withBackground && 'none'};
   }
@@ -11,14 +13,15 @@ export const Container = styled.div<{
 
 export const Content = styled.div<{
   isOpen?: boolean;
+  padding?: string;
   withBackground?: boolean;
 }>`
   width: 100%;
   overflow: hidden;
   height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
-  padding: ${({ isOpen }) => (isOpen ? '16px 0' : '0')};
+  padding: ${({ isOpen, padding }) => (isOpen ? padding || '16px 0' : '0')};
+  transition: height 0.1s ease, overflow 0.1s ease;
   padding-top: ${({ withBackground }) => (withBackground ? '0px' : '16px')};
-  transition: all 0.1s ease;
 
   .border {
     border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
