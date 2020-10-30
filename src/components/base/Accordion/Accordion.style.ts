@@ -1,6 +1,8 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div<{ marginBottom: string }>`
+  margin-bottom: ${(props) => props.marginBottom};
+`;
 
 export const Content = styled.div<{ isOpen?: boolean }>`
   width: 100%;

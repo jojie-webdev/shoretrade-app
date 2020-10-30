@@ -10,14 +10,26 @@ export const Container = styled.div<InteractionsProps>`
   display: flex;
   justify-content: space-between;
   position: relative;
-  background-color: ${({ theme, backgroundColor }) => {
+  background-color: ${({ theme, backgroundColor, noBg }) => {
     const isSeller = theme.appType !== 'buyer';
+
+    if (noBg) {
+      return 'transparent';
+    }
 
     return backgroundColor || (isSeller ? theme.grey.shade9 : '#ffffff');
   }};
+
   margin-top: ${({ label }) => (label ? '20px' : 0)};
-  box-shadow: ${({ theme }) =>
-    theme.appType === 'buyer' ? '0 6px 12px rgba(41, 43, 50, 0.12)' : 'none'};
+  box-shadow: ${({ theme, noBg }) => {
+    if (noBg) {
+      return 'none';
+    }
+
+    return theme.appType === 'buyer'
+      ? '0 6px 12px rgba(41, 43, 50, 0.12)'
+      : 'none';
+  }};
 
   ${({ onClick, type }) =>
     onClick && type !== 'none'

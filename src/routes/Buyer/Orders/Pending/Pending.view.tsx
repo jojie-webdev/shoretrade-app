@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 
-import { Label } from 'components/base/Select/Select.style';
-import { Container } from 'components/base/Spinner/Spinner.style';
 import Typography from 'components/base/Typography';
 import OrderAccordionContent from 'components/module/OrderAccordionContent';
-import Pagination from 'components/module/Pagination';
 import moment from 'moment';
-import { Row, Col } from 'react-grid-system';
-import { useTheme } from 'utils/Theme';
+import { Row } from 'react-grid-system';
+// import { useTheme } from 'utils/Theme';
 
 import { OrderItem, OrdersGeneratedProps } from '../Orders.props';
 import {
@@ -16,7 +13,9 @@ import {
   CollapsibleContent,
   LeftContainer,
   AccordionContainer,
+  StyledAccordion,
 } from './Pending.style';
+import { groupByDate, sortByDateAsc } from './Pending.transform';
 
 const PendingItems = (props: OrderItem) => {
   const {
@@ -74,36 +73,29 @@ const PendingItems = (props: OrderItem) => {
 };
 
 const Pending = (props: OrdersGeneratedProps) => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  const { pendingOrders, pendingOrdersCount, filters, updateFilters } = props;
+  const { pendingOrders } = props;
 
-  const pendingPagesTotal = Math.ceil(Number(pendingOrdersCount) / 10);
+  const data = groupByDate(sortByDateAsc(pendingOrders));
 
   return (
     <>
-      {pendingOrders.map((item) => {
-        return (
-          <AccordionContainer key={item.id}>
-            <PendingItems {...item} />
-          </AccordionContainer>
-        );
-      })}
-
-      <Row justify="center">
-        {pendingPagesTotal > 1 && (
-          <Pagination
-            numPages={pendingPagesTotal}
-            currentValue={Number(filters.pendingOrdersFilter.page)}
-            onClickButton={(value) =>
-              updateFilters.updatePendingOrdersFilter({
-                page: value.toFixed(0),
-              })
-            }
-            variant="number"
-          />
-        )}
-      </Row>
+      {Object.keys(data).map((key) => (
+        <StyledAccordion
+          key={key}
+          noBg
+          title={key}
+          padding="0"
+          marginBottom="16px"
+        >
+          {data[key].map((d) => (
+            <AccordionContainer key={d.id}>
+              <PendingItems {...d} />
+            </AccordionContainer>
+          ))}
+        </StyledAccordion>
+      ))}
     </>
   );
 };

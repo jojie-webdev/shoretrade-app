@@ -152,6 +152,7 @@ export const orderItemToInTransitItemData = (
 
 export const groupDeliveredOrders = (orders: GetSellerOrdersResponseItem[]) => {
   const groupedOrders = groupByDate(orders);
+
   const result = Object.keys(groupedOrders)
     .filter((k) => k !== '0')
     .map((k) => ({
