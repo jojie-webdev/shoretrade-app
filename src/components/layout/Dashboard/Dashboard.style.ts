@@ -3,6 +3,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
+const dashboardWidth = (isSeller: boolean) =>
+  isSeller ? 'calc(100% - 64px)' : 'calc(100% - 200px)';
+
 export const DashboardContainer = styled.div<{ openSidebar?: boolean }>`
   height: 100vh;
   width: 100%;
@@ -162,7 +165,9 @@ export const Content = styled.div<{
           : props.theme.grey.shade8};
 
       width: ${(props) =>
-        props.shouldUseFullWidth ? '100%' : 'calc(100% - 200px)'};
+        props.shouldUseFullWidth
+          ? '100%'
+          : dashboardWidth(props.theme.appType === 'seller')};
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-x: hidden;
@@ -189,7 +194,7 @@ export const Content = styled.div<{
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: ${(props) =>
-          props.shouldUseFullWidth ? '100%' : 'calc(100% - 150px)'};
+          props.shouldUseFullWidth ? '100%' : 'calc(100% - 32px)'};
         padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
     }
@@ -222,7 +227,10 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => (props.useOuterWrapper ? '100%' : 'calc(100% - 200px)')};
+  width: ${(props) =>
+    props.useOuterWrapper
+      ? '100%'
+      : dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
@@ -296,7 +304,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: calc(100% - 150px);
+    width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   }
 
   ${(props) =>
@@ -362,7 +370,7 @@ export const CheckoutCount = styled.div`
 `;
 
 export const HeaderWrapper = styled.div`
-  width: calc(100% - 200px);
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   margin: auto;
   position: relative;
 
@@ -371,6 +379,6 @@ export const HeaderWrapper = styled.div`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: calc(100% - 150px);
+    width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   }
 `;
