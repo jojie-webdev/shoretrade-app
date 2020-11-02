@@ -39,7 +39,7 @@ export const ItemCard = styled.div`
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 75%;
+    width: 90%;
 
     :hover {
       cursor: pointer;
@@ -84,10 +84,10 @@ export const ItemCard = styled.div`
     z-index: 1000;
   }
 
-  @media (max-width: 1252px) {
+  @media (max-width: 1383px) {
     .right-content {
       margin-top: 8px;
-      margin-left: 48px;
+      margin-left: 72px;
       flex-wrap: wrap;
     }
 
@@ -98,7 +98,13 @@ export const ItemCard = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 500px) {
+    .right-content {
+      margin-left: 0px;
+    }
+  }
+
+  @media (max-width: 460px) {
     .right-content {
       .item-data {
         flex-wrap: wrap;
@@ -113,7 +119,7 @@ export const StyledTouchable = styled(Touchable)`
 
 export const Tag = styled.div`
   background: ${(props) => props.theme.grey.shade8};
-  padding: 2px 6px;
+  padding: 4px 8px;
   margin-right: 8px;
   border-radius: 4px;
   display: flex;
@@ -123,8 +129,8 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
   background: ${(props) => props.theme.grey.noshade};
 
@@ -135,15 +141,30 @@ export const ItemImage = styled.img`
 export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.row ? 'row' : 'column')};
-  margin-right: 16px;
-  width: auto;
+  align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
 
+  width: auto;
   white-space: nowrap;
+  line-height: 16px;
+
+  margin-right: 56px;
+
+  @media (max-width: 1052px) {
+    margin-right: 32px;
+  }
+
+  @media (max-width: 980px) {
+    margin-right: 16px;
+  }
+
+  @media (max-width: 550px) {
+    flex: 1;
+  }
 
   span {
-    font-weight: 900;
     color: ${(props) => props.theme.grey.noshade};
-
+    font-size: 14px;
     margin-left: ${(props) => (props.row ? '8px' : '0')};
+    line-height: 24px;
   }
 `;

@@ -162,7 +162,7 @@ export const Content = styled.div<{
           : props.theme.grey.shade8};
 
       width: ${(props) =>
-        props.shouldUseFullWidth ? '100%' : 'calc(100% - 200px)'};
+        props.shouldUseFullWidth ? '100%' : 'calc(100% - 64px)'};
       padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
       border-radius: 2px;
       overflow-x: hidden;
@@ -189,7 +189,7 @@ export const Content = styled.div<{
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       .screen {
         width: ${(props) =>
-          props.shouldUseFullWidth ? '100%' : 'calc(100% - 150px)'};
+          props.shouldUseFullWidth ? '100%' : 'calc(100% - 32px)'};
         padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
     }
@@ -222,7 +222,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => (props.useOuterWrapper ? '100%' : 'calc(100% - 200px)')};
+  width: ${(props) => (props.useOuterWrapper ? '100%' : 'calc(100% - 64px)')};
 
   .left-content {
     display: flex;
@@ -296,7 +296,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: calc(100% - 150px);
+    width: calc(100% - 64px);
   }
 
   ${(props) =>
@@ -362,7 +362,7 @@ export const CheckoutCount = styled.div`
 `;
 
 export const HeaderWrapper = styled.div`
-  width: calc(100% - 200px);
+  width: calc(100% - 64px);
   margin: auto;
   position: relative;
 
@@ -371,6 +371,6 @@ export const HeaderWrapper = styled.div`
   }
 
   @media ${BREAKPOINTS['md']} {
-    width: calc(100% - 150px);
+    width: calc(100% - 64px);
   }
 `;
