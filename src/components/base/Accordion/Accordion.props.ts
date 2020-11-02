@@ -9,4 +9,5 @@ export interface AccordionProps {
   padding?: string;
   marginBottom?: string;
   innerContentPadding?: string;
+  withBackground?: boolean;
 }

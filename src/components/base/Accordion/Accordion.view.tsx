@@ -15,9 +15,12 @@ const Accordion = ({
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
-
   return (
-    <Container marginBottom={marginBottom}>
+    <Container
+      withBackground={props.withBackground}
+      isOpen={isOpen}
+      marginBottom={marginBottom}
+    >
       <Interactions
         pressed={isOpen}
         onClick={() => setIsOpen(!isOpen)}
@@ -27,7 +30,12 @@ const Accordion = ({
         noBg={noBg}
         padding={padding}
       />
-      <Content isOpen={isOpen} padding={padding}>
+      <Content
+        isOpen={isOpen}
+        withBackground={props.withBackground}
+        padding={padding}
+      >
+        {props.withBackground && <div className="border" />}
         {props.children}
       </Content>
     </Container>
