@@ -1,9 +1,7 @@
 import React from 'react';
 
-import AlertInfoView from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
+import { CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -17,18 +15,12 @@ import {
   AccountName,
   StyledInteaction,
   StyledAlert,
+  TextContainer,
 } from './LinkedAccounts.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
-  const {
-    pending,
-    addAssistant,
-    accounts,
-    editAssistant,
-    currentCompanyName,
-    notifMsg
-  } = props;
+  const { pending, addAssistant, accounts, editAssistant, notifMsg } = props;
 
   if (pending) {
     return <Loading />;
@@ -44,12 +36,48 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
       {!notifMsg && (
         <SmallAlertContainer>
-          <div className="icon-container">
-            <InfoFilled fill={theme.grey.shade8} height={20} width={20} />
-          </div>
-          <Typography variant="caption" className="text" color="shade8">
-            {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+          <Typography variant="body" weight="500" color="shade8">
+            {`If you want to give others access to you account, you can add a “linked account”`}
           </Typography>
+          <Typography
+            variant="body"
+            weight="500"
+            className="text-people"
+            color="shade8"
+          >
+            {`People with linked account…`}
+          </Typography>
+          <TextContainer>
+            <CheckFilled
+              fill={theme.brand.success}
+              height={16.67}
+              width={16.67}
+            />
+            <Typography
+              variant="body"
+              weight="500"
+              className="text"
+              color="shade8"
+            >
+              {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
+            </Typography>
+          </TextContainer>
+
+          <TextContainer>
+            <CloseFilled
+              fill={theme.brand.error}
+              height={16.67}
+              width={16.67}
+            />
+            <Typography
+              variant="body"
+              weight="500"
+              className="text"
+              color="shade8"
+            >
+              {`Cannot add other linked accounts`}
+            </Typography>
+          </TextContainer>
         </SmallAlertContainer>
       )}
 
