@@ -59,6 +59,15 @@ const groupByDeliveryMethod = groupBy((order: GetSellerOrdersResponseItem) => {
   return 'Road Freight';
 });
 
+const groupByDeliveryMethodAndState = groupBy(
+  (order: GetSellerOrdersResponseItem) => {
+    if (order.deliveryMethod === 'AIR') {
+      return `Air Freight - ${order.toAddress.state}`;
+    }
+    return `Road Freight - ${order.toAddress.state}`;
+  }
+);
+
 export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
   const groupedOrders = groupByDate(orders);
   return Object.keys(groupedOrders)
@@ -66,6 +75,10 @@ export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
     .map((k) => ({
       title: moment(k, 'yyyy-MM-DD').toDate(),
       data: groupedOrders[k],
+    }))
+    .map((k) => ({
+      ...k,
+      data: groupByDeliveryMethodAndState(k.data),
     }));
 };
 
@@ -84,34 +97,39 @@ export const orderItemToPendingToShipItem = (
   }));
 };
 
-export const orderItemToToShipItemData = (
-  data: GetSellerOrdersResponseItem[]
-): ToShipItemData[] => {
-  console.log(data[0].status);
+export const orderItemToToShipItemData = (data: {
+  [p: string]: GetSellerOrdersResponseItem[];
+}): { [p: string]: ToShipItemData[] } => {
+  //@ts-ignore
+  const newObj: { [p: string]: ToShipItemData[] } = { ...data };
 
-  return data.map((order) => ({
-    id: order.orderId,
-    date: moment(order.orderDate).toDate(),
-    type: order.deliveryMethod.toLowerCase(),
-    orderRefNumber: order.orderRefNumber,
-    orders: order.orderLineItem.map((lineItem) => ({
-      orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-      buyer: order.buyerCompanyName,
-      uri: lineItem.listing.images[0],
-      price: `${toPrice(lineItem.price)}`,
-      weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
-        lineItem.listing.measurementUnit
-      )}`,
-      name: lineItem.listing.typeName,
-      tags: lineItem.listing.specifications.map((s) => ({ label: s })),
-      size: sizeToString(
-        lineItem.listing.metricLabel,
-        lineItem.listing.sizeFrom || '',
-        lineItem.listing.sizeTo || ''
-      ),
-    })),
-    toAddressState: order.toAddress.state,
-  }));
+  for (const [key, value] of Object.entries(data)) {
+    newObj[key] = value.map((order) => ({
+      id: order.orderId,
+      date: moment(order.orderDate).toDate(),
+      type: order.deliveryMethod.toLowerCase(),
+      orderRefNumber: order.orderRefNumber,
+      orders: order.orderLineItem.map((lineItem) => ({
+        orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
+        buyer: order.buyerCompanyName,
+        uri: lineItem.listing.images[0],
+        price: `${toPrice(lineItem.price)}`,
+        weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
+          lineItem.listing.measurementUnit
+        )}`,
+        name: lineItem.listing.typeName,
+        tags: lineItem.listing.specifications.map((s) => ({ label: s })),
+        size: sizeToString(
+          lineItem.listing.metricLabel,
+          lineItem.listing.sizeFrom || '',
+          lineItem.listing.sizeTo || ''
+        ),
+      })),
+      toAddressState: order.toAddress.state,
+    }));
+  }
+
+  return newObj;
 };
 
 export const groupInTransitOrders = (orders: GetSellerOrdersResponseItem[]) => {

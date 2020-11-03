@@ -31,7 +31,7 @@ export type ToShipItemData = {
 
 export type ToShipItem = {
   title: Date;
-  data: ToShipItemData[];
+  data: { [p: string]: ToShipItemData[] };
 };
 
 export type InTransitItemData = {

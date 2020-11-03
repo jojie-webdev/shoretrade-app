@@ -33,80 +33,86 @@ import {
   CarouselContainer,
 } from './ToShip.styles';
 
-export const SoldItem = (
-  props: ToShipItemData & {
-    token: string;
-  }
-) => {
+export const SoldItem = (props: {
+  data: { [p: string]: ToShipItemData[] };
+  token: string;
+}): any => {
   const history = useHistory();
-  const {
-    type = 'air',
-    date,
-    orders,
-    id,
-    orderRefNumber,
-    token,
-    toAddressState,
-  } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const desc =
-    type.toLowerCase() === 'air'
-      ? 'Air Freight Cut Off'.toUpperCase()
-      : 'Road Freight Pick Up'.toUpperCase();
-  const time =
-    type.toLowerCase() === 'air' ? moment(date).format('hh:mm a') : '';
+  const [isOpen, setIsOpen] = useState<string[]>([]);
 
-  const Icon = () =>
-    type.toLowerCase().includes('air') ? (
-      <Plane height={13} width={13} />
-    ) : (
-      <Truck height={13} width={13} />
-    );
-  const toAddress = toAddressState ? `${toAddressState}` : '';
-  return (
-    <>
-      <StyledInteraction
-        pressed={isOpen}
-        onClick={() => setIsOpen((v) => !v)}
-        leftComponent={
-          <PriorityNumber>
-            <Typography color="noshade" variant="label">
-              {orders.length}
-            </Typography>
-          </PriorityNumber>
-        }
-      >
-        <div className="content">
-          <Icon />
-          <Typography variant="label" color="shade6" className="center-text">
-            {desc} - {toAddress}
-          </Typography>
-          <Typography variant="label" color="noshade">
-            {time}
-          </Typography>
-        </div>
-      </StyledInteraction>
-      <CollapsibleContent isOpen={isOpen}>
-        <ToShipAccordionContent
-          onDownloadInvoice={() => {
-            window.open(
-              `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
-              '_blank'
-            );
-          }}
-          items={orders}
-          onPress={() =>
-            history.push(
-              SELLER_SOLD_ROUTES.DETAILS.replace(':orderId', id).replace(
-                ':status',
-                'PLACED'
-              )
-            )
+  const setClosed = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
+
+  return Object.values(props.data).map((entry) => {
+    const { type = 'air', toAddressState } = entry[0];
+
+    const desc =
+      type.toLowerCase() === 'air'
+        ? 'Air Freight Cut Off'.toUpperCase()
+        : 'Road Freight Pick Up'.toUpperCase();
+
+    const Icon = () =>
+      type.toLowerCase().includes('air') ? (
+        <Plane height={13} width={13} />
+      ) : (
+        <Truck height={13} width={13} />
+      );
+    const toAddress = toAddressState ? `${toAddressState}` : '';
+
+    return (
+      <>
+        <StyledInteraction
+          pressed={isOpen.includes(toAddress)}
+          onClick={() => setClosed(toAddress)}
+          leftComponent={
+            <PriorityNumber>
+              <Typography color="noshade" variant="label">
+                {entry.length}
+              </Typography>
+            </PriorityNumber>
           }
-        />
-      </CollapsibleContent>
-    </>
-  );
+        >
+          <div className="content">
+            <Icon />
+            <Typography variant="label" color="shade6" className="center-text">
+              {desc} - {toAddress}
+            </Typography>
+          </div>
+        </StyledInteraction>
+
+        {entry.map((v) => (
+          <CollapsibleContent key={v.id} isOpen={isOpen.includes(toAddress)}>
+            <ToShipAccordionContent
+              onDownloadInvoice={() => {
+                window.open(
+                  `${API.URL}/${API.VERSION}/order/invoice/${v.orderRefNumber}?token=${props.token}`,
+                  '_blank'
+                );
+              }}
+              items={v.orders}
+              onPress={() =>
+                history.push(
+                  SELLER_SOLD_ROUTES.DETAILS.replace(':orderId', v.id).replace(
+                    ':status',
+                    'PLACED'
+                  )
+                )
+              }
+            />
+          </CollapsibleContent>
+        ))}
+      </>
+    );
+  });
 };
 
 export const PendingItem = (props: PendingToShipItemData) => {
@@ -192,8 +198,21 @@ const ToShip = (props: SoldGeneratedProps) => {
     token,
   } = props;
   const [pendingPage, setPendingPage] = useState(1);
+  const [isClosed, setIsClosed] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
+
+  const setClosedDeliveryRow = (title: string) => {
+    const isExisting = isClosed.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsClosed((prevState) => [...prevState, title]);
+    } else {
+      setIsClosed((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
 
   return (
     <>
@@ -237,13 +256,18 @@ const ToShip = (props: SoldGeneratedProps) => {
         return (
           <DeliveryRow key={calendarDateString} className="delivery-row">
             <Col>
-              <Typography color="noshade" className="title">
-                {calendarDateString}
-              </Typography>
+              <div
+                className="delivery-date"
+                onClick={() => setClosedDeliveryRow(calendarDateString)}
+              >
+                <Typography color="noshade">{calendarDateString}</Typography>
+              </div>
 
-              {group.data.map((item) => (
-                <SoldItem key={item.id} {...item} token={token} />
-              ))}
+              <CollapsibleContent
+                isOpen={!isClosed.includes(calendarDateString)}
+              >
+                <SoldItem data={group.data} token={token} />
+              </CollapsibleContent>
             </Col>
           </DeliveryRow>
         );

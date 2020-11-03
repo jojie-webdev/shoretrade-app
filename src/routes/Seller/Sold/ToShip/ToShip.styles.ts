@@ -106,8 +106,8 @@ export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
 export const DeliveryRow = styled(Row)`
   margin-bottom: 32px;
 
-  .title {
-    margin-bottom: 8px;
+  .delivery-date {
+    cursor: pointer;
   }
 `;
 
