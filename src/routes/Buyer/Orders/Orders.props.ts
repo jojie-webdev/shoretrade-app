@@ -24,8 +24,13 @@ export interface OrderItem {
     }[];
     shippingOption: string;
     shippingPrice: string;
+    shippingTo: string;
+    shippingFrom: string;
+    shippingChargeGst: number;
+    shippingChargeNet: number;
     total: string;
   };
+
   estDeliveryDate: Date;
   estCatchmentDate: Date;
   deliveredDate: Date;
@@ -40,6 +45,7 @@ export type RequestFilters = {
 };
 
 export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
+export type ItemDetailVariants = 'left' | 'center' | 'right';
 
 export interface OrdersGeneratedProps {
   pendingOrders: OrderItem[];
