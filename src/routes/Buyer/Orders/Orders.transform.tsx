@@ -33,6 +33,7 @@ export const transformOrder = (
     Number(orderItem.totalPrice) + orderItem.shippingCost,
     false
   );
+
   return {
     id: orderItem.orderId,
     confirmed: orderItem.weightConfirmed,
@@ -61,17 +62,24 @@ export const transformOrder = (
         orderItem.deliveryMethod,
         orderItem.deliveryOption
       ),
+      shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
+      shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
       shippingPrice: toPrice(orderItem.shippingCost, false),
+      shippingChargeGst: orderItem.shippingChargeGst,
+      shippingChargeNet: orderItem.shippingChargeNet,
       total: totalPrice,
     },
+
     estCatchmentDate: moment(
       orderItem.orderLineItem[0].listing.catchDate
     ).toDate(),
+
     estDeliveryDate: moment(
       orderItem.latestExpectedDeliveryDate != null
         ? orderItem.latestExpectedDeliveryDate
         : orderItem.originalExpectedDeliveryDate
     ).toDate(), //original_expected_delivery_date --> from database
+
     deliveredDate: moment(
       getDeliveredDate(
         orderItem.deliveryDate,
@@ -79,6 +87,7 @@ export const transformOrder = (
         orderItem.originalExpectedDeliveryDate
       )
     ).toDate(), // date_delivered --> from database
+
     price: totalPrice,
     isAquafuture: orderItem.orderLineItem[0].listing.isAquafuture,
   };
