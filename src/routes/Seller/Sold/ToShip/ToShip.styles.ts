@@ -83,7 +83,7 @@ export const PendingItemContainer = styled.div`
 `;
 
 export const StyledInteraction = styled(Interaction)`
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
   .content {
     display: flex;
@@ -96,19 +96,13 @@ export const StyledInteraction = styled(Interaction)`
 `;
 
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
-  width: 100%;
   overflow: hidden;
   height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
-  padding: ${({ isOpen }) => (isOpen ? '16px 0' : '0')};
   transition: all 0.1s ease;
 `;
 
 export const DeliveryRow = styled(Row)`
-  margin-bottom: 32px;
-
-  .delivery-date {
-    cursor: pointer;
-  }
+  margin-bottom: 8px;
 `;
 
 export const CarouselContainer = styled.div`

@@ -38,9 +38,10 @@ export const SoldItem = (props: {
   token: string;
 }): any => {
   const history = useHistory();
+  const theme = useTheme();
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
-  const setClosed = (title: string) => {
+  const toggleAccordion = (title: string) => {
     const isExisting = isOpen.some((v) => v === title);
 
     if (!isExisting) {
@@ -72,7 +73,9 @@ export const SoldItem = (props: {
       <>
         <StyledInteraction
           pressed={isOpen.includes(toAddress)}
-          onClick={() => setClosed(toAddress)}
+          onClick={() => toggleAccordion(toAddress)}
+          type="accordion"
+          iconColor={theme.brand.primary}
           leftComponent={
             <PriorityNumber>
               <Typography color="noshade" variant="label">
@@ -90,7 +93,11 @@ export const SoldItem = (props: {
         </StyledInteraction>
 
         {entry.map((v) => (
-          <CollapsibleContent key={v.id} isOpen={isOpen.includes(toAddress)}>
+          <CollapsibleContent
+            key={v.id}
+            isOpen={isOpen.includes(toAddress)}
+            style={{ margin: '0px 16px' }}
+          >
             <ToShipAccordionContent
               onDownloadInvoice={() => {
                 window.open(
@@ -198,17 +205,17 @@ const ToShip = (props: SoldGeneratedProps) => {
     token,
   } = props;
   const [pendingPage, setPendingPage] = useState(1);
-  const [isClosed, setIsClosed] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
 
-  const setClosedDeliveryRow = (title: string) => {
-    const isExisting = isClosed.some((v) => v === title);
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
 
     if (!isExisting) {
-      setIsClosed((prevState) => [...prevState, title]);
+      setIsOpen((prevState) => [...prevState, title]);
     } else {
-      setIsClosed((prevState) => {
+      setIsOpen((prevState) => {
         return prevState.filter((v) => v !== title);
       });
     }
@@ -249,22 +256,40 @@ const ToShip = (props: SoldGeneratedProps) => {
 
       {toShip.map((group) => {
         // const calendarDateString = getCalendarDate(group.title);
-        const calendarDateString = moment(group.title)
-          .format('Do MMM')
-          .toUpperCase();
+
+        const getDisplayDate = () => {
+          const targetDate = moment(group.title);
+          const currentDate = moment();
+          const dateDiff = targetDate.diff(currentDate, 'days');
+
+          if (dateDiff === -1) {
+            return 'Yesterday';
+          } else if (dateDiff === 0) {
+            return 'Today';
+          } else if (dateDiff === 1) {
+            return 'Tomorrow';
+          }
+
+          return targetDate.format('Do MMMM');
+        };
+
+        const calendarDateString = getDisplayDate();
 
         return (
           <DeliveryRow key={calendarDateString} className="delivery-row">
             <Col>
-              <div
-                className="delivery-date"
-                onClick={() => setClosedDeliveryRow(calendarDateString)}
+              <StyledInteraction
+                pressed={isOpen.includes(calendarDateString)}
+                onClick={() => toggleAccordion(calendarDateString)}
+                type="accordion"
+                iconColor={theme.brand.primary}
               >
                 <Typography color="noshade">{calendarDateString}</Typography>
-              </div>
+              </StyledInteraction>
 
               <CollapsibleContent
-                isOpen={!isClosed.includes(calendarDateString)}
+                isOpen={isOpen.includes(calendarDateString)}
+                style={{ marginLeft: 24, marginRight: 24 }}
               >
                 <SoldItem data={group.data} token={token} />
               </CollapsibleContent>
