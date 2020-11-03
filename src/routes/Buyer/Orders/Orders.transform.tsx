@@ -63,7 +63,7 @@ export const transformOrder = (
         orderItem.deliveryOption
       ),
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
-      shippingTo: `${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}`,
+      shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
       shippingPrice: toPrice(orderItem.shippingCost, false),
       shippingChargeGst: orderItem.shippingChargeGst,
       shippingChargeNet: orderItem.shippingChargeNet,
