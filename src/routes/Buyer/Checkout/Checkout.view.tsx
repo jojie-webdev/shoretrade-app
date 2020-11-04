@@ -113,8 +113,8 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   return (
     <Container>
       <ConfirmationModal
-        title="Are you sure?"
-        description="Are you sure you want to place this order?"
+        title="Final Order Confirmation?"
+        description="Just confirming you want to place this order?"
         isOpen={showConfirmationModal}
         onClickClose={() => {
           setShowConfirmationModal(false);
