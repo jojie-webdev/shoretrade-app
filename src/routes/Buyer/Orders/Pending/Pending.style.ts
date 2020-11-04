@@ -1,5 +1,6 @@
 import AccordionView from 'components/base/Accordion';
 import Interaction from 'components/base/Interactions';
+import TouchableView from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
 import styled from 'utils/styled';
@@ -169,4 +170,15 @@ export const OrderBadge = styled.div`
   border-radius: 4px;
   margin-right: 24px;
   white-space: nowrap;
+`;
+
+export const StyledTouchable = styled(TouchableView)`
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+
+  .svg-container {
+    margin-right: 6px;
+    margin-bottom: 2px;
+  }
 `;
