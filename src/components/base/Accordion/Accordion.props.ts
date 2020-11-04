@@ -11,5 +11,6 @@ export interface AccordionProps {
   innerContentPadding?: string;
   withBackground?: boolean;
   rightComponent?: ReactNode;
+  leftComponent?: ReactNode;
   keepIcon?: boolean;
 }
