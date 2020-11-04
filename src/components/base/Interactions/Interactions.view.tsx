@@ -30,7 +30,10 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     children,
     resultCount,
     customFontSize,
+    keepIcon,
   } = props;
+
+  const RightComponent = rightComponent;
 
   const getIcon = () => {
     if (type === 'none') return <></>;
@@ -81,11 +84,11 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         {children}
       </div>
 
-      {rightComponent ? (
+      {rightComponent && !keepIcon ? (
         rightComponent
       ) : (
-        <>
-          {/* <Typography>{text}</Typography> */}
+        <div className="right-content">
+          {keepIcon && rightComponent}
           <IconContainer
             className="interactions-right"
             iconAlignment={iconAlignment}
@@ -100,7 +103,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
             </Typography>
             {getIcon()}
           </IconContainer>
-        </>
+        </div>
       )}
     </Container>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Typography from 'components/base/Typography';
 import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
 
 import { OrderItem, OrdersGeneratedProps } from '../Orders.props';
 import {
@@ -11,6 +11,7 @@ import {
   RightContent,
   StyledAccordion,
   Tag,
+  OrderBadge,
 } from './Pending.style';
 import { groupByDate, sortByDateAsc } from './Pending.transform';
 
@@ -26,7 +27,6 @@ const PendingItems = (props: OrderItem) => {
             <Typography color="shade9">{props.data.seller}</Typography>
           </ItemDetail>
 
-          {/* <RightContent> */}
           <ItemDetail type="center">
             <Typography color="shade7" variant="caption">
               Download
@@ -40,7 +40,6 @@ const PendingItems = (props: OrderItem) => {
             </Typography>
             <Typography color="shade9">{props.data.seller}</Typography>
           </ItemDetail>
-          {/* </RightContent> */}
         </div>
 
         <div className="section item">
@@ -116,7 +115,7 @@ const PendingItems = (props: OrderItem) => {
               Total
             </Typography>
             <Typography color="shade9" variant="title5" weight="bold">
-              {toPrice(props.data.shippingPrice)}
+              {toPrice(props.data.total)}
             </Typography>
           </ItemDetail>
         </div>
@@ -151,20 +150,34 @@ const PendingItems = (props: OrderItem) => {
 };
 
 const Pending = (props: OrdersGeneratedProps) => {
-  // const theme = useTheme();
+  const theme = useTheme();
 
   const { pendingOrders } = props;
 
   const data = groupByDate(sortByDateAsc(pendingOrders));
 
+  const accordionTitle = (date: string, isAquafuture: boolean) =>
+    date !== 'Today' && date !== 'Tomorrow'
+      ? `Estimated ${isAquafuture ? 'Catchment' : 'Delivery'} ${date}`
+      : date;
+
   return (
     <>
-      {Object.keys(data).map((key) => (
+      {Object.keys(data).map((key, ndx) => (
         <StyledAccordion
           key={key}
-          title={key}
+          title={accordionTitle(key, data[key][0].isAquafuture)}
           padding="24px"
           marginBottom="16px"
+          keepIcon
+          iconColor={theme.brand.primary}
+          rightComponent={
+            <OrderBadge>
+              <Typography color="shade9" variant="overline">
+                {data[key].length} {data[key].length > 1 ? 'Orders' : 'Order'}
+              </Typography>
+            </OrderBadge>
+          }
         >
           {data[key].map((d) => (
             <PendingItems {...d} key={d.id} />

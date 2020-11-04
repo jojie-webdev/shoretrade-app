@@ -57,8 +57,7 @@ export const ItemContainer = styled.div`
   }
 
   .item {
-    display: flex;
-    flex-wrap: nowrap;
+    display: block;
 
     .item-detail-container {
       display: flex;
@@ -159,4 +158,15 @@ export const AccordionContainer = styled.div`
 
 export const StyledAccordion = styled(AccordionView)`
   margin-bottom: 16px;
+`;
+
+export const OrderBadge = styled.div`
+  padding: 8px 16px;
+  background: ${(props) => props.theme.grey.shade3};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  margin-right: 24px;
+  white-space: nowrap;
 `;
