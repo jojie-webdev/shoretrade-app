@@ -18,29 +18,29 @@ const PendingItems = (props: OrderItem) => {
   return (
     <>
       <ItemContainer>
-        <div className="section">
-          <ItemDetail type="left" style={{ flex: 1 }}>
+        <div className="section wrap-content">
+          <ItemDetail type="left">
             <Typography color="shade7" variant="caption">
               Seller
             </Typography>
             <Typography color="shade9">{props.data.seller}</Typography>
           </ItemDetail>
 
-          <RightContent>
-            <ItemDetail type="center">
-              <Typography color="shade7" variant="caption">
-                Download
-              </Typography>
-              <Typography color="shade9">Missing</Typography>
-            </ItemDetail>
+          {/* <RightContent> */}
+          <ItemDetail type="center">
+            <Typography color="shade7" variant="caption">
+              Download
+            </Typography>
+            <Typography color="shade9">Missing</Typography>
+          </ItemDetail>
 
-            <ItemDetail type="right">
-              <Typography color="shade7" variant="caption">
-                Seller
-              </Typography>
-              <Typography color="shade9">{props.data.seller}</Typography>
-            </ItemDetail>
-          </RightContent>
+          <ItemDetail type="right">
+            <Typography color="shade7" variant="caption">
+              Seller
+            </Typography>
+            <Typography color="shade9">{props.data.seller}</Typography>
+          </ItemDetail>
+          {/* </RightContent> */}
         </div>
 
         <div className="section item">
@@ -64,6 +64,7 @@ const PendingItems = (props: OrderItem) => {
                   </div>
                 </div>
               </ItemDetail>
+
               <RightContent>
                 <ItemDetail type="left">
                   <Typography color="shade7" variant="caption">
@@ -94,7 +95,11 @@ const PendingItems = (props: OrderItem) => {
 
         <div className="section">
           <ItemDetail type="center" row>
-            <Typography color="shade7" variant="label">
+            <Typography
+              color="shade7"
+              variant="label"
+              style={{ marginRight: '4px' }}
+            >
               {props.data.shippingOption} +
             </Typography>
             <Typography color="shade9" variant="label" weight="bold">
@@ -116,22 +121,22 @@ const PendingItems = (props: OrderItem) => {
           </ItemDetail>
         </div>
 
-        <div className="section">
-          <ItemDetail type="left" row>
-            <div className="shipping-from">
+        <div className="section wrap-content">
+          <div className="delivery-section">
+            <ItemDetail type="left" className="shipping-from">
               <Typography color="shade7" variant="caption">
                 Shipping From
               </Typography>
               <Typography color="shade9">{props.data.shippingFrom}</Typography>
-            </div>
+            </ItemDetail>
 
-            <div>
+            <ItemDetail type="left" className="wrap-text">
               <Typography color="shade7" variant="caption">
                 Delivery Address
               </Typography>
               <Typography color="shade9">{props.data.shippingTo}</Typography>
-            </div>
-          </ItemDetail>
+            </ItemDetail>
+          </div>
 
           <ItemDetail type="right">
             <Typography color="shade7" variant="caption">
