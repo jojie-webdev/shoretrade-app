@@ -13,6 +13,7 @@ const Accordion = ({
   marginBottom = '0px',
   innerContentPadding,
   rightComponent,
+  leftComponent,
   keepIcon,
   ...props
 }: AccordionProps): JSX.Element => {
@@ -31,6 +32,7 @@ const Accordion = ({
         iconColor={iconColor}
         noBg={noBg}
         padding={padding}
+        leftComponent={leftComponent}
         rightComponent={rightComponent}
         keepIcon={keepIcon}
       />

@@ -15,6 +15,7 @@ import {
   Tag,
   OrderBadge,
   StyledTouchable,
+  AccordionTitleContainer,
 } from './Pending.style';
 import { groupByDate, sortByDateAsc } from './Pending.transform';
 
@@ -50,9 +51,9 @@ const PendingItems = (props: OrderItem) => {
 
         <ItemDetail type="right">
           <Typography color="shade7" variant="caption">
-            Seller
+            Ordered By:
           </Typography>
-          <Typography color="shade9">{props.data.seller}</Typography>
+          <Typography color="shade9">{props.data.orderedBy}</Typography>
         </ItemDetail>
       </div>
 
@@ -96,7 +97,7 @@ const PendingItems = (props: OrderItem) => {
                 <Typography color="shade7" variant="caption">
                   Subtotal
                 </Typography>
-                <Typography color="shade9">{toPrice(d.price)}</Typography>
+                <Typography color="shade9">{d.price}</Typography>
               </ItemDetail>
             </RightContent>
           </div>
@@ -126,7 +127,7 @@ const PendingItems = (props: OrderItem) => {
             Total
           </Typography>
           <Typography color="shade9" variant="title5" weight="bold">
-            {toPrice(props.data.total)}
+            {props.data.total}
           </Typography>
         </ItemDetail>
       </div>
@@ -166,21 +167,27 @@ const Pending = (props: OrdersGeneratedProps) => {
 
   const data = groupByDate(sortByDateAsc(pendingOrders));
 
-  const accordionTitle = (date: string, isAquafuture: boolean) =>
-    date !== 'Today' && date !== 'Tomorrow'
-      ? `Estimated ${isAquafuture ? 'Catchment' : 'Delivery'} ${date}`
-      : date;
+  console.log(data);
 
   return (
     <>
-      {Object.keys(data).map((key, ndx) => (
+      {Object.keys(data).map((key) => (
         <StyledAccordion
           key={key}
-          title={accordionTitle(key, data[key][0].isAquafuture)}
+          title={''}
           padding="24px"
           marginBottom="16px"
           keepIcon
           iconColor={theme.brand.primary}
+          leftComponent={
+            <AccordionTitleContainer>
+              <Typography color="shade7" className="title">
+                Estimated {data[key][0].isAquafuture ? 'Catchment' : 'Delivery'}
+                :
+              </Typography>
+              <Typography color="shade9">{key}</Typography>
+            </AccordionTitleContainer>
+          }
           rightComponent={
             <OrderBadge>
               <Typography color="shade9" variant="overline">

@@ -30,8 +30,7 @@ export const transformOrder = (
   orderItem: GetBuyerOrdersResponseItem
 ): OrderItem => {
   const totalPrice = toPrice(
-    Number(orderItem.totalPrice) + orderItem.shippingCost,
-    false
+    Number(orderItem.totalPrice) + orderItem.shippingCost
   );
 
   return {
@@ -45,7 +44,7 @@ export const transformOrder = (
       detailsProps: orderItem.orderLineItem.map((lineItem) => ({
         uri: lineItem.listing.images[0],
         name: lineItem.listing.typeName,
-        price: toPrice(lineItem.price, false),
+        price: toPrice(lineItem.price),
         tags: lineItem.listing.specifications.map((label) => ({ label })),
         weight: lineItem.weight.toFixed(2),
         unit: formatMeasurementUnit(lineItem.listing.measurementUnit),
@@ -65,7 +64,7 @@ export const transformOrder = (
       ),
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
       shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
-      shippingPrice: toPrice(orderItem.shippingCost, false),
+      shippingPrice: toPrice(orderItem.shippingCost),
       shippingChargeGst: orderItem.shippingChargeGst,
       shippingChargeNet: orderItem.shippingChargeNet,
       total: totalPrice,

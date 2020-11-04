@@ -182,3 +182,12 @@ export const StyledTouchable = styled(TouchableView)`
     margin-bottom: 2px;
   }
 `;
+
+export const AccordionTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  .title {
+    margin-right: 4px;
+  }
+`;

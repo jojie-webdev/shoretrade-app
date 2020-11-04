@@ -7,8 +7,6 @@ import Loading from 'components/module/Loading';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import { ROUTES } from 'routes/index.routes';
-import { useTheme } from 'utils/Theme';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
@@ -69,13 +67,10 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     );
   } else if (currentTab == PENDING) {
     content = <Pending {...props} />;
-    // content = 'Pending Tab';
   } else if (currentTab == IN_TRANSIT) {
     content = <InTransit {...props} />;
-    // content = 'In Transit Tab';
   } else if (currentTab == COMPLETE) {
     content = <Complete {...props} />;
-    // content = 'Complete Tab';
   }
 
   return (
