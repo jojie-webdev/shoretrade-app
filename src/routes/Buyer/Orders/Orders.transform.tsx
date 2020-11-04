@@ -38,6 +38,7 @@ export const transformOrder = (
     id: orderItem.orderId,
     confirmed: orderItem.weightConfirmed,
     data: {
+      orderRefNumber: orderItem.orderRefNumber,
       orderNumber: formatOrderReferenceNumber(orderItem.orderRefNumber),
       seller: orderItem.sellerCompanyName,
       orderedBy: `${orderItem.buyerEmployeeFirstName} ${orderItem.buyerEmployeeLastName}`,

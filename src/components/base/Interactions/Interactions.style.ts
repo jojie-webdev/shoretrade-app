@@ -46,7 +46,8 @@ export const Container = styled.div<InteractionsProps>`
   }`
       : ''};
 
-  .left-content {
+  .left-content,
+  .right-content {
     display: flex;
     align-items: center;
   }

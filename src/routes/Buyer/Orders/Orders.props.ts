@@ -4,6 +4,7 @@ export interface OrderItem {
   id: string;
   confirmed: boolean;
   data: {
+    orderRefNumber: number;
     orderNumber: string;
     seller: string;
     orderedBy: string;
@@ -36,6 +37,7 @@ export interface OrderItem {
   deliveredDate: Date;
   price: string;
   isAquafuture: boolean;
+  token?: string;
 }
 
 export type RequestFilters = {

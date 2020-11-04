@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as DownloadFile } from './DownloadFile';
 export { default as TrashCan } from './TrashCan';
 export { default as Amex } from './Amex';
 export { default as PlaceholderProfile } from './PlaceholderProfile';
