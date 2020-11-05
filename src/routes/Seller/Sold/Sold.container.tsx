@@ -80,6 +80,8 @@ const Sold = (): JSX.Element => {
     GetSellerOrdersToShipPending()
   );
 
+  console.log(pendingToShip);
+
   const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
     (orderGroup) => ({
       title: orderGroup.title,

@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 
-import { InfoFilled, Plane, Truck } from 'components/base/SVG';
+import Button from 'components/base/Button';
+import {
+  InfoFilled,
+  Plane,
+  Truck,
+  Message,
+  CheckList,
+  CheckFilled,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
 import MultipleCarousel from 'components/module/MultipleCarousel';
@@ -13,9 +21,9 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
+import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
-
-import 'swiper/swiper-bundle.min.css';
 
 import {
   TabOptions,
@@ -26,12 +34,183 @@ import {
 import {
   PriorityNumber,
   StyledInteraction,
-  DeliveryRow,
-  PendingRow,
+  ItemRow,
+  TitleRow,
   CollapsibleContent,
-  PendingItemContainer,
-  CarouselContainer,
+  ItemCard,
+  ItemImage,
+  ItemDetail,
+  Tag,
+  Spacer,
 } from './ToShip.styles';
+
+export const PendingItem = (props: { data: PendingToShipItemData }): any => {
+  const theme = useTheme();
+  const { data } = props;
+  const [isOpen, setIsOpen] = useState<string[]>([]);
+
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
+
+  return data.orders.map((order) => {
+    return (
+      <>
+        <StyledInteraction
+          key={order.orderId}
+          pressed={isOpen.includes(order.orderId)}
+          onClick={() => toggleAccordion(order.orderId)}
+          type="accordion"
+          iconColor={theme.brand.primary}
+          fullWidth
+        >
+          <div className="content">
+            <div className="left-content">
+              <Typography
+                variant="label"
+                color="noshade"
+                className="center-text"
+              >
+                Order&nbsp;{order.orderRefNumber}
+              </Typography>
+
+              <div className="order-count">
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  className="center-text"
+                >
+                  {order.itemCount}&nbsp;
+                  {order.itemCount > 1 ? 'Items' : 'Item'}
+                </Typography>
+              </div>
+            </div>
+            <Spacer />
+            <div className="right-content">
+              <ItemDetail variant="caption" color="shade6">
+                Sold Weight <span>0</span>
+              </ItemDetail>
+
+              <ItemDetail variant="caption" color="shade6">
+                Price (AUD) <span>0</span>
+              </ItemDetail>
+            </div>
+            <div className="buttons">
+              <Button
+                text={'Ship Partial'}
+                style={{ width: 169, height: 32 }}
+                size="sm"
+                onClick={(e) => {
+                  // Do Shipping
+                  console.log('DO SHIPPING');
+                  e.stopPropagation();
+                }}
+              />
+            </div>
+          </div>
+        </StyledInteraction>
+        {order.orderLineItem.map((lineItem) => (
+          <CollapsibleContent
+            key={lineItem.id}
+            isOpen={isOpen.includes(order.orderId)}
+          >
+            <ItemCard>
+              <div className="left-content">
+                <ItemImage src={lineItem.listing.images[0]} alt="" />
+
+                <div className="text-content">
+                  <Typography
+                    variant="label"
+                    color="noshade"
+                    className="item-title"
+                  >
+                    {lineItem.listing.typeName}
+                  </Typography>
+
+                  <div className="tags-container">
+                    {lineItem.listing.specifications.map((tag) => (
+                      <Tag key={tag}>
+                        <Typography variant="caption" color="noshade">
+                          {tag}
+                        </Typography>
+                      </Tag>
+                    ))}
+                  </div>
+
+                  <ItemDetail variant="caption" color="shade6" row>
+                    Size:{' '}
+                    <span>
+                      {sizeToString(
+                        lineItem.listing.metricLabel,
+                        lineItem.listing.sizeFrom || undefined,
+                        lineItem.listing.sizeTo || undefined
+                      )}
+                    </span>
+                  </ItemDetail>
+                </div>
+              </div>
+              <Spacer />
+              <div className="right-content">
+                <div className="item-data">
+                  <ItemDetail variant="caption" color="shade6">
+                    Sold Weight{' '}
+                    <span>
+                      {lineItem.weight} {lineItem.listing.measurementUnit}
+                    </span>
+                  </ItemDetail>
+
+                  <ItemDetail variant="caption" color="shade6">
+                    Price (AUD) <span>{toPrice(lineItem.price)}</span>
+                  </ItemDetail>
+                </div>
+              </div>
+
+              <div className="buttons">
+                {lineItem.weightConfirmed ? (
+                  <Button
+                    text={'Weight Confirmed'}
+                    icon={<CheckFilled fill="white" height={16} width={16} />}
+                    iconPosition="before"
+                    style={{ width: 169, height: 32 }}
+                    size="sm"
+                    onClick={(e) => {
+                      console.log('DO NOTHING');
+                      e.stopPropagation();
+                    }}
+                    variant="success"
+                  />
+                ) : (
+                  <Button
+                    text={'Confirm Weight'}
+                    icon={<CheckList fill="white" height={15} width={20} />}
+                    iconPosition="before"
+                    style={{ width: 169, height: 32 }}
+                    size="sm"
+                    onClick={(e) => {
+                      if (!lineItem.weightConfirmed) {
+                        // Show confirm weight
+                        console.log('SHOW CONFIRM WEIGHT');
+                      }
+                      e.stopPropagation();
+                    }}
+                  />
+                )}
+              </div>
+            </ItemCard>
+          </CollapsibleContent>
+        ))}
+      </>
+    );
+  });
+};
 
 export const SoldItem = (props: {
   data: { [p: string]: ToShipItemData[] };
@@ -122,77 +301,6 @@ export const SoldItem = (props: {
   });
 };
 
-export const PendingItem = (props: PendingToShipItemData) => {
-  const {
-    id,
-    orderNumber,
-    numberOfOrders,
-    buyerCompanyName,
-    orderImage,
-    total,
-    type,
-    toAddressState,
-  } = props;
-
-  const history = useHistory();
-  return (
-    <PendingItemContainer>
-      <div className="content">
-        {/* <img src={orderImage} /> */}
-
-        <div className="details">
-          <div>
-            <Typography variant="label" color="shade6">
-              Order:
-            </Typography>
-            <Typography variant="label" color="noshade" className="center-text">
-              {orderNumber}
-            </Typography>
-          </div>
-
-          <div>
-            <Typography variant="label" color="shade6">
-              Buyer:
-            </Typography>
-            <Typography variant="label" color="noshade" className="center-text">
-              {buyerCompanyName}
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="label" color="shade6">
-              Items:
-            </Typography>
-            <Typography variant="label" color="noshade" className="center-text">
-              {numberOfOrders} {numberOfOrders > 1 ? 'items' : 'item'}
-            </Typography>
-          </div>
-        </div>
-      </div>
-
-      <div className="divider"></div>
-
-      <div className="bottom-content">
-        <Typography variant="label" color="error">
-          Weight to be Confirmed
-        </Typography>
-
-        <Typography variant="label" color="noshade">
-          ${total}
-        </Typography>
-      </div>
-    </PendingItemContainer>
-  );
-};
-
-const breakPoints = {
-  1340: {
-    slidesPerView: 3,
-  },
-  1024: {
-    slidesPerView: 2,
-  },
-};
-
 const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
@@ -204,10 +312,12 @@ const ToShip = (props: SoldGeneratedProps) => {
     pendingToShip,
     token,
   } = props;
-  const [pendingPage, setPendingPage] = useState(1);
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
+  const addHorizontalRowMargin = useMediaQuery({
+    query: '(min-width: 1080px)',
+  });
 
   const toggleAccordion = (title: string) => {
     const isExisting = isOpen.some((v) => v === title);
@@ -223,7 +333,7 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   return (
     <>
-      <PendingRow>
+      <TitleRow>
         <Col md={12} className="title-col">
           <div className="svg-container">
             <InfoFilled fill={theme.brand.alert} height={18} width={18} />
@@ -232,31 +342,47 @@ const ToShip = (props: SoldGeneratedProps) => {
             Pending Confirmation - {pendingToShip.length}
           </Typography>
         </Col>
+      </TitleRow>
 
-        <CarouselContainer>
-          <MultipleCarousel<PendingToShipItemData, PendingToShipItemData>
-            data={pendingToShip}
-            transform={(data: PendingToShipItemData) => data}
-            Component={PendingItem}
-            link={SELLER_SOLD_ROUTES.CONFIRM_LIST}
-            breakpoints={breakPoints}
-            onSlideChange={(ndx) => setPendingPage(ndx + 1)}
-          />
-        </CarouselContainer>
+      {pendingToShip.map((group) => {
+        return (
+          <ItemRow key={group.buyerCompanyId}>
+            <Col>
+              <StyledInteraction
+                pressed={isOpen.includes(group.buyerCompanyId)}
+                onClick={() => toggleAccordion(group.buyerCompanyId)}
+                type="accordion"
+                iconColor={theme.brand.primary}
+              >
+                <Typography color="noshade">
+                  {group.buyerCompanyName}
+                </Typography>
+              </StyledInteraction>
 
-        <div className="pagination-container">
-          <Pagination
-            variant="infinite-dots"
-            numPages={pendingToShip.length}
-            currentValue={pendingPage}
-            onClickButton={(nextValue) => setPendingPage(nextValue)}
-          />
-        </div>
-      </PendingRow>
+              <CollapsibleContent
+                isOpen={isOpen.includes(group.buyerCompanyId)}
+                style={
+                  addHorizontalRowMargin
+                    ? { marginLeft: 24, marginRight: 24 }
+                    : { marginLeft: 8, marginRight: 8 }
+                }
+              >
+                <PendingItem data={group} />
+              </CollapsibleContent>
+            </Col>
+          </ItemRow>
+        );
+      })}
+
+      <TitleRow style={{ marginTop: 24 }}>
+        <Col md={12} className="title-col">
+          <Typography variant="overline" color="shade6">
+            TO SHIP
+          </Typography>
+        </Col>
+      </TitleRow>
 
       {toShip.map((group) => {
-        // const calendarDateString = getCalendarDate(group.title);
-
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
           const currentDate = moment();
@@ -276,7 +402,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         const calendarDateString = getDisplayDate();
 
         return (
-          <DeliveryRow key={calendarDateString} className="delivery-row">
+          <ItemRow key={calendarDateString}>
             <Col>
               <StyledInteraction
                 pressed={isOpen.includes(calendarDateString)}
@@ -294,7 +420,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                 <SoldItem data={group.data} token={token} />
               </CollapsibleContent>
             </Col>
-          </DeliveryRow>
+          </ItemRow>
         );
       })}
 

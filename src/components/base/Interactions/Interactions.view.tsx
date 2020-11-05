@@ -30,6 +30,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     children,
     resultCount,
     customFontSize,
+    fullWidth,
   } = props;
 
   const getIcon = () => {
@@ -72,7 +73,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </Label>
       ) : null}
 
-      <div className="left-content">
+      <div className="left-content" style={fullWidth ? { flex: 1 } : {}}>
         {leftComponent ? (
           leftComponent
         ) : (

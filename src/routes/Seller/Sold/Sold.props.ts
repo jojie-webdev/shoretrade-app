@@ -1,15 +1,29 @@
 import { Dispatch } from 'react';
 
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+
+interface PendingOrders extends GetSellerOrdersResponseItem {
+  itemCount: number;
+  totalWeight: number;
+}
+
 export type PendingToShipItemData = {
-  id: string;
-  orderNumber: string;
-  numberOfOrders: number;
-  total: string;
+  buyerCompanyId: string;
   buyerCompanyName: string;
-  orderImage: string;
-  type: string;
-  toAddressState: string;
+  orderCount: number;
+  orders: PendingOrders[];
 };
+
+// export type PendingToShipItemData = {
+//   id: string;
+//   orderNumber: string;
+//   numberOfOrders: number;
+//   total: string;
+//   buyerCompanyName: string;
+//   orderImage: string;
+//   type: string;
+//   toAddressState: string;
+// };
 
 export type ToShipItemData = {
   id: string;

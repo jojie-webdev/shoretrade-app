@@ -56,7 +56,7 @@ export const ButtonContainer = styled.button<
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding: 18px;
+    padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
   }
 `;
 
