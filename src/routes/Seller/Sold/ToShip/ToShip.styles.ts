@@ -108,7 +108,7 @@ export const StyledInteraction = styled(Interaction)`
     .left-content {
       display: flex;
       align-items: center;
-      width: 300px;
+      width: 292px;
       justify-content: space-between;
       padding-right: 32px;
 
@@ -123,7 +123,7 @@ export const StyledInteraction = styled(Interaction)`
     }
 
     .left-content-extended {
-      width: 324px;
+      width: 316px;
     }
 
     .right-content {

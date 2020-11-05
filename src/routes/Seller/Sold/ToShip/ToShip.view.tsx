@@ -170,13 +170,17 @@ export const PendingItem = (props: {
             </div>
             <Spacer />
             <div className="right-content">
-              <ItemDetail variant="caption" color="shade6">
-                Sold Weight <span>{subtotalWeight} kg</span>
-              </ItemDetail>
+              {!isOpen.includes(order.orderId) && (
+                <>
+                  <ItemDetail variant="caption" color="shade6">
+                    Sold Weight <span>{subtotalWeight} kg</span>
+                  </ItemDetail>
 
-              <ItemDetail variant="caption" color="shade6">
-                Price (AUD) <span>{toPrice(subtotalPrice)}</span>
-              </ItemDetail>
+                  <ItemDetail variant="caption" color="shade6">
+                    Price (AUD) <span>{toPrice(subtotalPrice)}</span>
+                  </ItemDetail>
+                </>
+              )}
             </div>
             <div className="buttons">
               {allowPartialShipment && !allowFullShipment && (
