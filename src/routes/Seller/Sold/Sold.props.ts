@@ -12,6 +12,8 @@ export type PendingToShipItemData = {
   buyerCompanyName: string;
   orderCount: number;
   orders: PendingOrders[];
+  totalPrice: number;
+  totalWeight: number;
 };
 
 // export type PendingToShipItemData = {
@@ -114,4 +116,6 @@ export interface SoldGeneratedProps {
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+  sendMessage: (buyerId: string, message: string) => void;
+  isSendingMessage: boolean;
 }

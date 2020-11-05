@@ -9,6 +9,7 @@ import {
   getSellerOrdersPlacedActions,
   getSellerOrdersTransitActions,
   getSellerOrdersDeliveredActions,
+  sendMessageActions,
 } from 'store/actions';
 import {
   GetSellerOrdersToShipPending,
@@ -79,8 +80,6 @@ const Sold = (): JSX.Element => {
   const pendingToShip = orderItemToPendingToShipItem(
     GetSellerOrdersToShipPending()
   );
-
-  console.log(pendingToShip);
 
   const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
     (orderGroup) => ({
@@ -222,6 +221,20 @@ const Sold = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
+  const sendMessage = (buyerId: string, message: string) => {
+    if (buyerId && message) {
+      dispatch(
+        sendMessageActions.request({
+          buyerId: buyerId || '',
+          message,
+        })
+      );
+    }
+  };
+
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
@@ -237,6 +250,8 @@ const Sold = (): JSX.Element => {
     filters,
     updateFilters,
     token,
+    sendMessage,
+    isSendingMessage,
   };
   return <SoldView {...generatedProps} />;
 };

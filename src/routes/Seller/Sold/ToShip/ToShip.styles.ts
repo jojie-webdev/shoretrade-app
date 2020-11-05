@@ -80,19 +80,19 @@ export const PendingItemContainer = styled.div`
 export const Spacer = styled.div`
   width: 0px;
   @media (min-width: 1300px) {
-    width: 50px;
+    width: 32px;
   }
 
   @media (min-width: 1400px) {
-    width: 100px;
+    width: 132px;
   }
 
   @media (min-width: 1500px) {
-    width: 200px;
+    width: 232px;
   }
 
   @media (min-width: 1600px) {
-    width: 300px;
+    width: 332px;
   }
 `;
 
@@ -122,11 +122,15 @@ export const StyledInteraction = styled(Interaction)`
       }
     }
 
+    .left-content-extended {
+      width: 324px;
+    }
+
     .right-content {
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      width: 210px;
+      width: 230px;
       padding: 16px 0px;
 
       @media (max-width: 375px) {
@@ -144,12 +148,7 @@ export const StyledInteraction = styled(Interaction)`
       align-items: center;
       justify-content: flex-end;
       flex: 1;
-
-      @media (max-width: 1237px) {
-        margin-top: 4px;
-        align-items: flex-start;
-        margin-left: 72px;
-      }
+      margin-right: 16px;
     }
 
     .center-text {
@@ -213,24 +212,16 @@ export const ItemCard = styled.div`
   .right-content {
     display: flex;
     align-items: center;
-    width: 210px;
+    width: 230px;
+    padding: 16px 0px;
+    justify-content: space-evenly;
 
     @media (max-width: 375px) {
       width: 240px;
     }
 
-    .item-data {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      padding: 16px 0px;
-      justify-content: space-evenly;
-
-      @media (max-width: 1237px) {
-        justify-content: flex-start;
-        max-width: 300px;
-        margin-left: 72px;
-      }
+    @media (max-width: 1237px) {
+      margin-left: 72px;
     }
   }
 

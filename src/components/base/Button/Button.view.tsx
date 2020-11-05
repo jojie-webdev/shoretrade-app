@@ -23,21 +23,27 @@ const Button = (props: ButtonProps): JSX.Element => {
     variant = 'primary',
     takeFullWidth = false,
     size = 'md',
+    textColor,
     ...buttonProps
   } = props;
 
-  let textColor: keyof Theme['brand'] | keyof Theme['grey'];
+  let defaultTextColor:
+    | keyof Theme['brand']
+    | keyof Theme['grey']
+    | undefined = textColor;
 
-  if (variant === 'primary') {
-    textColor = 'noshade';
-  } else if (variant === 'outline') {
-    textColor = 'primary';
-  } else if (variant === 'success') {
-    textColor = 'noshade';
-  } else if (variant === 'unselected') {
-    textColor = 'noshade';
-  } else {
-    textColor = 'shade5';
+  if (!defaultTextColor) {
+    if (variant === 'primary') {
+      defaultTextColor = 'noshade';
+    } else if (variant === 'outline') {
+      defaultTextColor = 'primary';
+    } else if (variant === 'success') {
+      defaultTextColor = 'noshade';
+    } else if (variant === 'unselected') {
+      defaultTextColor = 'noshade';
+    } else {
+      defaultTextColor = 'shade5';
+    }
   }
 
   let textVariant: TypographyProps['variant'];
@@ -72,7 +78,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       {text && (
         <Typography
           variant={props.textVariant || textVariant}
-          color={textColor}
+          color={defaultTextColor}
           weight={props.textWeight || textWeight}
         >
           {text}

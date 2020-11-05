@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, Fragment } from 'react';
 
 import Button from 'components/base/Button';
 import {
@@ -11,6 +11,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
+import MessageModal from 'components/module/MessageModal';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
@@ -73,10 +74,21 @@ export const PendingItem = (props: {
   };
 
   return data.orders.map((order) => {
+    const subtotalWeight = order.orderLineItem.reduce(
+      (accumB: number, currentB) => {
+        return accumB + currentB.weight;
+      },
+      0
+    );
+    const subtotalPrice = order.orderLineItem.reduce(
+      (accumB: number, currentB) => {
+        return accumB + currentB.price;
+      },
+      0
+    );
     return (
-      <>
+      <Fragment key={order.orderId}>
         <StyledInteraction
-          key={order.orderId}
           pressed={isOpen.includes(order.orderId)}
           onClick={() => toggleAccordion(order.orderId)}
           type="accordion"
@@ -107,11 +119,11 @@ export const PendingItem = (props: {
             <Spacer />
             <div className="right-content">
               <ItemDetail variant="caption" color="shade6">
-                Sold Weight <span>0</span>
+                Sold Weight <span>{subtotalWeight} kg</span>
               </ItemDetail>
 
               <ItemDetail variant="caption" color="shade6">
-                Price (AUD) <span>0</span>
+                Price (AUD) <span>{toPrice(subtotalPrice)}</span>
               </ItemDetail>
             </div>
             <div className="buttons">
@@ -170,18 +182,16 @@ export const PendingItem = (props: {
               </div>
               <Spacer />
               <div className="right-content">
-                <div className="item-data">
-                  <ItemDetail variant="caption" color="shade6">
-                    Sold Weight{' '}
-                    <span>
-                      {lineItem.weight} {lineItem.listing.measurementUnit}
-                    </span>
-                  </ItemDetail>
+                <ItemDetail variant="caption" color="shade6">
+                  Sold Weight{' '}
+                  <span>
+                    {lineItem.weight} {lineItem.listing.measurementUnit}
+                  </span>
+                </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(lineItem.price)}</span>
-                  </ItemDetail>
-                </div>
+                <ItemDetail variant="caption" color="shade6">
+                  Price (AUD) <span>{toPrice(lineItem.price)}</span>
+                </ItemDetail>
               </div>
 
               <div className="buttons">
@@ -221,7 +231,7 @@ export const PendingItem = (props: {
             </ItemCard>
           </CollapsibleContent>
         ))}
-      </>
+      </Fragment>
     );
   });
 };
@@ -263,7 +273,7 @@ export const SoldItem = (props: {
     const toAddress = toAddressState ? `${toAddressState}` : '';
 
     return (
-      <>
+      <Fragment key={desc}>
         <StyledInteraction
           pressed={isOpen.includes(toAddress)}
           onClick={() => toggleAccordion(toAddress)}
@@ -310,7 +320,7 @@ export const SoldItem = (props: {
             />
           </CollapsibleContent>
         ))}
-      </>
+      </Fragment>
     );
   });
 };
@@ -325,6 +335,8 @@ const ToShip = (props: SoldGeneratedProps) => {
     updateFilters,
     pendingToShip,
     token,
+    sendMessage,
+    isSendingMessage,
   } = props;
 
   const [confirmModal, updateConfirmModal] = useReducer(
@@ -337,6 +349,19 @@ const ToShip = (props: SoldGeneratedProps) => {
       isOpen: false,
       orderId: '',
       lineItemId: '',
+    }
+  );
+
+  const [messageModal, updateMessageModal] = useReducer(
+    createUpdateReducer<{
+      buyerId: string;
+      buyerName: string;
+      isOpen: boolean;
+    }>(),
+    {
+      buyerId: '',
+      buyerName: '',
+      isOpen: false,
     }
   );
   const [isOpen, setIsOpen] = useState<string[]>([]);
@@ -368,6 +393,18 @@ const ToShip = (props: SoldGeneratedProps) => {
         }}
         {...confirmModal}
       />
+      <MessageModal
+        isOpen={isSendingMessage || messageModal.isOpen}
+        recipient={messageModal.buyerName}
+        onSend={(message) => {
+          sendMessage(messageModal.buyerId, message);
+          updateMessageModal({ isOpen: false });
+        }}
+        onClickClose={() => {
+          updateMessageModal({ isOpen: false });
+        }}
+        loading={isSendingMessage}
+      />
       <TitleRow>
         <Col md={12} className="title-col">
           <div className="svg-container">
@@ -388,10 +425,75 @@ const ToShip = (props: SoldGeneratedProps) => {
                 onClick={() => toggleAccordion(group.buyerCompanyId)}
                 type="accordion"
                 iconColor={theme.brand.primary}
+                fullWidth
               >
-                <Typography color="noshade">
-                  {group.buyerCompanyName}
-                </Typography>
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text"
+                    >
+                      {group.buyerCompanyName}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography
+                        variant="label"
+                        color="noshade"
+                        className="center-text"
+                      >
+                        {group.orderCount}&nbsp;
+                        {group.orderCount > 1 ? 'Orders' : 'Order'}
+                      </Typography>
+                    </div>
+                  </div>
+                  <Spacer />
+                  <div className="right-content">
+                    <ItemDetail variant="caption" color="shade6">
+                      Sold Weight <span>{group.totalWeight} kg</span>
+                    </ItemDetail>
+
+                    <ItemDetail variant="caption" color="shade6">
+                      Price (AUD) <span>{toPrice(group.totalPrice)}</span>
+                    </ItemDetail>
+                  </div>
+                  <div className="buttons">
+                    <Button
+                      text={'Message Buyer'}
+                      icon={
+                        messageModal.buyerId === group.buyerCompanyId &&
+                        isSendingMessage ? undefined : (
+                          <Message
+                            fill={theme.grey.shade9}
+                            height={16}
+                            width={16}
+                          />
+                        )
+                      }
+                      textColor={'shade9'}
+                      iconPosition="before"
+                      style={{
+                        width: 169,
+                        height: 32,
+                        backgroundColor: theme.grey.noshade,
+                      }}
+                      size="sm"
+                      onClick={(e) => {
+                        updateMessageModal({
+                          isOpen: true,
+                          buyerId: group.buyerCompanyId,
+                          buyerName: group.buyerCompanyName,
+                        });
+                        e.stopPropagation();
+                      }}
+                      loading={
+                        messageModal.buyerId === group.buyerCompanyId &&
+                        isSendingMessage
+                      }
+                    />
+                  </div>
+                </div>
               </StyledInteraction>
 
               <CollapsibleContent
