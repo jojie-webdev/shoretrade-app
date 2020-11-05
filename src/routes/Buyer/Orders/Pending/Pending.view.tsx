@@ -111,10 +111,18 @@ const PendingItems = (props: OrderItem) => {
             variant="label"
             style={{ marginRight: '4px' }}
           >
-            {props.data.shippingOption} +
+            {props.data.shippingOption}:
           </Typography>
-          <Typography color="shade9" variant="label" weight="bold">
-            {toPrice(props.data.shippingChargeGst)}
+          <Typography
+            color="shade9"
+            variant="label"
+            weight="bold"
+            style={{ marginRight: '4px' }}
+          >
+            {toPrice(
+              props.data.shippingChargeNet + props.data.shippingChargeGst
+            )}{' '}
+            (incl. GST)
           </Typography>
         </ItemDetail>
 
