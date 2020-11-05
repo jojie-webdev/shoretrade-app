@@ -6,6 +6,7 @@ import {
   /* PLOP_INJECT_IMPORT */
   Message,
   CheckList,
+  DownloadFile,
   TrashCan,
   Amex,
   PlaceholderProfile,
@@ -148,6 +149,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="CheckList">
           <CheckList width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="DownloadFile">
+          <DownloadFile width={30} height={30} />
         </Wrapper>
         <Wrapper label="TrashCan">
           <TrashCan width={30} height={30} />

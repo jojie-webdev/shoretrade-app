@@ -27,4 +27,5 @@ export interface InteractionsProps {
   customFontSize?: number;
   noBg?: boolean;
   fullWidth?: boolean;
+  keepIcon?: boolean;
 }

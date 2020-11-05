@@ -12,6 +12,9 @@ const Accordion = ({
   padding,
   marginBottom = '0px',
   innerContentPadding,
+  rightComponent,
+  leftComponent,
+  keepIcon,
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
@@ -29,6 +32,9 @@ const Accordion = ({
         iconColor={iconColor}
         noBg={noBg}
         padding={padding}
+        leftComponent={leftComponent}
+        rightComponent={rightComponent}
+        keepIcon={keepIcon}
       />
       <Content
         isOpen={isOpen}
