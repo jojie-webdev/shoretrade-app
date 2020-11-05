@@ -50,29 +50,29 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           setTargetAddress('');
         }}
       />
-      <div style={{ flexDirection: 'column', flex: 3 }}>
-        <InputContainer>
-          <SearchSVG height={16} width={16} />
-          <input
-            type="text"
-            placeholder="Search for a product"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
-            onFocus={() => {
-              setIsFocused(true);
-            }}
+
+      <InputContainer>
+        <SearchSVG height={16} width={16} />
+        <input
+          type="text"
+          placeholder="Search for a product"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
+          onFocus={() => {
+            setIsFocused(true);
+          }}
+        />
+        <div onClick={onReset} className="close-svg-container">
+          <CloseFilled
+            fill={
+              searchTerm.length === 0 ? theme.grey.shade3 : theme.grey.shade6
+            }
+            height={20}
+            width={20}
           />
-          <div onClick={onReset} className="close-svg-container">
-            <CloseFilled
-              fill={
-                searchTerm.length === 0 ? theme.grey.shade3 : theme.grey.shade6
-              }
-              height={20}
-              width={20}
-            />
-          </div>
-        </InputContainer>
-      </div>
+        </div>
+      </InputContainer>
+
       <AddressContainer>
         <Select
           className="search-address-select"

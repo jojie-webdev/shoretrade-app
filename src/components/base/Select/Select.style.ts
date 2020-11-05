@@ -33,7 +33,7 @@ export const StyledDropdown = styled(Dropdown)<{
       `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
-    margin-top: 4px;
+    // margin-top: 4px;
   }
 
   /* TODO: Should extend .${PREFIX}Container */
@@ -51,7 +51,7 @@ export const StyledDropdown = styled(Dropdown)<{
       `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: 4px;
     padding: 4px 16px;
-    margin-top: 4px;
+    // margin-top: 4px;
   }
 
   .${PREFIX}Placeholder {
