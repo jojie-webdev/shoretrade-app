@@ -24,12 +24,10 @@ export type Total = {
 };
 
 export interface ConfirmPublicProps {
-  match: {
-    params: {
-      orderId: string;
-      lineItemId: string;
-    };
-  };
+  isOpen: boolean;
+  orderId: string;
+  lineItemId: string;
+  onClickClose: () => void;
 }
 
 export interface ConfirmGeneratedProps {

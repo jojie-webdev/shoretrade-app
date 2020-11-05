@@ -34,13 +34,7 @@ function* confirmWeightSuccess(
   action: AsyncAction<ConfirmWeightMeta, ConfirmWeightPayload>
 ) {
   yield put(getSellerOrdersPlacedActions.request());
-
-  const orderId = pathOr('', ['payload', 'orderId'], action);
-  if (orderId) {
-    yield put(push(SELLER_SOLD_ROUTES.CONFIRM_LIST(orderId)));
-  } else {
-    yield put(push(SELLER_SOLD_ROUTES.LANDING));
-  }
+  yield put(push(SELLER_SOLD_ROUTES.LANDING));
 }
 
 function* confirmWeightWatcher() {

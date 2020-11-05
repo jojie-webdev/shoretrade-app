@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import Button from 'components/base/Button';
 import {
@@ -19,8 +19,10 @@ import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import ConfirmModal from 'routes/Seller/Sold/Confirm';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import getCalendarDate from 'utils/Date/getCalendarDate';
+import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -44,9 +46,18 @@ import {
   Spacer,
 } from './ToShip.styles';
 
-export const PendingItem = (props: { data: PendingToShipItemData }): any => {
+export const PendingItem = (props: {
+  data: PendingToShipItemData;
+  updateConfirmModal: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      orderId: string;
+      lineItemId: string;
+    }>
+  >;
+}): any => {
   const theme = useTheme();
-  const { data } = props;
+  const { data, updateConfirmModal } = props;
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toggleAccordion = (title: string) => {
@@ -196,8 +207,11 @@ export const PendingItem = (props: { data: PendingToShipItemData }): any => {
                     size="sm"
                     onClick={(e) => {
                       if (!lineItem.weightConfirmed) {
-                        // Show confirm weight
-                        console.log('SHOW CONFIRM WEIGHT');
+                        updateConfirmModal({
+                          isOpen: true,
+                          lineItemId: lineItem.id,
+                          orderId: order.orderId,
+                        });
                       }
                       e.stopPropagation();
                     }}
@@ -312,6 +326,19 @@ const ToShip = (props: SoldGeneratedProps) => {
     pendingToShip,
     token,
   } = props;
+
+  const [confirmModal, updateConfirmModal] = useReducer(
+    createUpdateReducer<{
+      isOpen: boolean;
+      orderId: string;
+      lineItemId: string;
+    }>(),
+    {
+      isOpen: false,
+      orderId: '',
+      lineItemId: '',
+    }
+  );
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
@@ -333,6 +360,14 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   return (
     <>
+      <ConfirmModal
+        onClickClose={() => {
+          updateConfirmModal({
+            isOpen: false,
+          });
+        }}
+        {...confirmModal}
+      />
       <TitleRow>
         <Col md={12} className="title-col">
           <div className="svg-container">
@@ -367,7 +402,10 @@ const ToShip = (props: SoldGeneratedProps) => {
                     : { marginLeft: 8, marginRight: 8 }
                 }
               >
-                <PendingItem data={group} />
+                <PendingItem
+                  data={group}
+                  updateConfirmModal={updateConfirmModal}
+                />
               </CollapsibleContent>
             </Col>
           </ItemRow>
