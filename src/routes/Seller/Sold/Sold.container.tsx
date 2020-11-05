@@ -10,6 +10,7 @@ import {
   getSellerOrdersTransitActions,
   getSellerOrdersDeliveredActions,
   sendMessageActions,
+  placeOrderActions,
 } from 'store/actions';
 import {
   GetSellerOrdersToShipPending,
@@ -17,6 +18,7 @@ import {
   GetSellerOrdersInTransit,
   GetSellerOrdersDelivered,
 } from 'store/selectors/seller/orders';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -235,6 +237,12 @@ const Sold = (): JSX.Element => {
     }
   };
 
+  const isPlacingOrder =
+    useSelector((state: Store) => state.placeOrder.pending) || false;
+  const placeOrder = (data: PlaceOrderMeta) => {
+    dispatch(placeOrderActions.request(data));
+  };
+
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
@@ -252,6 +260,8 @@ const Sold = (): JSX.Element => {
     token,
     sendMessage,
     isSendingMessage,
+    isPlacingOrder,
+    placeOrder,
   };
   return <SoldView {...generatedProps} />;
 };

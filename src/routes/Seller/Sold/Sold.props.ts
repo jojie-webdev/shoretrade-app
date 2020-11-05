@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 
 interface PendingOrders extends GetSellerOrdersResponseItem {
   itemCount: number;
@@ -118,4 +119,6 @@ export interface SoldGeneratedProps {
   token: string;
   sendMessage: (buyerId: string, message: string) => void;
   isSendingMessage: boolean;
+  isPlacingOrder: boolean;
+  placeOrder: (data: PlaceOrderMeta) => void;
 }

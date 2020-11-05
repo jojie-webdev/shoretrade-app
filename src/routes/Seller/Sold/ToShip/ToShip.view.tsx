@@ -1,4 +1,10 @@
-import React, { useReducer, useState, Fragment } from 'react';
+import React, {
+  useReducer,
+  useState,
+  Fragment,
+  Dispatch,
+  useEffect,
+} from 'react';
 
 import Button from 'components/base/Button';
 import {
@@ -22,6 +28,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
@@ -56,9 +63,20 @@ export const PendingItem = (props: {
       lineItemId: string;
     }>
   >;
+  isPlacingOrder: boolean;
+  placeOrder: (data: PlaceOrderMeta) => void;
+  placeOrderId: string;
+  setPlaceOrderId: Dispatch<string>;
 }): any => {
   const theme = useTheme();
-  const { data, updateConfirmModal } = props;
+  const {
+    data,
+    updateConfirmModal,
+    setPlaceOrderId,
+    placeOrderId,
+    placeOrder,
+    isPlacingOrder,
+  } = props;
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toggleAccordion = (title: string) => {
@@ -86,6 +104,40 @@ export const PendingItem = (props: {
       },
       0
     );
+
+    const allowPartialShipment = order.orderLineItem.some(
+      (i) => i.weightConfirmed
+    );
+    const allowFullShipment = order.orderLineItem.every(
+      (i) => i.weightConfirmed
+    );
+
+    const generatePlaceOrderPayload = (config: { isPartial: boolean }) => {
+      setPlaceOrderId(order.orderId);
+      return {
+        orderId: order?.orderId || '',
+        buyerCompanyId: order?.buyerCompanyId || '',
+        sellerCompanyId: order?.sellerCompanyId || '',
+        buyerId: order?.buyerId || '',
+        sellerId: order?.sellerId || '',
+        deliveryMethod: order?.deliveryMethod || '',
+        deliveryOption: order?.deliveryOption || '',
+        fromAddressId: order?.fromAddress.id || '',
+        toAddressId: order?.toAddress.id || '',
+        isPartial: config.isPartial,
+        orderLineItem: order?.orderLineItem
+          ? order?.orderLineItem.map((lineItem) => ({
+              id: lineItem.id,
+              weight: lineItem.weight,
+              price: lineItem.price,
+              weightConfirmed: lineItem.weightConfirmed,
+              priceDelta: lineItem.priceDelta,
+              listingBoxes: lineItem.listingBoxes,
+              listing: lineItem.listing,
+            }))
+          : [],
+      };
+    };
     return (
       <Fragment key={order.orderId}>
         <StyledInteraction
@@ -127,16 +179,39 @@ export const PendingItem = (props: {
               </ItemDetail>
             </div>
             <div className="buttons">
-              <Button
-                text={'Ship Partial'}
-                style={{ width: 169, height: 32 }}
-                size="sm"
-                onClick={(e) => {
-                  // Do Shipping
-                  console.log('DO SHIPPING');
-                  e.stopPropagation();
-                }}
-              />
+              {allowPartialShipment && !allowFullShipment && (
+                <Button
+                  text={'Ship Partial'}
+                  style={{ width: 169, height: 32 }}
+                  size="sm"
+                  onClick={(e) => {
+                    placeOrder(
+                      generatePlaceOrderPayload({
+                        isPartial: !allowFullShipment,
+                      })
+                    );
+                    e.stopPropagation();
+                  }}
+                  loading={isPlacingOrder && placeOrderId === order.orderId}
+                />
+              )}
+
+              {allowPartialShipment && allowFullShipment && (
+                <Button
+                  text={'Ship Order'}
+                  style={{ width: 169, height: 32 }}
+                  size="sm"
+                  onClick={(e) => {
+                    placeOrder(
+                      generatePlaceOrderPayload({
+                        isPartial: !allowFullShipment,
+                      })
+                    );
+                    e.stopPropagation();
+                  }}
+                  loading={isPlacingOrder && placeOrderId === order.orderId}
+                />
+              )}
             </div>
           </div>
         </StyledInteraction>
@@ -337,6 +412,8 @@ const ToShip = (props: SoldGeneratedProps) => {
     token,
     sendMessage,
     isSendingMessage,
+    isPlacingOrder,
+    placeOrder,
   } = props;
 
   const [confirmModal, updateConfirmModal] = useReducer(
@@ -364,6 +441,8 @@ const ToShip = (props: SoldGeneratedProps) => {
       isOpen: false,
     }
   );
+
+  const [placeOrderId, setPlaceOrderId] = useState('');
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
@@ -382,6 +461,12 @@ const ToShip = (props: SoldGeneratedProps) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (!isPlacingOrder && placeOrderId.length > 0) {
+      setPlaceOrderId('');
+    }
+  }, [isPlacingOrder]);
 
   return (
     <>
@@ -507,6 +592,10 @@ const ToShip = (props: SoldGeneratedProps) => {
                 <PendingItem
                   data={group}
                   updateConfirmModal={updateConfirmModal}
+                  placeOrderId={placeOrderId}
+                  setPlaceOrderId={setPlaceOrderId}
+                  isPlacingOrder={isPlacingOrder}
+                  placeOrder={placeOrder}
                 />
               </CollapsibleContent>
             </Col>
