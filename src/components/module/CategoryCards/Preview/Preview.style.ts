@@ -1,4 +1,5 @@
 import TypographyView from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -28,6 +29,10 @@ export const CardContainer = styled.div<{ img: string }>`
   .card:hover {
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
     transform: scale(1.1);
+
+    @media ${BREAKPOINTS.sm} {
+      transform: none;
+    }
   }
 
   .card a {

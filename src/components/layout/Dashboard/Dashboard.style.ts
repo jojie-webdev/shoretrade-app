@@ -66,24 +66,30 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   .logo-container {
     margin-top: 68px;
     margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+
+    .close-container {
+      margin-right: 16px;
+    }
   }
 
   @media ${BREAKPOINTS['md']} {
     display: static;
-    width: 225px;
+    width: 90%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-225px')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
     height: 100vh;
   }
 
   @media ${BREAKPOINTS['sm']} {
     display: static;
-    width: 225px;
+    width: 90%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-225px')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
     height: 100vh;
   }

@@ -1,19 +1,20 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import {
+  ShoretradeLogo,
   ShoretradeLogo2,
   Exit,
-  Menu,
   Cart,
   ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
+  Close,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
-import { Container } from 'react-grid-system';
+import { Container, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
@@ -194,7 +195,18 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
-            <ShoretradeLogo2 />
+            <Visible xs sm>
+              <div
+                className="close-container"
+                onClick={() => setOpenSidebar(false)}
+              >
+                <Close fill={theme.brand.primary} height={20} width={20} />
+              </div>
+              <ShoretradeLogo fill={theme.grey.noshade} />
+            </Visible>
+            <Visible md lg xl xxl>
+              <ShoretradeLogo2 />
+            </Visible>
           </div>
           {routes.map((route) => (
             <NavLink
