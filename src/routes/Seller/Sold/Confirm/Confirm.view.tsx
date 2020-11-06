@@ -25,6 +25,7 @@ import {
   Tag,
   BoxDetailsContainer,
   BoxSummaryContainer,
+  ScrollWrapper,
 } from './Confirm.style';
 
 const BoxDetails = ({
@@ -251,139 +252,131 @@ const ConfirmView = (props: ConfirmProps) => {
   };
 
   return (
-    <Wrapper>
-      <InnerRouteHeader
-        title={'Confirm Weights'}
-        onClickBack={() =>
-          history.push(
-            `${SELLER_ROUTES.SOLD}${qs.stringify(
-              { tab: 'To Ship' },
-              { addQueryPrefix: true }
-            )}`
-          )
-        }
-      />
-      <Typography color="shade5">
-        Confirming this order will move it into:
-      </Typography>
-      <Typography variant="title5" color="noshade">
-        “To Ship”
-      </Typography>
-      <DetailsContainer>
-        <OrderDetails>
-          <div className="order-details-item">
-            <Typography variant="overline" color="shade5">
-              ORDER
-            </Typography>
-            <Typography
-              className="order-details-item-value"
-              color="primary"
-              weight="bold"
-            >
-              {orderNumber}
-            </Typography>
-          </div>
-          <div className="order-details-item">
-            <Typography variant="overline" color="shade5">
-              PRICE
-            </Typography>
-            <Typography
-              className="order-details-item-value"
-              color="noshade"
-              weight="bold"
-            >
-              {price}
-            </Typography>
-          </div>
-          <div className="order-details-item">
-            <Typography variant="overline" color="shade5">
-              BUYER
-            </Typography>
-            <Typography
-              className="order-details-item-value"
-              color="noshade"
-              weight="bold"
-            >
-              {buyer}
-            </Typography>
-          </div>
-        </OrderDetails>
-        <ItemRow>
-          <ItemImage src={uri} alt="" />
-          <ItemColumn>
-            <Typography variant="title5" color="noshade">
-              {name}
-            </Typography>
-            <div className="tags-container">
-              {tags.map((tag) => (
-                <Tag key={tag.label}>
-                  <Typography variant="caption" color="noshade">
-                    {tag.label}
-                  </Typography>
-                </Tag>
-              ))}
-            </div>
-            <div className="size-container">
-              <Typography className="size-label" color="shade6">
-                Size:
+    <ScrollWrapper>
+      <Wrapper>
+        <InnerRouteHeader title={'Confirm Weights'} showIcon={false} />
+        <Typography color="shade5">
+          Confirming this order will move it into:
+        </Typography>
+        <Typography variant="title5" color="noshade">
+          “To Ship”
+        </Typography>
+        <DetailsContainer>
+          <OrderDetails>
+            <div className="order-details-item">
+              <Typography variant="overline" color="shade5">
+                ORDER
               </Typography>
-              <Typography color="noshade">{size}</Typography>
+              <Typography
+                className="order-details-item-value"
+                color="primary"
+                weight="bold"
+              >
+                {orderNumber}
+              </Typography>
             </div>
-          </ItemColumn>
-        </ItemRow>
-      </DetailsContainer>
-      {boxes.map((box, index) => (
-        <BoxDetails
-          {...box}
-          key={box.id}
-          measurementUnit={measurementUnit}
-          onRemove={() => {
-            setBoxes(remove(index, 1, boxes));
-          }}
-        />
-      ))}
-      <div className="add-box-container">
-        <Add
-          title="Add a box"
-          Svg={BoxSVG}
-          onClick={() => setShowModal(true)}
-        />
-      </div>
-      <BoxSummary {...summary} />
-      <div className="actions-container">
-        <Button
-          style={{ marginRight: 16, width: 200 }}
-          text="CANCEL"
-          variant="outline"
-          onClick={() => onCancel()}
-        />
+            <div className="order-details-item">
+              <Typography variant="overline" color="shade5">
+                PRICE
+              </Typography>
+              <Typography
+                className="order-details-item-value"
+                color="noshade"
+                weight="bold"
+              >
+                {price}
+              </Typography>
+            </div>
+            <div className="order-details-item">
+              <Typography variant="overline" color="shade5">
+                BUYER
+              </Typography>
+              <Typography
+                className="order-details-item-value"
+                color="noshade"
+                weight="bold"
+              >
+                {buyer}
+              </Typography>
+            </div>
+          </OrderDetails>
+          <ItemRow>
+            <ItemImage src={uri} alt="" />
+            <ItemColumn>
+              <Typography variant="title5" color="noshade">
+                {name}
+              </Typography>
+              <div className="tags-container">
+                {tags.map((tag) => (
+                  <Tag key={tag.label}>
+                    <Typography variant="caption" color="noshade">
+                      {tag.label}
+                    </Typography>
+                  </Tag>
+                ))}
+              </div>
+              <div className="size-container">
+                <Typography className="size-label" color="shade6">
+                  Size:
+                </Typography>
+                <Typography color="noshade">{size}</Typography>
+              </div>
+            </ItemColumn>
+          </ItemRow>
+        </DetailsContainer>
+        {boxes.map((box, index) => (
+          <BoxDetails
+            {...box}
+            key={box.id}
+            measurementUnit={measurementUnit}
+            onRemove={() => {
+              setBoxes(remove(index, 1, boxes));
+            }}
+          />
+        ))}
+        <div className="add-box-container">
+          <Add
+            title="Add a box"
+            Svg={BoxSVG}
+            onClick={() => setShowModal(true)}
+          />
+        </div>
+        <BoxSummary {...summary} />
+        <div className="actions-container">
+          <Button
+            style={{ marginRight: 16, width: 200 }}
+            text="CANCEL"
+            variant="outline"
+            onClick={() => onCancel()}
+          />
 
-        <Button
-          style={{ width: 200 }}
-          text="CONFIRM"
-          onClick={() => onConfirm()}
-        />
-      </div>
+          <Button
+            style={{ width: 200 }}
+            text="CONFIRM"
+            onClick={() => onConfirm()}
+          />
+        </div>
 
-      {showModal && (
-        <AddBoxModal
-          unit={measurementUnit}
-          onAdd={(values) => {
-            if (values.weight && values.quantity) {
-              const box: Box = {
-                weight: Number(values.weight),
-                quantity: Number(values.quantity),
-                count: values.count !== '' ? Number(values.count) : undefined,
-                id: `new-${new Date().getTime().toString()}`,
-              };
-              setBoxes([...boxes, box]);
-            }
-          }}
-          onClickClose={() => setShowModal(false)}
-          isOpen={showModal}
-        />
-      )}
-    </Wrapper>
+        {showModal && (
+          <AddBoxModal
+            unit={measurementUnit}
+            onAdd={(values) => {
+              if (values.weight && values.quantity) {
+                const box: Box = {
+                  weight: Number(values.weight),
+                  quantity: Number(values.quantity),
+                  count: values.count !== '' ? Number(values.count) : undefined,
+                  id: `new-${new Date().getTime().toString()}`,
+                };
+                setBoxes([...boxes, box]);
+              }
+            }}
+            onClickClose={() => setShowModal(false)}
+            isOpen={showModal}
+          />
+        )}
+      </Wrapper>
+    </ScrollWrapper>
   );
 };
 

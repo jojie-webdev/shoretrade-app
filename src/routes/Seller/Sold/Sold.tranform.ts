@@ -82,19 +82,57 @@ export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
     }));
 };
 
+const groupByBuyer = groupBy((order: GetSellerOrdersResponseItem) => {
+  return order.buyerCompanyId;
+});
+
 export const orderItemToPendingToShipItem = (
   data: GetSellerOrdersResponseItem[]
 ): PendingToShipItemData[] => {
-  return data.map((order) => ({
-    id: order.orderId,
-    orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-    numberOfOrders: order.orderLineItem.length,
-    total: order.totalPrice,
-    buyerCompanyName: order.buyerCompanyName,
-    orderImage: order.orderLineItem[0].listing.images[0],
-    toAddressState: order.toAddress.state,
-    type: order.deliveryMethod.toLowerCase(),
-  }));
+  const groupedData = groupByBuyer(data);
+  return Object.keys(groupedData).reduce(
+    (accum: PendingToShipItemData[], current: string) => {
+      const currentData = groupedData[current];
+      const totalWeight = currentData.reduce((accumA: number, currentA) => {
+        return (
+          accumA +
+          currentA.orderLineItem.reduce((accumB: number, currentB) => {
+            return accumB + currentB.weight;
+          }, 0)
+        );
+      }, 0);
+      const totalPrice = currentData.reduce((accumA: number, currentA) => {
+        return (
+          accumA +
+          currentA.orderLineItem.reduce((accumB: number, currentB) => {
+            return accumB + currentB.price;
+          }, 0)
+        );
+      }, 0);
+
+      const computeSubtotalWeight = currentData.map((d) => {
+        return {
+          ...d,
+          itemCount: d.orderLineItem.length,
+          totalWeight: d.orderLineItem.reduce((accumA: number, currentA) => {
+            return accumA + currentA.weight;
+          }, 0),
+        };
+      });
+      return [
+        ...accum,
+        {
+          buyerCompanyId: currentData[0].buyerCompanyId,
+          buyerCompanyName: currentData[0].buyerCompanyName,
+          orderCount: currentData.length,
+          totalWeight,
+          totalPrice,
+          orders: computeSubtotalWeight,
+        },
+      ];
+    },
+    []
+  );
 };
 
 export const orderItemToToShipItemData = (data: {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Modal from 'components/layout/Modal';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -26,29 +27,29 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const getOrdersPlaced = () => {
-    dispatch(
-      getSellerOrdersPlacedActions.request({
-        page: '1',
-        dateFrom: '',
-        dateTo: '',
-      })
-    );
-  };
+  // const getOrdersPlaced = () => {
+  //   dispatch(
+  //     getSellerOrdersPlacedActions.request({
+  //       page: '1',
+  //       dateFrom: '',
+  //       dateTo: '',
+  //     })
+  //   );
+  // };
 
-  const { orderId, lineItemId } = props.match.params;
+  const { orderId, lineItemId, isOpen, onClickClose } = props;
 
   const order = GetSellerOrder(orderId, 'PENDING');
   const selectedLineItem = order?.orderLineItem
     ? order.orderLineItem.find((lineItem) => lineItem.id === lineItemId)
     : undefined;
 
-  useEffect(() => {
-    // make sure seller orders is not empty
-    if (!selectedLineItem) {
-      getOrdersPlaced();
-    }
-  }, []);
+  // useEffect(() => {
+  //   // make sure seller orders is not empty
+  //   if (!selectedLineItem) {
+  //     getOrdersPlaced();
+  //   }
+  // }, []);
 
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [initialBoxes, setInitialBoxes] = useState<Box[]>([]);
@@ -74,10 +75,6 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
       selectedLineItem?.listing.sizeFrom || '',
       selectedLineItem?.listing.sizeTo || ''
     ),
-  };
-
-  const onCancel = () => {
-    history.goBack();
   };
 
   const onConfirm = () => {
@@ -113,11 +110,19 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     setBoxes,
     pricePerKilo,
     measurementUnit,
-    onCancel,
+    onCancel: onClickClose,
     onConfirm,
     initialBoxes,
   };
-  return <ConfirmView {...props} {...generatedProps} />;
+  return (
+    <Modal
+      onClickClose={onClickClose}
+      isOpen={isOpen}
+      style={{ width: 'calc(100% - 48px)', height: 'calc(100% - 48px)' }}
+    >
+      <ConfirmView {...props} {...generatedProps} />
+    </Modal>
+  );
 };
 
 export default Confirm;

@@ -9,6 +9,8 @@ import {
   getSellerOrdersPlacedActions,
   getSellerOrdersTransitActions,
   getSellerOrdersDeliveredActions,
+  sendMessageActions,
+  placeOrderActions,
 } from 'store/actions';
 import {
   GetSellerOrdersToShipPending,
@@ -16,6 +18,7 @@ import {
   GetSellerOrdersInTransit,
   GetSellerOrdersDelivered,
 } from 'store/selectors/seller/orders';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -81,10 +84,25 @@ const Sold = (): JSX.Element => {
   );
 
   const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToToShipItemData(orderGroup.data),
-    })
+    (orderGroup) => {
+      const toShipItemData = orderItemToToShipItemData(orderGroup.data);
+      const orderTotal = Object.keys(toShipItemData).reduce(
+        (accum, current) => {
+          return (
+            accum +
+            toShipItemData[current].reduce((accumA, currentA) => {
+              return accumA + currentA.orders.length;
+            }, 0)
+          );
+        },
+        0
+      );
+      return {
+        title: orderGroup.title,
+        data: toShipItemData,
+        orderTotal,
+      };
+    }
   );
 
   const inTransit = groupInTransitOrders(GetSellerOrdersInTransit()).map(
@@ -220,6 +238,26 @@ const Sold = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
+  const sendMessage = (buyerId: string, message: string) => {
+    if (buyerId && message) {
+      dispatch(
+        sendMessageActions.request({
+          buyerId: buyerId || '',
+          message,
+        })
+      );
+    }
+  };
+
+  const isPlacingOrder =
+    useSelector((state: Store) => state.placeOrder.pending) || false;
+  const placeOrder = (data: PlaceOrderMeta) => {
+    dispatch(placeOrderActions.request(data));
+  };
+
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
@@ -235,6 +273,10 @@ const Sold = (): JSX.Element => {
     filters,
     updateFilters,
     token,
+    sendMessage,
+    isSendingMessage,
+    isPlacingOrder,
+    placeOrder,
   };
   return <SoldView {...generatedProps} />;
 };

@@ -1,15 +1,32 @@
 import { Dispatch } from 'react';
 
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
+
+interface PendingOrders extends GetSellerOrdersResponseItem {
+  itemCount: number;
+  totalWeight: number;
+}
+
 export type PendingToShipItemData = {
-  id: string;
-  orderNumber: string;
-  numberOfOrders: number;
-  total: string;
+  buyerCompanyId: string;
   buyerCompanyName: string;
-  orderImage: string;
-  type: string;
-  toAddressState: string;
+  orderCount: number;
+  orders: PendingOrders[];
+  totalPrice: number;
+  totalWeight: number;
 };
+
+// export type PendingToShipItemData = {
+//   id: string;
+//   orderNumber: string;
+//   numberOfOrders: number;
+//   total: string;
+//   buyerCompanyName: string;
+//   orderImage: string;
+//   type: string;
+//   toAddressState: string;
+// };
 
 export type ToShipItemData = {
   id: string;
@@ -32,6 +49,7 @@ export type ToShipItemData = {
 export type ToShipItem = {
   title: Date;
   data: { [p: string]: ToShipItemData[] };
+  orderTotal: number;
 };
 
 export type InTransitItemData = {
@@ -100,4 +118,8 @@ export interface SoldGeneratedProps {
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+  sendMessage: (buyerId: string, message: string) => void;
+  isSendingMessage: boolean;
+  isPlacingOrder: boolean;
+  placeOrder: (data: PlaceOrderMeta) => void;
 }

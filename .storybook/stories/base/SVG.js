@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Message,
+  CheckList,
   DownloadFile,
   TrashCan,
   Amex,
@@ -142,6 +144,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Message">
+          <Message width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CheckList">
+          <CheckList width={30} height={30} />
+        </Wrapper>
         <Wrapper label="DownloadFile">
           <DownloadFile width={30} height={30} />
         </Wrapper>

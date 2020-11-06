@@ -1,6 +1,14 @@
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
+export const ScrollWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 16px;
+`;
+
 export const Wrapper = styled.div`
   padding: 0px 0px 50px 0px;
   .add-box-container {
