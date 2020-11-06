@@ -14,6 +14,7 @@ import {
   Message,
   CheckList,
   CheckFilled,
+  DownloadFile,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
@@ -362,6 +363,40 @@ export const SoldItem = (props: {
               <Typography variant="label" color="noshade">
                 {`${toAddress}`}
               </Typography>
+            </div>
+            <div className="buttons">
+              <Button
+                text={'Invoice'}
+                icon={
+                  <DownloadFile
+                    fill={theme.grey.noshade}
+                    height={16}
+                    width={16}
+                  />
+                }
+                textColor={'noshade'}
+                iconPosition="before"
+                style={{
+                  width: 123,
+                  height: 32,
+                  backgroundColor: theme.grey.shade8,
+                }}
+                size="sm"
+                onClick={(e) => {
+                  const orderRefNumbers = entry.map((v) => {
+                    return v.orderRefNumber;
+                  });
+                  window.open(
+                    `${API.URL}/${
+                      API.VERSION
+                    }/order/invoice/${orderRefNumbers.join()}?token=${
+                      props.token
+                    }`,
+                    '_blank'
+                  );
+                  e.stopPropagation();
+                }}
+              />
             </div>
           </div>
         </StyledInteraction>
