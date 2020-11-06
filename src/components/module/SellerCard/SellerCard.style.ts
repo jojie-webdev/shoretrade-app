@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { Typography } from '../CategoryCards/Landing/Card.style';
@@ -32,6 +33,10 @@ export const Container = styled.div`
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
     transform: scale(1.1);
     z-index: 1000;
+
+    @media ${BREAKPOINTS.sm} {
+      transform: none;
+    }
   }
 
   .card-content {
