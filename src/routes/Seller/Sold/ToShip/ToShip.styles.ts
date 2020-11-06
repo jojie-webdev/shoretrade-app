@@ -3,6 +3,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const TitleRow = styled.div`
   margin-bottom: 12px;
@@ -119,6 +120,10 @@ export const StyledInteraction = styled(Interaction)`
       .order-count {
         padding: 8px 16px;
         background-color: ${({ theme }) => theme.grey.shade8};
+
+        p {
+          font-size: 11px;
+        }
       }
     }
 
@@ -162,6 +167,10 @@ export const StyledInteraction = styled(Interaction)`
       p:not(:first-child) {
         margin-left: 4px;
       }
+    }
+
+    .title-text {
+      font-size: ${pxToRem(16)};
     }
   }
 `;
@@ -292,7 +301,7 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
 `;
 
 export const Tag = styled.div`
-  background: ${(props) => props.theme.grey.shade8};
+  /* background: ${(props) => props.theme.grey.shade8}; */
   padding: 4px 8px;
   margin-right: 8px;
   border-radius: 4px;

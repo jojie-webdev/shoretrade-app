@@ -158,13 +158,9 @@ export const PendingItem = (props: {
               </Typography>
 
               <div className="order-count">
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  className="center-text"
-                >
+                <Typography variant="label" color="noshade">
                   {order.itemCount}&nbsp;
-                  {order.itemCount > 1 ? 'Items' : 'Item'}
+                  {order.itemCount > 1 ? 'ITEMS' : 'ITEM'}
                 </Typography>
               </div>
             </div>
@@ -581,19 +577,15 @@ const ToShip = (props: SoldGeneratedProps) => {
                     <Typography
                       variant="label"
                       color="noshade"
-                      className="center-text"
+                      className="center-text title-text"
                     >
                       {group.buyerCompanyName}
                     </Typography>
 
                     <div className="order-count">
-                      <Typography
-                        variant="label"
-                        color="noshade"
-                        className="center-text"
-                      >
+                      <Typography variant="label" color="noshade">
                         {group.orderCount}&nbsp;
-                        {group.orderCount > 1 ? 'Orders' : 'Order'}
+                        {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
                       </Typography>
                     </div>
                   </div>
@@ -714,13 +706,9 @@ const ToShip = (props: SoldGeneratedProps) => {
                     </Typography>
 
                     <div className="order-count">
-                      <Typography
-                        variant="label"
-                        color="noshade"
-                        className="center-text"
-                      >
+                      <Typography variant="label" color="noshade">
                         {group.orderTotal}&nbsp;
-                        {group.orderTotal > 1 ? 'Orders' : 'Order'}
+                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
                       </Typography>
                     </div>
                   </div>
