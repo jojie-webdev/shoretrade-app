@@ -42,6 +42,7 @@ export type ToShipItemData = {
     name: string;
     tags: { label: string }[];
     size: string;
+    fisherman: string;
   }[];
   toAddressState: string;
 };

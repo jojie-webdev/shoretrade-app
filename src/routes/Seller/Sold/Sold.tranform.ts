@@ -150,6 +150,9 @@ export const orderItemToToShipItemData = (data: {
       orders: order.orderLineItem.map((lineItem) => ({
         orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
         buyer: order.buyerCompanyName,
+        fisherman: lineItem.listing.fishermanFirstName
+          ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+          : 'N/A',
         uri: lineItem.listing.images[0],
         price: `${toPrice(lineItem.price)}`,
         weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
