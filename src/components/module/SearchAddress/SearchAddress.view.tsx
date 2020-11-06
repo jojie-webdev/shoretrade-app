@@ -54,7 +54,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         <InputContainer>
           <SearchSVG height={16} width={16} />
           <input
-            type="text"
+            type="search"
             placeholder="Search for a product"
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
