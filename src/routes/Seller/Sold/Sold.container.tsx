@@ -84,10 +84,25 @@ const Sold = (): JSX.Element => {
   );
 
   const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToToShipItemData(orderGroup.data),
-    })
+    (orderGroup) => {
+      const toShipItemData = orderItemToToShipItemData(orderGroup.data);
+      const orderTotal = Object.keys(toShipItemData).reduce(
+        (accum, current) => {
+          return (
+            accum +
+            toShipItemData[current].reduce((accumA, currentA) => {
+              return accumA + currentA.orders.length;
+            }, 0)
+          );
+        },
+        0
+      );
+      return {
+        title: orderGroup.title,
+        data: toShipItemData,
+        orderTotal,
+      };
+    }
   );
 
   const inTransit = groupInTransitOrders(GetSellerOrdersInTransit()).map(

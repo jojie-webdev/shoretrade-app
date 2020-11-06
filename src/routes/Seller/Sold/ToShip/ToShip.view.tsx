@@ -247,15 +247,12 @@ export const PendingItem = (props: {
                     ))}
                   </div>
 
-                  <ItemDetail variant="caption" color="shade6" row>
-                    Size:{' '}
-                    <span>
-                      {sizeToString(
-                        lineItem.listing.metricLabel,
-                        lineItem.listing.sizeFrom || undefined,
-                        lineItem.listing.sizeTo || undefined
-                      )}
-                    </span>
+                  <ItemDetail variant="caption" color="shade5" row>
+                    {sizeToString(
+                      lineItem.listing.metricLabel,
+                      lineItem.listing.sizeFrom || undefined,
+                      lineItem.listing.sizeTo || undefined
+                    )}
                   </ItemDetail>
                 </div>
               </div>
@@ -345,9 +342,9 @@ export const SoldItem = (props: {
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (
-        <Plane height={13} width={13} />
+        <Plane height={18} width={18} fill={theme.grey.shade6} />
       ) : (
-        <Truck height={13} width={13} />
+        <Truck height={18} width={18} fill={theme.grey.shade6} />
       );
     const toAddress = toAddressState ? `${toAddressState}` : '';
 
@@ -358,19 +355,18 @@ export const SoldItem = (props: {
           onClick={() => toggleAccordion(toAddress)}
           type="accordion"
           iconColor={theme.brand.primary}
-          leftComponent={
-            <PriorityNumber>
-              <Typography color="noshade" variant="label">
-                {entry.length}
-              </Typography>
-            </PriorityNumber>
-          }
+          fullWidth
         >
           <div className="content">
             <Icon />
-            <Typography variant="label" color="shade6" className="center-text">
-              {desc} - {toAddress}
-            </Typography>
+            <div className="center-text">
+              <Typography variant="label" color="shade6">
+                {desc}
+              </Typography>
+              <Typography variant="label" color="noshade">
+                {`${toAddress}`}
+              </Typography>
+            </div>
           </div>
         </StyledInteraction>
 
@@ -397,6 +393,70 @@ export const SoldItem = (props: {
                 )
               }
             />
+            {/*
+              // TODO: Use component below instead
+              */}
+            {/* {v.orders.map((order) => (
+              <ItemCard key={order.orderNumber}>
+                <div className="left-content">
+                  <ItemImage src={order.uri} alt="" />
+
+                  <div className="text-content">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="item-title"
+                    >
+                      {order.name}
+                    </Typography>
+
+                    <div className="tags-container">
+                      {order.tags.map(({ label }) => (
+                        <Tag key={label}>
+                          <Typography variant="caption" color="noshade">
+                            {label}
+                          </Typography>
+                        </Tag>
+                      ))}
+                    </div>
+
+                    <ItemDetail variant="caption" color="shade5" row>
+                      {order.size}
+                    </ItemDetail>
+                  </div>
+                </div>
+                <div className="right-content-alternate">
+                  <Col style={{ paddingLeft: 0 }} lg={'content'} xl={8}>
+                    <Row nogutter>
+                      <Col>
+                        <ItemDetail variant="caption" color="shade6">
+                          Fisherman <span>{order.buyer}</span>
+                        </ItemDetail>
+                      </Col>
+                      <Col>
+                        <ItemDetail variant="caption" color="shade6">
+                          Order No. <span>{order.orderNumber}</span>
+                        </ItemDetail>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col style={{ paddingLeft: 0 }} lg={'content'} xl={4}>
+                    <Row nogutter>
+                      <Col>
+                        <ItemDetail variant="caption" color="shade6">
+                          Sold Weight <span>{order.weight}</span>
+                        </ItemDetail>
+                      </Col>
+                      <Col>
+                        <ItemDetail variant="caption" color="shade6">
+                          Price (AUD) <span>{order.price}</span>
+                        </ItemDetail>
+                      </Col>
+                    </Row>
+                  </Col>
+                </div>
+              </ItemCard>
+            ))} */}
           </CollapsibleContent>
         ))}
       </Fragment>
@@ -643,7 +703,31 @@ const ToShip = (props: SoldGeneratedProps) => {
                 type="accordion"
                 iconColor={theme.brand.primary}
               >
-                <Typography color="noshade">{calendarDateString}</Typography>
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text"
+                    >
+                      {calendarDateString}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography
+                        variant="label"
+                        color="noshade"
+                        className="center-text"
+                      >
+                        {group.orderTotal}&nbsp;
+                        {group.orderTotal > 1 ? 'Orders' : 'Order'}
+                      </Typography>
+                    </div>
+                  </div>
+                  <Spacer />
+                  <div className="right-content" />
+                  <div className="buttons" />
+                </div>
               </StyledInteraction>
 
               <CollapsibleContent

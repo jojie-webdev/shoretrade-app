@@ -49,6 +49,7 @@ export type ToShipItemData = {
 export type ToShipItem = {
   title: Date;
   data: { [p: string]: ToShipItemData[] };
+  orderTotal: number;
 };
 
 export type InTransitItemData = {

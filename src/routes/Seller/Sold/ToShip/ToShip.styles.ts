@@ -124,13 +124,17 @@ export const StyledInteraction = styled(Interaction)`
 
     .left-content-extended {
       width: 316px;
+
+      @media (max-width: 375px) {
+        width: 240px;
+      }
     }
 
     .right-content {
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      width: 230px;
+      width: 210px;
       padding: 16px 0px;
 
       @media (max-width: 375px) {
@@ -153,6 +157,11 @@ export const StyledInteraction = styled(Interaction)`
 
     .center-text {
       margin: 0 4px;
+      display: flex;
+
+      p:not(:first-child) {
+        margin-left: 4px;
+      }
     }
   }
 `;
@@ -212,7 +221,7 @@ export const ItemCard = styled.div`
   .right-content {
     display: flex;
     align-items: center;
-    width: 230px;
+    width: 210px;
     padding: 16px 0px;
     justify-content: space-evenly;
 
@@ -220,8 +229,24 @@ export const ItemCard = styled.div`
       width: 240px;
     }
 
-    @media (max-width: 1237px) {
+    @media (max-width: 1024px) {
+      width: auto;
+    }
+
+    /* @media (max-width: 1237px) {
       margin-left: 72px;
+    } */
+  }
+
+  .right-content-alternate {
+    display: flex;
+    /* align-items: center; */
+    flex: 1;
+    padding: 16px 0px;
+    flex-wrap: wrap;
+
+    @media (max-width: 375px) {
+      width: 240px;
     }
   }
 
@@ -248,7 +273,7 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   flex-direction: ${(props) => (props.row ? 'row' : 'column')};
   align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
 
-  width: auto;
+  width: 100%;
   white-space: nowrap;
   line-height: 16px;
 

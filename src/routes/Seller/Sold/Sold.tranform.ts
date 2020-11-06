@@ -82,21 +82,6 @@ export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
     }));
 };
 
-// export const orderItemToPendingToShipItem = (
-//   data: GetSellerOrdersResponseItem[]
-// ): PendingToShipItemData[] => {
-//   return data.map((order) => ({
-//     id: order.orderId,
-//     orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-//     numberOfOrders: order.orderLineItem.length,
-//     total: order.totalPrice,
-//     buyerCompanyName: order.buyerCompanyName,
-//     orderImage: order.orderLineItem[0].listing.images[0],
-//     toAddressState: order.toAddress.state,
-//     type: order.deliveryMethod.toLowerCase(),
-//   }));
-// };
-
 const groupByBuyer = groupBy((order: GetSellerOrdersResponseItem) => {
   return order.buyerCompanyId;
 });
