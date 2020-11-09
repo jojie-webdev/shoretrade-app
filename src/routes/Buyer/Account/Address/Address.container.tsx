@@ -11,8 +11,8 @@ import {
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
-import AccountDeliveryView from './Address.view';
-const AccountDelivery = (): JSX.Element => {
+import AddressView from './Address.view';
+const Address = (): JSX.Element => {
   // Mark:- Variables
   const history = useHistory();
   const dispatch = useDispatch();
@@ -94,7 +94,7 @@ const AccountDelivery = (): JSX.Element => {
     goToEditAddress,
     goToAddAddress,
   };
-  return <AccountDeliveryView {...generatedProps} />;
+  return <AddressView {...generatedProps} />;
 };
 
-export default AccountDelivery;
+export default Address;

@@ -35,7 +35,7 @@ const AddressText = (
     <Typography>{countryCode}</Typography>
   </AddressTextContainer>
 );
-const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
+const AddressView = (props: AccountDeliveryGeneratedProps) => {
   const {
     pending,
     addresses,
@@ -112,4 +112,4 @@ const AccountDeliveryView = (props: AccountDeliveryGeneratedProps) => {
   );
 };
 
-export default AccountDeliveryView;
+export default AddressView;
