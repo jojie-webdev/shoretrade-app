@@ -206,6 +206,26 @@ export const ItemCard = styled.div`
     cursor: pointer;
   }
 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+
+    p:not(:first-child) {
+      margin-left: 4px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+
   .left-content {
     display: flex;
     align-items: center;
@@ -249,6 +269,7 @@ export const ItemCard = styled.div`
 
   .right-content-alternate {
     display: flex;
+    flex-direction: row;
     /* align-items: center; */
     flex: 1;
     padding: 16px 0px;
@@ -256,6 +277,20 @@ export const ItemCard = styled.div`
 
     @media (max-width: 375px) {
       width: 240px;
+    }
+
+    .data-content {
+      display: flex;
+      min-width: 120px;
+      flex: 1;
+      padding: 4px 16px;
+    }
+
+    .data-fisherman {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

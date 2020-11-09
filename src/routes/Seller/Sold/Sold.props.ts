@@ -42,6 +42,7 @@ export type ToShipItemData = {
     name: string;
     tags: { label: string }[];
     size: string;
+    fisherman: string;
   }[];
   toAddressState: string;
 };
@@ -58,6 +59,18 @@ export type InTransitItemData = {
   amount: string;
   buyer: string;
   orderRefNumber: number;
+  orders: {
+    orderNumber: string;
+    buyer: string;
+    uri: string;
+    price: string;
+    weight: string;
+    name: string;
+    tags: { label: string }[];
+    size: string;
+    fisherman: string;
+  }[];
+  toAddressState: string;
 };
 
 export type InTransitItem = {
@@ -71,6 +84,17 @@ export type DeliveredItemData = {
   amount: string;
   buyer: string;
   orderRefNumber: number;
+  orders: {
+    orderNumber: string;
+    buyer: string;
+    uri: string;
+    price: string;
+    weight: string;
+    name: string;
+    tags: { label: string }[];
+    size: string;
+    fisherman: string;
+  }[];
 };
 
 export type DeliveredItem = {

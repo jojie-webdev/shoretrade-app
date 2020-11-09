@@ -150,6 +150,9 @@ export const orderItemToToShipItemData = (data: {
       orders: order.orderLineItem.map((lineItem) => ({
         orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
         buyer: order.buyerCompanyName,
+        fisherman: lineItem.listing.fishermanFirstName
+          ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+          : 'N/A',
         uri: lineItem.listing.images[0],
         price: `${toPrice(lineItem.price)}`,
         weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
@@ -203,6 +206,26 @@ export const orderItemToInTransitItemData = (
     type: order.deliveryMethod.toLowerCase(),
     buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
     orderRefNumber: order.orderRefNumber,
+    orders: order.orderLineItem.map((lineItem) => ({
+      orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
+      buyer: order.buyerCompanyName,
+      fisherman: lineItem.listing.fishermanFirstName
+        ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+        : 'N/A',
+      uri: lineItem.listing.images[0],
+      price: `${toPrice(lineItem.price)}`,
+      weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
+        lineItem.listing.measurementUnit
+      )}`,
+      name: lineItem.listing.typeName,
+      tags: lineItem.listing.specifications.map((s) => ({ label: s })),
+      size: sizeToString(
+        lineItem.listing.metricLabel,
+        lineItem.listing.sizeFrom || '',
+        lineItem.listing.sizeTo || ''
+      ),
+    })),
+    toAddressState: order.toAddress.state,
   }));
 };
 
@@ -233,5 +256,24 @@ export const orderItemToDeliveredItemData = (
     type: order.deliveryMethod.toLowerCase(),
     buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
     orderRefNumber: order.orderRefNumber,
+    orders: order.orderLineItem.map((lineItem) => ({
+      orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
+      buyer: order.buyerCompanyName,
+      fisherman: lineItem.listing.fishermanFirstName
+        ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+        : 'N/A',
+      uri: lineItem.listing.images[0],
+      price: `${toPrice(lineItem.price)}`,
+      weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
+        lineItem.listing.measurementUnit
+      )}`,
+      name: lineItem.listing.typeName,
+      tags: lineItem.listing.specifications.map((s) => ({ label: s })),
+      size: sizeToString(
+        lineItem.listing.metricLabel,
+        lineItem.listing.sizeFrom || '',
+        lineItem.listing.sizeTo || ''
+      ),
+    })),
   }));
 };

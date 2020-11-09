@@ -14,6 +14,7 @@ import {
   Message,
   CheckList,
   CheckFilled,
+  DownloadFile,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
@@ -363,6 +364,40 @@ export const SoldItem = (props: {
                 {`${toAddress}`}
               </Typography>
             </div>
+            <div className="buttons">
+              <Button
+                text={'Invoice'}
+                icon={
+                  <DownloadFile
+                    fill={theme.grey.noshade}
+                    height={16}
+                    width={16}
+                  />
+                }
+                textColor={'noshade'}
+                iconPosition="before"
+                style={{
+                  width: 123,
+                  height: 32,
+                  backgroundColor: theme.grey.shade8,
+                }}
+                size="sm"
+                onClick={(e) => {
+                  const orderRefNumbers = entry.map((v) => {
+                    return v.orderRefNumber;
+                  });
+                  window.open(
+                    `${API.URL}/${
+                      API.VERSION
+                    }/order/invoice/${orderRefNumbers.join()}?token=${
+                      props.token
+                    }`,
+                    '_blank'
+                  );
+                  e.stopPropagation();
+                }}
+              />
+            </div>
           </div>
         </StyledInteraction>
 
@@ -372,87 +407,84 @@ export const SoldItem = (props: {
             isOpen={isOpen.includes(toAddress)}
             style={{ margin: '0px 16px' }}
           >
-            <ToShipAccordionContent
-              onDownloadInvoice={() => {
-                window.open(
-                  `${API.URL}/${API.VERSION}/order/invoice/${v.orderRefNumber}?token=${props.token}`,
-                  '_blank'
-                );
-              }}
-              items={v.orders}
-              onPress={() =>
-                history.push(
-                  SELLER_SOLD_ROUTES.DETAILS.replace(':orderId', v.id).replace(
-                    ':status',
-                    'PLACED'
-                  )
-                )
-              }
-            />
-            {/*
-              // TODO: Use component below instead
-              */}
-            {/* {v.orders.map((order) => (
-              <ItemCard key={order.orderNumber}>
-                <div className="left-content">
-                  <ItemImage src={order.uri} alt="" />
-
-                  <div className="text-content">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="item-title"
-                    >
-                      {order.name}
+            {v.orders.map((order) => (
+              <ItemCard
+                key={order.orderNumber}
+                onClick={() => {
+                  history.push(
+                    SELLER_SOLD_ROUTES.DETAILS.replace(
+                      ':orderId',
+                      v.id
+                    ).replace(':status', 'PLACED')
+                  );
+                }}
+              >
+                <div className="wrapper">
+                  <div className="title">
+                    <Typography color="shade6" className="item-title">
+                      Buyer
                     </Typography>
-
-                    <div className="tags-container">
-                      {order.tags.map(({ label }) => (
-                        <Tag key={label}>
-                          <Typography variant="caption" color="noshade">
-                            {label}
-                          </Typography>
-                        </Tag>
-                      ))}
-                    </div>
-
-                    <ItemDetail variant="caption" color="shade5" row>
-                      {order.size}
-                    </ItemDetail>
+                    <Typography color="noshade" className="item-title">
+                      {order.buyer}
+                    </Typography>
                   </div>
-                </div>
-                <div className="right-content-alternate">
-                  <Col style={{ paddingLeft: 0 }} lg={'content'} xl={8}>
-                    <Row nogutter>
-                      <Col>
-                        <ItemDetail variant="caption" color="shade6">
-                          Fisherman <span>{order.buyer}</span>
+                  <div className="content">
+                    <div className="left-content">
+                      <ItemImage src={order.uri} alt="" />
+
+                      <div className="text-content">
+                        <Typography
+                          variant="label"
+                          color="noshade"
+                          className="item-title"
+                        >
+                          {order.name}
+                        </Typography>
+
+                        <div className="tags-container">
+                          {order.tags.map(({ label }) => (
+                            <Tag key={label}>
+                              <Typography variant="caption" color="noshade">
+                                {label}
+                              </Typography>
+                            </Tag>
+                          ))}
+                        </div>
+
+                        <ItemDetail variant="caption" color="shade5" row>
+                          {order.size}
                         </ItemDetail>
-                      </Col>
-                      <Col>
+                      </div>
+                    </div>
+                    <div className="right-content-alternate">
+                      <div className="data-content">
+                        <ItemDetail variant="caption" color="shade6">
+                          Fisherman{' '}
+                          <span className="data-fisherman">
+                            {order.fisherman}
+                          </span>
+                        </ItemDetail>
+                      </div>
+                      <div className="data-content">
                         <ItemDetail variant="caption" color="shade6">
                           Order No. <span>{order.orderNumber}</span>
                         </ItemDetail>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col style={{ paddingLeft: 0 }} lg={'content'} xl={4}>
-                    <Row nogutter>
-                      <Col>
+                      </div>
+                      <div className="data-content">
                         <ItemDetail variant="caption" color="shade6">
                           Sold Weight <span>{order.weight}</span>
                         </ItemDetail>
-                      </Col>
-                      <Col>
+                      </div>
+                      <div className="data-content">
                         <ItemDetail variant="caption" color="shade6">
                           Price (AUD) <span>{order.price}</span>
                         </ItemDetail>
-                      </Col>
-                    </Row>
-                  </Col>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </ItemCard>
-            ))} */}
+            ))}
           </CollapsibleContent>
         ))}
       </Fragment>
@@ -700,7 +732,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                     <Typography
                       variant="label"
                       color="noshade"
-                      className="center-text"
+                      className="center-text title-text"
                     >
                       {calendarDateString}
                     </Typography>
