@@ -68,7 +68,7 @@ function Step7({
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
     (address) => ({
-      label: `${address.streetName}, ${address.suburb}, ${address.state}, ${address.countryCode}, ${address.postcode}`,
+      label: `${address.streetNumber} ${address.streetName}, ${address.suburb}, ${address.state}, ${address.countryCode}, ${address.postcode}`,
       value: address.id,
     })
   );
