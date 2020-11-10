@@ -69,6 +69,9 @@ const Card = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    if (addCardResult.error && !submitted)
+      dispatch(addCardTokenActions.clear()); // clear related actions on render
+
     if (addCardResult.data && submitted) history.goBack();
   }, [addCardResult]);
 
