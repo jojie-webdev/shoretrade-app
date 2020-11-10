@@ -67,6 +67,7 @@ export const OrderBadge = styled.div`
 export const AccordionTitleContainer = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   .title {
     margin-right: 4px;

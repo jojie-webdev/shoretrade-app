@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState, ChangeEvent } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
-import { Search as SearchSVG, CloseFilled, Octopus } from 'components/base/SVG';
+import { Search as SearchSVG, Octopus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
@@ -35,6 +35,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   const history = useHistory();
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  function blurOnEnter(event: any) {
+    if (event.key === 'Enter' && inputRef !== null) {
+      inputRef?.current?.blur();
+    }
+  }
 
   return (
     <Container>
@@ -55,12 +62,14 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         <SearchSVG height={16} width={16} />
         <input
           type="search"
+          ref={inputRef}
           placeholder="Search for a product"
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
           onFocus={() => {
             setIsFocused(true);
           }}
+          onKeyPress={blurOnEnter}
         />
       </InputContainer>
 
