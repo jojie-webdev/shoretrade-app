@@ -1,11 +1,12 @@
 import moment from 'moment';
+import { groupBy } from 'ramda';
 import { GetBuyerOrdersResponseItem } from 'types/store/GetBuyerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 
-import { OrderItem } from './Orders.props';
+import { DateType, OrderItem } from './Orders.props';
 
 export const getShipmentOptionString = (
   deliveryMethod: string,
@@ -92,3 +93,47 @@ export const transformOrder = (
     isAquafuture: orderItem.orderLineItem[0].listing.isAquafuture,
   };
 };
+
+const isToday = (date: Date) => moment(date).isSame(moment(), 'day');
+const isTomorrow = (date: Date) =>
+  moment(date).isSame(moment().add(1, 'day'), 'day');
+
+export const groupByDate = (dateType: DateType) =>
+  groupBy((order: OrderItem) => {
+    const momentDateFormat = 'MMM. D, YYYY';
+
+    let date;
+
+    if (dateType === 'estCatchmentDate') {
+      date = order.isAquafuture
+        ? order.estCatchmentDate
+        : order.estDeliveryDate;
+    } else {
+      date = order[dateType];
+    }
+
+    if (isToday(date)) {
+      return 'Today';
+    }
+
+    if (isTomorrow(date)) {
+      return 'Tomorrow';
+    }
+
+    return moment(date).format(momentDateFormat);
+  });
+
+export const sortByDateAsc = (orders: OrderItem[], dateType: DateType) =>
+  orders.sort((a, b) => {
+    let date1, date2;
+
+    if (dateType === 'estCatchmentDate') {
+      date1 = a.isAquafuture ? a.estCatchmentDate : a.estDeliveryDate;
+      date2 = b.isAquafuture ? b.estCatchmentDate : b.estDeliveryDate;
+    } else {
+      date1 = a[dateType];
+      date2 = b[dateType];
+    }
+
+    return date1.getTime() - date2.getTime();
+  });

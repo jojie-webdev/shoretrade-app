@@ -49,9 +49,9 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   if (loadingCurrentTab) {
     content = <Loading />;
   } else if (
-    (pendingOrders.length === 0 && currentTab === PENDING) ||
-    (inTransitOrders.length === 0 && currentTab === IN_TRANSIT) ||
-    (completedOrders.length === 0 && currentTab === COMPLETE)
+    (Object.keys(pendingOrders).length === 0 && currentTab === PENDING) ||
+    (Object.keys(inTransitOrders).length === 0 && currentTab === IN_TRANSIT) ||
+    (Object.keys(completedOrders).length === 0 && currentTab === COMPLETE)
   ) {
     content = (
       <Row className="emptystate-row" align="center" justify="center">

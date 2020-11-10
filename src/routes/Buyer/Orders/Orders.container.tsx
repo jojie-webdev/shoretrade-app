@@ -21,7 +21,7 @@ import {
   TabOptions,
   RequestFilters,
 } from './Orders.props';
-import { transformOrder } from './Orders.transform';
+import { groupByDate, sortByDateAsc, transformOrder } from './Orders.transform';
 import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
@@ -181,9 +181,15 @@ const OrdersContainer = (): JSX.Element => {
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
   const generatedProps: OrdersGeneratedProps = {
-    pendingOrders,
-    inTransitOrders,
-    completedOrders,
+    pendingOrders: groupByDate('estCatchmentDate')(
+      sortByDateAsc(pendingOrders, 'estCatchmentDate')
+    ),
+    inTransitOrders: groupByDate('estDeliveryDate')(
+      sortByDateAsc(inTransitOrders, 'estDeliveryDate')
+    ),
+    completedOrders: groupByDate('deliveredDate')(
+      sortByDateAsc(completedOrders, 'deliveredDate')
+    ),
 
     getAllOrders,
     pendingOrdersCount,

@@ -47,12 +47,17 @@ export type RequestFilters = {
 };
 
 export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
-export type ItemDetailVariants = 'left' | 'center' | 'right';
 
 export interface OrdersGeneratedProps {
-  pendingOrders: OrderItem[];
-  inTransitOrders: OrderItem[];
-  completedOrders: OrderItem[];
+  pendingOrders: {
+    [index: string]: OrderItem[];
+  };
+  inTransitOrders: {
+    [index: string]: OrderItem[];
+  };
+  completedOrders: {
+    [index: string]: OrderItem[];
+  };
   currentTab: TabOptions;
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;
@@ -72,3 +77,5 @@ export interface OrdersGeneratedProps {
   };
   token: string;
 }
+
+export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';
