@@ -1,10 +1,33 @@
 import Interaction from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
+export const ItemRow = styled(Row)``;
+
+export const Spacer = styled.div`
+  width: 0px;
+  @media (min-width: 1300px) {
+    width: 32px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 132px;
+  }
+
+  @media (min-width: 1500px) {
+    width: 232px;
+  }
+
+  @media (min-width: 1600px) {
+    width: 332px;
+  }
+`;
+
 export const StyledInteraction = styled(Interaction)`
   margin-bottom: 8px;
+  padding: 16px 24px;
 
   .content {
     display: flex;

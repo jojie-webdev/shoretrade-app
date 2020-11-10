@@ -9,14 +9,7 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 
-import {
-  ToShipItemData,
-  InTransitItemData,
-  DeliveredItemData,
-  PendingToShipItemData,
-} from './Sold.props';
-
-const sortByTitle = sortBy(prop('title'));
+import { SoldItemData, PendingToShipItemData } from './Sold.props';
 
 const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
   if (!order.sellerDropOffCutOffTime && order.deliveryMethod === 'AIR') {
@@ -46,17 +39,6 @@ const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
   }
 
   return deliveryMoment.format(momentDateFormat);
-});
-
-const groupByToAddressState = groupBy(
-  (order: GetSellerOrdersResponseItem) => order.toAddress.state
-);
-
-const groupByDeliveryMethod = groupBy((order: GetSellerOrdersResponseItem) => {
-  if (order.deliveryMethod === 'AIR') {
-    return 'Air Freight';
-  }
-  return 'Road Freight';
 });
 
 const groupByDeliveryMethodAndState = groupBy(
@@ -135,9 +117,9 @@ export const orderItemToPendingToShipItem = (
   );
 };
 
-export const orderItemToToShipItemData = (data: {
+export const orderItemToSoldItemData = (data: {
   [p: string]: GetSellerOrdersResponseItem[];
-}): { [p: string]: ToShipItemData[] } => {
+}): { [p: string]: SoldItemData[] } => {
   //@ts-ignore
   const newObj: { [p: string]: ToShipItemData[] } = { ...data };
 
@@ -171,109 +153,4 @@ export const orderItemToToShipItemData = (data: {
   }
 
   return newObj;
-};
-
-export const groupInTransitOrders = (orders: GetSellerOrdersResponseItem[]) => {
-  const groupedByState = groupByToAddressState(orders);
-  const nestedGrouping = Object.keys(groupedByState)
-    .filter((key) => key !== '0')
-    .map((key) => {
-      return {
-        key,
-        data: groupedByState[key],
-      };
-    })
-    .map((group) => {
-      const regrouped = groupByDeliveryMethod(group.data);
-      return {
-        state: group.key,
-        deliveryMethod: regrouped,
-      };
-    });
-
-  return nestedGrouping;
-};
-
-export const orderItemToInTransitItemData = (
-  data: GetSellerOrdersResponseItem[]
-): InTransitItemData[] => {
-  return data.map((order) => ({
-    id: order.orderId,
-    date: moment(
-      order.latestExpectedDeliveryDate || order.originalExpectedDeliveryDate
-    ).toDate(),
-    amount: toPrice(order.totalPrice, false),
-    type: order.deliveryMethod.toLowerCase(),
-    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
-    orderRefNumber: order.orderRefNumber,
-    orders: order.orderLineItem.map((lineItem) => ({
-      orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-      buyer: order.buyerCompanyName,
-      fisherman: lineItem.listing.fishermanFirstName
-        ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
-        : 'N/A',
-      uri: lineItem.listing.images[0],
-      price: `${toPrice(lineItem.price)}`,
-      weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
-        lineItem.listing.measurementUnit
-      )}`,
-      name: lineItem.listing.typeName,
-      tags: lineItem.listing.specifications.map((s) => ({ label: s })),
-      size: sizeToString(
-        lineItem.listing.metricLabel,
-        lineItem.listing.sizeFrom || '',
-        lineItem.listing.sizeTo || ''
-      ),
-    })),
-    toAddressState: order.toAddress.state,
-  }));
-};
-
-export const groupDeliveredOrders = (orders: GetSellerOrdersResponseItem[]) => {
-  const groupedOrders = groupByDate(orders);
-
-  const result = Object.keys(groupedOrders)
-    .filter((k) => k !== '0')
-    .map((k) => ({
-      title: moment(k, 'yyyy-MM-DD').toDate(),
-      data: groupedOrders[k],
-    }));
-
-  return reverse(sortByTitle(result));
-};
-
-export const orderItemToDeliveredItemData = (
-  data: GetSellerOrdersResponseItem[]
-): DeliveredItemData[] => {
-  return data.map((order) => ({
-    id: order.orderId,
-    date: moment(
-      order.deliveryDate ||
-        order.latestExpectedDeliveryDate ||
-        order.originalExpectedDeliveryDate
-    ).toDate(),
-    amount: toPrice(order.totalPrice, false),
-    type: order.deliveryMethod.toLowerCase(),
-    buyer: `${order.buyerEmployeeFirstName} ${order.buyerEmployeeLastName}`,
-    orderRefNumber: order.orderRefNumber,
-    orders: order.orderLineItem.map((lineItem) => ({
-      orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-      buyer: order.buyerCompanyName,
-      fisherman: lineItem.listing.fishermanFirstName
-        ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
-        : 'N/A',
-      uri: lineItem.listing.images[0],
-      price: `${toPrice(lineItem.price)}`,
-      weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
-        lineItem.listing.measurementUnit
-      )}`,
-      name: lineItem.listing.typeName,
-      tags: lineItem.listing.specifications.map((s) => ({ label: s })),
-      size: sizeToString(
-        lineItem.listing.metricLabel,
-        lineItem.listing.sizeFrom || '',
-        lineItem.listing.sizeTo || ''
-      ),
-    })),
-  }));
 };

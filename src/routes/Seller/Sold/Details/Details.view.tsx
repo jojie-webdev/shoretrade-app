@@ -64,17 +64,7 @@ const DetailsView = (props: DetailsProps) => {
   return (
     <Wrapper>
       <Header>
-        <InnerRouteHeader
-          title={status}
-          onClickBack={() =>
-            history.push(
-              `${SELLER_ROUTES.SOLD}${qs.stringify(
-                { tab: isDelivered ? 'Delivered' : 'In Transit' },
-                { addQueryPrefix: true }
-              )}`
-            )
-          }
-        />
+        <InnerRouteHeader title={status} onClickBack={() => history.goBack()} />
         <Touchable
           dark
           onPress={() => {

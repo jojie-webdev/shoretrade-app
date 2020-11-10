@@ -18,6 +18,7 @@ import {
   GetSellerOrdersInTransit,
   GetSellerOrdersDelivered,
 } from 'store/selectors/seller/orders';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -26,11 +27,7 @@ import { SoldGeneratedProps, TabOptions, RequestFilters } from './Sold.props';
 import {
   orderItemToPendingToShipItem,
   groupToShipOrders,
-  orderItemToToShipItemData,
-  orderItemToInTransitItemData,
-  orderItemToDeliveredItemData,
-  groupInTransitOrders,
-  groupDeliveredOrders,
+  orderItemToSoldItemData,
 } from './Sold.tranform';
 import SoldView from './Sold.view';
 const Sold = (): JSX.Element => {
@@ -83,9 +80,9 @@ const Sold = (): JSX.Element => {
     GetSellerOrdersToShipPending()
   );
 
-  const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
-    (orderGroup) => {
-      const toShipItemData = orderItemToToShipItemData(orderGroup.data);
+  const rawDataToSoldItems = (rawData: GetSellerOrdersResponseItem[]) => {
+    return groupToShipOrders(rawData).map((orderGroup) => {
+      const toShipItemData = orderItemToSoldItemData(orderGroup.data);
       const orderTotal = Object.keys(toShipItemData).reduce(
         (accum, current) => {
           return (
@@ -102,37 +99,12 @@ const Sold = (): JSX.Element => {
         data: toShipItemData,
         orderTotal,
       };
-    }
-  );
+    });
+  };
 
-  const inTransit = groupInTransitOrders(GetSellerOrdersInTransit()).map(
-    (orderGroup) => {
-      const { state, deliveryMethod } = orderGroup;
-      const inTransitOrder = {
-        state,
-        deliveryMethod: {
-          'Air Freight': orderItemToInTransitItemData(
-            deliveryMethod['Air Freight'] || []
-          ),
-          'Road Freight': orderItemToInTransitItemData(
-            deliveryMethod['Road Freight'] || []
-          ),
-        },
-      };
-      return inTransitOrder;
-      // return {
-      //   state: orderGroup.title,
-      //   data: orderItemToInTransitItemData(orderGroup.data),
-      // };
-    }
-  );
-
-  const delivered = groupDeliveredOrders(GetSellerOrdersDelivered()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToDeliveredItemData(orderGroup.data),
-    })
-  );
+  const toShip = rawDataToSoldItems(GetSellerOrdersToShip());
+  const inTransit = rawDataToSoldItems(GetSellerOrdersInTransit());
+  const delivered = rawDataToSoldItems(GetSellerOrdersDelivered());
 
   const toShipCount =
     useSelector(

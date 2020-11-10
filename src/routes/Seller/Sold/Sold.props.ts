@@ -17,18 +17,7 @@ export type PendingToShipItemData = {
   totalWeight: number;
 };
 
-// export type PendingToShipItemData = {
-//   id: string;
-//   orderNumber: string;
-//   numberOfOrders: number;
-//   total: string;
-//   buyerCompanyName: string;
-//   orderImage: string;
-//   type: string;
-//   toAddressState: string;
-// };
-
-export type ToShipItemData = {
+export type SoldItemData = {
   id: string;
   date: Date;
   type?: string;
@@ -47,59 +36,10 @@ export type ToShipItemData = {
   toAddressState: string;
 };
 
-export type ToShipItem = {
+export type SoldItem = {
   title: Date;
-  data: { [p: string]: ToShipItemData[] };
+  data: { [p: string]: SoldItemData[] };
   orderTotal: number;
-};
-
-export type InTransitItemData = {
-  id: string;
-  date: Date;
-  amount: string;
-  buyer: string;
-  orderRefNumber: number;
-  orders: {
-    orderNumber: string;
-    buyer: string;
-    uri: string;
-    price: string;
-    weight: string;
-    name: string;
-    tags: { label: string }[];
-    size: string;
-    fisherman: string;
-  }[];
-  toAddressState: string;
-};
-
-export type InTransitItem = {
-  state: string;
-  deliveryMethod: Record<string, any>;
-};
-
-export type DeliveredItemData = {
-  id: string;
-  date: Date;
-  amount: string;
-  buyer: string;
-  orderRefNumber: number;
-  orders: {
-    orderNumber: string;
-    buyer: string;
-    uri: string;
-    price: string;
-    weight: string;
-    name: string;
-    tags: { label: string }[];
-    size: string;
-    fisherman: string;
-  }[];
-};
-
-export type DeliveredItem = {
-  title: Date;
-  data: DeliveredItemData[];
 };
 
 export type RequestFilters = {
@@ -111,10 +51,10 @@ export type RequestFilters = {
 export type TabOptions = 'To Ship' | 'In Transit' | 'Delivered';
 
 export interface SoldGeneratedProps {
-  toShip: ToShipItem[];
+  toShip: SoldItem[];
   pendingToShip: PendingToShipItemData[];
-  inTransit: InTransitItem[];
-  delivered: DeliveredItem[];
+  inTransit: SoldItem[];
+  delivered: SoldItem[];
   toShipCount: string;
   deliveredCount: string;
   currentTab: TabOptions;

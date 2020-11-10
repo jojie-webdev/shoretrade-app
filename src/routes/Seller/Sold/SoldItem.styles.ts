@@ -5,41 +5,10 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const TitleRow = styled.div`
-  margin-bottom: 12px;
-
-  .title-col {
-    display: flex;
-    align-items: center;
-
-    .svg-container {
-      margin-right: 8px;
-    }
-  }
-`;
-
-export const Spacer = styled.div`
-  width: 0px;
-  @media (min-width: 1300px) {
-    width: 32px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 132px;
-  }
-
-  @media (min-width: 1500px) {
-    width: 232px;
-  }
-
-  @media (min-width: 1600px) {
-    width: 332px;
-  }
-`;
-
 export const StyledInteraction = styled(Interaction)`
   margin-bottom: 8px;
   padding: 16px 24px;
+
   .content {
     display: flex;
     flex: 1;
@@ -125,17 +94,15 @@ export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
   transition: all 0.1s ease;
 `;
 
-export const ItemRow = styled(Row)``;
-
 export const CarouselContainer = styled.div`
   position: relative;
   margin-bottom: 16px;
 `;
 
 export const ItemCard = styled.div`
-  min-height: 110px;
+  min-height: 144px;
   background: ${(props) => props.theme.grey.shade9};
-  padding: 8px 12px;
+  padding: 16px;
   margin-bottom: 8px;
   border-radius: 4px;
 
@@ -158,6 +125,7 @@ export const ItemCard = styled.div`
   .title {
     display: flex;
     flex-direction: row;
+    margin-bottom: 12px;
 
     p:not(:first-child) {
       margin-left: 4px;

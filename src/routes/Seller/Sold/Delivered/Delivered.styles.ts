@@ -4,26 +4,30 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const DeliveredRow = styled(Row)`
-  .delivered-col {
-    margin-bottom: 16px;
+export const ItemRow = styled(Row)``;
 
-    .order-price {
-      display: flex;
-      justify-content: flex-start;
-      & > p {
-        display: inline-block;
-        vertical-align: sub;
-      }
-      & > svg {
-        margin-left: 16px;
-      }
-    }
+export const Spacer = styled.div`
+  width: 0px;
+  @media (min-width: 1300px) {
+    width: 32px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 132px;
+  }
+
+  @media (min-width: 1500px) {
+    width: 232px;
+  }
+
+  @media (min-width: 1600px) {
+    width: 332px;
   }
 `;
 
 export const StyledInteraction = styled(Interaction)`
   margin-bottom: 8px;
+  padding: 16px 24px;
 
   .content {
     display: flex;
