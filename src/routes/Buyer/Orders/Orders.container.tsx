@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 // import useSelectorSafe from 'store/selectors/useSelectorSafe';
 import {
@@ -20,6 +21,7 @@ import {
   OrdersGeneratedProps,
   TabOptions,
   RequestFilters,
+  OrderItem,
 } from './Orders.props';
 import { groupByDate, sortByDateAsc, transformOrder } from './Orders.transform';
 import OrdersView from './Orders.view';

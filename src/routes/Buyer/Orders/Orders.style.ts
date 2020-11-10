@@ -15,6 +15,19 @@ export const Container = styled.div`
 
 // Shared Styles
 
+export const TitleRow = styled.div`
+  margin-bottom: 12px;
+
+  .title-col {
+    display: flex;
+    align-items: center;
+
+    .svg-container {
+      margin-right: 8px;
+    }
+  }
+`;
+
 export const LeftContainer = styled(Col)``;
 
 export const AccordionContainer = styled.div`
