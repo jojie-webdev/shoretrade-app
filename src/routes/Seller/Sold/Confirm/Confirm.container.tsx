@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'components/layout/Modal';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import {
   confirmWeightActions,
@@ -114,11 +115,16 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     onConfirm,
     initialBoxes,
   };
+
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' });
   return (
     <Modal
       onClickClose={onClickClose}
       isOpen={isOpen}
-      style={{ width: 'calc(100% - 48px)', height: 'calc(100% - 48px)' }}
+      style={{
+        width: isLargeScreen ? '75%' : 'calc(100% - 48px)',
+        height: isLargeScreen ? '75%' : 'calc(100% - 48px)',
+      }}
     >
       <ConfirmView {...props} {...generatedProps} />
     </Modal>
