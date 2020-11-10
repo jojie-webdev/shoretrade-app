@@ -216,7 +216,8 @@ export const Content = styled.div<{
       .screen {
         height: 100%;
         width: 100%;
-        padding: 40px 20px;
+        padding: ${(props) =>
+          props.theme.appType === 'buyer' ? '20px 40px 40px' : '40px 20px'};
 
         .container {
           position: static !important; // needed to override react-grid-system .container
