@@ -58,7 +58,11 @@ export const StyledInteraction = styled(Interaction)`
       }
 
       .order-count {
-        padding: 8px 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 28px;
         background-color: ${({ theme }) => theme.grey.shade8};
 
         p {
