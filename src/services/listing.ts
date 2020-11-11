@@ -191,6 +191,7 @@ export const getShippingQuote = (
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    timeout: 10000,
     data,
   });
 };

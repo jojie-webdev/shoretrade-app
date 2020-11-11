@@ -80,7 +80,9 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           label="Buying For"
           size="small"
           onChange={(e) => {
-            setTargetAddress(e.value);
+            if (e.value !== currentDefaultAddressId) {
+              setTargetAddress(e.value);
+            }
           }}
           value={currentDefaultAddressId}
         />
