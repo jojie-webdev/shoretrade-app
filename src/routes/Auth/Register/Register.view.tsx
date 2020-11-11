@@ -53,6 +53,7 @@ import {
   MobileField,
   PaymentMethodDetails,
   PaymentMethodOverline,
+  Spacer,
 } from './Register.style';
 import {
   validateUserDetails,
@@ -183,6 +184,7 @@ const StepForm = ({
                   />
                 </Fragment>
               ))}
+
               {step === 1 && (
                 <MobileField
                   name="mobile"
@@ -348,6 +350,7 @@ const StepForm = ({
                   </div>
                 </>
               )}
+              <Spacer />
             </Content>
           </Container>
         </FormikContainer>

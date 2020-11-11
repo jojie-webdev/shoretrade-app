@@ -22,6 +22,11 @@ export const Content = styled.div`
   flex: 1;
 `;
 
+export const Spacer = styled.div`
+  min-height: 16px;
+  max-height: 16px;
+`;
+
 export const ColumnWrapper = styled.div`
   display: 'flex';
   flex: 1;

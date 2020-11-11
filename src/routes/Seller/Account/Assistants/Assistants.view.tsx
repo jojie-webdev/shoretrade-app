@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AlertInfoView from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import { InfoFilled } from 'components/base/SVG';
