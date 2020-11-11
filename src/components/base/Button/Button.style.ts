@@ -58,6 +58,10 @@ export const ButtonContainer = styled.button<
   @media ${BREAKPOINTS['sm']} {
     padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
   }
+
+  p {
+    line-height: 100%;
+  }
 `;
 
 export const LoadingContainer = styled.div`

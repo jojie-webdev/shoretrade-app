@@ -126,7 +126,9 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
   overflow: hidden;
   height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
-  transition: all 0.1s ease;
+  transition: all 0.25s ease-in-out;
+  transform-origin: top;
+  transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
 `;
 
 export const ItemRow = styled(Row)``;

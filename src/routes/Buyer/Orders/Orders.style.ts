@@ -62,6 +62,11 @@ export const OrderBadge = styled.div`
   border-radius: 4px;
   margin-right: 24px;
   white-space: nowrap;
+  width: 100px;
+
+  p {
+    line-height: 100%;
+  }
 `;
 
 export const AccordionTitleContainer = styled.div`
