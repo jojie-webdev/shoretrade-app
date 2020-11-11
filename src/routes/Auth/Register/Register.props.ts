@@ -44,5 +44,6 @@ export interface RegisterGeneratedProps {
   register: (details: RegistrationDetails) => void;
   isPending: boolean;
   isSuccess: boolean;
+  error: string;
   isApplicationForLineCredit: boolean;
 }

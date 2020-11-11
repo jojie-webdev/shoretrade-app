@@ -37,6 +37,8 @@ export const register = (
     method: 'post',
     url: `${USER_URL}/register/${userGroup}`,
     data,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
   });
 };
 
