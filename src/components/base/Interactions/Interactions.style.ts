@@ -10,6 +10,7 @@ export const Container = styled.div<InteractionsProps>`
   display: flex;
   justify-content: space-between;
   position: relative;
+
   background-color: ${({ theme, backgroundColor, noBg }) => {
     const isSeller = theme.appType !== 'buyer';
 

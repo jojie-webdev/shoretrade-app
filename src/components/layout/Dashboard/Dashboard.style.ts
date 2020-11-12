@@ -6,13 +6,26 @@ import styled, { css } from 'utils/styled';
 const dashboardWidth = (isSeller: boolean) =>
   isSeller ? 'calc(100% - 64px)' : 'calc(100% - 200px)';
 
-export const DashboardContainer = styled.div<{ openSidebar?: boolean }>`
+export const DashboardContainer = styled.div<{
+  openSidebar?: boolean;
+}>`
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: row;
   position: relative;
-  overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+  /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
+
+
+  @media ${BREAKPOINTS['md']} {
+    max-height: 100vh;
+    height: -webkit-fill-available;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    max-height: 100vh;
+    height: -webkit-fill-available;
+  }
 `;
 
 export const MenuIcon = styled.div`
@@ -38,8 +51,11 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   opacity: 0.5;
   top: 0;
   left: 0;
-  height: 100vh;
+  /* height: 100vh; */
+
   width: 100%;
+  height: 100%;
+  overflow: hidden;
 
   @media ${BREAKPOINTS['md']} {
     z-index: 999;
@@ -53,7 +69,6 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 `;
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
-  display: none;
   padding: 0 24px;
   background: ${(props) =>
     props.theme.appType === 'buyer' ? props.theme.grey.shade9 : '#020a13'};
@@ -62,6 +77,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.3s ease-in-out;
+  overflow: hidden;
 
   .logo-container {
     margin-top: 68px;
@@ -81,7 +97,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100vh;
+    height: 100%;
   }
 
   @media ${BREAKPOINTS['sm']} {
@@ -91,7 +107,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100vh;
+    height: 100%;
   }
 `;
 
@@ -217,7 +233,7 @@ export const Content = styled.div<{
         height: 100%;
         width: 100%;
         padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '20px 40px 40px' : '40px 20px'};
+          props.theme.appType === 'buyer' ? '0 8px' : '40px 20px'};
 
         .container {
           position: static !important; // needed to override react-grid-system .container
@@ -326,7 +342,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
         `
       : css`
           @media ${BREAKPOINTS['sm']} {
-            width: 85%;
+            width: 90%;
             padding: 8px;
             margin-top: 8px;
             margin-bottom: 8px;
