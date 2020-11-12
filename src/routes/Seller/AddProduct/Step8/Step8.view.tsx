@@ -110,12 +110,8 @@ function Step8({
           <Interactions
             label="Boxes"
             value={boxes}
-            type={isExisting ? 'none' : 'edit'}
-            onClick={() => {
-              if (!isExisting) {
-                onChangeCurrentPage(6);
-              }
-            }}
+            type="edit"
+            onClick={() => {onChangeCurrentPage(6)}}
           />
         </Col>
         <Col md={12} className="interaction-col">

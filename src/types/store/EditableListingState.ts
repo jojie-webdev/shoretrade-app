@@ -26,6 +26,7 @@ export type EditableListingState = Partial<{
     weight: number;
     quantity: number;
     count?: number;
+    fixed?: boolean;
   }[];
   minOrder: number;
   sellInMultiplesOfMinOrder?: boolean;
