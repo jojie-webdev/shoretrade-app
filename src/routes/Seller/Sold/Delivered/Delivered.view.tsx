@@ -1,92 +1,104 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 
+import Button from 'components/base/Button';
+import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import Pagination from 'components/module/Pagination';
-import { SELLER_SOLD_ROUTES } from 'consts';
+import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
-import { Col, Row } from 'react-grid-system';
+import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import getCalendarDate from 'utils/Date/getCalendarDate';
+import { useTheme } from 'utils/Theme';
 
-import { SoldGeneratedProps, RequestFilters } from '../Sold.props';
-import { DeliveryItem } from '../Sold.style';
-import { DeliveredRow } from './Delivered.styles';
+import { SoldGeneratedProps } from '../Sold.props';
+import SoldItem from '../SoldItem.view';
+import {
+  StyledInteraction,
+  CollapsibleContent,
+  Spacer,
+  ItemRow,
+} from './Delivered.styles';
 
 const Delivered = (props: SoldGeneratedProps) => {
-  const { delivered, deliveredCount, filters, updateFilters } = props;
-  const deliveredPagesTotal = Math.ceil(Number(deliveredCount) / 10);
+  const { delivered, token } = props;
+
+  const theme = useTheme();
   const history = useHistory();
+  const [isOpen, setIsOpen] = useState<string[]>([]);
+
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
   return (
     <>
-      <DeliveredRow>
-        {delivered.map((group) => {
-          const calendarDateString = getCalendarDate(group.title);
-          return (
-            <Col key={calendarDateString} className="delivered-col" md={12}>
-              <div className="section-header">
-                <Typography color="noshade" className="title">
-                  {calendarDateString}
-                </Typography>
-              </div>
-              {group.data.map((item) => {
-                const deliveryDate = moment(item.date).format('ddd DD MMM');
-                return (
-                  <DeliveryItem
-                    key={item.id}
-                    onClick={() =>
-                      history.push(
-                        SELLER_SOLD_ROUTES.DETAILS.replace(
-                          ':orderId',
-                          item.id
-                        ).replace(':status', 'DELIVERED')
-                      )
-                    }
-                    iconAlignment="flex-start"
-                  >
-                    <div className="content">
-                      <div className="top">
-                        <Typography
-                          color="shade6"
-                          weight="500"
-                          variant="label"
-                          className="delivery-date"
-                        >
-                          Delivery Date
-                        </Typography>
-                        <Typography
-                          color="noshade"
-                          weight="bold"
-                          variant="label"
-                        >
-                          {deliveryDate}
-                        </Typography>
-                      </div>
-                      <Typography variant="title5" weight="900" color="noshade">
-                        ${item.amount}
+      {delivered.map((group) => {
+        const getDisplayDate = () => {
+          const targetDate = moment(group.title);
+          const currentDate = moment();
+          const dateDiff = targetDate.diff(currentDate, 'days');
+
+          if (dateDiff === -1) {
+            return 'Yesterday';
+          } else if (dateDiff === 0) {
+            return 'Today';
+          } else if (dateDiff === 1) {
+            return 'Tomorrow';
+          }
+
+          return targetDate.format('Do MMMM');
+        };
+
+        const calendarDateString = getDisplayDate();
+
+        return (
+          <ItemRow key={calendarDateString}>
+            <Col>
+              <StyledInteraction
+                pressed={isOpen.includes(calendarDateString)}
+                onClick={() => toggleAccordion(calendarDateString)}
+                type="accordion"
+                iconColor={theme.brand.primary}
+              >
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text title-text"
+                    >
+                      {calendarDateString}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography variant="label" color="noshade">
+                        {group.orderTotal}&nbsp;
+                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
                       </Typography>
                     </div>
-                  </DeliveryItem>
-                );
-              })}
-            </Col>
-          );
-        })}
-      </DeliveredRow>
+                  </div>
+                  <Spacer />
+                  <div className="right-content" />
+                  <div className="buttons" />
+                </div>
+              </StyledInteraction>
 
-      {deliveredPagesTotal > 1 && (
-        <Row justify="center">
-          <Pagination
-            numPages={deliveredPagesTotal}
-            currentValue={Number(filters.deliveredFilters.page)}
-            onClickButton={(value) =>
-              updateFilters.updateDeliveredFilters({
-                page: value.toFixed(0),
-              })
-            }
-            variant="number"
-          />
-        </Row>
-      )}
+              <CollapsibleContent
+                isOpen={isOpen.includes(calendarDateString)}
+                style={{ marginLeft: 24, marginRight: 24 }}
+              >
+                <SoldItem data={group.data} token={token} status="DELIVERED" />
+              </CollapsibleContent>
+            </Col>
+          </ItemRow>
+        );
+      })}
     </>
   );
 };

@@ -1,94 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Typography from 'components/base/Typography';
-import OrderAccordionContent from 'components/module/OrderAccordionContent';
-import Pagination from 'components/module/Pagination';
-import moment from 'moment';
-import { Row, Col } from 'react-grid-system';
+import OrderItemView from 'components/module/OrderItem';
 import { useTheme } from 'utils/Theme';
 
-import Accordion from '../../../../components/base/Accordion';
-import Interactions from '../../../../components/base/Interactions';
-import { OrderItem, OrdersGeneratedProps } from '../Orders.props';
+import { OrdersGeneratedProps } from '../Orders.props';
 import {
-  AccordionContainer,
-  StyledInteraction,
-  LeftContainer,
-  Confirmed,
-  CollapsibleContent,
-} from '../Pending/Pending.style';
-
-const CompletedItems = (props: OrderItem) => {
-  const { confirmed, data, deliveredDate, id, price } = props;
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      <StyledInteraction
-        pressed={isOpen}
-        onClick={() => setIsOpen((v) => !v)}
-        type="accordion"
-        padding="16px 25px 16px 16px"
-        leftComponent={
-          <LeftContainer>
-            <Row>
-              <Typography
-                style={{ marginRight: '4px', marginLeft: '16px' }}
-                variant="label"
-                color="shade6"
-                weight="500"
-              >
-                Delivered On:
-              </Typography>
-              <Typography variant="label" color="shade8" weight="bold">
-                {moment(deliveredDate).format('ddd DD MMM')}
-              </Typography>
-            </Row>
-            <Typography variant="title5" weight="900">
-              ${price}
-            </Typography>
-          </LeftContainer>
-        }
-      ></StyledInteraction>
-      <CollapsibleContent isOpen={isOpen}>
-        <OrderAccordionContent {...data} />
-      </CollapsibleContent>
-    </>
-  );
-};
+  AccordionTitleContainer,
+  StyledAccordion,
+  OrderBadge,
+} from '../Orders.style';
 
 const Complete = (props: OrdersGeneratedProps) => {
-  const {
-    completedOrders,
-    completedOrdersCount,
-    filters,
-    updateFilters,
-  } = props;
+  const { completedOrders } = props;
   const theme = useTheme();
-  const completedPagesTotal = Math.ceil(Number(completedOrdersCount) / 5);
+
   return (
     <>
-      {completedOrders.map((item, index) => {
-        return (
-          <AccordionContainer key={item.id}>
-            <CompletedItems {...item} />
-          </AccordionContainer>
-        );
-      })}
-      <Row justify="center">
-        {completedPagesTotal > 1 && (
-          <Pagination
-            numPages={completedPagesTotal}
-            currentValue={Number(filters.completedOrdersFilter.page)}
-            onClickButton={(value) =>
-              updateFilters.updateCompletedOrdersFilter({
-                page: value.toFixed(0),
-              })
-            }
-            variant="number"
-          />
-        )}
-      </Row>
+      {Object.keys(completedOrders).map((key) => (
+        <StyledAccordion
+          key={key}
+          title={''}
+          padding="24px"
+          marginBottom="16px"
+          keepIcon
+          iconColor={theme.brand.primary}
+          leftComponent={
+            <AccordionTitleContainer>
+              <Typography color="shade7" className="title">
+                Date Delivered:
+              </Typography>
+              <Typography color="shade9">{key}</Typography>
+            </AccordionTitleContainer>
+          }
+          rightComponent={
+            <OrderBadge>
+              <Typography color="shade9" variant="overline">
+                {completedOrders[key].length}{' '}
+                {completedOrders[key].length > 1 ? 'Orders' : 'Order'}
+              </Typography>
+            </OrderBadge>
+          }
+        >
+          {completedOrders[key].map((d) => (
+            <OrderItemView {...d} token={props.token} key={d.id} />
+          ))}
+        </StyledAccordion>
+      ))}
     </>
   );
 };

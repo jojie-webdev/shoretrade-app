@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 
 import {
   ShoretradeLogo,
+  ShoretradeLogo2,
   Exit,
-  Menu,
   Cart,
   ArrowLeft,
+  PlaceholderProfile,
+  ChevronRight,
+  Close,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
-import { Container } from 'react-grid-system';
+import { Container, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
+import { autoScrollToTop } from 'utils/scrollToTop';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -35,6 +39,7 @@ import {
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
+  HeaderWrapper,
 } from './Dashboard.style';
 
 const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
@@ -57,17 +62,17 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
+  useOuterWrapper,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
 
-  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
   });
 
   return (
-    <HeaderContainer className="appbar">
+    <HeaderContainer className="appbar" useOuterWrapper={useOuterWrapper}>
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
@@ -132,18 +137,11 @@ const Header = ({
             </Typography>
           </div>
 
-          {!hideBrokenProfileImage &&
-            userData?.profileImage &&
-            theme.appType === 'seller' && (
-              <img
-                src={userData?.profileImage}
-                onError={() => {
-                  // do something
-                  setHideBrokenProfileImage(true);
-                }}
-                alt=""
-              />
-            )}
+          {userData?.profileImage ? (
+            <img src={userData?.profileImage} alt="Profile" />
+          ) : (
+            <PlaceholderProfile />
+          )}
         </Touchable>
       </div>
     </HeaderContainer>
@@ -171,13 +169,21 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
+    useOuterWrapper,
   } = props;
 
   const history = useHistory();
   const isSeller = theme.appType === 'seller';
-  const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'shade9';
+  const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
-  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade9;
+  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
+
+  const cbRef = useCallback(
+    (node: any) => {
+      if (node !== null) autoScrollToTop(history, node);
+    },
+    [history.location]
+  );
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -189,7 +195,18 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar openSidebar={openSidebar}>
         <div>
           <div className="logo-container">
-            <ShoretradeLogo />
+            <Visible xs sm>
+              <div
+                className="close-container"
+                onClick={() => setOpenSidebar(false)}
+              >
+                <Close fill={theme.brand.primary} height={20} width={20} />
+              </div>
+              <ShoretradeLogo fill={theme.grey.noshade} />
+            </Visible>
+            <Visible md lg xl xxl>
+              <ShoretradeLogo2 />
+            </Visible>
           </div>
           {routes.map((route) => (
             <NavLink
@@ -210,12 +227,15 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <CreditBalanceContainer
               onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
             >
-              <Typography color="shade7" variant="overline" weight="900">
+              <Typography color="shade6" variant="overline" weight="900">
                 Credit balance
               </Typography>
-              <Typography color="shade9" variant="title5" className="amount">
-                {credit ? toPrice(credit) : '$0.00'}
-              </Typography>
+              <div className="balance-arrow">
+                <Typography color="noshade" variant="title5" className="amount">
+                  {credit ? toPrice(credit) : '$0.00'}
+                </Typography>
+                <ChevronRight />
+              </div>
             </CreditBalanceContainer>
           )}
 
@@ -245,33 +265,59 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         background={background}
         screenBackground={screenBackground}
         color={color}
+        ref={cbRef}
       >
-        <Header
-          pageTitle={pageTitle}
-          userData={userData}
-          textColor={headerTextColor || textColor}
-          onClick={() => setOpenSidebar(!openSidebar)}
-          openSidebar={openSidebar}
-          onBack={onBack}
-          cartItems={cartItems}
-          onClickAccount={onClickAccount}
-        />
-        <div className="screen-wrapper">
-          <div className="screen">
-            <Container
-              className="container"
-              style={{
-                padding: 0,
-                marginLeft: 0,
-                marginRight: 0,
-                width: '100%',
-                maxWidth: '100%',
-              }}
-            >
-              {children}
-            </Container>
-          </div>
-        </div>
+        {useOuterWrapper ? (
+          <Container
+            className="container"
+            style={{ width: '100%', height: '100%' }}
+          >
+            <HeaderWrapper>
+              <Header
+                pageTitle={pageTitle}
+                userData={userData}
+                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+                onClick={() => setOpenSidebar(!openSidebar)}
+                openSidebar={openSidebar}
+                onBack={onBack}
+                cartItems={cartItems}
+                onClickAccount={onClickAccount}
+                useOuterWrapper
+              />
+            </HeaderWrapper>
+            {children}
+          </Container>
+        ) : (
+          <>
+            <Header
+              pageTitle={pageTitle}
+              userData={userData}
+              textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+              onClick={() => setOpenSidebar(!openSidebar)}
+              openSidebar={openSidebar}
+              onBack={onBack}
+              cartItems={cartItems}
+              onClickAccount={onClickAccount}
+            />
+
+            <div className="screen-wrapper">
+              <div className="screen">
+                <Container
+                  className="container"
+                  style={{
+                    padding: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    width: '100%',
+                    maxWidth: '100%',
+                  }}
+                >
+                  {children}
+                </Container>
+              </div>
+            </div>
+          </>
+        )}
       </Content>
     </DashboardContainer>
   );

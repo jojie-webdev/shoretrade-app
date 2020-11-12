@@ -16,6 +16,7 @@ import {
   AddressTextContainer,
   InteractionCol,
   SmallAlertContainer,
+  Notification,
 } from './ShippingAddresses.style';
 
 const AddressText = (
@@ -37,7 +38,13 @@ const AddressText = (
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
-  const { pending, addresses, onClickAddress, onClickAddAddress } = props;
+  const {
+    pending,
+    addresses,
+    onClickAddress,
+    onClickAddAddress,
+    notificationMessage,
+  } = props;
 
   const theme = useTheme();
 
@@ -48,16 +55,29 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
   return (
     <Wrapper>
       <InnerRouteHeader title="Shipping Addresses" />
-
+      {notificationMessage ? (
+        <Notification
+          content={notificationMessage}
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      ) : null}
       <SmallAlertContainer>
         <div className="icon-container">
-          <InfoFilled fill={theme.brand.alert} height={16} width={16} />
+          <InfoFilled fill={theme.brand.alert} height={14} width={14} />
         </div>
         <Typography color="alert" variant="caption">
           New and updated addresses require approval before they can be used.
           This process should take less than 24 hours.
         </Typography>
       </SmallAlertContainer>
+
+      <Row>
+        <Col>
+          <Button text="Add a new address" onClick={onClickAddAddress} />
+        </Col>
+      </Row>
 
       <Row className="address-row">
         {addresses.map((address) => {
@@ -100,12 +120,6 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
             </InteractionCol>
           );
         })}
-      </Row>
-
-      <Row>
-        <Col>
-          <Button text="Add a new address" onClick={onClickAddAddress} />
-        </Col>
       </Row>
     </Wrapper>
   );

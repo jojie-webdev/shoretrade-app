@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { addAddressActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { PlaceData } from 'types/PlaceData';
@@ -13,6 +14,7 @@ import AddAddressView from './AddAddress.view';
 const AddAddress = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
+  const history = useHistory();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
   const pending = useSelector(
@@ -41,6 +43,7 @@ const AddAddress = (): JSX.Element => {
         )
       );
       setIsSubmitted(true);
+      history.goBack();
     }
   };
 

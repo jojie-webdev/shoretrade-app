@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Typography from 'components/base/Typography';
 import * as array from 'd3-array';
 import * as d3Scale from 'd3-scale';
 import * as shape from 'd3-shape';
 import moment from 'moment';
+import numeral from 'numeral';
 import { useTheme } from 'utils/Theme';
 import useResize from 'utils/useResize';
 
@@ -108,7 +109,14 @@ const LineChartView = (props: any) => {
     <div style={style} ref={componentRef}>
       <div style={{ flex: 1 }}>
         {height > 0 && width > 0 && (
-          <svg style={{ width: '100%', height: height, maxWidth: width }}>
+          <svg
+            style={{
+              width: '100%',
+              height: height,
+              maxWidth: width,
+              overflow: 'visible',
+            }}
+          >
             {React.Children.map(children, (child) => {
               if (child && child.props.belowChart) {
                 return React.cloneElement(child, extraProps);
@@ -127,6 +135,57 @@ const LineChartView = (props: any) => {
       </div>
     </div>
   );
+};
+
+const Tooltip = (props: any) => {
+  const theme = useTheme();
+  const { data = [], x, y, svg } = props;
+  const [shown, setShown] = useState(-1);
+
+  return data.map((value: any, index: any) => (
+    <g key={index}>
+      {shown === index && (
+        <svg x={x(value.date) - 50} y={y(value.value) - 40}>
+          <rect
+            width="75px"
+            height="32px"
+            rx="4"
+            ry="4"
+            style={{
+              fill: theme.grey.shade8,
+              stroke: theme.grey.shade9,
+              strokeWidth: 1,
+            }}
+          />
+          <text
+            y={20}
+            x={36}
+            textAnchor="middle"
+            fill="white"
+            style={{ fontSize: 12 }}
+          >
+            {numeral(value.value).format('$0.0a')}
+          </text>
+        </svg>
+      )}
+      <rect
+        width="10px"
+        height="40px"
+        x={x(value.date) - 5}
+        y={y(value.value) - 30}
+        fill="transparent"
+        onMouseEnter={() => setShown(index)}
+        onMouseLeave={() => setShown(-1)}
+      />
+      <circle
+        cx={x(value.date)}
+        cy={y(value.value)}
+        {...svg}
+        onMouseEnter={() => setShown(index)}
+        onMouseLeave={() => setShown(-1)}
+      />
+    </g>
+  ));
 };
 
 const Grid = (props: any) => {
@@ -408,6 +467,8 @@ const XAxis = (props: any) => {
   );
 };
 
+// this component is a port of
+// https://github.com/JesperLekland/react-native-svg-charts
 const LineChart = (props: LineChartProps): JSX.Element | null => {
   const theme = useTheme();
 
@@ -435,12 +496,23 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
 
   const xTick = graphData.length >= 5 ? 5 : 3;
 
+  // check if horizontal
+  const isValuesTheSame = data.values.every((v, i, a) => {
+    return i === 0 || v === a[i - 1];
+  });
+
+  // either put in middle or add 25% buffer at top
+  const yMax = isValuesTheSame
+    ? data.values[0] * 2
+    : Math.max(...data.values) * 1.25;
+
   return (
     <Container>
       <Title variant="overline">{title}</Title>
       <YAxisContainer cHeight={cHeight}>
         <YAxis
           min={0}
+          max={yMax}
           style={{ paddingLeft: 10 }}
           data={graphData}
           yAccessor={({ item }: any) => item.value}
@@ -451,6 +523,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
         />
         <LineChartView
           yMin={0}
+          gridMax={yMax}
           style={{ flex: 1 }}
           data={graphData}
           xScale={d3Scale.scaleTime}
@@ -461,6 +534,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           contentInset={{ left: 5, top: 20 }}
           curve={shape.curveLinear}
         >
+          <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />
         </LineChartView>
       </YAxisContainer>

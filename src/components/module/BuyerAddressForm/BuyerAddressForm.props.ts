@@ -13,6 +13,9 @@ export interface BuyerAddressFormProps {
   setAddress: Dispatch<PlaceData>;
   setUnitNumber: Dispatch<string>;
   type: 'EDIT' | 'CREATE';
+  onDeleteAddress?: () => void;
+  isDelete?: boolean;
+  toggleisDelete?: () => void;
 }
 
 export type QueryParams = { companyId: string; addressId: string };

@@ -1,80 +1,49 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { currentAddressActions, getBuyerHomepageActions } from 'store/actions';
-import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import { updateAddressActions, cartActions } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
+import { PlaceData } from 'types/PlaceData';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
-import { HomeGeneratedProps, CreditState } from './Home.props';
+import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
+import {
+  addressToPlaceData,
+  placeDataToUpdateAddressMeta,
+} from './Home.transform';
 import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
-  const [search, setSearch] = useState('');
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const addresses = GetAddressOptions();
-
-  const selectedAddress =
-    useSelector((state: Store) => state.currentAddress.id) || '';
-
-  const selectAddress = (id: string) => {
-    dispatch(
-      currentAddressActions.update({
-        id,
-      })
-    );
-  };
-
-  const favourites = (
-    useSelector(
-      (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteListing
-    ) || []
-  ).filter((result) =>
-    search ? result.type.toLowerCase().includes(search.toLowerCase()) : true
+  // MARK:- Store
+  const buyerHomePageData = useSelector(
+    (state: Store) => state.getBuyerHomepage
   );
 
-  const categories = (
-    useSelector(
-      (state: Store) => state.getBuyerHomepage.data?.data.data.categories
-    ) || []
-  ).filter((category) =>
-    search ? category.name.toLowerCase().includes(search.toLowerCase()) : true
-  );
+  const loading =
+    useSelector((state: Store) => state.searchAndCountProductType.pending) ||
+    false;
 
-  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const onLoad = () => {
-    dispatch(getBuyerHomepageActions.request());
-  };
-
-  const resetSearchValue = () => {
-    setSearch('');
-  };
+  // MARK:- Variables
+  const {
+    categories,
+    favouriteListing,
+    favouriteSellers,
+    recentListing,
+    sellers,
+    bannerData,
+  } = (buyerHomePageData.data?.data.data || {}) as HomeData;
 
   const company = GetDefaultCompany();
-  const [loading, setLoading] = useState<boolean>(true);
+  const featured: string[] = bannerData?.web || [];
+  const loadingHomePage = buyerHomePageData.pending === null ? true : false;
+
+  // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
 
-  useEffect(() => {
-    if (company) {
-      setCurrentCompany(company);
-      setLoading(false);
-    }
-  });
-
-  const bannerData =
-    useSelector(
-      (state: Store) => state.getBuyerHomepage.data?.data.data.bannerData.app
-    ) || [];
-
-  const creditBalance = currentCompany?.credit || '0';
-
+  // MARK:- Methods
   const getCreditState = (): CreditState => {
     if (Number(currentCompany?.credit || 0) === 0) {
       return 'empty';
@@ -91,23 +60,30 @@ const Home = (): JSX.Element => {
     return 'normal';
   };
 
+  // MARK:- Effects
+  useEffect(() => {
+    if (company) {
+      setCurrentCompany(company);
+    }
+  }, [company]);
+
+  // MARK:- Bottom Variables
+  const creditBalance = currentCompany?.credit || '0';
   const creditState: CreditState = getCreditState();
 
-  const featured: string[] = bannerData;
-
   const generatedProps: HomeGeneratedProps = {
-    addresses,
-    selectedAddress,
-    selectAddress,
-    favourites,
-    categories,
-    search,
-    onChangeSearchValue,
-    resetSearchValue,
+    // Credit Data
     loading,
+    featured,
     creditState,
     creditBalance,
-    featured,
+    // Carousel Data
+    recentlyAdded: recentListing,
+    categories,
+    favourites: favouriteListing,
+    favouriteSellers,
+    sellers,
+    loadingHomePage,
   };
 
   return <HomeView {...generatedProps} />;

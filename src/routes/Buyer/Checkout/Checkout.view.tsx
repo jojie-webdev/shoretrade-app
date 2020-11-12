@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import Accordion from 'components/base/Accordion/Accordion.view';
+import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
@@ -23,6 +26,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
     setSelectedShippingId,
     removeItem,
   } = props;
+  const theme = useTheme();
 
   const orders = Object.keys(groupedOrders).reduce(
     (data: { id: string; listings: OrderItem[] }[], vendorId) => [
@@ -33,53 +37,53 @@ const Orders = (props: CheckoutGeneratedProps) => {
   );
 
   return orders.map((item, i) => (
-    <>
-      <Row>
-        <Col
-          style={{
-            marginTop: i !== 0 ? 32 : 0,
-          }}
-        >
-          <Typography
-            className="order-summary"
-            variant="overline"
-            color="shade6"
-          >
-            ORDER SUMMARY
-          </Typography>
+    <div className="accordion-container" key={`orders-${i}`}>
+      <Accordion title={item.listings[0].vendor} withBackground isOpen>
+        <div className="accordion-content-container">
+          <Row>
+            <Col
+              style={{
+                marginTop: i !== 0 ? 32 : 0,
+              }}
+            >
+              {item.listings.map((listing) => (
+                <CheckoutCard
+                  key={listing.cartId}
+                  onRemove={() => removeItem(listing.cartId)}
+                  {...listing}
+                />
+              ))}
+            </Col>
+          </Row>
 
-          {item.listings.map((listing) => (
-            <CheckoutCard
-              key={listing.cartId}
-              onRemove={() => removeItem(listing.cartId)}
-              {...listing}
-            />
-          ))}
-        </Col>
-      </Row>
+          <Row>
+            <Col>
+              <Typography
+                className="checkout-shipping"
+                variant="overline"
+                color="shade6"
+              >
+                Shipping
+              </Typography>
 
-      <Row>
-        <Col>
-          <Typography
-            className="checkout-shipping"
-            variant="overline"
-            color="shade6"
-          >
-            Shipping
-          </Typography>
-
-          <ShippingCard
-            selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
-            options={item.listings[0].shippingOptions}
-            onPress={(priceId) =>
-              setSelectedShippingId({
-                [item.listings[0].vendorId]: priceId,
-              })
-            }
-          />
-        </Col>
-      </Row>
-    </>
+              <ShippingCard
+                selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
+                options={item.listings[0].shippingOptions.sort((a, b) => {
+                  if (a.est < b.est) return -1;
+                  if (a.est > b.est) return 1;
+                  return 0;
+                })}
+                onPress={(priceId) =>
+                  setSelectedShippingId({
+                    [item.listings[0].vendorId]: priceId,
+                  })
+                }
+              />
+            </Col>
+          </Row>
+        </div>
+      </Accordion>
+    </div>
   ));
 };
 
@@ -94,7 +98,10 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     loadingShippingQuotes,
     selectedShippingId,
     processingOrder,
+    orderError,
   } = props;
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
@@ -105,8 +112,24 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        title="Final Order Confirmation?"
+        description="Just confirming you want to place this order?"
+        isOpen={showConfirmationModal}
+        onClickClose={() => {
+          setShowConfirmationModal(false);
+        }}
+        action={() => {
+          setShowConfirmationModal(false);
+          placeOrder();
+        }}
+        actionText="Proceed"
+        cancelText="Keep Shopping"
+      />
       {loadingShippingQuotes ? (
-        <Loading label="Loading Shipping Quotes" />
+        <div className="center">
+          <Loading label="Loading Shipping Quotes" color="shade6" />
+        </div>
       ) : (
         <>
           {isEmpty(groupedOrders) ? (
@@ -129,6 +152,17 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
       {!isEmpty(groupedOrders) && !loadingShippingQuotes && (
         <Footer>
+          {orderError && (
+            <div className="box-error-container">
+              <Alert
+                fullWidth
+                alignText="center"
+                variant="error"
+                content={orderError}
+              />
+            </div>
+          )}
+
           <Typography color="shade6">Total</Typography>
           <Typography variant="title5" color="shade8" weight="900">
             ${total}
@@ -145,7 +179,9 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             <Button
               text="Place Order"
               disabled={disablePlaceOrder}
-              onClick={placeOrder}
+              onClick={() => {
+                setShowConfirmationModal(true);
+              }}
               loading={processingOrder}
             />
           </div>

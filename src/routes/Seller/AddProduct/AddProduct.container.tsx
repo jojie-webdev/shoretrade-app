@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
 import pathOr from 'ramda/src/pathOr';
+import pick from 'ramda/src/pick';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -259,6 +260,15 @@ const AddProduct = (): JSX.Element => {
     onChangeCurrentPage(7);
   };
 
+  const marketEstimateData = useSelector(
+    (state: Store) => state.getMarketEstimate.data?.data
+  ) || { min: null, max: null };
+
+  const marketEstimate: {
+    min: number | null;
+    max: number | null;
+  } = pick(['min', 'max'], marketEstimateData);
+
   const onUpdateDetails = ({
     pricePerKilo,
     catchDate,
@@ -350,6 +360,7 @@ const AddProduct = (): JSX.Element => {
     isExisting,
     discardChanges,
     preview,
+    marketEstimate,
   };
 
   return <AddProductView {...generatedProps} />;

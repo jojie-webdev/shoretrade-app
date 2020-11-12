@@ -30,3 +30,13 @@ export const FormAddCard = styled(Form)`
     margin-bottom: 32px;
   }
 `;
+
+export const Notification = styled.div`
+  display: flex;
+  border-radius: 4px;
+  border: transparent;
+  margin: 12px auto;
+  & > div {
+    flex: 1;
+  }
+`;

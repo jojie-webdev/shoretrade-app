@@ -12,11 +12,26 @@ export const getGraphData = (data: any, from: string) => {
     return `0${n + 1}`;
   };
 
+  //first
   const month = moment(from).month();
   const year = moment(from).year();
   const lastDayOfMonth = moment(from).endOf('month').date();
   const firstDay = `${year}-${getMonth(month)}-01`;
-  const lastDay = `${year}-${getMonth(month)}-${lastDayOfMonth}`;
+
+  //last
+  let lastDay = `${year}-${getMonth(month)}-${lastDayOfMonth}`;
+
+  if (dates.length > 1) {
+    const lastDateOnData = dates[dates.length - 1];
+
+    if (moment(lastDateOnData).isAfter(moment(lastDay))) {
+      const monthLast = moment(lastDateOnData).month();
+      const yearLast = moment(lastDateOnData).year();
+      const lastDayOfMonthLast = moment(lastDateOnData).endOf('month').date();
+
+      lastDay = `${yearLast}-${getMonth(monthLast)}-${lastDayOfMonthLast}`;
+    }
+  }
 
   if (!isEmpty(dates) && !isEmpty(values)) {
     const firstDayFound = dates.find((d: string) => d.includes(firstDay));

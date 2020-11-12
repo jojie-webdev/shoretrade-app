@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { ChevronRight, Scale } from 'components/base/SVG';
+import { ChevronRight, Scale, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { SELLER_ACCOUNT_ROUTES, SELLER_SOLD_ROUTES } from 'consts';
+import MessageModal from 'components/module/MessageModal';
+import { SELLER_ROUTES, SELLER_SOLD_ROUTES } from 'consts';
+import qs from 'qs';
 import { Row, Col } from 'react-grid-system';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Theme } from 'types/Theme';
+import { useHistory } from 'react-router-dom';
 import theme, { useTheme } from 'utils/Theme';
 
 import { ConfirmListProps, PendingItem } from './ConfirmList.props';
@@ -25,6 +25,8 @@ import {
   TagText,
   Size,
   Details,
+  StyledTouchable,
+  CustomBadge,
 } from './ConfirmList.style';
 
 export const Item = (props: PendingItem) => (
@@ -41,14 +43,14 @@ export const Item = (props: PendingItem) => (
   >
     <div className="top-content">
       <div className="left">
-        <ValuesRow>
+        {/* <ValuesRow>
           <Value>
             <Typography variant="overline" color="shade6">
               Shipping:
             </Typography>
             <OrderNumber>{props.shipping}</OrderNumber>
           </Value>
-        </ValuesRow>
+        </ValuesRow> */}
         <ValuesRow>
           <Value>
             <Typography variant="overline" color="shade6">
@@ -87,9 +89,11 @@ export const Item = (props: PendingItem) => (
           </Details>
         </div>
       </div>
-      <div className="right">
-        <ChevronRight height={16} width={16} />
-      </div>
+      {!props.weightConfirmed && (
+        <div className="right">
+          <ChevronRight height={16} width={16} />
+        </div>
+      )}
     </div>
 
     <hr className="divider" />
@@ -97,12 +101,19 @@ export const Item = (props: PendingItem) => (
     <div className="bottom">
       <div className="text-container">
         {props.weightConfirmed ? (
-          <>
-            <Scale height={16} width={16} fill={theme.brand.secondary} />
-            <Typography color="secondary" className="text" variant="caption">
+          <CustomBadge>
+            <Typography
+              color="shade9"
+              className="text"
+              variant="caption"
+              weight="bold"
+              style={{ lineHeight: '0px' }}
+            >
               Weight Confirmed
             </Typography>
-          </>
+
+            <Lock height={16} width={16} fill={theme.grey.shade9} />
+          </CustomBadge>
         ) : (
           <>
             <Scale height={16} width={16} />
@@ -121,15 +132,57 @@ export const Item = (props: PendingItem) => (
 
 const ConfirmListView = (props: ConfirmListProps) => {
   const theme = useTheme();
-  const { title, items, orderId, placeOrder, isPending, buyer } = props;
+  const {
+    title,
+    items,
+    orderId,
+    placeOrder,
+    isPending,
+    buyer,
+    sendMessage,
+    isSendingMessage,
+  } = props;
   const history = useHistory();
 
+  const [showMessageModal, setShowMessageModal] = useState(false);
   const allowPartialShipment = items.some((i) => i.weightConfirmed);
   const allowFullShipment = items.every((i) => i.weightConfirmed);
 
   return (
     <Wrapper>
-      <InnerRouteHeader title={title} subtitle={buyer} />
+      <MessageModal
+        isOpen={isSendingMessage || showMessageModal}
+        recipient={buyer}
+        onSend={(message) => {
+          sendMessage(message);
+          setShowMessageModal(false);
+        }}
+        onClickClose={() => {
+          setShowMessageModal(false);
+        }}
+        loading={isSendingMessage}
+      />
+      <InnerRouteHeader
+        title={title}
+        rightContent={
+          <StyledTouchable onPress={() => setShowMessageModal(true)}>
+            <Typography variant="body" color="noshade">
+              {buyer}
+            </Typography>
+            <Typography variant="caption" color="success">
+              Message Buyer
+            </Typography>
+          </StyledTouchable>
+        }
+        onClickBack={() =>
+          history.push(
+            `${SELLER_ROUTES.SOLD}${qs.stringify(
+              { tab: 'To Ship' },
+              { addQueryPrefix: true }
+            )}`
+          )
+        }
+      />
 
       <Row className="items-row">
         {items.map((item) => (
@@ -153,7 +206,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
         <Col>
           {allowPartialShipment && !allowFullShipment && (
             <Button
-              onClick={() => placeOrder({ isPartial: true })}
+              onClick={() => placeOrder({ isPartial: !allowFullShipment })}
               text="Ship Partial"
               loading={isPending}
             />
@@ -161,7 +214,7 @@ const ConfirmListView = (props: ConfirmListProps) => {
 
           {allowPartialShipment && allowFullShipment && (
             <Button
-              onClick={() => placeOrder({ isPartial: false })}
+              onClick={() => placeOrder({ isPartial: !allowFullShipment })}
               text="Ship Order"
               loading={isPending}
             />

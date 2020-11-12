@@ -32,6 +32,7 @@ export const Container = styled.div`
 
     :hover {
       border-radius: 100px;
+      color: ${(props) => props.theme.brand.primary};
     }
   }
 
@@ -42,6 +43,11 @@ export const Container = styled.div`
   .CalendarDay__selected {
     background: ${(props) => props.theme.brand.primary};
     border-radius: 100px;
+  }
+  .CalendarDay__today {
+    color: ${(props) => props.theme.brand.primary};
+    border-radius: 100px;
+    background-color: #e4e7e7;
   }
 `;
 

@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import { Expand, Location, StarFilled, Star } from 'components/base/SVG';
+import {
+  Expand,
+  Location,
+  StarFilled,
+  Star,
+  PlaceholderProfile,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import ProductSellerRating from 'components/module/ProductSellerRating';
 import { API } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
@@ -23,6 +30,7 @@ import {
   OrderBoxCard,
   ActionsContainer,
   ActionContainer,
+  NoProfilePic,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
@@ -54,11 +62,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   }, [carousel.items]);
 
   const addSeperatorSpacing = useMediaQuery({
-    query: '(min-width: 1270px)',
-  });
-
-  const hideCarouselArrowArea = useMediaQuery({
-    query: `(max-width: 991px)`,
+    query: '(min-width: 992px)',
   });
 
   return (
@@ -70,10 +74,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               <Carousel
                 id="product-carousel"
                 images={images}
-                height={'200px'}
-                arrowWidth={50}
-                hideArrowArea={hideCarouselArrowArea}
                 loop
+                arrowInside
+                aspectRatio="9:4"
               />
             </div>
             <div className="details-container">
@@ -105,7 +108,13 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               </div>
               <div className="separator" />
               <div className="seller-container">
-                <SellerPreview src={productDetails.vendor.uri} />
+                {productDetails.vendor.uri ? (
+                  <SellerPreview src={productDetails.vendor.uri} />
+                ) : (
+                  <NoProfilePic>
+                    <PlaceholderProfile width={90} height={90} />
+                  </NoProfilePic>
+                )}
                 <Typography color="shade9" weight="bold">
                   {productDetails.vendor.name}
                 </Typography>
@@ -128,7 +137,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           md={12}
           lg={7}
           xl={7}
-          style={{ paddingLeft: addSeperatorSpacing ? 100 : 0 }}
+          style={{ paddingLeft: addSeperatorSpacing ? 32 : 0 }}
         >
           <SalesCard>
             <Typography variant="overline" color="shade9">
@@ -138,7 +147,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               {sales.sales}
             </Typography>
             <Typography color="shade6">
-              {`${sales.soldWeight} / ${sales.totalWeight} ${sales.unit}`}
+              {`${orderDetails.remaining} / ${sales.totalWeight}${sales.unit}`}
             </Typography>
           </SalesCard>
           <OrderBoxCard>
@@ -151,7 +160,8 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Min. Order
                 </Typography>
                 <Typography color="shade9" weight="bold">
-                  {orderDetails.minOrder} {orderDetails.unit}
+                  {orderDetails.minOrder}
+                  {orderDetails.unit}
                 </Typography>
               </div>
               <div className="order-details-item">
@@ -159,7 +169,8 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Remaining
                 </Typography>
                 <Typography color="shade9" weight="bold">
-                  {orderDetails.remaining} {orderDetails.unit}
+                  {orderDetails.remaining}
+                  {orderDetails.unit}
                 </Typography>
               </div>
             </div>
@@ -185,13 +196,15 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               boxDetails.boxes?.map((b) => (
                 <div key={b.id} className="box-details-row">
                   <Typography color="shade9" weight="bold">
-                    {b.weight} {boxDetails.unit}
+                    {b.weight}
+                    {boxDetails.unit}
                   </Typography>
                   <Typography color="shade9" weight="bold">
-                    x{b.quantity}
+                    x {b.quantity}
                   </Typography>
                   <Typography color="shade9" weight="bold">
-                    {b.quantity * b.weight} {boxDetails.unit}
+                    {b.quantity * b.weight}
+                    {boxDetails.unit}
                   </Typography>
                   <Typography color="shade9" weight="bold">
                     {b.count}

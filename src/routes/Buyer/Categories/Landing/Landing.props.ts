@@ -9,12 +9,5 @@ export type Results = {
 
 export interface CategoriesLandingGeneratedProps {
   categories: Results[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
   currentPath: string;
-  resetSearchValue: () => void;
-  onLoad: () => void;
-  addresses: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
 }

@@ -1,5 +1,6 @@
-import { ChangeEvent } from 'react';
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
+import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
 export type CategoryResults = {
@@ -9,19 +10,50 @@ export type CategoryResults = {
   thumbnail: string;
 };
 
+export type SellerResults = {
+  companyImage: string;
+  companyName: string;
+  id: string;
+};
+
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
-  categories: CategoryResults[];
+  // Credit Data
+  loading: boolean;
   creditState: CreditState;
   creditBalance: string;
-  favourites: GetBuyerHomepageResponseListingItem[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-  resetSearchValue: () => void;
-  addresses: { label: string; value: string }[];
-  selectedAddress: string;
-  selectAddress: (id: string) => void;
-  loading: boolean;
+  // Carousel Data
   featured: string[];
+  recentlyAdded: GetBuyerHomepageResponseListingItem[];
+  categories: CategoryResults[];
+  favourites: GetBuyerHomepageResponseListingItem[];
+  favouriteSellers: SellerResults[];
+  sellers: SellerResults[];
+  loadingHomePage: boolean;
+}
+
+export interface HomeData {
+  bannerData: {
+    app: string[];
+    web: string[];
+  };
+  categories: {
+    id: string;
+    name: string;
+    sortIndex: number;
+    thumbnail: string;
+  }[];
+  favouriteListing: GetBuyerHomepageResponseListingItem[];
+  favouriteSellers: {
+    companyImage: string;
+    companyName: string;
+    id: string;
+  }[];
+  recentListing: GetBuyerHomepageResponseListingItem[];
+  sellers: {
+    companyImage: string;
+    companyName: string;
+    id: string;
+  }[];
 }

@@ -4,6 +4,15 @@ export interface SellingGeneratedProps {
   listings: GetAllListingsResponseItem[];
   pending: boolean;
   goToListingDetails: (id: string) => void;
+  onClickRemoveListing: (listingId: string, companyId: string) => void;
+  showDeletedSuccess: boolean;
+  onClickEdit: (listingId: string) => void;
+  clearListingData: () => void;
+  showModal: boolean;
+  onRemove: () => void;
+  search: string;
+  onChangeSearch: (value: string) => void;
+  resetSearch: () => void;
 }
 
 export type ItemProp = {
@@ -15,7 +24,11 @@ export type ItemProp = {
   listedOn?: Date;
   expiresIn?: Date;
   remaining?: string;
+  sales?: string;
   data: GetAllListingsResponseItem;
   unit?: string;
-  onClick?: () => void;
+  originalWeight?: string;
+  onClick: () => void;
+  onClickEdit: () => void;
+  onRemove: () => void;
 };

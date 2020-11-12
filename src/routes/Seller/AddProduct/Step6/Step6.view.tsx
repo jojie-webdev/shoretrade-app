@@ -21,6 +21,7 @@ import {
   Container,
   BoxDetailsContainer,
   BoxSummaryContainer,
+  FooterPadding,
 } from './Step6.style';
 
 const BoxDetails = ({
@@ -111,7 +112,7 @@ const BoxSummary = ({
         >
           Total
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.total.toFixed(2)} {unit}
         </Typography>
       </div>
@@ -124,7 +125,7 @@ const BoxSummary = ({
         >
           Quantities
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.quantities}
         </Typography>
       </div>
@@ -137,7 +138,7 @@ const BoxSummary = ({
         >
           Average
         </Typography>
-        <Typography color="noshade" variant="title5">
+        <Typography color="noshade" variant="title5" className="value">
           {summary.average.toFixed(2)}
         </Typography>
       </div>
@@ -255,7 +256,13 @@ function Step6({
         </Col>
       </Row>
 
-      <Row className="minimum-row" align="center">
+      <Row
+        className="minimum-row"
+        align="center"
+        style={{
+          marginBottom: showError ? 200 : 40,
+        }}
+      >
         <Col md={6}>
           <TextField
             label="Minimum Order"
@@ -283,33 +290,37 @@ function Step6({
         </Col>
       </Row>
 
-      {showError && (
-        <div className="box-error-container">
-          <Alert
-            fullWidth
-            alignText="center"
-            variant="error"
-            content="Please include at least 1 box and set minimum order"
-          />
-        </div>
-      )}
+      <FooterPadding />
 
-      <BoxSummary
-        unit={measurementUnit}
-        summary={summary}
-        onClick={() => {
-          if (boxes.length > 0 && minimumOrder) {
-            onAddBoxes({
-              isAquafuture,
-              sellInMultiples,
-              boxes,
-              minimumOrder,
-            });
-          } else {
-            setShowError(true);
-          }
-        }}
-      />
+      <div className="absolute-container">
+        {showError && (
+          <div className="box-error-container">
+            <Alert
+              fullWidth
+              alignText="center"
+              variant="error"
+              content="Please include at least 1 box and set minimum order"
+            />
+          </div>
+        )}
+
+        <BoxSummary
+          unit={measurementUnit}
+          summary={summary}
+          onClick={() => {
+            if (boxes.length > 0 && minimumOrder) {
+              onAddBoxes({
+                isAquafuture,
+                sellInMultiples,
+                boxes,
+                minimumOrder,
+              });
+            } else {
+              setShowError(true);
+            }
+          }}
+        />
+      </div>
 
       {showModal && (
         <AddBoxModal

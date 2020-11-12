@@ -12,7 +12,7 @@ const items = [
     uri:
       'https://www.cameraegg.org/wp-content/uploads/2013/02/Leica-M-Sample-Image-1024x684.jpg',
     price: '$1,440.00',
-    weight: '12 Kg',
+    weight: '12 kg',
     name: 'King Salmon Manuka Cold Smoked Sliced',
     tags: [
       { label: 'Fresh' },

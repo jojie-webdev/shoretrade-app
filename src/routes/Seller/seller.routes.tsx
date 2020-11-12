@@ -9,7 +9,7 @@ import {
   CheckBorder,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import {
   Route,
   Switch,
@@ -107,7 +107,6 @@ const SellerRoutes = (): JSX.Element => {
         background: theme.grey.shade1,
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
-        shouldUseFullWidth: true,
         shouldIncludePadding: false,
         onBack: history.goBack,
         pageTitle: 'Selling Details',
@@ -120,7 +119,6 @@ const SellerRoutes = (): JSX.Element => {
         background: theme.grey.shade1,
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
-        shouldUseFullWidth: true,
         shouldIncludePadding: false,
         onBack: history.goBack,
         pageTitle: 'Product Preview',

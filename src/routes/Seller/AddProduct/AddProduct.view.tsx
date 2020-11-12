@@ -46,6 +46,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     isExisting,
     discardChanges,
     preview,
+    marketEstimate,
   } = props;
 
   const currentStep = () => {
@@ -117,6 +118,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             onUpdateDetails={onUpdateDetails}
+            marketEstimate={marketEstimate}
           />
         );
       case 8:

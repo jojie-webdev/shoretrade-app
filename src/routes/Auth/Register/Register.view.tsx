@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import AddImage from 'components/module/AddImage';
 import DialogModal from 'components/module/DialogModal';
+import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
@@ -52,6 +53,7 @@ import {
   MobileField,
   PaymentMethodDetails,
   PaymentMethodOverline,
+  Spacer,
 } from './Register.style';
 import {
   validateUserDetails,
@@ -182,6 +184,7 @@ const StepForm = ({
                   />
                 </Fragment>
               ))}
+
               {step === 1 && (
                 <MobileField
                   name="mobile"
@@ -194,16 +197,20 @@ const StepForm = ({
               )}
               {step === 2 && (
                 <>
-                  <LocationField
-                    value={registrationDetails.address?.address || ''}
-                    onSelect={(address) =>
-                      updateRegistrationDetails({
-                        address,
-                      })
-                    }
-                    label="Address you will be shipping from"
-                    error={otherErrors.address}
-                  />
+                  <LocationField>
+                    <LocationSearch
+                      onSelect={(address) =>
+                        updateRegistrationDetails({
+                          address,
+                        })
+                      }
+                      textFieldProps={{
+                        value: registrationDetails.address?.address || '',
+                        label: 'Address you will be shipping from',
+                        error: otherErrors.address,
+                      }}
+                    />
+                  </LocationField>
                   <ShippingInfo
                     label={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
@@ -343,6 +350,7 @@ const StepForm = ({
                   </div>
                 </>
               )}
+              <Spacer />
             </Content>
           </Container>
         </FormikContainer>

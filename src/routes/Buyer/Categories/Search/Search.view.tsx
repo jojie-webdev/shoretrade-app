@@ -6,6 +6,7 @@ import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesByCategoryState';
@@ -18,25 +19,13 @@ import {
   LoadingContainer,
   Image,
   DetailsContainer,
-  FilterButton,
   ResultContainer,
 } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
-  const {
-    results,
-    searchValue,
-    onChangeSearchValue,
-    resetSearchValue,
-    onLoad,
-    categoryId,
-    addresses,
-    selectedAddress,
-    selectAddress,
-  } = props;
+  const { results, onLoad, categoryId } = props;
 
   useEffect(() => {
-    selectAddress(categoryId);
     onLoad(categoryId);
   }, []);
 
@@ -46,9 +35,15 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
       <DetailsContainer>
         <Typography className="title">{result.name}</Typography>
         <ResultContainer>
-          <Typography variant="caption" weight="bold">
-            {toPrice(result.price.to)}
-          </Typography>
+          {result.price.from != result.price.to ? (
+            <Typography variant="caption" weight="bold">
+              {toPrice(result.price.from)} - {toPrice(result.price.to)}
+            </Typography>
+          ) : (
+            <Typography variant="caption" weight="bold">
+              {toPrice(result.price.from)}
+            </Typography>
+          )}
           <Typography variant="caption" color="shade6" className="per">
             per
           </Typography>
@@ -66,23 +61,11 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     </>
   );
 
-  // if (results.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
   return (
     <SearchContainer>
       <Row className="search-row">
         <Col xs={12}>
-          <Search
-            value={searchValue}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
-            placeholder="Search for a Whole Fish"
-          />
+          <SearchAddressView />
         </Col>
       </Row>
       {results.length <= 0 ? (
@@ -106,26 +89,25 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                     {results.length}
                   </Typography>
                 </Row>
-                {/* <Col xs={2}>
-                  <FilterButton>
-                    Filters <Filter></Filter>
-                  </FilterButton>
-                </Col> */}
               </ResultContainer>
 
               <Row className="items-row">
                 <Col xs={12}>
                   {results.map((result) => (
                     <Link
-                      to={`/buyer/categories/products/${result.id}`}
+                      to={{
+                        pathname: `/buyer/categories/products/${result.id}`,
+                        state: {
+                          title: result.name,
+                        },
+                      }}
                       className="market-item"
                       key={result.id}
                     >
                       <Interactions
+                        // eslint-disable-next-line react/no-children-prop
                         children={children(result)}
                         isHover
-                        // value={r.name}
-                        onClick={() => {}}
                       />
                     </Link>
                   ))}

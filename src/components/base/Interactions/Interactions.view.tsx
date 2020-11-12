@@ -3,6 +3,7 @@ import React from 'react';
 import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
 import { ChevronRight, DropdownArrow, Pen } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 
 import { InteractionsProps } from './Interactions.props';
@@ -27,9 +28,17 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     iconAlignment = 'center',
     iconColor,
     children,
+    resultCount,
+    customFontSize,
+    fullWidth,
+    keepIcon,
   } = props;
 
+  const RightComponent = rightComponent;
+
   const getIcon = () => {
+    if (type === 'none') return <></>;
+
     if (type === 'accordion') {
       const Dropdown = () => (
         <DropdownArrow fill={iconColor || theme.grey.shade8} />
@@ -56,7 +65,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
       return pressed ? <Checkbox checked /> : <Checkbox />;
     }
 
-    return <ChevronRight width={16} height={24} />;
+    return <ChevronRight width={8} height={12} />;
   };
 
   return (
@@ -67,7 +76,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </Label>
       ) : null}
 
-      <div className="left-content">
+      <div className="left-content" style={fullWidth ? { flex: 1 } : {}}>
         {leftComponent ? (
           leftComponent
         ) : (
@@ -76,15 +85,26 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         {children}
       </div>
 
-      {rightComponent ? (
+      {rightComponent && !keepIcon ? (
         rightComponent
       ) : (
-        <IconContainer
-          className="interactions-right"
-          iconAlignment={iconAlignment}
-        >
-          {getIcon()}
-        </IconContainer>
+        <div className="right-content">
+          {keepIcon && rightComponent}
+          <IconContainer
+            className="interactions-right"
+            iconAlignment={iconAlignment}
+          >
+            <Typography
+              variant="overline"
+              weight="bold"
+              color="shade6"
+              style={{ marginRight: '8px', fontSize: customFontSize }}
+            >
+              {resultCount}
+            </Typography>
+            {getIcon()}
+          </IconContainer>
+        </div>
       )}
     </Container>
   );

@@ -6,11 +6,7 @@ import { AsyncAction } from 'types/Action';
 import { ChargeCardMeta, ChargeCardPayload } from 'types/store/ChargeCardState';
 import { Store } from 'types/store/Store';
 
-import {
-  chargeCardActions,
-  getPaymentMethodsActions,
-  getUserActions,
-} from '../actions';
+import { chargeCardActions, getUserActions } from '../actions';
 
 function* chargeCardRequest(
   action: AsyncAction<ChargeCardMeta, ChargeCardPayload>,

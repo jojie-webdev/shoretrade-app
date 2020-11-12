@@ -29,10 +29,12 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
+import getMarketEstimate from './getMarketEstimate';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
+import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import login from './login';
 import order from './order';
@@ -42,9 +44,10 @@ import resendVerification from './resendVerification';
 import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
-import udpateDefaultCard from './updateDefaultCard';
+import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
@@ -52,57 +55,59 @@ import updateUser from './updateUser';
 import verify from './verify';
 
 const sagas = [
-  login,
-  verify,
-  resendVerification,
-  forgotPassword,
-  getUser,
-  getAllListings,
-  register,
-  getUser,
-  updateUser,
-  getAddresses,
-  updateAddress,
-  getSellerOrders,
-  getCoopUsers,
-  router,
-  searchProductType,
-  editableListing,
-  getListingFormData,
-  getCustomFormData,
-  getBankDetails,
-  updateBankDetails,
-  changePassword,
-  getBuyerOrders,
-  getLinkedAccounts,
-  addLinkedAccount,
   addAddress,
-  deleteLinkedAccount,
-  updateFavoriteSeller,
-  getSellerById,
+  addCardToken,
+  addLinkedAccount,
+  changePassword,
+  chargeCard,
+  confirmWeight,
   createCustomListing,
   createListing,
-  updateListing,
-  getBuyerHomepage,
   currentAddress,
-  getListingTypesByCategory,
+  deleteCard,
+  deleteLinkedAccount,
+  editSelectedListing,
+  editableListing,
+  endListing,
+  forgotPassword,
+  getAddresses,
+  getAllListings,
+  getBankDetails,
+  getBuyerHomepage,
+  getBuyerOrders,
   getBuyerSearchFilterData,
-  getListingsByType,
+  getCoopUsers,
+  getCustomFormData,
+  getLinkedAccounts,
   getListing,
   getListingBoxes,
-  updateFavouriteProduct,
-  getShippingQuote,
-  order,
-  searchAndCountProductType,
-  confirmWeight,
-  placeOrder,
+  getListingFormData,
+  getListingTypesByCategory,
+  getListingsByType,
+  getMarketEstimate,
   getPaymentMethods,
-  chargeCard,
-  addCardToken,
-  udpateDefaultCard,
-  deleteCard,
-  endListing,
-  editSelectedListing,
+  getSellerById,
+  getSellerOrders,
+  getShippingQuote,
+  getTransactionHistory,
+  getUser,
+  login,
+  order,
+  placeOrder,
+  register,
+  resendVerification,
+  router,
+  searchAndCountProductType,
+  searchProductType,
+  sendMessage,
+  updateAddress,
+  updateBankDetails,
+  updateDefaultCard,
+  updateFavoriteSeller,
+  updateFavouriteProduct,
+  updateListing,
+  updateUser,
+  verify,
 ];
 
 export default function* root() {

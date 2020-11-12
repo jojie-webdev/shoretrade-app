@@ -1,13 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-
-import Touchable from 'components/base/Touchable';
-// import SwiperCore, { Autoplay } from 'swiper';
-// import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { SwiperContainerProps } from './SwiperContainer.props';
 import { Parent, Container } from './SwiperContainer.style';
-
-// SwiperCore.use([Autoplay]);
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -28,14 +22,18 @@ const debounce = (fn: () => void, ms: number) => {
  *
  */
 const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
-  const { children, height } = props;
+  const { children, height, aspectRatio = '16:9', addMargin, onResize } = props;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
   const [containerWidth, setContainerWidth] = useState<number | null>(null);
 
   // calculate a definite width so that it won't overflow
   useEffect(() => {
-    if (containerRef.current) {
+    if (
+      containerRef.current &&
+      containerWidth !== containerRef.current.offsetWidth
+    ) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
   }, [containerRef?.current?.offsetWidth, windowWidth]);
@@ -43,7 +41,6 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
   // helps to trigger recalculation of width
   useEffect(() => {
     const handleResize = () => {
-      setContainerWidth(null);
       setWindowWidth(window.innerWidth);
     };
 
@@ -56,8 +53,26 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     };
   });
 
+  useEffect(() => {
+    // prevent onResize to fire on initialization
+    if (containerWidth !== null) {
+      if (!isInitialized) {
+        setIsInitialized(true);
+      } else {
+        if (onResize) {
+          onResize();
+        }
+      }
+    }
+  }, [containerWidth]);
+
   return (
-    <Parent ref={containerRef} height={height}>
+    <Parent
+      ref={containerRef}
+      height={height}
+      aspectRatio={aspectRatio}
+      addMargin={addMargin}
+    >
       {containerWidth && (
         <Container style={{ width: containerWidth }}>{children}</Container>
       )}

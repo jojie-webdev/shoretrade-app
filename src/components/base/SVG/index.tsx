@@ -1,4 +1,11 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Message } from './Message';
+export { default as CheckList } from './CheckList';
+export { default as DownloadFile } from './DownloadFile';
+export { default as TrashCan } from './TrashCan';
+export { default as Amex } from './Amex';
+export { default as PlaceholderProfile } from './PlaceholderProfile';
+export { default as ShoretradeLogo2 } from './ShoretradeLogo2';
 export { default as MarketSectorWholesaler } from './MarketSectorWholesaler';
 export { default as MarketSectorWetShop } from './MarketSectorWetShop';
 export { default as MarketSectorRetailer } from './MarketSectorRetailer';

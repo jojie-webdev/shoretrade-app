@@ -14,7 +14,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
   return (
     <Container>
       <HeaderRow align="center" justify="between">
-        <InnerRouteHeader title="Cash flow" fullRow={false} />
+        <InnerRouteHeader title={props.innerRouteTitle} fullRow={false} />
         <Typography variant="overline" color="shade6">
           {props.name}
         </Typography>
@@ -31,7 +31,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
               title="Paid"
               data={props.data}
               yAxisLabelFormat={(v) =>
-                `${v === 0 ? '' : `$${numeral(v).format('0a')}`}`
+                `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
               }
               cHeight={263}
             />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import SellerAssistantForm from 'components/module/SellerAssistantForm';
 import {
@@ -6,6 +6,7 @@ import {
   AssistantForm,
 } from 'components/module/SellerAssistantForm/SellerAssistantForm.props';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { addLinkedAccountActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
@@ -15,6 +16,7 @@ import { isValid } from './CreateAssistant.validation';
 
 const CreateAssistant = (): JSX.Element => {
   // MARK:- Store / Hooks
+  const history = useHistory();
   const dispatch = useDispatch();
   const [companyId] = useCompany();
   const addLinkedAccount = useSelector(
@@ -52,6 +54,14 @@ const CreateAssistant = (): JSX.Element => {
     validate: isValid,
     onSubmit: onClickCreate,
   };
+
+  // MARK:- Effects
+
+  useEffect(() => {
+    if (submitted && addLinkedAccount.data) {
+      history.goBack();
+    }
+  }, [addLinkedAccount]);
 
   // MARK:- Render
   const generatedProps: CreateAssistantGeneratedProps = {

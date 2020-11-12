@@ -3,9 +3,10 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { DollarSign, Clock } from 'components/base/SVG';
+import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
-import DropdownLocation from 'components/module/DropdownLocation';
+import LocationSearch from 'components/module/LocationSearch';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
@@ -14,14 +15,21 @@ import { PlaceData } from 'types/PlaceData';
 import { originToPlaceData } from 'utils/Address/originToPlaceData';
 import { placeDataToOrigin } from 'utils/Address/placeDataToOrigin';
 import { createUpdateReducer } from 'utils/Hooks';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
 import { Step7Props } from './Step7.props';
-import { Container } from './Step7.style';
+import { Container, PriceAlertInfo } from './Step7.style';
 import { combineDateTime } from './Step7.transform';
 import { isValid, isDateRangeValid } from './Step7.validation';
 
-function Step7({ editableListing, onUpdateDetails }: Step7Props) {
+function Step7({
+  editableListing,
+  onUpdateDetails,
+  marketEstimate,
+  listingFormData,
+}: Step7Props) {
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
     {}
@@ -60,7 +68,9 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
     (address) => ({
-      label: `${address.streetName}, ${address.suburb}, ${address.state}, ${address.countryCode}, ${address.postcode}`,
+      label: `${address.streetNumber || ''} ${address.streetName}, ${
+        address.suburb
+      }, ${address.state}, ${address.countryCode}, ${address.postcode}`,
       value: address.id,
     })
   );
@@ -172,8 +182,24 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
     }
   };
 
+  const priceAlertMessage =
+    marketEstimate.min !== null && marketEstimate.max !== null
+      ? `${toPrice(marketEstimate.min)} - ${toPrice(
+          marketEstimate.max
+        )} per ${formatMeasurementUnit(
+          listingFormData?.measurementUnit
+        )} in the past 14 days`
+      : 'No Data Available';
+
   return (
     <Container>
+      <Row>
+        <Col>
+          <PriceAlertInfo
+            label={`Like products sold for: ${priceAlertMessage}`}
+          />
+        </Col>
+      </Row>
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
@@ -204,12 +230,29 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
           />
         </Col>
         <Col md={6} className="textfield-col">
-          <DropdownLocation
-            value={origin?.address || ''}
-            onSelect={setOrigin}
-            label="Catchment Origin"
-            error={pathOr('', ['origin', '0'], errors)}
-            locationSearchProps={{ autocompleteType: '(cities)' }}
+          <LocationSearch
+            onSelect={(location) => {
+              if (location) {
+                setOrigin(location);
+              }
+            }}
+            autocompleteType={'(cities)'}
+            textFieldProps={{
+              value: origin?.address || '',
+              label: 'Catchment Origin',
+              error: pathOr('', ['origin', '0'], errors),
+            }}
+          />
+        </Col>
+        <Col md={6} className="textfield-col">
+          <Select
+            value={shippingAddress}
+            onChange={(option) => {
+              setShippingAddress(option.value);
+            }}
+            options={shippingAddressOptions}
+            label="Shipping Address"
+            error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
         <Col md={6} className="textfield-col">
@@ -223,17 +266,6 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
-          />
-        </Col>
-        <Col md={6} className="textfield-col">
-          <Select
-            value={shippingAddress}
-            onChange={(option) => {
-              setShippingAddress(option.value);
-            }}
-            options={shippingAddressOptions}
-            label="Shipping Address"
-            error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
         <Col md={6} className="textfield-col">
@@ -282,10 +314,12 @@ function Step7({ editableListing, onUpdateDetails }: Step7Props) {
         </Col>
 
         <Col md={12} className="textfield-col">
-          <TextField
+          <TextArea
             label="Additional notes (Optional)"
             value={description}
             onChangeText={setDescription}
+            autoHeight
+            style={{ height: '100px' }}
           />
         </Col>
       </Row>

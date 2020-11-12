@@ -31,6 +31,9 @@ const persistConfig = {
     'editableListing',
     'getCustomFormData',
     'getListingFormData',
+    'getMarketEstimate',
+    'cart',
+    'history',
   ],
 };
 

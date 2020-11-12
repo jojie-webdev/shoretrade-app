@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 
+import { clickAndCollectAddress, clickAndCollectAddress2 } from 'consts';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +47,6 @@ const Checkout = (): JSX.Element => {
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
 
-  //TODO: remove default on buying for implementation
   const currentAddress = addresses.find(
     (a) => a.id === currentAddressId || a.default
   );
@@ -56,6 +56,8 @@ const Checkout = (): JSX.Element => {
 
   const shippingQuotes =
     useSelector((store: Store) => store.getShippingQuote.data?.data) || {};
+
+  const orderError = useSelector((store: Store) => store.order.error) || '';
 
   useEffect(() => {
     if (!loadingShippingQuotes) {
@@ -105,7 +107,13 @@ const Checkout = (): JSX.Element => {
             const serviceName = serviceNameToString(data.serviceName);
             return {
               priceId: data.priceId,
-              name: `${shipmentMode} ${serviceName}`,
+              name:
+                data.serviceName === 'CLICK AND COLLECT'
+                  ? `${serviceName} ${clickAndCollectAddress}`
+                  : `${shipmentMode} ${serviceName}`,
+              ...(data.serviceName === 'CLICK AND COLLECT'
+                ? { secondName: clickAndCollectAddress2 }
+                : {}),
               price: toPrice(data.grossPrice, false),
               est: estimatedDeliveryToString(
                 data.minTransitTime,
@@ -275,6 +283,7 @@ const Checkout = (): JSX.Element => {
     setSelectedShippingId,
     processingOrder,
     removeItem,
+    orderError,
   };
 
   return <CheckoutView {...generatedProps} />;

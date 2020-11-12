@@ -1,99 +1,139 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Label } from 'components/base/Select/Select.style';
-import { Container } from 'components/base/Spinner/Spinner.style';
+import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import OrderAccordionContent from 'components/module/OrderAccordionContent';
-import Pagination from 'components/module/Pagination';
-import moment from 'moment';
-import { Row, Col } from 'react-grid-system';
+import OrderItemView from 'components/module/OrderItem';
+import { Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { OrderItem, OrdersGeneratedProps } from '../Orders.props';
 import {
-  Confirmed,
-  StyledInteraction,
-  CollapsibleContent,
-  LeftContainer,
-  AccordionContainer,
-} from './Pending.style';
-
-const PendingItems = (props: OrderItem) => {
-  const { confirmed, data, estCatchmentDate, id, price } = props;
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      <StyledInteraction
-        pressed={isOpen}
-        onClick={() => setIsOpen((v) => !v)}
-        type="accordion"
-        padding="16px 25px 16px 16px"
-        leftComponent={
-          <LeftContainer>
-            <Confirmed
-              variant="overline"
-              color={confirmed ? 'success' : 'warning'}
-            >
-              {confirmed ? 'Confirmed' : 'Pending Confirmation'}
-            </Confirmed>
-            <Row>
-              <Typography
-                style={{ marginRight: '4px', marginLeft: '16px' }}
-                variant="label"
-                color="shade6"
-                weight="500"
-              >
-                Est. Catchment:
-              </Typography>
-              <Typography variant="label" color="shade8" weight="bold">
-                {moment(estCatchmentDate).format('ddd DD MMM')}
-              </Typography>
-            </Row>
-            <Typography variant="title5" weight="900">
-              ${price}
-            </Typography>
-          </LeftContainer>
-        }
-      ></StyledInteraction>
-      <CollapsibleContent isOpen={isOpen}>
-        <OrderAccordionContent {...data} />
-      </CollapsibleContent>
-    </>
-  );
-};
+  StyledAccordion,
+  OrderBadge,
+  AccordionTitleContainer,
+  TitleRow,
+} from '../Orders.style';
 
 const Pending = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
 
-  const { pendingOrders, pendingOrdersCount, filters, updateFilters } = props;
+  const { pendingOrders } = props;
 
-  const pendingPagesTotal = Math.ceil(Number(pendingOrdersCount) / 10);
+  const [confirmedOrdersFormatted, setConfirmedOrdersFormatted] = useState({});
+  const [pendingOrdersFormatted, setPendingOrdersFormatted] = useState({});
+
+  useEffect(() => {
+    if (pendingOrders) {
+      const co: {
+        [key: string]: OrderItem;
+      } = {};
+      const po: {
+        [key: string]: OrderItem;
+      } = {};
+
+      Object.keys(pendingOrders).forEach((key) => {
+        const orders = pendingOrders[key];
+
+        orders.forEach((o) => {
+          if (o.confirmed) {
+            co[key] = o;
+          } else {
+            po[key] = o;
+          }
+        });
+        setConfirmedOrdersFormatted(co);
+        setPendingOrdersFormatted(po);
+      });
+    }
+  }, [pendingOrders]);
+
+  const pendingOrdersKeys = Object.keys(pendingOrdersFormatted);
+  const confirmedOrdersKeys = Object.keys(confirmedOrdersFormatted);
 
   return (
     <>
-      {pendingOrders.map((item) => {
-        return (
-          <AccordionContainer key={item.id}>
-            <PendingItems {...item} />
-          </AccordionContainer>
-        );
-      })}
+      <TitleRow>
+        <Col md={12} className="title-col">
+          <div className="svg-container">
+            <InfoFilled fill={theme.brand.alert} height={18} width={18} />
+          </div>
+          <Typography color="alert">
+            Pending Confirmation - {pendingOrdersKeys.length}
+          </Typography>
+        </Col>
+      </TitleRow>
 
-      <Row justify="center">
-        {pendingPagesTotal > 1 && (
-          <Pagination
-            numPages={pendingPagesTotal}
-            currentValue={Number(filters.pendingOrdersFilter.page)}
-            onClickButton={(value) =>
-              updateFilters.updatePendingOrdersFilter({
-                page: value.toFixed(0),
-              })
-            }
-            variant="number"
-          />
-        )}
-      </Row>
+      {pendingOrdersKeys.map((key) => (
+        <StyledAccordion
+          key={key}
+          title={''}
+          padding="24px"
+          marginBottom="16px"
+          keepIcon
+          iconColor={theme.brand.primary}
+          leftComponent={
+            <AccordionTitleContainer>
+              <Typography color="shade7" className="title">
+                Estimated{' '}
+                {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
+              </Typography>
+              <Typography color="shade9">{key}</Typography>
+            </AccordionTitleContainer>
+          }
+          rightComponent={
+            <OrderBadge>
+              <Typography color="shade9" variant="overline">
+                {pendingOrders[key].length}{' '}
+                {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
+              </Typography>
+            </OrderBadge>
+          }
+        >
+          {pendingOrders[key].map((d) => (
+            <OrderItemView {...d} token={props.token} key={d.id} />
+          ))}
+        </StyledAccordion>
+      ))}
+
+      <TitleRow style={{ marginTop: '24px' }}>
+        <Col md={12} className="title-col">
+          <Typography color="shade6" variant="overline">
+            TO SHIP - {confirmedOrdersKeys.length}
+          </Typography>
+        </Col>
+      </TitleRow>
+
+      {confirmedOrdersKeys.map((key) => (
+        <StyledAccordion
+          key={key}
+          title={''}
+          padding="24px"
+          marginBottom="16px"
+          keepIcon
+          iconColor={theme.brand.primary}
+          leftComponent={
+            <AccordionTitleContainer>
+              <Typography color="shade7" className="title">
+                Estimated{' '}
+                {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
+              </Typography>
+              <Typography color="shade9">{key}</Typography>
+            </AccordionTitleContainer>
+          }
+          rightComponent={
+            <OrderBadge>
+              <Typography color="shade9" variant="overline">
+                {pendingOrders[key].length}{' '}
+                {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
+              </Typography>
+            </OrderBadge>
+          }
+        >
+          {pendingOrders[key].map((d) => (
+            <OrderItemView {...d} token={props.token} key={d.id} />
+          ))}
+        </StyledAccordion>
+      ))}
     </>
   );
 };

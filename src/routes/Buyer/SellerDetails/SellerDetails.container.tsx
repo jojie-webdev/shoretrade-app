@@ -1,46 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 
 import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.props';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getSellerByCompanyId } from 'services/company';
 import {
   getSellerByIdActions,
   updateFavoriteSellerActions,
 } from 'store/actions';
+import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
 
+import { SellerDetailsGeneratedProps } from './SellerDetails.props';
 import SellerDetailsView from './SellerDetails.view';
 
 const SellerDetails = (): JSX.Element => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const sellerIdParsed = id;
 
-  const [result, setResult] = useState<any[]>([]);
-  const [searchString, setSearchString] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const previousId =
+    useSelector((state: Store) => state.getSellerById.request?.sellerId) || '';
+
+  const results = (
+    useSelector(
+      (state: Store) => state.getSellerById.data?.data.seller.listings
+    ) || []
+  ).filter((result) => {
+    return searchValue
+      ? result.type.toLowerCase().includes(searchValue.toLowerCase())
+      : true;
+  });
+
+  const onLoad = (sellerId: string) => {
+    dispatch(getSellerByIdActions.request({ sellerId }));
+  };
+
+  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
+  const resetSearchValue = () => {
+    setSearchValue('');
+  };
+
+  useEffect(() => {
+    if (sellerIdParsed && previousId !== sellerIdParsed) {
+      onLoad(sellerIdParsed);
+    }
+  }, [sellerIdParsed]);
+
+  const recent =
+    useSelector((state: Store) => state.history.buyerRecentSearch) || [];
 
   const loading: boolean | undefined = useSelector(
     (state: Store) => state.getSellerById.pending || false
   );
 
   const seller: Seller | undefined = useSelector(
-    (state: Store) => state.getSellerById.data?.data?.seller || undefined
+    (state: Store) => state.getSellerById.data?.data?.seller
   );
 
-  const updateFavoriteSeller = useSelector(
-    (state: Store) => state.updateFavoriteSeller
-  );
+  const [isFavorite, setIsFavorite] = useState(seller?.isFavourite);
 
   const onFavorite = async (): Promise<any> => {
     if (seller) {
       setIsFavorite((prevState) => !prevState);
+
       dispatch(
         updateFavoriteSellerActions.request({
-          sellerId: seller.id || '',
-          favorite: !seller.isFavourite,
+          sellerId: seller.id,
+          favorite: !seller?.isFavourite,
         })
       );
     }
@@ -55,26 +87,8 @@ const SellerDetails = (): JSX.Element => {
   }, [id]);
 
   useEffect(() => {
-    setIsFavorite(seller?.isFavourite || false);
-    setResult(seller?.listings || []);
+    setIsFavorite(seller?.isFavourite);
   }, [seller]);
-
-  useEffect(() => {
-    setIsFavorite(seller?.isFavourite || false);
-  }, [updateFavoriteSeller]);
-
-  useEffect(() => {
-    const listings = seller?.listings || [];
-    const result = listings.filter((r) => r.type.includes(searchString));
-    setResult(result);
-  }, [searchString]);
-
-  // On error, set favorite back to what it originally was
-  useEffect(() => {
-    if (updateFavoriteSeller?.error !== '') {
-      setIsFavorite(seller?.isFavourite || false);
-    }
-  }, [updateFavoriteSeller]);
 
   const sellerRatingProps: SellerRatingProps = {
     companyName: seller?.companyName || '',
@@ -85,12 +99,13 @@ const SellerDetails = (): JSX.Element => {
     onFavorite,
   };
 
-  const generatedProps = {
+  const generatedProps: SellerDetailsGeneratedProps = {
     sellerRatingProps,
+    results,
+    onChangeSearchValue,
+    resetSearchValue,
     loading,
-    search: searchString,
-    result,
-    onSearch: setSearchString,
+    searchValue,
   };
 
   return <SellerDetailsView {...generatedProps} />;

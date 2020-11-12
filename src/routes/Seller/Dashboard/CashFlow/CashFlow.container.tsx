@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getGraphData } from 'routes/Seller/Dashboard/CashFlow/CashFlow.transforms';
 import { getSellerGraphDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
@@ -14,8 +14,11 @@ import CashFlowView from './CashFlow.view';
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CashFlow = (): JSX.Element => {
+  const location: { state: any } = useLocation();
   const { months = 'FY' }: { months: string } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
+
+  const innerRouteTitle = location.state?.innerRouteTitle || 'Cash Flow';
 
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState<{ values: number[]; dates: string[] }>({
@@ -33,16 +36,18 @@ const CashFlow = (): JSX.Element => {
       const monthsParam = months.split('_');
 
       if (monthsParam.length === 2) {
-        const start = moment(monthsParam[0]).format('D MMM');
-        const end = moment(monthsParam[1]).format('D MMM YYYY');
+        const start = moment(monthsParam[0], 'MM-DD-YYYY').format('D MMM');
+        const end = moment(monthsParam[1], 'MM-DD-YYYY').format('D MMM YYYY');
 
         return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
       } else {
         return 'Invalid Date';
       }
     } else {
-      const start = moment(months).format('D MMM');
-      const end = moment(months).endOf('month').format('D MMM YYYY');
+      const start = moment(months, 'MM-DD-YYYY').format('D MMM');
+      const end = moment(months, 'MM-DD-YYYY')
+        .endOf('month')
+        .format('D MMM YYYY');
 
       return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
     }
@@ -64,11 +69,13 @@ const CashFlow = (): JSX.Element => {
             return;
           }
 
-          dateFrom = moment(monthsParam[0]).format('YYYYMMDD');
-          dateTo = moment(monthsParam[1]).format('YYYYMMDD');
+          dateFrom = moment(monthsParam[0], 'MM-DD-YYYY').format('YYYYMMDD');
+          dateTo = moment(monthsParam[1], 'MM-DD-YYYY').format('YYYYMMDD');
         } else {
-          dateFrom = moment(months).format('YYYYMMDD');
-          dateTo = moment(months).endOf('month').format('YYYYMMDD');
+          dateFrom = moment(months, 'MM-DD-YYYY').format('YYYYMMDD');
+          dateTo = moment(months, 'MM-DD-YYYY')
+            .endOf('month')
+            .format('YYYYMMDD');
         }
       }
 
@@ -97,6 +104,7 @@ const CashFlow = (): JSX.Element => {
   }, [months]);
 
   const generatedProps = {
+    innerRouteTitle,
     name: name(),
     isLoading,
     data,

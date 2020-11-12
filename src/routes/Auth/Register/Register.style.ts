@@ -1,8 +1,8 @@
 import AlertInfo from 'components/base/AlertInfo';
 import { Download } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import DropdownLocation from 'components/module/DropdownLocation';
 import FormikTextField from 'components/module/FormikTextField';
+import LocationSearch from 'components/module/LocationSearch';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
@@ -20,6 +20,11 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+`;
+
+export const Spacer = styled.div`
+  min-height: 16px;
+  max-height: 16px;
 `;
 
 export const ColumnWrapper = styled.div`
@@ -118,8 +123,8 @@ export const ShippingInfo = styled(AlertInfo)`
   margin-top: 24px;
 `;
 
-export const LocationField = styled(DropdownLocation)`
-  margin-top: 48px;
+export const LocationField = styled.div`
+  margin-top: 24px;
 `;
 
 export const Error = styled(Typography)`

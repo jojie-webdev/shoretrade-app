@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
+import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
@@ -17,6 +18,7 @@ import {
   NavInteraction,
   Header,
   DropdownContainer,
+  NoProfilePic,
 } from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
@@ -117,20 +119,32 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
               <Spinner />
             </div>
           ) : (
-            <img
-              src={
-                hideBrokenProfileImage
-                  ? DefaultProfileImage
-                  : profilePicture || DefaultProfileImage
-              }
-              alt="profile picture"
-              onError={() => {
-                setHideBrokenProfileImage(true);
-              }}
-              onClick={() => {
-                handleOnClick();
-              }}
-            />
+            <>
+              {profilePicture !== '' ? (
+                <img
+                  src={
+                    hideBrokenProfileImage
+                      ? DefaultProfileImage
+                      : profilePicture || DefaultProfileImage
+                  }
+                  alt="profile picture"
+                  onError={() => {
+                    setHideBrokenProfileImage(true);
+                  }}
+                  onClick={() => {
+                    handleOnClick();
+                  }}
+                />
+              ) : (
+                <NoProfilePic
+                  onClick={() => {
+                    handleOnClick();
+                  }}
+                >
+                  <PlaceholderProfile width={90} height={90} />
+                </NoProfilePic>
+              )}
+            </>
           )}
 
           <div>

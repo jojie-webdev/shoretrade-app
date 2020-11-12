@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
 
+import { AsyncState } from 'types/store/AsyncState';
 import { GetPaymentMethodsResponseItem } from 'types/store/GetPaymentMethodsState';
 
 export interface AddCreditGeneratedProps {
@@ -8,6 +9,7 @@ export interface AddCreditGeneratedProps {
   selectedCardId: string;
   setSelectedCardId: Dispatch<string>;
   addCredit: (x: string) => void;
+  chargeCardResult?: AsyncState;
 }
 
 export interface FieldsetCreditCardProps {

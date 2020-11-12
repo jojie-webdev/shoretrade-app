@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import SellerAddressForm from 'components/module/SellerAddressForm';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { addAddressActions } from 'store/actions';
 import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
@@ -15,6 +16,7 @@ const CreateAddress = (): JSX.Element => {
   // MARK:- Store / Hooks
   const [companyId] = useCompany();
   const dispatch = useDispatch();
+  const history = useHistory();
   const pending = useSelector(
     (store: Store) => store.addAddress.pending || false
   );
@@ -43,6 +45,7 @@ const CreateAddress = (): JSX.Element => {
         )
       );
       setIsSubmitted(true);
+      history.goBack();
     }
   };
 

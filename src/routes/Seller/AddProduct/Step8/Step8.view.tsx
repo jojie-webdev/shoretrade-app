@@ -7,9 +7,10 @@ import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 
 import { Step8Props } from './Step8.props';
-import { Container } from './Step8.style';
+import { Container, ButtonRow } from './Step8.style';
 
 function Step8({
   isCustomType,
@@ -63,6 +64,8 @@ function Step8({
     'HH:mm ddd DD MMM yyyy'
   );
 
+  const price = editableListing?.pricePerKilo || 0;
+
   const notes = editableListing?.description || '';
   return (
     <Container>
@@ -71,7 +74,7 @@ function Step8({
           <Interactions
             label="Type"
             value={title}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(2);
@@ -83,7 +86,7 @@ function Step8({
           <Interactions
             label="Specifications"
             value={specifications.join(', ')}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(3);
@@ -95,7 +98,7 @@ function Step8({
           <Interactions
             label="Size"
             value={size}
-            type={isExisting ? undefined : 'edit'}
+            type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
                 onChangeCurrentPage(4);
@@ -107,10 +110,16 @@ function Step8({
           <Interactions
             label="Boxes"
             value={boxes}
-            type={'edit'}
-            onClick={() => {
-              onChangeCurrentPage(6);
-            }}
+            type="edit"
+            onClick={() => {onChangeCurrentPage(6)}}
+          />
+        </Col>
+        <Col md={12} className="interaction-col">
+          <Interactions
+            label="Price"
+            value={toPrice(price)}
+            type="edit"
+            onClick={() => onChangeCurrentPage(7)}
           />
         </Col>
         <Col md={12} className="interaction-col">
@@ -123,7 +132,7 @@ function Step8({
         </Col>
         <Col md={12} className="interaction-col">
           <Interactions
-            label="Catch details"
+            label="Catch Date"
             value={catchDate}
             type="edit"
             onClick={() => onChangeCurrentPage(7)}
@@ -146,19 +155,19 @@ function Step8({
           />
         </Col>
       </Row>
-      <Row justify="end" style={{ padding: '0 15px' }}>
+      <ButtonRow justify="end">
         <Button
-          style={{ marginRight: 16, width: 200 }}
           text="Preview"
           variant="outline"
           onClick={() => preview()}
+          className="button"
         />
         <Button
-          style={{ width: 200 }}
           text={isExisting ? 'Update' : 'Add'}
           onClick={() => saveListing()}
+          className="button"
         />
-      </Row>
+      </ButtonRow>
     </Container>
   );
 }

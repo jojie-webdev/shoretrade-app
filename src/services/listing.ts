@@ -11,6 +11,7 @@ import { GetListingFormDataMeta } from 'types/store/GetListingFormDataState';
 import { GetListingsByTypeRequestData } from 'types/store/GetListingsByTypeState';
 import { GetListingMeta } from 'types/store/GetListingState';
 import { GetListingTypesByCategoryRequestData } from 'types/store/GetListingTypesByCategoryState';
+import { GetMarketEstimateMeta } from 'types/store/GetMarketEstimateState';
 import {
   GetShippingQuoteMeta,
   GetShippingQuoteRequestData,
@@ -190,6 +191,20 @@ export const getShippingQuote = (
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    timeout: 10000,
     data,
+  });
+};
+
+export const getMarketEstimate = (
+  data: GetMarketEstimateMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${LISTING_URL}/market-estimate/${data.typeId}?${qs.stringify(data)}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

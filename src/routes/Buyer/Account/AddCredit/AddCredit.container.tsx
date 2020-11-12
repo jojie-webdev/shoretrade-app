@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { chargeCardActions, getPaymentMethodsActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -9,6 +10,7 @@ import { AddCreditGeneratedProps } from './AddCredit.props';
 import AddCreditView from './AddCredit.view';
 
 const AddCredit = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const currentCompany = GetDefaultCompany();
@@ -22,7 +24,7 @@ const AddCredit = (): JSX.Element => {
 
   useEffect(() => {
     getPaymentMethods();
-  }, []);
+  }, [companyId]);
 
   const isPending =
     useSelector((state: Store) => state.chargeCard.pending) || false;
@@ -36,11 +38,19 @@ const AddCredit = (): JSX.Element => {
     (state: Store) => state.getPaymentMethods.data?.data.data.cards || []
   );
 
+  const chargeCardResult = useSelector((state: Store) => state.chargeCard);
+
+  const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     if (defaultCardId) {
       setSelectedCardId(defaultCardId);
     }
   }, [defaultCardId]);
+
+  useEffect(() => {
+    if (chargeCardResult.data && submitted) history.goBack();
+  }, [chargeCardResult]);
 
   const addCredit = (amount: string) => {
     if (!isPending) {
@@ -52,6 +62,7 @@ const AddCredit = (): JSX.Element => {
           companyId,
         })
       );
+      setSubmitted(true);
     }
   };
 
@@ -62,6 +73,7 @@ const AddCredit = (): JSX.Element => {
     selectedCardId,
     setSelectedCardId,
     addCredit,
+    chargeCardResult,
   };
   return <AddCreditView {...generatedProps} />;
 };

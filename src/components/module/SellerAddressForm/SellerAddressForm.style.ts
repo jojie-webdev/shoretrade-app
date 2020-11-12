@@ -16,6 +16,9 @@ export const Container = styled.div`
   .checkbox-container {
     margin-right: 8px;
   }
+  .delete-btn {
+    margin-left: 8px;
+  }
 `;
 
 export const StyledCheckbox = styled(Checkbox)`

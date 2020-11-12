@@ -10,6 +10,7 @@ import AddAssistant from './AddAssistant';
 import AddCredit from './AddCredit';
 import Address from './Address';
 import Balance from './Balance';
+import BalanceHistory from './BalanceHistory';
 import Card from './Card';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
@@ -67,8 +68,8 @@ const ROUTES: Routes = {
     children: <EditAssistant />,
   },
   CREDIT_HISTORY: {
-    path: BUYER_ACCOUNT_ROUTES.CREDIT_HISORY,
-    children: <Balance />,
+    path: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+    children: <BalanceHistory />,
   },
   CREDIT_CARD: {
     path: BUYER_ACCOUNT_ROUTES.CREDIT_CARD,

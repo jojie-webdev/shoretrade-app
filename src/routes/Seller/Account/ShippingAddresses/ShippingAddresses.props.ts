@@ -5,6 +5,7 @@ export interface ShippingAddressesGeneratedProps {
   pending: boolean;
   onClickAddress: (addressId: string) => void;
   onClickAddAddress: () => void;
+  notificationMessage: string;
 }
 
 export type QueryParams = { companyId: string };

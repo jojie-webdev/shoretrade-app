@@ -1,4 +1,3 @@
-
 import { Variants } from 'components/base/Typography/Typography.props';
 import { Theme } from 'types/Theme';
 
@@ -9,6 +8,7 @@ export interface TextFieldProps
   secured?: boolean;
   error?: string;
   LeftComponent?: React.ReactNode;
+  RightComponent?: React.ReactNode;
   className?: string;
   alert?: string;
   prefix?: string;

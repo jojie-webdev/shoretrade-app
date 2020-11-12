@@ -1,125 +1,308 @@
-import React, { useState } from 'react';
+import React, {
+  useReducer,
+  useState,
+  Fragment,
+  Dispatch,
+  useEffect,
+} from 'react';
 
-import { InfoFilled, Plane, Truck } from 'components/base/SVG';
+import Button from 'components/base/Button';
+import {
+  InfoFilled,
+  Plane,
+  Truck,
+  Message,
+  CheckList,
+  CheckFilled,
+  DownloadFile,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
+import MessageModal from 'components/module/MessageModal';
+import MultipleCarousel from 'components/module/MultipleCarousel';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import ConfirmModal from 'routes/Seller/Sold/Confirm';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import getCalendarDate from 'utils/Date/getCalendarDate';
+import { createUpdateReducer } from 'utils/Hooks';
+import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
-import 'swiper/swiper-bundle.min.css';
-
+import { PendingToShipItemData, SoldGeneratedProps } from '../Sold.props';
+import SoldItem from '../SoldItem.view';
 import {
-  TabOptions,
-  SoldGeneratedProps,
-  ToShipItemData,
-  PendingToShipItemData,
-} from '../Sold.props';
-import {
-  PriorityNumber,
   StyledInteraction,
-  DeliveryRow,
-  PendingRow,
+  InnerStyledInteraction,
+  ItemRow,
+  TitleRow,
   CollapsibleContent,
+  ItemCard,
+  ItemImage,
+  ItemDetail,
+  Tag,
+  Spacer,
 } from './ToShip.styles';
 
-export const SoldItem = (
-  props: ToShipItemData & {
-    token: string;
-  }
-) => {
-  const history = useHistory();
-  const { type = 'air', date, orders, id, orderRefNumber, token } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const desc =
-    type.toLowerCase() === 'air'
-      ? 'Air Freight Cut Off'
-      : 'Road Freight Pick Up';
-  const time =
-    type.toLowerCase() === 'air' ? moment(date).format('hh:mm a') : '';
+export const PendingItem = (props: {
+  data: PendingToShipItemData;
+  updateConfirmModal: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      orderId: string;
+      lineItemId: string;
+    }>
+  >;
+  isPlacingOrder: boolean;
+  placeOrder: (data: PlaceOrderMeta) => void;
+  placeOrderId: string;
+  setPlaceOrderId: Dispatch<string>;
+}): any => {
+  const theme = useTheme();
+  const {
+    data,
+    updateConfirmModal,
+    setPlaceOrderId,
+    placeOrderId,
+    placeOrder,
+    isPlacingOrder,
+  } = props;
+  const [isOpen, setIsOpen] = useState<string[]>([]);
 
-  const Icon = () =>
-    type.toLowerCase().includes('air') ? (
-      <Plane height={13} width={13} />
-    ) : (
-      <Truck height={13} width={13} />
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
+
+  return data.orders.map((order) => {
+    const subtotalWeight = order.orderLineItem.reduce(
+      (accumB: number, currentB) => {
+        return accumB + currentB.weight;
+      },
+      0
     );
-  return (
-    <>
-      <StyledInteraction
-        pressed={isOpen}
-        onClick={() => setIsOpen((v) => !v)}
-        leftComponent={
-          <PriorityNumber>
-            <Typography color="noshade" variant="label">
-              {orders.length}
-            </Typography>
-          </PriorityNumber>
-        }
-      >
-        <div className="content">
-          <Icon />
-          <Typography variant="label" color="shade6" className="center-text">
-            {desc}
-          </Typography>
-          <Typography variant="label" color="noshade">
-            {time}
-          </Typography>
-        </div>
-      </StyledInteraction>
-      <CollapsibleContent isOpen={isOpen}>
-        <ToShipAccordionContent
-          onDownloadInvoice={() => {
-            window.open(
-              `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
-              '_blank'
-            );
-          }}
-          items={orders}
-          onPress={() =>
-            history.push(
-              SELLER_SOLD_ROUTES.DETAILS.replace(':orderId', id).replace(
-                ':status',
-                'PLACED'
-              )
-            )
-          }
-        />
-      </CollapsibleContent>
-    </>
-  );
-};
+    const subtotalPrice = order.orderLineItem.reduce(
+      (accumB: number, currentB) => {
+        return accumB + currentB.price;
+      },
+      0
+    );
 
-export const PendingItem = (props: PendingToShipItemData) => {
-  const { id, orderNumber, numberOfOrders } = props;
+    const allowPartialShipment = order.orderLineItem.some(
+      (i) => i.weightConfirmed
+    );
+    const allowFullShipment = order.orderLineItem.every(
+      (i) => i.weightConfirmed
+    );
 
-  const history = useHistory();
-  return (
-    <StyledInteraction
-      onClick={() =>
-        history.push(SELLER_SOLD_ROUTES.CONFIRM_LIST.replace(':orderId', id))
-      }
-      leftComponent={
-        <PriorityNumber>
-          <Typography color="noshade" variant="label">
-            {numberOfOrders}
-          </Typography>
-        </PriorityNumber>
-      }
-    >
-      <div className="content">
-        <Typography variant="label" color="shade6" className="center-text">
-          {orderNumber}
-        </Typography>
-      </div>
-    </StyledInteraction>
-  );
+    const generatePlaceOrderPayload = (config: { isPartial: boolean }) => {
+      setPlaceOrderId(order.orderId);
+      return {
+        orderId: order?.orderId || '',
+        buyerCompanyId: order?.buyerCompanyId || '',
+        sellerCompanyId: order?.sellerCompanyId || '',
+        buyerId: order?.buyerId || '',
+        sellerId: order?.sellerId || '',
+        deliveryMethod: order?.deliveryMethod || '',
+        deliveryOption: order?.deliveryOption || '',
+        fromAddressId: order?.fromAddress.id || '',
+        toAddressId: order?.toAddress.id || '',
+        isPartial: config.isPartial,
+        orderLineItem: order?.orderLineItem
+          ? order?.orderLineItem.map((lineItem) => ({
+              id: lineItem.id,
+              weight: lineItem.weight,
+              price: lineItem.price,
+              weightConfirmed: lineItem.weightConfirmed,
+              priceDelta: lineItem.priceDelta,
+              listingBoxes: lineItem.listingBoxes,
+              listing: lineItem.listing,
+            }))
+          : [],
+      };
+    };
+    return (
+      <Fragment key={order.orderId}>
+        <InnerStyledInteraction
+          pressed={isOpen.includes(order.orderId)}
+          onClick={() => toggleAccordion(order.orderId)}
+          type="accordion"
+          iconColor={theme.brand.primary}
+          fullWidth
+        >
+          <div className="content">
+            <div className="left-content">
+              <Typography
+                variant="label"
+                color="noshade"
+                className="center-text"
+              >
+                Order&nbsp;{order.orderRefNumber}
+              </Typography>
+
+              <div className="order-count">
+                <Typography variant="label" color="noshade">
+                  {order.itemCount}&nbsp;
+                  {order.itemCount > 1 ? 'ITEMS' : 'ITEM'}
+                </Typography>
+              </div>
+            </div>
+            <Spacer />
+            <div className="right-content">
+              {!isOpen.includes(order.orderId) && (
+                <>
+                  <ItemDetail variant="caption" color="shade6">
+                    Sold Weight <span>{subtotalWeight} kg</span>
+                  </ItemDetail>
+
+                  <ItemDetail variant="caption" color="shade6">
+                    Price (AUD) <span>{toPrice(subtotalPrice)}</span>
+                  </ItemDetail>
+                </>
+              )}
+            </div>
+            <div className="buttons">
+              {allowPartialShipment && !allowFullShipment && (
+                <Button
+                  text={'Ship Partial'}
+                  style={{ width: 169, height: 32 }}
+                  size="sm"
+                  onClick={(e) => {
+                    placeOrder(
+                      generatePlaceOrderPayload({
+                        isPartial: !allowFullShipment,
+                      })
+                    );
+                    e.stopPropagation();
+                  }}
+                  loading={isPlacingOrder && placeOrderId === order.orderId}
+                />
+              )}
+
+              {allowPartialShipment && allowFullShipment && (
+                <Button
+                  text={'Ship Order'}
+                  style={{ width: 169, height: 32 }}
+                  size="sm"
+                  onClick={(e) => {
+                    placeOrder(
+                      generatePlaceOrderPayload({
+                        isPartial: !allowFullShipment,
+                      })
+                    );
+                    e.stopPropagation();
+                  }}
+                  loading={isPlacingOrder && placeOrderId === order.orderId}
+                />
+              )}
+            </div>
+          </div>
+        </InnerStyledInteraction>
+        {order.orderLineItem.map((lineItem) => (
+          <CollapsibleContent
+            key={lineItem.id}
+            isOpen={isOpen.includes(order.orderId)}
+          >
+            <ItemCard>
+              <div className="left-content">
+                <ItemImage src={lineItem.listing.images[0]} alt="" />
+
+                <div className="text-content">
+                  <Typography
+                    variant="label"
+                    color="noshade"
+                    className="item-title"
+                  >
+                    {lineItem.listing.typeName}
+                  </Typography>
+
+                  <div className="tags-container">
+                    {lineItem.listing.specifications.map((tag) => (
+                      <Tag key={tag}>
+                        <Typography variant="caption" color="noshade">
+                          {tag}
+                        </Typography>
+                      </Tag>
+                    ))}
+                  </div>
+
+                  <ItemDetail variant="caption" color="shade5" row>
+                    {sizeToString(
+                      lineItem.listing.metricLabel,
+                      lineItem.listing.sizeFrom || undefined,
+                      lineItem.listing.sizeTo || undefined
+                    )}
+                  </ItemDetail>
+                </div>
+              </div>
+              <Spacer />
+              <div className="right-content">
+                <ItemDetail variant="caption" color="shade6">
+                  Sold Weight{' '}
+                  <span>
+                    {lineItem.weight} {lineItem.listing.measurementUnit}
+                  </span>
+                </ItemDetail>
+
+                <ItemDetail variant="caption" color="shade6">
+                  Price (AUD) <span>{toPrice(lineItem.price)}</span>
+                </ItemDetail>
+              </div>
+
+              <div className="buttons">
+                {lineItem.weightConfirmed ? (
+                  <Button
+                    text={'Weight Confirmed'}
+                    icon={<CheckFilled fill="white" height={16} width={16} />}
+                    iconPosition="before"
+                    style={{ width: 169, height: 32 }}
+                    size="sm"
+                    onClick={(e) => {
+                      console.log('DO NOTHING');
+                      e.stopPropagation();
+                    }}
+                    variant="success"
+                  />
+                ) : (
+                  <Button
+                    text={'Confirm Weight'}
+                    icon={<CheckList fill="white" height={15} width={20} />}
+                    iconPosition="before"
+                    style={{ width: 169, height: 32 }}
+                    size="sm"
+                    onClick={(e) => {
+                      if (!lineItem.weightConfirmed) {
+                        updateConfirmModal({
+                          isOpen: true,
+                          lineItemId: lineItem.id,
+                          orderId: order.orderId,
+                        });
+                      }
+                      e.stopPropagation();
+                    }}
+                  />
+                )}
+              </div>
+            </ItemCard>
+          </CollapsibleContent>
+        ))}
+      </Fragment>
+    );
+  });
 };
 
 const ToShip = (props: SoldGeneratedProps) => {
@@ -132,14 +315,87 @@ const ToShip = (props: SoldGeneratedProps) => {
     updateFilters,
     pendingToShip,
     token,
+    sendMessage,
+    isSendingMessage,
+    isPlacingOrder,
+    placeOrder,
   } = props;
-  const [pendingPage, setPendingPage] = useState(1);
+
+  const [confirmModal, updateConfirmModal] = useReducer(
+    createUpdateReducer<{
+      isOpen: boolean;
+      orderId: string;
+      lineItemId: string;
+    }>(),
+    {
+      isOpen: false,
+      orderId: '',
+      lineItemId: '',
+    }
+  );
+
+  const [messageModal, updateMessageModal] = useReducer(
+    createUpdateReducer<{
+      buyerId: string;
+      buyerName: string;
+      isOpen: boolean;
+    }>(),
+    {
+      buyerId: '',
+      buyerName: '',
+      isOpen: false,
+    }
+  );
+
+  const [placeOrderId, setPlaceOrderId] = useState('');
+  const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
+  const addHorizontalRowMargin = useMediaQuery({
+    query: '(min-width: 1080px)',
+  });
+
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!isPlacingOrder && placeOrderId.length > 0) {
+      setPlaceOrderId('');
+    }
+  }, [isPlacingOrder]);
 
   return (
     <>
-      <PendingRow>
+      <ConfirmModal
+        onClickClose={() => {
+          updateConfirmModal({
+            isOpen: false,
+          });
+        }}
+        {...confirmModal}
+      />
+      <MessageModal
+        isOpen={isSendingMessage || messageModal.isOpen}
+        recipient={messageModal.buyerName}
+        onSend={(message) => {
+          sendMessage(messageModal.buyerId, message);
+          updateMessageModal({ isOpen: false });
+        }}
+        onClickClose={() => {
+          updateMessageModal({ isOpen: false });
+        }}
+        loading={isSendingMessage}
+      />
+      <TitleRow>
         <Col md={12} className="title-col">
           <div className="svg-container">
             <InfoFilled fill={theme.brand.alert} height={18} width={18} />
@@ -148,44 +404,173 @@ const ToShip = (props: SoldGeneratedProps) => {
             Pending Confirmation - {pendingToShip.length}
           </Typography>
         </Col>
-        <SwiperContainer height={'100px'}>
-          <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            onSlideChange={(e) => setPendingPage(e.realIndex + 1)}
-            loop
-          >
-            {pendingToShip.map((item) => (
-              <SwiperSlide key={item.id}>
-                <PendingItem {...item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </SwiperContainer>
-        <div className="pagination-container">
-          <Pagination
-            variant="infinite-dots"
-            numPages={pendingToShip.length}
-            currentValue={pendingPage}
-            onClickButton={(nextValue) => setPendingPage(nextValue)}
-          />
-        </div>
-      </PendingRow>
+      </TitleRow>
+
+      {pendingToShip.map((group) => {
+        return (
+          <ItemRow key={group.buyerCompanyId}>
+            <Col>
+              <StyledInteraction
+                pressed={isOpen.includes(group.buyerCompanyId)}
+                onClick={() => toggleAccordion(group.buyerCompanyId)}
+                type="accordion"
+                iconColor={theme.brand.primary}
+                fullWidth
+              >
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text title-text"
+                    >
+                      {group.buyerCompanyName}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography variant="label" color="noshade">
+                        {group.orderCount}&nbsp;
+                        {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
+                      </Typography>
+                    </div>
+                  </div>
+                  <Spacer />
+                  <div className="right-content">
+                    <ItemDetail variant="caption" color="shade6">
+                      Sold Weight <span>{group.totalWeight} kg</span>
+                    </ItemDetail>
+
+                    <ItemDetail variant="caption" color="shade6">
+                      Price (AUD) <span>{toPrice(group.totalPrice)}</span>
+                    </ItemDetail>
+                  </div>
+                  <div className="buttons">
+                    <Button
+                      text={'Message Buyer'}
+                      icon={
+                        messageModal.buyerId === group.buyerCompanyId &&
+                        isSendingMessage ? undefined : (
+                          <Message
+                            fill={theme.grey.shade9}
+                            height={16}
+                            width={16}
+                          />
+                        )
+                      }
+                      textColor={'shade9'}
+                      iconPosition="before"
+                      style={{
+                        width: 169,
+                        height: 32,
+                        backgroundColor: theme.grey.noshade,
+                      }}
+                      size="sm"
+                      onClick={(e) => {
+                        updateMessageModal({
+                          isOpen: true,
+                          buyerId: group.buyerCompanyId,
+                          buyerName: group.buyerCompanyName,
+                        });
+                        e.stopPropagation();
+                      }}
+                      loading={
+                        messageModal.buyerId === group.buyerCompanyId &&
+                        isSendingMessage
+                      }
+                    />
+                  </div>
+                </div>
+              </StyledInteraction>
+
+              <CollapsibleContent
+                isOpen={isOpen.includes(group.buyerCompanyId)}
+                style={
+                  addHorizontalRowMargin
+                    ? { marginLeft: 24, marginRight: 24 }
+                    : { marginLeft: 8, marginRight: 8 }
+                }
+              >
+                <PendingItem
+                  data={group}
+                  updateConfirmModal={updateConfirmModal}
+                  placeOrderId={placeOrderId}
+                  setPlaceOrderId={setPlaceOrderId}
+                  isPlacingOrder={isPlacingOrder}
+                  placeOrder={placeOrder}
+                />
+              </CollapsibleContent>
+            </Col>
+          </ItemRow>
+        );
+      })}
+
+      <TitleRow style={{ marginTop: 24 }}>
+        <Col md={12} className="title-col">
+          <Typography variant="overline" color="shade6">
+            TO SHIP
+          </Typography>
+        </Col>
+      </TitleRow>
 
       {toShip.map((group) => {
-        const calendarDateString = getCalendarDate(group.title);
-        return (
-          <DeliveryRow key={calendarDateString} className="delivery-row">
-            <Col>
-              <Typography color="noshade" className="title">
-                {calendarDateString}
-              </Typography>
+        const getDisplayDate = () => {
+          const targetDate = moment(group.title);
+          const currentDate = moment();
+          const dateDiff = targetDate.diff(currentDate, 'days');
 
-              {group.data.map((item) => (
-                <SoldItem key={item.id} {...item} token={token} />
-              ))}
+          if (dateDiff === -1) {
+            return 'Yesterday';
+          } else if (dateDiff === 0) {
+            return 'Today';
+          } else if (dateDiff === 1) {
+            return 'Tomorrow';
+          }
+
+          return targetDate.format('Do MMMM');
+        };
+
+        const calendarDateString = getDisplayDate();
+
+        return (
+          <ItemRow key={calendarDateString}>
+            <Col>
+              <StyledInteraction
+                pressed={isOpen.includes(calendarDateString)}
+                onClick={() => toggleAccordion(calendarDateString)}
+                type="accordion"
+                iconColor={theme.brand.primary}
+              >
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text title-text"
+                    >
+                      {calendarDateString}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography variant="label" color="noshade">
+                        {group.orderTotal}&nbsp;
+                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
+                      </Typography>
+                    </div>
+                  </div>
+                  <Spacer />
+                  <div className="right-content" />
+                  <div className="buttons" />
+                </div>
+              </StyledInteraction>
+
+              <CollapsibleContent
+                isOpen={isOpen.includes(calendarDateString)}
+                style={{ marginLeft: 24, marginRight: 24 }}
+              >
+                <SoldItem data={group.data} token={token} status="PLACED" />
+              </CollapsibleContent>
             </Col>
-          </DeliveryRow>
+          </ItemRow>
         );
       })}
 

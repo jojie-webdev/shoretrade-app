@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Badge from 'components/base/Badge/Badge.view';
 import { Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import { Col, Row } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
@@ -10,7 +12,17 @@ import { Container, Image, TextValue } from './CheckoutCard.style';
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();
-  const { name, uri, vendor, size, unit, weight, price, onRemove } = props;
+  const {
+    name,
+    uri,
+    vendor,
+    size,
+    unit,
+    weight,
+    price,
+    tags,
+    onRemove,
+  } = props;
 
   return (
     <Container>
@@ -22,6 +34,22 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
               <Typography color="shade9" weight="700">
                 {name}
               </Typography>
+
+              {tags && (
+                <div className="checkout-tags">
+                  {tags.map((t) => (
+                    <Badge
+                      key={t.label}
+                      fontColor={theme.grey.shade9}
+                      badgeColor={theme.grey.shade2}
+                    >
+                      <BadgeText variant="caption" weight="bold">
+                        {t.label}
+                      </BadgeText>
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
               <div className="checkout-row">
                 <Typography variant="caption" color="shade6">

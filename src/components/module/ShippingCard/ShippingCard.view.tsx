@@ -11,9 +11,6 @@ import { Container, Rectangle, Spacer } from './ShippingCard.style';
 const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   const theme = useTheme();
   const { options, onPress, selectedPriceId } = props;
-
-  console.log(options);
-
   return (
     <Container>
       {options.length === 0 && (
@@ -48,6 +45,11 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                   <Typography color="shade9" weight="700">
                     {o.name}
                   </Typography>
+                  {o.secondName && (
+                    <Typography color="shade9" weight="700">
+                      {o.secondName}
+                    </Typography>
+                  )}
                   <Spacer />
                   <Typography variant="caption" color="shade6">
                     {o.est}

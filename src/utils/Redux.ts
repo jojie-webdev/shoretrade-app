@@ -1,7 +1,6 @@
 import pathOr from 'ramda/es/pathOr';
 import { AsyncAction } from 'types/Action';
 import { AsyncState } from 'types/store/AsyncState';
-
 export const createSetAction = <Payload = any>(namespace: string) => {
   const type = `${namespace}/SET`;
   return {
@@ -12,7 +11,6 @@ export const createSetAction = <Payload = any>(namespace: string) => {
     SET: type,
   };
 };
-
 export const createUpdateAction = <Payload = any>(namespace: string) => {
   const type = `${namespace}/UPDATE`;
   return {
@@ -23,7 +21,6 @@ export const createUpdateAction = <Payload = any>(namespace: string) => {
     UPDATE: type,
   };
 };
-
 export const createClearAction = (namespace: string) => {
   const type = `${namespace}/CLEAR`;
   return {
@@ -34,13 +31,13 @@ export const createClearAction = (namespace: string) => {
     CLEAR: type,
   };
 };
-
 export const createAsyncAction = <Meta = any, Payload = any>(
   namespace: string
 ) => {
   const requestType = `${namespace}/REQUEST`;
   const successType = `${namespace}/SUCCESS`;
   const failedType = `${namespace}/FAILED`;
+  const clearType = `${namespace}/CLEAR`;
   return {
     request: (meta: Meta) => ({
       type: requestType,
@@ -54,20 +51,23 @@ export const createAsyncAction = <Meta = any, Payload = any>(
       type: failedType,
       error,
     }),
+    clear: () => ({
+      type: clearType,
+    }),
     REQUEST: requestType,
     SUCCESS: successType,
     FAILED: failedType,
+    CLEAR: clearType,
   };
 };
-
 type AsyncActionTypes = {
   REQUEST: string;
   SUCCESS: string;
   FAILED: string;
+  CLEAR: string;
 };
-
 export const createAsyncReducer = <Meta = any, Payload = any>(
-  { REQUEST, SUCCESS, FAILED }: AsyncActionTypes,
+  { REQUEST, SUCCESS, FAILED, CLEAR }: AsyncActionTypes,
   customEventsHandler?: (
     state: AsyncState<Meta, Payload>,
     action: AsyncAction<Meta, Payload>,
@@ -101,6 +101,7 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
         pending: false,
         error: pathOr('Unknown Error', ['error'], action),
       },
+      [CLEAR]: DEFAULT_STATE,
       ...(customEventsHandler
         ? customEventsHandler(state, action, DEFAULT_STATE)
         : {}),

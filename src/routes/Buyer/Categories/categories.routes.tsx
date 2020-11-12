@@ -32,7 +32,7 @@ const ROUTES: Routes = {
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
 
-const CategoriesRoute = (props: any): JSX.Element => {
+const CategoriesRoute = (): JSX.Element => {
   return (
     <>
       <Switch>

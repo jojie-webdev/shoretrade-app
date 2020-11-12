@@ -5,8 +5,9 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
-import DropdownLocation from 'components/module/DropdownLocation';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import LocationSearch from 'components/module/LocationSearch';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -21,12 +22,15 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     isDefault,
     pending,
     onClickSave,
+    onDeleteAddress,
     toggleIsDefault,
     setAddress,
     unitNumber,
     setUnitNumber,
     isSuccess,
     type,
+    isDelete,
+    toggleisDelete,
   } = props;
 
   let successContent = '';
@@ -35,16 +39,18 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
   if (type === 'CREATE') {
     routeHeader = 'Add Address';
     successContent = 'Address has successfully been created!';
-  } else if (type === 'EDIT') {
+  } else if (type === 'EDIT' && !isDelete) {
     routeHeader = 'Edit Address';
     successContent = 'Your account details have successfully been updated!';
+  } else if (type === 'EDIT' && isDelete) {
+    routeHeader = 'Edit Address';
+    successContent = 'Your address has been deleted!';
   }
 
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
     {}
   );
-
   const validate = () => {
     const addressError = isValid({
       address: address?.address || '',
@@ -61,37 +67,37 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
 
   return (
     <Container>
-      {isSuccess && (
-        <StyledAlert
-          content={successContent}
-          variant="success"
-          alignText="center"
-          fullWidth
-        />
-      )}
-
       <InnerRouteHeader title={routeHeader} />
 
-      <Row nogutter className="textfield-row">
-        <Col md={12}>
-          <DropdownLocation
-            value={address?.address || ''}
-            label="Address"
-            onSelect={setAddress}
-            error={pathOr('', ['address', '0'], errors)}
-          />
-        </Col>
-        <Col md={12} style={{ marginTop: 24 }}>
-          <TextField
-            className="address"
-            label="Unit number (optional)"
-            name="unitNumber"
-            value={unitNumber}
-            onChange={(e) => setUnitNumber(e.target.value)}
-            error={pathOr('', ['unitNumber', '0'], errors)}
-          />
-        </Col>
-      </Row>
+      <FixedWidthContainer>
+        <Row nogutter className="textfield-row">
+          <Col md={12}>
+            <LocationSearch
+              onSelect={(location) => {
+                if (location) {
+                  setAddress(location);
+                }
+              }}
+              textFieldProps={{
+                value: address?.address || '',
+                label: 'Address',
+                error: pathOr('', ['address', '0'], errors),
+                disabled: type === 'EDIT' ? true : false,
+              }}
+            />
+          </Col>
+          <Col md={12} style={{ marginTop: 24 }}>
+            <TextField
+              className="address"
+              label="Unit number (optional)"
+              name="unitNumber"
+              value={unitNumber}
+              onChange={(e) => setUnitNumber(e.target.value)}
+              error={pathOr('', ['unitNumber', '0'], errors)}
+            />
+          </Col>
+        </Row>
+      </FixedWidthContainer>
 
       <Row nogutter className="checkbox-row">
         <Col className="checkbox-col">
@@ -104,6 +110,21 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
 
       <Row nogutter>
         <Button text="Submit" onClick={validate} loading={pending} />
+        {type === 'EDIT' ? (
+          <Button
+            className="delete-btn"
+            text="Delete"
+            onClick={() => {
+              if (toggleisDelete) {
+                toggleisDelete();
+              }
+              if (onDeleteAddress) {
+                onDeleteAddress();
+              }
+            }}
+            loading={pending}
+          />
+        ) : null}
       </Row>
     </Container>
   );

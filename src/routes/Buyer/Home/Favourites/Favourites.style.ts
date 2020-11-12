@@ -23,8 +23,7 @@ export const PreviewContainer = styled.div`
   height: 100%;
   overflow: auto;
   overflow-x: hidden;
-
-  ${customScrollbar}
+  padding: 0 8px 8px 8px;
 
   .cards {
     display: flex;

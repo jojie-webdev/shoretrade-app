@@ -52,6 +52,9 @@ const CategoriesPreview = (): JSX.Element => {
       : true;
   });
 
+  const isLoadingResults =
+    useSelector((state: Store) => state.getListingsByType.pending) || false;
+
   // MARK:- Methods
   const onLoad = (typeId: string) => {
     dispatch(getBuyerSearchFilterDataActions.request({ typeId: typeId }));
@@ -80,9 +83,10 @@ const CategoriesPreview = (): JSX.Element => {
     []
   );
 
-  const filterData =
+  const getBuyerSearchFilterData =
     useSelector((state: Store) => state.getBuyerSearchFilterData) || {};
-  const filters = getFilters(filterData);
+  const filterData = getBuyerSearchFilterData.data?.data;
+  const modalFilters = getFilters(getBuyerSearchFilterData);
   const checkboxFilters = [
     { label: 'Show Only Ungraded', value: 'showUngraded' },
   ];
@@ -97,12 +101,22 @@ const CategoriesPreview = (): JSX.Element => {
     setVisible(!isOpen);
   };
 
+  // used by FilterModal
   const onApply = () => {
     setVisible(false);
 
-    const { sizeRangeFrom, sizeRangeTo } = getSize(filterData, selectedSize);
-    const catchmentArea = getCatchmentArea(filterData, selectedFilters);
-    const specifications = getSpecifications(filterData, selectedFilters);
+    const { sizeRangeFrom, sizeRangeTo } = getSize(
+      getBuyerSearchFilterData,
+      selectedSize
+    );
+    const catchmentArea = getCatchmentArea(
+      getBuyerSearchFilterData,
+      selectedFilters
+    );
+    const specifications = getSpecifications(
+      getBuyerSearchFilterData,
+      selectedFilters
+    );
 
     dispatch(
       getListingsByTypeActions.request({
@@ -118,11 +132,28 @@ const CategoriesPreview = (): JSX.Element => {
     );
   };
 
+  // used by FilterArea
+  const onChangeFilter = (f: {
+    catchmentArea?: string;
+    sizeRangeFrom?: number | string;
+    sizeRangeTo?: number | string;
+    specifications?: string;
+    showUngraded?: boolean;
+  }) => {
+    dispatch(
+      getListingsByTypeActions.request({
+        typeId: typeIdParsed,
+        filterData: f,
+      })
+    );
+  };
+
   const generatedProps = {
     onChangeSearchValue,
     searchValue,
     resetSearchValue,
     results,
+    isLoadingResults,
     typeId: typeIdParsed,
     addresses,
     selectedAddress,
@@ -131,7 +162,7 @@ const CategoriesPreview = (): JSX.Element => {
     setVisible,
     modalFilterProps: {
       isOpen,
-      filters,
+      filters: modalFilters,
       selectedFilters,
       checkboxFilters,
       selectedCheckboxFilters,
@@ -143,6 +174,8 @@ const CategoriesPreview = (): JSX.Element => {
       onReset,
       onClickClose,
     },
+    filterData,
+    onChangeFilter,
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };

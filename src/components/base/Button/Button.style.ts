@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
@@ -26,7 +27,7 @@ const border: Record<Variants, string> = {
 
 const padding: Record<ButtonSizes, string> = {
   sm: '8px 12px',
-  md: '18px 36px',
+  md: '18px 32px',
   lg: '',
 };
 
@@ -40,7 +41,7 @@ export const ButtonContainer = styled.button<
   border-radius: 4px;
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-
+  white-space: nowrap;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -52,6 +53,14 @@ export const ButtonContainer = styled.button<
 
   :hover {
     opacity: 0.5;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
+  }
+
+  p {
+    line-height: 100%;
   }
 `;
 

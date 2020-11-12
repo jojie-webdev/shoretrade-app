@@ -1,6 +1,7 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Container = styled.div`
   flex-direction: row;
@@ -8,25 +9,23 @@ export const Container = styled.div`
 
   .description {
     text-align: center;
-    padding: 24px;
-  }
-
-  .wrapper {
-    width: calc(100% - 200px);
-    margin: auto;
-
-    @media ${BREAKPOINTS['sm']} {
-      width: 100%;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: calc(100% - 150px);
-    }
+    margin-bottom: 16px;
   }
 `;
 
 export const BannerContainer = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  width: 100%;
+  max-width: 100%;
+
+  .placeholder {
+    margin: auto;
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 295px;
+    object-fit: contain;
+  }
 `;
 
 export const DetailsContainer = styled(Row)`
@@ -46,9 +45,8 @@ export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
   }
 
   @media (min-width: 992px) {
-    border-width: 2px 2px 1px 2px;
+    border-width: 2px;
     border-radius: 0px 0px 8px 8px;
-    border-bottom-right-radius: 0px;
   }
 `;
 
@@ -63,7 +61,6 @@ export const DesiredQuantityContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
   border-color: ${({ theme }) => theme.grey.shade2};
   border: 2px solid #edeffa;
-  height: 100%;
 
   @media (max-width: 991px) {
     border-width: 1px 2px 2px 2px;
@@ -71,19 +68,19 @@ export const DesiredQuantityContainer = styled.div`
   }
 
   @media (min-width: 992px) {
-    border-left: 0px;
-    border-radius: 8px 8px 8px 8px;
-    border-width: 2px 2px 1px 1px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
+    border-radius: 8px;
+    border-width: 2px;
   }
 
   .content {
     display: flex;
-    /* background-color: #000; */
-    flex: 1;
     flex-direction: column;
-    /* height: 100%; */
+  }
+
+  .box-loading {
+    display: flex;
+    flex-direction: column;
+    padding-top: 48px;
   }
 `;
 
@@ -101,4 +98,12 @@ export const BoxRadioContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const AddToCartButton = styled(Button)`
+  @media ${BREAKPOINTS['sm']} {
+    width: 50%;
+  }
 `;

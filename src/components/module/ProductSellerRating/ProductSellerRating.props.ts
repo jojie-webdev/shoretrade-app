@@ -6,4 +6,5 @@ export interface ProductSellerRatingProps {
   rating: string;
   isFavorite?: boolean;
   onFavorite: () => Promise<void>;
+  onClickSeller: () => void;
 }

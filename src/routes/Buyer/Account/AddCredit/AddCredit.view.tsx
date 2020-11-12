@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import SegmentedControls from 'components/base/SegmentedControls';
-import Typography from 'components/base/Typography';
+import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { Formik, Field } from 'formik';
-import pathOr from 'ramda/es/pathOr';
-import { Col } from 'react-grid-system';
+import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
+import { Formik } from 'formik';
+import { useHistory } from 'react-router-dom';
 
 import { AddCreditGeneratedProps } from './AddCredit.props';
 import {
   Container,
   Content,
-  CreditInput,
   FormAddCredit,
+  Notification,
 } from './AddCredit.style';
 import { validate } from './AddCredit.validation';
 import { FieldsetBankAccount } from './FieldsetBankAccount';
@@ -34,9 +35,12 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
     setSelectedCardId,
     addCredit,
     isPending,
+    chargeCardResult,
   } = props;
 
-  const [activeTab, setActiveTab] = useState(TABS.BANK);
+  const [activeTab, setActiveTab] = useState(TABS.CC);
+
+  const history = useHistory();
 
   // const theme = useTheme();
   return (
@@ -45,12 +49,18 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
 
       <Content>
         <SegmentedControls
-          options={[TABS.BANK, TABS.CC]}
+          options={[TABS.CC, TABS.BANK]}
           selectedOption={activeTab}
           onClickControl={(value) => {
             setActiveTab(value == TABS.BANK ? TABS.BANK : TABS.CC);
           }}
         />
+
+        {chargeCardResult?.error && (
+          <Notification>
+            <Alert variant="error" content="Cannot add Credit at the moment." />
+          </Notification>
+        )}
 
         <Formik
           initialValues={{
@@ -63,10 +73,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
           enableReinitialize
         >
           <FormAddCredit>
-            <Col
-              md={activeTab == TABS.BANK ? 6 : 12}
-              className="textfield-container"
-            >
+            <FixedWidthContainer width={436} className="textfield-container">
               <FormikTextField
                 type="text"
                 name="amount"
@@ -76,7 +83,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
                 variant="label"
                 color="shade8"
               />
-            </Col>
+            </FixedWidthContainer>
 
             {activeTab == TABS.BANK && <FieldsetBankAccount />}
 
@@ -90,8 +97,19 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
 
             {activeTab == TABS.BANK ? (
               <Button type="submit" text="Download Invoice" disabled />
+            ) : cards.length ? (
+              <Button type="submit" text="Add Credit" loading={isPending} />
             ) : (
-              <Button type="submit" text="SAVE" loading={isPending} />
+              <Button
+                type="button"
+                text="Add a Card"
+                loading={isPending}
+                onClick={() => {
+                  history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+                    card: {},
+                  });
+                }}
+              />
             )}
           </FormAddCredit>
         </Formik>

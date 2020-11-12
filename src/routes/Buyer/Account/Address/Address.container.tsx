@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { push } from 'connected-react-router';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
-import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getAddressesActions } from 'store/actions';
-import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import {
+  getAddressesActions,
+  updateAddressActions,
+  addAddressActions,
+} from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
-import AccountDeliveryView from './Address.view';
-const AccountDelivery = (): JSX.Element => {
+import AddressView from './Address.view';
+const Address = (): JSX.Element => {
   // Mark:- Variables
   const history = useHistory();
   const dispatch = useDispatch();
@@ -19,6 +21,11 @@ const AccountDelivery = (): JSX.Element => {
   const getAddress = useSelector((state: Store) => state.getAddresses);
   const addresses = getAddress.data?.data.addresses || [];
   const pending = getAddress.pending || false;
+  const [notificationMessage, setNotifficationMessage] = useState('');
+  const updateAdrressResult = useSelector(
+    (state: Store) => state.updateAddress
+  );
+  const addAddressResult = useSelector((state: Store) => state.addAddress);
 
   // Mark:- Methods
   const getAddresses = () => {
@@ -46,13 +53,48 @@ const AccountDelivery = (): JSX.Element => {
     getAddresses();
   }, [companyId]);
 
+  useEffect(() => {
+    const isUpdateLoading = updateAdrressResult.pending;
+    const updateClassification =
+      updateAdrressResult.data?.data?.address?.approved;
+    if (
+      !isUpdateLoading &&
+      isUpdateLoading !== null &&
+      updateClassification === 'DECLINED'
+    ) {
+      setNotifficationMessage('Your address has been deleted successfully!');
+    } else if (
+      !isUpdateLoading &&
+      isUpdateLoading !== null &&
+      updateClassification !== 'DECLINED'
+    ) {
+      setNotifficationMessage('Your address has been updated successfully!');
+    }
+  }, [updateAdrressResult]);
+
+  useEffect(() => {
+    if (notificationMessage.length > 0) {
+      dispatch(updateAddressActions.clear());
+      dispatch(addAddressActions.clear());
+    }
+  }, [notificationMessage]);
+
+  useEffect(() => {
+    const isLoading = addAddressResult.pending;
+    const addAddressData = addAddressResult.data;
+    if (!isLoading && addAddressData) {
+      setNotifficationMessage('Your address has been successfully added!');
+    }
+  }, [addAddressResult]);
+
   const generatedProps = {
+    notificationMessage,
     addresses,
     pending,
     goToEditAddress,
     goToAddAddress,
   };
-  return <AccountDeliveryView {...generatedProps} />;
+  return <AddressView {...generatedProps} />;
 };
 
-export default AccountDelivery;
+export default Address;

@@ -37,7 +37,8 @@ export const SELLER_DASHBOARD_ROUTES = {
 
 export const SELLER_SOLD_ROUTES = {
   LANDING: `${SELLER_ROUTES.SOLD}`,
-  CONFIRM_LIST: `${SELLER_ROUTES.SOLD}/confirm/:orderId`,
+  CONFIRM_LIST: (orderId = ':orderId') =>
+    `${SELLER_ROUTES.SOLD}/confirm/${orderId}`,
   CONFIRM: `${SELLER_ROUTES.SOLD}/confirm/:orderId/:lineItemId`,
   DETAILS: `${SELLER_ROUTES.SOLD}/details/:status/:orderId`,
 };
@@ -78,12 +79,17 @@ export const BUYER_ROUTES = {
   CATEGORIES: `${BUYER_ROOT}/categories`,
   CHECKOUT: `${BUYER_ROOT}/checkout`,
   SEARCH: `${BUYER_ROOT}/search`,
+  PRODUCT_DETAIL: (id = ':id') => `${BUYER_ROOT}/product/${id}`,
   CATEGORY_PRODUCTS: (id = ':id') => `${BUYER_ROOT}/categories/${id}`,
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
+  RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
+  SELLERS: `${BUYER_ROOT}/sellers`,
+  FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
+  SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {
@@ -100,7 +106,7 @@ export const BUYER_ACCOUNT_ROUTES = {
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
-  CREDIT_HISORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
+  BALANCE_HISTORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
 };

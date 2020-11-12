@@ -27,7 +27,8 @@ export function placeDataToAddAddressMeta(
   data: PlaceData,
   unitNumber: string,
   companyId: string,
-  isDefault: boolean
+  isDefault: boolean,
+  approved?: string
 ): AddAddressMeta {
   return {
     companyId,
@@ -41,5 +42,6 @@ export function placeDataToAddAddressMeta(
     state: data.administrativeAreaLevel1,
     postcode: data.postcode,
     countryCode: data.countryCode,
+    approved: approved || '',
   };
 }

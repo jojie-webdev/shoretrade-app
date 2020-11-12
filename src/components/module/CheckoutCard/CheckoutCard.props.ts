@@ -6,5 +6,6 @@ export interface CheckoutCardProps {
   size?: string;
   vendor?: string;
   unit?: string;
+  tags?: { label: string }[];
   onRemove?: () => void;
 }

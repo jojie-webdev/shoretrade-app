@@ -1,23 +1,6 @@
 import Button from 'components/base/Button';
 import styled, { css } from 'utils/styled';
 
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
-
 export const PreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,19 +10,10 @@ export const PreviewContainer = styled.div`
   display: table;
   clear: both;
   width: 100%;
-  padding: 0 6px;
+  padding: 0 16px;
 
-  ${customScrollbar}
-
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    clear: both;
-  }
-
-  .search-container {
-    flex-direction: row;
-    display: flex;
+  .search-row {
+    margin-bottom: 24px;
   }
 
   .filter-container {
@@ -49,32 +23,15 @@ export const PreviewContainer = styled.div`
     margin-bottom: 5px;
   }
 
-  /* Float four columns side by side */
-  .column {
-    float: left;
-    /* width: 30%; */
-    padding: 0;
+  .subheader {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
   }
-
-  /* Remove extra left and right margins, due to padding */
-  .row {
-    margin: 0 -5px;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
-  /* Responsive columns */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
-    }
+  .result-count-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
   }
 `;
 
@@ -87,10 +44,13 @@ export const LoadingContainer = styled.div`
 `;
 
 export const FilterButton = styled(Button)`
+  min-width: 64px !important;
+  max-width: 64px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
   background: #111e2b;
   border-radius: 4px;
   color: white;
-  min-width: 69px !important;
   align-content: 'center';
   justify-content: 'center';
 `;

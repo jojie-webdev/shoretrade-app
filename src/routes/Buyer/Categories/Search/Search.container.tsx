@@ -1,48 +1,26 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import {
-  getListingTypesByCategoryActions,
-  currentAddressActions,
-} from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
+import { useParams } from 'react-router-dom';
+import { getListingTypesByCategoryActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
+import { CategoriesSearchGeneratedProps } from './Search.props';
 import CategoriesSearchView from './Search.view';
-
 const CategoriesSearch = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const token = useSelector((state: Store) => state.auth.token) || '';
-  const addresses = GetAddressOptions();
-  const selectedAddress =
-    useSelector((state: Store) => state.currentAddress.id) || '';
-  const selectAddress = (id: string) => {
-    dispatch(
-      currentAddressActions.update({
-        id,
-      })
-    );
-  };
 
   const previousId =
     useSelector(
       (state: Store) => state.getListingTypesByCategory.request?.categoryId
     ) || '';
-  const results = (
+  const results =
     useSelector(
       (state: Store) => state.getListingTypesByCategory.data?.data.type
-    ) || []
-  ).filter((result) =>
-    searchValue
-      ? result.name.toLowerCase().includes(searchValue.toLowerCase())
-      : true
-  );
+    ) || [];
 
   // MARK:- Effects
   useEffect(() => {
@@ -60,27 +38,12 @@ const CategoriesSearch = (): JSX.Element => {
     setLoading(false);
   };
 
-  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
-  const resetSearchValue = () => {
-    setSearchValue('');
-  };
-
   // MARK:- Render
-  const generatedProps = {
-    // generated props hereonChangeSearchValue,
-    onChangeSearchValue,
-    searchValue,
-    resetSearchValue,
+  const generatedProps: CategoriesSearchGeneratedProps = {
     loading,
     results,
     categoryId: id,
     onLoad,
-    addresses,
-    selectedAddress,
-    selectAddress,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };

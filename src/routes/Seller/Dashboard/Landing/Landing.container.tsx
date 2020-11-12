@@ -104,6 +104,7 @@ const Dashboard = (): JSX.Element => {
 
     return {
       pathname,
+      state: { innerRouteTitle: 'Historical Sales' },
     };
   };
 

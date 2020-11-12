@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Heart, HeartFilled, Star, StarFilled } from 'components/base/SVG';
+import {
+  Heart,
+  HeartFilled,
+  PlaceholderProfile,
+  Star,
+  StarFilled,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 // import { useTheme } from 'utils/Theme';
@@ -29,13 +35,23 @@ const SellerRating = (props: SellerRatingProps): JSX.Element => {
   const hasLocation =
     companyLocation?.state !== '' && companyLocation?.countryCode !== '';
 
+  const [defaultImage, setDefaultImage] = useState(companyImage);
+
   return (
     <Row>
       <AvatarContainer>
-        {companyImage ? (
-          <AvatarPreview src={companyImage} alt="profile picture" />
+        {(defaultImage || '').length > 0 ? (
+          <AvatarPreview
+            src={defaultImage}
+            alt={`${companyName}-image`}
+            onError={() => {
+              setDefaultImage('');
+            }}
+          />
         ) : (
-          <AvatarPlaceholder />
+          <AvatarPlaceholder>
+            <PlaceholderProfile width={96} height={96} />
+          </AvatarPlaceholder>
         )}
         <Favorite onClick={onFavorite}>
           {isFavorite ? (

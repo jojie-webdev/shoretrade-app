@@ -10,7 +10,6 @@ const ModalComponent = ({ children }) => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [selectedCheckboxFilters, setSelectedCheckboxFilters] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
 
   const filters = [
     // {
@@ -31,16 +30,13 @@ const ModalComponent = ({ children }) => {
       label: 'Size',
       type: 'size_input',
       values: ['3000', '5000'],
-      unit: 'Kg',
+      unit: 'kg',
     },
     {
       label: 'Type',
       values: ['Frozen', 'Fresh'],
       type: 'choice',
     },
-    { label: 'Catchment Region',
-      type: 'location' },
-
   ];
 
   const checkboxFilters = [
@@ -54,12 +50,10 @@ const ModalComponent = ({ children }) => {
 
   const onReset = () => {
     setSelectedFilters([]);
-    setSelectedLocation(null);
     setSelectedCheckboxFilters([]);
   };
 
   const onApply = () => {
-    
     console.log(selectedFilters);
     console.log(selectedSize);
   };
@@ -76,8 +70,6 @@ const ModalComponent = ({ children }) => {
         setSelectedCheckboxFilters={setSelectedCheckboxFilters}
         selectedSize={selectedSize}
         setSelectedSize={setSelectedSize}
-        selectedLocation={selectedLocation}
-        setSelectedLocation={setSelectedLocation}
         onReset={onReset}
         onApply={onApply}
       />
@@ -86,13 +78,13 @@ const ModalComponent = ({ children }) => {
 };
 
 storiesOf('module/FilterModal', module).add('Seller', () => (
-  <Container background="white" appType='seller'>
+  <Container background="white" appType="seller">
     <ModalComponent />
   </Container>
 ));
 
 storiesOf('module/FilterModal', module).add('Buyer', () => (
-  <Container background="white" appType='buyer'>
+  <Container background="white" appType="buyer">
     <ModalComponent />
   </Container>
 ));

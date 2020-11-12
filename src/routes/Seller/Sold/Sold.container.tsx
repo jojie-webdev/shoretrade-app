@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { push } from 'connected-react-router';
+import { SELLER_SOLD_ROUTES } from 'consts';
+import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
   getSellerOrdersPlacedActions,
   getSellerOrdersTransitActions,
   getSellerOrdersDeliveredActions,
+  sendMessageActions,
+  placeOrderActions,
 } from 'store/actions';
 import {
   GetSellerOrdersToShipPending,
@@ -12,6 +18,8 @@ import {
   GetSellerOrdersInTransit,
   GetSellerOrdersDelivered,
 } from 'store/selectors/seller/orders';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -19,16 +27,12 @@ import { SoldGeneratedProps, TabOptions, RequestFilters } from './Sold.props';
 import {
   orderItemToPendingToShipItem,
   groupToShipOrders,
-  orderItemToToShipItemData,
-  orderItemToInTransitItemData,
-  orderItemToDeliveredItemData,
-  groupInTransitOrders,
-  groupDeliveredOrders,
+  orderItemToSoldItemData,
 } from './Sold.tranform';
 import SoldView from './Sold.view';
-
 const Sold = (): JSX.Element => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const token = useSelector((state: Store) => state.auth.token) || '';
 
@@ -76,26 +80,31 @@ const Sold = (): JSX.Element => {
     GetSellerOrdersToShipPending()
   );
 
-  const toShip = groupToShipOrders(GetSellerOrdersToShip()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToToShipItemData(orderGroup.data),
-    })
-  );
+  const rawDataToSoldItems = (rawData: GetSellerOrdersResponseItem[]) => {
+    return groupToShipOrders(rawData).map((orderGroup) => {
+      const toShipItemData = orderItemToSoldItemData(orderGroup.data);
+      const orderTotal = Object.keys(toShipItemData).reduce(
+        (accum, current) => {
+          return (
+            accum +
+            toShipItemData[current].reduce((accumA, currentA) => {
+              return accumA + currentA.orders.length;
+            }, 0)
+          );
+        },
+        0
+      );
+      return {
+        title: orderGroup.title,
+        data: toShipItemData,
+        orderTotal,
+      };
+    });
+  };
 
-  const inTransit = groupInTransitOrders(GetSellerOrdersInTransit()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToInTransitItemData(orderGroup.data),
-    })
-  );
-
-  const delivered = groupDeliveredOrders(GetSellerOrdersDelivered()).map(
-    (orderGroup) => ({
-      title: orderGroup.title,
-      data: orderItemToDeliveredItemData(orderGroup.data),
-    })
-  );
+  const toShip = rawDataToSoldItems(GetSellerOrdersToShip());
+  const inTransit = rawDataToSoldItems(GetSellerOrdersInTransit());
+  const delivered = rawDataToSoldItems(GetSellerOrdersDelivered());
 
   const toShipCount =
     useSelector(
@@ -108,7 +117,30 @@ const Sold = (): JSX.Element => {
     ) || '1';
 
   const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
-  const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
+
+  const onChangeCurrentTab = (newTab: TabOptions) => {
+    dispatch(
+      push(
+        `${SELLER_SOLD_ROUTES.LANDING}${qs.stringify(
+          { tab: newTab },
+          { addQueryPrefix: true }
+        )}`
+      )
+    );
+  };
+
+  useEffect(() => {
+    const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
+      tab: TabOptions;
+    };
+
+    if (!tab) {
+      setCurrentTab('To Ship');
+      return;
+    }
+
+    setCurrentTab(tab);
+  }, [location.search]);
 
   useEffect(() => {
     if (currentTab === 'To Ship') {
@@ -116,11 +148,13 @@ const Sold = (): JSX.Element => {
         getOrders.placed();
       }
     }
+
     if (currentTab === 'In Transit') {
       if (inTransit.length === 0) {
         getOrders.transit();
       }
     }
+
     if (currentTab === 'Delivered') {
       if (delivered.length === 0) {
         getOrders.delivered();
@@ -176,6 +210,26 @@ const Sold = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
+  const sendMessage = (buyerId: string, message: string) => {
+    if (buyerId && message) {
+      dispatch(
+        sendMessageActions.request({
+          buyerId: buyerId || '',
+          message,
+        })
+      );
+    }
+  };
+
+  const isPlacingOrder =
+    useSelector((state: Store) => state.placeOrder.pending) || false;
+  const placeOrder = (data: PlaceOrderMeta) => {
+    dispatch(placeOrderActions.request(data));
+  };
+
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
@@ -191,6 +245,10 @@ const Sold = (): JSX.Element => {
     filters,
     updateFilters,
     token,
+    sendMessage,
+    isSendingMessage,
+    isPlacingOrder,
+    placeOrder,
   };
   return <SoldView {...generatedProps} />;
 };

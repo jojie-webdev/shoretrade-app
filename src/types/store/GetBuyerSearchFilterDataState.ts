@@ -4,13 +4,13 @@ export type GetBuyerSearchFilterDataMeta = {
   typeId: string;
 };
 
-export type GetBuyerSearchFilterDataPayload = GenericResponse<{
+export type FilterDataResponse = {
   maxBoxCount: number;
   minBoxCount: number;
   origin: string[];
-  sizeFrom: number;
+  sizeFrom: number | string;
   sizeOptions: [];
-  sizeTo: number;
+  sizeTo: number | string;
   specifications: [
     {
       categoryStateOptionId: string;
@@ -23,4 +23,8 @@ export type GetBuyerSearchFilterDataPayload = GenericResponse<{
   ][];
   stateRules: Record<string, string[]>;
   typeMetric: string;
-}>;
+};
+
+export type GetBuyerSearchFilterDataPayload = GenericResponse<
+  FilterDataResponse
+>;

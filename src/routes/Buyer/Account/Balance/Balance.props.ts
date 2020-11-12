@@ -6,4 +6,5 @@ export interface CardItem extends GetPaymentMethodsResponseItem {
 export interface BalanceGeneratedProps {
   credit: string;
   cards: CardItem[];
+  notifMessage: string;
 }

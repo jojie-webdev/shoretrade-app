@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getSellerOrdersPlacedActions, placeOrderActions } from 'store/actions';
+import {
+  getSellerOrdersPlacedActions,
+  placeOrderActions,
+  sendMessageActions,
+} from 'store/actions';
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
@@ -75,6 +79,18 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
     );
   };
 
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
+  const sendMessage = (message: string) => {
+    dispatch(
+      sendMessageActions.request({
+        buyerId: order?.buyerId || '',
+        message,
+      })
+    );
+  };
+
   const generatedProps: ConfirmListGeneratedProps = {
     // generated props here
     title,
@@ -83,6 +99,8 @@ const ConfirmList = (props: ConfirmListPublicProps): JSX.Element => {
     placeOrder,
     isPending,
     buyer,
+    sendMessage,
+    isSendingMessage,
   };
   return <ConfirmListView {...props} {...generatedProps} />;
 };

@@ -1,5 +1,5 @@
+import Accordion from 'components/base/Accordion/Accordion.view';
 import styled from 'utils/styled';
-
 export const Container = styled.div`
   height: 100%;
   padding: 0 8px 48px 8px;
@@ -17,6 +17,22 @@ export const Container = styled.div`
     margin-top: 32px;
     margin-bottom: 16px;
   }
+
+  .center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
+
+  .accordion-container {
+    margin-bottom: 8px;
+    padding-top: 0px;
+  }
+
+  .accordion-content-container {
+    background: ${(props) => props.theme.grey.noshade};
+    padding: 24px;
+  }
 `;
 
 export const Footer = styled.div`
@@ -25,6 +41,10 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  .box-error-container {
+    margin-bottom: 24px;
+  }
 
   .footer-separator {
     margin-top: 24px;

@@ -1,5 +1,5 @@
 import Typography from 'components/base/Typography';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
 export const Row = styled.div`
   display: flex;
@@ -7,28 +7,29 @@ export const Row = styled.div`
   width: 100%;
 `;
 
-export const PreviewContainer = styled.div`
-  margin-right: 16px;
-  border-radius: 4px;
+export const AvatarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
+  width: fit-content;
 `;
 
-export const FlexShrinked = styled.div`
-  flex-shrink: 1;
-  margin-top: 4px;
-`;
-
-export const Preview = styled.img`
+export const AvatarPreview = styled.img`
   width: 96px;
   height: 96px;
-  border-radius: 4px;
+  border-radius: 5px;
+  object-fit: contain;
 `;
 
-export const Bold = styled(Typography)``;
-
-export const StarContainer = styled.div<{ location?: string }>`
-  margin-right: 6px;
-  margin-top: ${({ location }) => (location ? '9px' : 0)};
+export const AvatarPlaceholder = styled.div`
+  border-radius: 5px;
+  width: 96px;
+  height: 96px;
+  background-color: ${({ theme }) => theme.grey.shade2};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Favorite = styled.button`
@@ -39,12 +40,22 @@ export const Favorite = styled.button`
   right: 8px;
   width: 40px;
   height: 40px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-radius: 20px;
-  ${() => `
-    shadow-color: rgba(41, 43, 50, 0.12);
-    shadow-opacity: 1.34;
-    shadow-radius: 6.27;
-    shadow-offset: 0 5px;
-    elevation: 3;`};
+  border-width: 0;
+  border-radius: 50%;
+  background-color: white;
+  padding-top: 8px;
+  box-shadow: 0px 4px 10px -5px;
+`;
+
+export const FlexShrinked = styled.div`
+  flex-shrink: 1;
+  margin-top: 4px;
+  cursor: pointer;
+`;
+
+export const Bold = styled(Typography)``;
+
+export const StarContainer = styled.div<{ location?: string }>`
+  margin-right: 6px;
+  margin-top: ${({ location }) => (location ? '9px' : 0)};
 `;

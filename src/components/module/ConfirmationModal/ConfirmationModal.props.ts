@@ -4,6 +4,7 @@ type ConfirmationModalGeneratedProps = {
   title?: string;
   description?: string;
   actionText?: string;
+  cancelText?: string;
   action: () => void;
 };
 

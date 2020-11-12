@@ -81,6 +81,10 @@ import {
   GetListingTypesByCategoryPayload,
 } from './GetListingTypesByCategoryState';
 import {
+  GetMarketEstimateMeta,
+  GetMarketEstimatePayload,
+} from './GetMarketEstimateState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -115,6 +119,7 @@ import {
   SearchProductTypeMeta,
   SearchProductTypePayload,
 } from './SearchProductTypeState';
+import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -258,4 +263,6 @@ export interface Store {
     UpdateFavoriteSellerPayload
   >;
   sellerDashboardDate: any;
+  sendMessage: AsyncState<SendMessageMeta, SendMessagePayload>;
+  getMarketEstimate: AsyncState<GetMarketEstimateMeta, GetMarketEstimatePayload>;
 }

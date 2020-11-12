@@ -6,4 +6,5 @@ export interface AssistantsGeneratedProps {
   goToCreateAssistant: () => void;
   onClickAssistant: (assistantId: string) => void;
   currentCompanyName: string;
+  notifMsg: string;
 }

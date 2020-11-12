@@ -7,7 +7,15 @@ import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { CarouselProps } from './Carousel.props';
-import { SwiperArea, ArrowArea, Image, ImageContainer } from './Carousel.style';
+import {
+  SwiperArea,
+  ArrowArea,
+  Image,
+  ImageContainer,
+  LeftInsideArrowArea,
+  RightInsideArrowArea,
+  ArrowButton,
+} from './Carousel.style';
 
 SwiperCore.use([Autoplay]);
 
@@ -22,18 +30,21 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowWidth,
     justifyArrows,
     hideArrowArea,
+    aspectRatio = '16:9',
+    addMargin,
+    arrowInside,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer>
-          <Image src={image} />
-        </ImageContainer>
+        <ImageContainer img={image} aspectRatio={aspectRatio} />
       </SwiperSlide>
     );
   });
+
+  const [showSwiperItems, setShowSwiperItems] = useState(true);
 
   // initialize swiper
   // useful when image data comes from BE
@@ -45,6 +56,18 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     }
   }, [images]);
 
+  // logic to rerender the items,
+  // this allows images to resize properly
+  useEffect(() => {
+    if (!showSwiperItems) {
+      setShowSwiperItems(true);
+    } else {
+      if (swiperRef) {
+        swiperRef.update();
+      }
+    }
+  }, [showSwiperItems]);
+
   const swiperAreaWidth =
     swiperWidth ||
     `calc(100% - ${arrowWidth ? `${arrowWidth * 2}px` : '200px'})`;
@@ -54,9 +77,21 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     ? `calc((100% - ${swiperWidth})/2)`
     : 100;
 
+  if (images.length === 0) {
+    return <></>;
+  }
+
+  const hideOutsideArrows = arrowInside || hideArrowArea || false;
   return (
-    <SwiperContainer height={height}>
-      {!hideArrowArea && (
+    <SwiperContainer
+      height={height}
+      aspectRatio={aspectRatio}
+      addMargin={addMargin}
+      onResize={() => {
+        setShowSwiperItems(false);
+      }}
+    >
+      {!hideOutsideArrows && (
         <ArrowArea
           style={{
             width: arrowAreaWidth,
@@ -77,14 +112,45 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           )}
         </ArrowArea>
       )}
-      <SwiperArea style={{ width: hideArrowArea ? '100%' : swiperAreaWidth }}>
+      <SwiperArea
+        style={{
+          width: hideOutsideArrows ? '100%' : swiperAreaWidth,
+        }}
+      >
+        {arrowInside && (
+          <>
+            <LeftInsideArrowArea>
+              <ArrowButton
+                onClick={() => {
+                  if (swiperRef) {
+                    swiperRef.slidePrev();
+                  }
+                }}
+              >
+                <CarouselChevronLeft width={14} height={14} />
+              </ArrowButton>
+            </LeftInsideArrowArea>
+            <RightInsideArrowArea>
+              <ArrowButton
+                onClick={() => {
+                  if (swiperRef) {
+                    swiperRef.slideNext();
+                  }
+                }}
+              >
+                <CarouselChevronRight width={14} height={14} />
+              </ArrowButton>
+            </RightInsideArrowArea>
+          </>
+        )}
         <Swiper
           id={id}
           spaceBetween={10}
           slidesPerView={1}
-          loop={loop}
+          loop={loop && images.length > 1}
+          initialSlide={0}
           autoplay={
-            autoplay
+            images.length !== 0 && autoplay
               ? {
                   delay: 5000,
                 }
@@ -94,10 +160,10 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             setSwiperRef(swiper);
           }}
         >
-          {swiperItems}
+          {showSwiperItems && swiperItems}
         </Swiper>
       </SwiperArea>
-      {!hideArrowArea && (
+      {!hideOutsideArrows && (
         <ArrowArea
           style={{
             width: arrowAreaWidth,

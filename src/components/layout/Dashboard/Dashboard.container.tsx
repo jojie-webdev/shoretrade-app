@@ -9,7 +9,12 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from 'routes/index.routes';
-import { authActions } from 'store/actions';
+import { getCustomFormData, getListingFormData } from 'services/listing';
+import {
+  authActions,
+  cartActions,
+  editableListingActions,
+} from 'store/actions';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
@@ -62,6 +67,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   };
 
   const logout = () => {
+    dispatch(editableListingActions.clear());
+    dispatch(cartActions.clear());
     dispatch(authActions.clear());
   };
 

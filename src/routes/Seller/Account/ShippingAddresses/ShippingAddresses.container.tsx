@@ -4,8 +4,11 @@ import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { getAddressesActions } from 'store/actions';
+import {
+  getAddressesActions,
+  updateAddressActions,
+  addAddressActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
 
@@ -21,6 +24,11 @@ const ShippingAddresses = (): JSX.Element => {
   // Mark:- Variables
   const addresses = getAddress.data?.data.addresses || [];
   const pending = getAddress.pending || false;
+  const updateAdrressResult = useSelector(
+    (state: Store) => state.updateAddress
+  );
+  const addAddressResult = useSelector((state: Store) => state.addAddress);
+  const [notificationMessage, setNotifficationMessage] = useState('');
 
   // Mark:- Methods
   const onClickAddress = (addressId: string) => {
@@ -47,10 +55,45 @@ const ShippingAddresses = (): JSX.Element => {
     }
   }, [companyId]);
 
+  useEffect(() => {
+    const isUpdateLoading = updateAdrressResult.pending;
+    const updateClassification =
+      updateAdrressResult.data?.data?.address?.approved;
+    if (
+      !isUpdateLoading &&
+      isUpdateLoading !== null &&
+      updateClassification === 'DECLINED'
+    ) {
+      setNotifficationMessage('Your address has been deleted successfully!');
+    } else if (
+      !isUpdateLoading &&
+      isUpdateLoading !== null &&
+      updateClassification !== 'DECLINED'
+    ) {
+      setNotifficationMessage('Your address has been updated successfully!');
+    }
+  }, [updateAdrressResult]);
+
+  useEffect(() => {
+    if (notificationMessage.length > 0) {
+      dispatch(updateAddressActions.clear());
+      dispatch(addAddressActions.clear());
+    }
+  }, [notificationMessage]);
+
+  useEffect(() => {
+    const isLoading = addAddressResult.pending;
+    const addAddressData = addAddressResult.data;
+    if (!isLoading && addAddressData) {
+      setNotifficationMessage('Your address has been successfully added!');
+    }
+  }, [addAddressResult]);
+
   // Mark:- Render
   const generatedProps: ShippingAddressesGeneratedProps = {
     addresses,
     pending,
+    notificationMessage,
     onClickAddress,
     onClickAddAddress,
   };

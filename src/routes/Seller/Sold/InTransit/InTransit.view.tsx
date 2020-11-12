@@ -1,85 +1,105 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 
-import {
-  Octopus,
-  ChevronRight,
-  Scale,
-  InfoFilled,
-  Plane,
-  Truck,
-} from 'components/base/SVG';
+import Button from 'components/base/Button';
+import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { SELLER_SOLD_ROUTES } from 'consts';
+import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
-import { Row, Col } from 'react-grid-system';
+import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps } from '../Sold.props';
-import { DeliveryItem } from '../Sold.style';
-import { TransitRow } from './InTransit.styles';
+import SoldItem from '../SoldItem.view';
+import {
+  StyledInteraction,
+  CollapsibleContent,
+  Spacer,
+  ItemRow,
+} from './InTransit.styles';
 
 const InTransit = (props: SoldGeneratedProps) => {
-  const { inTransit } = props;
+  const { inTransit, token } = props;
+
+  const theme = useTheme();
   const history = useHistory();
+  const [isOpen, setIsOpen] = useState<string[]>([]);
+
+  const toggleAccordion = (title: string) => {
+    const isExisting = isOpen.some((v) => v === title);
+
+    if (!isExisting) {
+      setIsOpen((prevState) => [...prevState, title]);
+    } else {
+      setIsOpen((prevState) => {
+        return prevState.filter((v) => v !== title);
+      });
+    }
+  };
   return (
-    <TransitRow>
+    <>
       {inTransit.map((group) => {
-        const { title, data } = group;
-        const Icon = () =>
-          title.toLowerCase().includes('air') ? (
-            <Plane height={13} width={13} />
-          ) : (
-            <Truck height={13} width={13} />
-          );
+        const getDisplayDate = () => {
+          const targetDate = moment(group.title);
+          const currentDate = moment();
+          const dateDiff = targetDate.diff(currentDate, 'days');
+
+          if (dateDiff === -1) {
+            return 'Yesterday';
+          } else if (dateDiff === 0) {
+            return 'Today';
+          } else if (dateDiff === 1) {
+            return 'Tomorrow';
+          }
+
+          return targetDate.format('Do MMMM');
+        };
+
+        const calendarDateString = getDisplayDate();
+
         return (
-          <Col key={title} className="transit-col" md={12}>
-            <div className="section-header">
-              <Icon />
-              <Typography color="noshade" className="title">
-                {title}
-              </Typography>
-            </div>
-            {data.map((item) => {
-              const { date, amount, id } = item;
-              const deliveryDate = moment(date).format('ddd DD MMM');
-              return (
-                <DeliveryItem
-                  key={id}
-                  onClick={() =>
-                    history.push(
-                      SELLER_SOLD_ROUTES.DETAILS.replace(
-                        ':orderId',
-                        id
-                      ).replace(':status', 'TRANSIT')
-                    )
-                  }
-                  iconAlignment="flex-start"
-                >
-                  <div className="content">
-                    <div className="top">
-                      <Typography
-                        color="shade6"
-                        weight="500"
-                        variant="label"
-                        className="delivery-date"
-                      >
-                        Delivery Date
-                      </Typography>
-                      <Typography color="noshade" weight="bold" variant="label">
-                        {deliveryDate}
+          <ItemRow key={calendarDateString}>
+            <Col>
+              <StyledInteraction
+                pressed={isOpen.includes(calendarDateString)}
+                onClick={() => toggleAccordion(calendarDateString)}
+                type="accordion"
+                iconColor={theme.brand.primary}
+              >
+                <div className="content">
+                  <div className="left-content left-content-extended">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="center-text title-text"
+                    >
+                      {calendarDateString}
+                    </Typography>
+
+                    <div className="order-count">
+                      <Typography variant="label" color="noshade">
+                        {group.orderTotal}&nbsp;
+                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
                       </Typography>
                     </div>
-                    <Typography variant="title5" weight="900" color="noshade">
-                      ${amount}
-                    </Typography>
                   </div>
-                </DeliveryItem>
-              );
-            })}
-          </Col>
+                  <Spacer />
+                  <div className="right-content" />
+                  <div className="buttons" />
+                </div>
+              </StyledInteraction>
+
+              <CollapsibleContent
+                isOpen={isOpen.includes(calendarDateString)}
+                style={{ marginLeft: 24, marginRight: 24 }}
+              >
+                <SoldItem data={group.data} token={token} status="TRANSIT" />
+              </CollapsibleContent>
+            </Col>
+          </ItemRow>
         );
       })}
-    </TransitRow>
+    </>
   );
 };
 

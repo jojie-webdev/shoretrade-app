@@ -34,12 +34,14 @@ import getListingBoxes from './getListingBoxes';
 import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
+import getMarketEstimate from './getMarketEstimate';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
+import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import history from './history';
 import login from './login';
@@ -50,6 +52,7 @@ import resendVerification from './resendVerification';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
+import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -63,63 +66,66 @@ export default (routeHistory: History) =>
   combineReducers(
     Object.fromEntries(
       Object.entries({
-        router: connectRouter(routeHistory),
-        auth,
-        login,
-        resendVerification,
-        verify,
-        forgotPassword,
-        getUser,
-        getAllListings,
-        register,
-        updateUser,
-        getAddresses,
-        updateAddress,
-        getSellerOrdersPlaced,
-        getSellerOrdersTransit,
-        getSellerOrdersDelivered,
-        getBankDetails,
-        updateBankDetails,
-        changePassword,
-        currentAddress,
-        getBuyerHomepage,
-        getListingTypesByCategory,
-        getBuyerSearchFilterData,
-        getListingsByType,
-        getLinkedAccounts,
-        addLinkedAccount,
         addAddress,
-        deleteLinkedAccount,
-        getSellerById,
+        addCardToken,
+        addLinkedAccount,
+        auth,
         cart,
-        order,
-        getShippingQuote,
-        getListing,
-        getListingBoxes,
-        updateFavoriteSeller,
-        updateFavouriteProduct,
-        searchAndCountProductType,
-        history,
+        changePassword,
+        chargeCard,
         confirmWeight,
-        placeOrder,
-        getCoopUsers,
-        editableListing,
-        sellerDashboardDate,
-        searchProductType,
-        getListingFormData,
-        getCustomFormData,
-        updateListing,
-        createListing,
         createCustomListing,
+        createListing,
+        currentAddress,
+        deleteCard,
+        deleteLinkedAccount,
+        editableListing,
+        endListing,
+        forgotPassword,
+        getAddresses,
+        getAllListings,
+        getBankDetails,
+        getBuyerHomepage,
+        getBuyerOrdersDelivered,
         getBuyerOrdersPlaced,
         getBuyerOrdersTransit,
-        getBuyerOrdersDelivered,
+        getBuyerSearchFilterData,
+        getCoopUsers,
+        getCustomFormData,
+        getLinkedAccounts,
+        getListing,
+        getListingBoxes,
+        getListingFormData,
+        getListingTypesByCategory,
+        getListingsByType,
+        getMarketEstimate,
         getPaymentMethods,
-        chargeCard,
-        addCardToken,
+        getSellerById,
+        getSellerOrdersDelivered,
+        getSellerOrdersPlaced,
+        getSellerOrdersTransit,
+        getShippingQuote,
+        getTransactionHistory,
+        getUser,
+        history,
+        login,
+        order,
+        placeOrder,
+        register,
+        resendVerification,
+        router: connectRouter(routeHistory),
+        searchAndCountProductType,
+        searchProductType,
+        sellerDashboardDate,
+        sendMessage,
+        updateAddress,
+        updateBankDetails,
         updateDefaultCard,
-        deleteCard,
-        endListing,
+        updateFavoriteSeller,
+        updateFavouriteProduct,
+        updateListing,
+        updateUser,
+        verify,
       }).sort()
     )
   );

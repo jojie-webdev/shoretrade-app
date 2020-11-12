@@ -6,7 +6,7 @@ import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { VerifyMeta, VerifyPayload } from 'types/store/VerifyState';
 
-import { verifyActions, authActions } from '../actions';
+import { verifyActions, authActions, historyActions } from '../actions';
 
 function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
   try {
@@ -28,6 +28,11 @@ function* verifySuccess(action: AsyncAction<VerifyMeta, VerifyPayload>) {
   // );
   // const isSeller = pathname.includes('seller');
   if (userGroup === 'BUYER_ADMIN') {
+    yield put(
+      historyActions.update({
+        buyerRecentSearch: [],
+      })
+    );
     yield put(
       authActions.update({ token: action.payload.data.token, type: 'buyer' })
     );

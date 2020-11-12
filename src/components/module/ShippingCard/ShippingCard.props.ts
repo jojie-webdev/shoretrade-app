@@ -1,6 +1,7 @@
 export type Option = {
   priceId: number;
   name: string;
+  secondName?: string;
   est: string;
   price: string;
 };

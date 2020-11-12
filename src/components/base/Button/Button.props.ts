@@ -2,6 +2,8 @@ import { ButtonHTMLAttributes } from 'react';
 
 import { Theme } from 'types/Theme';
 
+import { TypographyProps } from '../Typography/Typography.props';
+
 export type Variants =
   | 'primary'
   | 'outline'
@@ -15,11 +17,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   color?: keyof Theme['brand'];
   text?: string;
+  textVariant?: TypographyProps['variant'];
+  textWeight?: string;
   iconPosition?: IconPosition;
   variant?: Variants;
   icon?: JSX.Element;
   takeFullWidth?: boolean;
   size?: ButtonSizes; // defaults to md
+  textColor?: keyof Theme['brand'] | keyof Theme['grey'];
 }
 
 // Styles

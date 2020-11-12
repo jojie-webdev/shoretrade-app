@@ -1,12 +1,23 @@
 import { Dispatch } from 'react';
 
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
+
+interface PendingOrders extends GetSellerOrdersResponseItem {
+  itemCount: number;
+  totalWeight: number;
+}
+
 export type PendingToShipItemData = {
-  id: string;
-  orderNumber: string;
-  numberOfOrders: number;
+  buyerCompanyId: string;
+  buyerCompanyName: string;
+  orderCount: number;
+  orders: PendingOrders[];
+  totalPrice: number;
+  totalWeight: number;
 };
 
-export type ToShipItemData = {
+export type SoldItemData = {
   id: string;
   date: Date;
   type?: string;
@@ -20,34 +31,15 @@ export type ToShipItemData = {
     name: string;
     tags: { label: string }[];
     size: string;
+    fisherman: string;
   }[];
+  toAddressState: string;
 };
 
-export type ToShipItem = {
+export type SoldItem = {
   title: Date;
-  data: ToShipItemData[];
-};
-
-export type InTransitItemData = {
-  id: string;
-  date: Date;
-  amount: string;
-};
-
-export type InTransitItem = {
-  title: string;
-  data: InTransitItemData[];
-};
-
-export type DeliveredItemData = {
-  id: string;
-  date: Date;
-  amount: string;
-};
-
-export type DeliveredItem = {
-  title: Date;
-  data: DeliveredItemData[];
+  data: { [p: string]: SoldItemData[] };
+  orderTotal: number;
 };
 
 export type RequestFilters = {
@@ -59,10 +51,10 @@ export type RequestFilters = {
 export type TabOptions = 'To Ship' | 'In Transit' | 'Delivered';
 
 export interface SoldGeneratedProps {
-  toShip: ToShipItem[];
+  toShip: SoldItem[];
   pendingToShip: PendingToShipItemData[];
-  inTransit: InTransitItem[];
-  delivered: DeliveredItem[];
+  inTransit: SoldItem[];
+  delivered: SoldItem[];
   toShipCount: string;
   deliveredCount: string;
   currentTab: TabOptions;
@@ -90,4 +82,8 @@ export interface SoldGeneratedProps {
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+  sendMessage: (buyerId: string, message: string) => void;
+  isSendingMessage: boolean;
+  isPlacingOrder: boolean;
+  placeOrder: (data: PlaceOrderMeta) => void;
 }

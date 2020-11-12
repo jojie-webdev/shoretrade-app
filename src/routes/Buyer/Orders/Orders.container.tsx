@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-
 // import useSelectorSafe from 'store/selectors/useSelectorSafe';
 import {
   getBuyerOrdersActions,
@@ -21,8 +21,9 @@ import {
   OrdersGeneratedProps,
   TabOptions,
   RequestFilters,
+  OrderItem,
 } from './Orders.props';
-import { transformOrder } from './Orders.transform';
+import { groupByDate, sortByDateAsc, transformOrder } from './Orders.transform';
 import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
@@ -182,9 +183,15 @@ const OrdersContainer = (): JSX.Element => {
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
   const generatedProps: OrdersGeneratedProps = {
-    pendingOrders,
-    inTransitOrders,
-    completedOrders,
+    pendingOrders: groupByDate('estCatchmentDate')(
+      sortByDateAsc(pendingOrders, 'estCatchmentDate')
+    ),
+    inTransitOrders: groupByDate('estDeliveryDate')(
+      sortByDateAsc(inTransitOrders, 'estDeliveryDate')
+    ),
+    completedOrders: groupByDate('deliveredDate')(
+      sortByDateAsc(completedOrders, 'deliveredDate')
+    ),
 
     getAllOrders,
     pendingOrdersCount,

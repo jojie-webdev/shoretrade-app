@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { FileCheck, ChevronRight, Scale } from 'components/base/SVG';
+import { FileCheck } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { API } from 'consts';
+import { API, SELLER_ROUTES } from 'consts';
+import qs from 'qs';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { DetailsProps } from './Details.props';
@@ -39,6 +41,8 @@ const OrderDetail = (props: { label?: string; value?: string }) => {
 
 const DetailsView = (props: DetailsProps) => {
   const theme = useTheme();
+  const history = useHistory();
+
   const { details, token } = props;
 
   const {
@@ -60,7 +64,7 @@ const DetailsView = (props: DetailsProps) => {
   return (
     <Wrapper>
       <Header>
-        <InnerRouteHeader title={status} />
+        <InnerRouteHeader title={status} onClickBack={() => history.goBack()} />
         <Touchable
           dark
           onPress={() => {

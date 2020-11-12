@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
@@ -60,6 +60,24 @@ const Card = (): JSX.Element => {
   const isLoading = pendingAddCard || pendingUpdateDefaultCard;
   const isRemoving =
     useSelector((state: Store) => state.deleteCard.pending) || false;
+  const addCardResult = useSelector((state: Store) => state.addCardToken);
+
+  const updateDefaultCardResult = useSelector(
+    (state: Store) => state.updateDefaultCard
+  );
+
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (addCardResult.error && !submitted)
+      dispatch(addCardTokenActions.clear()); // clear related actions on render
+
+    if (addCardResult.data && submitted) history.goBack();
+  }, [addCardResult]);
+
+  useEffect(() => {
+    if (updateDefaultCardResult.data && submitted) history.goBack();
+  }, [updateDefaultCardResult]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
@@ -67,7 +85,7 @@ const Card = (): JSX.Element => {
         addCardTokenActions.request({
           card: {
             number: Number(formCardDetails.number.replace(/\D/g, '')),
-            exp_month: formCardDetails.exp.split('/')[0],
+            exp_month: formCardDetails.exp.split('/')[0].trim(),
             exp_year: moment(formCardDetails.exp.split('/')[1], 'YY').format(
               'YYYY'
             ),
@@ -78,6 +96,7 @@ const Card = (): JSX.Element => {
           default: formCardDetails.isDefault,
         })
       );
+      setSubmitted(true);
     }
   };
 
@@ -92,6 +111,7 @@ const Card = (): JSX.Element => {
             card: card?.id || '',
           })
         );
+        setSubmitted(true);
       } else {
         history.goBack();
       }
@@ -118,7 +138,9 @@ const Card = (): JSX.Element => {
     onUpdateCard,
     onRemoveCard,
     isRemoving,
+    addCardResult,
   };
+
   return <CardView {...generatedProps} />;
 };
 

@@ -6,22 +6,35 @@ import styled from 'utils/styled';
 export const Container = styled.div``;
 
 export const SmallAlertContainer = styled.div`
-  padding: 8px;
+  // padding: 8px;
+  padding: 24px 24px 25px 24px;
   width: 100%;
-  background: rgba(255, 207, 92, 0.12);
+  background: ${({ theme }) => theme.grey.shade2};
+  border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
   border-radius: 4px;
   margin-bottom: 24px;
+  flex-direction: column;
 
   display: flex;
-  align-items: center;
+  .text-people {
+    margin-top: 12px;
+  }
+
+  .text {
+    margin-top: 4px;
+    margin-left: 5.67px;
+  }
 
   .icon-container {
     margin-right: 8px;
   }
+`;
 
-  .text {
-    margin-top: 6px;
-  }
+export const TextContainer = styled.div`
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
 `;
 
 export const StyledAlert = styled(Alert)`

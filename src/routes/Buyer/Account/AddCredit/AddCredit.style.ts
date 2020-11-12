@@ -1,4 +1,6 @@
+import CreditCardRow from 'components/module/CreditCardRow';
 import { Form } from 'formik';
+import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -31,4 +33,22 @@ export const Footer = styled.div`
   padding: 16px 24px 16px 24px;
   flex-direction: row;
   background-color: ${({ theme }) => theme.grey.shade2};
+`;
+
+export const Field = styled(Col)`
+  margin-bottom: 24px;
+`;
+
+export const CC = styled(CreditCardRow)`
+  margin-bottom: 8px;
+`;
+
+export const Notification = styled.div`
+  display: flex;
+  border-radius: 4px;
+  border: transparent;
+  margin: 12px auto;
+  & > div {
+    flex: 1;
+  }
 `;

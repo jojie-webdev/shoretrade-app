@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Visa, Mastercard, Zippay, Paypal } from 'components/base/SVG';
+import { Visa, Mastercard, Zippay, Paypal, Amex } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 // import { useTheme } from 'utils/Theme';
@@ -21,6 +21,8 @@ const CreditCard = (props: CreditCardProps): JSX.Element => {
         return <Zippay />;
       case 'paypal':
         return <Paypal />;
+      case 'american express':
+        return <Amex />;
       default:
         return null;
     }

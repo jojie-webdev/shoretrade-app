@@ -6,6 +6,7 @@ import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
+import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
@@ -18,61 +19,39 @@ import {
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   // const theme = useTheme();
-  const {
-    categories,
-    search,
-    onChangeSearchValue,
-    resetSearchValue,
-    currentPath,
-    onLoad,
-  } = props;
-
-  // useEffect(() => {
-  //   onLoad();
-  // }, []);
-
-  // if (categories.length <= 0) {
-  //   return (
-  //     <LoadingContainer>
-  //       <Spinner width={24} height={24} />
-  //     </LoadingContainer>
-  //   );
-  // }
+  const { categories, currentPath } = props;
 
   return (
     <CategoriesContainer>
       <Row nogutter className="search-row">
         <Col xs={12}>
-          <Search
-            value={search}
-            onChange={onChangeSearchValue}
-            resetValue={resetSearchValue}
-            placeholder="Search for a Product"
-          />
+          <SearchAddressView />
         </Col>
-        {/* <Col xs={1.5}>
-          <FilterButton>
-            Filters <Filter></Filter>
-          </FilterButton>
-        </Col> */}
       </Row>
       {categories.length <= 0 ? (
         <LoadingContainer>
           <Spinner width={24} height={24} />
         </LoadingContainer>
       ) : (
-        <Row nogutter className="cards" style={{ marginTop: 20 }}>
+        <Row className="cards">
           {categories.length > 0 &&
-            categories.map((category, index) => {
+            categories.map((category) => {
               return (
-                <Link to={`${currentPath}/${category.id}`} key={category.id}>
-                  <Card
-                    sortIndex={category.sortIndex}
-                    id={category.id}
-                    image={category.thumbnail}
-                    label={category.name}
-                  />
-                </Link>
+                <Col xs={6} sm={6} md={6} lg={4} xl={3} key={category.id}>
+                  <Link
+                    to={{
+                      pathname: `${currentPath}/${category.id}`,
+                      state: { title: category.name },
+                    }}
+                  >
+                    <Card
+                      sortIndex={category.sortIndex}
+                      id={category.id}
+                      image={category.thumbnail}
+                      label={category.name}
+                    />
+                  </Link>
+                </Col>
               );
             })}
         </Row>

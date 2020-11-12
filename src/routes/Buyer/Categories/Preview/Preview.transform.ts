@@ -44,7 +44,7 @@ export const getFilters = (data: any) => {
             label: 'Size',
             type: 'size_input',
             values: getSizeMinMax(),
-            unit: 'Kg',
+            unit: 'kg',
           }
         : {
             label: 'Size',

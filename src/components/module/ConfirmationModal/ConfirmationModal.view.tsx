@@ -14,6 +14,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     children,
     title,
     actionText,
+    cancelText,
     action,
     description,
     ...modalProps
@@ -22,7 +23,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
 
   return (
-    <Modal {...modalProps} style={{ maxWidth: '438px' }}>
+    <Modal {...modalProps}>
       <Content>
         <Typography
           variant="title4"
@@ -45,7 +46,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           <Button
             style={{ flex: 1, marginRight: 8 }}
             variant="outline"
-            text="Cancel"
+            text={cancelText || 'Cancel'}
             onClick={modalProps.onClickClose}
           />
           <Button

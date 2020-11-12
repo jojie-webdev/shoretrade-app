@@ -1,7 +1,7 @@
 import styled from 'utils/styled';
 
 export const SearchContainer = styled.div`
-  padding: 0 6px;
+  padding: 0px 6px;
 
   .search-row {
     margin-bottom: 24px;
@@ -57,7 +57,7 @@ export const DetailsContainer = styled.div`
   margin-left: 24px;
 
   .title {
-    font-size: 16;
+    font-size: 16px;
   }
 `;
 
@@ -83,12 +83,4 @@ export const ResultContainer = styled.div`
   .result-length {
     margin-left: 10px;
   }
-`;
-
-export const FilterButton = styled.button`
-  background: #111e2b;
-  border-radius: 4px;
-  color: white;
-  float: right;
-  margin-top: -8px;
 `;
