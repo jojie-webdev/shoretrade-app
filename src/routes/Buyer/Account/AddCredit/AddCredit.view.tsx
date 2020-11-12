@@ -36,6 +36,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
     addCredit,
     isPending,
     chargeCardResult,
+    downloadInvoice,
   } = props;
 
   const [activeTab, setActiveTab] = useState(TABS.CC);
@@ -67,7 +68,11 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
             amount: '',
           }}
           onSubmit={(values) => {
-            addCredit(`${values.amount}`);
+            if (activeTab == TABS.BANK) {
+              downloadInvoice(`${values.amount}`);
+            } else {
+              addCredit(`${values.amount}`);
+            }
           }}
           validate={validate}
           enableReinitialize
@@ -96,7 +101,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
             )}
 
             {activeTab == TABS.BANK ? (
-              <Button type="submit" text="Download Invoice" disabled />
+              <Button type="submit" text="Download Invoice" />
             ) : cards.length ? (
               <Button type="submit" text="Add Credit" loading={isPending} />
             ) : (

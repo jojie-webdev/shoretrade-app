@@ -66,6 +66,31 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: flex-end;
       flex: 1;
       margin-right: 16px;
+
+      .downloads-menu {
+        position: absolute;
+        background-color: ${({ theme }) => theme.grey.shade9};
+        width: 123px;
+        height: 64px;
+        top: -56px;
+        right: 56px;
+        z-index: 999;
+        border-radius: 4px;
+        padding: 8px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        p {
+          font-size: ${pxToRem(12)};
+          line-height: 16px;
+          width: 100%;
+
+          :hover {
+            color: ${({ theme }) => theme.brand.primary};
+          }
+        }
+      }
     }
 
     .center-text {

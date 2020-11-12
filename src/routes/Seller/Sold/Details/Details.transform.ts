@@ -63,4 +63,5 @@ export const sellerOrderToSoldDetails = (
       }))
     : [],
   total: toPrice(order?.totalPrice || 0),
+  toAddressState: order?.toAddress.state || '',
 });

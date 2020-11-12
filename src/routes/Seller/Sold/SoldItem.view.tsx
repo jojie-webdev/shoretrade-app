@@ -25,6 +25,29 @@ const SoldItem = (props: {
 }): any => {
   const history = useHistory();
   const theme = useTheme();
+
+  const [showDownloads, setShowDownloads] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const onEnterDownloads = (id: string) => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    setShowDownloads(id);
+  };
+
+  const onExitDownloads = () => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    const timerId = setTimeout(() => {
+      setShowDownloads('');
+    }, 500);
+    setTimer(timerId);
+  };
+
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toggleAccordion = (title: string) => {
@@ -54,9 +77,9 @@ const SoldItem = (props: {
         <Truck height={18} width={18} fill={theme.grey.shade6} />
       );
     const toAddress = toAddressState ? `${toAddressState}` : '';
-
+    const key = `${desc}-${toAddress}`;
     return (
-      <Fragment key={desc}>
+      <Fragment key={key}>
         <InnerStyledInteraction
           pressed={isOpen.includes(toAddress)}
           onClick={() => toggleAccordion(toAddress)}
@@ -75,8 +98,87 @@ const SoldItem = (props: {
               </Typography>
             </div>
             <div className="buttons">
+              {showDownloads === key && (
+                <div
+                  className="downloads-menu"
+                  onMouseEnter={() => {
+                    if (timer) {
+                      clearTimeout(timer);
+                      setTimer(null);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    onExitDownloads();
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Typography
+                    color="noshade"
+                    onClick={(e) => {
+                      const orderRefNumbers = entry.map((v) => {
+                        return v.orderRefNumber;
+                      });
+                      window.open(
+                        `${API.URL}/${
+                          API.VERSION
+                        }/order/packing-list/${orderRefNumbers.join()}?token=${
+                          props.token
+                        }&state=${toAddressState}&status=${props.status}`,
+                        '_blank'
+                      );
+                      setShowDownloads('');
+                      e.stopPropagation();
+                    }}
+                  >
+                    Packing Lists
+                  </Typography>
+                  <Typography
+                    color="noshade"
+                    onClick={(e) => {
+                      const orderRefNumbers = entry.map((v) => {
+                        return v.orderRefNumber;
+                      });
+                      window.open(
+                        `${API.URL}/${
+                          API.VERSION
+                        }/order/invoice/${orderRefNumbers.join()}?token=${
+                          props.token
+                        }`,
+                        '_blank'
+                      );
+                      setShowDownloads('');
+                      e.stopPropagation();
+                    }}
+                  >
+                    Invoices
+                  </Typography>
+                  <Typography
+                    color="noshade"
+                    onClick={(e) => {
+                      const orderRefNumbers = entry.map((v) => {
+                        return v.orderRefNumber;
+                      });
+                      window.open(
+                        `${API.URL}/${
+                          API.VERSION
+                        }/order/order-summary/${orderRefNumbers.join()}?token=${
+                          props.token
+                        }&state=${toAddressState}&status=${props.status}`,
+                        '_blank'
+                      );
+                      setShowDownloads('');
+                      e.stopPropagation();
+                    }}
+                  >
+                    Order Summary
+                  </Typography>
+                </div>
+              )}
+
               <Button
-                text={'Invoice'}
+                text={'Downloads'}
                 icon={
                   <DownloadFile
                     fill={theme.grey.noshade}
@@ -92,18 +194,15 @@ const SoldItem = (props: {
                   backgroundColor: theme.grey.shade8,
                 }}
                 size="sm"
+                onMouseLeave={() => {
+                  onExitDownloads();
+                }}
                 onClick={(e) => {
-                  const orderRefNumbers = entry.map((v) => {
-                    return v.orderRefNumber;
-                  });
-                  window.open(
-                    `${API.URL}/${
-                      API.VERSION
-                    }/order/invoice/${orderRefNumbers.join()}?token=${
-                      props.token
-                    }`,
-                    '_blank'
-                  );
+                  if (showDownloads.length > 0) {
+                    setShowDownloads('');
+                  } else {
+                    onEnterDownloads(key);
+                  }
                   e.stopPropagation();
                 }}
               />
@@ -117,9 +216,9 @@ const SoldItem = (props: {
             isOpen={isOpen.includes(toAddress)}
             style={{ margin: '0px 16px' }}
           >
-            {v.orders.map((order) => (
+            {v.orders.map((order, index) => (
               <ItemCard
-                key={order.orderNumber}
+                key={order.orderNumber + index}
                 onClick={() => {
                   history.push(
                     SELLER_SOLD_ROUTES.DETAILS.replace(

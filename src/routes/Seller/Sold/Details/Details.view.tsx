@@ -57,34 +57,92 @@ const DetailsView = (props: DetailsProps) => {
     shippingTo,
     packingList,
     total,
+    toAddressState,
   } = details;
 
   const isDelivered = status === 'Delivered';
+
+  const statusOptions = {
+    'To Send': 'PLACED',
+    'In Transit': 'TRANSIT',
+    Delivered: 'DELIVERED',
+    'N/A': '',
+  };
 
   return (
     <Wrapper>
       <Header>
         <InnerRouteHeader title={status} onClickBack={() => history.goBack()} />
-        <Touchable
-          dark
-          onPress={() => {
-            window.open(
-              `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
-              '_blank'
-            );
-          }}
-        >
-          <ActionContainer>
-            <FileCheck width={13} height={13} fill={theme.grey.noshade} />
-            <Typography
-              className="action-text"
-              variant="caption"
-              color="noshade"
-            >
-              Invoice
-            </Typography>
-          </ActionContainer>
-        </Touchable>
+        <div className="actions">
+          <Touchable
+            dark
+            onPress={() => {
+              window.open(
+                `${API.URL}/${
+                  API.VERSION
+                }/order/packing-list/${orderRefNumber}?token=${token}&status=${
+                  statusOptions[status] || ''
+                }&state=${toAddressState}`,
+                '_blank'
+              );
+            }}
+          >
+            <ActionContainer>
+              <FileCheck width={13} height={13} fill={theme.grey.noshade} />
+              <Typography
+                className="action-text"
+                variant="caption"
+                color="noshade"
+              >
+                Packing List
+              </Typography>
+            </ActionContainer>
+          </Touchable>
+          <Touchable
+            dark
+            onPress={() => {
+              window.open(
+                `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
+                '_blank'
+              );
+            }}
+          >
+            <ActionContainer>
+              <FileCheck width={13} height={13} fill={theme.grey.noshade} />
+              <Typography
+                className="action-text"
+                variant="caption"
+                color="noshade"
+              >
+                Invoice
+              </Typography>
+            </ActionContainer>
+          </Touchable>
+          <Touchable
+            dark
+            onPress={() => {
+              window.open(
+                `${API.URL}/${
+                  API.VERSION
+                }/order/order-summary/${orderRefNumber}?token=${token}&status=${
+                  statusOptions[status] || ''
+                }&state=${toAddressState}`,
+                '_blank'
+              );
+            }}
+          >
+            <ActionContainer>
+              <FileCheck width={13} height={13} fill={theme.grey.noshade} />
+              <Typography
+                className="action-text"
+                variant="caption"
+                color="noshade"
+              >
+                Order Summary
+              </Typography>
+            </ActionContainer>
+          </Touchable>
+        </div>
       </Header>
       <DetailsRow>
         <DetailsColumn>

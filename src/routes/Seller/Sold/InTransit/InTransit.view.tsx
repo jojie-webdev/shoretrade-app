@@ -91,7 +91,7 @@ const InTransit = (props: SoldGeneratedProps) => {
 
               <CollapsibleContent
                 isOpen={isOpen.includes(calendarDateString)}
-                style={{ marginLeft: 24, marginRight: 24 }}
+                style={{ marginLeft: 24, marginRight: 24, overflow: 'visible' }}
               >
                 <SoldItem data={group.data} token={token} status="TRANSIT" />
               </CollapsibleContent>

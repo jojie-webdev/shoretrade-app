@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { API } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { chargeCardActions, getPaymentMethodsActions } from 'store/actions';
@@ -66,6 +67,18 @@ const AddCredit = (): JSX.Element => {
     }
   };
 
+  const token = useSelector((state: Store) => state.auth.token) || '';
+
+  const downloadInvoice = (amount: string) => {
+    if (Number(amount) > 0) {
+      window.open(
+        `${API.URL}/${API.VERSION}/company/bank-transfer/Invoice?amount=${amount}&token=${token}`,
+
+        '_blank'
+      );
+    }
+  };
+
   const generatedProps: AddCreditGeneratedProps = {
     // generated props here
     isPending,
@@ -74,6 +87,7 @@ const AddCredit = (): JSX.Element => {
     setSelectedCardId,
     addCredit,
     chargeCardResult,
+    downloadInvoice,
   };
   return <AddCreditView {...generatedProps} />;
 };

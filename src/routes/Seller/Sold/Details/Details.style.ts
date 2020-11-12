@@ -8,6 +8,12 @@ export const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+
+  .actions {
+    display: flex;
+
+    flex-direction: row;
+  }
 `;
 
 export const ActionContainer = styled.div`

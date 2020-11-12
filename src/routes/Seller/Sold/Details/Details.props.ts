@@ -23,6 +23,7 @@ export type Details = {
     unit: string;
   }[];
   total: string;
+  toAddressState: string;
 };
 
 export interface DetailsPublicProps {

@@ -10,6 +10,7 @@ export interface AddCreditGeneratedProps {
   setSelectedCardId: Dispatch<string>;
   addCredit: (x: string) => void;
   chargeCardResult?: AsyncState;
+  downloadInvoice: (amount: string) => void;
 }
 
 export interface FieldsetCreditCardProps {
