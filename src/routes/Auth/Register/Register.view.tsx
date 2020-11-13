@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useReducer, useRef } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
@@ -89,6 +90,7 @@ const StepForm = ({
   updateRegistrationDetails,
   isPending,
   isApplicationForLineCredit,
+  error: registerError,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -317,6 +319,16 @@ const StepForm = ({
                       </DownloadTermsText>
                     </DownloadTermsContainer>
                   </Touchable>
+                  {step === MAX_STEP && registerError.length > 0 && (
+                    <Alert
+                      content={registerError}
+                      variant="error"
+                      style={{
+                        marginTop: 16,
+                        width: '100%',
+                      }}
+                    />
+                  )}
                 </>
               )}
               {step === 4 && (
@@ -346,6 +358,16 @@ const StepForm = ({
                       <Error variant="caption" color="error">
                         {otherErrors.selectedMarketSector}
                       </Error>
+                    )}
+                    {registerError.length > 0 && (
+                      <Alert
+                        content={registerError}
+                        variant="error"
+                        style={{
+                          marginTop: 16,
+                          width: '100%',
+                        }}
+                      />
                     )}
                   </div>
                 </>

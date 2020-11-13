@@ -118,6 +118,7 @@ const Register = (): JSX.Element => {
 
   const isPending =
     useSelector((state: Store) => state.register.pending) || false;
+  const error = useSelector((state: Store) => state.register.error) || '';
   const isSuccess =
     useSelector((state: Store) => (state.register.data?.status || 0) === 200) ||
     false;
@@ -131,6 +132,7 @@ const Register = (): JSX.Element => {
     isPending,
     isSuccess,
     isApplicationForLineCredit,
+    error,
   };
   return <RegisterView {...generatedProps} />;
 };
