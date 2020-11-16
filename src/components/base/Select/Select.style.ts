@@ -98,7 +98,9 @@ export const ArrowContainer = styled.div<{ size?: string; flipped?: boolean }>`
   color: ${({ theme }) => theme.brand.primary};
 `;
 
-export const Label = styled(Typography)``;
+export const Label = styled(Typography)`
+  margin-bottom: 4px;
+`;
 
 export const Error = styled(Typography)`
   margin-top: 4px;

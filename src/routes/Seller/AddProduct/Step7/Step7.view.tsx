@@ -7,7 +7,7 @@ import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import LocationSearch from 'components/module/LocationSearch';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { GetCompanyAddresses } from 'store/selectors/seller/addresses';
@@ -23,6 +23,14 @@ import { Step7Props } from './Step7.props';
 import { Container, PriceAlertInfo } from './Step7.style';
 import { combineDateTime } from './Step7.transform';
 import { isValid, isDateRangeValid } from './Step7.validation';
+
+const timeOptions = [...Array(24).keys()].map((v) => {
+  const value = `${v < 10 ? '0' : ''}${v}:00`;
+  return {
+    value,
+    label: `${value} AEST`,
+  };
+});
 
 function Step7({
   editableListing,
@@ -76,11 +84,11 @@ function Step7({
   );
 
   useEffect(() => {
-    if (
-      listingEndTimeString.length === 5 &&
-      listingEndTimeString.includes(':')
-    ) {
-      setListingEndTime(moment(listingEndTimeString, 'HH:mm').toDate());
+    if (listingEndTimeString) {
+      // moment tz uses Australia/Brisbane for AEST
+      setListingEndTime(
+        moment.tz(listingEndTimeString, 'HH:mm', 'Australia/Brisbane').toDate()
+      );
     } else {
       setListingEndTime(null);
     }
@@ -140,6 +148,9 @@ function Step7({
       );
     }
   }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
+
+  console.log(moment.tz.names());
+  console.log(listingEndTime);
 
   const onNext = () => {
     const detailsError = isValid({
@@ -269,43 +280,13 @@ function Step7({
           />
         </Col>
         <Col md={6} className="textfield-col">
-          <TextField
-            className="time-picker"
-            label="LISTING VALID UNTIL"
-            placeholder="00:00"
-            LeftComponent={<Clock fill={theme.grey.shade6} />}
+          <Select
             value={listingEndTimeString}
-            onChangeText={(v) => {
-              // Note: This is hacky way to handle time input
-              // But this makes sure that is is supported by all browsers
-              // unlike when using type='time'
-              const x = v.split(':');
-              const [h, m] = x;
-              const [H, M] = x.map((X) => (X ? Number(X) : NaN));
-
-              if (!Number.isNaN(H)) {
-                if (H < 24 && H >= 0) {
-                  if (h.length === 1 && !v.includes(':') && H > 2) {
-                    setListingEndTimeString(`0${h}:`);
-                  } else if (h.length === 2 && !v.includes(':')) {
-                    setListingEndTimeString(`${h}:`);
-                  } else if ((m || '').length > 0 && v.includes(':')) {
-                    if (!Number.isNaN(M)) {
-                      if (M < 60 && M >= 0) {
-                        // avoid trailing zeros
-                        if (m.length <= 2) {
-                          setListingEndTimeString(v);
-                        }
-                      }
-                    }
-                  } else {
-                    setListingEndTimeString(v);
-                  }
-                }
-              } else {
-                setListingEndTimeString(v);
-              }
+            onChange={(option) => {
+              setListingEndTimeString(option.value);
             }}
+            options={timeOptions}
+            label="LISTING VALID UNTIL"
             error={
               pathOr('', ['listingEndTime', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
