@@ -6,4 +6,6 @@ export interface EmptyStateProps {
   fluid?: boolean;
   onButtonClicked?: () => void;
   Svg: React.FC<SVGProps>;
+  height?: number;
+  width?: number;
 }

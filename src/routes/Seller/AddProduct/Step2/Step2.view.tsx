@@ -32,7 +32,7 @@ function Step2({
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    setSearchKey(searchKey.trim());
+    setSearchKey(searchKey);
 
     if (timer) {
       clearTimeout(timer);
@@ -187,6 +187,8 @@ function Step2({
               buttonText="Create Custom Type"
               Svg={Fish}
               onButtonClicked={() => setShowCustomTypeSettings(true)}
+              height={211}
+              width={211}
             />
           )}
         </Col>
