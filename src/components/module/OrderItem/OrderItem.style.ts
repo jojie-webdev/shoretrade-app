@@ -1,6 +1,7 @@
 import InteractionsView from 'components/base/Interactions';
 import TouchableView from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { ItemDetailVariants } from './OrderItem.props';
@@ -104,6 +105,10 @@ export const ItemDetail = styled.div<{
 
   @media (max-width: 1135px) {
     align-items: flex-start;
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
   }
 `;
 

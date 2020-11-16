@@ -214,11 +214,16 @@ export const Content = styled.div<{
   @media ${BREAKPOINTS['md']} {
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+
       .screen {
         width: ${(props) =>
           props.shouldUseFullWidth ? '100%' : 'calc(100% - 32px)'};
         padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
+    }
+
+    .container {
+      max-width: 100% !important;
     }
   }
 
@@ -258,6 +263,7 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   .left-content {
     display: flex;
     align-items: flex-start;
+    flex: 1;
   }
 
   .title-container {
@@ -324,10 +330,6 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
       width: 56px;
       border-radius: calc(56px / 2);
     }
-  }
-
-  @media ${BREAKPOINTS['md']} {
-    width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   }
 
   ${(props) =>

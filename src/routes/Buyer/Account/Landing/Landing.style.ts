@@ -11,7 +11,7 @@ export const Container = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding: 0px 0px;
+    padding: 0px 8px;
   }
 `;
 

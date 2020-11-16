@@ -102,7 +102,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
       </div>
 
       <div className="section">
-        <ItemDetail type="center" row>
+        <ItemDetail type="center" row className="wrap-text">
           <Typography
             color="shade7"
             variant="label"

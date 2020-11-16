@@ -1,6 +1,5 @@
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import { DropdownArrow, PlaceholderProfile } from 'components/base/SVG';
 import styled, { css } from 'utils/styled';
 
 const imgStyle = css`
