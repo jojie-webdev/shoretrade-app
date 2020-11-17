@@ -212,4 +212,123 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('seller-route', {
+    description: 'Create a seller route component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your seller route name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/routes/Seller/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/seller-route/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/seller-route/route.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/seller-route/route.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/seller-route/route.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Seller/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/seller-route/route.container.tsx.hbs',
+      },
+    ],
+  });
+  plop.setGenerator('buyer-route', {
+    description: 'Create a buyer route component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your buyer route name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/routes/Buyer/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/buyer-route/index.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.props.ts',
+        templateFile: 'plop-templates/buyer-route/route.props.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.style.ts',
+        templateFile: 'plop-templates/buyer-route/route.style.ts.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
+        templateFile: 'plop-templates/buyer-route/route.view.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path:
+          'src/routes/Buyer/{{pascalCase name}}/{{pascalCase name}}.container.tsx',
+        templateFile: 'plop-templates/buyer-route/route.container.tsx.hbs',
+      },
+    ],
+  });
+  plop.setGenerator('svg', {
+    description: 'Create svg component and storybook entry',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your svg name?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/components/base/SVG/{{pascalCase name}}.tsx',
+        templateFile: 'plop-templates/svg/component.tsx.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/components/base/SVG/index.tsx',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "export { default as {{pascalCase name}} } from './{{pascalCase name}}';",
+      },
+      {
+        type: 'append',
+        path: '.storybook/stories/base/SVG.js',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "  {{pascalCase name}},",
+      },
+      {
+        type: 'append',
+        path: '.storybook/stories/base/SVG.js',
+        pattern: '{/* PLOP_INJECT_INSTANCE*/}',
+        template: `        <Wrapper label="{{pascalCase name}}">
+          <{{pascalCase name}} width={30} height={30} />
+        </Wrapper>`,
+      },
+    ],
+  });
 };

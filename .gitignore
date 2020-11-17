@@ -34,5 +34,5 @@ gen
 *.log
 
 # env file
-.env
 
+yarn.lock

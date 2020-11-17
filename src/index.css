@@ -1,3 +1,84 @@
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Medium.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Medium.woff") format("woff");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Bold.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Bold.woff") format("woff");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Basis Grotesque Pro";
+  src: url("res/fonts/Basis Grotesque Pro Black.woff2") format("woff2"),
+    url("res/fonts/Basis Grotesque Pro Black.woff") format("woff");
+  font-weight: 900;
+}
+
 body {
   margin: 0;
+}
+
+body * {
+  font-family: "Basis Grotesque Pro", sans-serif;
+  box-sizing: border-box;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
+
+button:focus {
+  outline: none;
+}
+
+/**
+* Disable browser styling for autocomplete input
+**/
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type="search"]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* clears the ‘X’ from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }
