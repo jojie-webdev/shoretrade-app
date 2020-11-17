@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { ConnectedRouter } from 'connected-react-router';
+import { SELLER_ROUTES } from 'consts';
 import { ThemeProvider } from 'emotion-theming';
 import { props } from 'ramda';
 import ReactDOM from 'react-dom';
@@ -31,7 +32,8 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
   const pathname = useSelector(
     (state: Store) => state.router.location.pathname
   );
-  const isSeller = pathname.startsWith('/seller');
+  const isSeller =
+    pathname.startsWith('/seller') || pathname === SELLER_ROUTES.REGISTER;
 
   return (
     <ThemeProvider theme={{ ...theme, appType: isSeller ? 'seller' : 'buyer' }}>
