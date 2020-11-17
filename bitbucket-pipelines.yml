@@ -15,7 +15,7 @@ pipelines:
             - node
           script:
             - npm install --silent
-            - CI=false npm run build
+            - CI=false npm run build:staging
             - pipe: atlassian/aws-s3-deploy:0.3.2
               variables:
                 AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID

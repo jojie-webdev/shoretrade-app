@@ -13,6 +13,7 @@ import getUserActions from 'store/actions/getUser';
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
 
+import Authenticate from './Auth/Authenticate';
 import ForgotPassword from './Auth/ForgotPassword';
 import Login from './Auth/Login';
 import Onboarding from './Auth/Onboarding';
@@ -39,6 +40,11 @@ export const ROUTES: Routes = {
   VERIFY: {
     path: MAIN_ROUTES.VERIFY,
     children: <Verify2FA />,
+  },
+  AUTHENTICATE: {
+    exact: true,
+    path: MAIN_ROUTES.AUTHENTICATE,
+    children: <Authenticate />,
   },
   FORGOT_PASSWORD: {
     path: MAIN_ROUTES.FORGOT_PASSWORD,
@@ -121,6 +127,7 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
+  MAIN_ROUTES.AUTHENTICATE.replace(':token', ''),
   SELLER_ROUTES.LOGIN,
   SELLER_ROUTES.VERIFY2FA,
   SELLER_ROUTES.ONBOARDING,
@@ -133,6 +140,7 @@ const UNAUTHENTICATED_BUYER_ROUTES = [
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
+  MAIN_ROUTES.AUTHENTICATE.replace(':token', ''),
   BUYER_ROUTES.LOGIN,
   BUYER_ROUTES.VERIFY2FA,
   BUYER_ROUTES.ONBOARDING,
@@ -157,14 +165,14 @@ const RoutesComponent = (): JSX.Element => {
       // Redirects
       if (
         authenticatedUserType === 'seller' &&
-        (UNAUTHENTICATED_SELLER_ROUTES.includes(currentPath) ||
+        (UNAUTHENTICATED_SELLER_ROUTES.some((r) => currentPath.includes(r)) ||
           currentPath.startsWith('/buyer'))
       ) {
         history.push(SELLER_ROUTES.ROOT);
       }
       if (
         authenticatedUserType === 'buyer' &&
-        (UNAUTHENTICATED_BUYER_ROUTES.includes(currentPath) ||
+        (UNAUTHENTICATED_BUYER_ROUTES.some((r) => currentPath.includes(r)) ||
           currentPath.startsWith('/seller'))
       ) {
         history.push(BUYER_ROUTES.ROOT);
