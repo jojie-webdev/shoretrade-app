@@ -6,6 +6,7 @@ export const MAIN_ROUTES = {
   LOGIN: '/login',
   VERIFY: '/verify',
   FORGOT_PASSWORD: '/forgot-password',
+  AUTHENTICATE: '/authenticate/:token',
 };
 
 export const SELLER_ROUTES = {
