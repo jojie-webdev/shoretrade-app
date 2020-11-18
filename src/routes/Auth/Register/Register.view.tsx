@@ -208,7 +208,9 @@ const StepForm = ({
                       }
                       textFieldProps={{
                         value: registrationDetails.address?.address || '',
-                        label: 'Address you will be buying from',
+                        label: `Address you will be ${
+                          isSeller ? 'shipping from' : 'buying from'
+                        }`,
                         error: otherErrors.address,
                       }}
                     />
