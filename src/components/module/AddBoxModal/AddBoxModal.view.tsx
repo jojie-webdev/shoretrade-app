@@ -42,7 +42,6 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
             label="Box Weight"
             value={values.weight}
             onChangeText={(v) => {
-              console.log(v);
               setValues({ ...values, weight: v });
             }}
             onKeyDown={(v) =>
