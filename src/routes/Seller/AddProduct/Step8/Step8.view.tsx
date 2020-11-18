@@ -111,7 +111,9 @@ function Step8({
             label="Boxes"
             value={boxes}
             type="edit"
-            onClick={() => {onChangeCurrentPage(6)}}
+            onClick={() => {
+              onChangeCurrentPage(6);
+            }}
           />
         </Col>
         <Col md={12} className="interaction-col">

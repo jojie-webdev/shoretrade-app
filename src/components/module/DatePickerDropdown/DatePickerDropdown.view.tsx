@@ -21,7 +21,14 @@ import {
 const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
   const theme = useTheme();
   const [show, setShow] = useState<boolean>(false);
-  const { date, onDateChange, label, placeholder = '', error } = props;
+  const {
+    date,
+    onDateChange,
+    label,
+    placeholder = '',
+    error,
+    isOutsideRange,
+  } = props;
 
   return (
     <Container className={props.className}>
@@ -64,6 +71,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
             daySize={37}
             hideKeyboardShortcutsPanel
             enableOutsideDays
+            isOutsideRange={isOutsideRange}
             noBorder
             navNext={
               <NavButton direction="right">

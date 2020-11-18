@@ -42,6 +42,10 @@ const LocationSearch = ({
     `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY}`
   );
 
+  useEffect(() => {
+    setSearchData([]);
+  }, [searchValue]);
+
   const search = async (text: string) => {
     if (!hasMap) return;
     setLoading(true);

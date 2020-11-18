@@ -7,4 +7,5 @@ export interface DatePickerDropdownProps {
   placeholder?: string;
   label?: string;
   error?: string;
+  isOutsideRange?: (date: any) => boolean;
 }
