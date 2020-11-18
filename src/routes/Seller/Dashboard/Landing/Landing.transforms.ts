@@ -41,12 +41,12 @@ export const getGraphData = (data: any, from: string) => {
     let finalValues = [...values];
     if (!firstDayFound) {
       finalDates = [firstDay, ...finalDates];
-      finalValues = [finalValues[0], ...finalValues];
+      finalValues = [0, ...finalValues];
     }
 
     if (!lastDayFound) {
       finalDates = [...finalDates, lastDay];
-      finalValues = [...finalValues, finalValues[finalValues.length - 1]];
+      finalValues = [...finalValues, 0];
     }
 
     return {
