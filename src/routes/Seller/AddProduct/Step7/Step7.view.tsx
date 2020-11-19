@@ -67,7 +67,9 @@ function Step7({
   );
 
   const [listingEndTimeString, setListingEndTimeString] = useState(
-    editableListing?.ends ? moment(editableListing?.ends).format('HH:mm') : ''
+    editableListing?.ends
+      ? moment(editableListing?.ends).tz('Australia/Brisbane').format('HH:mm')
+      : ''
   );
 
   const [shippingAddress, setShippingAddress] = useState(
@@ -281,7 +283,7 @@ function Step7({
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
-            isOutsideRange={(date) => date < new Date()}
+            isOutsideRange={(date) => date < new Date().setHours(0, 0, 0, 0)}
           />
         </Col>
         <Col md={6} className="textfield-col">
