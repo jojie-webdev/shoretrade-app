@@ -6,7 +6,7 @@ export type UpdateListingRequestData = {
   companyId: string;
   listingId: string;
   images: { url: string; requirementId: string }[];
-  pricePerKilo: number;
+  price: number;
   catchDate: string | null; // date iso string
   description: string;
   origin: {

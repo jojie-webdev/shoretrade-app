@@ -41,6 +41,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     variant,
     color,
     onKeyUp,
+    onKeyDown,
     disabled,
   } = props;
 
@@ -80,6 +81,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           placeholder={placeholder}
           readOnly={readOnly}
           onKeyUp={onKeyUp}
+          onKeyDown={onKeyDown}
           disabled={disabled}
         />
         {RightComponent && (
