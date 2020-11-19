@@ -31,7 +31,7 @@ export const transform = (
     requirementId: id,
     url: images[id],
   })),
-  pricePerKilo: data?.pricePerKilo || 0,
+  price: data?.pricePerKilo || 0,
   catchDate: data?.catchDate ? moment(data.catchDate).toISOString() : null,
   description: data?.description || '',
   origin: data?.origin || {

@@ -29,10 +29,13 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   // TODO: if buyer set to true
   const state: Store = yield select();
   if (state.auth.type === 'buyer') {
-    if ((state.getAddresses.data?.data.addresses || []).length === 0) {
-      const { companies } = action.payload.data.user;
-      const companyId: string = pathOr('', ['0', 'id'], companies);
-      if (companyId) {
+    const { companies } = action.payload.data.user;
+    const companyId: string = pathOr('', ['0', 'id'], companies);
+    if (companyId) {
+      if (
+        (state.getAddresses.data?.data.addresses || []).length === 0 ||
+        state.getAddresses.request?.companyId !== companyId
+      ) {
         yield put(getAddressesActions.request({ companyId }));
       }
     }

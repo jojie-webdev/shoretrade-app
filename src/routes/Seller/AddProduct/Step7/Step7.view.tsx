@@ -24,8 +24,12 @@ import { Container, PriceAlertInfo } from './Step7.style';
 import { combineDateTime } from './Step7.transform';
 import { isValid, isDateRangeValid } from './Step7.validation';
 
-const timeOptions = [...Array(24).keys()].map((v) => {
-  const value = `${v < 10 ? '0' : ''}${v}:00`;
+const timeOptions = [...Array(48)].map((v, i) => {
+  const value = `${
+    (i / 2 < 10 ? '0' : '') +
+    (i / 2 - ((i / 2) % 1)) +
+    ((i / 2) % 1 != 0 ? ':30' : ':00')
+  }`;
   return {
     value,
     label: `${value} AEST`,
@@ -214,7 +218,7 @@ function Step7({
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
-            label="Price (exluding freight)"
+            label="Price (excluding freight)"
             LeftComponent={<DollarSign height={15} width={15} />}
             value={price}
             onChangeText={(v) => {
@@ -277,6 +281,7 @@ function Step7({
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
+            isOutsideRange={(date) => date < new Date()}
           />
         </Col>
         <Col md={6} className="textfield-col">

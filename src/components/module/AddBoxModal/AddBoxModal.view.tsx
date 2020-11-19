@@ -22,6 +22,8 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
     if (!isWhole(values.count)) setValues({ ...values, count: '' });
   }, [values.quantity, values.count]);
 
+  const inputFilters = ['e', 'E', '+', '-'];
+
   return (
     <Modal
       style={{
@@ -39,7 +41,12 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
             type="number"
             label="Box Weight"
             value={values.weight}
-            onChangeText={(v) => setValues({ ...values, weight: v })}
+            onChangeText={(v) => {
+              setValues({ ...values, weight: v });
+            }}
+            onKeyDown={(v) =>
+              inputFilters.includes(v.key) && v.preventDefault()
+            }
             LeftComponent={
               <Typography variant="label" color="shade6">
                 {unit}
@@ -50,14 +57,24 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
             type="number"
             label="Quantity"
             value={values.quantity}
-            onChangeText={(v) => setValues({ ...values, quantity: v })}
+            onChangeText={(v) => {
+              setValues({ ...values, quantity: v });
+            }}
+            onKeyDown={(v) =>
+              inputFilters.includes(v.key) && v.preventDefault()
+            }
           />
           <StyledTextField
             type="number"
             label="Count per Box"
             value={values.count}
-            onChangeText={(v) => setValues({ ...values, count: v })}
+            onChangeText={(v) => {
+              setValues({ ...values, count: v });
+            }}
             noMargin
+            onKeyDown={(v) =>
+              inputFilters.includes(v.key) && v.preventDefault()
+            }
           />
         </Inputs>
         <ButtonContainer>
