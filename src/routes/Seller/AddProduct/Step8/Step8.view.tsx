@@ -60,9 +60,17 @@ function Step8({
   const catchDate = moment(editableListing?.catchDate || null).format(
     'ddd DD MMM yyyy'
   );
-  const listingEnds = moment(editableListing?.ends || null).format(
-    'HH:mm ddd DD MMM yyyy'
+
+  const listingEndDate = moment(editableListing?.ends || null).format(
+    'ddd DD MMM yyyy'
   );
+
+  // Note: only time should be treated as AEST
+  const listingEndTime = moment(editableListing?.ends || null)
+    .tz('Australia/Brisbane')
+    .format('HH:mm');
+
+  const listingEnds = `${listingEndTime} ${listingEndDate}`;
 
   const price = editableListing?.pricePerKilo || 0;
 

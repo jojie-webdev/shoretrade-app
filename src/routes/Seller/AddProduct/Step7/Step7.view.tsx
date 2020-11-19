@@ -67,7 +67,9 @@ function Step7({
   );
 
   const [listingEndTimeString, setListingEndTimeString] = useState(
-    editableListing?.ends ? moment(editableListing?.ends).format('HH:mm') : ''
+    editableListing?.ends
+      ? moment(editableListing?.ends).tz('Australia/Brisbane').format('HH:mm')
+      : ''
   );
 
   const [shippingAddress, setShippingAddress] = useState(
