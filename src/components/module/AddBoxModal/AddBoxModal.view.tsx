@@ -47,6 +47,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
             onKeyDown={(v) =>
               inputFilters.includes(v.key) && v.preventDefault()
             }
+            min={0}
             LeftComponent={
               <Typography variant="label" color="shade6">
                 {unit}
@@ -60,6 +61,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
             onChangeText={(v) => {
               setValues({ ...values, quantity: v });
             }}
+            min={0}
             onKeyDown={(v) =>
               inputFilters.includes(v.key) && v.preventDefault()
             }
@@ -72,6 +74,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
               setValues({ ...values, count: v });
             }}
             noMargin
+            min={0}
             onKeyDown={(v) =>
               inputFilters.includes(v.key) && v.preventDefault()
             }
