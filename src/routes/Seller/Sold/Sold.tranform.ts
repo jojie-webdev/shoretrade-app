@@ -79,7 +79,12 @@ export const orderItemToPendingToShipItem = (
         return (
           accumA +
           currentA.orderLineItem.reduce((accumB: number, currentB) => {
-            return accumB + currentB.weight;
+            return (
+              accumB +
+              currentB.listingBoxes.reduce((accumB: number, currentB) => {
+                return accumB + currentB.quantity * currentB.weight;
+              }, 0)
+            );
           }, 0)
         );
       }, 0);
@@ -97,7 +102,12 @@ export const orderItemToPendingToShipItem = (
           ...d,
           itemCount: d.orderLineItem.length,
           totalWeight: d.orderLineItem.reduce((accumA: number, currentA) => {
-            return accumA + currentA.weight;
+            return (
+              accumA +
+              currentA.listingBoxes.reduce((accumB: number, currentB) => {
+                return accumB + currentB.quantity * currentB.weight;
+              }, 0)
+            );
           }, 0),
         };
       });
