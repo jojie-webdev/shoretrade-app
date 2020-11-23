@@ -89,19 +89,6 @@ export const PendingItem = (props: {
   };
 
   return data.orders.map((order) => {
-    const subtotalWeight = order.orderLineItem.reduce(
-      (accumB: number, currentB) => {
-        return accumB + currentB.weight;
-      },
-      0
-    );
-    const subtotalPrice = order.orderLineItem.reduce(
-      (accumB: number, currentB) => {
-        return accumB + currentB.price;
-      },
-      0
-    );
-
     const allowPartialShipment = order.orderLineItem.some(
       (i) => i.weightConfirmed
     );
@@ -166,11 +153,11 @@ export const PendingItem = (props: {
               {!isOpen.includes(order.orderId) && (
                 <>
                   <ItemDetail variant="caption" color="shade6">
-                    Sold Weight <span>{subtotalWeight} kg</span>
+                    Sold Weight <span>{order.totalWeight} kg</span>
                   </ItemDetail>
 
                   <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(subtotalPrice)}</span>
+                    Price (AUD) <span>{toPrice(order.totalPrice)}</span>
                   </ItemDetail>
                 </>
               )}
@@ -212,94 +199,102 @@ export const PendingItem = (props: {
             </div>
           </div>
         </InnerStyledInteraction>
-        {order.orderLineItem.map((lineItem) => (
-          <CollapsibleContent
-            key={lineItem.id}
-            isOpen={isOpen.includes(order.orderId)}
-          >
-            <ItemCard>
-              <div className="left-content">
-                <ItemImage src={lineItem.listing.images[0]} alt="" />
+        {order.orderLineItem.map((lineItem) => {
+          const lineItemTotalWeight = lineItem.listingBoxes.reduce(
+            (accum: number, current) => {
+              return accum + current.weight * current.quantity;
+            },
+            0
+          );
+          return (
+            <CollapsibleContent
+              key={lineItem.id}
+              isOpen={isOpen.includes(order.orderId)}
+            >
+              <ItemCard>
+                <div className="left-content">
+                  <ItemImage src={lineItem.listing.images[0]} alt="" />
 
-                <div className="text-content">
-                  <Typography
-                    variant="label"
-                    color="noshade"
-                    className="item-title"
-                  >
-                    {lineItem.listing.typeName}
-                  </Typography>
+                  <div className="text-content">
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="item-title"
+                    >
+                      {lineItem.listing.typeName}
+                    </Typography>
 
-                  <div className="tags-container">
-                    {lineItem.listing.specifications.map((tag) => (
-                      <Tag key={tag}>
-                        <Typography variant="caption" color="noshade">
-                          {tag}
-                        </Typography>
-                      </Tag>
-                    ))}
+                    <div className="tags-container">
+                      {lineItem.listing.specifications.map((tag) => (
+                        <Tag key={tag}>
+                          <Typography variant="caption" color="noshade">
+                            {tag}
+                          </Typography>
+                        </Tag>
+                      ))}
+                    </div>
+
+                    <ItemDetail variant="caption" color="shade5" row>
+                      {sizeToString(
+                        lineItem.listing.metricLabel,
+                        lineItem.listing.sizeFrom || undefined,
+                        lineItem.listing.sizeTo || undefined
+                      )}
+                    </ItemDetail>
                   </div>
+                </div>
+                <Spacer />
+                <div className="right-content">
+                  <ItemDetail variant="caption" color="shade6">
+                    Sold Weight{' '}
+                    <span>
+                      {lineItemTotalWeight} {lineItem.listing.measurementUnit}
+                    </span>
+                  </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade5" row>
-                    {sizeToString(
-                      lineItem.listing.metricLabel,
-                      lineItem.listing.sizeFrom || undefined,
-                      lineItem.listing.sizeTo || undefined
-                    )}
+                  <ItemDetail variant="caption" color="shade6">
+                    Price (AUD) <span>{toPrice(lineItem.price)}</span>
                   </ItemDetail>
                 </div>
-              </div>
-              <Spacer />
-              <div className="right-content">
-                <ItemDetail variant="caption" color="shade6">
-                  Sold Weight{' '}
-                  <span>
-                    {lineItem.weight} {lineItem.listing.measurementUnit}
-                  </span>
-                </ItemDetail>
 
-                <ItemDetail variant="caption" color="shade6">
-                  Price (AUD) <span>{toPrice(lineItem.price)}</span>
-                </ItemDetail>
-              </div>
-
-              <div className="buttons">
-                {lineItem.weightConfirmed ? (
-                  <Button
-                    text={'Weight Confirmed'}
-                    icon={<CheckFilled fill="white" height={16} width={16} />}
-                    iconPosition="before"
-                    style={{ width: 169, height: 32 }}
-                    size="sm"
-                    onClick={(e) => {
-                      console.log('DO NOTHING');
-                      e.stopPropagation();
-                    }}
-                    variant="success"
-                  />
-                ) : (
-                  <Button
-                    text={'Confirm Weight'}
-                    icon={<CheckList fill="white" height={15} width={20} />}
-                    iconPosition="before"
-                    style={{ width: 169, height: 32 }}
-                    size="sm"
-                    onClick={(e) => {
-                      if (!lineItem.weightConfirmed) {
-                        updateConfirmModal({
-                          isOpen: true,
-                          lineItemId: lineItem.id,
-                          orderId: order.orderId,
-                        });
-                      }
-                      e.stopPropagation();
-                    }}
-                  />
-                )}
-              </div>
-            </ItemCard>
-          </CollapsibleContent>
-        ))}
+                <div className="buttons">
+                  {lineItem.weightConfirmed ? (
+                    <Button
+                      text={'Weight Confirmed'}
+                      icon={<CheckFilled fill="white" height={16} width={16} />}
+                      iconPosition="before"
+                      style={{ width: 169, height: 32 }}
+                      size="sm"
+                      onClick={(e) => {
+                        console.log('DO NOTHING');
+                        e.stopPropagation();
+                      }}
+                      variant="success"
+                    />
+                  ) : (
+                    <Button
+                      text={'Confirm Weight'}
+                      icon={<CheckList fill="white" height={15} width={20} />}
+                      iconPosition="before"
+                      style={{ width: 169, height: 32 }}
+                      size="sm"
+                      onClick={(e) => {
+                        if (!lineItem.weightConfirmed) {
+                          updateConfirmModal({
+                            isOpen: true,
+                            lineItemId: lineItem.id,
+                            orderId: order.orderId,
+                          });
+                        }
+                        e.stopPropagation();
+                      }}
+                    />
+                  )}
+                </div>
+              </ItemCard>
+            </CollapsibleContent>
+          );
+        })}
       </Fragment>
     );
   });
