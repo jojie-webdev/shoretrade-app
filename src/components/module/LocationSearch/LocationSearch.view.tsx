@@ -104,7 +104,10 @@ const LocationSearch = ({
   };
 
   const getLocationData = async (placeId: string, placeTitle: string) => {
-    if (placeTitle === NO_RESULTS || placeTitle === API_ERROR) return;
+    if (placeTitle === NO_RESULTS || placeTitle === API_ERROR) {
+      setSearchValue('');
+      return;
+    }
 
     const placesService = new google.maps.places.PlacesService(
       document.createElement('div')

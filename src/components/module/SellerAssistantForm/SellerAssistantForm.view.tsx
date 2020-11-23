@@ -134,10 +134,10 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
                   checked={role === 'ASSISTANT'}
                   onClick={() => setRole('ASSISTANT')}
                 >
-                  Has the same permissions as you, the primary account holder,
-                  though they connect edit your bank details or add other
-                  fishermen / assistants. Does not appear as a fisherman on your
-                  account.
+                  Has the same permission and user rights as you, the primary
+                  account holder, however they cannot edit your bank details or
+                  add other fishermen/assistants. User does not appear as a
+                  fishermen on your account.
                 </Role>
 
                 <Role
