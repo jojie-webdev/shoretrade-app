@@ -83,6 +83,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           onKeyUp={onKeyUp}
           onKeyDown={onKeyDown}
           disabled={disabled}
+          min={props.min}
         />
         {RightComponent && (
           <RightComponentContainer>{RightComponent}</RightComponentContainer>
