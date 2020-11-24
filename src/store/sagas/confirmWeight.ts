@@ -34,7 +34,6 @@ function* confirmWeightSuccess(
   action: AsyncAction<ConfirmWeightMeta, ConfirmWeightPayload>
 ) {
   // yield put(getSellerOrdersPlacedActions.request());
-
   yield put(
     getSellerOrdersPlacedActions.updateOptimistically(
       action.payload.orderId,

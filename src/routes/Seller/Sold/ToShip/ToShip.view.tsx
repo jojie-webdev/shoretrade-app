@@ -155,7 +155,7 @@ export const PendingItem = (props: {
               {!isOpen.includes(order.orderId) && (
                 <>
                   <ItemDetail variant="caption" color="shade6">
-                    Sold Weight <span>{order.totalWeight} kg</span>
+                    Sold Weight <span>{order.totalWeight.toFixed(2)} kg</span>
                   </ItemDetail>
 
                   <ItemDetail variant="caption" color="shade6">
@@ -250,7 +250,8 @@ export const PendingItem = (props: {
                   <ItemDetail variant="caption" color="shade6">
                     Sold Weight{' '}
                     <span>
-                      {lineItemTotalWeight} {lineItem.listing.measurementUnit}
+                      {lineItemTotalWeight.toFixed(2)}{' '}
+                      {lineItem.listing.measurementUnit}
                     </span>
                   </ItemDetail>
 
@@ -451,7 +452,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                   <Spacer />
                   <div className="right-content">
                     <ItemDetail variant="caption" color="shade6">
-                      Sold Weight <span>{group.totalWeight} kg</span>
+                      Sold Weight <span>{group.totalWeight.toFixed(2)} kg</span>
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6">
