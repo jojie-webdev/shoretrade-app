@@ -5,13 +5,14 @@ import {
 import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'GET_SELLER_ORDERS_PLACED';
-const asyncAction = createAsyncAction<
-  GetSellerOrdersMeta,
-  GetSellerOrdersPayload
->(ns);
+const asyncAction = {
+  ...createAsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>(ns),
+  UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
+};
 
 const getSellerOrdersPlacedActions = {
   ...asyncAction,
+
   request: (filter?: {
     page: string;
     dateFrom: string;
@@ -25,6 +26,14 @@ const getSellerOrdersPlacedActions = {
       status: 'PLACED',
       limit: 10,
       ...filter,
+    },
+  }),
+
+  updateOptimistically: (orderId: string, orderLineItemId: string) => ({
+    type: asyncAction.UPDATE_OPTIMISTICALLY,
+    meta: {
+      orderId,
+      orderLineItemId,
     },
   }),
 };

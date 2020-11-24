@@ -23,7 +23,12 @@ import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
-import { SoldGeneratedProps, TabOptions, RequestFilters } from './Sold.props';
+import {
+  SoldGeneratedProps,
+  TabOptions,
+  RequestFilters,
+  PendingToShipItemData,
+} from './Sold.props';
 import {
   orderItemToPendingToShipItem,
   groupToShipOrders,
@@ -31,11 +36,67 @@ import {
 } from './Sold.tranform';
 import SoldView from './Sold.view';
 const Sold = (): JSX.Element => {
+  // MARK:- Hooks
   const dispatch = useDispatch();
   const location = useLocation();
 
+  // MARK:- Selectors
   const token = useSelector((state: Store) => state.auth.token) || '';
 
+  const toShipCount =
+    useSelector(
+      (state: Store) => state.getSellerOrdersPlaced.data?.data.count
+    ) || '1';
+
+  const deliveredCount =
+    useSelector(
+      (state: Store) => state.getSellerOrdersDelivered.data?.data.count
+    ) || '1';
+
+  const pendingGetOrdersPlaced =
+    useSelector((state: Store) => state.getSellerOrdersPlaced.pending) || false;
+
+  const pendingGetOrdersTransit =
+    useSelector((state: Store) => state.getSellerOrdersTransit.pending) ||
+    false;
+
+  const pendingGetOrdersDelivered =
+    useSelector((state: Store) => state.getSellerOrdersDelivered.pending) ||
+    false;
+
+  const isSendingMessage =
+    useSelector((state: Store) => state.sendMessage.pending) || false;
+
+  const isPlacingOrder =
+    useSelector((state: Store) => state.placeOrder.pending) || false;
+
+  // MARK:- Reducers
+  const [toShipFilters, updateToShipFilters] = useReducer(
+    createUpdateReducer<RequestFilters>(),
+    {
+      page: '1',
+      dateFrom: '',
+      dateTo: '',
+    }
+  );
+
+  const [deliveredFilters, updateDeliveredFilters] = useReducer(
+    createUpdateReducer<RequestFilters>(),
+    {
+      page: '1',
+      dateFrom: '',
+      dateTo: '',
+    }
+  );
+
+  // MARK:- State
+  const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
+  const [pendingToShipState, setPendingToShipState] = useState<
+    PendingToShipItemData[]
+  >();
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  // MARK: Methods
   const getOrdersPlaced = (filter?: {
     page: string;
     dateFrom: string;
@@ -44,6 +105,17 @@ const Sold = (): JSX.Element => {
     if (filter?.page) {
       // prevent firing action twice on mount
       dispatch(getSellerOrdersPlacedActions.request(filter));
+    }
+  };
+
+  const sendMessage = (buyerId: string, message: string) => {
+    if (buyerId && message) {
+      dispatch(
+        sendMessageActions.request({
+          buyerId: buyerId || '',
+          message,
+        })
+      );
     }
   };
 
@@ -58,27 +130,6 @@ const Sold = (): JSX.Element => {
   }) => {
     dispatch(getSellerOrdersDeliveredActions.request(filter));
   };
-
-  const getOrders = {
-    placed: getOrdersPlaced,
-    transit: getOrdersTransit,
-    delivered: getOrdersDelivered,
-  };
-
-  const pendingGetOrdersPlaced =
-    useSelector((state: Store) => state.getSellerOrdersPlaced.pending) || false;
-
-  const pendingGetOrdersTransit =
-    useSelector((state: Store) => state.getSellerOrdersTransit.pending) ||
-    false;
-
-  const pendingGetOrdersDelivered =
-    useSelector((state: Store) => state.getSellerOrdersDelivered.pending) ||
-    false;
-
-  const pendingToShip = orderItemToPendingToShipItem(
-    GetSellerOrdersToShipPending()
-  );
 
   const rawDataToSoldItems = (rawData: GetSellerOrdersResponseItem[]) => {
     return groupToShipOrders(rawData).map((orderGroup) => {
@@ -102,22 +153,6 @@ const Sold = (): JSX.Element => {
     });
   };
 
-  const toShip = rawDataToSoldItems(GetSellerOrdersToShip());
-  const inTransit = rawDataToSoldItems(GetSellerOrdersInTransit());
-  const delivered = rawDataToSoldItems(GetSellerOrdersDelivered());
-
-  const toShipCount =
-    useSelector(
-      (state: Store) => state.getSellerOrdersPlaced.data?.data.count
-    ) || '1';
-
-  const deliveredCount =
-    useSelector(
-      (state: Store) => state.getSellerOrdersDelivered.data?.data.count
-    ) || '1';
-
-  const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
-
   const onChangeCurrentTab = (newTab: TabOptions) => {
     dispatch(
       push(
@@ -128,6 +163,56 @@ const Sold = (): JSX.Element => {
       )
     );
   };
+
+  const placeOrder = (data: PlaceOrderMeta) => {
+    dispatch(placeOrderActions.request(data));
+  };
+
+  // MARK:- Variables
+  const getOrders = {
+    placed: getOrdersPlaced,
+    transit: getOrdersTransit,
+    delivered: getOrdersDelivered,
+  };
+
+  const pendingToShip = orderItemToPendingToShipItem(
+    GetSellerOrdersToShipPending()
+  );
+
+  const toShip = rawDataToSoldItems(GetSellerOrdersToShip());
+  const inTransit = rawDataToSoldItems(GetSellerOrdersInTransit());
+  const delivered = rawDataToSoldItems(GetSellerOrdersDelivered());
+
+  const filters = {
+    toShipFilters,
+    deliveredFilters,
+  };
+
+  const updateFilters = {
+    updateToShipFilters,
+    updateDeliveredFilters,
+  };
+
+  const pendingGetOrders: Record<TabOptions, boolean> = {
+    'To Ship': pendingGetOrdersPlaced,
+    'In Transit': pendingGetOrdersTransit,
+    Delivered: pendingGetOrdersDelivered,
+  };
+
+  const loadingCurrentTab = pendingGetOrders[currentTab];
+
+  // MARK:- Effects
+  useEffect(() => {
+    if (currentTab === 'To Ship') {
+      getOrders.placed(toShipFilters);
+    }
+  }, [toShipFilters.page, toShipFilters.dateFrom]);
+
+  useEffect(() => {
+    if (currentTab === 'Delivered') {
+      getOrders.delivered(deliveredFilters);
+    }
+  }, [deliveredFilters.page, deliveredFilters.dateFrom]);
 
   useEffect(() => {
     const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
@@ -162,79 +247,17 @@ const Sold = (): JSX.Element => {
     }
   }, [currentTab]);
 
-  const [toShipFilters, updateToShipFilters] = useReducer(
-    createUpdateReducer<RequestFilters>(),
-    {
-      page: '1',
-      dateFrom: '',
-      dateTo: '',
-    }
-  );
-
-  const [deliveredFilters, updateDeliveredFilters] = useReducer(
-    createUpdateReducer<RequestFilters>(),
-    {
-      page: '1',
-      dateFrom: '',
-      dateTo: '',
-    }
-  );
-
   useEffect(() => {
-    if (currentTab === 'To Ship') {
-      getOrders.placed(toShipFilters);
+    if (!pendingGetOrders['To Ship']) {
+      setInitialLoading(false);
     }
-  }, [toShipFilters.page, toShipFilters.dateFrom]);
-
-  useEffect(() => {
-    if (currentTab === 'Delivered') {
-      getOrders.delivered(deliveredFilters);
-    }
-  }, [deliveredFilters.page, deliveredFilters.dateFrom]);
-
-  const filters = {
-    toShipFilters,
-    deliveredFilters,
-  };
-
-  const updateFilters = {
-    updateToShipFilters,
-    updateDeliveredFilters,
-  };
-
-  const pendingGetOrders: Record<TabOptions, boolean> = {
-    'To Ship': pendingGetOrdersPlaced,
-    'In Transit': pendingGetOrdersTransit,
-    Delivered: pendingGetOrdersDelivered,
-  };
-
-  const loadingCurrentTab = pendingGetOrders[currentTab];
-
-  const isSendingMessage =
-    useSelector((state: Store) => state.sendMessage.pending) || false;
-
-  const sendMessage = (buyerId: string, message: string) => {
-    if (buyerId && message) {
-      dispatch(
-        sendMessageActions.request({
-          buyerId: buyerId || '',
-          message,
-        })
-      );
-    }
-  };
-
-  const isPlacingOrder =
-    useSelector((state: Store) => state.placeOrder.pending) || false;
-  const placeOrder = (data: PlaceOrderMeta) => {
-    dispatch(placeOrderActions.request(data));
-  };
+  }, [pendingGetOrders]);
 
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
     onChangeCurrentTab,
-    loadingCurrentTab,
+    loadingCurrentTab: loadingCurrentTab && initialLoading,
     // getOrders,
     toShip,
     pendingToShip,

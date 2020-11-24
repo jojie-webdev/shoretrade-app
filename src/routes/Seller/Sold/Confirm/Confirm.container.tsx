@@ -87,6 +87,8 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
         listingBoxes: boxes,
       })
     );
+
+    props.onClickConfirm();
   };
 
   useEffect(() => {
