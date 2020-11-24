@@ -50,4 +50,6 @@ export type PlaceOrderMeta = {
   toAddressId: string;
 };
 
-export type PlaceOrderPayload = GenericResponse;
+export type PlaceOrderPayload = GenericResponse & {
+  orderId: string;
+};
