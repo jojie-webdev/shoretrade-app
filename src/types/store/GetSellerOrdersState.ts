@@ -6,6 +6,8 @@ export type GetSellerOrdersMeta = {
   page?: string;
   dateFrom?: string;
   dateTo?: string;
+  orderId?: string;
+  orderLineItemId?: string;
 };
 
 export type GetSellerOrdersResponseItem = {

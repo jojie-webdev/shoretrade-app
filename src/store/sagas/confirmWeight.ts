@@ -33,7 +33,14 @@ function* confirmWeightRequest(
 function* confirmWeightSuccess(
   action: AsyncAction<ConfirmWeightMeta, ConfirmWeightPayload>
 ) {
-  yield put(getSellerOrdersPlacedActions.request());
+  // yield put(getSellerOrdersPlacedActions.request());
+  console.log(action);
+  yield put(
+    getSellerOrdersPlacedActions.updateOptimistically(
+      action.payload.orderId,
+      action.payload.orderLineItemId
+    )
+  );
   // yield put(push(SELLER_SOLD_ROUTES.LANDING));
 }
 
