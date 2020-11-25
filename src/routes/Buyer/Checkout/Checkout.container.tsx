@@ -40,16 +40,11 @@ const Checkout = (): JSX.Element => {
     {}
   );
 
-  const currentAddressId =
-    useSelector((store: Store) => store.currentAddress.id) || '';
-
   const addresses =
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
 
-  const currentAddress = addresses.find(
-    (a) => a.id === currentAddressId || a.default
-  );
+  const currentAddress = addresses.find((a) => a.default);
 
   const loadingShippingQuotes =
     useSelector((store: Store) => store.getShippingQuote.pending) || false;
@@ -271,7 +266,7 @@ const Checkout = (): JSX.Element => {
         }
       }
     }
-  }, [cartItems, currentAddressId]);
+  }, [cartItems]);
 
   const generatedProps = {
     groupedOrders,
