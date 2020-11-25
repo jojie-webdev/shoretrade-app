@@ -530,14 +530,19 @@ const ToShip = (props: SoldGeneratedProps) => {
       {toShip.map((group) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
-          const currentDate = moment();
-          const dateDiff = targetDate.diff(currentDate, 'days');
 
-          if (dateDiff === -1) {
+          const currentDate = moment();
+          const dateDiff = Math.floor(
+            currentDate.diff(targetDate, 'days', true)
+          );
+          // 1 -> 1.99
+          if (dateDiff === 1) {
             return 'Yesterday';
+            // 0 -> 0.99
           } else if (dateDiff === 0) {
             return 'Today';
-          } else if (dateDiff === 1) {
+            // -1 -> -0
+          } else if (dateDiff === -1) {
             return 'Tomorrow';
           }
 
