@@ -162,6 +162,7 @@ const ProductDetails = (): JSX.Element => {
 
   const getBoxes = () => {
     if (!shouldHideResult) {
+      console.log('test');
       setShouldHideResult(true);
       setPressedBoxRadio('');
     }
@@ -170,18 +171,22 @@ const ProductDetails = (): JSX.Element => {
       setTimer(null);
     }
     const timerId = setTimeout(() => {
-      if (
-        weight.length > 0 &&
-        (weight !== previousWeightRequest?.weight ||
-          id !== previousWeightRequest?.listingId)
-      ) {
+      if (weight.length > 0) {
         setShouldHideResult(false);
-        dispatch(
-          getListingBoxesActions.request({
-            listingId: id,
-            weight,
-          })
-        );
+        // request only when weight or id is different
+        if (
+          !(
+            weight === previousWeightRequest?.weight &&
+            id === previousWeightRequest?.listingId
+          )
+        ) {
+          dispatch(
+            getListingBoxesActions.request({
+              listingId: id,
+              weight,
+            })
+          );
+        }
       }
     }, 800);
     setTimer(timerId);
