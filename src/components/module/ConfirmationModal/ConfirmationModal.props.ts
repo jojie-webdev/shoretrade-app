@@ -6,6 +6,7 @@ type ConfirmationModalGeneratedProps = {
   actionText?: string;
   cancelText?: string;
   action: () => void;
+  cancel?: () => void;
 };
 
 export type ConfirmationModalProps = ModalProps &

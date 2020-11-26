@@ -17,6 +17,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     cancelText,
     action,
     description,
+    cancel,
     ...modalProps
   } = props;
 
@@ -47,7 +48,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
             style={{ flex: 1, marginRight: 8 }}
             variant="outline"
             text={cancelText || 'Cancel'}
-            onClick={modalProps.onClickClose}
+            onClick={cancel || modalProps.onClickClose}
           />
           <Button
             style={{ flex: 1, marginLeft: 8 }}
