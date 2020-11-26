@@ -119,6 +119,9 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
         onClickClose={() => {
           setShowConfirmationModal(false);
         }}
+        cancel={() => {
+          history.push(BUYER_ROUTES.CATEGORIES);
+        }}
         action={() => {
           setShowConfirmationModal(false);
           placeOrder();
