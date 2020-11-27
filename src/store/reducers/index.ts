@@ -49,6 +49,7 @@ import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
+import resetPassword from './resetPassword';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
@@ -113,6 +114,7 @@ export default (routeHistory: History) =>
         placeOrder,
         register,
         resendVerification,
+        resetPassword,
         router: connectRouter(routeHistory),
         searchAndCountProductType,
         searchProductType,

@@ -15,6 +15,7 @@ import { Store } from 'types/store/Store';
 
 import Authenticate from './Auth/Authenticate';
 import ForgotPassword from './Auth/ForgotPassword';
+import ResetPassword from './Auth/ResetPassword';
 import Login from './Auth/Login';
 import Onboarding from './Auth/Onboarding';
 import Register from './Auth/Register';
@@ -49,6 +50,10 @@ export const ROUTES: Routes = {
   FORGOT_PASSWORD: {
     path: MAIN_ROUTES.FORGOT_PASSWORD,
     children: <ForgotPassword />,
+  },
+  RESET_PASSWORD: {
+    path: MAIN_ROUTES.RESET_PASSWORD,
+    children: <ResetPassword />,
   },
   // Seller Unauthenticated Routes
   SELLER_LOGIN: {
