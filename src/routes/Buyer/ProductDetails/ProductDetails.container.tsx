@@ -153,7 +153,7 @@ const ProductDetails = (): JSX.Element => {
           },
         ],
         subTotal: currentBox.weight * price * (currentBox.quantity || 0),
-        weight: currentBox.weight,
+        weight: currentBox.weight * (currentBox.quantity || 0),
       };
       dispatch(cartActions.add(payload));
       history.push(BUYER_ROUTES.CHECKOUT);
