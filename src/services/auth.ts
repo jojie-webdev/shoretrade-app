@@ -3,6 +3,7 @@ import { API } from 'consts';
 import { ForgotPasswordRequestData } from 'types/store/ForgotPasswordState';
 import { LoginMeta } from 'types/store/LoginState';
 import { RegisterRequestData } from 'types/store/RegisterState';
+import { ResetPasswordMeta } from 'types/store/ResetPasswordState';
 import { VerifyMeta } from 'types/store/VerifyState';
 import { createBasicToken } from 'utils/Token';
 
@@ -47,6 +48,16 @@ export const forgotPassword = (data: ForgotPasswordRequestData) => {
     method: 'post',
     url: `${USER_URL}/forgot-password`,
     data,
+  });
+};
+
+export const resetPassword = (data: ResetPasswordMeta) => {
+  return axios({
+    method: 'post',
+    url: `${USER_URL}/reset-password`,
+    data,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
   });
 };
 

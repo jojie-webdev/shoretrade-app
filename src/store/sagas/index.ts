@@ -41,6 +41,7 @@ import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
 import resendVerification from './resendVerification';
+import resetPassword from './resetPassword';
 import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
@@ -96,6 +97,7 @@ const sagas = [
   placeOrder,
   register,
   resendVerification,
+  resetPassword,
   router,
   searchAndCountProductType,
   searchProductType,

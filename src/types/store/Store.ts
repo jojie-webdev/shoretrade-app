@@ -111,6 +111,7 @@ import {
   ResendVerificationMeta,
   ResendVerificationPayload,
 } from './ResendVerificationState';
+import { ResetPasswordMeta, ResetPasswordPayload } from './ResetPasswordState';
 import {
   SearchAndCountProductTypeMeta,
   SearchAndCountProductTypePayload,
@@ -264,5 +265,9 @@ export interface Store {
   >;
   sellerDashboardDate: any;
   sendMessage: AsyncState<SendMessageMeta, SendMessagePayload>;
-  getMarketEstimate: AsyncState<GetMarketEstimateMeta, GetMarketEstimatePayload>;
+  getMarketEstimate: AsyncState<
+    GetMarketEstimateMeta,
+    GetMarketEstimatePayload
+  >;
+  resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
 }
