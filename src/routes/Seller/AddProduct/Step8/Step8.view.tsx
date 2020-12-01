@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
 import { GetCategoryData } from 'store/selectors/seller/categories';
