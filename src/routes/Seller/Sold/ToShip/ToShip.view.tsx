@@ -25,11 +25,13 @@ import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
+import { Store } from 'types/store/Store';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
@@ -317,6 +319,12 @@ const ToShip = (props: SoldGeneratedProps) => {
     placeOrder,
   } = props;
 
+  const [didPressConfirmWeight, setDidPressConfirmWeight] = useState(false);
+
+  const confirmWeightPending = useSelector(
+    (state: Store) => state.confirmWeight.pending
+  );
+
   const [confirmModal, updateConfirmModal] = useReducer(
     createUpdateReducer<{
       isOpen: boolean;
@@ -369,6 +377,16 @@ const ToShip = (props: SoldGeneratedProps) => {
     }
   }, [isPlacingOrder]);
 
+  useEffect(() => {
+    // After pressing submit and response is finished, close modal
+    if (!confirmWeightPending && didPressConfirmWeight) {
+      updateConfirmModal({
+        isOpen: false,
+      });
+      setDidPressConfirmWeight(false);
+    }
+  }, [confirmWeightPending]);
+
   return (
     <>
       <ConfirmModal
@@ -377,6 +395,7 @@ const ToShip = (props: SoldGeneratedProps) => {
             isOpen: false,
           });
         }}
+        onClickConfirm={() => setDidPressConfirmWeight(true)}
         {...confirmModal}
       />
       <MessageModal
@@ -511,14 +530,19 @@ const ToShip = (props: SoldGeneratedProps) => {
       {toShip.map((group) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
-          const currentDate = moment();
-          const dateDiff = targetDate.diff(currentDate, 'days');
 
-          if (dateDiff === -1) {
+          const currentDate = moment();
+          const dateDiff = Math.floor(
+            currentDate.diff(targetDate, 'days', true)
+          );
+          // 1 -> 1.99
+          if (dateDiff === 1) {
             return 'Yesterday';
+            // 0 -> 0.99
           } else if (dateDiff === 0) {
             return 'Today';
-          } else if (dateDiff === 1) {
+            // -1 -> -0
+          } else if (dateDiff === -1) {
             return 'Tomorrow';
           }
 

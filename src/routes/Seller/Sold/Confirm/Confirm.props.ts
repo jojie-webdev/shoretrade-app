@@ -28,6 +28,7 @@ export interface ConfirmPublicProps {
   orderId: string;
   lineItemId: string;
   onClickClose: () => void;
+  onClickConfirm: () => void;
 }
 
 export interface ConfirmGeneratedProps {

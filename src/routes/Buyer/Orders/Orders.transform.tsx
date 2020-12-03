@@ -47,7 +47,11 @@ export const transformOrder = (
         name: lineItem.listing.typeName,
         price: toPrice(lineItem.price),
         tags: lineItem.listing.specifications.map((label) => ({ label })),
-        weight: lineItem.weight.toFixed(2),
+        weight: lineItem.listingBoxes
+          .reduce((accum, current) => {
+            return accum + current.quantity * current.weight;
+          }, 0)
+          .toFixed(2),
         unit: formatMeasurementUnit(lineItem.listing.measurementUnit),
         size: sizeToString(
           lineItem.listing.metricLabel,

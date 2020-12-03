@@ -12,4 +12,7 @@ export type ConfirmWeightMeta = {
   orderLineItemId: string;
 };
 
-export type ConfirmWeightPayload = GenericResponse;
+export type ConfirmWeightPayload = GenericResponse & {
+  orderId: string;
+  orderLineItemId: string;
+};

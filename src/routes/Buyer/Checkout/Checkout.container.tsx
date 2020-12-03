@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 
-import { clickAndCollectAddress, clickAndCollectAddress2 } from 'consts';
+import { BUYER_ROUTES, clickAndCollectAddress, clickAndCollectAddress2 } from 'consts';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,16 +40,11 @@ const Checkout = (): JSX.Element => {
     {}
   );
 
-  const currentAddressId =
-    useSelector((store: Store) => store.currentAddress.id) || '';
-
   const addresses =
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
 
-  const currentAddress = addresses.find(
-    (a) => a.id === currentAddressId || a.default
-  );
+  const currentAddress = addresses.find((a) => a.default);
 
   const loadingShippingQuotes =
     useSelector((store: Store) => store.getShippingQuote.pending) || false;
@@ -175,7 +170,7 @@ const Checkout = (): JSX.Element => {
     useSelector((store: Store) => store.order.pending) || false;
 
   const keepShopping = () => {
-    history.goBack();
+    history.push(BUYER_ROUTES.CATEGORIES);
   };
 
   const placeOrder = () => {
@@ -271,7 +266,7 @@ const Checkout = (): JSX.Element => {
         }
       }
     }
-  }, [cartItems, currentAddressId]);
+  }, [cartItems]);
 
   const generatedProps = {
     groupedOrders,
