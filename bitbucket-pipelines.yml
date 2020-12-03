@@ -38,7 +38,7 @@ pipelines:
           caches:
             - node
           script:
-            - npm install --silent
+            - NODE_ENV=build && npm install --silent && NODE_ENV=production
             - CI=false npm run build
             - pipe: atlassian/aws-s3-deploy:0.3.2
               variables:
