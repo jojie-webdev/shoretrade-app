@@ -1,5 +1,7 @@
 import AlertInfo from 'components/base/AlertInfo';
-import { Download } from 'components/base/SVG';
+import Button from 'components/base/Button';
+import Select from 'components/base/Select';
+import { Download, ArrowLeft } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
 import LocationSearch from 'components/module/LocationSearch';
@@ -7,19 +9,55 @@ import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
 import styled from 'utils/styled';
+import theme from 'utils/Theme';
 
 export const Container = styled.div`
-  padding: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 100%;
+`;
+export const BackIcon = styled(ArrowLeft)``;
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 32px;
+  margin-top: 8px;
+`;
+
+export const RenderContainer = styled.div<{ step?: number }>`
+margin-top:60px;
+  /* margin-top: ${({ step }) =>
+    (theme.appType === 'seller' && step === 7) || step === 6
+      ? '60px'
+      : (theme.appType === 'buyer' && step === 6) || step === 5
+      ? '60px'
+      : '80px'}; */
+  height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    overflow: auto;
+  }
+`;
+
+export const NextButton = styled(Button)`
+  margin-right: 8px;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+`;
+
+export const GetStartedButton = styled(Button)`
+  width: 148px;
+  margin-top: 32px;
 `;
 
 export const Spacer = styled.div`
@@ -149,3 +187,97 @@ export const PaymentMethodOverline = styled(Typography)`
 export const PaymentMethodDetails = styled(Typography)`
   color: ${({ theme }) => theme.grey.shade8};
 `;
+
+export const UploadLabel = styled(Typography)`
+  margin-top: 24px;
+  margin-bottom: 4px;
+`;
+
+export const MarketSectorContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  margin-left: 4px;
+`;
+
+export const MarketSectorItemContainer = styled.div`
+  flex: 0 50%;
+  height: 162px;
+  width: 162px;
+  margin: 0px 0px 24px 0px;
+`;
+
+export const CategoryContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 32px;
+`;
+
+export const CategorySearchInputContainer = styled.div`
+  margin-bottom: 16px;
+  background: #ffffff;
+  border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
+  border-radius: 100px;
+  width: 100%;
+  height: 50px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .close-svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input {
+    flex: 1;
+    border: 0;
+    margin: 0 10px;
+    height: 100%;
+
+    :focus {
+      outline: none;
+      border: none;
+    }
+
+    ::placeholder {
+      color: ${(props) => props.theme.grey.shade5};
+    }
+  }
+`;
+
+export const InteractionsContainer = styled.div`
+  margin-bottom: 8px;
+  width: 100%;
+  .interactions {
+    padding: 8px;
+    border-radius: 8px;
+  }
+`;
+
+export const BadgeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+`;
+
+export const BadgeItemContainer = styled.div`
+  margin-right: 8px;
+  margin-top: 8px;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+export const SellerSummaryContainer = styled.div`
+  margin-top: 24px;
+  padding: 8px;
+`;
+
+export const SelectMarketSelector = styled(Select)``;

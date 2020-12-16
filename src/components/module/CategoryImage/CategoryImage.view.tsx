@@ -31,6 +31,7 @@ const CategoryImage = ({
   maxHeight,
   customSVGSize,
   containerHeight,
+  fill,
 }: CategoryImageProps) => {
   const upperCaseId = id.toUpperCase();
 
@@ -41,6 +42,7 @@ const CategoryImage = ({
           <CtgClams
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'BD1EA44F-63E9-44E8-8BD6-5213BE85DA7C':
@@ -48,6 +50,7 @@ const CategoryImage = ({
           <CtgCrabs
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '48B46427-82D3-434C-AFC4-492000FFD5C2':
@@ -55,6 +58,7 @@ const CategoryImage = ({
           <CtgFillets
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '3AE0F9A5-15C2-4EFE-9A75-1956762019A9':
@@ -62,6 +66,7 @@ const CategoryImage = ({
           <CtgFish
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'A13DA4C1-C103-4390-81F6-3ACB0BDC9FDB':
@@ -69,6 +74,7 @@ const CategoryImage = ({
           <CtgFishCuts
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '53A435E4-5355-4949-81A5-1C94DEE95317':
@@ -76,6 +82,7 @@ const CategoryImage = ({
           <CtgLobsters
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'E6E7DCAB-126F-4E22-B1ED-681D086C6B31':
@@ -83,6 +90,7 @@ const CategoryImage = ({
           <CtgOctopus
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'B6367227-6892-4DC6-9C9A-32DF9AB8284A':
@@ -90,6 +98,7 @@ const CategoryImage = ({
           <CtgOysters
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'B920A5A8-EF5D-4BF9-95A0-0FECC19BFB2F':
@@ -97,6 +106,7 @@ const CategoryImage = ({
           <CtgPrawns
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'C07B5FFD-E668-4DF3-B9FC-462F414D4E46':
@@ -104,6 +114,7 @@ const CategoryImage = ({
           <CtgShellfish
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'A6DFB3C8-7F9B-4CF4-B436-5B0E84872024':
@@ -111,6 +122,7 @@ const CategoryImage = ({
           <CtgSmoked
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case 'F9679552-7B86-4911-8EB7-FACEAB4D7BAE':
@@ -118,6 +130,7 @@ const CategoryImage = ({
           <CtgSquids
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '08714EE7-AAE7-43FD-B692-996A5C06B433':
@@ -125,6 +138,7 @@ const CategoryImage = ({
           <CtgTuna
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '964087D2-3F9E-46DC-A446-1BDAE606601E':
@@ -132,6 +146,7 @@ const CategoryImage = ({
           <CtgBugsScampi
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '3C984EEA-3040-4E88-8686-5019C7455698':
@@ -139,6 +154,7 @@ const CategoryImage = ({
           <CtgCaviar
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '3A6714A2-6D6F-4BEF-8FDA-8E4D70289CA1':
@@ -146,6 +162,7 @@ const CategoryImage = ({
           <CtgMussels
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '3B44272B-E8FC-42DE-B797-0B7DD5AA81D2':
@@ -153,6 +170,7 @@ const CategoryImage = ({
           <CtgScallopMeat
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       case '50645A22-5018-4C6D-A3B8-1B789CC2EEC8':
@@ -160,6 +178,7 @@ const CategoryImage = ({
           <CtgScallopsShell
             sizeMultiplier={customSVGSize ? customSVGSize : 1.75}
             height={maxHeight}
+            fill={fill}
           />
         );
       default:

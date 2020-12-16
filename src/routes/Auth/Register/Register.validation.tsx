@@ -153,6 +153,36 @@ const selectedMarketSectorContstraints = {
   },
 };
 
+const categoryMarketSectorContstraints = {
+  categoryMarketSector: {
+    presence: {
+      message: '^Please select a market sector',
+      allowEmpty: false,
+    },
+  },
+};
+
+const licenseConstraint = {
+  licenseName: {
+    presence: {
+      message: '^Please enter license name',
+      allowEmpty: false,
+    },
+  },
+  licenseFile: {
+    presence: {
+      message: '^Please select a license file',
+      allowEmpty: false,
+    },
+  },
+};
+
+export const validateLicense = createFormikValidator(licenseConstraint);
+
+export const validateCategoryMarketSector = createFormikValidator(
+  categoryMarketSectorContstraints
+);
+
 export const validateUserDetails = createFormikValidator(
   userDetailsConstraints
 );

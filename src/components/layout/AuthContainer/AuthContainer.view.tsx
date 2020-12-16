@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Close } from 'components/base/SVG';
+import { Close, Logo } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -19,11 +20,14 @@ import {
   Title,
   HeaderSpacer,
   ProgressIndicator,
+  LogoContainer,
+  ProgressContainer,
+  BackgroundContainer,
 } from './AuthContainer.style';
 
 const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
   const theme = useTheme();
-
+  const isSeller = theme.appType === 'seller';
   const {
     children,
     onCloseAction,
@@ -33,14 +37,33 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
     totalSteps,
     containerBackground,
     minHeight,
+    noLogo,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
-      <Background />
-      <Wrapper>
+      <BackgroundContainer md={6} lg={7} xl={7} xxl={7}>
+        <Background />
+      </BackgroundContainer>
+      <Wrapper xs={12} sm={12} md={6} lg={5} xl={5} xxl={5}>
+        <ProgressContainer background={containerBackground}>
+          {currentStep !== undefined && totalSteps !== undefined && (
+            <ProgressIndicator
+              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+            />
+          )}
+        </ProgressContainer>
         <Content background={containerBackground} minHeight={minHeight}>
+          {!noLogo && (
+            <LogoContainer
+              logoContainerMarginBottomHeight={
+                props.logoContainerMarginBottomHeight
+              }
+            >
+              <Logo fill={!isSeller ? 'black' : 'white'} />
+            </LogoContainer>
+          )}
           {!isSmallScreen && onCloseAction && (
             <CloseButtonContainer>
               <Touchable circle width={'100%'} onPress={() => onCloseAction()}>
@@ -61,9 +84,6 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                   </Touchable>
                 )}
               </HeaderSpacer>
-              <HeaderContent>
-                <Title>{title}</Title>
-              </HeaderContent>
               <HeaderSpacer>
                 {isSmallScreen && onCloseAction && (
                   <Touchable
@@ -76,11 +96,6 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 )}
               </HeaderSpacer>
             </HeaderContainer>
-          )}
-          {currentStep !== undefined && totalSteps !== undefined && (
-            <ProgressIndicator
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            />
           )}
           {children}
         </Content>

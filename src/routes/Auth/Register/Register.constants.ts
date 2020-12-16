@@ -14,6 +14,26 @@ export const SELLER_STEPS = [
     description:
       'Provide your bank details so we can get your account set up and running.',
   },
+  {
+    title: 'Licenses',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+  {
+    title: 'Market Sector',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+  {
+    title: "I'm Selling",
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+  {
+    title: 'Summary',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
 ];
 
 export const BUYER_STEPS = [
@@ -31,6 +51,21 @@ export const BUYER_STEPS = [
     title: 'Payment Method',
     description:
       'Select a payment method to be used when purchasing from our suppliers.',
+  },
+  {
+    title: 'Market Sector',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+  {
+    title: 'I’m looking for',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+  {
+    title: 'Summary',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
   },
 ];
 
@@ -102,6 +137,10 @@ export const BANK_DETAIL_FIELDS: Field[] = [
   },
 ];
 
+export const LICENSES_FIELDS: Field[] = [
+  { label: 'License Name', key: 'licenseName' },
+];
+
 export const BUYER_LOCATION_NOTES =
   'Receiving shipment from more than 1 location? You can add multiple addresses once your account is approved.';
 
@@ -117,10 +156,6 @@ export const PAYMENT_METHOD_OPTIONS = [
     label: 'Bank Transfer / EFT',
     value: '1',
   },
-  {
-    label: 'Credit Card',
-    value: '2',
-  },
 ];
 
 export const CREDIT_LINE_NOTES =
@@ -134,11 +169,19 @@ export const CREDIT_LINE_TERMS = [
   '• Thereafter 1% on Invoice Penalty.',
 ];
 
-export const MARKET_SECTORS = [
-  'Hotel',
-  'Restaurant',
-  'Wholesaler',
-  'Seafood Processor',
-  'Retailer',
-  'Wet Shop',
+export const BUYER_VARIATION = [
+  { key: 'HOTEL', label: 'Hotel' },
+  { key: 'RESTAURANT_BAR', label: 'Restaurant ~ Bar' },
+  { key: 'WHOLESALER', label: 'Wholesaler' },
+  { key: 'RETAILER', label: 'Retailer' },
+  { key: 'PROCESSOR', label: 'Processor' },
+  { key: 'WET_SHOP', label: 'Wet Shop' },
+];
+
+export const SELLER_VARIATIONS = [
+  { key: 'WILD_CATCH_FISHING_COMPANY', label: 'Wild Catch Fishing Company' },
+  { key: 'AQUACULTURE_PRODUCER', label: 'Aquaculture Producer' },
+  { key: 'WHOLESALER', label: 'Wholesaler' },
+  { key: 'PROCESSOR', label: 'Processor' },
+  { key: 'RETAILER', label: 'Retailer' },
 ];

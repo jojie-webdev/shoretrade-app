@@ -1,6 +1,11 @@
 import { Dispatch } from 'react';
 
 import { PlaceData } from 'types/PlaceData';
+import {
+  Category,
+  CategoryType,
+  CategoryPayload,
+} from 'types/store/GetCategories';
 
 export interface RegistrationDetails {
   // user
@@ -29,6 +34,10 @@ export interface RegistrationDetails {
   selectedMarketSector: string;
 
   tncAgreement: boolean;
+  categoryMarketSector: string;
+  //license
+  licenseName: string;
+  licenseFile: File | null;
 }
 
 export interface BankDetails {
@@ -46,4 +55,18 @@ export interface RegisterGeneratedProps {
   isSuccess: boolean;
   error: string;
   isApplicationForLineCredit: boolean;
+  categories: Category[];
+  getCategoryItem: (id: string) => void;
+  categoryItems: CategoryType[];
+  isGotoDetails?: boolean;
+  showDetails: () => void;
+  hideDetails: () => void;
+  selectedCategoryTypes: CategoryPayload[];
+  addSelected: (category: CategoryPayload) => void;
+  searchCategory: Category[];
+  searchCategoryType: CategoryType[];
+  searchTerm: string;
+  onChangeSearch: (search: string) => void;
+  isSummaryEdit: boolean;
+  setSummaryEdit: () => void;
 }

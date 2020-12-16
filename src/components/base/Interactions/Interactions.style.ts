@@ -28,8 +28,8 @@ export const Container = styled.div<InteractionsProps>`
     }
 
     return theme.appType === 'buyer'
-      ? '0px 4px 12px rgba(41, 43, 50, 0.04);'
-      : 'none';
+      ? '0px 4px 12px rgba(41, 43, 50, 0.04) !important'
+      : 'none !important';
   }};
 
   ${({ onClick, type }) =>

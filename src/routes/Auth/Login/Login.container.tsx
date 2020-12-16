@@ -14,6 +14,7 @@ const Login = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   const pending = useSelector((state: Store) => state.login.pending) || false;
 
   const isError =
@@ -24,15 +25,13 @@ const Login = (): JSX.Element => {
   };
 
   const goToForgotPassword = () => {
-    history.push(MAIN_ROUTES.FORGOT_PASSWORD);
+    history.push(
+      isSeller ? SELLER_ROUTES.FORGOT_PASSWORD : BUYER_ROUTES.FORGOT_PASSWORD
+    );
   };
 
-  const goToSellerRegister = () => {
-    history.push(SELLER_ROUTES.REGISTER);
-  };
-
-  const goToBuyerRegister = () => {
-    history.push(BUYER_ROUTES.REGISTER);
+  const goToRegister = () => {
+    history.push(isSeller ? SELLER_ROUTES.REGISTER : BUYER_ROUTES.REGISTER);
   };
 
   const generatedProps = {
@@ -40,8 +39,7 @@ const Login = (): JSX.Element => {
     login,
     pending,
     goToForgotPassword,
-    goToSellerRegister,
-    goToBuyerRegister,
+    goToRegister,
     isError,
   };
   return <LoginView {...generatedProps} />;

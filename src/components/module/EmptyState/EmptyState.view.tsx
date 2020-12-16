@@ -24,7 +24,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
   const svgColor =
     theme.appType === 'buyer' ? theme.grey.shade7 : theme.grey.shade6;
   const circleColor =
-    theme.appType === 'buyer' ? theme.grey.shade3 : theme.grey.shade9;
+    theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9;
 
   return (
     <Container fluid={fluid}>
@@ -33,7 +33,12 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
           {title}
         </MainText>
       )}
-      <SVGContainer circleColor={circleColor} fluid={fluid}>
+      <SVGContainer
+        circleHeight={props.circleHeight}
+        circleWidth={props.circleWidth}
+        circleColor={circleColor}
+        fluid={fluid}
+      >
         <Svg height={height || 311} width={width || 311} fill={svgColor} />
       </SVGContainer>
 
