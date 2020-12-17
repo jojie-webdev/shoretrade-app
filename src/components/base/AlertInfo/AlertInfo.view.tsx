@@ -14,10 +14,15 @@ const AlertInfo = (props: AlertInfoProps): JSX.Element => {
       <InfoFilled
         width={13.33}
         height={13.33}
-        fill={theme.grey.shade9}
+        fill={
+          theme.appType === 'seller' ? theme.brand.alert : theme.grey.shade9
+        }
         {...props}
       />
-      <Text variant="caption" color={'shade9'}>
+      <Text
+        variant="caption"
+        color={theme.appType === 'seller' ? 'alert' : 'shade9'}
+      >
         {label}
       </Text>
     </Container>

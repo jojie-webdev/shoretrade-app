@@ -6,7 +6,9 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   padding: 8px;
-  background-color: ${({ theme }) => theme.brand.alert};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.brand.alert};
+  border-radius: 8px;
 `;
 
 export const Text = styled(Typography)`

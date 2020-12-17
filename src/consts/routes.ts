@@ -12,8 +12,8 @@ export const MAIN_ROUTES = {
 
 export const SELLER_ROUTES = {
   ROOT: `${SELLER_ROOT}`,
-  LOGIN: `/login/seller`,
-  REGISTER: `/register/seller`,
+  LOGIN: `${SELLER_ROOT}/login`,
+  REGISTER: `${SELLER_ROOT}/register`,
   FORGOT_PASSWORD: `${SELLER_ROOT}/forgot-password`,
   VERIFY2FA: `${SELLER_ROOT}/verify2fa`,
   ONBOARDING: `${SELLER_ROOT}/onboarding`,
@@ -72,8 +72,8 @@ export const SELLER_ACCOUNT_ROUTES = {
 
 export const BUYER_ROUTES = {
   ROOT: `${BUYER_ROOT}`,
-  LOGIN: `/login/buyer`,
-  REGISTER: `/register/buyer`,
+  LOGIN: `${BUYER_ROOT}/login`,
+  REGISTER: `${BUYER_ROOT}/register`,
   FORGOT_PASSWORD: `${BUYER_ROOT}/forgot-password`,
   VERIFY2FA: `${BUYER_ROOT}/verify2fa`,
   ONBOARDING: `${BUYER_ROOT}/onboarding`,

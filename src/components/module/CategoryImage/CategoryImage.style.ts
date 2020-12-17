@@ -9,7 +9,11 @@ export const Container = styled.div<{
   justify-content: center;
   padding: 6px;
   background-color: ${({ circled, theme }) =>
-    circled ? theme.grey.shade8 : theme.grey.shade9};
+    circled
+      ? theme.grey.shade8
+      : theme.appType === 'buyer'
+      ? theme.grey.noshade
+      : theme.grey.shade9};
   flex: 1;
   border-radius: ${({ cBorderRadius }) => cBorderRadius || '0'};
 `;

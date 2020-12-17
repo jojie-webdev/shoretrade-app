@@ -1,4 +1,14 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Wetshop } from './Wetshop';
+export { default as BuyerRestaurantBar } from './BuyerRestaurantBar';
+export { default as BuyerHotel } from './BuyerHotel';
+export { default as Retailer } from './Retailer';
+export { default as Processor } from './Processor';
+export { default as Wholesaler } from './Wholesaler';
+export { default as AquacultureProducer } from './AquacultureProducer';
+export { default as WildCatchFishingCompany } from './WildCatchFishingCompany';
+export { default as Tuna } from './Tuna';
+export { default as Logo } from './Logo';
 export { default as Message } from './Message';
 export { default as CheckList } from './CheckList';
 export { default as DownloadFile } from './DownloadFile';
