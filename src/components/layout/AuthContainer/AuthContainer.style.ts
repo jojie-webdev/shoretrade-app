@@ -111,7 +111,10 @@ export const Title = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const ProgressContainer = styled.div<{ background?: string }>`
+export const ProgressContainer = styled.div<{
+  background?: string;
+  isRegister?: boolean;
+}>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -119,10 +122,14 @@ export const ProgressContainer = styled.div<{ background?: string }>`
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};
   border-radius: 4px;
-  height: 1%;
+  height: ${({ isRegister }) => (isRegister ? '1%' : '0%')};
 `;
 
-export const Content = styled.div<{ background?: string; minHeight?: string }>`
+export const Content = styled.div<{
+  background?: string;
+  minHeight?: string;
+  isRegister?: boolean;
+}>`
   padding: 0px 40px 24px 40px;
   position: relative;
   display: flex;
@@ -135,7 +142,7 @@ export const Content = styled.div<{ background?: string; minHeight?: string }>`
   /* max-height: 660px; */
   border-radius: 4px;
   z-index: 999;
-  height: 99%;
+  height: ${({ isRegister }) => (isRegister ? '99%' : '100%')};
 
   @media ${BREAKPOINTS['sm']} {
     max-height: 100vh;

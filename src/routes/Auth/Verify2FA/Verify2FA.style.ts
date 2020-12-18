@@ -33,7 +33,11 @@ export const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-top: 347px;
+  /* margin-top: 347px; */
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  margin-bottom: 16px;
 `;
 
 export const TitleContainer = styled.div`
