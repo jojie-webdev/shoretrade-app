@@ -1,3 +1,4 @@
+import { collectAddressShort } from 'consts';
 import moment from 'moment';
 import { groupBy } from 'ramda';
 import { GetBuyerOrdersResponseItem } from 'types/store/GetBuyerOrdersState';
@@ -12,6 +13,9 @@ export const getShipmentOptionString = (
   deliveryMethod: string,
   deliveryOption: string
 ) => {
+  if (deliveryOption === 'COLLECT') {
+    return `Pick Up at ${collectAddressShort}`;
+  }
   return `${deliveryMethod === 'AIR' ? 'Air freight' : 'Road freight'} ${
     deliveryOption !== 'DOOR' ? 'pickup at airport' : 'delivery to door'
   }`;

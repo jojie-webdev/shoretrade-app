@@ -20,3 +20,4 @@ export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
 
 export const clickAndCollectAddress = 'Sydney Fish Market (Loading Dock 3)';
 export const clickAndCollectAddress2 = 'Bank St, Pyrmont NSW';
+export const collectAddressShort = 'Sydney Seafood Market';

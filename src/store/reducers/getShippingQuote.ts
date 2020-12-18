@@ -9,4 +9,6 @@ import { getShippingQuoteActions } from '../actions';
 export default createAsyncReducer<
   GetShippingQuoteMeta,
   GetShippingQuotePayload
->(getShippingQuoteActions);
+>(getShippingQuoteActions, (state, action, defaultState) => ({
+  [getShippingQuoteActions.CLEAR]: defaultState,
+}));
