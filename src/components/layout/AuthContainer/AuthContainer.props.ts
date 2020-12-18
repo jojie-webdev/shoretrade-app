@@ -9,4 +9,5 @@ export interface AuthContainerProps {
   minHeight?: string;
   noLogo?: boolean;
   logoContainerMarginBottomHeight?: number;
+  isRegister?: boolean;
 }

@@ -1197,6 +1197,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   };
   return (
     <AuthContainer
+      isRegister
       noLogo
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
