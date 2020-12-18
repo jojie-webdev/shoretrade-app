@@ -37,6 +37,7 @@ import getShippingQuote from './getShippingQuote';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import login from './login';
+import logRequest from './logRequest';
 import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
@@ -93,6 +94,7 @@ const sagas = [
   getTransactionHistory,
   getUser,
   login,
+  logRequest,
   order,
   placeOrder,
   register,
