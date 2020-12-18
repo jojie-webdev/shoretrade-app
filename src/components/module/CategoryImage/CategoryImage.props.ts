@@ -5,4 +5,5 @@ export type CategoryImageProps = {
   maxHeight?: number;
   customSVGSize?: number;
   containerHeight?: number;
+  fill?: string;
 };

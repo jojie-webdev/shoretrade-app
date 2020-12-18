@@ -5,7 +5,6 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
-  padding: 40px 40px 24px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -56,6 +55,7 @@ export const RegisterLinkPrefix = styled(Typography)`
 export const RegisterLinkAction = styled.div`
   cursor: pointer;
   margin-right: 4px;
+  border-bottom: ${({ theme }) => `1px solid ${theme.brand.primary}`};
 `;
 
 export const RegisterLink = styled(Typography)`
@@ -73,7 +73,6 @@ export const Password = styled(FormikTextField)`
 export const LoginButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   margin-top: 28px;
 `;
 
@@ -81,6 +80,10 @@ export const ForgotPasswordContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-bottom: ${({ theme }) =>
+    `1px solid ${
+      theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade7
+    }`};
 `;
 
 export const ForgotPasswordIcon = styled(Lock)`

@@ -32,8 +32,8 @@ const ForgotPasswordView = (
   props: ForgotPasswordGeneratedProps
 ): JSX.Element => {
   const theme = useTheme();
-  const isSeller = true;
-  // const isSeller = theme.appType === 'seller';
+  // const isSeller = true;
+  const isSeller = theme.appType === 'seller';
   const { resetPassword, pending, backToLogin, success } = props;
 
   const formikProps = {
@@ -57,13 +57,6 @@ const ForgotPasswordView = (
                 Forgot Password?
               </Title>
             </TitleContainer>
-            {/* <GuideContainer>
-              <GuideText color="shade5">
-                Please enter your registered email address. Login details will
-                be emailed to you.
-              </GuideText>
-            </GuideContainer> */}
-
             <Formik {...formikProps}>
               <Form>
                 <Email name="email" type="email" label="EMAIL" />

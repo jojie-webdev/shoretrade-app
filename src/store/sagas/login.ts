@@ -18,16 +18,16 @@ function* loginRequest(action: AsyncAction<LoginMeta, LoginPayload>) {
 }
 
 function* loginSuccess(action: AsyncAction<LoginMeta, LoginPayload>) {
-  // const pathname: string = yield select(
-  //   (state: Store) => state.router.location.pathname
-  // );
-  // const isSeller = pathname.includes('seller');
-  // if (isSeller) {
-  //   yield put(push(SELLER_ROUTES.VERIFY2FA));
-  // } else {
-  //   yield put(push(BUYER_ROUTES.VERIFY2FA));
-  // }
-  yield put(push(MAIN_ROUTES.VERIFY));
+  const pathname: string = yield select(
+    (state: Store) => state.router.location.pathname
+  );
+  const isSeller = pathname.includes('seller');
+  if (isSeller) {
+    yield put(push(SELLER_ROUTES.VERIFY2FA));
+  } else {
+    yield put(push(BUYER_ROUTES.VERIFY2FA));
+  }
+  // yield put(push(MAIN_ROUTES.VERIFY));
 }
 
 function* loginWatcher() {

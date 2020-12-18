@@ -81,3 +81,17 @@ export const getUser = (token: string) => {
     },
   });
 };
+
+export const getAvailableCategories = () => {
+  return axios({
+    method: 'get',
+    url: `${BASE_URL}/category/all?inactive=true`,
+  });
+};
+
+export const getCategoryDetails = (id: string) => {
+  return axios({
+    method: 'get',
+    url: `${BASE_URL}/listing/types-by-category/${id}?inactive=true`,
+  });
+};

@@ -26,6 +26,14 @@ const Onboarding = (): JSX.Element => {
     }
   };
 
+  const onClickPrev = () => {
+    if (currentPage !== DATA.length) {
+      setCurrentPage(currentPage - 1);
+    } else {
+      dispatch(push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN));
+    }
+  };
+
   const onClickSkip = () => {
     dispatch(push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN));
   };
@@ -34,8 +42,8 @@ const Onboarding = (): JSX.Element => {
   const generatedProps: OnboardingGeneratedProps = {
     currentPage,
     onClickNext,
+    onClickPrev,
     currentData: DATA[currentPage],
-
     onClickSkip,
   };
 

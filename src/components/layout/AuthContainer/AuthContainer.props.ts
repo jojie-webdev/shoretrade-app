@@ -7,4 +7,6 @@ export interface AuthContainerProps {
   totalSteps?: number;
   containerBackground?: string;
   minHeight?: string;
+  noLogo?: boolean;
+  logoContainerMarginBottomHeight?: number;
 }

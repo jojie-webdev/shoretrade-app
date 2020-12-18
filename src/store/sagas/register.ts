@@ -25,10 +25,36 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
       profileImageUrl = uploadStatus === 200 ? profileImage.url : '';
     }
 
+    let licenseFileUrl = '';
+    if (action.meta.licenseImage) {
+      const { status: uploadStatus, data: licenseImage } = yield call(
+        uploadImageData,
+        {
+          file: action.meta.licenseImage,
+          asset: 'company',
+        }
+      );
+      licenseFileUrl = uploadStatus === 200 ? licenseImage.url : '';
+    }
+
     const transformMetaToRequest = (
       data: RegisterMeta
     ): RegisterRequestData => {
       if (data.userGroup === 'seller') {
+        let fileType = '';
+        const licenseExtension = licenseFileUrl.substring(
+          licenseFileUrl.lastIndexOf('.') + 1,
+          licenseFileUrl.length
+        );
+
+        if (licenseExtension.toLowerCase().includes('doc')) {
+          fileType = 'DOC';
+        } else if (licenseExtension.toLowerCase().includes('pdf')) {
+          fileType = 'PDF';
+        } else {
+          fileType = 'IMAGE';
+        }
+
         return {
           email: data.email,
           password: data.password,
@@ -45,6 +71,13 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           debtFinancingSegment: data.debtFinancingSegment || '',
           debtFinancingEstRevenue: 0,
           registerDebtFinancing: false,
+          sellerLicense: {
+            url: licenseFileUrl,
+            name: data.licenseName,
+            fileType: fileType,
+          },
+          marketSector: data.marketSector,
+          marketSelling: data.marketSelling,
         };
       }
       // buyer
@@ -64,6 +97,8 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         debtFinancingSegment: data.debtFinancingSegment || '',
         debtFinancingEstRevenue: Number(data.debtFinancingEstRevenue || 0),
         registerDebtFinancing: data.registerDebtFinancing || false,
+        marketSector: data.marketSector,
+        marketBuying: data.marketBuying,
       };
     };
 
