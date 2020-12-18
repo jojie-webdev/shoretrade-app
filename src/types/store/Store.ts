@@ -104,6 +104,7 @@ import {
 import { GetUserMeta, GetUserPayload } from './GetUserState';
 import { HistoryState } from './HistoryState';
 import { LoginMeta, LoginPayload } from './LoginState';
+import { RequestLogState } from './LogRequestState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
@@ -270,4 +271,5 @@ export interface Store {
     GetMarketEstimatePayload
   >;
   resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
+  logRequest: RequestLogState;
 }

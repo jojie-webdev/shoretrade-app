@@ -207,6 +207,9 @@ const Checkout = (): JSX.Element => {
 
   // Logic for generating shipping quote request
 
+  const previousShippingQuotesRequestError =
+    useSelector((store: Store) => store.getShippingQuote.error) || '';
+
   const previousShippingQuotesRequestSellers =
     useSelector((store: Store) => store.getShippingQuote.request?.sellers) ||
     {};
@@ -251,7 +254,12 @@ const Checkout = (): JSX.Element => {
         }, {});
 
         // Prevent action being fired when listing data is the same
-        if (!equals(previousShippingQuotesListingIds, currentListingIds)) {
+        if (
+          !(
+            equals(previousShippingQuotesListingIds, currentListingIds) &&
+            previousShippingQuotesRequestError.length === 0
+          )
+        ) {
           dispatch(
             getShippingQuoteActions.request({
               destination: {
