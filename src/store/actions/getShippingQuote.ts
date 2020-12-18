@@ -2,7 +2,7 @@ import {
   GetShippingQuoteMeta,
   GetShippingQuotePayload,
 } from 'types/store/GetShippingQuoteState';
-import { createAsyncAction } from 'utils/Redux';
+import { createAsyncAction, createClearAction } from 'utils/Redux';
 
 const ns = 'GET_SHIPPING_QUOTE';
 
@@ -11,8 +11,11 @@ const asyncAction = createAsyncAction<
   GetShippingQuotePayload
 >(ns);
 
+const clearAction = createClearAction(ns);
+
 const getShippingQuoteActions = {
   ...asyncAction,
+  ...clearAction,
 };
 
 export default getShippingQuoteActions;
