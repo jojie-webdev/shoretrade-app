@@ -90,6 +90,9 @@ export const ImageContainer = styled.div<{
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) =>
       `${ImageContainerHeight[aspectRatio][375]}px`};
+
+    background-position: ${(props) =>
+      props.aspectRatio === '16:9' ? '50% 50%' : '35% 65%'};
   }
 
   @media (min-width: 768px) {

@@ -80,12 +80,15 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
                 <FormikTextField label="Business" name="businessName" />
               </Col>
               <Col md={12} className="input-col">
-                <FormikTextField label="Business number (optional)" name="abn" />
+                <FormikTextField
+                  label="Business number (optional)"
+                  name="abn"
+                />
               </Col>
             </InputRow>
           </FixedWidthContainer>
 
-          <Row>
+          <Row justify="start">
             <Col>
               <Button text="Save" type="submit" loading={updatingUser} />
             </Col>
