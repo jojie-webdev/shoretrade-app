@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
@@ -57,6 +57,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     onAddToCart,
     isLoadingListingBoxes,
   } = props;
+  const boxWeightsRef = useRef<HTMLDivElement>(null);
+  const [didScroll, setDidScroll] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
     GetListingResponseItem
@@ -74,6 +76,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       setImages(newCurrentListing?.images);
     }
   }, [newCurrentListing, newCurrentListing?.images]);
+
+  useEffect(() => {
+    if (!isEmpty(boxRadios) && !didScroll) {
+      setDidScroll(true);
+      boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [boxRadios]);
 
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
@@ -147,7 +156,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   </RemainingWrapper>
 
                   {!isEmpty(boxRadios) ? (
-                    <BoxContainer>
+                    <BoxContainer ref={boxWeightsRef}>
                       <Typography
                         variant="overline"
                         color="shade6"
