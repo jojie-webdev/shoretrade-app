@@ -3,7 +3,7 @@ import React, { useState, Fragment } from 'react';
 import Button from 'components/base/Button';
 import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { API, SELLER_SOLD_ROUTES } from 'consts';
+import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
@@ -65,10 +65,17 @@ const SoldItem = (props: {
   return Object.values(props.data).map((entry) => {
     const { type = 'air', toAddressState } = entry[0];
 
-    const desc =
-      type.toLowerCase() === 'air'
-        ? 'Air Freight Cut Off'.toUpperCase()
-        : 'Road Freight Pick Up'.toUpperCase();
+    const desc = (() => {
+      if (type === 'air') {
+        return 'Air Freight Cut Off'.toUpperCase();
+      }
+
+      if (type === 'pickup') {
+        return `Pick Up at ${collectAddressShort}`.toUpperCase();
+      }
+
+      return 'Road Freight Pick Up'.toUpperCase();
+    })();
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (
@@ -93,9 +100,11 @@ const SoldItem = (props: {
               <Typography variant="label" color="shade6">
                 {desc}
               </Typography>
-              <Typography variant="label" color="noshade">
-                {`${toAddress}`}
-              </Typography>
+              {type !== 'pickup' && (
+                <Typography variant="label" color="noshade">
+                  {`${toAddress}`}
+                </Typography>
+              )}
             </div>
             <div className="buttons">
               {showDownloads === key && (
