@@ -45,6 +45,14 @@ margin-top:60px;
   }
 `;
 
+export const TopContainer = styled.div`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.noshade};
+`;
+
 export const NextButton = styled(Button)`
   margin-right: 8px;
 `;

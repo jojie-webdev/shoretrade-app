@@ -93,6 +93,7 @@ import {
   ButtonContainer,
   SellerSummaryContainer,
   SelectMarketSelector,
+  TopContainer,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -176,7 +177,11 @@ const StepForm = ({
       />
       <DetailsContainer>
         <ResultContainer>
-          <Typography variant="caption" color="shade6" className="per">
+          <Typography
+            variant="label"
+            color={isSeller ? 'noshade' : 'shade9'}
+            className="per"
+          >
             {result.name}
           </Typography>
         </ResultContainer>
@@ -1206,7 +1211,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     >
       <RenderContainer step={step}>
         {!props.isGotoDetails && step > 0 && !isSuccess && (
-          <>
+          <TopContainer>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
             <TitleContainer>
               <Touchable
@@ -1223,7 +1228,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 {steps[step - 1].title}
               </Title>
             </TitleContainer>
-          </>
+          </TopContainer  >
         )}
 
         {props.isGotoDetails && (

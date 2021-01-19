@@ -66,9 +66,12 @@ export const ResultContainer = styled.div`
   align-self: center;
   flex-direction: row;
   display: flex;
+  position: absolute;
+  left: 30%;
+  top: 0;
 
   .per {
-    margin-left: 3px;
+    margin-top: 14px;
   }
 
   .result-count {
