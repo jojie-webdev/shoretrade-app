@@ -6,8 +6,8 @@ const getCompanies = (state: Store) =>
 
 export const GetCompanyAddresses = (companyName: string) => {
   return (
-    (useSelector(getCompanies) || []).find(
-      (company) => company.name === companyName
+    (useSelector(getCompanies) || []).find((company) =>
+      companyName.includes(company.name)
     )?.addresses || []
   ).filter((address) => address.approved === 'APPROVED');
 };
