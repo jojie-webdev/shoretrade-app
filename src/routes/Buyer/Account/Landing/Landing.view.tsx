@@ -3,19 +3,14 @@ import React from 'react';
 import Select from 'components/base/Select';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { LandingGeneratedProps } from './Landing.props';
-import {
-  Container,
-  Content,
-  Header,
-  NavInteraction,
-  DropdownContainer,
-} from './Landing.style';
+import { Container, Header, NavInteraction } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
@@ -56,7 +51,7 @@ const LandingView = (props: LandingGeneratedProps) => {
 
   return (
     <Container>
-      <Content>
+      <BoxContainer>
         <Header>
           <div className="left-content">
             {profilePicture ? (
@@ -76,16 +71,14 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </div>
 
-          <div className="right-content">
-            <DropdownContainer>
-              <Select
-                label=""
-                options={companyOptions}
-                value={currentCompany?.id}
-                size="small"
-                grey
-              />
-            </DropdownContainer>
+          <div>
+            <Select
+              label=""
+              options={companyOptions}
+              value={currentCompany?.id}
+              size="small"
+              grey
+            />
           </div>
         </Header>
 
@@ -98,7 +91,7 @@ const LandingView = (props: LandingGeneratedProps) => {
             }}
           />
         ))}
-      </Content>
+      </BoxContainer>
     </Container>
   );
 };

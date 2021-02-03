@@ -11,7 +11,7 @@ storiesOf('base/Breadcrumbs', module).add('Summary', () => (
       sections={[
         { label: 'Link 1', link: 'a' },
         { label: 'Link 2', link: 'b' },
-        { label: 'Link 3', link: '' },
+        { label: 'Link 3' },
       ]}
     />
   </Container>

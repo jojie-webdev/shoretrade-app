@@ -1,3 +1,3 @@
 export interface BreadcrumbsProps {
-  sections: { label: string; link: string }[];
+  sections: { label: string; link?: string }[];
 }

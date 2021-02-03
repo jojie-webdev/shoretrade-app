@@ -1,15 +1,16 @@
 import Alert from 'components/base/Alert';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import { Form } from 'formik';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
+export const Container = styled.div`
+  padding-bottom: 16px;
 
-  @media ${BREAKPOINTS.sm} {
-    padding: 0 16px;
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
+
+  .alert-container {
+    margin-bottom: 24px;
   }
 `;
 
