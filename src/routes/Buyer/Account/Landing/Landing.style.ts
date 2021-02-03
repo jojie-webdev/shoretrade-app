@@ -15,11 +15,26 @@ export const Container = styled.div`
   }
 `;
 
+export const Content = styled.div`
+  padding: 40px 40px 24px 40px;
+  background: ${(props) => props.theme.grey.shade2};
+  border: 2px solid ${(props) => props.theme.grey.shade3};
+  border-radius: 8px;
+
+  @media ${BREAKPOINTS['md']} {
+    padding: 32px 32px 16px 32px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 16px 16px 0 16px;
+  }
+`;
+
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 
   .left-content {
     display: flex;
@@ -29,7 +44,10 @@ export const Header = styled.div`
       width: 96px;
       height: 96px;
       border-radius: 4px;
-      margin-right: 16px;
+    }
+
+    .user-details {
+      margin-left: 16px;
     }
   }
 

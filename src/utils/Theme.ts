@@ -19,7 +19,7 @@ export const theme: Theme = {
   },
   grey: {
     shade1: '#F9FAFF',
-    shade2: '#EDEFFA',
+    shade2: '#F4F6FF',
     shade3: '#E5E9F5',
     shade4: '#DADFF2',
     shade5: '#BBC2DC',
@@ -27,6 +27,7 @@ export const theme: Theme = {
     shade7: '#565A6A',
     shade8: '#111E2B',
     shade9: '#09131D',
+    shade10: '#050E16',
     noshade: '#FFFFFF',
   },
 };
