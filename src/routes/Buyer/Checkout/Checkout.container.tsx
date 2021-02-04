@@ -1,6 +1,10 @@
 import React, { useEffect, useReducer } from 'react';
 
-import { BUYER_ROUTES, clickAndCollectAddress, clickAndCollectAddress2 } from 'consts';
+import {
+  BUYER_ROUTES,
+  clickAndCollectAddress,
+  clickAndCollectAddress2,
+} from 'consts';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';
@@ -203,6 +207,13 @@ const Checkout = (): JSX.Element => {
 
   // Logic for generating shipping quote request
 
+  const previousShippingQuotesRequestError =
+    useSelector((store: Store) => store.getShippingQuote.error) || '';
+
+  const previousShippingQuotesRequestAddress = useSelector(
+    (store: Store) => store.getShippingQuote.request?.destination
+  );
+
   const previousShippingQuotesRequestSellers =
     useSelector((store: Store) => store.getShippingQuote.request?.sellers) ||
     {};
@@ -246,27 +257,40 @@ const Checkout = (): JSX.Element => {
           };
         }, {});
 
+        const destination = {
+          administrativeAreaLevel1: currentAddress.state,
+          countryCode: currentAddress.countryCode,
+          level: currentAddress.level,
+          locality: currentAddress.suburb,
+          postcode: currentAddress.postcode,
+          route: currentAddress.streetName,
+          streetNumber: currentAddress.streetNumber,
+          unitNumber: currentAddress.unitNumber,
+        };
+
         // Prevent action being fired when listing data is the same
-        if (!equals(previousShippingQuotesListingIds, currentListingIds)) {
+        if (
+          !(
+            equals(previousShippingQuotesListingIds, currentListingIds) &&
+            previousShippingQuotesRequestError.length === 0 &&
+            JSON.stringify(destination) ===
+              JSON.stringify(previousShippingQuotesRequestAddress)
+          )
+        ) {
           dispatch(
             getShippingQuoteActions.request({
-              destination: {
-                administrativeAreaLevel1: currentAddress.state,
-                countryCode: currentAddress.countryCode,
-                level: currentAddress.level,
-                locality: currentAddress.suburb,
-                postcode: currentAddress.postcode,
-                route: currentAddress.streetName,
-                streetNumber: currentAddress.streetNumber,
-                unitNumber: currentAddress.unitNumber,
-              },
+              destination,
               sellers,
             })
           );
         }
       }
+    } else {
+      if (previousShippingQuotesListingIds.length > 0) {
+        dispatch(getShippingQuoteActions.clear());
+      }
     }
-  }, [cartItems]);
+  }, [cartItems.length]);
 
   const generatedProps = {
     groupedOrders,

@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 import Alert from 'components/base/Alert';
-import AlertInfoView from 'components/base/AlertInfo';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
@@ -69,7 +68,6 @@ import {
   DownloadTermsContainer,
   DownloadIcon,
   DownloadTermsText,
-  ShippingInfo,
   LocationField,
   Error,
   BusinessLogoLabel,
@@ -512,9 +510,9 @@ const StepForm = ({
             <Alert
               content={registerError}
               variant="error"
+              fullWidth
               style={{
                 marginTop: 16,
-                width: '100%',
               }}
             />
           )}
@@ -682,13 +680,13 @@ const StepForm = ({
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
-                  <div style={{ marginTop: '8px' }}>
-                    <AlertInfoView
-                      label={
-                        'You can add more people to your seller account once you’re approved'
-                      }
-                    />
-                  </div>
+                  <Alert
+                    variant="info"
+                    content={
+                      'You can add more people to your seller account once you’re approved'
+                    }
+                    style={{ marginTop: '8px' }}
+                  />
                 </>
               )}
               {step === 2 && (
@@ -709,8 +707,10 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
-                  <ShippingInfo
-                    label={
+                  <Alert
+                    variant="info"
+                    fullWidth
+                    content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                     }
                   />

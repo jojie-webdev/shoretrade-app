@@ -1,25 +1,18 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
-export type Variants = 'default' | 'alert' | 'warning' | 'error' | 'success';
+export type Variants = 'info' | 'alert' | 'warning' | 'error' | 'success';
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant: Variants;
-  content: string;
-  buttonText?: string;
-  onClick?: () => void;
+  content: ReactNode | string;
+  header?: string;
+  children?: ReactNode;
   alignText?: 'flex-start' | 'center';
   fullWidth?: boolean;
-  small?: boolean;
 }
 
-// Styled Props
 export type AlertContainerProps = {
   variant: Variants;
   alignText?: 'flex-start' | 'center';
   fullWidth?: boolean;
-  small?: boolean;
 };
-
-export interface AlertButtonProps {
-  variant: Variants;
-}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { DollarSign, Clock } from 'components/base/SVG';
@@ -20,7 +21,7 @@ import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
 import { Step7Props } from './Step7.props';
-import { Container, PriceAlertInfo } from './Step7.style';
+import { Container } from './Step7.style';
 import { combineDateTime } from './Step7.transform';
 import { isValid, isDateRangeValid } from './Step7.validation';
 
@@ -212,8 +213,11 @@ function Step7({
     <Container>
       <Row>
         <Col>
-          <PriceAlertInfo
-            label={`Like products sold for: ${priceAlertMessage}`}
+          <Alert
+            variant="info"
+            fullWidth
+            content={`Like products sold for: ${priceAlertMessage}`}
+            style={{ marginBottom: 16 }}
           />
         </Col>
       </Row>

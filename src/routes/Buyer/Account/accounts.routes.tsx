@@ -18,6 +18,7 @@ import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import YourDetails from './YourDetails';
+
 const ROUTES: Routes = {
   LANDING: {
     path: BUYER_ACCOUNT_ROUTES.LANDING,

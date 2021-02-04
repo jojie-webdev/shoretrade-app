@@ -1,3 +1,4 @@
+import { collectAddressShort } from 'consts';
 import moment from 'moment';
 import groupBy from 'ramda/es/groupBy';
 import prop from 'ramda/es/prop';
@@ -43,6 +44,10 @@ const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
 
 const groupByDeliveryMethodAndState = groupBy(
   (order: GetSellerOrdersResponseItem) => {
+    if (order.deliveryOption === 'COLLECT') {
+      return `Pick Up at ${collectAddressShort}`;
+    }
+
     if (order.deliveryMethod === 'AIR') {
       return `Air Freight - ${order.toAddress.state}`;
     }
@@ -137,7 +142,10 @@ export const orderItemToSoldItemData = (data: {
     newObj[key] = value.map((order) => ({
       id: order.orderId,
       date: moment(order.orderDate).toDate(),
-      type: order.deliveryMethod.toLowerCase(),
+      type:
+        order.deliveryOption === 'COLLECT'
+          ? 'pickup'
+          : order.deliveryMethod.toLowerCase(),
       orderRefNumber: order.orderRefNumber,
       orders: order.orderLineItem.map((lineItem) => ({
         orderNumber: formatOrderReferenceNumber(order.orderRefNumber),

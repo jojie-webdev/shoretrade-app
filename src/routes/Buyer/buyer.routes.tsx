@@ -146,13 +146,6 @@ const BuyerRoutes = (): JSX.Element => {
     pageTitle?: string;
     useOuterWrapper?: boolean;
   } => {
-    if (pathname === '/buyer/account') {
-      return {
-        shouldUseFullWidth: true,
-        shouldIncludePadding: false,
-      };
-    }
-
     if (pathname.includes('/buyer/home')) {
       return {
         shouldUseFullWidth: true,

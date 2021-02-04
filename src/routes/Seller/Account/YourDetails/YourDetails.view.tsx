@@ -57,7 +57,13 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
       <InnerRouteHeader title="Your Details" />
       <Formik {...formikProps}>
         <Form>
-          <FixedWidthContainer>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <InputRow>
               <Col md={12} className="input-col">
                 <FormikTextField label="First Name" name="firstName" />
@@ -80,10 +86,13 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
                 <FormikTextField label="Business" name="businessName" />
               </Col>
               <Col md={12} className="input-col">
-                <FormikTextField label="Business number (optional)" name="abn" />
+                <FormikTextField
+                  label="Business number (optional)"
+                  name="abn"
+                />
               </Col>
             </InputRow>
-          </FixedWidthContainer>
+          </div>
           <Row>
             <Col>
               <Button text="Save" type="submit" loading={updatingUser} />

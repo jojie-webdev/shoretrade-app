@@ -1,3 +1,4 @@
+import partial from 'ramda/es/partial';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select, all } from 'redux-saga/effects';
 import { getShippingQuote } from 'services/listing';
@@ -10,6 +11,7 @@ import {
   GetShippingQuoteResponseItem,
 } from 'types/store/GetShippingQuoteState';
 import { Store } from 'types/store/Store';
+import { requestLimiter } from 'utils/requestLimiter';
 
 import { getShippingQuoteActions } from '../actions';
 
@@ -17,7 +19,6 @@ function* getShippingQuoteRequest(
   action: AsyncAction<GetShippingQuoteMeta, GetShippingQuotePayload>
 ) {
   const state: Store = yield select();
-
   if (state.auth.token) {
     try {
       const { destination, sellers } = action.meta;
@@ -71,7 +72,13 @@ function* getShippingQuoteRequest(
 }
 
 function* getShippingQuoteWatcher() {
-  yield takeLatest(getShippingQuoteActions.REQUEST, getShippingQuoteRequest);
+  yield takeLatest(
+    getShippingQuoteActions.REQUEST,
+    partial(requestLimiter, [
+      getShippingQuoteRequest,
+      getShippingQuoteActions.failed,
+    ])
+  );
 }
 
 export default getShippingQuoteWatcher;

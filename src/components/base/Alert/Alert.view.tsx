@@ -12,34 +12,39 @@ import {
 import { SVGProps } from '../SVG/SVG.props';
 import Typography from '../Typography';
 import { AlertProps } from './Alert.props';
-import { Container, AlertButton } from './Alert.style';
+import { Container } from './Alert.style';
 
 const Alert = (props: AlertProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const {
+    header,
     content,
+    children,
     variant,
-    onClick,
-    buttonText,
     alignText = 'flex-start',
     fullWidth,
-    small,
     ...containerProps
   } = props;
 
   let Icon: React.FC<SVGProps> = InfoFilled;
+  let IconFill = '';
 
-  if (variant === 'default') {
+  if (variant === 'info') {
     Icon = InfoFilled;
+    IconFill = theme.brand.info;
   } else if (variant === 'alert') {
     Icon = QuestionFilled;
+    IconFill = theme.brand.alert;
   } else if (variant === 'warning') {
     Icon = ExclamationFilled;
+    IconFill = theme.brand.warning;
   } else if (variant === 'error') {
     Icon = CloseFilled;
+    IconFill = theme.brand.error;
   } else if (variant === 'success') {
     Icon = CheckFilled;
+    IconFill = theme.brand.success;
   }
 
   return (
@@ -47,35 +52,37 @@ const Alert = (props: AlertProps): JSX.Element => {
       variant={variant}
       alignText={alignText}
       fullWidth={fullWidth}
-      small={small}
       {...containerProps}
     >
-      <div className="top-content-container">
-        <div className="svg-container">
-          <Icon
-            width={small ? 13.13 : 20}
-            height={small ? 13.13 : 20}
-            fill={isSeller ? theme.grey.noshade : theme.grey.shade8}
-          />
-        </div>
-        <Typography
-          variant={small ? 'caption' : 'label'}
-          color={isSeller ? 'noshade' : 'shade8'}
-          weight="500"
-        >
-          {content}
-        </Typography>
-      </div>
+      <div className="horizontal-style-container" />
 
-      {buttonText !== undefined && onClick !== undefined && (
-        <div className="alert-button-container">
-          <AlertButton variant={variant} onClick={onClick}>
-            <Typography color={isSeller ? 'noshade' : 'shade8'}>
-              {buttonText}
-            </Typography>
-          </AlertButton>
+      <div className="content-container">
+        <div className="svg-container">
+          <Icon width={20} height={20} fill={IconFill} />
         </div>
-      )}
+
+        <div>
+          {header && (
+            <Typography
+              variant="body"
+              color={isSeller ? 'noshade' : 'shade9'}
+              weight="700"
+            >
+              {header}
+            </Typography>
+          )}
+
+          <Typography
+            variant={header ? 'body' : 'label'}
+            color={header ? 'shade6' : isSeller ? 'noshade' : 'shade9'}
+            weight="400"
+          >
+            {content}
+          </Typography>
+
+          {children}
+        </div>
+      </div>
     </Container>
   );
 };
