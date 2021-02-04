@@ -66,7 +66,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
           <Breadcrumbs
             sections={[
               { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Your Details' },
+              { label: 'Help & Support' },
             ]}
           />
         </div>
