@@ -64,7 +64,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
       ) : null}
 
       <Alert
-        variant="alert"
+        variant="infoAlert"
         content="New and updated addresses require approval before they can be used.
           This process should take less than 24 hours."
         style={{

@@ -681,7 +681,7 @@ const StepForm = ({
                     }
                   />
                   <Alert
-                    variant="info"
+                    variant="infoAlert"
                     content={
                       'You can add more people to your seller account once you’re approved'
                     }
@@ -708,7 +708,7 @@ const StepForm = ({
                     />
                   </LocationField>
                   <Alert
-                    variant="info"
+                    variant="infoAlert"
                     fullWidth
                     content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
@@ -1228,7 +1228,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 {steps[step - 1].title}
               </Title>
             </TitleContainer>
-          </TopContainer  >
+          </TopContainer>
         )}
 
         {props.isGotoDetails && (

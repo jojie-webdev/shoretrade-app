@@ -34,6 +34,9 @@ const Alert = (props: AlertProps): JSX.Element => {
   if (variant === 'info') {
     Icon = InfoFilled;
     IconFill = theme.brand.info;
+  } else if (variant === 'infoAlert') {
+    Icon = InfoFilled;
+    IconFill = theme.brand.alert;
   } else if (variant === 'alert') {
     Icon = QuestionFilled;
     IconFill = theme.brand.alert;
@@ -80,8 +83,6 @@ const Alert = (props: AlertProps): JSX.Element => {
           >
             {content}
           </Typography>
-
-          {children}
         </div>
 
         {iconRight && <div>{iconRight}</div>}

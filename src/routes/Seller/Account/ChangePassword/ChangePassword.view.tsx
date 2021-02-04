@@ -1,26 +1,18 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
-import { InfoFilled } from 'components/base/SVG';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { ChangePasswordGeneratedProps } from './ChangePassword.props';
-import {
-  Wrapper,
-  TextFieldRow,
-  SmallAlertContainer,
-  StyledAlert,
-} from './ChangePassword.style';
+import { Wrapper, TextFieldRow } from './ChangePassword.style';
 import { isValid } from './ChangePassword.validation';
 
 const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
@@ -57,7 +49,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
 
         {isSuccess && (
           <div className="alert-container">
-            <StyledAlert
+            <Alert
               content="Your account details have successfully been updated!"
               variant="success"
               alignText="center"
@@ -68,7 +60,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
 
         {isError && (
           <div className="alert-container">
-            <StyledAlert
+            <Alert
               content="Current password is incorrect!"
               variant="error"
               alignText="center"
@@ -77,32 +69,26 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
           </div>
         )}
 
-        {/*<FixedWidthContainer width={320}>*/}
-        {/*  <SmallAlertContainer>*/}
-        {/*    <div className="icon-container">*/}
-        {/*      <InfoFilled*/}
-        {/*        fill={*/}
-        {/*          theme.appType === 'seller'*/}
-        {/*            ? theme.brand.alert*/}
-        {/*            : theme.grey.shade8*/}
-        {/*        }*/}
-        {/*        height={theme.appType === 'seller' ? 14 : 20}*/}
-        {/*        width={theme.appType === 'seller' ? 14 : 20}*/}
-        {/*      />*/}
-        {/*    </div>*/}
-        {/*    <Typography*/}
-        {/*      variant="caption"*/}
-        {/*      className="text"*/}
-        {/*      color={theme.appType === 'seller' ? 'alert' : 'shade8'}*/}
-        {/*    >*/}
-        {/*      Your Password must: <br />*/}
-        {/*      • Be at least 8 characters long <br />*/}
-        {/*      • Include at least 1 number <br />*/}
-        {/*      • Include at least 1 upper case character <br />*/}
-        {/*      • Include at least 1 special character <br />*/}
-        {/*    </Typography>*/}
-        {/*  </SmallAlertContainer>*/}
-        {/*</FixedWidthContainer>*/}
+        <Row>
+          <Col md={12} lg={8}>
+            <Alert
+              variant="infoAlert"
+              header="Your Password must:"
+              content={
+                <Typography color="shade6" weight="400">
+                  • Be at least 8 characters long <br />
+                  • Include at least 1 number <br />
+                  • Include at least 1 upper case character <br />
+                  • Include at least 1 special character <br />
+                </Typography>
+              }
+              fullWidth
+              style={{
+                marginBottom: 24,
+              }}
+            />
+          </Col>
+        </Row>
 
         <Formik {...formikProps}>
           <Form>
