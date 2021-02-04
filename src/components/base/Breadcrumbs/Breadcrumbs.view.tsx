@@ -10,6 +10,7 @@ import { Container } from './Breadcrumbs.style';
 
 const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
   const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
 
   return (
     <Container>
@@ -23,7 +24,9 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
             )}
             {section.link ? (
               <Link key={i} to={section.link}>
-                <Typography>{section.label}</Typography>
+                <Typography color={isSeller ? 'noshade' : 'shade9'}>
+                  {section.label}
+                </Typography>
               </Link>
             ) : (
               <Typography color="primary">{section.label}</Typography>
