@@ -32,26 +32,6 @@ export const SwiperContainer = styled.div`
   max-width: 100%;
 `;
 
-export const SmallAlertContainer = styled.div`
-  // padding: 8px;
-  padding: 16px 0px 16px 18px;
-  width: 100%;
-  background: ${({ theme }) => theme.brand.alert};
-  border-radius: 4px;
-  margin-bottom: 24px;
-
-  display: flex;
-  align-items: center;
-
-  .icon-container {
-    margin-right: 8px;
-  }
-
-  .text {
-    // margin-top: 6px;
-  }
-`;
-
 export const CategoriesContainer = styled.div``;
 
 export const Text = styled(Typography)`

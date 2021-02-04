@@ -20,6 +20,7 @@ const Alert = (props: AlertProps): JSX.Element => {
   const {
     header,
     content,
+    iconRight,
     children,
     variant,
     alignText = 'flex-start',
@@ -61,7 +62,7 @@ const Alert = (props: AlertProps): JSX.Element => {
           <Icon width={20} height={20} fill={IconFill} />
         </div>
 
-        <div>
+        <div className="text-container">
           {header && (
             <Typography
               variant="body"
@@ -82,6 +83,8 @@ const Alert = (props: AlertProps): JSX.Element => {
 
           {children}
         </div>
+
+        {iconRight && <div>{iconRight}</div>}
       </div>
     </Container>
   );

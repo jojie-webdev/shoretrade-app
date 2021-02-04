@@ -4,6 +4,7 @@ export type Variants = 'info' | 'alert' | 'warning' | 'error' | 'success';
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant: Variants;
+  iconRight?: ReactNode;
   content: ReactNode | string;
   header?: string;
   children?: ReactNode;

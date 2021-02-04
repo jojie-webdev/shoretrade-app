@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { InfoFilled, ChevronRight } from 'components/base/SVG';
+import Alert from 'components/base/Alert';
+import { ChevronRight } from 'components/base/SVG';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -36,7 +37,6 @@ import {
   ViewContainer,
   RecentContainer,
   SellerContainer,
-  SmallAlertContainer,
   SwiperContainer,
 } from './Home.style';
 import {
@@ -47,39 +47,37 @@ import {
 } from './Home.transform';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
-  const { creditState, loading } = props;
+  const { creditState } = props;
   const theme = useTheme();
   const history = useHistory();
-  // if (loading) {
-  //   return <Loading />;
-  // }
 
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
-      <SmallAlertContainer
-        onClick={() => history.push('/buyer/account/bank-details')}
-        style={{ cursor: 'pointer' }}
-      >
-        <div className="icon-container">
-          <InfoFilled height={20} width={20} fill={theme.grey.shade8} />
-        </div>
-        <Text variant="label" color="shade8">
-          {creditState === 'empty' ? (
-            <>
-              You need to add credit to your account in order to make purchases.
-              <Bold> Click here </Bold> to add credit to your account.
-            </>
-          ) : (
-            <>
-              You have <Bold> less than $250 </Bold> in your account. Please
-              fill it up if you want to continue making purchases.
-            </>
-          )}
-        </Text>
-        <span style={{ paddingRight: '20px' }}>
+      <Alert
+        variant="alert"
+        fullWidth
+        content={
+          <>
+            {creditState === 'empty' ? (
+              <>
+                You need to add credit to your account in order to make
+                purchases. <Bold>Click here</Bold> to add credit to your
+                account.
+              </>
+            ) : (
+              <>
+                You have <Bold>less than $250 </Bold> in your account. Please
+                fill it up if you want to continue making purchases.
+              </>
+            )}
+          </>
+        }
+        iconRight={
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
-        </span>
-      </SmallAlertContainer>
+        }
+        onClick={() => history.push('/buyer/account/bank-details')}
+        style={{ cursor: 'pointer', marginBottom: 24 }}
+      />
     );
   }
   return null;
