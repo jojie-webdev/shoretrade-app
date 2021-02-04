@@ -19,22 +19,6 @@ export const InteractionCol = styled(Col)`
   }
 `;
 
-export const SmallAlertContainer = styled.div`
-  padding: 8px 0px 8px 10px;
-  width: 100%;
-  background: rgba(255, 207, 92, 0.12);
-  border-radius: 4px;
-  margin-bottom: 16px;
-
-  display: flex;
-  align-items: center;
-
-  .icon-container {
-    margin-right: 10px;
-    line-height: 0.875 !important;
-  }
-`;
-
 export const Notification = styled(Alert)`
   margin-bottom: 16px;
 `;

@@ -1,4 +1,3 @@
-import AlertInfo from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { Download, ArrowLeft } from 'components/base/SVG';
@@ -156,10 +155,6 @@ export const DownloadIcon = styled(Download)`
 `;
 
 export const DownloadTermsText = styled(Typography)``;
-
-export const ShippingInfo = styled(AlertInfo)`
-  margin-top: 24px;
-`;
 
 export const LocationField = styled.div`
   margin-top: 24px;

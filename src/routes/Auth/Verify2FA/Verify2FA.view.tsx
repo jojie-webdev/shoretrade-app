@@ -107,9 +107,9 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
               <Alert
                 content={`Verification Failed!\nYour verification code were incorrect.`}
                 variant="error"
+                fullWidth
                 style={{
                   marginTop: 16,
-                  width: '100%',
                 }}
               />
             )}

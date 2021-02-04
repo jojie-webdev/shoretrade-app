@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -15,7 +15,6 @@ import {
   Wrapper,
   AddressTextContainer,
   InteractionCol,
-  SmallAlertContainer,
   Notification,
 } from './ShippingAddresses.style';
 
@@ -63,15 +62,15 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
           fullWidth
         />
       ) : null}
-      <SmallAlertContainer>
-        <div className="icon-container">
-          <InfoFilled fill={theme.brand.alert} height={14} width={14} />
-        </div>
-        <Typography color="alert" variant="caption">
-          New and updated addresses require approval before they can be used.
-          This process should take less than 24 hours.
-        </Typography>
-      </SmallAlertContainer>
+
+      <Alert
+        variant="alert"
+        content="New and updated addresses require approval before they can be used.
+          This process should take less than 24 hours."
+        style={{
+          marginBottom: 16,
+        }}
+      />
 
       <Row>
         <Col>

@@ -69,9 +69,9 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
                 <Alert
                   content="Verification Failed! Your email or password were incorrect."
                   variant="error"
+                  fullWidth
                   style={{
                     marginTop: 16,
-                    width: '100%',
                   }}
                 />
               )}

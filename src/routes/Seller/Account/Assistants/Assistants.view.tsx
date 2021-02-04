@@ -1,8 +1,7 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
@@ -10,13 +9,7 @@ import { Row, Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './Assistants.props';
-import {
-  Container,
-  SmallAlertContainer,
-  AccountName,
-  StyledInteaction,
-  StyledAlert,
-} from './Assistants.style';
+import { Container, AccountName, StyledInteaction } from './Assistants.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
@@ -39,26 +32,22 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
       <InnerRouteHeader title="Fisherman / Assistant" />
 
       {notifMsg && (
-        <StyledAlert content={notifMsg} variant="success" fullWidth />
+        <Alert
+          content={notifMsg}
+          variant="success"
+          fullWidth
+          style={{
+            marginBottom: 16,
+          }}
+        />
       )}
 
       {!notifMsg && (
-        <SmallAlertContainer>
-          <div className="icon-container">
-            <InfoFilled
-              fill={
-                theme.appType === 'seller'
-                  ? theme.brand.alert
-                  : theme.grey.shade8
-              }
-              height={14}
-              width={14}
-            />
-          </div>
-          <Typography variant="caption" className="text" color="alert">
-            {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
-          </Typography>
-        </SmallAlertContainer>
+        <Alert
+          variant="alert"
+          content={`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+          style={{ marginBottom: 24 }}
+        />
       )}
 
       {accounts.map((account) => (
