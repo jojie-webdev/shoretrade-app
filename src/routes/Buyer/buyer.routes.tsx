@@ -6,6 +6,7 @@ import {
   Home as HomeIcon,
   Category as CategoryIcon,
   Notepad as OrderIcon,
+  Pen as PenIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -32,6 +33,7 @@ import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
+import MarketRequestsLanding from './MarketRequests/Landing';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -43,6 +45,12 @@ const ROUTES: Routes = {
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,
+  },
+  MARKET_REQUESTS: {
+    path: BUYER_ROUTES.MARKET_REQUESTS,
+    children: <MarketRequestsLanding />,
+    title: 'Market Requests',
+    icon: PenIcon,
   },
   FAVOURITES: {
     path: BUYER_ROUTES.FAVOURITES,
@@ -197,7 +205,6 @@ const BuyerRoutes = (): JSX.Element => {
         onBack: history.goBack,
       };
     }
-
     return {};
   };
 

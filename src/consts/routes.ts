@@ -86,6 +86,7 @@ export const BUYER_ROUTES = {
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
+  MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
