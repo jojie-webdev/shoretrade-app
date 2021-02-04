@@ -28,10 +28,11 @@ export const Container = styled.div<AlertContainerProps>`
   }
 
   .content-container {
-    padding: 16px 16px 16px 0;
     display: flex;
     flex-direction: row;
+    padding: 16px 16px 16px 0;
     align-items: ${(props) => props.alignText}; // defaults to 'flex-start'
+    width: 100%;
 
     .svg-container {
       display: flex;
@@ -40,6 +41,10 @@ export const Container = styled.div<AlertContainerProps>`
       margin: 0 18px;
       height: 20px;
       width: 20px;
+    }
+
+    .text-container {
+      width: 100%;
     }
   }
 `;
