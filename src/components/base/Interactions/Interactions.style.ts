@@ -35,16 +35,9 @@ export const Container = styled.div<InteractionsProps>`
   ${({ onClick, type }) =>
     onClick && type !== 'none'
       ? `cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }`
-      : ''};
-
-  ${({ isHover }) =>
-    isHover
-      ? `:hover {
-    box-shadow: none;
-  }`
+          &:hover {
+            opacity: 0.9;
+          }`
       : ''};
 
   .left-content,

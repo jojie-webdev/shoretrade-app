@@ -34,8 +34,6 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     keepIcon,
   } = props;
 
-  const RightComponent = rightComponent;
-
   const getIcon = () => {
     if (type === 'none') return <></>;
 

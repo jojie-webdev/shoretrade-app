@@ -254,17 +254,12 @@ export const CategorySearchInputContainer = styled.div`
 export const InteractionsContainer = styled.div`
   margin-bottom: 8px;
   width: 100%;
-  .interactions {
-    padding: 8px;
-    border-radius: 8px;
-  }
 `;
 
 export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 16px;
 `;
 
 export const BadgeItemContainer = styled.div`
@@ -281,6 +276,10 @@ export const ButtonContainer = styled.div`
 export const SellerSummaryContainer = styled.div`
   margin-top: 24px;
   padding: 8px;
+
+  .interactions {
+    margin-bottom: 8px;
+  }
 `;
 
 export const SelectMarketSelector = styled(Select)``;

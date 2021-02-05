@@ -72,7 +72,7 @@ export const StyledDropdown = styled(Dropdown)<{
     border: 1px solid ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     border-radius: 4px;
-    box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+    box-shadow: 0px 2px 8px rgba(41, 43, 50, 0.10);
     // padding: 0 16px;
     margin-top: 8px;
     background-color: ${({ theme }) =>
