@@ -24,6 +24,14 @@ const styles: Record<Variants, string> = {
         font-size: ${pxToRem(24)};
         line-height: 32px;
     `,
+  title6: `
+        font-size: ${pxToRem(20)};
+        line-height: 32px;
+    `,
+  copy: `
+        font-size: ${pxToRem(18)};
+        line-height: 24px;
+    `,
   body: `
         font-size: ${pxToRem(16)};
         line-height: 24px;
@@ -67,6 +75,8 @@ const font: Record<string, string> = {
   title3: weights.Regular,
   title4: weights.Regular,
   title5: weights.Regular,
+  title6: weights.Regular,
+  copy: weights.Medium,
   body: weights.Medium,
   label: weights.Medium,
   caption: weights.Medium,
