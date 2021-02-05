@@ -46,6 +46,12 @@ const styles: Record<Variants, string> = {
         text-transform: uppercase;
         letter-spacing: 2px;
     `,
+  overlineSmall: `
+      font-size: ${pxToRem(9)};
+      line-height: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    `,
 };
 
 const weights: Record<string, string> = {
@@ -66,6 +72,7 @@ const font: Record<string, string> = {
   caption: weights.Medium,
   small: weights.Medium,
   overline: weights.Black,
+  overlineSmall: weights.Black,
 };
 
 export const P = styled.p<TypographyProps>`
