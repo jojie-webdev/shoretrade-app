@@ -1,39 +1,37 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
-import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
 import { AccountDeliveryGeneratedProps } from './Address.props';
-import {
-  Container,
-  AddressTextContainer,
-  InteractionCol,
-  Notification,
-} from './Address.style';
+import { Container, AddressBadge, InteractionCol } from './Address.style';
 
 const AddressText = (
   title: string,
-  color: keyof Theme['brand'] | keyof Theme['grey'],
+  color: string,
   streetNumber: string,
   street: string,
   countryCode: string
 ) => (
-  <AddressTextContainer>
-    <Typography variant="overline" color={color} className="label">
-      {title}
-    </Typography>
+  <div>
+    <AddressBadge color={color}>
+      <Typography variant="overlineSmall" color="shade9" className="label">
+        {title}
+      </Typography>
+    </AddressBadge>
 
     <Typography>{streetNumber}</Typography>
     <Typography>{street}</Typography>
     <Typography>{countryCode}</Typography>
-  </AddressTextContainer>
+  </div>
 );
 const AddressView = (props: AccountDeliveryGeneratedProps) => {
   const {
@@ -50,64 +48,76 @@ const AddressView = (props: AccountDeliveryGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Delivery Addresses" />
+      <BoxContainer>
+        <div className="breadcrumb-container">
+          <Breadcrumbs
+            sections={[
+              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+              { label: 'Delivery Addresses' },
+            ]}
+          />
+        </div>
 
-      {notificationMessage ? (
-        <Notification
-          content={notificationMessage}
-          variant="success"
-          alignText="center"
-          fullWidth
-        />
-      ) : null}
-      <Row className="btn-add-address">
-        <Col>
-          <Button text="Add a new address" onClick={goToAddAddress} />
-        </Col>
-      </Row>
+        {notificationMessage ? (
+          <Alert
+            content={notificationMessage}
+            variant="success"
+            alignText="center"
+            fullWidth
+            style={{ marginBottom: 16 }}
+          />
+        ) : null}
 
-      <Row className="address-row">
-        {addresses.map((address) => {
-          let title = '';
-          let color: keyof Theme['brand'] | keyof Theme['grey'] = 'shade6';
+        <Row>
+          {addresses.map((address) => {
+            let title = '';
+            let color = theme.grey.shade3;
 
-          if (address.default) {
-            title = 'Default Address';
-            color = 'shade6';
-          }
+            if (address.default) {
+              title = 'Default Address';
+              color = theme.grey.shade3;
+            }
 
-          if (address.approved !== 'APPROVED') {
-            title = 'Approval Pending';
-            color = 'alert';
-          }
+            if (address.approved !== 'APPROVED') {
+              title = 'Approval Pending';
+              color = theme.brand.alert;
+            }
 
-          const streetNumber = address.unitNumber
-            ? `${address.unitNumber}/${address.streetNumber}`
-            : address.streetNumber;
+            const streetNumber = address.unitNumber
+              ? `${address.unitNumber}/${address.streetNumber}`
+              : address.streetNumber;
 
-          const street = streetNumber
-            ? `${streetNumber} ${address.streetName}\n`
-            : address.streetName;
+            const street = streetNumber
+              ? `${streetNumber} ${address.streetName}\n`
+              : address.streetName;
 
-          const addressString = `${address.suburb}, ${address.state}, ${address.postcode}`;
+            const addressString = `${address.suburb}, ${address.state}, ${address.postcode}`;
 
-          return (
-            <InteractionCol md={12} key={address.id}>
-              <Interactions
-                onClick={() => goToEditAddress(address.id)}
-                leftComponent={AddressText(
-                  title,
-                  color,
-                  street,
-                  addressString,
-                  address.countryCode
-                )}
-                iconAlignment="flex-start"
-              />
-            </InteractionCol>
-          );
-        })}
-      </Row>
+            return (
+              <InteractionCol md={12} key={address.id}>
+                <Interactions
+                  onClick={() => goToEditAddress(address.id)}
+                  leftComponent={AddressText(
+                    title,
+                    color,
+                    street,
+                    addressString,
+                    address.countryCode
+                  )}
+                  iconAlignment="flex-start"
+                  padding="16px 24px"
+                />
+              </InteractionCol>
+            );
+          })}
+        </Row>
+
+        <Row className="btn-add-address">
+          <Col>
+            <Button text="Add a new address" onClick={goToAddAddress} />
+          </Col>
+        </Row>
+      </BoxContainer>
     </Container>
   );
 };

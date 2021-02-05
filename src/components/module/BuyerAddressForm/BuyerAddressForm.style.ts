@@ -3,8 +3,10 @@ import Checkbox from 'components/base/Checkbox';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .checkbox-col {
-    display: flex;
+  padding-bottom: 16px;
+
+  .breadcrumb-container {
+    margin-bottom: 40px;
   }
 
   .textfield-row,
@@ -17,8 +19,10 @@ export const Container = styled.div`
   }
 
   .checkbox-col {
+    display: flex;
     padding-left: 0px !important;
   }
+
   .delete-btn {
     margin-left: 8px;
   }

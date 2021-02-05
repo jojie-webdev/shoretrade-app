@@ -8,6 +8,10 @@ export const Container = styled.div`
   .breadcrumb-container {
     margin-bottom: 40px;
   }
+
+  .btn-add-account {
+    margin-top: 32px;
+  }
 `;
 
 export const InfoContainer = styled.div`

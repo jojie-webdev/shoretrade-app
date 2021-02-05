@@ -101,7 +101,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
           />
         ))}
 
-        <Row nogutter style={{ marginTop: 20 }}>
+        <Row className="btn-add-account">
           <Col>
             <Button text="Add Linked Account" onClick={addAssistant} />
           </Col>
