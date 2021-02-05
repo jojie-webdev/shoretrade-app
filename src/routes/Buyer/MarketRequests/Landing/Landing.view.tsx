@@ -11,14 +11,16 @@ import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
-// import { MarketRequestsLandingGeneratedProps } from './Landing.props';
+import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
   LoadingContainer,
   FilterButton,
 } from './Landing.style';
 
-const MarketRequestsLandingView = () => {
+const MarketRequestsLandingView = (
+  props: MarketRequestsLandingGeneratedProps
+) => {
   // const theme = useTheme();
 
   return (

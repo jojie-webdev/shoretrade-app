@@ -6,7 +6,7 @@ import {
   Home as HomeIcon,
   Category as CategoryIcon,
   Notepad as OrderIcon,
-  Pen as PenIcon,
+  Bolt as BoltIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -50,7 +50,8 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,
     title: 'Market Requests',
-    icon: PenIcon,
+    icon: BoltIcon,
+    nested: true,
   },
   FAVOURITES: {
     path: BUYER_ROUTES.FAVOURITES,
@@ -203,6 +204,12 @@ const BuyerRoutes = (): JSX.Element => {
       return {
         pageTitle: 'Seller',
         onBack: history.goBack,
+      };
+    }
+
+    if (pathname === '/buyer/market-requests') {
+      return {
+        pageTitle: 'Market Requests',
       };
     }
     return {};

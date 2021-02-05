@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pen as PenIcon } from 'components/base/SVG';
+import { Bolt as BoltIcon } from 'components/base/SVG';
 import { BUYER_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
@@ -13,21 +13,9 @@ const ROUTES: Routes = {
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,
-    title: 'Market Request',
-    icon: PenIcon,
+    title: 'Market Dequests',
+    icon: BoltIcon,
   },
-  // CATEGORY_PRODUCTS: {
-  //   path: BUYER_ROUTES.CATEGORY_PRODUCTS(),
-  //   children: <CategoriesSearch />,
-  //   title: '',
-  //   hideFromSidebar: true,
-  // },
-  // PRODUCT_PREVIEW: {
-  //   path: BUYER_ROUTES.PRODUCT_PREVIEW(),
-  //   children: <CategoriesPreview />,
-  //   title: '',
-  //   hideFromSidebar: true,
-  // },
 };
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
