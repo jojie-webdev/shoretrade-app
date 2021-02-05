@@ -77,7 +77,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
               { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
               {
                 label: 'Delivery Addresses',
-                link: BUYER_ACCOUNT_ROUTES.DELIVERY,
+                link: BUYER_ACCOUNT_ROUTES.ADDRESS,
               },
               { label: routeHeader },
             ]}
@@ -85,7 +85,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
         </div>
 
         <Row className="textfield-row">
-          <Col md={12} lg={4}>
+          <Col className="textfield-col" md={12} xl={4}>
             <LocationSearch
               onSelect={(location) => {
                 if (location) {
@@ -100,7 +100,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
               }}
             />
           </Col>
-          <Col md={12} lg={4}>
+          <Col className="textfield-col" md={12} xl={4}>
             <TextField
               className="address"
               label="Unit number (optional)"

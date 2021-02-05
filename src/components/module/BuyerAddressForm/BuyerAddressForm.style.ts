@@ -6,12 +6,16 @@ export const Container = styled.div`
   padding-bottom: 16px;
 
   .breadcrumb-container {
-    margin-bottom: 40px;
+    margin-bottom: 26px;
   }
 
   .textfield-row,
   .checkbox-row {
     margin-bottom: 24px;
+  }
+
+  .textfield-col {
+    margin-top: 24px;
   }
 
   .checkbox-container {

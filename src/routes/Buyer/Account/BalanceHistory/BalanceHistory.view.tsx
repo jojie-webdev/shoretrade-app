@@ -3,7 +3,6 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
@@ -26,6 +25,10 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
           <Breadcrumbs
             sections={[
               { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+              {
+                label: 'Balance & Payments',
+                link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+              },
               { label: 'Credit History' },
             ]}
           />

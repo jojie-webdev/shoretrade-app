@@ -4,35 +4,19 @@ import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 0px 8px;
-`;
+  padding-bottom: 16px;
 
-export const Content = styled.div``;
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
+`;
 
 export const FormAddCredit = styled(Form)`
   margin-top: 24px;
 
-  & > * {
+  .form-spacer {
     margin-bottom: 24px;
   }
-`;
-
-export const CreditInput = styled.input<{ error: boolean }>`
-  font-size: 24px;
-  line-height: 32px;
-  padding: 16px;
-  margin: 8px 0 24px 0;
-  border-radius: 4px;
-  background-color: ${(props) => props.theme.grey.noshade};
-  border: 1px solid;
-  border-color: ${(props) =>
-    props.error ? props.theme.brand.error : props.theme.grey.shade5};
-`;
-
-export const Footer = styled.div`
-  padding: 16px 24px 16px 24px;
-  flex-direction: row;
-  background-color: ${({ theme }) => theme.grey.shade2};
 `;
 
 export const Field = styled(Col)`
@@ -40,7 +24,7 @@ export const Field = styled(Col)`
 `;
 
 export const CC = styled(CreditCardRow)`
-  margin-bottom: 8px;
+  margin-top: 12px;
 `;
 
 export const Notification = styled.div`

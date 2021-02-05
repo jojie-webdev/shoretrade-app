@@ -72,14 +72,14 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
         <Formik {...formikProps}>
           <Form>
             <InputRow>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="First Name" name="firstName" />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Last Name" name="lastName" />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="input-col">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="input-col">
                 <PhoneTextField
                   label="Mobile"
                   name="mobile"
@@ -87,14 +87,14 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
                   setCallingCode={setCallingCode}
                 />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Email" name="email" />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="input-col">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Business" name="businessName" />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField
                   label="Business number (optional)"
                   name="abn"

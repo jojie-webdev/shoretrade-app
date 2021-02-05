@@ -7,11 +7,11 @@ export const Container = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.grey.noshade};
   padding: 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   ${({ theme }) =>
     theme.appType === 'buyer'
       ? `
-      box-shadow: 0px 4px 4px 0px rgba(41, 43, 50, 0.12);
+      box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
       `
       : null};
   min-height: 56px;

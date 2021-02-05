@@ -84,22 +84,22 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
         >
           <Form>
             <TextFieldRow>
-              <Col md={12} lg={4} className="textfield-container">
+              <Col md={12} xl={4} className="textfield-container">
                 <FormikTextField
                   label="First Name"
                   name="firstName"
                   readOnly={type === 'EDIT'}
                 />
               </Col>
-              <Col md={12} lg={4} className="textfield-container">
+              <Col md={12} xl={4} className="textfield-container">
                 <FormikTextField
                   label="Last Name"
                   name="lastName"
                   readOnly={type === 'EDIT'}
                 />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="textfield-container">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="textfield-container">
                 <PhoneTextField
                   label="Mobile"
                   name="mobile"
@@ -108,7 +108,7 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
                   readOnly={type === 'EDIT'}
                 />
               </Col>
-              <Col md={12} lg={4} className="textfield-container">
+              <Col md={12} xl={4} className="textfield-container">
                 <FormikTextField
                   label="Email"
                   name="email"
