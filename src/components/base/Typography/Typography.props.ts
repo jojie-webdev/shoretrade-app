@@ -12,7 +12,8 @@ export type Variants =
   | 'label'
   | 'caption'
   | 'small'
-  | 'overline';
+  | 'overline'
+  | 'overlineSmall';
 
 export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   children: any;
