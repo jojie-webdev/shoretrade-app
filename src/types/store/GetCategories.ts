@@ -1,5 +1,3 @@
-import { GenericResponse } from 'types/GenericResponse';
-
 interface Price {
   from: number;
   to: number;

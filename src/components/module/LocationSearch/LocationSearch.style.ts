@@ -16,7 +16,7 @@ export const Results = styled.div`
     ${({ theme }) =>
       theme.appType === 'buyer' ? theme.grey.shade5 : theme.grey.shade9};
   border-radius: 4px;
-  box-shadow: 0 12px 24px rgba(41, 43, 50, 0.25);
+  box-shadow: 0px 2px 8px rgba(41, 43, 50, 0.1);
   margin-top: 8px;
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9};
@@ -66,5 +66,4 @@ export const Item = styled.div<{ isSelected?: boolean }>`
     background-color: ${({ theme }) =>
       theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
   }
-
 `;

@@ -21,7 +21,7 @@ const Wrapper = ({ children }) => {
 storiesOf('base/Interactions', module).add('Summary', () => (
   <Container background="white" appType="buyer">
     <Wrapper>
-      <Interactions label="Next " value="Some Value" resultCount="3" />
+      <Interactions label="Next" value="Some Value" resultCount="3" />
     </Wrapper>
     <Wrapper>
       <Interactions label="Accordion" value="Some Value" type="accordion" />
