@@ -5,7 +5,7 @@ import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
 
 export const Container = styled.div<InteractionsProps>`
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: ${({ padding }) => padding || '24px'};
   display: flex;
   justify-content: space-between;
