@@ -45,6 +45,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
       {!notifMsg && (
         <Alert
           variant="infoAlert"
+          fullWidth
           content={`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
           style={{ marginBottom: 24 }}
         />
