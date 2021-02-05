@@ -87,13 +87,13 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
             key={account.userId}
             leftComponent={
               <div>
-                <Typography color="shade5" variant="overline">
+                <Typography color="shade5" variant="overlineSmall">
                   {account.relationship}
                 </Typography>
                 <AccountName>
                   {account.firstName} {account.lastName}
                 </AccountName>
-                <Typography color="shade5" variant="caption">
+                <Typography color="shade6" variant="caption">
                   {account.email}
                 </Typography>
               </div>
@@ -101,9 +101,9 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
           />
         ))}
 
-        <Row nogutter>
+        <Row nogutter style={{ marginTop: 20 }}>
           <Col>
-            <Button text="Add assistant" onClick={addAssistant} />
+            <Button text="Add Linked Account" onClick={addAssistant} />
           </Col>
         </Row>
       </BoxContainer>

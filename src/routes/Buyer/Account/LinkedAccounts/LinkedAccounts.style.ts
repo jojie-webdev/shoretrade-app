@@ -16,7 +16,7 @@ export const InfoContainer = styled.div`
   padding: 24px;
   background: ${({ theme }) => theme.grey.noshade};
   border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 24px;
 
   .text-people {
@@ -26,6 +26,10 @@ export const InfoContainer = styled.div`
   .text {
     margin-top: 4px;
     margin-left: 4px;
+  }
+
+  .button-col {
+    margin-top: 20px;
   }
 `;
 
@@ -37,9 +41,10 @@ export const TextContainer = styled.div`
 `;
 
 export const AccountName = styled(Typography)`
-  margin: 4px 0;
+  margin-top: 4px;
 `;
 
 export const StyledInteraction = styled(Interactions)`
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  padding: 16px 24px;
 `;
