@@ -49,7 +49,7 @@ export const TopContainer = styled.div`
   position: sticky;
   top: 0;
   background: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.noshade};
+    theme.appType === 'seller' ? theme.grey.shade8 : 'transparent'};
 `;
 
 export const NextButton = styled(Button)`
@@ -73,17 +73,17 @@ export const Spacer = styled.div`
 `;
 
 export const ColumnWrapper = styled.div`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
 `;
 
 export const FormikContainer = styled(Form)`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: auto;

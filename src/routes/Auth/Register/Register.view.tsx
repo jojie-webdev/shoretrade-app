@@ -682,10 +682,11 @@ const StepForm = ({
                   />
                   <Alert
                     variant="infoAlert"
+                    fullWidth
                     content={
                       'You can add more people to your seller account once you’re approved'
                     }
-                    style={{ marginTop: '8px' }}
+                    style={{ marginTop: 8 }}
                   />
                 </>
               )}
@@ -713,6 +714,7 @@ const StepForm = ({
                     content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                     }
+                    style={{ marginTop: 8 }}
                   />
                   {isSeller && (
                     <>
