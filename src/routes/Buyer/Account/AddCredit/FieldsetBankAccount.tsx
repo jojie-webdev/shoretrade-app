@@ -1,28 +1,29 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
-import FixedWidthContainer from 'components/layout/FixedWidthContainer';
 import FormikTextField from 'components/module/FormikTextField';
 import { Col, Row } from 'react-grid-system';
 
 import { Field } from './AddCredit.style';
 
 export const FieldsetBankAccount = () => (
-  <FixedWidthContainer width={436}>
+  <>
     <Row>
-      <Field md={12}>
+      <Field md={12} xl={6}>
         <Typography variant="overline" color="shade6">
-          Credit Balance
+          Bank Transfer Instructions
         </Typography>
-        <Typography variant="body" color="shade9">
+        <Typography variant="label">
           It is very important that you enter the correct details into your bank
           transfer page, or your deposit will not go through. We use the
           reference number to match deposits to your ShoreTrade account. Bank
           transfers normally take 2 days to clear.
         </Typography>
       </Field>
+    </Row>
 
-      <Field md={12}>
+    <Row>
+      <Field md={12} xl={4}>
         <FormikTextField
           type="text"
           name="acctName"
@@ -33,7 +34,7 @@ export const FieldsetBankAccount = () => (
         />
       </Field>
 
-      <Field md={12}>
+      <Field md={12} xl={4}>
         <FormikTextField
           type="text"
           name="bsb"
@@ -43,8 +44,10 @@ export const FieldsetBankAccount = () => (
           readOnly
         />
       </Field>
+    </Row>
 
-      <Field md={12}>
+    <Row className="form-spacer">
+      <Field md={12} xl={4}>
         <FormikTextField
           type="text"
           name="acctNum"
@@ -55,7 +58,7 @@ export const FieldsetBankAccount = () => (
         />
       </Field>
 
-      <Field md={12}>
+      <Field md={12} xl={4}>
         <FormikTextField
           type="text"
           name="description"
@@ -67,5 +70,5 @@ export const FieldsetBankAccount = () => (
         />
       </Field>
     </Row>
-  </FixedWidthContainer>
+  </>
 );

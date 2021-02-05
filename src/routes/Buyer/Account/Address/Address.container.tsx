@@ -17,12 +17,15 @@ const Address = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
+
   const companyId = currentCompany?.id || '';
   const getAddress = useSelector((state: Store) => state.getAddresses);
-  const addresses = getAddress.data?.data.addresses || [];
+  const addresses =
+    getAddress.data?.data.addresses.sort((a) => (a.default ? -1 : 1)) || [];
   const pending = getAddress.pending || false;
-  const [notificationMessage, setNotifficationMessage] = useState('');
-  const updateAdrressResult = useSelector(
+
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const updateAddressResult = useSelector(
     (state: Store) => state.updateAddress
   );
   const addAddressResult = useSelector((state: Store) => state.addAddress);
@@ -54,23 +57,23 @@ const Address = (): JSX.Element => {
   }, [companyId]);
 
   useEffect(() => {
-    const isUpdateLoading = updateAdrressResult.pending;
+    const isUpdateLoading = updateAddressResult.pending;
     const updateClassification =
-      updateAdrressResult.data?.data?.address?.approved;
+      updateAddressResult.data?.data?.address?.approved;
     if (
       !isUpdateLoading &&
       isUpdateLoading !== null &&
       updateClassification === 'DECLINED'
     ) {
-      setNotifficationMessage('Your address has been deleted successfully!');
+      setNotificationMessage('Your address has been deleted successfully!');
     } else if (
       !isUpdateLoading &&
       isUpdateLoading !== null &&
       updateClassification !== 'DECLINED'
     ) {
-      setNotifficationMessage('Your address has been updated successfully!');
+      setNotificationMessage('Your address has been updated successfully!');
     }
-  }, [updateAdrressResult]);
+  }, [updateAddressResult]);
 
   useEffect(() => {
     if (notificationMessage.length > 0) {
@@ -83,7 +86,7 @@ const Address = (): JSX.Element => {
     const isLoading = addAddressResult.pending;
     const addAddressData = addAddressResult.data;
     if (!isLoading && addAddressData) {
-      setNotifficationMessage('Your address has been successfully added!');
+      setNotificationMessage('Your address has been successfully added!');
     }
   }, [addAddressResult]);
 

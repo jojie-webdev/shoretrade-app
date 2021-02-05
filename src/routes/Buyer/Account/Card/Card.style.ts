@@ -1,25 +1,33 @@
 import { Form } from 'formik';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  padding-bottom: 16px;
+
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
+`;
 
 export const CCImageRow = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
-  margin-bottom: 44px;
+  margin-bottom: 32px;
 `;
 
 export const CCImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: ${(props) => `2px solid ${props.theme.grey.shade3}`};
-  padding: 0px 4px;
-  border-radius: 5px;
-  height: 32px;
-  width: 54px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  padding: 0 4px;
+  box-shadow: 0 6px 12px rgba(41, 43, 50, 0.12);
+  border-radius: 2px;
+  height: 24px;
+  width: 40px;
   margin-right: 16px;
+
   & > svg {
     vertical-align: middle;
   }
@@ -27,16 +35,14 @@ export const CCImage = styled.div`
 
 export const FormAddCard = styled(Form)`
   & > * {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
-`;
 
-export const Notification = styled.div`
-  display: flex;
-  border-radius: 4px;
-  border: transparent;
-  margin: 12px auto;
-  & > div {
-    flex: 1;
+  .form-card-checkbox {
+    margin-top: -24px;
+  }
+
+  .form-card-col {
+    margin-bottom: 24px;
   }
 `;
