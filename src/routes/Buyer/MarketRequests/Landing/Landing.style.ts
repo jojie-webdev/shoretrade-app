@@ -13,17 +13,17 @@ export const MarketRequestsContainer = styled.div`
   }
 `;
 
+export const HeaderContainer = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 8px;
   height: 100%;
-`;
-
-export const FilterButton = styled.button`
-  background: #111e2b;
-  border-radius: 4px;
-  color: white;
-  margin-top: 4px;
 `;

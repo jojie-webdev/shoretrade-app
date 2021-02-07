@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
@@ -15,17 +16,21 @@ import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
   LoadingContainer,
-  FilterButton,
+  HeaderContainer,
 } from './Landing.style';
 
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
 ) => {
   // const theme = useTheme();
-
   return (
     <MarketRequestsContainer>
-      <BoxContainer>My Requests</BoxContainer>
+      <BoxContainer>
+        <HeaderContainer>
+          <div>My Request</div>
+          <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
+        </HeaderContainer>
+      </BoxContainer>
     </MarketRequestsContainer>
   );
 };
