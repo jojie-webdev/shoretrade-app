@@ -102,6 +102,7 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
         error: pathOr('Unknown Error', ['error'], action),
       },
       [CLEAR]: DEFAULT_STATE,
+
       ...(customEventsHandler
         ? customEventsHandler(state, action, DEFAULT_STATE)
         : {}),

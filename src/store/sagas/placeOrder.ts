@@ -1,5 +1,3 @@
-import { push } from 'connected-react-router';
-import { SELLER_SOLD_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { placeOrder } from 'services/orders';
 import { AsyncAction } from 'types/Action';
@@ -15,7 +13,9 @@ function* placeOrderRequest(
   if (state.auth.token) {
     try {
       const { data } = yield call(placeOrder, action.meta, state.auth.token);
-      yield put(placeOrderActions.success(data));
+      yield put(
+        placeOrderActions.success({ ...data, orderId: action.meta.orderId })
+      );
     } catch (e) {
       yield put(placeOrderActions.failed(e.message));
     }
@@ -27,8 +27,15 @@ function* placeOrderRequest(
 function* placeOrderSuccess(
   action: AsyncAction<PlaceOrderMeta, PlaceOrderPayload>
 ) {
-  yield put(getSellerOrdersPlacedActions.request());
-  yield put(push(SELLER_SOLD_ROUTES.LANDING));
+  console.log(action);
+
+  yield put(
+    getSellerOrdersPlacedActions.updateShipOrderOptimisitically(
+      action.payload.orderId
+    )
+  );
+  // yield put(getSellerOrdersPlacedActions.request());
+  // yield put(push(SELLER_SOLD_ROUTES.LANDING));
 }
 
 function* placeOrderWatcher() {
