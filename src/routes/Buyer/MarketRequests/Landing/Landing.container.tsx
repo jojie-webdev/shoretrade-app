@@ -13,7 +13,36 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
-    marketRequests: [], // TODO STATE
+    marketRequests: [
+      {
+        id: '001',
+        name: 'Pale Octopus',
+        offersTotal: 12,
+        timeRemaining: '3 days 24hours 17mins',
+        thumbnail: 'http://placekitten.com/64/64',
+      },
+      {
+        id: '002',
+        name: 'Abacore',
+        offersTotal: 0,
+        timeRemaining: '3 days 24hours 17mins',
+        thumbnail: 'http://placekitten.com/64/64',
+      },
+      {
+        id: '003',
+        name: 'Atlantic Salmon',
+        offersTotal: 7,
+        timeRemaining: '0',
+        thumbnail: 'http://placekitten.com/64/64',
+      },
+      {
+        id: '004',
+        name: 'Ocean Trout',
+        offersTotal: 3,
+        timeRemaining: '0',
+        thumbnail: 'http://placekitten.com/64/64',
+      },
+    ], // TODO STATE
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;
