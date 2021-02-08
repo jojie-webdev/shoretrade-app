@@ -4,6 +4,7 @@ import React, {
   Fragment,
   Dispatch,
   useEffect,
+  useRef,
 } from 'react';
 
 import Button from 'components/base/Button';
@@ -124,6 +125,7 @@ export const PendingItem = (props: {
           : [],
       };
     };
+
     return (
       <Fragment key={order.orderId}>
         <InnerStyledInteraction
@@ -306,6 +308,8 @@ export const PendingItem = (props: {
 const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
+  const returningRef = useRef();
+
   const {
     toShip,
     toShipCount,
@@ -353,6 +357,7 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   const [placeOrderId, setPlaceOrderId] = useState('');
   const [isOpen, setIsOpen] = useState<string[]>([]);
+  const [lastOpenAccordion, setLastOpenAccordion] = useState('');
 
   const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
   const addHorizontalRowMargin = useMediaQuery({
@@ -361,6 +366,7 @@ const ToShip = (props: SoldGeneratedProps) => {
 
   const toggleAccordion = (title: string) => {
     const isExisting = isOpen.some((v) => v === title);
+    setLastOpenAccordion(title);
 
     if (!isExisting) {
       setIsOpen((prevState) => [...prevState, title]);
@@ -375,6 +381,16 @@ const ToShip = (props: SoldGeneratedProps) => {
     if (!isPlacingOrder && placeOrderId.length > 0) {
       setPlaceOrderId('');
     }
+
+    if (lastOpenAccordion && !isPlacingOrder) {
+      setTimeout(() => {
+        document
+          .getElementById(lastOpenAccordion)
+          ?.scrollIntoView({ behavior: 'smooth' });
+
+        setLastOpenAccordion('');
+      }, 1000);
+    }
   }, [isPlacingOrder]);
 
   useEffect(() => {
@@ -386,6 +402,8 @@ const ToShip = (props: SoldGeneratedProps) => {
       setDidPressConfirmWeight(false);
     }
   }, [confirmWeightPending]);
+
+  console.log(lastOpenAccordion);
 
   return (
     <>
@@ -423,7 +441,7 @@ const ToShip = (props: SoldGeneratedProps) => {
 
       {pendingToShip.map((group) => {
         return (
-          <ItemRow key={group.buyerCompanyId}>
+          <ItemRow key={group.buyerCompanyId} id={group.buyerCompanyId}>
             <Col>
               <StyledInteraction
                 pressed={isOpen.includes(group.buyerCompanyId)}
