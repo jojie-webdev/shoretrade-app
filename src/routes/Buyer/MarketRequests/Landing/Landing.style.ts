@@ -8,7 +8,11 @@ export const MarketRequestsContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 16px;
+  padding-bottom: 16px;
+
+  .header {
+    margin-bottom: 24px;
+  }
 
   .cards {
     display: flex;
@@ -20,15 +24,6 @@ export const MarketRequestsContainer = styled.div`
 export const MarketRequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
-`;
-
-export const HeaderContainer = styled.header`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding: 16px;
 `;
 
 export const MarketRequestItemContainer = styled.div`

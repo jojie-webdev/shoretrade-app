@@ -1,6 +1,7 @@
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
+import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
@@ -84,6 +85,7 @@ export default (routeHistory: History) =>
         editableListing,
         endListing,
         forgotPassword,
+        getAccountCompletion,
         getAddresses,
         getAllListings,
         getBankDetails,

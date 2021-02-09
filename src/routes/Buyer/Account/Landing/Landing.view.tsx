@@ -14,7 +14,10 @@ import { Container, Header, NavInteraction } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
-    { value: 'Account Completion', path: '' },
+    {
+      value: 'Account Completion',
+      path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    },
     { value: 'Balance & Payments', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
     {
       value: 'Your Details',
