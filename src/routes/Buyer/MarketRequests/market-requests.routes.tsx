@@ -13,7 +13,7 @@ const ROUTES: Routes = {
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,
-    title: 'Market Dequests',
+    title: 'Market Requests',
     icon: BoltIcon,
   },
 };

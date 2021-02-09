@@ -6,6 +6,7 @@ import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
@@ -21,7 +22,6 @@ import {
   MarketRequestItemInteraction,
   LoadingContainer,
   StyledAlert,
-  HeaderContainer,
   BadgeText,
 } from './Landing.style';
 
@@ -81,10 +81,14 @@ const MarketRequestsLandingView = (
   return (
     <MarketRequestsContainer>
       <BoxContainer>
-        <HeaderContainer>
-          <div>My Request</div>
-          <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
-        </HeaderContainer>
+        <Row nogutter justify="around" align="center" className="header">
+          <Col>
+            <Typography>My Requests</Typography>
+          </Col>
+          <Col xs="content">
+            <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
+          </Col>
+        </Row>
         <StyledAlert
           content={'All offers below are including the shipping cost'}
           variant="alert"
