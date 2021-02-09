@@ -15,6 +15,7 @@ import editableListing from './editableListing';
 import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
+import getAccountCompletion from './getAccountCompletion';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
@@ -72,6 +73,7 @@ const sagas = [
   editableListing,
   endListing,
   forgotPassword,
+  getAccountCompletion,
   getAddresses,
   getAllListings,
   getBankDetails,

@@ -111,4 +111,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   BALANCE_HISTORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
+  ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
 };

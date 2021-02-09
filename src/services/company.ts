@@ -5,6 +5,7 @@ import omit from 'ramda/es/omit';
 import { AddAddressMeta } from 'types/store/AddAddressState';
 import { AddLinkedAccountMeta } from 'types/store/AddLinkedAccountState';
 import { DeleteLinkedAccountMeta } from 'types/store/DeleteLinkedAccountState';
+import { GetAccountCompletionMeta } from 'types/store/GetAccountCompletionState';
 import { GetAddressesMeta } from 'types/store/GetAddressesState';
 import { GetBankDetailsMeta } from 'types/store/GetBankDetailsState';
 import { GetBuyerHomepageRequestData } from 'types/store/GetBuyerHomepageState';
@@ -224,6 +225,19 @@ export const getTransactionHistory = (
   return axios({
     method: 'get',
     url: `${COMPANY_URL}/transaction-history/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getAccountCompletion = (
+  data: GetAccountCompletionMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${COMPANY_URL}/account-completion/${data.companyId}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

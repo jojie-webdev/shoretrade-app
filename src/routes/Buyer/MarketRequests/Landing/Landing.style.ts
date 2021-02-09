@@ -8,7 +8,7 @@ export const MarketRequestsContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 16px;
+  padding-bottom: 16px;
 
   .header {
     margin-bottom: 24px;

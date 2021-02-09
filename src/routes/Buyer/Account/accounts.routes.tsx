@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import ChangePassword from 'routes/Seller/Account/ChangePassword';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+import AccountCompletion from './AccountCompletion';
 import AddAddress from './AddAddress';
 import AddAssistant from './AddAssistant';
 import AddCredit from './AddCredit';
@@ -79,6 +80,10 @@ const ROUTES: Routes = {
   ADD_CREDIT: {
     path: BUYER_ACCOUNT_ROUTES.ADD_CREDIT,
     children: <AddCredit />,
+  },
+  ACCOUNT_COMPLETION: {
+    path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    children: <AccountCompletion />,
   },
 };
 

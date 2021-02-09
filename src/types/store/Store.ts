@@ -1,5 +1,9 @@
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
+import {
+  GetAccountCompletionMeta,
+  GetAccountCompletionPayload,
+} from 'types/store/GetAccountCompletionState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -272,4 +276,8 @@ export interface Store {
   >;
   resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
   logRequest: RequestLogState;
+  getAccountCompletion: AsyncState<
+    GetAccountCompletionMeta,
+    GetAccountCompletionPayload
+  >;
 }
