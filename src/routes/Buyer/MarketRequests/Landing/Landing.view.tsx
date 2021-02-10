@@ -81,7 +81,7 @@ const MarketRequestsLandingView = (
   return (
     <MarketRequestsContainer>
       <BoxContainer>
-        <Row nogutter justify="around" align="center" className="header">
+        <Row nogutter justify="between" align="center" className="header">
           <Col>
             <Typography>My Requests</Typography>
           </Col>

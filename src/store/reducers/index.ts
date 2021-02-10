@@ -36,6 +36,7 @@ import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
+import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
@@ -62,6 +63,7 @@ import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
+import updateMarketInterests from './updateMarketInterests';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -103,6 +105,7 @@ export default (routeHistory: History) =>
         getListingTypesByCategory,
         getListingsByType,
         getMarketEstimate,
+        getMarketInterests,
         getPaymentMethods,
         getSellerById,
         getSellerOrdersDelivered,
@@ -130,6 +133,7 @@ export default (routeHistory: History) =>
         updateFavoriteSeller,
         updateFavouriteProduct,
         updateListing,
+        updateMarketInterests,
         updateUser,
         verify,
       }).sort()
