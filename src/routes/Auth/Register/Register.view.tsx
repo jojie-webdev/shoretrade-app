@@ -28,12 +28,7 @@ import {
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
-import {
-  Image,
-  CategoryItems,
-  DetailsContainer,
-  ResultContainer,
-} from './Categories.style';
+import { Image, CategoryItems } from './Categories.style';
 import {
   BUYER_STEPS,
   SELLER_STEPS,
@@ -103,6 +98,7 @@ import {
   validateCategoryMarketSector,
   validateLicense,
 } from './Register.validation';
+
 interface StepFormProps extends RegisterGeneratedProps {
   formikProps: {
     initialValues: Record<string, string>;
@@ -167,24 +163,30 @@ const StepForm = ({
 
   const CategoryChildren = (result: Category) => (
     <>
-      <CategoryImageView id={result.id} maxHeight={30} containerHeight={30} />
-      <DetailsContainer>
-        <ResultContainer>
-          <Typography
-            color={isSeller ? 'noshade' : 'shade9'}
-            className="ctg-text"
-          >
-            {result.name}
-          </Typography>
-        </ResultContainer>
-      </DetailsContainer>
+      <CategoryItems>
+        <div style={{ width: 48 }}>
+          <CategoryImageView
+            id={result.id}
+            containerHeight={30}
+            maxHeight={30}
+          />
+        </div>
+
+        <Typography
+          color={isSeller ? 'noshade' : 'shade9'}
+          variant="label"
+          className="category-text"
+        >
+          {result.name}
+        </Typography>
+      </CategoryItems>
     </>
   );
 
   const CategoryItemsChildren = (result: CategoryType) => (
     <CategoryItems>
       <Image src={result.thumbnail} />
-      <Typography>{result.name}</Typography>
+      <Typography variant="label">{result.name}</Typography>
     </CategoryItems>
   );
 
@@ -266,7 +268,7 @@ const StepForm = ({
                       getCategoryItem(result.id);
                       showDetails();
                     }}
-                    padding="8px 20px 8px 8px"
+                    padding="16px 20px 16px 8px"
                   >
                     <CategoryChildren {...result} />
                   </Interactions>
@@ -292,7 +294,7 @@ const StepForm = ({
                       };
                       addSelected(value);
                     }}
-                    padding="8px 20px 8px 8px"
+                    padding="8px 20px 8px 16px"
                   >
                     <CategoryItemsChildren {...result} />
                   </Interactions>

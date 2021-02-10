@@ -4,6 +4,14 @@ import {
   GetAccountCompletionMeta,
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
+import {
+  GetMarketInterestsMeta,
+  GetMarketInterestsPayload,
+} from 'types/store/GetMarketInterestsState';
+import {
+  UpdateMarketInterestsMeta,
+  UpdateMarketInterestsPayload,
+} from 'types/store/UpdateMarketInterestsState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -279,5 +287,13 @@ export interface Store {
   getAccountCompletion: AsyncState<
     GetAccountCompletionMeta,
     GetAccountCompletionPayload
+  >;
+  getMarketInterests: AsyncState<
+    GetMarketInterestsMeta,
+    GetMarketInterestsPayload
+  >;
+  updateMarketInterests: AsyncState<
+    UpdateMarketInterestsMeta,
+    UpdateMarketInterestsPayload
   >;
 }

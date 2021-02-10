@@ -18,6 +18,7 @@ import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
+import MarketInterests from './MarketInterests';
 import YourDetails from './YourDetails';
 
 const ROUTES: Routes = {
@@ -84,6 +85,10 @@ const ROUTES: Routes = {
   ACCOUNT_COMPLETION: {
     path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
     children: <AccountCompletion />,
+  },
+  MARKET_INTERESTS: {
+    path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
+    children: <MarketInterests />,
   },
 };
 

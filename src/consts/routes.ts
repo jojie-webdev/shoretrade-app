@@ -112,4 +112,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
+  MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
 };

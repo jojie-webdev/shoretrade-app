@@ -11,4 +11,11 @@ export const Container = styled.div`
   a > p:hover {
     color: ${({ theme }) => theme.brand.primary};
   }
+
+  .alt-link {
+    cursor: pointer;
+    &:hover {
+      color: ${({ theme }) => theme.brand.primary};
+    }
+  }
 `;

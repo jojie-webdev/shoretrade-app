@@ -4,7 +4,8 @@ import { push } from 'connected-react-router';
 import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getAvailableCategories, getCategoryDetails } from 'services/auth';
+import { getAvailableCategories } from 'services/category';
+import { getInactiveTypesByCategory } from 'services/listing';
 import { registerActions } from 'store/actions';
 import {
   Category,
@@ -115,7 +116,7 @@ const Register = (): JSX.Element => {
   }, []);
 
   const getCategoryItem = async (id: string) => {
-    const data = await getCategoryDetails(id);
+    const data = await getInactiveTypesByCategory(id);
     const result = data.data.data.type;
     setCategoryItems(result);
     setSearchCategoryType(result);

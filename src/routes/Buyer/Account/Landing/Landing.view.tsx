@@ -25,7 +25,10 @@ const LandingView = (props: LandingGeneratedProps) => {
         BUYER_ACCOUNT_ROUTES.DETAILS + `?companyId=${props.currentCompany?.id}`,
     },
     { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.ADDRESS },
-    { value: "Products I'm Buying", path: '' },
+    {
+      value: "Products I'm Buying",
+      path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
+    },
     { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },

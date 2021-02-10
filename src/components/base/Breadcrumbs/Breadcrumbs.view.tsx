@@ -22,13 +22,25 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
                 <ChevronRight width={8} height={12} fill={theme.grey.shade4} />
               </div>
             )}
-            {section.link ? (
+            {section.link && (
               <Link key={i} to={section.link}>
                 <Typography color={isSeller ? 'noshade' : 'shade9'}>
                   {section.label}
                 </Typography>
               </Link>
-            ) : (
+            )}
+
+            {section.onClick && (
+              <Typography
+                className="alt-link"
+                color={isSeller ? 'noshade' : 'shade9'}
+                onClick={section.onClick}
+              >
+                {section.label}
+              </Typography>
+            )}
+
+            {!section.link && !section.onClick && (
               <Typography color="primary">{section.label}</Typography>
             )}
           </React.Fragment>
