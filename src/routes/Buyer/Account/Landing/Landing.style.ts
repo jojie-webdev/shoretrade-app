@@ -1,9 +1,13 @@
 import Interactions from 'components/base/Interactions';
-import styled from 'utils/styled';
+import styled, { css } from 'utils/styled';
 
-export const Container = styled.div`
-  padding-bottom: 16px;
+const imgStyle = css`
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
 `;
+
+export const Container = styled.div``;
 
 export const Header = styled.div`
   display: flex;
@@ -16,9 +20,7 @@ export const Header = styled.div`
     align-items: center;
 
     img {
-      width: 96px;
-      height: 96px;
-      border-radius: 4px;
+      ${imgStyle};
     }
 
     .user-details {
@@ -28,5 +30,10 @@ export const Header = styled.div`
 `;
 
 export const NavInteraction = styled(Interactions)`
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+`;
+
+export const NoProfilePic = styled.div`
+  ${imgStyle};
+  background-color: #edeffa;
 `;

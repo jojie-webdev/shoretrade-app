@@ -20,10 +20,6 @@ const Assistants = (): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
-  // const companies =
-  //   useSelector((state: Store) => state.getUser.data?.data.user.companies) ||
-  //   [];
-  // const currentCompany = companies.find((company) => company.id === companyId);
 
   const currentCompanyName = currentCompany?.name || 'Your Company';
   const linkedAccounts = useSelector((state: Store) => state.getLinkedAccounts);

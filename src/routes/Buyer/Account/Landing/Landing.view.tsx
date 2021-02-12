@@ -10,7 +10,12 @@ import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { LandingGeneratedProps } from './Landing.props';
-import { Container, Header, NavInteraction } from './Landing.style';
+import {
+  Container,
+  Header,
+  NavInteraction,
+  NoProfilePic,
+} from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
@@ -21,8 +26,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     { value: 'Balance & Payments', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
     {
       value: 'Your Details',
-      path:
-        BUYER_ACCOUNT_ROUTES.DETAILS + `?companyId=${props.currentCompany?.id}`,
+      path: BUYER_ACCOUNT_ROUTES.DETAILS,
     },
     { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.ADDRESS },
     {
@@ -63,7 +67,9 @@ const LandingView = (props: LandingGeneratedProps) => {
             {profilePicture ? (
               <img src={profilePicture} alt="Profile" />
             ) : (
-              <PlaceholderProfile />
+              <NoProfilePic>
+                <PlaceholderProfile width={96} height={96} />
+              </NoProfilePic>
             )}
             <div className="user-details">
               <Typography variant="overline" color="shade6">

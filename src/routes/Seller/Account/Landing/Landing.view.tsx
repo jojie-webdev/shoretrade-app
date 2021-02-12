@@ -17,7 +17,6 @@ import {
   Container,
   NavInteraction,
   Header,
-  DropdownContainer,
   NoProfilePic,
 } from './Landing.style';
 
@@ -38,6 +37,13 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
 
   const INTERACTIONS = [
     {
+      value: 'Account Completion',
+      path: `${SELLER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
+    {
       value: 'Your Details',
       path: `${SELLER_ACCOUNT_ROUTES.YOUR_DETAILS}${qs.stringify(
         { companyId: currentCompany?.id },
@@ -52,6 +58,20 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
       )}`,
     },
     { value: 'Change Password', path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
+    {
+      value: 'Fishing Licenses',
+      path: `${SELLER_ACCOUNT_ROUTES.LICENSES}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
+    {
+      value: "Products I'm Selling",
+      path: `${SELLER_ACCOUNT_ROUTES.MARKET_INTERESTS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
     {
       value: 'Fisherman / Assistants',
       path: `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
@@ -141,14 +161,14 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                     handleOnClick();
                   }}
                 >
-                  <PlaceholderProfile width={90} height={90} />
+                  <PlaceholderProfile width={96} height={96} />
                 </NoProfilePic>
               )}
             </>
           )}
 
           <div>
-            <Typography variant="overline" color="noshade">
+            <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
             <Typography variant="title5" color="noshade">
@@ -157,17 +177,14 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
           </div>
         </div>
 
-        <div className="right-content">
-          <DropdownContainer>
-            <Select
-              label=""
-              options={companyOptions}
-              value={currentCompany?.id}
-              size="small"
-              dark={true}
-            />
-          </DropdownContainer>
-          {/* <AccountSelect options={['one', 'two', 'three']} /> */}
+        <div>
+          <Select
+            label=""
+            options={companyOptions}
+            value={currentCompany?.id}
+            size="small"
+            dark={true}
+          />
         </div>
       </Header>
 

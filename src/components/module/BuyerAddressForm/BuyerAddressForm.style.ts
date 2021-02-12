@@ -3,8 +3,6 @@ import Checkbox from 'components/base/Checkbox';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding-bottom: 16px;
-
   .breadcrumb-container {
     margin-bottom: 26px;
   }

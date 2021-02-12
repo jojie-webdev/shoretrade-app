@@ -1,8 +1,6 @@
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding-bottom: 16px;
-
   .header {
     margin-bottom: 40px;
   }
