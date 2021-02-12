@@ -97,7 +97,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100%;
+    min-height: 100vh;
   }
 
   @media ${BREAKPOINTS['sm']} {
@@ -107,7 +107,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100%;
+    min-height: 100vh;
   }
 `;
 
@@ -213,6 +213,8 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['md']} {
+    min-height: 100vh;
+
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 
@@ -229,7 +231,7 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding-left: 0;
+    min-height: 100vh;
 
     .screen-wrapper {
       height: 100%;
@@ -255,7 +257,7 @@ export const Content = styled.div<{
 export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
-  margin-top: ${(props) => (props.theme.appType === 'seller' ? '0' : '40px')};
+  //margin-top: ${(props) => (props.theme.appType === 'seller' ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
