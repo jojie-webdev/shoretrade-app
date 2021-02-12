@@ -4,7 +4,6 @@ import Accordion from 'components/base/Accordion';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useTheme } from 'utils/Theme';
 
