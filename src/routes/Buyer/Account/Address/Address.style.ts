@@ -24,18 +24,3 @@ export const InteractionCol = styled(Col)`
     margin-bottom: 12px;
   }
 `;
-
-export const SmallAlertContainer = styled.div`
-  padding: 8px;
-  width: 100%;
-  background: rgba(255, 207, 92, 0.12);
-  border-radius: 4px;
-  margin-bottom: 16px;
-
-  display: flex;
-  align-items: center;
-
-  .icon-container {
-    margin-right: 8px;
-  }
-`;

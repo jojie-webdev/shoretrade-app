@@ -22,17 +22,20 @@ const AddressText = (
   countryCode: string
 ) => (
   <div>
-    <AddressBadge color={color}>
-      <Typography variant="overlineSmall" color="shade9" className="label">
-        {title}
-      </Typography>
-    </AddressBadge>
+    {title && (
+      <AddressBadge color={color}>
+        <Typography variant="overlineSmall" color="shade9" className="label">
+          {title}
+        </Typography>
+      </AddressBadge>
+    )}
 
     <Typography>{streetNumber}</Typography>
     <Typography>{street}</Typography>
     <Typography>{countryCode}</Typography>
   </div>
 );
+
 const AddressView = (props: AccountDeliveryGeneratedProps) => {
   const {
     pending,

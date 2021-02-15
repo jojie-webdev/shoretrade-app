@@ -10,7 +10,7 @@ const EditAddressView = (props: EditAddressGeneratedProps) => {
   // const theme = useTheme();
 
   if (!props.address) {
-    return <LoadingView></LoadingView>;
+    return <LoadingView />;
   }
 
   return <SellerAddressForm {...props} />;

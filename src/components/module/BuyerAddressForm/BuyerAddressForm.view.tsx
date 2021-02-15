@@ -7,8 +7,6 @@ import Checkbox from 'components/base/Checkbox';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import FixedWidthContainer from 'components/layout/FixedWidthContainer';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LocationSearch from 'components/module/LocationSearch';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import pathOr from 'ramda/es/pathOr';
@@ -16,7 +14,7 @@ import { Row, Col } from 'react-grid-system';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import { BuyerAddressFormProps } from './BuyerAddressForm.props';
-import { Container, StyledAlert } from './BuyerAddressForm.style';
+import { Container } from './BuyerAddressForm.style';
 import { isValid } from './BuyerAddressForm.validation';
 
 const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
