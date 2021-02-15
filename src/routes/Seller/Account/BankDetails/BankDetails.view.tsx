@@ -1,12 +1,12 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Formik, Form } from 'formik';
 import { Col } from 'react-grid-system';
 
@@ -42,7 +42,14 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Bank Details" />
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Bank Details' },
+          ]}
+        />
+      </div>
 
       {isError && (
         <StyledAlert
@@ -62,20 +69,21 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         />
       )}
 
-      <Typography variant="label" color="shade1">
+      <Typography color="shade1">
         Your earnings will be transfered here. Australian banks only.
       </Typography>
 
       <Formik {...formikProps} enableReinitialize>
         <Form>
           <TextFieldRow>
-            <Col md={6} className="textfield-col">
+            <Col md={12} lg={4} className="textfield-col">
               <FormikTextField label="Account name" name="accountName" />
             </Col>
-            <Col md={6} className="textfield-col">
+            <Col md={12} lg={4} className="textfield-col">
               <FormikTextField label="BSB" name="bsb" maxLength={6} />
             </Col>
-            <Col md={6} className="textfield-col">
+            <Col lg={4} />
+            <Col md={12} lg={4} className="textfield-col">
               <FormikTextField
                 label="Account number"
                 name="accountNumber"
