@@ -17,7 +17,7 @@ import { isValid } from './ChangePassword.validation';
 
 const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
   const theme = useTheme();
-  const { onClickSave, pending, isError, isSuccess, errorMessage } = props;
+  const isSeller = theme.appType === 'seller';
 
   const formikProps = {
     initialValues: {
@@ -26,27 +26,27 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
       confirmNewPassword: '',
     },
     validate: isValid,
-    onSubmit: onClickSave,
+    onSubmit: props.onClickSave,
   };
 
-  return (
-    <Wrapper>
-      <BoxContainer>
+  const Content = (contentProps: ChangePasswordGeneratedProps) => {
+    const { pending, isError, isSuccess, errorMessage } = contentProps;
+
+    return (
+      <>
         <div className="breadcrumb-container">
           <Breadcrumbs
             sections={[
               {
                 label: 'Account',
-                link:
-                  theme.appType === 'seller'
-                    ? SELLER_ACCOUNT_ROUTES.LANDING
-                    : BUYER_ACCOUNT_ROUTES.LANDING,
+                link: isSeller
+                  ? SELLER_ACCOUNT_ROUTES.LANDING
+                  : BUYER_ACCOUNT_ROUTES.LANDING,
               },
               { label: 'Change Password' },
             ]}
           />
         </div>
-
         {isSuccess && (
           <div className="alert-container">
             <Alert
@@ -57,7 +57,6 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             />
           </div>
         )}
-
         {isError && (
           <div className="alert-container">
             <Alert
@@ -68,7 +67,6 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             />
           </div>
         )}
-
         <Row>
           <Col md={12} lg={8}>
             <Alert
@@ -89,7 +87,6 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             />
           </Col>
         </Row>
-
         <Formik {...formikProps}>
           <Form>
             <TextFieldRow>
@@ -128,7 +125,19 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             </Row>
           </Form>
         </Formik>
-      </BoxContainer>
+      </>
+    );
+  };
+
+  return (
+    <Wrapper>
+      {isSeller ? (
+        <Content {...props} />
+      ) : (
+        <BoxContainer>
+          <Content {...props} />
+        </BoxContainer>
+      )}
     </Wrapper>
   );
 };
