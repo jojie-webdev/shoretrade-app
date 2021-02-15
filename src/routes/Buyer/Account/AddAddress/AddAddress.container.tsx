@@ -17,6 +17,7 @@ const AddAddress = (): JSX.Element => {
   const history = useHistory();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
+
   const pending = useSelector(
     (state: Store) => state.addAddress.pending || false
   );
@@ -48,6 +49,7 @@ const AddAddress = (): JSX.Element => {
   };
 
   const toggleIsDefault = () => setIsDefault(!isDefault);
+
   const generatedProps: AddAddressGeneratedProps = {
     type: 'CREATE',
     address: address as PlaceData,

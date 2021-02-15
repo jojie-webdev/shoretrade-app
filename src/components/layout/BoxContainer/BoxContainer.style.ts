@@ -13,7 +13,7 @@ export const Container = styled.div`
   border-radius: 8px;
 
   @media ${BREAKPOINTS['md']} {
-    padding: 32px;
+    padding: 24px;
   }
 
   @media ${BREAKPOINTS['sm']} {

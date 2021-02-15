@@ -68,6 +68,9 @@ export const SELLER_ACCOUNT_ROUTES = {
     `${SELLER_ROUTES.ACCOUNT}/assistants/${assitantId}`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
+  ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
+  LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
+  MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
 };
 
 export const BUYER_ROUTES = {

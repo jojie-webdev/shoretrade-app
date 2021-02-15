@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
 const dashboardWidth = (isSeller: boolean) =>
-  isSeller ? 'calc(100% - 64px)' : 'calc(100% - 200px)';
+  isSeller ? 'calc(100% - 200px)' : 'calc(100% - 200px)';
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
@@ -97,7 +97,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100%;
+    min-height: 100vh;
   }
 
   @media ${BREAKPOINTS['sm']} {
@@ -107,7 +107,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
-    height: 100%;
+    min-height: 100vh;
   }
 `;
 
@@ -178,6 +178,7 @@ export const Content = styled.div<{
     display: flex;
     width: 100%;
     justify-content: center;
+
     .screen {
       background: ${(props) =>
         props.screenBackground
@@ -190,8 +191,8 @@ export const Content = styled.div<{
         props.shouldUseFullWidth
           ? '100%'
           : dashboardWidth(props.theme.appType === 'seller')};
-      padding: ${(props) => (props.shouldIncludePadding ? '40px 80px' : '0')};
-      border-radius: 2px;
+      padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
+      border-radius: 8px;
       overflow-x: hidden;
       overflow-y: auto;
 
@@ -212,6 +213,8 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['md']} {
+    min-height: 100vh;
+
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 
@@ -228,7 +231,7 @@ export const Content = styled.div<{
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding-left: 0;
+    min-height: 100vh;
 
     .screen-wrapper {
       height: 100%;
@@ -238,7 +241,10 @@ export const Content = styled.div<{
         height: 100%;
         width: 100%;
         padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '0 8px' : '40px 20px'};
+          props.theme.appType === 'buyer' ? '0 8px' : '16px'};
+
+        //TODO: remove on deletion of BoxContainer
+        margin: ${(props) => (props.theme.appType === 'seller' ? '0 8px' : 0)};
 
         .container {
           position: static !important; // needed to override react-grid-system .container
@@ -251,7 +257,7 @@ export const Content = styled.div<{
 export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
-  margin-top: ${(props) => (props.theme.appType === 'seller' ? '0' : '40px')};
+  //margin-top: ${(props) => (props.theme.appType === 'seller' ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;

@@ -65,6 +65,7 @@ const CreateAssistant = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: CreateAssistantGeneratedProps = {
+    companyId,
     type: 'CREATE',
     role,
     setRole,

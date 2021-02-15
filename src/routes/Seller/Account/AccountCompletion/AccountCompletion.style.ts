@@ -39,8 +39,8 @@ export const Container = styled.div`
 export const InfoContainer = styled.div`
   display: flex;
   padding: 16px 24px;
-  background: ${({ theme }) => theme.grey.noshade};
-  border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
+  background: ${({ theme }) => theme.grey.shade9};
+  border: ${({ theme }) => `2px solid ${theme.grey.shade9}`};
   border-radius: 8px;
   margin-bottom: 32px;
 

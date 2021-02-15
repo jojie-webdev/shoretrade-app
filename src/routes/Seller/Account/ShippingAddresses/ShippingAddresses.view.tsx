@@ -1,39 +1,42 @@
 import React from 'react';
 
 import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
-import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
 import { ShippingAddressesGeneratedProps } from './ShippingAddresses.props';
 import {
-  Wrapper,
-  AddressTextContainer,
+  Container,
+  AddressBadge,
   InteractionCol,
-  Notification,
 } from './ShippingAddresses.style';
 
 const AddressText = (
   title: string,
-  color: keyof Theme['brand'] | keyof Theme['grey'],
+  color: string,
   streetNumber: string,
   street: string,
   countryCode: string
 ) => (
-  <AddressTextContainer>
-    <Typography variant="overline" color={color} className="label">
-      {title}
-    </Typography>
+  <div>
+    {title && (
+      <AddressBadge color={color}>
+        <Typography variant="overlineSmall" color="shade9" className="label">
+          {title}
+        </Typography>
+      </AddressBadge>
+    )}
 
     <Typography color="noshade">{streetNumber}</Typography>
     <Typography color="noshade">{street}</Typography>
     <Typography color="noshade">{countryCode}</Typography>
-  </AddressTextContainer>
+  </div>
 );
 
 const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
@@ -52,14 +55,23 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
   }
 
   return (
-    <Wrapper>
-      <InnerRouteHeader title="Shipping Addresses" />
+    <Container>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Shipping Addresses' },
+          ]}
+        />
+      </div>
+
       {notificationMessage ? (
-        <Notification
+        <Alert
           content={notificationMessage}
           variant="success"
           alignText="center"
           fullWidth
+          style={{ marginBottom: 16 }}
         />
       ) : null}
 
@@ -74,24 +86,18 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
       />
 
       <Row>
-        <Col>
-          <Button text="Add a new address" onClick={onClickAddAddress} />
-        </Col>
-      </Row>
-
-      <Row className="address-row">
         {addresses.map((address) => {
           let title = '';
-          let color: keyof Theme['brand'] | keyof Theme['grey'] = 'shade6';
+          let color = theme.grey.shade3;
 
           if (address.default) {
             title = 'Default Address';
-            color = 'shade6';
+            color = theme.grey.shade3;
           }
 
           if (address.approved !== 'APPROVED') {
             title = 'Approval Pending';
-            color = 'alert';
+            color = theme.brand.alert;
           }
 
           const streetNumber = address.unitNumber
@@ -116,12 +122,19 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
                   address.countryCode
                 )}
                 iconAlignment="flex-start"
+                padding="16px 24px"
               />
             </InteractionCol>
           );
         })}
       </Row>
-    </Wrapper>
+
+      <Row className="btn-add-address">
+        <Col>
+          <Button text="Add a new address" onClick={onClickAddAddress} />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -2,12 +2,21 @@ import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
 
-export const AccountName = styled(Typography)`
-  margin: 4px 0;
+  .btn-add-assistant {
+    margin-top: 32px;
+  }
 `;
 
-export const StyledInteaction = styled(Interactions)`
-  margin-bottom: 8px;
+export const AccountName = styled(Typography)`
+  margin-top: 4px;
+`;
+
+export const StyledInteraction = styled(Interactions)`
+  margin-bottom: 12px;
+  padding: 16px 24px;
 `;

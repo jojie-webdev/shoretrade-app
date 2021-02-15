@@ -3,6 +3,7 @@ import { Dispatch } from 'react';
 import { PlaceData } from 'types/PlaceData';
 
 export interface SellerAddressFormProps {
+  companyId: string;
   address: PlaceData | null;
   isDefault: boolean | null;
   pending: boolean;

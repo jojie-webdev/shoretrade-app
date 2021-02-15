@@ -20,6 +20,7 @@ const EditAssistant = (): JSX.Element => {
   const history = useHistory();
   const [companyId] = useCompany();
   const { assistantId } = useParams<{ assistantId: string }>();
+
   const getLinkedAccounts = useSelector(
     (store: Store) => store.getLinkedAccounts
   );
@@ -70,6 +71,7 @@ const EditAssistant = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: EditAssistantGeneratedProps = {
+    companyId,
     type: 'EDIT',
     formikInitial,
     callingCode,

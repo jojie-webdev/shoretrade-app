@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
+import AccountCompletion from './AccountCompletion';
 import Assistants from './Assistants';
 import BankDetails from './BankDetails';
 import ChangePassword from './ChangePassword';
@@ -62,6 +63,10 @@ const ROUTES: Routes = {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS,
     children: <CreateAddress />,
   },
+  ACCOUNT_COMPLETION: {
+    path: SELLER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    children: <AccountCompletion />,
+  },
 };
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
@@ -74,9 +79,6 @@ const SellerAccountRoutes = (): JSX.Element => {
           {r.children}
         </Route>
       ))}
-      {/* <Route>
-        <Redirect to="/seller/account" />
-      </Route> */}
     </>
   );
 };
