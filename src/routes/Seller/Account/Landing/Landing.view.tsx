@@ -73,7 +73,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
       )}`,
     },
     {
-      value: 'Fisherman / Assistants',
+      value: 'Fisherman / Assistant',
       path: `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
         { companyId: currentCompany?.id },
         { addQueryPrefix: true }

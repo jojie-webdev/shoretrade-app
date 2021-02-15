@@ -76,14 +76,14 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
       <Formik {...formikProps} enableReinitialize>
         <Form>
           <TextFieldRow>
-            <Col md={12} lg={4} className="textfield-col">
+            <Col md={12} xl={4} className="textfield-col">
               <FormikTextField label="Account name" name="accountName" />
             </Col>
-            <Col md={12} lg={4} className="textfield-col">
+            <Col md={12} xl={4} className="textfield-col">
               <FormikTextField label="BSB" name="bsb" maxLength={6} />
             </Col>
-            <Col lg={4} />
-            <Col md={12} lg={4} className="textfield-col">
+            <Col xl={4} />
+            <Col md={12} xl={4} className="textfield-col">
               <FormikTextField
                 label="Account number"
                 name="accountNumber"

@@ -68,7 +68,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
           </div>
         )}
         <Row>
-          <Col md={12} lg={8}>
+          <Col md={12} xl={8}>
             <Alert
               variant="infoAlert"
               header="Your Password must:"
@@ -90,22 +90,22 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
         <Formik {...formikProps}>
           <Form>
             <TextFieldRow>
-              <Col md={12} lg={8} className="textfield-col">
+              <Col md={12} xl={8} className="textfield-col">
                 <FormikTextField
                   label="Current Password"
                   name="oldPassword"
                   secured
                 />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="textfield-col">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="textfield-col">
                 <FormikTextField
                   label="New Password"
                   name="newPassword"
                   secured
                 />
               </Col>
-              <Col md={12} lg={4} className="textfield-col">
+              <Col md={12} xl={4} className="textfield-col">
                 <FormikTextField
                   label="Confirm New Password"
                   name="confirmNewPassword"
