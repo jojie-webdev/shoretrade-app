@@ -5,7 +5,6 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
 import Search from 'components/module/Search';
