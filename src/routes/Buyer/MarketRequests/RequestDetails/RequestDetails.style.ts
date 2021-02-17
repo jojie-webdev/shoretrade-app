@@ -1,3 +1,4 @@
+import Accordion from 'components/base/Accordion';
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
@@ -19,6 +20,13 @@ export const RequestDetailsContainer = styled.div`
 
 export const RequestDetailsCardContainer = styled(Interactions)``;
 
+export const RequestOffersAccordion = styled(Accordion)``;
+
+export const RequestOfferItemInteraction = styled(Interactions)`
+  margin-bottom: 16px;
+  border-radius: 8px;
+  padding: 12px;
+`;
 export const RequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
@@ -33,7 +41,7 @@ export const HeaderContainer = styled.header`
   padding: 16px;
 `;
 
-export const MarketRequestItemContainer = styled.div`
+export const OffersSellerAccordionContentContainer = styled.div`
   display: flex;
   flex-direction: row;
 
@@ -59,6 +67,61 @@ export const MarketRequestItemContainer = styled.div`
       margin: 0;
       width: fit-content;
     }
+    .ratings-container {
+      display: flex;
+      flex-direction: row;
+      margin-top: 5px;
+      & svg:not(:last-child) {
+        margin-right: 6px;
+      }
+    }
+  }
+`;
+
+export const SellerOfferInteractionContentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  div {
+    margin-bottom: 0.2rem;
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+
+    .weight-price-container {
+      font-size: ${pxToRem(12)};
+      margin: 4px 0px;
+      line-height: 1rem;
+      display: flex;
+      flow-direction: row;
+
+      .weight {
+        margin-right: 1rem;
+      }
+    }
+    .offers-badge {
+      margin: 0;
+      width: fit-content;
+    }
+    .ratings-container {
+      display: flex;
+      flex-direction: row;
+      margin-top: 5px;
+      & svg:not(:last-child) {
+        margin-right: 6px;
+      }
+    }
+  }
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+
+  .offers-state-badge {
+    margin-right: 0.6rem;
   }
 `;
 
@@ -71,7 +134,12 @@ export const LoadingContainer = styled.div`
 `;
 
 export const BadgeText = styled(TypographyView)`
-  font-size: ${pxToRem(12)};
+  font-size: ${pxToRem(11)};
+  text-align: center;
+`;
+
+export const StatusBadgeText = styled(TypographyView)`
+  font-size: ${pxToRem(9)};
   text-align: center;
 `;
 
@@ -81,6 +149,7 @@ export const StyledAlert = styled(Alert)`
 
 export const OffersContainer = styled.div`
   display: flex;
+  flex-direction: column;
 
   .numbers-container {
     margin-bottom: 2rem;
@@ -100,5 +169,19 @@ export const OffersContainer = styled.div`
         color: ${(props) => props.theme.grey.shade6};
       }
     }
+  }
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .filter-search-container {
+    width: 18rem;
+  }
+
+  .filter-sort {
+    width: 8rem;
   }
 `;

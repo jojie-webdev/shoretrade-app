@@ -1,4 +1,4 @@
-import { Dispatch, ChangeEvent } from 'react';
+import { Dispatch, ChangeEvent, SetStateAction } from 'react';
 
 export type RequestDetail = {
   id: string;
@@ -12,4 +12,6 @@ export type RequestDetail = {
 export interface MarketRequestDetailProps {
   data: RequestDetail;
   currentPath: string;
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
 }

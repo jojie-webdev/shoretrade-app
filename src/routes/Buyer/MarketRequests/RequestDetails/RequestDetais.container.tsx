@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -25,6 +25,8 @@ const MarketRequestDetail = (): JSX.Element => {
   const offersTotal = location.state ? location.state.offersTotal : 0;
   const expiry = location.state ? location.state.expiry : '';
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     data: {
@@ -35,6 +37,8 @@ const MarketRequestDetail = (): JSX.Element => {
       offersTotal,
       expiry,
     },
+    searchTerm,
+    setSearchTerm,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
