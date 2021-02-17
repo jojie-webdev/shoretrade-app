@@ -54,7 +54,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   if (creditState === 'empty' || creditState === 'lessThan') {
     return (
       <Alert
-        variant="alert"
+        variant="infoAlert"
         fullWidth
         content={
           <>

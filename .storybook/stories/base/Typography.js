@@ -12,10 +12,13 @@ storiesOf('base/Typography', module).add('Summary', () => (
     <Typography variant="title3">title3</Typography>
     <Typography variant="title4">title4</Typography>
     <Typography variant="title5">title5</Typography>
+    <Typography variant="title6">title6</Typography>
+    <Typography variant="copy">copy</Typography>
     <Typography variant="body">body</Typography>
     <Typography variant="label">label</Typography>
     <Typography variant="caption">caption</Typography>
     <Typography variant="small">small</Typography>
     <Typography variant="overline">overline</Typography>
+    <Typography variant="overlineSmall">overlineSmall</Typography>
   </Container>
 ));

@@ -10,19 +10,29 @@ import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
 import { LandingGeneratedProps } from './Landing.props';
-import { Container, Header, NavInteraction } from './Landing.style';
+import {
+  Container,
+  Header,
+  NavInteraction,
+  NoProfilePic,
+} from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
-    { value: 'Account Completion', path: '' },
+    {
+      value: 'Account Completion',
+      path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    },
     { value: 'Balance & Payments', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
     {
       value: 'Your Details',
-      path:
-        BUYER_ACCOUNT_ROUTES.DETAILS + `?companyId=${props.currentCompany?.id}`,
+      path: BUYER_ACCOUNT_ROUTES.DETAILS,
     },
     { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.ADDRESS },
-    { value: "Products I'm Buying", path: '' },
+    {
+      value: "Products I'm Buying",
+      path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
+    },
     { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
@@ -57,7 +67,9 @@ const LandingView = (props: LandingGeneratedProps) => {
             {profilePicture ? (
               <img src={profilePicture} alt="Profile" />
             ) : (
-              <PlaceholderProfile />
+              <NoProfilePic>
+                <PlaceholderProfile width={96} height={96} />
+              </NoProfilePic>
             )}
             <div className="user-details">
               <Typography variant="overline" color="shade6">

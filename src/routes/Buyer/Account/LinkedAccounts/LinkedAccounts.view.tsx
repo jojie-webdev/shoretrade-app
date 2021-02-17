@@ -1,20 +1,22 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import { CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './LinkedAccounts.props';
 import {
   Container,
-  SmallAlertContainer,
+  InfoContainer,
   AccountName,
-  StyledInteaction,
-  StyledAlert,
+  StyledInteraction,
   TextContainer,
 } from './LinkedAccounts.style';
 
@@ -28,84 +30,83 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Linked Accounts" />
+      <BoxContainer>
+        <div className="breadcrumb-container">
+          <Breadcrumbs
+            sections={[
+              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+              { label: 'Linked Accounts' },
+            ]}
+          />
+        </div>
 
-      {notifMsg && (
-        <StyledAlert content={notifMsg} variant="success" fullWidth />
-      )}
+        {notifMsg && (
+          <Alert
+            content={notifMsg}
+            variant="success"
+            fullWidth
+            style={{ marginBottom: 16 }}
+          />
+        )}
 
-      {!notifMsg && (
-        <SmallAlertContainer>
-          <Typography variant="body" weight="500" color="shade8">
-            {`If you want to give others access to you account, you can add a “linked account”`}
-          </Typography>
-          <Typography
-            variant="body"
-            weight="500"
-            className="text-people"
-            color="shade8"
-          >
-            {`People with linked account…`}
-          </Typography>
-          <TextContainer>
-            <CheckFilled
-              fill={theme.brand.success}
-              height={16.67}
-              width={16.67}
-            />
-            <Typography
-              variant="body"
-              weight="500"
-              className="text"
-              color="shade8"
-            >
-              {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
+        {!notifMsg && (
+          <InfoContainer>
+            <Typography variant="label" color="shade9">
+              {`If you want to give others access to you account, you can add a “linked account”`}
             </Typography>
-          </TextContainer>
-
-          <TextContainer>
-            <CloseFilled
-              fill={theme.brand.error}
-              height={16.67}
-              width={16.67}
-            />
-            <Typography
-              variant="body"
-              weight="500"
-              className="text"
-              color="shade8"
-            >
-              {`Cannot add other linked accounts`}
+            <Typography variant="label" className="text-people" color="shade9">
+              {`People with linked account…`}
             </Typography>
-          </TextContainer>
-        </SmallAlertContainer>
-      )}
-
-      {accounts.map((account) => (
-        <StyledInteaction
-          onClick={() => editAssistant(account.userId)}
-          key={account.userId}
-          leftComponent={
-            <div>
-              <Typography color="shade6" variant="overline">
-                {account.relationship}
+            <TextContainer>
+              <CheckFilled
+                fill={theme.brand.success}
+                height={16.67}
+                width={16.67}
+              />
+              <Typography variant="label" className="text" color="shade9">
+                {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
               </Typography>
-              <AccountName>
-                {account.firstName} {account.lastName}
-              </AccountName>
-              <Typography color="shade5" variant="caption">
-                {account.email}
-              </Typography>
-            </div>
-          }
-        />
-      ))}
+            </TextContainer>
 
-      <Row nogutter>
-        <Col>
-          <Button text="Add assistant" onClick={addAssistant} />
-        </Col>
-      </Row>
+            <TextContainer>
+              <CloseFilled
+                fill={theme.brand.error}
+                height={16.67}
+                width={16.67}
+              />
+              <Typography variant="label" className="text" color="shade9">
+                {`Cannot add other linked accounts`}
+              </Typography>
+            </TextContainer>
+          </InfoContainer>
+        )}
+
+        {accounts.map((account) => (
+          <StyledInteraction
+            onClick={() => editAssistant(account.userId)}
+            key={account.userId}
+            leftComponent={
+              <div>
+                <Typography color="shade5" variant="overlineSmall">
+                  {account.relationship}
+                </Typography>
+                <AccountName>
+                  {account.firstName} {account.lastName}
+                </AccountName>
+                <Typography color="shade6" variant="caption">
+                  {account.email}
+                </Typography>
+              </div>
+            }
+          />
+        ))}
+
+        <Row className="btn-add-account">
+          <Col>
+            <Button text="Add Linked Account" onClick={addAssistant} />
+          </Col>
+        </Row>
+      </BoxContainer>
     </Container>
   );
 };

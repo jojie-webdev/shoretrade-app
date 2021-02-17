@@ -29,7 +29,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     onLoad(categoryId);
   }, []);
 
-  const children = (result: GetListingTypesByCategoryTypeItem) => (
+  const InteractionsChildren = (result: GetListingTypesByCategoryTypeItem) => (
     <>
       <Image src={result.thumbnail} />
       <DetailsContainer>
@@ -104,11 +104,9 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                       className="market-item"
                       key={result.id}
                     >
-                      <Interactions
-                        // eslint-disable-next-line react/no-children-prop
-                        children={children(result)}
-                        isHover
-                      />
+                      <Interactions>
+                        <InteractionsChildren {...result} />
+                      </Interactions>
                     </Link>
                   ))}
                 </Col>

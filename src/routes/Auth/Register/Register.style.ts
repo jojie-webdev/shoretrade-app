@@ -49,7 +49,7 @@ export const TopContainer = styled.div`
   position: sticky;
   top: 0;
   background: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.noshade};
+    theme.appType === 'seller' ? theme.grey.shade8 : 'transparent'};
 `;
 
 export const NextButton = styled(Button)`
@@ -73,17 +73,17 @@ export const Spacer = styled.div`
 `;
 
 export const ColumnWrapper = styled.div`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
 `;
 
 export const FormikContainer = styled(Form)`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -254,17 +254,12 @@ export const CategorySearchInputContainer = styled.div`
 export const InteractionsContainer = styled.div`
   margin-bottom: 8px;
   width: 100%;
-  .interactions {
-    padding: 8px;
-    border-radius: 8px;
-  }
 `;
 
 export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 16px;
 `;
 
 export const BadgeItemContainer = styled.div`
@@ -281,6 +276,10 @@ export const ButtonContainer = styled.div`
 export const SellerSummaryContainer = styled.div`
   margin-top: 24px;
   padding: 8px;
+
+  .interactions {
+    margin-bottom: 8px;
+  }
 `;
 
 export const SelectMarketSelector = styled(Select)``;

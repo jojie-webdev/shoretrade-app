@@ -1,6 +1,7 @@
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
+import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
@@ -35,6 +36,7 @@ import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
+import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
@@ -61,6 +63,7 @@ import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
+import updateMarketInterests from './updateMarketInterests';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -84,6 +87,7 @@ export default (routeHistory: History) =>
         editableListing,
         endListing,
         forgotPassword,
+        getAccountCompletion,
         getAddresses,
         getAllListings,
         getBankDetails,
@@ -101,6 +105,7 @@ export default (routeHistory: History) =>
         getListingTypesByCategory,
         getListingsByType,
         getMarketEstimate,
+        getMarketInterests,
         getPaymentMethods,
         getSellerById,
         getSellerOrdersDelivered,
@@ -128,6 +133,7 @@ export default (routeHistory: History) =>
         updateFavoriteSeller,
         updateFavouriteProduct,
         updateListing,
+        updateMarketInterests,
         updateUser,
         verify,
       }).sort()

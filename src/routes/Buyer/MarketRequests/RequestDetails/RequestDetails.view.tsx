@@ -42,7 +42,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             />
           </div>
         </HeaderContainer>
-        <MarketRequestItem thumbnail= />
       </BoxContainer>
     </RequestDetailsContainer>
   );

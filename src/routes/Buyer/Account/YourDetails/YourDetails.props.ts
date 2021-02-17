@@ -24,5 +24,3 @@ export interface BusinessDetails {
 }
 
 export type UpdateUserForm = UserDetails & BusinessDetails;
-
-export type QueryParams = { companyId: string };

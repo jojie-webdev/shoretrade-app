@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -12,7 +13,7 @@ import { Row, Col } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { YourDetailsGeneratedProps } from './YourDetails.props';
-import { Container, InputRow, StyledAlert } from './YourDetails.style';
+import { Container, InputRow } from './YourDetails.style';
 import { validate } from './YourDetails.validation';
 const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   // const theme = useTheme();
@@ -56,27 +57,29 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             ]}
           />
         </div>
+
         {updateUserSuccess && (
-          <div className="alert-container">
-            <StyledAlert
-              content="Your account details have successfully been updated!"
-              variant="success"
-              alignText="center"
-              fullWidth
-            />
-          </div>
+          <Alert
+            content="Your account details have successfully been updated!"
+            variant="success"
+            alignText="center"
+            fullWidth
+            style={{
+              marginBottom: 16,
+            }}
+          />
         )}
         <Formik {...formikProps}>
           <Form>
             <InputRow>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="First Name" name="firstName" />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Last Name" name="lastName" />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="input-col">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="input-col">
                 <PhoneTextField
                   label="Mobile"
                   name="mobile"
@@ -84,14 +87,14 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
                   setCallingCode={setCallingCode}
                 />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Email" name="email" />
               </Col>
-              <Col lg={4} />
-              <Col md={12} lg={4} className="input-col">
+              <Col xl={4} />
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField label="Business" name="businessName" />
               </Col>
-              <Col md={12} lg={4} className="input-col">
+              <Col md={12} xl={4} className="input-col">
                 <FormikTextField
                   label="Business number (optional)"
                   name="abn"

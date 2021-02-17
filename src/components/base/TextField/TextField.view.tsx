@@ -102,7 +102,14 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         </Error>
       )}
 
-      {alert && <Alert variant="info" content={alert} fullWidth />}
+      {alert && (
+        <Alert
+          variant="infoAlert"
+          content={alert}
+          fullWidth
+          style={{ marginTop: 8 }}
+        />
+      )}
     </Container>
   );
 };

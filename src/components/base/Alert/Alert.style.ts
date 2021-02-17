@@ -5,6 +5,7 @@ import { Variants, AlertContainerProps } from './Alert.props';
 
 const backgroundColor: Record<Variants, string> = {
   info: theme.brand.info,
+  infoAlert: theme.brand.alert,
   alert: theme.brand.alert,
   error: theme.brand.error,
   success: theme.brand.success,
@@ -41,6 +42,7 @@ export const Container = styled.div<AlertContainerProps>`
       margin: 0 18px;
       height: 20px;
       width: 20px;
+      padding-top: 2px;
     }
 
     .text-container {

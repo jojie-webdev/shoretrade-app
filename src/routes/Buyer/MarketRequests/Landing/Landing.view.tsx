@@ -6,14 +6,15 @@ import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography/Typography.view';
+import { HeaderContainer } from 'components/layout/AuthContainer/AuthContainer.style';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -23,7 +24,6 @@ import {
   MarketRequestItemInteraction,
   LoadingContainer,
   StyledAlert,
-  HeaderContainer,
   BadgeText,
 } from './Landing.style';
 

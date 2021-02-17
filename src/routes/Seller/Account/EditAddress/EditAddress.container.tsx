@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
+import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { updateAddressActions } from 'store/actions';
+import { getAddressesActions, updateAddressActions } from 'store/actions';
 import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
 
@@ -20,6 +21,7 @@ const EditAddress = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
+
   const pending = useSelector(
     (state: Store) => state.updateAddress.pending || false
   );
@@ -40,6 +42,7 @@ const EditAddress = (): JSX.Element => {
     : null;
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
   const [isDelete, setIsDelete] = useState(false);
+
   // MARK:- Methods
   const onClickSave = () => {
     if (address) {
@@ -80,6 +83,7 @@ const EditAddress = (): JSX.Element => {
   };
   const toggleIsDefault = () => setIsDefault(!isDefault);
   const toggleisDelete = () => setIsDelete(!isDelete);
+
   // MARK:- Effects
   useEffect(() => {
     const { companyId, addressId } = qs.parse(location.search, {
@@ -93,6 +97,12 @@ const EditAddress = (): JSX.Element => {
     setCompanyId(companyId);
     setAddressId(addressId);
   }, []);
+
+  useEffect(() => {
+    if (isEmpty(addresses) && companyId) {
+      dispatch(getAddressesActions.request({ companyId }));
+    }
+  }, [companyId, addresses]);
 
   useEffect(() => {
     if (currentAddress && isDefault === null) {
@@ -117,6 +127,7 @@ const EditAddress = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: EditAddressGeneratedProps = {
+    companyId,
     type: 'EDIT',
     address: address as PlaceData,
     isDefault,

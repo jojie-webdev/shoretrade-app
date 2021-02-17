@@ -15,6 +15,7 @@ import editableListing from './editableListing';
 import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
+import getAccountCompletion from './getAccountCompletion';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
@@ -30,6 +31,7 @@ import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
+import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerOrders from './getSellerOrders';
@@ -53,6 +55,7 @@ import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
+import updateMarketInterests from './updateMarketInterests';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -72,6 +75,7 @@ const sagas = [
   editableListing,
   endListing,
   forgotPassword,
+  getAccountCompletion,
   getAddresses,
   getAllListings,
   getBankDetails,
@@ -87,6 +91,7 @@ const sagas = [
   getListingTypesByCategory,
   getListingsByType,
   getMarketEstimate,
+  getMarketInterests,
   getPaymentMethods,
   getSellerById,
   getSellerOrders,
@@ -110,6 +115,7 @@ const sagas = [
   updateFavoriteSeller,
   updateFavouriteProduct,
   updateListing,
+  updateMarketInterests,
   updateUser,
   verify,
 ];

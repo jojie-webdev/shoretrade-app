@@ -214,7 +214,7 @@ function Step7({
       <Row>
         <Col>
           <Alert
-            variant="info"
+            variant="infoAlert"
             fullWidth
             content={`Like products sold for: ${priceAlertMessage}`}
             style={{ marginBottom: 16 }}

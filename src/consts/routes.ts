@@ -68,6 +68,9 @@ export const SELLER_ACCOUNT_ROUTES = {
     `${SELLER_ROUTES.ACCOUNT}/assistants/${assitantId}`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
+  ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
+  LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
+  MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
 };
 
 export const BUYER_ROUTES = {
@@ -109,9 +112,10 @@ export const BUYER_ACCOUNT_ROUTES = {
   HELP: `${BUYER_ROUTES.ACCOUNT}/help`,
   ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
-  DELIVERY: `${BUYER_ROUTES.ACCOUNT}/delivery-address`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
   BALANCE_HISTORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
+  ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
+  MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
 };
