@@ -21,6 +21,8 @@ import { MarketRequestDetailProps } from './RequestDetails.prop';
 import {
   RequestDetailsContainer,
   HeaderContainer,
+  RequestDetailsCardContainer,
+  OffersContainer,
 } from './RequestDetails.style';
 
 const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
@@ -42,6 +44,34 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             />
           </div>
         </HeaderContainer>
+        <Row gutterWidth={30}>
+          <Col xl={4}>
+            <RequestDetailsCardContainer type={'none'}>
+              <MarketRequestItem
+                inDetail={true}
+                type={data.type}
+                expiry={data.expiry}
+                offersTotal={data.offersTotal}
+                image={data.image}
+              />
+            </RequestDetailsCardContainer>
+          </Col>
+          <Col xl={8}>
+            <OffersContainer>
+              <div className="numbers-container">
+                <div className="item">
+                  <span className="value">{data.offersTotal} &nbsp;</span>
+                  <span className="label">Offers</span>
+                </div>
+                <span className="divider">,</span>
+                <div className="item">
+                  <span className="value">{data.offersTotal} &nbsp;</span>
+                  <span className="label">Sellers</span>
+                </div>
+              </div>
+            </OffersContainer>
+          </Col>
+        </Row>
       </BoxContainer>
     </RequestDetailsContainer>
   );

@@ -16,6 +16,9 @@ export const RequestDetailsContainer = styled.div`
     flex-direction: row;
   }
 `;
+
+export const RequestDetailsCardContainer = styled(Interactions)``;
+
 export const RequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
@@ -74,4 +77,28 @@ export const BadgeText = styled(TypographyView)`
 
 export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
+`;
+
+export const OffersContainer = styled.div`
+  display: flex;
+
+  .numbers-container {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    font-size: ${pxToRem(12)};
+    font-weight: bold;
+
+    .divider {
+      margin-right: 0.5rem;
+      color: ${(props) => props.theme.grey.shade6};
+    }
+
+    .item {
+      .label {
+        text-transform: uppercase;
+        color: ${(props) => props.theme.grey.shade6};
+      }
+    }
+  }
 `;

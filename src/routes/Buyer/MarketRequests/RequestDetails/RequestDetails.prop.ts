@@ -2,11 +2,11 @@ import { Dispatch, ChangeEvent } from 'react';
 
 export type RequestDetail = {
   id: string;
-  name: string;
+  type: string;
   offersTotal: number;
-  offers: any[];
-  thumbnail: string;
-  timeRemaining: string;
+  image: string;
+  status: string;
+  expiry: string;
 };
 
 export interface MarketRequestDetailProps {

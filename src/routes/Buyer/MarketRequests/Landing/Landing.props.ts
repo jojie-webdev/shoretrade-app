@@ -1,14 +1,16 @@
 import { Dispatch, ChangeEvent } from 'react';
 
-export type Results = {
+export type Result = {
   id: string;
-  name: string;
+  type: string;
   offersTotal: number;
-  thumbnail: string;
-  timeRemaining: string;
+  image: string;
+  expiry: string;
+  offers: any[];
 };
 
 export interface MarketRequestsLandingGeneratedProps {
-  marketRequests: Results[];
+  marketRequests: Result[];
   currentPath: string;
+  onClickItem: (row: any) => void;
 }
