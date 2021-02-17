@@ -28,6 +28,7 @@ export const DeleteBadge = styled.button`
     outline: none;
   }
 `;
+
 export const DeleteText = styled(Typography)`
   margin-left: 4px;
 `;

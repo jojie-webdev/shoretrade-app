@@ -1,6 +1,10 @@
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import {
+  AddSellerLicenseMeta,
+  AddSellerLicensePayload,
+} from 'types/store/AddSellerLicenseState';
+import {
   GetAccountCompletionMeta,
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
@@ -9,9 +13,17 @@ import {
   GetMarketInterestsPayload,
 } from 'types/store/GetMarketInterestsState';
 import {
+  GetSellerLicenseMeta,
+  GetSellerLicensePayload,
+} from 'types/store/GetSellerLicenseState';
+import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
 } from 'types/store/UpdateMarketInterestsState';
+import {
+  UpdateSellerLicenseMeta,
+  UpdateSellerLicensePayload,
+} from 'types/store/UpdateSellerLicenseState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -295,5 +307,11 @@ export interface Store {
   updateMarketInterests: AsyncState<
     UpdateMarketInterestsMeta,
     UpdateMarketInterestsPayload
+  >;
+  getSellerLicense: AsyncState<GetSellerLicenseMeta, GetSellerLicensePayload>;
+  addSellerLicense: AsyncState<AddSellerLicenseMeta, AddSellerLicensePayload>;
+  updateSellerLicense: AsyncState<
+    UpdateSellerLicenseMeta,
+    UpdateSellerLicensePayload
   >;
 }

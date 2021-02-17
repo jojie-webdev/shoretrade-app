@@ -65,3 +65,6 @@ export { default as logRequestActions } from './logRequest';
 export { default as getAccountCompletionActions } from './getAccountCompletion';
 export { default as getMarketInterestsActions } from './getMarketInterests';
 export { default as updateMarketInterestsActions } from './updateMarketInterests';
+export { default as getSellerLicenseActions } from './getSellerLicense';
+export { default as addSellerLicenseActions } from './addSellerLicense';
+export { default as updateSellerLicenseActions } from './updateSellerLicense';
