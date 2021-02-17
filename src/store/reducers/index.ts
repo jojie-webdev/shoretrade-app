@@ -6,6 +6,7 @@ import getAccountCompletion from 'store/reducers/getAccountCompletion';
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
+import addSellerLicense from './addSellerLicense';
 import auth from './auth';
 import cart from './cart';
 import changePassword from './changePassword';
@@ -39,6 +40,7 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
+import getSellerLicense from './getSellerLicense';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -64,6 +66,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -74,6 +77,7 @@ export default (routeHistory: History) =>
         addAddress,
         addCardToken,
         addLinkedAccount,
+        addSellerLicense,
         auth,
         cart,
         changePassword,
@@ -111,6 +115,7 @@ export default (routeHistory: History) =>
         getSellerOrdersDelivered,
         getSellerOrdersPlaced,
         getSellerOrdersTransit,
+        getSellerLicense,
         getShippingQuote,
         getTransactionHistory,
         getUser,
@@ -134,6 +139,7 @@ export default (routeHistory: History) =>
         updateFavouriteProduct,
         updateListing,
         updateMarketInterests,
+        updateSellerLicense,
         updateUser,
         verify,
       }).sort()

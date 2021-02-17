@@ -15,6 +15,7 @@ import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
+import Licenses from './Licenses';
 import MarketInterests from './MarketInterests';
 import ShippingAddresses from './ShippingAddresses';
 import YourDetails from './YourDetails';
@@ -71,6 +72,10 @@ const ROUTES: Routes = {
   MARKET_INTERESTS: {
     path: SELLER_ACCOUNT_ROUTES.MARKET_INTERESTS,
     children: <MarketInterests />,
+  },
+  LICENSES: {
+    path: SELLER_ACCOUNT_ROUTES.LICENSES,
+    children: <Licenses />,
   },
 };
 

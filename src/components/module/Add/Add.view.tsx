@@ -85,7 +85,7 @@ const Add = (props: AddProps): JSX.Element => {
           onChange={handleFileChange}
         />
       )}
-      <Container onClick={handleOnClick}>
+      <Container onClick={handleOnClick} className="add-container">
         <div className="content">
           <div className="svg-container">
             <Svg fill={theme.brand.primary} />
