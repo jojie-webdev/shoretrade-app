@@ -33,7 +33,7 @@ import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
-import MarketRequestsLanding from './MarketRequests/Landing';
+import Market from './MarketRequests/market-requests.routes';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -48,7 +48,7 @@ const ROUTES: Routes = {
   },
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
-    children: <MarketRequestsLanding />,
+    children: <Market />,
     title: 'Market Requests',
     icon: BoltIcon,
     nested: true,
@@ -207,9 +207,10 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname === '/buyer/market-requests') {
+    if (pathname.includes('/buyer/market-requests')) {
       return {
         pageTitle: 'Market Requests',
+        onBack: history.goBack,
       };
     }
     return {};

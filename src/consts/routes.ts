@@ -87,6 +87,8 @@ export const BUYER_ROUTES = {
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
   MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
+  MARKET_REQUEST_DETAILS: (id = ':id') =>
+    `${BUYER_ROOT}/market-requests/details/${id}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,

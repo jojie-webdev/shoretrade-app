@@ -10,8 +10,10 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
+import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -25,7 +27,7 @@ import {
   BadgeText,
 } from './Landing.style';
 
-const MarketRequestItem = (props: {
+export const MarketRequestItem = (props: {
   timeRemaining: string;
   offersTotal: number;
   name: string;
@@ -76,13 +78,14 @@ const MarketRequestItem = (props: {
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
 ) => {
+  const history = useHistory();
   const { marketRequests } = props;
 
   return (
     <MarketRequestsContainer>
       <BoxContainer>
         <HeaderContainer>
-          <div>My Request</div>
+          <div>My Requests</div>
           <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
         </HeaderContainer>
         <StyledAlert
@@ -94,6 +97,9 @@ const MarketRequestsLandingView = (
         {marketRequests.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
+            onClick={() => {
+              history.push(`${BUYER_ROUTES.MARKET_REQUEST_DETAILS(mr.id)}`);
+            }}
             leftComponent={
               <MarketRequestItem
                 thumbnail={mr.thumbnail}
