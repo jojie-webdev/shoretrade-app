@@ -14,14 +14,13 @@ import {
   Weight,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
-import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -162,71 +161,77 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             </RequestDetailsCardContainer>
           </Col>
           <Col xl={8}>
-            <OffersContainer>
-              {/* NUMBERS CONTAINER START */}
-              <div className="numbers-container">
-                <div className="item">
-                  <span className="value">{data.offersTotal} &nbsp;</span>
-                  <span className="label">Offers</span>
-                </div>
-                <span className="divider">,</span>
-                <div className="item">
-                  <span className="value">{data.offersTotal} &nbsp;</span>
-                  <span className="label">Sellers</span>
-                </div>
-              </div>
-              {/* NUMBERS CONTAINER END */}
-              <FilterContainer>
-                <div className="filter-search-container">
-                  <Search
-                    className="filter-search"
-                    value={props.searchTerm}
-                    onChange={(event: any) =>
-                      props.setSearchTerm(event.currentTarget.value)
-                    }
-                    resetValue={() => props.setSearchTerm('')}
-                    placeholder="Search for an offer..."
-                    rounded
-                  />
-                </div>
-                <div>
-                  <Select
-                    className="filter-sort"
-                    grey
-                    options={[]}
-                    placeholder="Sort"
-                  />
-                </div>
-              </FilterContainer>
-              <div>
-                <RequestOffersAccordion
-                  title="Manila"
-                  noBg={false}
-                  leftComponent={
-                    <OffersSellerAccordionContent
-                      image={'http://placekitten.com/64/64'}
-                      sellerLocation="Manila"
-                      sellerName="Manny Pacquiao"
-                      sellerRating="4"
-                      sellerId="001"
-                    />
-                  }
-                  iconColor={theme.brand.primary}
-                >
-                  <RequestOfferItemInteraction
-                    leftComponent={
-                      <SellerOfferInteractionContent
-                        price={100}
-                        status="Negotiation"
-                        weight="180"
-                        tags={['Fresh', 'Frozen']}
-                        weightUnit="kg"
+            <Switch>
+              <Route
+                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFERS(data.id)}`}
+              >
+                <OffersContainer>
+                  {/* NUMBERS CONTAINER START */}
+                  <div className="numbers-container">
+                    <div className="item">
+                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="label">Offers</span>
+                    </div>
+                    <span className="divider">,</span>
+                    <div className="item">
+                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="label">Sellers</span>
+                    </div>
+                  </div>
+                  {/* NUMBERS CONTAINER END */}
+                  <FilterContainer>
+                    <div className="filter-search-container">
+                      <Search
+                        className="filter-search"
+                        value={props.searchTerm}
+                        onChange={(event: any) =>
+                          props.setSearchTerm(event.currentTarget.value)
+                        }
+                        resetValue={() => props.setSearchTerm('')}
+                        placeholder="Search for an offer..."
+                        rounded
                       />
-                    }
-                  />
-                </RequestOffersAccordion>
-              </div>
-            </OffersContainer>
+                    </div>
+                    <div>
+                      <Select
+                        className="filter-sort"
+                        grey
+                        options={[]}
+                        placeholder="Sort"
+                      />
+                    </div>
+                  </FilterContainer>
+                  <div>
+                    <RequestOffersAccordion
+                      title="Manila"
+                      noBg={false}
+                      leftComponent={
+                        <OffersSellerAccordionContent
+                          image={'http://placekitten.com/64/64'}
+                          sellerLocation="Manila"
+                          sellerName="Manny Pacquiao"
+                          sellerRating="4"
+                          sellerId="001"
+                        />
+                      }
+                      iconColor={theme.brand.primary}
+                    >
+                      <RequestOfferItemInteraction
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                    </RequestOffersAccordion>
+                  </div>
+                </OffersContainer>
+              </Route>
+            </Switch>
           </Col>
         </Row>
       </BoxContainer>

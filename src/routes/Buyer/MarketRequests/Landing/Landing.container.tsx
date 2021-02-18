@@ -46,7 +46,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   const history = useHistory();
 
   const onClickItem = (row: any) => {
-    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS(row.id), {
+    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFERS(row.id), {
       type: row.type,
       image: row.image,
       status: row.status,

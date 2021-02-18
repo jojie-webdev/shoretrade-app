@@ -15,6 +15,11 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.MARKET_REQUEST_DETAILS(),
     children: <MarketRequestDetail />,
   },
+  // MARKET_REQUEST_DETAILS_OFFERS: {
+  //   path: BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFERS(),
+  //   children: <MarketRequestDetail />,
+  //   nested: true,
+  // },
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,
@@ -28,7 +33,7 @@ const MarketRequestsRoute = (): JSX.Element => {
     <>
       <Switch>
         {ROUTES_ARRAY.map((r) => (
-          <Route key={r.path} path={`${r.path}`} exact>
+          <Route key={r.path} path={`${r.path}`}>
             {r.children}
           </Route>
         ))}

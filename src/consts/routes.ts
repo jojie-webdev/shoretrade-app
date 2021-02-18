@@ -92,6 +92,8 @@ export const BUYER_ROUTES = {
   MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
   MARKET_REQUEST_DETAILS: (id = ':id') =>
     `${BUYER_ROOT}/market-requests/details/${id}`,
+  MARKET_REQUEST_DETAILS_OFFERS: (id = ':id') =>
+    `${BUYER_ROOT}/market-requests/details/offers/${id}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
