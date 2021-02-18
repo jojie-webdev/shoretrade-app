@@ -34,7 +34,6 @@ export const MarketRequestItem = (props: {
   inDetail: boolean;
 }) => {
   const { inDetail, expiry, offersTotal, type, image } = props;
-
   const offersText = `${offersTotal} Offers`;
 
   const offers = () => {
@@ -66,13 +65,13 @@ export const MarketRequestItem = (props: {
       </div>
       <div className="info-container">
         <TypographyView variant="body">{type}</TypographyView>
-        {props.expiry === 'Expired' ? (
+        {expiry === 'Expired' ? (
           <TypographyView
             style={{ fontStyle: 'italic' }}
             color="error"
             className="time"
           >
-            Expired
+            {expiry}
           </TypographyView>
         ) : (
           <TypographyView color="shade6" className="time">

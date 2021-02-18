@@ -1,6 +1,7 @@
 import Accordion from 'components/base/Accordion';
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
+import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -9,7 +10,6 @@ export const RequestDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 16px;
 
   .cards {
     display: flex;
@@ -71,6 +71,13 @@ export const OffersSellerAccordionContentContainer = styled.div`
       display: flex;
       flex-direction: row;
       margin-top: 5px;
+      align-items: baseline;
+
+      .value {
+        font-size: ${pxToRem(12)};
+        margin-right: ${pxToRem(5)};
+      }
+
       & svg:not(:last-child) {
         margin-right: 6px;
       }
@@ -145,6 +152,42 @@ export const StatusBadgeText = styled(TypographyView)`
 
 export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
+`;
+
+export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
+  flex: 1;
+  margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
+`;
+
+export const OfferContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04) !important;
+
+  .offer-badges {
+    margin-bottom: 24px;
+  }
+
+  .sizes-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .footer {
+    border-top: 1px solid;
+    padding-top: 10px;
+    border-color: ${(props) => props.theme.grey.shade3};
+    margin-top: 52px;
+
+    .total-value-container {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 `;
 
 export const OffersContainer = styled.div`

@@ -24,6 +24,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
+import OfferDetailView from './OfferDetail/OfferDetail.view';
 import { MarketRequestDetailProps } from './RequestDetails.prop';
 import {
   RequestDetailsCardContainer,
@@ -40,7 +41,7 @@ import {
   SellerOfferInteractionContentContainer,
 } from './RequestDetails.style';
 
-const OffersSellerAccordionContent = (props: {
+export const OffersSellerAccordionContent = (props: {
   sellerId: string;
   sellerName: string;
   sellerLocation: string;
@@ -48,6 +49,8 @@ const OffersSellerAccordionContent = (props: {
   image: string;
 }) => {
   const { sellerId, sellerName, sellerLocation, sellerRating, image } = props;
+  const starHeight = 12;
+  const starWidth = 12;
 
   return (
     <OffersSellerAccordionContentContainer>
@@ -62,9 +65,16 @@ const OffersSellerAccordionContent = (props: {
           </TypographyView>
         </div>
         <div className="ratings-container">
-          {[...Array(5).keys()].map((r) =>
-            Number(sellerRating || 0) > r ? <StarFilled /> : <Star />
-          )}
+          <span className="value">{sellerRating}</span>
+          <div>
+            {[...Array(5).keys()].map((r) =>
+              Number(sellerRating || 0) > r ? (
+                <StarFilled width={starWidth} height={starHeight} />
+              ) : (
+                <Star width={starWidth} height={starHeight} />
+              )
+            )}
+          </div>
         </div>
       </div>
     </OffersSellerAccordionContentContainer>
@@ -130,22 +140,14 @@ const SellerOfferInteractionContent = (props: {
 };
 
 const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
-  const { data } = props;
+  const { data, onClickItem, breadCrumbSections } = props;
 
   return (
     <RequestDetailsContainer>
       <BoxContainer>
         <HeaderContainer>
           <div>
-            <Breadcrumbs
-              sections={[
-                { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
-                {
-                  label: 'Request Details',
-                  link: BUYER_ROUTES.MARKET_REQUEST_DETAILS(),
-                },
-              ]}
-            />
+            <Breadcrumbs sections={breadCrumbSections} />
           </div>
         </HeaderContainer>
         <Row gutterWidth={30}>
@@ -163,7 +165,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <Col xl={8}>
             <Switch>
               <Route
-                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFERS(data.id)}`}
+                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
+                  data.id
+                )}`}
               >
                 <OffersContainer>
                   {/* NUMBERS CONTAINER START */}
@@ -217,6 +221,82 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       iconColor={theme.brand.primary}
                     >
                       <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                      <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                      <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                    </RequestOffersAccordion>
+                    <RequestOffersAccordion
+                      title="Manila"
+                      noBg={false}
+                      leftComponent={
+                        <OffersSellerAccordionContent
+                          image={'http://placekitten.com/64/64'}
+                          sellerLocation="Manila"
+                          sellerName="Manny Pacquiao"
+                          sellerRating="4"
+                          sellerId="001"
+                        />
+                      }
+                      iconColor={theme.brand.primary}
+                    >
+                      <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                      <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            price={100}
+                            status="Negotiation"
+                            weight="180"
+                            tags={['Fresh', 'Frozen']}
+                            weightUnit="kg"
+                          />
+                        }
+                      />
+                      <RequestOfferItemInteraction
+                        onClick={() => onClickItem({ id: '001' })}
                         leftComponent={
                           <SellerOfferInteractionContent
                             price={100}
@@ -230,6 +310,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </RequestOffersAccordion>
                   </div>
                 </OffersContainer>
+              </Route>
+              <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(data.id)}>
+                <OfferDetailView />
               </Route>
             </Switch>
           </Col>

@@ -9,9 +9,35 @@ export type RequestDetail = {
   expiry: string;
 };
 
+export enum MarketRequestOfferTip {
+  Negotiation = 'Negotiation',
+  GreatValue = 'Great Value',
+  AboveMarket = 'Above Market',
+}
+
+export interface MarketRequestOffer {
+  sellerId: string;
+  sellerRating: string;
+  sellerName: string;
+  id: string; //offerid
+  status: string;
+  specs: string[];
+  price: {
+    value: number;
+    currency: string;
+  };
+  weight: {
+    unit: string;
+    value: number;
+  };
+  tip: MarketRequestOfferTip;
+}
+
 export interface MarketRequestDetailProps {
   data: RequestDetail;
   currentPath: string;
   searchTerm: string;
+  breadCrumbSections: any[];
   setSearchTerm: Dispatch<SetStateAction<string>>;
+  onClickItem: (row: any) => void;
 }
