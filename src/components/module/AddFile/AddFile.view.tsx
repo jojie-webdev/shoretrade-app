@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FileCheck, Subtract } from 'components/base/SVG';
+import { FileUpload, Subtract } from 'components/base/SVG';
 import Add from 'components/module/Add';
 import isEmpty from 'ramda/es/isEmpty';
 import { useTheme } from 'utils/Theme';
@@ -35,7 +35,7 @@ const AddFile = (props: AddFileProps): JSX.Element => {
       </PreviewContainer>
     );
   }
-  return <Add onClickFile={onSelectFile} title="Add a File" Svg={FileCheck} />;
+  return <Add onClickFile={onSelectFile} title="Add a File" Svg={FileUpload} />;
 };
 
 export default React.memo(AddFile);

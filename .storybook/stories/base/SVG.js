@@ -4,7 +4,11 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+<<<<<<< HEAD
   Weight,
+=======
+  FileUpload,
+>>>>>>> 817025425ee67070509ec6ac2a6d19645c458e61
   Bolt,
   BuyerRestaurantBar,
   BuyerHotel,
@@ -156,8 +160,13 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background='white'>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+<<<<<<< HEAD
         <Wrapper label="Weight">
           <Weight width={30} height={30} />
+=======
+        <Wrapper label="FileUpload">
+          <FileUpload width={30} height={30} />
+>>>>>>> 817025425ee67070509ec6ac2a6d19645c458e61
         </Wrapper>
         <Wrapper label="Bolt">
           <Bolt width={30} height={30} />

@@ -3,6 +3,7 @@ import { fork, all } from 'redux-saga/effects';
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
+import addSellerLicense from './addSellerLicense';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
@@ -34,6 +35,7 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
+import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
 import getTransactionHistory from './getTransactionHistory';
@@ -56,6 +58,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import verify from './verify';
 
@@ -63,6 +66,7 @@ const sagas = [
   addAddress,
   addCardToken,
   addLinkedAccount,
+  addSellerLicense,
   changePassword,
   chargeCard,
   confirmWeight,
@@ -94,6 +98,7 @@ const sagas = [
   getMarketInterests,
   getPaymentMethods,
   getSellerById,
+  getSellerLicense,
   getSellerOrders,
   getShippingQuote,
   getTransactionHistory,
@@ -116,6 +121,7 @@ const sagas = [
   updateFavouriteProduct,
   updateListing,
   updateMarketInterests,
+  updateSellerLicense,
   updateUser,
   verify,
 ];
