@@ -38,6 +38,8 @@ export interface MarketRequestDetailProps {
   currentPath: string;
   searchTerm: string;
   breadCrumbSections: any[];
+  negotiating: boolean;
+  setNegotiating: Dispatch<SetStateAction<boolean>>;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   onClickItem: (row: any) => void;
 }

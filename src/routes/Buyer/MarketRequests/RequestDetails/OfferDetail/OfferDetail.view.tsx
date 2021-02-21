@@ -17,7 +17,7 @@ import {
 } from './OfferDetail.style';
 
 const OfferDetailView = (props: any) => {
-  const { specs } = props;
+  const { specs, handleStartNegotiotiate } = props;
   const theme = useTheme();
 
   const OfferBadges = (props: { items: string[]; label: string }) => {
@@ -102,7 +102,12 @@ const OfferDetailView = (props: any) => {
         </div>
       </OfferDetailsContainer>
       <OfferActionsContainer>
-        <Button className="button" variant="outline" text="Negotiate" />
+        <Button
+          onClick={() => handleStartNegotiotiate()}
+          className="button"
+          variant="outline"
+          text="Negotiate"
+        />
         <Button className="button" variant="primary" text="Accept" />
       </OfferActionsContainer>
     </>

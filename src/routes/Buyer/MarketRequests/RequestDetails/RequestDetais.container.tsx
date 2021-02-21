@@ -68,6 +68,7 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections = offerBreadCrumb;
   }
   const [searchTerm, setSearchTerm] = useState('');
+  const [negotiating, setNegotiating] = useState(false);
 
   const onClickItem = (row: any) => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(row.id), {
@@ -92,6 +93,8 @@ const MarketRequestDetail = (): JSX.Element => {
       expiry,
     },
     searchTerm,
+    negotiating,
+    setNegotiating,
     setSearchTerm,
     onClickItem,
     breadCrumbSections,

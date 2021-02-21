@@ -16,6 +16,7 @@ import {
 import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
+import NegotiateModalView from 'components/module/NegotiateModal';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
@@ -71,8 +72,8 @@ export const OffersSellerAccordionContent = (props: {
               Number(sellerRating || 0) > r ? (
                 <StarFilled width={starWidth} height={starHeight} />
               ) : (
-                <Star width={starWidth} height={starHeight} />
-              )
+                  <Star width={starWidth} height={starHeight} />
+                )
             )}
           </div>
         </div>
@@ -131,8 +132,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -140,10 +141,31 @@ const SellerOfferInteractionContent = (props: {
 };
 
 const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
-  const { data, onClickItem, breadCrumbSections } = props;
+  const {
+    data,
+    onClickItem,
+    breadCrumbSections,
+    negotiating,
+    setNegotiating,
+  } = props;
+
+  const handleStartNegotiotiate = () => {
+    setNegotiating(true);
+  };
 
   return (
     <RequestDetailsContainer>
+      <NegotiateModalView
+        onSubmit={() => console.log('submit')}
+        offerId={'1'}
+        originalOffer={50}
+        negotiationId={'0'}
+        weight={{ unit: 'kg', value: 100 }}
+        isOpen={negotiating}
+        onClickClose={() => {
+          setNegotiating(false);
+        }}
+      />
       <BoxContainer>
         <HeaderContainer>
           <div>
@@ -312,7 +334,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 </OffersContainer>
               </Route>
               <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(data.id)}>
-                <OfferDetailView />
+                <OfferDetailView
+                  handleStartNegotiotiate={handleStartNegotiotiate}
+                />
               </Route>
             </Switch>
           </Col>
