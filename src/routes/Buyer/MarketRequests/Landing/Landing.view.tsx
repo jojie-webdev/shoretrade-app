@@ -98,7 +98,12 @@ const MarketRequestsLandingView = (
             <Typography>My Requests</Typography>
           </Col>
           <Col xs="content">
-            <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
+            <Button
+              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+              text="CREATE MARKET REQUEST"
+              variant="primary"
+              size="md"
+            />
           </Col>
         </Row>
         <StyledAlert

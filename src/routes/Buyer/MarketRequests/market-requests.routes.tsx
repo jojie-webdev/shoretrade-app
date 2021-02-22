@@ -5,6 +5,7 @@ import { BUYER_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+import CreateRequest from './Create/Create.container';
 import MarketRequestsLanding from './Landing';
 import MarketRequestDetail from './RequestDetails';
 // import CategoriesPreview from './Preview';
@@ -20,6 +21,10 @@ const ROUTES: Routes = {
   //   children: <MarketRequestDetail />,
   //   nested: true,
   // },
+  CREATE_REQUEST: {
+    path: BUYER_ROUTES.CREATE_MARKET_REQUEST,
+    children: <CreateRequest />,
+  },
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,

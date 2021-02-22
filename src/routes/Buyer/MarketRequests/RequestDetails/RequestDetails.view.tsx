@@ -72,8 +72,8 @@ export const OffersSellerAccordionContent = (props: {
               Number(sellerRating || 0) > r ? (
                 <StarFilled width={starWidth} height={starHeight} />
               ) : (
-                  <Star width={starWidth} height={starHeight} />
-                )
+                <Star width={starWidth} height={starHeight} />
+              )
             )}
           </div>
         </div>
