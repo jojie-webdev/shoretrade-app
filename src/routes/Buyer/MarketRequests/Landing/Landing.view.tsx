@@ -11,8 +11,9 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
+import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -25,49 +26,59 @@ import {
   BadgeText,
 } from './Landing.style';
 
-const MarketRequestItem = (props: {
-  timeRemaining: string;
+export const MarketRequestItem = (props: {
+  expiry: string;
   offersTotal: number;
-  name: string;
-  thumbnail: string;
+  type: string;
+  image: string;
+  inDetail: boolean;
 }) => {
-  const { timeRemaining, offersTotal, name, thumbnail } = props;
-
+  const { inDetail, expiry, offersTotal, type, image } = props;
   const offersText = `${offersTotal} Offers`;
+
+  const offers = () => {
+    if (inDetail) return '';
+
+    if (offersTotal >= 12) {
+      return (
+        <Badge className="offers-badge" badgeColor={theme.brand.success}>
+          <BadgeText color="shade1" weight="bold" variant="overline">
+            {offersText}
+          </BadgeText>
+        </Badge>
+      );
+    } else {
+      return (
+        <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
+          <BadgeText color="shade8" weight="bold" variant="overline">
+            {offersText}
+          </BadgeText>
+        </Badge>
+      );
+    }
+  };
 
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
-        <img src={thumbnail} />
+        <img src={image} />
       </div>
       <div className="info-container">
-        <TypographyView variant="body">{name}</TypographyView>
-        {props.timeRemaining === '0' ? (
+        <TypographyView variant="body">{type}</TypographyView>
+        {expiry === 'Expired' ? (
           <TypographyView
             style={{ fontStyle: 'italic' }}
             color="error"
             className="time"
           >
-            Expired
+            {expiry}
           </TypographyView>
         ) : (
           <TypographyView color="shade6" className="time">
-            {timeRemaining}
+            {expiry}
           </TypographyView>
         )}
-        {props.offersTotal >= 12 ? (
-          <Badge className="offers-badge" badgeColor={theme.brand.success}>
-            <BadgeText color="shade1" weight="bold" variant="overline">
-              {offersText}
-            </BadgeText>
-          </Badge>
-        ) : (
-          <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-            <BadgeText color="shade8" weight="bold" variant="overline">
-              {offersText}
-            </BadgeText>
-          </Badge>
-        )}
+        {offers()}
       </div>
     </MarketRequestItemContainer>
   );
@@ -76,17 +87,23 @@ const MarketRequestItem = (props: {
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
 ) => {
-  const { marketRequests } = props;
+  const history = useHistory();
+  const { marketRequests, onClickItem } = props;
 
   return (
     <MarketRequestsContainer>
       <BoxContainer>
-        <Row nogutter justify="between" align="center" className="header">
+        <Row nogutter justify="around" align="center" className="header">
           <Col>
             <Typography>My Requests</Typography>
           </Col>
           <Col xs="content">
-            <Button text="CREATE MARKET REQUEST" variant="primary" size="md" />
+            <Button
+              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+              text="CREATE MARKET REQUEST"
+              variant="primary"
+              size="md"
+            />
           </Col>
         </Row>
         <StyledAlert
@@ -98,12 +115,14 @@ const MarketRequestsLandingView = (
         {marketRequests.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
+            onClick={() => onClickItem(mr)}
             leftComponent={
               <MarketRequestItem
-                thumbnail={mr.thumbnail}
+                inDetail={false}
+                image={mr.image}
                 offersTotal={mr.offersTotal}
-                timeRemaining={mr.timeRemaining}
-                name={mr.name}
+                expiry={mr.expiry}
+                type={mr.type}
               />
             }
           />

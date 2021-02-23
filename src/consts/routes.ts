@@ -90,6 +90,13 @@ export const BUYER_ROUTES = {
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
   MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
+  MARKET_REQUEST_DETAILS: (id = ':id') =>
+    `${BUYER_ROOT}/market-requests/details/${id}`,
+  CREATE_MARKET_REQUEST: `${BUYER_ROOT}/market-requests/create`,
+  MARKET_REQUEST_DETAILS_OFFER_LIST: (id = ':id') =>
+    `${BUYER_ROOT}/market-requests/details/offers/${id}`,
+  MARKET_REQUEST_DETAILS_OFFER: (id = ':id') =>
+    `${BUYER_ROOT}/market-requests/details/offer/${id}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,

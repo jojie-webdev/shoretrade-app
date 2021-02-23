@@ -5,16 +5,29 @@ import { BUYER_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+import CreateRequest from './Create/Create.container';
 import MarketRequestsLanding from './Landing';
+import MarketRequestDetail from './RequestDetails';
 // import CategoriesPreview from './Preview';
 // import CategoriesSearch from './Search';
 
 const ROUTES: Routes = {
+  MARKET_REQUEST_DETAILS: {
+    path: BUYER_ROUTES.MARKET_REQUEST_DETAILS(),
+    children: <MarketRequestDetail />,
+  },
+  // MARKET_REQUEST_DETAILS_OFFERS: {
+  //   path: BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFERS(),
+  //   children: <MarketRequestDetail />,
+  //   nested: true,
+  // },
+  CREATE_REQUEST: {
+    path: BUYER_ROUTES.CREATE_MARKET_REQUEST,
+    children: <CreateRequest />,
+  },
   MARKET_REQUESTS: {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <MarketRequestsLanding />,
-    title: 'Market Requests',
-    icon: BoltIcon,
   },
 };
 
@@ -25,7 +38,7 @@ const MarketRequestsRoute = (): JSX.Element => {
     <>
       <Switch>
         {ROUTES_ARRAY.map((r) => (
-          <Route key={r.path} path={`${r.path}`} exact>
+          <Route key={r.path} path={`${r.path}`}>
             {r.children}
           </Route>
         ))}

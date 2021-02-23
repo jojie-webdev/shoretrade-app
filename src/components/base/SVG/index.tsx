@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Weight } from './Weight';
 export { default as FileUpload } from './FileUpload';
 export { default as Bolt } from './Bolt';
 export { default as Wetshop } from './Wetshop';
