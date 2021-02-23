@@ -18,7 +18,9 @@ export const RequestDetailsContainer = styled.div`
   }
 `;
 
-export const RequestDetailsCardContainer = styled(Interactions)``;
+export const RequestDetailsCardContainer = styled(Interactions)`
+  margin-bottom: 1rem;
+`;
 
 export const RequestOffersAccordion = styled(Accordion)`
   background-color: ${({ theme }) => theme.grey.shade3};

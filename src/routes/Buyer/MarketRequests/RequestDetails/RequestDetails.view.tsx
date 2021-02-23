@@ -72,8 +72,8 @@ export const OffersSellerAccordionContent = (props: {
               Number(sellerRating || 0) > r ? (
                 <StarFilled width={starWidth} height={starHeight} />
               ) : (
-                <Star width={starWidth} height={starHeight} />
-              )
+                  <Star width={starWidth} height={starHeight} />
+                )
             )}
           </div>
         </div>
@@ -132,8 +132,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -173,7 +173,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           </div>
         </HeaderContainer>
         <Row gutterWidth={30}>
-          <Col xl={4}>
+          <Col md={12} sm={12} xl={4}>
             <RequestDetailsCardContainer type={'none'}>
               <MarketRequestItem
                 inDetail={true}
@@ -184,7 +184,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               />
             </RequestDetailsCardContainer>
           </Col>
-          <Col xl={8}>
+          <Col md={12} sm={12} xl={8}>
             <Switch>
               <Route
                 path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
