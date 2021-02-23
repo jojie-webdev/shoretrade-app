@@ -132,8 +132,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -230,7 +230,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   <div>
                     <RequestOffersAccordion
                       title="Manila"
-                      noBg={false}
+                      noBg={true}
+                      padding={'16px'}
+                      withBackground={false}
+                      background={theme.grey.shade1}
+                      marginBottom={'12px'}
                       leftComponent={
                         <OffersSellerAccordionContent
                           image={'http://placekitten.com/64/64'}
@@ -281,7 +285,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </RequestOffersAccordion>
                     <RequestOffersAccordion
                       title="Manila"
-                      noBg={false}
+                      padding={'16px'}
+                      noBg={true}
+                      withBackground={false}
+                      marginBottom={'12px'}
+                      background={theme.grey.shade1}
                       leftComponent={
                         <OffersSellerAccordionContent
                           image={'http://placekitten.com/64/64'}

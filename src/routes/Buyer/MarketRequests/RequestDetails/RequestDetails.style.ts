@@ -20,7 +20,9 @@ export const RequestDetailsContainer = styled.div`
 
 export const RequestDetailsCardContainer = styled(Interactions)``;
 
-export const RequestOffersAccordion = styled(Accordion)``;
+export const RequestOffersAccordion = styled(Accordion)`
+  background-color: ${({ theme }) => theme.grey.shade3};
+`;
 
 export const RequestOfferItemInteraction = styled(Interactions)`
   margin-bottom: 16px;

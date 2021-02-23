@@ -13,6 +13,7 @@ const Accordion = ({
   marginBottom = '0px',
   innerContentPadding,
   rightComponent,
+  background,
   leftComponent,
   keepIcon,
   ...props
@@ -23,6 +24,7 @@ const Accordion = ({
       withBackground={props.withBackground}
       isOpen={isOpen}
       marginBottom={marginBottom}
+      background={background}
     >
       <Interactions
         pressed={isOpen}
