@@ -78,6 +78,8 @@ export const OffersSellerAccordionContentContainer = styled.div`
       align-items: baseline;
 
       .value {
+        display: inline-block;
+        height: 16px;
         font-size: ${pxToRem(12)};
         margin-right: ${pxToRem(5)};
       }

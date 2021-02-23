@@ -50,8 +50,8 @@ export const OffersSellerAccordionContent = (props: {
   image: string;
 }) => {
   const { sellerId, sellerName, sellerLocation, sellerRating, image } = props;
-  const starHeight = 12;
-  const starWidth = 12;
+  const starHeight = 16;
+  const starWidth = 16;
 
   return (
     <OffersSellerAccordionContentContainer>
@@ -70,10 +70,18 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {[...Array(5).keys()].map((r) =>
               Number(sellerRating || 0) > r ? (
-                <StarFilled width={starWidth} height={starHeight} />
+                <StarFilled
+                  fill={theme.brand.alert}
+                  width={starWidth}
+                  height={starHeight}
+                />
               ) : (
-                  <Star width={starWidth} height={starHeight} />
-                )
+                <Star
+                  fill={theme.brand.alert}
+                  width={starWidth}
+                  height={starHeight}
+                />
+              )
             )}
           </div>
         </div>
@@ -132,8 +140,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
