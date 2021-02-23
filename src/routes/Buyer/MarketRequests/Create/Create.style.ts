@@ -31,6 +31,12 @@ export const CreateRequestHeaderContainer = styled.div`
   }
 `;
 
+export const ContainerWithCategoryImagePreview = styled.div`
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const HeroImageContainer = styled.div`
   width: ${pxToRem(300)};
   height: ${pxToRem(300)};
