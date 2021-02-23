@@ -1,4 +1,4 @@
-import { Dispatch, ChangeEvent, SetStateAction } from 'react';
+import { Dispatch, ChangeEvent, SetStateAction, ReactNode } from 'react';
 
 export interface CreateRequestStep {
   current: number;
@@ -7,6 +7,12 @@ export interface CreateRequestStep {
 
 export interface CreateRequestGeneratedProps {
   step: CreateRequestStep;
+  setStep: Dispatch<SetStateAction<number>>;
   termsAgreement: boolean;
   setTermsAgreement: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface CreateStepProps {
+  stepCountComponent?: ReactNode;
+  step: CreateRequestStep;
 }

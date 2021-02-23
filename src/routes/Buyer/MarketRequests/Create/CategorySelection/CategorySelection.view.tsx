@@ -12,28 +12,14 @@ import { Row, Col, Container } from 'react-grid-system';
 import { useHistory, Link } from 'react-router-dom';
 import theme from 'utils/Theme';
 
+import { CreateStepProps } from '../Create.props';
 import { CreateRequestHeaderContainer } from '../Create.style';
 
-const CategorySelectionView = (props: {
-  step: {
-    total: number;
-    current: number;
-  };
-}) => {
-  const { step } = props;
+const CategorySelectionView = (props: CreateStepProps) => {
+  const { step, stepCountComponent } = props;
   const history = useHistory();
 
-  return (
-    <>
-      <BoxContainer>
-        <CreateRequestHeaderContainer>
-          <TypographyView>
-            Step {step.current}/{step.total}
-          </TypographyView>
-        </CreateRequestHeaderContainer>
-      </BoxContainer>
-    </>
-  );
+  return <>{stepCountComponent}</>;
 };
 
 export default CategorySelectionView;

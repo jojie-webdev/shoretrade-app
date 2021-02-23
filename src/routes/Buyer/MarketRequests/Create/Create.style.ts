@@ -4,6 +4,16 @@ import TypographyView from 'components/base/Typography';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
+export const ProgressBar = styled.div<{
+  progress: number;
+}>`
+  border: ${({ theme }) => `2px solid ${theme.brand.success}`};
+  width: ${(props) => (props.progress ? `${props.progress}%` : '0px')};
+  position: absolute;
+  top: 2px;
+  left: 0;
+`;
+
 export const CreateRequestContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,11 +21,7 @@ export const CreateRequestContainer = styled.div`
   padding-bottom: 16px;
 `;
 
-export const CreateRequestHeaderContainer = styled.div`
-  .step {
-    color: ${(props) => props.theme.grey.shade5};
-  }
-`;
+export const CreateRequestHeaderContainer = styled.div``;
 
 export const HeroImageContainer = styled.div`
   width: ${pxToRem(300)};

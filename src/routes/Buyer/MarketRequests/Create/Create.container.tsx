@@ -33,6 +33,7 @@ const CreateRequest = (): JSX.Element => {
       total: 5,
       current: currentStep,
     },
+    setStep: setCurrentStep,
     setTermsAgreement,
   };
 

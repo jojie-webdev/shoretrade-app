@@ -22,12 +22,14 @@ import {
   TextAgreenmentContainer,
   MainAgreementContainer,
   HeroRightContainer,
+  ProgressBar,
+  CreateRequestHeaderContainer,
 } from './Create.style';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const history = useHistory();
 
-  const { step, termsAgreement, setTermsAgreement } = props;
+  const { step, termsAgreement, setTermsAgreement, setStep } = props;
   const [checkAgree, setCheckAgree] = useState(false);
 
   const handleCheck = (v: any) => {
@@ -36,6 +38,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
 
   const handleGetStarted = () => {
     setTermsAgreement(true);
+    setStep(1);
   };
 
   if (!termsAgreement) {
@@ -84,10 +87,25 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     );
   }
 
+  const StepCountComponent = (props: { step: CreateRequestStep }) => {
+    return (
+      <CreateRequestHeaderContainer>
+        <TypographyView>
+          Step {step.current}/{step.total}
+        </TypographyView>
+      </CreateRequestHeaderContainer>
+    );
+  };
+
   const StepView = (props: { step: CreateRequestStep }) => {
     switch (step.current) {
       case 1:
-        return <CategorySelectionView step={step} />;
+        return (
+          <CategorySelectionView
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
 
       default:
         return <CategorySelectionView step={step} />;
@@ -95,9 +113,12 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   };
 
   return (
-    <BoxContainer>
-      <StepView step={step} />
-    </BoxContainer>
+    <>
+      <BoxContainer>
+        <ProgressBar progress={(step.current / step.total) * 100} />
+        <StepView step={step} />
+      </BoxContainer>
+    </>
   );
 };
 
