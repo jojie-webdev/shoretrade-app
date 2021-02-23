@@ -45,7 +45,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
       backgroundColor="#fff"
       style={{
         width: '',
-        padding: '',
+        padding: '48px',
       }}
       {...modalProps}
     >
@@ -111,8 +111,8 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
                 {Math.abs(discountValue)}/{'kg'}
               </Typography>
             ) : (
-              <Typography>0</Typography>
-            )}
+                <Typography>0</Typography>
+              )}
           </div>
           <div className="computation-item-container">
             <Typography variant="label">Original offer was</Typography>
