@@ -9,6 +9,7 @@ export interface AccordionProps {
   padding?: string;
   marginBottom?: string;
   background?: string;
+  border?: string;
   innerContentPadding?: string;
   withBackground?: boolean;
   rightComponent?: ReactNode;

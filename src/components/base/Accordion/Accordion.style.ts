@@ -5,12 +5,13 @@ export const Container = styled.div<{
   withBackground?: boolean;
   marginBottom: string;
   background?: string;
+  border?: string;
 }>`
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   margin-bottom: ${(props) => props.marginBottom};
-  border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+  border: ${(props) => (props.border ? props.border : 'none')};
   background: ${(props) => (props.background ? props.background : 'none')};
   .interactions {
     box-shadow: ${({ withBackground }) => withBackground && 'none'};

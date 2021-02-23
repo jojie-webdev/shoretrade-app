@@ -66,7 +66,9 @@ export const OffersSellerAccordionContent = (props: {
           </TypographyView>
         </div>
         <div className="ratings-container">
-          <span className="value">{sellerRating}</span>
+          <div>
+            <span className="value">{sellerRating}</span>
+          </div>
           <div>
             {[...Array(5).keys()].map((r) =>
               Number(sellerRating || 0) > r ? (
@@ -76,12 +78,12 @@ export const OffersSellerAccordionContent = (props: {
                   height={starHeight}
                 />
               ) : (
-                <Star
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              )
+                  <Star
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
+                )
             )}
           </div>
         </div>
@@ -140,8 +142,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -241,6 +243,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       noBg={true}
                       padding={'16px'}
                       withBackground={false}
+                      border={`1px solid ${theme.grey.shade3}`}
                       background={theme.grey.shade1}
                       marginBottom={'12px'}
                       leftComponent={
@@ -296,6 +299,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       padding={'16px'}
                       noBg={true}
                       withBackground={false}
+                      border={`1px solid ${theme.grey.shade3}`}
                       marginBottom={'12px'}
                       background={theme.grey.shade1}
                       leftComponent={
@@ -303,7 +307,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                           image={'http://placekitten.com/64/64'}
                           sellerLocation="Manila"
                           sellerName="Manny Pacquiao"
-                          sellerRating="4"
+                          sellerRating="4.5"
                           sellerId="001"
                         />
                       }
