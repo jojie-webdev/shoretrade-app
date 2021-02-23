@@ -25,11 +25,23 @@ import {
   ProgressBar,
   CreateRequestHeaderContainer,
 } from './Create.style';
+import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const history = useHistory();
 
-  const { step, termsAgreement, setTermsAgreement, setStep } = props;
+  const {
+    step,
+    termsAgreement,
+    setTermsAgreement,
+    setStep,
+    searchTerm,
+    setSearchTerm,
+    categories,
+    onBack,
+    selectedCategory,
+    setSelectedCategory,
+  } = props;
   const [checkAgree, setCheckAgree] = useState(false);
 
   const handleCheck = (v: any) => {
@@ -89,11 +101,13 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
 
   const StepCountComponent = (props: { step: CreateRequestStep }) => {
     return (
-      <CreateRequestHeaderContainer>
-        <TypographyView>
-          Step {step.current}/{step.total}
-        </TypographyView>
-      </CreateRequestHeaderContainer>
+      <TypographyView
+        style={{ marginBottom: 6 }}
+        variant="overline"
+        color="shade6"
+      >
+        Step {step.current}/{step.total}
+      </TypographyView>
     );
   };
 
@@ -102,13 +116,38 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 1:
         return (
           <CategorySelectionView
+            onBack={onBack}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
+
+      case 2:
+        return (
+          <SelectSpecificationsView
+            selectedCategory={selectedCategory}
+            onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
           />
         );
 
       default:
-        return <CategorySelectionView step={step} />;
+        return (
+          <CategorySelectionView
+            onBack={onBack}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
     }
   };
 

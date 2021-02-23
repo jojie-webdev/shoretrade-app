@@ -21,7 +21,15 @@ export const CreateRequestContainer = styled.div`
   padding-bottom: 16px;
 `;
 
-export const CreateRequestHeaderContainer = styled.div``;
+export const CreateRequestHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  .title-container {
+    display: flex;
+    flex-direction: row;
+  }
+`;
 
 export const HeroImageContainer = styled.div`
   width: ${pxToRem(300)};

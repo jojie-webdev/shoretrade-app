@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,11 @@ const CreateRequest = (): JSX.Element => {
 
   const [termsAgreement, setTermsAgreement] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [categorySearchTerm, setCategorySearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState({
+    id: '',
+    name: '',
+  });
 
   const onClickItem = (row: any) => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id), {
@@ -27,14 +32,33 @@ const CreateRequest = (): JSX.Element => {
     });
   };
 
+  const onBack = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  useEffect(() => {
+    setCurrentStep(2);
+  }, [selectedCategory]);
+
   const generatedProps: CreateRequestGeneratedProps = {
     termsAgreement,
+    onBack,
     step: {
       total: 5,
       current: currentStep,
     },
+    categories: [
+      { id: '001', name: 'Baby Octopus' },
+      { id: '002', name: 'Maori Octopus' },
+      { id: '003', name: 'Octopus Hands' },
+      { id: '004', name: 'Octopus Legs' },
+    ],
     setStep: setCurrentStep,
     setTermsAgreement,
+    searchTerm: categorySearchTerm,
+    setSearchTerm: setCategorySearchTerm,
+    selectedCategory,
+    setSelectedCategory,
   };
 
   return <CreateRequestLandingView {...generatedProps} />;
