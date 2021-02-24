@@ -9,7 +9,12 @@ import {
   CheckBorder,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import {
+  SELLER_ROUTES,
+  SELLER_ACCOUNT_ROUTES,
+  BUYER_ROUTES,
+  ADD_PRODUCT_ROUTES,
+} from 'consts';
 import {
   Route,
   Switch,
@@ -126,10 +131,18 @@ const SellerRoutes = (): JSX.Element => {
     }
 
     if (pathname.includes(SELLER_ROUTES.ADD_PRODUCT)) {
+      if (pathname.includes('/bulk-upload-preview')) {
+        return {
+          pageTitle: 'Bulk Spreadsheet Upload',
+          shouldIncludePadding: false,
+        };
+      }
+
       return {
         shouldIncludePadding: false,
       };
     }
+
     return {};
   };
 
