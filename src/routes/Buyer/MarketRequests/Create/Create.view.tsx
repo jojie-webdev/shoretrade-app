@@ -28,6 +28,7 @@ import {
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
+import SummaryView from './Summary/Summary.view';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const history = useHistory();
@@ -41,7 +42,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     setSearchTerm,
     categories,
     onBack,
+    selectedQuantity,
     selectedCategory,
+    selectedSize,
+    selectedSpecifications,
     setSelectedCategory,
     setSelectedQuantity,
     setSelectedSize,
@@ -158,6 +162,19 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           <SelectQuantityView
             setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}
+            onBack={onBack}
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
+
+      case 5:
+        return (
+          <SummaryView
+            selectedSize={selectedSize}
+            selectedCategory={selectedCategory}
+            selectedSpecifications={selectedSpecifications}
+            selectedQuantity={selectedQuantity}
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}

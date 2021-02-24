@@ -56,6 +56,9 @@ const CreateRequest = (): JSX.Element => {
   }, [selectedQuantity]);
 
   const generatedProps: CreateRequestGeneratedProps = {
+    selectedSpecifications,
+    selectedSize,
+    selectedQuantity,
     termsAgreement,
     setSelectedQuantity,
     setSelectedSize,
