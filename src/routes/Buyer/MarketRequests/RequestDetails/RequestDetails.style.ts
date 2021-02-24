@@ -3,6 +3,7 @@ import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -225,12 +226,34 @@ export const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 
   .filter-search-container {
     width: 18rem;
   }
 
-  .filter-sort {
+  .filter-sort-container {
     width: 8rem;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    .filter-search-container {
+      width: 100%;
+    }
+
+    .filter-sort-container {
+      width: 76%;
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .filter-search-container {
+      width: 100%;
+    }
+
+    .filter-sort-container {
+      width: 100%;
+    }
   }
 `;

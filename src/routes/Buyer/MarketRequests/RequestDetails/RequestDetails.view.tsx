@@ -78,12 +78,12 @@ export const OffersSellerAccordionContent = (props: {
                   height={starHeight}
                 />
               ) : (
-                <Star
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              )
+                  <Star
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
+                )
             )}
           </div>
         </div>
@@ -142,8 +142,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -228,7 +228,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         rounded
                       />
                     </div>
-                    <div>
+                    <div className="filter-sort-container">
                       <Select
                         className="filter-sort"
                         grey

@@ -26,10 +26,28 @@ export const CreateRequestContainer = styled.div`
 export const CreateRequestHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   .title-container {
     display: flex;
     flex-direction: row;
+    margin-bottom: 1rem;
+  }
+
+  .search-container {
+    width: 308px;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    .search-container {
+      width: 100%;
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .search-container {
+      width: 100%;
+    }
   }
 `;
 
@@ -37,6 +55,7 @@ export const ContainerWithCategoryImagePreview = styled.div`
   margin-top: 40px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const HeroImageContainer = styled.div`

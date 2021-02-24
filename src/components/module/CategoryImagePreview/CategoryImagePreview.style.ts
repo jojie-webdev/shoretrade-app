@@ -3,7 +3,8 @@ import styled from 'utils/styled';
 const imgUrl = (url: string) => `"${url}"`;
 
 export const Container = styled.div<{ img: string }>`
-  width: 474px;
+  max-width: 474px;
+  margin-bottom: 1rem;
 
   .imgContainer {
     position: relative;
@@ -16,7 +17,7 @@ export const Container = styled.div<{ img: string }>`
     background-position: 50% 50%;
     display: block;
     border: 0;
-    width: 474px;
+    width: 100%;
     height: 280px;
     border-radius: 8px;
   }

@@ -43,11 +43,13 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
   return (
     <>
       <CreateRequestHeaderContainer>
-        <div className="">
+        <div>
           {stepCountComponent}
-          <TypographyView variant="title4">Choose Category</TypographyView>
+          <div className="title-container">
+            <TypographyView variant="title4">Choose Category</TypographyView>
+          </div>
         </div>
-        <div style={{ maxWidth: '308px' }}>
+        <div className="search-container">
           <Search
             value={searchTerm}
             onChange={(event: any) => setSearchTerm(event.currentTarget.value)}

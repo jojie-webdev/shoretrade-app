@@ -7,7 +7,6 @@ import { pxToRem } from 'utils/Theme';
 export const SizeFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
   min-width: 280px;
 
   .submit-btn {

@@ -8,8 +8,8 @@ import { pxToRem } from 'utils/Theme';
 export const QuantityFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
   min-width: 280px;
+  height: 240px;
 
   .submit-btn {
     margin-top: 1rem;
