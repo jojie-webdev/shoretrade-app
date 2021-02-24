@@ -25,6 +25,8 @@ import {
   ProgressBar,
   CreateRequestHeaderContainer,
 } from './Create.style';
+import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
+import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
@@ -41,6 +43,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     onBack,
     selectedCategory,
     setSelectedCategory,
+    setSelectedQuantity,
+    setSelectedSize,
+    setSelectedSpecifications,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
 
@@ -129,6 +134,29 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 2:
         return (
           <SelectSpecificationsView
+            setSelectedSpecifications={setSelectedSpecifications}
+            selectedCategory={selectedCategory}
+            onBack={onBack}
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
+
+      case 3:
+        return (
+          <SelectSizeView
+            setSelectedSize={setSelectedSize}
+            selectedCategory={selectedCategory}
+            onBack={onBack}
+            step={step}
+            stepCountComponent={<StepCountComponent step={step} />}
+          />
+        );
+
+      case 4:
+        return (
+          <SelectQuantityView
+            setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}
             onBack={onBack}
             step={step}

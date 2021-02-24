@@ -16,6 +16,9 @@ const CreateRequest = (): JSX.Element => {
   const [termsAgreement, setTermsAgreement] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [categorySearchTerm, setCategorySearchTerm] = useState('');
+  const [selectedSpecifications, setSelectedSpecifications] = useState([null]);
+  const [selectedQuantity, setSelectedQuantity] = useState({ from: 0, to: 0 });
+  const [selectedSize, setSelectedSize] = useState([null]);
   const [selectedCategory, setSelectedCategory] = useState({
     id: '',
     name: '',
@@ -40,8 +43,23 @@ const CreateRequest = (): JSX.Element => {
     setCurrentStep(2);
   }, [selectedCategory]);
 
+  useEffect(() => {
+    setCurrentStep(3);
+  }, [selectedSpecifications]);
+
+  useEffect(() => {
+    setCurrentStep(4);
+  }, [selectedSize]);
+
+  useEffect(() => {
+    setCurrentStep(5);
+  }, [selectedQuantity]);
+
   const generatedProps: CreateRequestGeneratedProps = {
     termsAgreement,
+    setSelectedQuantity,
+    setSelectedSize,
+    setSelectedSpecifications,
     onBack,
     step: {
       total: 5,
