@@ -21,7 +21,7 @@ import {
   HeroImageContainer,
   TextAgreenmentContainer,
   MainAgreementContainer,
-  HeroRightContainer,
+  HeroContainer,
   ProgressBar,
   CreateRequestHeaderContainer,
 } from './Create.style';
@@ -67,17 +67,26 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       <BoxContainer>
         <MainAgreementContainer>
           <TextAgreenmentContainer>
-            <TypographyView variant="title4">Market Request</TypographyView>
-            <TypographyView
-              className="text-content"
-              variant="body"
-              color="shade5"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consectetur iure, laudantium doloremque ducimus aliquid enim, quam
-              labore omnis deleniti itaque, cupiditate quia molestias error
-              obcaecati accusamus ab earum laboriosam autem.
-            </TypographyView>
+            <div>
+              <TypographyView variant="title4">Market Request</TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Consectetur iure, laudantium doloremque ducimus aliquid enim,
+                quam labore omnis deleniti itaque, cupiditate quia molestias
+                error obcaecati accusamus ab earum laboriosam autem.
+              </TypographyView>
+            </div>
+            <HeroContainer>
+              <HeroImageContainer>
+                <Crab />
+              </HeroImageContainer>
+            </HeroContainer>
+          </TextAgreenmentContainer>
+          <div>
             <div className="checkbox">
               <Checkbox
                 onClick={(v: any) => handleCheck(v)}
@@ -89,6 +98,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               </Typography>
             </div>
             <Button
+              takeFullWidth
               className="btn-get-started"
               disabled={!checkAgree}
               variant="primary"
@@ -97,12 +107,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 handleGetStarted();
               }}
             />
-          </TextAgreenmentContainer>
-          <HeroRightContainer>
-            <HeroImageContainer>
-              <Crab width={310} height={310} />
-            </HeroImageContainer>
-          </HeroRightContainer>
+          </div>
         </MainAgreementContainer>
       </BoxContainer>
     );

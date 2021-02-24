@@ -1,6 +1,7 @@
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -17,6 +18,7 @@ export const ProgressBar = styled.div<{
 export const CreateRequestContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   height: 100%;
   padding-bottom: 16px;
 `;
@@ -44,45 +46,85 @@ export const HeroImageContainer = styled.div`
   border-radius: 50%;
   margin: 0 auto;
 
+  @media ${BREAKPOINTS['md']} {
+    width: ${pxToRem(180)};
+    height: ${pxToRem(180)};
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: ${pxToRem(180)};
+    height: ${pxToRem(180)};
+  }
+
   .image {
     height: ${pxToRem(306)};
     width: ${pxToRem(306)};
+
+    @media ${BREAKPOINTS['md']} {
+      width: ${pxToRem(186)};
+      height: ${pxToRem(180)};
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      width: ${pxToRem(186)};
+      height: ${pxToRem(186)};
+    }
   }
 `;
 
 export const MainAgreementContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const TextAgreenmentContainer = styled.div`
-  display: flex;
   flex-direction: column;
-
-  .text-content {
-    max-width: 24rem;
-  }
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   .checkbox {
     display: flex;
     flex-direction: row;
+    flex: 0 1 auto;
 
-    margin-top: 12rem;
+    margin-top: 8rem;
     width: 16rem;
 
     .label {
       margin-left: 0.6rem;
     }
   }
-
   .btn-get-started {
+    max-width: 325px;
     margin-top: 1rem;
   }
 `;
 
-export const HeroRightContainer = styled.div`
+export const TextAgreenmentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .text-content {
+    max-width: 24rem;
+    margin-bottom: 1rem;
+
+    @media ${BREAKPOINTS['md']} {
+      max-width: 80%;
+      text-align: justify;
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      max-width: 100%;
+      text-align: justify;
+    }
+  }
+`;
+
+export const HeroContainer = styled.div`
   width: 380px;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+    text-align: justify;
+  }
 `;
 
 export const CheckBoxContainer = styled.div`
