@@ -172,7 +172,7 @@ const RoutesComponent = (): JSX.Element => {
     if (isAuthenticated) {
       // On authenticated, fetch user.
       dispatch(getUserActions.request());
-      // Redirects
+      // Redirects;
       if (
         authenticatedUserType === 'seller' &&
         (UNAUTHENTICATED_SELLER_ROUTES.some((r) => currentPath.includes(r)) ||

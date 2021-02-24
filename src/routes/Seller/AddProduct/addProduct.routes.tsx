@@ -5,7 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 // Screens
 import AddProduct from './AddProduct.container';
-import Preview from './Preview/Preview.container';
+import BulkUploadPreview from './BulkUploadPreview';
+import Preview from './Preview';
 
 const ROUTES = {
   LANDING: {
@@ -15,6 +16,10 @@ const ROUTES = {
   PREVIEW: {
     path: ADD_PRODUCT_ROUTES.PREVIEW,
     children: Preview,
+  },
+  BULK_UPLOAD_PREVIEW: {
+    path: ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW,
+    children: BulkUploadPreview,
   },
 };
 

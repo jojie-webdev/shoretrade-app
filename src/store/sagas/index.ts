@@ -7,6 +7,7 @@ import addSellerLicense from './addSellerLicense';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
+import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -60,6 +61,7 @@ import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
+import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 const sagas = [
@@ -70,6 +72,7 @@ const sagas = [
   changePassword,
   chargeCard,
   confirmWeight,
+  createBulkListing,
   createCustomListing,
   createListing,
   currentAddress,
@@ -116,6 +119,7 @@ const sagas = [
   sendMessage,
   updateAddress,
   updateBankDetails,
+  uploadBulk,
   updateDefaultCard,
   updateFavoriteSeller,
   updateFavouriteProduct,

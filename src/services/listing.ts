@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API } from 'consts';
 import qs from 'qs';
 import omit from 'ramda/es/omit';
+import { CreateBulkListingRequestData } from 'types/store/CreateBulkListingState';
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
 import { CreateListingRequestData } from 'types/store/CreateListingState';
 import { EndListingMeta } from 'types/store/EndListingState';
@@ -12,12 +13,9 @@ import { GetListingsByTypeRequestData } from 'types/store/GetListingsByTypeState
 import { GetListingMeta } from 'types/store/GetListingState';
 import { GetListingTypesByCategoryRequestData } from 'types/store/GetListingTypesByCategoryState';
 import { GetMarketEstimateMeta } from 'types/store/GetMarketEstimateState';
-import {
-  GetShippingQuoteMeta,
-  GetShippingQuoteRequestData,
-} from 'types/store/GetShippingQuoteState';
-import { UpdateFavouriteProductMeta } from 'types/store/UpdateFavouriteProductState';
+import { GetShippingQuoteRequestData } from 'types/store/GetShippingQuoteState';
 import { UpdateListingRequestData } from 'types/store/UpdateListingState';
+import { UploadBulkMeta } from 'types/store/UploadBulkState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const LISTING_URL = `${BASE_URL}/listing`;
@@ -213,5 +211,30 @@ export const getInactiveTypesByCategory = (id: string) => {
   return axios({
     method: 'get',
     url: `${LISTING_URL}/types-by-category/${id}?inactive=true`,
+  });
+};
+
+export const uploadBulkListingCSV = (data: UploadBulkMeta, token: string) => {
+  return axios({
+    method: 'post',
+    url: `${LISTING_URL}/bulk-upload`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data,
+  });
+};
+
+export const createBulkListing = (
+  data: CreateBulkListingRequestData[],
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${LISTING_URL}/bulk-create-listings`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data,
   });
 };

@@ -47,6 +47,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     discardChanges,
     preview,
     marketEstimate,
+    onUploadCSV,
+    isUploadingCSV,
   } = props;
 
   const currentStep = () => {
@@ -57,6 +59,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           <Step1
             accountOptions={accountOptions}
             onSelectAccount={onSelectAccount}
+            onUploadCSV={onUploadCSV}
+            isUploadingCSV={isUploadingCSV}
           />
         );
       case 2:

@@ -12,6 +12,7 @@ import cart from './cart';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
+import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -68,6 +69,7 @@ import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
+import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 export default (routeHistory: History) =>
@@ -83,6 +85,7 @@ export default (routeHistory: History) =>
         changePassword,
         chargeCard,
         confirmWeight,
+        createBulkListing,
         createCustomListing,
         createListing,
         currentAddress,
@@ -141,6 +144,7 @@ export default (routeHistory: History) =>
         updateMarketInterests,
         updateSellerLicense,
         updateUser,
+        uploadBulk,
         verify,
       }).sort()
     )

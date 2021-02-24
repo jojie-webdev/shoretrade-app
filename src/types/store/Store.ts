@@ -5,6 +5,10 @@ import {
   AddSellerLicensePayload,
 } from 'types/store/AddSellerLicenseState';
 import {
+  CreateBulkListingMeta,
+  CreateBulkListingPayload,
+} from 'types/store/CreateBulkListingState';
+import {
   GetAccountCompletionMeta,
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
@@ -24,6 +28,7 @@ import {
   UpdateSellerLicenseMeta,
   UpdateSellerLicensePayload,
 } from 'types/store/UpdateSellerLicenseState';
+import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -313,5 +318,10 @@ export interface Store {
   updateSellerLicense: AsyncState<
     UpdateSellerLicenseMeta,
     UpdateSellerLicensePayload
+  >;
+  uploadBulk: AsyncState<UploadBulkMeta, UploadBulkPayload>;
+  createBulkListing: AsyncState<
+    CreateBulkListingMeta,
+    CreateBulkListingPayload
   >;
 }
