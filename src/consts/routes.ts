@@ -25,6 +25,7 @@ export const SELLER_ROUTES = {
   MARKET_PRICES: `${SELLER_ROOT}/market-prices`,
   SELLING: `${SELLER_ROOT}/selling`,
   SOLD: `${SELLER_ROOT}/sold`,
+  MARKET_BOARD: `${SELLER_ROOT}/market-board`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
