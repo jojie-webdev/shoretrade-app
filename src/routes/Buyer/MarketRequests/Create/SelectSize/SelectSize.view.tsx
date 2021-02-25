@@ -20,22 +20,22 @@ import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
 } from '../Create.style';
-import { SpecificationFormContainer } from './SelectSpecification.style';
-import { SelectSpecificationProps } from './SelectSpecifications.props';
+import { SelectSizeProps } from './SelectSize.props';
+import { SizeFormContainer } from './SelectSize.style';
 
-const SelectSpecificationsView = (props: SelectSpecificationProps) => {
+const SelectSizeView = (props: SelectSizeProps) => {
   const {
     step,
     stepCountComponent,
     onBack,
     selectedCategory,
-    setSelectedSpecifications,
+    setSelectedSize,
   } = props;
   const history = useHistory();
 
-  const handleSelectSpecs = () => {
+  const handleSubmit = () => {
     // MOCK
-    setSelectedSpecifications(['Frozen']);
+    setSelectedSize(['Medium']);
   };
 
   return (
@@ -50,9 +50,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">
-              Select Specifications
-            </TypographyView>
+            <TypographyView variant="title4">Select Size</TypographyView>
           </div>
         </div>
       </CreateRequestHeaderContainer>
@@ -61,32 +59,26 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           categoryName={selectedCategory.name}
           imgSrc="http://placekitten.com/474/280"
           caption="Aliquip ullamco dolore amet sunt ullamco. 
-        Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-        Sint ea nulla velit mollit amet sint ea."
+  Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
+  Sint ea nulla velit mollit amet sint ea."
         />
-        <SpecificationFormContainer>
-          <div className="spec-row">
-            <Checkbox label="Fresh"></Checkbox>
-            <Checkbox label="Frozen"></Checkbox>
-            <Checkbox label="Third Option"></Checkbox>
-          </div>
-          <div className="spec-row">
-            <Checkbox label="Whole"></Checkbox>
-            <Checkbox label="Cleaned"></Checkbox>
-          </div>
-          <div className="spec-row">
-            <Checkbox label="Tenderized"></Checkbox>
-            <Checkbox label="Not Tenderized"></Checkbox>
-          </div>
+        <SizeFormContainer>
+          <Checkbox label="Baby"></Checkbox>
+          <Checkbox label="Small"></Checkbox>
+          <Checkbox label="Medium"></Checkbox>
+          <Checkbox label="Large"></Checkbox>
+          <Checkbox label="Giant"></Checkbox>
+
           <Button
-            onClick={() => handleSelectSpecs()}
-            text="Select Specification"
+            onClick={() => handleSubmit()}
+            className="submit-btn"
+            text="Select Size"
             variant="primary"
           />
-        </SpecificationFormContainer>
+        </SizeFormContainer>
       </ContainerWithCategoryImagePreview>
     </>
   );
 };
 
-export default SelectSpecificationsView;
+export default SelectSizeView;

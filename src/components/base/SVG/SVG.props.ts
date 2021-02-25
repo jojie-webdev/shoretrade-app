@@ -4,4 +4,5 @@ export type SVGProps = {
   height?: number;
   stroke?: string;
   sizeMultiplier?: number;
+  fullSize?: boolean;
 };

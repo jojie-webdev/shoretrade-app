@@ -3,6 +3,7 @@ import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -74,7 +75,6 @@ export const OffersSellerAccordionContentContainer = styled.div`
     .ratings-container {
       display: flex;
       flex-direction: row;
-      margin-top: 5px;
       align-items: baseline;
 
       .value {
@@ -109,10 +109,16 @@ export const SellerOfferInteractionContentContainer = styled.div`
       margin: 4px 0px;
       line-height: 1rem;
       display: flex;
-      flow-direction: row;
 
-      .weight {
+      .weight-price {
+        display: flex;
+        align-items: center;
         margin-right: 1rem;
+      }
+
+      .weight-price > svg {
+        margin-right: 4px;
+        padding-bottom: 1px;
       }
     }
     .offers-badge {
@@ -122,7 +128,6 @@ export const SellerOfferInteractionContentContainer = styled.div`
     .ratings-container {
       display: flex;
       flex-direction: row;
-      margin-top: 5px;
       & svg:not(:last-child) {
         margin-right: 6px;
       }
@@ -225,12 +230,34 @@ export const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 
   .filter-search-container {
     width: 18rem;
   }
 
-  .filter-sort {
+  .filter-sort-container {
     width: 8rem;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    .filter-search-container {
+      width: 100%;
+    }
+
+    .filter-sort-container {
+      width: 76%;
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .filter-search-container {
+      width: 100%;
+    }
+
+    .filter-sort-container {
+      width: 100%;
+    }
   }
 `;
