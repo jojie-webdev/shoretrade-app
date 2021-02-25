@@ -59,9 +59,11 @@ export const OffersSellerAccordionContent = (props: {
         <img src={image} />
       </div>
       <div className="info-container">
-        <TypographyView variant="body">{sellerName}</TypographyView>
+        <TypographyView variant="copy" color="shade8">
+          {sellerName}
+        </TypographyView>
         <div className="location-container">
-          <TypographyView color={'shade5'} variant="overline">
+          <TypographyView color={'shade5'} variant="overlineSmall">
             {sellerLocation}
           </TypographyView>
         </div>
@@ -78,12 +80,12 @@ export const OffersSellerAccordionContent = (props: {
                   height={starHeight}
                 />
               ) : (
-                  <Star
-                    fill={theme.brand.alert}
-                    width={starWidth}
-                    height={starHeight}
-                  />
-                )
+                <Star
+                  fill={theme.brand.alert}
+                  width={starWidth}
+                  height={starHeight}
+                />
+              )
             )}
           </div>
         </div>
@@ -129,11 +131,15 @@ const SellerOfferInteractionContent = (props: {
           </Badge>
         </div>
         <div className="weight-price-container">
-          <div className="weight">
-            <Weight fill={theme.grey.shade5} /> {weight} {weightUnit}
+          <div className="weight-price">
+            <Weight fill={theme.grey.shade5} />
+            <TypographyView variant="label">
+              {weight} {weightUnit}
+            </TypographyView>
           </div>
-          <div className="price">
-            <DollarSign fill={theme.grey.shade5} /> {price}
+          <div className="weight-price">
+            <DollarSign fill={theme.grey.shade5} />
+            <TypographyView variant="label">{price}</TypographyView>
           </div>
         </div>
         <div className="tags">
@@ -142,8 +148,8 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-              ''
-            )}
+            ''
+          )}
         </div>
       </div>
     </SellerOfferInteractionContentContainer>
@@ -228,7 +234,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         rounded
                       />
                     </div>
-                    <div>
+                    <div className="filter-sort-container">
                       <Select
                         className="filter-sort"
                         grey

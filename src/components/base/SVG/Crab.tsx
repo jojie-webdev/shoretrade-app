@@ -6,14 +6,14 @@ import { SVGProps } from './SVG.props';
 
 const Crab = (props: SVGProps): JSX.Element => {
   const theme = useTheme();
-  const { width, height, fill } = props;
+  const { width, height, fill, fullSize } = props;
 
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (
     <svg
-      width={width || '246'}
-      height={height || '246'}
+      width={fullSize ? '' : width}
+      height={fullSize ? '' : height}
       viewBox="0 0 246 246"
       fill={fill || 'none'}
       xmlns="http://www.w3.org/2000/svg"
