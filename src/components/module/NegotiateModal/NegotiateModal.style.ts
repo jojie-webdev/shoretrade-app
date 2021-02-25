@@ -23,7 +23,7 @@ export const CheckBoxContainer = styled.div`
   align-items: flex-start;
 
   .label {
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `;
 
@@ -32,8 +32,10 @@ export const ComputationContainer = styled.div`
   flex-direction: column;
   padding-top: 0.6rem;
   border-top: 1px solid;
-  margin-bottom: 1rem;
-  border-color: ${(props) => props.theme.grey.shade3};
+  margin-bottom: 24px;
+  border-color: ${({ theme }) =>
+    theme.appType === 'buyer' ? theme.grey.shade3 : theme.grey.shade7};
+
   .computation-item-container {
     display: flex;
     flex-direction: row;
@@ -43,10 +45,6 @@ export const ComputationContainer = styled.div`
       .indicator {
         font-weight: bold;
       }
-    }
-
-    .value {
-      font-size: 14px;
     }
   }
 `;

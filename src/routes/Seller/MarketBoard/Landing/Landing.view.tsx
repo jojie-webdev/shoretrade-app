@@ -7,7 +7,9 @@ import { ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import Search from 'components/module/Search';
+import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { Col, Row } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
@@ -15,6 +17,7 @@ import { Container } from './Landing.style';
 
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
 
   return (
     <Container>
@@ -45,6 +48,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         [...new Array(5)].map((v, i) => (
           <Interactions
             key={i}
+            onClick={() =>
+              history.push(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST)
+            }
             leftComponent={
               <div className="left-component">
                 <img src="https://picsum.photos/200/300" />
@@ -90,6 +96,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         [...new Array(5)].map((v, i) => (
           <Interactions
             key={i}
+            onClick={() => history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE)}
             leftComponent={
               <div className="left-component">
                 <img src="https://picsum.photos/200/300" />

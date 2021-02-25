@@ -10,12 +10,7 @@ import {
   Bolt,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import {
-  SELLER_ROUTES,
-  SELLER_ACCOUNT_ROUTES,
-  BUYER_ROUTES,
-  ADD_PRODUCT_ROUTES,
-} from 'consts';
+import { SELLER_ROUTES } from 'consts';
 import {
   Route,
   Switch,
@@ -31,7 +26,7 @@ import { useTheme } from 'utils/Theme';
 import SellerAccountRoutes from './Account/account.routes';
 import AddProduct from './AddProduct/addProduct.routes';
 import DashboardRoutes from './Dashboard/dashboard.routes';
-import MarketBoard from './MarketBoard/market-board.routes';
+import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
 import Selling from './Selling/selling.routes';
@@ -79,7 +74,7 @@ const ROUTES: Routes = {
   MARKET_BOARD: {
     path: SELLER_ROUTES.MARKET_BOARD,
     title: 'Market Board',
-    children: <MarketBoard />,
+    children: <MarketBoardRoutes />,
     icon: Bolt,
     nested: true,
   },
@@ -92,7 +87,7 @@ const ROUTES: Routes = {
     nested: true,
   },
   ACCOUNT: {
-    path: SELLER_ACCOUNT_ROUTES.LANDING,
+    path: SELLER_ROUTES.ACCOUNT,
     title: 'Account',
     children: <SellerAccountRoutes />,
     icon: AccountSVG,

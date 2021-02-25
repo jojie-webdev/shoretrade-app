@@ -4,7 +4,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
 import Modal from 'components/layout/Modal';
-// import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { NegotiateModalProps } from './NegotiateModal.props';
 import {
@@ -24,6 +24,10 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
     ...modalProps
   } = props;
 
+  const theme = useTheme();
+  const isBuyer = useTheme().appType === 'buyer';
+  const textColor = isBuyer ? 'shade9' : 'noshade';
+
   const [counterOffer, setCounterOffer] = useState(originalOffer);
   const [closeListing, setCloseListing] = useState(false);
   const [discountValue, setDiscountValue] = useState(0);
@@ -42,7 +46,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   // const theme = useTheme();
   return (
     <Modal
-      backgroundColor="#fff"
+      backgroundColor={isBuyer ? theme.grey.noshade : theme.grey.shade8}
       style={{
         width: '',
         padding: '48px',
@@ -50,7 +54,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
       {...modalProps}
     >
       <>
-        <Typography weight="bold" variant="title4">
+        <Typography weight="bold" variant="title4" color={textColor}>
           Negotiate
         </Typography>
         <Inputs>
@@ -75,34 +79,42 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             className="checkbox"
             checked={closeListing}
           />
-          <Typography className="label" variant="label" color="shade7">
+          <Typography
+            className="label"
+            variant="label"
+            color={isBuyer ? 'shade7' : 'noshade'}
+          >
             Close this listing if accepted.
           </Typography>
         </CheckBoxContainer>
         <ComputationContainer>
           <div className="computation-item-container">
-            <Typography variant="label">Original offer was</Typography>
-            <Typography className="value" weight="bold">
+            <Typography variant="label" color={textColor}>
+              Original offer was
+            </Typography>
+            <Typography variant="label" weight="bold" color={textColor}>
               {'$'}
               {originalOffer}/{'kg'}
             </Typography>
           </div>
           <div className="computation-item-container">
-            <Typography variant="label">Your counter offer is</Typography>
-            <Typography className="value" weight="bold">
+            <Typography variant="label" color={textColor}>
+              Your counter offer is
+            </Typography>
+            <Typography variant="label" weight="bold" color={textColor}>
               {'$'}
               {counterOffer}/{'kg'}
             </Typography>
           </div>
           <div className="computation-item-container">
-            <Typography variant="label">
+            <Typography variant="label" color={textColor}>
               {/* TODO */}
               Discount Value <span className="indicator">{'0.5%'}</span>
             </Typography>
             {discountValue !== 0 ? (
               <Typography
                 color={discountValue > 0 ? 'success' : 'error'}
-                className="value"
+                variant="label"
                 weight="bold"
               >
                 {/* TODO */}
@@ -111,12 +123,16 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
                 {Math.abs(discountValue)}/{'kg'}
               </Typography>
             ) : (
-                <Typography>0</Typography>
-              )}
+              <Typography variant="label" weight="bold" color={textColor}>
+                0
+              </Typography>
+            )}
           </div>
           <div className="computation-item-container">
-            <Typography variant="label">Original offer was</Typography>
-            <Typography className="value" weight="bold">
+            <Typography variant="label" color={textColor}>
+              Original offer was
+            </Typography>
+            <Typography variant="label" weight="bold" color={textColor}>
               {'$'}
               {originalOffer}/{'kg'}
             </Typography>

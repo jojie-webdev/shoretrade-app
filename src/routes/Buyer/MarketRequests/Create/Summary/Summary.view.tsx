@@ -62,7 +62,7 @@ const SummaryView = (props: SummaryProps) => {
     ));
 
     return (
-      <div className="offer-badges">
+      <div>
         <TypographyView
           style={{ marginBottom: '8px' }}
           color="shade6"
