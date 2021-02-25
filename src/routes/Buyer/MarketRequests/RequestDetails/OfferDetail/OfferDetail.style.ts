@@ -37,7 +37,6 @@ export const SellerOfferInteractionContentContainer = styled.div`
     .ratings-container {
       display: flex;
       flex-direction: row;
-      margin-top: 5px;
       & svg:not(:last-child) {
         margin-right: 6px;
       }

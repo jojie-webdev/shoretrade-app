@@ -75,7 +75,6 @@ export const OffersSellerAccordionContentContainer = styled.div`
     .ratings-container {
       display: flex;
       flex-direction: row;
-      margin-top: 5px;
       align-items: baseline;
 
       .value {
@@ -110,10 +109,16 @@ export const SellerOfferInteractionContentContainer = styled.div`
       margin: 4px 0px;
       line-height: 1rem;
       display: flex;
-      flow-direction: row;
 
-      .weight {
+      .weight-price {
+        display: flex;
+        align-items: center;
         margin-right: 1rem;
+      }
+
+      .weight-price > svg {
+        margin-right: 4px;
+        padding-bottom: 1px;
       }
     }
     .offers-badge {
@@ -123,7 +128,6 @@ export const SellerOfferInteractionContentContainer = styled.div`
     .ratings-container {
       display: flex;
       flex-direction: row;
-      margin-top: 5px;
       & svg:not(:last-child) {
         margin-right: 6px;
       }
