@@ -7,13 +7,17 @@ import Interactions from 'components/base/Interactions/Interactions.view';
 import { SubtractHollow, Pen, ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
+import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { ReviewOfferGeneratedProps } from './ReviewOffer.props';
 import { Container } from './ReviewOffer.style';
 
-const ReviewOfferView = (props: ReviewOfferGeneratedProps) => {
+const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
+
   return (
     <Container>
       <div>
@@ -59,7 +63,7 @@ const ReviewOfferView = (props: ReviewOfferGeneratedProps) => {
             }
             rightComponent={
               <div className="right-component">
-                <div onClick={() => props.setStep && props.setStep(2)}>
+                <div onClick={() => setStep && setStep(2)}>
                   <Pen fill={theme.brand.primary} />
                 </div>
                 <div onClick={() => {}}>
@@ -82,13 +86,13 @@ const ReviewOfferView = (props: ReviewOfferGeneratedProps) => {
       <div className="submit-btns">
         <Button
           style={{ width: 137 }}
-          onClick={() => props.setStep && props.setStep(2)}
+          onClick={() => setStep && setStep(2)}
           className="submit-btn"
           text="Add an offer"
           variant="outline"
         />
         <Button
-          onClick={() => {}}
+          onClick={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
           className="submit-btn"
           text="submit"
           variant="primary"

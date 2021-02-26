@@ -28,10 +28,15 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
+          flex-direction: column;
         }
 
         .badge {
           margin: 0 4px 4px 0;
+
+          @media ${BREAKPOINTS['sm']} {
+            width: fit-content;
+          }
         }
       }
 

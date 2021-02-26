@@ -24,10 +24,15 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
+          flex-direction: column;
         }
 
         .badge {
           margin: 0 4px 4px 0;
+
+          @media ${BREAKPOINTS['sm']} {
+            width: fit-content;
+          }
         }
       }
 
@@ -46,11 +51,25 @@ export const Container = styled.div`
       justify-content: center;
       align-items: center;
 
+      @media ${BREAKPOINTS['sm']} {
+        flex-direction: column;
+      }
+
       svg {
         cursor: pointer;
         margin-left: 28px;
         width: 20px;
         height: 20px;
+
+        @media ${BREAKPOINTS['sm']} {
+          margin-left: 0;
+        }
+      }
+
+      svg:last-child {
+        @media ${BREAKPOINTS['sm']} {
+          margin-top: 16px;
+        }
       }
     }
   }

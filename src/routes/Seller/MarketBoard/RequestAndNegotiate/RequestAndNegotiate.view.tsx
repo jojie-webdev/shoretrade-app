@@ -9,10 +9,11 @@ import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
 import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import { useLocation } from 'react-router-dom';
-import { ReviewOfferGeneratedProps } from 'routes/Seller/MarketBoard/RequestAndNegotiate/ReviewOffer/ReviewOffer.props';
+import { useHistory, useLocation } from 'react-router-dom';
 import theme from 'utils/Theme';
 
+import MakeOffer from './MakeOffer';
+import { MakeOfferProps } from './MakeOffer/MakeOffer.props';
 import {
   RequestAndNegotiateGeneratedProps,
   StepProps,
@@ -24,8 +25,10 @@ import {
   BadgeText,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
+import { ReviewOfferGeneratedProps } from './ReviewOffer/ReviewOffer.props';
 
 const Step1 = (props: StepProps) => {
+  const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST);
@@ -169,7 +172,9 @@ const Step1 = (props: StepProps) => {
                   variant="outline"
                 />
                 <Button
-                  onClick={() => {}}
+                  onClick={() =>
+                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)
+                  }
                   className="submit-btn"
                   text="accept"
                   variant="primary"
@@ -188,7 +193,7 @@ const Step1 = (props: StepProps) => {
       </div>
 
       <NegotiateModal
-        onSubmit={() => setIsOpen(false)}
+        onSubmit={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
         offerId="2"
         negotiationId="1"
         originalOffer={1}
@@ -203,8 +208,8 @@ const Step1 = (props: StepProps) => {
   );
 };
 
-const Step2 = (props: StepProps) => {
-  return <></>;
+const Step2 = (props: MakeOfferProps) => {
+  return <MakeOffer {...props} />;
 };
 
 const Step3 = (props: ReviewOfferGeneratedProps) => {
@@ -216,7 +221,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const { pathname } = location;
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST);
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   return (
     <Container>
@@ -230,7 +235,10 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
             },
             ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
             ...(step === 3
-              ? [{ label: 'Make an Offer' }, { label: 'Review Offer' }]
+              ? [
+                  { label: 'Make an Offer', onClick: () => setStep(2) },
+                  { label: 'Review Offer' },
+                ]
               : []),
           ]}
         />

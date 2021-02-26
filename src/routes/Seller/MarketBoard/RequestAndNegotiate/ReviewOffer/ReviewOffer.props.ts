@@ -1,4 +1,4 @@
-import { StepProps } from 'routes/Seller/MarketBoard/RequestAndNegotiate/RequestAndNegotiate.props';
+import { StepProps } from '../RequestAndNegotiate.props';
 
 export interface ReviewOfferProps extends StepProps {}
 
