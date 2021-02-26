@@ -4,10 +4,19 @@ import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   .breadcrumb-container {
-    margin-bottom: 58px;
+    margin-bottom: 40px;
   }
 
-  .contents {
+  .submit-btns {
+    display: flex;
+  }
+
+  .submit-btn {
+    margin-top: 1rem;
+    margin-right: 8px;
+  }
+
+  .step-1-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -18,15 +27,6 @@ export const SummaryContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 320px;
-
-  .submit-btns {
-    display: flex;
-  }
-
-  .submit-btn {
-    margin-top: 1rem;
-    margin-right: 8px;
-  }
 
   .quantity-container {
     display: flex;

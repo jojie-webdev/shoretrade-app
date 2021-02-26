@@ -2,10 +2,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .search-row {
-    margin-top: 24px;
-  }
-
   .interactions {
     margin-bottom: 12px;
 
@@ -43,6 +39,28 @@ export const Container = styled.div`
           margin: 0 6px;
         }
       }
+    }
+
+    .right-component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        cursor: pointer;
+        margin-left: 28px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .checkbox-container {
+    display: flex;
+    padding: 1rem 0;
+
+    .label {
+      margin-left: 8px;
     }
   }
 `;
