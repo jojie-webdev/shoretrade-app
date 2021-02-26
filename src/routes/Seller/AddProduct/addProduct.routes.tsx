@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ADD_PRODUCT_ROUTES, SELLING_ROUTES } from 'consts';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { ADD_PRODUCT_ROUTES } from 'consts';
+import { Route } from 'react-router-dom';
 
 // Screens
 import AddProduct from './AddProduct.container';

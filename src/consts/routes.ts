@@ -26,6 +26,7 @@ export const SELLER_ROUTES = {
   SELLING: `${SELLER_ROOT}/selling`,
   SOLD: `${SELLER_ROOT}/sold`,
   BULK_UPLOAD: `${SELLER_ROOT}/bulk-upload`,
+  MARKET_BOARD: `${SELLER_ROOT}/market-board`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -55,6 +56,12 @@ export const ADD_PRODUCT_ROUTES = {
   LANDING: `${SELLER_ROUTES.ADD_PRODUCT}`,
   PREVIEW: `${SELLER_ROUTES.ADD_PRODUCT}/preview`,
   BULK_UPLOAD_PREVIEW: `${SELLER_ROUTES.ADD_PRODUCT}/bulk-upload-preview`,
+};
+
+export const SELLER_MARKET_BOARD_ROUTES = {
+  LANDING: `${SELLER_ROUTES.MARKET_BOARD}`,
+  REVIEW_REQUEST: `${SELLER_ROUTES.MARKET_BOARD}/review-request`,
+  NEGOTIATE: `${SELLER_ROUTES.MARKET_BOARD}/negotiate`,
 };
 
 export const SELLER_ACCOUNT_ROUTES = {

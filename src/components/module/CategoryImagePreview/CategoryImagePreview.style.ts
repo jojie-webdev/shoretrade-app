@@ -22,7 +22,7 @@ export const Container = styled.div<{ img: string }>`
     border-radius: 8px;
   }
 
-  .caption {
+  .label {
     margin-top: 1rem;
   }
 `;
@@ -33,11 +33,4 @@ export const BadgeContainer = styled.div`
   position: absolute;
   bottom: 12px;
   left: 16px;
-
-  .badge {
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 900;
-    line-height: 12px;
-  }
 `;

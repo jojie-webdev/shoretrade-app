@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { SELLER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { createBulkListingActions, uploadBulkActions } from 'store/actions';
 import { GetCompanyAddresses } from 'store/selectors/seller/addresses';
 import { Store } from 'types/store/Store';
@@ -11,7 +9,6 @@ import BulkUploadPreviewView from './BulkUploadPreview.view';
 
 const BulkUploadPreview = (): JSX.Element => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const getUser = useSelector((state: Store) => state.getUser);
   const uploadBulk = useSelector((store: Store) => store.uploadBulk);
@@ -54,10 +51,6 @@ const BulkUploadPreview = (): JSX.Element => {
       })
     );
   };
-
-  if (!uploadBulk.data?.data) {
-    history.replace(SELLER_ROUTES.ADD_PRODUCT);
-  }
 
   const generatedProps = {
     data: uploadBulk.data?.data.editableListings || [],
