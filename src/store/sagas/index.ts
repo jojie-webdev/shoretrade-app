@@ -3,9 +3,11 @@ import { fork, all } from 'redux-saga/effects';
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
+import addSellerLicense from './addSellerLicense';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
+import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -15,6 +17,7 @@ import editableListing from './editableListing';
 import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
+import getAccountCompletion from './getAccountCompletion';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getBankDetails from './getBankDetails';
@@ -30,8 +33,10 @@ import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
+import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
+import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
 import getTransactionHistory from './getTransactionHistory';
@@ -53,16 +58,21 @@ import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
+import updateMarketInterests from './updateMarketInterests';
+import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
+import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 const sagas = [
   addAddress,
   addCardToken,
   addLinkedAccount,
+  addSellerLicense,
   changePassword,
   chargeCard,
   confirmWeight,
+  createBulkListing,
   createCustomListing,
   createListing,
   currentAddress,
@@ -72,6 +82,7 @@ const sagas = [
   editableListing,
   endListing,
   forgotPassword,
+  getAccountCompletion,
   getAddresses,
   getAllListings,
   getBankDetails,
@@ -87,8 +98,10 @@ const sagas = [
   getListingTypesByCategory,
   getListingsByType,
   getMarketEstimate,
+  getMarketInterests,
   getPaymentMethods,
   getSellerById,
+  getSellerLicense,
   getSellerOrders,
   getShippingQuote,
   getTransactionHistory,
@@ -106,10 +119,13 @@ const sagas = [
   sendMessage,
   updateAddress,
   updateBankDetails,
+  uploadBulk,
   updateDefaultCard,
   updateFavoriteSeller,
   updateFavouriteProduct,
   updateListing,
+  updateMarketInterests,
+  updateSellerLicense,
   updateUser,
   verify,
 ];

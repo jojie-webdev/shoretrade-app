@@ -1,7 +1,6 @@
 import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import Search from 'components/module/Search';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -10,6 +9,10 @@ export const Container = styled.div`
   .row {
     height: 100%;
   }
+
+  .search-row {
+    margin-bottom: 24px;
+  }
 `;
 
 export const StyledAlert = styled(Alert)`
@@ -17,15 +20,11 @@ export const StyledAlert = styled(Alert)`
   width: 100%;
 `;
 
-export const StyledSearch = styled(Search)`
-  margin-bottom: 24px;
-`;
-
 export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   padding: 8px 12px;
   margin-bottom: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
 
   display: flex;
   position: relative;

@@ -1,5 +1,34 @@
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
+import {
+  AddSellerLicenseMeta,
+  AddSellerLicensePayload,
+} from 'types/store/AddSellerLicenseState';
+import {
+  CreateBulkListingMeta,
+  CreateBulkListingPayload,
+} from 'types/store/CreateBulkListingState';
+import {
+  GetAccountCompletionMeta,
+  GetAccountCompletionPayload,
+} from 'types/store/GetAccountCompletionState';
+import {
+  GetMarketInterestsMeta,
+  GetMarketInterestsPayload,
+} from 'types/store/GetMarketInterestsState';
+import {
+  GetSellerLicenseMeta,
+  GetSellerLicensePayload,
+} from 'types/store/GetSellerLicenseState';
+import {
+  UpdateMarketInterestsMeta,
+  UpdateMarketInterestsPayload,
+} from 'types/store/UpdateMarketInterestsState';
+import {
+  UpdateSellerLicenseMeta,
+  UpdateSellerLicensePayload,
+} from 'types/store/UpdateSellerLicenseState';
+import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -272,4 +301,27 @@ export interface Store {
   >;
   resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
   logRequest: RequestLogState;
+  getAccountCompletion: AsyncState<
+    GetAccountCompletionMeta,
+    GetAccountCompletionPayload
+  >;
+  getMarketInterests: AsyncState<
+    GetMarketInterestsMeta,
+    GetMarketInterestsPayload
+  >;
+  updateMarketInterests: AsyncState<
+    UpdateMarketInterestsMeta,
+    UpdateMarketInterestsPayload
+  >;
+  getSellerLicense: AsyncState<GetSellerLicenseMeta, GetSellerLicensePayload>;
+  addSellerLicense: AsyncState<AddSellerLicenseMeta, AddSellerLicensePayload>;
+  updateSellerLicense: AsyncState<
+    UpdateSellerLicenseMeta,
+    UpdateSellerLicensePayload
+  >;
+  uploadBulk: AsyncState<UploadBulkMeta, UploadBulkPayload>;
+  createBulkListing: AsyncState<
+    CreateBulkListingMeta,
+    CreateBulkListingPayload
+  >;
 }

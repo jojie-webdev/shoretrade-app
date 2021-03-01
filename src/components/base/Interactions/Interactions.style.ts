@@ -5,7 +5,7 @@ import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
 
 export const Container = styled.div<InteractionsProps>`
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: ${({ padding }) => padding || '24px'};
   display: flex;
   justify-content: space-between;
@@ -35,16 +35,9 @@ export const Container = styled.div<InteractionsProps>`
   ${({ onClick, type }) =>
     onClick && type !== 'none'
       ? `cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }`
-      : ''};
-
-  ${({ isHover }) =>
-    isHover
-      ? `:hover {
-    box-shadow: none;
-  }`
+          &:hover {
+            opacity: 0.9;
+          }`
       : ''};
 
   .left-content,

@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Select from 'components/base/Select';
+import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
@@ -12,18 +14,25 @@ import {
   Container,
   Header,
   NavInteraction,
-  DropdownContainer,
+  NoProfilePic,
 } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
-    { value: 'Balance & Payment', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
+    {
+      value: 'Account Completion',
+      path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    },
+    { value: 'Balance & Payments', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
     {
       value: 'Your Details',
-      path:
-        BUYER_ACCOUNT_ROUTES.DETAILS + `?companyId=${props.currentCompany?.id}`,
+      path: BUYER_ACCOUNT_ROUTES.DETAILS,
     },
     { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.ADDRESS },
+    {
+      value: "Products I'm Buying",
+      path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
+    },
     { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
@@ -52,40 +61,49 @@ const LandingView = (props: LandingGeneratedProps) => {
 
   return (
     <Container>
-      <Header>
-        <div className="left-content">
-          <div>
-            <Typography variant="overline" color="shade6">
-              {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
-            </Typography>
-            <Typography variant="title5" color="shade8">
-              {profileName}
-            </Typography>
+      <BoxContainer>
+        <Header>
+          <div className="left-content">
+            {profilePicture ? (
+              <img src={profilePicture} alt="Profile" />
+            ) : (
+              <NoProfilePic>
+                <PlaceholderProfile width={96} height={96} />
+              </NoProfilePic>
+            )}
+            <div className="user-details">
+              <Typography variant="overline" color="shade6">
+                {companyRelationship === 'ADMIN'
+                  ? 'Owner'
+                  : companyRelationship}
+              </Typography>
+              <Typography variant="title5" color="shade8">
+                {profileName}
+              </Typography>
+            </div>
           </div>
-        </div>
 
-        <div className="right-content">
-          <DropdownContainer>
+          <div>
             <Select
               label=""
               options={companyOptions}
               value={currentCompany?.id}
               size="small"
-              dark={true}
+              grey
             />
-          </DropdownContainer>
-        </div>
-      </Header>
+          </div>
+        </Header>
 
-      {INTERACTIONS.map((link) => (
-        <NavInteraction
-          key={link.path}
-          value={link.value}
-          onClick={() => {
-            history.push(link.path);
-          }}
-        />
-      ))}
+        {INTERACTIONS.map((link) => (
+          <NavInteraction
+            key={link.path}
+            value={link.value}
+            onClick={() => {
+              history.push(link.path);
+            }}
+          />
+        ))}
+      </BoxContainer>
     </Container>
   );
 };

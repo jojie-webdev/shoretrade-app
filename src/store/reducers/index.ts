@@ -1,15 +1,18 @@
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
+import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 import addAddress from './addAddress';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
+import addSellerLicense from './addSellerLicense';
 import auth from './auth';
 import cart from './cart';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
+import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import currentAddress from './currentAddress';
@@ -35,8 +38,10 @@ import getListingFormData from './getListingFormData';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
+import getMarketInterests from './getMarketInterests';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
+import getSellerLicense from './getSellerLicense';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
@@ -61,7 +66,10 @@ import updateDefaultCard from './updateDefaultCard';
 import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
+import updateMarketInterests from './updateMarketInterests';
+import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
+import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 export default (routeHistory: History) =>
@@ -71,11 +79,13 @@ export default (routeHistory: History) =>
         addAddress,
         addCardToken,
         addLinkedAccount,
+        addSellerLicense,
         auth,
         cart,
         changePassword,
         chargeCard,
         confirmWeight,
+        createBulkListing,
         createCustomListing,
         createListing,
         currentAddress,
@@ -84,6 +94,7 @@ export default (routeHistory: History) =>
         editableListing,
         endListing,
         forgotPassword,
+        getAccountCompletion,
         getAddresses,
         getAllListings,
         getBankDetails,
@@ -101,11 +112,13 @@ export default (routeHistory: History) =>
         getListingTypesByCategory,
         getListingsByType,
         getMarketEstimate,
+        getMarketInterests,
         getPaymentMethods,
         getSellerById,
         getSellerOrdersDelivered,
         getSellerOrdersPlaced,
         getSellerOrdersTransit,
+        getSellerLicense,
         getShippingQuote,
         getTransactionHistory,
         getUser,
@@ -128,7 +141,10 @@ export default (routeHistory: History) =>
         updateFavoriteSeller,
         updateFavouriteProduct,
         updateListing,
+        updateMarketInterests,
+        updateSellerLicense,
         updateUser,
+        uploadBulk,
         verify,
       }).sort()
     )

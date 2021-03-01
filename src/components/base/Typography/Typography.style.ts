@@ -24,6 +24,14 @@ const styles: Record<Variants, string> = {
         font-size: ${pxToRem(24)};
         line-height: 32px;
     `,
+  title6: `
+        font-size: ${pxToRem(20)};
+        line-height: 32px;
+    `,
+  copy: `
+        font-size: ${pxToRem(18)};
+        line-height: 24px;
+    `,
   body: `
         font-size: ${pxToRem(16)};
         line-height: 24px;
@@ -46,6 +54,12 @@ const styles: Record<Variants, string> = {
         text-transform: uppercase;
         letter-spacing: 2px;
     `,
+  overlineSmall: `
+      font-size: ${pxToRem(9)};
+      line-height: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    `,
 };
 
 const weights: Record<string, string> = {
@@ -61,11 +75,14 @@ const font: Record<string, string> = {
   title3: weights.Regular,
   title4: weights.Regular,
   title5: weights.Regular,
+  title6: weights.Regular,
+  copy: weights.Medium,
   body: weights.Medium,
   label: weights.Medium,
   caption: weights.Medium,
   small: weights.Medium,
   overline: weights.Black,
+  overlineSmall: weights.Black,
 };
 
 export const P = styled.p<TypographyProps>`

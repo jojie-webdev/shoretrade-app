@@ -6,6 +6,7 @@ import {
   Home as HomeIcon,
   Category as CategoryIcon,
   Notepad as OrderIcon,
+  Bolt as BoltIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -32,6 +33,7 @@ import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
+import Market from './MarketRequests/market-requests.routes';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import { SearchLanding } from './Search';
@@ -43,6 +45,13 @@ const ROUTES: Routes = {
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,
+  },
+  MARKET_REQUESTS: {
+    path: BUYER_ROUTES.MARKET_REQUESTS,
+    children: <Market />,
+    title: 'Market Requests',
+    icon: BoltIcon,
+    nested: true,
   },
   FAVOURITES: {
     path: BUYER_ROUTES.FAVOURITES,
@@ -146,13 +155,6 @@ const BuyerRoutes = (): JSX.Element => {
     pageTitle?: string;
     useOuterWrapper?: boolean;
   } => {
-    if (pathname === '/buyer/account') {
-      return {
-        shouldUseFullWidth: true,
-        shouldIncludePadding: false,
-      };
-    }
-
     if (pathname.includes('/buyer/home')) {
       return {
         shouldUseFullWidth: true,
@@ -205,6 +207,12 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
+    if (pathname.includes('/buyer/market-requests')) {
+      return {
+        pageTitle: 'Market Requests',
+        onBack: history.goBack,
+      };
+    }
     return {};
   };
 

@@ -38,6 +38,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
     containerBackground,
     minHeight,
     noLogo,
+    isRegister,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -47,14 +48,21 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
         <Background />
       </BackgroundContainer>
       <Wrapper xs={12} sm={12} md={6} lg={5} xl={5} xxl={5}>
-        <ProgressContainer background={containerBackground}>
+        <ProgressContainer
+          background={containerBackground}
+          isRegister={isRegister}
+        >
           {currentStep !== undefined && totalSteps !== undefined && (
             <ProgressIndicator
               style={{ width: `${(currentStep / totalSteps) * 100}%` }}
             />
           )}
         </ProgressContainer>
-        <Content background={containerBackground} minHeight={minHeight}>
+        <Content
+          background={containerBackground}
+          minHeight={minHeight}
+          isRegister={isRegister}
+        >
           {!noLogo && (
             <LogoContainer
               logoContainerMarginBottomHeight={

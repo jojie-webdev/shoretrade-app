@@ -1,7 +1,9 @@
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 0px 8px;
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
 `;
 
 export const Transx = styled.div`

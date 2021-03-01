@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import ChangePassword from 'routes/Seller/Account/ChangePassword';
 import { Routes, Route as TRoute } from 'types/Routes';
 
+import AccountCompletion from './AccountCompletion';
 import AddAddress from './AddAddress';
 import AddAssistant from './AddAssistant';
 import AddCredit from './AddCredit';
@@ -17,7 +18,9 @@ import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
+import MarketInterests from './MarketInterests';
 import YourDetails from './YourDetails';
+
 const ROUTES: Routes = {
   LANDING: {
     path: BUYER_ACCOUNT_ROUTES.LANDING,
@@ -78,6 +81,14 @@ const ROUTES: Routes = {
   ADD_CREDIT: {
     path: BUYER_ACCOUNT_ROUTES.ADD_CREDIT,
     children: <AddCredit />,
+  },
+  ACCOUNT_COMPLETION: {
+    path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
+    children: <AccountCompletion />,
+  },
+  MARKET_INTERESTS: {
+    path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
+    children: <MarketInterests />,
   },
 };
 

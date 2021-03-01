@@ -4,10 +4,15 @@ export const Container = styled.div<{
   isOpen?: boolean;
   withBackground?: boolean;
   marginBottom: string;
+  background?: string;
+  border?: string;
 }>`
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
   margin-bottom: ${(props) => props.marginBottom};
+  border: ${(props) => (props.border ? props.border : 'none')};
+  background: ${(props) => (props.background ? props.background : 'none')};
   .interactions {
     box-shadow: ${({ withBackground }) => withBackground && 'none'};
   }
@@ -24,7 +29,7 @@ export const Content = styled.div<{
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
   transform-origin: top;
   transition: all 0.25s ease-in-out;
-  padding: 0 16px;
+  padding: ${({ padding }) => (padding ? padding : '0 16px')};
   padding-top: ${({ withBackground }) => (withBackground ? '0px' : '16px')};
   .border {
     border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};

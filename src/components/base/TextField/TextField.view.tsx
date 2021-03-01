@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import { Eye, EyeOff, InfoFilled } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -14,7 +15,6 @@ import {
   Field,
   VisibilityContainer,
   Error,
-  Alert,
   Prefix,
 } from './TextField.style';
 
@@ -102,7 +102,14 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         </Error>
       )}
 
-      {alert && <Alert label={alert} />}
+      {alert && (
+        <Alert
+          variant="infoAlert"
+          content={alert}
+          fullWidth
+          style={{ marginTop: 8 }}
+        />
+      )}
     </Container>
   );
 };

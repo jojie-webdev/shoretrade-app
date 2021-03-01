@@ -1,4 +1,3 @@
-import AlertInfo from 'components/base/AlertInfo';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -9,8 +8,4 @@ export const Container = styled.div`
       margin-bottom: 36px;
     }
   }
-`;
-
-export const PriceAlertInfo = styled(AlertInfo)`
-  margin-bottom: 16px;
 `;

@@ -22,13 +22,14 @@ const ShippingAddresses = (): JSX.Element => {
   const getAddress = useSelector((state: Store) => state.getAddresses);
 
   // Mark:- Variables
-  const addresses = getAddress.data?.data.addresses || [];
+  const addresses =
+    getAddress.data?.data.addresses.sort((a) => (a.default ? -1 : 1)) || [];
   const pending = getAddress.pending || false;
-  const updateAdrressResult = useSelector(
+  const updateAddressResult = useSelector(
     (state: Store) => state.updateAddress
   );
   const addAddressResult = useSelector((state: Store) => state.addAddress);
-  const [notificationMessage, setNotifficationMessage] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState('');
 
   // Mark:- Methods
   const onClickAddress = (addressId: string) => {
@@ -56,23 +57,23 @@ const ShippingAddresses = (): JSX.Element => {
   }, [companyId]);
 
   useEffect(() => {
-    const isUpdateLoading = updateAdrressResult.pending;
+    const isUpdateLoading = updateAddressResult.pending;
     const updateClassification =
-      updateAdrressResult.data?.data?.address?.approved;
+      updateAddressResult.data?.data?.address?.approved;
     if (
       !isUpdateLoading &&
       isUpdateLoading !== null &&
       updateClassification === 'DECLINED'
     ) {
-      setNotifficationMessage('Your address has been deleted successfully!');
+      setNotificationMessage('Your address has been deleted successfully!');
     } else if (
       !isUpdateLoading &&
       isUpdateLoading !== null &&
       updateClassification !== 'DECLINED'
     ) {
-      setNotifficationMessage('Your address has been updated successfully!');
+      setNotificationMessage('Your address has been updated successfully!');
     }
-  }, [updateAdrressResult]);
+  }, [updateAddressResult]);
 
   useEffect(() => {
     if (notificationMessage.length > 0) {
@@ -85,7 +86,7 @@ const ShippingAddresses = (): JSX.Element => {
     const isLoading = addAddressResult.pending;
     const addAddressData = addAddressResult.data;
     if (!isLoading && addAddressData) {
-      setNotifficationMessage('Your address has been successfully added!');
+      setNotificationMessage('Your address has been successfully added!');
     }
   }, [addAddressResult]);
 

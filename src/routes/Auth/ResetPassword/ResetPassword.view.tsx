@@ -71,9 +71,9 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
                   <Alert
                     content={'Updating Password Failed! Please try again.'}
                     variant="error"
+                    fullWidth
                     style={{
                       marginTop: 16,
-                      width: '100%',
                     }}
                   />
                 )}

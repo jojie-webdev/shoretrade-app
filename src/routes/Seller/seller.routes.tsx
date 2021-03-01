@@ -7,9 +7,10 @@ import {
   FileCheck,
   Cart,
   CheckBorder,
+  Bolt,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { SELLER_ROUTES, SELLER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import { SELLER_ROUTES } from 'consts';
 import {
   Route,
   Switch,
@@ -25,6 +26,7 @@ import { useTheme } from 'utils/Theme';
 import SellerAccountRoutes from './Account/account.routes';
 import AddProduct from './AddProduct/addProduct.routes';
 import DashboardRoutes from './Dashboard/dashboard.routes';
+import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
 import Selling from './Selling/selling.routes';
@@ -38,6 +40,22 @@ const ROUTES: Routes = {
     icon: DashboardSVG,
     nested: true,
   },
+  SELLING: {
+    path: SELLER_ROUTES.SELLING,
+    title: 'Selling',
+    children: <Selling />,
+    icon: Cart,
+    nested: true,
+  },
+  // Add Product
+  ADD_PRODUCT: {
+    path: SELLER_ROUTES.ADD_PRODUCT,
+    title: 'Add Product',
+    children: <AddProduct />,
+    icon: AddBorder,
+    nested: true,
+  },
+
   // Market Prices
   MARKET_PRICES: {
     path: SELLER_ROUTES.MARKET_PRICES,
@@ -52,21 +70,15 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
 
-  // Add Product
-  ADD_PRODUCT: {
-    path: SELLER_ROUTES.ADD_PRODUCT,
-    title: 'Add Product',
-    children: <AddProduct />,
-    icon: AddBorder,
+  //Market Board
+  MARKET_BOARD: {
+    path: SELLER_ROUTES.MARKET_BOARD,
+    title: 'Market Board',
+    children: <MarketBoardRoutes />,
+    icon: Bolt,
     nested: true,
   },
-  SELLING: {
-    path: SELLER_ROUTES.SELLING,
-    title: 'Selling',
-    children: <Selling />,
-    icon: Cart,
-    nested: true,
-  },
+
   SOLD: {
     path: SELLER_ROUTES.SOLD,
     title: 'Sold',
@@ -75,7 +87,7 @@ const ROUTES: Routes = {
     nested: true,
   },
   ACCOUNT: {
-    path: SELLER_ACCOUNT_ROUTES.LANDING,
+    path: SELLER_ROUTES.ACCOUNT,
     title: 'Account',
     children: <SellerAccountRoutes />,
     icon: AccountSVG,
@@ -126,10 +138,18 @@ const SellerRoutes = (): JSX.Element => {
     }
 
     if (pathname.includes(SELLER_ROUTES.ADD_PRODUCT)) {
+      if (pathname.includes('/bulk-upload-preview')) {
+        return {
+          pageTitle: 'Bulk Spreadsheet Upload',
+          shouldIncludePadding: false,
+        };
+      }
+
       return {
         shouldIncludePadding: false,
       };
     }
+
     return {};
   };
 

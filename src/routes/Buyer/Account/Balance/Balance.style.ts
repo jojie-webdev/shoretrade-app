@@ -1,28 +1,31 @@
 import Interactions from 'components/base/Interactions';
 import InteractionCreditCard from 'components/module/InteractionCreditCard';
-import { Col, Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 0px 8px;
-`;
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
 
-export const ContentLeft = styled(Col)`
-  & > * {
-    margin-bottom: 18px;
+  .balance-header {
+    margin-bottom: 8px;
+  }
+
+  .balance-btn {
+    margin: 24px 0;
   }
 `;
-
-export const ContentRight = styled(Col)`
-  & > * {
-    margin-bottom: 18px;
-  }
-`;
-
-export const CreditBalance = styled.div``;
 
 export const CreditWrapper = styled.div`
-  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: ${({ theme }) => theme.grey.noshade};
+  border: 2px solid ${({ theme }) => theme.grey.shade3};
+  border-radius: 8px;
+
+  margin-bottom: 12px;
 `;
 
 export const LinkCreditHistory = styled(Interactions)`
@@ -30,7 +33,8 @@ export const LinkCreditHistory = styled(Interactions)`
 `;
 
 export const LinkCreditCard = styled(InteractionCreditCard)`
-  max-height: 70px;
+  max-height: 74px;
+  margin-bottom: 12px;
 `;
 
 export const Notification = styled.div`

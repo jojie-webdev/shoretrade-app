@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+export { default as SubtractHollow } from './SubtractHollow';
+export { default as Weight } from './Weight';
+export { default as FileUpload } from './FileUpload';
+export { default as Bolt } from './Bolt';
 export { default as Wetshop } from './Wetshop';
 export { default as BuyerRestaurantBar } from './BuyerRestaurantBar';
 export { default as BuyerHotel } from './BuyerHotel';

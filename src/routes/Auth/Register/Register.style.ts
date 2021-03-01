@@ -1,4 +1,3 @@
-import AlertInfo from 'components/base/AlertInfo';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { Download, ArrowLeft } from 'components/base/SVG';
@@ -45,6 +44,14 @@ margin-top:60px;
   }
 `;
 
+export const TopContainer = styled.div`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : 'transparent'};
+`;
+
 export const NextButton = styled(Button)`
   margin-right: 8px;
 `;
@@ -66,17 +73,17 @@ export const Spacer = styled.div`
 `;
 
 export const ColumnWrapper = styled.div`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
 `;
 
 export const FormikContainer = styled(Form)`
-  display: 'flex';
+  display: flex;
   flex: 1;
-  flex-direction: 'column';
+  flex-direction: column;
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -156,10 +163,6 @@ export const DownloadIcon = styled(Download)`
 `;
 
 export const DownloadTermsText = styled(Typography)``;
-
-export const ShippingInfo = styled(AlertInfo)`
-  margin-top: 24px;
-`;
 
 export const LocationField = styled.div`
   margin-top: 24px;
@@ -251,17 +254,12 @@ export const CategorySearchInputContainer = styled.div`
 export const InteractionsContainer = styled.div`
   margin-bottom: 8px;
   width: 100%;
-  .interactions {
-    padding: 8px;
-    border-radius: 8px;
-  }
 `;
 
 export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 16px;
 `;
 
 export const BadgeItemContainer = styled.div`
@@ -278,6 +276,10 @@ export const ButtonContainer = styled.div`
 export const SellerSummaryContainer = styled.div`
   margin-top: 24px;
   padding: 8px;
+
+  .interactions {
+    margin-bottom: 8px;
+  }
 `;
 
 export const SelectMarketSelector = styled(Select)``;

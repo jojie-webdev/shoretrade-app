@@ -17,12 +17,17 @@ const font = `
 
 export const StyledDropdown = styled(Dropdown)<{
   dark?: boolean;
+  grey?: boolean;
   disabled?: boolean;
 }>`
   .${PREFIX}Container {
     height: 48px;
-    background: ${({ theme, disabled, dark }) =>
-      disabled ? theme.grey.shade3 : dark ? theme.grey.shade9 : '#ffffff'};
+    background: ${({ theme, disabled, dark, grey }) =>
+      disabled || grey
+        ? theme.grey.shade3
+        : dark
+        ? theme.grey.shade9
+        : '#ffffff'};
     color: ${({ theme, disabled, dark }) =>
       disabled
         ? theme.grey.shade6
@@ -39,8 +44,12 @@ export const StyledDropdown = styled(Dropdown)<{
   /* TODO: Should extend .${PREFIX}Container */
   .${PREFIX}ContainerThin {
     height: 30px;
-    background: ${({ theme, disabled, dark }) =>
-      disabled ? theme.grey.shade3 : dark ? theme.grey.shade9 : '#ffffff'};
+    background: ${({ theme, disabled, dark, grey }) =>
+      disabled || grey
+        ? theme.grey.shade3
+        : dark
+        ? theme.grey.shade9
+        : '#ffffff'};
     color: ${({ theme, disabled, dark }) =>
       disabled
         ? theme.grey.shade6
@@ -63,7 +72,7 @@ export const StyledDropdown = styled(Dropdown)<{
     border: 1px solid ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     border-radius: 4px;
-    box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+    box-shadow: 0px 2px 8px rgba(41, 43, 50, 0.10);
     // padding: 0 16px;
     margin-top: 8px;
     background-color: ${({ theme }) =>

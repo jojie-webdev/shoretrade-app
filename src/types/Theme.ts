@@ -20,6 +20,7 @@ export type Theme = {
     shade7: string;
     shade8: string;
     shade9: string;
+    shade10: string;
     noshade: string;
   };
 };

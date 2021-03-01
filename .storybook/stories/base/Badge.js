@@ -6,7 +6,7 @@ import Badge from '../../../src/components/base/Badge';
 import Container from '../../components/Container';
 
 storiesOf('base/Badge', module).add('Summary', () => (
-  <Container>
-    <Badge />
+  <Container background="white">
+    <Badge style={{ width: 'fit-content' }}>Badge</Badge>
   </Container>
 ));

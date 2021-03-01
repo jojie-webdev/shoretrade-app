@@ -7,6 +7,7 @@ import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  uploadBulkActions,
   editableListingActions,
   searchProductTypeActions,
   updateListingActions,
@@ -26,6 +27,8 @@ const AddProduct = (): JSX.Element => {
   const dispatch = useDispatch();
   const currentPage =
     useSelector((state: Store) => state.editableListing.currentStep) || 1;
+
+  const uploadBulk = useSelector((store: Store) => store.uploadBulk);
 
   function onChangeCurrentPage(newPage: number) {
     if (newPage >= 1 && newPage <= 8) {
@@ -53,6 +56,7 @@ const AddProduct = (): JSX.Element => {
           company: user.company,
         };
 
+  const getUser = useSelector((state: Store) => state.getUser);
   const accounts =
     useSelector((state: Store) => state.getCoopUsers.data?.data.users) || [];
   const employeeList = unnest(accounts.map(toEmployeeOptions));
@@ -62,6 +66,7 @@ const AddProduct = (): JSX.Element => {
     if (account) {
       const company =
         employeeList.find((e) => e.value === account)?.company || '';
+
       if (company) {
         dispatch(
           editableListingActions.update({
@@ -333,6 +338,25 @@ const AddProduct = (): JSX.Element => {
     history.push(ADD_PRODUCT_ROUTES.PREVIEW);
   };
 
+  const onUploadCSV = (csv: File, account: string) => {
+    const companies = getUser.data?.data.user.companies || [];
+    const companyId = companies.find((c) => c.employeeId === account)?.id || '';
+
+    if (companyId) {
+      const reader = new FileReader();
+      reader.readAsText(csv);
+
+      reader.onload = () => {
+        dispatch(
+          uploadBulkActions.request({
+            companyId,
+            csv: reader.result as string,
+          })
+        );
+      };
+    }
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -361,6 +385,8 @@ const AddProduct = (): JSX.Element => {
     discardChanges,
     preview,
     marketEstimate,
+    onUploadCSV,
+    isUploadingCSV: uploadBulk?.pending || false,
   };
 
   return <AddProductView {...generatedProps} />;

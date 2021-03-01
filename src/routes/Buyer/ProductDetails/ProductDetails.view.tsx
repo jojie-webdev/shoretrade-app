@@ -145,13 +145,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <Alert
                       variant="alert"
                       content={`Remaining ${remainingWeight} ${unit}`}
-                      style={{
-                        borderRadius: 4,
-                        padding: 8,
-                      }}
                       fullWidth
                       alignText="center"
-                      small
                     />
                   </RemainingWrapper>
 

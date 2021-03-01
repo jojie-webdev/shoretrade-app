@@ -1,18 +1,10 @@
-import React, {
-  useState,
-  Fragment,
-  useReducer,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useState, Fragment, useReducer, useRef } from 'react';
 
 import Alert from 'components/base/Alert';
-import AlertInfoView from 'components/base/AlertInfo';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
-import InteractionsV2 from 'components/base/InteractionsV2';
 import Select from 'components/base/Select';
 import { Search } from 'components/base/SVG';
 import BaseTextField from 'components/base/TextField';
@@ -36,7 +28,7 @@ import {
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
-import { Image, DetailsContainer, ResultContainer } from './Categories.style';
+import { Image, CategoryItems } from './Categories.style';
 import {
   BUYER_STEPS,
   SELLER_STEPS,
@@ -69,7 +61,6 @@ import {
   DownloadTermsContainer,
   DownloadIcon,
   DownloadTermsText,
-  ShippingInfo,
   LocationField,
   Error,
   BusinessLogoLabel,
@@ -93,6 +84,7 @@ import {
   ButtonContainer,
   SellerSummaryContainer,
   SelectMarketSelector,
+  TopContainer,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -106,6 +98,7 @@ import {
   validateCategoryMarketSector,
   validateLicense,
 } from './Register.validation';
+
 interface StepFormProps extends RegisterGeneratedProps {
   formikProps: {
     initialValues: Record<string, string>;
@@ -162,39 +155,39 @@ const StepForm = ({
     : BUYER_STEPS;
   const steps = isSeller ? SELLER_STEPS : buyerSteps;
   const MAX_STEP: number = !isSeller ? 6 : 7;
+
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
     {}
   );
+
   const CategoryChildren = (result: Category) => (
     <>
-      <CategoryImageView
-        id={result.id}
-        maxHeight={30}
-        containerHeight={30}
-        cBorderRadius={'4px 4px 0px 0px'}
-      />
-      <DetailsContainer>
-        <ResultContainer>
-          <Typography variant="caption" color="shade6" className="per">
-            {result.name}
-          </Typography>
-        </ResultContainer>
-      </DetailsContainer>
+      <CategoryItems>
+        <div style={{ width: 48 }}>
+          <CategoryImageView
+            id={result.id}
+            containerHeight={30}
+            maxHeight={30}
+          />
+        </div>
+
+        <Typography
+          color={isSeller ? 'noshade' : 'shade9'}
+          variant="label"
+          className="category-text"
+        >
+          {result.name}
+        </Typography>
+      </CategoryItems>
     </>
   );
 
   const CategoryItemsChildren = (result: CategoryType) => (
-    <>
+    <CategoryItems>
       <Image src={result.thumbnail} />
-      <DetailsContainer>
-        <ResultContainer>
-          <Typography variant="caption" color="shade6" className="per">
-            {result.name}
-          </Typography>
-        </ResultContainer>
-      </DetailsContainer>
-    </>
+      <Typography variant="label">{result.name}</Typography>
+    </CategoryItems>
   );
 
   const formRef = useRef<FormikProps<Record<string, string>> | null>(null);
@@ -249,7 +242,11 @@ const StepForm = ({
 
         {!isGotoDetails && (
           <>
-            <BadgeContainer>
+            <BadgeContainer
+              style={{
+                marginBottom: 16,
+              }}
+            >
               {selectedCategoryTypes &&
                 selectedCategoryTypes.map((selection: CategoryPayload) => {
                   return (
@@ -265,18 +262,16 @@ const StepForm = ({
             </BadgeContainer>
             {searchCategory.map((result) => {
               return (
-                <InteractionsContainer
-                  onClick={() => {
-                    getCategoryItem(result.id);
-                    showDetails();
-                  }}
-                  key={result.id}
-                >
+                <InteractionsContainer key={result.id}>
                   <Interactions
-                    // eslint-disable-next-line react/no-children-prop
-                    children={CategoryChildren(result)}
-                    isHover
-                  />
+                    onClick={() => {
+                      getCategoryItem(result.id);
+                      showDetails();
+                    }}
+                    padding="16px 20px 16px 8px"
+                  >
+                    <CategoryChildren {...result} />
+                  </Interactions>
                 </InteractionsContainer>
               );
             })}
@@ -299,10 +294,10 @@ const StepForm = ({
                       };
                       addSelected(value);
                     }}
-                    // eslint-disable-next-line react/no-children-prop
-                    children={CategoryItemsChildren(result)}
-                    isHover
-                  />
+                    padding="8px 20px 8px 16px"
+                  >
+                    <CategoryItemsChildren {...result} />
+                  </Interactions>
                 </InteractionsContainer>
               );
             })}
@@ -313,49 +308,71 @@ const StepForm = ({
   };
 
   const summaryUI = () => {
+    const CustomInteraction = ({ label, value, arrayValue, onClick }: any) => {
+      return (
+        <Interactions padding="15px 24px" type={'edit'} onClick={onClick}>
+          <div>
+            <Typography variant="overlineSmall" color="shade6">
+              {label}
+            </Typography>
+            {arrayValue && (
+              <BadgeContainer>
+                {arrayValue.map((selection: CategoryPayload) => (
+                  <BadgeItemContainer key={selection.id}>
+                    <Badge badgeColor={theme.grey.shade3}>
+                      <Typography variant="overline" color="shade9">
+                        {selection.name}
+                      </Typography>
+                    </Badge>
+                  </BadgeItemContainer>
+                ))}
+              </BadgeContainer>
+            )}
+
+            {value && <Typography variant="label">{value}</Typography>}
+          </div>
+        </Interactions>
+      );
+    };
+
     return (
       <>
         <SellerSummaryContainer>
-          <InteractionsV2
+          <CustomInteraction
             label="First Name"
             value={registrationDetails.firstName}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(1);
               setSummaryEdit();
             }}
           />
-          <InteractionsV2
+          <CustomInteraction
             label="Last Name"
             value={registrationDetails.lastName}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(1);
               setSummaryEdit();
             }}
           />
-          <InteractionsV2
+          <CustomInteraction
             label="Email"
             value={registrationDetails.email}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(1);
               setSummaryEdit();
             }}
           />
-          <InteractionsV2
+          <CustomInteraction
             label="Mobile"
             value={`+${registrationDetails.callingCode}${registrationDetails.mobile}`}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(1);
               setSummaryEdit();
             }}
           />
-          <InteractionsV2
+          <CustomInteraction
             label="Business Name"
             value={registrationDetails.businessName}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(2);
               setSummaryEdit();
@@ -363,10 +380,9 @@ const StepForm = ({
           />
 
           {isSeller && (
-            <InteractionsV2
+            <CustomInteraction
               label="Business Number"
               value={registrationDetails.abn}
-              type={'edit'}
               onClick={() => {
                 summaryHandleStep(2);
                 setSummaryEdit();
@@ -374,9 +390,8 @@ const StepForm = ({
             />
           )}
 
-          <InteractionsV2
+          <CustomInteraction
             label="Address"
-            type={'edit'}
             value={
               registrationDetails.address !== null
                 ? addressToPlaceData(registrationDetails.address).address
@@ -390,50 +405,45 @@ const StepForm = ({
 
           {isSeller && (
             <>
-              <InteractionsV2
+              <CustomInteraction
                 label="Bank Account Name"
                 value={registrationDetails.accountName}
-                type={'edit'}
                 onClick={() => {
                   summaryHandleStep(3);
                   setSummaryEdit();
                 }}
               />
-              <InteractionsV2
+              <CustomInteraction
                 label="BSB"
                 value={registrationDetails.bsb}
-                type={'edit'}
                 onClick={() => {
                   summaryHandleStep(3);
                   setSummaryEdit();
                 }}
               />
-              <InteractionsV2
+              <CustomInteraction
                 label="Account Number"
                 value={registrationDetails.accountNumber}
-                type={'edit'}
                 onClick={() => {
                   summaryHandleStep(3);
                   setSummaryEdit();
                 }}
               />
-              <InteractionsV2
+              <CustomInteraction
                 label="Fishing License"
                 value={registrationDetails.licenseName}
-                type={'edit'}
                 onClick={() => {
                   summaryHandleStep(4);
                   setSummaryEdit();
                 }}
               />
-              <InteractionsV2
+              <CustomInteraction
                 label="Market Sector"
                 value={
                   SELLER_VARIATIONS.filter(
                     (i) => i.key === registrationDetails.categoryMarketSector
                   )[0].label
                 }
-                type={'edit'}
                 onClick={() => {
                   summaryHandleStep(5);
                   setSummaryEdit();
@@ -443,9 +453,8 @@ const StepForm = ({
           )}
 
           {!isSeller && (
-            <InteractionsV2
+            <CustomInteraction
               label="Payment Method"
-              type={'edit'}
               value={
                 PAYMENT_METHOD_OPTIONS[
                   parseInt(registrationDetails.selectedPaymentMethod)
@@ -458,10 +467,9 @@ const StepForm = ({
             />
           )}
 
-          <InteractionsV2
+          <CustomInteraction
             label={isSeller ? 'Selling Products' : 'Buying Products'}
             arrayValue={selectedCategoryTypes}
-            type={'edit'}
             onClick={() => {
               summaryHandleStep(isSeller ? 6 : 5);
               setSummaryEdit();
@@ -507,9 +515,9 @@ const StepForm = ({
             <Alert
               content={registerError}
               variant="error"
+              fullWidth
               style={{
                 marginTop: 16,
-                width: '100%',
               }}
             />
           )}
@@ -677,13 +685,14 @@ const StepForm = ({
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
-                  <div style={{ marginTop: '8px' }}>
-                    <AlertInfoView
-                      label={
-                        'You can add more people to your seller account once you’re approved'
-                      }
-                    />
-                  </div>
+                  <Alert
+                    variant="infoAlert"
+                    fullWidth
+                    content={
+                      'You can add more people to your seller account once you’re approved'
+                    }
+                    style={{ marginTop: 8 }}
+                  />
                 </>
               )}
               {step === 2 && (
@@ -704,10 +713,13 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
-                  <ShippingInfo
-                    label={
+                  <Alert
+                    variant="infoAlert"
+                    fullWidth
+                    content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                     }
+                    style={{ marginTop: 8 }}
                   />
                   {isSeller && (
                     <>
@@ -1197,6 +1209,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   };
   return (
     <AuthContainer
+      isRegister
       noLogo
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
@@ -1205,7 +1218,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     >
       <RenderContainer step={step}>
         {!props.isGotoDetails && step > 0 && !isSuccess && (
-          <>
+          <TopContainer>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
             <TitleContainer>
               <Touchable
@@ -1222,7 +1235,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 {steps[step - 1].title}
               </Title>
             </TitleContainer>
-          </>
+          </TopContainer>
         )}
 
         {props.isGotoDetails && (

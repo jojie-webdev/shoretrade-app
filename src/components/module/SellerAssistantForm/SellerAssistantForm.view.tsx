@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Radio from 'components/base/Radio';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import PhoneTextField from 'components/module/PhoneTextField';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Formik, Form } from 'formik';
+import qs from 'qs';
 import { Col } from 'react-grid-system';
 
 import {
@@ -20,19 +23,18 @@ import {
   RoleContainer,
   TextFieldRow,
   RolesRow,
-  StyledAlert,
 } from './SellerAssistantForm.style';
 
 const Role = ({ children, label, checked, onClick }: RoleProps) => (
-  <RoleContainer style={{ display: 'flex' }}>
-    <div className="radio-container">
-      <Radio checked={checked} onClick={onClick} />
-    </div>
+  <RoleContainer>
+    <Radio checked={checked} onClick={onClick} />
     <div className="text-container">
-      <Typography color="shade6" variant="overline" className="overline">
+      <Typography color="shade6" className="overline">
         {label}
       </Typography>
-      <Typography color="noshade">{children}</Typography>
+      <Typography variant="label" color="noshade">
+        {children}
+      </Typography>
     </div>
   </RoleContainer>
 );
@@ -40,6 +42,7 @@ const Role = ({ children, label, checked, onClick }: RoleProps) => (
 const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
   // const theme = useTheme();
   const {
+    companyId,
     role,
     setRole,
     callingCode,
@@ -69,9 +72,24 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title={routeHeader} />
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            {
+              label: 'Fisherman / Assistant',
+              link: `${SELLER_ACCOUNT_ROUTES.ASSISTANTS}${qs.stringify(
+                { companyId },
+                { addQueryPrefix: true }
+              )}`,
+            },
+            { label: routeHeader },
+          ]}
+        />
+      </div>
+
       {(error || '')?.length > 0 && (
-        <StyledAlert
+        <Alert
           content={
             error ||
             'An error has occurred while creating an assistant! Try again later.'
@@ -79,6 +97,9 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
           variant="error"
           alignText="center"
           fullWidth
+          style={{
+            marginBottom: 16,
+          }}
         />
       )}
 
@@ -90,21 +111,22 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
       >
         <Form>
           <TextFieldRow>
-            <Col md={6} className="textfield-container">
+            <Col md={12} xl={4} className="textfield-container">
               <FormikTextField
                 label="First Name"
                 name="firstName"
                 readOnly={type === 'EDIT'}
               />
             </Col>
-            <Col md={6} className="textfield-container">
+            <Col md={12} xl={4} className="textfield-container">
               <FormikTextField
                 label="Last Name"
                 name="lastName"
                 readOnly={type === 'EDIT'}
               />
             </Col>
-            <Col md={6} className="textfield-container">
+            <Col xl={4} />
+            <Col md={12} xl={4} className="textfield-container">
               <PhoneTextField
                 label="Mobile"
                 name="mobile"
@@ -113,7 +135,7 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
                 readOnly={type === 'EDIT'}
               />
             </Col>
-            <Col md={6} className="textfield-container">
+            <Col md={12} xl={4} className="textfield-container">
               <FormikTextField
                 label="Email"
                 name="email"
@@ -125,7 +147,7 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
           {role && setRole && (
             <RolesRow>
               <Col>
-                <Typography color="noshade" className="title">
+                <Typography variant="title6" color="noshade" className="title">
                   Roles & Permissions
                 </Typography>
 
