@@ -6,6 +6,7 @@ import SegmentedControls from 'components/base/SegmentedControls/SegmentedContro
 import { ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { Col, Row } from 'react-grid-system';
@@ -44,95 +45,103 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         </Col>
       </Row>
 
-      {props.currentTab === 'Buyer Requests' &&
-        [...new Array(5)].map((v, i) => (
-          <Interactions
-            key={i}
-            onClick={() =>
-              history.push(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST)
-            }
-            leftComponent={
-              <div className="left-component">
-                <img src="https://picsum.photos/200/300" />
-                <div>
-                  <Typography color="noshade">Pale Octopus</Typography>
-                  <div className="badges-container">
-                    {['Fresh', 'Farmed', 'Head on Gutted', 'Medium'].map(
-                      (v) => (
+      {props.isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {props.currentTab === 'Buyer Requests' &&
+            props.buyerRequests.map((b) => (
+              <Interactions
+                key={b.id}
+                onClick={() =>
+                  history.push(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST)
+                }
+                leftComponent={
+                  <div className="left-component">
+                    <img src={b.image} />
+                    <div>
+                      <Typography color="noshade">{b.type}</Typography>
+                      <div className="badges-container">
+                        {b.specifications.map((s) => (
+                          <Badge
+                            key={s.stateId}
+                            className="badge"
+                            badgeColor={theme.grey.shade8}
+                          >
+                            <BadgeText variant="overlineSmall" color="noshade">
+                              {s.stateName}
+                            </BadgeText>
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="weights">
+                        <Typography color="noshade" variant="small">
+                          {b.weight?.from || ''}
+                          {b.measurementUnit.toLowerCase()}
+                        </Typography>
+                        <ArrowRight
+                          width={10}
+                          height={10}
+                          fill={theme.grey.shade7}
+                        />
+                        <Typography color="noshade" variant="small">
+                          {b.weight?.to || ''}
+                          {b.measurementUnit.toLowerCase()}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                }
+                padding="16px 24px 16px 16px"
+              />
+            ))}
+
+          {props.currentTab === 'My Active Offers' &&
+            [...new Array(5)].map((v, i) => (
+              <Interactions
+                key={i}
+                onClick={() =>
+                  history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE)
+                }
+                leftComponent={
+                  <div className="left-component">
+                    <img src="https://picsum.photos/200/300" />
+                    <div>
+                      <Typography color="noshade">Pale Octopus</Typography>
+                      <div className="badges-container">
                         <Badge
                           key={v}
                           className="badge"
-                          badgeColor={theme.grey.shade8}
+                          badgeColor={theme.brand.success}
                         >
                           <BadgeText variant="overlineSmall" color="noshade">
-                            {v}
+                            ACCEPTED
                           </BadgeText>
                         </Badge>
-                      )
-                    )}
-                  </div>
+                      </div>
 
-                  <div className="weights">
-                    <Typography color="noshade" variant="small">
-                      100kg
-                    </Typography>
-                    <ArrowRight
-                      width={10}
-                      height={10}
-                      fill={theme.grey.shade7}
-                    />
-                    <Typography color="noshade" variant="small">
-                      250kg
-                    </Typography>
+                      <div className="weights">
+                        <Typography color="noshade" variant="small">
+                          100kg
+                        </Typography>
+                        <ArrowRight
+                          width={10}
+                          height={10}
+                          fill={theme.grey.shade7}
+                        />
+                        <Typography color="noshade" variant="small">
+                          250kg
+                        </Typography>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            }
-            padding="16px 24px 16px 16px"
-          />
-        ))}
-
-      {props.currentTab === 'My Active Offers' &&
-        [...new Array(5)].map((v, i) => (
-          <Interactions
-            key={i}
-            onClick={() => history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE)}
-            leftComponent={
-              <div className="left-component">
-                <img src="https://picsum.photos/200/300" />
-                <div>
-                  <Typography color="noshade">Pale Octopus</Typography>
-                  <div className="badges-container">
-                    <Badge
-                      key={v}
-                      className="badge"
-                      badgeColor={theme.brand.success}
-                    >
-                      <BadgeText variant="overlineSmall" color="noshade">
-                        ACCEPTED
-                      </BadgeText>
-                    </Badge>
-                  </div>
-
-                  <div className="weights">
-                    <Typography color="noshade" variant="small">
-                      100kg
-                    </Typography>
-                    <ArrowRight
-                      width={10}
-                      height={10}
-                      fill={theme.grey.shade7}
-                    />
-                    <Typography color="noshade" variant="small">
-                      250kg
-                    </Typography>
-                  </div>
-                </div>
-              </div>
-            }
-            padding="16px 24px 16px 16px"
-          />
-        ))}
+                }
+                padding="16px 24px 16px 16px"
+              />
+            ))}
+        </>
+      )}
     </Container>
   );
 };

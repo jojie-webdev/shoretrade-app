@@ -18,8 +18,10 @@ import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAccountCompletion from './getAccountCompletion';
+import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getAllMarketRequest from './getAllMarketRequest';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
@@ -83,8 +85,10 @@ const sagas = [
   endListing,
   forgotPassword,
   getAccountCompletion,
+  getActiveOffers,
   getAddresses,
   getAllListings,
+  getAllMarketRequest,
   getBankDetails,
   getBuyerHomepage,
   getBuyerOrders,

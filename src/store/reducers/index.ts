@@ -21,8 +21,10 @@ import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
+import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getAllMarketRequest from './getAllMarketRequest';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
@@ -95,8 +97,10 @@ export default (routeHistory: History) =>
         endListing,
         forgotPassword,
         getAccountCompletion,
+        getActiveOffers,
         getAddresses,
         getAllListings,
+        getAllMarketRequest,
         getBankDetails,
         getBuyerHomepage,
         getBuyerOrdersDelivered,
