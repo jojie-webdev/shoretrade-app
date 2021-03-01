@@ -13,6 +13,14 @@ import {
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
 import {
+  GetActiveOffersMeta,
+  GetActiveOffersPayload,
+} from 'types/store/GetActiveOffersState';
+import {
+  GetAllMarketRequestMeta,
+  GetAllMarketRequestPayload,
+} from 'types/store/GetAllMarketRequestState';
+import {
   GetMarketInterestsMeta,
   GetMarketInterestsPayload,
 } from 'types/store/GetMarketInterestsState';
@@ -324,4 +332,9 @@ export interface Store {
     CreateBulkListingMeta,
     CreateBulkListingPayload
   >;
+  getAllMarketRequest: AsyncState<
+    GetAllMarketRequestMeta,
+    GetAllMarketRequestPayload
+  >;
+  getActiveOffers: AsyncState<GetActiveOffersMeta, GetActiveOffersPayload>;
 }
