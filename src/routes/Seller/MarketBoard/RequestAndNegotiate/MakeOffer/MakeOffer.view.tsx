@@ -5,17 +5,21 @@ import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
+import Select from 'components/base/Select/Select.view';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerDropdown.view';
 import moment from 'moment';
+import { pathOr } from 'ramda';
 import { Col, Row } from 'react-grid-system';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
-import { Container } from './MakeOffer.style';
+import { Container, Error } from './MakeOffer.style';
 
-const MakeOfferView = (props: MakeOfferGeneratedProps) => {
+const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   // const theme = useTheme();
+
   return (
     <Container>
       <Alert
@@ -30,64 +34,100 @@ const MakeOfferView = (props: MakeOfferGeneratedProps) => {
         }}
       />
 
+      <div className="shipping-to">
+        <Typography variant="label" color="shade6">
+          Shipping to
+        </Typography>
+        <Typography variant="label" color="noshade" weight="bold">
+          {props.shippingTo}
+        </Typography>
+      </div>
+
       <Typography variant="overline" color="shade6" className="row-label">
         Specs
       </Typography>
       <Row>
-        {[
-          'Fresh',
-          'Frozen',
-          'Cleaned',
-          'Whole',
-          'Not Tenderised',
-          'Tenderised',
-        ].map((v) => (
-          <Col key={v} md={12} lg={6} xl={4}>
+        {props.stateOptions.map((v) => (
+          <Col key={v.value} md={12} lg={6} xl={4}>
             <Interactions
-              value={v}
+              value={v.label}
               type="radio"
               padding="14px 18px"
-              onClick={() => {}}
+              pressed={props.specifications.includes(v.value)}
+              onClick={() => props.onClickSpecification(v.value)}
             />
           </Col>
         ))}
       </Row>
+      {pathOr('', ['specifications', '0'], errors) ? (
+        <Error variant="caption" color="error">
+          {pathOr('', ['specifications', '0'], errors)}
+        </Error>
+      ) : null}
 
       <Typography variant="overline" color="shade6" className="row-label">
         Size
       </Typography>
       <Row>
-        {['Medium', 'Large', 'Giant'].map((v) => (
+        {props.marketSizes.map((v) => (
           <Col key={v} md={12} lg={6} xl={4}>
             <Interactions
               value={v}
               type="radio"
               padding="14px 18px"
-              onClick={() => {}}
+              pressed={props.size.includes(v)}
+              onClick={() => props.setSize(v)}
             />
           </Col>
         ))}
+
+        {props.buyerRequest.sizeFrom && (
+          <Col md={12} lg={6} xl={4}>
+            <TextField
+              LeftComponent={
+                <Typography variant="label" weight="bold" color="shade6">
+                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+                </Typography>
+              }
+              value={props.size}
+              onChangeText={props.setSize}
+              type="number"
+              error={pathOr('', ['size', '0'], errors)}
+            />
+          </Col>
+        )}
       </Row>
 
       <div className="checkbox-container ungraded">
-        <Checkbox onClick={(v) => {}} className="checkbox" checked={false} />
+        <Checkbox
+          onClick={() => props.setSize('ungraded')}
+          className="checkbox"
+          checked={props.size === 'ungraded'}
+        />
         <Typography className="label" variant="label" color="noshade">
           Ungraded
         </Typography>
       </div>
 
-      <Row>
+      {!props.buyerRequest.sizeFrom && pathOr('', ['size', '0'], errors) ? (
+        <Error variant="caption" color="error">
+          {pathOr('', ['size', '0'], errors)}
+        </Error>
+      ) : null}
+
+      <Row className="textfield-row">
         <Col md={12} lg={6} xl={4} className="textfield-col">
           <TextField
             label="Quantity"
             LeftComponent={
               <Typography variant="label" weight="bold" color="shade6">
-                Kg
+                {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
               </Typography>
             }
-            value={''}
-            onChangeText={() => {}}
+            value={props.weight}
+            onChangeText={props.setWeight}
             type="number"
+            error={pathOr('', ['weight', '0'], errors)}
           />
         </Col>
 
@@ -99,17 +139,29 @@ const MakeOfferView = (props: MakeOfferGeneratedProps) => {
                 $
               </Typography>
             }
-            value={''}
-            onChangeText={() => {}}
+            value={props.price}
+            onChangeText={props.setPrice}
             type="number"
+            error={pathOr('', ['price', '0'], errors)}
           />
         </Col>
 
         <Col md={12} lg={6} xl={4} className="textfield-col">
           <DatePickerDropdown
             label="Delivery date"
-            date={moment()}
-            onDateChange={(d) => {}}
+            date={props.deliveryDate ? moment(props.deliveryDate) : null}
+            onDateChange={(d) => props.setDeliveryDate(d?.toDate() || null)}
+            error={pathOr('', ['deliveryDate', '0'], errors)}
+          />
+        </Col>
+
+        <Col md={12} lg={6} xl={4} className="textfield-col">
+          <Select
+            value={props.selectedAddress}
+            onChange={(o) => props.setSelectedAddress(o.value)}
+            options={props.addresses}
+            label="Shipping From"
+            error={pathOr('', ['selectedAddress', '0'], errors)}
           />
         </Col>
       </Row>
@@ -119,12 +171,14 @@ const MakeOfferView = (props: MakeOfferGeneratedProps) => {
           Total Value
         </Typography>
         <Typography variant="label" color="noshade" weight="bold">
-          $1895.00
+          {props.weight && props.price && (
+            <>${parseFloat(props.weight) * parseFloat(props.price)}.00</>
+          )}
         </Typography>
       </div>
 
       <Button
-        onClick={() => props.setStep && props.setStep(3)}
+        onClick={props.addToMarketOffers}
         className="submit-btn"
         text="Review offer"
         variant="primary"
