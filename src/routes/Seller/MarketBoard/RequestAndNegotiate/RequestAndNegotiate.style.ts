@@ -30,10 +30,10 @@ export const SummaryContentContainer = styled.div`
 
   .quantity-container {
     display: flex;
-    flex-direction: column;
 
     .text-field {
       margin-bottom: 1rem;
+      margin-right: 16px;
     }
   }
 

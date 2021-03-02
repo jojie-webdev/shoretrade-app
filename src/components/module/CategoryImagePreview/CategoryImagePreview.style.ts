@@ -3,6 +3,7 @@ import styled from 'utils/styled';
 const imgUrl = (url: string) => `"${url}"`;
 
 export const Container = styled.div<{ img: string }>`
+  width: 100%;
   max-width: 474px;
   margin-bottom: 1rem;
 

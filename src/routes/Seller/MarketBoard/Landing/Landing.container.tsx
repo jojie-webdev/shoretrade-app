@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   getActiveOffersActions,
   getAllMarketRequestActions,
 } from 'store/actions';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 
 import { TabOptions } from './Landing.props';
 import MarketBoardLandingView from './Landing.view';
 
 const MarketBoardLanding = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const buyerRequests = useSelector(
@@ -67,6 +71,12 @@ const MarketBoardLanding = (): JSX.Element => {
     setTimer(timerId);
   }, [searchTerm]);
 
+  const onClickOffer = (data: GetAllMarketRequestResponseItem) => {
+    history.push(SELLER_MARKET_BOARD_ROUTES.OFFER, {
+      buyerRequest: data,
+    });
+  };
+
   const generatedProps = {
     buyerRequests: buyerRequests.data?.data.marketRequests || [],
     activeOffers: activeOffers.data?.data.marketOffers || [],
@@ -75,6 +85,7 @@ const MarketBoardLanding = (): JSX.Element => {
     onChangeCurrentTab,
     searchTerm,
     setSearchTerm,
+    onClickOffer,
   };
   return <MarketBoardLandingView {...generatedProps} />;
 };

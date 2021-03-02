@@ -53,9 +53,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             props.buyerRequests.map((b) => (
               <Interactions
                 key={b.id}
-                onClick={() =>
-                  history.push(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST)
-                }
+                onClick={() => props.onClickOffer(b)}
                 leftComponent={
                   <div className="left-component">
                     <img src={b.image} />

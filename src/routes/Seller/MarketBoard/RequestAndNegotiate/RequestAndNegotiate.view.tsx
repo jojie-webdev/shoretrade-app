@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
 import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { isEmpty } from 'ramda';
 import { useHistory, useLocation } from 'react-router-dom';
 import theme from 'utils/Theme';
 
@@ -16,7 +17,7 @@ import MakeOffer from './MakeOffer';
 import { MakeOfferProps } from './MakeOffer/MakeOffer.props';
 import {
   RequestAndNegotiateGeneratedProps,
-  StepProps,
+  Step1Props,
 } from './RequestAndNegotiate.props';
 import {
   SummaryContentContainer,
@@ -27,11 +28,8 @@ import {
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferGeneratedProps } from './ReviewOffer/ReviewOffer.props';
 
-const Step1 = (props: StepProps) => {
+const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
   const history = useHistory();
-  const location = useLocation();
-  const { pathname } = location;
-  const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,7 +38,7 @@ const Step1 = (props: StepProps) => {
   const SummaryBadges = (badgeProps: { items: string[]; label: string }) => {
     const { items, label } = badgeProps;
 
-    if (!items) return <></>;
+    if (isEmpty(items)) return <></>;
 
     const tagsMarkup = items.map((item) => (
       <Badge
@@ -55,7 +53,7 @@ const Step1 = (props: StepProps) => {
     ));
 
     return (
-      <div className="offer-badges">
+      <div>
         <Typography
           style={{ marginBottom: '8px' }}
           color="shade6"
@@ -72,25 +70,72 @@ const Step1 = (props: StepProps) => {
     <>
       <div className="step-1-container">
         <CategoryImagePreviewView
-          categoryName="Pale Octopus"
-          imgSrc="http://placekitten.com/474/280"
-          caption="Praesent vel et sed augue. Pharetra duis vitae pellentesque elementum.
-             Cras id ac hac ultricies lorem in nisl nunc lectus. Consequat quam."
+          categoryName={buyerRequest.type}
+          imgSrc={buyerRequest.image}
         />
 
         <SummaryContentContainer>
-          <SummaryBadges label="Specs" items={['FRESH']} />
-          <SummaryBadges label="Sizes" items={['MEDIUM']} />
+          <SummaryBadges
+            label="Specs"
+            items={buyerRequest.specifications.map((v) => v.stateName)}
+          />
+          {!isEmpty(buyerRequest.sizeOptions) ? (
+            <SummaryBadges label="Sizes" items={buyerRequest.sizeOptions} />
+          ) : (
+            <>
+              <Typography
+                style={{ marginBottom: '16px' }}
+                color="shade6"
+                variant="overline"
+              >
+                Size
+              </Typography>
+
+              <div className="quantity-container">
+                <TextField
+                  className="text-field"
+                  type="number"
+                  label="From"
+                  value={buyerRequest.sizeFrom || 0}
+                  disabled
+                  LeftComponent={
+                    <Typography variant="label" color="shade6">
+                      kg
+                    </Typography>
+                  }
+                />
+                <TextField
+                  className="text-field"
+                  type="number"
+                  label="To"
+                  value={buyerRequest.sizeTo || 0}
+                  disabled
+                  LeftComponent={
+                    <Typography variant="label" color="shade6">
+                      kg
+                    </Typography>
+                  }
+                />
+              </div>
+            </>
+          )}
+          <Typography
+            style={{ margin: '16px 0' }}
+            color="shade6"
+            variant="overline"
+          >
+            Weight
+          </Typography>
           <div className="quantity-container">
             <TextField
               className="text-field"
               type="number"
               label="From"
-              value={100}
+              value={buyerRequest.weight?.from || 0}
               disabled
               LeftComponent={
                 <Typography variant="label" color="shade6">
-                  kg
+                  Kg
                 </Typography>
               }
             />
@@ -98,11 +143,11 @@ const Step1 = (props: StepProps) => {
               className="text-field"
               type="number"
               label="To"
-              value={250}
+              value={buyerRequest.weight?.to || 0}
               disabled
               LeftComponent={
                 <Typography variant="label" color="shade6">
-                  kg
+                  Kg
                 </Typography>
               }
             />
@@ -219,8 +264,9 @@ const Step3 = (props: ReviewOfferGeneratedProps) => {
 const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const location = useLocation();
   const { pathname } = location;
-  const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST);
+  const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
+  const { buyerRequest } = props;
   const [step, setStep] = useState(1);
 
   return (
@@ -244,7 +290,13 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         />
       </div>
 
-      {step === 1 && <Step1 setStep={setStep} />}
+      {step === 1 && (
+        <Step1
+          setStep={setStep}
+          isReview={isReview}
+          buyerRequest={buyerRequest}
+        />
+      )}
       {step === 2 && <Step2 setStep={setStep} />}
       {step === 3 && <Step3 setStep={setStep} />}
     </Container>
