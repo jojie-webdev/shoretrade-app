@@ -4,11 +4,11 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 
 export interface StepProps {
   setStep?: Dispatch<SetStateAction<number>>;
+  buyerRequest: GetAllMarketRequestResponseItem;
 }
 
 export interface Step1Props extends StepProps {
   isReview: boolean;
-  buyerRequest: GetAllMarketRequestResponseItem;
 }
 
 export interface RequestAndNegotiateGeneratedProps {

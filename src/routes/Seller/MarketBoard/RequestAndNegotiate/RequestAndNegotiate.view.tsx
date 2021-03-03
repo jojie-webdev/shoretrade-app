@@ -11,6 +11,7 @@ import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { isEmpty } from 'ramda';
 import { useHistory, useLocation } from 'react-router-dom';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import MakeOffer from './MakeOffer';
@@ -99,8 +100,8 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
                   value={buyerRequest.sizeFrom || 0}
                   disabled
                   LeftComponent={
-                    <Typography variant="label" color="shade6">
-                      kg
+                    <Typography variant="label" weight="bold" color="shade6">
+                      {formatMeasurementUnit(buyerRequest.measurementUnit)}
                     </Typography>
                   }
                 />
@@ -111,8 +112,8 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
                   value={buyerRequest.sizeTo || 0}
                   disabled
                   LeftComponent={
-                    <Typography variant="label" color="shade6">
-                      kg
+                    <Typography variant="label" weight="bold" color="shade6">
+                      {formatMeasurementUnit(buyerRequest.measurementUnit)}
                     </Typography>
                   }
                 />
@@ -134,8 +135,8 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
               value={buyerRequest.weight?.from || 0}
               disabled
               LeftComponent={
-                <Typography variant="label" color="shade6">
-                  Kg
+                <Typography variant="label" weight="bold" color="shade6">
+                  {formatMeasurementUnit(buyerRequest.measurementUnit)}
                 </Typography>
               }
             />
@@ -146,8 +147,8 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
               value={buyerRequest.weight?.to || 0}
               disabled
               LeftComponent={
-                <Typography variant="label" color="shade6">
-                  Kg
+                <Typography variant="label" weight="bold" color="shade6">
+                  {formatMeasurementUnit(buyerRequest.measurementUnit)}
                 </Typography>
               }
             />
@@ -297,8 +298,8 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
           buyerRequest={buyerRequest}
         />
       )}
-      {step === 2 && <Step2 setStep={setStep} />}
-      {step === 3 && <Step3 setStep={setStep} />}
+      {step === 2 && <Step2 setStep={setStep} buyerRequest={buyerRequest} />}
+      {step === 3 && <Step3 setStep={setStep} buyerRequest={buyerRequest} />}
     </Container>
   );
 };
