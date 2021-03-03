@@ -1,20 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions/Interactions.view';
-import {
-  Weight,
-  DollarSign,
-  SubtractHollow,
-  Pen,
-  ArrowRight,
-} from 'components/base/SVG';
+import { Weight, DollarSign, SubtractHollow, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
@@ -23,7 +15,7 @@ import { Container } from './ReviewOffer.style';
 
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
-  const history = useHistory();
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <Container>
@@ -49,10 +41,10 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                           </BadgeText>
                         </Badge>
                       ))}
-                    {v.size.to !== null && (
+                    {v.size.from !== null && (
                       <Badge className="badge" badgeColor={theme.grey.shade8}>
                         <BadgeText variant="overlineSmall" color="noshade">
-                          {v.size.to || ''}
+                          {v.size.from || ''}
                         </BadgeText>
                       </Badge>
                     )}
@@ -100,7 +92,11 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
       </div>
 
       <div className="checkbox-container">
-        <Checkbox onClick={(v) => {}} className="checkbox" checked={false} />
+        <Checkbox
+          onClick={() => setIsChecked((prevState) => !prevState)}
+          className="checkbox"
+          checked={isChecked}
+        />
         <Typography className="label" variant="label" color="noshade">
           Confirm the availability of the product
         </Typography>
@@ -115,10 +111,12 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           variant="outline"
         />
         <Button
-          onClick={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
+          onClick={props.onSubmit}
           className="submit-btn"
           text="submit"
           variant="primary"
+          disabled={!isChecked}
+          loading={props.isSubmitting}
         />
       </div>
     </Container>

@@ -2,7 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 interface Size {
   from: string | null;
-  to: string | null;
+  to: null;
 }
 
 export type MarketOfferItem = {
@@ -20,6 +20,13 @@ export type MarketOfferItem = {
   type?: string;
   image?: string;
   measurementUnit?: string;
+};
+
+export type CreateMarketOfferRequestData = {
+  marketOffers: Omit<
+    MarketOfferItem,
+    'listStateOptions' | 'type' | 'image' | 'measurementUnit'
+  >[];
 };
 
 export type CreateMarketOfferMeta = MarketOfferItem[];

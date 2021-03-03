@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   getActiveOffersActions,
   getAllMarketRequestActions,
@@ -16,13 +16,17 @@ import MarketBoardLandingView from './Landing.view';
 const MarketBoardLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location: { state?: { currentTab?: string } } = useLocation();
+  const locationTab = location.state?.currentTab || 'Buyer Requests';
 
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
 
-  const [currentTab, setCurrentTab] = useState<TabOptions>('Buyer Requests');
+  const [currentTab, setCurrentTab] = useState<TabOptions>(
+    locationTab as TabOptions
+  );
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [initial, setInitial] = useState(true);

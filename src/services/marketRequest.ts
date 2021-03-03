@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API } from 'consts';
-import { CreateMarketOfferMeta } from 'types/store/CreateMarketOfferState';
+import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const MARKET_REQUEST_URL = `${BASE_URL}/market-request`;
@@ -26,7 +26,7 @@ export const getActiveOffers = (token: string, queryString?: string) => {
 };
 
 export const createMarketOffer = (
-  data: CreateMarketOfferMeta,
+  data: CreateMarketOfferRequestData,
   token: string
 ) => {
   return axios({

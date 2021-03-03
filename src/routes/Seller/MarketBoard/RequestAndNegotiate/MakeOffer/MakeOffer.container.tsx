@@ -25,9 +25,9 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     currentOfferItemData?.stateOptions || []
   );
   const [size, setSize] = useState(
-    currentOfferItemData?.size.to === null
+    currentOfferItemData?.size.from === null
       ? 'ungraded'
-      : currentOfferItemData?.size.to || ''
+      : currentOfferItemData?.size.from || ''
   );
   const [weight, setWeight] = useState(
     currentOfferItemData?.weight ? currentOfferItemData?.weight.toString() : ''
@@ -116,7 +116,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       sellerId: user?.id || '',
       size: {
         from: size as string,
-        to: size as string,
+        to: null,
       },
       stateOptions: specifications,
       weight: parseFloat(weight),
