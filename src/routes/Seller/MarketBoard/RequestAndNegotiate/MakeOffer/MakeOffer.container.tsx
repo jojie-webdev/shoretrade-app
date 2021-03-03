@@ -4,8 +4,10 @@ import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddressesActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/seller/addresses';
+import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
+import { v4 as uuidv4 } from 'uuid';
 
 import { MakeOfferProps } from './MakeOffer.props';
 import { isValid } from './MakeOffer.validation';
@@ -14,8 +16,6 @@ import MakeOfferView from './MakeOffer.view';
 const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   const { buyerRequest } = props;
   const dispatch = useDispatch();
-
-  const currentSelectedMarketOffer = {} as any;
 
   const [specifications, setSpecifications] = useState<string[]>([]);
   const [size, setSize] = useState('');
@@ -88,12 +88,12 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     );
     setErrors(marketOfferValidation);
 
-    // const payload: MarketOfferItem = {
-    const payload: any = {
+    const payload: MarketOfferItem = {
+      editId: uuidv4(),
       addressId: selectedAddress,
       companyId: user?.companies[0].id || '',
       deliveryDate,
-      marketRequestId: currentSelectedMarketOffer?.id || '',
+      marketRequestId: buyerRequest.id || '',
       price: parseFloat(price) || 0,
       sellerId: user?.id || '',
       size: {
@@ -105,9 +105,9 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       listStateOptions: stateOptions
         .filter((item) => specifications.includes(item.value))
         .map((item) => item.label),
-      type: currentSelectedMarketOffer?.type,
-      image: currentSelectedMarketOffer?.image,
-      measurementUnit: currentSelectedMarketOffer?.measurementUnit,
+      type: buyerRequest?.type,
+      image: buyerRequest?.image,
+      measurementUnit: buyerRequest?.measurementUnit,
     };
 
     if (specifications.length < 0 || size === 'ungraded') {
@@ -118,6 +118,22 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     }
 
     if (isEmptyError) {
+      props.setOffer((o) => {
+        const existing = o.some(
+          (item) => item.marketRequestId === payload.marketRequestId
+        );
+        if (existing) {
+          return [
+            payload,
+            ...o.filter(
+              (item) => item.marketRequestId !== payload.marketRequestId
+            ),
+          ];
+        }
+
+        return [payload];
+      });
+      props.setStep && props.setStep(3);
     }
   };
 

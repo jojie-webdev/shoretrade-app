@@ -15,6 +15,7 @@ import confirmWeight from './confirmWeight';
 import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
+import createMarketOffer from './createMarketOffer';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -90,6 +91,7 @@ export default (routeHistory: History) =>
         createBulkListing,
         createCustomListing,
         createListing,
+        createMarketOffer,
         currentAddress,
         deleteCard,
         deleteLinkedAccount,

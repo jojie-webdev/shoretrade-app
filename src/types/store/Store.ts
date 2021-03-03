@@ -9,6 +9,10 @@ import {
   CreateBulkListingPayload,
 } from 'types/store/CreateBulkListingState';
 import {
+  CreateMarketOfferMeta,
+  CreateMarketOfferPayload,
+} from 'types/store/CreateMarketOfferState';
+import {
   GetAccountCompletionMeta,
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
@@ -337,4 +341,8 @@ export interface Store {
     GetAllMarketRequestPayload
   >;
   getActiveOffers: AsyncState<GetActiveOffersMeta, GetActiveOffersPayload>;
+  createMarketOffer: AsyncState<
+    CreateMarketOfferMeta,
+    CreateMarketOfferPayload
+  >;
 }

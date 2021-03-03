@@ -41,7 +41,7 @@ export const Container = styled.div`
         align-items: center;
 
         svg {
-          margin: 0 6px;
+          margin-bottom: ;
         }
       }
     }

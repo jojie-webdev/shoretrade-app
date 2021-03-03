@@ -82,7 +82,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         ))}
 
         {props.buyerRequest.sizeFrom && (
-          <Col md={12} lg={6} xl={4}>
+          <Col md={12} lg={6} xl={4} style={{ marginBottom: 16 }}>
             <TextField
               LeftComponent={
                 <Typography variant="label" weight="bold" color="shade6">

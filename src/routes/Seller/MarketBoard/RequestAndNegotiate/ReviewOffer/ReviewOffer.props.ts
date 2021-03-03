@@ -1,5 +1,7 @@
-import { StepProps } from '../RequestAndNegotiate.props';
+import { OfferProps, StepProps } from '../RequestAndNegotiate.props';
 
-export interface ReviewOfferProps extends StepProps {}
+export interface ReviewOfferProps extends StepProps, OfferProps {}
 
-export interface ReviewOfferGeneratedProps extends ReviewOfferProps {}
+export interface ReviewOfferGeneratedProps extends ReviewOfferProps {
+  onDelete: (id: string) => void;
+}

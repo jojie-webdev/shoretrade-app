@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { StepProps } from '../RequestAndNegotiate.props';
+import { OfferProps, StepProps } from '../RequestAndNegotiate.props';
 
-export interface MakeOfferProps extends StepProps {}
+export interface MakeOfferProps extends StepProps, OfferProps {}
 
 export type Option = { label: string; value: string };
 

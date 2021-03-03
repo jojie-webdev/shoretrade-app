@@ -27,7 +27,7 @@ import {
   BadgeText,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
-import { ReviewOfferGeneratedProps } from './ReviewOffer/ReviewOffer.props';
+import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
 
 const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
   const history = useHistory();
@@ -258,7 +258,7 @@ const Step2 = (props: MakeOfferProps) => {
   return <MakeOffer {...props} />;
 };
 
-const Step3 = (props: ReviewOfferGeneratedProps) => {
+const Step3 = (props: ReviewOfferProps) => {
   return <ReviewOffer {...props} />;
 };
 
@@ -267,7 +267,6 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const { pathname } = location;
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
-  const { buyerRequest } = props;
   const [step, setStep] = useState(1);
 
   return (
@@ -291,15 +290,9 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         />
       </div>
 
-      {step === 1 && (
-        <Step1
-          setStep={setStep}
-          isReview={isReview}
-          buyerRequest={buyerRequest}
-        />
-      )}
-      {step === 2 && <Step2 setStep={setStep} buyerRequest={buyerRequest} />}
-      {step === 3 && <Step3 setStep={setStep} buyerRequest={buyerRequest} />}
+      {step === 1 && <Step1 setStep={setStep} isReview={isReview} {...props} />}
+      {step === 2 && <Step2 setStep={setStep} {...props} />}
+      {step === 3 && <Step3 setStep={setStep} {...props} />}
     </Container>
   );
 };
