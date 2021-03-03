@@ -17,12 +17,12 @@ function* createMarketRequestOfferDatabase(
   const state: Store = yield select();
   if (state.auth.token) {
     const cleanedData = [...action.meta].map((item) => {
-      if (item.listStateOptions) {
-        delete item.listStateOptions;
-        delete item.type;
-        delete item.image;
-        delete item.measurementUnit;
-      }
+      delete item.editId;
+      delete item.listStateOptions;
+      delete item.type;
+      delete item.image;
+      delete item.measurementUnit;
+
       return {
         ...item,
       };

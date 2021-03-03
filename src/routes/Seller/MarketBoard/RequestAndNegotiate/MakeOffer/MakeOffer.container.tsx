@@ -123,9 +123,9 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       listStateOptions: stateOptions
         .filter((item) => specifications.includes(item.value))
         .map((item) => item.label),
-      type: buyerRequest?.type,
-      image: buyerRequest?.image,
-      measurementUnit: buyerRequest?.measurementUnit,
+      type: buyerRequest?.type || '',
+      image: buyerRequest?.image || '',
+      measurementUnit: buyerRequest?.measurementUnit || '',
     };
 
     if (size === 'ungraded') {

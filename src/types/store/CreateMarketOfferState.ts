@@ -25,7 +25,7 @@ export type MarketOfferItem = {
 export type CreateMarketOfferRequestData = {
   marketOffers: Omit<
     MarketOfferItem,
-    'listStateOptions' | 'type' | 'image' | 'measurementUnit'
+    'editId' | 'listStateOptions' | 'type' | 'image' | 'measurementUnit'
   >[];
 };
 
