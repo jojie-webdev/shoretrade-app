@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge/Badge.view';
@@ -7,6 +7,7 @@ import Button from 'components/base/Button';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { isEmpty } from 'ramda';
@@ -264,17 +265,28 @@ const Step3 = (props: ReviewOfferProps) => {
 
 const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const location = useLocation();
+  const history = useHistory();
   const { pathname } = location;
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
   const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
-            { label: 'Market Board', link: SELLER_MARKET_BOARD_ROUTES.LANDING },
+            {
+              label: 'Market Board',
+              onClick: () => {
+                if (!isEmpty(props.offer)) {
+                  setIsOpen(true);
+                } else {
+                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+                }
+              },
+            },
             {
               label: isReview ? 'Review Request' : 'Negotiate',
               ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
@@ -293,6 +305,19 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
       {step === 1 && <Step1 setStep={setStep} isReview={isReview} {...props} />}
       {step === 2 && <Step2 setStep={setStep} {...props} />}
       {step === 3 && <Step3 setStep={setStep} {...props} />}
+
+      <ConfirmationModal
+        isOpen={isOpen}
+        title="Clear Current Offer"
+        description="Are you sure you want to clear current offer?"
+        action={() => {
+          props.setOffer([]);
+          setIsOpen(false);
+          history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+        }}
+        actionText="Clear"
+        onClickClose={() => setIsOpen(false)}
+      />
     </Container>
   );
 };
