@@ -43,10 +43,6 @@ export const Container = styled.div`
       .weights {
         display: flex;
         align-items: center;
-
-        svg {
-          margin: 0 6px;
-        }
       }
     }
   }

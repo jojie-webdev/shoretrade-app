@@ -6,12 +6,13 @@ export type GetActiveOffersMeta = {
 
 export type GetActiveOffersRequestResponseItem = {
   id: string;
-  status: 'ACCEPTED' | 'DECLINE';
+  status: 'OPEN' | 'ACCEPTED' | 'DECLINE' | 'CLOSED';
   createdAt: string;
   price: number;
   weight: number;
   image: string;
   name: string;
+  measurementUnit: string;
   marketRequest: {
     id: string;
     status: 'OPEN' | 'CLOSED';
