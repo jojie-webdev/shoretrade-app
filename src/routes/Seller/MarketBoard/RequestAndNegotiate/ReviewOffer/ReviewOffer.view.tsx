@@ -86,7 +86,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             }
             rightComponent={
               <div className="right-component">
-                <div onClick={() => setStep && setStep(2)}>
+                <div onClick={() => props.onEdit(v.editId)}>
                   <Pen fill={theme.brand.primary} />
                 </div>
                 <div onClick={() => props.onDelete(v.editId)}>

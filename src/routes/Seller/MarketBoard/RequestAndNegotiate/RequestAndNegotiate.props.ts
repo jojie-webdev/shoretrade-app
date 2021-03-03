@@ -15,6 +15,8 @@ export interface Step1Props extends StepProps {
 export interface OfferProps {
   offer: MarketOfferItem[];
   setOffer: Dispatch<SetStateAction<MarketOfferItem[]>>;
+  currentOfferItem: string;
+  setCurrentOfferItem: Dispatch<SetStateAction<string>>;
 }
 
 export interface RequestAndNegotiateGeneratedProps extends OfferProps {

@@ -312,6 +312,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         description="Are you sure you want to clear current offer?"
         action={() => {
           props.setOffer([]);
+          props.setCurrentOfferItem('');
           setIsOpen(false);
           history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
         }}

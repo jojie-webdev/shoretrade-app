@@ -6,7 +6,12 @@ import { ReviewOfferProps } from './ReviewOffer.props';
 import ReviewOfferView from './ReviewOffer.view';
 
 const ReviewOffer = (props: ReviewOfferProps): JSX.Element => {
-  const { buyerRequest, offer, setOffer, setStep } = props;
+  const { buyerRequest, offer, setOffer, setStep, setCurrentOfferItem } = props;
+
+  const onEdit = (id: string) => {
+    setCurrentOfferItem(id);
+    setStep && setStep(2);
+  };
 
   const onDelete = (id: string) => {
     const offerCopy = [...offer];
@@ -17,6 +22,7 @@ const ReviewOffer = (props: ReviewOfferProps): JSX.Element => {
   };
 
   const generatedProps = {
+    onEdit,
     onDelete,
     ...props,
   };

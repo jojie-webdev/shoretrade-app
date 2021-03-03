@@ -17,6 +17,7 @@ const RequestAndNegotiate = (): JSX.Element => {
   const buyerRequest = state?.buyerRequest;
 
   const [offer, setOffer] = useState<MarketOfferItem[]>([]);
+  const [currentOfferItem, setCurrentOfferItem] = useState('');
 
   if (!buyerRequest) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
@@ -27,6 +28,8 @@ const RequestAndNegotiate = (): JSX.Element => {
     buyerRequest,
     offer,
     setOffer,
+    currentOfferItem,
+    setCurrentOfferItem,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

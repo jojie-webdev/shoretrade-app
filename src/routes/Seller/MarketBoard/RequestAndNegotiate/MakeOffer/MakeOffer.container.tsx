@@ -14,15 +14,33 @@ import { isValid } from './MakeOffer.validation';
 import MakeOfferView from './MakeOffer.view';
 
 const MakeOffer = (props: MakeOfferProps): JSX.Element => {
-  const { buyerRequest } = props;
+  const { buyerRequest, offer, currentOfferItem } = props;
   const dispatch = useDispatch();
 
-  const [specifications, setSpecifications] = useState<string[]>([]);
-  const [size, setSize] = useState('');
-  const [weight, setWeight] = useState('');
-  const [price, setPrice] = useState('');
-  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
-  const [selectedAddress, setSelectedAddress] = useState('');
+  const currentOfferItemData = offer.find(
+    (item) => item.editId === currentOfferItem
+  );
+
+  const [specifications, setSpecifications] = useState<string[]>(
+    currentOfferItemData?.stateOptions || []
+  );
+  const [size, setSize] = useState(
+    currentOfferItemData?.size.to === null
+      ? 'ungraded'
+      : currentOfferItemData?.size.to || ''
+  );
+  const [weight, setWeight] = useState(
+    currentOfferItemData?.weight ? currentOfferItemData?.weight.toString() : ''
+  );
+  const [price, setPrice] = useState(
+    currentOfferItemData?.price ? currentOfferItemData?.price.toString() : ''
+  );
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(
+    currentOfferItemData?.deliveryDate || null
+  );
+  const [selectedAddress, setSelectedAddress] = useState(
+    currentOfferItemData?.addressId || ''
+  );
 
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
@@ -89,7 +107,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     setErrors(marketOfferValidation);
 
     const payload: MarketOfferItem = {
-      editId: uuidv4(),
+      editId: currentOfferItemData?.editId || uuidv4(),
       addressId: selectedAddress,
       companyId: user?.companies[0].id || '',
       deliveryDate,
@@ -97,8 +115,8 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       price: parseFloat(price) || 0,
       sellerId: user?.id || '',
       size: {
-        from: size,
-        to: size,
+        from: size as string,
+        to: size as string,
       },
       stateOptions: specifications,
       weight: parseFloat(weight),
@@ -110,7 +128,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       measurementUnit: buyerRequest?.measurementUnit,
     };
 
-    if (specifications.length < 0 || size === 'ungraded') {
+    if (size === 'ungraded') {
       payload.size = {
         from: null,
         to: null,
@@ -119,20 +137,18 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
 
     if (isEmptyError) {
       props.setOffer((o) => {
-        const existing = o.some(
-          (item) => item.marketRequestId === payload.marketRequestId
-        );
+        const existing = o.some((item) => item.editId === payload.editId);
         if (existing) {
           return [
             payload,
-            ...o.filter(
-              (item) => item.marketRequestId !== payload.marketRequestId
-            ),
+            ...o.filter((item) => item.editId !== payload.editId),
           ];
         }
 
-        return [payload];
+        return [...o, payload];
       });
+
+      props.setCurrentOfferItem('');
       props.setStep && props.setStep(3);
     }
   };
