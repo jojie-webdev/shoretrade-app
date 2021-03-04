@@ -53,8 +53,10 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               value={v.label}
               type="radio"
               padding="14px 18px"
-              pressed={props.specifications.includes(v.value)}
-              onClick={() => props.onClickSpecification(v.value)}
+              pressed={props.specifications
+                .map((s) => s.value)
+                .includes(v.value)}
+              onClick={() => props.onClickSpecification(v)}
             />
           </Col>
         ))}

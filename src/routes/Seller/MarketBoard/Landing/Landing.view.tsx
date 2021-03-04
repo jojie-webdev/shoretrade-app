@@ -94,16 +94,19 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       <div className="weights">
                         <Typography color="noshade" variant="small">
                           {b.weight?.from || ''}
-                          {b.measurementUnit.toLowerCase()}
+                          {formatMeasurementUnit(b.measurementUnit)}
                         </Typography>
-                        <ArrowRight
-                          width={10}
-                          height={10}
-                          fill={theme.grey.shade7}
-                        />
+                        <div style={{ margin: '0 6px' }}>
+                          <ArrowRight
+                            width={10}
+                            height={10}
+                            fill={theme.grey.shade7}
+                          />
+                        </div>
+
                         <Typography color="noshade" variant="small">
                           {b.weight?.to || ''}
-                          {b.measurementUnit.toLowerCase()}
+                          {formatMeasurementUnit(b.measurementUnit)}
                         </Typography>
                       </div>
                     </div>

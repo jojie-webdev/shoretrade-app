@@ -4,7 +4,7 @@ import { OfferProps, StepProps } from '../RequestAndNegotiate.props';
 
 export interface MakeOfferProps extends StepProps, OfferProps {}
 
-export type Option = { label: string; value: string };
+export type Option = { label: string; value: string; groupOrder: number };
 
 export interface MakeOfferGeneratedProps extends MakeOfferProps {
   shippingTo: string;
@@ -13,7 +13,7 @@ export interface MakeOfferGeneratedProps extends MakeOfferProps {
   marketSizes: string[];
   errors: Record<string, string[]>;
 
-  specifications: string[];
+  specifications: Option[];
   size: string;
   setSize: Dispatch<SetStateAction<string>>;
   weight: string;
@@ -25,6 +25,6 @@ export interface MakeOfferGeneratedProps extends MakeOfferProps {
   selectedAddress: string;
   setSelectedAddress: Dispatch<SetStateAction<string>>;
 
-  onClickSpecification: (id: string) => void;
+  onClickSpecification: (option: Option) => void;
   addToMarketOffers: () => void;
 }

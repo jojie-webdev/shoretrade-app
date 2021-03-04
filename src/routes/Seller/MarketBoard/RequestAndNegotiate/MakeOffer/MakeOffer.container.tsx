@@ -9,7 +9,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { v4 as uuidv4 } from 'uuid';
 
-import { MakeOfferProps } from './MakeOffer.props';
+import { MakeOfferProps, Option } from './MakeOffer.props';
 import { isValid } from './MakeOffer.validation';
 import MakeOfferView from './MakeOffer.view';
 
@@ -21,8 +21,21 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     (item) => item.editId === currentOfferItem
   );
 
-  const [specifications, setSpecifications] = useState<string[]>(
-    currentOfferItemData?.stateOptions || []
+  const stateOptions =
+    buyerRequest.specifications.map((group) => {
+      return {
+        label: group.stateName,
+        value: group.stateId,
+        groupOrder: group.stateGroup,
+      };
+    }) || [];
+
+  const [specifications, setSpecifications] = useState<Option[]>(
+    currentOfferItemData?.stateOptions
+      ? stateOptions.filter((st) =>
+          currentOfferItemData?.stateOptions.includes(st.value)
+        )
+      : []
   );
   const [size, setSize] = useState(
     currentOfferItemData?.size.from === null
@@ -62,14 +75,6 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     return `${streetNumber} ${shippingTo.street_name}, ${shippingTo.suburb}, ${shippingTo.state} ${shippingTo.postcode}`;
   };
 
-  const stateOptions =
-    buyerRequest.specifications.map((group) => {
-      return {
-        label: group.stateName,
-        value: group.stateId,
-      };
-    }) || [];
-
   const marketSizes = !isEmpty(buyerRequest.sizeOptions)
     ? buyerRequest.sizeOptions
     : [];
@@ -84,13 +89,29 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     }
   }, [companies]);
 
-  const onClickSpecification = (id: string) => {
-    if (specifications.includes(id)) {
-      setSpecifications((prevState) => prevState.filter((ps) => ps !== id));
+  const onClickSpecification = (option: Option) => {
+    const ids = specifications.map((s) => s.value);
+    const groupOrders = specifications.map((s) => s.groupOrder);
+
+    if (groupOrders.includes(option.groupOrder)) {
+      if (ids.includes(option.value)) {
+        setSpecifications((prevState) =>
+          prevState.filter((ps) => ps.value !== option.value)
+        );
+      } else {
+        setSpecifications((prevState) => [
+          ...prevState.filter((ps) => ps.groupOrder !== option.groupOrder),
+          option,
+        ]);
+      }
     } else {
-      setSpecifications((prevState) => [...prevState, id]);
+      setSpecifications((prevState) => [...prevState, option]);
     }
   };
+
+  useEffect(() => {
+    console.log(specifications);
+  }, [specifications]);
 
   const addToMarketOffers = () => {
     const marketOfferValidation = isValid({
@@ -118,11 +139,9 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
         from: size as string,
         to: null,
       },
-      stateOptions: specifications,
+      stateOptions: specifications.map((s) => s.value),
       weight: parseFloat(weight),
-      listStateOptions: stateOptions
-        .filter((item) => specifications.includes(item.value))
-        .map((item) => item.label),
+      listStateOptions: specifications.map((s) => s.label),
       type: buyerRequest?.type || '',
       image: buyerRequest?.image || '',
       measurementUnit: buyerRequest?.measurementUnit || '',
