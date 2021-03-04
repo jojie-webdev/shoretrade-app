@@ -109,10 +109,6 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    console.log(specifications);
-  }, [specifications]);
-
   const addToMarketOffers = () => {
     const marketOfferValidation = isValid({
       specifications,
