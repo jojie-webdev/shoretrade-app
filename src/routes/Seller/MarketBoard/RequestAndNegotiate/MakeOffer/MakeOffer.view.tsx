@@ -77,7 +77,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               value={v}
               type="radio"
               padding="14px 18px"
-              pressed={props.size.includes(v)}
+              pressed={props.size === v}
               onClick={() => props.setSize(v)}
             />
           </Col>
