@@ -1,1 +1,1 @@
-export { default } from 'routes/Seller/MarketBoard/RequestAndNegotiate/MakeOffer/MakeOffer.container';
+export { default } from './MakeOffer.container';

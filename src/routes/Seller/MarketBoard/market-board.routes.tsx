@@ -13,7 +13,7 @@ const ROUTES: Routes = {
     children: <Landing />,
   },
   REVIEW_REQUEST: {
-    path: SELLER_MARKET_BOARD_ROUTES.REVIEW_REQUEST,
+    path: SELLER_MARKET_BOARD_ROUTES.OFFER,
     children: <RequestAndNegotiate />,
   },
   NEGOTIATE: {

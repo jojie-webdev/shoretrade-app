@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   getActiveOffersActions,
   getAllMarketRequestActions,
 } from 'store/actions';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 
 import { TabOptions } from './Landing.props';
 import MarketBoardLandingView from './Landing.view';
 
 const MarketBoardLanding = (): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const location: { state?: { currentTab?: string } } = useLocation();
+  const locationTab = location.state?.currentTab || 'Buyer Requests';
 
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
 
-  const [currentTab, setCurrentTab] = useState<TabOptions>('Buyer Requests');
+  const [currentTab, setCurrentTab] = useState<TabOptions>(
+    locationTab as TabOptions
+  );
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [initial, setInitial] = useState(true);
@@ -67,6 +75,12 @@ const MarketBoardLanding = (): JSX.Element => {
     setTimer(timerId);
   }, [searchTerm]);
 
+  const onClickOffer = (data: GetAllMarketRequestResponseItem) => {
+    history.push(SELLER_MARKET_BOARD_ROUTES.OFFER, {
+      buyerRequest: data,
+    });
+  };
+
   const generatedProps = {
     buyerRequests: buyerRequests.data?.data.marketRequests || [],
     activeOffers: activeOffers.data?.data.marketOffers || [],
@@ -75,6 +89,7 @@ const MarketBoardLanding = (): JSX.Element => {
     onChangeCurrentTab,
     searchTerm,
     setSearchTerm,
+    onClickOffer,
   };
   return <MarketBoardLandingView {...generatedProps} />;
 };
