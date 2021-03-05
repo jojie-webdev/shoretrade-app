@@ -2,7 +2,8 @@ import styled from 'utils/styled';
 
 const imgUrl = (url: string) => `"${url}"`;
 
-export const Container = styled.div<{ img: string }>`
+export const Container = styled.div<{ img?: string }>`
+  width: 100%;
   max-width: 474px;
   margin-bottom: 1rem;
 
@@ -12,7 +13,7 @@ export const Container = styled.div<{ img: string }>`
     color: white;
   }
   .img {
-    background-image: url(${(props) => imgUrl(props.img)});
+    background-image: url(${(props) => imgUrl(props.img ? props.img : '')});
     background-size: cover;
     background-position: 50% 50%;
     display: block;

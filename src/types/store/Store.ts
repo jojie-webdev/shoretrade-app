@@ -9,9 +9,21 @@ import {
   CreateBulkListingPayload,
 } from 'types/store/CreateBulkListingState';
 import {
+  CreateMarketOfferMeta,
+  CreateMarketOfferPayload,
+} from 'types/store/CreateMarketOfferState';
+import {
   GetAccountCompletionMeta,
   GetAccountCompletionPayload,
 } from 'types/store/GetAccountCompletionState';
+import {
+  GetActiveOffersMeta,
+  GetActiveOffersPayload,
+} from 'types/store/GetActiveOffersState';
+import {
+  GetAllMarketRequestMeta,
+  GetAllMarketRequestPayload,
+} from 'types/store/GetAllMarketRequestState';
 import {
   GetMarketInterestsMeta,
   GetMarketInterestsPayload,
@@ -57,6 +69,7 @@ import {
   DeleteLinkedAccountPayload,
 } from './DeleteLinkedAccountState';
 import { EditableListingState } from './EditableListingState';
+import { EditableMarketRequestPayload } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -114,6 +127,10 @@ import {
   GetMarketEstimatePayload,
 } from './GetMarketEstimateState';
 import {
+  GetMarketNotificationMeta,
+  GetMarketNotificationPayload,
+} from './GetMarketNotificationState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -136,6 +153,10 @@ import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
+import {
+  ReadMarketNotificationMeta,
+  ReadMarketNotificationPayload,
+} from './ReadMarketNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
 import {
   ResendVerificationMeta,
@@ -192,6 +213,7 @@ export interface Store {
     SearchProductTypePayload
   >;
   editableListing: EditableListingState;
+  editableMarketRequest: EditableMarketRequestPayload;
   getListingFormData: AsyncState<
     GetListingFormDataMeta,
     GetListingFormDataPayload
@@ -323,5 +345,22 @@ export interface Store {
   createBulkListing: AsyncState<
     CreateBulkListingMeta,
     CreateBulkListingPayload
+  >;
+  getAllMarketRequest: AsyncState<
+    GetAllMarketRequestMeta,
+    GetAllMarketRequestPayload
+  >;
+  getActiveOffers: AsyncState<GetActiveOffersMeta, GetActiveOffersPayload>;
+  createMarketOffer: AsyncState<
+    CreateMarketOfferMeta,
+    CreateMarketOfferPayload
+  >;
+  getMarketNotification: AsyncState<
+    GetMarketNotificationMeta,
+    GetMarketNotificationPayload
+  >;
+  readMarketNotification: AsyncState<
+    ReadMarketNotificationMeta,
+    ReadMarketNotificationPayload
   >;
 }

@@ -34,4 +34,6 @@ export interface DashboardLandingGeneratedProps {
     Dispatch<{ end: RangeObject; start: RangeObject }>
   >;
   onApplyCustom: ({ start, end }: onApply) => void;
+  currentNotificationType: string;
+  onClickMarketNotification: () => void;
 }

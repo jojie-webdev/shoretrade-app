@@ -10,6 +10,8 @@ import confirmWeight from './confirmWeight';
 import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
+import createMarketOffer from './createMarketOffer';
+import createMarketRequest from './createMarketRequest';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -18,8 +20,10 @@ import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAccountCompletion from './getAccountCompletion';
+import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getAllMarketRequest from './getAllMarketRequest';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
@@ -34,6 +38,7 @@ import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
+import getMarketNotification from './getMarketNotification';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerLicense from './getSellerLicense';
@@ -45,6 +50,7 @@ import login from './login';
 import logRequest from './logRequest';
 import order from './order';
 import placeOrder from './placeOrder';
+import readMarketNotification from './readMarketNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -74,7 +80,9 @@ const sagas = [
   confirmWeight,
   createBulkListing,
   createCustomListing,
+  createMarketRequest,
   createListing,
+  createMarketOffer,
   currentAddress,
   deleteCard,
   deleteLinkedAccount,
@@ -83,8 +91,10 @@ const sagas = [
   endListing,
   forgotPassword,
   getAccountCompletion,
+  getActiveOffers,
   getAddresses,
   getAllListings,
+  getAllMarketRequest,
   getBankDetails,
   getBuyerHomepage,
   getBuyerOrders,
@@ -99,6 +109,7 @@ const sagas = [
   getListingsByType,
   getMarketEstimate,
   getMarketInterests,
+  getMarketNotification,
   getPaymentMethods,
   getSellerById,
   getSellerLicense,
@@ -106,10 +117,11 @@ const sagas = [
   getShippingQuote,
   getTransactionHistory,
   getUser,
-  login,
   logRequest,
+  login,
   order,
   placeOrder,
+  readMarketNotification,
   register,
   resendVerification,
   resetPassword,
@@ -119,7 +131,6 @@ const sagas = [
   sendMessage,
   updateAddress,
   updateBankDetails,
-  uploadBulk,
   updateDefaultCard,
   updateFavoriteSeller,
   updateFavouriteProduct,
@@ -127,6 +138,7 @@ const sagas = [
   updateMarketInterests,
   updateSellerLicense,
   updateUser,
+  uploadBulk,
   verify,
 ];
 

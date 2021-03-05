@@ -15,14 +15,18 @@ import confirmWeight from './confirmWeight';
 import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
+import createMarketOffer from './createMarketOffer';
+import createMarketRequest from './createMarketRequest';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import editableListing from './editableListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
+import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
+import getAllMarketRequest from './getAllMarketRequest';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
@@ -39,6 +43,7 @@ import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
+import getMarketNotification from './getMarketNotification';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerLicense from './getSellerLicense';
@@ -53,6 +58,7 @@ import login from './login';
 import logRequest from './logRequest';
 import order from './order';
 import placeOrder from './placeOrder';
+import readMarketNotification from './readMarketNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -87,7 +93,9 @@ export default (routeHistory: History) =>
         confirmWeight,
         createBulkListing,
         createCustomListing,
+        createMarketRequest,
         createListing,
+        createMarketOffer,
         currentAddress,
         deleteCard,
         deleteLinkedAccount,
@@ -95,8 +103,10 @@ export default (routeHistory: History) =>
         endListing,
         forgotPassword,
         getAccountCompletion,
+        getActiveOffers,
         getAddresses,
         getAllListings,
+        getAllMarketRequest,
         getBankDetails,
         getBuyerHomepage,
         getBuyerOrdersDelivered,
@@ -113,20 +123,22 @@ export default (routeHistory: History) =>
         getListingsByType,
         getMarketEstimate,
         getMarketInterests,
+        getMarketNotification,
         getPaymentMethods,
         getSellerById,
+        getSellerLicense,
         getSellerOrdersDelivered,
         getSellerOrdersPlaced,
         getSellerOrdersTransit,
-        getSellerLicense,
         getShippingQuote,
         getTransactionHistory,
         getUser,
         history,
-        login,
         logRequest,
+        login,
         order,
         placeOrder,
+        readMarketNotification,
         register,
         resendVerification,
         resetPassword,

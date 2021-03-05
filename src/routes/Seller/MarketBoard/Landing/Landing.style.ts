@@ -23,7 +23,7 @@ export const Container = styled.div`
       .badges-container {
         display: flex;
         flex-wrap: wrap;
-        width: 350px;
+        max-width: 350px;
         margin: 4px 0;
 
         @media ${BREAKPOINTS['sm']} {
@@ -43,10 +43,6 @@ export const Container = styled.div`
       .weights {
         display: flex;
         align-items: center;
-
-        svg {
-          margin: 0 6px;
-        }
       }
     }
   }

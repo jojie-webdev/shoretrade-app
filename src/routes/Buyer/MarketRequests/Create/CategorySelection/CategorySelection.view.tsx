@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-import Badge from 'components/base/Badge';
-import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
-import { Filter } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { useHistory, Link } from 'react-router-dom';
-import theme from 'utils/Theme';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -30,13 +22,18 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     stepCountComponent,
     searchTerm,
     setSearchTerm,
-    categories,
+    search,
+    buying,
     setSelectedCategory,
+    hideSearchResult,
+    pendingSearch,
+    typeSearchResults,
   } = props;
   const history = useHistory();
-
+  const dispatch = useDispatch();
+  const [searchKey, setSearchKey] = useState<string>('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const handleCategoryClick = (v: CategoryItem) => {
-    console.log(v);
     setSelectedCategory(v);
   };
 
@@ -52,24 +49,41 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
         <div className="search-container">
           <Search
             value={searchTerm}
-            onChange={(event: any) => setSearchTerm(event.currentTarget.value)}
-            resetValue={() => props.setSearchTerm('')}
+            onChange={(e) => setSearchTerm(e.currentTarget.value)}
+            resetValue={() => setSearchTerm('')}
             placeholder="Search a category..."
             rounded
           />
         </div>
       </CreateRequestHeaderContainer>
       <CategoryInteractionsContainer>
-        {categories.map((category) => (
-          <CategoryInterAction
-            onClick={() => handleCategoryClick(category)}
-            key={category.id}
-            type="next"
-            leftComponent={
-              <TypographyView variant="body">{category.name}</TypographyView>
-            }
-          ></CategoryInterAction>
-        ))}
+        {pendingSearch ? (
+          <Loading label="Searching" />
+        ) : !hideSearchResult && typeSearchResults.length > 0 ? (
+          typeSearchResults.map((result) => (
+            <CategoryInterAction
+              onClick={() =>
+                handleCategoryClick({ id: result.value, name: result.label })
+              }
+              key={result.value}
+              type="next"
+              leftComponent={
+                <TypographyView variant="body">{result.label}</TypographyView>
+              }
+            ></CategoryInterAction>
+          ))
+        ) : (
+          buying.map((item: any) => (
+            <CategoryInterAction
+              onClick={() => handleCategoryClick(item)}
+              key={item.id}
+              type="next"
+              leftComponent={
+                <TypographyView variant="body">{item.name}</TypographyView>
+              }
+            ></CategoryInterAction>
+          ))
+        )}
       </CategoryInteractionsContainer>
     </>
   );

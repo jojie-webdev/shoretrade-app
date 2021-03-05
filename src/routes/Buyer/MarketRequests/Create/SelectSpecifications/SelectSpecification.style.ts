@@ -1,12 +1,10 @@
-import Alert from 'components/base/Alert';
-import Interactions from 'components/base/Interactions';
-import TypographyView from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
+import styled from 'utils/styled';
 
-export const SpecificationFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+import { ContainerWithCategoryImageContent } from '../Create.style';
+
+export const SpecificationFormContainer = styled(
+  ContainerWithCategoryImageContent
+)`
   max-width: 300px;
 
   .spec-row {

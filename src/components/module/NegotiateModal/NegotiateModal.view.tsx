@@ -39,7 +39,6 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   }, [counterOffer]);
 
   const handleCheck = (value: any) => {
-    console.log(value);
     setCloseListing(!closeListing);
   };
 

@@ -4,8 +4,8 @@ import { CategoryItem } from '../CategorySelection/CategorySelection.props';
 import { CreateStepProps } from '../Create.props';
 
 export interface Quantity {
-  from: number;
-  to: number;
+  from: string;
+  to: string;
 }
 
 export interface SelectQuantityProps extends CreateStepProps {

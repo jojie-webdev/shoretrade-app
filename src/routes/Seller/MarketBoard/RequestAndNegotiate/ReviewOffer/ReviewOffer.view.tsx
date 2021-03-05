@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions/Interactions.view';
-import { SubtractHollow, Pen, ArrowRight } from 'components/base/SVG';
+import { Weight, DollarSign, SubtractHollow, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import { useHistory } from 'react-router-dom';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { ReviewOfferGeneratedProps } from './ReviewOffer.props';
@@ -16,46 +15,62 @@ import { Container } from './ReviewOffer.style';
 
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
-  const history = useHistory();
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <Container>
       <div>
-        {[...new Array(2)].map((v, i) => (
+        {props.offer.map((v) => (
           <Interactions
-            key={i}
+            key={v.editId}
             leftComponent={
               <div className="left-component">
-                <img src="https://picsum.photos/200/300" />
+                <img src={v.image} />
                 <div>
-                  <Typography color="noshade">Pale Octopus</Typography>
+                  <Typography color="noshade">{v.type}</Typography>
                   <div className="badges-container">
-                    {['Fresh', 'Farmed', 'Head on Gutted', 'Medium'].map(
-                      (v) => (
+                    {v.listStateOptions &&
+                      v.listStateOptions.map((ls) => (
                         <Badge
-                          key={v}
+                          key={ls}
                           className="badge"
                           badgeColor={theme.grey.shade8}
                         >
                           <BadgeText variant="overlineSmall" color="noshade">
-                            {v}
+                            {ls}
                           </BadgeText>
                         </Badge>
-                      )
+                      ))}
+                    {v.size.from !== null && (
+                      <Badge className="badge" badgeColor={theme.grey.shade8}>
+                        <BadgeText variant="overlineSmall" color="noshade">
+                          {v.size.from || ''}
+                        </BadgeText>
+                      </Badge>
                     )}
                   </div>
 
                   <div className="weights">
+                    <div style={{ margin: '0 4px 4px 0' }}>
+                      <Weight
+                        fill={theme.grey.noshade}
+                        width={12}
+                        height={12}
+                      />
+                    </div>
                     <Typography color="noshade" variant="small">
-                      100kg
+                      {v.weight}
+                      {formatMeasurementUnit(v.measurementUnit)}
                     </Typography>
-                    <ArrowRight
-                      width={10}
-                      height={10}
-                      fill={theme.grey.shade7}
-                    />
+                    <div style={{ margin: '0 2px 4px 8px' }}>
+                      <DollarSign
+                        fill={theme.grey.noshade}
+                        width={11}
+                        height={11}
+                      />
+                    </div>
                     <Typography color="noshade" variant="small">
-                      250kg
+                      {v.price}/{formatMeasurementUnit(v.measurementUnit)}
                     </Typography>
                   </div>
                 </div>
@@ -63,10 +78,10 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             }
             rightComponent={
               <div className="right-component">
-                <div onClick={() => setStep && setStep(2)}>
+                <div onClick={() => props.onEdit(v.editId)}>
                   <Pen fill={theme.brand.primary} />
                 </div>
-                <div onClick={() => {}}>
+                <div onClick={() => props.onDelete(v.editId)}>
                   <SubtractHollow fill={theme.brand.primary} />
                 </div>
               </div>
@@ -77,7 +92,11 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
       </div>
 
       <div className="checkbox-container">
-        <Checkbox onClick={(v) => {}} className="checkbox" checked={false} />
+        <Checkbox
+          onClick={() => setIsChecked((prevState) => !prevState)}
+          className="checkbox"
+          checked={isChecked}
+        />
         <Typography className="label" variant="label" color="noshade">
           Confirm the availability of the product
         </Typography>
@@ -92,10 +111,12 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           variant="outline"
         />
         <Button
-          onClick={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
+          onClick={props.onSubmit}
           className="submit-btn"
           text="submit"
           variant="primary"
+          disabled={!isChecked}
+          loading={props.isSubmitting}
         />
       </div>
     </Container>
