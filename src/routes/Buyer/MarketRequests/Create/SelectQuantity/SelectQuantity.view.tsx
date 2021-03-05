@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import Checkbox from 'components/base/Checkbox';
-import Spinner from 'components/base/Spinner';
-import { ArrowLeft, Filter } from 'components/base/SVG';
+import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { useHistory, Link } from 'react-router-dom';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
-import { CreateStepProps } from '../Create.props';
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
 } from '../Create.style';
-import { SpecificationFormContainer } from '../SelectSpecifications/SelectSpecification.style';
 import { SelectQuantityProps } from './SelectQuantity.props';
 import { QuantityFormContainer, StyledTextField } from './SelectQuantity.style';
 
 const SelectQuantityView = (props: SelectQuantityProps) => {
   const {
-    step,
     stepCountComponent,
+    listingFormData,
     onBack,
     setSelectedQuantity,
     selectedCategory,
   } = props;
-  const history = useHistory();
 
-  const [from, setFrom] = useState(0);
-  const [to, setTo] = useState(0);
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
 
   const handleSubmit = () => {
-    //MOCK
     setSelectedQuantity({ from, to });
   };
 
@@ -61,7 +50,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
       <ContainerWithCategoryImagePreview>
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
-          imgSrc="http://placekitten.com/474/280"
+          imgSrc={listingFormData?.defaultPhoto}
           caption="Aliquip ullamco dolore amet sunt ullamco. 
   Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
   Sint ea nulla velit mollit amet sint ea."
@@ -72,12 +61,19 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             label="From"
             value={from}
             onChangeText={(v) => {
-              setFrom(Number(v));
+              if (!Number.isNaN(Number(v))) {
+                setFrom(v);
+              }
             }}
             min={1}
+            onBlur={() => {
+              if (from !== '' && to !== '' && Number(from) > Number(to)) {
+                setTo(from);
+              }
+            }}
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                {'Kg'}
+                {formatMeasurementUnit(listingFormData?.measurementUnit)}
               </TypographyView>
             }
           />
@@ -86,12 +82,19 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             label="To"
             value={to}
             onChangeText={(v) => {
-              setTo(Number(v));
+              if (!Number.isNaN(Number(v))) {
+                setTo(v);
+              }
+            }}
+            onBlur={() => {
+              if (from !== '' && to !== '' && Number(from) > Number(to)) {
+                setFrom(to);
+              }
             }}
             min={1}
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                {'Kg'}
+                {formatMeasurementUnit(listingFormData?.measurementUnit)}
               </TypographyView>
             }
           />
@@ -99,6 +102,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
           <Button
             onClick={() => handleSubmit()}
             className="submit-btn"
+            disabled={from === '' || to === ''}
             text="Select This Quantity"
             variant="primary"
           />

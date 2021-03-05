@@ -13,6 +13,7 @@ import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { useHistory, Link } from 'react-router-dom';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import { CreateStepProps } from '../Create.props';
@@ -36,12 +37,16 @@ const SummaryView = (props: SummaryProps) => {
     selectedQuantity,
     selectedSize,
     selectedSpecifications,
+    setSendConfModalisOpen,
     onBack,
+    maxKgAutoClose,
+    listingFormData,
+    setMaxKgAutoClose,
   } = props;
   const history = useHistory();
 
   const handleSubmit = () => {
-    console.log('submit');
+    setSendConfModalisOpen(true);
   };
 
   const SummaryBadges = (props: { items: string[]; label: string }) => {
@@ -75,6 +80,39 @@ const SummaryView = (props: SummaryProps) => {
     );
   };
 
+  const sizeSummary = () => {
+    if (selectedSize.ungraded === true) {
+      return <SummaryBadges label="Size" items={['Ungraded']} />;
+    }
+
+    if (selectedSize.from !== '') {
+      return (
+        <Row>
+          <Col sm={12} md={12}>
+            <StyledTextField
+              className="text-field"
+              type="number"
+              label="Size From"
+              value={selectedSize.from}
+              disabled
+            />
+          </Col>
+          <Col sm={12} md={12}>
+            <StyledTextField
+              className="text-field"
+              type="number"
+              label="Size To"
+              value={selectedSize.to}
+              disabled
+            />
+          </Col>
+        </Row>
+      );
+    } else {
+      return <SummaryBadges label="Size" items={['Ungraded']} />;
+    }
+  };
+
   return (
     <>
       <CreateRequestHeaderContainer>
@@ -94,14 +132,17 @@ const SummaryView = (props: SummaryProps) => {
       <ContainerWithCategoryImagePreview>
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
-          imgSrc="http://placekitten.com/474/280"
+          imgSrc={listingFormData?.defaultPhoto}
           caption="Aliquip ullamco dolore amet sunt ullamco. 
   Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-  Sint ea nulla velit mollit amet sint ea."
+  Sint ea nulla velit mollit amet sint esa."
         />
         <SummaryContentContainer>
-          <SummaryBadges label="Specs" items={selectedSpecifications} />
-          <SummaryBadges label="Sizes" items={selectedSize} />
+          <SummaryBadges
+            label="Specs"
+            items={selectedSpecifications.map((spec) => spec.label)}
+          />
+          <div className="size-container">{sizeSummary()}</div>
           <div className="quantity-container">
             <StyledTextField
               className="text-field"
@@ -111,7 +152,7 @@ const SummaryView = (props: SummaryProps) => {
               disabled
               LeftComponent={
                 <TypographyView variant="label" color="shade6">
-                  kg
+                  {formatMeasurementUnit(listingFormData?.measurementUnit)}
                 </TypographyView>
               }
             />
@@ -123,11 +164,15 @@ const SummaryView = (props: SummaryProps) => {
               disabled
               LeftComponent={
                 <TypographyView variant="label" color="shade6">
-                  kg
+                  {formatMeasurementUnit(listingFormData?.measurementUnit)}
                 </TypographyView>
               }
             />
-            <Checkbox label="Auto-close this listing when reached max kg"></Checkbox>
+            <Checkbox
+              checked={maxKgAutoClose}
+              onClick={() => setMaxKgAutoClose(!maxKgAutoClose)}
+              label="Auto-close this listing when reached max kg"
+            ></Checkbox>
           </div>
           <Button
             onClick={() => handleSubmit()}

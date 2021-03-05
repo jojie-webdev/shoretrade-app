@@ -1,15 +1,21 @@
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const SummaryContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 320px;
+import { ContainerWithCategoryImageContent } from '../Create.style';
+
+export const SummaryContentContainer = styled(
+  ContainerWithCategoryImageContent
+)`
+  max-width: 320px;
 
   .submit-btn {
     margin-top: 1rem;
+  }
+
+  .size-container {
+    margin-bottom: 1rem;
   }
 
   .quantity-container {
@@ -19,6 +25,10 @@ export const SummaryContentContainer = styled.div`
     .text-field {
       margin-bottom: 1rem;
     }
+  }
+
+  .text-field {
+    margin-bottom: 1rem;
   }
 `;
 

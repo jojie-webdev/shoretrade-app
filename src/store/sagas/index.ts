@@ -11,6 +11,7 @@ import createBulkListing from './createBulkListing';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
+import createMarketRequest from './createMarketRequest';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -77,6 +78,7 @@ const sagas = [
   confirmWeight,
   createBulkListing,
   createCustomListing,
+  createMarketRequest,
   createListing,
   createMarketOffer,
   currentAddress,

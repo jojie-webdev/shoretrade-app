@@ -69,6 +69,7 @@ import {
   DeleteLinkedAccountPayload,
 } from './DeleteLinkedAccountState';
 import { EditableListingState } from './EditableListingState';
+import { EditableMarketRequestPayload } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -204,6 +205,7 @@ export interface Store {
     SearchProductTypePayload
   >;
   editableListing: EditableListingState;
+  editableMarketRequest: EditableMarketRequestPayload;
   getListingFormData: AsyncState<
     GetListingFormDataMeta,
     GetListingFormDataPayload

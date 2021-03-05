@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { ButtonContainer } from 'components/base/Button/Button.style';
 import Checkbox from 'components/base/Checkbox';
-import Spinner from 'components/base/Spinner';
-import { Crab, Filter } from 'components/base/SVG';
+import { Crab } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { useHistory, Link } from 'react-router-dom';
-import theme from 'utils/Theme';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 
 import CategorySelectionView from './CategorySelection/CategorySelection.view';
 import { CreateRequestGeneratedProps, CreateRequestStep } from './Create.props';
@@ -23,7 +16,6 @@ import {
   MainAgreementContainer,
   HeroContainer,
   ProgressBar,
-  CreateRequestHeaderContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -31,16 +23,17 @@ import SelectSpecificationsView from './SelectSpecifications/SelectSpecification
 import SummaryView from './Summary/Summary.view';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
-  const history = useHistory();
-
   const {
     step,
+    sendConfModalisOpen,
+    setSendConfModalisOpen,
     termsAgreement,
     setTermsAgreement,
     setStep,
+    hideSearchResult,
     searchTerm,
     setSearchTerm,
-    categories,
+    buying,
     onBack,
     selectedQuantity,
     selectedCategory,
@@ -50,16 +43,27 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     setSelectedQuantity,
     setSelectedSize,
     setSelectedSpecifications,
+    listingFormData,
+    typeSearchResults,
+    maxKgAutoClose,
+    setMaxKgAutoClose,
+    onSubmitRequest,
+    search,
+    pendingSearch,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
-
   const handleCheck = (v: any) => {
     setCheckAgree(!checkAgree);
   };
 
   const handleGetStarted = () => {
     setTermsAgreement(true);
+    setSearchTerm('');
     setStep(1);
+  };
+
+  const onSubmit = () => {
+    onSubmitRequest();
   };
 
   if (!termsAgreement) {
@@ -74,10 +78,24 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 variant="label"
                 color="shade7"
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consectetur iure, laudantium doloremque ducimus aliquid enim,
-                quam labore omnis deleniti itaque, cupiditate quia molestias
-                error obcaecati accusamus ab earum laboriosam autem.
+                Search in our Database and choose between more than 50+
+                Categories
+              </TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                Select specifications, size, quantity and send your request to
+                the market
+              </TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                Check and negotiate offers from more than 10.000+ sellers from
+                ShoreTrade
               </TypographyView>
             </div>
             <HeroContainer>
@@ -130,9 +148,15 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 1:
         return (
           <CategorySelectionView
+            hideSearchResult={hideSearchResult}
+            pendingSearch={pendingSearch}
+            search={search}
+            selectedSize={selectedSize}
+            listingFormData={listingFormData}
+            typeSearchResults={typeSearchResults}
             onBack={onBack}
             setSelectedCategory={setSelectedCategory}
-            categories={categories}
+            buying={buying}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             step={step}
@@ -143,6 +167,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 2:
         return (
           <SelectSpecificationsView
+            selectedSize={selectedSize}
+            listingFormData={listingFormData}
             setSelectedSpecifications={setSelectedSpecifications}
             selectedCategory={selectedCategory}
             onBack={onBack}
@@ -154,6 +180,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 3:
         return (
           <SelectSizeView
+            selectedSize={selectedSize}
+            listingFormData={listingFormData}
             setSelectedSize={setSelectedSize}
             selectedCategory={selectedCategory}
             onBack={onBack}
@@ -165,6 +193,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 4:
         return (
           <SelectQuantityView
+            selectedSize={selectedSize}
+            listingFormData={listingFormData}
             setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}
             onBack={onBack}
@@ -176,6 +206,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 5:
         return (
           <SummaryView
+            maxKgAutoClose={maxKgAutoClose}
+            setMaxKgAutoClose={setMaxKgAutoClose}
+            listingFormData={listingFormData}
+            setSendConfModalisOpen={setSendConfModalisOpen}
             selectedSize={selectedSize}
             selectedCategory={selectedCategory}
             selectedSpecifications={selectedSpecifications}
@@ -187,25 +221,26 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         );
 
       default:
-        return (
-          <CategorySelectionView
-            onBack={onBack}
-            setSelectedCategory={setSelectedCategory}
-            categories={categories}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            step={step}
-            stepCountComponent={<StepCountComponent step={step} />}
-          />
-        );
+        return <></>;
     }
   };
 
   return (
     <>
+      <ConfirmationModal
+        isOpen={sendConfModalisOpen}
+        title="Your request is ready to be sent to the market"
+        description="Are you sure you want to send this request to the market?"
+        action={() => {
+          onSubmit();
+        }}
+        actionText="YES"
+        cancelText="NO"
+        onClickClose={() => setSendConfModalisOpen(false)}
+      />
       <BoxContainer>
         <ProgressBar progress={(step.current / step.total) * 100} />
-        <StepView step={step} />
+        {StepView({ step })}
       </BoxContainer>
     </>
   );

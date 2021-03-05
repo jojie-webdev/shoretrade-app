@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
+
 import { CreateStepProps } from '../Create.props';
 
 export interface CategoryItem {
@@ -8,8 +10,12 @@ export interface CategoryItem {
 }
 
 export interface CategorySelectionProps extends CreateStepProps {
+  pendingSearch: boolean;
+  hideSearchResult: boolean;
+  search: (term: string) => void;
+  typeSearchResults: SearchProductTypeResponseItem[];
+  buying: any;
   searchTerm: string;
-  categories: CategoryItem[];
   setSearchTerm: Dispatch<SetStateAction<string>>;
   setSelectedCategory: Dispatch<SetStateAction<CategoryItem>>;
 }

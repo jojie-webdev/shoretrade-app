@@ -54,8 +54,27 @@ export const CreateRequestHeaderContainer = styled.div`
 export const ContainerWithCategoryImagePreview = styled.div`
   margin-top: 40px;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+export const ContainerWithCategoryImageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  margin-left: 4rem;
+
+  @media ${BREAKPOINTS['lg']} {
+    margin-left: 0;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    margin-left: 0;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-left: 0;
+  }
 `;
 
 export const HeroImageContainer = styled.div`
