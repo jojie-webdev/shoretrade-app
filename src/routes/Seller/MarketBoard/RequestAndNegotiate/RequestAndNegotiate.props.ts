@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 
 export interface StepProps {
@@ -8,9 +9,17 @@ export interface StepProps {
   buyerRequest: GetAllMarketRequestResponseItem;
 }
 
-export interface Step1Props extends StepProps {
+export interface CommonProps {
   isReview: boolean;
+  buyerRequest: GetAllMarketRequestResponseItem;
+  activeOffer: GetActiveOffersRequestResponseItem;
+
+  onAcceptOffer: (id: string, price: number) => void;
+
+  isNegotiating: boolean;
 }
+
+export interface Step1Props extends StepProps, CommonProps {}
 
 export interface OfferProps {
   offer: MarketOfferItem[];
@@ -19,6 +28,6 @@ export interface OfferProps {
   setCurrentOfferItem: Dispatch<SetStateAction<string>>;
 }
 
-export interface RequestAndNegotiateGeneratedProps extends OfferProps {
-  buyerRequest: GetAllMarketRequestResponseItem;
-}
+export interface RequestAndNegotiateGeneratedProps
+  extends CommonProps,
+    OfferProps {}

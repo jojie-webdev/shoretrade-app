@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API } from 'consts';
 import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
 import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
+import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
 import { ReadMarketNotificationMeta } from 'types/store/ReadMarketNotificationState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
@@ -72,6 +73,17 @@ export const readMarketNotification = (
   return axios({
     method: 'post',
     url: `${MARKET_REQUEST_URL}/notification/read`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data,
+  });
+};
+
+export const negotiateOffer = (data: NegotiateOfferMeta, token: string) => {
+  return axios({
+    method: 'post',
+    url: `${MARKET_REQUEST_URL}/negotiate`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

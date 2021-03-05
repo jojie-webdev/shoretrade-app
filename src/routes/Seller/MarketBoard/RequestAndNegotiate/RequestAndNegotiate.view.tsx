@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge/Badge.view';
@@ -10,9 +10,10 @@ import CategoryImagePreviewView from 'components/module/CategoryImagePreview/Cat
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import { isEmpty } from 'ramda';
-import { useHistory, useLocation } from 'react-router-dom';
+import { isEmpty, pathOr } from 'ramda';
+import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
 import MakeOffer from './MakeOffer';
@@ -30,12 +31,36 @@ import {
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
 
-const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
+const Step1 = ({
+  isReview,
+  buyerRequest,
+  activeOffer,
+  ...props
+}: Step1Props) => {
   const history = useHistory();
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const discountValue = 1.5;
+  const unit = formatMeasurementUnit(
+    isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
+  );
+  const noNegotiations = isReview ? true : isEmpty(activeOffer.negotiations);
+
+  const getSizeBadge = () => {
+    if (buyerRequest && !isEmpty(buyerRequest.sizeOptions)) {
+      return buyerRequest.sizeOptions;
+    }
+
+    const sizeFrom = pathOr(null, ['size', 'from'], activeOffer);
+    if (activeOffer) {
+      if (sizeFrom === null) {
+        return ['Ungraded'];
+      } else if (isNaN(parseFloat(sizeFrom))) {
+        return [activeOffer.size?.from || ''];
+      }
+    }
+
+    return [];
+  };
 
   const SummaryBadges = (badgeProps: { items: string[]; label: string }) => {
     const { items, label } = badgeProps;
@@ -68,21 +93,160 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
     );
   };
 
+  const Negotiations = ({
+    activeOffer,
+  }: {
+    activeOffer: Step1Props['activeOffer'];
+  }) => {
+    if (isReview) return <></>;
+    if (noNegotiations) {
+      return (
+        <div className="offer-container">
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Your original offer
+            </Typography>
+            <Typography variant="label" weight="bold" color="noshade">
+              {toPrice(activeOffer.price)}/{unit}
+            </Typography>
+          </div>
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              No counter offer from buyer yet
+            </Typography>
+          </div>
+        </div>
+      );
+    }
+
+    const negotiations = activeOffer.negotiations.reverse();
+    const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
+    const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
+
+    const sellerOffer = sellerNego?.price || activeOffer.price;
+    const buyerCounterOffer = buyerNego?.price || 0;
+
+    const discountValue = buyerCounterOffer - sellerOffer;
+    const discountPercentage = discountValue
+      ? ((discountValue / sellerOffer) * 100).toFixed(2)
+      : 0;
+
+    const deliveryTotal = buyerCounterOffer * activeOffer.weight;
+
+    return (
+      <>
+        <div className="offer-container">
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Your offer was
+            </Typography>
+            <Typography variant="label" weight="bold" color="noshade">
+              {toPrice(sellerOffer)}/{unit}
+            </Typography>
+          </div>
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Their counter offer is
+            </Typography>
+            <Typography variant="label" color="noshade" weight="bold">
+              {toPrice(buyerCounterOffer)}/{unit}
+            </Typography>
+          </div>
+
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Discount Value{' '}
+              <span className="indicator">{discountPercentage}%</span>
+            </Typography>
+            {discountValue !== 0 ? (
+              <Typography
+                color={
+                  Math.sign(discountValue) === 0
+                    ? 'noshade'
+                    : Math.sign(discountValue) === 1
+                    ? 'success'
+                    : 'error'
+                }
+                variant="label"
+                weight="bold"
+              >
+                {Math.sign(discountValue) === 1 && '+'}
+                {Math.sign(discountValue) === -1 && '-'}
+                {toPrice(Math.abs(discountValue))}/{unit}
+              </Typography>
+            ) : (
+              <Typography variant="label" weight="bold" color="noshade">
+                0
+              </Typography>
+            )}
+          </div>
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Total Value
+            </Typography>
+            <Typography variant="label" color="noshade" weight="bold">
+              {toPrice(deliveryTotal)}/{unit}
+            </Typography>
+          </div>
+        </div>
+
+        <div className="submit-btns">
+          {!isReview && !noNegotiations && (
+            <>
+              <Button
+                onClick={() => setIsOpen(true)}
+                className="submit-btn"
+                text="Negotiate"
+                variant="outline"
+              />
+              <Button
+                loading={props.isNegotiating}
+                onClick={() =>
+                  props.onAcceptOffer(activeOffer.id, buyerCounterOffer)
+                }
+                className="submit-btn"
+                text="accept"
+                variant="primary"
+              />
+            </>
+          )}
+        </div>
+
+        <NegotiateModal
+          onSubmit={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
+          offerId="2"
+          negotiationId="1"
+          originalOffer={1}
+          weight={{
+            unit: 'kg',
+            value: 100,
+          }}
+          isOpen={isOpen}
+          onClickClose={() => setIsOpen(false)}
+        />
+      </>
+    );
+  };
+
   return (
     <>
       <div className="step-1-container">
         <CategoryImagePreviewView
-          categoryName={buyerRequest.type}
-          imgSrc={buyerRequest.image}
+          categoryName={isReview ? buyerRequest.type : activeOffer.name}
+          imgSrc={isReview ? buyerRequest.image : activeOffer.image}
         />
 
         <SummaryContentContainer>
           <SummaryBadges
             label="Specs"
-            items={buyerRequest.specifications.map((v) => v.stateName)}
+            items={
+              isReview
+                ? buyerRequest.specifications.map((v) => v.stateName)
+                : activeOffer.specifications
+            }
           />
-          {!isEmpty(buyerRequest.sizeOptions) ? (
-            <SummaryBadges label="Sizes" items={buyerRequest.sizeOptions} />
+          {!isEmpty(getSizeBadge()) ? (
+            <SummaryBadges label="Sizes" items={getSizeBadge()} />
           ) : (
             <>
               <Typography
@@ -97,27 +261,34 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
                 <TextField
                   className="text-field"
                   type="number"
-                  label="From"
-                  value={buyerRequest.sizeFrom || 0}
+                  label={isReview ? 'From' : ''}
+                  value={
+                    isReview
+                      ? buyerRequest.sizeFrom || 0
+                      : activeOffer.size.from || 0
+                  }
                   disabled
                   LeftComponent={
                     <Typography variant="label" weight="bold" color="shade6">
-                      {formatMeasurementUnit(buyerRequest.measurementUnit)}
+                      {unit}
                     </Typography>
                   }
                 />
-                <TextField
-                  className="text-field"
-                  type="number"
-                  label="To"
-                  value={buyerRequest.sizeTo || 0}
-                  disabled
-                  LeftComponent={
-                    <Typography variant="label" weight="bold" color="shade6">
-                      {formatMeasurementUnit(buyerRequest.measurementUnit)}
-                    </Typography>
-                  }
-                />
+
+                {isReview && (
+                  <TextField
+                    className="text-field"
+                    type="number"
+                    label="To"
+                    value={buyerRequest.sizeTo || 0}
+                    disabled
+                    LeftComponent={
+                      <Typography variant="label" weight="bold" color="shade6">
+                        {unit}
+                      </Typography>
+                    }
+                  />
+                )}
               </div>
             </>
           )}
@@ -132,125 +303,50 @@ const Step1 = ({ isReview, buyerRequest, ...props }: Step1Props) => {
             <TextField
               className="text-field"
               type="number"
-              label="From"
-              value={buyerRequest.weight?.from || 0}
+              label={isReview ? 'From' : ''}
+              value={
+                isReview
+                  ? buyerRequest.weight?.from || 0
+                  : activeOffer.weight || 0
+              }
               disabled
               LeftComponent={
                 <Typography variant="label" weight="bold" color="shade6">
-                  {formatMeasurementUnit(buyerRequest.measurementUnit)}
+                  {unit}
                 </Typography>
               }
             />
-            <TextField
-              className="text-field"
-              type="number"
-              label="To"
-              value={buyerRequest.weight?.to || 0}
-              disabled
-              LeftComponent={
-                <Typography variant="label" weight="bold" color="shade6">
-                  {formatMeasurementUnit(buyerRequest.measurementUnit)}
-                </Typography>
-              }
-            />
+
+            {isReview && (
+              <TextField
+                className="text-field"
+                type="number"
+                label="To"
+                value={buyerRequest.weight?.to || 0}
+                disabled
+                LeftComponent={
+                  <Typography variant="label" weight="bold" color="shade6">
+                    {unit}
+                  </Typography>
+                }
+              />
+            )}
           </div>
 
-          {!isReview && (
-            <div className="offer-container">
-              <div className="computation-item-container">
-                <Typography variant="label" color="noshade">
-                  Your offer was
-                </Typography>
-                <Typography variant="label" weight="bold" color="noshade">
-                  {'$'}
-                  {'24'}/{'kg'}
-                </Typography>
-              </div>
-              <div className="computation-item-container">
-                <Typography variant="label" color="noshade">
-                  Your counter offer is
-                </Typography>
-                <Typography variant="label" color="noshade" weight="bold">
-                  {'$'}
-                  {'48'}/{'kg'}
-                </Typography>
-              </div>
-              <div className="computation-item-container">
-                <Typography variant="label" color="noshade">
-                  Discount Value <span className="indicator">{'0.5%'}</span>
-                </Typography>
-                {/*
-                //@ts-ignore*/}
-                {discountValue !== 0 ? (
-                  <Typography
-                    color={discountValue > 0 ? 'success' : 'error'}
-                    variant="label"
-                    weight="bold"
-                  >
-                    {'$'}
-                    {discountValue > 0 ? '-' : '+'}
-                    {Math.abs(discountValue)}/{'kg'}
-                  </Typography>
-                ) : (
-                  <Typography variant="label" weight="bold" color="noshade">
-                    0
-                  </Typography>
-                )}
-              </div>
-              <div className="computation-item-container">
-                <Typography variant="label" color="noshade">
-                  Original offer was
-                </Typography>
-                <Typography variant="label" color="noshade" weight="bold">
-                  {'$'}
-                  {'1800'}/{'kg'}
-                </Typography>
-              </div>
-            </div>
-          )}
+          <Negotiations activeOffer={activeOffer} />
 
-          <div className="submit-btns">
-            {!isReview ? (
-              <>
-                <Button
-                  onClick={() => setIsOpen(true)}
-                  className="submit-btn"
-                  text="Negotiate"
-                  variant="outline"
-                />
-                <Button
-                  onClick={() =>
-                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)
-                  }
-                  className="submit-btn"
-                  text="accept"
-                  variant="primary"
-                />
-              </>
-            ) : (
+          {isReview && (
+            <div className="submit-btns">
               <Button
                 onClick={() => props.setStep && props.setStep(2)}
                 className="submit-btn"
                 text="Make an offer"
                 variant="primary"
               />
-            )}
-          </div>
+            </div>
+          )}
         </SummaryContentContainer>
       </div>
-
-      <NegotiateModal
-        onSubmit={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
-        offerId="2"
-        negotiationId="1"
-        originalOffer={1}
-        weight={{
-          unit: 'kg',
-          value: 100,
-        }}
-        isOpen={isOpen}
-        onClickClose={() => setIsOpen(false)}
-      />
     </>
   );
 };
@@ -264,10 +360,7 @@ const Step3 = (props: ReviewOfferProps) => {
 };
 
 const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
-  const location = useLocation();
   const history = useHistory();
-  const { pathname } = location;
-  const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -288,7 +381,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
               },
             },
             {
-              label: isReview ? 'Review Request' : 'Negotiate',
+              label: props.isReview ? 'Review Request' : 'Negotiate',
               ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
             },
             ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
@@ -302,7 +395,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         />
       </div>
 
-      {step === 1 && <Step1 setStep={setStep} isReview={isReview} {...props} />}
+      {step === 1 && <Step1 setStep={setStep} {...props} />}
       {step === 2 && <Step2 setStep={setStep} {...props} />}
       {step === 3 && <Step3 setStep={setStep} {...props} />}
 

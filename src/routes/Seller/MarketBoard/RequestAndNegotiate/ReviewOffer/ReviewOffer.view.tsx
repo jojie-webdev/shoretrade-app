@@ -41,13 +41,11 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                           </BadgeText>
                         </Badge>
                       ))}
-                    {v.size.from !== null && (
-                      <Badge className="badge" badgeColor={theme.grey.shade8}>
-                        <BadgeText variant="overlineSmall" color="noshade">
-                          {v.size.from || ''}
-                        </BadgeText>
-                      </Badge>
-                    )}
+                    <Badge className="badge" badgeColor={theme.grey.shade8}>
+                      <BadgeText variant="overlineSmall" color="noshade">
+                        {v.size.from || 'Ungraded'}
+                      </BadgeText>
+                    </Badge>
                   </div>
 
                   <div className="weights">
