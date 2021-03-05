@@ -38,6 +38,7 @@ import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
+import getMarketNotification from './getMarketNotification';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerLicense from './getSellerLicense';
@@ -49,6 +50,7 @@ import login from './login';
 import logRequest from './logRequest';
 import order from './order';
 import placeOrder from './placeOrder';
+import readMarketNotification from './readMarketNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -107,6 +109,7 @@ const sagas = [
   getListingsByType,
   getMarketEstimate,
   getMarketInterests,
+  getMarketNotification,
   getPaymentMethods,
   getSellerById,
   getSellerLicense,
@@ -114,10 +117,11 @@ const sagas = [
   getShippingQuote,
   getTransactionHistory,
   getUser,
-  login,
   logRequest,
+  login,
   order,
   placeOrder,
+  readMarketNotification,
   register,
   resendVerification,
   resetPassword,
@@ -127,7 +131,6 @@ const sagas = [
   sendMessage,
   updateAddress,
   updateBankDetails,
-  uploadBulk,
   updateDefaultCard,
   updateFavoriteSeller,
   updateFavouriteProduct,
@@ -135,6 +138,7 @@ const sagas = [
   updateMarketInterests,
   updateSellerLicense,
   updateUser,
+  uploadBulk,
   verify,
 ];
 

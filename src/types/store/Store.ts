@@ -127,6 +127,10 @@ import {
   GetMarketEstimatePayload,
 } from './GetMarketEstimateState';
 import {
+  GetMarketNotificationMeta,
+  GetMarketNotificationPayload,
+} from './GetMarketNotificationState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -149,6 +153,10 @@ import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
+import {
+  ReadMarketNotificationMeta,
+  ReadMarketNotificationPayload,
+} from './ReadMarketNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
 import {
   ResendVerificationMeta,
@@ -346,5 +354,13 @@ export interface Store {
   createMarketOffer: AsyncState<
     CreateMarketOfferMeta,
     CreateMarketOfferPayload
+  >;
+  getMarketNotification: AsyncState<
+    GetMarketNotificationMeta,
+    GetMarketNotificationPayload
+  >;
+  readMarketNotification: AsyncState<
+    ReadMarketNotificationMeta,
+    ReadMarketNotificationPayload
   >;
 }

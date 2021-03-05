@@ -43,6 +43,7 @@ import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
+import getMarketNotification from './getMarketNotification';
 import getPaymentMethods from './getPaymentMethods';
 import getSellerById from './getSellerById';
 import getSellerLicense from './getSellerLicense';
@@ -57,6 +58,7 @@ import login from './login';
 import logRequest from './logRequest';
 import order from './order';
 import placeOrder from './placeOrder';
+import readMarketNotification from './readMarketNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -121,20 +123,22 @@ export default (routeHistory: History) =>
         getListingsByType,
         getMarketEstimate,
         getMarketInterests,
+        getMarketNotification,
         getPaymentMethods,
         getSellerById,
+        getSellerLicense,
         getSellerOrdersDelivered,
         getSellerOrdersPlaced,
         getSellerOrdersTransit,
-        getSellerLicense,
         getShippingQuote,
         getTransactionHistory,
         getUser,
         history,
-        login,
         logRequest,
+        login,
         order,
         placeOrder,
+        readMarketNotification,
         register,
         resendVerification,
         resetPassword,

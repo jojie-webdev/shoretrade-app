@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { SELLER_DASHBOARD_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getSellerDashboard } from 'services/company';
-import { sellerDashboardActions } from 'store/actions';
+import {
+  getMarketNotificationActions,
+  readMarketNotificationActions,
+  sellerDashboardActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
@@ -23,6 +28,7 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 //TODO: refactor other dashboard data since dateRange is on redux
 const Dashboard = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const dateRange =
@@ -145,6 +151,40 @@ const Dashboard = (): JSX.Element => {
     };
   };
 
+  // Market Notification Logic - Start
+  useEffect(() => {
+    dispatch(getMarketNotificationActions.request({}));
+  }, []);
+
+  const marketNotification = useSelector(
+    (state: Store) => state.getMarketNotification.data?.data.currentNotification
+  );
+
+  const currentNotificationType = marketNotification?.type || '';
+
+  const onClickMarketNotification = () => {
+    if (
+      currentNotificationType === 'NEW_MARKET_REQUEST' ||
+      currentNotificationType === 'MARKET_OFFER_NEGOTIATED'
+    ) {
+      history.push(SELLER_ROUTES.MARKET_BOARD);
+    }
+
+    if (currentNotificationType === 'MARKET_OFFER_ACCEPTED') {
+      history.push(SELLER_ROUTES.SOLD);
+    }
+
+    if (marketNotification?.id) {
+      dispatch(
+        readMarketNotificationActions.request({
+          notificationId: marketNotification.id,
+        })
+      );
+    }
+  };
+
+  // Market Notification Logic - End
+
   const generatedProps: DashboardLandingGeneratedProps = {
     isCalendarModalOpen,
     toggleModal,
@@ -156,6 +196,8 @@ const Dashboard = (): JSX.Element => {
     dateRange,
     setDateRange,
     onApplyCustom,
+    currentNotificationType,
+    onClickMarketNotification,
   };
   return <DashboardView {...generatedProps} />;
 };
