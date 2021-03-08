@@ -16,13 +16,18 @@ export const Container = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
 `;
 
 export const BreakdownRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+`;
+
+export const BreakDownCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+  max-width: 90px;
 `;
 
 export const Col = styled.div`
