@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { BUYER_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { getAllMarketRequestActions } from 'store/actions';
+import {
+  getActiveOffersActions,
+  getAllMarketRequestActions,
+} from 'store/actions';
 import getAllMarketRequest from 'store/reducers/getAllMarketRequest';
 import { Store } from 'types/store/Store';
 
@@ -53,11 +56,18 @@ const MarketRequestsLanding = (): JSX.Element => {
   );
 
   const onClickItem = (row: any) => {
+    dispatch(
+      getActiveOffersActions.request({
+        queryParams: {
+          marketRequestId: row.id,
+        },
+      })
+    );
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id), {
       type: row.type,
       image: row.image,
       status: row.status,
-      offersTotal: row.offers,
+      offers: row.offers,
       expiry: row.expiry,
       id: row.id,
     });

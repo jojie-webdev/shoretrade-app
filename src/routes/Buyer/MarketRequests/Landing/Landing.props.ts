@@ -3,10 +3,9 @@ import { Dispatch, ChangeEvent } from 'react';
 export type Result = {
   id: string;
   type: string;
-  offersTotal: number;
+  offers: number;
   image: string;
   expiry: string;
-  offers: any[];
 };
 
 // buyerId: "5c28babb-6113-4118-933a-5e4a3d48111b"

@@ -54,9 +54,9 @@ const SummaryView = (props: SummaryProps) => {
 
     if (!items) return <></>;
 
-    const tagsMarkup = items.map((item) => (
+    const tagsMarkup = items.map((item, index) => (
       <Badge
-        key={item}
+        key={index}
         className="offers-state-badge"
         badgeColor={theme.grey.shade3}
       >
@@ -140,7 +140,7 @@ const SummaryView = (props: SummaryProps) => {
         <SummaryContentContainer>
           <SummaryBadges
             label="Specs"
-            items={selectedSpecifications.map((spec) => spec.label)}
+            items={selectedSpecifications.items.map((spec) => spec.label)}
           />
           <div className="size-container">{sizeSummary()}</div>
           <div className="quantity-container">

@@ -55,6 +55,8 @@ export const OffersSellerAccordionContentContainer = styled.div`
 
     img {
       border-radius: 8px;
+      width: 64px;
+      height: 64px;
     }
   }
 

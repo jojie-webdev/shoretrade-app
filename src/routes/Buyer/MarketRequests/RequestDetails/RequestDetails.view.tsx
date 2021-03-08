@@ -24,6 +24,8 @@ import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link, Route, Switch } from 'react-router-dom';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -48,7 +50,7 @@ export const OffersSellerAccordionContent = (props: {
   sellerId: string;
   sellerName: string;
   sellerLocation: string;
-  sellerRating: string;
+  sellerRating: number;
   image: string;
 }) => {
   const { sellerId, sellerName, sellerLocation, sellerRating, image } = props;
@@ -98,7 +100,7 @@ export const OffersSellerAccordionContent = (props: {
 
 const SellerOfferInteractionContent = (props: {
   status: string;
-  weight: string;
+  weight: number;
   weightUnit: string;
   price: number;
   tags: string[];
@@ -166,93 +168,19 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     negotiating,
     setNegotiating,
     sellerOffers,
+    searchTerm,
+    setSearchTerm,
+    currentOfferId,
+    selectedOffer,
+    selectedCompany,
   } = props;
+
+  if (!sellerOffers) {
+    return <></>;
+  }
 
   const handleStartNegotiotiate = () => {
     setNegotiating(true);
-  };
-
-  const SellerOffersContent = () => {
-    if (sellerOffers?.length < 1) {
-      return (
-        <EmptyStateView
-          title="There are currently no offers for this request."
-          // circleHeight={280}
-          // circleWidth={280}
-          Svg={Crab}
-          height={240}
-          width={249}
-          fluid
-        />
-      );
-    }
-
-    return (
-      <>
-        <FilterContainer>
-          <div className="filter-search-container">
-            <Search
-              className="filter-search"
-              value={props.searchTerm}
-              onChange={(event: any) =>
-                props.setSearchTerm(event.currentTarget.value)
-              }
-              resetValue={() => props.setSearchTerm('')}
-              placeholder="Search for an offer..."
-              rounded
-            />
-          </div>
-          <div className="filter-sort-container">
-            <Select
-              className="filter-sort"
-              grey
-              options={[]}
-              placeholder="Sort"
-            />
-          </div>
-        </FilterContainer>
-        <div>
-          {sellerOffers?.map((offer) => (
-            <RequestOffersAccordion
-              key={offer.sellerId}
-              title="Manila"
-              noBg={true}
-              padding={'16px'}
-              withBackground={false}
-              border={`1px solid ${theme.grey.shade3}`}
-              background={theme.grey.shade1}
-              marginBottom={'12px'}
-              leftComponent={
-                <OffersSellerAccordionContent
-                  image={'http://placekitten.com/64/64'}
-                  sellerLocation="Manila"
-                  sellerName="Manny Pacquiao"
-                  sellerRating="4"
-                  sellerId="001"
-                />
-              }
-              iconColor={theme.brand.primary}
-            >
-              {offer.map((item: any) => (
-                <RequestOfferItemInteraction
-                  key={item.id}
-                  onClick={() => onClickItem({ id: '001' })}
-                  leftComponent={
-                    <SellerOfferInteractionContent
-                      price={100}
-                      status="Negotiation"
-                      weight="180"
-                      tags={['Fresh', 'Frozen']}
-                      weightUnit="kg"
-                    />
-                  }
-                />
-              ))}
-            </RequestOffersAccordion>
-          ))}
-        </div>
-      </>
-    );
   };
 
   return (
@@ -281,7 +209,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 inDetail={true}
                 type={data.type}
                 expiry={data.expiry}
-                offersTotal={data.offersTotal}
+                offers={data.offers}
                 image={data.image}
               />
             </RequestDetailsCardContainer>
@@ -297,21 +225,76 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {/* NUMBERS CONTAINER START */}
                   <div className="numbers-container">
                     <div className="item">
-                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="value">{data.offers} &nbsp;</span>
                       <span className="label">Offers</span>
                     </div>
                     <span className="divider">,</span>
                     <div className="item">
-                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="value">{data.offers} &nbsp;</span>
                       <span className="label">Sellers</span>
                     </div>
                   </div>
                   {/* NUMBERS CONTAINER END */}
-                  <>{SellerOffersContent()}</>
+                  {data.offers < 1 || sellerOffers === undefined ? (
+                    <EmptyStateView
+                      title="There are currently no offers for this request."
+                      // circleHeight={280}
+                      // circleWidth={280}
+                      Svg={Crab}
+                      height={240}
+                      width={249}
+                      fluid
+                    />
+                  ) : (
+                    sellerOffers.map((seller) => (
+                      <RequestOffersAccordion
+                        key={seller.company.id}
+                        title="Manila"
+                        noBg={true}
+                        padding={'16px'}
+                        withBackground={false}
+                        border={`1px solid ${theme.grey.shade3}`}
+                        background={theme.grey.shade1}
+                        marginBottom={'12px'}
+                        leftComponent={
+                          <OffersSellerAccordionContent
+                            image={seller.company.image}
+                            sellerLocation={seller.company.address.countryCode}
+                            sellerName={seller.company.name}
+                            sellerRating={seller.company.rating}
+                            sellerId={seller.company.id}
+                          />
+                        }
+                        iconColor={theme.brand.primary}
+                      >
+                        {seller.offers.map((item) => (
+                          <RequestOfferItemInteraction
+                            key={item.id}
+                            onClick={() => onClickItem(item, seller.company)}
+                            leftComponent={
+                              <SellerOfferInteractionContent
+                                price={item.price}
+                                status={item.status}
+                                weight={item.weight}
+                                tags={item.specifications}
+                                weightUnit={formatMeasurementUnit(
+                                  item.measurementUnit
+                                )}
+                              />
+                            }
+                          />
+                        ))}
+                      </RequestOffersAccordion>
+                    ))
+                  )}
                 </OffersContainer>
               </Route>
-              <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(data.id)}>
+              <Route
+                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
+              >
                 <OfferDetailView
+                  company={selectedCompany}
+                  selectedOffer={selectedOffer}
                   handleStartNegotiotiate={handleStartNegotiotiate}
                 />
               </Route>

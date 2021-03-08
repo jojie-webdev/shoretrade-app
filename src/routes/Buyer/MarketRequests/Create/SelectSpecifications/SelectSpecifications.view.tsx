@@ -38,7 +38,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
 
   const handleSelectSpecs = () => {
     // MOCK
-    setSelectedSpecifications(selectedState.selectedStates);
+    setSelectedSpecifications({ items: selectedState.selectedStates });
   };
 
   const handleStateCheck = (v: any) => {

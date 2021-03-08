@@ -27,15 +27,23 @@ export type GetActiveOffersRequestResponseItem = {
     id: string;
     name: string;
     rating: number;
+    image: string;
+    address: {
+      state: string;
+      countryCode: string;
+    };
   };
-  negotiations: Array<{
+  offers: Array<{
     id: string;
-    market_offer_id: string;
+    negotiations: any[];
     price: number;
     type: 'NEW_OFFER' | 'COUNTER_OFFER';
-    is_accespted: boolean;
+    size: { from: string; to: string };
     created_at: string;
-    updated_at: string;
+    specifications: string[];
+    status: string;
+    weight: number;
+    measurementUnit: string;
   }>;
 };
 

@@ -3,6 +3,7 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
+import { Item } from 'components/module/LocationSearch/LocationSearch.style';
 import OrderItemView from 'components/module/OrderItem';
 import { useTheme } from 'utils/Theme';
 
@@ -17,7 +18,7 @@ import {
 } from './OfferDetail.style';
 
 const OfferDetailView = (props: any) => {
-  const { specs, handleStartNegotiotiate } = props;
+  const { selectedOffer, handleStartNegotiotiate, company } = props;
   const theme = useTheme();
 
   const OfferBadges = (props: { items: string[]; label: string }) => {
@@ -56,21 +57,21 @@ const OfferDetailView = (props: any) => {
       <OfferDetailsContainer>
         <SellerOfferInteractionContentContainer>
           <OffersSellerAccordionContent
-            sellerLocation="Manila"
-            image={'http://placekitten.com/64/64'}
-            sellerName="Manny Pacquiao"
-            sellerId={'1'}
-            sellerRating={'4'}
+            sellerLocation={company?.address?.countryCode}
+            image={company.image}
+            sellerName={company.name}
+            sellerId={company.id}
+            sellerRating={company.rating}
           />
         </SellerOfferInteractionContentContainer>
         {/* MOCK */}
-        <OfferBadges label="Specs" items={['Frozen', 'Fresh']} />
-        <OfferBadges label="Sizes" items={['Medium', 'Large']} />
+        <OfferBadges label="Specs" items={selectedOffer.specifications} />
+        <OfferBadges label="Sizes" items={[selectedOffer.size.from]} />
         <div className="sizes-container">
           <StyledTextField
             type="number"
             label="From"
-            value={100}
+            value={selectedOffer.weight}
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
@@ -81,7 +82,7 @@ const OfferDetailView = (props: any) => {
           <StyledTextField
             type="number"
             label="To"
-            value={100}
+            value={selectedOffer.weight}
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
@@ -96,7 +97,8 @@ const OfferDetailView = (props: any) => {
               Total Value Including Delivery
             </TypographyView>
             <TypographyView weight="bold" color="shade9" variant="body">
-              $ {'19000'}
+              $ {'-----'}
+              {/* TODO */}
             </TypographyView>
           </div>
         </div>

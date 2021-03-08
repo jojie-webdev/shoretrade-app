@@ -29,18 +29,18 @@ import {
 
 export const MarketRequestItem = (props: {
   expiry: string;
-  offersTotal: number;
+  offers: number;
   type: string;
   image: string;
   inDetail: boolean;
 }) => {
-  const { inDetail, expiry, offersTotal, type, image } = props;
-  const offersText = `${offersTotal} Offers`;
+  const { inDetail, expiry, offers, type, image } = props;
+  const offersText = `${offers} Offers`;
 
-  const offers = () => {
+  const offersMarkup = () => {
     if (inDetail) return '';
 
-    if (offersTotal >= 12) {
+    if (offers >= 12) {
       return (
         <Badge className="offers-badge" badgeColor={theme.brand.success}>
           <BadgeText color="shade1" weight="bold" variant="overline">
@@ -79,7 +79,7 @@ export const MarketRequestItem = (props: {
             {expiry}
           </TypographyView>
         )}
-        {offers()}
+        {offersMarkup()}
       </div>
     </MarketRequestItemContainer>
   );
@@ -122,7 +122,7 @@ const MarketRequestsLandingView = (
                 <MarketRequestItem
                   inDetail={false}
                   image={mr.image}
-                  offersTotal={mr.offersTotal}
+                  offers={mr.offers}
                   expiry={mr.expiry}
                   type={mr.type}
                 />
