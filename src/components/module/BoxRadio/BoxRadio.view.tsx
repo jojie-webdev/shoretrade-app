@@ -6,7 +6,13 @@ import Typography from 'components/base/Typography';
 // import { Col } from 'react-grid-system';
 
 import { BoxRadioProps } from './BoxRadio.props';
-import { Container, Row, Col, BreakdownRow } from './BoxRadio.style';
+import {
+  Container,
+  Row,
+  Col,
+  BreakdownRow,
+  BreakDownCol,
+} from './BoxRadio.style';
 
 const BoxRadio = (props: BoxRadioProps): JSX.Element => {
   const { checked, onClick, totalWeight, boxes, cost, unit = 'kg' } = props;
@@ -18,15 +24,17 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
           <Radio checked={checked} onClick={onClick} />
         </Col>
 
-        <Col>
+        <Col style={{ flex: 1 }}>
           {boxes.map((b) => (
             <BreakdownRow key={b.id}>
-              <Col style={{ paddingLeft: 24, paddingTop: 4 }}>
+              <BreakDownCol
+                style={{ paddingLeft: 24, paddingTop: 4, alignItems: 'left' }}
+              >
                 <Typography
                   variant="caption"
                   color="shade6"
                 >{`${b.weight.toFixed(2)} ${unit}`}</Typography>
-              </Col>
+              </BreakDownCol>
 
               <Col style={{ paddingLeft: 16, paddingTop: 4 }}>
                 <Typography variant="caption" color="shade6">
@@ -34,11 +42,11 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
                 </Typography>
               </Col>
 
-              <Col style={{ paddingLeft: 16 }}>
+              <BreakDownCol style={{ paddingLeft: 16 }}>
                 <Typography variant="body" color="shade6">
                   {(b.weight * (b.quantity || 0)).toFixed(2)} {unit}
                 </Typography>
-              </Col>
+              </BreakDownCol>
             </BreakdownRow>
           ))}
         </Col>
