@@ -36,10 +36,11 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
                   maxWidth: 100,
                 }}
               >
-                <Typography
-                  variant="caption"
-                  color="shade6"
-                >{`${b.weight.toFixed(2)} ${unit}`}</Typography>
+                <Typography variant="caption" color="shade6">{`${
+                  Number.isInteger(b.weight)
+                    ? b.weight.toFixed(0)
+                    : b.weight.toFixed(2)
+                } ${unit}`}</Typography>
               </BreakDownCol>
 
               <Col style={{ paddingLeft: 16, paddingTop: 4 }}>
@@ -52,7 +53,10 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
                 style={{ paddingLeft: 16, minWidth: 120, maxWidth: 120 }}
               >
                 <Typography variant="body" color="shade6">
-                  {(b.weight * (b.quantity || 0)).toFixed(2)} {unit}
+                  {Number.isInteger(b.weight)
+                    ? (b.weight * (b.quantity || 0)).toFixed(0)
+                    : (b.weight * (b.quantity || 0)).toFixed(2)}{' '}
+                  {unit}
                 </Typography>
               </BreakDownCol>
             </BreakdownRow>
