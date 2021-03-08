@@ -26,8 +26,6 @@ export const BreakdownRow = styled.div`
 export const BreakDownCol = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 90px;
-  max-width: 90px;
 `;
 
 export const Col = styled.div`

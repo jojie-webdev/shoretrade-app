@@ -28,7 +28,13 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
           {boxes.map((b) => (
             <BreakdownRow key={b.id}>
               <BreakDownCol
-                style={{ paddingLeft: 24, paddingTop: 4, alignItems: 'left' }}
+                style={{
+                  paddingLeft: 24,
+                  paddingTop: 4,
+                  alignItems: 'left',
+                  minWidth: 100,
+                  maxWidth: 100,
+                }}
               >
                 <Typography
                   variant="caption"
@@ -42,7 +48,9 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
                 </Typography>
               </Col>
 
-              <BreakDownCol style={{ paddingLeft: 16 }}>
+              <BreakDownCol
+                style={{ paddingLeft: 16, minWidth: 120, maxWidth: 120 }}
+              >
                 <Typography variant="body" color="shade6">
                   {(b.weight * (b.quantity || 0)).toFixed(2)} {unit}
                 </Typography>
