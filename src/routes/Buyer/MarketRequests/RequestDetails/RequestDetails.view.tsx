@@ -7,6 +7,7 @@ import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
 import {
+  Crab,
   DollarSign,
   Filter,
   Star,
@@ -16,6 +17,7 @@ import {
 import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
+import EmptyStateView from 'components/module/EmptyState';
 import NegotiateModalView from 'components/module/NegotiateModal';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
@@ -163,10 +165,94 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     breadCrumbSections,
     negotiating,
     setNegotiating,
+    sellerOffers,
   } = props;
 
   const handleStartNegotiotiate = () => {
     setNegotiating(true);
+  };
+
+  const SellerOffersContent = () => {
+    if (sellerOffers?.length < 1) {
+      return (
+        <EmptyStateView
+          title="There are currently no offers for this request."
+          // circleHeight={280}
+          // circleWidth={280}
+          Svg={Crab}
+          height={240}
+          width={249}
+          fluid
+        />
+      );
+    }
+
+    return (
+      <>
+        <FilterContainer>
+          <div className="filter-search-container">
+            <Search
+              className="filter-search"
+              value={props.searchTerm}
+              onChange={(event: any) =>
+                props.setSearchTerm(event.currentTarget.value)
+              }
+              resetValue={() => props.setSearchTerm('')}
+              placeholder="Search for an offer..."
+              rounded
+            />
+          </div>
+          <div className="filter-sort-container">
+            <Select
+              className="filter-sort"
+              grey
+              options={[]}
+              placeholder="Sort"
+            />
+          </div>
+        </FilterContainer>
+        <div>
+          {sellerOffers?.map((offer) => (
+            <RequestOffersAccordion
+              key={offer.sellerId}
+              title="Manila"
+              noBg={true}
+              padding={'16px'}
+              withBackground={false}
+              border={`1px solid ${theme.grey.shade3}`}
+              background={theme.grey.shade1}
+              marginBottom={'12px'}
+              leftComponent={
+                <OffersSellerAccordionContent
+                  image={'http://placekitten.com/64/64'}
+                  sellerLocation="Manila"
+                  sellerName="Manny Pacquiao"
+                  sellerRating="4"
+                  sellerId="001"
+                />
+              }
+              iconColor={theme.brand.primary}
+            >
+              {offer.map((item: any) => (
+                <RequestOfferItemInteraction
+                  key={item.id}
+                  onClick={() => onClickItem({ id: '001' })}
+                  leftComponent={
+                    <SellerOfferInteractionContent
+                      price={100}
+                      status="Negotiation"
+                      weight="180"
+                      tags={['Fresh', 'Frozen']}
+                      weightUnit="kg"
+                    />
+                  }
+                />
+              ))}
+            </RequestOffersAccordion>
+          ))}
+        </div>
+      </>
+    );
   };
 
   return (
@@ -221,142 +307,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </div>
                   </div>
                   {/* NUMBERS CONTAINER END */}
-                  <FilterContainer>
-                    <div className="filter-search-container">
-                      <Search
-                        className="filter-search"
-                        value={props.searchTerm}
-                        onChange={(event: any) =>
-                          props.setSearchTerm(event.currentTarget.value)
-                        }
-                        resetValue={() => props.setSearchTerm('')}
-                        placeholder="Search for an offer..."
-                        rounded
-                      />
-                    </div>
-                    <div className="filter-sort-container">
-                      <Select
-                        className="filter-sort"
-                        grey
-                        options={[]}
-                        placeholder="Sort"
-                      />
-                    </div>
-                  </FilterContainer>
-                  <div>
-                    <RequestOffersAccordion
-                      title="Manila"
-                      noBg={true}
-                      padding={'16px'}
-                      withBackground={false}
-                      border={`1px solid ${theme.grey.shade3}`}
-                      background={theme.grey.shade1}
-                      marginBottom={'12px'}
-                      leftComponent={
-                        <OffersSellerAccordionContent
-                          image={'http://placekitten.com/64/64'}
-                          sellerLocation="Manila"
-                          sellerName="Manny Pacquiao"
-                          sellerRating="4"
-                          sellerId="001"
-                        />
-                      }
-                      iconColor={theme.brand.primary}
-                    >
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                    </RequestOffersAccordion>
-                    <RequestOffersAccordion
-                      title="Manila"
-                      padding={'16px'}
-                      noBg={true}
-                      withBackground={false}
-                      border={`1px solid ${theme.grey.shade3}`}
-                      marginBottom={'12px'}
-                      background={theme.grey.shade1}
-                      leftComponent={
-                        <OffersSellerAccordionContent
-                          image={'http://placekitten.com/64/64'}
-                          sellerLocation="Manila"
-                          sellerName="Manny Pacquiao"
-                          sellerRating="4.5"
-                          sellerId="001"
-                        />
-                      }
-                      iconColor={theme.brand.primary}
-                    >
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                    </RequestOffersAccordion>
-                  </div>
+                  <>{SellerOffersContent()}</>
                 </OffersContainer>
               </Route>
               <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(data.id)}>

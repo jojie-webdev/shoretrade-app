@@ -4,11 +4,12 @@ import React, { useEffect } from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { Filter } from 'components/base/SVG';
+import { Filter, Crab } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
+import EmptyStateView from 'components/module/EmptyState';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
@@ -89,7 +90,7 @@ const MarketRequestsLandingView = (
 ) => {
   const history = useHistory();
   const { marketRequests, onClickItem } = props;
-
+  console.log(marketRequests);
   return (
     <MarketRequestsContainer>
       <BoxContainer>
@@ -112,21 +113,32 @@ const MarketRequestsLandingView = (
           alignText="center"
           fullWidth
         />
-        {marketRequests.map((mr) => (
-          <MarketRequestItemInteraction
-            key={mr.id}
-            onClick={() => onClickItem(mr)}
-            leftComponent={
-              <MarketRequestItem
-                inDetail={false}
-                image={mr.image}
-                offersTotal={mr.offersTotal}
-                expiry={mr.expiry}
-                type={mr.type}
-              />
-            }
+        {marketRequests.length > 0 ? (
+          marketRequests.map((mr) => (
+            <MarketRequestItemInteraction
+              key={mr.id}
+              onClick={() => onClickItem(mr)}
+              leftComponent={
+                <MarketRequestItem
+                  inDetail={false}
+                  image={mr.image}
+                  offersTotal={mr.offersTotal}
+                  expiry={mr.expiry}
+                  type={mr.type}
+                />
+              }
+            />
+          ))
+        ) : (
+          <EmptyStateView
+            // circleHeight={280}
+            // circleWidth={280}
+            Svg={Crab}
+            height={240}
+            width={249}
+            fluid
           />
-        ))}
+        )}
       </BoxContainer>
     </MarketRequestsContainer>
   );

@@ -39,6 +39,7 @@ export interface MarketRequestDetailProps {
   searchTerm: string;
   breadCrumbSections: any[];
   negotiating: boolean;
+  sellerOffers: any[];
   setNegotiating: Dispatch<SetStateAction<boolean>>;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   onClickItem: (row: any) => void;

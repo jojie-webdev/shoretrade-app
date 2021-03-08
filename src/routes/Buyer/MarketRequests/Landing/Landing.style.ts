@@ -34,6 +34,8 @@ export const MarketRequestItemContainer = styled.div`
     margin-right: 1rem;
 
     img {
+      width: 64px;
+      height: 64px;
       border-radius: 8px;
     }
   }

@@ -92,6 +92,7 @@ const MarketRequestDetail = (): JSX.Element => {
       offersTotal,
       expiry,
     },
+    sellerOffers: [],
     searchTerm,
     negotiating,
     setNegotiating,

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { getAllMarketRequestActions } from 'store/actions';
+import getAllMarketRequest from 'store/reducers/getAllMarketRequest';
 import { Store } from 'types/store/Store';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -44,6 +46,11 @@ const MarketRequestsLanding = (): JSX.Element => {
   // MARK:- States / Variables
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
 
   const onClickItem = (row: any) => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id), {
@@ -56,9 +63,19 @@ const MarketRequestsLanding = (): JSX.Element => {
     });
   };
 
+  useEffect(() => {
+    dispatch(getAllMarketRequestActions.request({}));
+  }, []);
+
+  useEffect(() => {
+    console.log(buyerRequests);
+  }, [buyerRequests]);
+
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
-    marketRequests: getMarketRequestLandingData(mockData), // TODO STATE
+    marketRequests: getMarketRequestLandingData(
+      buyerRequests.data?.data?.marketRequests
+    ), // TODO STATE
     onClickItem,
   };
 
