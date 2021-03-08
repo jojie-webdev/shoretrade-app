@@ -51,11 +51,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     getBoxes,
     remainingWeight,
     unit,
-    boxRadios,
     pressedBoxRadio,
     setPressedBoxRadio,
     onAddToCart,
     isLoadingListingBoxes,
+    groupedBox,
   } = props;
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
@@ -146,7 +146,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     />
                   </RemainingWrapper>
 
-                  {!isEmpty(boxRadios) ? (
+                  {!isEmpty(groupedBox) ? (
                     <BoxContainer>
                       <Typography
                         variant="overline"
@@ -155,11 +155,15 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       >
                         BEST BOX WEIGHT MATCH
                       </Typography>
-                      {boxRadios.map((p) => (
+                      {groupedBox.map((p) => (
                         <BoxRadioContainer key={p.id}>
                           <BoxRadio
+                            id={p.id}
                             checked={p.id === pressedBoxRadio}
-                            {...p}
+                            totalWeight={p.totalWeight}
+                            boxes={p.boxes}
+                            cost={p.cost}
+                            unit={p.unit}
                             onClick={() =>
                               setPressedBoxRadio((prevState) =>
                                 p.id === prevState ? '' : p.id

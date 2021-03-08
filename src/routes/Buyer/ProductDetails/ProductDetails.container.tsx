@@ -81,8 +81,8 @@ const ProductDetails = (): JSX.Element => {
   ];
 
   const getListingBoxesResponse =
-    (useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) ||
-      [])[0] || [];
+    useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
+
   const isLoadingListingBoxes =
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
 
@@ -90,19 +90,46 @@ const ProductDetails = (): JSX.Element => {
     (state: Store) => state.getListingBoxes.request
   );
 
-  const boxRadios =
+  const groupedBox =
     previousWeightRequest?.listingId === listingId && !shouldHideResult
-      ? getListingBoxesResponse.map((box) => {
-          const totalWeight = box.weight * (box.quantity || 0);
-          return {
-            id: box.id,
-            pressedBoxRadio,
-            weight: box.weight,
-            quantity: box.quantity || 0,
-            totalWeight,
-            cost: price * totalWeight,
-            unit,
-          };
+      ? getListingBoxesResponse.map((boxGroup) => {
+          return boxGroup.reduce(
+            (
+              accum: {
+                id: string;
+                totalWeight: number;
+                quantity: number;
+                cost: number;
+                boxes: {
+                  count: number | null;
+                  id: string;
+                  quantity: number | null;
+                  weight: number;
+                }[];
+                unit: string;
+              },
+              current
+            ) => {
+              const totalWeight =
+                accum.totalWeight + current.weight * (current?.quantity || 0);
+              return {
+                id: `${accum.id}${accum.id ? '' : ','}${current.id}`,
+                totalWeight,
+                cost: price * totalWeight,
+                quantity: 1,
+                boxes: [...accum.boxes, current],
+                unit,
+              };
+            },
+            {
+              id: '',
+              totalWeight: 0,
+              cost: 0,
+              quantity: 1,
+              boxes: [],
+              unit,
+            }
+          );
         })
       : [];
 
@@ -112,9 +139,7 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const onAddToCart = () => {
-    const currentBox = getListingBoxesResponse.find(
-      (box) => box.id === pressedBoxRadio
-    );
+    const currentBox = groupedBox.find((box) => box.id === pressedBoxRadio);
 
     if (currentBox) {
       const payload: CartItem = {
@@ -144,16 +169,14 @@ const ProductDetails = (): JSX.Element => {
           address: currentListing.address,
           measurementUnit: currentListing.measurementUnit,
         },
-        orderBoxes: [
-          {
-            id: currentBox.id,
-            weight: currentBox.weight,
-            quantity: currentBox.quantity || 0,
-            count: currentBox.count || 0,
-          },
-        ],
-        subTotal: currentBox.weight * price * (currentBox.quantity || 0),
-        weight: currentBox.weight * (currentBox.quantity || 0),
+        orderBoxes: currentBox.boxes.map((b) => ({
+          id: b.id,
+          weight: b.weight,
+          quantity: b.quantity || 0,
+          count: b.count || 0,
+        })),
+        subTotal: currentBox.cost,
+        weight: currentBox.totalWeight,
       };
       dispatch(cartActions.add(payload));
       history.push(BUYER_ROUTES.CHECKOUT);
@@ -162,7 +185,6 @@ const ProductDetails = (): JSX.Element => {
 
   const getBoxes = () => {
     if (!shouldHideResult) {
-      console.log('test');
       setShouldHideResult(true);
       setPressedBoxRadio('');
     }
@@ -300,7 +322,7 @@ const ProductDetails = (): JSX.Element => {
     productDetailsCard6Props,
     sellerRatingProps,
     unit,
-    boxRadios,
+    groupedBox,
     pressedBoxRadio,
     setPressedBoxRadio,
     remainingWeight,

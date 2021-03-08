@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-import { BoxRadioProps } from 'components/module/BoxRadio/BoxRadio.props';
 import { ProductDetailsCard1Props } from 'components/module/ProductDetailsCard1/ProductDetailsCard1.props';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
@@ -21,7 +20,6 @@ export interface ProductDetailsGeneratedProps {
   sellerRatingProps: ProductSellerRatingProps;
   unit?: string;
   remainingWeight?: string;
-  boxRadios: BoxRadioProps[];
   pressedBoxRadio: string;
   setPressedBoxRadio: Dispatch<SetStateAction<string>>;
   isAquafuture?: boolean;
@@ -29,5 +27,18 @@ export interface ProductDetailsGeneratedProps {
   weight: string;
   setWeight: Dispatch<string>;
   getBoxes: () => void;
-  isLoadingListingBoxes: boolean,
+  isLoadingListingBoxes: boolean;
+  groupedBox: {
+    id: string;
+    totalWeight: number;
+    quantity: number;
+    cost: number;
+    boxes: {
+      count: number | null;
+      id: string;
+      quantity: number | null;
+      weight: number;
+    }[];
+    unit: string;
+  }[];
 }
