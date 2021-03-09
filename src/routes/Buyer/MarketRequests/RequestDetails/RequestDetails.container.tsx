@@ -28,6 +28,17 @@ const MarketRequestDetail = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const goTolist = () => {
+    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id), {
+      type,
+      image,
+      status,
+      offers,
+      expiry,
+      id,
+    });
+  };
+
   const id = location.state ? location.state.id : '';
   const image = location.state ? location.state.image : '';
   const type = location.state ? location.state.type : '';
@@ -52,14 +63,7 @@ const MarketRequestDetail = (): JSX.Element => {
     {
       label: 'Request Details',
       onClick: () => {
-        history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id), {
-          type,
-          image,
-          status,
-          offers,
-          expiry,
-          id,
-        });
+        goTolist();
       },
     },
     {
@@ -83,6 +87,13 @@ const MarketRequestDetail = (): JSX.Element => {
   const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
+
+  if (
+    !selectedOffer &&
+    location.pathname.includes(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id))
+  ) {
+    goTolist();
+  }
 
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);

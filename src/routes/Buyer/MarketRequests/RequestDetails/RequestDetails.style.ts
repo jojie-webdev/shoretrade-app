@@ -71,7 +71,7 @@ export const OffersSellerAccordionContentContainer = styled.div`
       line-height: 1rem;
     }
     .offers-badge {
-      margin: 0;
+      margin-bottom: 4px;
       width: fit-content;
     }
     .ratings-container {
@@ -123,10 +123,16 @@ export const SellerOfferInteractionContentContainer = styled.div`
         padding-bottom: 1px;
       }
     }
-    .offers-badge {
-      margin: 0;
-      width: fit-content;
+
+    .status {
+      display: flex;
+      flex-direction: row;
+      .offers-badge {
+        margin-bottom: 4px;
+        width: fit-content;
+      }
     }
+
     .ratings-container {
       display: flex;
       flex-direction: row;

@@ -5,6 +5,7 @@ import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
 import { Item } from 'components/module/LocationSearch/LocationSearch.style';
 import OrderItemView from 'components/module/OrderItem';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { OffersSellerAccordionContent } from '../RequestDetails.view';
@@ -75,7 +76,7 @@ const OfferDetailView = (props: any) => {
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                kg
+                {formatMeasurementUnit(selectedOffer.measurementUnit)}
               </TypographyView>
             }
           />
@@ -86,7 +87,7 @@ const OfferDetailView = (props: any) => {
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                kg
+                {formatMeasurementUnit(selectedOffer.measurementUnit)}
               </TypographyView>
             }
           />

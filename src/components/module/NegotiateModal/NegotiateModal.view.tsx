@@ -16,13 +16,7 @@ import {
 } from './NegotiateModal.style';
 
 const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
-  const {
-    onSubmit,
-    weight,
-    originalOffer = 50,
-    offerId,
-    ...modalProps
-  } = props;
+  const { onSubmit, weight, originalOffer = 0, offerId, ...modalProps } = props;
 
   const theme = useTheme();
   const isBuyer = useTheme().appType === 'buyer';
