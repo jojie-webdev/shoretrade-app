@@ -155,7 +155,7 @@ const SellerOfferInteractionContent = (props: {
             </Badge>
           )}
           {isUnderNegotiations && (
-            <Badge className="offers-badge" badgeColor={theme.brand.warning}>
+            <Badge className="offers-badge" badgeColor={theme.brand.alert}>
               <StatusBadgeText weight="bold" variant="overline">
                 Negotiation
               </StatusBadgeText>
@@ -281,7 +281,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     sellerOffers.map((seller) => (
                       <RequestOffersAccordion
                         key={seller.company.name}
-                        title="Manila"
+                        title=""
                         noBg={true}
                         padding={'16px'}
                         withBackground={false}
