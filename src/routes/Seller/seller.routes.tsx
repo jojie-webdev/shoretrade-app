@@ -73,7 +73,7 @@ const ROUTES: Routes = {
   //Market Board
   MARKET_BOARD: {
     path: SELLER_ROUTES.MARKET_BOARD,
-    title: 'Market Board',
+    title: 'Buyer Requests',
     children: <MarketBoardRoutes />,
     icon: Bolt,
     nested: true,

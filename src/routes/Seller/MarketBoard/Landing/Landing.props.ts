@@ -17,4 +17,5 @@ export interface MarketBoardLandingGeneratedProps {
   setSearchTerm: Dispatch<SetStateAction<string>>;
 
   onClickOffer: (data: GetAllMarketRequestResponseItem) => void;
+  onClickActiveOffer: (data: GetActiveOffersRequestResponseItem) => void;
 }

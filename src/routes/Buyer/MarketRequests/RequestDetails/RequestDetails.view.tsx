@@ -213,9 +213,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     <RequestDetailsContainer>
       <NegotiateModalView
         onSubmit={() => console.log('submit')}
-        offerId={selectedOffer.id}
         originalOffer={selectedOffer.price}
-        negotiationId={'0'}
+        counterOffer={0}
         weight={{
           unit: selectedOffer.measurementUnit,
           value: selectedOffer.weight,

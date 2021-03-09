@@ -7,6 +7,13 @@ import Container from '../../components/Container';
 
 storiesOf('module/NegotiateModal', module).add('Summary', () => (
   <Container>
-    <NegotiateModal isOpen />
+    <NegotiateModal
+      isOpen
+      originalOffer={100}
+      weight={{
+        value: 100,
+        unit: 'kg',
+      }}
+    />
   </Container>
 ));

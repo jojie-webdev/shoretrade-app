@@ -34,9 +34,8 @@ export type GetActiveOffersRequestResponseItem = {
       countryCode: string;
     };
   };
-  offers: Array<{
+  negotiations: Array<{
     id: string;
-    negotiations: any[];
     price: number;
     type: 'NEW_OFFER' | 'COUNTER_OFFER';
     size: { from: string; to: string };
@@ -46,9 +45,44 @@ export type GetActiveOffersRequestResponseItem = {
     weight: number;
     measurementUnit: string;
   }>;
+  offers: Array<Offer>;
 };
+
+export interface Offer {
+  id: string;
+  status: string;
+  createdAt: string;
+  price: number;
+  weight: number;
+  size: Size;
+  measurementUnit: string;
+  specifications: string[];
+  negotiations: Negotiation[] | null;
+}
+
+export interface Negotiation {
+  id: string;
+  type: string;
+  price: number;
+  created_at: string;
+  updated_at: string;
+  is_accepted: boolean;
+  market_offer_id: string;
+}
+
+interface Size {
+  from?: string;
+  to?: any;
+}
+
+export interface NegotiateOfferMeta {
+  marketOfferId: string;
+  price: number;
+}
 
 export type GetActiveOffersPayload = GenericResponse<{
   token: string;
   marketOffers: GetActiveOffersRequestResponseItem[];
 }>;
+
+export type NegotiatePayload = GenericResponse;
