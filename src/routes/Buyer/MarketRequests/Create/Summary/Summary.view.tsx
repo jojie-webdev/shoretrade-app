@@ -133,9 +133,7 @@ const SummaryView = (props: SummaryProps) => {
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
-          caption="Aliquip ullamco dolore amet sunt ullamco. 
-  Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-  Sint ea nulla velit mollit amet sint esa."
+          caption="Review product specifications for this request."
         />
         <SummaryContentContainer>
           <SummaryBadges
