@@ -99,15 +99,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         <ComputationContainer isSeller={!isBuyer}>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Your original offer is
-            </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(counterOfferProp)}/{unit}
-            </Typography>
-          </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
-              Their counter offer was
+              Their original offer is
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
               {toPrice(originalOffer)}/{unit}
@@ -115,12 +107,22 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
           </div>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Your {isBuyer ? 'counter' : 'new'} offer is
+              Your counter offer was
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(counterOffer)}/{unit}
+              {toPrice(counterOfferProp)}/{unit}
             </Typography>
           </div>
+          {counterOfferProp !== counterOffer && (
+            <div className="computation-item-container">
+              <Typography variant="label" color={textColor}>
+                Your {isBuyer ? 'counter' : 'new'} offer is
+              </Typography>
+              <Typography variant="label" weight="bold" color={textColor}>
+                {toPrice(counterOffer)}/{unit}
+              </Typography>
+            </div>
+          )}
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
               Discount Value{' '}
