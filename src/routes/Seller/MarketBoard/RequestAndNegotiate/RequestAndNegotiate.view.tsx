@@ -131,7 +131,7 @@ const Step1 = ({
       ? ((discountValue / sellerOffer) * 100).toFixed(2)
       : 0;
 
-    const deliveryTotal = buyerCounterOffer * activeOffer.weight;
+    const deliveryTotal = sellerOffer * activeOffer.weight;
 
     return (
       <>
@@ -214,6 +214,7 @@ const Step1 = ({
 
         <NegotiateModal
           originalOffer={buyerCounterOffer}
+          counterOffer={sellerOffer}
           weight={{
             unit: unit,
             value: activeOffer.weight,

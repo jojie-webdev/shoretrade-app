@@ -21,6 +21,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
     onSubmit,
     weight,
     originalOffer,
+    counterOffer: counterOfferProp,
     isNegotiating,
     ...modalProps
   } = props;
@@ -30,7 +31,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   const isBuyer = useTheme().appType === 'buyer';
   const textColor = isBuyer ? 'shade9' : 'noshade';
 
-  const [counterOffer, setCounterOffer] = useState(originalOffer);
+  const [counterOffer, setCounterOffer] = useState(counterOfferProp);
   const [closeListing, setCloseListing] = useState(false);
   const [discountValue, setDiscountValue] = useState(0);
 
@@ -98,7 +99,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         <ComputationContainer isSeller={!isBuyer}>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Original offer was
+              Their counter offer was
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
               {toPrice(originalOffer)}/{unit}
