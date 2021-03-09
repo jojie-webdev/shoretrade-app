@@ -230,7 +230,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </div>
                     <span className="divider">,</span>
                     <div className="item">
-                      <span className="value">{data.offers} &nbsp;</span>
+                      <span className="value">
+                        {sellerOffers.length} &nbsp;
+                      </span>
                       <span className="label">Sellers</span>
                     </div>
                   </div>

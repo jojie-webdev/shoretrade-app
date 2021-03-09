@@ -1,1 +1,1 @@
-export { computeTimeRemaining } from './timeRemaining';
+export { formatRunningDateDifference } from './timeRemaining';
