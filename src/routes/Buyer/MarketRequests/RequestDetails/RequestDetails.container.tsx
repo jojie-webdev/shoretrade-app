@@ -88,13 +88,6 @@ const MarketRequestDetail = (): JSX.Element => {
   const [selectedOffer, setSelectedOffer] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
 
-  if (
-    !selectedOffer &&
-    location.pathname.includes(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id))
-  ) {
-    goTolist();
-  }
-
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);

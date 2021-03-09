@@ -53,6 +53,10 @@ const OfferDetailView = (props: any) => {
     );
   };
 
+  if (!selectedOffer) {
+    return <></>;
+  }
+
   return (
     <>
       <OfferDetailsContainer>
@@ -65,9 +69,13 @@ const OfferDetailView = (props: any) => {
             sellerRating={company.rating}
           />
         </SellerOfferInteractionContentContainer>
-        {/* MOCK */}
-        <OfferBadges label="Specs" items={selectedOffer.specifications} />
-        <OfferBadges label="Sizes" items={[selectedOffer.size.from]} />
+        <OfferBadges label="Specs" items={selectedOffer?.specifications} />
+        {selectedOffer.size.from ? (
+          <OfferBadges label="Size" items={[selectedOffer?.size?.from]} />
+        ) : (
+          <OfferBadges label="Size" items={['Ungraded']} />
+        )}
+
         <div className="sizes-container">
           <StyledTextField
             type="number"

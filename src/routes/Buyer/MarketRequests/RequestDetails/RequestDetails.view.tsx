@@ -10,6 +10,7 @@ import {
   Crab,
   DollarSign,
   Filter,
+  PlaceholderProfile,
   Star,
   StarFilled,
   Weight,
@@ -60,7 +61,7 @@ export const OffersSellerAccordionContent = (props: {
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
-        <img src={image ? image : ''} />
+        {image ? <img src={image} /> : <PlaceholderProfile />}
       </div>
       <div className="info-container">
         <TypographyView variant="copy" color="shade8">
@@ -280,7 +281,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   ) : (
                     sellerOffers.map((seller) => (
                       <RequestOffersAccordion
-                        key={seller.company.id}
+                        key={seller.company.name}
                         title="Manila"
                         noBg={true}
                         padding={'16px'}
