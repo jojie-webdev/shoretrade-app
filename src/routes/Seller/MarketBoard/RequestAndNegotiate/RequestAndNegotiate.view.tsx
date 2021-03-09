@@ -43,6 +43,7 @@ const Step1 = ({
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
   );
   const noNegotiations = isReview ? true : isEmpty(activeOffer.negotiations);
+  const isNegoOpen = isReview ? false : activeOffer.status === 'OPEN';
 
   const getSizeBadge = () => {
     if (buyerRequest && !isEmpty(buyerRequest.sizeOptions)) {
@@ -98,7 +99,7 @@ const Step1 = ({
     activeOffer: Step1Props['activeOffer'];
   }) => {
     if (isReview) return <></>;
-    if (noNegotiations) {
+    if (noNegotiations || !isNegoOpen) {
       return (
         <div className="offer-container">
           <div className="computation-item-container">
@@ -109,11 +110,23 @@ const Step1 = ({
               {toPrice(activeOffer.price)}/{unit}
             </Typography>
           </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color="noshade">
-              No counter offer from buyer yet
-            </Typography>
-          </div>
+
+          {isNegoOpen ? (
+            <div className="computation-item-container">
+              <Typography variant="label" color="noshade">
+                No counter offer from buyer yet
+              </Typography>
+            </div>
+          ) : (
+            <div className="computation-item-container">
+              <Typography variant="label" color="noshade">
+                Total Value
+              </Typography>
+              <Typography variant="label" weight="bold" color="noshade">
+                {toPrice(activeOffer.price * activeOffer.weight)}/{unit}
+              </Typography>
+            </div>
+          )}
         </div>
       );
     }
@@ -128,7 +141,11 @@ const Step1 = ({
 
     const discountValue = buyerCounterOffer - sellerOffer;
     const discountPercentage = discountValue
-      ? ((discountValue / buyerCounterOffer) * 100).toFixed(2)
+      ? (
+          (discountValue /
+            (buyerCounterOffer === 0 ? sellerOffer : buyerCounterOffer)) *
+          100
+        ).toFixed(2)
       : 0;
 
     const deliveryTotal = sellerOffer * activeOffer.weight;
@@ -190,7 +207,7 @@ const Step1 = ({
         </div>
 
         <div className="submit-btns">
-          {!isReview && !noNegotiations && (
+          {!isReview && !noNegotiations && isNegoOpen && (
             <>
               <Button
                 onClick={() => setIsOpen(true)}
