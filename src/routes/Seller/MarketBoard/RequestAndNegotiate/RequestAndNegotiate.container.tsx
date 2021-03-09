@@ -35,15 +35,6 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
-  const onAcceptOffer = (marketOfferId: string, price: number) => {
-    dispatch(
-      marketOfferNegotiateActions.request({
-        marketOfferId,
-        price,
-      })
-    );
-  };
-
   const onNegotiateOffer = (marketOfferId: string, price: number) => {
     dispatch(
       marketOfferNegotiateActions.request({
@@ -67,7 +58,6 @@ const RequestAndNegotiate = (): JSX.Element => {
     setCurrentOfferItem,
     isReview,
 
-    onAcceptOffer,
     onNegotiateOffer,
 
     isNegotiating,

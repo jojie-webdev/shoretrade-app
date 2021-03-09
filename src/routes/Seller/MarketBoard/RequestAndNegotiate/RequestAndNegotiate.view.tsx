@@ -202,7 +202,7 @@ const Step1 = ({
               <Button
                 loading={props.isNegotiating}
                 onClick={() =>
-                  props.onAcceptOffer(activeOffer.id, buyerCounterOffer)
+                  props.onNegotiateOffer(activeOffer.id, buyerCounterOffer)
                 }
                 className="submit-btn"
                 text="accept"
