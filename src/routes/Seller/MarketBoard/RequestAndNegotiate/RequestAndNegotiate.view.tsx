@@ -128,7 +128,7 @@ const Step1 = ({
 
     const discountValue = buyerCounterOffer - sellerOffer;
     const discountPercentage = discountValue
-      ? ((discountValue / sellerOffer) * 100).toFixed(2)
+      ? ((discountValue / buyerCounterOffer) * 100).toFixed(2)
       : 0;
 
     const deliveryTotal = sellerOffer * activeOffer.weight;

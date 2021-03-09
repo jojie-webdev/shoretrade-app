@@ -42,7 +42,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   }, [counterOffer]);
 
   const discountPercentage = discountValue
-    ? ((discountValue / counterOffer) * 100).toFixed(2)
+    ? ((discountValue / originalOffer) * 100).toFixed(2)
     : 0;
   const deliveryTotal = counterOffer * weightValue;
 
