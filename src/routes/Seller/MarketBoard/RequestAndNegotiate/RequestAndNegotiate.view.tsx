@@ -212,8 +212,8 @@ const Step1 = ({
         </div>
 
         <NegotiateModal
-          originalOffer={50}
-          counterOffer={48}
+          originalOffer={buyerCounterOffer}
+          counterOffer={sellerOffer}
           weight={{
             unit: unit,
             value: activeOffer.weight,
