@@ -170,7 +170,6 @@ const Step1 = ({
                 variant="label"
                 weight="bold"
               >
-                {Math.sign(discountValue) === 1 && '+'}
                 {Math.sign(discountValue) === -1 && '-'}
                 {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
@@ -185,7 +184,7 @@ const Step1 = ({
               Total Value
             </Typography>
             <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(deliveryTotal)}/{unit}
+              {toPrice(deliveryTotal)}
             </Typography>
           </div>
         </div>
