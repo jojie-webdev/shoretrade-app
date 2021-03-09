@@ -120,6 +120,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             props.activeOffers.map((v, i) => (
               <Interactions
                 key={i}
+                onClick={() => props.onClickActiveOffer(v)}
                 leftComponent={
                   <div className="left-component">
                     <img src={v.image} />
