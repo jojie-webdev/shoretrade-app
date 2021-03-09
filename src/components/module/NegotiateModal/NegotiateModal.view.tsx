@@ -107,7 +107,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
           </div>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Your counter offer is
+              Your {isBuyer ? 'counter' : 'new'} offer is
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
               {toPrice(counterOffer)}/{unit}
