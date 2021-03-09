@@ -69,7 +69,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             label={isBuyer ? 'Counter Offer' : 'Make a new Offer'}
             value={counterOffer}
             onChangeText={(v) => {
-              setCounterOffer(Number(v));
+              setCounterOffer(parseFloat(v));
             }}
             min={1}
             LeftComponent={
@@ -153,7 +153,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              onSubmit(counterOffer);
+              if (counterOffer >= 1) onSubmit(counterOffer);
             }}
             loading={isNegotiating}
           />
