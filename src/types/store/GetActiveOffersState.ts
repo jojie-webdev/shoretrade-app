@@ -36,14 +36,12 @@ export type GetActiveOffersRequestResponseItem = {
   };
   negotiations: Array<{
     id: string;
+    market_offer_id: string;
     price: number;
     type: 'NEW_OFFER' | 'COUNTER_OFFER';
-    size: { from: string; to: string };
+    is_accespted: boolean;
     created_at: string;
-    specifications: string[];
-    status: string;
-    weight: number;
-    measurementUnit: string;
+    updated_at: string;
   }>;
   offers: Array<Offer>;
 };
@@ -57,7 +55,7 @@ export interface Offer {
   size: Size;
   measurementUnit: string;
   specifications: string[];
-  negotiations: Negotiation[] | null;
+  negotiations: any[];
 }
 
 export interface Negotiation {
