@@ -44,6 +44,15 @@ const RequestAndNegotiate = (): JSX.Element => {
     );
   };
 
+  const onNegotiateOffer = (marketOfferId: string, price: number) => {
+    dispatch(
+      marketOfferNegotiateActions.request({
+        marketOfferId,
+        price,
+      })
+    );
+  };
+
   if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
     return <></>;
@@ -59,6 +68,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     isReview,
 
     onAcceptOffer,
+    onNegotiateOffer,
 
     isNegotiating,
   };

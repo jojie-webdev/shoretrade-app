@@ -37,7 +37,6 @@ const Step1 = ({
   activeOffer,
   ...props
 }: Step1Props) => {
-  const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
   const unit = formatMeasurementUnit(
@@ -119,7 +118,8 @@ const Step1 = ({
       );
     }
 
-    const negotiations = activeOffer.negotiations.reverse();
+    const negoCopy = [...activeOffer.negotiations];
+    const negotiations = negoCopy.reverse();
     const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
     const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
 
@@ -213,16 +213,17 @@ const Step1 = ({
         </div>
 
         <NegotiateModal
-          onSubmit={() => history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING)}
-          offerId="2"
-          negotiationId="1"
-          originalOffer={1}
+          originalOffer={buyerCounterOffer}
           weight={{
-            unit: 'kg',
-            value: 100,
+            unit: unit,
+            value: activeOffer.weight,
           }}
           isOpen={isOpen}
           onClickClose={() => setIsOpen(false)}
+          isNegotiating={props.isNegotiating}
+          onSubmit={(counterOffer) =>
+            props.onNegotiateOffer(activeOffer.id, counterOffer)
+          }
         />
       </>
     );

@@ -173,9 +173,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     <RequestDetailsContainer>
       <NegotiateModalView
         onSubmit={() => console.log('submit')}
-        offerId={'1'}
         originalOffer={50}
-        negotiationId={'0'}
         weight={{ unit: 'kg', value: 100 }}
         isOpen={negotiating}
         onClickClose={() => {

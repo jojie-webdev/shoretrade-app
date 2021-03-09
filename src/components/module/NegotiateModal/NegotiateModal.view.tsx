@@ -4,6 +4,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
 import Modal from 'components/layout/Modal';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { NegotiateModalProps } from './NegotiateModal.props';
@@ -19,10 +20,11 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   const {
     onSubmit,
     weight,
-    originalOffer = 50,
-    offerId,
+    originalOffer,
+    isNegotiating,
     ...modalProps
   } = props;
+  const { unit, value: weightValue } = weight;
 
   const theme = useTheme();
   const isBuyer = useTheme().appType === 'buyer';
@@ -38,11 +40,16 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
     }
   }, [counterOffer]);
 
+  const discountPercentage = discountValue
+    ? ((discountValue / counterOffer) * 100).toFixed(2)
+    : 0;
+  const deliveryTotal = counterOffer * weightValue;
+
   const handleCheck = (value: any) => {
     setCloseListing(!closeListing);
   };
 
-  // const theme = useTheme();
+  //TODO: offer buyer
   return (
     <Modal
       backgroundColor={isBuyer ? theme.grey.noshade : theme.grey.shade8}
@@ -59,7 +66,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         <Inputs>
           <StyledTextField
             type="number"
-            label="Counter Offer"
+            label={isBuyer ? 'Counter Offer' : 'Make a new Offer'}
             value={counterOffer}
             onChangeText={(v) => {
               setCounterOffer(Number(v));
@@ -72,28 +79,29 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             }
           />
         </Inputs>
-        <CheckBoxContainer>
-          <Checkbox
-            onClick={(v) => handleCheck(v)}
-            className="checkbox"
-            checked={closeListing}
-          />
-          <Typography
-            className="label"
-            variant="label"
-            color={isBuyer ? 'shade7' : 'noshade'}
-          >
-            Close this listing if accepted.
-          </Typography>
-        </CheckBoxContainer>
-        <ComputationContainer>
+        {isBuyer && (
+          <CheckBoxContainer>
+            <Checkbox
+              onClick={(v) => handleCheck(v)}
+              className="checkbox"
+              checked={closeListing}
+            />
+            <Typography
+              className="label"
+              variant="label"
+              color={isBuyer ? 'shade7' : 'noshade'}
+            >
+              Close this listing if accepted.
+            </Typography>
+          </CheckBoxContainer>
+        )}
+        <ComputationContainer isSeller={!isBuyer}>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
               Original offer was
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {'$'}
-              {originalOffer}/{'kg'}
+              {toPrice(originalOffer)}/{unit}
             </Typography>
           </div>
           <div className="computation-item-container">
@@ -101,25 +109,29 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
               Your counter offer is
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {'$'}
-              {counterOffer}/{'kg'}
+              {toPrice(counterOffer)}/{unit}
             </Typography>
           </div>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              {/* TODO */}
-              Discount Value <span className="indicator">{'0.5%'}</span>
+              Discount Value{' '}
+              <span className="indicator">{discountPercentage}%</span>
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue > 0 ? 'success' : 'error'}
+                color={
+                  Math.sign(discountValue) === 0
+                    ? 'noshade'
+                    : Math.sign(discountValue) === 1
+                    ? 'success'
+                    : 'error'
+                }
                 variant="label"
                 weight="bold"
               >
-                {/* TODO */}
-                {'$'}
-                {discountValue > 0 ? '-' : '+'}
-                {Math.abs(discountValue)}/{'kg'}
+                {Math.sign(discountValue) === 1 && '+'}
+                {Math.sign(discountValue) === -1 && '-'}
+                {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color={textColor}>
@@ -129,11 +141,10 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
           </div>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Original offer was
+              Total Value
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {'$'}
-              {originalOffer}/{'kg'}
+              {toPrice(deliveryTotal)}/{unit}
             </Typography>
           </div>
         </ComputationContainer>
@@ -142,9 +153,9 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              onSubmit({ counterOffer, offerId });
-              modalProps.onClickClose();
+              onSubmit(counterOffer);
             }}
+            loading={isNegotiating}
           />
         </ButtonContainer>
       </>
