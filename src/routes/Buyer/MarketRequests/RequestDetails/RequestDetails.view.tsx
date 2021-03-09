@@ -60,7 +60,7 @@ export const OffersSellerAccordionContent = (props: {
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
-        <img src={image} />
+        <img src={image ? image : ''} />
       </div>
       <div className="info-container">
         <TypographyView variant="copy" color="shade8">
@@ -76,21 +76,23 @@ export const OffersSellerAccordionContent = (props: {
             <span className="value">{sellerRating}</span>
           </div>
           <div>
-            {[...Array(5).keys()].map((r) =>
-              Number(sellerRating || 0) > r ? (
-                <StarFilled
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              ) : (
-                <Star
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              )
-            )}
+            {sellerRating
+              ? [...Array(5).keys()].map((r) =>
+                  Number(sellerRating || 0) > r ? (
+                    <StarFilled
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  ) : (
+                    <Star
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  )
+                )
+              : ''}
           </div>
         </div>
       </div>
@@ -137,7 +139,7 @@ const SellerOfferInteractionContent = (props: {
     <SellerOfferInteractionContentContainer>
       <div className="info-container">
         <div className="status">
-          {price <= averagePrice && (
+          {price < averagePrice && (
             <Badge className="offers-badge" badgeColor={theme.brand.success}>
               <StatusBadgeText color="shade1" weight="bold" variant="overline">
                 Great Value

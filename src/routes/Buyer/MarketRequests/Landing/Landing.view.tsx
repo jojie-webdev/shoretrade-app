@@ -50,25 +50,14 @@ export const MarketRequestItem = (props: {
   const offersText = `${offers} Offers`;
 
   const offersMarkup = () => {
-    if (inDetail) return '';
-
-    if (offers >= 12) {
-      return (
-        <Badge className="offers-badge" badgeColor={theme.brand.success}>
-          <BadgeText color="shade1" weight="bold" variant="overline">
-            {offersText}
-          </BadgeText>
-        </Badge>
-      );
-    } else {
-      return (
-        <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-          <BadgeText color="shade8" weight="bold" variant="overline">
-            {offersText}
-          </BadgeText>
-        </Badge>
-      );
-    }
+    if (inDetail || offers < 1) return '';
+    return (
+      <Badge className="offers-badge" badgeColor={theme.brand.success}>
+        <BadgeText color="shade1" weight="bold" variant="overline">
+          {offersText}
+        </BadgeText>
+      </Badge>
+    );
   };
 
   return (
