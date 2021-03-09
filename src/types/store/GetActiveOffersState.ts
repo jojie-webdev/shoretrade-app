@@ -17,6 +17,7 @@ export type GetActiveOffersRequestResponseItem = {
     id: string;
     status: 'OPEN' | 'CLOSED';
     createdAt: string;
+    averagePrice: number;
   };
   size: {
     from?: string;

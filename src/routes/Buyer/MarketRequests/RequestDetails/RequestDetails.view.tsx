@@ -104,9 +104,18 @@ const SellerOfferInteractionContent = (props: {
   weightUnit: string;
   price: number;
   tags: string[];
+  averagePrice: number;
+  isUnderNegotiations: boolean;
 }) => {
-  const { status, weight, price, tags, weightUnit } = props;
-
+  const {
+    status,
+    weight,
+    price,
+    tags,
+    weightUnit,
+    averagePrice,
+    isUnderNegotiations = false,
+  } = props;
   const OfferTags = (props: { tags: string[] }) => {
     const { tags } = props;
     const tagsMarkup = tags.map((tag) => (
@@ -128,11 +137,27 @@ const SellerOfferInteractionContent = (props: {
     <SellerOfferInteractionContentContainer>
       <div className="info-container">
         <div className="status">
-          <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-            <StatusBadgeText color="shade8" weight="bold" variant="overline">
-              {status}
-            </StatusBadgeText>
-          </Badge>
+          {price <= averagePrice && (
+            <Badge className="offers-badge" badgeColor={theme.brand.success}>
+              <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                Great Value
+              </StatusBadgeText>
+            </Badge>
+          )}
+          {price > averagePrice && (
+            <Badge className="offers-badge" badgeColor={theme.brand.error}>
+              <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                Above Market
+              </StatusBadgeText>
+            </Badge>
+          )}
+          {isUnderNegotiations && (
+            <Badge className="offers-badge" badgeColor={theme.brand.warning}>
+              <StatusBadgeText weight="bold" variant="overline">
+                Negotiation
+              </StatusBadgeText>
+            </Badge>
+          )}
         </div>
         <div className="weight-price-container">
           <div className="weight-price">
@@ -277,7 +302,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                             onClick={() => onClickItem(item, seller.company)}
                             leftComponent={
                               <SellerOfferInteractionContent
+                                averagePrice={seller.marketRequest.averagePrice}
                                 price={item.price}
+                                isUnderNegotiations={item.negotiations?.find(
+                                  (i) => i.is_accepted === false
+                                )}
                                 status={item.status}
                                 weight={item.weight}
                                 tags={item.specifications}
