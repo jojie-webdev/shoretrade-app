@@ -56,6 +56,7 @@ import getUser from './getUser';
 import history from './history';
 import login from './login';
 import logRequest from './logRequest';
+import marketOfferNegotiate from './marketOfferNegotiate';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
@@ -136,6 +137,7 @@ export default (routeHistory: History) =>
         history,
         logRequest,
         login,
+        marketOfferNegotiate,
         order,
         placeOrder,
         readMarketNotification,

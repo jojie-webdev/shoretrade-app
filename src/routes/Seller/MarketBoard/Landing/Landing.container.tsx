@@ -7,6 +7,7 @@ import {
   getActiveOffersActions,
   getAllMarketRequestActions,
 } from 'store/actions';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 
@@ -81,6 +82,12 @@ const MarketBoardLanding = (): JSX.Element => {
     });
   };
 
+  const onClickActiveOffer = (data: GetActiveOffersRequestResponseItem) => {
+    history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
+      activeOffer: data,
+    });
+  };
+
   const generatedProps = {
     buyerRequests: buyerRequests.data?.data.marketRequests || [],
     activeOffers: activeOffers.data?.data.marketOffers || [],
@@ -90,6 +97,7 @@ const MarketBoardLanding = (): JSX.Element => {
     searchTerm,
     setSearchTerm,
     onClickOffer,
+    onClickActiveOffer,
   };
   return <MarketBoardLandingView {...generatedProps} />;
 };

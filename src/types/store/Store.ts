@@ -19,6 +19,8 @@ import {
 import {
   GetActiveOffersMeta,
   GetActiveOffersPayload,
+  NegotiateOfferMeta,
+  NegotiatePayload,
 } from 'types/store/GetActiveOffersState';
 import {
   GetAllMarketRequestMeta,
@@ -363,4 +365,5 @@ export interface Store {
     ReadMarketNotificationMeta,
     ReadMarketNotificationPayload
   >;
+  marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
 }

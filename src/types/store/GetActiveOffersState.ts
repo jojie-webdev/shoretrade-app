@@ -39,7 +39,14 @@ export type GetActiveOffersRequestResponseItem = {
   }>;
 };
 
+export interface NegotiateOfferMeta {
+  marketOfferId: string;
+  price: number;
+}
+
 export type GetActiveOffersPayload = GenericResponse<{
   token: string;
   marketOffers: GetActiveOffersRequestResponseItem[];
 }>;
+
+export type NegotiatePayload = GenericResponse;
