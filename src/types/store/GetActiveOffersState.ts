@@ -17,6 +17,7 @@ export type GetActiveOffersRequestResponseItem = {
     id: string;
     status: 'OPEN' | 'CLOSED';
     createdAt: string;
+    averagePrice: number;
   };
   size: {
     from?: string;
@@ -27,6 +28,11 @@ export type GetActiveOffersRequestResponseItem = {
     id: string;
     name: string;
     rating: number;
+    image: string;
+    address: {
+      state: string;
+      countryCode: string;
+    };
   };
   negotiations: Array<{
     id: string;
@@ -37,7 +43,35 @@ export type GetActiveOffersRequestResponseItem = {
     created_at: string;
     updated_at: string;
   }>;
+  offers: Array<Offer>;
 };
+
+export interface Offer {
+  id: string;
+  status: string;
+  createdAt: string;
+  price: number;
+  weight: number;
+  size: Size;
+  measurementUnit: string;
+  specifications: string[];
+  negotiations: any[];
+}
+
+export interface Negotiation {
+  id: string;
+  type: string;
+  price: number;
+  created_at: string;
+  updated_at: string;
+  is_accepted: boolean;
+  market_offer_id: string;
+}
+
+interface Size {
+  from?: string;
+  to?: any;
+}
 
 export interface NegotiateOfferMeta {
   marketOfferId: string;

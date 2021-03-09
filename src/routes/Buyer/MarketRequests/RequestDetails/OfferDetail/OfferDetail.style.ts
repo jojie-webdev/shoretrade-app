@@ -31,7 +31,7 @@ export const SellerOfferInteractionContentContainer = styled.div`
       }
     }
     .offers-badge {
-      margin: 0;
+      margin-bottom: 4px;
       width: fit-content;
     }
     .ratings-container {

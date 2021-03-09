@@ -202,9 +202,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
-          caption="Aliquip ullamco dolore amet sunt ullamco. 
-  Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-  Sint ea nulla velit mollit amet sint ea."
+          caption="Select your product size for this request."
         />
         <SizeFormContainer>
           {listingFormData ? (

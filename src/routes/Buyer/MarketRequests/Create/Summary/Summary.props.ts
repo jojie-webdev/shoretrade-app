@@ -7,7 +7,7 @@ import { SizeOptions } from '../SelectSize/SelectSize.props';
 
 export interface SummaryProps extends CreateStepProps {
   selectedCategory: CategoryItem;
-  selectedSpecifications: any[];
+  selectedSpecifications: { items: any[] };
   selectedQuantity: Quantity;
   setSendConfModalisOpen: Dispatch<SetStateAction<boolean>>;
   maxKgAutoClose: boolean;

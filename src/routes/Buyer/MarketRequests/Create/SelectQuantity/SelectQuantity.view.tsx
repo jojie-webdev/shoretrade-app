@@ -51,9 +51,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
-          caption="Aliquip ullamco dolore amet sunt ullamco. 
-  Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-  Sint ea nulla velit mollit amet sint ea."
+          caption="Select your product quantity for this request."
         />
         <QuantityFormContainer>
           <StyledTextField
