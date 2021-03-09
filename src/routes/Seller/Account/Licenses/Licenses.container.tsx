@@ -48,6 +48,9 @@ const Licenses = (): JSX.Element => {
         fileName: licenseName,
       })
     );
+
+    setLicenseFile(null);
+    setLicenseName('');
   };
 
   const onPressDelete = (id: string) => {
