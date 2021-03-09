@@ -73,3 +73,13 @@ export const BadgeText = styled(TypographyView)`
 export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
 `;
+
+export const SizeTextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .over-divider {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+`;

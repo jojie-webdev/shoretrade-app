@@ -15,6 +15,7 @@ import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { useHistory, Link } from 'react-router-dom';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -23,6 +24,7 @@ import {
   MarketRequestItemContainer,
   MarketRequestItemInteraction,
   LoadingContainer,
+  SizeTextContainer,
   StyledAlert,
   BadgeText,
 } from './Landing.style';
@@ -33,8 +35,18 @@ export const MarketRequestItem = (props: {
   type: string;
   image: string;
   inDetail: boolean;
+  weight?: { from: number; to: number };
+  measurementUnit?: string;
 }) => {
-  const { inDetail, expiry, offers, type, image } = props;
+  const {
+    inDetail,
+    expiry,
+    offers,
+    type,
+    image,
+    measurementUnit,
+    weight,
+  } = props;
   const offersText = `${offers} Offers`;
 
   const offersMarkup = () => {
@@ -66,6 +78,17 @@ export const MarketRequestItem = (props: {
       </div>
       <div className="info-container">
         <TypographyView variant="body">{type}</TypographyView>
+        {weight && measurementUnit ? (
+          <SizeTextContainer>
+            <TypographyView variant="body">{weight?.from}</TypographyView>
+            <TypographyView variant="body" color="shade6">
+              <span className="over-divider">/</span>
+              {weight?.to} {formatMeasurementUnit(measurementUnit)}
+            </TypographyView>
+          </SizeTextContainer>
+        ) : (
+          ''
+        )}
         {expiry === 'Expired' ? (
           <TypographyView
             style={{ fontStyle: 'italic' }}

@@ -9,6 +9,8 @@ export type RequestDetail = {
   image: string;
   status: string;
   expiry: string;
+  weight: { from: number; to: number };
+  measurementUnit: string;
 };
 
 export enum MarketRequestOfferTip {

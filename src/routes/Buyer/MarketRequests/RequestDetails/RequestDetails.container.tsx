@@ -19,6 +19,11 @@ const MarketRequestDetail = (): JSX.Element => {
     status: string;
     offers: number;
     expiry: string;
+    measurementUnit: string;
+    weight: {
+      from: number;
+      to: number;
+    };
   }>();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -29,6 +34,8 @@ const MarketRequestDetail = (): JSX.Element => {
   const status = location.state ? location.state.status : '';
   const offers = location.state ? location.state.offers : 0;
   const expiry = location.state ? location.state.expiry : '';
+  const measurementUnit = location.state ? location.state.measurementUnit : '';
+  const weight = location.state ? location.state.weight : { from: 0, to: 0 };
 
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
 
@@ -88,6 +95,8 @@ const MarketRequestDetail = (): JSX.Element => {
       status,
       offers,
       expiry,
+      weight,
+      measurementUnit,
     });
   };
 
@@ -102,6 +111,8 @@ const MarketRequestDetail = (): JSX.Element => {
       status,
       offers,
       expiry,
+      weight,
+      measurementUnit,
     },
     sellerOffers: activeOffers.data?.data.marketOffers || [],
     searchTerm,

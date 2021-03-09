@@ -69,7 +69,9 @@ const MarketRequestsLanding = (): JSX.Element => {
       status: row.status,
       offers: row.offers,
       expiry: row.expiry,
+      weight: row.weight,
       id: row.id,
+      measurementUnit: row.measurementUnit,
     });
   };
 

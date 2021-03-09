@@ -211,6 +211,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 expiry={data.expiry}
                 offers={data.offers}
                 image={data.image}
+                measurementUnit={data.measurementUnit}
+                weight={data.weight}
               />
             </RequestDetailsCardContainer>
           </Col>
