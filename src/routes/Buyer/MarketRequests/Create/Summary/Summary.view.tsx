@@ -54,9 +54,9 @@ const SummaryView = (props: SummaryProps) => {
 
     if (!items) return <></>;
 
-    const tagsMarkup = items.map((item) => (
+    const tagsMarkup = items.map((item, index) => (
       <Badge
-        key={item}
+        key={index}
         className="offers-state-badge"
         badgeColor={theme.grey.shade3}
       >
@@ -133,14 +133,12 @@ const SummaryView = (props: SummaryProps) => {
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
-          caption="Aliquip ullamco dolore amet sunt ullamco. 
-  Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-  Sint ea nulla velit mollit amet sint esa."
+          caption="Review product specifications for this request."
         />
         <SummaryContentContainer>
           <SummaryBadges
             label="Specs"
-            items={selectedSpecifications.map((spec) => spec.label)}
+            items={selectedSpecifications.items.map((spec) => spec.label)}
           />
           <div className="size-container">{sizeSummary()}</div>
           <div className="quantity-container">

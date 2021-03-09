@@ -20,13 +20,12 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   const {
     onSubmit,
     weight,
-    originalOffer,
+    originalOffer = 0,
     counterOffer: counterOfferProp,
     isNegotiating,
     ...modalProps
   } = props;
   const { unit, value: weightValue } = weight;
-
   const theme = useTheme();
   const isBuyer = useTheme().appType === 'buyer';
   const textColor = isBuyer ? 'shade9' : 'noshade';

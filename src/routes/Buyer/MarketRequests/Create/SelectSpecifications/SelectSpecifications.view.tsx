@@ -38,7 +38,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
 
   const handleSelectSpecs = () => {
     // MOCK
-    setSelectedSpecifications(selectedState.selectedStates);
+    setSelectedSpecifications({ items: selectedState.selectedStates });
   };
 
   const handleStateCheck = (v: any) => {
@@ -84,9 +84,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
         <CategoryImagePreviewView
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
-          caption="Aliquip ullamco dolore amet sunt ullamco. 
-        Voluptate aliquip velit et commodo reprehenderit tempor laboris amet. 
-        Sint ea nulla velit mollit amet sint ea."
+          caption="Select your product specifications for this request."
         />
         <SpecificationFormContainer>
           {stateOptions.map((group) => (

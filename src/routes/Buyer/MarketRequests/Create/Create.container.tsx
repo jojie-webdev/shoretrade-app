@@ -23,7 +23,14 @@ const CreateRequest = (): JSX.Element => {
   const [maxKgAutoClose, setMaxKgAutoClose] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecifications, setSelectedSpecifications] = useState([null]);
+  const [selectedSpecifications, setSelectedSpecifications] = useState({
+    items: [
+      {
+        label: '',
+        value: '',
+      },
+    ],
+  });
   const [selectedQuantity, setSelectedQuantity] = useState({
     from: '',
     to: '',
@@ -84,6 +91,7 @@ const CreateRequest = (): JSX.Element => {
         companyId: companyId,
         buyerId: user?.id,
         addressId: currentCompany?.addresses[0].id,
+        stateOptions: selectedSpecifications.items.map((item) => item.value),
         weight: {
           from: Number(selectedQuantity.from),
           to: Number(selectedQuantity.to),

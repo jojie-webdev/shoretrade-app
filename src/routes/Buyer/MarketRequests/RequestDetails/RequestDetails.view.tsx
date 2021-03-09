@@ -7,8 +7,10 @@ import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
 import {
+  Crab,
   DollarSign,
   Filter,
+  PlaceholderProfile,
   Star,
   StarFilled,
   Weight,
@@ -16,12 +18,15 @@ import {
 import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
+import EmptyStateView from 'components/module/EmptyState';
 import NegotiateModalView from 'components/module/NegotiateModal';
 import Search from 'components/module/Search';
 import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Container } from 'react-grid-system';
 import { Link, Route, Switch } from 'react-router-dom';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -46,7 +51,7 @@ export const OffersSellerAccordionContent = (props: {
   sellerId: string;
   sellerName: string;
   sellerLocation: string;
-  sellerRating: string;
+  sellerRating: number;
   image: string;
 }) => {
   const { sellerId, sellerName, sellerLocation, sellerRating, image } = props;
@@ -56,7 +61,7 @@ export const OffersSellerAccordionContent = (props: {
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
-        <img src={image} />
+        {image ? <img src={image} /> : <PlaceholderProfile />}
       </div>
       <div className="info-container">
         <TypographyView variant="copy" color="shade8">
@@ -72,21 +77,23 @@ export const OffersSellerAccordionContent = (props: {
             <span className="value">{sellerRating}</span>
           </div>
           <div>
-            {[...Array(5).keys()].map((r) =>
-              Number(sellerRating || 0) > r ? (
-                <StarFilled
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              ) : (
-                <Star
-                  fill={theme.brand.alert}
-                  width={starWidth}
-                  height={starHeight}
-                />
-              )
-            )}
+            {sellerRating
+              ? [...Array(5).keys()].map((r) =>
+                  Number(sellerRating || 0) > r ? (
+                    <StarFilled
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  ) : (
+                    <Star
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  )
+                )
+              : ''}
           </div>
         </div>
       </div>
@@ -96,13 +103,22 @@ export const OffersSellerAccordionContent = (props: {
 
 const SellerOfferInteractionContent = (props: {
   status: string;
-  weight: string;
+  weight: number;
   weightUnit: string;
   price: number;
   tags: string[];
+  averagePrice: number;
+  isUnderNegotiations: boolean;
 }) => {
-  const { status, weight, price, tags, weightUnit } = props;
-
+  const {
+    status,
+    weight,
+    price,
+    tags,
+    weightUnit,
+    averagePrice,
+    isUnderNegotiations = false,
+  } = props;
   const OfferTags = (props: { tags: string[] }) => {
     const { tags } = props;
     const tagsMarkup = tags.map((tag) => (
@@ -124,11 +140,27 @@ const SellerOfferInteractionContent = (props: {
     <SellerOfferInteractionContentContainer>
       <div className="info-container">
         <div className="status">
-          <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-            <StatusBadgeText color="shade8" weight="bold" variant="overline">
-              {status}
-            </StatusBadgeText>
-          </Badge>
+          {price < averagePrice && (
+            <Badge className="offers-badge" badgeColor={theme.brand.success}>
+              <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                Great Value
+              </StatusBadgeText>
+            </Badge>
+          )}
+          {price > averagePrice && (
+            <Badge className="offers-badge" badgeColor={theme.brand.error}>
+              <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                Above Market
+              </StatusBadgeText>
+            </Badge>
+          )}
+          {isUnderNegotiations && (
+            <Badge className="offers-badge" badgeColor={theme.brand.alert}>
+              <StatusBadgeText weight="bold" variant="overline">
+                Negotiation
+              </StatusBadgeText>
+            </Badge>
+          )}
         </div>
         <div className="weight-price-container">
           <div className="weight-price">
@@ -163,7 +195,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     breadCrumbSections,
     negotiating,
     setNegotiating,
+    sellerOffers,
+    currentOfferId,
+    selectedOffer,
+    selectedCompany,
   } = props;
+
+  if (!sellerOffers) {
+    return <></>;
+  }
 
   const handleStartNegotiotiate = () => {
     setNegotiating(true);
@@ -173,9 +213,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     <RequestDetailsContainer>
       <NegotiateModalView
         onSubmit={() => console.log('submit')}
-        originalOffer={50}
-        counterOffer={100}
-        weight={{ unit: 'kg', value: 100 }}
+        originalOffer={selectedOffer.price}
+        counterOffer={0}
+        weight={{
+          unit: selectedOffer.measurementUnit,
+          value: selectedOffer.weight,
+        }}
         isOpen={negotiating}
         onClickClose={() => {
           setNegotiating(false);
@@ -194,8 +237,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 inDetail={true}
                 type={data.type}
                 expiry={data.expiry}
-                offersTotal={data.offersTotal}
+                offers={data.offers}
                 image={data.image}
+                measurementUnit={data.measurementUnit}
+                weight={data.weight}
               />
             </RequestDetailsCardContainer>
           </Col>
@@ -210,156 +255,82 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {/* NUMBERS CONTAINER START */}
                   <div className="numbers-container">
                     <div className="item">
-                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="value">{data.offers} &nbsp;</span>
                       <span className="label">Offers</span>
                     </div>
                     <span className="divider">,</span>
                     <div className="item">
-                      <span className="value">{data.offersTotal} &nbsp;</span>
+                      <span className="value">
+                        {sellerOffers.length} &nbsp;
+                      </span>
                       <span className="label">Sellers</span>
                     </div>
                   </div>
                   {/* NUMBERS CONTAINER END */}
-                  <FilterContainer>
-                    <div className="filter-search-container">
-                      <Search
-                        className="filter-search"
-                        value={props.searchTerm}
-                        onChange={(event: any) =>
-                          props.setSearchTerm(event.currentTarget.value)
-                        }
-                        resetValue={() => props.setSearchTerm('')}
-                        placeholder="Search for an offer..."
-                        rounded
-                      />
-                    </div>
-                    <div className="filter-sort-container">
-                      <Select
-                        className="filter-sort"
-                        grey
-                        options={[]}
-                        placeholder="Sort"
-                      />
-                    </div>
-                  </FilterContainer>
-                  <div>
-                    <RequestOffersAccordion
-                      title="Manila"
-                      noBg={true}
-                      padding={'16px'}
-                      withBackground={false}
-                      border={`1px solid ${theme.grey.shade3}`}
-                      background={theme.grey.shade1}
-                      marginBottom={'12px'}
-                      leftComponent={
-                        <OffersSellerAccordionContent
-                          image={'http://placekitten.com/64/64'}
-                          sellerLocation="Manila"
-                          sellerName="Manny Pacquiao"
-                          sellerRating="4"
-                          sellerId="001"
-                        />
-                      }
-                      iconColor={theme.brand.primary}
-                    >
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
+                  {data.offers < 1 || sellerOffers === undefined ? (
+                    <EmptyStateView
+                      title="There are currently no offers for this request."
+                      // circleHeight={280}
+                      // circleWidth={280}
+                      Svg={Crab}
+                      height={240}
+                      width={249}
+                      fluid
+                    />
+                  ) : (
+                    sellerOffers.map((seller) => (
+                      <RequestOffersAccordion
+                        key={seller.company.name}
+                        title=""
+                        noBg={true}
+                        padding={'16px'}
+                        withBackground={false}
+                        border={`1px solid ${theme.grey.shade3}`}
+                        background={theme.grey.shade1}
+                        marginBottom={'12px'}
                         leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
+                          <OffersSellerAccordionContent
+                            image={seller.company.image}
+                            sellerLocation={seller.company.address.countryCode}
+                            sellerName={seller.company.name}
+                            sellerRating={seller.company.rating}
+                            sellerId={seller.company.id}
                           />
                         }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
+                        iconColor={theme.brand.primary}
+                      >
+                        {seller.offers.map((item) => (
+                          <RequestOfferItemInteraction
+                            key={item.id}
+                            onClick={() => onClickItem(item, seller.company)}
+                            leftComponent={
+                              <SellerOfferInteractionContent
+                                averagePrice={seller.marketRequest.averagePrice}
+                                price={item.price}
+                                isUnderNegotiations={item.negotiations?.find(
+                                  (i) => i.is_accepted === false
+                                )}
+                                status={item.status}
+                                weight={item.weight}
+                                tags={item.specifications}
+                                weightUnit={formatMeasurementUnit(
+                                  item.measurementUnit
+                                )}
+                              />
+                            }
                           />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                    </RequestOffersAccordion>
-                    <RequestOffersAccordion
-                      title="Manila"
-                      padding={'16px'}
-                      noBg={true}
-                      withBackground={false}
-                      border={`1px solid ${theme.grey.shade3}`}
-                      marginBottom={'12px'}
-                      background={theme.grey.shade1}
-                      leftComponent={
-                        <OffersSellerAccordionContent
-                          image={'http://placekitten.com/64/64'}
-                          sellerLocation="Manila"
-                          sellerName="Manny Pacquiao"
-                          sellerRating="4.5"
-                          sellerId="001"
-                        />
-                      }
-                      iconColor={theme.brand.primary}
-                    >
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                      <RequestOfferItemInteraction
-                        onClick={() => onClickItem({ id: '001' })}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            price={100}
-                            status="Negotiation"
-                            weight="180"
-                            tags={['Fresh', 'Frozen']}
-                            weightUnit="kg"
-                          />
-                        }
-                      />
-                    </RequestOffersAccordion>
-                  </div>
+                        ))}
+                      </RequestOffersAccordion>
+                    ))
+                  )}
                 </OffersContainer>
               </Route>
-              <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(data.id)}>
+              <Route
+                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
+              >
                 <OfferDetailView
+                  company={selectedCompany}
+                  selectedOffer={selectedOffer}
                   handleStartNegotiotiate={handleStartNegotiotiate}
                 />
               </Route>

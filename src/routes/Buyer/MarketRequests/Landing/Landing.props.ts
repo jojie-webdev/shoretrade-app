@@ -1,12 +1,9 @@
-import { Dispatch, ChangeEvent } from 'react';
-
 export type Result = {
   id: string;
   type: string;
-  offersTotal: number;
+  offers: number;
   image: string;
   expiry: string;
-  offers: any[];
 };
 
 export interface MarketRequestsLandingGeneratedProps {
