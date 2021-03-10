@@ -199,6 +199,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     currentOfferId,
     selectedOffer,
     selectedCompany,
+    handleAcceptOffer,
+    price,
+    setPrice,
+    counterOffer,
+    deliveryTotal,
+    submitNegotiation,
   } = props;
 
   if (!sellerOffers) {
@@ -212,12 +218,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   return (
     <RequestDetailsContainer>
       <NegotiateModalView
-        onSubmit={() => console.log('submit')}
-        originalOffer={selectedOffer.price}
-        counterOffer={0}
+        onSubmit={(v: number) => submitNegotiation(v)}
+        originalOffer={selectedOffer?.price}
+        counterOffer={parseFloat(counterOffer)}
         weight={{
-          unit: selectedOffer.measurementUnit,
-          value: selectedOffer.weight,
+          unit: selectedOffer?.measurementUnit,
+          value: selectedOffer?.weight,
         }}
         isOpen={negotiating}
         onClickClose={() => {
@@ -329,8 +335,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
               >
                 <OfferDetailView
+                  price={price}
+                  handleAcceptOffer={handleAcceptOffer}
                   company={selectedCompany}
                   selectedOffer={selectedOffer}
+                  deliveryTotal={deliveryTotal}
                   handleStartNegotiotiate={handleStartNegotiotiate}
                 />
               </Route>

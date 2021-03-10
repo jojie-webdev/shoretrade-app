@@ -109,7 +109,7 @@ const SummaryView = (props: SummaryProps) => {
         </Row>
       );
     } else {
-      return <SummaryBadges label="Size" items={['Ungraded']} />;
+      return <SummaryBadges label="Size" items={selectedSize.items} />;
     }
   };
 
