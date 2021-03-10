@@ -73,12 +73,6 @@ interface Size {
   to?: any;
 }
 
-export interface AcceptOffer {
-  marketOfferId: string;
-  marketNegotiationId: string;
-  marketRequestId: string;
-}
-
 export interface NegotiateOfferMeta {
   marketOfferId: string;
   price: number;
