@@ -162,7 +162,6 @@ const ProductDetails = (): JSX.Element => {
 
   const getBoxes = () => {
     if (!shouldHideResult) {
-      console.log('test');
       setShouldHideResult(true);
       setPressedBoxRadio('');
     }

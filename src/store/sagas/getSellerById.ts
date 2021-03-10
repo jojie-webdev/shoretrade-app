@@ -28,7 +28,6 @@ export function* getSellerByIdRequest(
     }
   } catch (e) {
     // yield put(getPaymentMethodsActions.failed('Token not found'));
-    console.error(e);
   }
 }
 

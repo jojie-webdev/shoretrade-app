@@ -79,10 +79,6 @@ const MarketRequestsLanding = (): JSX.Element => {
     dispatch(getAllMarketRequestActions.request({}));
   }, []);
 
-  useEffect(() => {
-    console.log(buyerRequests);
-  }, [buyerRequests]);
-
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
     marketRequests: getMarketRequestLandingData(

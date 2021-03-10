@@ -56,9 +56,7 @@ const MarketPriceDetail = (): JSX.Element => {
       setData(resp.data.data);
       setGraphData(getGraphData(resp.data.data));
       setFilters(getFilters(resp.data.data));
-    } catch (e) {
-      // console.log(e);
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {
