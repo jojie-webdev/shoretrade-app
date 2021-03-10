@@ -2,10 +2,8 @@ import axios from 'axios';
 import { API } from 'consts';
 import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
 import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
-import {
-  AcceptOffer,
-  NegotiateOfferMeta,
-} from 'types/store/GetActiveOffersState';
+import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
+import { AcceptOffer } from 'types/store/MarketOfferState';
 import { ReadMarketNotificationMeta } from 'types/store/ReadMarketNotificationState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
