@@ -156,9 +156,6 @@ function Step7({
     }
   }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
 
-  console.log(moment.tz.names());
-  console.log(listingEndTime);
-
   const onNext = () => {
     const detailsError = isValid({
       price,

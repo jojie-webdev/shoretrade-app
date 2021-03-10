@@ -269,7 +269,7 @@ export const PendingItem = (props: {
                       style={{ width: 169, height: 32 }}
                       size="sm"
                       onClick={(e) => {
-                        console.log('DO NOTHING');
+                        //DO NOTHING
                         e.stopPropagation();
                       }}
                       variant="success"

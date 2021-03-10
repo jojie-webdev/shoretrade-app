@@ -29,7 +29,6 @@ export function* getSellerLicensesRequest(
     }
   } catch (e) {
     yield put(getSellerLicenseActions.failed('FAILED'));
-    console.error(e);
   }
 }
 

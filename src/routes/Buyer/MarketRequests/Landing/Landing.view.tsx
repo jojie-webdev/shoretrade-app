@@ -102,7 +102,7 @@ const MarketRequestsLandingView = (
 ) => {
   const history = useHistory();
   const { marketRequests, onClickItem } = props;
-  console.log(marketRequests);
+
   return (
     <MarketRequestsContainer>
       <BoxContainer>

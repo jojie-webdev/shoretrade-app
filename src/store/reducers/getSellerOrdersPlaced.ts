@@ -30,8 +30,6 @@ const updateToConfirmed = (
   const newPendingOrders = [...pendingOrders];
   newPendingOrders[ndx].orderLineItem[lineItemNdx].weightConfirmed = true;
 
-  console.log(newPendingOrders[ndx]);
-
   return newPendingOrders;
 };
 

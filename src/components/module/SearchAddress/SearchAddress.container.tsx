@@ -42,7 +42,6 @@ const SearchAddress = (): JSX.Element => {
   const setDefaultAddress = (addressId: string) => {
     const targetAddressData = addresses.find((i) => i.id === addressId);
     if (targetAddressData) {
-      console.log(targetAddressData);
       dispatch(
         updateAddressActions.request(
           placeDataToUpdateAddressMeta(
