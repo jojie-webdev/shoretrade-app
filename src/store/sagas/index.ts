@@ -49,6 +49,8 @@ import getUser from './getUser';
 import login from './login';
 import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
+import marketRequestAcceptOffer from './marketRequestAcceptOffer';
+import marketRequestNegotiation from './marketRequestNegotiation';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
@@ -121,6 +123,8 @@ const sagas = [
   logRequest,
   login,
   marketOfferNegotiate,
+  marketRequestAcceptOffer,
+  marketRequestNegotiation,
   order,
   placeOrder,
   readMarketNotification,

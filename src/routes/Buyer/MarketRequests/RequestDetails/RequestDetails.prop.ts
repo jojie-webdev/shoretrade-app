@@ -42,12 +42,18 @@ export interface MarketRequestDetailProps {
   currentPath: string;
   searchTerm: string;
   breadCrumbSections: any[];
+  price: string;
   negotiating: boolean;
   sellerOffers: GetActiveOffersRequestResponseItem[];
   setNegotiating: Dispatch<SetStateAction<boolean>>;
+  setPrice: Dispatch<SetStateAction<string>>;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   onClickItem: (row: any, company: any) => void;
   currentOfferId: string;
   selectedOffer: any;
   selectedCompany: any;
+  handleAcceptOffer: () => void;
+  counterOffer: string;
+  deliveryTotal: number | undefined;
+  submitNegotiation: (v: number) => void;
 }

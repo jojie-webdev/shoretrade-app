@@ -19,7 +19,14 @@ import {
 } from './OfferDetail.style';
 
 const OfferDetailView = (props: any) => {
-  const { selectedOffer, handleStartNegotiotiate, company } = props;
+  const {
+    selectedOffer,
+    handleStartNegotiotiate,
+    company,
+    handleAcceptOffer,
+    price,
+    deliveryTotal,
+  } = props;
   const theme = useTheme();
 
   const OfferBadges = (props: { items: string[]; label: string }) => {
@@ -106,7 +113,7 @@ const OfferDetailView = (props: any) => {
               Total Value Including Delivery
             </TypographyView>
             <TypographyView weight="bold" color="shade9" variant="body">
-              $ {'-----'}
+              ${!isNaN(deliveryTotal) ? deliveryTotal : selectedOffer?.price}
               {/* TODO */}
             </TypographyView>
           </div>
@@ -119,7 +126,12 @@ const OfferDetailView = (props: any) => {
           variant="outline"
           text="Negotiate"
         />
-        <Button className="button" variant="primary" text="Accept" />
+        <Button
+          onClick={() => handleAcceptOffer()}
+          className="button"
+          variant="primary"
+          text="Accept"
+        />
       </OfferActionsContainer>
     </>
   );

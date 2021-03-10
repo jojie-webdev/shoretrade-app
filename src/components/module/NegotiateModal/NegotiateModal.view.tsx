@@ -47,7 +47,6 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
       ).toFixed(2)
     : 0;
   const deliveryTotal = counterOffer * weightValue;
-
   const handleCheck = (value: any) => {
     setCloseListing(!closeListing);
   };
@@ -107,14 +106,19 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
               {toPrice(originalOffer)}/{unit}
             </Typography>
           </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
-              Your counter offer was
-            </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(counterOfferProp)}/{unit}
-            </Typography>
-          </div>
+
+          {counterOfferProp ? (
+            <div className="computation-item-container">
+              <Typography variant="label" color={textColor}>
+                Your counter offer was
+              </Typography>
+              <Typography variant="label" weight="bold" color={textColor}>
+                {toPrice(counterOfferProp)}/{unit}
+              </Typography>
+            </div>
+          ) : (
+            ''
+          )}
           {counterOfferProp !== counterOffer && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>

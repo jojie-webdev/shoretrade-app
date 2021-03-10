@@ -4,8 +4,17 @@ import { BUYER_ROUTES } from 'consts';
 import { act } from 'react-dom/test-utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { getActiveOffersActions } from 'store/actions';
+import {
+  getActiveOffersActions,
+  marketRequestAcceptOfferActions,
+} from 'store/actions';
+import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
+import { useTheme } from 'utils/Theme';
 
 import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
@@ -27,6 +36,8 @@ const MarketRequestDetail = (): JSX.Element => {
   }>();
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  theme.appType = 'buyer';
 
   const goTolist = () => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id), {
@@ -84,8 +95,9 @@ const MarketRequestDetail = (): JSX.Element => {
   }
   const [searchTerm, setSearchTerm] = useState('');
   const [negotiating, setNegotiating] = useState(false);
+  const [price, setPrice] = useState('');
   const [currentOfferId, setCurrentOfferId] = useState('');
-  const [selectedOffer, setSelectedOffer] = useState('');
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [selectedCompany, setSelectedCompany] = useState('');
 
   const onClickItem = (row: any, company: any) => {
@@ -104,10 +116,77 @@ const MarketRequestDetail = (): JSX.Element => {
     });
   };
 
+  const handleAcceptOffer = () => {
+    dispatch(
+      marketRequestAcceptOfferActions.request({
+        marketOfferId: currentOfferId,
+        marketRequestId: id,
+        marketNegotiationId:
+          selectedOffer?.negotiations?.reduce((a, b) =>
+            a.updated_at > b.updated_at ? a : b
+          ).id || undefined,
+      })
+    );
+  };
+
+  const submitNegotiation = (v: number) => {
+    if (selectedOffer) {
+      dispatch(
+        marketRequestNegotiateOfferActions.request({
+          marketRequestId: id,
+          marketOfferId: selectedOffer.id,
+          price: v,
+        })
+      );
+    }
+    setNegotiating(false);
+  };
+
+  let counterOffer = '';
+  let newOffer = '';
+  let deliveryTotal;
+
+  if (selectedOffer) {
+    if (selectedOffer.negotiations !== null) {
+      const counterOfferArr = selectedOffer.negotiations.filter(
+        (i: any) => i.type === 'COUNTER_OFFER'
+      );
+      const newOfferArr = selectedOffer.negotiations.filter(
+        (i: any) => i.type === 'NEW_OFFER'
+      );
+
+      if (counterOfferArr.length > 0 && counterOfferArr) {
+        counterOffer = counterOfferArr
+          .reduce((a: any, b: any) => (a.updated_at > b.updated_at ? a : b))
+          .price.toString();
+      }
+
+      if (newOfferArr.length > 0 && newOfferArr) {
+        newOffer = newOfferArr
+          .reduce((a: any, b: any) => (a.updated_at > b.updated_at ? a : b))
+          .price.toString();
+      }
+    }
+
+    const actualPrice = newOffer ? parseFloat(newOffer) : selectedOffer.price;
+    const discountValue = actualPrice - parseFloat(price);
+    const discountPercentage = discountValue
+      ? (discountValue / actualPrice) * 100
+      : 0;
+
+    deliveryTotal =
+      parseFloat(newOffer.length > 0 ? newOffer : `${selectedOffer.price}`) *
+      selectedOffer.weight;
+  }
+
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
+    deliveryTotal,
+    counterOffer,
     selectedOffer,
+    price,
+    setPrice,
     data: {
       id,
       type,
@@ -126,6 +205,8 @@ const MarketRequestDetail = (): JSX.Element => {
     onClickItem,
     selectedCompany,
     breadCrumbSections,
+    handleAcceptOffer,
+    submitNegotiation,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
