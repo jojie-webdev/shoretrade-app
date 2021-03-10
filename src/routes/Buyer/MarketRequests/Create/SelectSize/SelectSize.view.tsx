@@ -140,16 +140,17 @@ const SelectSizeView = (props: SelectSizeProps) => {
     setSelectedSize,
     selectedSize,
     listingFormData,
+    setStep,
   } = props;
   const history = useHistory();
 
   const [sizeToFrom, setSizeToFrom] = useState<{ from: string; to: string }>({
-    from: '',
-    to: '',
+    from: selectedSize.from,
+    to: selectedSize.to,
   });
 
   const [sizeItemChecked, setSizeItemChecked] = useState<{ items: string[] }>({
-    items: [],
+    items: [...selectedSize.items],
   });
 
   const handleSubmit = () => {
@@ -160,6 +161,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
       items: sizeItemChecked.items,
       ungraded: sizeToFrom.from === '' && sizeItemChecked.items.length < 1,
     });
+    setStep(4);
   };
 
   const handleSetFromSize = (value: string) => {

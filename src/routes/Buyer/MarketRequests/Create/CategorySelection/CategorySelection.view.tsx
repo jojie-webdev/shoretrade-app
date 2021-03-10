@@ -28,6 +28,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     hideSearchResult,
     pendingSearch,
     typeSearchResults,
+    setStep,
   } = props;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const handleCategoryClick = (v: CategoryItem) => {
     setSelectedCategory(v);
+    setStep(2);
   };
 
   return (

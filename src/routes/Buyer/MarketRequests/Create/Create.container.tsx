@@ -23,13 +23,10 @@ const CreateRequest = (): JSX.Element => {
   const [maxKgAutoClose, setMaxKgAutoClose] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecifications, setSelectedSpecifications] = useState({
-    items: [
-      {
-        label: '',
-        value: '',
-      },
-    ],
+  const [selectedSpecifications, setSelectedSpecifications] = useState<{
+    items: any[];
+  }>({
+    items: [],
   });
   const [selectedQuantity, setSelectedQuantity] = useState({
     from: '',
@@ -150,22 +147,13 @@ const CreateRequest = (): JSX.Element => {
 
   useEffect(() => {
     if (selectedCategory?.id != '') {
-      setCurrentStep(2);
+      //reset
+      setSelectedSize({ from: '', to: '', items: [] });
+      setSelectedSpecifications({ items: [] });
+      setSelectedQuantity({ from: '', to: '' });
       getFormData(selectedCategory.id);
     }
   }, [selectedCategory]);
-
-  useEffect(() => {
-    setCurrentStep(3);
-  }, [selectedSpecifications]);
-
-  useEffect(() => {
-    setCurrentStep(4);
-  }, [selectedSize]);
-
-  useEffect(() => {
-    setCurrentStep(5);
-  }, [selectedQuantity]);
 
   const generatedProps: CreateRequestGeneratedProps = {
     buying,

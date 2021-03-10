@@ -148,6 +148,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 1:
         return (
           <CategorySelectionView
+            setStep={setStep}
             hideSearchResult={hideSearchResult}
             pendingSearch={pendingSearch}
             search={search}
@@ -167,6 +168,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 2:
         return (
           <SelectSpecificationsView
+            setStep={setStep}
+            selectedSpecifications={selectedSpecifications}
             selectedSize={selectedSize}
             listingFormData={listingFormData}
             setSelectedSpecifications={setSelectedSpecifications}
@@ -180,6 +183,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 3:
         return (
           <SelectSizeView
+            setStep={setStep}
             selectedSize={selectedSize}
             listingFormData={listingFormData}
             setSelectedSize={setSelectedSize}
@@ -193,6 +197,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 4:
         return (
           <SelectQuantityView
+            setStep={setStep}
+            selectedQuantity={selectedQuantity}
             selectedSize={selectedSize}
             listingFormData={listingFormData}
             setSelectedQuantity={setSelectedQuantity}
@@ -206,6 +212,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       case 5:
         return (
           <SummaryView
+            setStep={setStep}
             maxKgAutoClose={maxKgAutoClose}
             setMaxKgAutoClose={setMaxKgAutoClose}
             listingFormData={listingFormData}
