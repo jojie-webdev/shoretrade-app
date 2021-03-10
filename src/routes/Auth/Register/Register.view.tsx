@@ -186,7 +186,9 @@ const StepForm = ({
   const CategoryItemsChildren = (result: CategoryType) => (
     <CategoryItems>
       <Image src={result.thumbnail} />
-      <Typography variant="label">{result.name}</Typography>
+      <Typography variant="label" color={isSeller ? 'noshade' : 'shade9'}>
+        {result.name}
+      </Typography>
     </CategoryItems>
   );
 
