@@ -20,7 +20,6 @@ export interface CreateRequestGeneratedProps
     SelectSpecificationProps,
     SummaryProps {
   step: CreateRequestStep;
-  setStep: Dispatch<SetStateAction<number>>;
   termsAgreement: boolean;
   sendConfModalisOpen: boolean;
   setTermsAgreement: Dispatch<SetStateAction<boolean>>;
@@ -31,6 +30,7 @@ export interface CreateStepProps {
   stepCountComponent?: ReactNode;
   step: CreateRequestStep;
   selectedSize: SizeOptions;
+  setStep: Dispatch<SetStateAction<number>>;
   onBack: () => void;
   listingFormData: GetListingFormDataResponse | null;
 }

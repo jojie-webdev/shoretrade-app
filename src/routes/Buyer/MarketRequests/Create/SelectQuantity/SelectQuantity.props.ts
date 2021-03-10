@@ -11,4 +11,5 @@ export interface Quantity {
 export interface SelectQuantityProps extends CreateStepProps {
   setSelectedQuantity: Dispatch<SetStateAction<Quantity>>;
   selectedCategory: CategoryItem;
+  selectedQuantity: Quantity;
 }

@@ -22,13 +22,16 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
     onBack,
     setSelectedQuantity,
     selectedCategory,
+    selectedQuantity,
+    setStep,
   } = props;
 
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+  const [from, setFrom] = useState(selectedQuantity.from);
+  const [to, setTo] = useState(selectedQuantity.to);
 
   const handleSubmit = () => {
     setSelectedQuantity({ from, to });
+    setStep(5);
   };
 
   return (

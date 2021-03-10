@@ -22,6 +22,8 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     selectedCategory,
     setSelectedSpecifications,
     listingFormData,
+    selectedSpecifications,
+    setStep,
   } = props;
 
   const stateOptions = (listingFormData?.stateOptions || []).map((group) =>
@@ -32,13 +34,15 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     }))
   );
 
+  console.log(selectedSpecifications);
   const [selectedState, setSelectedState] = useState<{
     selectedStates: any[];
-  }>({ selectedStates: [] });
+  }>({ selectedStates: [...selectedSpecifications.items] });
 
   const handleSelectSpecs = () => {
     // MOCK
     setSelectedSpecifications({ items: selectedState.selectedStates });
+    setStep(3);
   };
 
   const handleStateCheck = (v: any) => {
