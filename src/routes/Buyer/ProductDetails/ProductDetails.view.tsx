@@ -78,11 +78,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   }, [newCurrentListing, newCurrentListing?.images]);
 
   useEffect(() => {
-    if (!isEmpty(boxRadios) && !didScroll) {
+    if (!isEmpty(groupedBox) && !didScroll) {
       setDidScroll(true);
       boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [boxRadios]);
+  }, [groupedBox]);
 
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
