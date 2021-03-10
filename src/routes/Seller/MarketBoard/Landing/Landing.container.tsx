@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -24,6 +25,11 @@ const MarketBoardLanding = (): JSX.Element => {
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+
+  const filteredSpecs =
+    buyerRequests.data?.data.marketRequests.filter(
+      (d) => !isEmpty(d.specifications)
+    ) || [];
 
   const [currentTab, setCurrentTab] = useState<TabOptions>(
     locationTab as TabOptions
@@ -89,7 +95,7 @@ const MarketBoardLanding = (): JSX.Element => {
   };
 
   const generatedProps = {
-    buyerRequests: buyerRequests.data?.data.marketRequests || [],
+    buyerRequests: filteredSpecs,
     activeOffers: activeOffers.data?.data.marketOffers || [],
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
