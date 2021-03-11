@@ -3,24 +3,22 @@ import React from 'react';
 import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
-import { ArrowRight, DollarSign, Weight } from 'components/base/SVG';
+import { ArrowRight, DollarSign, Filter, Weight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
+import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { Col, Row } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
-import { Container } from './Landing.style';
+import { Container, FilterButton } from './Landing.style';
 
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
-  const history = useHistory();
 
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
@@ -48,20 +46,35 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         }
       />
 
-      <Row className="search-row">
+      <Row nogutter className="search-row" justify="between">
         {props.currentTab === 'Buyer Requests' && (
-          <Col xl={4}>
-            <Search
-              className="filter-search"
-              value={props.searchTerm}
-              onChange={(event: any) =>
-                props.setSearchTerm(event.currentTarget.value)
-              }
-              resetValue={() => props.setSearchTerm('')}
-              placeholder="Search for any product..."
-              rounded
-            />
-          </Col>
+          <>
+            <Col xl={4}>
+              <Search
+                className="filter-search"
+                value={props.searchTerm}
+                onChange={(event: any) =>
+                  props.setSearchTerm(event.currentTarget.value)
+                }
+                resetValue={() => props.setSearchTerm('')}
+                placeholder="Search for any product..."
+                rounded
+              />
+            </Col>
+
+            <FilterButton onClick={props.onClickFilterButton}>
+              <Typography
+                variant="label"
+                color="noshade"
+                weight="500"
+                className="btn-text"
+              >
+                Filters
+              </Typography>
+
+              <Filter />
+            </FilterButton>
+          </>
         )}
       </Row>
 
@@ -173,6 +186,8 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             ))}
         </>
       )}
+
+      <FilterModal {...props.filterModalProps} />
     </Container>
   );
 };

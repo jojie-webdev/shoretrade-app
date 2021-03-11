@@ -8,7 +8,7 @@ export const HeaderRow = styled(Row)`
 `;
 
 export const FilterButton = styled.button`
-  background: #09131d;
+  background: ${({ theme }) => theme.grey.shade9};
   border-radius: 4px;
   display: flex;
   align-items: center;

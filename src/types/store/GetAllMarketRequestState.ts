@@ -1,7 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
 export type GetAllMarketRequestMeta = {
-  queryParams?: Record<string, string>;
+  queryParams?: Record<string, any>;
 };
 
 export type GetAllMarketRequestResponseItem = {
