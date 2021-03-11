@@ -60,23 +60,13 @@ const MarketBoardLanding = (): JSX.Element => {
     }
 
     const timerId = setTimeout(() => {
-      if (currentTab === 'Buyer Requests') {
-        dispatch(
-          getAllMarketRequestActions.request({
-            queryParams: {
-              term: searchTerm.length > 2 ? searchTerm : '',
-            },
-          })
-        );
-      } else {
-        dispatch(
-          getActiveOffersActions.request({
-            queryParams: {
-              term: searchTerm.length > 2 ? searchTerm : '',
-            },
-          })
-        );
-      }
+      dispatch(
+        getAllMarketRequestActions.request({
+          queryParams: {
+            term: searchTerm.length > 2 ? searchTerm : '',
+          },
+        })
+      );
     }, 800);
 
     setTimer(timerId);

@@ -19,10 +19,10 @@ export const getAllMarketRequest = (token: string, queryString?: string) => {
   });
 };
 
-export const getActiveOffers = (token: string, queryString?: string) => {
+export const getActiveOffers = (token: string) => {
   return axios({
     method: 'get',
-    url: `${MARKET_REQUEST_URL}/offers?${queryString}`,
+    url: `${MARKET_REQUEST_URL}/offers`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

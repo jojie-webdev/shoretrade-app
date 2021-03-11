@@ -49,18 +49,20 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       />
 
       <Row className="search-row">
-        <Col xl={4}>
-          <Search
-            className="filter-search"
-            value={props.searchTerm}
-            onChange={(event: any) =>
-              props.setSearchTerm(event.currentTarget.value)
-            }
-            resetValue={() => props.setSearchTerm('')}
-            placeholder="Search for any product..."
-            rounded
-          />
-        </Col>
+        {props.currentTab === 'Buyer Requests' && (
+          <Col xl={4}>
+            <Search
+              className="filter-search"
+              value={props.searchTerm}
+              onChange={(event: any) =>
+                props.setSearchTerm(event.currentTarget.value)
+              }
+              resetValue={() => props.setSearchTerm('')}
+              placeholder="Search for any product..."
+              rounded
+            />
+          </Col>
+        )}
       </Row>
 
       {props.isLoading ? (
