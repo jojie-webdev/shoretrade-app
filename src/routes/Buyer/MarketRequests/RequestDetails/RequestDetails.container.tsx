@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
-import { act } from 'react-dom/test-utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  getActiveOffersActions,
-  marketRequestAcceptOfferActions,
-} from 'store/actions';
+import { marketRequestAcceptOfferActions } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
-import {
-  GetActiveOffersRequestResponseItem,
-  Offer,
-} from 'types/store/GetActiveOffersState';
+import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
-import { useTheme } from 'utils/Theme';
 
 import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
-  // MARK:- States / Variables
   const location = useLocation<{
     id: string;
     type: string;
@@ -36,8 +27,6 @@ const MarketRequestDetail = (): JSX.Element => {
   }>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const theme = useTheme();
-  theme.appType = 'buyer';
 
   const goTolist = () => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id), {
@@ -58,7 +47,6 @@ const MarketRequestDetail = (): JSX.Element => {
   const expiry = location.state ? location.state.expiry : '';
   const measurementUnit = location.state ? location.state.measurementUnit : '';
   const weight = location.state ? location.state.weight : { from: 0, to: 0 };
-
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
 
   let breadCrumbSections = [];
@@ -81,8 +69,6 @@ const MarketRequestDetail = (): JSX.Element => {
       label: 'Offer Details',
     },
   ];
-
-  //TEMP Breadcrumb dynamic functionality
 
   if (
     location.pathname.includes(
@@ -145,6 +131,8 @@ const MarketRequestDetail = (): JSX.Element => {
   let counterOffer = '';
   let newOffer = '';
   let deliveryTotal;
+  let counterOfferLatest;
+  let newOfferLatest;
 
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
@@ -156,23 +144,20 @@ const MarketRequestDetail = (): JSX.Element => {
       );
 
       if (counterOfferArr.length > 0 && counterOfferArr) {
-        counterOffer = counterOfferArr
-          .reduce((a: any, b: any) => (a.updated_at > b.updated_at ? a : b))
-          .price.toString();
+        counterOfferLatest = counterOfferArr.reduce((a: any, b: any) =>
+          a.updated_at > b.updated_at ? a : b
+        );
       }
 
       if (newOfferArr.length > 0 && newOfferArr) {
-        newOffer = newOfferArr
-          .reduce((a: any, b: any) => (a.updated_at > b.updated_at ? a : b))
-          .price.toString();
+        newOfferLatest = newOfferArr.reduce((a: any, b: any) =>
+          a.updated_at > b.updated_at ? a : b
+        );
       }
     }
 
-    const actualPrice = newOffer ? parseFloat(newOffer) : selectedOffer.price;
-    const discountValue = actualPrice - parseFloat(price);
-    const discountPercentage = discountValue
-      ? (discountValue / actualPrice) * 100
-      : 0;
+    newOffer = newOfferLatest.price.toString();
+    counterOffer = counterOfferLatest.price.toString();
 
     deliveryTotal =
       parseFloat(newOffer.length > 0 ? newOffer : `${selectedOffer.price}`) *
@@ -207,6 +192,8 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections,
     handleAcceptOffer,
     submitNegotiation,
+    disableNegotiate:
+      newOfferLatest?.updated_at < counterOfferLatest?.updated_at,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
