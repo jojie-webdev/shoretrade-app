@@ -23,6 +23,10 @@ import {
   NegotiatePayload,
 } from 'types/store/GetActiveOffersState';
 import {
+  GetAllMarketRequestFiltersMeta,
+  GetAllMarketRequestFiltersPayload,
+} from 'types/store/GetAllMarketRequestFiltersState';
+import {
   GetAllMarketRequestMeta,
   GetAllMarketRequestPayload,
 } from 'types/store/GetAllMarketRequestState';
@@ -351,6 +355,10 @@ export interface Store {
   getAllMarketRequest: AsyncState<
     GetAllMarketRequestMeta,
     GetAllMarketRequestPayload
+  >;
+  getAllMarketRequestFilters: AsyncState<
+    GetAllMarketRequestFiltersMeta,
+    GetAllMarketRequestFiltersPayload
   >;
   getActiveOffers: AsyncState<GetActiveOffersMeta, GetActiveOffersPayload>;
   createMarketOffer: AsyncState<

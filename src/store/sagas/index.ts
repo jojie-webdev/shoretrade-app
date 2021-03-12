@@ -24,6 +24,7 @@ import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
+import getAllMarketRequestFilters from './getAllMarketRequestFilters';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
@@ -98,6 +99,7 @@ const sagas = [
   getAddresses,
   getAllListings,
   getAllMarketRequest,
+  getAllMarketRequestFilters,
   getBankDetails,
   getBuyerHomepage,
   getBuyerOrders,
