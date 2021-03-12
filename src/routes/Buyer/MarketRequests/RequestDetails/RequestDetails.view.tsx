@@ -195,7 +195,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     counterOffer,
     deliveryTotal,
     submitNegotiation,
-    disableNegotiate,
+    hideNegotiate,
   } = props;
 
   if (!sellerOffers) {
@@ -332,7 +332,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   selectedOffer={selectedOffer}
                   deliveryTotal={deliveryTotal}
                   handleStartNegotiotiate={handleStartNegotiotiate}
-                  disableNegotiate={disableNegotiate}
+                  hideNegotiate={hideNegotiate}
                 />
               </Route>
             </Switch>

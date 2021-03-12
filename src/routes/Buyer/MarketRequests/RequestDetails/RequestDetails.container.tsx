@@ -192,8 +192,7 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections,
     handleAcceptOffer,
     submitNegotiation,
-    disableNegotiate:
-      newOfferLatest?.updated_at < counterOfferLatest?.updated_at,
+    hideNegotiate: newOfferLatest?.updated_at < counterOfferLatest?.updated_at,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
