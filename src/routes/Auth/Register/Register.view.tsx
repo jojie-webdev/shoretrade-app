@@ -1184,8 +1184,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
             <Container>
               <Content>
                 <GetStartedTitle variant="title5">
-                  Signing up is <b>free</b> and complete with <b>3 simple</b>{' '}
-                  steps
+                  Signing up is <b>free</b> and complete with{' '}
+                  <b>{isSeller ? '6' : '5'} simple</b> steps
                 </GetStartedTitle>
                 {steps
                   .filter((i) => i.title !== 'Summary')
