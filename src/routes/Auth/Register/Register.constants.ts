@@ -7,7 +7,7 @@ export const SELLER_STEPS = [
   {
     title: 'Business Details',
     description:
-      'Provide your business details so we can get your account set up and running.',
+      'Provide your business details so we know where to send your purchases.',
   },
   {
     title: 'Bank Details',
@@ -17,17 +17,17 @@ export const SELLER_STEPS = [
   {
     title: 'Licenses',
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'You have the ability to upload relevant licenses for your seafood business.',
   },
   {
     title: 'Market Sector',
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'Let us know more about your business by selecting your market sector.',
   },
   {
     title: "I'm Selling",
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'Let us know which seafood products your business commonly sells so we can optimise your experience.',
   },
   {
     title: 'Summary',
@@ -55,12 +55,12 @@ export const BUYER_STEPS = [
   {
     title: 'Market Sector',
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'Let us know more about your business by selecting your market sector.',
   },
   {
     title: 'I’m looking for',
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'Let us know which seafood products you commonly purchase so we can optimise your experience.',
   },
   {
     title: 'Summary',
