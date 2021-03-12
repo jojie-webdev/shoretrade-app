@@ -13,8 +13,6 @@ import { isEmpty } from 'ramda';
 import { Row } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
-import { PlaceData } from '../../../types/PlaceData';
-import LocationSearch from '../LocationSearch';
 import { FilterModalProps, Filters, FilterType } from './FilterModal.props';
 import {
   HeaderContainer,

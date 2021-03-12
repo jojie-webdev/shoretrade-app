@@ -5,9 +5,18 @@ import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+  getLocation,
+  getSize,
+  getSpecs,
+  getType,
+  requestToModalFilter,
+} from 'routes/Seller/MarketBoard/Landing/Landing.transform';
+import {
   getActiveOffersActions,
   getAllMarketRequestActions,
+  getAllMarketRequestFiltersActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
@@ -21,15 +30,25 @@ const MarketBoardLanding = (): JSX.Element => {
   const location: { state?: { currentTab?: string } } = useLocation();
   const locationTab = location.state?.currentTab || 'Buyer Requests';
 
+  const currentCompany = GetDefaultCompany();
+  const companyId = currentCompany?.id || '';
+
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  const buyerRequestsFilters = useSelector(
+    (store: Store) => store.getAllMarketRequestFilters.data?.data
+  );
 
   const filteredSpecs =
     buyerRequests.data?.data.marketRequests.filter(
       (d) => !isEmpty(d.specifications)
     ) || [];
+
+  const { filters, checkboxFilters } = requestToModalFilter(
+    buyerRequestsFilters
+  );
 
   const [currentTab, setCurrentTab] = useState<TabOptions>(
     locationTab as TabOptions
@@ -37,6 +56,11 @@ const MarketBoardLanding = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [initial, setInitial] = useState(true);
+
+  //filters
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
@@ -49,7 +73,14 @@ const MarketBoardLanding = (): JSX.Element => {
 
     setInitial(false);
     setSearchTerm('');
+    setIsFilterModalOpen(false);
   }, [currentTab]);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(getAllMarketRequestFiltersActions.request({ companyId }));
+    }
+  }, [companyId]);
 
   useEffect(() => {
     if (initial) return;
@@ -60,23 +91,13 @@ const MarketBoardLanding = (): JSX.Element => {
     }
 
     const timerId = setTimeout(() => {
-      if (currentTab === 'Buyer Requests') {
-        dispatch(
-          getAllMarketRequestActions.request({
-            queryParams: {
-              term: searchTerm.length > 2 ? searchTerm : '',
-            },
-          })
-        );
-      } else {
-        dispatch(
-          getActiveOffersActions.request({
-            queryParams: {
-              term: searchTerm.length > 2 ? searchTerm : '',
-            },
-          })
-        );
-      }
+      dispatch(
+        getAllMarketRequestActions.request({
+          queryParams: {
+            term: searchTerm.length > 2 ? searchTerm : '',
+          },
+        })
+      );
     }, 800);
 
     setTimer(timerId);
@@ -94,6 +115,38 @@ const MarketBoardLanding = (): JSX.Element => {
     });
   };
 
+  const onClickFilterButton = () => {
+    setIsFilterModalOpen((prevState) => !prevState);
+  };
+
+  const onApply = () => {
+    setIsFilterModalOpen(false);
+
+    const sizesFilter = getSize(selectedFilters, buyerRequestsFilters!);
+    const actualSizesFilter = sizesFilter
+      ? sizesFilter?.filter((v) => v !== 'Ungraded')
+      : undefined;
+    const isUngraded = (sizesFilter || []).includes('Ungraded');
+
+    dispatch(
+      getAllMarketRequestActions.request({
+        queryParams: {
+          address: getLocation(selectedFilters, buyerRequestsFilters!),
+          sizes: isUngraded ? undefined : actualSizesFilter,
+          typeId: getType(selectedFilters, buyerRequestsFilters!),
+          specifications: getSpecs(selectedFilters, buyerRequestsFilters!),
+          ungraded: isUngraded ? true : undefined,
+        },
+      })
+    );
+  };
+
+  const onReset = () => {
+    setSelectedFilters([]);
+    setSelectedSize(null);
+    setIsFilterModalOpen(false);
+  };
+
   const generatedProps = {
     buyerRequests: filteredSpecs,
     activeOffers: activeOffers.data?.data.marketOffers || [],
@@ -104,6 +157,20 @@ const MarketBoardLanding = (): JSX.Element => {
     setSearchTerm,
     onClickOffer,
     onClickActiveOffer,
+    onClickFilterButton,
+
+    filterModalProps: {
+      isOpen: isFilterModalOpen,
+      filters,
+      checkboxFilters,
+      selectedFilters,
+      setSelectedFilters,
+      selectedSize,
+      setSelectedSize,
+      onApply,
+      onReset,
+      onClickClose: () => setIsFilterModalOpen(false),
+    },
   };
   return <MarketBoardLandingView {...generatedProps} />;
 };

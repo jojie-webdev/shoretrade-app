@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { FilterModalProps } from 'components/module/FilterModal/FilterModal.props';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 
@@ -18,4 +19,7 @@ export interface MarketBoardLandingGeneratedProps {
 
   onClickOffer: (data: GetAllMarketRequestResponseItem) => void;
   onClickActiveOffer: (data: GetActiveOffersRequestResponseItem) => void;
+  onClickFilterButton: () => void;
+
+  filterModalProps: FilterModalProps;
 }

@@ -111,19 +111,19 @@ const Step1 = ({
             </Typography>
           </div>
 
-          {isNegoOpen ? (
+          <div className="computation-item-container">
+            <Typography variant="label" color="noshade">
+              Total Value
+            </Typography>
+            <Typography variant="label" weight="bold" color="noshade">
+              {toPrice(activeOffer.price * activeOffer.weight)}
+            </Typography>
+          </div>
+
+          {isNegoOpen && (
             <div className="computation-item-container">
               <Typography variant="label" color="noshade">
                 No counter offer from buyer yet
-              </Typography>
-            </div>
-          ) : (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                Total Value
-              </Typography>
-              <Typography variant="label" weight="bold" color="noshade">
-                {toPrice(activeOffer.price * activeOffer.weight)}/{unit}
               </Typography>
             </div>
           )}

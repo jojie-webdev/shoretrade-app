@@ -3,6 +3,7 @@ import { API } from 'consts';
 import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
 import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
 import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
+import { GetAllMarketRequestFiltersMeta } from 'types/store/GetAllMarketRequestFiltersState';
 import { AcceptOffer } from 'types/store/MarketOfferState';
 import { ReadMarketNotificationMeta } from 'types/store/ReadMarketNotificationState';
 
@@ -19,10 +20,23 @@ export const getAllMarketRequest = (token: string, queryString?: string) => {
   });
 };
 
-export const getActiveOffers = (token: string, queryString?: string) => {
+export const getAllMarketRequestFilters = (
+  data: GetAllMarketRequestFiltersMeta,
+  token: string
+) => {
   return axios({
     method: 'get',
-    url: `${MARKET_REQUEST_URL}/offers?${queryString}`,
+    url: `${MARKET_REQUEST_URL}/get-seller-search-filter-data/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getActiveOffers = (token: string) => {
+  return axios({
+    method: 'get',
+    url: `${MARKET_REQUEST_URL}/offers`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
