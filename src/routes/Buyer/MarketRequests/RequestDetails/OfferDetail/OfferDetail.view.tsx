@@ -25,6 +25,7 @@ const OfferDetailView = (props: any) => {
     company,
     handleAcceptOffer,
     price,
+    hideNegotiate,
     deliveryTotal,
   } = props;
   const theme = useTheme();
@@ -120,12 +121,17 @@ const OfferDetailView = (props: any) => {
         </div>
       </OfferDetailsContainer>
       <OfferActionsContainer>
-        <Button
-          onClick={() => handleStartNegotiotiate()}
-          className="button"
-          variant="outline"
-          text="Negotiate"
-        />
+        {hideNegotiate ? (
+          ''
+        ) : (
+          <Button
+            onClick={() => handleStartNegotiotiate()}
+            className="button"
+            variant="outline"
+            text="Negotiate"
+          />
+        )}
+
         <Button
           onClick={() => handleAcceptOffer()}
           className="button"
