@@ -93,7 +93,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
               variant="label"
               color={isBuyer ? 'shade7' : 'noshade'}
             >
-              Close this listing if accepted.
+              Change this listing if accepted.
             </Typography>
           </CheckBoxContainer>
         )}
