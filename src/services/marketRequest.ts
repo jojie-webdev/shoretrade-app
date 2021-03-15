@@ -33,10 +33,10 @@ export const getAllMarketRequestFilters = (
   });
 };
 
-export const getActiveOffers = (token: string) => {
+export const getActiveOffers = (token: string, queryString?: string) => {
   return axios({
     method: 'get',
-    url: `${MARKET_REQUEST_URL}/offers`,
+    url: `${MARKET_REQUEST_URL}/offers?${queryString}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
