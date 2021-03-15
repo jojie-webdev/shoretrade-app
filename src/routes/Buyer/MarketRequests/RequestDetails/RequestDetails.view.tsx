@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
-import Button from 'components/base/Button';
-import Select from 'components/base/Select';
-import Spinner from 'components/base/Spinner';
 import {
   Crab,
   DollarSign,
@@ -17,15 +13,11 @@ import {
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import Card from 'components/module/CategoryCards/Landing';
 import EmptyStateView from 'components/module/EmptyState';
 import NegotiateModalView from 'components/module/NegotiateModal';
-import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { Link, Route, Switch } from 'react-router-dom';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { Row, Col } from 'react-grid-system';
+import { Route, Switch } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -43,7 +35,6 @@ import {
   RequestOfferItemInteraction,
   BadgeText,
   StatusBadgeText,
-  FilterContainer,
   SellerOfferInteractionContentContainer,
 } from './RequestDetails.style';
 
@@ -54,7 +45,7 @@ export const OffersSellerAccordionContent = (props: {
   sellerRating: number;
   image: string;
 }) => {
-  const { sellerId, sellerName, sellerLocation, sellerRating, image } = props;
+  const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
 
@@ -111,7 +102,6 @@ const SellerOfferInteractionContent = (props: {
   isUnderNegotiations: boolean;
 }) => {
   const {
-    status,
     weight,
     price,
     tags,
@@ -205,6 +195,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     counterOffer,
     deliveryTotal,
     submitNegotiation,
+    hideNegotiate,
   } = props;
 
   if (!sellerOffers) {
@@ -341,6 +332,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   selectedOffer={selectedOffer}
                   deliveryTotal={deliveryTotal}
                   handleStartNegotiotiate={handleStartNegotiotiate}
+                  hideNegotiate={hideNegotiate}
                 />
               </Route>
             </Switch>
