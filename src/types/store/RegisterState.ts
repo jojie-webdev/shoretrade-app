@@ -57,7 +57,7 @@ export type RegisterRequestData = {
       }
     | {};
   playerId?: string;
-  sellerLicense?: {
+  sellerLicenses?: {
     url: string;
     name: string;
     fileType: 'IMAGE' | 'PDF' | 'DOC';

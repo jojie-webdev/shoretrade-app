@@ -471,7 +471,7 @@ const StepForm = ({
                 }}
               />
               <CustomInteraction
-                label="Fishing License"
+                label="Fishing Licenses"
                 value={
                   registrationDetails.licenses.length > 0
                     ? `${registrationDetails.licenses[0].fileName}...`
