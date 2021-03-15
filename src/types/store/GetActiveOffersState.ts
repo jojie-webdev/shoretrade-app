@@ -1,7 +1,8 @@
 import { GenericResponse } from 'types/GenericResponse';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type GetActiveOffersMeta = {};
+export type GetActiveOffersMeta = {
+  queryParams?: Record<string, string>;
+};
 
 export type GetActiveOffersRequestResponseItem = {
   id: string;
