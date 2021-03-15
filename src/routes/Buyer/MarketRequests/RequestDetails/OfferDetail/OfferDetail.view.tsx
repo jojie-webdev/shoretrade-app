@@ -136,6 +136,7 @@ const OfferDetailView = (props: any) => {
           onClick={() => handleAcceptOffer()}
           className="button"
           variant="primary"
+          disabled={ selectedOffer.status !== 'Open' }
           text="Accept"
         />
       </OfferActionsContainer>

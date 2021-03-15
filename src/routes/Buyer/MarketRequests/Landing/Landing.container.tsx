@@ -82,7 +82,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
     marketRequests: getMarketRequestLandingData(
-      buyerRequests.data?.data?.marketRequests
+      buyerRequests.data?.data?.marketRequests.filter((mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED')
     ), // TODO STATE
     onClickItem,
   };

@@ -23,6 +23,8 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
     originalOffer = 0,
     counterOffer: counterOfferProp,
     isNegotiating,
+    setCloseOnAccept,
+    closeOnAccept,
     ...modalProps
   } = props;
   const { unit, value: weightValue } = weight;
@@ -31,7 +33,6 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   const textColor = isBuyer ? 'shade9' : 'noshade';
 
   const [counterOffer, setCounterOffer] = useState(counterOfferProp);
-  const [closeListing, setCloseListing] = useState(false);
   const [discountValue, setDiscountValue] = useState(0);
 
   useEffect(() => {
@@ -47,8 +48,10 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
       ).toFixed(2)
     : 0;
   const deliveryTotal = counterOffer * weightValue;
-  const handleCheck = (value: any) => {
-    setCloseListing(!closeListing);
+  const handleCheck = () => {
+    if(setCloseOnAccept) {
+      setCloseOnAccept(!closeOnAccept);
+    }
   };
 
   //TODO: offer buyer
@@ -84,9 +87,9 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         {isBuyer && (
           <CheckBoxContainer>
             <Checkbox
-              onClick={(v) => handleCheck(v)}
+              onClick={() => handleCheck()}
               className="checkbox"
-              checked={closeListing}
+              checked={closeOnAccept}
             />
             <Typography
               className="label"
