@@ -37,7 +37,11 @@ const SizeInput = (props: SizeInputProps) => {
     }
   }, [fromSize, toSize]);
 
-  if (metricString === 'GRAMS' || metricString === 'UNITS_PER_POUND') {
+  if (
+    metricString === 'PORTIONS' ||
+    metricString === 'GRAMS' ||
+    metricString === 'UNITS_PER_POUND'
+  ) {
     return (
       <Row className="select-row">
         <Col md={6}>

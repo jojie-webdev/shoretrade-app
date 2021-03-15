@@ -35,6 +35,7 @@ import { Store } from 'types/store/Store';
 import getCalendarDate from 'utils/Date/getCalendarDate';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -251,7 +252,7 @@ export const PendingItem = (props: {
                     Sold Weight{' '}
                     <span>
                       {lineItemTotalWeight.toFixed(2)}{' '}
-                      {lineItem.listing.measurementUnit}
+                      {formatMeasurementUnit(lineItem.listing.measurementUnit)}
                     </span>
                   </ItemDetail>
 
