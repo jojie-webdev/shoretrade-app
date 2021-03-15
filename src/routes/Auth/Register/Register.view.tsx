@@ -363,7 +363,14 @@ const StepForm = ({
               </BadgeContainer>
             )}
 
-            {value && <Typography variant="label">{value}</Typography>}
+            {value && (
+              <Typography
+                variant="label"
+                color={isSeller ? 'noshade' : 'shade9'}
+              >
+                {value}
+              </Typography>
+            )}
           </div>
         </Interactions>
       );
