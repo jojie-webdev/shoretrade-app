@@ -56,4 +56,5 @@ export interface MarketRequestDetailProps {
   counterOffer: string;
   deliveryTotal: number | undefined;
   submitNegotiation: (v: number) => void;
+  hideNegotiate: boolean;
 }
