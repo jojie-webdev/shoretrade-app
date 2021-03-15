@@ -35,9 +35,9 @@ export interface RegistrationDetails {
 
   tncAgreement: boolean;
   categoryMarketSector: string;
+
   //license
-  licenseName: string;
-  licenseFile: File | null;
+  licenses: { file: File | null; fileName: string }[];
 }
 
 export interface BankDetails {

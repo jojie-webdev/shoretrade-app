@@ -1,7 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
 
-import { push } from 'connected-react-router';
-import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAvailableCategories } from 'services/category';
@@ -126,30 +124,29 @@ const Register = (): JSX.Element => {
     createUpdateReducer<RegistrationDetails>(),
     {
       // user
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      mobile: '',
+      firstName: 'jp',
+      lastName: 'dp',
+      email: 'jpdp@email.com',
+      password: 'Password!23',
+      passwordConfirm: 'Password!23',
+      mobile: '919191919',
       callingCode: '61',
       // business
-      businessName: '',
-      abn: '',
+      businessName: 'bname',
+      abn: '123123',
       address: null,
       businessLogo: null,
       // bank
-      accountName: '',
-      bsb: '',
-      accountNumber: '',
+      accountName: 'aname',
+      bsb: '123123',
+      accountNumber: '123123',
       selectedPaymentMethod: '',
       estimatedAnnualRevenue: '',
       selectedMarketSector: '',
       tncAgreement: false,
       categoryMarketSector: '',
       //license
-      licenseName: '',
-      licenseFile: null,
+      licenses: [],
     }
   );
 
@@ -182,8 +179,7 @@ const Register = (): JSX.Element => {
           userGroup: 'seller',
           marketSector: details.categoryMarketSector,
           marketSelling: selectedCategoryTypes,
-          licenseImage: details.licenseFile,
-          licenseName: details.licenseName,
+          licenses: details.licenses,
         })
       );
     }

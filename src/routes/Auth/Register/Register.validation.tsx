@@ -162,23 +162,6 @@ const categoryMarketSectorContstraints = {
   },
 };
 
-const licenseConstraint = {
-  licenseName: {
-    presence: {
-      message: '^Please enter license name',
-      allowEmpty: false,
-    },
-  },
-  licenseFile: {
-    presence: {
-      message: '^Please select a license file',
-      allowEmpty: false,
-    },
-  },
-};
-
-export const validateLicense = createFormikValidator(licenseConstraint);
-
 export const validateCategoryMarketSector = createFormikValidator(
   categoryMarketSectorContstraints
 );
