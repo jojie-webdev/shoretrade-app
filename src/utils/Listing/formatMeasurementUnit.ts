@@ -10,7 +10,7 @@ export const formatMeasurementUnit = (unit = '') => {
 
 export const formatUnitToPricePerUnit = (unit = '') => {
   if (unit.toUpperCase() === 'PORTIONS') {
-    return 'ea';
+    return 'portion';
   }
   if (unit.toUpperCase() === 'DOZ') {
     return 'doz';
