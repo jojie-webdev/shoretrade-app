@@ -12,7 +12,7 @@ import {
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
 import { sizeToString } from 'utils/Listing';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatMeasurementUnit, formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -67,7 +67,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     uri: pathOr('', ['listing', 'images', '0'], selectedLineItem),
     price: `${toPrice(
       selectedLineItem?.listing.pricePerKilo || 0
-    )} per ${measurementUnit}`,
+    )} per ${formatUnitToPricePerUnit(measurementUnit)}`,
     name: selectedLineItem?.listing.typeName || '',
     tags:
       selectedLineItem?.listing.specifications.map((s) => ({ label: s })) || [],

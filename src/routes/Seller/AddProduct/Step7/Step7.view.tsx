@@ -15,7 +15,10 @@ import { PlaceData } from 'types/PlaceData';
 import { originToPlaceData } from 'utils/Address/originToPlaceData';
 import { placeDataToOrigin } from 'utils/Address/placeDataToOrigin';
 import { createUpdateReducer } from 'utils/Hooks';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
@@ -203,8 +206,8 @@ function Step7({
     marketEstimate.min !== null && marketEstimate.max !== null
       ? `${toPrice(marketEstimate.min)} - ${toPrice(
           marketEstimate.max
-        )} per ${formatMeasurementUnit(
-          listingFormData?.measurementUnit
+        )} per ${formatUnitToPricePerUnit(
+          formatMeasurementUnit(listingFormData?.measurementUnit)
         )} in the past 14 days`
       : 'No Data Available';
 

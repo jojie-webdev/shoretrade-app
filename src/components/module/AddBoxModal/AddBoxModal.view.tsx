@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography/Typography.view';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 
 import { AddBoxModalProps, BoxValues } from './AddBoxModal.props';
 import { Inputs, ButtonContainer, StyledTextField } from './AddBoxModal.style';
@@ -23,12 +25,12 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
   }, [values.quantity, values.count]);
 
   const inputFilters = ['e', 'E', '+', '-'];
-
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Modal
       style={{
         width: 'unset',
-        padding: '48px 80px',
+        padding: isSmallScreen ? '48px 16px' : '48px 80px',
       }}
       {...modalProps}
     >

@@ -10,7 +10,10 @@ import SearchAddressView from 'components/module/SearchAddress';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesByCategoryState';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
@@ -48,7 +51,9 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             per
           </Typography>
           <Typography variant="caption" color="shade6" className="measure">
-            {formatMeasurementUnit(result.measurementUnit)}
+            {formatUnitToPricePerUnit(
+              formatMeasurementUnit(result.measurementUnit)
+            )}
           </Typography>
           <Typography weight="bold" variant="caption" className="result-count">
             {result.count}

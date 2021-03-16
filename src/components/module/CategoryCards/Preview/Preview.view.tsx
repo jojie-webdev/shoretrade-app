@@ -21,6 +21,7 @@ import {
   BadgeText,
   ResultText,
 } from './Preview.style';
+import { formatMeasurementUnit, formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const Preview = (props: PreviewProps): JSX.Element => {
   const { cardContainerStyle, cardContainerClass } = props;
@@ -74,7 +75,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   variant="small"
                   color="shade6"
                 >
-                  per {props.unit}
+                  per {formatUnitToPricePerUnit(props.unit)}
                 </Typography>
               </PriceContainer>
             </Row>
@@ -114,7 +115,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 Remaining:
               </ResultText>
               <ResultText variant="small" weight="bold">
-                {props.remaining} {props.unit}
+                {props.remaining} {formatMeasurementUnit(props.unit)}
               </ResultText>
             </Row>
             <Row style={{ height: 24, alignItems: 'center' }} nogutter>

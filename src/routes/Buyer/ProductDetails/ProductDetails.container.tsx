@@ -298,6 +298,7 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.caught || undefined,
       currentListing?.caught ? 'YYYY-MM-DD' : undefined
     ).toDate(),
+    unit: currentListing?.measurementUnit || undefined,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',

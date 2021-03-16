@@ -11,6 +11,7 @@ import { SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { SellingGeneratedProps, ItemProp } from './Selling.props';
 import {
@@ -71,7 +72,7 @@ const Item = (props: ItemProp) => {
             <ItemDetail variant="caption" color="shade6">
               Price:{' '}
               <span>
-                ${props.price} per {props.unit}
+                ${props.price} per {formatUnitToPricePerUnit(props.unit)}
               </span>
             </ItemDetail>
 
