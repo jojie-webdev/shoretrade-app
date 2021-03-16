@@ -7,6 +7,7 @@ import LocationSearch from 'components/module/LocationSearch';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
+import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
@@ -17,6 +18,7 @@ export const Container = styled.div`
   height: 100%;
 `;
 export const BackIcon = styled(ArrowLeft)``;
+
 export const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -283,3 +285,25 @@ export const SellerSummaryContainer = styled.div`
 `;
 
 export const SelectMarketSelector = styled(Select)``;
+
+export const LicensePreview = styled.div`
+  margin-top: 24px;
+
+  .license-details {
+    margin-top: 6px;
+  }
+
+  button {
+    padding: 4px 8px;
+    background: ${(props) => props.theme.brand.error};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: none;
+
+    :focus {
+      outline: none;
+    }
+  }
+`;
