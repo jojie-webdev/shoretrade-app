@@ -1,7 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
 
-import { push } from 'connected-react-router';
-import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAvailableCategories } from 'services/category';
@@ -148,8 +146,7 @@ const Register = (): JSX.Element => {
       tncAgreement: false,
       categoryMarketSector: '',
       //license
-      licenseName: '',
-      licenseFile: null,
+      licenses: [],
     }
   );
 
@@ -182,8 +179,7 @@ const Register = (): JSX.Element => {
           userGroup: 'seller',
           marketSector: details.categoryMarketSector,
           marketSelling: selectedCategoryTypes,
-          licenseImage: details.licenseFile,
-          licenseName: details.licenseName,
+          licenses: details.licenses,
         })
       );
     }

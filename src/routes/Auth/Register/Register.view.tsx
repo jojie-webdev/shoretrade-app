@@ -6,12 +6,12 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import { Search } from 'components/base/SVG';
+import { FileCheck, Search, Subtract } from 'components/base/SVG';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
-import AddFile from 'components/module/AddFile';
+import Add from 'components/module/Add/Add.view';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
 import DialogModal from 'components/module/DialogModal';
@@ -85,6 +85,7 @@ import {
   SellerSummaryContainer,
   SelectMarketSelector,
   TopContainer,
+  LicensePreview,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -96,7 +97,6 @@ import {
   validateAnnualRevenue,
   validateMarketSector,
   validateCategoryMarketSector,
-  validateLicense,
 } from './Register.validation';
 
 interface StepFormProps extends RegisterGeneratedProps {
@@ -156,6 +156,15 @@ const StepForm = ({
   const steps = isSeller ? SELLER_STEPS : buyerSteps;
   const MAX_STEP: number = !isSeller ? 6 : 7;
 
+  const [license, setLicense] = useState<{
+    file: File | null;
+    fileName: string;
+  }>({
+    file: null,
+    fileName: '',
+  });
+  const [licenseError, setLicenseError] = useState('');
+
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
     {}
@@ -194,6 +203,32 @@ const StepForm = ({
 
   const formRef = useRef<FormikProps<Record<string, string>> | null>(null);
 
+  const onAddMoreLicense = () => {
+    if (!license.file) {
+      setLicenseError('Please add a license file');
+    } else if (license.file && license.fileName.length === 0) {
+      setLicenseError('Please add a license name');
+    } else {
+      setLicenseError('');
+      updateRegistrationDetails({
+        licenses: [
+          ...registrationDetails.licenses.filter(
+            (f) => f.fileName !== license.fileName
+          ),
+          license,
+        ],
+      });
+    }
+  };
+
+  const onDeleteLicense = (fileName: string) => {
+    updateRegistrationDetails({
+      licenses: [
+        ...registrationDetails.licenses.filter((f) => f.fileName !== fileName),
+      ],
+    });
+  };
+
   const handleSubmit = () => {
     if (buttonTextHandler(step) === 'SKIP') {
       hideDetails();
@@ -205,10 +240,7 @@ const StepForm = ({
 
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
-      if (
-        registrationDetails.licenseFile ||
-        registrationDetails.licenseName.length > 0
-      ) {
+      if (registrationDetails.licenses.length > 0) {
         return 'NEXT';
       }
       return 'SKIP';
@@ -439,8 +471,12 @@ const StepForm = ({
                 }}
               />
               <CustomInteraction
-                label="Fishing License"
-                value={registrationDetails.licenseName}
+                label="Fishing Licenses"
+                value={
+                  registrationDetails.licenses.length > 0
+                    ? `${registrationDetails.licenses[0].fileName}...`
+                    : ''
+                }
                 onClick={() => {
                   summaryHandleStep(4);
                   setSummaryEdit();
@@ -597,24 +633,7 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
-              if (
-                registrationDetails.licenseFile ||
-                registrationDetails.licenseName.length > 0
-              ) {
-                const error = validateLicense({
-                  licenseName: registrationDetails.licenseName,
-                  licenseFile: registrationDetails.licenseFile,
-                });
-
-                if (error.licenseName || error.licenseFile) {
-                  setOtherErrors(error);
-                } else {
-                  setOtherErrors({ licenseName: '', licenseFile: '' });
-                  formikProps.onSubmit(values);
-                }
-              } else {
-                formikProps.onSubmit(values);
-              }
+              formikProps.onSubmit(values);
             }
           } else if (step === 5) {
             if (isSeller) {
@@ -819,32 +838,66 @@ const StepForm = ({
                       <UploadLabel variant="overline" color={'shade6'}>
                         License File
                       </UploadLabel>
-                      <AddFile //Todo: alter to proper data
-                        file={registrationDetails.licenseFile}
-                        onSelectFile={(file) =>
-                          updateRegistrationDetails({ licenseFile: file })
-                        }
-                        onRemoveFile={() => {
-                          updateRegistrationDetails({ licenseFile: null });
+                      <Add
+                        onClickFile={(file) => {
+                          if (file) {
+                            const { name } = file;
+                            const fileName = name.substring(
+                              0,
+                              name.lastIndexOf('.')
+                            );
+
+                            setLicense({
+                              file: file,
+                              fileName: fileName,
+                            });
+                          }
                         }}
+                        title="Add a File"
+                        Svg={FileCheck}
                       />
-                      {(otherErrors.licenseFile || '').length > 0 && (
-                        <Error variant="caption" color="error">
-                          {otherErrors.licenseFile}
-                        </Error>
-                      )}
                       <BaseTextField
-                        value={registrationDetails.licenseName}
+                        value={license.fileName}
                         onChangeText={(v) =>
-                          updateRegistrationDetails({
-                            licenseName: v,
-                          })
+                          setLicense((prevState) => ({
+                            ...prevState,
+                            fileName: v,
+                          }))
                         }
                         label="License Name"
                         type="text"
-                        error={otherErrors.licenseName || ''}
+                        error={licenseError || ''}
                         style={{ marginBottom: 8, marginTop: 16 }}
                       />
+
+                      {registrationDetails.licenses.map((l, index) => (
+                        <LicensePreview key={index}>
+                          <Typography variant="overline" color="shade6">
+                            License
+                          </Typography>
+                          <div className="license-details">
+                            <Typography variant="label" color="noshade">
+                              {l.fileName}
+                            </Typography>
+                            <button
+                              type="button"
+                              onClick={() => onDeleteLicense(l.fileName)}
+                            >
+                              <Subtract
+                                innerFill={theme.brand.error}
+                                fill={theme.grey.noshade}
+                              />
+                              <Typography
+                                color="shade2"
+                                variant="label"
+                                style={{ marginLeft: 4 }}
+                              >
+                                Delete
+                              </Typography>
+                            </button>
+                          </div>
+                        </LicensePreview>
+                      ))}
                     </>
                   )}
                   {!isSeller && (
@@ -976,6 +1029,14 @@ const StepForm = ({
               <NextButton text={'ADD MORE'} onClick={() => hideDetails()} />
             )}
 
+            {step === 4 && isSeller && (
+              <NextButton
+                text={'ADD'}
+                type={'button'}
+                onClick={() => onAddMoreLicense()}
+              />
+            )}
+
             {isSuccess && (
               <NextButton
                 text={'OK'}
@@ -1012,10 +1073,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const summaryHandleStep = (step: number) => {
     setStep(step);
   };
-
-  // useEffect(() => {
-  //   setStep(4);
-  // }, []);
 
   const nextStep = () => {
     if (isSummaryEdit) {
@@ -1216,6 +1273,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       );
     }
   };
+
   return (
     <AuthContainer
       isRegister
