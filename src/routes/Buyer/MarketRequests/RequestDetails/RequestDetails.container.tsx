@@ -159,8 +159,12 @@ const MarketRequestDetail = (): JSX.Element => {
       }
     }
 
-    newOffer = newOfferLatest?.price.toString();
-    counterOffer = counterOfferLatest?.price.toString();
+    newOffer = newOfferLatest ? newOfferLatest.price.toString() : '0';
+    counterOffer = counterOfferLatest
+      ? counterOfferLatest.price.toString()
+      : '0';
+
+    console.log(newOffer);
 
     deliveryTotal =
       parseFloat(newOffer?.length > 0 ? newOffer : `${selectedOffer.price}`) *

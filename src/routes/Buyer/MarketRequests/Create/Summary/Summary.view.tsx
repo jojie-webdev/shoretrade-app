@@ -4,19 +4,15 @@ import React, { useEffect } from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import Spinner from 'components/base/Spinner';
-import { ArrowLeft, Filter } from 'components/base/SVG';
+import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { useHistory, Link } from 'react-router-dom';
+import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
-import { CreateStepProps } from '../Create.props';
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
@@ -170,7 +166,7 @@ const SummaryView = (props: SummaryProps) => {
               checked={maxKgAutoClose}
               onClick={() => setMaxKgAutoClose(!maxKgAutoClose)}
               label="Auto-close this listing when reached max kg"
-            ></Checkbox>
+            />
           </div>
           <Button
             onClick={() => handleSubmit()}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
