@@ -47,7 +47,7 @@ const BoxDetails = ({
             className="overline"
             weight="900"
           >
-            Box Weight
+            {measurementUnit} per Box
           </Typography>
           <Typography color="noshade">{`${weight.toFixed(
             2
@@ -60,7 +60,7 @@ const BoxDetails = ({
             className="overline"
             weight="900"
           >
-            Quantity
+            Number of Boxes
           </Typography>
           <Typography color="noshade">{quantity}</Typography>
         </div>

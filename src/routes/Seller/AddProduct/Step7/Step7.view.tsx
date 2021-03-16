@@ -223,7 +223,9 @@ function Step7({
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
-            label="Price (excluding freight)"
+            label={`Price per ${formatUnitToPricePerUnit(
+              formatMeasurementUnit(listingFormData?.measurementUnit)
+            )} (excluding freight)`}
             LeftComponent={<DollarSign height={15} width={15} />}
             value={price}
             onChangeText={(v) => {

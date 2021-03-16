@@ -26,6 +26,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
 
   const inputFilters = ['e', 'E', '+', '-'];
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <Modal
       style={{
@@ -41,7 +42,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
         <Inputs>
           <StyledTextField
             type="number"
-            label="Box Weight"
+            label={`${unit} per box`}
             value={values.weight}
             onChangeText={(v) => {
               setValues({ ...values, weight: v });
@@ -58,7 +59,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
           />
           <StyledTextField
             type="number"
-            label="Quantity"
+            label="Number of Boxes"
             value={values.quantity}
             onChangeText={(v) => {
               setValues({ ...values, quantity: v });
@@ -70,6 +71,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
           />
           <StyledTextField
             type="number"
+            readOnly={unit === 'portions'}
             label="Count per Box"
             value={values.count}
             onChangeText={(v) => {

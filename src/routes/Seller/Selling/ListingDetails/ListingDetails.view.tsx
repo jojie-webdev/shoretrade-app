@@ -180,10 +180,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </Typography>
             <div className="box-details-row">
               <Typography color="shade6" weight="bold">
-                Box Weight
+                {boxDetails.unit} per Box
               </Typography>
               <Typography color="shade6" weight="bold">
-                Quantity
+                Number of Boxes
               </Typography>
               <Typography color="shade6" weight="bold">
                 Subtotal
