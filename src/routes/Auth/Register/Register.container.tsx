@@ -130,7 +130,7 @@ const Register = (): JSX.Element => {
       password: '',
       passwordConfirm: '',
       mobile: '',
-      callingCode: '',
+      callingCode: '61',
       // business
       businessName: '',
       abn: '',
