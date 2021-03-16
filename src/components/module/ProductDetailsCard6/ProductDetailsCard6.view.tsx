@@ -2,6 +2,10 @@ import React from 'react';
 
 import Typography from 'components/base/Typography';
 import moment from 'moment';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
@@ -37,7 +41,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           color="shade6"
           style={{ marginLeft: 6.5, marginTop: 8 }}
         >
-          per kg
+          per {formatUnitToPricePerUnit(formatMeasurementUnit(unit))}
         </Label>
       </Row>
       <Row>

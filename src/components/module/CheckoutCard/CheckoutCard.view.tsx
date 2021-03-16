@@ -9,6 +9,7 @@ import { useTheme } from 'utils/Theme';
 
 import { CheckoutCardProps } from './CheckoutCard.props';
 import { Container, Image, TextValue } from './CheckoutCard.style';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();
@@ -63,7 +64,7 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                   Weight
                 </Typography>
                 <TextValue variant="caption" color="shade8">
-                  {weight} {unit}
+                  {weight} {formatMeasurementUnit(unit)}
                 </TextValue>
 
                 <Typography variant="caption" color="shade6">

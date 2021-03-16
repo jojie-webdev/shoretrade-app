@@ -53,7 +53,8 @@ export const Field = styled.input`
 
 export const LeftComponentContainer = styled.div`
   display: flex;
-  width: 48px;
+  min-width: 48px;
+  padding: 0px 2px;
   height: 100%;
   flex-direction: column;
   justify-content: center;
