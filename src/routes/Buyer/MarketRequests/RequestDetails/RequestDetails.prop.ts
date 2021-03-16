@@ -57,4 +57,6 @@ export interface MarketRequestDetailProps {
   deliveryTotal: number | undefined;
   submitNegotiation: (v: number) => void;
   hideNegotiate: boolean;
+  closeOnAccept: boolean;
+  setCloseOnAccept: Dispatch<SetStateAction<boolean>>;
 }

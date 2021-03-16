@@ -107,6 +107,7 @@ const SellerOfferInteractionContent = (props: {
     tags,
     weightUnit,
     averagePrice,
+    status,
     isUnderNegotiations = false,
   } = props;
   const OfferTags = (props: { tags: string[] }) => {
@@ -130,6 +131,16 @@ const SellerOfferInteractionContent = (props: {
     <SellerOfferInteractionContentContainer>
       <div className="info-container">
         <div className="status">
+        {status === 'DECLINED' || status === 'ACCEPTED' ? (
+          <Badge className="offers-badge" badgeColor={ status === 'ACCEPTED'
+          ? theme.brand.success
+          : theme.brand.error}>
+              <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                { status === 'DECLINED' ? 'LOST' : status }
+              </StatusBadgeText>
+            </Badge>
+        ) : (
+          <>
           {price < averagePrice && (
             <Badge className="offers-badge" badgeColor={theme.brand.success}>
               <StatusBadgeText color="shade1" weight="bold" variant="overline">
@@ -151,6 +162,8 @@ const SellerOfferInteractionContent = (props: {
               </StatusBadgeText>
             </Badge>
           )}
+          </>
+        )}
         </div>
         <div className="weight-price-container">
           <div className="weight-price">
@@ -196,6 +209,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     deliveryTotal,
     submitNegotiation,
     hideNegotiate,
+    closeOnAccept,
+    setCloseOnAccept,
   } = props;
 
   if (!sellerOffers) {
@@ -209,6 +224,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   return (
     <RequestDetailsContainer>
       <NegotiateModalView
+        closeOnAccept={closeOnAccept}
+        setCloseOnAccept={setCloseOnAccept}
         onSubmit={(v: number) => submitNegotiation(v)}
         originalOffer={selectedOffer?.price}
         counterOffer={parseFloat(counterOffer)}
@@ -304,8 +321,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                               <SellerOfferInteractionContent
                                 averagePrice={seller.marketRequest.averagePrice}
                                 price={item.price}
-                                isUnderNegotiations={item.negotiations?.find(
-                                  (i) => i.is_accepted === false
+                                isUnderNegotiations={!item.negotiations?.find(
+                                  (i) => i.is_accepted === true
                                 )}
                                 status={item.status}
                                 weight={item.weight}

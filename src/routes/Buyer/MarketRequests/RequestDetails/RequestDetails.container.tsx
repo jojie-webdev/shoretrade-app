@@ -85,6 +85,7 @@ const MarketRequestDetail = (): JSX.Element => {
   const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [selectedCompany, setSelectedCompany] = useState('');
+  const [closeOnAccept, setCloseOnAccept] = useState(false);
 
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
@@ -122,6 +123,7 @@ const MarketRequestDetail = (): JSX.Element => {
           marketRequestId: id,
           marketOfferId: selectedOffer.id,
           price: v,
+          closeOnAccept: closeOnAccept
         })
       );
     }
@@ -133,6 +135,7 @@ const MarketRequestDetail = (): JSX.Element => {
   let deliveryTotal;
   let counterOfferLatest;
   let newOfferLatest;
+  let hideNegotiate = false;
 
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
@@ -164,9 +167,14 @@ const MarketRequestDetail = (): JSX.Element => {
     console.log(newOffer);
 
     deliveryTotal =
-      parseFloat(newOffer.length > 0 ? newOffer : `${selectedOffer.price}`) *
+      parseFloat(newOffer?.length > 0 ? newOffer : `${selectedOffer.price}`) *
       selectedOffer.weight;
+
+      hideNegotiate = (newOfferLatest?.updated_at < counterOfferLatest?.updated_at) || selectedOffer.status !== 'OPEN'
   }
+
+
+
 
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
@@ -196,7 +204,9 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections,
     handleAcceptOffer,
     submitNegotiation,
-    hideNegotiate: newOfferLatest?.updated_at < counterOfferLatest?.updated_at,
+    hideNegotiate,
+    closeOnAccept,
+    setCloseOnAccept,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
