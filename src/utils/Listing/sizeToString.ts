@@ -26,6 +26,7 @@ export const sizeToString = (
       return sizeFrom === sizeTo || !sizeTo || sizeTo === ''
         ? `${sizeFrom || ''}`
         : `${sizeFrom || ''} - ${sizeTo || ''}`;
+    case 'Portions':
     case 'Grams':
       return sizeFrom === sizeTo || !sizeTo || sizeTo === ''
         ? toKilograms(sizeFrom)

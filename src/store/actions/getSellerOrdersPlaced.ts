@@ -7,7 +7,10 @@ import { createAsyncAction } from 'utils/Redux';
 const ns = 'GET_SELLER_ORDERS_PLACED';
 const asyncAction = {
   ...createAsyncAction<GetSellerOrdersMeta, GetSellerOrdersPayload>(ns),
+  // For Confirm Weight
   UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
+  // For Ship Order
+  UPDATE_SHIP_ORDER_OPTIMISTICALLY: `${ns}/UPDATE_SHIP_ORDER_OPTIMISTICALLY`,
 };
 
 const getSellerOrdersPlacedActions = {
@@ -29,6 +32,14 @@ const getSellerOrdersPlacedActions = {
     },
   }),
 
+  updateShipOrderOptimisitically: (orderId: string) => ({
+    type: asyncAction.UPDATE_SHIP_ORDER_OPTIMISTICALLY,
+    meta: {
+      orderId,
+    },
+  }),
+
+  // For Confirm Weight
   updateOptimistically: (orderId: string, orderLineItemId: string) => ({
     type: asyncAction.UPDATE_OPTIMISTICALLY,
     meta: {

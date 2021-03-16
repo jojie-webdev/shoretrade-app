@@ -1,6 +1,7 @@
 import { collectAddressShort } from 'consts';
 import moment from 'moment';
 import { groupBy } from 'ramda';
+import pathOr from 'ramda/es/pathOr';
 import { GetBuyerOrdersResponseItem } from 'types/store/GetBuyerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -80,7 +81,11 @@ export const transformOrder = (
     },
 
     estCatchmentDate: moment(
-      orderItem.orderLineItem[0].listing.catchDate
+      pathOr(
+        undefined,
+        ['orderLineItem', '0', 'listing', 'catchDate'],
+        orderItem
+      )
     ).toDate(),
 
     estDeliveryDate: moment(
@@ -96,9 +101,12 @@ export const transformOrder = (
         orderItem.originalExpectedDeliveryDate
       )
     ).toDate(), // date_delivered --> from database
-
     price: totalPrice,
-    isAquafuture: orderItem.orderLineItem[0].listing.isAquafuture,
+    isAquafuture: pathOr(
+      false,
+      ['orderLineItem', '0', 'listing', 'isAquafuture'],
+      orderItem
+    ),
   };
 };
 

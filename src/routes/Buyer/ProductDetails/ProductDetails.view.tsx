@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
@@ -51,12 +51,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     getBoxes,
     remainingWeight,
     unit,
-    boxRadios,
     pressedBoxRadio,
     setPressedBoxRadio,
     onAddToCart,
     isLoadingListingBoxes,
+    groupedBox,
   } = props;
+  const boxWeightsRef = useRef<HTMLDivElement>(null);
+  const [didScroll, setDidScroll] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
     GetListingResponseItem
@@ -74,6 +76,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       setImages(newCurrentListing?.images);
     }
   }, [newCurrentListing, newCurrentListing?.images]);
+
+  useEffect(() => {
+    if (!isEmpty(groupedBox) && !didScroll) {
+      setDidScroll(true);
+      boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [groupedBox]);
 
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
@@ -141,7 +150,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     />
                   </RemainingWrapper>
 
-                  {!isEmpty(boxRadios) ? (
+                  {!isEmpty(groupedBox) ? (
                     <BoxContainer>
                       <Typography
                         variant="overline"
@@ -150,11 +159,15 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       >
                         BEST BOX WEIGHT MATCH
                       </Typography>
-                      {boxRadios.map((p) => (
+                      {groupedBox.map((p) => (
                         <BoxRadioContainer key={p.id}>
                           <BoxRadio
+                            id={p.id}
                             checked={p.id === pressedBoxRadio}
-                            {...p}
+                            totalWeight={p.totalWeight}
+                            boxes={p.boxes}
+                            cost={p.cost}
+                            unit={p.unit}
                             onClick={() =>
                               setPressedBoxRadio((prevState) =>
                                 p.id === prevState ? '' : p.id

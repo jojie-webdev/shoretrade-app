@@ -40,7 +40,6 @@ function* confirmWeightSuccess(
       action.payload.orderLineItemId
     )
   );
-  // yield put(push(SELLER_SOLD_ROUTES.LANDING));
 }
 
 function* confirmWeightWatcher() {

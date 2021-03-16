@@ -18,6 +18,16 @@ export const Row = styled.div`
   flex-direction: row;
 `;
 
+export const BreakdownRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const BreakDownCol = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Col = styled.div`
   display: flex;
   flex-direction: column;
