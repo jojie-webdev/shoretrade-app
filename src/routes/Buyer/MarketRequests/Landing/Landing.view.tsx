@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import Spinner from 'components/base/Spinner';
 import { Filter, Crab } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import Card from 'components/module/CategoryCards/Landing';
 import EmptyStateView from 'components/module/EmptyState';
-import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
 import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Container } from 'react-grid-system';
-import { useHistory, Link } from 'react-router-dom';
+import { Row, Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 

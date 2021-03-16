@@ -1,6 +1,3 @@
-import Accordion from 'components/base/Accordion';
-import Alert from 'components/base/Alert';
-import Interactions from 'components/base/Interactions';
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import styled, { css } from 'utils/styled';
@@ -24,7 +21,6 @@ export const SellerOfferInteractionContentContainer = styled.div`
       margin: 4px 0px;
       line-height: 1rem;
       display: flex;
-      flow-direction: row;
 
       .weight {
         margin-right: 1rem;

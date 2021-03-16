@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -30,10 +28,6 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     typeSearchResults,
     setStep,
   } = props;
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [searchKey, setSearchKey] = useState<string>('');
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const handleCategoryClick = (v: CategoryItem) => {
     setSelectedCategory(v);
     setStep(2);
@@ -72,7 +66,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
               leftComponent={
                 <TypographyView variant="body">{result.label}</TypographyView>
               }
-            ></CategoryInterAction>
+            />
           ))
         ) : (
           buying.map((item: any) => (
@@ -83,7 +77,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
               leftComponent={
                 <TypographyView variant="body">{item.name}</TypographyView>
               }
-            ></CategoryInterAction>
+            />
           ))
         )}
       </CategoryInteractionsContainer>
