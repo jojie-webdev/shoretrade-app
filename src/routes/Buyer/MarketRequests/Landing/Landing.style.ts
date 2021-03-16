@@ -1,7 +1,7 @@
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const MarketRequestsContainer = styled.div`

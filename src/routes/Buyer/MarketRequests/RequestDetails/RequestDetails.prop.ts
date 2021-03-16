@@ -1,4 +1,4 @@
-import { Dispatch, ChangeEvent, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 

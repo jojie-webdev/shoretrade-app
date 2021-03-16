@@ -34,13 +34,11 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     }))
   );
 
-  console.log(selectedSpecifications);
   const [selectedState, setSelectedState] = useState<{
     selectedStates: any[];
   }>({ selectedStates: [...selectedSpecifications.items] });
 
   const handleSelectSpecs = () => {
-    // MOCK
     setSelectedSpecifications({ items: selectedState.selectedStates });
     setStep(3);
   };
@@ -105,7 +103,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                     onClick={() => handleStateCheck(item)}
                     key={item.value}
                     label={item.label}
-                  ></Checkbox>
+                  />
                 ))}
               </div>
             </div>
