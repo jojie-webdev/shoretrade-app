@@ -40,6 +40,7 @@ export interface NegotiateOffer {
   marketOfferId: string;
   marketRequestId: string;
   price: number;
+  closeOnAccept: boolean;
 }
 
 export type OffersPayload = { marketOffers: MarketOfferItem[] };
