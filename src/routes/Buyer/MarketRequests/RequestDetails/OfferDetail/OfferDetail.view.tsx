@@ -3,8 +3,6 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
-import { Item } from 'components/module/LocationSearch/LocationSearch.style';
-import OrderItemView from 'components/module/OrderItem';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
@@ -115,7 +113,6 @@ const OfferDetailView = (props: any) => {
             </TypographyView>
             <TypographyView weight="bold" color="shade9" variant="body">
               ${!isNaN(deliveryTotal) ? deliveryTotal : selectedOffer?.price}
-              {/* TODO */}
             </TypographyView>
           </div>
         </div>

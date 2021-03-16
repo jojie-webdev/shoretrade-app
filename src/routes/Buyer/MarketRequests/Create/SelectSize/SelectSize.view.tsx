@@ -9,7 +9,6 @@ import TypographyView from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { pathOr } from 'ramda';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step4/Step4.constants';
 import theme from 'utils/Theme';
 
@@ -125,7 +124,7 @@ const SizeInput = (props: SizeInputProps) => {
       key={metric.value}
       value={metric.value}
       label={metric.label}
-    ></Checkbox>
+    />
   ));
 
   return <>{sizeOptions}</>;
@@ -142,7 +141,6 @@ const SelectSizeView = (props: SelectSizeProps) => {
     listingFormData,
     setStep,
   } = props;
-  const history = useHistory();
 
   const [sizeToFrom, setSizeToFrom] = useState<{ from: string; to: string }>({
     from: selectedSize.from,
@@ -154,7 +152,6 @@ const SelectSizeView = (props: SelectSizeProps) => {
   });
 
   const handleSubmit = () => {
-    // MOCK
     setSelectedSize({
       from: sizeToFrom.from,
       to: sizeToFrom.to,
