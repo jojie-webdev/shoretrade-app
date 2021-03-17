@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem } from "types/store/GetActiveOffersState";
 
 export type RequestDetail = {
   id: string;
@@ -14,9 +14,9 @@ export type RequestDetail = {
 };
 
 export enum MarketRequestOfferTip {
-  Negotiation = 'Negotiation',
-  GreatValue = 'Great Value',
-  AboveMarket = 'Above Market',
+  Negotiation = "Negotiation",
+  GreatValue = "Great Value",
+  AboveMarket = "Above Market",
 }
 
 export interface MarketRequestOffer {
@@ -54,9 +54,13 @@ export interface MarketRequestDetailProps {
   selectedCompany: any;
   handleAcceptOffer: () => void;
   counterOffer: string;
+  newOffer: string;
   deliveryTotal: number | undefined;
   submitNegotiation: (v: number) => void;
   hideNegotiate: boolean;
   closeOnAccept: boolean;
   setCloseOnAccept: Dispatch<SetStateAction<boolean>>;
+  noNewCounterOffer: boolean;
+  discountValue: number;
+  discountPercentage: string;
 }

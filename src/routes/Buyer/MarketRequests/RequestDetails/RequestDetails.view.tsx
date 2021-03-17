@@ -211,6 +211,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     hideNegotiate,
     closeOnAccept,
     setCloseOnAccept,
+    discountPercentage,
+    discountValue,
+    noNewCounterOffer,
+    newOffer,
   } = props;
 
   if (!sellerOffers) {
@@ -350,6 +354,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   deliveryTotal={deliveryTotal}
                   handleStartNegotiotiate={handleStartNegotiotiate}
                   hideNegotiate={hideNegotiate}
+                  originalOffer={selectedOffer?.price}
+                  counterOffer={parseFloat(counterOffer)}
+                  discountPercentage={discountPercentage}
+                  discountValue={discountValue}
+                  newOffer={newOffer}
+                  noNewCounter={noNewCounterOffer}
                 />
               </Route>
             </Switch>
