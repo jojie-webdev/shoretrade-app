@@ -1057,7 +1057,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSummaryEdit,
   } = props;
 
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(0);
   const MAX_STEP = !isSeller ? 6 : 7;
 
   const summaryHandleStep = (step: number) => {
