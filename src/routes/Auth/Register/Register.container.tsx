@@ -136,6 +136,7 @@ const Register = (): JSX.Element => {
       businessName: '',
       abn: '',
       address: null,
+      unitNumber: '',
       businessLogo: null,
       // bank
       accountName: '',
@@ -170,7 +171,10 @@ const Register = (): JSX.Element => {
             businessName: details.businessName,
             abn: details.abn,
           },
-          address: details.address,
+          address: {
+            ...details.address,
+            unitNumber: details.unitNumber,
+          },
           businessLogo: details.businessLogo,
           bankAccounts: {
             accountName: details.accountName,
@@ -200,7 +204,10 @@ const Register = (): JSX.Element => {
             businessName: details.businessName,
             abn: details.abn,
           },
-          address: details.address,
+          address: {
+            ...details.address,
+            unitNumber: details.unitNumber,
+          },
           businessLogo: details.businessLogo,
           registerDebtFinancing:
             details.selectedPaymentMethod === PAYMENT_METHOD_OPTIONS[0].value,

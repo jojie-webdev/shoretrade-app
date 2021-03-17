@@ -20,6 +20,7 @@ import MarketSectorItem from 'components/module/MarketSectorItem';
 import SearchAddressView from 'components/module/SearchAddress';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
+import pathOr from 'ramda/es/pathOr';
 import {
   Category,
   CategoryType,
@@ -744,13 +745,25 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
+
+                  <BaseTextField
+                    label="Unit number (optional)"
+                    value={registrationDetails.unitNumber}
+                    onChangeText={(v) =>
+                      updateRegistrationDetails({
+                        unitNumber: v,
+                      })
+                    }
+                    error={otherErrors.unitNumber || ''}
+                    style={{ marginBottom: 8, marginTop: 24 }}
+                  />
+
                   <Alert
                     variant="infoAlert"
                     fullWidth
                     content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                     }
-                    style={{ marginTop: 8 }}
                   />
                   {isSeller && (
                     <>
