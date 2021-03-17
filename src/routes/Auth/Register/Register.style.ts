@@ -17,6 +17,7 @@ export const Container = styled.div`
   justify-content: center;
   height: 100%;
 `;
+
 export const BackIcon = styled(ArrowLeft)``;
 
 export const TitleContainer = styled.div`
@@ -28,7 +29,7 @@ export const TitleContainer = styled.div`
 `;
 
 export const RenderContainer = styled.div<{ step?: number }>`
-margin-top:60px;
+  margin-top:60px;
   /* margin-top: ${({ step }) =>
     (theme.appType === 'seller' && step === 7) || step === 6
       ? '60px'
@@ -47,11 +48,14 @@ margin-top:60px;
 `;
 
 export const TopContainer = styled.div`
+  /*
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   background: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade8 : 'transparent'};
+  
+   */
 `;
 
 export const NextButton = styled(Button)`
@@ -67,6 +71,21 @@ export const Content = styled.div`
 export const GetStartedButton = styled(Button)`
   width: 148px;
   margin-top: 32px;
+`;
+
+export const GetStartedTitleWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
+export const GetStartedTitle = styled(Typography)`
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade7};
+  font-weight: 400;
+  b {
+    color: ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+  }
 `;
 
 export const Spacer = styled.div`
@@ -111,16 +130,6 @@ export const FormikContainer = styled(Form)`
   .market-sector-item {
     margin-right: 8px;
     margin-bottom: 8px;
-  }
-`;
-
-export const GetStartedTitle = styled(Typography)`
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade7};
-  font-weight: 400;
-  b {
-    color: ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
   }
 `;
 

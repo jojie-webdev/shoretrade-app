@@ -52,6 +52,8 @@ import {
   Content,
   Footer,
   GetStartedTitle,
+  GetStartedTitleWrapper,
+  GetStartedButton,
   StepCount,
   Title,
   TextField,
@@ -70,7 +72,6 @@ import {
   Spacer,
   BackIcon,
   TitleContainer,
-  GetStartedButton,
   RenderContainer,
   NextButton,
   UploadLabel,
@@ -713,14 +714,16 @@ const StepForm = ({
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
-                  <Alert
-                    variant="infoAlert"
-                    fullWidth
-                    content={
-                      'You can add more people to your seller account once you’re approved'
-                    }
-                    style={{ marginTop: 8 }}
-                  />
+                  {isSeller && (
+                    <Alert
+                      variant="infoAlert"
+                      fullWidth
+                      content={
+                        'You can add more people to your seller account once you’re approved'
+                      }
+                      style={{ marginTop: 8 }}
+                    />
+                  )}
                 </>
               )}
               {step === 2 && (
@@ -1247,10 +1250,20 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <ColumnWrapper>
             <Container>
               <Content>
-                <GetStartedTitle variant="title5">
-                  Signing up is <b>free</b> and complete with{' '}
-                  <b>{isSeller ? '6' : '5'} simple</b> steps
-                </GetStartedTitle>
+                <GetStartedTitleWrapper>
+                  <Touchable dark onPress={() => backToLogin()}>
+                    <BackIcon
+                      width={16}
+                      height={16}
+                      fill={theme.brand.primary}
+                    />
+                  </Touchable>
+                  <GetStartedTitle variant="title5">
+                    Signing up is <b>free</b> and complete with{' '}
+                    <b>{isSeller ? '6' : '5'} simple</b> steps
+                  </GetStartedTitle>
+                </GetStartedTitleWrapper>
+
                 {steps
                   .filter((i) => i.title !== 'Summary')
                   .map((step, index) => (
@@ -1288,10 +1301,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <TopContainer>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
             <TitleContainer>
-              <Touchable
-                dark
-                onPress={() => (step <= 1 ? backToLogin() : previousStep())}
-              >
+              <Touchable dark onPress={() => previousStep()}>
                 <BackIcon width={16} height={16} fill={theme.brand.primary} />
               </Touchable>
               <Title
