@@ -85,7 +85,6 @@ import {
   BadgeItemContainer,
   ButtonContainer,
   SellerSummaryContainer,
-  SelectMarketSelector,
   TopContainer,
   LicensePreview,
 } from './Register.style';
@@ -596,10 +595,6 @@ const StepForm = ({
             if (!isSeller) {
               if (isApplicationForLineCredit) {
                 const error = {
-                  ...validateMarketSector({
-                    selectedMarketSector:
-                      registrationDetails.selectedMarketSector,
-                  }),
                   ...(isApplicationForLineCredit
                     ? validateAnnualRevenue({
                         estimatedAnnualRevenue:
@@ -607,10 +602,7 @@ const StepForm = ({
                       })
                     : {}),
                 };
-                if (
-                  error.selectedMarketSector ||
-                  error.estimatedAnnualRevenue
-                ) {
+                if (error.estimatedAnnualRevenue) {
                   setOtherErrors(error);
                 } else {
                   setOtherErrors({ estimatedAnnualRevenue: '' });
@@ -828,20 +820,6 @@ const StepForm = ({
                         type="number"
                         error={otherErrors.estimatedAnnualRevenue || ''}
                         style={{ marginBottom: 8, marginTop: 8 }}
-                      />
-
-                      <SelectMarketSelector
-                        value={registrationDetails.selectedMarketSector}
-                        onChange={(option) => {
-                          updateRegistrationDetails({
-                            selectedMarketSector: option.value,
-                          });
-                        }}
-                        options={BUYER_VARIATION.map((i) => {
-                          return { label: i.label, value: i.key };
-                        })}
-                        label="Market Sector"
-                        error={otherErrors.selectedMarketSector}
                       />
                     </div>
                   )}

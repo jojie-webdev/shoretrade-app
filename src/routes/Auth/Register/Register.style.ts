@@ -293,8 +293,6 @@ export const SellerSummaryContainer = styled.div`
   }
 `;
 
-export const SelectMarketSelector = styled(Select)``;
-
 export const LicensePreview = styled.div`
   margin-top: 24px;
 
