@@ -144,15 +144,6 @@ const agreementConstraints = {
   },
 };
 
-const selectedMarketSectorContstraints = {
-  selectedMarketSector: {
-    presence: {
-      message: '^Please select a market sector',
-      allowEmpty: false,
-    },
-  },
-};
-
 const categoryMarketSectorContstraints = {
   categoryMarketSector: {
     presence: {
@@ -181,10 +172,6 @@ export const validateBankDetails = createFormikValidator(
 
 export const validateAnnualRevenue = createFormikValidator(
   estimatedAnnualRevenueContraints
-);
-
-export const validateMarketSector = createFormikValidator(
-  selectedMarketSectorContstraints
 );
 
 export const validateAgreement = createFormikValidator(agreementConstraints);

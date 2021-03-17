@@ -14,13 +14,10 @@ import AuthContainer from 'components/layout/AuthContainer';
 import Add from 'components/module/Add/Add.view';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
-import DialogModal from 'components/module/DialogModal';
 import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
-import SearchAddressView from 'components/module/SearchAddress';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
-import pathOr from 'ramda/es/pathOr';
 import {
   Category,
   CategoryType,
@@ -96,7 +93,6 @@ import {
   validateBusinessAddress,
   validateAgreement,
   validateAnnualRevenue,
-  validateMarketSector,
   validateCategoryMarketSector,
 } from './Register.validation';
 
@@ -1061,7 +1057,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSummaryEdit,
   } = props;
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(4);
   const MAX_STEP = !isSeller ? 6 : 7;
 
   const summaryHandleStep = (step: number) => {

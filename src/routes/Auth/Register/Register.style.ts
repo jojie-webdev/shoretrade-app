@@ -1,13 +1,10 @@
 import Button from 'components/base/Button';
-import Select from 'components/base/Select';
 import { Download, ArrowLeft } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
-import LocationSearch from 'components/module/LocationSearch';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
-import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 

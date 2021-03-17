@@ -1,6 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
 
-import { BUYER_ROUTES, MAIN_ROUTES, SELLER_ROUTES } from 'consts';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAvailableCategories } from 'services/category';

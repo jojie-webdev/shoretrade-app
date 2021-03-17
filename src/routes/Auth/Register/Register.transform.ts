@@ -1,4 +1,5 @@
 import { PlaceData } from 'types/PlaceData';
+
 export function addressToPlaceData(data: PlaceData) {
   const street = data.streetNumber
     ? `${data.streetNumber} ${data.address}`
