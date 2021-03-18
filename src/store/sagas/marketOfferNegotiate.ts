@@ -1,5 +1,6 @@
 import { replace } from 'connected-react-router';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
+import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { negotiateOffer } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';
@@ -22,7 +23,9 @@ function* negotiationOfferRequest(
         action.meta,
         state.auth.token
       );
-      yield put(marketOfferNegotiateActions.success(data));
+      yield put(
+        marketOfferNegotiateActions.success({ ...data, data: action.meta })
+      );
     } catch (e) {
       yield put(marketOfferNegotiateActions.failed(e.message));
     }
@@ -34,11 +37,17 @@ function* negotiationOfferRequest(
 function* negotiationOfferSuccess(
   action: AsyncAction<NegotiateOfferMeta, NegotiatePayload>
 ) {
-  yield put(
-    replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-      currentTab: 'My Active Offers',
-    })
-  );
+  const accepted = pathOr(false, ['payload', 'data', 'accepted'], action);
+
+  if (accepted) {
+    yield put(replace(SELLER_ROUTES.SOLD));
+  } else {
+    yield put(
+      replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+        currentTab: 'My Active Offers',
+      })
+    );
+  }
 }
 
 function* negotiationOfferWatcher() {

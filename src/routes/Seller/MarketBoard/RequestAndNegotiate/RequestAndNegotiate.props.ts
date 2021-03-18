@@ -14,7 +14,7 @@ export interface CommonProps {
   buyerRequest: GetAllMarketRequestResponseItem;
   activeOffer: GetActiveOffersRequestResponseItem;
 
-  onNegotiateOffer: (id: string, price: number) => void;
+  onNegotiateOffer: (id: string, price: number, accepted?: boolean) => void;
 
   isNegotiating: boolean;
 }
