@@ -81,12 +81,7 @@ export const GetStartedTitleWrapper = styled.div`
 
 export const GetStartedTitle = styled(Typography)`
   color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade7};
-  font-weight: 400;
-  b {
-    color: ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
-  }
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
 `;
 
 export const Spacer = styled.div`

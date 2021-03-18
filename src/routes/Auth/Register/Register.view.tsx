@@ -1246,8 +1246,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                     />
                   </Touchable>
                   <GetStartedTitle variant="title5">
-                    Signing up is <b>free</b> and complete with{' '}
-                    <b>{isSeller ? '6' : '5'} simple</b> steps
+                    Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
+                    simple steps
                   </GetStartedTitle>
                 </GetStartedTitleWrapper>
 
