@@ -23,6 +23,10 @@ export const TitleContainer = styled.div`
   align-items: center;
   height: 32px;
   margin-top: 8px;
+
+  .back-badge {
+    margin-left: 35px;
+  }
 `;
 
 export const RenderContainer = styled.div<{ step?: number }>`
@@ -77,12 +81,7 @@ export const GetStartedTitleWrapper = styled.div`
 
 export const GetStartedTitle = styled(Typography)`
   color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade7};
-  font-weight: 400;
-  b {
-    color: ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
-  }
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
 `;
 
 export const Spacer = styled.div`
@@ -105,6 +104,7 @@ export const FormikContainer = styled(Form)`
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-left: 35px;
 
   .select-container {
     margin-top: 24px;
@@ -133,6 +133,7 @@ export const FormikContainer = styled(Form)`
 export const StepCount = styled(Typography)`
   color: ${({ theme }) => theme.grey.shade6};
   font-weight: 900;
+  padding-left: 33px;
 `;
 
 export const Title = styled(Typography)`
@@ -208,7 +209,6 @@ export const MarketSectorContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 32px;
-  margin-left: 4px;
 `;
 
 export const MarketSectorItemContainer = styled.div`
@@ -283,7 +283,6 @@ export const ButtonContainer = styled.div`
 
 export const SellerSummaryContainer = styled.div`
   margin-top: 24px;
-  padding: 8px;
 
   .interactions {
     margin-bottom: 8px;

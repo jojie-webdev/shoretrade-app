@@ -169,12 +169,12 @@ export const CREDIT_LINE_TERMS = [
   '• Thereafter 1% on Invoice Penalty.',
 ];
 
-export const BUYER_VARIATION = [
+export const BUYER_VARIATIONS = [
   { key: 'HOTEL', label: 'Hotel' },
   { key: 'RESTAURANT_BAR', label: 'Restaurant ~ Bar' },
   { key: 'WHOLESALER', label: 'Wholesaler' },
-  { key: 'RETAILER', label: 'Retailer' },
   { key: 'PROCESSOR', label: 'Processor' },
+  { key: 'RETAILER', label: 'Retailer' },
   { key: 'WET_SHOP', label: 'Wet Shop' },
 ];
 
