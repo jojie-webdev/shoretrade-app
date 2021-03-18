@@ -29,7 +29,7 @@ const OfferDetailView = (props: any) => {
     discountValue,
     originalOffer,
     counterOffer,
-    noNewCounterOffer,
+    thereIsNewOffer,
     newOffer,
   } = props;
   const theme = useTheme();
@@ -107,66 +107,75 @@ const OfferDetailView = (props: any) => {
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+                {formatMeasurementUnit(
+                  formatMeasurementUnit(selectedOffer?.measurementUnit)
+                )}
               </TypographyView>
             }
           />
         </div>
         <div className="footer">
           <div className="computation-container">
-            {!noNewCounterOffer ? (
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Orignal Offer was
+              </TypographyView>
+              <TypographyView variant="label" weight="bold" color="shade9">
+                {toPrice(selectedOffer?.price)}/
+                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+              </TypographyView>
+            </div>
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Your counter offer is
+              </TypographyView>
+              <TypographyView variant="label" weight="bold" color="shade9">
+                {toPrice(counterOffer)}/
+                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+              </TypographyView>
+            </div>
+            {thereIsNewOffer ? (
               <>
                 <div className="computation-item-container">
                   <TypographyView variant="label" color="shade9">
-                    Your offer was
+                    New offer is
                   </TypographyView>
                   <TypographyView variant="label" weight="bold" color="shade9">
-                    {toPrice(counterOffer)}/{selectedOffer?.measurementUnit}
+                    {toPrice(newOffer)}/
+                    {formatMeasurementUnit(selectedOffer?.measurementUnit)}
                   </TypographyView>
-                </div>
-                <div className="computation-item-container">
-                  <TypographyView variant="label" color="shade9">
-                    Their counter offer is
-                  </TypographyView>
-                  <TypographyView variant="label" weight="bold" color="shade9">
-                    {toPrice(newOffer)}/{selectedOffer?.measurementUnit}
-                  </TypographyView>
-                </div>
-                <div className="computation-item-container">
-                  <TypographyView variant="label" color="shade9">
-                    Discount Value{" "}
-                    <span className="indicator">{discountPercentage}%</span>
-                  </TypographyView>
-                  {discountValue !== 0 ? (
-                    <TypographyView
-                      color={
-                        Math.sign(discountValue) === 0
-                          ? "noshade"
-                          : Math.sign(discountValue) === 1
-                          ? "success"
-                          : "error"
-                      }
-                      variant="label"
-                      weight="bold"
-                    >
-                      {Math.sign(discountValue) === -1 && "-"}
-                      {toPrice(Math.abs(discountValue))}/
-                      {selectedOffer?.measurementUnit}
-                    </TypographyView>
-                  ) : (
-                    <TypographyView
-                      variant="label"
-                      weight="bold"
-                      color="shade9"
-                    >
-                      0
-                    </TypographyView>
-                  )}
                 </div>
               </>
             ) : (
               ""
             )}
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Discount Value{" "}
+                <span className="indicator">{discountPercentage}%</span>
+              </TypographyView>
+              {discountValue !== 0 ? (
+                <TypographyView
+                  color={
+                    Math.sign(discountValue) === 0
+                      ? "noshade"
+                      : Math.sign(discountValue) === 1
+                      ? "success"
+                      : "error"
+                  }
+                  variant="label"
+                  weight="bold"
+                >
+                  {Math.sign(discountValue) === -1 && "-"}
+                  {toPrice(Math.abs(discountValue))}/
+                  {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+                </TypographyView>
+              ) : (
+                <TypographyView variant="label" weight="bold" color="shade9">
+                  0
+                </TypographyView>
+              )}
+            </div>
             <div className="computation-item-container">
               <TypographyView variant="label" color="shade9">
                 Total Value
@@ -176,7 +185,7 @@ const OfferDetailView = (props: any) => {
               </TypographyView>
             </div>
 
-            {!noNewCounterOffer ? (
+            {!thereIsNewOffer && counterOffer > 0 ? (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
                   No counter offer from seller yet

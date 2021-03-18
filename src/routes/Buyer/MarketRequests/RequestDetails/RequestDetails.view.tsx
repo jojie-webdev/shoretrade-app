@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Badge from 'components/base/Badge';
-import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import Badge from "components/base/Badge";
+import Breadcrumbs from "components/base/Breadcrumbs/Breadcrumbs.view";
 import {
   Crab,
   DollarSign,
@@ -10,20 +10,20 @@ import {
   Star,
   StarFilled,
   Weight,
-} from 'components/base/SVG';
-import TypographyView from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
-import EmptyStateView from 'components/module/EmptyState';
-import NegotiateModalView from 'components/module/NegotiateModal';
-import { BUYER_ROUTES } from 'consts';
-import { Row, Col } from 'react-grid-system';
-import { Route, Switch } from 'react-router-dom';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import theme from 'utils/Theme';
+} from "components/base/SVG";
+import TypographyView from "components/base/Typography";
+import { BoxContainer } from "components/layout/BoxContainer";
+import EmptyStateView from "components/module/EmptyState";
+import NegotiateModalView from "components/module/NegotiateModal";
+import { BUYER_ROUTES } from "consts";
+import { Row, Col } from "react-grid-system";
+import { Route, Switch } from "react-router-dom";
+import { formatMeasurementUnit } from "utils/Listing/formatMeasurementUnit";
+import theme from "utils/Theme";
 
-import { MarketRequestItem } from '../Landing/Landing.view';
-import OfferDetailView from './OfferDetail/OfferDetail.view';
-import { MarketRequestDetailProps } from './RequestDetails.prop';
+import { MarketRequestItem } from "../Landing/Landing.view";
+import OfferDetailView from "./OfferDetail/OfferDetail.view";
+import { MarketRequestDetailProps } from "./RequestDetails.prop";
 import {
   RequestDetailsCardContainer,
   RequestDetailsContainer,
@@ -36,7 +36,7 @@ import {
   BadgeText,
   StatusBadgeText,
   SellerOfferInteractionContentContainer,
-} from './RequestDetails.style';
+} from "./RequestDetails.style";
 
 export const OffersSellerAccordionContent = (props: {
   sellerId: string;
@@ -59,7 +59,7 @@ export const OffersSellerAccordionContent = (props: {
           {sellerName}
         </TypographyView>
         <div className="location-container">
-          <TypographyView color={'shade5'} variant="overlineSmall">
+          <TypographyView color={"shade5"} variant="overlineSmall">
             {sellerLocation}
           </TypographyView>
         </div>
@@ -84,7 +84,7 @@ export const OffersSellerAccordionContent = (props: {
                     />
                   )
                 )
-              : ''}
+              : ""}
           </div>
         </div>
       </div>
@@ -131,39 +131,53 @@ const SellerOfferInteractionContent = (props: {
     <SellerOfferInteractionContentContainer>
       <div className="info-container">
         <div className="status">
-        {status === 'DECLINED' || status === 'ACCEPTED' ? (
-          <Badge className="offers-badge" badgeColor={ status === 'ACCEPTED'
-          ? theme.brand.success
-          : theme.brand.error}>
+          {status === "DECLINED" || status === "ACCEPTED" ? (
+            <Badge
+              className="offers-badge"
+              badgeColor={
+                status === "ACCEPTED" ? theme.brand.success : theme.brand.error
+              }
+            >
               <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                { status === 'DECLINED' ? 'LOST' : status }
+                {status === "DECLINED" ? "LOST" : status}
               </StatusBadgeText>
             </Badge>
-        ) : (
-          <>
-          {price < averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.success}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Great Value
-              </StatusBadgeText>
-            </Badge>
+          ) : (
+            <>
+              {price < averagePrice && (
+                <Badge
+                  className="offers-badge"
+                  badgeColor={theme.brand.success}
+                >
+                  <StatusBadgeText
+                    color="shade1"
+                    weight="bold"
+                    variant="overline"
+                  >
+                    Great Value
+                  </StatusBadgeText>
+                </Badge>
+              )}
+              {price > averagePrice && (
+                <Badge className="offers-badge" badgeColor={theme.brand.error}>
+                  <StatusBadgeText
+                    color="shade1"
+                    weight="bold"
+                    variant="overline"
+                  >
+                    Above Market
+                  </StatusBadgeText>
+                </Badge>
+              )}
+              {isUnderNegotiations && (
+                <Badge className="offers-badge" badgeColor={theme.brand.alert}>
+                  <StatusBadgeText weight="bold" variant="overline">
+                    Negotiation
+                  </StatusBadgeText>
+                </Badge>
+              )}
+            </>
           )}
-          {price > averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.error}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Above Market
-              </StatusBadgeText>
-            </Badge>
-          )}
-          {isUnderNegotiations && (
-            <Badge className="offers-badge" badgeColor={theme.brand.alert}>
-              <StatusBadgeText weight="bold" variant="overline">
-                Negotiation
-              </StatusBadgeText>
-            </Badge>
-          )}
-          </>
-        )}
         </div>
         <div className="weight-price-container">
           <div className="weight-price">
@@ -183,7 +197,7 @@ const SellerOfferInteractionContent = (props: {
               <OfferTags tags={tags} />
             </>
           ) : (
-            ''
+            ""
           )}
         </div>
       </div>
@@ -213,7 +227,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setCloseOnAccept,
     discountPercentage,
     discountValue,
-    noNewCounterOffer,
+    thereIsNewOffer,
     newOffer,
   } = props;
 
@@ -250,7 +264,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </HeaderContainer>
         <Row gutterWidth={30}>
           <Col md={12} sm={12} xl={4}>
-            <RequestDetailsCardContainer type={'none'}>
+            <RequestDetailsCardContainer type={"none"}>
               <MarketRequestItem
                 inDetail={true}
                 type={data.type}
@@ -301,11 +315,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         key={seller.company.name}
                         title=""
                         noBg={true}
-                        padding={'16px'}
+                        padding={"16px"}
                         withBackground={false}
                         border={`1px solid ${theme.grey.shade3}`}
                         background={theme.grey.shade1}
-                        marginBottom={'12px'}
+                        marginBottom={"12px"}
                         leftComponent={
                           <OffersSellerAccordionContent
                             image={seller.company.image}
@@ -325,9 +339,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                               <SellerOfferInteractionContent
                                 averagePrice={seller.marketRequest.averagePrice}
                                 price={item.price}
-                                isUnderNegotiations={!item.negotiations?.find(
-                                  (i) => i.is_accepted === true
-                                )}
+                                isUnderNegotiations={
+                                  !item.negotiations?.find(
+                                    (i) => i.is_accepted === true
+                                  )
+                                }
                                 status={item.status}
                                 weight={item.weight}
                                 tags={item.specifications}
@@ -359,7 +375,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   discountPercentage={discountPercentage}
                   discountValue={discountValue}
                   newOffer={newOffer}
-                  noNewCounter={noNewCounterOffer}
+                  thereIsNewOffer={thereIsNewOffer}
                 />
               </Route>
             </Switch>

@@ -60,7 +60,7 @@ export interface MarketRequestDetailProps {
   hideNegotiate: boolean;
   closeOnAccept: boolean;
   setCloseOnAccept: Dispatch<SetStateAction<boolean>>;
-  noNewCounterOffer: boolean;
+  thereIsNewOffer: boolean;
   discountValue: number;
   discountPercentage: string;
 }

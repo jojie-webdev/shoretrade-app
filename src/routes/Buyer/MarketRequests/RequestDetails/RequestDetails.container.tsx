@@ -137,8 +137,8 @@ const MarketRequestDetail = (): JSX.Element => {
   let counterOfferLatest;
   let newOfferLatest;
   let hideNegotiate = false;
-  let noNewCounterOffer = false;
-  let discountPercentage = '';
+  let thereIsNewOffer = false;
+  let discountPercentage = "";
   let discountValue = 0;
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
@@ -169,24 +169,28 @@ const MarketRequestDetail = (): JSX.Element => {
 
     console.log(newOffer);
 
-    discountValue = counterOfferLatest?.price - parseFloat(newOffer);
+    const valueAgainst = newOfferLatest
+      ? newOfferLatest.price
+      : counterOfferLatest?.price;
+    discountValue = selectedOffer?.price - valueAgainst;
     discountPercentage = (discountValue
-      ? (discountValue / counterOfferLatest?.price) * 100
-      : 0).toFixed(2);
+      ? (discountValue / selectedOffer?.price) * 100
+      : 0
+    ).toFixed(2);
 
-    deliveryTotal = 
-      parseFloat(
-        newOfferLatest
-          ? newOfferLatest.price.toString()
-          : parseFloat(`${selectedOffer.price}`) * selectedOffer.weight
-      )
-    ;
+    deliveryTotal = parseFloat(
+      newOfferLatest
+        ? newOfferLatest.price.toString()
+        : parseFloat(`${selectedOffer.price}`) * selectedOffer.weight
+    );
 
-    noNewCounterOffer = newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
+    thereIsNewOffer =
+      selectedOffer.negotiations &&
+      newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
 
     hideNegotiate =
-    !noNewCounterOffer ||
-      selectedOffer.status !== "OPEN"; 
+      (!thereIsNewOffer || selectedOffer.status !== "OPEN") &&
+      counterOfferLatest;
   }
 
   const generatedProps: MarketRequestDetailProps = {
@@ -221,7 +225,7 @@ const MarketRequestDetail = (): JSX.Element => {
     hideNegotiate,
     closeOnAccept,
     setCloseOnAccept,
-    noNewCounterOffer,
+    thereIsNewOffer,
     discountPercentage,
     discountValue,
   };
