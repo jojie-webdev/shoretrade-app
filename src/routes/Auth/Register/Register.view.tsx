@@ -42,7 +42,7 @@ import {
   CREDIT_LINE_TERMS_LABEL,
   LICENSES_FIELDS,
   SELLER_VARIATIONS,
-  BUYER_VARIATION,
+  BUYER_VARIATIONS,
 } from './Register.constants';
 import { RegisterGeneratedProps } from './Register.props';
 import {
@@ -892,7 +892,7 @@ const StepForm = ({
                   )}
                   {!isSeller && (
                     <MarketSectorContainer>
-                      {BUYER_VARIATION.map((variant) => (
+                      {BUYER_VARIATIONS.map((variant) => (
                         <MarketSectorItemContainer key={variant.key}>
                           <MarketSectorItem
                             variant={variant.key}
