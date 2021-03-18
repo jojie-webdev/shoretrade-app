@@ -33,7 +33,6 @@ export const Background = styled.div`
   height: 100%;
   background-image: url(${({ theme }) => getBackgroundImage(theme)});
   background-repeat: no-repeat;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
   background-size: 100% 100%;
 
   @media ${BREAKPOINTS['lg']} {
@@ -130,7 +129,7 @@ export const Content = styled.div<{
   minHeight?: string;
   isRegister?: boolean;
 }>`
-  padding: 0px 40px 24px 40px;
+  padding: 0px 40px 24px 0px;
   position: relative;
   display: flex;
   flex-direction: column;

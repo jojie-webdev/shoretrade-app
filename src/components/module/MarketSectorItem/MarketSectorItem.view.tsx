@@ -41,13 +41,13 @@ const MarketSectorItem = (props: MarketSectorItemProps): JSX.Element => {
       icon: Wholesaler,
       label: 'Wholesaler',
     },
-    RETAILER: {
-      icon: Retailer,
-      label: 'Retailer',
-    },
     PROCESSOR: {
       icon: Processor,
       label: 'Processor',
+    },
+    RETAILER: {
+      icon: Retailer,
+      label: 'Retailer',
     },
     WET_SHOP: {
       icon: Wetshop,
@@ -58,11 +58,23 @@ const MarketSectorItem = (props: MarketSectorItemProps): JSX.Element => {
   const sellerVariations = {
     WILD_CATCH_FISHING_COMPANY: {
       icon: WildCatchFishingCompany,
-      label: 'Wild Catch Fishing Company',
+      label: (
+        <>
+          Wild Catch
+          <br />
+          Fishing Company
+        </>
+      ),
     },
     AQUACULTURE_PRODUCER: {
       icon: AquacultureProducer,
-      label: 'Aquaculture Producer',
+      label: (
+        <>
+          Aquaculture
+          <br />
+          Producer
+        </>
+      ),
     },
     WHOLESALER: {
       icon: Wholesaler,
