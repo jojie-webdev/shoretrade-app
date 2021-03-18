@@ -1,5 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
 
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAvailableCategories } from 'services/category';
@@ -90,7 +91,7 @@ const Register = (): JSX.Element => {
   };
 
   const backToLogin = () => {
-    history.goBack();
+    history.replace(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN);
   };
 
   const showDetails = () => {
@@ -135,6 +136,7 @@ const Register = (): JSX.Element => {
       businessName: '',
       abn: '',
       address: null,
+      unitNumber: '',
       businessLogo: null,
       // bank
       accountName: '',
@@ -169,7 +171,10 @@ const Register = (): JSX.Element => {
             businessName: details.businessName,
             abn: details.abn,
           },
-          address: details.address,
+          address: {
+            ...details.address,
+            unitNumber: details.unitNumber,
+          },
           businessLogo: details.businessLogo,
           bankAccounts: {
             accountName: details.accountName,
@@ -199,7 +204,10 @@ const Register = (): JSX.Element => {
             businessName: details.businessName,
             abn: details.abn,
           },
-          address: details.address,
+          address: {
+            ...details.address,
+            unitNumber: details.unitNumber,
+          },
           businessLogo: details.businessLogo,
           registerDebtFinancing:
             details.selectedPaymentMethod === PAYMENT_METHOD_OPTIONS[0].value,
