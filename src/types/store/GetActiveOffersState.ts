@@ -76,6 +76,7 @@ interface Size {
 export interface NegotiateOfferMeta {
   marketOfferId: string;
   price: number;
+  accepted?: boolean;
 }
 
 export type GetActiveOffersPayload = GenericResponse<{

@@ -218,7 +218,11 @@ const Step1 = ({
               <Button
                 loading={props.isNegotiating}
                 onClick={() =>
-                  props.onNegotiateOffer(activeOffer.id, buyerCounterOffer)
+                  props.onNegotiateOffer(
+                    activeOffer.id,
+                    buyerCounterOffer,
+                    true
+                  )
                 }
                 className="submit-btn"
                 text="accept"
@@ -393,8 +397,12 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
               onClick: () => {
                 if (!isEmpty(props.offer)) {
                   setIsOpen(true);
-                } else {
+                } else if (props.isReview) {
                   history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+                } else {
+                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+                    currentTab: 'My Active Offers',
+                  });
                 }
               },
             },

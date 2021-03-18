@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,11 +35,16 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
-  const onNegotiateOffer = (marketOfferId: string, price: number) => {
+  const onNegotiateOffer = (
+    marketOfferId: string,
+    price: number,
+    accepted?: boolean
+  ) => {
     dispatch(
       marketOfferNegotiateActions.request({
         marketOfferId,
         price,
+        accepted: accepted,
       })
     );
   };
