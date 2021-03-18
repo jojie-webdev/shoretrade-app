@@ -1306,6 +1306,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <>
             <TitleContainer>
               <Button
+                className="back-badge"
                 text="Back"
                 size="sm"
                 iconPosition="before"

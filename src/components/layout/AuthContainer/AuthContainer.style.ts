@@ -130,7 +130,7 @@ export const Content = styled.div<{
   minHeight?: string;
   isRegister?: boolean;
 }>`
-  padding: 0px 40px 24px 40px;
+  padding: 0px 40px 24px 0px;
   position: relative;
   display: flex;
   flex-direction: column;
