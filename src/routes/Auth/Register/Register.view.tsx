@@ -570,7 +570,11 @@ const StepForm = ({
             }
           } else if (step === 3) {
             if (!isSeller) {
-              if (isApplicationForLineCredit) {
+              if (!registrationDetails.selectedPaymentMethod) {
+                setOtherErrors({
+                  selectedPaymentMethod: 'Please select payment method',
+                });
+              } else if (isApplicationForLineCredit) {
                 const error = {
                   ...(isApplicationForLineCredit
                     ? validateAnnualRevenue({
@@ -586,6 +590,7 @@ const StepForm = ({
                   formikProps.onSubmit(values);
                 }
               } else {
+                setOtherErrors({ selectedPaymentMethod: '' });
                 formikProps.onSubmit(values);
               }
             } else {
@@ -762,9 +767,13 @@ const StepForm = ({
                           updateRegistrationDetails({
                             selectedPaymentMethod: option.value,
                           });
+                          setOtherErrors({
+                            selectedPaymentMethod: '',
+                          });
                         }}
                         options={PAYMENT_METHOD_OPTIONS}
                         label="SELECT FROM THE OPTIONS BELOW"
+                        error={otherErrors.selectedPaymentMethod || ''}
                       />
                     </div>
                   )}
