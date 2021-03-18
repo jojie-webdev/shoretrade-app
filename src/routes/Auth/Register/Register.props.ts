@@ -71,3 +71,21 @@ export interface RegisterGeneratedProps {
   isSummaryEdit: boolean;
   setSummaryEdit: () => void;
 }
+
+export interface StepFormProps extends RegisterGeneratedProps {
+  formikProps: {
+    initialValues: Record<string, string>;
+    validate?: (attributes: Record<string, string>) => Record<string, string>;
+    onSubmit: (values: Record<string, string>) => void;
+  };
+  step: number;
+  fields: {
+    label: string;
+    key: string;
+    secured?: boolean;
+    alert?: string;
+    type?: string;
+    prefix?: string;
+  }[];
+  summaryHandleStep: (step: number) => void;
+}

@@ -44,7 +44,7 @@ import {
   SELLER_VARIATIONS,
   BUYER_VARIATIONS,
 } from './Register.constants';
-import { RegisterGeneratedProps } from './Register.props';
+import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
   Container,
   Content,
@@ -96,29 +96,6 @@ import {
   validateCategoryMarketSector,
 } from './Register.validation';
 
-interface StepFormProps extends RegisterGeneratedProps {
-  formikProps: {
-    initialValues: Record<string, string>;
-    validate?: (attributes: Record<string, string>) => Record<string, string>;
-    onSubmit: (values: Record<string, string>) => void;
-  };
-  step: number;
-  fields: {
-    label: string;
-    key: string;
-    secured?: boolean;
-    alert?: string;
-    type?: string;
-    prefix?: string;
-  }[];
-  categories: Category[];
-  getCategoryItem: (id: string) => void;
-  showDetails: () => void;
-  hideDetails: () => void;
-  selectedCategoryTypes: CategoryPayload[];
-  addSelected: (category: CategoryPayload) => void;
-  summaryHandleStep: (step: number) => void;
-}
 const StepForm = ({
   formikProps,
   step,
@@ -147,10 +124,6 @@ const StepForm = ({
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const buyerSteps = isApplicationForLineCredit
-    ? [...BUYER_STEPS, BUYER_MARKET_STEP]
-    : BUYER_STEPS;
-  const steps = isSeller ? SELLER_STEPS : buyerSteps;
   const MAX_STEP: number = !isSeller ? 6 : 7;
 
   const [license, setLicense] = useState<{
@@ -161,6 +134,7 @@ const StepForm = ({
     fileName: '',
   });
   const [licenseError, setLicenseError] = useState('');
+  const [currentCategory, setCurrentCategory] = useState('');
 
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -261,6 +235,12 @@ const StepForm = ({
   const categoryPicker = () => {
     return (
       <CategoryContainer>
+        {isGotoDetails && (
+          <Typography variant="title5" style={{ marginBottom: 8 }}>
+            {currentCategory}
+          </Typography>
+        )}
+
         <CategorySearchInputContainer>
           <Search height={16} width={16} />
           <input
@@ -296,6 +276,7 @@ const StepForm = ({
                 <InteractionsContainer key={result.id}>
                   <Interactions
                     onClick={() => {
+                      setCurrentCategory(result.name);
                       getCategoryItem(result.id);
                       showDetails();
                     }}
@@ -1057,7 +1038,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSummaryEdit,
   } = props;
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(5);
   const MAX_STEP = !isSeller ? 6 : 7;
 
   const summaryHandleStep = (step: number) => {
