@@ -7,6 +7,7 @@ import { marketRequestAcceptOfferActions } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
+import { toPrice } from 'utils/String/toPrice';
 
 import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
@@ -123,7 +124,7 @@ const MarketRequestDetail = (): JSX.Element => {
           marketRequestId: id,
           marketOfferId: selectedOffer.id,
           price: v,
-          closeOnAccept: closeOnAccept
+          closeOnAccept: closeOnAccept,
         })
       );
     }
@@ -136,7 +137,9 @@ const MarketRequestDetail = (): JSX.Element => {
   let counterOfferLatest;
   let newOfferLatest;
   let hideNegotiate = false;
-
+  let thereIsNewOffer = false;
+  let discountPercentage = '';
+  let discountValue = 0;
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
       const counterOfferArr = selectedOffer.negotiations.filter(
@@ -164,23 +167,34 @@ const MarketRequestDetail = (): JSX.Element => {
       ? counterOfferLatest.price.toString()
       : '0';
 
-    console.log(newOffer);
+    const valueAgainst = newOfferLatest
+      ? newOfferLatest.price
+      : counterOfferLatest?.price;
+    discountValue = selectedOffer?.price - valueAgainst;
+    discountPercentage = (discountValue
+      ? (discountValue / selectedOffer?.price) * 100
+      : 0
+    ).toFixed(2);
 
-    deliveryTotal =
-      parseFloat(newOffer?.length > 0 ? newOffer : `${selectedOffer.price}`) *
-      selectedOffer.weight;
+    deliveryTotal = newOfferLatest
+      ? newOfferLatest.price * selectedOffer.weight
+      : selectedOffer.price * selectedOffer.weight;
 
-      hideNegotiate = (newOfferLatest?.updated_at < counterOfferLatest?.updated_at) || selectedOffer.status !== 'OPEN'
+    thereIsNewOffer =
+      selectedOffer.negotiations &&
+      newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
+
+    hideNegotiate =
+      (!thereIsNewOffer || selectedOffer.status !== 'OPEN') &&
+      counterOfferLatest;
   }
-
-
-
 
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
     deliveryTotal,
     counterOffer,
+    newOffer,
     selectedOffer,
     price,
     setPrice,
@@ -207,6 +221,9 @@ const MarketRequestDetail = (): JSX.Element => {
     hideNegotiate,
     closeOnAccept,
     setCloseOnAccept,
+    thereIsNewOffer,
+    discountPercentage,
+    discountValue,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

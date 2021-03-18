@@ -47,7 +47,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         100
       ).toFixed(2)
     : 0;
-  const deliveryTotal = counterOffer * weightValue;
+  const deliveryTotal = counterOffer ? counterOffer * weightValue: originalOffer * weightValue;
   const handleCheck = () => {
     if(setCloseOnAccept) {
       setCloseOnAccept(!closeOnAccept);

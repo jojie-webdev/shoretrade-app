@@ -82,9 +82,17 @@ export const OfferDetailsContainer = styled.div`
     border-color: ${(props) => props.theme.grey.shade3};
     margin-top: 52px;
 
-    .total-value-container {
+    .computation-container {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
+
+      .computation-item-container {
+        display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      }
+
     }
   }
 `;
