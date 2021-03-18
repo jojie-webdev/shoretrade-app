@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { BUYER_ROUTES } from "consts";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import { marketRequestAcceptOfferActions } from "store/actions";
-import marketRequestNegotiateOfferActions from "store/actions/marketRequestNegotiation";
-import { Offer } from "types/store/GetActiveOffersState";
-import { Store } from "types/store/Store";
-import { toPrice } from "utils/String/toPrice";
+import { BUYER_ROUTES } from 'consts';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { marketRequestAcceptOfferActions } from 'store/actions';
+import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
+import { Offer } from 'types/store/GetActiveOffersState';
+import { Store } from 'types/store/Store';
+import { toPrice } from 'utils/String/toPrice';
 
-import { MarketRequestDetailProps } from "./RequestDetails.prop";
-import MarketRequestDetailView from "./RequestDetails.view";
+import { MarketRequestDetailProps } from './RequestDetails.prop';
+import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
   const location = useLocation<{
@@ -40,34 +40,34 @@ const MarketRequestDetail = (): JSX.Element => {
     });
   };
 
-  const id = location.state ? location.state.id : "";
-  const image = location.state ? location.state.image : "";
-  const type = location.state ? location.state.type : "";
-  const status = location.state ? location.state.status : "";
+  const id = location.state ? location.state.id : '';
+  const image = location.state ? location.state.image : '';
+  const type = location.state ? location.state.type : '';
+  const status = location.state ? location.state.status : '';
   const offers = location.state ? location.state.offers : 0;
-  const expiry = location.state ? location.state.expiry : "";
-  const measurementUnit = location.state ? location.state.measurementUnit : "";
+  const expiry = location.state ? location.state.expiry : '';
+  const measurementUnit = location.state ? location.state.measurementUnit : '';
   const weight = location.state ? location.state.weight : { from: 0, to: 0 };
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
-    { label: "My Requests", link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
     {
-      label: "Request Details",
+      label: 'Request Details',
     },
   ];
 
   const offerBreadCrumb = [
-    { label: "My Requests", link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
     {
-      label: "Request Details",
+      label: 'Request Details',
       onClick: () => {
         goTolist();
       },
     },
     {
-      label: "Offer Details",
+      label: 'Offer Details',
     },
   ];
 
@@ -80,12 +80,12 @@ const MarketRequestDetail = (): JSX.Element => {
   } else {
     breadCrumbSections = offerBreadCrumb;
   }
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [negotiating, setNegotiating] = useState(false);
-  const [price, setPrice] = useState("");
-  const [currentOfferId, setCurrentOfferId] = useState("");
+  const [price, setPrice] = useState('');
+  const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
-  const [selectedCompany, setSelectedCompany] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState('');
   const [closeOnAccept, setCloseOnAccept] = useState(false);
 
   const onClickItem = (row: any, company: any) => {
@@ -131,22 +131,22 @@ const MarketRequestDetail = (): JSX.Element => {
     setNegotiating(false);
   };
 
-  let counterOffer = "";
-  let newOffer = "";
+  let counterOffer = '';
+  let newOffer = '';
   let deliveryTotal;
   let counterOfferLatest;
   let newOfferLatest;
   let hideNegotiate = false;
   let thereIsNewOffer = false;
-  let discountPercentage = "";
+  let discountPercentage = '';
   let discountValue = 0;
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
       const counterOfferArr = selectedOffer.negotiations.filter(
-        (i: any) => i.type === "COUNTER_OFFER"
+        (i: any) => i.type === 'COUNTER_OFFER'
       );
       const newOfferArr = selectedOffer.negotiations.filter(
-        (i: any) => i.type === "NEW_OFFER"
+        (i: any) => i.type === 'NEW_OFFER'
       );
 
       if (counterOfferArr.length > 0 && counterOfferArr) {
@@ -162,12 +162,10 @@ const MarketRequestDetail = (): JSX.Element => {
       }
     }
 
-    newOffer = newOfferLatest ? newOfferLatest.price.toString() : "0";
+    newOffer = newOfferLatest ? newOfferLatest.price.toString() : '0';
     counterOffer = counterOfferLatest
       ? counterOfferLatest.price.toString()
-      : "0";
-
-    console.log(newOffer);
+      : '0';
 
     const valueAgainst = newOfferLatest
       ? newOfferLatest.price
@@ -178,18 +176,16 @@ const MarketRequestDetail = (): JSX.Element => {
       : 0
     ).toFixed(2);
 
-    deliveryTotal = parseFloat(
-      newOfferLatest
-        ? newOfferLatest.price.toString()
-        : parseFloat(`${selectedOffer.price}`) * selectedOffer.weight
-    );
+    deliveryTotal = newOfferLatest
+      ? newOfferLatest.price * selectedOffer.weight
+      : selectedOffer.price * selectedOffer.weight;
 
     thereIsNewOffer =
       selectedOffer.negotiations &&
       newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
 
     hideNegotiate =
-      (!thereIsNewOffer || selectedOffer.status !== "OPEN") &&
+      (!thereIsNewOffer || selectedOffer.status !== 'OPEN') &&
       counterOfferLatest;
   }
 
