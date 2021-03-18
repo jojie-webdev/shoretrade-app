@@ -14,10 +14,8 @@ import AuthContainer from 'components/layout/AuthContainer';
 import Add from 'components/module/Add/Add.view';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
-import DialogModal from 'components/module/DialogModal';
 import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
-import SearchAddressView from 'components/module/SearchAddress';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
 import {
@@ -52,6 +50,8 @@ import {
   Content,
   Footer,
   GetStartedTitle,
+  GetStartedTitleWrapper,
+  GetStartedButton,
   StepCount,
   Title,
   TextField,
@@ -70,7 +70,6 @@ import {
   Spacer,
   BackIcon,
   TitleContainer,
-  GetStartedButton,
   RenderContainer,
   NextButton,
   UploadLabel,
@@ -83,7 +82,6 @@ import {
   BadgeItemContainer,
   ButtonContainer,
   SellerSummaryContainer,
-  SelectMarketSelector,
   TopContainer,
   LicensePreview,
 } from './Register.style';
@@ -95,7 +93,6 @@ import {
   validateBusinessAddress,
   validateAgreement,
   validateAnnualRevenue,
-  validateMarketSector,
   validateCategoryMarketSector,
 } from './Register.validation';
 
@@ -594,10 +591,6 @@ const StepForm = ({
             if (!isSeller) {
               if (isApplicationForLineCredit) {
                 const error = {
-                  ...validateMarketSector({
-                    selectedMarketSector:
-                      registrationDetails.selectedMarketSector,
-                  }),
                   ...(isApplicationForLineCredit
                     ? validateAnnualRevenue({
                         estimatedAnnualRevenue:
@@ -605,10 +598,7 @@ const StepForm = ({
                       })
                     : {}),
                 };
-                if (
-                  error.selectedMarketSector ||
-                  error.estimatedAnnualRevenue
-                ) {
+                if (error.estimatedAnnualRevenue) {
                   setOtherErrors(error);
                 } else {
                   setOtherErrors({ estimatedAnnualRevenue: '' });
@@ -713,14 +703,16 @@ const StepForm = ({
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
-                  <Alert
-                    variant="infoAlert"
-                    fullWidth
-                    content={
-                      'You can add more people to your seller account once you’re approved'
-                    }
-                    style={{ marginTop: 8 }}
-                  />
+                  {isSeller && (
+                    <Alert
+                      variant="infoAlert"
+                      fullWidth
+                      content={
+                        'You can add more people to your seller account once you’re approved'
+                      }
+                      style={{ marginTop: 8 }}
+                    />
+                  )}
                 </>
               )}
               {step === 2 && (
@@ -741,13 +733,25 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
+
+                  <BaseTextField
+                    label="Unit number (optional)"
+                    value={registrationDetails.unitNumber}
+                    onChangeText={(v) =>
+                      updateRegistrationDetails({
+                        unitNumber: v,
+                      })
+                    }
+                    error={otherErrors.unitNumber || ''}
+                    style={{ marginBottom: 8, marginTop: 24 }}
+                  />
+
                   <Alert
                     variant="infoAlert"
                     fullWidth
                     content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES
                     }
-                    style={{ marginTop: 8 }}
                   />
                   {isSeller && (
                     <>
@@ -812,20 +816,6 @@ const StepForm = ({
                         type="number"
                         error={otherErrors.estimatedAnnualRevenue || ''}
                         style={{ marginBottom: 8, marginTop: 8 }}
-                      />
-
-                      <SelectMarketSelector
-                        value={registrationDetails.selectedMarketSector}
-                        onChange={(option) => {
-                          updateRegistrationDetails({
-                            selectedMarketSector: option.value,
-                          });
-                        }}
-                        options={BUYER_VARIATION.map((i) => {
-                          return { label: i.label, value: i.key };
-                        })}
-                        label="Market Sector"
-                        error={otherErrors.selectedMarketSector}
                       />
                     </div>
                   )}
@@ -1247,10 +1237,20 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <ColumnWrapper>
             <Container>
               <Content>
-                <GetStartedTitle variant="title5">
-                  Signing up is <b>free</b> and complete with{' '}
-                  <b>{isSeller ? '6' : '5'} simple</b> steps
-                </GetStartedTitle>
+                <GetStartedTitleWrapper>
+                  <Touchable dark onPress={() => backToLogin()}>
+                    <BackIcon
+                      width={16}
+                      height={16}
+                      fill={theme.brand.primary}
+                    />
+                  </Touchable>
+                  <GetStartedTitle variant="title5">
+                    Signing up is <b>free</b> and complete with{' '}
+                    <b>{isSeller ? '6' : '5'} simple</b> steps
+                  </GetStartedTitle>
+                </GetStartedTitleWrapper>
+
                 {steps
                   .filter((i) => i.title !== 'Summary')
                   .map((step, index) => (
@@ -1288,10 +1288,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <TopContainer>
             <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
             <TitleContainer>
-              <Touchable
-                dark
-                onPress={() => (step <= 1 ? backToLogin() : previousStep())}
-              >
+              <Touchable dark onPress={() => previousStep()}>
                 <BackIcon width={16} height={16} fill={theme.brand.primary} />
               </Touchable>
               <Title
