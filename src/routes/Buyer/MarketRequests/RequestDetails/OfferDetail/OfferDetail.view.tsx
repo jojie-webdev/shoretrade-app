@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import Badge from 'components/base/Badge';
-import Button from 'components/base/Button';
-import TypographyView from 'components/base/Typography';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { useTheme } from 'utils/Theme';
-
-import { OffersSellerAccordionContent } from '../RequestDetails.view';
+import Badge from "components/base/Badge";
+import Button from "components/base/Button";
+import TypographyView from "components/base/Typography";
+import { formatMeasurementUnit } from "utils/Listing/formatMeasurementUnit";
+import { useTheme } from "utils/Theme";
+import { toPrice } from "utils/String/toPrice";
+import { OffersSellerAccordionContent } from "../RequestDetails.view";
 import {
   OfferDetailsContainer,
   SellerOfferInteractionContentContainer,
@@ -14,7 +14,7 @@ import {
   StyledTextField,
   BadgesContainer,
   OfferActionsContainer,
-} from './OfferDetail.style';
+} from "./OfferDetail.style";
 
 const OfferDetailView = (props: any) => {
   const {
@@ -25,6 +25,12 @@ const OfferDetailView = (props: any) => {
     price,
     hideNegotiate,
     deliveryTotal,
+    discountPercentage,
+    discountValue,
+    originalOffer,
+    counterOffer,
+    thereIsNewOffer,
+    newOffer,
   } = props;
   const theme = useTheme();
 
@@ -48,7 +54,7 @@ const OfferDetailView = (props: any) => {
     return (
       <div className="offer-badges">
         <TypographyView
-          style={{ marginBottom: '8px' }}
+          style={{ marginBottom: "8px" }}
           color="shade6"
           variant="overline"
         >
@@ -79,7 +85,7 @@ const OfferDetailView = (props: any) => {
         {selectedOffer.size.from ? (
           <OfferBadges label="Size" items={[selectedOffer?.size?.from]} />
         ) : (
-          <OfferBadges label="Size" items={['Ungraded']} />
+          <OfferBadges label="Size" items={["Ungraded"]} />
         )}
 
         <div className="sizes-container">
@@ -101,25 +107,99 @@ const OfferDetailView = (props: any) => {
             disabled
             LeftComponent={
               <TypographyView variant="label" color="shade6">
-                {formatMeasurementUnit(selectedOffer.measurementUnit)}
+                {formatMeasurementUnit(
+                  formatMeasurementUnit(selectedOffer?.measurementUnit)
+                )}
               </TypographyView>
             }
           />
         </div>
         <div className="footer">
-          <div className="total-value-container">
-            <TypographyView color="shade6" variant="body">
-              Total Value Including Delivery
-            </TypographyView>
-            <TypographyView weight="bold" color="shade9" variant="body">
-              ${!isNaN(deliveryTotal) ? deliveryTotal : selectedOffer?.price}
-            </TypographyView>
+          <div className="computation-container">
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Orignal Offer was
+              </TypographyView>
+              <TypographyView variant="label" weight="bold" color="shade9">
+                {toPrice(selectedOffer?.price)}/
+                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+              </TypographyView>
+            </div>
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Your counter offer is
+              </TypographyView>
+              <TypographyView variant="label" weight="bold" color="shade9">
+                {toPrice(counterOffer)}/
+                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+              </TypographyView>
+            </div>
+            {thereIsNewOffer ? (
+              <>
+                <div className="computation-item-container">
+                  <TypographyView variant="label" color="shade9">
+                    New offer is
+                  </TypographyView>
+                  <TypographyView variant="label" weight="bold" color="shade9">
+                    {toPrice(newOffer)}/
+                    {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+                  </TypographyView>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Discount Value{" "}
+                <span className="indicator">{discountPercentage}%</span>
+              </TypographyView>
+              {discountValue !== 0 ? (
+                <TypographyView
+                  color={
+                    Math.sign(discountValue) === 0
+                      ? "noshade"
+                      : Math.sign(discountValue) === 1
+                      ? "success"
+                      : "error"
+                  }
+                  variant="label"
+                  weight="bold"
+                >
+                  {Math.sign(discountValue) === -1 && "-"}
+                  {toPrice(Math.abs(discountValue))}/
+                  {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+                </TypographyView>
+              ) : (
+                <TypographyView variant="label" weight="bold" color="shade9">
+                  0
+                </TypographyView>
+              )}
+            </div>
+            <div className="computation-item-container">
+              <TypographyView variant="label" color="shade9">
+                Total Value
+              </TypographyView>
+              <TypographyView variant="label" weight="bold" color="shade9">
+                {toPrice(deliveryTotal)}
+              </TypographyView>
+            </div>
+
+            {!thereIsNewOffer && counterOffer > 0 ? (
+              <div className="computation-item-container">
+                <TypographyView variant="label" color="shade9">
+                  No counter offer from seller yet
+                </TypographyView>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </OfferDetailsContainer>
       <OfferActionsContainer>
         {hideNegotiate ? (
-          ''
+          ""
         ) : (
           <Button
             onClick={() => handleStartNegotiotiate()}
@@ -133,7 +213,7 @@ const OfferDetailView = (props: any) => {
           onClick={() => handleAcceptOffer()}
           className="button"
           variant="primary"
-          disabled={ selectedOffer.status !== 'Open' }
+          disabled={selectedOffer.status !== "OPEN"}
           text="Accept"
         />
       </OfferActionsContainer>
