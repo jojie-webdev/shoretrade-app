@@ -18,6 +18,7 @@ import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
+import { validateAccount } from 'services/auth';
 import {
   Category,
   CategoryType,
@@ -557,7 +558,17 @@ const StepForm = ({
         {...formikProps}
         onSubmit={(values) => {
           if (step === 1) {
-            formikProps.onSubmit(values);
+            validateAccount(values.email)
+              .then(({ data }) => {
+                if (data.status === 200) {
+                  formikProps.onSubmit(values);
+                } else {
+                  setOtherErrors({ email: 'Email already in use' });
+                }
+              })
+              .catch(() => {
+                setOtherErrors({ email: 'Email already in use' });
+              });
           } else if (step === 2) {
             const error = validateBusinessAddress({
               address: registrationDetails.address,
@@ -668,6 +679,11 @@ const StepForm = ({
                     label={label}
                     secured={secured}
                     alert={alert}
+                    onChangeText={() => {
+                      if (key === 'email' && otherErrors[key]) {
+                        setOtherErrors({ email: '' });
+                      }
+                    }}
                     LeftComponent={
                       (prefix || '').length > 0 ? (
                         <Typography variant="label" color="shade6">
@@ -675,6 +691,7 @@ const StepForm = ({
                         </Typography>
                       ) : undefined
                     }
+                    otherError={otherErrors[key]}
                   />
                 </Fragment>
               ))}
