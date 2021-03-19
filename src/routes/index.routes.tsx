@@ -15,10 +15,10 @@ import { Store } from 'types/store/Store';
 
 import Authenticate from './Auth/Authenticate';
 import ForgotPassword from './Auth/ForgotPassword';
-import ResetPassword from './Auth/ResetPassword';
 import Login from './Auth/Login';
 import Onboarding from './Auth/Onboarding';
 import Register from './Auth/Register';
+import ResetPassword from './Auth/ResetPassword';
 import Verify2FA from './Auth/Verify2FA';
 import BuyerRoutes from './Buyer/buyer.routes';
 import SellerRoutes from './Seller/seller.routes';
@@ -128,7 +128,7 @@ export const ROUTES: Routes = {
 };
 
 const UNAUTHENTICATED_SELLER_ROUTES = [
-  MAIN_ROUTES.LANDING,
+  // MAIN_ROUTES.LANDING,
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
@@ -141,7 +141,7 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
 ];
 
 const UNAUTHENTICATED_BUYER_ROUTES = [
-  MAIN_ROUTES.LANDING,
+  // MAIN_ROUTES.LANDING,
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
@@ -170,15 +170,13 @@ const RoutesComponent = (): JSX.Element => {
       // Redirects
       if (
         authenticatedUserType === 'seller' &&
-        (UNAUTHENTICATED_SELLER_ROUTES.some((r) => currentPath.includes(r)) ||
-          currentPath.startsWith('/buyer'))
+        !currentPath.startsWith('/seller')
       ) {
         history.push(SELLER_ROUTES.ROOT);
       }
       if (
         authenticatedUserType === 'buyer' &&
-        (UNAUTHENTICATED_BUYER_ROUTES.some((r) => currentPath.includes(r)) ||
-          currentPath.startsWith('/seller'))
+        !currentPath.startsWith('/buyer')
       ) {
         history.push(BUYER_ROUTES.ROOT);
       }
