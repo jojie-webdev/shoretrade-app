@@ -29,7 +29,7 @@ const persistConfig = {
   whitelist: [
     'auth',
     'editableListing',
-    // 'getCustomFormData',
+    'getCustomFormData',
     'getListingFormData',
     'getMarketEstimate',
     'cart',
