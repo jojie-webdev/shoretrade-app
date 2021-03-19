@@ -6,6 +6,7 @@ import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { pathOr } from 'ramda';
 import { Row, Col } from 'react-grid-system';
@@ -17,7 +18,7 @@ import {
   CreateRequestHeaderContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
-import { SizeFormContainer } from './SelectSize.style';
+import { SizeFormContainer, MetricLabelContainer } from './SelectSize.style';
 
 const SizeInput = (props: SizeInputProps) => {
   const {
@@ -68,53 +69,63 @@ const SizeInput = (props: SizeInputProps) => {
 
   if (metricString === 'GRAMS' || metricString === 'UNITS_PER_POUND') {
     return (
-      <Row className="select-row">
-        <Col xs={12} sm={12} md={12}>
-          <TextField
-            label="Size From"
-            value={fromSize}
-            onChangeText={(v) => {
-              if (!Number.isNaN(Number(v))) {
-                setFromSize(v);
-              }
-            }}
-            placeholder=""
-            onBlur={() => {
-              if (
-                fromSize !== '' &&
-                toSize !== '' &&
-                Number(fromSize) > Number(toSize)
-              ) {
-                setToSize(fromSize);
-              }
-            }}
-            readOnly={disabled}
-          />
-        </Col>
+      <>
+        <MetricLabelContainer>
+          <Typography color="shade6" variant="label">
+            Metric:
+          </Typography>
+          <Typography className="metric-value" color="shade7" variant="body">
+            {metric}
+          </Typography>
+        </MetricLabelContainer>
+        <Row className="select-row">
+          <Col xs={12} sm={12} md={12}>
+            <TextField
+              label="Size From"
+              value={fromSize}
+              onChangeText={(v) => {
+                if (!Number.isNaN(Number(v))) {
+                  setFromSize(v);
+                }
+              }}
+              placeholder=""
+              onBlur={() => {
+                if (
+                  fromSize !== '' &&
+                  toSize !== '' &&
+                  Number(fromSize) > Number(toSize)
+                ) {
+                  setToSize(fromSize);
+                }
+              }}
+              readOnly={disabled}
+            />
+          </Col>
 
-        <Col xs={12} sm={12} md={12}>
-          <TextField
-            label={`Size To\n(Optional)`}
-            value={toSize}
-            onChangeText={(v) => {
-              if (!Number.isNaN(Number(v))) {
-                setToSize(v);
-              }
-            }}
-            placeholder=""
-            onBlur={() => {
-              if (
-                fromSize !== '' &&
-                toSize !== '' &&
-                Number(fromSize) > Number(toSize)
-              ) {
-                setFromSize(`${Number(toSize) - 1}`);
-              }
-            }}
-            readOnly={disabled}
-          />
-        </Col>
-      </Row>
+          <Col xs={12} sm={12} md={12}>
+            <TextField
+              label={`Size To\n(Optional)`}
+              value={toSize}
+              onChangeText={(v) => {
+                if (!Number.isNaN(Number(v))) {
+                  setToSize(v);
+                }
+              }}
+              placeholder=""
+              onBlur={() => {
+                if (
+                  fromSize !== '' &&
+                  toSize !== '' &&
+                  Number(fromSize) > Number(toSize)
+                ) {
+                  setFromSize(`${Number(toSize) - 1}`);
+                }
+              }}
+              readOnly={disabled}
+            />
+          </Col>
+        </Row>
+      </>
     );
   }
 
