@@ -12,3 +12,12 @@ export const SizeFormContainer = styled(ContainerWithCategoryImageContent)`
     margin-bottom: 1rem;
   }
 `;
+
+export const MetricLabelContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .metric-value {
+    margin-left: 2px;
+  }
+`;
