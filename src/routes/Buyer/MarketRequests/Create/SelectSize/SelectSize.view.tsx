@@ -31,6 +31,7 @@ const SizeInput = (props: SizeInputProps) => {
     sizeItemChecked,
   } = props;
   const metricString = metric.toUpperCase().replace(/\s/g, '_');
+
   const sizeMetrics = pathOr<{ value: string; label: string }[]>(
     [],
     [metricString],
@@ -117,17 +118,20 @@ const SizeInput = (props: SizeInputProps) => {
     );
   }
 
-  const sizeOptions = sizeMetrics.map((metric) => (
-    <Checkbox
-      checked={sizeItemChecked.items.includes(metric.value)}
-      onClick={() => handleStateCheck(metric.value)}
-      key={metric.value}
-      value={metric.value}
-      label={metric.label}
-    />
-  ));
+  if (sizeMetrics && sizeMetrics.length > 0) {
+    const sizeOptions = sizeMetrics.map((metric) => (
+      <Checkbox
+        checked={sizeItemChecked.items.includes(metric.value)}
+        onClick={() => handleStateCheck(metric.value)}
+        key={metric.value}
+        value={metric.value}
+        label={metric.label}
+      />
+    ));
+    return <>{sizeOptions}</>;
+  }
 
-  return <>{sizeOptions}</>;
+  return <Checkbox checked={true} disabled label="Ungraded" />;
 };
 
 const SelectSizeView = (props: SelectSizeProps) => {
@@ -141,6 +145,8 @@ const SelectSizeView = (props: SelectSizeProps) => {
     listingFormData,
     setStep,
   } = props;
+
+  const [ungraded, setUngraded] = useState(false);
 
   const [sizeToFrom, setSizeToFrom] = useState<{ from: string; to: string }>({
     from: selectedSize.from,
@@ -178,6 +184,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
     ) {
       return sizeToFrom.from === '';
     }
+
     return false;
   };
 
