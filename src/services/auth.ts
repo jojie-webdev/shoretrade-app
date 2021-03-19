@@ -81,3 +81,14 @@ export const getUser = (token: string) => {
     },
   });
 };
+
+// check for existing email
+export const validateAccount = (email: string) => {
+  return axios({
+    method: 'post',
+    url: `${USER_URL}/validate`,
+    data: {
+      email,
+    },
+  });
+};
