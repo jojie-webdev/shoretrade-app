@@ -8,42 +8,47 @@ import { Store } from 'types/store/Store';
 import { CategoriesSearchGeneratedProps } from './Search.props';
 import CategoriesSearchView from './Search.view';
 const CategoriesSearch = (): JSX.Element => {
-  // MARK:- States / Variables
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const { id } = useParams();
+  const { id }: any = useParams();
+
+  const addresses = (
+    useSelector((state: Store) => state.getAddresses.data?.data.addresses) || []
+  ).length;
 
   const previousId =
     useSelector(
       (state: Store) => state.getListingTypesByCategory.request?.categoryId
     ) || '';
+
+  const loading =
+    useSelector((state: Store) => state.getListingTypesByCategory.pending) ||
+    false;
+
+  const isSuccess =
+    useSelector(
+      (state: Store) => state.getListingTypesByCategory.data?.status === 200
+    ) || false;
+
   const results =
     useSelector(
       (state: Store) => state.getListingTypesByCategory.data?.data.type
     ) || [];
 
-  // MARK:- Effects
-  useEffect(() => {
-    if (id && previousId !== id) {
-      onLoad(id);
-    }
-  }, [id]);
-
-  // MARK:- Methods
   const onLoad = (categoryId: string) => {
-    setLoading(true);
     dispatch(
       getListingTypesByCategoryActions.request({ categoryId: categoryId })
     );
-    setLoading(false);
   };
+  useEffect(() => {
+    if (addresses > 0 && id && previousId !== id) {
+      onLoad(id);
+    }
+  }, [id, addresses]);
 
-  // MARK:- Render
   const generatedProps: CategoriesSearchGeneratedProps = {
     loading,
     results,
-    categoryId: id,
-    onLoad,
+    isSuccess,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };

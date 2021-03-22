@@ -26,11 +26,7 @@ import {
 } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
-  const { results, onLoad, categoryId } = props;
-
-  useEffect(() => {
-    onLoad(categoryId);
-  }, []);
+  const { results, loading, isSuccess } = props;
 
   const InteractionsChildren = (result: GetListingTypesByCategoryTypeItem) => (
     <>
@@ -73,51 +69,47 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
           <SearchAddressView />
         </Col>
       </Row>
-      {results.length <= 0 ? (
+      {loading && (
         <LoadingContainer>
           <Spinner width={24} height={24} />
         </LoadingContainer>
-      ) : (
+      )}
+      {isSuccess && (
         <>
-          {results.length > 0 ? (
-            <>
-              <ResultContainer style={{ paddingLeft: 15 }}>
-                <Row>
-                  <Typography variant="title5" weight="regular">
-                    Results
-                  </Typography>
-                  <Typography
-                    className="result-length"
-                    variant="title5"
-                    weight="bold"
-                  >
-                    {results.length}
-                  </Typography>
-                </Row>
-              </ResultContainer>
-
-              <Row className="items-row">
-                <Col xs={12}>
-                  {results.map((result) => (
-                    <Link
-                      to={{
-                        pathname: `/buyer/categories/products/${result.id}`,
-                        state: {
-                          title: result.name,
-                        },
-                      }}
-                      className="market-item"
-                      key={result.id}
-                    >
-                      <Interactions>
-                        <InteractionsChildren {...result} />
-                      </Interactions>
-                    </Link>
-                  ))}
-                </Col>
-              </Row>
-            </>
-          ) : null}
+          <ResultContainer style={{ paddingLeft: 15 }}>
+            <Row>
+              <Typography variant="title5" weight="regular">
+                Results
+              </Typography>
+              <Typography
+                className="result-length"
+                variant="title5"
+                weight="bold"
+              >
+                {results.length}
+              </Typography>
+            </Row>
+          </ResultContainer>
+          <Row className="items-row">
+            <Col xs={12}>
+              {results.map((result) => (
+                <Link
+                  to={{
+                    pathname: `/buyer/categories/products/${result.id}`,
+                    state: {
+                      title: result.name,
+                    },
+                  }}
+                  className="market-item"
+                  key={result.id}
+                >
+                  <Interactions>
+                    <InteractionsChildren {...result} />
+                  </Interactions>
+                </Link>
+              ))}
+            </Col>
+          </Row>
         </>
       )}
     </SearchContainer>
