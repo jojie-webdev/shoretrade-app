@@ -47,14 +47,15 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         100
       ).toFixed(2)
     : 0;
-  const deliveryTotal = counterOffer ? counterOffer * weightValue: originalOffer * weightValue;
+  const deliveryTotal = counterOffer
+    ? counterOffer * weightValue
+    : originalOffer * weightValue;
   const handleCheck = () => {
-    if(setCloseOnAccept) {
+    if (setCloseOnAccept) {
       setCloseOnAccept(!closeOnAccept);
     }
   };
 
-  //TODO: offer buyer
   return (
     <Modal
       backgroundColor={isBuyer ? theme.grey.noshade : theme.grey.shade8}
@@ -96,7 +97,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
               variant="label"
               color={isBuyer ? 'shade7' : 'noshade'}
             >
-              Change this listing if accepted.
+              Close this buyer request if accepted.
             </Typography>
           </CheckBoxContainer>
         )}
@@ -110,7 +111,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             </Typography>
           </div>
 
-          {counterOfferProp ? (
+          {counterOfferProp && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
                 Your counter offer was
@@ -119,8 +120,6 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
                 {toPrice(counterOfferProp)}/{unit}
               </Typography>
             </div>
-          ) : (
-            ''
           )}
           {counterOfferProp !== counterOffer && (
             <div className="computation-item-container">
