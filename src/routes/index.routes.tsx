@@ -133,7 +133,7 @@ export const ROUTES: Routes = {
 };
 
 const UNAUTHENTICATED_SELLER_ROUTES = [
-  // MAIN_ROUTES.LANDING,
+  MAIN_ROUTES.LANDING,
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
@@ -146,7 +146,7 @@ const UNAUTHENTICATED_SELLER_ROUTES = [
 ];
 
 const UNAUTHENTICATED_BUYER_ROUTES = [
-  // MAIN_ROUTES.LANDING,
+  MAIN_ROUTES.LANDING,
   MAIN_ROUTES.LOGIN,
   MAIN_ROUTES.VERIFY,
   MAIN_ROUTES.FORGOT_PASSWORD,
@@ -175,13 +175,15 @@ const RoutesComponent = (): JSX.Element => {
       // Redirects;
       if (
         authenticatedUserType === 'seller' &&
-        !currentPath.startsWith('/seller')
+        (!currentPath.startsWith('/seller') ||
+          UNAUTHENTICATED_SELLER_ROUTES.some((a) => a === currentPath))
       ) {
         history.push(SELLER_ROUTES.ROOT);
       }
       if (
         authenticatedUserType === 'buyer' &&
-        !currentPath.startsWith('/buyer')
+        (!currentPath.startsWith('/buyer') ||
+          UNAUTHENTICATED_BUYER_ROUTES.some((a) => a === currentPath))
       ) {
         history.push(BUYER_ROUTES.ROOT);
       }
