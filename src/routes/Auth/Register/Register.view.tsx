@@ -44,6 +44,8 @@ import {
   LICENSES_FIELDS,
   SELLER_VARIATIONS,
   BUYER_VARIATIONS,
+  BUYER_STEP_SUBTITLE,
+  SELLER_STEP_SUBTITLE,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -1306,6 +1308,26 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 {steps[step - 1].title}
               </Title>
             </TitleContainer>
+
+            {!isSeller && BUYER_STEP_SUBTITLE[step] && (
+              <Typography
+                variant="label"
+                color="shade6"
+                style={{ marginLeft: 35 }}
+              >
+                {BUYER_STEP_SUBTITLE[step]}
+              </Typography>
+            )}
+
+            {isSeller && SELLER_STEP_SUBTITLE[step] && (
+              <Typography
+                variant="label"
+                color="shade6"
+                style={{ marginLeft: 35 }}
+              >
+                {SELLER_STEP_SUBTITLE[step]}
+              </Typography>
+            )}
           </TopContainer>
         )}
 

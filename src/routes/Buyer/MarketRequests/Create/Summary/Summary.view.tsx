@@ -35,9 +35,7 @@ const SummaryView = (props: SummaryProps) => {
     selectedSpecifications,
     setSendConfModalisOpen,
     onBack,
-    maxKgAutoClose,
     listingFormData,
-    setMaxKgAutoClose,
   } = props;
   const history = useHistory();
 
@@ -162,11 +160,10 @@ const SummaryView = (props: SummaryProps) => {
                 </TypographyView>
               }
             />
-            <Checkbox
-              checked={maxKgAutoClose}
-              onClick={() => setMaxKgAutoClose(!maxKgAutoClose)}
-              label="Auto-close this listing when reached max kg"
-            />
+            <TypographyView variant="caption">
+              This request will automatically close once maximum quantity
+              requested is reached
+            </TypographyView>
           </div>
           <Button
             onClick={() => handleSubmit()}

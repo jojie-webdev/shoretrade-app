@@ -45,8 +45,6 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     setSelectedSpecifications,
     listingFormData,
     typeSearchResults,
-    maxKgAutoClose,
-    setMaxKgAutoClose,
     onSubmitRequest,
     search,
     pendingSearch,
@@ -78,24 +76,28 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 variant="label"
                 color="shade7"
               >
-                Search in our Database and choose between more than 50+
-                Categories
+                A Market Request sends a notification directly to our sellers,
+                detailing the product, specifications, size and quantity you
+                want, allowing them to make an offer directly to your business.
               </TypographyView>
               <TypographyView
                 className="text-content"
                 variant="label"
                 color="shade7"
               >
-                Select specifications, size, quantity and send your request to
-                the market
+                There are over 600 products in our database that you can request
+                from. Once your request has been sent, you can review, negotiate
+                and/or accept your offers. The seller will arrange freight and
+                you will be able to view the real time tracking of your
+                products.
               </TypographyView>
               <TypographyView
                 className="text-content"
                 variant="label"
                 color="shade7"
               >
-                Check and negotiate offers from more than 10.000+ sellers from
-                ShoreTrade
+                Your market request will automatically close after 7 days or
+                once the maximum quantity requested has been reached.
               </TypographyView>
             </div>
             <HeroContainer>
@@ -213,8 +215,6 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         return (
           <SummaryView
             setStep={setStep}
-            maxKgAutoClose={maxKgAutoClose}
-            setMaxKgAutoClose={setMaxKgAutoClose}
             listingFormData={listingFormData}
             setSendConfModalisOpen={setSendConfModalisOpen}
             selectedSize={selectedSize}
