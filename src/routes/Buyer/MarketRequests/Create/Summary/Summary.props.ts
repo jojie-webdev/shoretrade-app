@@ -9,6 +9,4 @@ export interface SummaryProps extends CreateStepProps {
   selectedSpecifications: { items: any[] };
   selectedQuantity: Quantity;
   setSendConfModalisOpen: Dispatch<SetStateAction<boolean>>;
-  maxKgAutoClose: boolean;
-  setMaxKgAutoClose: Dispatch<SetStateAction<boolean>>;
 }

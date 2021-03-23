@@ -20,7 +20,6 @@ const CreateRequest = (): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [hideSearchResult, setHideSearchResult] = useState(false);
   const [termsAgreement, setTermsAgreement] = useState(false);
-  const [maxKgAutoClose, setMaxKgAutoClose] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
@@ -99,7 +98,7 @@ const CreateRequest = (): JSX.Element => {
           to: selectedSize.to ? selectedSize.to : null,
           options: selectedSize.items,
         },
-        autoClose: maxKgAutoClose,
+        autoClose: true,
       })
     );
   };
@@ -183,8 +182,6 @@ const CreateRequest = (): JSX.Element => {
     setSearchTerm: setSearchTerm,
     selectedCategory,
     setSelectedCategory,
-    maxKgAutoClose,
-    setMaxKgAutoClose,
   };
 
   return <CreateRequestLandingView {...generatedProps} />;
