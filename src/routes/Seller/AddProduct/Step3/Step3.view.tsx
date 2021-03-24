@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Interaction from 'components/base/Interactions';
@@ -19,6 +19,11 @@ function Step3({
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
   );
+
+  const typeName =
+    (isCustomType
+      ? editableListing?.customTypeData?.name
+      : listingFormData?.type.name) || '';
 
   const stateOptions = (
     (isCustomType ? categoryData?.states : listingFormData?.stateOptions) || []
@@ -59,28 +64,54 @@ function Step3({
   );
 
   const isComplete = specificationIds.length === stateOptions.length;
+
+  useEffect(() => {
+    if (
+      specifications.filter(
+        (spec) => spec.label === 'Live' || spec.label === 'Raw'
+      ).length === 1
+    ) {
+      const filteredRaw = stateOptions.map((group) =>
+        group.filter((item) => item.label === 'Raw')
+      );
+      const cleanArray = filteredRaw.filter((i) => i.length > 0)[0][0];
+      specificationIds.push(cleanArray.value);
+      setTimeout(() => {
+        onSelectSpecifications(specificationIds);
+      }, 500);
+    }
+  }, [specifications]);
+
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
         <div key={group[0].groupOrder} className="interaction-group">
-          {group.map(
-            (item) =>
-              !disabledOptions.includes(item.label.toUpperCase()) && (
-                <div key={item.value} className="interaction-container">
-                  <Interaction
-                    type="radio"
-                    value={item.label}
-                    pressed={specificationIds.includes(item.value)}
-                    onClick={() => {
-                      setSpecifications([
-                        ...specifications.slice(0, item.groupOrder - 1),
-                        item,
-                      ]);
-                    }}
-                  />
-                </div>
-              )
-          )}
+          {group
+            .filter((i) => {
+              if (typeName.toLowerCase().includes('meat')) {
+                return i.label !== 'Live';
+              }
+
+              return i;
+            })
+            .map(
+              (item) =>
+                !disabledOptions.includes(item.label.toUpperCase()) && (
+                  <div key={item.value} className="interaction-container">
+                    <Interaction
+                      type="radio"
+                      value={item.label}
+                      pressed={specificationIds.includes(item.value)}
+                      onClick={() => {
+                        setSpecifications([
+                          ...specifications.slice(0, item.groupOrder - 1),
+                          item,
+                        ]);
+                      }}
+                    />
+                  </div>
+                )
+            )}
         </div>
       ))}
 
