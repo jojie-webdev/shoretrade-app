@@ -15,9 +15,11 @@ import {
   createListingActions,
   getCustomFormDataActions,
 } from 'store/actions';
+import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
 import { Store } from 'types/store/Store';
 import { fileToBase64 } from 'utils/File';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
@@ -161,6 +163,10 @@ const AddProduct = (): JSX.Element => {
       setShowCustomTypeSettings(true);
     }
   }, [isCustomType]);
+
+  const boxes = (editableListing?.boxes || []).length.toString();
+
+  const boxesDetails = editableListing?.boxes || [];
 
   const typeName =
     (isCustomType
@@ -338,6 +344,22 @@ const AddProduct = (): JSX.Element => {
     history.push(ADD_PRODUCT_ROUTES.PREVIEW);
   };
 
+  const categoryData = GetCategoryData(
+    editableListing?.customTypeData?.categoryId || ''
+  );
+
+  const measurementUnit = formatMeasurementUnit(
+    (() => {
+      if (isCustomType) {
+        const isPortions =
+          editableListing?.customTypeData?.metric.name === 'Portions';
+        return isPortions ? 'Portions' : categoryData?.measurementUnit;
+      }
+
+      return listingFormData?.measurementUnit;
+    })()
+  );
+
   const onUploadCSV = (csv: File, account: string) => {
     const companies = getUser.data?.data.user.companies || [];
     const companyId = companies.find((c) => c.employeeId === account)?.id || '';
@@ -386,6 +408,8 @@ const AddProduct = (): JSX.Element => {
     preview,
     marketEstimate,
     onUploadCSV,
+    boxesDetails,
+    measurementUnit,
     isUploadingCSV: uploadBulk?.pending || false,
   };
 
