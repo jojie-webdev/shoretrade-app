@@ -7,7 +7,6 @@ import { marketRequestAcceptOfferActions } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
-import { toPrice } from 'utils/String/toPrice';
 
 import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
@@ -185,8 +184,10 @@ const MarketRequestDetail = (): JSX.Element => {
       newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
 
     hideNegotiate =
-      (!thereIsNewOffer || selectedOffer.status !== 'OPEN') &&
-      counterOfferLatest;
+      (selectedOffer.status === 'OPEN' &&
+        !thereIsNewOffer &&
+        selectedOffer.negotiations !== null) ||
+      selectedOffer.status === 'ACCEPTED';
   }
 
   const generatedProps: MarketRequestDetailProps = {
