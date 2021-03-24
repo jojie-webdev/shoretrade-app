@@ -5,6 +5,8 @@ const imgStyle = css`
   width: 96px;
   height: 96px;
   border-radius: 8px;
+  margin-right: 16px;
+  cursor: pointer;
 `;
 
 export const Container = styled.div``;
@@ -23,8 +25,12 @@ export const Header = styled.div`
       ${imgStyle};
     }
 
-    .user-details {
-      margin-left: 16px;
+    .loading-indicator {
+      width: 96px;
+      height: 96px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;

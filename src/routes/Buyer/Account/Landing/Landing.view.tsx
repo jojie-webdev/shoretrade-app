@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import Select from 'components/base/Select';
+import Spinner from 'components/base/Spinner/Spinner.view';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -9,6 +10,8 @@ import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 
 // import { useTheme } from 'utils/Theme';
+import DefaultProfileImage from 'res/images/seller-profile-default.png';
+
 import { LandingGeneratedProps } from './Landing.props';
 import {
   Container,
@@ -46,11 +49,36 @@ const LandingView = (props: LandingGeneratedProps) => {
     profilePicture,
     profileName,
     loadingUser,
+    updateImage,
+    updatingImage,
   } = props;
+
+  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
+  const imagePicker = useRef<HTMLInputElement | null>(null);
 
   if (loadingUser) {
     return <Loading />;
   }
+
+  const handleOnClick = () => {
+    // handle image
+    if (imagePicker && imagePicker.current) {
+      imagePicker.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    // accept ony jpg and png
+    const imageFiles = files.filter(
+      ({ type }) => type === 'image/jpeg' || type === 'image/png'
+    );
+
+    if (imageFiles.length > 0) {
+      updateImage(imageFiles[0]);
+    }
+  };
 
   const companyOptions = companies.map((company) => {
     return {
@@ -64,14 +92,47 @@ const LandingView = (props: LandingGeneratedProps) => {
       <BoxContainer>
         <Header>
           <div className="left-content">
-            {profilePicture ? (
-              <img src={profilePicture} alt="Profile" />
+            <input
+              ref={imagePicker}
+              type="file"
+              hidden
+              name="profileImage"
+              onChange={handleFileChange}
+            />
+            {updatingImage ? (
+              <div className="loading-indicator">
+                <Spinner />
+              </div>
             ) : (
-              <NoProfilePic>
-                <PlaceholderProfile width={96} height={96} />
-              </NoProfilePic>
+              <>
+                {profilePicture !== '' ? (
+                  <img
+                    src={
+                      hideBrokenProfileImage
+                        ? DefaultProfileImage
+                        : profilePicture || DefaultProfileImage
+                    }
+                    alt="profile picture"
+                    onError={() => {
+                      setHideBrokenProfileImage(true);
+                    }}
+                    onClick={() => {
+                      handleOnClick();
+                    }}
+                  />
+                ) : (
+                  <NoProfilePic
+                    onClick={() => {
+                      handleOnClick();
+                    }}
+                  >
+                    <PlaceholderProfile width={96} height={96} />
+                  </NoProfilePic>
+                )}
+              </>
             )}
-            <div className="user-details">
+
+            <div>
               <Typography variant="overline" color="shade6">
                 {companyRelationship === 'ADMIN'
                   ? 'Owner'
