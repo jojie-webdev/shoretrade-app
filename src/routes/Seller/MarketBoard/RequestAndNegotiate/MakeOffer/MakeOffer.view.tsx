@@ -27,7 +27,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         fullWidth
         content={
           'When you are making an offer you are committing to sell this product to this buyer. ' +
-          'You need to make sure that the product is available if the buyer accept.'
+          'You need to make sure that the product is available if the buyer accepts.'
         }
         style={{
           marginBottom: 32,

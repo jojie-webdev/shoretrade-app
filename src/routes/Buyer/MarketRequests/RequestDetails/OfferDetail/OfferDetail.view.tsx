@@ -1,12 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import Badge from "components/base/Badge";
-import Button from "components/base/Button";
-import TypographyView from "components/base/Typography";
-import { formatMeasurementUnit } from "utils/Listing/formatMeasurementUnit";
-import { useTheme } from "utils/Theme";
-import { toPrice } from "utils/String/toPrice";
-import { OffersSellerAccordionContent } from "../RequestDetails.view";
+import Badge from 'components/base/Badge';
+import Button from 'components/base/Button';
+import TypographyView from 'components/base/Typography';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
+
+import { OffersSellerAccordionContent } from '../RequestDetails.view';
 import {
   OfferDetailsContainer,
   SellerOfferInteractionContentContainer,
@@ -14,12 +15,12 @@ import {
   StyledTextField,
   BadgesContainer,
   OfferActionsContainer,
-} from "./OfferDetail.style";
+} from './OfferDetail.style';
 
 const OfferDetailView = (props: any) => {
   const {
     selectedOffer,
-    handleStartNegotiotiate,
+    handleStartNegotiate,
     company,
     handleAcceptOffer,
     price,
@@ -54,7 +55,7 @@ const OfferDetailView = (props: any) => {
     return (
       <div className="offer-badges">
         <TypographyView
-          style={{ marginBottom: "8px" }}
+          style={{ marginBottom: '8px' }}
           color="shade6"
           variant="overline"
         >
@@ -85,7 +86,7 @@ const OfferDetailView = (props: any) => {
         {selectedOffer.size.from ? (
           <OfferBadges label="Size" items={[selectedOffer?.size?.from]} />
         ) : (
-          <OfferBadges label="Size" items={["Ungraded"]} />
+          <OfferBadges label="Size" items={['Ungraded']} />
         )}
 
         <div className="sizes-container">
@@ -118,7 +119,7 @@ const OfferDetailView = (props: any) => {
           <div className="computation-container">
             <div className="computation-item-container">
               <TypographyView variant="label" color="shade9">
-                Orignal Offer was
+                Original Offer was
               </TypographyView>
               <TypographyView variant="label" weight="bold" color="shade9">
                 {toPrice(selectedOffer?.price)}/
@@ -134,7 +135,7 @@ const OfferDetailView = (props: any) => {
                 {formatMeasurementUnit(selectedOffer?.measurementUnit)}
               </TypographyView>
             </div>
-            {thereIsNewOffer ? (
+            {thereIsNewOffer && (
               <>
                 <div className="computation-item-container">
                   <TypographyView variant="label" color="shade9">
@@ -146,27 +147,25 @@ const OfferDetailView = (props: any) => {
                   </TypographyView>
                 </div>
               </>
-            ) : (
-              ""
             )}
             <div className="computation-item-container">
               <TypographyView variant="label" color="shade9">
-                Discount Value{" "}
+                Change in Price{' '}
                 <span className="indicator">{discountPercentage}%</span>
               </TypographyView>
               {discountValue !== 0 ? (
                 <TypographyView
                   color={
                     Math.sign(discountValue) === 0
-                      ? "noshade"
+                      ? 'noshade'
                       : Math.sign(discountValue) === 1
-                      ? "success"
-                      : "error"
+                      ? 'success'
+                      : 'error'
                   }
                   variant="label"
                   weight="bold"
                 >
-                  {Math.sign(discountValue) === -1 && "-"}
+                  {Math.sign(discountValue) === -1 && '-'}
                   {toPrice(Math.abs(discountValue))}/
                   {formatMeasurementUnit(selectedOffer?.measurementUnit)}
                 </TypographyView>
@@ -185,24 +184,20 @@ const OfferDetailView = (props: any) => {
               </TypographyView>
             </div>
 
-            {!thereIsNewOffer && counterOffer > 0 ? (
+            {!thereIsNewOffer && counterOffer > 0 && (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
                   No counter offer from seller yet
                 </TypographyView>
               </div>
-            ) : (
-              ""
             )}
           </div>
         </div>
       </OfferDetailsContainer>
       <OfferActionsContainer>
-        {hideNegotiate ? (
-          ""
-        ) : (
+        {!hideNegotiate && (
           <Button
-            onClick={() => handleStartNegotiotiate()}
+            onClick={() => handleStartNegotiate()}
             className="button"
             variant="outline"
             text="Negotiate"
@@ -213,7 +208,7 @@ const OfferDetailView = (props: any) => {
           onClick={() => handleAcceptOffer()}
           className="button"
           variant="primary"
-          disabled={selectedOffer.status !== "OPEN"}
+          disabled={selectedOffer.status !== 'OPEN'}
           text="Accept"
         />
       </OfferActionsContainer>

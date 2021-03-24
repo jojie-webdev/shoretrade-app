@@ -172,7 +172,7 @@ const Step1 = ({
 
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
-              Discount Value{' '}
+              Change in Price{' '}
               <span className="indicator">{discountPercentage}%</span>
             </Typography>
             {discountValue !== 0 ? (
