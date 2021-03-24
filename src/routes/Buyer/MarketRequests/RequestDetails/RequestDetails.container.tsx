@@ -183,7 +183,11 @@ const MarketRequestDetail = (): JSX.Element => {
       selectedOffer.negotiations &&
       newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
 
-    hideNegotiate = !thereIsNewOffer || selectedOffer.status !== 'OPEN';
+    hideNegotiate =
+      (selectedOffer.status === 'OPEN' &&
+        !thereIsNewOffer &&
+        selectedOffer.negotiations !== null) ||
+      selectedOffer.status === 'ACCEPTED';
   }
 
   const generatedProps: MarketRequestDetailProps = {
