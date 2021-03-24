@@ -1,5 +1,6 @@
-import { ModalProps } from 'components/layout/Modal/Modal.props';
 import { Dispatch, SetStateAction } from 'react';
+
+import { ModalProps } from 'components/layout/Modal/Modal.props';
 
 export interface NegotiateModalProps extends ModalProps {
   onSubmit: (counterOffer: number) => void;
