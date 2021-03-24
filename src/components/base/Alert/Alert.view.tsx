@@ -44,7 +44,7 @@ const Alert = (props: AlertProps): JSX.Element => {
     Icon = ExclamationFilled;
     IconFill = theme.brand.warning;
   } else if (variant === 'error') {
-    Icon = CloseFilled;
+    Icon = ExclamationFilled;
     IconFill = theme.brand.error;
   } else if (variant === 'success') {
     Icon = CheckFilled;

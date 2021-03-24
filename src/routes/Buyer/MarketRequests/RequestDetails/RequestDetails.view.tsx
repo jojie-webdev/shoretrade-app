@@ -235,7 +235,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     return <></>;
   }
 
-  const handleStartNegotiotiate = () => {
+  const handleStartNegotiate = () => {
     setNegotiating(true);
   };
 
@@ -368,7 +368,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   company={selectedCompany}
                   selectedOffer={selectedOffer}
                   deliveryTotal={deliveryTotal}
-                  handleStartNegotiotiate={handleStartNegotiotiate}
+                  handleStartNegotiate={handleStartNegotiate}
                   hideNegotiate={hideNegotiate}
                   originalOffer={selectedOffer?.price}
                   counterOffer={parseFloat(counterOffer)}

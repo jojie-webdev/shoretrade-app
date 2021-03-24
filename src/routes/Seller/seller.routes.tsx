@@ -50,7 +50,7 @@ const ROUTES: Routes = {
   // Add Product
   ADD_PRODUCT: {
     path: SELLER_ROUTES.ADD_PRODUCT,
-    title: 'Add Product',
+    title: 'Add Listing',
     children: <AddProduct />,
     icon: AddBorder,
     nested: true,

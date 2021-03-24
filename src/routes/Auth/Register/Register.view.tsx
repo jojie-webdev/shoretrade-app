@@ -479,18 +479,33 @@ const StepForm = ({
           )}
 
           {!isSeller && (
-            <CustomInteraction
-              label="Payment Method"
-              value={
-                PAYMENT_METHOD_OPTIONS[
-                  parseInt(registrationDetails.selectedPaymentMethod)
-                ].label
-              }
-              onClick={() => {
-                summaryHandleStep(3);
-                setSummaryEdit();
-              }}
-            />
+            <>
+              <CustomInteraction
+                label="Market Sector"
+                value={
+                  BUYER_VARIATIONS.filter(
+                    (i) => i.key === registrationDetails.categoryMarketSector
+                  )[0].label
+                }
+                onClick={() => {
+                  summaryHandleStep(4);
+                  setSummaryEdit();
+                }}
+              />
+
+              <CustomInteraction
+                label="Payment Method"
+                value={
+                  PAYMENT_METHOD_OPTIONS[
+                    parseInt(registrationDetails.selectedPaymentMethod)
+                  ].label
+                }
+                onClick={() => {
+                  summaryHandleStep(3);
+                  setSummaryEdit();
+                }}
+              />
+            </>
           )}
 
           <CustomInteraction

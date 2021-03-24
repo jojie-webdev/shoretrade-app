@@ -69,10 +69,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
 
   const getShippingTo = () => {
     const { shippingTo } = buyerRequest;
-    const streetNumber = shippingTo.unit_number
-      ? `${shippingTo.unit_number}/${shippingTo.street_number}`
-      : shippingTo.street_number;
-    return `${streetNumber} ${shippingTo.street_name}, ${shippingTo.suburb}, ${shippingTo.state} ${shippingTo.postcode}`;
+    return `${shippingTo.suburb}, ${shippingTo.state} ${shippingTo.postcode}`;
   };
 
   const marketSizes = !isEmpty(buyerRequest.sizeOptions)

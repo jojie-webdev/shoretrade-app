@@ -11,10 +11,6 @@ const imgStyle = css`
 
 export const Container = styled.div``;
 
-export const NavInteraction = styled(Interactions)`
-  margin-bottom: 12px;
-`;
-
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -37,6 +33,10 @@ export const Header = styled.div`
       align-items: center;
     }
   }
+`;
+
+export const NavInteraction = styled(Interactions)`
+  margin-bottom: 12px;
 `;
 
 export const NoProfilePic = styled.div`

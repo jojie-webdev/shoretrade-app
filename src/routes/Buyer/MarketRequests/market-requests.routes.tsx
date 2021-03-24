@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Bolt as BoltIcon } from 'components/base/SVG';
 import { BUYER_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
@@ -8,8 +7,6 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import CreateRequest from './Create/Create.container';
 import MarketRequestsLanding from './Landing';
 import MarketRequestDetail from './RequestDetails';
-// import CategoriesPreview from './Preview';
-// import CategoriesSearch from './Search';
 
 const ROUTES: Routes = {
   MARKET_REQUEST_DETAILS: {

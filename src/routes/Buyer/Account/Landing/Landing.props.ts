@@ -9,4 +9,6 @@ export interface LandingGeneratedProps {
   credit?: string;
   company?: Record<string, any>;
   companyRelationship: string;
+  updateImage: (image: File) => void;
+  updatingImage: boolean;
 }

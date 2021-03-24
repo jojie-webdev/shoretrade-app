@@ -92,6 +92,10 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const imagePicker = useRef<HTMLInputElement | null>(null);
 
+  if (loadingUser) {
+    return <Loading />;
+  }
+
   const handleOnClick = () => {
     // handle image
     if (imagePicker && imagePicker.current) {
@@ -111,10 +115,6 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
       updateImage(imageFiles[0]);
     }
   };
-
-  if (loadingUser) {
-    return <Loading />;
-  }
 
   const companyOptions = companies.map((company) => {
     return {
