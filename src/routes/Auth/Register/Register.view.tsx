@@ -46,6 +46,8 @@ import {
   BUYER_VARIATIONS,
   BUYER_STEP_SUBTITLE,
   SELLER_STEP_SUBTITLE,
+  BUYER_PAYMENT_METHOD_DETAILS,
+  INTERESTED_SHOREPAY_OPTIONS,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -124,6 +126,9 @@ const StepForm = ({
   isSuccess,
   backToLogin,
   setSummaryEdit,
+  interestedInShorePay,
+  handleSelectShorePay,
+  handleDownloadApplicationForm,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -604,33 +609,7 @@ const StepForm = ({
               formikProps.onSubmit(values);
             }
           } else if (step === 3) {
-            if (!isSeller) {
-              if (!registrationDetails.selectedPaymentMethod) {
-                setOtherErrors({
-                  selectedPaymentMethod: 'Please select payment method',
-                });
-              } else if (isApplicationForLineCredit) {
-                const error = {
-                  ...(isApplicationForLineCredit
-                    ? validateAnnualRevenue({
-                        estimatedAnnualRevenue:
-                          registrationDetails.estimatedAnnualRevenue,
-                      })
-                    : {}),
-                };
-                if (error.estimatedAnnualRevenue) {
-                  setOtherErrors(error);
-                } else {
-                  setOtherErrors({ estimatedAnnualRevenue: '' });
-                  formikProps.onSubmit(values);
-                }
-              } else {
-                setOtherErrors({ selectedPaymentMethod: '' });
-                formikProps.onSubmit(values);
-              }
-            } else {
-              formikProps.onSubmit(values);
-            }
+            formikProps.onSubmit(values);
           } else if (step === 4) {
             if (!isSeller) {
               const error = validateCategoryMarketSector({
@@ -801,24 +780,55 @@ const StepForm = ({
               {step === 3 && (
                 <>
                   {!isSeller && (
-                    <div className="select-container">
-                      <Select
-                        value={registrationDetails.selectedPaymentMethod}
-                        onChange={(option) => {
-                          updateRegistrationDetails({
-                            selectedPaymentMethod: option.value,
-                          });
-                          setOtherErrors({
-                            selectedPaymentMethod: '',
-                          });
-                        }}
-                        options={PAYMENT_METHOD_OPTIONS}
-                        label="SELECT FROM THE OPTIONS BELOW"
-                        error={otherErrors.selectedPaymentMethod || ''}
-                      />
-                    </div>
+                    <>
+                      <div>
+                        {BUYER_PAYMENT_METHOD_DETAILS.map((bpmd) => (
+                          <>
+                            <PaymentMethodOverline variant="overline">
+                              {bpmd.label}
+                            </PaymentMethodOverline>
+                            <PaymentMethodDetails variant="label">
+                              {bpmd.text}
+                            </PaymentMethodDetails>
+                          </>
+                        ))}
+                      </div>
+                      <div className="select-container">
+                        <Select
+                          value={
+                            interestedInShorePay
+                              ? INTERESTED_SHOREPAY_OPTIONS[0].value
+                              : INTERESTED_SHOREPAY_OPTIONS[1].value
+                          }
+                          onChange={(option) => {
+                            handleSelectShorePay(
+                              option.value === '1' ? true : false
+                            );
+                          }}
+                          options={INTERESTED_SHOREPAY_OPTIONS}
+                          label="Are you interested in applying for ShorePay?"
+                        />
+                        {interestedInShorePay ? (
+                          <Button
+                            text="Download Application Form"
+                            variant="outline"
+                            onClick={() => handleDownloadApplicationForm()}
+                            icon={
+                              <DownloadIcon
+                                fill="#E35D32"
+                                height={15}
+                                width={20}
+                              />
+                            }
+                            style={{ marginBottom: '5px' }}
+                          />
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    </>
                   )}
-                  {isApplicationForLineCredit && (
+                  {/* {isApplicationForLineCredit && (
                     <div className="credit-line-info">
                       <PaymentMethodDetails variant="label">
                         {CREDIT_LINE_NOTES}
@@ -849,7 +859,7 @@ const StepForm = ({
                         style={{ marginBottom: 8, marginTop: 8 }}
                       />
                     </div>
-                  )}
+                  )} */}
                 </>
               )}
               {step === 4 && (
@@ -1083,7 +1093,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     register,
     isPending,
     isSuccess,
-    isApplicationForLineCredit,
     setSummaryEdit,
     isSummaryEdit,
   } = props;
@@ -1162,12 +1171,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     initialValues: {},
     onSubmit: (values: Record<string, string>) => {
       updateRegistrationDetails(values);
-
-      if (isApplicationForLineCredit) {
-        nextStep();
-      } else {
-        nextStep();
-      }
+      nextStep();
     },
   };
 

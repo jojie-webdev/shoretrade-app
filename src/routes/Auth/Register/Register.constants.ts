@@ -158,6 +158,17 @@ export const PAYMENT_METHOD_OPTIONS = [
   },
 ];
 
+export const INTERESTED_SHOREPAY_OPTIONS = [
+  {
+    label: 'Yes',
+    value: '1',
+  },
+  {
+    label: 'No',
+    value: '0',
+  },
+];
+
 export const CREDIT_LINE_NOTES =
   'Take Out an Uncapped Line of Credit with ShoreTrade’s Financing. Get approved within 24 hours.';
 
@@ -199,3 +210,19 @@ export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
   5: 'By choosing your market sector, we learn more about your business and can optimise your ShoreTrade experience.',
   6: 'These selections will result in a personalised ShoreTrade experience through customised notifications and relevant market statistics. They can also be amended at any time within your account.',
 };
+
+export const BUYER_PAYMENT_METHOD_DETAILS = [
+  {
+    label: 'Credit Card',
+    text: 'We accept Visa, MasterCard and American Express (Fees Apply).',
+  },
+  {
+    label: 'EFT',
+    text: 'Loading Credit into your ShoreTrade account via Bank Transfer.',
+  },
+  {
+    label: 'Shore Pay',
+    text:
+      'Apply for our Buy Now Pay Later trading account to fast track your business and help with cashflow. ShorePay is a financing tool built by industry for industry.',
+  },
+];
