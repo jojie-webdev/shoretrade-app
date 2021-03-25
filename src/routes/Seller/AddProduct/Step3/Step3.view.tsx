@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Interaction from 'components/base/Interactions';
@@ -65,22 +65,8 @@ function Step3({
 
   const isComplete = specificationIds.length === stateOptions.length;
 
-  useEffect(() => {
-    if (
-      specifications.filter(
-        (spec) => spec.label === 'Live' || spec.label === 'Raw'
-      ).length === 1
-    ) {
-      const filteredRaw = stateOptions.map((group) =>
-        group.filter((item) => item.label === 'Raw')
-      );
-      const cleanArray = filteredRaw.filter((i) => i.length > 0)[0][0];
-      specificationIds.push(cleanArray.value);
-      setTimeout(() => {
-        onSelectSpecifications(specificationIds);
-      }, 500);
-    }
-  }, [specifications]);
+  const liveIsSelected =
+    specifications.filter((specs) => specs.label === 'Live').length > 0;
 
   return (
     <Container>
@@ -94,24 +80,42 @@ function Step3({
 
               return i;
             })
-            .map(
-              (item) =>
-                !disabledOptions.includes(item.label.toUpperCase()) && (
+            .map((item) => {
+              if (liveIsSelected && item.label === 'Raw') {
+                return;
+              }
+              if (!disabledOptions.includes(item.label.toUpperCase())) {
+                return (
                   <div key={item.value} className="interaction-container">
                     <Interaction
                       type="radio"
                       value={item.label}
                       pressed={specificationIds.includes(item.value)}
                       onClick={() => {
-                        setSpecifications([
-                          ...specifications.slice(0, item.groupOrder - 1),
-                          item,
-                        ]);
+                        if (item.label === 'Live') {
+                          const filteredRaw = stateOptions.map((group) =>
+                            group.filter((item) => item.label === 'Raw')
+                          );
+                          const cleanArray = filteredRaw.filter(
+                            (i) => i.length > 0
+                          )[0][0];
+                          setSpecifications([
+                            ...specifications.slice(0, item.groupOrder - 1),
+                            item,
+                            cleanArray,
+                          ]);
+                        } else {
+                          setSpecifications([
+                            ...specifications.slice(0, item.groupOrder - 1),
+                            item,
+                          ]);
+                        }
                       }}
                     />
                   </div>
-                )
-            )}
+                );
+              }
+            })}
         </div>
       ))}
 
