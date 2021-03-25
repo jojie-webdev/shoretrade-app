@@ -6,7 +6,12 @@ import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { VerifyMeta, VerifyPayload } from 'types/store/VerifyState';
 
-import { verifyActions, authActions, historyActions } from '../actions';
+import {
+  verifyActions,
+  authActions,
+  historyActions,
+  notifyActions,
+} from '../actions';
 
 function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
   try {
@@ -37,9 +42,16 @@ function* verifySuccess(action: AsyncAction<VerifyMeta, VerifyPayload>) {
       authActions.update({ token: action.payload.data.token, type: 'buyer' })
     );
   } else if (userGroup === 'SELLER_ADMIN') {
-    yield put(
-      authActions.update({ token: action.payload.data.token, type: 'seller' })
-    );
+    const isPending =
+      pathOr<string>('', ['payload', 'data', 'user', 'status'], action) ===
+      'PENDING';
+    if (isPending) {
+      yield put(notifyActions.add('SELLER_PENDING_ACCOUNT'));
+    } else {
+      yield put(
+        authActions.update({ token: action.payload.data.token, type: 'seller' })
+      );
+    }
   }
 }
 

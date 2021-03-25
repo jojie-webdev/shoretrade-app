@@ -6,4 +6,5 @@ export interface Verify2FAGeneratedProps {
   backToLogin: () => void;
   resendCode: () => void;
   isError: boolean;
+  showSellerPendingModal: boolean;
 }

@@ -81,3 +81,4 @@ export { default as readMarketNotificationActions } from './readMarketNotificati
 export { default as marketOfferNegotiateActions } from './marketOfferNegotiate';
 export { default as marketRequestAcceptOfferActions } from './marketRequestAcceptOffer';
 export { default as marketRequestNegotiationOfferActions } from './marketRequestNegotiation';
+export { default as notifyActions } from './notify';
