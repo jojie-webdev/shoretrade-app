@@ -85,11 +85,11 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 variant="label"
                 color="shade7"
               >
-                There are over 600 products in our database that you can request
-                from. Once your request has been sent, you can review, negotiate
-                and/or accept your offers. The seller will arrange freight and
-                you will be able to view the real time tracking of your
-                products.
+                There are hundreds of products in our database that you can
+                request from. Once your request has been sent, you have the
+                ability to review, negotiate, decline or accept your offers. The
+                seller will arrange freight and you will be able to view the
+                real time tracking of your products.
               </TypographyView>
               <TypographyView
                 className="text-content"
