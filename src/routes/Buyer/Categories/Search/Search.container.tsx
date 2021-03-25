@@ -11,9 +11,13 @@ const CategoriesSearch = (): JSX.Element => {
   const dispatch = useDispatch();
   const { id }: any = useParams();
 
-  const addresses = (
-    useSelector((state: Store) => state.getAddresses.data?.data.addresses) || []
-  ).length;
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
+  const addressCount = (addresses || []).length;
 
   const previousId =
     useSelector(
@@ -40,15 +44,16 @@ const CategoriesSearch = (): JSX.Element => {
     );
   };
   useEffect(() => {
-    if (addresses > 0 && id && previousId !== id) {
+    if (addressCount > 0 && id && previousId !== id) {
       onLoad(id);
     }
-  }, [id, addresses]);
+  }, [id, addressCount]);
 
   const generatedProps: CategoriesSearchGeneratedProps = {
     loading,
     results,
     isSuccess,
+    isPendingAccount,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };
