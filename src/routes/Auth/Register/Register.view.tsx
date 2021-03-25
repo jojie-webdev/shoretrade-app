@@ -137,7 +137,10 @@ const StepForm = ({
     fileName: '',
   });
   const [licenseError, setLicenseError] = useState('');
-  const [currentCategory, setCurrentCategory] = useState('');
+  const [currentCategory, setCurrentCategory] = useState({
+    name: '',
+    id: '',
+  });
 
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -240,7 +243,7 @@ const StepForm = ({
       <CategoryContainer>
         {isGotoDetails && (
           <Typography variant="title5" style={{ marginBottom: 8 }}>
-            {currentCategory}
+            {currentCategory.name}
           </Typography>
         )}
 
@@ -279,7 +282,10 @@ const StepForm = ({
                 <InteractionsContainer key={result.id}>
                   <Interactions
                     onClick={() => {
-                      setCurrentCategory(result.name);
+                      setCurrentCategory({
+                        name: result.name,
+                        id: result.id,
+                      });
                       getCategoryItem(result.id);
                       showDetails();
                     }}
@@ -303,9 +309,10 @@ const StepForm = ({
                       (i: CategoryPayload) => i.id === result.id
                     )}
                     onClick={() => {
-                      const value: CategoryPayload = {
+                      const value = {
                         id: result.id,
                         name: result.name,
+                        categoryId: currentCategory.id,
                       };
                       addSelected(value);
                     }}
