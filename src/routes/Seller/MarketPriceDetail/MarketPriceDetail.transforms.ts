@@ -74,7 +74,8 @@ export const getFilters = (data: any) => {
 
   const getSizeMinMax = () => {
     return typeof sizeFrom === 'number' && typeof sizeTo === 'number'
-      ? [String(sizeFrom / 1000), String(sizeTo / 1000)]
+      ? // ? [String(sizeFrom / 1000), String(1000 / 1000)]
+        [String(sizeFrom / 1000), 100] // 100kg
       : null;
   };
   const getSizeDropdownValues = () => {
