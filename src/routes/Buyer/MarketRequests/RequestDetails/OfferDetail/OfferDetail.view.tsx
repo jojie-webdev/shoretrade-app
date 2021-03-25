@@ -184,6 +184,15 @@ const OfferDetailView = (props: any) => {
               </TypographyView>
             </div>
 
+            {thereIsNewOffer && counterOffer === newOffer && (
+              <div className="computation-item-container">
+                <TypographyView variant="label" color="shade9">
+                  Your offer was accepted by the Seller. Click accept to confirm
+                  negotiation.
+                </TypographyView>
+              </div>
+            )}
+
             {!thereIsNewOffer && counterOffer > 0 && (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">

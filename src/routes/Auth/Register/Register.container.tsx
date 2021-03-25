@@ -13,9 +13,9 @@ import {
 } from 'types/store/GetCategories';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
+import { downloadShorePayApplicationForm } from 'utils/Registration';
 import { useTheme } from 'utils/Theme';
 
-import { PAYMENT_METHOD_OPTIONS } from './Register.constants';
 import { RegistrationDetails } from './Register.props';
 import RegisterView from './Register.view';
 
@@ -76,7 +76,11 @@ const Register = (): JSX.Element => {
     }
   }, [searchTerm]);
 
-  const addSelected = (category: CategoryPayload) => {
+  const addSelected = (category: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => {
     if (
       selectedCategoryTypes.some((i: CategoryPayload) => i.id === category.id)
     ) {
@@ -121,6 +125,7 @@ const Register = (): JSX.Element => {
     setSearchCategoryType(result);
   };
 
+  const [interestedInShorePay, setInterestedInShorePay] = useState(false);
   const [registrationDetails, updateRegistrationDetails] = useReducer(
     createUpdateReducer<RegistrationDetails>(),
     {
@@ -151,11 +156,6 @@ const Register = (): JSX.Element => {
       licenses: [],
     }
   );
-
-  const isApplicationForLineCredit =
-    !isSeller &&
-    registrationDetails.selectedPaymentMethod ===
-      PAYMENT_METHOD_OPTIONS[0].value;
 
   const registerSeller = (details: RegistrationDetails) => {
     if (details.address) {
@@ -209,10 +209,9 @@ const Register = (): JSX.Element => {
             unitNumber: details.unitNumber,
           },
           businessLogo: details.businessLogo,
-          registerDebtFinancing:
-            details.selectedPaymentMethod === PAYMENT_METHOD_OPTIONS[0].value,
+          registerDebtFinancing: interestedInShorePay,
           debtFinancingSegment: details.selectedMarketSector,
-          debtFinancingEstRevenue: details.estimatedAnnualRevenue,
+          debtFinancingEstRevenue: interestedInShorePay ? '0' : '',
           userGroup: 'buyer',
           marketSector: details.categoryMarketSector,
           marketBuying: selectedCategoryTypes,
@@ -231,6 +230,23 @@ const Register = (): JSX.Element => {
     }
   };
 
+  const handleDownloadApplicationForm = () => {
+    downloadShorePayApplicationForm();
+  };
+
+  const handleSelectShorePay = (shorePay: boolean) => {
+    /**
+       * shorepay == true
+       registerDebtFinancing=true
+       debtFinancingEstRevenue=0
+       debtFinancingSegment=<selected market sector value>
+       otherwise,
+       registerDebtFinancing=false
+       */
+
+    setInterestedInShorePay(shorePay);
+  };
+
   const isPending =
     useSelector((state: Store) => state.register.pending) || false;
   const error = useSelector((state: Store) => state.register.error) || '';
@@ -246,7 +262,6 @@ const Register = (): JSX.Element => {
     register,
     isPending,
     isSuccess,
-    isApplicationForLineCredit,
     error,
     categories,
     getCategoryItem,
@@ -262,6 +277,9 @@ const Register = (): JSX.Element => {
     onChangeSearch,
     isSummaryEdit,
     setSummaryEdit,
+    interestedInShorePay,
+    handleSelectShorePay,
+    handleDownloadApplicationForm,
   };
   return <RegisterView {...generatedProps} />;
 };

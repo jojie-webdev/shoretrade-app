@@ -21,6 +21,8 @@ import { useTheme } from 'utils/Theme';
 const MarketInterestsView = ({
   isInner,
   setIsInner,
+  currentCategoryId,
+  setCurrentCategoryId,
 
   setSearchTerm,
   selectedCategories,
@@ -52,6 +54,7 @@ const MarketInterestsView = ({
                         label: "Products I'm Buying",
                         onClick: () => {
                           setIsInner(false);
+                          setCurrentCategoryId('');
                           setSearchTerm('');
                         },
                       },
@@ -120,7 +123,13 @@ const MarketInterestsView = ({
               key={c.id}
               type="checkbox"
               pressed={selectedCategories.some((v) => v.id === c.id)}
-              onClick={() => props.onPressInnerCategory(c)}
+              onClick={() =>
+                props.onPressInnerCategory({
+                  id: c.id,
+                  name: c.name,
+                  categoryId: currentCategoryId,
+                })
+              }
               leftComponent={
                 <div className="category-container">
                   <img src={c.thumbnail} />

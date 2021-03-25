@@ -46,7 +46,8 @@ export function placeDataToUpdateAddressMeta(
 }
 
 export function recentlyAddedToPreviewProps(
-  data: GetBuyerHomepageResponseListingItem
+  data: GetBuyerHomepageResponseListingItem,
+  isPendingAccount: boolean
 ): PreviewProps {
   return {
     id: data.id,
@@ -61,6 +62,8 @@ export function recentlyAddedToPreviewProps(
     isAquafuture: data.isAquafuture,
     unit: data.measurementUnit,
     state: data.state,
+    hiddenPrice: isPendingAccount,
+    hiddenVendor: isPendingAccount,
   };
 }
 

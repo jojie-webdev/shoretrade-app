@@ -4,4 +4,5 @@ import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepag
 
 export interface RecentlyAddedGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
+  isPendingAccount: boolean;
 }

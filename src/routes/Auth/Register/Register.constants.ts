@@ -69,12 +69,6 @@ export const BUYER_STEPS = [
   },
 ];
 
-export const BUYER_MARKET_STEP = {
-  title: 'Market Sector',
-  description:
-    'Please, let us know your industry so we can provide you with more tailored information.',
-};
-
 interface Field {
   label: string;
   key: string;
@@ -137,10 +131,6 @@ export const BANK_DETAIL_FIELDS: Field[] = [
   },
 ];
 
-export const LICENSES_FIELDS: Field[] = [
-  { label: 'License Name', key: 'licenseName' },
-];
-
 export const BUYER_LOCATION_NOTES =
   'Receiving shipment from more than 1 location? You can add multiple addresses once your account is approved.';
 
@@ -158,15 +148,15 @@ export const PAYMENT_METHOD_OPTIONS = [
   },
 ];
 
-export const CREDIT_LINE_NOTES =
-  'Take Out an Uncapped Line of Credit with ShoreTrade’s Financing. Get approved within 24 hours.';
-
-export const CREDIT_LINE_TERMS_LABEL = 'shoretrade financing terms are:';
-
-export const CREDIT_LINE_TERMS = [
-  '• 0 - 30 Days (Interest Free)',
-  '• 30 - 60 Days (1.5% on Invoice Penalty Fee), every 30 Days',
-  '• Thereafter 1% on Invoice Penalty.',
+export const INTERESTED_SHOREPAY_OPTIONS = [
+  {
+    label: 'Yes',
+    value: '1',
+  },
+  {
+    label: 'No',
+    value: '0',
+  },
 ];
 
 export const BUYER_VARIATIONS = [
@@ -199,3 +189,19 @@ export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
   5: 'By choosing your market sector, we learn more about your business and can optimise your ShoreTrade experience.',
   6: 'These selections will result in a personalised ShoreTrade experience through customised notifications and relevant market statistics. They can also be amended at any time within your account.',
 };
+
+export const BUYER_PAYMENT_METHOD_DETAILS = [
+  {
+    label: 'Credit Card',
+    text: 'We accept Visa, MasterCard and American Express (Fees Apply).',
+  },
+  {
+    label: 'EFT',
+    text: 'Loading Credit into your ShoreTrade account via Bank Transfer.',
+  },
+  {
+    label: 'Shore Pay',
+    text:
+      'Apply for our Buy Now Pay Later trading account to fast track your business and help with cashflow. ShorePay is a financing tool built by industry for industry.',
+  },
+];
