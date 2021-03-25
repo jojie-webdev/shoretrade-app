@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
@@ -27,6 +28,14 @@ import ProductDetailsView from './ProductDetails.view';
 
 const ProductDetails = (): JSX.Element => {
   // MARK:- States / Variables
+
+  const addressesData = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addressesData !== undefined &&
+    !(addressesData || []).some((a) => a.approved === 'APPROVED');
+
   const dispatch = useDispatch();
   const location = useLocation();
   const { id } = useParams();
@@ -289,7 +298,7 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.origin.state || ''
     }, ${currentListing?.origin.countryCode || ''}`,
   };
-  const productDetailsCard6Props = {
+  const productDetailsCard6Props: ProductDetailsCard6Props = {
     price: price.toFixed(2),
     minOrder: currentListing?.minimumOrder || '0',
     avgBoxSize: (currentListing?.average || 0).toFixed(2),
@@ -299,6 +308,7 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.caught ? 'YYYY-MM-DD' : undefined
     ).toDate(),
     unit: currentListing?.measurementUnit || undefined,
+    hiddenPrice: isPendingAccount,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
@@ -333,6 +343,7 @@ const ProductDetails = (): JSX.Element => {
     getBoxes,
     onAddToCart,
     isLoadingListingBoxes,
+    isPendingAccount,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

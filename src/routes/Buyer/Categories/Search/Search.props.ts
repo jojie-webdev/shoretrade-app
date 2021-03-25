@@ -6,4 +6,5 @@ export interface CategoriesSearchGeneratedProps {
   loading: boolean;
   results: GetListingTypesByCategoryTypeItem[];
   isSuccess: boolean;
+  isPendingAccount: boolean;
 }

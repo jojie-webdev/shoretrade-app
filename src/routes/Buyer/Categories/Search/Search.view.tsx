@@ -26,7 +26,7 @@ import {
 } from './Search.style';
 
 const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
-  const { results, loading, isSuccess } = props;
+  const { results, loading, isSuccess, isPendingAccount } = props;
 
   const children = (result: GetListingTypesByCategoryTypeItem) => (
     <>
@@ -34,23 +34,27 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
       <DetailsContainer>
         <Typography className="title">{result.name}</Typography>
         <ResultContainer>
-          {result.price.from != result.price.to ? (
-            <Typography variant="caption" weight="bold">
-              {toPrice(result.price.from)} - {toPrice(result.price.to)}
-            </Typography>
-          ) : (
-            <Typography variant="caption" weight="bold">
-              {toPrice(result.price.from)}
-            </Typography>
+          {!isPendingAccount && (
+            <>
+              {result.price.from != result.price.to ? (
+                <Typography variant="caption" weight="bold">
+                  {toPrice(result.price.from)} - {toPrice(result.price.to)}
+                </Typography>
+              ) : (
+                <Typography variant="caption" weight="bold">
+                  {toPrice(result.price.from)}
+                </Typography>
+              )}
+              <Typography variant="caption" color="shade6" className="per">
+                per
+              </Typography>
+              <Typography variant="caption" color="shade6" className="measure">
+                {formatUnitToPricePerUnit(
+                  formatMeasurementUnit(result.measurementUnit)
+                )}
+              </Typography>
+            </>
           )}
-          <Typography variant="caption" color="shade6" className="per">
-            per
-          </Typography>
-          <Typography variant="caption" color="shade6" className="measure">
-            {formatUnitToPricePerUnit(
-              formatMeasurementUnit(result.measurementUnit)
-            )}
-          </Typography>
           <Typography weight="bold" variant="caption" className="result-count">
             {result.count}
           </Typography>
