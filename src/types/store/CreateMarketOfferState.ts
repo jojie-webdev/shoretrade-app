@@ -2,7 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 interface Size {
   from: string | null;
-  to: null;
+  to: string | null;
 }
 
 export type MarketOfferItem = {

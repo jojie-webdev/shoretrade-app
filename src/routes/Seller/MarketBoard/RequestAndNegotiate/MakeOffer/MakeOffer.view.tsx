@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert/Alert.view';
@@ -42,7 +42,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         return (
           <Row
             key={i}
-            style={{ marginBottom: i === options.length - 1 ? 16 : 0 }}
+            style={{
+              marginBottom:
+                props.stateOptions.length >= 2 &&
+                i < props.stateOptions.length - 1
+                  ? 16
+                  : 0,
+            }}
           >
             {options.map((o) => (
               <Col key={o.value} md={12} lg={6} xl={4}>
@@ -76,8 +82,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               value={v}
               type="radio"
               padding="14px 18px"
-              pressed={props.size === v}
-              onClick={() => props.setSize(v)}
+              pressed={props.size.from === v || props.size.to === v}
+              onClick={() => props.setSize({ from: v, to: v })}
             />
           </Col>
         ))}
@@ -85,15 +91,51 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         {props.buyerRequest.sizeFrom && (
           <Col md={12} lg={6} xl={4} style={{ marginBottom: 16 }}>
             <TextField
+              label="From"
               LeftComponent={
                 <Typography variant="label" weight="bold" color="shade6">
                   {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
                 </Typography>
               }
-              value={props.size}
-              onChangeText={props.setSize}
+              value={props.size.from}
+              onChangeText={(v) =>
+                props.setSize((prevState) => ({
+                  from: v,
+                  to:
+                    prevState.to && prevState.to !== 'ungraded'
+                      ? prevState.to
+                      : '',
+                }))
+              }
+              min={1}
               type="number"
-              error={pathOr('', ['size', '0'], errors)}
+              error={pathOr('', ['sizeFrom', '0'], errors)}
+            />
+          </Col>
+        )}
+
+        {props.buyerRequest.sizeTo && (
+          <Col md={12} lg={6} xl={4} style={{ marginBottom: 16 }}>
+            <TextField
+              label={`To\n(Optional)`}
+              LeftComponent={
+                <Typography variant="label" weight="bold" color="shade6">
+                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+                </Typography>
+              }
+              value={props.size.to}
+              onChangeText={(v) => {
+                props.setSize((prevState) => ({
+                  from:
+                    prevState.from && prevState.from !== 'ungraded'
+                      ? prevState.from
+                      : '',
+                  to: v,
+                }));
+              }}
+              min={1}
+              type="number"
+              error={pathOr('', ['sizeTo', '0'], errors)}
             />
           </Col>
         )}
@@ -101,18 +143,25 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
 
       <div className="checkbox-container ungraded">
         <Checkbox
-          onClick={() => props.setSize('ungraded')}
+          onClick={() =>
+            props.setSize({
+              from: 'ungraded',
+              to: 'ungraded',
+            })
+          }
           className="checkbox"
-          checked={props.size === 'ungraded'}
+          checked={
+            props.size.from === 'ungraded' || props.size.to === 'ungraded'
+          }
         />
         <Typography className="label" variant="label" color="noshade">
           Ungraded
         </Typography>
       </div>
 
-      {!props.buyerRequest.sizeFrom && pathOr('', ['size', '0'], errors) ? (
+      {!props.buyerRequest.sizeFrom && pathOr('', ['sizeFrom', '0'], errors) ? (
         <Error variant="caption" color="error">
-          {pathOr('', ['size', '0'], errors)}
+          {pathOr('', ['sizeFrom', '0'], errors)}
         </Error>
       ) : null}
 
@@ -127,6 +176,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             }
             value={props.weight}
             onChangeText={props.setWeight}
+            min={1}
             type="number"
             error={pathOr('', ['weight', '0'], errors)}
           />
@@ -142,6 +192,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             }
             value={props.price}
             onChangeText={props.setPrice}
+            min={1}
             type="number"
             error={pathOr('', ['price', '0'], errors)}
           />

@@ -285,7 +285,7 @@ const Step1 = ({
                 <TextField
                   className="text-field"
                   type="number"
-                  label={isReview ? 'From' : ''}
+                  label="From"
                   value={
                     isReview
                       ? buyerRequest.sizeFrom || 0
@@ -305,6 +305,21 @@ const Step1 = ({
                     type="number"
                     label="To"
                     value={buyerRequest.sizeTo || 0}
+                    disabled
+                    LeftComponent={
+                      <Typography variant="label" weight="bold" color="shade6">
+                        {unit}
+                      </Typography>
+                    }
+                  />
+                )}
+
+                {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
+                  <TextField
+                    className="text-field"
+                    type="number"
+                    label="To"
+                    value={activeOffer.size.to}
                     disabled
                     LeftComponent={
                       <Typography variant="label" weight="bold" color="shade6">
