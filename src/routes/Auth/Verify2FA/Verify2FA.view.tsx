@@ -5,6 +5,7 @@ import Button from 'components/base/Button';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
+import DialogModal from 'components/module/DialogModal';
 import { useFormik } from 'formik';
 import theme, { useTheme } from 'utils/Theme';
 
@@ -43,7 +44,14 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = true;
   // const isSeller = theme.appType === 'seller';
-  const { verify, pending, backToLogin, resendCode, isError } = props;
+  const {
+    verify,
+    pending,
+    backToLogin,
+    resendCode,
+    isError,
+    showSellerPendingModal,
+  } = props;
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const formik = useFormik({
@@ -132,6 +140,24 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
             </FooterContainer>
           </Footer>
         </ContentWrapper>
+        {isSeller && (
+          <DialogModal
+            title="Thanks for signing up!"
+            overline="Your account is pending approval."
+            isOpen={showSellerPendingModal}
+            onClickClose={() => backToLogin()}
+            backgroundColor={theme.grey.shade8}
+          >
+            <Typography variant="body" color="noshade" weight="Medium">
+              We need to check a few things before you can start selling.
+            </Typography>
+            <br />
+            <Typography variant="body" color="noshade" weight="Medium">
+              We’ll send you and email and notification when your account is
+              approved. This normally takes less than 24 hours.
+            </Typography>
+          </DialogModal>
+        )}
       </Container>
     </AuthContainer>
   );

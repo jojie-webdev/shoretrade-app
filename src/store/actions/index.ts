@@ -62,3 +62,4 @@ export { default as sendMessageActions } from './sendMessage';
 export { default as getMarketEstimateActions } from './getMarketEstimate';
 export { default as resetPasswordActions } from './resetPassword';
 export { default as logRequestActions } from './logRequest';
+export { default as notifyActions } from './notify';

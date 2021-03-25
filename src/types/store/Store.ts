@@ -105,6 +105,7 @@ import { GetUserMeta, GetUserPayload } from './GetUserState';
 import { HistoryState } from './HistoryState';
 import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
+import { NotifyState } from './NotifyState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
@@ -272,4 +273,5 @@ export interface Store {
   >;
   resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
   logRequest: RequestLogState;
+  notify: NotifyState;
 }

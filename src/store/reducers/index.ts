@@ -46,6 +46,7 @@ import getUser from './getUser';
 import history from './history';
 import login from './login';
 import logRequest from './logRequest';
+import notify from './notify';
 import order from './order';
 import placeOrder from './placeOrder';
 import register from './register';
@@ -112,6 +113,7 @@ export default (routeHistory: History) =>
         history,
         login,
         logRequest,
+        notify,
         order,
         placeOrder,
         register,
