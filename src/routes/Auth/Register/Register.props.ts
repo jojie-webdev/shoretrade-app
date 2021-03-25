@@ -63,7 +63,11 @@ export interface RegisterGeneratedProps {
   showDetails: () => void;
   hideDetails: () => void;
   selectedCategoryTypes: CategoryPayload[];
-  addSelected: (category: CategoryPayload) => void;
+  addSelected: (category: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => void;
   searchCategory: Category[];
   searchCategoryType: CategoryType[];
   searchTerm: string;

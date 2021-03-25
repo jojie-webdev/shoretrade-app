@@ -31,7 +31,15 @@ const MarketInterests = (): JSX.Element => {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [innerCategories, setInnerCategories] = useState<Listing[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<Listing[]>([]);
+  const [currentCategoryId, setCurrentCategoryId] = useState('');
+
+  const [selectedCategories, setSelectedCategories] = useState<
+    {
+      id: string;
+      name: string;
+      categoryId: string;
+    }[]
+  >([]);
 
   const [loadingInnerCategories, setLoadingInnerCategories] = useState(false);
 
@@ -57,7 +65,7 @@ const MarketInterests = (): JSX.Element => {
   }, [companyId]);
 
   useEffect(() => {
-    if (!isEmpty(buying)) setSelectedCategories(buying as Listing[]);
+    if (!isEmpty(buying)) setSelectedCategories(buying);
   }, [buying]);
 
   useEffect(() => {
@@ -72,6 +80,7 @@ const MarketInterests = (): JSX.Element => {
 
   const onPressCategory = async (id: string) => {
     setIsInner(true);
+    setCurrentCategoryId(id);
     setSearchTerm('');
     setLoadingInnerCategories(true);
 
@@ -82,7 +91,11 @@ const MarketInterests = (): JSX.Element => {
     setInnerCategories(newInnerCategories);
   };
 
-  const onPressInnerCategory = (l: Listing) => {
+  const onPressInnerCategory = (l: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => {
     const exists = selectedCategories.some((c) => c.id === l.id);
 
     if (exists) {
@@ -98,8 +111,12 @@ const MarketInterests = (): JSX.Element => {
     dispatch(
       updateMarketInterestsActions.request({
         companyId,
-        buying: selectedCategories,
         selling: [],
+        buying: selectedCategories.map((a) => ({
+          id: a.id,
+          name: a.name,
+          categoryId: a.categoryId,
+        })),
       })
     );
   };
@@ -121,6 +138,8 @@ const MarketInterests = (): JSX.Element => {
   const generatedProps = {
     isInner,
     setIsInner,
+    currentCategoryId,
+    setCurrentCategoryId,
     searchTerm,
     setSearchTerm,
     selectedCategories,

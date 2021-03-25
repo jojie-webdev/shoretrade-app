@@ -76,7 +76,11 @@ const Register = (): JSX.Element => {
     }
   }, [searchTerm]);
 
-  const addSelected = (category: CategoryPayload) => {
+  const addSelected = (category: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => {
     if (
       selectedCategoryTypes.some((i: CategoryPayload) => i.id === category.id)
     ) {
