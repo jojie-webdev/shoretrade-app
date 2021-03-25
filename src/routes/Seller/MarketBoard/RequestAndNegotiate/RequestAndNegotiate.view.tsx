@@ -150,6 +150,8 @@ const Step1 = ({
 
     const deliveryTotal = sellerOffer * activeOffer.weight;
 
+    const isAccepted = sellerOffer === buyerCounterOffer;
+
     return (
       <>
         <div className="offer-container">
@@ -207,7 +209,7 @@ const Step1 = ({
         </div>
 
         <div className="submit-btns">
-          {!isReview && !noNegotiations && isNegoOpen && (
+          {!isReview && !noNegotiations && isNegoOpen && !isAccepted && (
             <>
               <Button
                 onClick={() => setIsOpen(true)}
