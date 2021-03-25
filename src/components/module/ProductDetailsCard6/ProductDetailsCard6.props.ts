@@ -7,4 +7,5 @@ export interface ProductDetailsCard6Props {
   catchDate?: Date;
   minOrder?: string;
   unit?: string;
+  hiddenPrice?: boolean;
 }

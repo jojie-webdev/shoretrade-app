@@ -25,4 +25,5 @@ export interface CategoriesPreviewGeneratedProps {
     specifications?: string;
     showUngraded?: boolean;
   }) => void;
+  isPendingAccount: boolean;
 }

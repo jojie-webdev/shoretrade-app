@@ -19,6 +19,7 @@ export type SellerResults = {
 export type CreditState = 'normal' | 'pending' | 'empty' | 'lessThan';
 
 export interface HomeGeneratedProps {
+  isPendingAccount: boolean;
   // Credit Data
   loading: boolean;
   creditState: CreditState;

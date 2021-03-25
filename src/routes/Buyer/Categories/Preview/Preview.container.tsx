@@ -25,6 +25,12 @@ const CategoriesPreview = (): JSX.Element => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
+  const addressesData = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addressesData !== undefined &&
+    !(addressesData || []).some((a) => a.approved === 'APPROVED');
   const addresses = GetAddressOptions();
   const { id } = useParams();
   const typeIdParsed = id; // consider removing this and use `id` instead
@@ -176,6 +182,7 @@ const CategoriesPreview = (): JSX.Element => {
     },
     filterData,
     onChangeFilter,
+    isPendingAccount,
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };
