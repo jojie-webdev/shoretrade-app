@@ -374,7 +374,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   counterOffer={parseFloat(counterOffer)}
                   discountPercentage={discountPercentage}
                   discountValue={discountValue}
-                  newOffer={newOffer}
+                  newOffer={parseFloat(newOffer)}
                   thereIsNewOffer={thereIsNewOffer}
                 />
               </Route>

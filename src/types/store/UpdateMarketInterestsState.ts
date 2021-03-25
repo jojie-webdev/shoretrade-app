@@ -3,6 +3,7 @@ import { GenericResponse } from 'types/GenericResponse';
 export type MarketInterestItem = {
   id: string;
   name: string;
+  categoryId: string;
 };
 
 export type UpdateMarketInterestsMeta = {

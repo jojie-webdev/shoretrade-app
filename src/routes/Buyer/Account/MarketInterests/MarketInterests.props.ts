@@ -12,10 +12,24 @@ export type Listing = {
 export interface MarketInterestsGeneratedProps {
   isInner: boolean;
   setIsInner: Dispatch<SetStateAction<boolean>>;
+  currentCategoryId: string;
+  setCurrentCategoryId: Dispatch<SetStateAction<string>>;
   searchTerm: string;
   setSearchTerm: Dispatch<SetStateAction<string>>;
-  selectedCategories: Listing[];
-  setSelectedCategories: Dispatch<SetStateAction<Listing[]>>;
+  selectedCategories: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }[];
+  setSelectedCategories: Dispatch<
+    SetStateAction<
+      {
+        id: string;
+        name: string;
+        categoryId: string;
+      }[]
+    >
+  >;
 
   buying: MarketInterestItem[];
   categories: Category[];
@@ -23,7 +37,11 @@ export interface MarketInterestsGeneratedProps {
   loadingInnerCategories: boolean;
 
   onPressCategory: (id: string) => void;
-  onPressInnerCategory: (listing: Listing) => void;
+  onPressInnerCategory: (listing: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => void;
   onSave: () => void;
 
   isSaving: boolean;

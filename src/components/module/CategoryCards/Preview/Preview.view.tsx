@@ -4,6 +4,10 @@ import Badge from 'components/base/Badge';
 import { Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { Row, Col } from 'react-grid-system';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { PreviewProps } from './Preview.props';
@@ -21,7 +25,6 @@ import {
   BadgeText,
   ResultText,
 } from './Preview.style';
-import { formatMeasurementUnit, formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const Preview = (props: PreviewProps): JSX.Element => {
   const { cardContainerStyle, cardContainerClass } = props;
@@ -75,7 +78,8 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   variant="small"
                   color="shade6"
                 >
-                  per {formatUnitToPricePerUnit(props.unit)}
+                  per{' '}
+                  {formatUnitToPricePerUnit(formatMeasurementUnit(props.unit))}
                 </Typography>
               </PriceContainer>
             </Row>
