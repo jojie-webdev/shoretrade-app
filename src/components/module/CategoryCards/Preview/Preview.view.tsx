@@ -27,7 +27,12 @@ import {
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
-  const { cardContainerStyle, cardContainerClass } = props;
+  const {
+    cardContainerStyle,
+    cardContainerClass,
+    hiddenPrice,
+    hiddenVendor,
+  } = props;
   const theme = useTheme();
   return (
     <CardContainer img={props.images[0]}>
@@ -69,19 +74,23 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   {props.type}
                 </Title>
               </div>
-              <PriceContainer>
-                <Price variant="body" weight="bold">
-                  {props.price}
-                </Price>
-                <Typography
-                  style={{ textAlign: 'end' }}
-                  variant="small"
-                  color="shade6"
-                >
-                  per{' '}
-                  {formatUnitToPricePerUnit(formatMeasurementUnit(props.unit))}
-                </Typography>
-              </PriceContainer>
+              {!hiddenPrice && (
+                <PriceContainer>
+                  <Price variant="body" weight="bold">
+                    {props.price}
+                  </Price>
+                  <Typography
+                    style={{ textAlign: 'end' }}
+                    variant="small"
+                    color="shade6"
+                  >
+                    per{' '}
+                    {formatUnitToPricePerUnit(
+                      formatMeasurementUnit(props.unit)
+                    )}
+                  </Typography>
+                </PriceContainer>
+              )}
             </Row>
           </HeaderContainer>
           <div style={{ display: 'flex' }}>
@@ -134,18 +143,20 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 {props.weight}
               </ResultText>
             </Row>
-            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
-              <ResultText
-                variant="small"
-                color="shade6"
-                style={{ paddingRight: 8 }}
-              >
-                Vendor:
-              </ResultText>
-              <ResultText variant="small" weight="700">
-                {props.coop?.name}
-              </ResultText>
-            </Row>
+            {!hiddenVendor && (
+              <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+                <ResultText
+                  variant="small"
+                  color="shade6"
+                  style={{ paddingRight: 8 }}
+                >
+                  Vendor:
+                </ResultText>
+                <ResultText variant="small" weight="700">
+                  {props.coop?.name}
+                </ResultText>
+              </Row>
+            )}
             <Row style={{ height: 24, alignItems: 'center' }} nogutter>
               <ResultText
                 variant="small"

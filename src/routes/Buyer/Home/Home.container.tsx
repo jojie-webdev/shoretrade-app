@@ -34,6 +34,12 @@ const Home = (): JSX.Element => {
     bannerData,
   } = (buyerHomePageData.data?.data.data || {}) as HomeData;
 
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
   const company = GetDefaultCompany();
   const featured: string[] = bannerData?.web || [];
   const loadingHomePage = buyerHomePageData.pending === null ? true : false;
@@ -72,6 +78,7 @@ const Home = (): JSX.Element => {
   const creditState: CreditState = getCreditState();
 
   const generatedProps: HomeGeneratedProps = {
+    isPendingAccount,
     // Credit Data
     loading,
     featured,

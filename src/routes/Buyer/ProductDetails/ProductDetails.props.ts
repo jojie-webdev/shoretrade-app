@@ -41,4 +41,5 @@ export interface ProductDetailsGeneratedProps {
     }[];
     unit: string;
   }[];
+  isPendingAccount: boolean;
 }

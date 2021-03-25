@@ -25,4 +25,6 @@ export interface PreviewProps {
   unit?: string;
   cardContainerStyle?: CSSProperties;
   cardContainerClass?: any;
+  hiddenPrice?: boolean;
+  hiddenVendor?: boolean;
 }

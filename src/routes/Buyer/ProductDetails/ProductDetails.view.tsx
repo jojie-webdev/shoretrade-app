@@ -56,6 +56,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     onAddToCart,
     isLoadingListingBoxes,
     groupedBox,
+    isPendingAccount,
   } = props;
   const boxWeightsRef = useRef<HTMLDivElement>(null);
   const [didScroll, setDidScroll] = useState(false);
@@ -120,79 +121,90 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               />
               <ProductDetailsCard6View
                 cBorderRadius="0"
-                cBorderWidth="1px 2px 0px 2px"
+                cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
                 {...productDetailsCard6Props}
               />
-              <SellerRatingContainer>
-                <ProductSellerRating isSmallName {...sellerRatingProps} />
-              </SellerRatingContainer>
+              {!isPendingAccount && (
+                <SellerRatingContainer>
+                  <ProductSellerRating isSmallName {...sellerRatingProps} />
+                </SellerRatingContainer>
+              )}
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
-              <DesiredQuantityContainer>
-                <div className="content">
-                  <TextFieldWrapper>
-                    <TextField
-                      label="Desired Quantity"
-                      LeftComponent={
-                        <Typography color="shade6">{unit}</Typography>
-                      }
-                      value={weight}
-                      onChangeText={setWeight}
-                      type="numeric"
-                    />
-                  </TextFieldWrapper>
-                  <RemainingWrapper>
-                    <Alert
-                      variant="alert"
-                      content={`Remaining ${remainingWeight} ${unit}`}
-                      fullWidth
-                      alignText="center"
-                    />
-                  </RemainingWrapper>
+              {isPendingAccount ? (
+                <Alert
+                  variant="alert"
+                  content={`Price hidden pending account approval.`}
+                  fullWidth
+                  alignText="center"
+                />
+              ) : (
+                <DesiredQuantityContainer>
+                  <div className="content">
+                    <TextFieldWrapper>
+                      <TextField
+                        label="Desired Quantity"
+                        LeftComponent={
+                          <Typography color="shade6">{unit}</Typography>
+                        }
+                        value={weight}
+                        onChangeText={setWeight}
+                        type="numeric"
+                      />
+                    </TextFieldWrapper>
+                    <RemainingWrapper>
+                      <Alert
+                        variant="alert"
+                        content={`Remaining ${remainingWeight} ${unit}`}
+                        fullWidth
+                        alignText="center"
+                      />
+                    </RemainingWrapper>
 
-                  {!isEmpty(groupedBox) ? (
-                    <BoxContainer>
-                      <Typography
-                        variant="overline"
-                        color="shade6"
-                        style={{ paddingTop: 32 }}
-                      >
-                        BEST BOX WEIGHT MATCH
-                      </Typography>
-                      {groupedBox.map((p) => (
-                        <BoxRadioContainer key={p.id}>
-                          <BoxRadio
-                            id={p.id}
-                            checked={p.id === pressedBoxRadio}
-                            totalWeight={p.totalWeight}
-                            boxes={p.boxes}
-                            cost={p.cost}
-                            unit={p.unit}
-                            onClick={() =>
-                              setPressedBoxRadio((prevState) =>
-                                p.id === prevState ? '' : p.id
-                              )
-                            }
-                          />
-                        </BoxRadioContainer>
-                      ))}
-                    </BoxContainer>
-                  ) : (
-                    isLoadingListingBoxes && (
-                      <div className="box-loading">
-                        <Loading />
-                      </div>
-                    )
-                  )}
-                </div>
-                <ButtonContainer>
-                  <AddToCartButton
-                    text="Add to Cart"
-                    onClick={onAddToCart}
-                    variant={pressedBoxRadio ? undefined : 'disabled'}
-                  />
-                </ButtonContainer>
-              </DesiredQuantityContainer>
+                    {!isEmpty(groupedBox) ? (
+                      <BoxContainer>
+                        <Typography
+                          variant="overline"
+                          color="shade6"
+                          style={{ paddingTop: 32 }}
+                        >
+                          BEST BOX WEIGHT MATCH
+                        </Typography>
+                        {groupedBox.map((p) => (
+                          <BoxRadioContainer key={p.id}>
+                            <BoxRadio
+                              id={p.id}
+                              checked={p.id === pressedBoxRadio}
+                              totalWeight={p.totalWeight}
+                              boxes={p.boxes}
+                              cost={p.cost}
+                              unit={p.unit}
+                              onClick={() =>
+                                setPressedBoxRadio((prevState) =>
+                                  p.id === prevState ? '' : p.id
+                                )
+                              }
+                            />
+                          </BoxRadioContainer>
+                        ))}
+                      </BoxContainer>
+                    ) : (
+                      isLoadingListingBoxes && (
+                        <div className="box-loading">
+                          <Loading />
+                        </div>
+                      )
+                    )}
+                  </div>
+                  <ButtonContainer>
+                    <AddToCartButton
+                      text="Add to Cart"
+                      onClick={onAddToCart}
+                      variant={pressedBoxRadio ? undefined : 'disabled'}
+                    />
+                  </ButtonContainer>
+                </DesiredQuantityContainer>
+              )}
             </Col>
           </DetailsContainer>
         </>
