@@ -69,12 +69,6 @@ export const BUYER_STEPS = [
   },
 ];
 
-export const BUYER_MARKET_STEP = {
-  title: 'Market Sector',
-  description:
-    'Please, let us know your industry so we can provide you with more tailored information.',
-};
-
 interface Field {
   label: string;
   key: string;
@@ -137,10 +131,6 @@ export const BANK_DETAIL_FIELDS: Field[] = [
   },
 ];
 
-export const LICENSES_FIELDS: Field[] = [
-  { label: 'License Name', key: 'licenseName' },
-];
-
 export const BUYER_LOCATION_NOTES =
   'Receiving shipment from more than 1 location? You can add multiple addresses once your account is approved.';
 
@@ -167,17 +157,6 @@ export const INTERESTED_SHOREPAY_OPTIONS = [
     label: 'No',
     value: '0',
   },
-];
-
-export const CREDIT_LINE_NOTES =
-  'Take Out an Uncapped Line of Credit with ShoreTrade’s Financing. Get approved within 24 hours.';
-
-export const CREDIT_LINE_TERMS_LABEL = 'shoretrade financing terms are:';
-
-export const CREDIT_LINE_TERMS = [
-  '• 0 - 30 Days (Interest Free)',
-  '• 30 - 60 Days (1.5% on Invoice Penalty Fee), every 30 Days',
-  '• Thereafter 1% on Invoice Penalty.',
 ];
 
 export const BUYER_VARIATIONS = [

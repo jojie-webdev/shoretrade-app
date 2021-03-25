@@ -37,11 +37,6 @@ import {
   SELLER_LOCATION_NOTES,
   BUYER_LOCATION_NOTES,
   PAYMENT_METHOD_OPTIONS,
-  BUYER_MARKET_STEP,
-  CREDIT_LINE_NOTES,
-  CREDIT_LINE_TERMS,
-  CREDIT_LINE_TERMS_LABEL,
-  LICENSES_FIELDS,
   SELLER_VARIATIONS,
   BUYER_VARIATIONS,
   BUYER_STEP_SUBTITLE,
@@ -53,7 +48,6 @@ import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
   Container,
   Content,
-  Footer,
   GetStartedTitle,
   GetStartedTitleWrapper,
   GetStartedButton,
@@ -97,7 +91,6 @@ import {
   validateBankDetails,
   validateBusinessAddress,
   validateAgreement,
-  validateAnnualRevenue,
   validateCategoryMarketSector,
 } from './Register.validation';
 
@@ -108,7 +101,6 @@ const StepForm = ({
   registrationDetails,
   updateRegistrationDetails,
   isPending,
-  isApplicationForLineCredit,
   error: registerError,
   categories,
   getCategoryItem,
@@ -801,9 +793,7 @@ const StepForm = ({
                               : INTERESTED_SHOREPAY_OPTIONS[1].value
                           }
                           onChange={(option) => {
-                            handleSelectShorePay(
-                              option.value === '1' ? true : false
-                            );
+                            handleSelectShorePay(option.value === '1');
                           }}
                           options={INTERESTED_SHOREPAY_OPTIONS}
                           label="Are you interested in applying for ShorePay?"
@@ -815,12 +805,12 @@ const StepForm = ({
                             onClick={() => handleDownloadApplicationForm()}
                             icon={
                               <DownloadIcon
-                                fill="#E35D32"
+                                fill={theme.brand.primary}
                                 height={15}
                                 width={20}
                               />
                             }
-                            style={{ marginBottom: '5px' }}
+                            style={{ margin: '10px 0' }}
                           />
                         ) : (
                           ''
@@ -828,38 +818,6 @@ const StepForm = ({
                       </div>
                     </>
                   )}
-                  {/* {isApplicationForLineCredit && (
-                    <div className="credit-line-info">
-                      <PaymentMethodDetails variant="label">
-                        {CREDIT_LINE_NOTES}
-                      </PaymentMethodDetails>
-                      <PaymentMethodOverline variant="overline">
-                        {CREDIT_LINE_TERMS_LABEL}
-                      </PaymentMethodOverline>
-
-                      {CREDIT_LINE_TERMS.map((term) => (
-                        <PaymentMethodDetails key={term} variant="label">
-                          {term}
-                        </PaymentMethodDetails>
-                      ))}
-
-                      <BaseTextField
-                        value={registrationDetails.estimatedAnnualRevenue}
-                        onChangeText={(v) =>
-                          updateRegistrationDetails({
-                            estimatedAnnualRevenue: v,
-                          })
-                        }
-                        label="Estimated annual revenue"
-                        LeftComponent={
-                          <Typography color="shade6">$</Typography>
-                        }
-                        type="number"
-                        error={otherErrors.estimatedAnnualRevenue || ''}
-                        style={{ marginBottom: 8, marginTop: 8 }}
-                      />
-                    </div>
-                  )} */}
                 </>
               )}
               {step === 4 && (
@@ -1097,7 +1055,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSummaryEdit,
   } = props;
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(3);
   const MAX_STEP = !isSeller ? 6 : 7;
 
   const summaryHandleStep = (step: number) => {

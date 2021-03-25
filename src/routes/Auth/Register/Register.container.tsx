@@ -16,7 +16,6 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { downloadShorePayApplicationForm } from 'utils/Registration';
 import { useTheme } from 'utils/Theme';
 
-import { PAYMENT_METHOD_OPTIONS } from './Register.constants';
 import { RegistrationDetails } from './Register.props';
 import RegisterView from './Register.view';
 
@@ -236,17 +235,16 @@ const Register = (): JSX.Element => {
   };
 
   const handleSelectShorePay = (shorePay: boolean) => {
-    setInterestedInShorePay(shorePay);
-    if (shorePay === true) {
-      /**
+    /**
        * shorepay == true
-        registerDebtFinancing=true
-        debtFinancingEstRevenue=0
-        debtFinancingSegment=<selected market sector value>
-        otherwise,
-        registerDebtFinancing=false
+       registerDebtFinancing=true
+       debtFinancingEstRevenue=0
+       debtFinancingSegment=<selected market sector value>
+       otherwise,
+       registerDebtFinancing=false
        */
-    }
+
+    setInterestedInShorePay(shorePay);
   };
 
   const isPending =
