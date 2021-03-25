@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { isEmpty } from 'ramda';
+import { groupBy, isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddressesActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/seller/addresses';
@@ -29,6 +29,10 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
         groupOrder: group.stateGroup,
       };
     }) || [];
+
+  const groupedStateOptions = Object.values(
+    groupBy((s) => s.groupOrder.toString(), stateOptions)
+  );
 
   const [specifications, setSpecifications] = useState<Option[]>(
     currentOfferItemData?.stateOptions
@@ -168,7 +172,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   const generatedProps = {
     shippingTo: getShippingTo(),
     addresses,
-    stateOptions,
+    stateOptions: groupedStateOptions,
     marketSizes,
     errors,
 

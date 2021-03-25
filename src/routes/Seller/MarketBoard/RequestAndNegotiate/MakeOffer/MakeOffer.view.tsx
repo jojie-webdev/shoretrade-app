@@ -34,33 +34,32 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         }}
       />
 
-      <div className="shipping-to">
-        <Typography variant="label" color="shade6">
-          Shipping to
-        </Typography>
-        <Typography variant="label" color="noshade" weight="bold">
-          {props.shippingTo}
-        </Typography>
-      </div>
-
       <Typography variant="overline" color="shade6" className="row-label">
         Specs
       </Typography>
-      <Row>
-        {props.stateOptions.map((v) => (
-          <Col key={v.value} md={12} lg={6} xl={4}>
-            <Interactions
-              value={v.label}
-              type="radio"
-              padding="14px 18px"
-              pressed={props.specifications
-                .map((s) => s.value)
-                .includes(v.value)}
-              onClick={() => props.onClickSpecification(v)}
-            />
-          </Col>
-        ))}
-      </Row>
+
+      {props.stateOptions.map((options, i) => {
+        return (
+          <Row
+            key={i}
+            style={{ marginBottom: i === options.length - 1 ? 16 : 0 }}
+          >
+            {options.map((o) => (
+              <Col key={o.value} md={12} lg={6} xl={4}>
+                <Interactions
+                  value={o.label}
+                  type="radio"
+                  padding="14px 18px"
+                  pressed={props.specifications
+                    .map((s) => s.value)
+                    .includes(o.value)}
+                  onClick={() => props.onClickSpecification(o)}
+                />
+              </Col>
+            ))}
+          </Row>
+        );
+      })}
       {pathOr('', ['specifications', '0'], errors) ? (
         <Error variant="caption" color="error">
           {pathOr('', ['specifications', '0'], errors)}
@@ -146,6 +145,15 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             type="number"
             error={pathOr('', ['price', '0'], errors)}
           />
+
+          <div className="shipping-to">
+            <Typography variant="label" color="shade6">
+              Shipping to
+            </Typography>
+            <Typography variant="label" color="noshade" weight="bold">
+              {props.shippingTo}
+            </Typography>
+          </div>
         </Col>
 
         <Col md={12} lg={6} xl={4} className="textfield-col">

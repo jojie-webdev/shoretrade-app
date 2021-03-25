@@ -9,7 +9,7 @@ export type Option = { label: string; value: string; groupOrder: number };
 export interface MakeOfferGeneratedProps extends MakeOfferProps {
   shippingTo: string;
   addresses: { label: string; value: string }[];
-  stateOptions: Option[];
+  stateOptions: Option[][];
   marketSizes: string[];
   errors: Record<string, string[]>;
 

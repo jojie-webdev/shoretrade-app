@@ -7,7 +7,7 @@ export const Container = styled.div`
   .shipping-to {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-top: 8px;
 
     p:first-child {
       margin-right: 4px;
@@ -31,12 +31,12 @@ export const Container = styled.div`
     }
   }
 
-  .textfield-col {
+  .textfield-row {
     margin-top: 24px;
   }
 
   .textfield-col {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
 
   .total-container {
