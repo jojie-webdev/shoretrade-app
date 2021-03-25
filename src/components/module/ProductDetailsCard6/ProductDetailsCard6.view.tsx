@@ -25,6 +25,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     catchDate,
     minOrder,
     unit = 'kg',
+    hiddenPrice,
   } = props;
 
   const formattedTimeLeft = () => moment().to(timeLeft);
@@ -32,18 +33,20 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
 
   return (
     <Container {...props}>
-      <Row>
-        <Price variant="title5" weight="900">
-          {toPrice(price)}
-        </Price>
-        <Label
-          variant="caption"
-          color="shade6"
-          style={{ marginLeft: 6.5, marginTop: 8 }}
-        >
-          per {formatUnitToPricePerUnit(formatMeasurementUnit(unit))}
-        </Label>
-      </Row>
+      {!hiddenPrice && (
+        <Row>
+          <Price variant="title5" weight="900">
+            {toPrice(price)}
+          </Price>
+          <Label
+            variant="caption"
+            color="shade6"
+            style={{ marginLeft: 6.5, marginTop: 8 }}
+          >
+            per {formatUnitToPricePerUnit(formatMeasurementUnit(unit))}
+          </Label>
+        </Row>
+      )}
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Time Left:

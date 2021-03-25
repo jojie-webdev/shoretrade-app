@@ -38,6 +38,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     filterData,
     onChangeFilter,
     isLoadingResults,
+    isPendingAccount,
   } = props;
 
   useEffect(() => {
@@ -124,6 +125,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         isAquafuture={product.isAquafuture}
                         unit={product.measurementUnit}
                         state={product.state}
+                        hiddenVendor={isPendingAccount}
+                        hiddenPrice={isPendingAccount}
                       />
                     </Link>
                   </Col>

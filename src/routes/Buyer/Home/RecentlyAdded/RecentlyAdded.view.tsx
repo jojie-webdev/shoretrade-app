@@ -17,7 +17,7 @@ import { PreviewContainer, LoadingContainer } from './RecentlyAdded.style';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   // const theme = useTheme();
-  const { results } = props;
+  const { results, isPendingAccount } = props;
 
   return (
     <PreviewContainer>
@@ -53,6 +53,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                     isAquafuture={rec.isAquafuture}
                     unit={rec.measurementUnit}
                     state={rec.state}
+                    hiddenPrice={isPendingAccount}
+                    hiddenVendor={isPendingAccount}
                   />
                 </Link>
               );

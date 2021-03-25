@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
-import { ChevronRight } from 'components/base/SVG';
+import { ChevronRight, InfoFilled } from 'components/base/SVG';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -15,6 +15,7 @@ import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import partialRight from 'ramda/es/partialRight';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -95,6 +96,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     favouriteSellers,
     sellers,
     loadingHomePage,
+    isPendingAccount,
   } = props;
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -116,6 +118,18 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer ref={cbRef}>
+      {isPendingAccount && (
+        <div className="wrapper" style={{ marginBottom: 16 }}>
+          <Col xs={12}>
+            <Alert
+              variant="alert"
+              content={`Account Pending. You cannot make purchases until approved.`}
+              fullWidth
+              alignText="center"
+            />
+          </Col>
+        </div>
+      )}
       <div className="wrapper">
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
@@ -139,29 +153,31 @@ const HomeView = (props: HomeGeneratedProps) => {
               addMargin
             />
           </SwiperContainer>
-          <div className="wrapper">
-            <ViewCol style={{ paddingTop: '48px' }}>
-              <HomeSectionHeader
-                title="Favourites"
-                onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-                noMargin
-              />
-
-              <FavouritesContainer>
-                <MultipleCarousel<
-                  GetBuyerHomepageResponseListingItem,
-                  PreviewProps
-                >
-                  data={favourites}
-                  transform={favouritesToPreviewProps}
-                  Component={PreviewCard}
-                  link={BUYER_ROUTES.PRODUCT_DETAIL}
-                  emptyText="No Favourite Products"
-                  id="favourites"
+          {!isPendingAccount && (
+            <div className="wrapper">
+              <ViewCol style={{ paddingTop: '48px' }}>
+                <HomeSectionHeader
+                  title="Favourites"
+                  onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                  noMargin
                 />
-              </FavouritesContainer>
-            </ViewCol>
-          </div>
+
+                <FavouritesContainer>
+                  <MultipleCarousel<
+                    GetBuyerHomepageResponseListingItem,
+                    PreviewProps
+                  >
+                    data={favourites}
+                    transform={favouritesToPreviewProps}
+                    Component={PreviewCard}
+                    link={BUYER_ROUTES.PRODUCT_DETAIL}
+                    emptyText="No Favourite Products"
+                    id="favourites"
+                  />
+                </FavouritesContainer>
+              </ViewCol>
+            </div>
+          )}
 
           <div className="wrapper">
             <ViewCol>
@@ -199,7 +215,9 @@ const HomeView = (props: HomeGeneratedProps) => {
                   PreviewProps
                 >
                   data={recentlyAdded}
-                  transform={recentlyAddedToPreviewProps}
+                  transform={partialRight(recentlyAddedToPreviewProps, [
+                    isPendingAccount,
+                  ])}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}
                   id="recentlyAdded"
@@ -208,46 +226,50 @@ const HomeView = (props: HomeGeneratedProps) => {
             </ViewCol>
           </div>
 
-          <div className="wrapper">
-            <ViewCol>
-              <HomeSectionHeader
-                title="Favourite Sellers"
-                onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
-                noMargin
-              />
+          {!isPendingAccount && (
+            <>
+              <div className="wrapper">
+                <ViewCol>
+                  <HomeSectionHeader
+                    title="Favourite Sellers"
+                    onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+                    noMargin
+                  />
 
-              <SellerContainer>
-                <MultipleCarousel<SellerResults, SellerCardProps>
-                  data={favouriteSellers}
-                  transform={favouriteSellersToSellerCardProps}
-                  Component={SellerCard}
-                  link={BUYER_ROUTES.SELLER_DETAILS}
-                  emptyText="No Favourite Sellers"
-                  id="favouriteSellers"
-                />
-              </SellerContainer>
-            </ViewCol>
-          </div>
+                  <SellerContainer>
+                    <MultipleCarousel<SellerResults, SellerCardProps>
+                      data={favouriteSellers}
+                      transform={favouriteSellersToSellerCardProps}
+                      Component={SellerCard}
+                      link={BUYER_ROUTES.SELLER_DETAILS}
+                      emptyText="No Favourite Sellers"
+                      id="favouriteSellers"
+                    />
+                  </SellerContainer>
+                </ViewCol>
+              </div>
 
-          <div className="wrapper">
-            <ViewCol>
-              <HomeSectionHeader
-                title="Sellers"
-                onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-                noMargin
-              />
+              <div className="wrapper">
+                <ViewCol>
+                  <HomeSectionHeader
+                    title="Sellers"
+                    onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+                    noMargin
+                  />
 
-              <SellerContainer>
-                <MultipleCarousel<SellerResults, SellerCardProps>
-                  data={sellers}
-                  transform={favouriteSellersToSellerCardProps}
-                  Component={SellerCard}
-                  link={BUYER_ROUTES.SELLER_DETAILS}
-                  id="sellers"
-                />
-              </SellerContainer>
-            </ViewCol>
-          </div>
+                  <SellerContainer>
+                    <MultipleCarousel<SellerResults, SellerCardProps>
+                      data={sellers}
+                      transform={favouriteSellersToSellerCardProps}
+                      Component={SellerCard}
+                      link={BUYER_ROUTES.SELLER_DETAILS}
+                      id="sellers"
+                    />
+                  </SellerContainer>
+                </ViewCol>
+              </div>
+            </>
+          )}
         </>
       )}
     </ViewContainer>
