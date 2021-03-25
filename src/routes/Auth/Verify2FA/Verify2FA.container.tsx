@@ -7,6 +7,7 @@ import {
   loginActions,
   verifyActions,
   resendVerificationActions,
+  notifyActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
@@ -18,7 +19,14 @@ const Verify2FA = (): JSX.Element => {
 
   const email = useSelector((state: Store) => state.login.request?.email) || '';
 
+  const showSellerPendingModal =
+    useSelector((state: Store) => state.notify.current) ===
+    'SELLER_PENDING_ACCOUNT';
+
   const backToLogin = () => {
+    if (showSellerPendingModal) {
+      dispatch(notifyActions.clear());
+    }
     history.goBack();
   };
 
@@ -54,6 +62,7 @@ const Verify2FA = (): JSX.Element => {
     backToLogin,
     resendCode,
     isError,
+    showSellerPendingModal,
   };
   return <Verify2FAView {...generatedProps} />;
 };

@@ -60,6 +60,7 @@ import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import notify from './notify';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
@@ -144,6 +145,7 @@ export default (routeHistory: History) =>
         marketRequestAcceptOffer,
         marketOfferNegotiate,
         marketRequestNegotiation,
+        notify,
         order,
         placeOrder,
         readMarketNotification,
