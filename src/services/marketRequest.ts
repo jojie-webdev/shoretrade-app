@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API } from 'consts';
 import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
+import { DeleteMarketRequestMeta } from 'types/store/DeleteMarketRequestState';
 import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
 import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersMeta } from 'types/store/GetAllMarketRequestFiltersState';
@@ -114,5 +115,15 @@ export const acceptOffer = (data: AcceptOffer, token: string) => {
       Authorization: `Bearer ${token}`,
     },
     data,
+  });
+};
+
+export const deleteRequest = (data: DeleteMarketRequestMeta, token: string) => {
+  return axios({
+    method: 'get',
+    url: `${MARKET_REQUEST_URL}/delete/${data.id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

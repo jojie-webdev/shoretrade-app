@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { BUYER_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { marketRequestAcceptOfferActions } from 'store/actions';
+import {
+  deleteMarketRequestActions,
+  marketRequestAcceptOfferActions,
+} from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
@@ -86,6 +89,7 @@ const MarketRequestDetail = (): JSX.Element => {
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [selectedCompany, setSelectedCompany] = useState('');
   const [closeOnAccept, setCloseOnAccept] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
@@ -114,6 +118,16 @@ const MarketRequestDetail = (): JSX.Element => {
           ).id || undefined,
       })
     );
+  };
+
+  const onClickDelete = () => {
+    if (id) {
+      dispatch(
+        deleteMarketRequestActions.request({
+          id,
+        })
+      );
+    }
   };
 
   const submitNegotiation = (v: number) => {
@@ -225,6 +239,9 @@ const MarketRequestDetail = (): JSX.Element => {
     thereIsNewOffer,
     discountPercentage,
     discountValue,
+    onClickDelete,
+    showDelete,
+    setShowDelete,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

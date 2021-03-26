@@ -74,6 +74,10 @@ import {
   DeleteLinkedAccountMeta,
   DeleteLinkedAccountPayload,
 } from './DeleteLinkedAccountState';
+import {
+  DeleteMarketRequestMeta,
+  DeleteMarketRequestPayload,
+} from './DeleteMarketRequestState';
 import { EditableListingState } from './EditableListingState';
 import { EditableMarketRequestPayload } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
@@ -239,6 +243,10 @@ export interface Store {
   deleteLinkedAccount: AsyncState<
     DeleteLinkedAccountMeta,
     DeleteLinkedAccountPayload
+  >;
+  deleteMarketRequest: AsyncState<
+    DeleteMarketRequestMeta,
+    DeleteMarketRequestPayload
   >;
   getBankDetails: AsyncState<GetBankDetailsMeta, GetBankDetailsPayload>;
   updateBankDetails: AsyncState<
