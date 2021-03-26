@@ -97,6 +97,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
                 </Typography>
               }
+              placeholder={props.buyerRequest.sizeFrom.toString()}
               value={props.size.from}
               onChangeText={(v) =>
                 props.setSize((prevState) => ({
@@ -107,7 +108,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       : '',
                 }))
               }
-              min={1}
+              min={props.buyerRequest.sizeFrom}
               type="number"
               error={pathOr('', ['sizeFrom', '0'], errors)}
             />
@@ -123,6 +124,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
                 </Typography>
               }
+              placeholder={props.buyerRequest.sizeTo.toString()}
               value={props.size.to}
               onChangeText={(v) => {
                 props.setSize((prevState) => ({
@@ -134,6 +136,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 }));
               }}
               min={1}
+              max={props.buyerRequest.sizeTo}
               type="number"
               error={pathOr('', ['sizeTo', '0'], errors)}
             />

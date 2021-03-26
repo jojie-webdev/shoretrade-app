@@ -6,6 +6,7 @@ import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import { isEmpty, uniq } from 'ramda';
 import theme from 'utils/Theme';
 
 import {
@@ -33,6 +34,8 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
       groupOrder: item.groupOrder,
     }))
   );
+
+  const groupOrders = uniq(stateOptions.flat().map((so) => so.groupOrder));
 
   const [selectedState, setSelectedState] = useState<{
     selectedStates: any[];
@@ -63,6 +66,11 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
       });
     }
   };
+
+  const selectedGroups = selectedState.selectedStates.map(
+    (ss) => ss.groupOrder
+  );
+  const isDisabled = !groupOrders.every((go) => selectedGroups.includes(go));
 
   return (
     <>
@@ -110,7 +118,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           ))}
           <Button
             onClick={() => handleSelectSpecs()}
-            disabled={selectedState.selectedStates.length < 1}
+            disabled={isEmpty(groupOrders) || isDisabled}
             text="Select Specification"
             variant="primary"
           />
