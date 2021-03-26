@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Typography from 'components/base/Typography';
+import DateRangePicker from 'components/module/DateRangePicker';
 import OrderItemView from 'components/module/OrderItem';
+import Search from 'components/module/Search';
 import { useTheme } from 'utils/Theme';
 
 import { OrdersGeneratedProps } from '../Orders.props';
@@ -9,14 +11,39 @@ import {
   AccordionTitleContainer,
   StyledAccordion,
   OrderBadge,
+  SearchContainer,
+  SearchFilterRow,
 } from '../Orders.style';
 
 const InTransit = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
-  const { inTransitOrders } = props;
+  const { inTransitOrders, filters } = props;
+  const [searchValue, setSearchValue] = useState('');
+
+  const onDatesChange = () => {
+    console.log('dateChanged');
+  };
 
   return (
     <>
+      <SearchFilterRow>
+        <SearchContainer>
+          <Search
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            resetValue={() => setSearchValue('')}
+            placeholder="Search by order#, product type & seller..."
+            rounded
+          />
+        </SearchContainer>
+
+        <DateRangePicker
+          startDate={filters.pendingOrdersFilter.dateFrom}
+          endDate={filters.pendingOrdersFilter.dateTo}
+          onDatesChange={onDatesChange}
+          format="D MMM YYYY"
+        />
+      </SearchFilterRow>
       {Object.keys(inTransitOrders).map((key) => (
         <StyledAccordion
           key={key}

@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Minus,
+  ChevronDown,
   SubtractHollow,
   Weight,
   FileUpload,
@@ -158,6 +160,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Minus">
+          <Minus width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ChevronDown">
+          <ChevronDown width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Weight">
           <Weight width={30} height={30} />
         </Wrapper>

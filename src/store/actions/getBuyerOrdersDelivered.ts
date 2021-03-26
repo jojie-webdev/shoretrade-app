@@ -14,8 +14,8 @@ const getBuyerOrdersDeliveredActions = {
   ...asyncAction,
   request: (filter?: {
     page: string;
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
   }): {
     type: string;
     meta: GetBuyerOrdersMeta;
@@ -24,7 +24,9 @@ const getBuyerOrdersDeliveredActions = {
     meta: {
       status: 'DELIVERED',
       limit: 10,
-      ...filter,
+      dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
+      dateTo: filter?.dateTo?.format('M/DD/yyyy'),
+      page: filter?.page,
     },
   }),
 };

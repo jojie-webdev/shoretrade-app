@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import moment from 'moment';
 import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 // import useSelectorSafe from 'store/selectors/useSelectorSafe';
@@ -37,22 +38,26 @@ const OrdersContainer = (): JSX.Element => {
 
   const getOrdersPlaced = (filter?: {
     page: string;
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
   }) => {
     if (filter?.page) {
       dispatch(getBuyerOrdersPlacedActions.request(filter));
     }
   };
 
-  const getOrdersTransit = () => {
-    dispatch(getBuyerOrdersTransitActions.request());
+  const getOrdersTransit = (filter?: {
+    page: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
+  }) => {
+    dispatch(getBuyerOrdersTransitActions.request(filter));
   };
 
   const getOrdersDelivered = (filter?: {
     page: string;
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
   }) => {
     dispatch(getBuyerOrdersDeliveredActions.request(filter));
   };
@@ -117,8 +122,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: '',
-      dateTo: '',
+      dateFrom: moment().startOf('week'),
+      dateTo: moment(),
     }
   );
 
@@ -126,8 +131,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: '',
-      dateTo: '',
+      dateFrom: null,
+      dateTo: null,
     }
   );
 
@@ -135,8 +140,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: '',
-      dateTo: '',
+      dateFrom: null,
+      dateTo: null,
     }
   );
 

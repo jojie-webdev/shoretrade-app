@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import DatePickerDropdown from 'components/module/DatePickerDropdown';
+import DateRangePicker from 'components/module/DateRangePicker';
 import OrderItemView from 'components/module/OrderItem';
+import Search from 'components/module/Search';
 import { Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
@@ -12,15 +15,22 @@ import {
   OrderBadge,
   AccordionTitleContainer,
   TitleRow,
+  SearchFilterRow,
+  SearchContainer,
 } from '../Orders.style';
 
 const Pending = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
 
-  const { pendingOrders } = props;
+  const { pendingOrders, updateFilters, filters } = props;
 
   const [confirmedOrdersFormatted, setConfirmedOrdersFormatted] = useState({});
   const [pendingOrdersFormatted, setPendingOrdersFormatted] = useState({});
+  const [searchValue, setSearchValue] = useState('');
+
+  const onDatesChange = () => {
+    console.log('dateChanged');
+  };
 
   useEffect(() => {
     if (pendingOrders) {
@@ -52,6 +62,24 @@ const Pending = (props: OrdersGeneratedProps) => {
 
   return (
     <>
+      <SearchFilterRow>
+        <SearchContainer>
+         <Search
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            resetValue={() => setSearchValue('')}
+            placeholder="Search by order#, product type & seller..."
+            rounded
+          />
+        </SearchContainer>
+
+        <DateRangePicker
+          startDate={filters.pendingOrdersFilter.dateFrom}
+          endDate={filters.pendingOrdersFilter.dateTo}
+          onDatesChange={onDatesChange}
+          format="D MMM YYYY"
+        />
+      </SearchFilterRow>
       <TitleRow>
         <Col md={12} className="title-col">
           <div className="svg-container">

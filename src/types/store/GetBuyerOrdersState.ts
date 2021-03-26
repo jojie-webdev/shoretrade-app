@@ -4,8 +4,8 @@ export type GetBuyerOrdersMeta = {
   status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   limit?: number;
   page?: string;
-  dateFrom?: string;
-  dateTo?: string;
+  dateFrom?: Date | string;
+  dateTo?: Date | string;
 };
 
 export type GetBuyerOrdersResponseItem = {

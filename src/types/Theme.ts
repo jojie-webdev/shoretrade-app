@@ -23,4 +23,8 @@ export type Theme = {
     shade10: string;
     noshade: string;
   };
+  states: {
+    hover: string;
+    pressed: string;
+  };
 };

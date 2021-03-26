@@ -1,5 +1,7 @@
 import { Dispatch } from 'react';
 
+import moment from 'moment';
+
 export interface OrderItem {
   id: string;
   confirmed: boolean;
@@ -42,8 +44,8 @@ export interface OrderItem {
 
 export type RequestFilters = {
   page: string;
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: moment.Moment | null;
+  dateTo: moment.Moment | null;
 };
 
 export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
