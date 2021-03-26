@@ -1,10 +1,6 @@
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .header {
-    margin-bottom: 40px;
-  }
-
   .interactions {
     margin-top: 12px;
 
@@ -24,16 +20,12 @@ export const Container = styled.div`
       margin-left: 8px;
     }
   }
-
-  button {
-    margin-top: 32px;
-  }
 `;
 
 export const BadgeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 24px;
 
   .badge-item-container {
     margin-right: 8px;
