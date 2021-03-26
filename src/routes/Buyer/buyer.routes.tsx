@@ -207,7 +207,7 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname.includes('/buyer/market-requests')) {
+    if (pathname.includes('/buyer/market-requests/')) {
       return {
         pageTitle: 'Market Requests',
         onBack: history.goBack,
