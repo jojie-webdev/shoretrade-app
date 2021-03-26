@@ -50,7 +50,7 @@ export const BUYER_STEPS = [
   {
     title: 'Payment Method',
     description:
-      'Select a payment method to be used when purchasing from our suppliers.',
+      'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
   },
   {
     title: 'Market Sector',

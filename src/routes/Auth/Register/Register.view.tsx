@@ -18,6 +18,7 @@ import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { Formik, FormikProps } from 'formik';
+import { isEmpty } from 'ramda';
 import { validateAccount } from 'services/auth';
 import {
   Category,
@@ -239,7 +240,11 @@ const StepForm = ({
     return (
       <CategoryContainer>
         {isGotoDetails && (
-          <Typography variant="title5" style={{ marginBottom: 8 }}>
+          <Typography
+            variant="title5"
+            color={isSeller ? 'noshade' : 'shade9'}
+            style={{ marginBottom: 8 }}
+          >
             {currentCategory.name}
           </Typography>
         )}
@@ -256,41 +261,47 @@ const StepForm = ({
 
         {!isGotoDetails && (
           <>
-            <BadgeContainer
-              style={{
-                marginBottom: 16,
-              }}
-            >
-              {selectedCategoryTypes &&
-                selectedCategoryTypes.map((selection: CategoryPayload) => {
-                  return (
-                    <BadgeItemContainer key={selection.id}>
-                      <Badge badgeColor={theme.grey.shade3}>
-                        <Typography variant="overline" color="shade9">
-                          {selection.name}
-                        </Typography>
-                      </Badge>
-                    </BadgeItemContainer>
-                  );
-                })}
-            </BadgeContainer>
             {searchCategory.map((result) => {
+              const selected = selectedCategoryTypes.filter(
+                (s) => s.categoryId === result.id
+              );
+
               return (
-                <InteractionsContainer key={result.id}>
-                  <Interactions
-                    onClick={() => {
-                      setCurrentCategory({
-                        name: result.name,
-                        id: result.id,
-                      });
-                      getCategoryItem(result.id);
-                      showDetails();
-                    }}
-                    padding="16px 20px 16px 8px"
-                  >
-                    <CategoryChildren {...result} />
-                  </Interactions>
-                </InteractionsContainer>
+                <>
+                  <InteractionsContainer key={result.id}>
+                    <Interactions
+                      onClick={() => {
+                        setCurrentCategory({
+                          name: result.name,
+                          id: result.id,
+                        });
+                        getCategoryItem(result.id);
+                        showDetails();
+                      }}
+                      padding="16px 20px 16px 8px"
+                    >
+                      <CategoryChildren {...result} />
+                    </Interactions>
+                  </InteractionsContainer>
+
+                  {!isEmpty(selected) && (
+                    <BadgeContainer
+                      style={{
+                        marginBottom: 12,
+                      }}
+                    >
+                      {selected.map((selection) => (
+                        <BadgeItemContainer key={selection.id}>
+                          <Badge badgeColor={theme.grey.shade3}>
+                            <Typography variant="overline" color="shade9">
+                              {selection.name}
+                            </Typography>
+                          </Badge>
+                        </BadgeItemContainer>
+                      ))}
+                    </BadgeContainer>
+                  )}
+                </>
               );
             })}
           </>
