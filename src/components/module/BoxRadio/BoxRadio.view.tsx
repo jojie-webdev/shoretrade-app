@@ -32,8 +32,6 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
                   paddingLeft: 24,
                   paddingTop: 4,
                   alignItems: 'left',
-                  minWidth: 100,
-                  maxWidth: 100,
                 }}
               >
                 <Typography variant="caption" color="shade6">{`${
@@ -45,13 +43,11 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
 
               <Col style={{ paddingLeft: 16, paddingTop: 4 }}>
                 <Typography variant="caption" color="shade6">
-                  {b.quantity || 0}x
+                  x{b.quantity || 0}
                 </Typography>
               </Col>
 
-              <BreakDownCol
-                style={{ paddingLeft: 16, minWidth: 120, maxWidth: 120 }}
-              >
+              <BreakDownCol style={{ paddingLeft: 16 }}>
                 <Typography variant="body" color="shade6">
                   {Number.isInteger(b.weight)
                     ? (b.weight * (b.quantity || 0)).toFixed(0)
