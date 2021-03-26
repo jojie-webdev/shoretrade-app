@@ -250,7 +250,7 @@ export const CategorySearchInputContainer = styled.div`
 `;
 
 export const InteractionsContainer = styled.div`
-  margin-bottom: 8px;
+  margin-top: 12px;
   width: 100%;
 `;
 
