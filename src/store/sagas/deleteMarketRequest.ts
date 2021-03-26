@@ -1,7 +1,5 @@
 import { push } from 'connected-react-router';
 import { BUYER_ROUTES } from 'consts';
-import qs from 'qs';
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteRequest } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';
@@ -20,15 +18,7 @@ function* deleteMarketRequestRequest(
   if (state.auth.token) {
     try {
       const { data } = yield call(deleteRequest, action.meta, state.auth.token);
-      yield put(
-        // Add companyId to success payload to be able to call getLinkedAccountsActions on success watcher.
-        deleteMarketRequestActions.success({
-          ...data,
-          data: {
-            ...data.data,
-          },
-        })
-      );
+      yield put(deleteMarketRequestActions.success(data));
     } catch (e) {
       yield put(deleteMarketRequestActions.failed(e.message));
     }
