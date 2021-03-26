@@ -24,7 +24,7 @@ import {
   FooterPadding,
 } from './Step6.style';
 
-const BoxDetails = ({
+export const BoxDetails = ({
   weight,
   quantity,
   count,
@@ -33,7 +33,7 @@ const BoxDetails = ({
   fixed,
 }: BoxType & {
   unit: string;
-  onRemove: () => void;
+  onRemove?: () => void;
 }) => {
   const theme = useTheme();
 
@@ -77,7 +77,7 @@ const BoxDetails = ({
         </div>
       </div>
 
-      {!fixed && (
+      {onRemove && !fixed ? (
         <Touchable
           onPress={() => {
             onRemove();
@@ -87,6 +87,8 @@ const BoxDetails = ({
         >
           <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
         </Touchable>
+      ) : (
+        ''
       )}
     </BoxDetailsContainer>
   );

@@ -48,6 +48,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     preview,
     marketEstimate,
     onUploadCSV,
+    boxesDetails,
+    measurementUnit,
     isUploadingCSV,
   } = props;
 
@@ -128,6 +130,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       case 8:
         return (
           <Step8
+            measurementUnit={measurementUnit}
+            boxesDetails={boxesDetails}
             onChangeCurrentPage={onChangeCurrentPage}
             isCustomType={isCustomType}
             editableListing={editableListing}
