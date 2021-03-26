@@ -63,4 +63,7 @@ export interface MarketRequestDetailProps {
   thereIsNewOffer: boolean;
   discountValue: number;
   discountPercentage: string;
+  onClickDelete: () => void;
+  showDelete: boolean;
+  setShowDelete: Dispatch<SetStateAction<boolean>>;
 }
