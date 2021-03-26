@@ -119,8 +119,12 @@ const Register = (): JSX.Element => {
   }, []);
 
   const getCategoryItem = async (id: string) => {
+    setCategoryItems([]);
+    setSearchCategoryType([]);
+
     const data = await getInactiveTypesByCategory(id);
     const result = data.data.data.type;
+
     setCategoryItems(result);
     setSearchCategoryType(result);
   };

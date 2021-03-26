@@ -9,6 +9,7 @@ import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
 import Search from 'components/module/Search';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { MarketInterestsGeneratedProps } from 'routes/Seller/Account/MarketInterests/MarketInterests.props';
 import {
@@ -40,7 +41,12 @@ const MarketInterestsView = ({
 
   return (
     <Container>
-      <Row nogutter justify="between" align="center" className="header">
+      <Row
+        nogutter
+        justify="between"
+        align="center"
+        style={{ marginBottom: !isInner ? 40 : 0 }}
+      >
         <Col>
           <Breadcrumbs
             sections={[
@@ -57,7 +63,9 @@ const MarketInterestsView = ({
                       },
                     },
                     {
-                      label: 'Details',
+                      label:
+                        categories.find((c) => c.id === currentCategoryId)
+                          ?.name || 'Details',
                     },
                   ]),
             ]}
@@ -76,47 +84,65 @@ const MarketInterestsView = ({
         </Col>
       </Row>
 
-      <BadgeContainer>
-        {props.selling.map((s) => {
-          return (
-            <div key={s.id} className="badge-item-container">
-              <Badge badgeColor={theme.grey.shade3}>
-                <Typography variant="overline" color="shade9">
-                  {s.name}
-                </Typography>
-              </Badge>
-            </div>
-          );
-        })}
-      </BadgeContainer>
+      {isInner && (
+        <Row style={{ marginBottom: 16 }}>
+          <Col />
+          <Col xs="content">
+            <Button
+              loading={props.isSaving}
+              onClick={props.onSave}
+              text="Save"
+            />
+          </Col>
+        </Row>
+      )}
 
       {!isInner &&
-        categories.map((c) => (
-          <Interactions
-            padding="16px 20px 16px 8px"
-            key={c.id}
-            onClick={() => props.onPressCategory(c.id)}
-            leftComponent={
-              <div className="category-container">
-                <div style={{ width: 48 }}>
-                  <CategoryImage
-                    id={c.id}
-                    containerHeight={30}
-                    maxHeight={30}
-                  />
-                </div>
+        categories.map((c) => {
+          const selling = props.selling.filter((s) => s.categoryId === c.id);
 
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  className="category-text"
-                >
-                  {c.name}
-                </Typography>
-              </div>
-            }
-          />
-        ))}
+          return (
+            <>
+              <Interactions
+                padding="16px 20px 16px 8px"
+                key={c.id}
+                onClick={() => props.onPressCategory(c.id)}
+                leftComponent={
+                  <div className="category-container">
+                    <div style={{ width: 48 }}>
+                      <CategoryImage
+                        id={c.id}
+                        containerHeight={30}
+                        maxHeight={30}
+                      />
+                    </div>
+
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      className="category-text"
+                    >
+                      {c.name}
+                    </Typography>
+                  </div>
+                }
+              />
+              {!isEmpty(selling) && (
+                <BadgeContainer>
+                  {selling.map((s) => (
+                    <div key={s.id} className="badge-item-container">
+                      <Badge badgeColor={theme.grey.shade3}>
+                        <Typography variant="overline" color="shade9">
+                          {s.name}
+                        </Typography>
+                      </Badge>
+                    </div>
+                  ))}
+                </BadgeContainer>
+              )}
+            </>
+          );
+        })}
 
       {isInner &&
         innerCategories.map((c) => (
@@ -142,10 +168,6 @@ const MarketInterestsView = ({
             }
           />
         ))}
-
-      {isInner && (
-        <Button loading={props.isSaving} onClick={props.onSave} text="Save" />
-      )}
     </Container>
   );
 };

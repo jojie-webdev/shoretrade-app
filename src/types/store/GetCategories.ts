@@ -22,6 +22,7 @@ export interface CategoryType {
 export interface CategoryPayload {
   id: string;
   name: string;
+  categoryId: string;
 }
 
 interface Price {
