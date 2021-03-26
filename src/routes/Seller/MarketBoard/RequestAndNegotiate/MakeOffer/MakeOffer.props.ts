@@ -9,13 +9,21 @@ export type Option = { label: string; value: string; groupOrder: number };
 export interface MakeOfferGeneratedProps extends MakeOfferProps {
   shippingTo: string;
   addresses: { label: string; value: string }[];
-  stateOptions: Option[];
+  stateOptions: Option[][];
   marketSizes: string[];
   errors: Record<string, string[]>;
 
   specifications: Option[];
-  size: string;
-  setSize: Dispatch<SetStateAction<string>>;
+  size: {
+    from: string;
+    to: string;
+  };
+  setSize: Dispatch<
+    SetStateAction<{
+      from: string;
+      to: string;
+    }>
+  >;
   weight: string;
   setWeight: Dispatch<SetStateAction<string>>;
   price: string;

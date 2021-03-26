@@ -231,7 +231,11 @@ function Step7({
             value={price}
             onChangeText={(v) => {
               if (!Number.isNaN(Number(v))) {
-                setPrice(v);
+                setPrice(
+                  v.includes('.') && v.split('.')[1].length >= 2
+                    ? parseFloat(v).toFixed(2).toString()
+                    : v
+                );
               }
             }}
             error={pathOr('', ['price', '0'], errors)}

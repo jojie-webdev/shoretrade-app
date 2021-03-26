@@ -7,7 +7,7 @@ const constraints = {
       allowEmpty: false,
     },
   },
-  size: {
+  sizeFrom: {
     presence: {
       message: '^Please set or pick size',
       allowEmpty: false,

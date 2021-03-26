@@ -147,16 +147,6 @@ export const TextField = styled(FormikTextField)`
   margin-top: 24px;
 `;
 
-export const Footer = styled.div`
-  display: flex;
-  min-height: 64px;
-  max-height: 64px;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 32px;
-  background-color: ${({ theme }) => theme.grey.shade9};
-`;
-
 export const InputContainer = styled.div`
   margin-top: 24px;
 `;

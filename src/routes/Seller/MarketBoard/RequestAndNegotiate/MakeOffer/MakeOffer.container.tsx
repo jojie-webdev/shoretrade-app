@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { isEmpty } from 'ramda';
+import { groupBy, isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddressesActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/seller/addresses';
@@ -30,6 +30,10 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       };
     }) || [];
 
+  const groupedStateOptions = Object.values(
+    groupBy((s) => s.groupOrder.toString(), stateOptions)
+  );
+
   const [specifications, setSpecifications] = useState<Option[]>(
     currentOfferItemData?.stateOptions
       ? stateOptions.filter((st) =>
@@ -37,11 +41,16 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
         )
       : []
   );
-  const [size, setSize] = useState(
-    currentOfferItemData?.size.from === null
-      ? 'ungraded'
-      : currentOfferItemData?.size.from || ''
-  );
+  const [size, setSize] = useState({
+    from:
+      currentOfferItemData?.size.from === null
+        ? 'ungraded'
+        : currentOfferItemData?.size.from || '',
+    to:
+      currentOfferItemData?.size.to === null
+        ? 'ungraded'
+        : currentOfferItemData?.size.to || '',
+  });
   const [weight, setWeight] = useState(
     currentOfferItemData?.weight ? currentOfferItemData?.weight.toString() : ''
   );
@@ -109,12 +118,23 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   const addToMarketOffers = () => {
     const marketOfferValidation = isValid({
       specifications,
-      size,
+      sizeFrom: size.from,
       price,
       deliveryDate,
       selectedAddress,
       weight,
     });
+
+    if (size.from && size.to) {
+      if (parseFloat(size.from) > parseFloat(size.to)) {
+        marketOfferValidation.sizeTo = [
+          'Please set value equal or higher than from',
+        ];
+      } else {
+        marketOfferValidation.sizeTo = [];
+      }
+    }
+
     const isEmptyError = Object.keys(marketOfferValidation).every(
       (k) => marketOfferValidation[k].length === 0
     );
@@ -129,8 +149,8 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       price: parseFloat(price) || 0,
       sellerId: user?.id || '',
       size: {
-        from: size as string,
-        to: null,
+        from: size.from,
+        to: size.to || null,
       },
       stateOptions: specifications.map((s) => s.value),
       weight: parseFloat(weight),
@@ -140,7 +160,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       measurementUnit: buyerRequest?.measurementUnit || '',
     };
 
-    if (size === 'ungraded') {
+    if (size.from === 'ungraded' || size.to === 'ungraded') {
       payload.size = {
         from: null,
         to: null,
@@ -168,7 +188,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   const generatedProps = {
     shippingTo: getShippingTo(),
     addresses,
-    stateOptions,
+    stateOptions: groupedStateOptions,
     marketSizes,
     errors,
 

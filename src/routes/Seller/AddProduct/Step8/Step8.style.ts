@@ -1,3 +1,4 @@
+import TextField from 'components/base/TextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
@@ -26,3 +27,8 @@ export const ButtonRow = styled(Row)`
     }
   }
 `;
+export const BoxItemContainer = styled.div`
+  margin-bottom: 8px;
+`;
+
+export const StyledTextField = styled(TextField)``;

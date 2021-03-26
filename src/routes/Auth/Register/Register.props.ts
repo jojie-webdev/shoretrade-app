@@ -55,7 +55,6 @@ export interface RegisterGeneratedProps {
   isPending: boolean;
   isSuccess: boolean;
   error: string;
-  isApplicationForLineCredit: boolean;
   categories: Category[];
   getCategoryItem: (id: string) => void;
   categoryItems: CategoryType[];
@@ -74,6 +73,9 @@ export interface RegisterGeneratedProps {
   onChangeSearch: (search: string) => void;
   isSummaryEdit: boolean;
   setSummaryEdit: () => void;
+  interestedInShorePay: boolean;
+  handleSelectShorePay: (shorePay: boolean) => void;
+  handleDownloadApplicationForm: () => void;
 }
 
 export interface StepFormProps extends RegisterGeneratedProps {

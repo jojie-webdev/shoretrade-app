@@ -72,7 +72,7 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
           <StyledTextField
             type="number"
             readOnly={unit === 'portions'}
-            label="Count per Box"
+            label="Count per Box (Optional)"
             value={values.count}
             onChangeText={(v) => {
               setValues({ ...values, count: v });
