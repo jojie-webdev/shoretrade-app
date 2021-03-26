@@ -2,6 +2,7 @@ import React from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import Button from 'components/base/Button';
 import {
   Crab,
   DollarSign,
@@ -13,6 +14,7 @@ import {
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import NegotiateModalView from 'components/module/NegotiateModal';
 import { BUYER_ROUTES } from 'consts';
@@ -229,6 +231,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     discountValue,
     thereIsNewOffer,
     newOffer,
+    showDelete,
+    setShowDelete,
+    onClickDelete,
   } = props;
 
   if (!sellerOffers) {
@@ -256,6 +261,16 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           setNegotiating(false);
         }}
       />
+      <ConfirmationModal
+        isOpen={showDelete}
+        title="Delete Market Request"
+        description="Are you sure you want to delete this market request?"
+        action={() => {
+          onClickDelete && onClickDelete();
+        }}
+        actionText="DELETE"
+        onClickClose={() => setShowDelete(false)}
+      />
       <BoxContainer>
         <HeaderContainer>
           <div>
@@ -275,6 +290,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 weight={data.weight}
               />
             </RequestDetailsCardContainer>
+            {data.status !== 'DELETED' && (
+              <Button
+                text="Delete"
+                onClick={() => setShowDelete(true)}
+                variant="primary"
+              />
+            )}
           </Col>
           <Col md={12} sm={12} xl={8}>
             <Switch>
