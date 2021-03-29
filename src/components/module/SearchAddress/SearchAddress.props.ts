@@ -1,6 +1,4 @@
-import { Dispatch, InputHTMLAttributes } from 'react';
-
-import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
+import { Dispatch } from 'react';
 
 export type SearchInterface = {
   count: string;

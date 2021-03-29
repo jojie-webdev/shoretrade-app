@@ -18,55 +18,19 @@ export const Container = styled.div`
   @media ${BREAKPOINTS.sm} {
     flex-direction: column;
   }
-`;
 
-export const InputContainer = styled.div`
-  background: #ffffff;
-  border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
-  border-radius: ${(props) =>
-    props.theme.appType === 'buyer' ? '4px' : '100px'};
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  width: 100%;
-  padding: ${(props) =>
-    props.theme.appType === 'buyer' ? '24px' : '10px 15px'};
-  flex: 3;
+  .search-product {
+    flex: 3;
+    margin-bottom: 0;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
 
-  .close-svg-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  input {
-    flex: 1;
-    border: 0;
-    margin: 0 10px;
-    height: 100%;
-
-    :focus {
-      outline: none;
-      border: none;
+    @media ${BREAKPOINTS.sm} {
+      padding: ${(props) =>
+        props.theme.appType === 'buyer' ? '12px' : '10px 15px'};
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
-
-    ::placeholder {
-      color: ${(props) => props.theme.grey.shade5};
-    }
-  }
-
-  .dropdownSelectContainerThin {
-    margin-top: 0 !important;
-  }
-
-  @media ${BREAKPOINTS.sm} {
-    padding: ${(props) =>
-      props.theme.appType === 'buyer' ? '12px' : '10px 15px'};
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
 `;
 

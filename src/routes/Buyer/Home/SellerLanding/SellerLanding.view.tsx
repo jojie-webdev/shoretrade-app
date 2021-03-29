@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -18,7 +16,11 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
     <PreviewContainer>
       <Row nogutter>
         <Col xs={12}>
-          <SearchAddressView />
+          <Search
+            placeholder="Search for a seller"
+            value={search}
+            onChange={onChangeSearchValue}
+          />
         </Col>
       </Row>
       {results.length > 0 ? (
