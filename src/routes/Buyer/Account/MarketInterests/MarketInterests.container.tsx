@@ -44,15 +44,47 @@ const MarketInterests = (): JSX.Element => {
   const [loadingInnerCategories, setLoadingInnerCategories] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const callAvailableCategories = async () => {
-      const { data } = await getAvailableCategories();
-      setCategories(data.data.categories);
-    };
+    if (!isInner) {
+      if (timer) {
+        clearTimeout(timer);
+        setTimer(null);
+      }
 
-    callAvailableCategories();
-  }, []);
+      const timerId = setTimeout(() => {
+        const callAvailableCategories = async () => {
+          const { data } = await getAvailableCategories(searchTerm);
+
+          const categories: any[] = data.data.categories;
+          if (!searchTerm) {
+            setInnerCategories([]);
+          } else {
+            setInnerCategories(
+              categories
+                .map((c: { id: string; types: Listing[] }) => {
+                  if (c.types) {
+                    return c.types.map((t) => ({
+                      ...t,
+                      categoryId: c.id,
+                    }));
+                  } else {
+                    return [];
+                  }
+                })
+                .flat()
+            );
+          }
+          setCategories(categories);
+        };
+
+        callAvailableCategories();
+      }, 500);
+
+      setTimer(timerId);
+    }
+  }, [searchTerm, isInner]);
 
   useEffect(() => {
     if (companyId) {
@@ -121,13 +153,6 @@ const MarketInterests = (): JSX.Element => {
     );
   };
 
-  let categoriesFiltered = categories;
-  if (!isInner) {
-    categoriesFiltered = categories.filter((c) =>
-      c.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
   let innerCategoriesFiltered = innerCategories;
   if (isInner) {
     innerCategoriesFiltered = innerCategories.filter((c) =>
@@ -144,9 +169,11 @@ const MarketInterests = (): JSX.Element => {
     setSearchTerm,
     selectedCategories,
     setSelectedCategories,
+    setCategories,
+    setInnerCategories,
 
     buying,
-    categories: categoriesFiltered,
+    categories,
     innerCategories: innerCategoriesFiltered,
     loadingInnerCategories,
 
