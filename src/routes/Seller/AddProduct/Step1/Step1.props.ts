@@ -8,6 +8,7 @@ export type Step1PublicProps = {
   onSelectAccount: (account: string) => void;
   onUploadCSV: (csv: File, account: string) => void;
   isUploadingCSV: boolean;
+  userPending: boolean;
 };
 
 export type Step1Props = Step1PublicProps;

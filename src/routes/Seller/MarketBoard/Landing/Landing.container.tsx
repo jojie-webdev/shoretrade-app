@@ -27,6 +27,14 @@ import MarketBoardLandingView from './Landing.view';
 const MarketBoardLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const userPending =
+    user !== undefined &&
+    !(user.companies || []).some((a) =>
+      a.addresses.some((b) => b.approved === 'APPROVED')
+    );
+
   const location: { state?: { currentTab?: string } } = useLocation();
   const locationTab = location.state?.currentTab || 'Buyer Requests';
 
@@ -171,6 +179,7 @@ const MarketBoardLanding = (): JSX.Element => {
       onReset,
       onClickClose: () => setIsFilterModalOpen(false),
     },
+    userPending,
   };
   return <MarketBoardLandingView {...generatedProps} />;
 };

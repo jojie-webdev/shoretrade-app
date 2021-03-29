@@ -19,7 +19,9 @@ export interface CommonProps {
   isNegotiating: boolean;
 }
 
-export interface Step1Props extends StepProps, CommonProps {}
+export interface Step1Props extends StepProps, CommonProps {
+  userPending: boolean;
+}
 
 export interface OfferProps {
   offer: MarketOfferItem[];
@@ -30,4 +32,6 @@ export interface OfferProps {
 
 export interface RequestAndNegotiateGeneratedProps
   extends CommonProps,
-    OfferProps {}
+    OfferProps {
+  userPending: boolean;
+}

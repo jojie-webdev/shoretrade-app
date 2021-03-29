@@ -35,6 +35,7 @@ const Step1 = ({
   isReview,
   buyerRequest,
   activeOffer,
+  userPending,
   ...props
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -379,8 +380,9 @@ const Step1 = ({
               <Button
                 onClick={() => props.setStep && props.setStep(2)}
                 className="submit-btn"
+                disabled={userPending}
                 text="Make an offer"
-                variant="primary"
+                variant={userPending ? 'disabled' : 'primary'}
               />
             </div>
           )}
@@ -438,7 +440,9 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         />
       </div>
 
-      {step === 1 && <Step1 setStep={setStep} {...props} />}
+      {step === 1 && (
+        <Step1 setStep={setStep} {...props} userPending={props.userPending} />
+      )}
       {step === 2 && <Step2 setStep={setStep} {...props} />}
       {step === 3 && <Step3 setStep={setStep} {...props} />}
 

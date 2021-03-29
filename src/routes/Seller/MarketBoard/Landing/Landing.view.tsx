@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
@@ -38,6 +39,16 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 
   return (
     <Container>
+      {props.userPending && (
+        <Alert
+          variant="alert"
+          content={`Your account needs approval.`}
+          fullWidth
+          alignText="center"
+          style={{ marginBottom: 16 }}
+        />
+      )}
+
       <SegmentedControls
         options={['Buyer Requests', 'My Active Offers']}
         selectedOption={props.currentTab}
