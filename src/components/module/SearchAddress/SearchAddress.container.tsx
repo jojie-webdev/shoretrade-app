@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { SearchAddressProps } from 'components/module/SearchAddress/SearchAddressGeneratedProps';
 import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,7 +17,7 @@ import {
 } from './SearchAddress.transfrom';
 import SearchAddressView from './SearchAddress.view';
 
-const SearchAddress = (props: SearchAddressProps): JSX.Element => {
+const SearchAddress = (): JSX.Element => {
   const dispatch = useDispatch();
   //#region Address
 
@@ -126,8 +125,6 @@ const SearchAddress = (props: SearchAddressProps): JSX.Element => {
   //#endregion
 
   const generatedProps = {
-    ...props,
-
     //#region Address
     addressOptions,
     currentDefaultAddressId,
