@@ -27,6 +27,14 @@ import AddProductView from './AddProduct.view';
 const AddProduct = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const userPending =
+    user !== undefined &&
+    !(user.companies || []).some((a) =>
+      a.addresses.some((b) => b.approved === 'APPROVED')
+    );
+
   const currentPage =
     useSelector((state: Store) => state.editableListing.currentStep) || 1;
 
@@ -411,6 +419,7 @@ const AddProduct = (): JSX.Element => {
     boxesDetails,
     measurementUnit,
     isUploadingCSV: uploadBulk?.pending || false,
+    userPending,
   };
 
   return <AddProductView {...generatedProps} />;

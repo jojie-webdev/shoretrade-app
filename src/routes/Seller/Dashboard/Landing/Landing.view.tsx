@@ -344,6 +344,7 @@ const DashboardView = ({
   toCategoryDetails,
   currentNotificationType,
   onClickMarketNotification,
+  userPending,
   ...props
 }: DashboardLandingGeneratedProps) => {
   const [startDate, setStartDate] = useState(moment());
@@ -367,6 +368,15 @@ const DashboardView = ({
         </SpinnerContainer>
       ) : (
         <>
+          {userPending && (
+            <Alert
+              variant="alert"
+              content={`Your account needs approval.`}
+              fullWidth
+              alignText="center"
+              style={{ marginBottom: 16 }}
+            />
+          )}
           {currentNotificationType.length > 0 && (
             <NotificationsContainer>
               <MarketNotification

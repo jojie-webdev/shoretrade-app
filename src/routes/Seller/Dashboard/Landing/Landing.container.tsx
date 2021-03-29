@@ -29,6 +29,14 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 const Dashboard = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const userPending =
+    user !== undefined &&
+    !(user.companies || []).some((a) =>
+      a.addresses.some((b) => b.approved === 'APPROVED')
+    );
+
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const dateRange =
@@ -198,6 +206,7 @@ const Dashboard = (): JSX.Element => {
     onApplyCustom,
     currentNotificationType,
     onClickMarketNotification,
+    userPending,
   };
   return <DashboardView {...generatedProps} />;
 };

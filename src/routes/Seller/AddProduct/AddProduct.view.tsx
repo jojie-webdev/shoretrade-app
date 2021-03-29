@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
-
+import Alert from 'components/base/Alert';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 
@@ -51,6 +51,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     boxesDetails,
     measurementUnit,
     isUploadingCSV,
+    userPending,
   } = props;
 
   const currentStep = () => {
@@ -63,6 +64,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             onSelectAccount={onSelectAccount}
             onUploadCSV={onUploadCSV}
             isUploadingCSV={isUploadingCSV}
+            userPending={userPending}
           />
         );
       case 2:
@@ -171,6 +173,15 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     <Container>
       <ProgressIndicator style={{ width: `${(currentPage / 8) * 100}%` }} />
       <div>
+        {userPending && (
+          <Alert
+            variant="alert"
+            content={`Your account needs approval.`}
+            fullWidth
+            alignText="center"
+            style={{ marginBottom: 16 }}
+          />
+        )}
         <Typography variant="overline" color="shade6">
           Step {currentPage} / 8
         </Typography>

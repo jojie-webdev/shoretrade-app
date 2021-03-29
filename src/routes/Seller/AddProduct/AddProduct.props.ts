@@ -28,4 +28,5 @@ export interface AddProductGeneratedProps
   saveListing: () => void;
   isExisting: boolean;
   discardChanges: () => void;
+  userPending: boolean;
 }
