@@ -16,6 +16,7 @@ const Step1 = ({
   accountOptions,
   onUploadCSV,
   isUploadingCSV,
+  userPending,
 }: Step1Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const aRef = useRef<HTMLAnchorElement>(null);
@@ -40,9 +41,16 @@ const Step1 = ({
         label="Choose Account"
       />
       <div className="btn-container">
-        <Button text="Bulk import" onClick={() => setIsAddInBulk(true)} />
+        <Button
+          variant={userPending ? 'disabled' : undefined}
+          disabled={userPending}
+          text="Bulk import"
+          onClick={() => setIsAddInBulk(true)}
+        />
 
         <Button
+          variant={userPending ? 'disabled' : undefined}
+          disabled={userPending}
           text="Add a new product"
           onClick={() => {
             onSelectAccount(selected);

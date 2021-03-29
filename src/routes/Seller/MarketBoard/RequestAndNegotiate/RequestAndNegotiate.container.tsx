@@ -24,6 +24,14 @@ const RequestAndNegotiate = (): JSX.Element => {
       activeOffer: GetActiveOffersRequestResponseItem;
     };
   } = useLocation();
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const userPending =
+    user !== undefined &&
+    !(user.companies || []).some((a) =>
+      a.addresses.some((b) => b.approved === 'APPROVED')
+    );
+
   const buyerRequest = state.buyerRequest;
   const activeOffer = state.activeOffer;
 
@@ -62,10 +70,9 @@ const RequestAndNegotiate = (): JSX.Element => {
     currentOfferItem,
     setCurrentOfferItem,
     isReview,
-
     onNegotiateOffer,
-
     isNegotiating,
+    userPending,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

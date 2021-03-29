@@ -22,4 +22,5 @@ export interface MarketBoardLandingGeneratedProps {
   onClickFilterButton: () => void;
 
   filterModalProps: FilterModalProps;
+  userPending: boolean;
 }
