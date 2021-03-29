@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
 import { Oysters } from 'components/base/SVG';
+import DateRangePicker from 'components/module/DateRangePicker';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
+import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
 import { OrdersGeneratedProps, TabOptions } from './Orders.props';
-import { Container } from './Orders.style';
+import {
+  Container,
+  SearchContainer,
+  SearchFilterRow,
+  DateRangeContainer,
+} from './Orders.style';
 import Pending from './Pending/Pending.view';
 
 const PENDING = 'Pending';
@@ -30,8 +38,71 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     inTransitOrders,
   } = props;
 
-  let content;
+  const {
+    filters,
+    updateFilters,
+    setFromFocusedInput,
+    fromFocusedInput,
+  } = props;
+
+  let currentFilter;
+  let updateFilter = updateFilters.updatePendingOrdersFilter;
   let title;
+  switch (currentTab) {
+    case PENDING:
+      title = 'awaiting shipment';
+      currentFilter = filters.pendingOrdersFilter;
+      updateFilter = updateFilters.updatePendingOrdersFilter;
+      break;
+    case IN_TRANSIT:
+      title = 'in transit';
+      currentFilter = filters.inTransitOrdersFilter;
+      updateFilter = updateFilters.updateInTransitOrdersFilter;
+      break;
+    case COMPLETE:
+      title = 'completed';
+      currentFilter = filters.completedOrdersFilter;
+      updateFilter = updateFilters.updateCompletedOrdersFilter;
+      break;
+
+    default:
+      currentFilter = filters.pendingOrdersFilter;
+      updateFilter = updateFilters.updatePendingOrdersFilter;
+      break;
+  }
+
+  const [dateRange, setDateRange] = useState({
+    from: currentFilter.dateFrom,
+    to: currentFilter.dateTo,
+  });
+
+  const fromOnFocusChange = (f: any) => {
+    setFromFocusedInput(!f ? 'startDate' : f);
+  };
+
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const fromOnDatesChange = (value: any) => {
+    console.log(value);
+    updateFilter({
+      ...filters,
+      dateFrom: value.startDate,
+      dateTo: value.endDate,
+    });
+  };
+
+  const toOnDatesChange = (value: any) => {
+    console.log(value);
+    updateFilter({
+      ...filters,
+      dateFrom: value.startDate,
+      dateTo: value.endDate,
+    });
+  };
+
+
+  let content;
   switch (currentTab) {
     case PENDING:
       title = 'awaiting shipment';
@@ -48,23 +119,6 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   }
   if (loadingCurrentTab) {
     content = <Loading />;
-  } else if (
-    (Object.keys(pendingOrders).length === 0 && currentTab === PENDING) ||
-    (Object.keys(inTransitOrders).length === 0 && currentTab === IN_TRANSIT) ||
-    (Object.keys(completedOrders).length === 0 && currentTab === COMPLETE)
-  ) {
-    content = (
-      <Row className="emptystate-row" align="center" justify="center">
-        <Col>
-          <EmptyState
-            title={`You have no orders ${title}`}
-            buttonText="START AN ORDER"
-            onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
-            Svg={Oysters}
-          />
-        </Col>
-      </Row>
-    );
   } else if (currentTab == PENDING) {
     content = <Pending {...props} />;
   } else if (currentTab == IN_TRANSIT) {
@@ -84,6 +138,35 @@ const OrdersView = (props: OrdersGeneratedProps) => {
           />
         </Col>
       </Row>
+      <SearchFilterRow>
+        <SearchContainer>
+          <Search
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            resetValue={() => setSearchValue('')}
+            placeholder="Search by order#, product type & seller..."
+            rounded
+          />
+        </SearchContainer>
+        <DateRangeContainer>
+          <DateRangePicker
+            onFocusChange={fromOnFocusChange}
+            focusedInput={fromFocusedInput}
+            startDate={currentFilter.dateFrom}
+            endDate={currentFilter.dateTo}
+            onDatesChange={(val) => fromOnDatesChange(val)}
+            format="D MMM YYYY"
+          />
+          {/* <DateRangePicker
+            onDatesChange={toOnDatesChange}
+            startDate={currentFilter.dateFrom}
+            endDate={currentFilter.dateTo}
+            format="D MMM YYYY"
+            focusedInput={toFocusedInput}
+            onFocusChange={toOnFocusChange}
+          /> */}
+        </DateRangeContainer>
+      </SearchFilterRow>
       {content}
     </Container>
   );

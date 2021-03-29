@@ -1,6 +1,7 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import moment from 'moment';
+import { FocusedInputShape } from 'react-dates';
 
 export interface OrderItem {
   id: string;
@@ -78,6 +79,9 @@ export interface OrdersGeneratedProps {
     updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+  fromFocusedInput: FocusedInputShape;
+  setFromFocusedInput: Dispatch<SetStateAction<FocusedInputShape>>;
+  currentFilter: RequestFilters;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';

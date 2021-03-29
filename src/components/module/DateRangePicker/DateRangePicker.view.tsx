@@ -111,6 +111,11 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
                 {endDate.format(format)}
               </DateTypography>
             )}
+            {!startDate && !endDate && (
+              <Typography variant="label" color="shade5">
+                {placeholder}
+              </Typography>
+            )}
           </div>
           {downArrowIcon()}
         </Dropdown>

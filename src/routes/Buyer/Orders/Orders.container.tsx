@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
 import moment from 'moment';
-import { groupBy } from 'ramda';
+import { FocusedInputShape } from 'react-dates';
 import { useDispatch, useSelector } from 'react-redux';
 // import useSelectorSafe from 'store/selectors/useSelectorSafe';
 import {
@@ -29,7 +29,12 @@ import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
   const dispatch = useDispatch();
-
+  const [fromFocusedInput, setFromFocusedInput] = useState<FocusedInputShape>(
+    'startDate'
+  );
+  const [toFocusedInput, setToFocusedInput] = useState<FocusedInputShape>(
+    'startDate'
+  );
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const getAllOrders = () => {
@@ -85,24 +90,6 @@ const OrdersContainer = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState<TabOptions>('Pending');
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
-  useEffect(() => {
-    if (currentTab === 'Pending') {
-      if (pendingOrders.length === 0) {
-        getOrders.placed();
-      }
-    }
-    if (currentTab === 'In Transit') {
-      if (inTransitOrders.length === 0) {
-        getOrders.transit();
-      }
-    }
-    if (currentTab === 'Complete') {
-      if (completedOrders.length === 0) {
-        getOrders.delivered();
-      }
-    }
-  }, [currentTab]);
-
   const pendingOrdersCount =
     useSelector(
       (state: Store) => state.getBuyerOrdersPlaced.data?.data.count
@@ -118,12 +105,16 @@ const OrdersContainer = (): JSX.Element => {
       (state: Store) => state.getBuyerOrdersDelivered.data?.data.count
     ) || '1';
 
+
+  const today = moment();
+  const last7Days = moment().subtract(7, 'days');
+
   const [pendingOrdersFilter, updatePendingOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: moment().startOf('week'),
-      dateTo: moment(),
+      dateFrom: last7Days,
+      dateTo: today,
     }
   );
 
@@ -131,8 +122,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: null,
-      dateTo: null,
+      dateFrom: last7Days,
+      dateTo: moment(),
     }
   );
 
@@ -140,43 +131,73 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: null,
-      dateTo: null,
+      dateFrom: last7Days,
+      dateTo: moment(),
     }
   );
 
-  // useEffect(() => {
-  //   getAllOrders()
-  // },[]);
+  let currentFilter = pendingOrdersFilter;
+  const updateFilters = {
+    updatePendingOrdersFilter,
+    updateCompletedOrdersFilter,
+    updateInTransitOrdersFilter,
+  };
+
+  useEffect(() => {
+    if (currentTab === 'Pending') {
+      if (pendingOrders.length === 0) {
+        getOrders.placed(pendingOrdersFilter);
+      }
+      currentFilter = pendingOrdersFilter;
+    }
+    if (currentTab === 'In Transit') {
+      if (inTransitOrders.length === 0) {
+        getOrders.transit(inTransitOrdersFilter);
+      }
+      currentFilter = inTransitOrdersFilter;
+    }
+    if (currentTab === 'Complete') {
+      if (completedOrders.length === 0) {
+        getOrders.delivered(completedOrdersFilter);
+      }
+      currentFilter = completedOrdersFilter;
+    }
+  }, [currentTab]);
 
   useEffect(() => {
     if (currentTab === 'Pending') {
       getOrders.placed(pendingOrdersFilter);
     }
-  }, [pendingOrdersFilter.page, pendingOrdersFilter.dateFrom]);
+  }, [
+    pendingOrdersFilter.page,
+    pendingOrdersFilter.dateFrom,
+    pendingOrdersFilter.dateTo,
+  ]);
 
   useEffect(() => {
     if (currentTab === 'In Transit') {
       getOrders.placed(inTransitOrdersFilter);
     }
-  }, [inTransitOrdersFilter.page, inTransitOrdersFilter.dateFrom]);
+  }, [
+    inTransitOrdersFilter.page,
+    inTransitOrdersFilter.dateFrom,
+    inTransitOrdersFilter.dateTo,
+  ]);
 
   useEffect(() => {
     if (currentTab === 'Complete') {
       getOrders.delivered(completedOrdersFilter);
     }
-  }, [completedOrdersFilter.page, completedOrdersFilter.dateFrom]);
+  }, [
+    completedOrdersFilter.page,
+    completedOrdersFilter.dateFrom,
+    completedOrdersFilter.dateTo,
+  ]);
 
   const filters = {
     pendingOrdersFilter,
     completedOrdersFilter,
     inTransitOrdersFilter,
-  };
-
-  const updateFilters = {
-    updatePendingOrdersFilter,
-    updateCompletedOrdersFilter,
-    updateInTransitOrdersFilter,
   };
 
   const pendingGetOrders: Record<TabOptions, boolean> = {
@@ -204,10 +225,13 @@ const OrdersContainer = (): JSX.Element => {
     inTransitOrdersCount,
     filters,
     updateFilters,
+    currentFilter,
     currentTab,
     loadingCurrentTab,
     onChangeCurrentTab,
     token,
+    fromFocusedInput,
+    setFromFocusedInput,
   };
 
   return <OrdersView {...generatedProps} />;
