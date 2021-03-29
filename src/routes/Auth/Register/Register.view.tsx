@@ -26,6 +26,7 @@ import {
   CategoryPayload,
 } from 'types/store/GetCategories';
 import { createUpdateReducer } from 'utils/Hooks';
+import { getTermsAndConditions } from 'utils/Links';
 import { useTheme } from 'utils/Theme';
 
 import { Image, CategoryItems } from './Categories.style';
@@ -550,14 +551,7 @@ const StepForm = ({
           </InputContainer>
           <Touchable
             dark
-            onPress={() => {
-              window.open(
-                `https://www.shoretrade.com/terms_${
-                  isSeller ? 'seller' : 'buyer'
-                }.pdf`,
-                '_blank'
-              );
-            }}
+            onPress={() => getTermsAndConditions(isSeller)}
             justifyContent={'flex-start'}
           >
             <DownloadTermsContainer>

@@ -43,8 +43,12 @@ export const Container = styled.div`
     padding: 12px 12px 0px 12px;
     object-fit: contain;
     height: 58px;
-    display: flex;
-    align-items: center;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .card-content h2 {

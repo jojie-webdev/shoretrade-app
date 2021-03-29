@@ -7,12 +7,13 @@ import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import { getTermsAndConditions } from 'utils/Links';
 
 import CategorySelectionView from './CategorySelection/CategorySelection.view';
 import { CreateRequestGeneratedProps, CreateRequestStep } from './Create.props';
 import {
   HeroImageContainer,
-  TextAgreenmentContainer,
+  TextAgreementContainer,
   MainAgreementContainer,
   HeroContainer,
   ProgressBar,
@@ -68,7 +69,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     return (
       <BoxContainer>
         <MainAgreementContainer>
-          <TextAgreenmentContainer>
+          <TextAgreementContainer>
             <div>
               <TypographyView variant="title4">Market Request</TypographyView>
               <TypographyView
@@ -105,7 +106,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 <Crab />
               </HeroImageContainer>
             </HeroContainer>
-          </TextAgreenmentContainer>
+          </TextAgreementContainer>
           <div>
             <div className="checkbox">
               <Checkbox
@@ -114,7 +115,13 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 checked={checkAgree}
               />
               <Typography className="label" variant="label" color="shade7">
-                Accept Terms &amp; Conditions
+                Accept{' '}
+                <span
+                  className="terms-and-conditions"
+                  onClick={() => getTermsAndConditions()}
+                >
+                  Terms &amp; Conditions
+                </span>
               </Typography>
             </div>
             <Button

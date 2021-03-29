@@ -13,7 +13,7 @@ import {
 } from 'types/store/GetCategories';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
-import { downloadShorePayApplicationForm } from 'utils/Registration';
+import { downloadShorePayApplicationForm } from 'utils/Links';
 import { useTheme } from 'utils/Theme';
 
 import { RegistrationDetails } from './Register.props';

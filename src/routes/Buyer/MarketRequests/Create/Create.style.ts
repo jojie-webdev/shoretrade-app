@@ -129,9 +129,17 @@ export const MainAgreementContainer = styled.div`
     max-width: 325px;
     margin-top: 1rem;
   }
+
+  .terms-and-conditions {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
-export const TextAgreenmentContainer = styled.div`
+export const TextAgreementContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
