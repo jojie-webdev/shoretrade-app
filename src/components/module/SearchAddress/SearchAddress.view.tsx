@@ -1,4 +1,4 @@
-import React, { useRef, useState, ChangeEvent } from 'react';
+import React, { useRef, useState } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
@@ -6,17 +6,18 @@ import { Search as SearchSVG, Octopus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
+import { SearchAddressGeneratedProps } from 'components/module/SearchAddress/SearchAddressGeneratedProps';
 import { BUYER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
-import { SearchAddressProps } from './SearchAddress.props';
 import {
   InputContainer,
   Container,
   AddressContainer,
 } from './SearchAddress.style';
-const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
+
+const SearchAddressView = (props: SearchAddressGeneratedProps): JSX.Element => {
   const theme = useTheme();
   const {
     addressOptions,
