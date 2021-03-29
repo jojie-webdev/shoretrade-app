@@ -13,12 +13,3 @@ export const Content = styled.div`
 export const SearchContainer = styled.div`
   margin-bottom: 24px;
 `;
-
-export const ListContainer = styled.div`
-  margin: 24px auto;
-  flex: 1;
-`;
-
-export const ListItemInteraction = styled(Interactions)`
-  margin-top: 12px;
-`;
