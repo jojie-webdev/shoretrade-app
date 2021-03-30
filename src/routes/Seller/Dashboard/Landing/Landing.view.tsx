@@ -250,7 +250,7 @@ const MonthlySales = (props: any) => {
                   color={hasIncreased(m.percentage) ? 'success' : 'error'}
                   className="text"
                 >
-                  {hasIncreased(m.percentage) ? '+' : '-'}
+                  {hasIncreased(m.percentage) ? '+' : ''}
                   {m.percentage}%
                 </Typography>
 
