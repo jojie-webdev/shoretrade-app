@@ -40,6 +40,10 @@ export const Container = styled.div`
         }
       }
 
+      .expiry {
+        font-style: italic;
+      }
+
       .weights {
         display: flex;
         align-items: center;

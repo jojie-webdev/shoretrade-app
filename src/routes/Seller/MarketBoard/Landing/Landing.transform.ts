@@ -2,6 +2,7 @@ import {
   CheckboxFilter,
   Filters,
 } from 'components/module/FilterModal/FilterModal.props';
+import moment from 'moment';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
 
 export const requestToModalFilter = (
@@ -91,4 +92,15 @@ export const getSize = (
 ) => {
   const sizeValues = [...data.sizeOptions.sizeList, 'Ungraded'];
   return sizeValues.filter((val) => values.includes(val));
+};
+
+export const getExpiry = (date: string) => {
+  const to = moment().add(2, 'd');
+  const diff = to.diff(moment(date), 'hours');
+
+  if (diff >= 48) {
+    return 'Expires Soon';
+  } else {
+    return 'Less than 48 hours left';
+  }
 };
