@@ -24,6 +24,7 @@ const MarketInterestsView = ({
   currentCategoryId,
   setCurrentCategoryId,
 
+  searchTerm,
   setSearchTerm,
   selectedCategories,
   setSelectedCategories,
@@ -45,7 +46,9 @@ const MarketInterestsView = ({
         nogutter
         justify="between"
         align="center"
-        style={{ marginBottom: !isInner ? 40 : 0 }}
+        style={{
+          marginBottom: !isInner && isEmpty(innerCategories) ? 40 : 0,
+        }}
       >
         <Col>
           <Breadcrumbs
@@ -60,6 +63,8 @@ const MarketInterestsView = ({
                         setIsInner(false);
                         setCurrentCategoryId('');
                         setSearchTerm('');
+                        props.setCategories([]);
+                        props.setInnerCategories([]);
                       },
                     },
                     {
@@ -74,7 +79,7 @@ const MarketInterestsView = ({
         <Col xs="content">
           <div style={{ width: 300 }}>
             <Search
-              value={props.searchTerm}
+              value={searchTerm}
               onChange={(event) => setSearchTerm(event.currentTarget.value)}
               resetValue={() => setSearchTerm('')}
               placeholder="Search for a product..."
@@ -84,7 +89,7 @@ const MarketInterestsView = ({
         </Col>
       </Row>
 
-      {isInner && (
+      {!isEmpty(innerCategories) && (
         <Row style={{ marginBottom: 16 }}>
           <Col />
           <Col xs="content">
@@ -127,6 +132,7 @@ const MarketInterestsView = ({
                   </div>
                 }
               />
+
               {!isEmpty(selling) && (
                 <BadgeContainer>
                   {selling.map((s) => (
@@ -144,30 +150,29 @@ const MarketInterestsView = ({
           );
         })}
 
-      {isInner &&
-        innerCategories.map((c) => (
-          <Interactions
-            padding="8px 20px 8px 16px"
-            key={c.id}
-            type="checkbox"
-            pressed={selectedCategories.some((v) => v.id === c.id)}
-            onClick={() =>
-              props.onPressInnerCategory({
-                id: c.id,
-                name: c.name,
-                categoryId: currentCategoryId,
-              })
-            }
-            leftComponent={
-              <div className="category-container">
-                <img src={c.thumbnail} />
-                <Typography variant="label" color="noshade">
-                  {c.name}
-                </Typography>
-              </div>
-            }
-          />
-        ))}
+      {innerCategories.map((c) => (
+        <Interactions
+          padding="8px 20px 8px 16px"
+          key={c.id}
+          type="checkbox"
+          pressed={selectedCategories.some((v) => v.id === c.id)}
+          onClick={() =>
+            props.onPressInnerCategory({
+              id: c.id,
+              name: c.name,
+              categoryId: c.categoryId || currentCategoryId,
+            })
+          }
+          leftComponent={
+            <div className="category-container">
+              <img src={c.thumbnail} />
+              <Typography variant="label" color="noshade">
+                {c.name}
+              </Typography>
+            </div>
+          }
+        />
+      ))}
     </Container>
   );
 };
