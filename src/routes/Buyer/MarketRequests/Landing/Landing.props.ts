@@ -10,4 +10,5 @@ export interface MarketRequestsLandingGeneratedProps {
   marketRequests: Result[];
   currentPath: string;
   onClickItem: (row: any) => void;
+  isPendingAccount: boolean;
 }
