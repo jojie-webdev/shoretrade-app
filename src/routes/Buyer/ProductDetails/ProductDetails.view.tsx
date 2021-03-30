@@ -57,6 +57,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isLoadingListingBoxes,
     groupedBox,
     isPendingAccount,
+    isAquafuture,
   } = props;
   const boxWeightsRef = useRef<HTMLDivElement>(null);
   const [didScroll, setDidScroll] = useState(false);
@@ -99,9 +100,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   id={'product-details-carousel'}
                   images={images}
                   loop
-                  autoplay
+                  // autoplay
                   aspectRatio="9:4"
                   arrowInside
+                  showAlmostGone={Number(remainingWeight) <= 50}
+                  showAquafuture={isAquafuture}
                 />
               </BannerContainer>
 

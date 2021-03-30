@@ -19,6 +19,13 @@ const MarketRequestsLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
+
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
@@ -55,6 +62,7 @@ const MarketRequestsLanding = (): JSX.Element => {
       )
     ), // TODO STATE
     onClickItem,
+    isPendingAccount,
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;

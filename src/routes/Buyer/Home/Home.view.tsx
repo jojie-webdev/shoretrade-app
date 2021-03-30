@@ -147,7 +147,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               id="featured-carousel"
               images={featured}
               loop
-              autoplay
+              // autoplay
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
               addMargin

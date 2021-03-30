@@ -11,6 +11,8 @@ export interface CarouselProps {
   aspectRatio?: AspectRatio;
   addMargin?: boolean;
   arrowInside?: boolean;
+  showAquafuture?: boolean;
+  showAlmostGone?: boolean;
 }
 
 export type AspectRatio = '16:9' | '9:4';
