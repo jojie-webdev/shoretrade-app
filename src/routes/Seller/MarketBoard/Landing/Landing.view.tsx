@@ -11,6 +11,7 @@ import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Col, Row } from 'react-grid-system';
+import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -103,6 +104,13 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                     <img src={b.image} />
                     <div>
                       <Typography color="noshade">{b.type}</Typography>
+                      <Typography
+                        className="expiry"
+                        color="error"
+                        variant="caption"
+                      >
+                        {getExpiry(b.createdAt)}
+                      </Typography>
                       <div className="badges-container">
                         {b.specifications.map((s) => (
                           <Badge
@@ -152,6 +160,13 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                     <img src={v.image} />
                     <div>
                       <Typography color="noshade">{v.name}</Typography>
+                      <Typography
+                        className="expiry"
+                        color="error"
+                        variant="caption"
+                      >
+                        {getExpiry(v.createdAt)}
+                      </Typography>
                       <div className="badges-container">
                         <Badge
                           className="badge"
