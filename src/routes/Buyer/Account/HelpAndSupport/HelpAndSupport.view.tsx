@@ -19,7 +19,7 @@ const HELP_AND_SUPPORT = [
   },
   {
     title: 'What do I need to sign up?',
-    description: `The signing process is simple, all you need is your business name,
+    description: `The signing up process is simple, all you need is your business name,
     ABN, banking details and address. Our team will review your
     application before you can start listing and selling your products in
     our seafood marketplace.`,
@@ -31,7 +31,7 @@ const HELP_AND_SUPPORT = [
   },
   {
     title: 'Can I sell overseas?',
-    description: `International exports is launching early 2019 for fishermen and
+    description: `International exports is launching early 2021 for fishermen and
     fisheries with valid export licences.`,
   },
   {

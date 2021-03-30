@@ -7,6 +7,7 @@ export type Listing = {
   id: string;
   name: string;
   thumbnail: string;
+  categoryId?: string;
 };
 
 export interface MarketInterestsGeneratedProps {
@@ -30,6 +31,8 @@ export interface MarketInterestsGeneratedProps {
       }[]
     >
   >;
+  setCategories: Dispatch<SetStateAction<Category[]>>;
+  setInnerCategories: Dispatch<SetStateAction<Listing[]>>;
 
   selling: MarketInterestItem[];
   categories: Category[];
