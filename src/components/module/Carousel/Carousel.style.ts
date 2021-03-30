@@ -47,6 +47,16 @@ export const RightInsideArrowArea = styled(LeftInsideArrowArea)`
   right: 8px;
 `;
 
+export const BadgeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  width: 100%;
+  z-index: 999;
+`;
+
 export const ArrowButton = styled.div`
   display: flex;
   justify-content: center;

@@ -110,8 +110,9 @@ const MarketRequestsLandingView = (
             <Button
               onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
               text="CREATE MARKET REQUEST"
-              variant="primary"
+              variant={props.isPendingAccount ? 'disabled' : 'primary'}
               size="md"
+              disabled={props.isPendingAccount}
             />
           </Col>
         </Row>
