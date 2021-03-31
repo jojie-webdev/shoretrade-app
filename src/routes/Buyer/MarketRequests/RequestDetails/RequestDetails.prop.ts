@@ -66,4 +66,5 @@ export interface MarketRequestDetailProps {
   onClickDelete: () => void;
   showDelete: boolean;
   setShowDelete: Dispatch<SetStateAction<boolean>>;
+  disableAccept: boolean;
 }

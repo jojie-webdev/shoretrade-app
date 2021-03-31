@@ -153,6 +153,7 @@ const MarketRequestDetail = (): JSX.Element => {
   let thereIsNewOffer = false;
   let discountPercentage = '';
   let discountValue = 0;
+  let disableAccept = false;
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
       const counterOfferArr = selectedOffer.negotiations.filter(
@@ -202,6 +203,10 @@ const MarketRequestDetail = (): JSX.Element => {
         !thereIsNewOffer &&
         selectedOffer.negotiations !== null) ||
       selectedOffer.status === 'ACCEPTED';
+
+    disableAccept =
+      selectedOffer.status !== 'OPEN' ||
+      (!thereIsNewOffer && selectedOffer.negotiations !== null);
   }
 
   const generatedProps: MarketRequestDetailProps = {
@@ -241,6 +246,7 @@ const MarketRequestDetail = (): JSX.Element => {
     discountValue,
     onClickDelete,
     showDelete,
+    disableAccept,
     setShowDelete,
   };
 
