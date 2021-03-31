@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -50,9 +51,9 @@ const MarketBoardLanding = (): JSX.Element => {
   );
 
   const filteredSpecs =
-    buyerRequests.data?.data.marketRequests.filter(
-      (d) => !isEmpty(d.specifications)
-    ) || [];
+    buyerRequests.data?.data.marketRequests
+      .filter((d) => !isEmpty(d.specifications))
+      .filter((d) => moment().diff(moment(d.createdAt), 'days') < 7) || [];
 
   const { filters, checkboxFilters } = requestToModalFilter(
     buyerRequestsFilters

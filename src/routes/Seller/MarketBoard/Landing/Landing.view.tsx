@@ -27,17 +27,19 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
   ) => {
-    if (status === 'OPEN') return theme.brand.alert;
+    if (status === 'OPEN') return theme.brand.warning;
     if (status === 'ACCEPTED') return theme.brand.success;
+    if (status === 'DECLINED') return theme.brand.error;
 
-    return theme.brand.error;
+    return '';
   };
 
   const getStatus = (status: GetActiveOffersRequestResponseItem['status']) => {
     if (status === 'OPEN') return 'NEGOTIATION';
     if (status === 'ACCEPTED') return 'ACCEPTED';
+    if (status === 'DECLINED') return 'LOST';
 
-    return 'LOST';
+    return '';
   };
 
   const getSizeBadge = (buyerRequest: GetAllMarketRequestResponseItem) => {
@@ -172,65 +174,74 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             ))}
 
           {props.currentTab === 'My Active Offers' &&
-            props.activeOffers.map((v, i) => (
-              <Interactions
-                key={i}
-                onClick={() => props.onClickActiveOffer(v)}
-                leftComponent={
-                  <div className="left-component">
-                    <img src={v.image} />
-                    <div>
-                      <Typography color="noshade">{v.name}</Typography>
-                      <Typography
-                        className="expiry"
-                        color="error"
-                        variant="caption"
-                      >
-                        {getExpiry(v.marketRequest.createdAt)}
-                      </Typography>
-                      <div className="badges-container">
-                        <Badge
-                          className="badge"
-                          badgeColor={getStatusBadgeColor(v.status)}
-                        >
-                          <BadgeText
-                            variant="overlineSmall"
-                            color={v.status === 'OPEN' ? 'shade9' : 'noshade'}
-                          >
-                            {getStatus(v.status)}
-                          </BadgeText>
-                        </Badge>
-                      </div>
+            props.activeOffers.map((v, i) => {
+              const status = getStatus(v.status);
 
-                      <div className="weights">
-                        <div style={{ margin: '0 4px 4px 0' }}>
-                          <Weight
-                            fill={theme.grey.noshade}
-                            width={12}
-                            height={12}
-                          />
-                        </div>
-                        <Typography color="noshade" variant="small">
-                          {v.weight}
-                          {formatMeasurementUnit(v.measurementUnit)}
+              return (
+                <Interactions
+                  key={i}
+                  onClick={() => props.onClickActiveOffer(v)}
+                  leftComponent={
+                    <div className="left-component">
+                      <img src={v.image} />
+                      <div>
+                        <Typography color="noshade">{v.name}</Typography>
+                        <Typography
+                          className="expiry"
+                          color="error"
+                          variant="caption"
+                        >
+                          {getExpiry(v.marketRequest.createdAt)}
                         </Typography>
-                        <div style={{ margin: '0 2px 4px 8px' }}>
-                          <DollarSign
-                            fill={theme.grey.noshade}
-                            width={11}
-                            height={11}
-                          />
+
+                        {status && (
+                          <div className="badges-container">
+                            <Badge
+                              className="badge"
+                              badgeColor={getStatusBadgeColor(v.status)}
+                            >
+                              <BadgeText
+                                variant="overlineSmall"
+                                color={
+                                  v.status === 'OPEN' ? 'shade9' : 'noshade'
+                                }
+                              >
+                                {status}
+                              </BadgeText>
+                            </Badge>
+                          </div>
+                        )}
+
+                        <div className="weights">
+                          <div style={{ margin: '0 4px 4px 0' }}>
+                            <Weight
+                              fill={theme.grey.noshade}
+                              width={12}
+                              height={12}
+                            />
+                          </div>
+                          <Typography color="noshade" variant="small">
+                            {v.weight}
+                            {formatMeasurementUnit(v.measurementUnit)}
+                          </Typography>
+                          <div style={{ margin: '0 2px 4px 8px' }}>
+                            <DollarSign
+                              fill={theme.grey.noshade}
+                              width={11}
+                              height={11}
+                            />
+                          </div>
+                          <Typography color="noshade" variant="small">
+                            {v.price}/{formatMeasurementUnit(v.measurementUnit)}
+                          </Typography>
                         </div>
-                        <Typography color="noshade" variant="small">
-                          {v.price}/{formatMeasurementUnit(v.measurementUnit)}
-                        </Typography>
                       </div>
                     </div>
-                  </div>
-                }
-                padding="16px 24px 16px 16px"
-              />
-            ))}
+                  }
+                  padding="16px 24px 16px 16px"
+                />
+              );
+            })}
         </>
       )}
 
