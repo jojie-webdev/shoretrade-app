@@ -152,7 +152,6 @@ const MarketBoardLanding = (): JSX.Element => {
   const onReset = () => {
     setSelectedFilters([]);
     setSelectedSize(null);
-    setIsFilterModalOpen(false);
   };
 
   const generatedProps = {
