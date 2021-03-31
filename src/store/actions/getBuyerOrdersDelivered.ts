@@ -23,7 +23,6 @@ const getBuyerOrdersDeliveredActions = {
     type: asyncAction.REQUEST,
     meta: {
       status: 'DELIVERED',
-      limit: 10,
       dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
       dateTo: filter?.dateTo?.format('M/DD/yyyy'),
       term: filter?.term,
