@@ -30,6 +30,10 @@ export const theme: Theme = {
     shade10: '#050E16',
     noshade: '#FFFFFF',
   },
+  states: {
+    hover: '#F96F43',
+    pressed: '#DE5124',
+  },
 };
 
 export default theme;
