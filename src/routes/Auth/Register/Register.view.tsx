@@ -432,7 +432,10 @@ const StepForm = ({
             label="Address"
             value={
               registrationDetails.address !== null
-                ? addressToPlaceData(registrationDetails.address).address
+                ? addressToPlaceData(
+                    registrationDetails.address,
+                    registrationDetails.unitNumber
+                  ).address
                 : ''
             }
             onClick={() => {
@@ -508,13 +511,11 @@ const StepForm = ({
                   setSummaryEdit();
                 }}
               />
-
+              
               <CustomInteraction
                 label="Payment Method"
                 value={
-                  PAYMENT_METHOD_OPTIONS[
-                    parseInt(registrationDetails.selectedPaymentMethod)
-                  ].label
+                  interestedInShorePay ? "ShorePay" : PAYMENT_METHOD_OPTIONS[1].label
                 }
                 onClick={() => {
                   summaryHandleStep(3);
@@ -706,16 +707,14 @@ const StepForm = ({
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
-                  {isSeller && (
-                    <Alert
-                      variant="infoAlert"
-                      fullWidth
-                      content={
-                        'You can add more people to your seller account once you’re approved'
-                      }
-                      style={{ marginTop: 8 }}
-                    />
-                  )}
+                  <Alert
+                    variant="infoAlert"
+                    fullWidth
+                    content={`You can add more people to your ${
+                      isSeller ? 'seller' : 'buyer'
+                    } account once you’re approved`}
+                    style={{ marginTop: 8 }}
+                  />
                 </>
               )}
               {step === 2 && (
