@@ -55,7 +55,7 @@ export const BUYER_STEPS = [
   {
     title: 'Market Sector',
     description:
-      'Let us know more about your business by selecting your market sector.',
+      'Please, let us know your industry so we can provide you with more tailored information.',
   },
   {
     title: 'I’m looking for',
