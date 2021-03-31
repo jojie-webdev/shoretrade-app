@@ -95,12 +95,19 @@ export const getSize = (
 };
 
 export const getExpiry = (date: string) => {
-  const to = moment().add(2, 'd');
-  const diff = to.diff(moment(date), 'hours');
+  const duration = moment().diff(moment(date), 'days');
 
-  if (diff >= 48) {
-    return 'Expires Soon';
-  } else {
+  if (duration >= 7) {
+    return 'Expired';
+  }
+
+  if (duration >= 5) {
     return 'Less than 48 hours left';
   }
+
+  if (duration >= 2) {
+    return 'Expires Soon';
+  }
+
+  return '';
 };
