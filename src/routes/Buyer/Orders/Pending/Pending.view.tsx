@@ -59,7 +59,7 @@ const Pending = (props: OrdersGeneratedProps) => {
         <Row className="emptystate-row" align="center" justify="center">
           <Col>
             <EmptyState
-              title={`You have no orders Completed`}
+              title={`You have no orders Pending`}
               buttonText="START AN ORDER"
               onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
               Svg={Oysters}

@@ -13,7 +13,7 @@ const asyncAction = createAsyncAction<
 const getBuyerOrdersPlacedActions = {
   ...asyncAction,
   request: (filter?: {
-    page: string;
+    term: string;
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
   }): {
@@ -26,7 +26,7 @@ const getBuyerOrdersPlacedActions = {
       limit: 10,
       dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
       dateTo: filter?.dateTo?.format('M/DD/yyyy'),
-      page: filter?.page,
+      term: filter?.term,
     },
   }),
 };

@@ -44,7 +44,7 @@ export interface OrderItem {
 }
 
 export type RequestFilters = {
-  page: string;
+  term: string;
   dateFrom: moment.Moment | null;
   dateTo: moment.Moment | null;
 };

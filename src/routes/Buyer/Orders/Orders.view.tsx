@@ -45,48 +45,51 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     fromFocusedInput,
   } = props;
 
-  let currentFilter;
+  let currentFilter = filters.completedOrdersFilter;
   let updateFilter = updateFilters.updatePendingOrdersFilter;
   let title;
-  switch (currentTab) {
-    case PENDING:
-      title = 'awaiting shipment';
-      currentFilter = filters.pendingOrdersFilter;
-      updateFilter = updateFilters.updatePendingOrdersFilter;
-      break;
-    case IN_TRANSIT:
-      title = 'in transit';
-      currentFilter = filters.inTransitOrdersFilter;
-      updateFilter = updateFilters.updateInTransitOrdersFilter;
-      break;
-    case COMPLETE:
-      title = 'completed';
-      currentFilter = filters.completedOrdersFilter;
-      updateFilter = updateFilters.updateCompletedOrdersFilter;
-      break;
 
-    default:
-      currentFilter = filters.pendingOrdersFilter;
-      updateFilter = updateFilters.updatePendingOrdersFilter;
-      break;
-  }
+  const updateWatchers = (currentTab: string) => {
+    switch (currentTab) {
+      case PENDING:
+        title = 'awaiting shipment';
+        currentFilter = filters.pendingOrdersFilter;
+        updateFilter = updateFilters.updatePendingOrdersFilter;
+        break;
+      case IN_TRANSIT:
+        title = 'in transit';
+        currentFilter = filters.inTransitOrdersFilter;
+        updateFilter = updateFilters.updateInTransitOrdersFilter;
+        break;
+      case COMPLETE:
+        title = 'completed';
+        currentFilter = filters.completedOrdersFilter;
+        updateFilter = updateFilters.updateCompletedOrdersFilter;
+        break;
+      default:
+        currentFilter = filters.pendingOrdersFilter;
+        updateFilter = updateFilters.updatePendingOrdersFilter;
+        break;
+    }
+  };
 
-  const [dateRange, setDateRange] = useState({
-    from: currentFilter.dateFrom,
-    to: currentFilter.dateTo,
-  });
+  updateWatchers(currentTab);
 
   const fromOnFocusChange = (f: any) => {
     setFromFocusedInput(!f ? 'startDate' : f);
   };
 
-
-  const [searchValue, setSearchValue] = useState('');
+  const handleSearchValue = (value: string) => {
+    updateFilter({
+      ...currentFilter,
+      term: value,
+    });
+  };
 
   const fromOnDatesChange = (value: any) => {
     console.log(value);
     updateFilter({
-      ...filters,
+      ...currentFilter,
       dateFrom: value.startDate,
       dateTo: value.endDate,
     });
@@ -100,7 +103,6 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       dateTo: value.endDate,
     });
   };
-
 
   let content;
   switch (currentTab) {
@@ -141,9 +143,9 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       <SearchFilterRow>
         <SearchContainer>
           <Search
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            resetValue={() => setSearchValue('')}
+            value={currentFilter.term}
+            onChange={(e) => handleSearchValue(e.target.value)}
+            resetValue={() => handleSearchValue('')}
             placeholder="Search by order#, product type & seller..."
             rounded
           />
