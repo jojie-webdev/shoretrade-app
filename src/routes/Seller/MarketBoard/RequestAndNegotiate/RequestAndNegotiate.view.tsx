@@ -10,7 +10,8 @@ import CategoryImagePreviewView from 'components/module/CategoryImagePreview/Cat
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateModal from 'components/module/NegotiateModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import { isEmpty, pathOr } from 'ramda';
+import moment from 'moment';
+import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
@@ -133,7 +134,10 @@ const Step1 = ({
     }
 
     const negoCopy = [...activeOffer.negotiations];
-    const negotiations = negoCopy.reverse();
+    const sortByDate = sortBy(
+      (data: { created_at: string }) => data.created_at
+    );
+    const negotiations = sortByDate(negoCopy);
     const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
     const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
 
@@ -148,8 +152,19 @@ const Step1 = ({
           100
         ).toFixed(2)
       : 0;
-
     const deliveryTotal = sellerOffer * activeOffer.weight;
+
+    const latestNewOfferDate = sellerNego
+      ? moment(sellerNego.created_at).toDate()
+      : undefined;
+    const latestCounterOfferDate = buyerNego
+      ? moment(buyerNego.created_at).toDate()
+      : undefined;
+    const isNegotiationAllowed =
+      (latestNewOfferDate &&
+        latestCounterOfferDate &&
+        latestCounterOfferDate > latestNewOfferDate) ||
+      (buyerNego && !latestNewOfferDate);
 
     const isAccepted = sellerOffer === buyerCounterOffer;
 
@@ -210,29 +225,33 @@ const Step1 = ({
         </div>
 
         <div className="submit-btns">
-          {!isReview && !noNegotiations && isNegoOpen && !isAccepted && (
-            <>
-              <Button
-                onClick={() => setIsOpen(true)}
-                className="submit-btn"
-                text="Negotiate"
-                variant="outline"
-              />
-              <Button
-                loading={props.isNegotiating}
-                onClick={() =>
-                  props.onNegotiateOffer(
-                    activeOffer.id,
-                    buyerCounterOffer,
-                    true
-                  )
-                }
-                className="submit-btn"
-                text="accept"
-                variant="primary"
-              />
-            </>
-          )}
+          {!isReview &&
+            !noNegotiations &&
+            isNegoOpen &&
+            isNegotiationAllowed &&
+            !isAccepted && (
+              <>
+                <Button
+                  onClick={() => setIsOpen(true)}
+                  className="submit-btn"
+                  text="Negotiate"
+                  variant="outline"
+                />
+                <Button
+                  loading={props.isNegotiating}
+                  onClick={() =>
+                    props.onNegotiateOffer(
+                      activeOffer.id,
+                      buyerCounterOffer,
+                      true
+                    )
+                  }
+                  className="submit-btn"
+                  text="accept"
+                  variant="primary"
+                />
+              </>
+            )}
         </div>
 
         <NegotiateModal
