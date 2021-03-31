@@ -1,11 +1,11 @@
 import { PlaceData } from 'types/PlaceData';
 
 export function addressToPlaceData(data: PlaceData, unitNumber: string) {
-  const unit = unitNumber ? `${unitNumber}/` : '';
-
   const street = data.streetNumber
-    ? `${unit}${data.streetNumber} ${data.address}`
-    : data.address;
+    ? `${unitNumber ? `${unitNumber}/` : ''}${data.streetNumber} ${
+        data.address
+      }`
+    : `${unitNumber ? `${unitNumber} ` : ''}${data.address}`;
 
   return {
     address: `${street}, ${data.countryCode}`,
@@ -13,7 +13,7 @@ export function addressToPlaceData(data: PlaceData, unitNumber: string) {
       lat: null,
       lng: null,
     },
-    unitNumber: '',
+    unitNumber: unitNumber,
     level: data.level,
     streetNumber: data.streetNumber,
     postcode: data.postcode,
