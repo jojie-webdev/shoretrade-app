@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Minus } from './Minus';
+export { default as ChevronDown } from './ChevronDown';
 export { default as SubtractHollow } from './SubtractHollow';
 export { default as Weight } from './Weight';
 export { default as FileUpload } from './FileUpload';

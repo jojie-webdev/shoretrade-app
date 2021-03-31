@@ -3,9 +3,9 @@ import { GenericResponse } from 'types/GenericResponse';
 export type GetSellerOrdersMeta = {
   status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   limit?: number;
-  page?: string;
-  dateFrom?: string;
-  dateTo?: string;
+  term?: string;
+  dateFrom?: Date | string;
+  dateTo?: Date | string;
   orderId?: string;
   orderLineItemId?: string;
 };

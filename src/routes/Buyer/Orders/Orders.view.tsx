@@ -1,17 +1,21 @@
 import React from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
-import { Oysters } from 'components/base/SVG';
-import EmptyState from 'components/module/EmptyState';
+import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
-import { BUYER_ROUTES } from 'consts';
+import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
 import { OrdersGeneratedProps, TabOptions } from './Orders.props';
-import { Container } from './Orders.style';
+import {
+  Container,
+  SearchContainer,
+  SearchFilterRow,
+  DateRangeContainer,
+} from './Orders.style';
 import Pending from './Pending/Pending.view';
 
 const PENDING = 'Pending';
@@ -21,50 +25,58 @@ const COMPLETE = 'Complete';
 const OrdersView = (props: OrdersGeneratedProps) => {
   const history = useHistory();
 
-  const {
-    currentTab,
-    loadingCurrentTab,
-    onChangeCurrentTab,
-    pendingOrders,
-    completedOrders,
-    inTransitOrders,
-  } = props;
+  const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
+
+  const { filters, updateFilters } = props;
+
+  let currentFilter = filters.completedOrdersFilter;
+  let updateFilter = updateFilters.updatePendingOrdersFilter;
+  let title;
+
+  const updateWatchers = (currentTab: string) => {
+    switch (currentTab) {
+      case PENDING:
+        title = 'awaiting shipment';
+        currentFilter = filters.pendingOrdersFilter;
+        updateFilter = updateFilters.updatePendingOrdersFilter;
+        break;
+      case IN_TRANSIT:
+        title = 'in transit';
+        currentFilter = filters.inTransitOrdersFilter;
+        updateFilter = updateFilters.updateInTransitOrdersFilter;
+        break;
+      case COMPLETE:
+        title = 'completed';
+        currentFilter = filters.completedOrdersFilter;
+        updateFilter = updateFilters.updateCompletedOrdersFilter;
+        break;
+      default:
+        currentFilter = filters.pendingOrdersFilter;
+        updateFilter = updateFilters.updatePendingOrdersFilter;
+        break;
+    }
+  };
+
+  updateWatchers(currentTab);
+
+  const handleSearchValue = (value: string) => {
+    updateFilter({
+      ...currentFilter,
+      term: value,
+    });
+  };
+
+  const fromOnDatesChange = (value: any) => {
+    updateFilter({
+      ...currentFilter,
+      dateFrom: value.startDate,
+      dateTo: value.endDate,
+    });
+  };
 
   let content;
-  let title;
-  switch (currentTab) {
-    case PENDING:
-      title = 'awaiting shipment';
-      break;
-    case IN_TRANSIT:
-      title = 'in transit';
-      break;
-    case COMPLETE:
-      title = 'completed';
-      break;
-
-    default:
-      break;
-  }
   if (loadingCurrentTab) {
     content = <Loading />;
-  } else if (
-    (Object.keys(pendingOrders).length === 0 && currentTab === PENDING) ||
-    (Object.keys(inTransitOrders).length === 0 && currentTab === IN_TRANSIT) ||
-    (Object.keys(completedOrders).length === 0 && currentTab === COMPLETE)
-  ) {
-    content = (
-      <Row className="emptystate-row" align="center" justify="center">
-        <Col>
-          <EmptyState
-            title={`You have no orders ${title}`}
-            buttonText="START AN ORDER"
-            onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
-            Svg={Oysters}
-          />
-        </Col>
-      </Row>
-    );
   } else if (currentTab == PENDING) {
     content = <Pending {...props} />;
   } else if (currentTab == IN_TRANSIT) {
@@ -84,6 +96,25 @@ const OrdersView = (props: OrdersGeneratedProps) => {
           />
         </Col>
       </Row>
+      <SearchFilterRow>
+        <SearchContainer>
+          <Search
+            value={currentFilter.term}
+            onChange={(e) => handleSearchValue(e.target.value)}
+            resetValue={() => handleSearchValue('')}
+            placeholder="Search by order#, product type & seller..."
+            rounded
+          />
+        </SearchContainer>
+        <DateRangeContainer>
+          <DateRangePicker
+            startDate={currentFilter.dateFrom}
+            endDate={currentFilter.dateTo}
+            onDatesChange={(val) => fromOnDatesChange(val)}
+            format="D MMM YYYY"
+          />
+        </DateRangeContainer>
+      </SearchFilterRow>
       {content}
     </Container>
   );
