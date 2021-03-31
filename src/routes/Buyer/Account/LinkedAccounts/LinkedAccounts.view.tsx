@@ -52,7 +52,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
         {!notifMsg && (
           <InfoContainer>
             <Typography variant="label" color="shade9">
-              {`If you want to give others access to you account, you can add a “linked account”`}
+              {`If you want to give others access to you account, you can add a “linked account”.`}
             </Typography>
             <Typography variant="label" className="text-people" color="shade9">
               {`People with linked account…`}
@@ -64,7 +64,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
                 width={16.67}
               />
               <Typography variant="label" className="text" color="shade9">
-                {`Can make purchases and track orders using your stored credit cards or existing credit balance`}
+                {`Linked Accounts can make purchases and track orders using your stored credit cards or existing credit balance.`}
               </Typography>
             </TextContainer>
 
@@ -75,7 +75,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
                 width={16.67}
               />
               <Typography variant="label" className="text" color="shade9">
-                {`Cannot add other linked accounts`}
+                {`Linked Accounts cannot add other linked accounts or use your stored credit card.`}
               </Typography>
             </TextContainer>
           </InfoContainer>
