@@ -508,13 +508,11 @@ const StepForm = ({
                   setSummaryEdit();
                 }}
               />
-
+              
               <CustomInteraction
                 label="Payment Method"
                 value={
-                  PAYMENT_METHOD_OPTIONS[
-                    parseInt(registrationDetails.selectedPaymentMethod)
-                  ].label
+                  interestedInShorePay ? "ShorePay" : PAYMENT_METHOD_OPTIONS[1].label
                 }
                 onClick={() => {
                   summaryHandleStep(3);
