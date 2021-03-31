@@ -32,6 +32,7 @@ const OfferDetailView = (props: any) => {
     counterOffer,
     thereIsNewOffer,
     newOffer,
+    disableAccept,
   } = props;
   const theme = useTheme();
 
@@ -196,7 +197,7 @@ const OfferDetailView = (props: any) => {
             {!thereIsNewOffer && counterOffer > 0 && (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
-                  No counter offer from seller yet
+                  The seller is reviewing your offer.
                 </TypographyView>
               </div>
             )}
@@ -217,7 +218,7 @@ const OfferDetailView = (props: any) => {
           onClick={() => handleAcceptOffer()}
           className="button"
           variant="primary"
-          disabled={selectedOffer.status !== 'OPEN'}
+          disabled={disableAccept}
           text="Accept"
         />
       </OfferActionsContainer>
