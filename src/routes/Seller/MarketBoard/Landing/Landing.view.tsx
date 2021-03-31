@@ -186,7 +186,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         color="error"
                         variant="caption"
                       >
-                        {getExpiry(v.createdAt)}
+                        {getExpiry(v.marketRequest.createdAt)}
                       </Typography>
                       <div className="badges-container">
                         <Badge
