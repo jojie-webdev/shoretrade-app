@@ -27,14 +27,11 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
     onDatesChange,
     label,
     placeholder = '',
-    error,
-    success,
     format,
     disabled,
     labelVariant,
     endDate,
     startDate,
-    pickerRadius,
   } = props;
 
   const theme = useTheme();
