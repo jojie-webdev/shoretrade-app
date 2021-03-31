@@ -137,6 +137,8 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                             </BadgeText>
                           </Badge>
                         ))}
+                      </div>
+                      <div className="badges-container">
                         <Badge className="badge" badgeColor={theme.grey.shade8}>
                           <BadgeText variant="overlineSmall" color="noshade">
                             {getSizeBadge(b)}
