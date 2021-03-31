@@ -29,14 +29,7 @@ const COMPLETE = 'Complete';
 const OrdersView = (props: OrdersGeneratedProps) => {
   const history = useHistory();
 
-  const {
-    currentTab,
-    loadingCurrentTab,
-    onChangeCurrentTab,
-    pendingOrders,
-    completedOrders,
-    inTransitOrders,
-  } = props;
+  const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
 
   const {
     filters,
@@ -105,20 +98,6 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   };
 
   let content;
-  switch (currentTab) {
-    case PENDING:
-      title = 'awaiting shipment';
-      break;
-    case IN_TRANSIT:
-      title = 'in transit';
-      break;
-    case COMPLETE:
-      title = 'completed';
-      break;
-
-    default:
-      break;
-  }
   if (loadingCurrentTab) {
     content = <Loading />;
   } else if (currentTab == PENDING) {
