@@ -11,6 +11,7 @@ interface PendingOrders extends GetSellerOrdersResponseItem {
 export type PendingToShipItemData = {
   buyerCompanyId: string;
   buyerCompanyName: string;
+  buyerId: string;
   orderCount: number;
   orders: PendingOrders[];
   totalPrice: number;

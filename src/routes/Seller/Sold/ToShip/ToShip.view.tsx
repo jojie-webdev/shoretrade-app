@@ -403,9 +403,6 @@ const ToShip = (props: SoldGeneratedProps) => {
       setDidPressConfirmWeight(false);
     }
   }, [confirmWeightPending]);
-
-  console.log(lastOpenAccordion);
-
   return (
     <>
       <ConfirmModal
@@ -502,7 +499,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                       onClick={(e) => {
                         updateMessageModal({
                           isOpen: true,
-                          buyerId: group.buyerCompanyId,
+                          buyerId: group.buyerId,
                           buyerName: group.buyerCompanyName,
                         });
                         e.stopPropagation();
