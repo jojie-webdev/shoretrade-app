@@ -79,8 +79,6 @@ export interface OrdersGeneratedProps {
     updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
-  fromFocusedInput: FocusedInputShape;
-  setFromFocusedInput: Dispatch<SetStateAction<FocusedInputShape>>;
   currentFilter: RequestFilters;
 }
 

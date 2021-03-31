@@ -46,7 +46,6 @@ export const DateRangeContainer = styled.div`
   max-width: 280px;
   position: relative;
   bottom: 10px; //offset
-}
 `;
 
 export const LeftContainer = styled(Col)``;

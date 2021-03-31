@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
-import { Oysters } from 'components/base/SVG';
 import DateRangePicker from 'components/module/DateRangePicker';
-import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { BUYER_ROUTES } from 'consts';
-import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 
@@ -31,12 +27,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
 
   const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
 
-  const {
-    filters,
-    updateFilters,
-    setFromFocusedInput,
-    fromFocusedInput,
-  } = props;
+  const { filters, updateFilters } = props;
 
   let currentFilter = filters.completedOrdersFilter;
   let updateFilter = updateFilters.updatePendingOrdersFilter;
@@ -68,10 +59,6 @@ const OrdersView = (props: OrdersGeneratedProps) => {
 
   updateWatchers(currentTab);
 
-  const fromOnFocusChange = (f: any) => {
-    setFromFocusedInput(!f ? 'startDate' : f);
-  };
-
   const handleSearchValue = (value: string) => {
     updateFilter({
       ...currentFilter,
@@ -80,18 +67,8 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   };
 
   const fromOnDatesChange = (value: any) => {
-    console.log(value);
     updateFilter({
       ...currentFilter,
-      dateFrom: value.startDate,
-      dateTo: value.endDate,
-    });
-  };
-
-  const toOnDatesChange = (value: any) => {
-    console.log(value);
-    updateFilter({
-      ...filters,
       dateFrom: value.startDate,
       dateTo: value.endDate,
     });
@@ -131,21 +108,11 @@ const OrdersView = (props: OrdersGeneratedProps) => {
         </SearchContainer>
         <DateRangeContainer>
           <DateRangePicker
-            onFocusChange={fromOnFocusChange}
-            focusedInput={fromFocusedInput}
             startDate={currentFilter.dateFrom}
             endDate={currentFilter.dateTo}
             onDatesChange={(val) => fromOnDatesChange(val)}
             format="D MMM YYYY"
           />
-          {/* <DateRangePicker
-            onDatesChange={toOnDatesChange}
-            startDate={currentFilter.dateFrom}
-            endDate={currentFilter.dateTo}
-            format="D MMM YYYY"
-            focusedInput={toFocusedInput}
-            onFocusChange={toOnFocusChange}
-          /> */}
         </DateRangeContainer>
       </SearchFilterRow>
       {content}

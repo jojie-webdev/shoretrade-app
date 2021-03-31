@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
 import moment from 'moment';
-import { FocusedInputShape } from 'react-dates';
 import { useDispatch, useSelector } from 'react-redux';
-// import useSelectorSafe from 'store/selectors/useSelectorSafe';
 import {
   getBuyerOrdersActions,
   getBuyerOrdersPlacedActions,
@@ -29,12 +27,7 @@ import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [fromFocusedInput, setFromFocusedInput] = useState<FocusedInputShape>(
-    'startDate'
-  );
-  const [toFocusedInput, setToFocusedInput] = useState<FocusedInputShape>(
-    'startDate'
-  );
+
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const getAllOrders = () => {
@@ -227,8 +220,6 @@ const OrdersContainer = (): JSX.Element => {
     loadingCurrentTab,
     onChangeCurrentTab,
     token,
-    fromFocusedInput,
-    setFromFocusedInput,
   };
 
   return <OrdersView {...generatedProps} />;
