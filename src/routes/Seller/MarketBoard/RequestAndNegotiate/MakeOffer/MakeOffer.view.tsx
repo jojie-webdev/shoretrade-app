@@ -82,8 +82,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               value={v}
               type="radio"
               padding="14px 18px"
-              pressed={props.size.from === v || props.size.to === v}
-              onClick={() => props.setSize({ from: v, to: v })}
+              pressed={props.size.from === v}
+              onClick={() => props.setSize({ from: v, to: '' })}
             />
           </Col>
         ))}
@@ -149,13 +149,11 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           onClick={() =>
             props.setSize({
               from: 'ungraded',
-              to: 'ungraded',
+              to: '',
             })
           }
           className="checkbox"
-          checked={
-            props.size.from === 'ungraded' || props.size.to === 'ungraded'
-          }
+          checked={props.size.from === 'ungraded'}
         />
         <Typography className="label" variant="label" color="noshade">
           Ungraded
