@@ -43,9 +43,11 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                       ))}
                     <Badge className="badge" badgeColor={theme.grey.shade8}>
                       <BadgeText variant="overlineSmall" color="noshade">
-                        {`${v.size.from}${
-                          v.size.to !== null ? ` - ${v.size.to}` : ''
-                        }` || 'Ungraded'}
+                        {v.size.from === null
+                          ? 'Ungraded'
+                          : `${v.size.from}${
+                              v.size.to !== null ? ` - ${v.size.to}` : ''
+                            }`}
                       </BadgeText>
                     </Badge>
                   </div>
