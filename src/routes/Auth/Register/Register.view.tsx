@@ -432,7 +432,10 @@ const StepForm = ({
             label="Address"
             value={
               registrationDetails.address !== null
-                ? addressToPlaceData(registrationDetails.address).address
+                ? addressToPlaceData(
+                    registrationDetails.address,
+                    registrationDetails.unitNumber
+                  ).address
                 : ''
             }
             onClick={() => {

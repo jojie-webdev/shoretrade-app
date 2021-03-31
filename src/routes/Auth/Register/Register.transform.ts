@@ -1,9 +1,12 @@
 import { PlaceData } from 'types/PlaceData';
 
-export function addressToPlaceData(data: PlaceData) {
+export function addressToPlaceData(data: PlaceData, unitNumber: string) {
+  const unit = unitNumber ? `${unitNumber}/` : '';
+
   const street = data.streetNumber
-    ? `${data.streetNumber} ${data.address}`
+    ? `${unit}${data.streetNumber} ${data.address}`
     : data.address;
+
   return {
     address: `${street}, ${data.countryCode}`,
     coordinates: {
