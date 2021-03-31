@@ -7,12 +7,12 @@ export const SELLER_STEPS = [
   {
     title: 'Business Details',
     description:
-      'Provide your business details so we know where to send your purchases.',
+      'Provide your business details so we can generate invoices and arrange shipment.',
   },
   {
     title: 'Bank Details',
     description:
-      'Provide your bank details so we can get your account set up and running.',
+      'Provide your bank details so we can deposit your sales revenue.',
   },
   {
     title: 'Licenses',
@@ -27,7 +27,7 @@ export const SELLER_STEPS = [
   {
     title: "I'm Selling",
     description:
-      'Let us know which seafood products your business commonly sells so we can optimise your experience.',
+      'Optimise your experience and select the seafood products your business commonly sells.',
   },
   {
     title: 'Summary',
