@@ -54,7 +54,7 @@ const MarketBoardLanding = (): JSX.Element => {
   );
 
   const filteredSpecs =
-    buyerRequests.data?.data.marketRequests
+    (buyerRequests.data?.data.marketRequests || [])
       .filter((d) => !isEmpty(d.specifications))
       .filter((d) => moment().diff(moment(d.createdAt), 'days') < 7) || [];
 
