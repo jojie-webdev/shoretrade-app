@@ -96,13 +96,13 @@ function Step3({
                           const filteredRaw = stateOptions.map((group) =>
                             group.filter((item) => item.label === 'Raw')
                           );
-                          const cleanArray = filteredRaw.filter(
-                            (i) => i.length > 0
-                          )[0][0];
+
+                          const a = pathOr(undefined, ['0', '0'], filteredRaw);
+
                           setSpecifications([
                             ...specifications.slice(0, item.groupOrder - 1),
                             item,
-                            cleanArray,
+                            ...(a ? [a] : []),
                           ]);
                         } else {
                           setSpecifications([
