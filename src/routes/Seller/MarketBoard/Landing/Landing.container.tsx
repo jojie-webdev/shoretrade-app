@@ -46,6 +46,9 @@ const MarketBoardLanding = (): JSX.Element => {
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  const activeOffersData = (activeOffers.data?.data.marketOffers || []).filter(
+    (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
+  );
   const buyerRequestsFilters = useSelector(
     (store: Store) => store.getAllMarketRequestFilters.data?.data
   );
@@ -157,7 +160,7 @@ const MarketBoardLanding = (): JSX.Element => {
 
   const generatedProps = {
     buyerRequests: filteredSpecs,
-    activeOffers: activeOffers.data?.data.marketOffers || [],
+    activeOffers: activeOffersData,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
     onChangeCurrentTab,
