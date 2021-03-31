@@ -118,7 +118,7 @@ const MarketRequestsLandingView = (
         </Row>
         <StyledAlert
           content={'All offers below are including the shipping cost'}
-          variant="alert"
+          variant="info"
           alignText="center"
           fullWidth
         />
