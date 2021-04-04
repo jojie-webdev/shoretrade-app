@@ -278,6 +278,7 @@ const Step1 = ({
         <CategoryImagePreviewView
           categoryName={isReview ? buyerRequest.type : activeOffer.name}
           imgSrc={isReview ? buyerRequest.image : activeOffer.image}
+          marketBoard
         />
 
         <SummaryContentContainer>
