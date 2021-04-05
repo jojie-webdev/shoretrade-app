@@ -5,9 +5,6 @@ export const formatMeasurementUnit = (unit = '') => {
   if (unit.toUpperCase() === 'DOZEN' || unit.toUpperCase() === 'DOZ') {
     return 'doz';
   }
-  if (unit.toUpperCase() === 'GRAMS' || unit.toUpperCase() === 'G') {
-    return 'g';
-  }
   return 'kg';
 };
 

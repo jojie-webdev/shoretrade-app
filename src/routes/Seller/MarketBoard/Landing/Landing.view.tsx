@@ -54,7 +54,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       }` || 'Ungraded'
     );
   };
-
   return (
     <Container>
       {props.userPending && (
@@ -142,32 +141,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         ))}
                       </div>
 
-                      {b.sizeFrom !== null ? (
-                        <div className="weights">
-                          <Typography color="noshade" variant="small">
-                            {b.sizeFrom || ''}
-                            {formatMeasurementUnit(b.metric)}
-                          </Typography>
-                          <div style={{ margin: '0 6px' }}>-</div>
-                          <Typography color="noshade" variant="small">
-                            {b.sizeTo || ''}
-                            {formatMeasurementUnit(b.metric)}
-                          </Typography>
-                        </div>
-                      ) : b.sizeOptions == null &&
-                        b.sizeTo == null &&
-                        b.sizeFrom == null ? (
-                        <div className="badges-container">
-                          <Badge
-                            className="badge"
-                            badgeColor={theme.grey.shade8}
-                          >
-                            <BadgeText variant="overlineSmall" color="noshade">
-                              Ungraded
-                            </BadgeText>
-                          </Badge>
-                        </div>
-                      ) : (
+                      {Object.keys(b.sizeOptions).length != 0 ? (
                         <div className="badges-container">
                           {b.sizeOptions.map((opt: any, idx: number) => (
                             <Badge
@@ -183,6 +157,16 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                               </BadgeText>
                             </Badge>
                           ))}
+                        </div>
+                      ) : (
+                        <div className="weights">
+                          <Typography color="noshade" variant="small">
+                            {sizeToString(
+                              b.metric,
+                              (b.sizeFrom || '').toString(),
+                              (b.sizeTo || '').toString()
+                            )}
+                          </Typography>
                         </div>
                       )}
 
