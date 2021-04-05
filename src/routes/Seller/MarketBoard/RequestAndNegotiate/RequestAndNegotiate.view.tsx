@@ -138,11 +138,13 @@ const Step1 = ({
       (data: { created_at: string }) => data.created_at
     );
     const negotiations = sortByDate(negoCopy);
-    const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
-    const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
+    const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
+    const latestBuyerNego = buyerNegos.slice(-1)[0];
+    const sellerNegos = negotiations.filter((n) => n.type === 'NEW_OFFER');
+    const latestSellerNego = sellerNegos.slice(-1)[0];
 
-    const sellerOffer = sellerNego?.price || activeOffer.price;
-    const buyerCounterOffer = buyerNego?.price || 0;
+    const sellerOffer = latestSellerNego?.price || activeOffer.price;
+    const buyerCounterOffer = latestBuyerNego?.price || 0;
 
     const discountValue = buyerCounterOffer - sellerOffer;
     const discountPercentage = discountValue
@@ -154,17 +156,17 @@ const Step1 = ({
       : 0;
     const deliveryTotal = sellerOffer * activeOffer.weight;
 
-    const latestNewOfferDate = sellerNego
-      ? moment(sellerNego.created_at).toDate()
+    const latestNewOfferDate = latestSellerNego
+      ? moment(latestSellerNego.created_at).toDate()
       : undefined;
-    const latestCounterOfferDate = buyerNego
-      ? moment(buyerNego.created_at).toDate()
+    const latestCounterOfferDate = latestBuyerNego
+      ? moment(latestBuyerNego.created_at).toDate()
       : undefined;
     const isNegotiationAllowed =
       (latestNewOfferDate &&
         latestCounterOfferDate &&
         latestCounterOfferDate > latestNewOfferDate) ||
-      (buyerNego && !latestNewOfferDate);
+      (latestBuyerNego && !latestNewOfferDate);
 
     const isAccepted = sellerOffer === buyerCounterOffer;
 
