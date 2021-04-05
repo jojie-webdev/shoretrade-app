@@ -9,7 +9,6 @@ export const parseOrderReferenceNumber = (value: string) => {
   if (value.match(/(^[0-9#])/)) {
     let out = '';
     value = value.replace(/\d+$/, (num) => {
-      console.log(num);
       out = `${+num}`;
       return out;
     });
