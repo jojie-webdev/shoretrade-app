@@ -32,7 +32,6 @@ const MarketRequestDetail = (): JSX.Element => {
   };
 
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
-  console.log(activeOffers);
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
@@ -137,6 +136,7 @@ const MarketRequestDetail = (): JSX.Element => {
   let discountPercentage = '';
   let discountValue = 0;
   let disableAccept = false;
+  let isAccepted = false;
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
       const counterOfferArr = selectedOffer.negotiations.filter(
@@ -190,6 +190,8 @@ const MarketRequestDetail = (): JSX.Element => {
     disableAccept =
       selectedOffer.status !== 'OPEN' ||
       (!thereIsNewOffer && selectedOffer.negotiations !== null);
+
+    isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
   const generatedProps: MarketRequestDetailProps = {
@@ -219,9 +221,10 @@ const MarketRequestDetail = (): JSX.Element => {
     thereIsNewOffer,
     discountPercentage,
     discountValue,
+    disableAccept,
+    isAccepted,
     onClickDelete,
     showDelete,
-    disableAccept,
     setShowDelete,
   };
 

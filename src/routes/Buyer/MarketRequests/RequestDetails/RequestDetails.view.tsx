@@ -42,7 +42,6 @@ import {
   SellerOfferInteractionContentContainer,
 } from './RequestDetails.style';
 
-
 export const OffersSellerAccordionContent = (props: {
   sellerId: string;
   sellerName: string;
@@ -233,6 +232,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     discountValue,
     thereIsNewOffer,
     newOffer,
+    isAccepted,
     showDelete,
     setShowDelete,
     onClickDelete,
@@ -287,19 +287,23 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         <Row gutterWidth={30}>
           <Col md={12} sm={12} xl={4}>
             <RequestDetailsCardContainer type={'none'}>
-              <MarketRequestItem
-                inDetail={true}
-                type={data.name}
-                expiry={
-                  moment(data.createdAt).add(7, 'd').isBefore()
-                    ? 'Expired'
-                    : formatRunningDateDifference(data.createdAt)
-                }
-                offers={data.totalOffers}
-                image={data.image}
-                measurementUnit={data.measurementUnit}
-                weight={data.weight}
-              />
+              {data && data.name ? (
+                <MarketRequestItem
+                  inDetail={true}
+                  type={data.name}
+                  expiry={
+                    moment(data.createdAt).add(7, 'd').isBefore()
+                      ? 'Expired'
+                      : formatRunningDateDifference(data.createdAt)
+                  }
+                  offers={data.totalOffers}
+                  image={data.image}
+                  measurementUnit={data.measurementUnit}
+                  weight={data.weight}
+                />
+              ) : (
+                <></>
+              )}
             </RequestDetailsCardContainer>
             {data.status !== 'DELETED' && (
               <Button
@@ -415,6 +419,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   newOffer={parseFloat(newOffer)}
                   thereIsNewOffer={thereIsNewOffer}
                   disableAccept={disableAccept}
+                  isAccepted={isAccepted}
                 />
               </Route>
             </Switch>

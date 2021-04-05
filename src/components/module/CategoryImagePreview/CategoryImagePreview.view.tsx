@@ -5,24 +5,39 @@ import TypographyView from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 
 import { CategoryImagePreviewProps } from './CategoryImagePreview.props';
-import { Container, BadgeContainer } from './CategoryImagePreview.style';
+import {
+  Container,
+  BadgeContainer,
+  MarketBoardBadge,
+} from './CategoryImagePreview.style';
 
 const CategoryImagePreview = (
   props: CategoryImagePreviewProps
 ): JSX.Element => {
   const theme = useTheme();
-  const { imgSrc, categoryName, caption } = props;
+  const { imgSrc, categoryName, caption, marketBoard } = props;
   const isBuyer = theme.appType === 'buyer';
 
   return (
     <Container img={imgSrc}>
-      <div className="imgContainer">
-        <div className="img" style={{ maxHeight: 280 }} />
-        <BadgeContainer>
+      {marketBoard && (
+        <MarketBoardBadge>
           <Badge badgeColor={theme.grey.shade3}>
             <TypographyView variant="overline">{categoryName}</TypographyView>
           </Badge>
-        </BadgeContainer>
+        </MarketBoardBadge>
+      )}
+      <div className="imgContainer">
+        <div className="img" style={{ maxHeight: 280 }} />
+        {marketBoard ? (
+          ''
+        ) : (
+          <BadgeContainer>
+            <Badge badgeColor={theme.grey.shade3}>
+              <TypographyView variant="overline">{categoryName}</TypographyView>
+            </Badge>
+          </BadgeContainer>
+        )}
       </div>
       <TypographyView
         className="label"

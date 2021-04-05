@@ -11,7 +11,13 @@ import { Formik } from 'formik';
 
 // import { useTheme } from 'utils/Theme';
 import { CardGeneratedProps, CardDetails } from './Card.props';
-import { Container, FormAddCard, CCImageRow, CCImage } from './Card.style';
+import {
+  Container,
+  FormAddCard,
+  CCImageRow,
+  CCImage,
+  ButtonContainer,
+} from './Card.style';
 import { isValid } from './Card.validation';
 import FieldsetCard from './FieldsetCard';
 
@@ -108,7 +114,18 @@ const CardView = (props: CardGeneratedProps) => {
                 }}
               />
             </div>
-            <Button type="submit" loading={isLoading} text="Save" />
+            <ButtonContainer>
+              {isExisting && (
+                <Button
+                  variant="outline"
+                  loading={isRemoving}
+                  text="Remove Card"
+                  style={{ marginRight: '8px' }}
+                  onClick={() => onRemoveCard()}
+                />
+              )}
+              <Button type="submit" loading={isLoading} text="Save" />
+            </ButtonContainer>
           </FormAddCard>
         </Formik>
       </BoxContainer>

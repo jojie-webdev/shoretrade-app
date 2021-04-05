@@ -125,7 +125,7 @@ const Step1 = ({
           {isNegoOpen && (
             <div className="computation-item-container">
               <Typography variant="label" color="noshade">
-                No counter offer from buyer yet
+                The buyer is reviewing your offer.
               </Typography>
             </div>
           )}
@@ -222,6 +222,14 @@ const Step1 = ({
               {toPrice(deliveryTotal)}
             </Typography>
           </div>
+
+          {!isNegotiationAllowed && (
+            <div className="computation-item-container">
+              <Typography variant="label" color="noshade">
+                The buyer is reviewing your offer.
+              </Typography>
+            </div>
+          )}
         </div>
 
         <div className="submit-btns">
@@ -278,6 +286,7 @@ const Step1 = ({
         <CategoryImagePreviewView
           categoryName={isReview ? buyerRequest.type : activeOffer.name}
           imgSrc={isReview ? buyerRequest.image : activeOffer.image}
+          marketBoard
         />
 
         <SummaryContentContainer>

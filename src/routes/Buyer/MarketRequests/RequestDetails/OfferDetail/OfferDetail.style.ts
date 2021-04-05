@@ -89,10 +89,9 @@ export const OfferDetailsContainer = styled.div`
 
       .computation-item-container {
         display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+        flex-direction: row;
+        justify-content: space-between;
       }
-
     }
   }
 `;

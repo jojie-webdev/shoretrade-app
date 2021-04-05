@@ -35,3 +35,8 @@ export const BadgeContainer = styled.div`
   bottom: 12px;
   left: 16px;
 `;
+
+export const MarketBoardBadge = styled.div`
+  display: flex;
+  margin-bottom: 8px;
+`;
