@@ -103,9 +103,9 @@ export const BUYER_ROUTES = {
     `${BUYER_ROOT}/market-requests/details/${id}`,
   CREATE_MARKET_REQUEST: `${BUYER_ROOT}/market-requests/create`,
   MARKET_REQUEST_DETAILS_OFFER_LIST: (id = ':id') =>
-    `${BUYER_ROOT}/market-requests/details/offers/${id}`,
-  MARKET_REQUEST_DETAILS_OFFER: (id = ':id') =>
-    `${BUYER_ROOT}/market-requests/details/offer/${id}`,
+    `${BUYER_ROOT}/market-requests/details/${id}/list`,
+  MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = 'offerId') =>
+    `${BUYER_ROOT}/market-requests/details/${id}/offer/${offerId}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,

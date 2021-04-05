@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import {
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom';
 import {
   deleteMarketRequestActions,
+  getActiveOffersActions,
   marketRequestAcceptOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
@@ -15,42 +21,18 @@ import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
-  const location = useLocation<{
-    id: string;
-    type: string;
-    image: string;
-    status: string;
-    offers: number;
-    expiry: string;
-    measurementUnit: string;
-    weight: {
-      from: number;
-      to: number;
-    };
-  }>();
+  const location = useLocation();
+  const params = useParams<{ id: string }>();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { id } = params;
 
   const goTolist = () => {
-    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id), {
-      type,
-      image,
-      status,
-      offers,
-      expiry,
-      id,
-    });
+    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
   };
 
-  const id = location.state ? location.state.id : '';
-  const image = location.state ? location.state.image : '';
-  const type = location.state ? location.state.type : '';
-  const status = location.state ? location.state.status : '';
-  const offers = location.state ? location.state.offers : 0;
-  const expiry = location.state ? location.state.expiry : '';
-  const measurementUnit = location.state ? location.state.measurementUnit : '';
-  const weight = location.state ? location.state.weight : { from: 0, to: 0 };
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  console.log(activeOffers);
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
@@ -95,16 +77,7 @@ const MarketRequestDetail = (): JSX.Element => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
     setSelectedCompany(company);
-    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(row.id), {
-      id,
-      type,
-      image,
-      status,
-      offers,
-      expiry,
-      weight,
-      measurementUnit,
-    });
+    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id, row.id));
   };
 
   const handleAcceptOffer = () => {
@@ -143,6 +116,16 @@ const MarketRequestDetail = (): JSX.Element => {
     }
     setNegotiating(false);
   };
+
+  useEffect(() => {
+    dispatch(
+      getActiveOffersActions.request({
+        queryParams: {
+          marketRequestId: id,
+        },
+      })
+    );
+  }, []);
 
   let counterOffer = '';
   let newOffer = '';
@@ -216,18 +199,10 @@ const MarketRequestDetail = (): JSX.Element => {
     counterOffer,
     newOffer,
     selectedOffer,
+    marketRequestId: id,
     price,
     setPrice,
-    data: {
-      id,
-      type,
-      image,
-      status,
-      offers,
-      expiry,
-      weight,
-      measurementUnit,
-    },
+    data: activeOffers.data?.data.marketOffers[0].marketRequest || {},
     sellerOffers: activeOffers.data?.data.marketOffers || [],
     searchTerm,
     negotiating,

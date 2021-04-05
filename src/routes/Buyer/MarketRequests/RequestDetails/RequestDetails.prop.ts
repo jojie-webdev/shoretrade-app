@@ -38,7 +38,8 @@ export interface MarketRequestOffer {
 }
 
 export interface MarketRequestDetailProps {
-  data: RequestDetail;
+  data: any;
+  marketRequestId: string;
   currentPath: string;
   searchTerm: string;
   breadCrumbSections: any[];

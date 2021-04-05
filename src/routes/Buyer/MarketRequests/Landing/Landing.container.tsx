@@ -31,23 +31,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   );
 
   const onClickItem = (row: any) => {
-    dispatch(
-      getActiveOffersActions.request({
-        queryParams: {
-          marketRequestId: row.id,
-        },
-      })
-    );
-    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id), {
-      type: row.type,
-      image: row.image,
-      status: row.status,
-      offers: row.offers,
-      expiry: row.expiry,
-      weight: row.weight,
-      id: row.id,
-      measurementUnit: row.measurementUnit,
-    });
+    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
   };
 
   useEffect(() => {

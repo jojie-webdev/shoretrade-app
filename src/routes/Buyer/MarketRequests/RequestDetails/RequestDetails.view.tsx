@@ -18,9 +18,11 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import NegotiateModalView from 'components/module/NegotiateModal';
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -40,6 +42,7 @@ import {
   SellerOfferInteractionContentContainer,
 } from './RequestDetails.style';
 
+
 export const OffersSellerAccordionContent = (props: {
   sellerId: string;
   sellerName: string;
@@ -50,7 +53,6 @@ export const OffersSellerAccordionContent = (props: {
   const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
-
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
@@ -194,7 +196,7 @@ const SellerOfferInteractionContent = (props: {
           </div>
         </div>
         <div className="tags">
-          {tags.length > 0 ? (
+          {(tags || []).length > 0 ? (
             <>
               <OfferTags tags={tags} />
             </>
@@ -235,7 +237,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setShowDelete,
     onClickDelete,
     disableAccept,
+    marketRequestId,
   } = props;
+
+  const params = useParams();
+  const match = useRouteMatch();
 
   if (!sellerOffers) {
     return <></>;
@@ -283,9 +289,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             <RequestDetailsCardContainer type={'none'}>
               <MarketRequestItem
                 inDetail={true}
-                type={data.type}
-                expiry={data.expiry}
-                offers={data.offers}
+                type={data.name}
+                expiry={
+                  moment(data.createdAt).add(7, 'd').isBefore()
+                    ? 'Expired'
+                    : formatRunningDateDifference(data.createdAt)
+                }
+                offers={data.totalOffers}
                 image={data.image}
                 measurementUnit={data.measurementUnit}
                 weight={data.weight}
@@ -310,7 +320,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {/* NUMBERS CONTAINER START */}
                   <div className="numbers-container">
                     <div className="item">
-                      <span className="value">{data.offers} &nbsp;</span>
+                      <span className="value">
+                        {sellerOffers.length} &nbsp;
+                      </span>
                       <span className="label">Offers</span>
                     </div>
                     <span className="divider">,</span>
@@ -383,7 +395,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 </OffersContainer>
               </Route>
               <Route
-                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
+                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+                  marketRequestId,
+                  currentOfferId
+                )}
               >
                 <OfferDetailView
                   price={price}
