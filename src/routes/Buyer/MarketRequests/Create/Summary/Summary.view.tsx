@@ -128,6 +128,7 @@ const SummaryView = (props: SummaryProps) => {
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
           caption="Review product specifications for this request."
+          marketBoard
         />
         <SummaryContentContainer>
           <SummaryBadges
