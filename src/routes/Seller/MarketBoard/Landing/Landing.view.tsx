@@ -154,7 +154,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                             {formatMeasurementUnit(b.metric)}
                           </Typography>
                         </div>
-                      ) : b.sizeOptions == null && b.sizeTo == null ? (
+                      ) : b.sizeOptions == null &&
+                        b.sizeTo == null &&
+                        b.sizeFrom == null ? (
                         <div className="badges-container">
                           <Badge
                             className="badge"
