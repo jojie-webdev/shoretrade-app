@@ -8,7 +8,7 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import NegotiateModal from 'components/module/NegotiateModal';
+import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
@@ -138,53 +138,59 @@ const Step1 = ({
       (data: { created_at: string }) => data.created_at
     );
     const negotiations = sortByDate(negoCopy);
-    const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
-    const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
+    const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
+    const latestBuyerNego = buyerNegos[0];
+    const sellerNegos = negotiations.filter((n) => n.type === 'NEW_OFFER');
+    const latestSellerNego = sellerNegos[0];
 
-    const sellerOffer = sellerNego?.price || activeOffer.price;
-    const buyerCounterOffer = buyerNego?.price || 0;
+    //latest, original, previous of latest
 
-    const discountValue = buyerCounterOffer - sellerOffer;
+    const latestSellerOffer = latestSellerNego?.price || activeOffer.price;
+    const latestBuyerCounterOffer = latestBuyerNego?.price || 0;
+
+    const discountValue = latestBuyerCounterOffer - latestSellerOffer;
     const discountPercentage = discountValue
       ? (
           (discountValue /
-            (buyerCounterOffer === 0 ? sellerOffer : buyerCounterOffer)) *
+            (latestBuyerCounterOffer === 0
+              ? latestSellerOffer
+              : latestBuyerCounterOffer)) *
           100
         ).toFixed(2)
       : 0;
-    const deliveryTotal = sellerOffer * activeOffer.weight;
+    const deliveryTotal = latestSellerOffer * activeOffer.weight;
 
-    const latestNewOfferDate = sellerNego
-      ? moment(sellerNego.created_at).toDate()
+    const latestNewOfferDate = latestSellerNego
+      ? moment(latestSellerNego.created_at).toDate()
       : undefined;
-    const latestCounterOfferDate = buyerNego
-      ? moment(buyerNego.created_at).toDate()
+    const latestCounterOfferDate = latestBuyerNego
+      ? moment(latestBuyerNego.created_at).toDate()
       : undefined;
     const isNegotiationAllowed =
       (latestNewOfferDate &&
         latestCounterOfferDate &&
         latestCounterOfferDate > latestNewOfferDate) ||
-      (buyerNego && !latestNewOfferDate);
+      (latestBuyerNego && !latestNewOfferDate);
 
-    const isAccepted = sellerOffer === buyerCounterOffer;
+    const isAccepted = latestSellerOffer === latestBuyerCounterOffer;
 
     return (
       <>
         <div className="offer-container">
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
-              Your offer was
+              Your original offer
             </Typography>
             <Typography variant="label" weight="bold" color="noshade">
-              {toPrice(sellerOffer)}/{unit}
+              {toPrice(latestSellerOffer)}/{unit}
             </Typography>
           </div>
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
-              Their counter offer is
+              Buyer&apos; counter offer
             </Typography>
             <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(buyerCounterOffer)}/{unit}
+              {toPrice(latestBuyerCounterOffer)}/{unit}
             </Typography>
           </div>
 
@@ -250,7 +256,7 @@ const Step1 = ({
                   onClick={() =>
                     props.onNegotiateOffer(
                       activeOffer.id,
-                      buyerCounterOffer,
+                      latestBuyerCounterOffer,
                       true
                     )
                   }
@@ -262,9 +268,9 @@ const Step1 = ({
             )}
         </div>
 
-        <NegotiateModal
-          originalOffer={buyerCounterOffer}
-          counterOffer={sellerOffer}
+        <NegotiateSellerModal
+          originalOffer={latestBuyerCounterOffer}
+          counterOffer={latestSellerOffer}
           weight={{
             unit: unit,
             value: activeOffer.weight,

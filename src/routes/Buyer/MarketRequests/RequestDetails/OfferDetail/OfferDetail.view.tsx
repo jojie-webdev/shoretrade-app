@@ -121,22 +121,24 @@ const OfferDetailView = (props: any) => {
           <div className="computation-container">
             <div className="computation-item-container">
               <TypographyView variant="label" color="shade9">
-                Original Offer was
+                Seller&apos;s original offer
               </TypographyView>
               <TypographyView variant="label" weight="bold" color="shade9">
                 {toPrice(selectedOffer?.price)}/
                 {formatMeasurementUnit(selectedOffer?.measurementUnit)}
               </TypographyView>
             </div>
-            <div className="computation-item-container">
-              <TypographyView variant="label" color="shade9">
-                Your counter offer is
-              </TypographyView>
-              <TypographyView variant="label" weight="bold" color="shade9">
-                {toPrice(counterOffer)}/
-                {formatMeasurementUnit(selectedOffer?.measurementUnit)}
-              </TypographyView>
-            </div>
+            {counterOffer !== 0 && (
+              <div className="computation-item-container">
+                <TypographyView variant="label" color="shade9">
+                  Your counter offer is
+                </TypographyView>
+                <TypographyView variant="label" weight="bold" color="shade9">
+                  {toPrice(counterOffer)}/
+                  {formatMeasurementUnit(selectedOffer?.measurementUnit)}
+                </TypographyView>
+              </div>
+            )}
             {thereIsNewOffer && (
               <>
                 <div className="computation-item-container">

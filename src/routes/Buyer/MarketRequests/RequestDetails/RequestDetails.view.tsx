@@ -16,7 +16,7 @@ import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
-import NegotiateModalView from 'components/module/NegotiateModal';
+import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { Route, Switch } from 'react-router-dom';
@@ -248,7 +248,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   return (
     <RequestDetailsContainer>
-      <NegotiateModalView
+      <NegotiateBuyerModal
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
         onSubmit={(v: number) => submitNegotiation(v)}

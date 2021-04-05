@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
 import Modal from 'components/layout/Modal';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toPrice } from 'utils/String/toPrice';
-import { useTheme } from 'utils/Theme';
-
-import { NegotiateModalProps } from './NegotiateModal.props';
+import { NegotiateSellerModalProps } from 'components/module/NegotiateSellerModal/NegotiateSellerModal.props';
 import {
   StyledTextField,
   Inputs,
   ButtonContainer,
   ComputationContainer,
-  CheckBoxContainer,
-} from './NegotiateModal.style';
+} from 'components/module/NegotiateSellerModal/NegotiateSellerModal.style';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
 
-const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
+const NegotiateSellerModal = (
+  props: NegotiateSellerModalProps
+): JSX.Element => {
   const {
     onSubmit,
     weight,
     originalOffer = 0,
     counterOffer: counterOfferProp,
     isNegotiating,
-    setCloseOnAccept,
-    closeOnAccept,
     ...modalProps
   } = props;
   const { unit, value: weightValue } = weight;
   const theme = useTheme();
-  const isBuyer = useTheme().appType === 'buyer';
-  const textColor = isBuyer ? 'shade9' : 'noshade';
+  const textColor = 'noshade';
 
   const [counterOffer, setCounterOffer] = useState(counterOfferProp);
   const [discountValue, setDiscountValue] = useState(0);
@@ -52,15 +48,9 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
     ? counterOffer * weightValue
     : originalOffer * weightValue;
 
-  const handleCheck = () => {
-    if (setCloseOnAccept) {
-      setCloseOnAccept(!closeOnAccept);
-    }
-  };
-
   return (
     <Modal
-      backgroundColor={isBuyer ? theme.grey.noshade : theme.grey.shade8}
+      backgroundColor={theme.grey.shade8}
       style={{
         width: '',
         padding: '48px',
@@ -74,7 +64,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
         <Inputs>
           <StyledTextField
             type="number"
-            label={isBuyer ? 'Counter Offer' : 'Make a new Offer'}
+            label={'Make a new Offer'}
             value={counterOffer}
             onChangeText={(v) => {
               setCounterOffer(parseFloat(v));
@@ -87,26 +77,10 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
             }
           />
         </Inputs>
-        {isBuyer && (
-          <CheckBoxContainer>
-            <Checkbox
-              onClick={() => handleCheck()}
-              className="checkbox"
-              checked={closeOnAccept}
-            />
-            <Typography
-              className="label"
-              variant="label"
-              color={isBuyer ? 'shade7' : 'noshade'}
-            >
-              Close this buyer request if accepted.
-            </Typography>
-          </CheckBoxContainer>
-        )}
-        <ComputationContainer isSeller={!isBuyer}>
+        <ComputationContainer>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Their original offer is
+              Your original offer
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
               {toPrice(originalOffer)}/{formatMeasurementUnit(unit)}
@@ -126,7 +100,7 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
           {counterOfferProp !== counterOffer && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
-                Your {isBuyer ? 'counter' : 'new'} offer is
+                Your new offer is
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
                 {toPrice(counterOffer)}/{formatMeasurementUnit(unit)}
@@ -183,4 +157,4 @@ const NegotiateModal = (props: NegotiateModalProps): JSX.Element => {
   );
 };
 
-export default React.memo(NegotiateModal);
+export default React.memo(NegotiateSellerModal);
