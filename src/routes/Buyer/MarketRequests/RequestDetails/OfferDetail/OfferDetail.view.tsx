@@ -33,6 +33,7 @@ const OfferDetailView = (props: any) => {
     thereIsNewOffer,
     newOffer,
     disableAccept,
+    isAccepted,
   } = props;
   const theme = useTheme();
 
@@ -185,21 +186,34 @@ const OfferDetailView = (props: any) => {
               </TypographyView>
             </div>
 
-            {thereIsNewOffer && counterOffer === newOffer && (
-              <div className="computation-item-container">
-                <TypographyView variant="label" color="shade9">
-                  Your offer was accepted by the Seller. Click accept to confirm
-                  negotiation.
-                </TypographyView>
-              </div>
-            )}
+            {!isAccepted && (
+              <>
+                {!thereIsNewOffer && counterOffer === 0 && newOffer === 0 && (
+                  <div className="computation-item-container">
+                    <TypographyView variant="label" color="shade9">
+                      You have received an offer by the Seller. Either click
+                      accept or negotiate to proceed.
+                    </TypographyView>
+                  </div>
+                )}
 
-            {!thereIsNewOffer && counterOffer > 0 && (
-              <div className="computation-item-container">
-                <TypographyView variant="label" color="shade9">
-                  The seller is reviewing your offer.
-                </TypographyView>
-              </div>
+                {thereIsNewOffer && counterOffer === newOffer && (
+                  <div className="computation-item-container">
+                    <TypographyView variant="label" color="shade9">
+                      You have received an offer by the Seller. Either click
+                      accept or negotiate to proceed.
+                    </TypographyView>
+                  </div>
+                )}
+
+                {!thereIsNewOffer && counterOffer > 0 && (
+                  <div className="computation-item-container">
+                    <TypographyView variant="label" color="shade9">
+                      The seller is reviewing your offer.
+                    </TypographyView>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -214,13 +228,15 @@ const OfferDetailView = (props: any) => {
           />
         )}
 
-        <Button
-          onClick={() => handleAcceptOffer()}
-          className="button"
-          variant="primary"
-          disabled={disableAccept}
-          text="Accept"
-        />
+        {!isAccepted && (
+          <Button
+            onClick={() => handleAcceptOffer()}
+            className="button"
+            variant="primary"
+            disabled={disableAccept}
+            text="Accept"
+          />
+        )}
       </OfferActionsContainer>
     </>
   );
