@@ -284,6 +284,7 @@ const Register = (): JSX.Element => {
     interestedInShorePay,
     handleSelectShorePay,
     handleDownloadApplicationForm,
+    setSearchTerm,
   };
   return <RegisterView {...generatedProps} />;
 };

@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import { FileCheck, Search, Subtract } from 'components/base/SVG';
+import { CloseFilled, FileCheck, Search, Subtract } from 'components/base/SVG';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -117,6 +117,7 @@ const StepForm = ({
   searchCategory,
   searchCategoryType,
   searchTerm,
+  setSearchTerm,
   isSuccess,
   backToLogin,
   setSummaryEdit,
@@ -254,10 +255,19 @@ const StepForm = ({
           <Search height={16} width={16} />
           <input
             type="search"
-            placeholder="Search for a product"
+            placeholder="Search for a product..."
             onChange={(e) => onChangeSearch(e.target.value)}
             value={searchTerm}
           />
+          <span onClick={() => setSearchTerm('')} style={{ cursor: 'pointer' }}>
+            <CloseFilled
+              fill={
+                searchTerm.length === 0 ? theme.grey.shade3 : theme.grey.shade6
+              }
+              height={16}
+              width={16}
+            />
+          </span>
         </CategorySearchInputContainer>
 
         {!isGotoDetails && (
