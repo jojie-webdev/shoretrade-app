@@ -15,6 +15,7 @@ import { Col, Row } from 'react-grid-system';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
@@ -140,13 +141,37 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                           </Badge>
                         ))}
                       </div>
-                      <div className="badges-container">
-                        <Badge className="badge" badgeColor={theme.grey.shade8}>
-                          <BadgeText variant="overlineSmall" color="noshade">
-                            {getSizeBadge(b)}
-                          </BadgeText>
-                        </Badge>
-                      </div>
+
+                      {b.sizeFrom !== null ? (
+                        <div className="weights">
+                          <Typography color="noshade" variant="small">
+                            {b.sizeFrom || ''}
+                            {formatMeasurementUnit(b.metric)}
+                          </Typography>
+                          <div style={{ margin: '0 6px' }}>-</div>
+                          <Typography color="noshade" variant="small">
+                            {b.sizeTo || ''}
+                            {formatMeasurementUnit(b.metric)}
+                          </Typography>
+                        </div>
+                      ) : (
+                        <div className="badges-container">
+                          {b.sizeOptions.map((opt: any, idx: number) => (
+                            <Badge
+                              key={idx}
+                              className="badge"
+                              badgeColor={theme.grey.shade8}
+                            >
+                              <BadgeText
+                                variant="overlineSmall"
+                                color="noshade"
+                              >
+                                {opt}
+                              </BadgeText>
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
 
                       <div className="weights">
                         <Typography color="noshade" variant="small">
