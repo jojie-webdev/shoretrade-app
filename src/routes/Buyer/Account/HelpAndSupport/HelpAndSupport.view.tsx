@@ -30,14 +30,9 @@ const HELP_AND_SUPPORT = [
     ShoreTrade.`,
   },
   {
-    title: 'Can I sell overseas?',
+    title: 'Can I purchase from overseas?',
     description: `International exports is launching early 2021 for fishermen and
     fisheries with valid export licences.`,
-  },
-  {
-    title: 'How do I get paid?',
-    description: `When someone purchases your product, your earnings are automatically
-    deposited into your nominated Australian bank account after each sale.`,
   },
   {
     title: 'Who can sell on ShoreTrade?',

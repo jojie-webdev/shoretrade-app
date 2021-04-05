@@ -43,7 +43,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
-  padding: 16px;
 `;
 
 export const OffersSellerAccordionContentContainer = styled.div`

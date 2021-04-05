@@ -30,6 +30,8 @@ const OrdersContainer = (): JSX.Element => {
 
   const token = useSelector((state: Store) => state.auth.token) || '';
 
+  const [initialPending, setInitialPending] = useState(true);
+
   const getAllOrders = () => {
     dispatch(getBuyerOrdersActions.request());
   };
@@ -134,7 +136,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (currentTab === 'Pending') {
+    if (currentTab === 'Pending' && !initialPending) {
       if (pendingOrders.length === 0) {
         getOrders.placed(pendingOrdersFilter);
       }
@@ -157,6 +159,7 @@ const OrdersContainer = (): JSX.Element => {
   useEffect(() => {
     if (currentTab === 'Pending') {
       getOrders.placed(pendingOrdersFilter);
+      setInitialPending(false);
     }
   }, [
     pendingOrdersFilter.term,

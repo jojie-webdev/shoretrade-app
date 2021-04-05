@@ -27,8 +27,6 @@ function* placeOrderRequest(
 function* placeOrderSuccess(
   action: AsyncAction<PlaceOrderMeta, PlaceOrderPayload>
 ) {
-  console.log(action);
-
   yield put(
     getSellerOrdersPlacedActions.updateShipOrderOptimisitically(
       action.payload.orderId

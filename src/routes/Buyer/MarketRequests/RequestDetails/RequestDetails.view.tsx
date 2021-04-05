@@ -231,10 +231,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     discountValue,
     thereIsNewOffer,
     newOffer,
+    disableAccept,
+    isAccepted,
     showDelete,
     setShowDelete,
     onClickDelete,
-    disableAccept,
   } = props;
 
   if (!sellerOffers) {
@@ -400,6 +401,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   newOffer={parseFloat(newOffer)}
                   thereIsNewOffer={thereIsNewOffer}
                   disableAccept={disableAccept}
+                  isAccepted={isAccepted}
                 />
               </Route>
             </Switch>

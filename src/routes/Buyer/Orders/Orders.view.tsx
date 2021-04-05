@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
 import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
+import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
@@ -23,7 +23,8 @@ const IN_TRANSIT = 'In Transit';
 const COMPLETE = 'Complete';
 
 const OrdersView = (props: OrdersGeneratedProps) => {
-  const history = useHistory();
+  const [searchValue, setSearchValue] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
 
@@ -60,10 +61,20 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   updateWatchers(currentTab);
 
   const handleSearchValue = (value: string) => {
+    const parsedValue = parseOrderReferenceNumber(value);
+
     updateFilter({
       ...currentFilter,
-      term: value,
+      term: parsedValue,
     });
+  };
+
+  const clearSearchValue = () => {
+    updateFilter({
+      ...currentFilter,
+      term: '',
+    });
+    setSearchValue('');
   };
 
   const fromOnDatesChange = (value: any) => {
@@ -73,6 +84,26 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       dateTo: value.endDate,
     });
   };
+
+  const onKeyUp = (e: any) => {
+    //enter
+    if (e.charCode === 13 && searchValue.length > 2 && !loadingCurrentTab) {
+      handleSearchValue(searchValue);
+    }
+  };
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    if (!loadingCurrentTab) {
+      const timerId = setTimeout(() => {
+        handleSearchValue(searchValue);
+      }, 800);
+      setTimer(timerId);
+    }
+  }, [searchValue]);
 
   let content;
   if (loadingCurrentTab) {
@@ -99,9 +130,10 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       <SearchFilterRow>
         <SearchContainer>
           <Search
-            value={currentFilter.term}
-            onChange={(e) => handleSearchValue(e.target.value)}
-            resetValue={() => handleSearchValue('')}
+            onKeyUp={onKeyUp}
+            value={searchValue}
+            onChange={(val) => setSearchValue(val.currentTarget.value)}
+            resetValue={() => clearSearchValue()}
             placeholder="Search by order#, product type & seller..."
             rounded
           />

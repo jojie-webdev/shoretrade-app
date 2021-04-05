@@ -44,3 +44,7 @@ export const FormAddCard = styled(Form)`
     margin-bottom: 24px;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+`;
