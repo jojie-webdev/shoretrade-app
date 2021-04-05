@@ -5,7 +5,7 @@ import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
+import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
@@ -17,18 +17,14 @@ import {
   DateRangeContainer,
 } from './Orders.style';
 import Pending from './Pending/Pending.view';
-import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 const PENDING = 'Pending';
 const IN_TRANSIT = 'In Transit';
 const COMPLETE = 'Complete';
 
 const OrdersView = (props: OrdersGeneratedProps) => {
-  const history = useHistory();
-
   const [searchValue, setSearchValue] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
 
@@ -91,7 +87,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
 
   const onKeyUp = (e: any) => {
     //enter
-    if (e.charCode === 13 && searchValue.length > 2 && !loading) {
+    if (e.charCode === 13 && searchValue.length > 2 && !loadingCurrentTab) {
       handleSearchValue(searchValue);
     }
   };
@@ -101,7 +97,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       clearTimeout(timer);
       setTimer(null);
     }
-    if (searchValue.length > 2 && !loading) {
+    if (searchValue.length > 2 && !loadingCurrentTab) {
       const timerId = setTimeout(() => {
         handleSearchValue(searchValue);
       }, 800);

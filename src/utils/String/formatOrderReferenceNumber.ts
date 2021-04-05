@@ -11,7 +11,6 @@ export const parseOrderReferenceNumber = (value: string) => {
     value = value.replace(/\d+$/, (num) => {
       console.log(num);
       out = `${+num}`;
-      console.log(out);
       return out;
     });
 
