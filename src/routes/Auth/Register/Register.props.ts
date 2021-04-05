@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { PlaceData } from 'types/PlaceData';
 import {
@@ -70,6 +70,7 @@ export interface RegisterGeneratedProps {
   searchCategory: Category[];
   searchCategoryType: CategoryType[];
   searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
   onChangeSearch: (search: string) => void;
   isSummaryEdit: boolean;
   setSummaryEdit: () => void;
