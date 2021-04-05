@@ -220,6 +220,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
           caption="Select your product size for this request."
+          marketBoard
         />
         <SizeFormContainer>
           {listingFormData ? (

@@ -95,6 +95,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           categoryName={selectedCategory.name}
           imgSrc={listingFormData?.defaultPhoto}
           caption="Select your product specifications for this request."
+          marketBoard
         />
         <SpecificationFormContainer>
           {stateOptions.map((group) => (
