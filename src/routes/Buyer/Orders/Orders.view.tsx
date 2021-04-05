@@ -97,7 +97,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       clearTimeout(timer);
       setTimer(null);
     }
-    if (searchValue.length > 2 && !loadingCurrentTab) {
+    if (!loadingCurrentTab) {
       const timerId = setTimeout(() => {
         handleSearchValue(searchValue);
       }, 800);
