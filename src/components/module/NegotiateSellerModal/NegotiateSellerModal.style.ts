@@ -27,15 +27,14 @@ export const CheckBoxContainer = styled.div`
   }
 `;
 
-export const ComputationContainer = styled.div<{ isSeller: boolean }>`
+export const ComputationContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 0.6rem;
   border-top: 1px solid;
   margin-bottom: 24px;
-  margin-top: ${({ isSeller }) => (isSeller ? '24px' : 0)};
-  border-color: ${({ theme }) =>
-    theme.appType === 'buyer' ? theme.grey.shade3 : theme.grey.shade7};
+  margin-top: 24px;
+  border-color: ${({ theme }) => theme.grey.shade7};
 
   .computation-item-container {
     display: flex;
