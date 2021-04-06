@@ -59,9 +59,19 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </LocationContainer>
 
           <BadgeContainer>
-            {props.isAquafuture ? <Badge>Aquafuture</Badge> : null}
+            {props.isAquafuture ? (
+              <Badge badgeColor="#111E2B">
+                <Typography color="shade4" variant="overline">
+                  Aquafuture
+                </Typography>
+              </Badge>
+            ) : null}
             {parseInt(props.remaining || '0') <= 50 ? (
-              <Badge badgeColor="#F23742">Almost Gone!</Badge>
+              <Badge badgeColor="#FFA26B">
+                <Typography style={{ color: '#FFF1E9' }} variant="overline">
+                  Almost Gone!
+                </Typography>
+              </Badge>
             ) : null}
           </BadgeContainer>
         </div>
@@ -84,7 +94,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     variant="small"
                     color="shade6"
                   >
-                    per {formatUnitToPricePerUnit(props.unit)}
+                    per{' '}
+                    {formatUnitToPricePerUnit(
+                      formatMeasurementUnit(props.unit)
+                    )}
                   </Typography>
                 </PriceContainer>
               )}

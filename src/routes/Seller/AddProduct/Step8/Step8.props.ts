@@ -3,7 +3,23 @@ import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState'
 
 export type Step8PublicProps = {
   preview: () => void;
+  boxesDetails: Box[];
+  measurementUnit: string;
 };
+
+export interface BoxItemProps {
+  weight: number;
+  quantity: number;
+  count?: number;
+  unit: string;
+}
+
+export interface Box {
+  id: string;
+  weight: number;
+  quantity: number;
+  count?: number;
+}
 
 export type Step8Props = Step8PublicProps & {
   isCustomType: boolean;

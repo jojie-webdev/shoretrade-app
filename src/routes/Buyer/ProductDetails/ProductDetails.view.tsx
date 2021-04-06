@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
@@ -57,7 +57,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isLoadingListingBoxes,
     groupedBox,
     isPendingAccount,
+    isAquafuture,
   } = props;
+  const boxWeightsRef = useRef<HTMLDivElement>(null);
+  const [didScroll, setDidScroll] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
     GetListingResponseItem
@@ -76,6 +79,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     }
   }, [newCurrentListing, newCurrentListing?.images]);
 
+  useEffect(() => {
+    if (!isEmpty(groupedBox) && !didScroll) {
+      setDidScroll(true);
+      boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [groupedBox]);
+
   const verticalView = useMediaQuery({
     query: `(max-width: 991px)`,
   });
@@ -90,9 +100,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   id={'product-details-carousel'}
                   images={images}
                   loop
-                  autoplay
+                  // autoplay
                   aspectRatio="9:4"
                   arrowInside
+                  showAlmostGone={Number(remainingWeight) <= 50}
+                  showAquafuture={isAquafuture}
                 />
               </BannerContainer>
 
@@ -123,19 +135,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
               {isPendingAccount ? (
-                <DesiredQuantityContainer>
-                  <Alert
-                    variant="alert"
-                    content={`Price hidden pending account approval.`}
-                    style={{
-                      borderRadius: 4,
-                      padding: 8,
-                    }}
-                    fullWidth
-                    alignText="center"
-                    small
-                  />
-                </DesiredQuantityContainer>
+                <Alert
+                  variant="alert"
+                  content={`Price hidden pending account approval.`}
+                  fullWidth
+                  alignText="center"
+                />
               ) : (
                 <DesiredQuantityContainer>
                   <div className="content">
@@ -154,13 +159,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       <Alert
                         variant="alert"
                         content={`Remaining ${remainingWeight} ${unit}`}
-                        style={{
-                          borderRadius: 4,
-                          padding: 8,
-                        }}
                         fullWidth
                         alignText="center"
-                        small
                       />
                     </RemainingWrapper>
 

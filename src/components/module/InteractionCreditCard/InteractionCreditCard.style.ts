@@ -3,8 +3,7 @@ import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const CustomInteractions = styled(Interactions)`
-  /* height: 70px; */
-  padding: 16px 18px;
+  padding: 16px 24px;
 `;
 
 export const LeftComponent = styled.div`

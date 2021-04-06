@@ -19,6 +19,11 @@ export const CardContainer = styled.div`
     height: 160px;
     margin-right: 32px;
     transition: transform 0.2s;
+
+    @media ${BREAKPOINTS.sm} {
+      min-height: 160px;
+      height: auto;
+    }
   }
 
   .card a {

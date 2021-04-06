@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Accordion from 'components/base/Accordion';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { useTheme } from 'utils/Theme';
 
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
@@ -17,7 +18,7 @@ const HELP_AND_SUPPORT = [
   },
   {
     title: 'What do I need to sign up?',
-    description: `The signing process is simple, all you need is your business name,
+    description: `The signing up process is simple, all you need is your business name,
     ABN, banking details and address. Our team will review your
     application before you can start listing and selling your products in
     our seafood marketplace.`,
@@ -29,7 +30,7 @@ const HELP_AND_SUPPORT = [
   },
   {
     title: 'Can I sell overseas?',
-    description: `International exports is launching early 2019 for fishermen and
+    description: `International exports is launching early 2021 for fishermen and
     fisheries with valid export licences.`,
   },
   {
@@ -58,7 +59,14 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Help & Support" />
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Help & Support' },
+          ]}
+        />
+      </div>
 
       <p className="help-text">
         You’ll find answers to common questions below. <br />

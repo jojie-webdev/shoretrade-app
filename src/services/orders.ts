@@ -26,7 +26,7 @@ export const getSellerOrders = (data: GetSellerOrdersMeta, token: string) => {
     method: 'get',
     url: `${ORDER_URL}/get-seller-orders-new?status=${
       data.status || ''
-    }&limit=${data.limit || ''}&page=${data.page || ''}&dateFrom=${
+    }&limit=${data.limit || ''}&term=${data.term || ''}&dateFrom=${
       data.dateFrom || ''
     }&dateTo=${data.dateTo || ''}`,
     headers: {
@@ -62,7 +62,7 @@ export const getBuyerOrders = (data: GetSellerOrdersMeta, token: string) => {
     method: 'get',
     url: `${ORDER_URL}/get-buyer-orders-new?status=${data.status || ''}&limit=${
       data.limit || ''
-    }&page=${data.page || ''}&dateFrom=${data.dateFrom || ''}&dateTo=${
+    }&term=${data.term || ''}&dateFrom=${data.dateFrom || ''}&dateTo=${
       data.dateTo || ''
     }`,
     headers: {

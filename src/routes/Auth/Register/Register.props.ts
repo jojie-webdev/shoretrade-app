@@ -1,6 +1,11 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { PlaceData } from 'types/PlaceData';
+import {
+  Category,
+  CategoryType,
+  CategoryPayload,
+} from 'types/store/GetCategories';
 
 export interface RegistrationDetails {
   // user
@@ -16,6 +21,7 @@ export interface RegistrationDetails {
   businessName: string;
   abn: string;
   address: PlaceData | null;
+  unitNumber: string;
   businessLogo: File | null;
 
   // bank
@@ -29,6 +35,10 @@ export interface RegistrationDetails {
   selectedMarketSector: string;
 
   tncAgreement: boolean;
+  categoryMarketSector: string;
+
+  //license
+  licenses: { file: File | null; fileName: string }[];
 }
 
 export interface BankDetails {
@@ -45,5 +55,44 @@ export interface RegisterGeneratedProps {
   isPending: boolean;
   isSuccess: boolean;
   error: string;
-  isApplicationForLineCredit: boolean;
+  categories: Category[];
+  getCategoryItem: (id: string) => void;
+  categoryItems: CategoryType[];
+  isGotoDetails?: boolean;
+  showDetails: () => void;
+  hideDetails: () => void;
+  selectedCategoryTypes: CategoryPayload[];
+  addSelected: (category: {
+    id: string;
+    name: string;
+    categoryId: string;
+  }) => void;
+  searchCategory: Category[];
+  searchCategoryType: CategoryType[];
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+  onChangeSearch: (search: string) => void;
+  isSummaryEdit: boolean;
+  setSummaryEdit: () => void;
+  interestedInShorePay: boolean;
+  handleSelectShorePay: (shorePay: boolean) => void;
+  handleDownloadApplicationForm: () => void;
+}
+
+export interface StepFormProps extends RegisterGeneratedProps {
+  formikProps: {
+    initialValues: Record<string, string>;
+    validate?: (attributes: Record<string, string>) => Record<string, string>;
+    onSubmit: (values: Record<string, string>) => void;
+  };
+  step: number;
+  fields: {
+    label: string;
+    key: string;
+    secured?: boolean;
+    alert?: string;
+    type?: string;
+    prefix?: string;
+  }[];
+  summaryHandleStep: (step: number) => void;
 }

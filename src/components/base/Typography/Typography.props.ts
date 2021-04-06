@@ -8,11 +8,14 @@ export type Variants =
   | 'title3'
   | 'title4'
   | 'title5'
+  | 'title6'
+  | 'copy'
   | 'body'
   | 'label'
   | 'caption'
   | 'small'
-  | 'overline';
+  | 'overline'
+  | 'overlineSmall';
 
 export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   children: any;

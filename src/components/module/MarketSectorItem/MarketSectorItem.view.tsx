@@ -1,17 +1,18 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
-import Checkbox from 'components/base/Checkbox';
+import Radio from 'components/base/Radio';
 import {
-  MarketSectorHotel,
-  MarketSectorProcessor,
-  MarketSectorRestaurantBar,
-  MarketSectorRetailer,
-  MarketSectorWetShop,
-  MarketSectorWholesaler,
+  AquacultureProducer,
+  BuyerHotel,
+  BuyerRestaurantBar,
+  Processor,
+  Retailer,
+  Wetshop,
+  Wholesaler,
+  WildCatchFishingCompany,
 } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
 import pathOr from 'ramda/es/pathOr';
+import { useTheme } from 'utils/Theme';
 
 import { MarketSectorItemProps } from './MarketSectorItem.props';
 import {
@@ -19,58 +20,96 @@ import {
   CheckBoxContainer,
   TextContainer,
   Content,
+  SectorLabel,
 } from './MarketSectorItem.style';
 
 const MarketSectorItem = (props: MarketSectorItemProps): JSX.Element => {
-  // const theme = useTheme();
-
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
   const { variant, selected = false, onPress } = props;
 
   const variations = {
-    Hotel: {
-      icon: MarketSectorHotel,
+    HOTEL: {
+      icon: BuyerHotel,
       label: 'Hotel',
     },
-    Restaurant: {
-      icon: MarketSectorRestaurantBar,
+    RESTAURANT_BAR: {
+      icon: BuyerRestaurantBar,
       label: 'Restaurant ~ Bar',
     },
-    Wholesaler: {
-      icon: MarketSectorWholesaler,
+    WHOLESALER: {
+      icon: Wholesaler,
       label: 'Wholesaler',
     },
-    Retailer: {
-      icon: MarketSectorRetailer,
-      label: 'Retailer',
-    },
-    'Seafood Processor': {
-      icon: MarketSectorProcessor,
+    PROCESSOR: {
+      icon: Processor,
       label: 'Processor',
     },
-    'Wet Shop': {
-      icon: MarketSectorWetShop,
+    RETAILER: {
+      icon: Retailer,
+      label: 'Retailer',
+    },
+    WET_SHOP: {
+      icon: Wetshop,
       label: 'Wet Shop',
+    },
+  };
+
+  const sellerVariations = {
+    WILD_CATCH_FISHING_COMPANY: {
+      icon: WildCatchFishingCompany,
+      label: (
+        <>
+          Wild Catch
+          <br />
+          Fishing Company
+        </>
+      ),
+    },
+    AQUACULTURE_PRODUCER: {
+      icon: AquacultureProducer,
+      label: (
+        <>
+          Aquaculture
+          <br />
+          Producer
+        </>
+      ),
+    },
+    WHOLESALER: {
+      icon: Wholesaler,
+      label: 'Wholesaler',
+    },
+    PROCESSOR: {
+      icon: Processor,
+      label: 'Processor',
+    },
+    RETAILER: {
+      icon: Retailer,
+      label: 'Retailer',
     },
   };
 
   const { label, icon: Icon } = pathOr(
     {
-      icon: MarketSectorWetShop,
+      icon: Wetshop,
       label: 'N/A',
     },
     [variant],
-    variations
+    isSeller ? sellerVariations : variations
   );
 
   return (
     <Container>
       <CheckBoxContainer>
-        <Checkbox checked={selected} onClick={() => onPress()} />
+        <Radio checked={selected} onClick={() => onPress()} />
       </CheckBoxContainer>
       <Content>
         <Icon />
         <TextContainer>
-          <Typography color="shade8">{label}</Typography>
+          <SectorLabel variant="label" color={isSeller ? 'noshade' : 'shade9'}>
+            {label}
+          </SectorLabel>
         </TextContainer>
       </Content>
     </Container>

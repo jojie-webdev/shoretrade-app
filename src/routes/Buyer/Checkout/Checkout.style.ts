@@ -19,9 +19,9 @@ export const Container = styled.div`
   }
 
   .center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .accordion-container {

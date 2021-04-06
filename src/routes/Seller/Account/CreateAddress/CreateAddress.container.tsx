@@ -17,6 +17,7 @@ const CreateAddress = (): JSX.Element => {
   const [companyId] = useCompany();
   const dispatch = useDispatch();
   const history = useHistory();
+
   const pending = useSelector(
     (store: Store) => store.addAddress.pending || false
   );
@@ -53,6 +54,7 @@ const CreateAddress = (): JSX.Element => {
 
   // MARK:- Render
   const generatedProps: CreateAddressGeneratedProps = {
+    companyId,
     type: 'CREATE',
     address,
     isDefault,

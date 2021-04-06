@@ -1,22 +1,16 @@
 import React from 'react';
 
+import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Loading from 'components/module/Loading';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './Assistants.props';
-import {
-  Container,
-  SmallAlertContainer,
-  AccountName,
-  StyledInteaction,
-  StyledAlert,
-} from './Assistants.style';
+import { Container, AccountName, StyledInteraction } from './Assistants.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
@@ -36,38 +30,42 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Fisherman / Assistant" />
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Fisherman / Assistant' },
+          ]}
+        />
+      </div>
 
       {notifMsg && (
-        <StyledAlert content={notifMsg} variant="success" fullWidth />
+        <Alert
+          content={notifMsg}
+          variant="success"
+          fullWidth
+          style={{
+            marginBottom: 16,
+          }}
+        />
       )}
 
       {!notifMsg && (
-        <SmallAlertContainer>
-          <div className="icon-container">
-            <InfoFilled
-              fill={
-                theme.appType === 'seller'
-                  ? theme.brand.alert
-                  : theme.grey.shade8
-              }
-              height={14}
-              width={14}
-            />
-          </div>
-          <Typography variant="caption" className="text" color="alert">
-            {`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
-          </Typography>
-        </SmallAlertContainer>
+        <Alert
+          variant="infoAlert"
+          fullWidth
+          content={`You can give others access to list seafood under “${currentCompanyName}” by adding them as assistants.`}
+          style={{ marginBottom: 24 }}
+        />
       )}
 
       {accounts.map((account) => (
-        <StyledInteaction
+        <StyledInteraction
           onClick={() => onClickAssistant(account.userId)}
           key={account.userId}
           leftComponent={
             <div>
-              <Typography color="shade6" variant="overline">
+              <Typography color="shade7" variant="overlineSmall">
                 {account.relationship}
               </Typography>
               <AccountName color="noshade">
@@ -81,7 +79,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
         />
       ))}
 
-      <Row nogutter>
+      <Row nogutter className="btn-add-assistant">
         <Col>
           <Button
             text="Add a fisherman / assistant"

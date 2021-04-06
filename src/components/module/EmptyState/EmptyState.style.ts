@@ -14,11 +14,13 @@ export const MainText = styled(Typography)``;
 export const SVGContainer = styled.div<{
   circleColor: string;
   fluid: boolean;
+  circleHeight?: number;
+  circleWidth?: number;
 }>`
   margin-top: ${({ fluid }) => (fluid ? '0' : '70px')};
   margin-bottom: ${({ fluid }) => (fluid ? '0' : '60px')};
   position: relative;
-  height: 245px;
+  height: 350px;
   width: 245px;
 
   display: flex;
@@ -32,11 +34,14 @@ export const SVGContainer = styled.div<{
   :before {
     position: absolute;
     content: '';
-    height: 210px;
-    width: 210px;
-    border-radius: 110px;
+    height: ${(props) =>
+      props.circleHeight ? `${props.circleHeight}px` : '210px'};
+    width: ${(props) =>
+      props.circleWidth ? `${props.circleWidth}px` : '210px'};
+    border-radius: 210px;
+    z-index: 1;
+
     background: ${(props) =>
       props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
-    z-index: 1;
   }
 `;

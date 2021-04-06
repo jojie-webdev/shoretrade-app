@@ -3,19 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   updateAddressActions,
-  cartActions,
   searchAndCountProductTypeActions,
   historyActions,
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
-import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
-import { useTheme } from 'utils/Theme';
 
-import { SearchInterface } from './SearchAddress.props';
 import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,
@@ -23,7 +18,6 @@ import {
 import SearchAddressView from './SearchAddress.view';
 
 const SearchAddress = (): JSX.Element => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   //#region Address
 
@@ -42,7 +36,6 @@ const SearchAddress = (): JSX.Element => {
   const setDefaultAddress = (addressId: string) => {
     const targetAddressData = addresses.find((i) => i.id === addressId);
     if (targetAddressData) {
-      console.log(targetAddressData);
       dispatch(
         updateAddressActions.request(
           placeDataToUpdateAddressMeta(

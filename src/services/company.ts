@@ -4,14 +4,20 @@ import qs from 'qs';
 import omit from 'ramda/es/omit';
 import { AddAddressMeta } from 'types/store/AddAddressState';
 import { AddLinkedAccountMeta } from 'types/store/AddLinkedAccountState';
+import { AddSellerLicenseMeta } from 'types/store/AddSellerLicenseState';
 import { DeleteLinkedAccountMeta } from 'types/store/DeleteLinkedAccountState';
+import { GetAccountCompletionMeta } from 'types/store/GetAccountCompletionState';
 import { GetAddressesMeta } from 'types/store/GetAddressesState';
 import { GetBankDetailsMeta } from 'types/store/GetBankDetailsState';
 import { GetBuyerHomepageRequestData } from 'types/store/GetBuyerHomepageState';
 import { GetCoopUsersRequest } from 'types/store/GetCoopUsersState';
+import { GetMarketInterestsMeta } from 'types/store/GetMarketInterestsState';
 import { GetSellerByIdMeta } from 'types/store/GetSellerByIdState';
+import { GetSellerLicenseMeta } from 'types/store/GetSellerLicenseState';
 import { GetTransactionHistoryMeta } from 'types/store/GetTransactionHistoryState';
 import { UpdateAddressMeta } from 'types/store/UpdateAddressState';
+import { UpdateMarketInterestsMeta } from 'types/store/UpdateMarketInterestsState';
+import { UpdateSellerLicenseMeta } from 'types/store/UpdateSellerLicenseState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const COMPANY_URL = `${BASE_URL}/company`;
@@ -226,6 +232,84 @@ export const getTransactionHistory = (
     url: `${COMPANY_URL}/transaction-history/${data.companyId}`,
     headers: {
       Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getAccountCompletion = (
+  data: GetAccountCompletionMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${COMPANY_URL}/account-completion/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getMarketInterests = (
+  data: GetMarketInterestsMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${COMPANY_URL}/market-interests/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const updateMarketInterests = (
+  data: UpdateMarketInterestsMeta,
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${COMPANY_URL}/update-market-interests/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data,
+  });
+};
+
+export const getSellerLicense = (data: GetSellerLicenseMeta, token: string) => {
+  return axios({
+    method: 'get',
+    url: `${COMPANY_URL}/seller-licenses/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const addSellerLicense = (data: AddSellerLicenseMeta, token: string) => {
+  return axios({
+    method: 'post',
+    url: `${COMPANY_URL}/add-seller-license/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { ...data.sellerLicense },
+  });
+};
+
+export const updateSellerLicense = (
+  data: UpdateSellerLicenseMeta,
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${COMPANY_URL}/update-seller-license/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      status: 'DELETED',
+      id: data.id,
     },
   });
 };

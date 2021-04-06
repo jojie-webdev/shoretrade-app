@@ -43,6 +43,7 @@ export type NavLinkProps = {
   linkText?: string;
   iconColor?: string;
   Icon?: React.FC<SVGProps>;
+  onClick: () => void;
 };
 
 export type HeaderProps = {

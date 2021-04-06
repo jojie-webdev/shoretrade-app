@@ -1,11 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { push } from 'connected-react-router';
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
-import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { replaceCallingCode, getCallingCode } from 'utils/String/callingCode';
 
@@ -13,7 +11,6 @@ import {
   UserDetails,
   BusinessDetails,
   YourDetailsGeneratedProps,
-  QueryParams,
   UpdateUserForm,
 } from './YourDetails.props';
 import YourDetailsView from './YourDetails.view';
@@ -24,9 +21,10 @@ const YourDetails = (): JSX.Element => {
   const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
   const updateUser = useSelector((state: Store) => state.updateUser);
+  const currentCompany = GetDefaultCompany();
+  const companyId = currentCompany?.id || '';
 
   // MARK:- State
-  const [companyId, setCompanyId] = useState('');
   const [submitted, setIsSubmitted] = useState(false);
   const [callingCode, setCallingCode] = useState('61'); // AU by default
   const [userDetails, setUserDetails] = useState<UserDetails>({
@@ -53,17 +51,6 @@ const YourDetails = (): JSX.Element => {
         email: user?.email || '',
         mobile: replaceCallingCode(user?.mobile || ''),
       });
-
-      const { companyId } = qs.parse(location.search, {
-        ignoreQueryPrefix: true,
-      }) as QueryParams;
-
-      if (!companyId) {
-        dispatch(push(BUYER_ACCOUNT_ROUTES.LANDING));
-      }
-
-      setCompanyId(companyId);
-      const currentCompany = user?.companies.find((c) => c.id === companyId);
 
       setBusinessDetails({
         businessName: currentCompany?.name || '',

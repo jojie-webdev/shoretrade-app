@@ -59,7 +59,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
                 resetValue={resetSearchValue}
                 onChange={onChangeSearchValue}
                 placeholder="Filter Products"
-                isSellerProduct
+                rounded
               />
             </div>
           </ListingHeader>

@@ -10,10 +10,12 @@ import { Container } from './Add.style';
 const Add = (props: AddProps): JSX.Element => {
   const theme = useTheme();
 
-  const { title, onClick, Svg, onClickImage } = props;
+  const { title, onClick, Svg, onClickImage, onClickFile } = props;
 
   const enableImagePicker = onClickImage !== undefined;
+  const enableFilePicker = onClickFile !== undefined;
   const imagePicker = useRef<HTMLInputElement | null>(null);
+  const filePicker = useRef<HTMLInputElement | null>(null);
 
   const handleOnClick = () => {
     if (enableImagePicker) {
@@ -21,12 +23,17 @@ const Add = (props: AddProps): JSX.Element => {
       if (imagePicker && imagePicker.current) {
         imagePicker.current.click();
       }
+    } else if (enableFilePicker) {
+      // handle file
+      if (filePicker && filePicker.current) {
+        filePicker.current.click();
+      }
     } else if (onClick !== undefined) {
       onClick();
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
 
     // accept ony jpg and png
@@ -40,6 +47,24 @@ const Add = (props: AddProps): JSX.Element => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    // accept ony images/docs/pdf
+    const documentFiles = files.filter(
+      ({ type }) =>
+        type === 'image/jpeg' ||
+        type === 'image/png' ||
+        type === 'application/pdf' ||
+        type === 'application/msword'
+    );
+
+    // only return first index
+    if (onClickFile !== undefined) {
+      onClickFile(documentFiles.length > 0 ? documentFiles[0] : null);
+    }
+  };
+
   return (
     <>
       {enableImagePicker && (
@@ -47,11 +72,20 @@ const Add = (props: AddProps): JSX.Element => {
           ref={imagePicker}
           type="file"
           hidden
-          name="test"
+          name="image"
+          onChange={handleImageChange}
+        />
+      )}
+      {enableFilePicker && (
+        <input
+          ref={filePicker}
+          type="file"
+          hidden
+          name="file"
           onChange={handleFileChange}
         />
       )}
-      <Container onClick={handleOnClick}>
+      <Container onClick={handleOnClick} className="add-container">
         <div className="content">
           <div className="svg-container">
             <Svg fill={theme.brand.primary} />

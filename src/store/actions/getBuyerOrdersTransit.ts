@@ -12,13 +12,20 @@ const asyncAction = createAsyncAction<
 
 const getBuyerOrdersTransitActions = {
   ...asyncAction,
-  request: (): {
+  request: (filter?: {
+    term: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
+  }): {
     type: string;
     meta: GetBuyerOrdersMeta;
   } => ({
     type: asyncAction.REQUEST,
     meta: {
       status: 'TRANSIT',
+      dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
+      dateTo: filter?.dateTo?.format('M/DD/yyyy'),
+      term: filter?.term,
     },
   }),
 };

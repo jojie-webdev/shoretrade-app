@@ -7,6 +7,7 @@ import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  uploadBulkActions,
   editableListingActions,
   searchProductTypeActions,
   updateListingActions,
@@ -14,9 +15,11 @@ import {
   createListingActions,
   getCustomFormDataActions,
 } from 'store/actions';
+import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
 import { Store } from 'types/store/Store';
 import { fileToBase64 } from 'utils/File';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
@@ -24,8 +27,18 @@ import AddProductView from './AddProduct.view';
 const AddProduct = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const userPending =
+    user !== undefined &&
+    !(user.companies || []).some((a) =>
+      a.addresses.some((b) => b.approved === 'APPROVED')
+    );
+
   const currentPage =
     useSelector((state: Store) => state.editableListing.currentStep) || 1;
+
+  const uploadBulk = useSelector((store: Store) => store.uploadBulk);
 
   function onChangeCurrentPage(newPage: number) {
     if (newPage >= 1 && newPage <= 8) {
@@ -53,6 +66,7 @@ const AddProduct = (): JSX.Element => {
           company: user.company,
         };
 
+  const getUser = useSelector((state: Store) => state.getUser);
   const accounts =
     useSelector((state: Store) => state.getCoopUsers.data?.data.users) || [];
   const employeeList = unnest(accounts.map(toEmployeeOptions));
@@ -62,6 +76,7 @@ const AddProduct = (): JSX.Element => {
     if (account) {
       const company =
         employeeList.find((e) => e.value === account)?.company || '';
+
       if (company) {
         dispatch(
           editableListingActions.update({
@@ -156,6 +171,10 @@ const AddProduct = (): JSX.Element => {
       setShowCustomTypeSettings(true);
     }
   }, [isCustomType]);
+
+  const boxes = (editableListing?.boxes || []).length.toString();
+
+  const boxesDetails = editableListing?.boxes || [];
 
   const typeName =
     (isCustomType
@@ -333,6 +352,41 @@ const AddProduct = (): JSX.Element => {
     history.push(ADD_PRODUCT_ROUTES.PREVIEW);
   };
 
+  const categoryData = GetCategoryData(
+    editableListing?.customTypeData?.categoryId || ''
+  );
+
+  const measurementUnit = formatMeasurementUnit(
+    (() => {
+      if (isCustomType) {
+        const isPortions =
+          editableListing?.customTypeData?.metric.name === 'Portions';
+        return isPortions ? 'Portions' : categoryData?.measurementUnit;
+      }
+
+      return listingFormData?.measurementUnit;
+    })()
+  );
+
+  const onUploadCSV = (csv: File, account: string) => {
+    const companies = getUser.data?.data.user.companies || [];
+    const companyId = companies.find((c) => c.employeeId === account)?.id || '';
+
+    if (companyId) {
+      const reader = new FileReader();
+      reader.readAsText(csv);
+
+      reader.onload = () => {
+        dispatch(
+          uploadBulkActions.request({
+            companyId,
+            csv: reader.result as string,
+          })
+        );
+      };
+    }
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -361,6 +415,11 @@ const AddProduct = (): JSX.Element => {
     discardChanges,
     preview,
     marketEstimate,
+    onUploadCSV,
+    boxesDetails,
+    measurementUnit,
+    isUploadingCSV: uploadBulk?.pending || false,
+    userPending,
   };
 
   return <AddProductView {...generatedProps} />;

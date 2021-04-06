@@ -48,7 +48,7 @@ const transform = (
     minOrder: Number(data?.minimumOrder || 0),
     sellInMultiplesOfMinOrder: data?.sellInMultiplesOf,
     catchDate: data?.catchDate
-      ? moment(data?.catchDate, 'YYYY-MM-dd').toDate()
+      ? moment(data?.catchDate, 'YYYY-MM-DD').toDate()
       : undefined,
     description: data?.description || '',
     origin: data?.origin || {

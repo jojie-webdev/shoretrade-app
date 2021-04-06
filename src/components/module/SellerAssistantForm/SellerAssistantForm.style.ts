@@ -1,36 +1,27 @@
-import Alert from 'components/base/Alert';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  @media ${BREAKPOINTS['md']} {
-    padding-bottom: 32px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 32px;
+  .breadcrumb-container {
+    margin-bottom: 26px;
   }
 `;
 
 export const RoleContainer = styled.div`
   display: flex;
   align-items: flex-start;
+  margin-top: 8px;
 
   :not(:last-child) {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
   }
 
   .text-container {
-    margin-left: 8px;
+    margin-left: 12px;
 
     .overline {
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
-  }
-
-  .radio-container {
-    margin-top: -8px;
   }
 `;
 
@@ -43,13 +34,9 @@ export const TextFieldRow = styled(Row)`
 `;
 
 export const RolesRow = styled(Row)`
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 
   .title {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
-`;
-
-export const StyledAlert = styled(Alert)`
-  margin-bottom: 16px;
 `;

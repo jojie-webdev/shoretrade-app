@@ -1,5 +1,6 @@
 import { GenericResponse } from 'types/GenericResponse';
 import { PlaceData } from 'types/PlaceData';
+import { CategoryPayload } from 'types/store/GetCategories';
 
 export type RegisterMeta = {
   firstName: string;
@@ -24,6 +25,10 @@ export type RegisterMeta = {
   debtFinancingSegment?: string;
   debtFinancingEstRevenue?: string;
   products?: string[];
+  licenses?: { file: any; fileName: string }[];
+  marketSector: string;
+  marketSelling?: CategoryPayload[];
+  marketBuying?: CategoryPayload[];
 };
 
 export type RegisterRequestData = {
@@ -52,6 +57,14 @@ export type RegisterRequestData = {
       }
     | {};
   playerId?: string;
+  sellerLicenses?: {
+    url: string;
+    name: string;
+    fileType: 'IMAGE' | 'PDF' | 'DOC';
+  }[];
+  marketSector: string;
+  marketSelling?: CategoryPayload[];
+  marketBuying?: CategoryPayload[];
 };
 
 export type RegisterPayload = GenericResponse;

@@ -1,5 +1,5 @@
 import pathOr from 'ramda/es/pathOr';
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { put, call, takeLatest, all, CallEffect } from 'redux-saga/effects';
 import { register } from 'services/auth';
 import { uploadImageData } from 'services/upload';
 import { AsyncAction } from 'types/Action';
@@ -25,6 +25,57 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
       profileImageUrl = uploadStatus === 200 ? profileImage.url : '';
     }
 
+    let sellerLicenses: {
+      url: string;
+      fileType: 'IMAGE' | 'PDF' | 'DOC';
+      name: string;
+    }[] = [];
+
+    if (action.meta.licenses && action.meta.licenses?.length > 0) {
+      const promisesArray: CallEffect<{
+        status: number;
+        data: {
+          url: string;
+        };
+      }>[] = [];
+
+      action.meta.licenses?.forEach((license) => {
+        promisesArray.push(
+          call(uploadImageData, {
+            file: license.file,
+            asset: 'company',
+          })
+        );
+      });
+
+      const dataArr: {
+        status: number;
+        data: {
+          url: string;
+        };
+      }[] = yield all(promisesArray);
+
+      sellerLicenses = dataArr.map(({ data }, ndx) => {
+        let fileType: 'IMAGE' | 'PDF' | 'DOC' = 'IMAGE';
+        const licenseExtension = data.url.substring(
+          data.url.lastIndexOf('.') + 1,
+          data.url.length
+        );
+
+        if (licenseExtension.toLowerCase().includes('doc')) {
+          fileType = 'DOC';
+        } else if (licenseExtension.toLowerCase().includes('pdf')) {
+          fileType = 'PDF';
+        }
+
+        return {
+          fileType: fileType,
+          url: data.url,
+          name: action.meta.licenses![ndx].fileName,
+        };
+      });
+    }
+
     const transformMetaToRequest = (
       data: RegisterMeta
     ): RegisterRequestData => {
@@ -45,6 +96,9 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           debtFinancingSegment: data.debtFinancingSegment || '',
           debtFinancingEstRevenue: 0,
           registerDebtFinancing: false,
+          marketSector: data.marketSector,
+          marketSelling: data.marketSelling,
+          sellerLicenses,
         };
       }
       // buyer
@@ -64,6 +118,8 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         debtFinancingSegment: data.debtFinancingSegment || '',
         debtFinancingEstRevenue: Number(data.debtFinancingEstRevenue || 0),
         registerDebtFinancing: data.registerDebtFinancing || false,
+        marketSector: data.marketSector,
+        marketBuying: data.marketBuying,
       };
     };
 

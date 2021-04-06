@@ -39,7 +39,7 @@ const MarketPrices = (): JSX.Element => {
   };
 
   useEffect(() => {
-    setSearchValue(searchValue.trim());
+    setSearchValue(searchValue);
 
     if (timer) {
       clearTimeout(timer);

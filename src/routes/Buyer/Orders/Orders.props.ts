@@ -1,4 +1,7 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+
+import moment from 'moment';
+import { FocusedInputShape } from 'react-dates';
 
 export interface OrderItem {
   id: string;
@@ -41,9 +44,9 @@ export interface OrderItem {
 }
 
 export type RequestFilters = {
-  page: string;
-  dateFrom: string;
-  dateTo: string;
+  term: string;
+  dateFrom: moment.Moment | null;
+  dateTo: moment.Moment | null;
 };
 
 export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
@@ -76,6 +79,7 @@ export interface OrdersGeneratedProps {
     updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+  currentFilter: RequestFilters;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';

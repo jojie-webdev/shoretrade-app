@@ -4,6 +4,21 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Minus,
+  ChevronDown,
+  SubtractHollow,
+  Weight,
+  FileUpload,
+  Bolt,
+  BuyerRestaurantBar,
+  BuyerHotel,
+  Retailer,
+  Processor,
+  Wholesaler,
+  AquacultureProducer,
+  WildCatchFishingCompany,
+  Tuna,
+  Logo,
   Message,
   CheckList,
   DownloadFile,
@@ -80,6 +95,7 @@ import {
   EyeOff,
   CarouselChevronRight,
   CarouselChevronLeft,
+  Wetshop,
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
@@ -144,6 +160,51 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Minus">
+          <Minus width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ChevronDown">
+          <ChevronDown width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Weight">
+          <Weight width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="FileUpload">
+          <FileUpload width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Bolt">
+          <Bolt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wetshop">
+          <Wetshop width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="BuyerRestaurantBar">
+          <BuyerRestaurantBar width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="BuyerHotel">
+          <BuyerHotel width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Retailer">
+          <Retailer width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Processor">
+          <Processor width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wholesaler">
+          <Wholesaler width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="AquacultureProducer">
+          <AquacultureProducer width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="WildCatchFishingCompany">
+          <WildCatchFishingCompany width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Tuna">
+          <Tuna width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Logo">
+          <Logo width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Message">
           <Message width={30} height={30} />
         </Wrapper>
@@ -275,6 +336,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Location">
           <Location width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="SubtractHollow">
+          <SubtractHollow width={30} height={30} />
         </Wrapper>
         <Wrapper label="Subtract">
           <Subtract width={30} height={30} fill={'#F23742'} />

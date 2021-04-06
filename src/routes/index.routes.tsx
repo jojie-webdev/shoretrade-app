@@ -29,7 +29,7 @@ export const ROUTES: Routes = {
     children: (
       <Redirect
         to={{
-          pathname: MAIN_ROUTES.LOGIN,
+          pathname: BUYER_ROUTES.LOGIN,
         }}
       />
     ),
@@ -38,8 +38,13 @@ export const ROUTES: Routes = {
     path: MAIN_ROUTES.LOGIN,
     children: <Login />,
   },
-  VERIFY: {
-    path: MAIN_ROUTES.VERIFY,
+  // Seller Unauthenticated Routes
+  SELLER_LOGIN: {
+    path: SELLER_ROUTES.LOGIN,
+    children: <Login />,
+  },
+  SELLER_VERIFY2FA: {
+    path: SELLER_ROUTES.VERIFY2FA,
     children: <Verify2FA />,
   },
   AUTHENTICATE: {
@@ -56,25 +61,21 @@ export const ROUTES: Routes = {
     children: <ResetPassword />,
   },
   // Seller Unauthenticated Routes
-  SELLER_LOGIN: {
-    path: SELLER_ROUTES.LOGIN,
-    // children: <Login />,
-    children: (
-      <Redirect
-        to={{
-          pathname: MAIN_ROUTES.LOGIN,
-        }}
-      />
-    ),
+  // SELLER_LOGIN: {
+  //   path: SELLER_ROUTES.LOGIN,
+  //   // children: <Login />,
+  //   children: (
+  //     <Redirect
+  //       to={{
+  //         pathname: MAIN_ROUTES.LOGIN,
+  //       }}
+  //     />
+  //   ),
+  // },
+  SELLER_FORGOT_PASSWORD: {
+    path: SELLER_ROUTES.FORGOT_PASSWORD,
+    children: <ForgotPassword />,
   },
-  // SELLER_FORGOT_PASSWORD: {
-  //   path: SELLER_ROUTES.FORGOT_PASSWORD,
-  //   children: <ForgotPassword />,
-  // },
-  // SELLER_VERIFY2FA: {
-  //   path: SELLER_ROUTES.VERIFY2FA,
-  //   children: <Verify2FA />,
-  // },
   SELLER_REGISTER: {
     path: SELLER_ROUTES.REGISTER,
     children: <Register />,
@@ -90,23 +91,27 @@ export const ROUTES: Routes = {
   },
   BUYER_LOGIN: {
     path: BUYER_ROUTES.LOGIN,
-    // children: <Login />,
-    children: (
-      <Redirect
-        to={{
-          pathname: MAIN_ROUTES.LOGIN,
-        }}
-      />
-    ),
+    children: <Login />,
   },
-  // BUYER_FORGOT_PASSWORD: {
-  //   path: BUYER_ROUTES.FORGOT_PASSWORD,
-  //   children: <ForgotPassword />,
+  BUYER_VERIFY2FA: {
+    path: BUYER_ROUTES.VERIFY2FA,
+    children: <Verify2FA />,
+  },
+  // BUYER_LOGIN: {
+  //   path: BUYER_ROUTES.LOGIN,
+  //   // children: <Login />,
+  //   children: (
+  //     <Redirect
+  //       to={{
+  //         pathname: MAIN_ROUTES.LOGIN,
+  //       }}
+  //     />
+  //   ),
   // },
-  // BUYER_VERIFY2FA: {
-  //   path: BUYER_ROUTES.VERIFY2FA,
-  //   children: <Verify2FA />,
-  // },
+  BUYER_FORGOT_PASSWORD: {
+    path: BUYER_ROUTES.FORGOT_PASSWORD,
+    children: <ForgotPassword />,
+  },
   BUYER_REGISTER: {
     path: BUYER_ROUTES.REGISTER,
     children: <Register />,
@@ -167,7 +172,7 @@ const RoutesComponent = (): JSX.Element => {
     if (isAuthenticated) {
       // On authenticated, fetch user.
       dispatch(getUserActions.request());
-      // Redirects
+      // Redirects;
       if (
         authenticatedUserType === 'seller' &&
         (!currentPath.startsWith('/seller') ||

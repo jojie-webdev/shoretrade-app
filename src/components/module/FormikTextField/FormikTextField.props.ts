@@ -13,4 +13,5 @@ export interface FormikTextFieldProps
   color?: keyof Theme['brand'] | keyof Theme['grey'];
   onChange?: (value: any) => void;
   onChangeText?: (value: string) => void;
+  otherError?: string; // error triggered outside formik
 }

@@ -59,9 +59,7 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                 <TextValue variant="caption" color="shade8">
                   {vendor}
                 </TextValue>
-              </div>
 
-              <div className="checkout-row">
                 <Typography variant="caption" color="shade6">
                   Weight
                 </Typography>

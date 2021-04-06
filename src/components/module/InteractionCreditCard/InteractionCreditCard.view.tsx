@@ -23,22 +23,7 @@ const InteractionCreditCard = (
   props: InteractionCreditCardProps
 ): JSX.Element => {
   // const theme = useTheme();
-  function renderBrand(brand: string) {
-    brand = brand ? brand.toLowerCase() : '';
 
-    switch (brand) {
-      case 'visa':
-        return <Visa />;
-      case 'mastercard':
-        return <Mastercard />;
-      case 'zippay':
-        return <Zippay />;
-      case 'paypal':
-        return <Paypal />;
-      default:
-        return null;
-    }
-  }
   return (
     <CustomInteractions
       {...props}
@@ -53,7 +38,7 @@ const InteractionCreditCard = (
       rightComponent={
         props.isDefault ? (
           <RightComponent>
-            <Typography variant="body" color="shade6">
+            <Typography variant="caption" color="shade6">
               Default
             </Typography>
             <ChevronRight width={8} height={12} />

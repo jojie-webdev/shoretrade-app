@@ -30,9 +30,37 @@ const updateToConfirmed = (
   const newPendingOrders = [...pendingOrders];
   newPendingOrders[ndx].orderLineItem[lineItemNdx].weightConfirmed = true;
 
-  console.log(newPendingOrders[ndx]);
-
   return newPendingOrders;
+};
+
+const movePendingOrderToOrder = (
+  data: {
+    token: string;
+    count: string;
+    orders: GetSellerOrdersResponseItem[];
+    pendingOrders?: GetSellerOrdersResponseItem[];
+  },
+  id: string
+) => {
+  const ndx = (data?.pendingOrders || []).findIndex((po) => po.orderId === id);
+
+  if (ndx === -1) {
+    return data;
+  }
+
+  const newPendingOrders = data?.pendingOrders?.filter(
+    (po) => po.orderId !== id
+  );
+  const newOrderItems = [
+    (data.pendingOrders as GetSellerOrdersResponseItem[])[ndx],
+    ...(data.orders || []),
+  ];
+
+  return {
+    ...data,
+    pendingOrders: newPendingOrders,
+    orders: newOrderItems,
+  };
 };
 
 export default createAsyncReducer<GetSellerOrdersMeta, GetSellerOrdersPayload>(
@@ -51,6 +79,16 @@ export default createAsyncReducer<GetSellerOrdersMeta, GetSellerOrdersPayload>(
               action.meta?.orderLineItemId || ''
             ),
           },
+        },
+      } as any,
+      [getSellerOrdersPlacedActions.UPDATE_SHIP_ORDER_OPTIMISTICALLY]: {
+        ...state,
+        data: {
+          ...state.data,
+          data: movePendingOrderToOrder(
+            state.data?.data as any,
+            action.meta?.orderId || ''
+          ),
         },
       } as any,
     };

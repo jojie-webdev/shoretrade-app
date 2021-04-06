@@ -1,4 +1,20 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Minus } from './Minus';
+export { default as ChevronDown } from './ChevronDown';
+export { default as SubtractHollow } from './SubtractHollow';
+export { default as Weight } from './Weight';
+export { default as FileUpload } from './FileUpload';
+export { default as Bolt } from './Bolt';
+export { default as Wetshop } from './Wetshop';
+export { default as BuyerRestaurantBar } from './BuyerRestaurantBar';
+export { default as BuyerHotel } from './BuyerHotel';
+export { default as Retailer } from './Retailer';
+export { default as Processor } from './Processor';
+export { default as Wholesaler } from './Wholesaler';
+export { default as AquacultureProducer } from './AquacultureProducer';
+export { default as WildCatchFishingCompany } from './WildCatchFishingCompany';
+export { default as Tuna } from './Tuna';
+export { default as Logo } from './Logo';
 export { default as Message } from './Message';
 export { default as CheckList } from './CheckList';
 export { default as DownloadFile } from './DownloadFile';

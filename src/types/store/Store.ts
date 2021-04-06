@@ -1,5 +1,52 @@
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
+import {
+  AddSellerLicenseMeta,
+  AddSellerLicensePayload,
+} from 'types/store/AddSellerLicenseState';
+import {
+  CreateBulkListingMeta,
+  CreateBulkListingPayload,
+} from 'types/store/CreateBulkListingState';
+import {
+  CreateMarketOfferMeta,
+  CreateMarketOfferPayload,
+} from 'types/store/CreateMarketOfferState';
+import {
+  GetAccountCompletionMeta,
+  GetAccountCompletionPayload,
+} from 'types/store/GetAccountCompletionState';
+import {
+  GetActiveOffersMeta,
+  GetActiveOffersPayload,
+  NegotiateOfferMeta,
+  NegotiatePayload,
+} from 'types/store/GetActiveOffersState';
+import {
+  GetAllMarketRequestFiltersMeta,
+  GetAllMarketRequestFiltersPayload,
+} from 'types/store/GetAllMarketRequestFiltersState';
+import {
+  GetAllMarketRequestMeta,
+  GetAllMarketRequestPayload,
+} from 'types/store/GetAllMarketRequestState';
+import {
+  GetMarketInterestsMeta,
+  GetMarketInterestsPayload,
+} from 'types/store/GetMarketInterestsState';
+import {
+  GetSellerLicenseMeta,
+  GetSellerLicensePayload,
+} from 'types/store/GetSellerLicenseState';
+import {
+  UpdateMarketInterestsMeta,
+  UpdateMarketInterestsPayload,
+} from 'types/store/UpdateMarketInterestsState';
+import {
+  UpdateSellerLicenseMeta,
+  UpdateSellerLicensePayload,
+} from 'types/store/UpdateSellerLicenseState';
+import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -27,7 +74,12 @@ import {
   DeleteLinkedAccountMeta,
   DeleteLinkedAccountPayload,
 } from './DeleteLinkedAccountState';
+import {
+  DeleteMarketRequestMeta,
+  DeleteMarketRequestPayload,
+} from './DeleteMarketRequestState';
 import { EditableListingState } from './EditableListingState';
+import { EditableMarketRequestPayload } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -85,6 +137,10 @@ import {
   GetMarketEstimatePayload,
 } from './GetMarketEstimateState';
 import {
+  GetMarketNotificationMeta,
+  GetMarketNotificationPayload,
+} from './GetMarketNotificationState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -108,6 +164,10 @@ import { RequestLogState } from './LogRequestState';
 import { NotifyState } from './NotifyState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
+import {
+  ReadMarketNotificationMeta,
+  ReadMarketNotificationPayload,
+} from './ReadMarketNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
 import {
   ResendVerificationMeta,
@@ -164,6 +224,7 @@ export interface Store {
     SearchProductTypePayload
   >;
   editableListing: EditableListingState;
+  editableMarketRequest: EditableMarketRequestPayload;
   getListingFormData: AsyncState<
     GetListingFormDataMeta,
     GetListingFormDataPayload
@@ -182,6 +243,10 @@ export interface Store {
   deleteLinkedAccount: AsyncState<
     DeleteLinkedAccountMeta,
     DeleteLinkedAccountPayload
+  >;
+  deleteMarketRequest: AsyncState<
+    DeleteMarketRequestMeta,
+    DeleteMarketRequestPayload
   >;
   getBankDetails: AsyncState<GetBankDetailsMeta, GetBankDetailsPayload>;
   updateBankDetails: AsyncState<
@@ -273,5 +338,50 @@ export interface Store {
   >;
   resetPassword: AsyncState<ResetPasswordMeta, ResetPasswordPayload>;
   logRequest: RequestLogState;
+  getAccountCompletion: AsyncState<
+    GetAccountCompletionMeta,
+    GetAccountCompletionPayload
+  >;
+  getMarketInterests: AsyncState<
+    GetMarketInterestsMeta,
+    GetMarketInterestsPayload
+  >;
+  updateMarketInterests: AsyncState<
+    UpdateMarketInterestsMeta,
+    UpdateMarketInterestsPayload
+  >;
+  getSellerLicense: AsyncState<GetSellerLicenseMeta, GetSellerLicensePayload>;
+  addSellerLicense: AsyncState<AddSellerLicenseMeta, AddSellerLicensePayload>;
+  updateSellerLicense: AsyncState<
+    UpdateSellerLicenseMeta,
+    UpdateSellerLicensePayload
+  >;
+  uploadBulk: AsyncState<UploadBulkMeta, UploadBulkPayload>;
+  createBulkListing: AsyncState<
+    CreateBulkListingMeta,
+    CreateBulkListingPayload
+  >;
+  getAllMarketRequest: AsyncState<
+    GetAllMarketRequestMeta,
+    GetAllMarketRequestPayload
+  >;
+  getAllMarketRequestFilters: AsyncState<
+    GetAllMarketRequestFiltersMeta,
+    GetAllMarketRequestFiltersPayload
+  >;
+  getActiveOffers: AsyncState<GetActiveOffersMeta, GetActiveOffersPayload>;
+  createMarketOffer: AsyncState<
+    CreateMarketOfferMeta,
+    CreateMarketOfferPayload
+  >;
+  getMarketNotification: AsyncState<
+    GetMarketNotificationMeta,
+    GetMarketNotificationPayload
+  >;
+  readMarketNotification: AsyncState<
+    ReadMarketNotificationMeta,
+    ReadMarketNotificationPayload
+  >;
+  marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
   notify: NotifyState;
 }

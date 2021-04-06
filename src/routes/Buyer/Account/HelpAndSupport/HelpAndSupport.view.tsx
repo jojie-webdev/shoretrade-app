@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import Accordion from 'components/base/Accordion';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { BoxContainer } from 'components/layout/BoxContainer';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { useTheme } from 'utils/Theme';
 
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
 import { Container } from './HelpAndSupport.style';
@@ -18,7 +19,7 @@ const HELP_AND_SUPPORT = [
   },
   {
     title: 'What do I need to sign up?',
-    description: `The signing process is simple, all you need is your business name,
+    description: `The signing up process is simple, all you need is your business name,
     ABN, banking details and address. Our team will review your
     application before you can start listing and selling your products in
     our seafood marketplace.`,
@@ -29,14 +30,9 @@ const HELP_AND_SUPPORT = [
     ShoreTrade.`,
   },
   {
-    title: 'Can I sell overseas?',
-    description: `International exports is launching early 2019 for fishermen and
+    title: 'Can I purchase from overseas?',
+    description: `International exports is launching early 2021 for fishermen and
     fisheries with valid export licences.`,
-  },
-  {
-    title: 'How do I get paid?',
-    description: `When someone purchases your product, your earnings are automatically
-    deposited into your nominated Australian bank account after each sale.`,
   },
   {
     title: 'Who can sell on ShoreTrade?',
@@ -59,23 +55,32 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
 
   return (
     <Container>
-      <InnerRouteHeader title="Help & Support" />
-
-      <p className="help-text">
-        You’ll find answers to common questions below. <br />
-        For everything else contact us on <span>1300 095 746</span> or{' '}
-        <span>buyers@shoretrade.com</span>
-      </p>
-
-      {HELP_AND_SUPPORT.map((help, ndx) => (
-        <div className="accordion-container" key={`help${ndx}`}>
-          <Accordion title={help.title} iconColor={theme.brand.primary}>
-            <Typography variant="label" color="shade9">
-              {help.description}
-            </Typography>
-          </Accordion>
+      <BoxContainer>
+        <div className="breadcrumb-container">
+          <Breadcrumbs
+            sections={[
+              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+              { label: 'Help & Support' },
+            ]}
+          />
         </div>
-      ))}
+
+        <p className="help-text">
+          You’ll find answers to common questions below. <br />
+          For everything else contact us on <span>1300 095 746</span> or{' '}
+          <span>buyers@shoretrade.com</span>
+        </p>
+
+        {HELP_AND_SUPPORT.map((help, ndx) => (
+          <div className="accordion-container" key={`help${ndx}`}>
+            <Accordion title={help.title} iconColor={theme.brand.primary}>
+              <Typography variant="label" color="shade9">
+                {help.description}
+              </Typography>
+            </Accordion>
+          </div>
+        ))}
+      </BoxContainer>
     </Container>
   );
 };

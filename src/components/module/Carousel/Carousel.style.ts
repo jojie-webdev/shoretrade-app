@@ -47,6 +47,16 @@ export const RightInsideArrowArea = styled(LeftInsideArrowArea)`
   right: 8px;
 `;
 
+export const BadgeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  width: 100%;
+  z-index: 999;
+`;
+
 export const ArrowButton = styled.div`
   display: flex;
   justify-content: center;
@@ -90,6 +100,9 @@ export const ImageContainer = styled.div<{
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) =>
       `${ImageContainerHeight[aspectRatio][375]}px`};
+
+    background-position: ${(props) =>
+      props.aspectRatio === '16:9' ? '50% 50%' : '35% 65%'};
   }
 
   @media (min-width: 768px) {

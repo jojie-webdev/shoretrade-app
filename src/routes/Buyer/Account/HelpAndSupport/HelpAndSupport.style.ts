@@ -1,7 +1,10 @@
-import Accordion from 'components/base/Accordion';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  .breadcrumb-container {
+    margin-bottom: 40px;
+  }
+
   .help-text {
     font-weight: 500;
     font-size: 14px;
@@ -18,5 +21,3 @@ export const Container = styled.div`
     margin-bottom: 8px;
   }
 `;
-
-export const StyledAccordion = styled(Accordion)``;

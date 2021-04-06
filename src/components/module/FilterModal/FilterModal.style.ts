@@ -31,7 +31,7 @@ export const Filter = styled.div`
 `;
 
 export const RadioContainer = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   background-color: ${({ theme }) => {
     const isSeller = theme.appType !== 'buyer';
 
@@ -49,11 +49,11 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const DropdownContainer = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 `;
 
 export const InputContainer = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 `;
 
 export const Scroll = styled.div`

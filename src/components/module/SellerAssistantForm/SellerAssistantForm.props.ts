@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface SellerAssistantFormProps {
+  companyId: string;
   type: 'EDIT' | 'CREATE';
   formikInitial: FormikForm;
   callingCode: string;

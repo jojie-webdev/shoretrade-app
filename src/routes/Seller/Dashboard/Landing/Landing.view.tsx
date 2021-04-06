@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { DropdownArrow } from 'components/base/SVG';
+import { ArrowRight, DropdownArrow } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
@@ -33,7 +34,54 @@ import {
   IllustrationContainer,
   CategoryImageContainer,
   SpinnerContainer,
+  NotificationsContainer,
 } from './Landing.style';
+
+const MarketNotification = (props: { type: string; onPress: () => void }) => {
+  const { type, onPress } = props;
+  const theme = useTheme();
+  if (type === 'NEW_MARKET_REQUEST') {
+    return (
+      <Alert
+        fullWidth
+        content="There’s a new market request that matches the types of product that you are selling"
+        variant="alert"
+        onClick={() => onPress()}
+        iconRight={
+          <ArrowRight height={12} width={12} fill={theme.brand.alert} />
+        }
+      />
+    );
+  }
+  if (type === 'MARKET_OFFER_NEGOTIATED') {
+    return (
+      <Alert
+        fullWidth
+        content="A buyer is negotiating on one of your offers"
+        variant="error"
+        onClick={() => onPress()}
+        iconRight={
+          <ArrowRight height={12} width={12} fill={theme.brand.error} />
+        }
+      />
+    );
+  }
+  if (type === 'MARKET_OFFER_ACCEPTED') {
+    return (
+      <Alert
+        fullWidth
+        content="Some of your market offers have been accepted and moved to your orders"
+        variant="success"
+        onClick={() => onPress()}
+        iconRight={
+          <ArrowRight height={12} width={12} fill={theme.brand.success} />
+        }
+      />
+    );
+  }
+
+  return null;
+};
 
 const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
@@ -202,7 +250,7 @@ const MonthlySales = (props: any) => {
                   color={hasIncreased(m.percentage) ? 'success' : 'error'}
                   className="text"
                 >
-                  {hasIncreased(m.percentage) ? '+' : '-'}
+                  {hasIncreased(m.percentage) ? '+' : ''}
                   {m.percentage}%
                 </Typography>
 
@@ -294,6 +342,9 @@ const DashboardView = ({
   toPaidGraph,
   toCategories,
   toCategoryDetails,
+  currentNotificationType,
+  onClickMarketNotification,
+  userPending,
   ...props
 }: DashboardLandingGeneratedProps) => {
   const [startDate, setStartDate] = useState(moment());
@@ -317,6 +368,23 @@ const DashboardView = ({
         </SpinnerContainer>
       ) : (
         <>
+          {userPending && (
+            <Alert
+              variant="alert"
+              content={`Your account needs approval.`}
+              fullWidth
+              alignText="center"
+              style={{ marginBottom: 16 }}
+            />
+          )}
+          {currentNotificationType.length > 0 && (
+            <NotificationsContainer>
+              <MarketNotification
+                onPress={onClickMarketNotification}
+                type={currentNotificationType}
+              />
+            </NotificationsContainer>
+          )}
           <FilterHeader toggleModal={toggleModal} {...props} />
           <TotalSales data={data} toPaid={toPaidGraph} />
 

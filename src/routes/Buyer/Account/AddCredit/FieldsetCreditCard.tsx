@@ -1,17 +1,22 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
-import FixedWidthContainer from 'components/layout/FixedWidthContainer';
-// import CreditCardRow from 'components/module/CreditCardRow';
-import { Col, Row } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 
 import { FieldsetCreditCardProps } from './AddCredit.props';
 import { Field, CC } from './AddCredit.style';
 
 export const FieldsetCreditCard = (props: FieldsetCreditCardProps) => (
-  <FixedWidthContainer width={436}>
-    <Row>
-      <Field md={12}>
+  <>
+    <Row className="form-spacer">
+      <Field md={12} xl={6}>
+        <Typography
+          variant={'overline'}
+          color={'shade6'}
+          style={{ marginBottom: -6 }}
+        >
+          Select Payment Method
+        </Typography>
         {props.cards.map((card) => (
           <CC
             key={card.id}
@@ -22,11 +27,13 @@ export const FieldsetCreditCard = (props: FieldsetCreditCardProps) => (
           />
         ))}
       </Field>
-      <Field md={12}>
-        <Typography variant="body" color="shade9">
+    </Row>
+    <Row>
+      <Field md={12} xl={6} style={{ marginBottom: 8 }}>
+        <Typography variant="label" color="shade9">
           Credit card transactions will incur a 1.75% fee.
         </Typography>
       </Field>
     </Row>
-  </FixedWidthContainer>
+  </>
 );

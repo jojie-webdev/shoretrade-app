@@ -121,6 +121,7 @@ export const orderItemToPendingToShipItem = (
         {
           buyerCompanyId: currentData[0].buyerCompanyId,
           buyerCompanyName: currentData[0].buyerCompanyName,
+          buyerId: currentData[0].buyerId, // this is employee id
           orderCount: currentData.length,
           totalWeight,
           totalPrice,

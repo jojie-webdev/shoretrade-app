@@ -91,7 +91,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     // progress indicator and box summary can fit in the screen
     if (!props.pageTitle) {
       let innerRoute = location.pathname.split('/')[2];
-      innerRoute = formatRouteString(innerRoute || '');
+      innerRoute = formatRouteString(innerRoute || '').replace(
+        'product',
+        'listing'
+      );
 
       setPageTitle(innerRoute);
     }

@@ -42,8 +42,15 @@ import {
   HeaderWrapper,
 } from './Dashboard.style';
 
-const NavLink = ({ to, color, iconColor, linkText, Icon }: NavLinkProps) => (
-  <SidebarItem to={to}>
+const NavLink = ({
+  to,
+  color,
+  iconColor,
+  linkText,
+  Icon,
+  onClick,
+}: NavLinkProps) => (
+  <SidebarItem to={to} onClick={onClick}>
     <div className="icon-container">
       {Icon && <Icon fill={iconColor} height={20} width={20} />}
     </div>
@@ -210,6 +217,11 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           </div>
           {routes.map((route) => (
             <NavLink
+              onClick={() => {
+                if (openSidebar) {
+                  setOpenSidebar(false);
+                }
+              }}
               key={`sidenav-${route.path}`}
               to={route.path}
               color={isInnerRoute(route.path) ? 'primary' : textColor}
@@ -225,7 +237,12 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         <div>
           {theme.appType === 'buyer' && (
             <CreditBalanceContainer
-              onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
+              onClick={() => {
+                if (openSidebar) {
+                  setOpenSidebar(false);
+                }
+                history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
+              }}
             >
               <Typography color="shade6" variant="overline" weight="900">
                 Credit balance

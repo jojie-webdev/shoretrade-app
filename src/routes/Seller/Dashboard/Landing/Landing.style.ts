@@ -101,3 +101,11 @@ export const CategoryImageContainer = styled.div`
   margin-left: 10px;
   height: 40px;
 `;
+
+export const NotificationsContainer = styled.div`
+  margin-bottom: 32px;
+
+  .content-container {
+    cursor: pointer;
+  }
+`;

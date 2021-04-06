@@ -7,6 +7,7 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
+import Search from 'components/module/Search';
 import { SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -22,7 +23,6 @@ import {
   Container,
   StyledTouchable,
   StyledAlert,
-  StyledSearch,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -132,9 +132,9 @@ const SellingView = (props: SellingGeneratedProps) => {
           />
         )}
 
-        <Row>
+        <Row className="search-row">
           <Col>
-            <StyledSearch
+            <Search
               value={search}
               resetValue={resetSearch}
               onChange={(e) => onChangeSearch(e.target.value)}

@@ -1,16 +1,25 @@
 import React from 'react';
 
+import Accordion from 'components/base/Accordion';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
+import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
 import moment from 'moment-timezone';
 import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
 
-import { Step8Props } from './Step8.props';
-import { Container, ButtonRow } from './Step8.style';
+import { BoxDetails } from '../Step6/Step6.view';
+import { BoxItemProps, Step8Props } from './Step8.props';
+import {
+  Container,
+  ButtonRow,
+  BoxItemContainer,
+  StyledTextField,
+} from './Step8.style';
 
 function Step8({
   isCustomType,
@@ -19,7 +28,10 @@ function Step8({
   saveListing,
   onChangeCurrentPage,
   preview,
+  boxesDetails,
+  measurementUnit,
 }: Step8Props) {
+  const theme = useTheme();
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
   );
@@ -123,6 +135,23 @@ function Step8({
               onChangeCurrentPage(6);
             }}
           />
+        </Col>
+        <Col md={12} className="interaction-col">
+          <Accordion title="Boxes Detail" iconColor={theme.brand.primary}>
+            <Typography variant="label" color="shade9">
+              {boxesDetails.map((b, i) => (
+                <BoxDetails
+                  fixed={true}
+                  key={b.id}
+                  id={b.id}
+                  weight={b.weight}
+                  unit={measurementUnit}
+                  quantity={b.quantity}
+                  count={b.count}
+                />
+              ))}
+            </Typography>
+          </Accordion>
         </Col>
         <Col md={12} className="interaction-col">
           <Interactions

@@ -18,7 +18,9 @@ const EditAddress = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
+
   const { companyId, addressId } = location.state as QueryParams;
+
   const pending = useSelector(
     (state: Store) => state.updateAddress.pending || false
   );
@@ -26,6 +28,7 @@ const EditAddress = (): JSX.Element => {
     useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
     [];
   const updateAddress = useSelector((state: Store) => state.updateAddress);
+
   const [submitted, setIsSubmitted] = useState(false);
   const [unitNumber, setUnitNumber] = useState('');
   const [isDelete, setIsDelete] = useState(false);
@@ -35,6 +38,7 @@ const EditAddress = (): JSX.Element => {
     ? addressToPlaceData(currentAddress)
     : null;
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
+
   // MARK:- Methods
   const onClickSave = () => {
     if (address) {
@@ -75,6 +79,7 @@ const EditAddress = (): JSX.Element => {
   };
   const toggleisDelete = () => setIsDelete(!isDelete);
   const toggleIsDefault = () => setIsDefault(!isDefault);
+
   // MARK:- Effects
   useEffect(() => {
     if (currentAddress && isDefault === null) {

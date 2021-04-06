@@ -82,7 +82,7 @@ const businessDetailsConstraints = {
   },
 };
 
-const businessAddressContraints = {
+const businessAddressConstraints = {
   address: {
     presence: {
       message: '^Please enter address',
@@ -132,26 +132,24 @@ const bankDetailsConstraints = {
   },
 };
 
-const estimatedAnnualRevenueContraints = {
-  estimatedAnnualRevenue: {
-    isValidPrice: '^Please enter a valid amount',
-  },
-};
-
 const agreementConstraints = {
   agreement: {
     isTrue: '^You must agree to the terms and conditions',
   },
 };
 
-const selectedMarketSectorContstraints = {
-  selectedMarketSector: {
+const categoryMarketSectorConstraints = {
+  categoryMarketSector: {
     presence: {
       message: '^Please select a market sector',
       allowEmpty: false,
     },
   },
 };
+
+export const validateCategoryMarketSector = createFormikValidator(
+  categoryMarketSectorConstraints
+);
 
 export const validateUserDetails = createFormikValidator(
   userDetailsConstraints
@@ -160,18 +158,10 @@ export const validateBusinessDetails = createFormikValidator(
   businessDetailsConstraints
 );
 export const validateBusinessAddress = createFormikValidator(
-  businessAddressContraints
+  businessAddressConstraints
 );
 export const validateBankDetails = createFormikValidator(
   bankDetailsConstraints
-);
-
-export const validateAnnualRevenue = createFormikValidator(
-  estimatedAnnualRevenueContraints
-);
-
-export const validateMarketSector = createFormikValidator(
-  selectedMarketSectorContstraints
 );
 
 export const validateAgreement = createFormikValidator(agreementConstraints);

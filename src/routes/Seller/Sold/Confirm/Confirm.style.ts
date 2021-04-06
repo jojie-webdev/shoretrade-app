@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
@@ -84,6 +85,11 @@ export const ItemImage = styled.img`
   height: 148px;
   margin-right: 16px;
   border-radius: 4px;
+
+  @media ${BREAKPOINTS.sm} {
+    height: 64px;
+    width: 64px;
+  }
 `;
 
 export const Box = styled.div`
@@ -136,12 +142,25 @@ export const BoxSummaryContainer = styled.div`
     align-items: center;
     margin-bottom: 16px;
 
+    @media ${BREAKPOINTS.sm} {
+      /* flex-direction: column; */
+      /* align-items: flex-start; */
+      /* justify-content: start; */
+      flex: 1;
+    }
+
     .inner-text {
       width: 150px;
       margin-right: 16px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+
+      @media ${BREAKPOINTS.sm} {
+        width: auto;
+        align-items: flex-start;
+        flex: 1;
+      }
     }
 
     .left-text {
@@ -150,6 +169,12 @@ export const BoxSummaryContainer = styled.div`
       margin-right: 16px;
       flex-direction: column;
       align-items: flex-start;
+
+      @media ${BREAKPOINTS.sm} {
+        width: auto;
+        align-items: flex-start;
+        flex: 1;
+      }
     }
 
     .right-text {
@@ -158,6 +183,11 @@ export const BoxSummaryContainer = styled.div`
       flex-direction: column;
       flex: 1;
       align-items: flex-end;
+
+      @media ${BREAKPOINTS.sm} {
+        min-width: auto;
+        flex: 1.5;
+      }
     }
   }
 `;

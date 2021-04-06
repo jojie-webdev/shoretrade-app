@@ -5,7 +5,7 @@ import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
 
 export const Container = styled.div<InteractionsProps>`
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: ${({ padding }) => padding || '24px'};
   display: flex;
   justify-content: space-between;
@@ -28,23 +28,16 @@ export const Container = styled.div<InteractionsProps>`
     }
 
     return theme.appType === 'buyer'
-      ? '0px 4px 12px rgba(41, 43, 50, 0.04);'
-      : 'none';
+      ? '0px 4px 12px rgba(41, 43, 50, 0.04) !important'
+      : 'none !important';
   }};
 
   ${({ onClick, type }) =>
     onClick && type !== 'none'
       ? `cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }`
-      : ''};
-
-  ${({ isHover }) =>
-    isHover
-      ? `:hover {
-    box-shadow: none;
-  }`
+          &:hover {
+            opacity: 0.9;
+          }`
       : ''};
 
   .left-content,

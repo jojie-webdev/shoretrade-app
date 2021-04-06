@@ -1,7 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import Badge from 'components/base/Badge';
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -15,6 +17,7 @@ import {
   LeftInsideArrowArea,
   RightInsideArrowArea,
   ArrowButton,
+  BadgeContainer,
 } from './Carousel.style';
 
 SwiperCore.use([Autoplay]);
@@ -33,6 +36,8 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     aspectRatio = '16:9',
     addMargin,
     arrowInside,
+    showAquafuture,
+    showAlmostGone,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
@@ -117,7 +122,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           width: hideOutsideArrows ? '100%' : swiperAreaWidth,
         }}
       >
-        {arrowInside && (
+        {arrowInside && images.length > 1 && (
           <>
             <LeftInsideArrowArea>
               <ArrowButton
@@ -143,6 +148,22 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             </RightInsideArrowArea>
           </>
         )}
+        <BadgeContainer>
+          {showAquafuture && (
+            <Badge badgeColor="#111E2B">
+              <Typography color="shade4" variant="overline">
+                Aquafuture
+              </Typography>
+            </Badge>
+          )}
+          {showAlmostGone && (
+            <Badge badgeColor="#FFA26B">
+              <Typography style={{ color: '#FFF1E9' }} variant="overline">
+                Almost Gone!
+              </Typography>
+            </Badge>
+          )}
+        </BadgeContainer>
         <Swiper
           id={id}
           spaceBetween={10}

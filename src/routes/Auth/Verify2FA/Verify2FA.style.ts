@@ -20,7 +20,6 @@ export const ContentWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
 `;
 
 export const Content = styled.div`
@@ -34,6 +33,11 @@ export const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  /* margin-top: 347px; */
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  margin-bottom: 16px;
 `;
 
 export const TitleContainer = styled.div`
@@ -50,10 +54,11 @@ export const Title = styled(Typography)`
 `;
 
 export const GuideContainer = styled.div`
-  margin-top: 32px;
+  margin-top: 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 18px;
 `;
 
 export const GuideText = styled(Typography)`
@@ -106,8 +111,7 @@ export const CodeField = styled.input`
 export const Verify2FAButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 28px;
+  margin-top: 56px;
 `;
 
 export const FooterContainer = styled.div`
