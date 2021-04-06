@@ -20,12 +20,12 @@ import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { Route, Switch } from 'react-router-dom';
+import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
-import { MarketRequestDetailProps } from './RequestDetails.prop';
 import {
   RequestDetailsCardContainer,
   RequestDetailsContainer,
@@ -219,8 +219,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     selectedOffer,
     selectedCompany,
     handleAcceptOffer,
-    price,
-    setPrice,
     counterOffer,
     deliveryTotal,
     submitNegotiation,
@@ -236,6 +234,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     showDelete,
     setShowDelete,
     onClickDelete,
+    sortedNegotiations,
+    lastNegotiationsOffers,
   } = props;
 
   if (!sellerOffers) {
@@ -253,7 +253,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         setCloseOnAccept={setCloseOnAccept}
         onSubmit={(v: number) => submitNegotiation(v)}
         originalOffer={selectedOffer?.price}
-        counterOffer={parseFloat(counterOffer)}
+        counterOffer={counterOffer}
+        newOffer={newOffer}
         weight={{
           unit: selectedOffer?.measurementUnit,
           value: selectedOffer?.weight,
@@ -262,6 +263,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         onClickClose={() => {
           setNegotiating(false);
         }}
+        sortedNegotiations={sortedNegotiations}
+        modalLastNegotiationsArray={lastNegotiationsOffers}
       />
       <ConfirmationModal
         isOpen={showDelete}
@@ -387,21 +390,21 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
               >
                 <OfferDetailView
-                  price={price}
                   handleAcceptOffer={handleAcceptOffer}
                   company={selectedCompany}
                   selectedOffer={selectedOffer}
                   deliveryTotal={deliveryTotal}
                   handleStartNegotiate={handleStartNegotiate}
                   hideNegotiate={hideNegotiate}
-                  originalOffer={selectedOffer?.price}
-                  counterOffer={parseFloat(counterOffer)}
+                  counterOffer={counterOffer}
                   discountPercentage={discountPercentage}
                   discountValue={discountValue}
-                  newOffer={parseFloat(newOffer)}
+                  newOffer={newOffer}
                   thereIsNewOffer={thereIsNewOffer}
                   disableAccept={disableAccept}
                   isAccepted={isAccepted}
+                  sortedNegotiations={sortedNegotiations}
+                  lastNegotiationsOffers={lastNegotiationsOffers}
                 />
               </Route>
             </Switch>

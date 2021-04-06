@@ -178,14 +178,35 @@ const Step1 = ({
       latestSellerNego.price === latestBuyerNego.price;
 
     const lastNegotiationsArray = negotiations.slice(
-      Math.max(negotiations.length - (negotiations.length > 3 ? 3 : 2), 0)
+      Math.max(negotiations.length - (negotiations.length >= 3 ? 2 : 1), 0)
     );
 
     const modalLastNegotiationsArray = negotiations.slice(
-      Math.max(negotiations.length - (negotiations.length >= 4 ? 2 : 0), 0)
+      Math.max(negotiations.length - (negotiations.length >= 3 ? 2 : 1), 0)
     );
 
-    const getOrdinal = (off: any, index: number) => {
+    sellerNegos.map((off, index) => {
+      const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
+      const findModal = modalLastNegotiationsArray.find(
+        (ltn) => off.id === ltn.id
+      );
+      if (find !== undefined) {
+        if (index === 0) {
+          find.ordinal = index + 2;
+        } else {
+          find.ordinal = index + 1;
+        }
+      }
+      if (findModal !== undefined) {
+        if (index === 0) {
+          findModal.ordinal = index + 2;
+        } else {
+          findModal.ordinal = index + 1;
+        }
+      }
+    });
+
+    buyerNegos.map((off, index) => {
       const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
       const findModal = modalLastNegotiationsArray.find(
         (ltn) => off.id === ltn.id
@@ -194,18 +215,9 @@ const Step1 = ({
       if (find !== undefined) {
         find.ordinal = index + 1;
       }
-
       if (findModal !== undefined) {
         findModal.ordinal = index + 1;
       }
-    };
-
-    buyerNegos.map((off, index) => {
-      getOrdinal(off, index);
-    });
-
-    sellerNegos.map((off, index) => {
-      getOrdinal(off, index);
     });
 
     return (
@@ -230,14 +242,14 @@ const Step1 = ({
             </div>
           )}
 
-          {negotiations.length > 3 &&
+          {negotiations.length >= 2 &&
             lastNegotiationsArray.map((offer) => {
               return (
                 <div key={offer.id} className="computation-item-container">
                   <Typography variant="label" color="noshade">
                     {`${offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'} ${
                       offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                    } offer `}
+                    } offer`}
                   </Typography>
                   <Typography variant="label" color="noshade" weight="bold">
                     {toPrice(offer.price)}/{unit}

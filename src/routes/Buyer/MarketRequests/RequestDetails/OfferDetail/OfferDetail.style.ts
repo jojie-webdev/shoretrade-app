@@ -92,6 +92,12 @@ export const OfferDetailsContainer = styled.div`
         flex-direction: row;
         justify-content: space-between;
       }
+
+      p {
+        .indicator {
+          font-weight: bold;
+        }
+      }
     }
   }
 `;

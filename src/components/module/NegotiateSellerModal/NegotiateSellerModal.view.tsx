@@ -96,7 +96,7 @@ const NegotiateSellerModal = (
             </Typography>
           </div>
 
-          {latestCounterOffer && sortedNegotiations.length <= 3 && (
+          {latestCounterOffer && sortedNegotiations.length <= 2 && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
                 Buyer&apos;s counter offer
@@ -107,7 +107,7 @@ const NegotiateSellerModal = (
             </div>
           )}
 
-          {sortedNegotiations.length > 3 && (
+          {sortedNegotiations.length >= 2 && (
             <>
               {modalLastNegotiationsArray.map((offer) => {
                 return (
@@ -117,7 +117,7 @@ const NegotiateSellerModal = (
                         offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'
                       } ${
                         offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                      } offer `}
+                      } offer`}
                     </Typography>
                     <Typography variant="label" weight="bold" color={textColor}>
                       {toPrice(offer.price)}/{unit}

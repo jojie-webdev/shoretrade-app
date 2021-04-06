@@ -1,18 +1,20 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { ModalProps } from 'components/layout/Modal/Modal.props';
+import { Negotiations } from 'types/store/GetActiveOffersState';
 
 export interface NegotiateBuyerModalProps extends ModalProps {
-  onSubmit: (counterOffer: number) => void;
   originalOffer: number;
-  counterOffer: number;
-  counterOffers?: number[];
-  originalOffers?: number[];
-  isNegotiating?: boolean;
+  newOffer: string;
+  counterOffer: string;
   weight: {
     unit: string;
     value: number;
   };
+  sortedNegotiations: Negotiations[];
+  modalLastNegotiationsArray: Negotiations[];
   closeOnAccept?: boolean | undefined;
   setCloseOnAccept?: Dispatch<SetStateAction<boolean>> | undefined;
+  isNegotiating?: boolean;
+  onSubmit: (counterOffer: number) => void;
 }

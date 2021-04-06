@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
+import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import {
   deleteMarketRequestActions,
   marketRequestAcceptOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
-import { Offer } from 'types/store/GetActiveOffersState';
+import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
 
-import { MarketRequestDetailProps } from './RequestDetails.prop';
 import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
@@ -84,7 +85,6 @@ const MarketRequestDetail = (): JSX.Element => {
   }
   const [searchTerm, setSearchTerm] = useState('');
   const [negotiating, setNegotiating] = useState(false);
-  const [price, setPrice] = useState('');
   const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [selectedCompany, setSelectedCompany] = useState('');
@@ -144,6 +144,8 @@ const MarketRequestDetail = (): JSX.Element => {
     setNegotiating(false);
   };
 
+  const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
+
   let counterOffer = '';
   let newOffer = '';
   let deliveryTotal;
@@ -155,12 +157,17 @@ const MarketRequestDetail = (): JSX.Element => {
   let discountValue = 0;
   let disableAccept = false;
   let isAccepted = false;
+
+  let sortedNegotiations: Negotiations[] = [];
+  let lastNegotiationsOffers: Negotiations[] = [];
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
-      const counterOfferArr = selectedOffer.negotiations.filter(
+      sortedNegotiations = sortByDate(selectedOffer.negotiations);
+
+      const counterOfferArr = sortedNegotiations.filter(
         (i: any) => i.type === 'COUNTER_OFFER'
       );
-      const newOfferArr = selectedOffer.negotiations.filter(
+      const newOfferArr = sortedNegotiations.filter(
         (i: any) => i.type === 'NEW_OFFER'
       );
 
@@ -175,19 +182,45 @@ const MarketRequestDetail = (): JSX.Element => {
           a.updated_at > b.updated_at ? a : b
         );
       }
+
+      lastNegotiationsOffers = sortedNegotiations
+        .slice(
+          Math.max(
+            sortedNegotiations.length - (sortedNegotiations.length > 2 ? 2 : 1),
+            0
+          )
+        )
+        .reverse();
+
+      counterOfferArr.forEach((off, index) => {
+        const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
+        if (find !== undefined) {
+          find.ordinal = index + 1;
+        }
+      });
+
+      newOfferArr.forEach((off, index) => {
+        const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
+        if (find !== undefined) {
+          if (index === 0) {
+            find.ordinal = index + 2;
+          } else {
+            find.ordinal = index + 1;
+          }
+        }
+      });
     }
 
-    newOffer = newOfferLatest ? newOfferLatest.price.toString() : '0';
+    newOffer = newOfferLatest ? newOfferLatest.price.toString() : '';
     counterOffer = counterOfferLatest
       ? counterOfferLatest.price.toString()
-      : '0';
+      : '';
 
-    const valueAgainst = newOfferLatest
-      ? newOfferLatest.price
-      : counterOfferLatest?.price;
-    discountValue = selectedOffer?.price - valueAgainst;
+    const actualPrice = newOffer ? parseFloat(newOffer) : selectedOffer.price;
+    discountValue = actualPrice - parseFloat(counterOffer);
+
     discountPercentage = (discountValue
-      ? (discountValue / selectedOffer?.price) * 100
+      ? (discountValue / actualPrice) * 100
       : 0
     ).toFixed(2);
 
@@ -197,6 +230,7 @@ const MarketRequestDetail = (): JSX.Element => {
 
     thereIsNewOffer =
       selectedOffer.negotiations &&
+      //@ts-ignore
       newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
 
     hideNegotiate =
@@ -219,8 +253,6 @@ const MarketRequestDetail = (): JSX.Element => {
     counterOffer,
     newOffer,
     selectedOffer,
-    price,
-    setPrice,
     data: {
       id,
       type,
@@ -252,6 +284,8 @@ const MarketRequestDetail = (): JSX.Element => {
     onClickDelete,
     showDelete,
     setShowDelete,
+    sortedNegotiations,
+    lastNegotiationsOffers,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
