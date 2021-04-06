@@ -71,3 +71,10 @@ export const BadgeText = styled(TypographyView)`
   font-size: ${pxToRem(11)};
   text-align: center;
 `;
+
+export const MetricContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 16px;
+`;
