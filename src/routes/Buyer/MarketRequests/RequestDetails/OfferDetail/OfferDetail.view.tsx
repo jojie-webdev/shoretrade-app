@@ -4,6 +4,7 @@ import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
 import { BUYER_ROUTES } from 'consts';
+import { useHistory } from 'react-router';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
@@ -18,7 +19,6 @@ import {
   BadgesContainer,
   OfferActionsContainer,
 } from './OfferDetail.style';
-import { useHistory } from 'react-router';
 
 const OfferDetailView = (props: any) => {
   const {
@@ -131,7 +131,7 @@ const OfferDetailView = (props: any) => {
               </TypographyView>
             </div>
 
-            {counterOffer !== '' && (
+            {counterOffer !== '' && sortedNegotiations.length <= 2 && (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
                   Your counter offer

@@ -222,7 +222,6 @@ const MarketRequestDetail = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
