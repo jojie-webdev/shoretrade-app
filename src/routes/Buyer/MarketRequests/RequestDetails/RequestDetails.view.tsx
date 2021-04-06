@@ -242,9 +242,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     measurementUnit,
   } = props;
 
-  const params = useParams();
-  const match = useRouteMatch();
-
   if (!sellerOffers) {
     return <></>;
   }
