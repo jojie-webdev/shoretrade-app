@@ -222,15 +222,19 @@ const MarketRequestDetail = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
+
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
+    totalOffers: activeOffers.data?.data.count || 0,
     deliveryTotal,
     counterOffer,
     newOffer,
     selectedOffer,
     marketRequestId: id,
-    data: activeOffers.data?.data.marketOffers[0].marketRequest || {},
+    data: activeOffers.data?.data.marketOffers[0]?.marketRequest || {},
+    measurementUnit:
+      activeOffers.data?.data.marketOffers[0]?.offers[0].measurementUnit || '',
     sellerOffers: activeOffers.data?.data.marketOffers || [],
     searchTerm,
     negotiating,

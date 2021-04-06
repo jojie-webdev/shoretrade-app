@@ -238,6 +238,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     marketRequestId,
     sortedNegotiations,
     lastNegotiationsOffers,
+    totalOffers,
+    measurementUnit,
   } = props;
 
   const params = useParams();
@@ -299,9 +301,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       ? 'Expired'
                       : formatRunningDateDifference(data.createdAt)
                   }
-                  offers={data.totalOffers}
+                  offers={totalOffers}
                   image={data.image}
-                  measurementUnit={data.measurementUnit}
+                  measurementUnit={measurementUnit}
                   weight={data.weight}
                 />
               ) : (
@@ -327,9 +329,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {/* NUMBERS CONTAINER START */}
                   <div className="numbers-container">
                     <div className="item">
-                      <span className="value">
-                        {sellerOffers.length} &nbsp;
-                      </span>
+                      <span className="value">{totalOffers} &nbsp;</span>
                       <span className="label">Offers</span>
                     </div>
                     <span className="divider">,</span>
@@ -341,7 +341,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </div>
                   </div>
                   {/* NUMBERS CONTAINER END */}
-                  {data.offers < 1 || sellerOffers === undefined ? (
+                  {totalOffers < 1 || sellerOffers === undefined ? (
                     <EmptyStateView
                       title="There are currently no offers for this request."
                       // circleHeight={280}
