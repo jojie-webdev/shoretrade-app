@@ -14,6 +14,7 @@ import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
@@ -138,27 +139,27 @@ const Step1 = ({
       (data: { created_at: string }) => data.created_at
     );
     const negotiations = sortByDate(negoCopy);
-    const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
-    const latestBuyerNego = buyerNegos[0];
+    const acceptedOffer = negotiations.find((a) => a.is_accepted);
     const sellerNegos = negotiations.filter((n) => n.type === 'NEW_OFFER');
-    const latestSellerNego = sellerNegos[0];
+    const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
 
-    //latest, original, previous of latest
+    const latestSellerNego = sellerNegos.slice(-1)[0];
+    const latestBuyerNego = buyerNegos.slice(-1)[0];
+    const currentOfferPrice =
+      acceptedOffer?.price || latestSellerNego?.price || activeOffer.price;
 
-    const latestSellerOffer = latestSellerNego?.price || activeOffer.price;
-    const latestBuyerCounterOffer = latestBuyerNego?.price || 0;
+    const discountValue = currentOfferPrice - (latestBuyerNego?.price || 0);
+    const discountPercentage = (
+      (discountValue / currentOfferPrice) *
+      100
+    ).toFixed(2);
 
-    const discountValue = latestBuyerCounterOffer - latestSellerOffer;
-    const discountPercentage = discountValue
-      ? (
-          (discountValue /
-            (latestBuyerCounterOffer === 0
-              ? latestSellerOffer
-              : latestBuyerCounterOffer)) *
-          100
-        ).toFixed(2)
-      : 0;
-    const deliveryTotal = latestSellerOffer * activeOffer.weight;
+    const actualPrice =
+      activeOffer.status === 'ACCEPTED'
+        ? acceptedOffer?.price || currentOfferPrice
+        : latestBuyerNego?.price || currentOfferPrice;
+
+    const totalValue = actualPrice * activeOffer.weight;
 
     const latestNewOfferDate = latestSellerNego
       ? moment(latestSellerNego.created_at).toDate()
@@ -172,7 +173,41 @@ const Step1 = ({
         latestCounterOfferDate > latestNewOfferDate) ||
       (latestBuyerNego && !latestNewOfferDate);
 
-    const isAccepted = latestSellerOffer === latestBuyerCounterOffer;
+    const isNegotiationEqual =
+      latestSellerNego &&
+      latestBuyerNego &&
+      latestSellerNego.price === latestBuyerNego.price;
+
+    const lastNegotiationsArray = negotiations.slice(
+      Math.max(negotiations.length - (negotiations.length > 3 ? 3 : 2), 0)
+    );
+
+    const modalLastNegotiationsArray = negotiations.slice(
+      Math.max(negotiations.length - (negotiations.length >= 4 ? 2 : 0), 0)
+    );
+
+    const getOrdinal = (off: any, index: number) => {
+      const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
+      const findModal = modalLastNegotiationsArray.find(
+        (ltn) => off.id === ltn.id
+      );
+
+      if (find !== undefined) {
+        find.ordinal = index + 1;
+      }
+
+      if (findModal !== undefined) {
+        findModal.ordinal = index + 1;
+      }
+    };
+
+    buyerNegos.map((off, index) => {
+      getOrdinal(off, index);
+    });
+
+    sellerNegos.map((off, index) => {
+      getOrdinal(off, index);
+    });
 
     return (
       <>
@@ -182,17 +217,35 @@ const Step1 = ({
               Your original offer
             </Typography>
             <Typography variant="label" weight="bold" color="noshade">
-              {toPrice(latestSellerOffer)}/{unit}
+              {toPrice(activeOffer.price)}/{unit}
             </Typography>
           </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color="noshade">
-              Buyer&apos; counter offer
-            </Typography>
-            <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(latestBuyerCounterOffer)}/{unit}
-            </Typography>
-          </div>
+          {negotiations.length !== 0 && negotiations.length <= 3 && (
+            <div className="computation-item-container">
+              <Typography variant="label" color="noshade">
+                Buyer&apos;s counter offer
+              </Typography>
+              <Typography variant="label" color="noshade" weight="bold">
+                {toPrice(latestBuyerNego.price)}/{unit}
+              </Typography>
+            </div>
+          )}
+
+          {negotiations.length > 3 &&
+            lastNegotiationsArray.map((offer) => {
+              return (
+                <div key={offer.id} className="computation-item-container">
+                  <Typography variant="label" color="noshade">
+                    {`${offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'} ${
+                      offer.ordinal && toOrdinalSuffix(offer.ordinal)
+                    } offer `}
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="bold">
+                    {toPrice(offer.price)}/{unit}
+                  </Typography>
+                </div>
+              );
+            })}
 
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
@@ -201,18 +254,11 @@ const Step1 = ({
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={
-                  Math.sign(discountValue) === 0
-                    ? 'noshade'
-                    : Math.sign(discountValue) === 1
-                    ? 'success'
-                    : 'error'
-                }
+                color={discountValue >= 0 ? 'error' : 'success'}
                 variant="label"
                 weight="bold"
               >
-                {Math.sign(discountValue) === -1 && '-'}
-                {toPrice(Math.abs(discountValue))}/{unit}
+                {toPrice(-discountValue)}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color="noshade">
@@ -225,7 +271,7 @@ const Step1 = ({
               Total Value
             </Typography>
             <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(deliveryTotal)}
+              {toPrice(totalValue)}
             </Typography>
           </div>
 
@@ -243,7 +289,7 @@ const Step1 = ({
             !noNegotiations &&
             isNegoOpen &&
             isNegotiationAllowed &&
-            !isAccepted && (
+            !isNegotiationEqual && (
               <>
                 <Button
                   onClick={() => setIsOpen(true)}
@@ -256,7 +302,7 @@ const Step1 = ({
                   onClick={() =>
                     props.onNegotiateOffer(
                       activeOffer.id,
-                      latestBuyerCounterOffer,
+                      latestBuyerNego.price,
                       true
                     )
                   }
@@ -269,12 +315,8 @@ const Step1 = ({
         </div>
 
         <NegotiateSellerModal
-          originalOffer={latestBuyerCounterOffer}
-          counterOffer={latestSellerOffer}
-          weight={{
-            unit: unit,
-            value: activeOffer.weight,
-          }}
+          marketOffer={activeOffer}
+          modalLastNegotiationsArray={modalLastNegotiationsArray}
           isOpen={isOpen}
           onClickClose={() => setIsOpen(false)}
           isNegotiating={props.isNegotiating}

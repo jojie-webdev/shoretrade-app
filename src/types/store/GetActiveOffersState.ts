@@ -34,15 +34,7 @@ export type GetActiveOffersRequestResponseItem = {
       countryCode: string;
     };
   };
-  negotiations: Array<{
-    id: string;
-    market_offer_id: string;
-    price: number;
-    type: 'NEW_OFFER' | 'COUNTER_OFFER';
-    is_accespted: boolean;
-    created_at: string;
-    updated_at: string;
-  }>;
+  negotiations: Negotiations[];
   offers: Array<Offer>;
 };
 
@@ -58,14 +50,15 @@ export interface Offer {
   negotiations: any[];
 }
 
-export interface Negotiation {
+export interface Negotiations {
   id: string;
-  type: string;
+  market_offer_id: string;
   price: number;
+  type: 'NEW_OFFER' | 'COUNTER_OFFER';
+  is_accepted: boolean;
   created_at: string;
   updated_at: string;
-  is_accepted: boolean;
-  market_offer_id: string;
+  ordinal?: number;
 }
 
 interface Size {

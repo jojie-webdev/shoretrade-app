@@ -1,14 +1,12 @@
 import { ModalProps } from 'components/layout/Modal/Modal.props';
+import {
+  GetActiveOffersRequestResponseItem,
+  Negotiations,
+} from 'types/store/GetActiveOffersState';
 
 export interface NegotiateSellerModalProps extends ModalProps {
-  onSubmit: (counterOffer: number) => void;
-  originalOffer: number;
-  counterOffer: number;
-  counterOffers?: number[];
-  originalOffers?: number[];
+  marketOffer: GetActiveOffersRequestResponseItem;
+  modalLastNegotiationsArray: Negotiations[];
   isNegotiating?: boolean;
-  weight: {
-    unit: string;
-    value: number;
-  };
+  onSubmit: (counterOffer: number) => void;
 }
