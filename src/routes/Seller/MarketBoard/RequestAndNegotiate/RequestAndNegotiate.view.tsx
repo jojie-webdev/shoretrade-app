@@ -29,6 +29,7 @@ import {
   Container,
   BadgesContainer,
   BadgeText,
+  MetricContainer,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
@@ -45,6 +46,9 @@ const Step1 = ({
   const unit = formatMeasurementUnit(
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
   );
+
+  const metric = isReview ? buyerRequest.metric : '';
+
   const noNegotiations = isReview ? true : isEmpty(activeOffer.negotiations);
   const isNegoOpen = isReview ? false : activeOffer.status === 'OPEN';
 
@@ -380,6 +384,20 @@ const Step1 = ({
               >
                 Size
               </Typography>
+              {metric !== '' && (
+                <MetricContainer>
+                  <Typography color="shade6" variant="overline">
+                    Metric:
+                  </Typography>
+                  <Typography
+                    style={{ marginLeft: '8px' }}
+                    color="shade2"
+                    variant="overline"
+                  >
+                    {metric}
+                  </Typography>
+                </MetricContainer>
+              )}
 
               <div className="quantity-container">
                 <TextField
