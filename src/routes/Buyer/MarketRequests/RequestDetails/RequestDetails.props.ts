@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  Negotiations,
+} from 'types/store/GetActiveOffersState';
 
 export type RequestDetail = {
   id: string;
@@ -42,11 +45,9 @@ export interface MarketRequestDetailProps {
   currentPath: string;
   searchTerm: string;
   breadCrumbSections: any[];
-  price: string;
   negotiating: boolean;
   sellerOffers: GetActiveOffersRequestResponseItem[];
   setNegotiating: Dispatch<SetStateAction<boolean>>;
-  setPrice: Dispatch<SetStateAction<string>>;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   onClickItem: (row: any, company: any) => void;
   currentOfferId: string;
@@ -68,4 +69,6 @@ export interface MarketRequestDetailProps {
   onClickDelete: () => void;
   showDelete: boolean;
   setShowDelete: Dispatch<SetStateAction<boolean>>;
+  sortedNegotiations: Negotiations[];
+  lastNegotiationsOffers: Negotiations[];
 }
