@@ -178,7 +178,7 @@ const Step1 = ({
       latestSellerNego.price === latestBuyerNego.price;
 
     const lastNegotiationsArray = negotiations.slice(
-      Math.max(negotiations.length - (negotiations.length >= 3 ? 2 : 1), 0)
+      Math.max(negotiations.length - (negotiations.length > 3 ? 3 : 2), 0)
     );
 
     const modalLastNegotiationsArray = negotiations.slice(
@@ -232,17 +232,29 @@ const Step1 = ({
             </Typography>
           </div>
           {negotiations.length !== 0 && negotiations.length <= 3 && (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                Buyer&apos;s counter offer
-              </Typography>
-              <Typography variant="label" color="noshade" weight="bold">
-                {toPrice(latestBuyerNego.price)}/{unit}
-              </Typography>
-            </div>
+            <>
+              <div className="computation-item-container">
+                <Typography variant="label" color="noshade">
+                  Buyer&apos;s counter offer
+                </Typography>
+                <Typography variant="label" color="noshade" weight="bold">
+                  {toPrice(latestBuyerNego.price)}/{unit}
+                </Typography>
+              </div>
+              {negotiations.length === 2 && (
+                <div className="computation-item-container">
+                  <Typography variant="label" color="noshade">
+                    Your 2nd offer
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="bold">
+                    {toPrice(negotiations[1].price)}/{unit}
+                  </Typography>
+                </div>
+              )}
+            </>
           )}
 
-          {negotiations.length >= 2 &&
+          {negotiations.length > 3 &&
             lastNegotiationsArray.map((offer) => {
               return (
                 <div key={offer.id} className="computation-item-container">
