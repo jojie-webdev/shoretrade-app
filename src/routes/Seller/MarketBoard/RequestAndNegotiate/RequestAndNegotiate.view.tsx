@@ -410,11 +410,6 @@ const Step1 = ({
                       : activeOffer.size.from || 0
                   }
                   disabled
-                  LeftComponent={
-                    <Typography variant="label" weight="bold" color="shade6">
-                      {unit}
-                    </Typography>
-                  }
                 />
 
                 {isReview && (
@@ -424,11 +419,6 @@ const Step1 = ({
                     label="To"
                     value={buyerRequest.sizeTo || 0}
                     disabled
-                    LeftComponent={
-                      <Typography variant="label" weight="bold" color="shade6">
-                        {unit}
-                      </Typography>
-                    }
                   />
                 )}
 
