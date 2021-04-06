@@ -31,3 +31,27 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: 'us-east-2'
                 DISTRIBUTION_ID: $CLOUDFRONT_DISTRIBUTION_ID
+    "master":
+      - step:
+          name: FE - Build and deploy
+          deployment: Production
+          caches:
+            - node
+          script:
+            - NODE_ENV=build && npm install --silent && NODE_ENV=production
+            - CI=false npm run build
+            - pipe: atlassian/aws-s3-deploy:0.3.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'ap-southeast-2'
+                S3_BUCKET: $S3_BUCKET
+                LOCAL_PATH: '$BITBUCKET_CLONE_DIR/build'
+                ACL: 'public-read'
+                DELETE_FLAG: 'true'
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'ap-southeast-2'
+                DISTRIBUTION_ID: $CLOUDFRONT_DISTRIBUTION_ID
