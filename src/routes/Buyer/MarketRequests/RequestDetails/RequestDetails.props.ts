@@ -41,8 +41,11 @@ export interface MarketRequestOffer {
 }
 
 export interface MarketRequestDetailProps {
-  data: RequestDetail;
+  data: any;
+  totalOffers: number;
+  marketRequestId: string;
   currentPath: string;
+  measurementUnit: string;
   searchTerm: string;
   breadCrumbSections: any[];
   negotiating: boolean;
