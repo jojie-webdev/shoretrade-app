@@ -18,10 +18,12 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -50,7 +52,6 @@ export const OffersSellerAccordionContent = (props: {
   const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
-
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
@@ -194,7 +195,7 @@ const SellerOfferInteractionContent = (props: {
           </div>
         </div>
         <div className="tags">
-          {tags.length > 0 ? (
+          {(tags || []).length > 0 ? (
             <>
               <OfferTags tags={tags} />
             </>
@@ -229,14 +230,20 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     discountValue,
     thereIsNewOffer,
     newOffer,
-    disableAccept,
     isAccepted,
     showDelete,
     setShowDelete,
     onClickDelete,
+    disableAccept,
+    marketRequestId,
     sortedNegotiations,
     lastNegotiationsOffers,
+    totalOffers,
+    measurementUnit,
   } = props;
+
+  const params = useParams();
+  const match = useRouteMatch();
 
   if (!sellerOffers) {
     return <></>;
@@ -285,15 +292,23 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         <Row gutterWidth={30}>
           <Col md={12} sm={12} xl={4}>
             <RequestDetailsCardContainer type={'none'}>
-              <MarketRequestItem
-                inDetail={true}
-                type={data.type}
-                expiry={data.expiry}
-                offers={data.offers}
-                image={data.image}
-                measurementUnit={data.measurementUnit}
-                weight={data.weight}
-              />
+              {data && data.name ? (
+                <MarketRequestItem
+                  inDetail={true}
+                  type={data.name}
+                  expiry={
+                    moment(data.createdAt).add(7, 'd').isBefore()
+                      ? 'Expired'
+                      : formatRunningDateDifference(data.createdAt)
+                  }
+                  offers={totalOffers}
+                  image={data.image}
+                  measurementUnit={measurementUnit}
+                  weight={data.weight}
+                />
+              ) : (
+                <></>
+              )}
             </RequestDetailsCardContainer>
             {data.status !== 'DELETED' && (
               <Button
@@ -314,7 +329,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {/* NUMBERS CONTAINER START */}
                   <div className="numbers-container">
                     <div className="item">
-                      <span className="value">{data.offers} &nbsp;</span>
+                      <span className="value">{totalOffers} &nbsp;</span>
                       <span className="label">Offers</span>
                     </div>
                     <span className="divider">,</span>
@@ -326,7 +341,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     </div>
                   </div>
                   {/* NUMBERS CONTAINER END */}
-                  {data.offers < 1 || sellerOffers === undefined ? (
+                  {totalOffers < 1 || sellerOffers === undefined ? (
                     <EmptyStateView
                       title="There are currently no offers for this request."
                       // circleHeight={280}
@@ -387,7 +402,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 </OffersContainer>
               </Route>
               <Route
-                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(currentOfferId)}
+                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+                  marketRequestId,
+                  currentOfferId
+                )}
               >
                 <OfferDetailView
                   handleAcceptOffer={handleAcceptOffer}

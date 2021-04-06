@@ -3,6 +3,7 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
+import { BUYER_ROUTES } from 'consts';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
@@ -17,6 +18,7 @@ import {
   BadgesContainer,
   OfferActionsContainer,
 } from './OfferDetail.style';
+import { useHistory } from 'react-router';
 
 const OfferDetailView = (props: any) => {
   const {

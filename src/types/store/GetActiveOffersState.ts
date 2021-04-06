@@ -74,6 +74,7 @@ export interface NegotiateOfferMeta {
 
 export type GetActiveOffersPayload = GenericResponse<{
   token: string;
+  count: number;
   marketOffers: GetActiveOffersRequestResponseItem[];
 }>;
 
