@@ -8,12 +8,13 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import NegotiateModal from 'components/module/NegotiateModal';
+import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
@@ -28,6 +29,7 @@ import {
   Container,
   BadgesContainer,
   BadgeText,
+  MetricContainer,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
@@ -44,6 +46,9 @@ const Step1 = ({
   const unit = formatMeasurementUnit(
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
   );
+
+  const metric = isReview ? buyerRequest.metric : '';
+
   const noNegotiations = isReview ? true : isEmpty(activeOffer.negotiations);
   const isNegoOpen = isReview ? false : activeOffer.status === 'OPEN';
 
@@ -138,55 +143,136 @@ const Step1 = ({
       (data: { created_at: string }) => data.created_at
     );
     const negotiations = sortByDate(negoCopy);
-    const buyerNego = negotiations.find((n) => n.type === 'COUNTER_OFFER');
-    const sellerNego = negotiations.find((n) => n.type === 'NEW_OFFER');
+    const acceptedOffer = negotiations.find((a) => a.is_accepted);
+    const sellerNegos = negotiations.filter((n) => n.type === 'NEW_OFFER');
+    const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
 
-    const sellerOffer = sellerNego?.price || activeOffer.price;
-    const buyerCounterOffer = buyerNego?.price || 0;
+    const latestSellerNego = sellerNegos.slice(-1)[0];
+    const latestBuyerNego = buyerNegos.slice(-1)[0];
+    const currentOfferPrice =
+      acceptedOffer?.price || latestSellerNego?.price || activeOffer.price;
 
-    const discountValue = buyerCounterOffer - sellerOffer;
-    const discountPercentage = discountValue
-      ? (
-          (discountValue /
-            (buyerCounterOffer === 0 ? sellerOffer : buyerCounterOffer)) *
-          100
-        ).toFixed(2)
-      : 0;
-    const deliveryTotal = sellerOffer * activeOffer.weight;
+    const discountValue = currentOfferPrice - (latestBuyerNego?.price || 0);
+    const discountPercentage = (
+      (discountValue / currentOfferPrice) *
+      100
+    ).toFixed(2);
 
-    const latestNewOfferDate = sellerNego
-      ? moment(sellerNego.created_at).toDate()
+    const actualPrice =
+      activeOffer.status === 'ACCEPTED'
+        ? acceptedOffer?.price || currentOfferPrice
+        : latestBuyerNego?.price || currentOfferPrice;
+    const totalValue = actualPrice * activeOffer.weight;
+
+    const latestNewOfferDate = latestSellerNego
+      ? moment(latestSellerNego.created_at).toDate()
       : undefined;
-    const latestCounterOfferDate = buyerNego
-      ? moment(buyerNego.created_at).toDate()
+    const latestCounterOfferDate = latestBuyerNego
+      ? moment(latestBuyerNego.created_at).toDate()
       : undefined;
     const isNegotiationAllowed =
       (latestNewOfferDate &&
         latestCounterOfferDate &&
         latestCounterOfferDate > latestNewOfferDate) ||
-      (buyerNego && !latestNewOfferDate);
+      (latestBuyerNego && !latestNewOfferDate);
 
-    const isAccepted = sellerOffer === buyerCounterOffer;
+    const isNegotiationEqual =
+      latestSellerNego &&
+      latestBuyerNego &&
+      latestSellerNego.price === latestBuyerNego.price;
+
+    const lastNegotiationsArray = negotiations.slice(
+      Math.max(negotiations.length - (negotiations.length > 3 ? 3 : 2), 0)
+    );
+
+    const modalLastNegotiationsArray = negotiations.slice(
+      Math.max(negotiations.length - (negotiations.length >= 3 ? 2 : 1), 0)
+    );
+
+    sellerNegos.map((off, index) => {
+      const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
+      const findModal = modalLastNegotiationsArray.find(
+        (ltn) => off.id === ltn.id
+      );
+      if (find !== undefined) {
+        if (index === 0) {
+          find.ordinal = index + 2;
+        } else {
+          find.ordinal = index + 1;
+        }
+      }
+      if (findModal !== undefined) {
+        if (index === 0) {
+          findModal.ordinal = index + 2;
+        } else {
+          findModal.ordinal = index + 1;
+        }
+      }
+    });
+
+    buyerNegos.map((off, index) => {
+      const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
+      const findModal = modalLastNegotiationsArray.find(
+        (ltn) => off.id === ltn.id
+      );
+
+      if (find !== undefined) {
+        find.ordinal = index + 1;
+      }
+      if (findModal !== undefined) {
+        findModal.ordinal = index + 1;
+      }
+    });
 
     return (
       <>
         <div className="offer-container">
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
-              Your offer was
+              Your original offer
             </Typography>
             <Typography variant="label" weight="bold" color="noshade">
-              {toPrice(sellerOffer)}/{unit}
+              {toPrice(activeOffer.price)}/{unit}
             </Typography>
           </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color="noshade">
-              Their counter offer is
-            </Typography>
-            <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(buyerCounterOffer)}/{unit}
-            </Typography>
-          </div>
+          {negotiations.length !== 0 && negotiations.length <= 3 && (
+            <>
+              <div className="computation-item-container">
+                <Typography variant="label" color="noshade">
+                  Buyer&apos;s counter offer
+                </Typography>
+                <Typography variant="label" color="noshade" weight="bold">
+                  {toPrice(latestBuyerNego.price)}/{unit}
+                </Typography>
+              </div>
+              {negotiations.length === 2 && (
+                <div className="computation-item-container">
+                  <Typography variant="label" color="noshade">
+                    Your 2nd offer
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="bold">
+                    {toPrice(negotiations[1].price)}/{unit}
+                  </Typography>
+                </div>
+              )}
+            </>
+          )}
+
+          {negotiations.length > 3 &&
+            lastNegotiationsArray.map((offer) => {
+              return (
+                <div key={offer.id} className="computation-item-container">
+                  <Typography variant="label" color="noshade">
+                    {`${offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'} ${
+                      offer.ordinal && toOrdinalSuffix(offer.ordinal)
+                    } offer`}
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="bold">
+                    {toPrice(offer.price)}/{unit}
+                  </Typography>
+                </div>
+              );
+            })}
 
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
@@ -195,18 +281,11 @@ const Step1 = ({
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={
-                  Math.sign(discountValue) === 0
-                    ? 'noshade'
-                    : Math.sign(discountValue) === 1
-                    ? 'success'
-                    : 'error'
-                }
+                color={discountValue >= 0 ? 'error' : 'success'}
                 variant="label"
                 weight="bold"
               >
-                {Math.sign(discountValue) === -1 && '-'}
-                {toPrice(Math.abs(discountValue))}/{unit}
+                {toPrice(-discountValue)}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color="noshade">
@@ -219,7 +298,7 @@ const Step1 = ({
               Total Value
             </Typography>
             <Typography variant="label" color="noshade" weight="bold">
-              {toPrice(deliveryTotal)}
+              {toPrice(totalValue)}
             </Typography>
           </div>
 
@@ -237,7 +316,7 @@ const Step1 = ({
             !noNegotiations &&
             isNegoOpen &&
             isNegotiationAllowed &&
-            !isAccepted && (
+            !isNegotiationEqual && (
               <>
                 <Button
                   onClick={() => setIsOpen(true)}
@@ -250,7 +329,7 @@ const Step1 = ({
                   onClick={() =>
                     props.onNegotiateOffer(
                       activeOffer.id,
-                      buyerCounterOffer,
+                      latestBuyerNego.price,
                       true
                     )
                   }
@@ -262,13 +341,9 @@ const Step1 = ({
             )}
         </div>
 
-        <NegotiateModal
-          originalOffer={buyerCounterOffer}
-          counterOffer={sellerOffer}
-          weight={{
-            unit: unit,
-            value: activeOffer.weight,
-          }}
+        <NegotiateSellerModal
+          marketOffer={activeOffer}
+          modalLastNegotiationsArray={modalLastNegotiationsArray}
           isOpen={isOpen}
           onClickClose={() => setIsOpen(false)}
           isNegotiating={props.isNegotiating}
@@ -309,6 +384,20 @@ const Step1 = ({
               >
                 Size
               </Typography>
+              {metric !== '' && (
+                <MetricContainer>
+                  <Typography color="shade6" variant="overline">
+                    Metric:
+                  </Typography>
+                  <Typography
+                    style={{ marginLeft: '8px' }}
+                    color="shade2"
+                    variant="overline"
+                  >
+                    {metric}
+                  </Typography>
+                </MetricContainer>
+              )}
 
               <div className="quantity-container">
                 <TextField

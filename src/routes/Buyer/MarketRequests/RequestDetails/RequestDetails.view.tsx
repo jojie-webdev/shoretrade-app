@@ -16,18 +16,18 @@ import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
-import NegotiateModalView from 'components/module/NegotiateModal';
+import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
+import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
-import { MarketRequestDetailProps } from './RequestDetails.prop';
 import {
   RequestDetailsCardContainer,
   RequestDetailsContainer,
@@ -220,8 +220,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     selectedOffer,
     selectedCompany,
     handleAcceptOffer,
-    price,
-    setPrice,
     counterOffer,
     deliveryTotal,
     submitNegotiation,
@@ -238,6 +236,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     onClickDelete,
     disableAccept,
     marketRequestId,
+    sortedNegotiations,
+    lastNegotiationsOffers,
   } = props;
 
   const params = useParams();
@@ -253,12 +253,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   return (
     <RequestDetailsContainer>
-      <NegotiateModalView
+      <NegotiateBuyerModal
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
         onSubmit={(v: number) => submitNegotiation(v)}
         originalOffer={selectedOffer?.price}
-        counterOffer={parseFloat(counterOffer)}
+        counterOffer={counterOffer}
+        newOffer={newOffer}
         weight={{
           unit: selectedOffer?.measurementUnit,
           value: selectedOffer?.weight,
@@ -267,6 +268,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         onClickClose={() => {
           setNegotiating(false);
         }}
+        sortedNegotiations={sortedNegotiations}
+        modalLastNegotiationsArray={lastNegotiationsOffers}
       />
       <ConfirmationModal
         isOpen={showDelete}
@@ -405,21 +408,21 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 )}
               >
                 <OfferDetailView
-                  price={price}
                   handleAcceptOffer={handleAcceptOffer}
                   company={selectedCompany}
                   selectedOffer={selectedOffer}
                   deliveryTotal={deliveryTotal}
                   handleStartNegotiate={handleStartNegotiate}
                   hideNegotiate={hideNegotiate}
-                  originalOffer={selectedOffer?.price}
-                  counterOffer={parseFloat(counterOffer)}
+                  counterOffer={counterOffer}
                   discountPercentage={discountPercentage}
                   discountValue={discountValue}
-                  newOffer={parseFloat(newOffer)}
+                  newOffer={newOffer}
                   thereIsNewOffer={thereIsNewOffer}
                   disableAccept={disableAccept}
                   isAccepted={isAccepted}
+                  sortedNegotiations={sortedNegotiations}
+                  lastNegotiationsOffers={lastNegotiationsOffers}
                 />
               </Route>
             </Switch>
