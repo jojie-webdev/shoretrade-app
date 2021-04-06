@@ -158,7 +158,6 @@ const Step1 = ({
       activeOffer.status === 'ACCEPTED'
         ? acceptedOffer?.price || currentOfferPrice
         : latestBuyerNego?.price || currentOfferPrice;
-
     const totalValue = actualPrice * activeOffer.weight;
 
     const latestNewOfferDate = latestSellerNego
