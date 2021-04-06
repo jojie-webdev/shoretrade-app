@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from 'consts';
+import moment from 'moment';
 import omit from 'ramda/es/omit';
 import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import { GetSellerOrdersMeta } from 'types/store/GetSellerOrdersState';
@@ -58,12 +59,16 @@ export const placeOrder = (data: PlaceOrderMeta, token: string) => {
 };
 
 export const getBuyerOrders = (data: GetSellerOrdersMeta, token: string) => {
+  //ADD 1 day to the end Date
+  const modifiedEndDate = moment(data.dateTo)
+    .add(1, 'days')
+    .format('M/DD/yyyy');
   return axios({
     method: 'get',
     url: `${ORDER_URL}/get-buyer-orders-new?status=${data.status || ''}&limit=${
       data.limit || ''
     }&term=${data.term || ''}&dateFrom=${data.dateFrom || ''}&dateTo=${
-      data.dateTo || ''
+      modifiedEndDate || ''
     }`,
     headers: {
       Authorization: `Bearer ${token}`,
