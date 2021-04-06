@@ -53,9 +53,16 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             {isSeller ? 'Seller' : 'Buyer'} Log in
           </Title>
           <RegisterLinkContainer>
-            <RegisterLinkPrefix color="shade6">New user?</RegisterLinkPrefix>
+            <RegisterLinkPrefix
+              variant="label"
+              color={isSeller ? 'shade6' : 'shade7'}
+            >
+              New user?
+            </RegisterLinkPrefix>
             <RegisterLinkAction onClick={() => goToRegister()}>
-              <RegisterLink color="primary">Create an Account</RegisterLink>
+              <RegisterLink variant="label" color="primary">
+                Create an Account
+              </RegisterLink>
             </RegisterLinkAction>
           </RegisterLinkContainer>
           <Formik {...formikProps}>
