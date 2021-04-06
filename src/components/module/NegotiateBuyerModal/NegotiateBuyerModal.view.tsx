@@ -31,7 +31,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     onSubmit,
     ...modalProps
   } = props;
-  const { unit, value: weightValue } = weight;
+  const { unit: measurementUnit, value: weightValue } = weight;
   const theme = useTheme();
   const textColor = 'shade9';
 
@@ -56,6 +56,8 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
 
   const lastOffer =
     sortedNegotiations.filter((i) => i.type === 'COUNTER_OFFER').length + 1;
+
+  const unit = formatMeasurementUnit(measurementUnit);
 
   return (
     <Modal
@@ -102,9 +104,20 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               Seller&apos;s original offer
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(originalOffer)}/{formatMeasurementUnit(unit)}
+              {toPrice(originalOffer)}/{unit}
             </Typography>
           </div>
+
+          {counterOffer !== '' && sortedNegotiations.length <= 2 && (
+            <div className="computation-item-container">
+              <Typography variant="label" color={textColor}>
+                Your counter offer
+              </Typography>
+              <Typography variant="label" weight="bold" color={textColor}>
+                {toPrice(counterOffer)}/{unit}
+              </Typography>
+            </div>
+          )}
 
           {sortedNegotiations.length >= 2 && (
             <>
@@ -146,7 +159,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 variant="label"
                 weight="bold"
               >
-                {toPrice(discountValue)}/{formatMeasurementUnit(unit)}
+                {toPrice(discountValue)}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color={textColor}>
