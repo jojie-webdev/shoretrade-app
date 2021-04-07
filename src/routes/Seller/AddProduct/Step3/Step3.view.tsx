@@ -67,7 +67,6 @@ function Step3({
 
   const liveIsSelected =
     specifications.filter((specs) => specs.label === 'Live').length > 0;
-
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
@@ -81,9 +80,6 @@ function Step3({
               return i;
             })
             .map((item) => {
-              if (liveIsSelected && item.label === 'Raw') {
-                return;
-              }
               if (!disabledOptions.includes(item.label.toUpperCase())) {
                 return (
                   <div key={item.value} className="interaction-container">
@@ -114,6 +110,9 @@ function Step3({
                     />
                   </div>
                 );
+              }
+              if (liveIsSelected && item.label === 'Raw') {
+                return;
               }
             })}
         </div>
