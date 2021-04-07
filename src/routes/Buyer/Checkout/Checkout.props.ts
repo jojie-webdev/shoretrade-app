@@ -24,9 +24,10 @@ export type OrderItem = {
 export interface CheckoutGeneratedProps {
   groupedOrders: Record<string, OrderItem[]>;
   loadingShippingQuotes: boolean;
-  total: string;
+  totalValue: number;
   keepShopping: () => void;
   placeOrder: () => void;
+  selectedShipping: Record<string, any>;
   selectedShippingId: Record<string, number>;
   setSelectedShippingId: Dispatch<Partial<Record<string, number>>>;
   processingOrder: boolean;

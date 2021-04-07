@@ -1,6 +1,10 @@
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import {
+  AddCardAndPayMeta,
+  AddCardAndPayPayload,
+} from 'types/store/AddCardAndPayState';
+import {
   AddSellerLicenseMeta,
   AddSellerLicensePayload,
 } from 'types/store/AddSellerLicenseState';
@@ -313,6 +317,7 @@ export interface Store {
     GetPaymentMethodsPayload
   >;
   addCardToken: AsyncState<AddCardTokenMeta, AddCardTokenPayload>;
+  addCardAndPay: AsyncState<AddCardAndPayMeta, AddCardAndPayPayload>;
   updateDefaultCard: AsyncState<
     UpdateDefaultCardMeta,
     UpdateDefaultCardPayload

@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 import addAddress from './addAddress';
+import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
@@ -89,6 +90,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         addAddress,
+        addCardAndPay,
         addCardToken,
         addLinkedAccount,
         addSellerLicense,
