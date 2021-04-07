@@ -20,6 +20,7 @@ import {
   ChevronDownFlipped,
   Container,
   DateTypography,
+  AllTextTypography,
 } from './DateRangePicker.style';
 
 const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
@@ -109,9 +110,10 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
               </DateTypography>
             )}
             {!startDate && !endDate && (
-              <Typography variant="label" color="shade5">
-                {placeholder}
-              </Typography>
+              <DateTypography variant="caption" color="shade7">
+                <Calendar width={16.67} height={16.67} />
+                <AllTextTypography>All</AllTextTypography>
+              </DateTypography>
             )}
           </div>
           {downArrowIcon()}
