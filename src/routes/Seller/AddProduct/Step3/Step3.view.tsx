@@ -63,7 +63,7 @@ function Step3({
     unnest(specifications.map((s) => stateRules[s.label.toUpperCase()] || []))
   );
 
-  const isComplete = specificationIds.length === stateOptions.length;
+  let isComplete = specificationIds.length === stateOptions.length;
 
   const liveIsSelected =
     specifications.filter((specs) => specs.label === 'Live').length > 0;
@@ -80,6 +80,10 @@ function Step3({
               return i;
             })
             .map((item) => {
+              if (liveIsSelected && item.label === 'Raw') {
+                isComplete = true;
+                return;
+              }
               if (!disabledOptions.includes(item.label.toUpperCase())) {
                 return (
                   <div key={item.value} className="interaction-container">
@@ -110,9 +114,6 @@ function Step3({
                     />
                   </div>
                 );
-              }
-              if (liveIsSelected && item.label === 'Raw') {
-                return;
               }
             })}
         </div>
