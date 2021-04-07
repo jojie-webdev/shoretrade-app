@@ -25,14 +25,20 @@ export const Content = styled.div<{
 }>`
   width: 100%;
   overflow: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
+  padding: ${(props) => (props.isOpen ? '16px 0' : '0px')};
+  padding-top: ${({ withBackground, isOpen }) => {
+    if (!isOpen) {
+      return '0';
+    }
+    return withBackground ? '0' : '16px';
+  }};
   height: ${(props) => (props.isOpen ? '100%' : '0')};
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
   transform-origin: top;
   transition: all 0.25s ease-in-out;
-  padding: ${({ padding }) => (padding ? padding : '0 16px')};
-  padding-top: ${({ withBackground }) => (withBackground ? '0px' : '16px')};
-  .border {
-    border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
-    margin: 0px 24px;
+    .border {
+      border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+      margin: 0px 24px;
+    }
   }
 `;
