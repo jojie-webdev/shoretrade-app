@@ -22,14 +22,19 @@ export const order = (data: OrderMeta, token: string) => {
   });
 };
 
-export const getSellerOrders = (data: GetSellerOrdersMeta, token: string) => {
+export const getSellerOrders = (
+  data: GetSellerOrdersMeta & {
+    page?: string;
+  },
+  token: string
+) => {
   return axios({
     method: 'get',
     url: `${ORDER_URL}/get-seller-orders-new?status=${
       data.status || ''
-    }&limit=${data.limit || ''}&term=${data.term || ''}&dateFrom=${
-      data.dateFrom || ''
-    }&dateTo=${data.dateTo || ''}`,
+    }&limit=${data.limit || ''}&page=${data.page || ''}&term=${
+      data.term || ''
+    }&dateFrom=${data.dateFrom || ''}&dateTo=${data.dateTo || ''}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -58,7 +63,12 @@ export const placeOrder = (data: PlaceOrderMeta, token: string) => {
   });
 };
 
-export const getBuyerOrders = (data: GetSellerOrdersMeta, token: string) => {
+export const getBuyerOrders = (
+  data: GetSellerOrdersMeta & {
+    page?: string;
+  },
+  token: string
+) => {
   //ADD 1 day to the end Date
   const modifiedEndDate = moment(data.dateTo)
     .add(1, 'days')
@@ -67,9 +77,9 @@ export const getBuyerOrders = (data: GetSellerOrdersMeta, token: string) => {
     method: 'get',
     url: `${ORDER_URL}/get-buyer-orders-new?status=${data.status || ''}&limit=${
       data.limit || ''
-    }&term=${data.term || ''}&dateFrom=${data.dateFrom || ''}&dateTo=${
-      modifiedEndDate || ''
-    }`,
+    }&page=${data.page || ''}&term=${data.term || ''}&dateFrom=${
+      data.dateFrom || ''
+    }&dateTo=${modifiedEndDate || ''}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
