@@ -63,11 +63,10 @@ function Step3({
     unnest(specifications.map((s) => stateRules[s.label.toUpperCase()] || []))
   );
 
-  const isComplete = specificationIds.length === stateOptions.length;
+  let isComplete = specificationIds.length === stateOptions.length;
 
   const liveIsSelected =
     specifications.filter((specs) => specs.label === 'Live').length > 0;
-
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
@@ -82,6 +81,7 @@ function Step3({
             })
             .map((item) => {
               if (liveIsSelected && item.label === 'Raw') {
+                isComplete = true;
                 return;
               }
               if (!disabledOptions.includes(item.label.toUpperCase())) {

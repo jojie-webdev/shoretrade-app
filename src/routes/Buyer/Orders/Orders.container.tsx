@@ -105,8 +105,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       term: '',
-      dateFrom: last7Days,
-      dateTo: today,
+      dateFrom: null,
+      dateTo: null,
     }
   );
 
@@ -114,8 +114,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       term: '',
-      dateFrom: last7Days,
-      dateTo: moment(),
+      dateFrom: null,
+      dateTo: null,
     }
   );
 
@@ -123,8 +123,8 @@ const OrdersContainer = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       term: '',
-      dateFrom: last7Days,
-      dateTo: moment(),
+      dateFrom: null,
+      dateTo: null,
     }
   );
 

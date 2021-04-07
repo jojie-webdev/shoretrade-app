@@ -139,3 +139,7 @@ export const DateTypography = styled(Typography)`
   display: flex;
   align-items: center;
 `;
+
+export const AllTextTypography = styled(Typography)`
+  margin-left: 0.2rem;
+`;
