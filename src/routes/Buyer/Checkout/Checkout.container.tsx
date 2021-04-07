@@ -168,7 +168,6 @@ const Checkout = (): JSX.Element => {
         totalItemsPrice + selectedShipping[companyId].price,
       0
     );
-  const total = toPrice(totalValue, false);
 
   const processingOrder =
     useSelector((store: Store) => store.order.pending) || false;
@@ -294,10 +293,11 @@ const Checkout = (): JSX.Element => {
 
   const generatedProps = {
     groupedOrders,
-    total,
+    totalValue,
     keepShopping,
     placeOrder,
     loadingShippingQuotes,
+    selectedShipping,
     selectedShippingId,
     setSelectedShippingId,
     processingOrder,

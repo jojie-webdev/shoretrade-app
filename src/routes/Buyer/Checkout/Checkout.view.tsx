@@ -13,6 +13,7 @@ import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
@@ -91,9 +92,10 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   const history = useHistory();
   const {
     groupedOrders,
-    total,
+    totalValue,
     keepShopping,
     placeOrder,
+    selectedShipping,
     loadingShippingQuotes,
     selectedShippingId,
     processingOrder,
@@ -101,6 +103,8 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   } = props;
 
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+
+  const total = toPrice(totalValue, false);
 
   const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
@@ -112,8 +116,9 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   if (showPaymentMethod) {
     return (
       <PaymentMethod
-        total={total}
+        totalValue={totalValue}
         orderError={orderError}
+        selectedShipping={selectedShipping}
         processingOrder={processingOrder}
         placeOrder={placeOrder}
         onBack={() => setShowPaymentMethod(false)}
