@@ -4,11 +4,14 @@ import {
   CardDetails,
   PaymentMethodPublicProps,
 } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.props';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import PaymentMethodView from './PaymentMethod.view';
 
 const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
+  const currentCompany = GetDefaultCompany();
+
   const [cardDetails, setCardDetails] = useReducer(
     createUpdateReducer<CardDetails>(),
     {
@@ -21,6 +24,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   );
 
   const generatedProps = {
+    balance: currentCompany?.credit || '',
     cardDetails,
     setCardDetails,
     ...props,

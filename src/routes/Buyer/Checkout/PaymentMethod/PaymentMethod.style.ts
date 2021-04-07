@@ -6,6 +6,10 @@ export const Container = styled.div`
     margin-bottom: 40px;
   }
 
+  .box-error-container {
+    margin-bottom: 24px;
+  }
+
   .payment-methods {
     margin-bottom: 40px;
 
@@ -45,7 +49,7 @@ export const Container = styled.div`
     }
 
     .pay-btn {
-      width: 210px;
+      min-width: 210px;
     }
   }
 
