@@ -1,6 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 
 import addAddress from './addAddress';
+import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
@@ -77,6 +78,7 @@ import verify from './verify';
 
 const sagas = [
   addAddress,
+  addCardAndPay,
   addCardToken,
   addLinkedAccount,
   addSellerLicense,

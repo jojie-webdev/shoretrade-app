@@ -9,8 +9,9 @@ export interface CardDetails {
 }
 
 export interface PaymentMethodPublicProps {
-  total: string;
+  totalValue: number;
   processingOrder: boolean;
+  selectedShipping: Record<string, any>;
   orderError: string;
   placeOrder: () => void;
   onBack: () => void;
@@ -20,4 +21,6 @@ export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {
   balance: string;
   cardDetails: CardDetails;
   setCardDetails: Dispatch<Partial<CardDetails>>;
+  isLoading: boolean;
+  onAddCard: (values: CardDetails) => void;
 }

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
@@ -18,7 +17,7 @@ import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
-import { Form, Formik, connect } from 'formik';
+import { Form, Formik, connect, FormikProps } from 'formik';
 import { Col, Row } from 'react-grid-system';
 import accountCredit from 'res/images/pm-account-credit.svg';
 import credit from 'res/images/pm-credit.svg';
@@ -149,8 +148,10 @@ const CardFields = (props: { formik?: any }) => {
 const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cardDetails, setCardDetails } = props;
+  const { cardDetails, setCardDetails, processingOrder, isLoading } = props;
   const theme = useTheme();
+
+  const formRef = useRef<FormikProps<CardDetails>>(null);
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'account' | 'card' | ''>(
@@ -238,8 +239,15 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
             </div>
 
             <Formik
+              innerRef={formRef}
               initialValues={cardDetails}
-              onSubmit={(values: CardDetails) => {}}
+              onSubmit={(values: CardDetails) => {
+                const finalValues = {
+                  ...values,
+                  isDefault: cardDetails.isDefault,
+                };
+                props.onAddCard(finalValues);
+              }}
               validate={isValid}
             >
               <Form>
@@ -253,7 +261,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 name="isDefault"
                 checked={cardDetails.isDefault}
                 onClick={() => {
-                  setCardDetails({ isDefault: !cardDetails.isDefault });
+                  setCardDetails({
+                    isDefault: !cardDetails.isDefault,
+                  });
                 }}
               />
             </div>
@@ -266,7 +276,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               className="back-btn"
               variant="outline"
               text="Back"
-              disabled={props.processingOrder}
+              disabled={processingOrder || isLoading}
               onClick={() => {
                 if (paymentMethod === 'card') {
                   setPaymentMethod('');
@@ -282,8 +292,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   ? 'Pay using credit card'
                   : 'Pay using this method'
               }
-              disabled={props.processingOrder}
-              loading={props.processingOrder}
+              disabled={processingOrder || isLoading}
+              loading={processingOrder || isLoading}
               onClick={() => setShowConfirmationModal(true)}
             />
           </div>
@@ -313,7 +323,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 align="right"
                 color="shade9"
               >
-                ${props.total}
+                {toPrice(props.totalValue)}
               </Typography>
             </div>
 
@@ -336,6 +346,12 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
             if (paymentMethod === 'account') {
               props.placeOrder();
+            }
+
+            if (paymentMethod === 'card') {
+              if (formRef.current) {
+                formRef.current.handleSubmit();
+              }
             }
           }}
           actionText="Proceed"
