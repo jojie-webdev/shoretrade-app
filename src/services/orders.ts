@@ -25,11 +25,9 @@ export const order = (data: OrderMeta, token: string) => {
 export const getSellerOrders = (data: GetSellerOrdersMeta, token: string) => {
   return axios({
     method: 'get',
-    url: `${ORDER_URL}/get-seller-orders-new?status=${
-      data.status || ''
-    }&limit=${data.limit || ''}&term=${data.term || ''}&dateFrom=${
-      data.dateFrom || ''
-    }&dateTo=${data.dateTo || ''}`,
+    url: `${ORDER_URL}/get-seller-orders-new?status=${data.status || ''}&term=${
+      data.term || ''
+    }&dateFrom=${data.dateFrom || ''}&dateTo=${data.dateTo || ''}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
