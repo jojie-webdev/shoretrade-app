@@ -6,7 +6,7 @@ export const formatOrderReferenceNumber = (n: number) => {
 export const parseOrderReferenceNumber = (value: string) => {
   // check first if valid referenceNumber other wise return
 
-  if (value.match(/(^[0-9#])/)) {
+  if (value.match(/^\d+$/)) {
     let out = '';
     value = value.replace(/\d+$/, (num) => {
       out = `${+num}`;
