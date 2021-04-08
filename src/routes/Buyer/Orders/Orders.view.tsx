@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
 import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
+import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import Complete from './Complete/Complete.view';
@@ -24,41 +25,31 @@ const COMPLETE = 'Complete';
 
 const OrdersView = (props: OrdersGeneratedProps) => {
   const [searchValue, setSearchValue] = useState('');
+  const [searchValueTable, updateSearchValueTable] = useReducer(
+    createUpdateReducer<Record<string, string>>(),
+    {
+      [PENDING]: '',
+      [IN_TRANSIT]: '',
+      [COMPLETE]: '',
+    }
+  );
+
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
 
   const { filters, updateFilters } = props;
 
-  let currentFilter = filters.completedOrdersFilter;
-  let updateFilter = updateFilters.updatePendingOrdersFilter;
-  let title;
-
-  const updateWatchers = (currentTab: string) => {
-    switch (currentTab) {
-      case PENDING:
-        title = 'awaiting shipment';
-        currentFilter = filters.pendingOrdersFilter;
-        updateFilter = updateFilters.updatePendingOrdersFilter;
-        break;
-      case IN_TRANSIT:
-        title = 'in transit';
-        currentFilter = filters.inTransitOrdersFilter;
-        updateFilter = updateFilters.updateInTransitOrdersFilter;
-        break;
-      case COMPLETE:
-        title = 'completed';
-        currentFilter = filters.completedOrdersFilter;
-        updateFilter = updateFilters.updateCompletedOrdersFilter;
-        break;
-      default:
-        currentFilter = filters.pendingOrdersFilter;
-        updateFilter = updateFilters.updatePendingOrdersFilter;
-        break;
-    }
-  };
-
-  updateWatchers(currentTab);
+  const currentFilter = {
+    [PENDING]: filters.pendingOrdersFilter,
+    [IN_TRANSIT]: filters.inTransitOrdersFilter,
+    [COMPLETE]: filters.completedOrdersFilter,
+  }[currentTab];
+  const updateFilter = {
+    [PENDING]: updateFilters.updatePendingOrdersFilter,
+    [IN_TRANSIT]: updateFilters.updateInTransitOrdersFilter,
+    [COMPLETE]: updateFilters.updateCompletedOrdersFilter,
+  }[currentTab];
 
   const handleSearchValue = (value: string) => {
     const parsedValue = parseOrderReferenceNumber(value);
@@ -86,8 +77,8 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   };
 
   const onKeyUp = (e: any) => {
-    //enter
-    if (e.charCode === 13 && searchValue.length > 2 && !loadingCurrentTab) {
+    // Allowing searching for shorter terms(n < 3) using enter key
+    if (e.key === 'Enter' && !loadingCurrentTab) {
       handleSearchValue(searchValue);
     }
   };
@@ -97,13 +88,17 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       clearTimeout(timer);
       setTimer(null);
     }
-    if (!loadingCurrentTab) {
+    if (!loadingCurrentTab && searchValue.length > 2) {
       const timerId = setTimeout(() => {
         handleSearchValue(searchValue);
       }, 800);
       setTimer(timerId);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    setSearchValue(searchValueTable[currentTab]);
+  }, [currentTab]);
 
   let content;
   if (loadingCurrentTab) {
@@ -132,8 +127,18 @@ const OrdersView = (props: OrdersGeneratedProps) => {
           <Search
             onKeyUp={onKeyUp}
             value={searchValue}
-            onChange={(val) => setSearchValue(val.currentTarget.value)}
-            resetValue={() => clearSearchValue()}
+            onChange={(val) => {
+              setSearchValue(val.currentTarget.value);
+              updateSearchValueTable({
+                [currentTab]: val.currentTarget.value,
+              });
+            }}
+            resetValue={() => {
+              clearSearchValue();
+              updateSearchValueTable({
+                [currentTab]: '',
+              });
+            }}
             placeholder="Search by order#, product type & seller..."
             rounded
           />
