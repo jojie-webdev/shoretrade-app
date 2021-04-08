@@ -84,7 +84,7 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   CATEGORIES: {
-    path: '/buyer/categories',
+    path: BUYER_ROUTES.CATEGORIES,
     children: <Categories />,
     title: 'Categories',
     icon: CategoryIcon,
@@ -97,14 +97,14 @@ const ROUTES: Routes = {
     icon: OrderIcon,
   },
   ACCOUNT: {
-    path: '/buyer/account',
+    path: BUYER_ROUTES.ACCOUNT,
     children: <Account />,
     title: 'Account',
     icon: AccountIcon,
     nested: true,
   },
   CHECKOUT: {
-    path: '/buyer/checkout',
+    path: BUYER_ROUTES.CHECKOUT,
     children: <Checkout />,
     title: 'Checkout',
     hideFromSidebar: true,
@@ -116,7 +116,7 @@ const ROUTES: Routes = {
     hideFromSidebar: true,
   },
   SELLER_DETAILS: {
-    path: '/buyer/seller-details/:id',
+    path: BUYER_ROUTES.SELLER_DETAILS(),
     children: <SellerDetails />,
     title: 'Seller Details',
     hideFromSidebar: true,

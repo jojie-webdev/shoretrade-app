@@ -1,4 +1,3 @@
-import Accordion from 'components/base/Accordion/Accordion.view';
 import styled from 'utils/styled';
 export const Container = styled.div`
   height: 100%;
@@ -41,10 +40,6 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
-  .box-error-container {
-    margin-bottom: 24px;
-  }
 
   .footer-separator {
     margin-top: 24px;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API } from 'consts';
 import omit from 'ramda/es/omit';
+import { AddCardAndPayRealPayload } from 'types/store/AddCardAndPayState';
 import { AddCardTokenRequestData } from 'types/store/AddCardTokenState';
 import { ChargeCardMeta } from 'types/store/ChargeCardState';
 import { DeleteCardMeta } from 'types/store/DeleteCardState';
@@ -67,5 +68,19 @@ export const chargeCard = (data: ChargeCardMeta, token: string) => {
       Authorization: `Bearer ${token}`,
     },
     data: omit(['companyId'], data),
+  });
+};
+
+export const addCardAndPay = (
+  data: AddCardAndPayRealPayload,
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${PAYMENT_URL}/add-card-and-pay`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: data,
   });
 };

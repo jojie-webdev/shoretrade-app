@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
-import Alert from 'components/base/Alert/Alert.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
-import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
@@ -14,6 +12,8 @@ import { BUYER_ROUTES } from 'consts';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
@@ -92,16 +92,19 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   const history = useHistory();
   const {
     groupedOrders,
-    total,
+    totalValue,
     keepShopping,
     placeOrder,
+    selectedShipping,
     loadingShippingQuotes,
     selectedShippingId,
     processingOrder,
     orderError,
   } = props;
 
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+
+  const total = toPrice(totalValue, false);
 
   const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
@@ -110,25 +113,21 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   );
   const disablePlaceOrder = totalSelectedShipping < totalCartGroups;
 
+  if (showPaymentMethod) {
+    return (
+      <PaymentMethod
+        totalValue={totalValue}
+        orderError={orderError}
+        selectedShipping={selectedShipping}
+        processingOrder={processingOrder}
+        placeOrder={placeOrder}
+        onBack={() => setShowPaymentMethod(false)}
+      />
+    );
+  }
+
   return (
     <Container>
-      <ConfirmationModal
-        title="Final Order Confirmation?"
-        description="Just confirming you want to place this order?"
-        isOpen={showConfirmationModal}
-        onClickClose={() => {
-          setShowConfirmationModal(false);
-        }}
-        cancel={() => {
-          history.push(BUYER_ROUTES.CATEGORIES);
-        }}
-        action={() => {
-          setShowConfirmationModal(false);
-          placeOrder();
-        }}
-        actionText="Proceed"
-        cancelText="Keep Shopping"
-      />
       {loadingShippingQuotes ? (
         <div className="center">
           <Loading label="Loading Shipping Quotes" color="shade6" />
@@ -155,17 +154,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
       {!isEmpty(groupedOrders) && !loadingShippingQuotes && (
         <Footer>
-          {orderError && (
-            <div className="box-error-container">
-              <Alert
-                fullWidth
-                alignText="center"
-                variant="error"
-                content={orderError}
-              />
-            </div>
-          )}
-
           <Typography color="shade6">Total</Typography>
           <Typography variant="title5" color="shade8" weight="900">
             ${total}
@@ -183,9 +171,8 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
               text="Place Order"
               disabled={disablePlaceOrder}
               onClick={() => {
-                setShowConfirmationModal(true);
+                setShowPaymentMethod(true);
               }}
-              loading={processingOrder}
             />
           </div>
         </Footer>
