@@ -79,7 +79,9 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               setTargetAddress(e.value);
             }
           }}
-          value={currentDefaultAddressId}
+          value={
+            addressOptions.length > 0 ? currentDefaultAddressId : undefined
+          }
         />
       </AddressContainer>
       <div className="search-result">
