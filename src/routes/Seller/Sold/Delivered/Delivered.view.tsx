@@ -3,9 +3,10 @@ import React, { Fragment, useState } from 'react';
 import Button from 'components/base/Button';
 import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import Pagination from 'components/module/Pagination';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
-import { Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
@@ -19,7 +20,7 @@ import {
 } from './Delivered.styles';
 
 const Delivered = (props: SoldGeneratedProps) => {
-  const { delivered, token } = props;
+  const { delivered, token, deliveredCount, updateFilters, filters } = props;
 
   const theme = useTheme();
   const history = useHistory();
@@ -36,6 +37,9 @@ const Delivered = (props: SoldGeneratedProps) => {
       });
     }
   };
+
+  const deliveredPagesTotal = Math.ceil(Number(deliveredCount) / 10);
+
   return (
     <>
       {delivered.map((group) => {
@@ -99,6 +103,21 @@ const Delivered = (props: SoldGeneratedProps) => {
           </ItemRow>
         );
       })}
+
+      {deliveredPagesTotal > 1 && (
+        <Row justify="center">
+          <Pagination
+            numPages={deliveredPagesTotal}
+            currentValue={Number(filters.deliveredFilters.page)}
+            onClickButton={(value) =>
+              updateFilters.updateDeliveredFilters({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        </Row>
+      )}
     </>
   );
 };

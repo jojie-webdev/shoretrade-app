@@ -95,6 +95,7 @@ const Sold = (): JSX.Element => {
     PendingToShipItemData[]
   >();
   const [initialLoading, setInitialLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
   // MARK: Methods
   const getOrdersPlaced = (filter?: {
@@ -203,7 +204,7 @@ const Sold = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    if (currentTab === 'To Ship') {
+    if (initialized && currentTab === 'To Ship') {
       getOrders.placed(toShipFilters);
     }
   }, [toShipFilters.page, toShipFilters.dateFrom]);
@@ -230,7 +231,13 @@ const Sold = (): JSX.Element => {
   useEffect(() => {
     if (currentTab === 'To Ship') {
       if (toShip.length === 0 && pendingToShip.length === 0) {
-        getOrders.placed();
+        getOrders.placed({
+          page: '1',
+          dateFrom: '',
+          dateTo: '',
+        });
+
+        setInitialized(true);
       }
     }
 
@@ -242,7 +249,11 @@ const Sold = (): JSX.Element => {
 
     if (currentTab === 'Delivered') {
       if (delivered.length === 0) {
-        getOrders.delivered();
+        getOrders.delivered({
+          page: '1',
+          dateFrom: '',
+          dateTo: '',
+        });
       }
     }
   }, [currentTab]);
