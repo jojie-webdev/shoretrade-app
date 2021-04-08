@@ -15,5 +15,5 @@ export interface DateRangePickerProps {
   labelVariant?: LabelVariant;
   format: Format;
   disabled?: boolean;
-  all?: boolean;
+  onClear: () => void;
 }
