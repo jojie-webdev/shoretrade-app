@@ -23,4 +23,5 @@ export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {
   setCardDetails: Dispatch<Partial<CardDetails>>;
   isLoading: boolean;
   onAddCard: (values: CardDetails) => void;
+  addCardAndPayError: string;
 }

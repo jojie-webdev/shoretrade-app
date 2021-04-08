@@ -30,6 +30,8 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     useSelector((state: Store) => state.addCardAndPay.pending) || false;
   const isLoadingAccountCredit =
     useSelector((state: Store) => state.order.pending) || false;
+  const addCardAndPayError =
+    useSelector((store: Store) => store.addCardAndPay.error) || '';
 
   const currentAddress = addresses.find((a) => a.default);
 
@@ -96,6 +98,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     setCardDetails,
     isLoading: pendingAddCard || isLoadingAccountCredit,
     onAddCard,
+    addCardAndPayError,
     ...props,
   };
   return <PaymentMethodView {...generatedProps} />;
