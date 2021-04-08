@@ -54,6 +54,14 @@ const SearchAddress = (): JSX.Element => {
     if (currentDefaultAddressId.length > 0 && targetAddress.length > 0) {
       setTargetAddress('');
     }
+
+    if (
+      currentDefaultAddressId.length > 0 &&
+      addressOptions.length > 0 &&
+      !addressOptions.map((a) => a.value).includes(currentDefaultAddressId)
+    ) {
+      setDefaultAddress(addressOptions[0].value);
+    }
   }, [currentDefaultAddressId]);
   //#endregion
 
