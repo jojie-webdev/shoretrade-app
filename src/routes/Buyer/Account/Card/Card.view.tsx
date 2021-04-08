@@ -68,12 +68,6 @@ const CardView = (props: CardGeneratedProps) => {
             <Mastercard height={32} />
           </CCImage>
           <CCImage>
-            <Zippay height={32} />
-          </CCImage>
-          <CCImage>
-            <Paypal height={32} />
-          </CCImage>
-          <CCImage>
             <Amex height={32} />
           </CCImage>
         </CCImageRow>

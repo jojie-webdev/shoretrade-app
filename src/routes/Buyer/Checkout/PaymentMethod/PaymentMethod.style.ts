@@ -43,11 +43,6 @@ export const Container = styled.div`
     display: flex;
     margin-bottom: 10px;
 
-    .back-btn {
-      width: 70px;
-      margin-right: 8px;
-    }
-
     .pay-btn {
       min-width: 210px;
     }
