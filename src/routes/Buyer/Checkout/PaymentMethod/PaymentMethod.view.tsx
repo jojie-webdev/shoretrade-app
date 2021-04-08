@@ -167,7 +167,17 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               { label: 'Orders', onClick: props.onBack },
               {
                 label: 'Payment Method',
+                ...(paymentMethod === 'card'
+                  ? { onClick: () => setPaymentMethod('') }
+                  : {}),
               },
+              ...(paymentMethod === 'card'
+                ? [
+                    {
+                      label: 'Credit Card',
+                    },
+                  ]
+                : []),
             ]}
           />
         </div>
@@ -179,6 +189,17 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               alignText="center"
               variant="error"
               content={props.orderError}
+            />
+          </div>
+        )}
+
+        {props.addCardAndPayError && (
+          <div className="box-error-container">
+            <Alert
+              fullWidth
+              alignText="center"
+              variant="error"
+              content={props.addCardAndPayError}
             />
           </div>
         )}
@@ -228,12 +249,6 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 <Mastercard height={32} />
               </CCImage>
               <CCImage>
-                <Zippay height={32} />
-              </CCImage>
-              <CCImage>
-                <Paypal height={32} />
-              </CCImage>
-              <CCImage>
                 <Amex height={32} />
               </CCImage>
             </div>
@@ -272,19 +287,6 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
         <div className="bottom-row">
           <div className="btns-container">
-            <Button
-              className="back-btn"
-              variant="outline"
-              text="Back"
-              disabled={processingOrder || isLoading}
-              onClick={() => {
-                if (paymentMethod === 'card') {
-                  setPaymentMethod('');
-                } else {
-                  props.onBack();
-                }
-              }}
-            />
             <Button
               className="pay-btn"
               text={
