@@ -94,7 +94,6 @@ const Sold = (): JSX.Element => {
   const [pendingToShipState, setPendingToShipState] = useState<
     PendingToShipItemData[]
   >();
-  const [initialLoading, setInitialLoading] = useState(true);
   const [initialized, setInitialized] = useState(false);
 
   // MARK: Methods
@@ -258,17 +257,11 @@ const Sold = (): JSX.Element => {
     }
   }, [currentTab]);
 
-  useEffect(() => {
-    if (!pendingGetOrders['To Ship']) {
-      setInitialLoading(false);
-    }
-  }, [pendingGetOrders]);
-
   const generatedProps: SoldGeneratedProps = {
     // generated props here
     currentTab,
     onChangeCurrentTab,
-    loadingCurrentTab: loadingCurrentTab && initialLoading,
+    loadingCurrentTab: loadingCurrentTab,
     // getOrders,
     toShip,
     pendingToShip,
