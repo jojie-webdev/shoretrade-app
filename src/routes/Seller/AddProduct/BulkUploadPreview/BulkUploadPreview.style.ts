@@ -75,3 +75,11 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const ErrorButton = styled.div`
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+`;

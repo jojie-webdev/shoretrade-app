@@ -1,9 +1,14 @@
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createBulkListingActions, uploadBulkActions } from 'store/actions';
+import {
+  createBulkListingActions,
+  modifyBulkUploadActions,
+  uploadBulkActions,
+} from 'store/actions';
 import { GetCompanyAddresses } from 'store/selectors/seller/addresses';
 import { Store } from 'types/store/Store';
+import { UploadBulkState } from 'types/store/UploadBulkState';
 
 import BulkUploadPreviewView from './BulkUploadPreview.view';
 
@@ -52,6 +57,20 @@ const BulkUploadPreview = (): JSX.Element => {
     );
   };
 
+  const onEdit = (
+    index: number,
+    step: number,
+    data: Partial<UploadBulkState>
+  ) => {
+    dispatch(
+      modifyBulkUploadActions.edit({
+        index,
+        currentStep: step,
+        ...data,
+      })
+    );
+  };
+
   const generatedProps = {
     data: uploadBulk.data?.data.editableListings || [],
     onUploadCSV,
@@ -60,6 +79,7 @@ const BulkUploadPreview = (): JSX.Element => {
     isSubmitting: createBulkListing?.pending || false,
     shippingAddressOptions,
     errorMessage: createBulkListing.error || '',
+    onEdit,
   };
   return <BulkUploadPreviewView {...generatedProps} />;
 };

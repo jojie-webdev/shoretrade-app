@@ -16,10 +16,26 @@ const createUpdateAction = () => {
   };
 };
 
+const createEditAction = () => {
+  const localNS = 'EDIT';
+  const localType = `${ns}/${localNS}`;
+  return {
+    edit: (
+      payload: Partial<UploadBulkState> & { index: number; currentStep: number }
+    ) => ({
+      type: localType,
+      payload,
+    }),
+    [localNS]: localType,
+  };
+};
+
 const updateAction = createUpdateAction();
+const editAction = createEditAction();
 
 const navigationActions = {
   ...updateAction,
+  ...editAction,
   ...clearAction,
 };
 

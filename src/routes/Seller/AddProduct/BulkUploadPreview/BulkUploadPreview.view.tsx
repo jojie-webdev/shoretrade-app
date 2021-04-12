@@ -16,7 +16,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { BulkUploadPreviewGeneratedProps } from './BulkUploadPreview.props';
-import { Container } from './BulkUploadPreview.style';
+import { Container, ErrorButton } from './BulkUploadPreview.style';
 import {
   getTotalWeight,
   showListingCount,
@@ -33,12 +33,23 @@ const COLUMNS = [
   'SHIPPING',
 ];
 
-const Error = () => {
-  return <InfoFilled width={20} height={20} />;
+const Error = (props: { onClick?: () => void }) => {
+  return (
+    <ErrorButton
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+    >
+      <InfoFilled width={20} height={20} />
+    </ErrorButton>
+  );
 };
 
 const BulkUploadPreviewView = ({
   data,
+  onEdit,
   ...props
 }: BulkUploadPreviewGeneratedProps) => {
   // const theme = useTheme();
@@ -133,7 +144,11 @@ const BulkUploadPreviewView = ({
                     {d.isUngraded || d.sizeFrom ? (
                       sizeToString(d.metric as string, d.sizeFrom, d.sizeTo)
                     ) : (
-                      <Error />
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 3, d);
+                        }}
+                      />
                     )}
                   </Typography>
                 </div>
