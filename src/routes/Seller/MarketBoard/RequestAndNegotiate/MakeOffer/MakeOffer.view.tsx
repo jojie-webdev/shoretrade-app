@@ -15,7 +15,7 @@ import { Col, Row } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
-import { Container, Error } from './MakeOffer.style';
+import { Container, Error, MetricContainer } from './MakeOffer.style';
 
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   // const theme = useTheme();
@@ -75,6 +75,21 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
       <Typography variant="overline" color="shade6" className="row-label">
         Size
       </Typography>
+      {props.buyerRequest.sizeFrom && (
+        <MetricContainer>
+          <Typography color="shade6" variant="overline">
+            Metric:
+          </Typography>
+          <Typography
+            style={{ marginLeft: '8px' }}
+            color="shade2"
+            variant="overline"
+          >
+            {props.buyerRequest.metric}
+          </Typography>
+        </MetricContainer>
+      )}
+
       <Row>
         {props.marketSizes.map((v) => (
           <Col key={v} md={12} lg={6} xl={4}>
@@ -92,11 +107,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Col md={12} lg={6} xl={4} style={{ marginBottom: 16 }}>
             <TextField
               label="From"
-              LeftComponent={
-                <Typography variant="label" weight="bold" color="shade6">
-                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
-                </Typography>
-              }
               placeholder={props.buyerRequest.sizeFrom.toString()}
               value={props.size.from}
               onChangeText={(v) =>
@@ -119,11 +129,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Col md={12} lg={6} xl={4} style={{ marginBottom: 16 }}>
             <TextField
               label={`To\n(Optional)`}
-              LeftComponent={
-                <Typography variant="label" weight="bold" color="shade6">
-                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
-                </Typography>
-              }
               placeholder={props.buyerRequest.sizeTo.toString()}
               value={props.size.to}
               onChangeText={(v) => {

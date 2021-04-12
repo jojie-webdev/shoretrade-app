@@ -100,7 +100,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           checked={isChecked}
         />
         <Typography className="label" variant="label" color="noshade">
-          Confirm the availability of the product
+          I confirm the availability of the product
         </Typography>
       </div>
 
