@@ -21,6 +21,7 @@ import {
   Container,
   DateTypography,
   AllTextTypography,
+  StyledButton,
 } from './DateRangePicker.style';
 
 const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
@@ -33,6 +34,7 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
     labelVariant,
     endDate,
     startDate,
+    onClear,
   } = props;
 
   const theme = useTheme();
@@ -81,6 +83,8 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
     return <div className="calendar-day-content">{day.format('D')}</div>;
   };
 
+  const clearId = 'date-range-clear-btn';
+
   return (
     <Container>
       <Typography variant={labelVariant || 'overline'} color="shade6">
@@ -118,35 +122,56 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
           </div>
           {downArrowIcon()}
         </Dropdown>
-
         {show && (
-          <DayPickerRangeController
-            onDatesChange={onDatesChange}
-            onFocusChange={onFocusChange}
-            focusedInput={focusedInput}
-            startDate={startDate}
-            endDate={endDate}
-            hideKeyboardShortcutsPanel
-            renderDayContents={handleWeekDays}
-            renderMonthElement={handleMonthLabel}
-            horizontalMonthPadding={0}
-            numberOfMonths={1}
-            noBorder
-            enableOutsideDays
-            daySize={37}
-            // disabled={disabled}
-            navNext={
-              <NavButton direction="right">
-                <ArrowRight fill={theme.grey.shade7} height={12} width={12} />
-              </NavButton>
-            }
-            navPrev={
-              <NavButton direction="left">
-                <ArrowLeft fill={theme.grey.shade7} height={12} width={12} />
-              </NavButton>
-            }
-            onOutsideClick={() => setShow(false)}
-          />
+          <div>
+            <DayPickerRangeController
+              onDatesChange={onDatesChange}
+              onFocusChange={onFocusChange}
+              focusedInput={focusedInput}
+              startDate={startDate}
+              endDate={endDate}
+              hideKeyboardShortcutsPanel
+              renderDayContents={handleWeekDays}
+              renderMonthElement={handleMonthLabel}
+              horizontalMonthPadding={0}
+              numberOfMonths={1}
+              noBorder
+              enableOutsideDays
+              daySize={37}
+              // disabled={disabled}
+              navNext={
+                <NavButton direction="right">
+                  <ArrowRight fill={theme.grey.shade7} height={12} width={12} />
+                </NavButton>
+              }
+              navPrev={
+                <NavButton direction="left">
+                  <ArrowLeft fill={theme.grey.shade7} height={12} width={12} />
+                </NavButton>
+              }
+              onOutsideClick={(e: any) => {
+                if (
+                  e.target?.id === clearId ||
+                  e.composedPath().indexOf(document.getElementById(clearId)) >=
+                    0
+                ) {
+                  onClear();
+                }
+                setShow(false);
+              }}
+            />
+            {startDate !== null && endDate !== null && (
+              <StyledButton
+                id={clearId}
+                variant="primary"
+                text="Clear"
+                size="sm"
+                onClick={() => {
+                  onClear();
+                }}
+              />
+            )}
+          </div>
         )}
       </div>
     </Container>

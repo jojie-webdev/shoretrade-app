@@ -149,6 +149,13 @@ const OrdersView = (props: OrdersGeneratedProps) => {
             endDate={currentFilter.dateTo}
             onDatesChange={(val) => fromOnDatesChange(val)}
             format="D MMM YYYY"
+            onClear={() => {
+              updateFilter({
+                ...currentFilter,
+                dateFrom: null,
+                dateTo: null,
+              });
+            }}
           />
         </DateRangeContainer>
       </SearchFilterRow>
