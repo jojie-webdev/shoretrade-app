@@ -12,11 +12,10 @@ import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerD
 import moment from 'moment';
 import { pathOr } from 'ramda';
 import { Col, Row } from 'react-grid-system';
-import { MetricContainer } from 'routes/Seller/MarketBoard/RequestAndNegotiate/RequestAndNegotiate.style';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
-import { Container, Error } from './MakeOffer.style';
+import { Container, Error, MetricContainer } from './MakeOffer.style';
 
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   // const theme = useTheme();
