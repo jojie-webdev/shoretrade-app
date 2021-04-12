@@ -10,11 +10,9 @@ import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
-import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -43,17 +41,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     return '';
   };
 
-  const getSizeBadge = (buyerRequest: GetAllMarketRequestResponseItem) => {
-    if (!isEmpty(buyerRequest.sizeOptions)) {
-      return buyerRequest.sizeOptions;
-    }
-
-    return (
-      `${buyerRequest.sizeFrom}${
-        buyerRequest.sizeTo !== null ? ` - ${buyerRequest.sizeTo}` : ''
-      }` || 'Ungraded'
-    );
-  };
   return (
     <Container>
       {props.userPending && (
