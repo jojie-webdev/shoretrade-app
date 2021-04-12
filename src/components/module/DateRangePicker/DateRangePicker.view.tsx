@@ -150,7 +150,6 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
                 </NavButton>
               }
               onOutsideClick={(e: any) => {
-                console.log(e);
                 if (
                   e.target?.id === clearId ||
                   e.composedPath().indexOf(document.getElementById(clearId)) >=
