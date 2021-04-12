@@ -6,7 +6,7 @@ import { AsyncAction } from 'types/Action';
 import { OrderMeta, OrderPayload } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
 
-import { orderActions, cartActions } from '../actions';
+import { orderActions, cartActions, getUserActions } from '../actions';
 
 function* orderRequest(action: AsyncAction<OrderMeta, OrderPayload>) {
   const state: Store = yield select();
@@ -25,8 +25,9 @@ function* orderRequest(action: AsyncAction<OrderMeta, OrderPayload>) {
 }
 
 function* orderSuccess(action: AsyncAction<OrderMeta, OrderPayload>) {
-  yield put(cartActions.clear());
   yield put(push(BUYER_ROUTES.ORDERS));
+  yield put(cartActions.clear());
+  yield put(getUserActions.request());
 }
 
 function* orderWatcher() {

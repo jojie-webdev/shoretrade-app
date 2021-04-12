@@ -1,21 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
 import { push } from 'connected-react-router';
-import {
-  BUYER_ACCOUNT_ROUTES,
-  SELLER_ACCOUNT_ROUTES,
-  SELLER_ROUTES,
-} from 'consts';
+import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ROUTES } from 'routes/index.routes';
-import { getCustomFormData, getListingFormData } from 'services/listing';
 import {
   authActions,
   cartActions,
   editableListingActions,
 } from 'store/actions';
-import { GetUserPayload } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 

@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
@@ -142,4 +143,11 @@ export const DateTypography = styled(Typography)`
 
 export const AllTextTypography = styled(Typography)`
   margin-left: 0.2rem;
+`;
+
+export const StyledButton = styled(Button)`
+  position: relative;
+  z-index: 2;
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  top: 300px;
 `;

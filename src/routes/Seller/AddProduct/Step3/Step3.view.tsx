@@ -63,59 +63,62 @@ function Step3({
     unnest(specifications.map((s) => stateRules[s.label.toUpperCase()] || []))
   );
 
-  let isComplete = specificationIds.length === stateOptions.length;
+  const isComplete = specificationIds.length === stateOptions.length;
 
-  const liveIsSelected =
-    specifications.filter((specs) => specs.label === 'Live').length > 0;
+
+  const computeGroup = (
+    group: {
+      label: string;
+      value: string;
+      groupOrder: number;
+    }[]
+  ) => {
+    const result = group.filter((i) => {
+      if (typeName.toLowerCase().includes('meat')) {
+        return i.label !== 'Live';
+      }
+      if (disabledOptions.includes(i.label.toUpperCase())) {
+        return;
+      }
+      return i;
+    });
+
+    // return to render to let the user se;ect
+    if (result.length > 1) {
+      return result;
+    } else if (result.length === 1) {
+      // add in the id in the selected specs if not already existing
+      if (!specificationIds.includes(result[0].value)) {
+        setSpecifications([
+          ...specifications.slice(0, result[0].groupOrder - 1),
+          result[0],
+        ]);
+      }
+    }
+    return [];
+  };
+
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
         <div key={group[0].groupOrder} className="interaction-group">
-          {group
-            .filter((i) => {
-              if (typeName.toLowerCase().includes('meat')) {
-                return i.label !== 'Live';
-              }
-
-              return i;
-            })
-            .map((item) => {
-              if (liveIsSelected && item.label === 'Raw') {
-                isComplete = true;
-                return;
-              }
-              if (!disabledOptions.includes(item.label.toUpperCase())) {
-                return (
-                  <div key={item.value} className="interaction-container">
-                    <Interaction
-                      type="radio"
-                      value={item.label}
-                      pressed={specificationIds.includes(item.value)}
-                      onClick={() => {
-                        if (item.label === 'Live') {
-                          const filteredRaw = stateOptions.map((group) =>
-                            group.filter((item) => item.label === 'Raw')
-                          );
-
-                          const a = pathOr(undefined, ['0', '0'], filteredRaw);
-
-                          setSpecifications([
-                            ...specifications.slice(0, item.groupOrder - 1),
-                            item,
-                            ...(a ? [a] : []),
-                          ]);
-                        } else {
-                          setSpecifications([
-                            ...specifications.slice(0, item.groupOrder - 1),
-                            item,
-                          ]);
-                        }
-                      }}
-                    />
-                  </div>
-                );
-              }
-            })}
+          {computeGroup(group).map((item) => {
+            return (
+              <div key={item.value} className="interaction-container">
+                <Interaction
+                  type="radio"
+                  value={item.label}
+                  pressed={specificationIds.includes(item.value)}
+                  onClick={() => {
+                    setSpecifications([
+                      ...specifications.slice(0, item.groupOrder - 1),
+                      item,
+                    ]);
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
       ))}
 
