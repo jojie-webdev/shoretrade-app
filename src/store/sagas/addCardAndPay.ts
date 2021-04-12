@@ -15,6 +15,7 @@ import {
   getPaymentMethodsActions,
   addCardAndPayActions,
   cartActions,
+  getUserActions,
 } from '../actions';
 
 function* addCardAndPayRequest(
@@ -53,12 +54,14 @@ function* addCardAndPayRequest(
 function* addCardAndPaySuccess(
   action: AsyncAction<AddCardAndPayMeta, AddCardAndPayPayload>
 ) {
+  yield put(push(BUYER_ROUTES.ORDERS));
+  yield put(cartActions.clear());
+  yield put(getUserActions.request());
+
   const companyId = pathOr('', ['payload', 'data', 'companyId'], action);
   if (companyId) {
     yield put(getPaymentMethodsActions.request({ companyId }));
   }
-  yield put(cartActions.clear());
-  yield put(push(BUYER_ROUTES.ORDERS));
 }
 
 function* addCardAndPayWatcher() {
