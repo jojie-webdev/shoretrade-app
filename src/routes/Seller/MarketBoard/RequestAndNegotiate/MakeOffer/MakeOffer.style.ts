@@ -52,3 +52,10 @@ export const Container = styled.div`
 export const Error = styled(Typography)`
   margin-top: 4px;
 `;
+
+export const MetricContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 16px;
+`;
