@@ -24,6 +24,22 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
 
+export const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
+  user.employees
+    ? user.employees.map((employee) => ({
+        label:
+          employee.relationship === 'ADMIN'
+            ? user.company
+            : `${user.company} - ${employee.firstName} ${employee.lastName}`,
+        value: employee.employeeId,
+        company: user.company,
+      }))
+    : {
+        label: user.company,
+        value: user.ownerEmployeeId,
+        company: user.company,
+      };
+
 const AddProduct = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -49,22 +65,6 @@ const AddProduct = (): JSX.Element => {
       );
     }
   }
-
-  const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
-    user.employees
-      ? user.employees.map((employee) => ({
-          label:
-            employee.relationship === 'ADMIN'
-              ? user.company
-              : `${user.company} - ${employee.firstName} ${employee.lastName}`,
-          value: employee.employeeId,
-          company: user.company,
-        }))
-      : {
-          label: user.company,
-          value: user.ownerEmployeeId,
-          company: user.company,
-        };
 
   const getUser = useSelector((state: Store) => state.getUser);
   const accounts =
