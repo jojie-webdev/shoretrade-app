@@ -341,8 +341,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   {totalOffers < 1 || sellerOffers === undefined ? (
                     <EmptyStateView
                       title="There are currently no offers for this request."
-                      // circleHeight={280}
-                      // circleWidth={280}
                       Svg={Crab}
                       height={240}
                       width={249}
