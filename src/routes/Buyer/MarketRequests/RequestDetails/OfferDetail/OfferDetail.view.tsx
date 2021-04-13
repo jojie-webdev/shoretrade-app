@@ -184,7 +184,7 @@ const OfferDetailView = (props: any) => {
                 </TypographyView>
               )}
             </div>
-            <div className="computation-item-container">
+            <div className="computation-item-container border-bottom">
               <TypographyView variant="label" color="shade9">
                 Total Value
               </TypographyView>
