@@ -118,7 +118,7 @@ const Step1 = ({
             </Typography>
           </div>
 
-          <div className="computation-item-container">
+          <div className="computation-item-container border-bottom">
             <Typography variant="label" color="noshade">
               Total Value
             </Typography>
@@ -128,7 +128,7 @@ const Step1 = ({
           </div>
 
           {isNegoOpen && (
-            <div className="computation-item-container">
+            <div className="computation-item-container border-bottom">
               <Typography variant="label" color="noshade">
                 The buyer is reviewing your offer.
               </Typography>
@@ -293,7 +293,7 @@ const Step1 = ({
               </Typography>
             )}
           </div>
-          <div className="computation-item-container">
+          <div className="computation-item-container border-bottom">
             <Typography variant="label" color="noshade">
               Total Value
             </Typography>
