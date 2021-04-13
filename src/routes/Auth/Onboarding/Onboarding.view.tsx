@@ -1,20 +1,18 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { ShoretradeLogo, ArrowRight, Logo } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import EmptyState from 'components/module/EmptyState';
 import Pagination from 'components/module/Pagination';
-import { Row } from 'react-grid-system';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { OnboardingGeneratedProps } from './Onboarding.props';
 import {
   Container,
   SvgContainer,
-  LogoContainer,
-  SkipButton,
   TextContainer,
   Description,
   ButtonContainer,
@@ -30,46 +28,60 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
     onClickSkip,
   } = props;
   const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
+
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
-    <AuthContainer logoContainerMarginBottomHeight={40}>
-      <Container>
-        <SvgContainer>
-          <EmptyState
-            // circleHeight={280}
-            // circleWidth={280}
-            Svg={currentData.Svg}
-            height={currentData.height}
-            width={currentData.width}
-            fluid
-          />
+    <AuthContainer
+      logoContainerMarginBottomHeight={20}
+      onSkipAction={onClickSkip}
+      mobileFooter={
+        <>
           <Pagination
             variant="dots"
             currentValue={currentPage + 1}
             numPages={4}
             spacing={8}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onClickButton={() => {}}
           />
+          <Button text="Next" onClick={onClickNext} />
+        </>
+      }
+    >
+      <Container>
+        <SvgContainer>
+          <EmptyState
+            Svg={currentData.Svg}
+            height={currentData.height}
+            width={currentData.width}
+            fluid
+          />
+          {!isSmallScreen && (
+            <Pagination
+              variant="dots"
+              currentValue={currentPage + 1}
+              numPages={4}
+              spacing={8}
+            />
+          )}
         </SvgContainer>
 
         <TextContainer>
           <Typography
             variant="title4"
-            color={theme.appType === 'seller' ? 'noshade' : 'shade8'}
+            color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
           >
             {currentData.title}
           </Typography>
-          <Description color={theme.appType === 'seller' ? 'shade5' : 'shade6'}>
-            {currentData.description}
-          </Description>
+          <Description color="shade6">{currentData.description}</Description>
         </TextContainer>
-        <ButtonContainer>
-          {currentPage > 0 ? (
-            <PrevButton text="Prev" variant="outline" onClick={onClickPrev} />
-          ) : null}
-          <Button text="Next" onClick={onClickNext} />
-        </ButtonContainer>
+        {!isSmallScreen && (
+          <ButtonContainer>
+            {currentPage > 0 ? (
+              <PrevButton text="Prev" variant="outline" onClick={onClickPrev} />
+            ) : null}
+            <Button text="Next" onClick={onClickNext} />
+          </ButtonContainer>
+        )}
       </Container>
     </AuthContainer>
   );

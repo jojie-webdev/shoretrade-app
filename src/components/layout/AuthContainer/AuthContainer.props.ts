@@ -1,8 +1,9 @@
 export interface AuthContainerProps {
   children: React.ReactNode;
-  onCloseAction?: () => void;
   title?: string;
+  onCloseAction?: () => void;
   onBackAction?: () => void;
+  onSkipAction?: () => void;
   currentStep?: number;
   totalSteps?: number;
   containerBackground?: string;
@@ -10,4 +11,5 @@ export interface AuthContainerProps {
   noLogo?: boolean;
   logoContainerMarginBottomHeight?: number;
   isRegister?: boolean;
+  mobileFooter?: React.ReactNode;
 }

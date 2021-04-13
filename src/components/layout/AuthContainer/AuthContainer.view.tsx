@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Close, Logo } from 'components/base/SVG';
+import Button from 'components/base/Button';
+import { ArrowRight, Close, Logo } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -14,15 +14,14 @@ import {
   Content,
   Wrapper,
   HeaderContainer,
-  HeaderContent,
   BackIcon,
   CloseButtonContainer,
-  Title,
   HeaderSpacer,
   ProgressIndicator,
   LogoContainer,
   ProgressContainer,
   BackgroundContainer,
+  MobileFooter,
 } from './AuthContainer.style';
 
 const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
@@ -30,15 +29,17 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
   const {
     children,
-    onCloseAction,
     title = '',
+    onCloseAction,
     onBackAction,
+    onSkipAction,
     currentStep,
     totalSteps,
     containerBackground,
     minHeight,
     noLogo,
     isRegister,
+    mobileFooter,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -70,8 +71,20 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
               }
             >
               <Logo fill={!isSeller ? 'black' : 'white'} />
+
+              {onSkipAction && (
+                <Button
+                  text="Skip"
+                  variant="unselected"
+                  size="sm"
+                  icon={<ArrowRight fill={theme.brand.primary} />}
+                  style={{ maxHeight: 32 }}
+                  onClick={() => onSkipAction()}
+                />
+              )}
             </LogoContainer>
           )}
+
           {!isSmallScreen && onCloseAction && (
             <CloseButtonContainer>
               <Touchable circle width={'100%'} onPress={() => onCloseAction()}>
@@ -108,6 +121,9 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
           {children}
         </Content>
       </Wrapper>
+      {mobileFooter && isSmallScreen && (
+        <MobileFooter>{mobileFooter}</MobileFooter>
+      )}
     </Container>
   );
 };

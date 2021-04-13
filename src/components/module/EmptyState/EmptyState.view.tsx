@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { Crab } from 'components/base/SVG';
 import { useTheme } from 'utils/Theme';
 
 import { EmptyStateProps } from './EmptyState.props';
@@ -24,7 +23,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
   const svgColor =
     theme.appType === 'buyer' ? theme.grey.shade7 : theme.grey.shade6;
   const circleColor =
-    theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9;
+    theme.appType === 'buyer' ? theme.grey.shade2 : theme.grey.shade9;
 
   return (
     <Container fluid={fluid}>
