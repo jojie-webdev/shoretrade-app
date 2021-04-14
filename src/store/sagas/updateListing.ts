@@ -45,6 +45,7 @@ export const transform = (
   })),
   ends: data?.ends ? moment(data.ends).toISOString() : null,
   addressId: data?.addressId || '',
+  minOrder: data.minOrder || 0,
 });
 
 function* updateListingRequest(
