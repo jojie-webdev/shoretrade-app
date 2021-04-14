@@ -19,9 +19,7 @@ function* confirmWeightRequest(
   if (state.auth.token) {
     try {
       const { data } = yield call(confirmWeight, action.meta, state.auth.token);
-      yield put(
-        confirmWeightActions.success({ ...data, orderId: action.meta.orderId })
-      );
+      yield put(confirmWeightActions.success({ ...data, meta: action.meta }));
     } catch (e) {
       yield put(confirmWeightActions.failed(e.message));
     }
@@ -35,10 +33,7 @@ function* confirmWeightSuccess(
 ) {
   // yield put(getSellerOrdersPlacedActions.request());
   yield put(
-    getSellerOrdersPlacedActions.updateOptimistically(
-      action.payload.orderId,
-      action.payload.orderLineItemId
-    )
+    getSellerOrdersPlacedActions.updateOptimistically(action.payload.meta)
   );
 }
 

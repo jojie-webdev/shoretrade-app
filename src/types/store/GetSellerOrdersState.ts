@@ -67,7 +67,7 @@ export type GetSellerOrdersResponseItem = {
       price: number;
       listingBoxes: {
         id: string;
-        count: number;
+        count: number | null;
         weight: number;
         quantity: number;
       }[];
