@@ -21,7 +21,9 @@ const MobileHeader = (props: MobileHeaderPublicProps): JSX.Element => {
   const showBack = () => {
     if (
       includes(SELLER_ROUTES.FORGOT_PASSWORD) ||
-      includes(BUYER_ROUTES.FORGOT_PASSWORD)
+      includes(BUYER_ROUTES.FORGOT_PASSWORD) ||
+      includes(SELLER_ROUTES.VERIFY2FA) ||
+      includes(BUYER_ROUTES.VERIFY2FA)
     )
       return true;
 
@@ -31,6 +33,8 @@ const MobileHeader = (props: MobileHeaderPublicProps): JSX.Element => {
   const getTitle = () => {
     if (props.titleOverride) return props.titleOverride;
     if (includes(MAIN_ROUTES.FORGOT_PASSWORD)) return 'Forgot Password?';
+    if (includes(SELLER_ROUTES.VERIFY2FA) || includes(BUYER_ROUTES.VERIFY2FA))
+      return '2-Step Verification';
 
     return '';
   };
