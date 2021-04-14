@@ -13,6 +13,5 @@ export type ConfirmWeightMeta = {
 };
 
 export type ConfirmWeightPayload = GenericResponse & {
-  orderId: string;
-  orderLineItemId: string;
+  meta: Partial<ConfirmWeightMeta>;
 };
