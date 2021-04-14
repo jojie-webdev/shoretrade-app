@@ -29,6 +29,7 @@ const MobileHeader = (props: MobileHeaderPublicProps): JSX.Element => {
   };
 
   const getTitle = () => {
+    if (props.titleOverride) return props.titleOverride;
     if (includes(MAIN_ROUTES.FORGOT_PASSWORD)) return 'Forgot Password?';
 
     return '';

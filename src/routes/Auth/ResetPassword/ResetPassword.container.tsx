@@ -26,9 +26,9 @@ const ResetPassword = (): JSX.Element => {
     email: string;
   };
   const { code } = useParams<{ code: string }>();
-  if (!(email && code)) {
-    history.push(MAIN_ROUTES.LANDING);
-  }
+  // if (!(email && code)) {
+  //   history.push(MAIN_ROUTES.LANDING);
+  // }
 
   const pending =
     useSelector((state: Store) => state.resetPassword.pending) || false;
