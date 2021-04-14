@@ -1,13 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
-import { Check } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
-import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import { Formik, Form } from 'formik';
-import theme, { useTheme } from 'utils/Theme';
 
 import { ResetPasswordGeneratedProps } from './ResetPassword.props';
 import {
@@ -22,9 +18,6 @@ import {
 import { validate } from './ResetPassword.validation';
 
 const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
-  const theme = useTheme();
-  const isSeller = true;
-  // const isSeller = theme.appType === 'seller';
   const { savePassword, pending, isError } = props;
 
   const formikProps = {
@@ -42,7 +35,7 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
         <ContentWrapper>
           <Content>
             <TitleContainer>
-              <Title variant="title5" color={isSeller ? 'noshade' : 'shade8'}>
+              <Title variant="title5" color="shade8">
                 Reset Password
               </Title>
             </TitleContainer>

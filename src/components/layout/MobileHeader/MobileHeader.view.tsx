@@ -7,7 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { MobileHeaderGeneratedProps } from './MobileHeader.props';
-import { Container, Title } from './MobileHeader.style';
+import { Container, Content, Title } from './MobileHeader.style';
 
 //TODO: Normal Header
 const MobileHeaderView = (props: MobileHeaderGeneratedProps): JSX.Element => {
@@ -21,20 +21,21 @@ const MobileHeaderView = (props: MobileHeaderGeneratedProps): JSX.Element => {
   return (
     <>
       <Container>
-        {showBack && (
-          <>
+        <>
+          {showBack() && (
             <div onClick={onBack}>
               <ArrowLeft fill={theme.grey.noshade} height={14} width={14} />
             </div>
-            <Title>
-              <Typography weight="bold" color="noshade" align="center">
-                {props.title}
-              </Typography>
-            </Title>
-          </>
-        )}
+          )}
+          <Title>
+            <Typography weight="bold" color="noshade" align="center">
+              {props.getTitle()}
+            </Typography>
+          </Title>
+        </>
       </Container>
-      {children}
+
+      <Content>{children}</Content>
     </>
   );
 };

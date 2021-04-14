@@ -7,6 +7,6 @@ import Container from '../../components/Container';
 
 storiesOf('layout/MobileHeader', module).add('Summary', () => (
   <Container>
-    <MobileHeader showBack={true} title="Header Title" />
+    <MobileHeader />
   </Container>
 ));
