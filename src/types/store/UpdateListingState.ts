@@ -22,6 +22,7 @@ export type UpdateListingRequestData = {
   }[];
   ends: string | null; // date iso string
   addressId: string;
+  minOrder: number;
 };
 
 export type UpdateListingPayload = GenericResponse;
