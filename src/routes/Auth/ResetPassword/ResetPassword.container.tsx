@@ -1,17 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useState } from 'react';
 
 import { MAIN_ROUTES } from 'consts';
-import moment from 'moment';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import {
-  loginActions,
-  verifyActions,
-  resendVerificationActions,
-  forgotPasswordActions,
-  resetPasswordActions,
-} from 'store/actions';
+import { resetPasswordActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import { ResetPasswordForm } from './ResetPassword.props';
@@ -26,9 +19,9 @@ const ResetPassword = (): JSX.Element => {
     email: string;
   };
   const { code } = useParams<{ code: string }>();
-  // if (!(email && code)) {
-  //   history.push(MAIN_ROUTES.LANDING);
-  // }
+  if (!(email && code)) {
+    history.push(MAIN_ROUTES.LANDING);
+  }
 
   const pending =
     useSelector((state: Store) => state.resetPassword.pending) || false;

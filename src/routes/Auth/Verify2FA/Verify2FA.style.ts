@@ -28,7 +28,6 @@ export const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  /* margin-top: 347px; */
   position: absolute;
   bottom: 0;
   left: 5%;
@@ -120,9 +119,5 @@ export const FooterIcon = styled(Help)`
 `;
 
 export const FooterLink = styled(Typography)`
-border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
-  /* border-bottom: 1px solid
-    ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.shade6 : theme.brand.primary}; */
-  
+  border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
 `;

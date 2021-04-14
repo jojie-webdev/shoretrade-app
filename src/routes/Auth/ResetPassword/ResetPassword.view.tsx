@@ -32,6 +32,23 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
     onSubmit: savePassword,
   };
 
+  const AlertView = () => {
+    return (
+      <>
+        {isError && (
+          <Alert
+            content={'Updating Password Failed! Please try again.'}
+            variant="error"
+            fullWidth
+            style={{
+              marginTop: 16,
+            }}
+          />
+        )}
+      </>
+    );
+  };
+
   return isSmallScreen ? (
     <MobileHeader titleOverride={'Reset Password?'}>
       <MobileContainer>
@@ -52,18 +69,10 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
                 takeFullWidth
               />
             </ResetPasswordButtonContainer>
-            {isError && (
-              <Alert
-                content={'Updating Password Failed! Please try again.'}
-                variant="error"
-                fullWidth
-                style={{
-                  marginTop: 16,
-                }}
-              />
-            )}
           </Form>
         </Formik>
+
+        <AlertView />
       </MobileContainer>
     </MobileHeader>
   ) : (
@@ -90,18 +99,9 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
               variant={'primary'}
             />
           </ResetPasswordButtonContainer>
-          {isError && (
-            <Alert
-              content={'Updating Password Failed! Please try again.'}
-              variant="error"
-              fullWidth
-              style={{
-                marginTop: 16,
-              }}
-            />
-          )}
         </Form>
       </Formik>
+      <AlertView />
     </AuthContainer>
   );
 };
