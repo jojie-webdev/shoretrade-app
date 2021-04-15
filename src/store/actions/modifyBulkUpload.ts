@@ -8,7 +8,7 @@ const createUpdateAction = () => {
   const localNS = 'UPDATE';
   const localType = `${ns}/${localNS}`;
   return {
-    update: (payload: Partial<UploadBulkState> & { index: number }) => ({
+    update: (payload: Partial<UploadBulkState>) => ({
       type: localType,
       payload,
     }),
@@ -30,13 +30,26 @@ const createEditAction = () => {
   };
 };
 
+const createClearSelectionAction = () => {
+  const localNS = 'CLEAR_SELECTION';
+  const localType = `${ns}/${localNS}`;
+  return {
+    clearSelection: () => ({
+      type: localType,
+      payload: {},
+    }),
+    [localNS]: localType,
+  };
+};
+
 const updateAction = createUpdateAction();
 const editAction = createEditAction();
-
+const clearSelectionAction = createClearSelectionAction();
 const navigationActions = {
   ...updateAction,
   ...editAction,
   ...clearAction,
+  ...clearSelectionAction,
 };
 
 export default navigationActions;

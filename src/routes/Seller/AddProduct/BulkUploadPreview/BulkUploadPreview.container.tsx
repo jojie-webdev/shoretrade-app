@@ -17,6 +17,15 @@ const BulkUploadPreview = (): JSX.Element => {
 
   const getUser = useSelector((state: Store) => state.getUser);
   const uploadBulk = useSelector((store: Store) => store.uploadBulk);
+
+  const modifiedData = useSelector(
+    (store: Store) => store.modifyBulkUpload.modifiedData
+  );
+  const uploadBulkData: UploadBulkState[] = uploadBulk.data?.data.editableListings || [];
+  const actualData = uploadBulkData.map((a, i) => ({
+    ...a,
+    ...modifiedData[i],
+  }));
   const createBulkListing = useSelector(
     (store: Store) => store.createBulkListing
   );
@@ -51,7 +60,7 @@ const BulkUploadPreview = (): JSX.Element => {
   const onSubmit = (shippingAddress: string) => {
     dispatch(
       createBulkListingActions.request({
-        data: uploadBulk.data?.data.editableListings || [],
+        data: actualData,
         shippingAddress,
       })
     );
@@ -72,7 +81,7 @@ const BulkUploadPreview = (): JSX.Element => {
   };
 
   const generatedProps = {
-    data: uploadBulk.data?.data.editableListings || [],
+    data: actualData,
     onUploadCSV,
     onSubmit,
     isUploadingCSV: uploadBulk?.pending || false,

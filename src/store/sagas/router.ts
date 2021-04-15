@@ -1,4 +1,4 @@
-import { SELLER_ROUTES } from 'consts';
+import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
 import { put, takeLatest, select } from 'redux-saga/effects';
 import { Action } from 'types/Action';
 import { Store } from 'types/store/Store';
@@ -21,7 +21,11 @@ function* routerRequest(
   const { isFirstRendering, location } = action.payload;
   const { pathname } = location;
 
-  if (!isFirstRendering && pathname === SELLER_ROUTES.ADD_PRODUCT) {
+  if (
+    !isFirstRendering &&
+    (pathname === SELLER_ROUTES.ADD_PRODUCT ||
+      pathname === ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW)
+  ) {
     yield put(getCoopUsersActions.request());
   }
 }

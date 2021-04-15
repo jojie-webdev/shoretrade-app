@@ -14,6 +14,7 @@ import {
   createCustomListingActions,
   createListingActions,
   getCustomFormDataActions,
+  modifyBulkUploadActions,
 } from 'store/actions';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
@@ -166,6 +167,10 @@ const AddProduct = (): JSX.Element => {
 
   const isCustomType = editableListing?.isCustomType || false;
 
+  const isBulkUpload = useSelector(
+    (state: Store) => state.modifyBulkUpload.currentData.index !== undefined
+  );
+
   useEffect(() => {
     if (isCustomType && currentPage !== 1) {
       setShowCustomTypeSettings(true);
@@ -181,13 +186,25 @@ const AddProduct = (): JSX.Element => {
       ? editableListing?.customTypeData?.name
       : listingFormData?.type.name) || '';
 
-  const onSelectSpecifications = (specificationIds: string[]) => {
-    dispatch(
-      editableListingActions.update({
-        states: specificationIds,
-      })
-    );
-    onChangeCurrentPage(4);
+  const onSelectSpecifications = (
+    specificationIds: string[],
+    specificationLabels: string[]
+  ) => {
+    if (isBulkUpload) {
+      dispatch(
+        modifyBulkUploadActions.update({
+          specifications: specificationIds,
+          specificationsDisplayText: specificationLabels,
+        })
+      );
+    } else {
+      dispatch(
+        editableListingActions.update({
+          states: specificationIds,
+        })
+      );
+      onChangeCurrentPage(4);
+    }
   };
 
   const onSelectSizes = (sizes: {
@@ -195,14 +212,24 @@ const AddProduct = (): JSX.Element => {
     sizeTo?: string;
     isUngraded: boolean;
   }) => {
-    dispatch(
-      editableListingActions.update({
-        sizeFrom: sizes.sizeFrom,
-        sizeTo: sizes.sizeTo,
-        isUngraded: sizes.isUngraded,
-      })
-    );
-    onChangeCurrentPage(5);
+    if (isBulkUpload) {
+      dispatch(
+        modifyBulkUploadActions.update({
+          sizeFrom: sizes.sizeFrom,
+          sizeTo: sizes.sizeTo,
+          isUngraded: sizes.isUngraded,
+        })
+      );
+    } else {
+      dispatch(
+        editableListingActions.update({
+          sizeFrom: sizes.sizeFrom,
+          sizeTo: sizes.sizeTo,
+          isUngraded: sizes.isUngraded,
+        })
+      );
+      onChangeCurrentPage(5);
+    }
   };
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
@@ -268,15 +295,26 @@ const AddProduct = (): JSX.Element => {
     }[];
     minimumOrder: string;
   }) => {
-    dispatch(
-      editableListingActions.update({
-        isAquafuture,
-        sellInMultiplesOfMinOrder: sellInMultiples,
-        boxes,
-        minOrder: Number(minimumOrder),
-      })
-    );
-    onChangeCurrentPage(7);
+    if (isBulkUpload) {
+      dispatch(
+        modifyBulkUploadActions.update({
+          isAquafuture,
+          sellInMultiplesOfMinOrder: sellInMultiples,
+          boxes,
+          minOrder: Number(minimumOrder),
+        })
+      );
+    } else {
+      dispatch(
+        editableListingActions.update({
+          isAquafuture,
+          sellInMultiplesOfMinOrder: sellInMultiples,
+          boxes,
+          minOrder: Number(minimumOrder),
+        })
+      );
+      onChangeCurrentPage(7);
+    }
   };
 
   const marketEstimateData = useSelector(
@@ -307,17 +345,29 @@ const AddProduct = (): JSX.Element => {
     description: string;
     addressId: string;
   }) => {
-    dispatch(
-      editableListingActions.update({
-        pricePerKilo,
-        catchDate,
-        ends,
-        origin,
-        description,
-        addressId,
-      })
-    );
-    onChangeCurrentPage(8);
+    if (isBulkUpload) {
+      dispatch(
+        modifyBulkUploadActions.update({
+          pricePerKilo,
+          catchDate,
+          ends,
+          origin,
+          description,
+        })
+      );
+    } else {
+      dispatch(
+        editableListingActions.update({
+          pricePerKilo,
+          catchDate,
+          ends,
+          origin,
+          description,
+          addressId,
+        })
+      );
+      onChangeCurrentPage(8);
+    }
   };
 
   const isPendingCreateListing =
@@ -345,6 +395,12 @@ const AddProduct = (): JSX.Element => {
 
   const discardChanges = () => {
     history.push(SELLER_ROUTES.SELLING);
+    dispatch(editableListingActions.clear());
+  };
+
+  const discardBulkUploadChanges = () => {
+    history.push(ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW);
+    dispatch(modifyBulkUploadActions.clearSelection());
     dispatch(editableListingActions.clear());
   };
 
@@ -420,6 +476,8 @@ const AddProduct = (): JSX.Element => {
     measurementUnit,
     isUploadingCSV: uploadBulk?.pending || false,
     userPending,
+    isBulkUpload,
+    discardBulkUploadChanges,
   };
 
   return <AddProductView {...generatedProps} />;

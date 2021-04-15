@@ -29,9 +29,11 @@ export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
       currentData: {},
       modifiedData: {
         ...state.modifiedData,
-        ...(action.payload
+        ...(action.payload &&
+        state.currentData &&
+        state.currentData.index !== undefined
           ? {
-              [action.payload.index || '0']: {
+              [state.currentData.index]: {
                 ...omit(['index', 'currentStep'], action.payload),
               },
             }
@@ -42,6 +44,10 @@ export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
       ...state,
       currentData: action.payload,
     },
-    [modifyBulkUploadActions.CLEAR]: {},
+    [modifyBulkUploadActions.CLEAR_SELECTION]: {
+      ...state,
+      currentData: {},
+    },
+    [modifyBulkUploadActions.CLEAR]: DEFAULT_STATE,
   });
 };

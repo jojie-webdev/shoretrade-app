@@ -16,6 +16,10 @@ const DEFAULT_ACTION: Action<EditableListingPayload> = {
 
 export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
   const localReducer = (): EditableListingState => {
+    if (action.payload?.isBulkUpload) {
+      return action.payload;
+    }
+
     if (action.payload?.type) {
       return {
         company: state.company,
