@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { ArrowRight, Close, Logo } from 'components/base/SVG';
+import { ArrowRight, Close, Logo, ShoretradeLogo } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
@@ -38,7 +38,9 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
     containerBackground,
     minHeight,
     noLogo,
+    horizontalLogo,
     isRegister,
+    isLogin,
     mobileFooter,
   } = props;
 
@@ -63,6 +65,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
           background={containerBackground}
           minHeight={minHeight}
           isRegister={isRegister}
+          isLogin={isLogin}
         >
           {!noLogo && (
             <LogoContainer
@@ -70,7 +73,11 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 props.logoContainerMarginBottomHeight
               }
             >
-              <Logo fill={!isSeller ? 'black' : 'white'} />
+              {!horizontalLogo ? (
+                <Logo fill={!isSeller ? 'black' : 'white'} />
+              ) : (
+                <ShoretradeLogo height={24} width={190} />
+              )}
 
               {onSkipAction && (
                 <Button

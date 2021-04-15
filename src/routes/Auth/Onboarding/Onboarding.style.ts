@@ -8,6 +8,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 50px;
+  }
 `;
 
 export const SvgContainer = styled.div`
@@ -56,4 +60,11 @@ export const ButtonContainer = styled.div`
 
 export const PrevButton = styled(Button)`
   margin-right: 16px;
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px 40px;
 `;

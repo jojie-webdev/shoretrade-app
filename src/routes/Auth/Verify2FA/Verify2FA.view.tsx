@@ -6,7 +6,7 @@ import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
-import MobileHeader from 'components/layout/MobileHeader';
+import MobileHeader from 'components/layout/MobileNav';
 import DialogModal from 'components/module/DialogModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useFormik } from 'formik';

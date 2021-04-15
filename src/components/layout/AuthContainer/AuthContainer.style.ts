@@ -113,6 +113,7 @@ export const Content = styled.div<{
   background?: string;
   minHeight?: string;
   isRegister?: boolean;
+  isLogin?: boolean;
 }>`
   padding: 0px 40px 24px 40px;
   position: relative;
@@ -131,6 +132,8 @@ export const Content = styled.div<{
   @media ${BREAKPOINTS['sm']} {
     max-height: 100vh;
     max-width: 100%;
+
+    padding: ${({ isLogin }) => (isLogin ? '40px 24px' : '0px 40px 24px 40px')};
   }
 `;
 
@@ -159,11 +162,10 @@ export const LogoContainer = styled.div<{
 `;
 
 export const MobileFooter = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 24px 40px;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   width: 100%;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
 `;
