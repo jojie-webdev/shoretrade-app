@@ -1,14 +1,8 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-  loginActions,
-  verifyActions,
-  resendVerificationActions,
-  forgotPasswordActions,
-} from 'store/actions';
+import { forgotPasswordActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import { ForgotPasswordForm } from './ForgotPassword.props';

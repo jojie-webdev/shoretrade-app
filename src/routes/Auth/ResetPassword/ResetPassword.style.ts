@@ -1,29 +1,13 @@
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
-
-export const ContentWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-`;
-
-export const Content = styled.div`
-  display: flex;
-  flex: 1;
-  max-width: 341px;
-  flex-direction: column;
+export const MobileContainer = styled.div`
+  padding: 24px;
+  min-height: calc(100vh - ${MOBILE_HEADER_HEIGHT}px);
+  background-color: ${({ theme }) => theme.grey.shade1};
 `;
 
 export const TitleContainer = styled.div`
@@ -39,10 +23,18 @@ export const Title = styled(Typography)`
 
 export const PasswordField = styled(FormikTextField)`
   margin-top: 32px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 24px;
+  }
 `;
 
 export const ResetPasswordButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 28px;
+  margin-top: 24px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 36px;
+  }
 `;
