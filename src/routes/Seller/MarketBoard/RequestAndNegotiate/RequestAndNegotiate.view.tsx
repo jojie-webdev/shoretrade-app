@@ -282,11 +282,11 @@ const Step1 = ({
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue >= 0 ? 'error' : 'success'}
+                color={discountValue >= 0 ? 'success' : 'error'}
                 variant="label"
                 weight="bold"
               >
-                {toPrice(-discountValue)}/{unit}
+                {toPrice(discountValue)}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color="noshade">

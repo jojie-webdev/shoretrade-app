@@ -51,12 +51,8 @@ const NegotiateSellerModal = (
   ).toFixed(2);
 
   const totalValue = currentNewOffer * weight;
-  const lastOffer = modalLastNegotiationsArray.find(
-    (i) => i.type === 'NEW_OFFER'
-  );
 
   const unit = formatMeasurementUnit(measurementUnit);
-
   return (
     <Modal
       backgroundColor={theme.grey.shade8}
@@ -87,19 +83,10 @@ const NegotiateSellerModal = (
           />
         </Inputs>
         <ComputationContainer>
-          <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
-              Your original offer
-            </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(price)}/{unit}
-            </Typography>
-          </div>
-
-          {latestCounterOffer && sortedNegotiations.length <= 2 && (
+          {sortedNegotiations.length >= 1 && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
-                Buyer&apos;s counter offer
+                Buyer&apos;s Counter Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
                 {toPrice(latestCounterOffer.price)}/{unit}
@@ -107,43 +94,10 @@ const NegotiateSellerModal = (
             </div>
           )}
 
-          {sortedNegotiations.length >= 2 && (
-            <>
-              {modalLastNegotiationsArray.map((offer) => {
-                return (
-                  <div key={offer.id} className="computation-item-container">
-                    <Typography variant="label" color={textColor}>
-                      {`${
-                        offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'
-                      } ${
-                        offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                      } offer`}
-                    </Typography>
-                    <Typography variant="label" weight="bold" color={textColor}>
-                      {toPrice(offer.price)}/{unit}
-                    </Typography>
-                  </div>
-                );
-              })}
-              <div className="computation-item-container">
-                <Typography variant="label" color={textColor}>
-                  Your{' '}
-                  {toOrdinalSuffix(
-                    lastOffer?.ordinal !== undefined ? lastOffer.ordinal + 1 : 0
-                  )}{' '}
-                  offer
-                </Typography>
-                <Typography variant="label" weight="bold" color={textColor}>
-                  {toPrice(negotiationPrice)}/{unit}
-                </Typography>
-              </div>
-            </>
-          )}
-
           {latestCounterOffer && sortedNegotiations.length <= 3 && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
-                Your counter offer
+                Your New Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
                 {toPrice(negotiationPrice)}/{unit}
@@ -158,11 +112,11 @@ const NegotiateSellerModal = (
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue >= 0 ? 'error' : 'success'}
+                color={discountValue >= 0 ? 'success' : 'error'}
                 variant="label"
                 weight="bold"
               >
-                {toPrice(-discountValue)}/{formatMeasurementUnit(unit)}
+                {toPrice(discountValue)}/{formatMeasurementUnit(unit)}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color={textColor}>
