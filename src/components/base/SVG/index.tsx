@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Ellipse } from './Ellipse';
 export { default as Minus } from './Minus';
 export { default as ChevronDown } from './ChevronDown';
 export { default as SubtractHollow } from './SubtractHollow';

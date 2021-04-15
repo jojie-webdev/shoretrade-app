@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
-import Carousel from 'components/module/Carousel';
+import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
@@ -96,13 +96,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           <DetailsContainer>
             <Col xs={12} sm={12} md={12} lg={6}>
               <BannerContainer>
-                <Carousel
+                <CarouselV2
                   id={'product-details-carousel'}
                   images={images}
                   loop
                   // autoplay
                   aspectRatio="9:4"
-                  arrowInside
                   showAlmostGone={Number(remainingWeight) <= 50}
                   showAquafuture={isAquafuture}
                 />

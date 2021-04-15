@@ -2,15 +2,14 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import Carousel from '../../../src/components/module/Carousel';
+import CarouselV2 from '../../../src/components/module/CarouselV2';
 import Container from '../../components/Container';
 
-storiesOf('module/Carousel', module).add('Summary', () => (
+storiesOf('module/CarouselV2', module).add('Summary', () => (
   <Container appType="buyer">
-    <Carousel
+    <CarouselV2
       id="carousel"
       loop
-      hideArrowArea
       autoplay
       images={[
         'https://picsum.photos/500/300.jpg',
