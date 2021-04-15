@@ -98,6 +98,9 @@ export const OfferDetailsContainer = styled.div`
           font-weight: bold;
         }
       }
+      .border-bottom {
+        border-bottom: 1px solid ${({ theme }) => theme.grey.shade8};
+      }
     }
   }
 `;

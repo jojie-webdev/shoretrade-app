@@ -52,6 +52,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     measurementUnit,
     isUploadingCSV,
     userPending,
+    isBulkUpload,
+    discardBulkUploadChanges,
   } = props;
 
   const currentStep = () => {
@@ -194,6 +196,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
               } else {
                 onChangeCurrentPage(8);
               }
+            } else if (isBulkUpload) {
+              discardBulkUploadChanges();
             } else {
               onChangeCurrentPage(currentPage - 1);
             }

@@ -1,5 +1,4 @@
 import { ArrowLeft } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import BuyerBackgroundImage from 'res/images/buyer-image.png';
@@ -85,15 +84,6 @@ export const HeaderContainer = styled.div`
   padding: 0px 20px;
 `;
 
-export const HeaderContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
 export const HeaderSpacer = styled.div`
   display: flex;
   flex-direction: row;
@@ -104,11 +94,6 @@ export const HeaderSpacer = styled.div`
 `;
 
 export const BackIcon = styled(ArrowLeft)``;
-
-export const Title = styled(Typography)`
-  font-weight: bold;
-  color: ${({ theme }) => theme.grey.noshade};
-`;
 
 export const ProgressContainer = styled.div<{
   background?: string;
@@ -129,7 +114,7 @@ export const Content = styled.div<{
   minHeight?: string;
   isRegister?: boolean;
 }>`
-  padding: 0px 40px 24px 0px;
+  padding: 0px 40px 24px 40px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -158,6 +143,9 @@ export const ProgressIndicator = styled.div`
 export const LogoContainer = styled.div<{
   logoContainerMarginBottomHeight?: number;
 }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: ${(props) =>
     props.logoContainerMarginBottomHeight
       ? `${props.logoContainerMarginBottomHeight}px`
@@ -168,4 +156,14 @@ export const LogoContainer = styled.div<{
     margin-top: 40px;
     margin-bottom: 20px;
   }
+`;
+
+export const MobileFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px 40px;
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
+  width: 100%;
 `;

@@ -53,6 +53,9 @@ export const SummaryContentContainer = styled.div`
         }
       }
     }
+    .border-bottom {
+      border-bottom: 1px solid ${({ theme }) => theme.grey.noshade};
+    }
   }
 `;
 

@@ -58,13 +58,13 @@ function Step3({
   );
 
   const specificationIds = specifications.map((s) => s.value);
+  const specificationLabels = specifications.map((s) => s.label);
 
   const disabledOptions = uniq(
     unnest(specifications.map((s) => stateRules[s.label.toUpperCase()] || []))
   );
 
   const isComplete = specificationIds.length === stateOptions.length;
-
 
   const computeGroup = (
     group: {
@@ -128,7 +128,7 @@ function Step3({
           variant={isComplete ? 'primary' : 'disabled'}
           onClick={() => {
             if (isComplete) {
-              onSelectSpecifications(specificationIds);
+              onSelectSpecifications(specificationIds, specificationLabels);
             }
           }}
         />

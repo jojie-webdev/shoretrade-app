@@ -139,14 +139,7 @@ const MarketRequestsLandingView = (
             />
           ))
         ) : (
-          <EmptyStateView
-            // circleHeight={280}
-            // circleWidth={280}
-            Svg={Crab}
-            height={240}
-            width={249}
-            fluid
-          />
+          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}
       </BoxContainer>
     </MarketRequestsContainer>
