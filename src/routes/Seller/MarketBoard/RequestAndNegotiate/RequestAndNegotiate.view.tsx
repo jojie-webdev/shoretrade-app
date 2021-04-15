@@ -282,7 +282,7 @@ const Step1 = ({
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue >= 0 ? 'success' : 'error'}
+                color={discountValue >= 0 ? 'error' : 'success'}
                 variant="label"
                 weight="bold"
               >
