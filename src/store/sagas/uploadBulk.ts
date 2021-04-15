@@ -6,7 +6,7 @@ import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
 
-import { uploadBulkActions } from '../actions';
+import { modifyBulkUploadActions, uploadBulkActions } from '../actions';
 
 function* uploadBulkRequest(
   action: AsyncAction<UploadBulkMeta, UploadBulkPayload>
@@ -31,6 +31,7 @@ function* uploadBulkRequest(
 function* uploadBulkSuccess(
   action: AsyncAction<UploadBulkMeta, UploadBulkPayload>
 ) {
+  yield put(modifyBulkUploadActions.clear());
   yield put(push(ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW));
 }
 

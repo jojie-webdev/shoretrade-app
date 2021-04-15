@@ -34,6 +34,8 @@ const persistConfig = {
     'getMarketEstimate',
     'cart',
     'history',
+    'uploadBulk',
+    'modifyBulkUpload',
   ],
 };
 

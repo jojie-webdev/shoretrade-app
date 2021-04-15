@@ -1,4 +1,4 @@
-import { SELLER_ROUTES } from 'consts';
+import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getCoopUsers } from 'services/company';
 import { AsyncAction } from 'types/Action';
@@ -33,7 +33,10 @@ function* getCoopUsersRequest(
 
 function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
-  if (state.router.location.pathname === SELLER_ROUTES.ADD_PRODUCT) {
+  if (
+    state.router.location.pathname === SELLER_ROUTES.ADD_PRODUCT ||
+    state.router.location.pathname === ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW
+  ) {
     yield put(getCoopUsersActions.request());
   }
 }

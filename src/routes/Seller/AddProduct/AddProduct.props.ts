@@ -29,4 +29,6 @@ export interface AddProductGeneratedProps
   isExisting: boolean;
   discardChanges: () => void;
   userPending: boolean;
+  isBulkUpload: boolean;
+  discardBulkUploadChanges: () => void;
 }

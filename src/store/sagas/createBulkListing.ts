@@ -10,7 +10,12 @@ import {
 import { Store } from 'types/store/Store';
 import { bulkListingToCreateListing } from 'utils/Listing/bulkListingToCreateListing';
 
-import { createBulkListingActions, getAllListingsActions } from '../actions';
+import {
+  createBulkListingActions,
+  getAllListingsActions,
+  modifyBulkUploadActions,
+  uploadBulkActions,
+} from '../actions';
 
 function* createBulkListingRequest(
   action: AsyncAction<CreateBulkListingMeta, CreateBulkListingPayload>
@@ -41,6 +46,8 @@ function* createBulkListingRequest(
 function* createBulkListingSuccess(
   action: AsyncAction<CreateBulkListingMeta, CreateBulkListingPayload>
 ) {
+  yield put(modifyBulkUploadActions.clear());
+  yield put(uploadBulkActions.clear());
   yield put(getAllListingsActions.request());
   yield put(push(SELLER_ROUTES.SELLING));
 }
