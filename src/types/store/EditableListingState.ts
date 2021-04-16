@@ -49,6 +49,7 @@ export type EditableListingState = Partial<{
       name: string;
     };
   };
+  isBulkUpload?: boolean;
 }>;
 
 export type EditableListingPayload = EditableListingState;

@@ -58,6 +58,8 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     sortedNegotiations.filter((i) => i.type === 'COUNTER_OFFER').length + 1;
 
   const unit = formatMeasurementUnit(measurementUnit);
+  const latestSellerNego =
+    modalLastNegotiationsArray[modalLastNegotiationsArray.length - 1];
 
   return (
     <Modal
@@ -101,51 +103,25 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         <ComputationContainer>
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
-              Seller&apos;s original offer
+              Seller&apos;s Current Offer
             </Typography>
             <Typography variant="label" weight="bold" color={textColor}>
-              {toPrice(originalOffer)}/{unit}
+              {sortedNegotiations.length === 0
+                ? toPrice(originalOffer)
+                : toPrice(latestSellerNego.price)}
+              /{unit}
             </Typography>
           </div>
 
-          {counterOffer !== '' && sortedNegotiations.length <= 2 && (
+          {sortedNegotiations.length >= 2 && (
             <div className="computation-item-container">
               <Typography variant="label" color={textColor}>
-                Your counter offer
+                Your New Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
-                {toPrice(counterOffer)}/{unit}
+                {toPrice(negotiationPrice)}/{unit}
               </Typography>
             </div>
-          )}
-
-          {sortedNegotiations.length >= 2 && (
-            <>
-              {modalLastNegotiationsArray.map((offer) => {
-                return (
-                  <div key={offer.id} className="computation-item-container">
-                    <Typography variant="label" color={textColor}>
-                      {`${
-                        offer.type === 'COUNTER_OFFER' ? 'Your' : `Seller's`
-                      } ${
-                        offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                      } offer`}
-                    </Typography>
-                    <Typography variant="label" weight="bold" color={textColor}>
-                      {toPrice(offer.price)}/{unit}
-                    </Typography>
-                  </div>
-                );
-              })}
-              <div className="computation-item-container">
-                <Typography variant="label" color={textColor}>
-                  Your {toOrdinalSuffix(lastOffer)} offer
-                </Typography>
-                <Typography variant="label" weight="bold" color={textColor}>
-                  {toPrice(negotiationPrice)}/{unit}
-                </Typography>
-              </div>
-            </>
           )}
 
           <div className="computation-item-container">

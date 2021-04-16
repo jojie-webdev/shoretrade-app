@@ -99,7 +99,7 @@ export const OfferDetailsContainer = styled.div`
         }
       }
       .border-bottom {
-        border-bottom: 1px solid ${({ theme }) => theme.grey.shade8};
+        margin-bottom: 16px;
       }
     }
   }

@@ -42,7 +42,7 @@ export const RegisterLinkContainer = styled.div`
 `;
 
 export const RegisterLinkPrefix = styled(Typography)`
-  margin-right: 4px;
+  margin-right: 6px;
 `;
 
 export const RegisterLinkAction = styled.div`

@@ -50,7 +50,7 @@ import {
   UpdateSellerLicenseMeta,
   UpdateSellerLicensePayload,
 } from 'types/store/UpdateSellerLicenseState';
-import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
+import { UploadBulkMeta, UploadBulkPayload, UploadBulkState } from 'types/store/UploadBulkState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -389,4 +389,11 @@ export interface Store {
   >;
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
   notify: NotifyState;
+  modifyBulkUpload: {
+    modifiedData: Record<number, Partial<UploadBulkState>>;
+    currentData: Partial<UploadBulkState> & {
+      index?: number;
+      currentStep?: number;
+    };
+  };
 }

@@ -300,3 +300,33 @@ export const LicensePreview = styled.div`
     }
   }
 `;
+
+export const SignUpHeader = styled.div`
+  margin-bottom: 32px;
+`;
+
+export const LogInLinkContainer = styled.div`
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const LogInLinkPrefix = styled(Typography)`
+  margin-right: 6px;
+`;
+
+export const LogInLinkAction = styled.div`
+  cursor: pointer;
+  border-bottom: ${({ theme }) => `1px solid ${theme.brand.primary}`};
+`;
+
+export const LogInLink = styled(Typography)`
+  font-weight: bold;
+`;
+
+export const AppTypeTitle = styled(Typography)`
+  color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+`;
