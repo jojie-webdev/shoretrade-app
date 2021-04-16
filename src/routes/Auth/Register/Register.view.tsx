@@ -85,6 +85,12 @@ import {
   SellerSummaryContainer,
   TopContainer,
   LicensePreview,
+  LogInLinkContainer,
+  LogInLinkPrefix,
+  LogInLinkAction,
+  LogInLink,
+  SignUpHeader,
+  AppTypeTitle,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -1069,6 +1075,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSuccess,
     setSummaryEdit,
     isSummaryEdit,
+    goToLogIn,
   } = props;
 
   const [step, setStep] = useState(0);
@@ -1246,6 +1253,24 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <ColumnWrapper>
             <Container>
               <Content>
+                <SignUpHeader>
+                  <AppTypeTitle variant="title3" weight="700">
+                    {isSeller ? 'Seller' : 'Buyer'} Sign Up
+                  </AppTypeTitle>
+                  <LogInLinkContainer>
+                    <LogInLinkPrefix
+                      variant="label"
+                      color={isSeller ? 'shade6' : 'shade7'}
+                    >
+                      Already have an account?
+                    </LogInLinkPrefix>
+                    <LogInLinkAction onClick={() => goToLogIn()}>
+                      <LogInLink variant="label" color="primary">
+                        Log In
+                      </LogInLink>
+                    </LogInLinkAction>
+                  </LogInLinkContainer>
+                </SignUpHeader>
                 <GetStartedTitleWrapper>
                   <Touchable dark onPress={() => backToLogin()}>
                     <BackIcon
@@ -1286,7 +1311,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   return (
     <AuthContainer
       isRegister
-      noLogo
+      // noLogo
+      logoContainerMarginBottomHeight={36}
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
       containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
