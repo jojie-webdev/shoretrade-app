@@ -3,21 +3,22 @@ import React, { useEffect, useState, useRef } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
+import Divider from 'components/base/Divider';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
 import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
+import ProductDetailCard from 'components/module/ProductDetailCard';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
-import ProductDetailCard from 'components/module/ProductDetailCard';
+import ProductSellerCard from 'components/module/ProductSellerCard';
 import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetListingResponseItem } from 'types/store/GetListingState';
-import ProductSellerCard from 'components/module/ProductSellerCard';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
@@ -32,6 +33,7 @@ import {
   ButtonContainer,
   AddToCartButton,
 } from './ProductDetails.style';
+
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
     currentListing,
@@ -94,8 +96,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
-          <Col xs={12} sm={12} md={12} lg={6} className="title">
-            <Typography variant="title4">{productDetailsCard1Props.title}</Typography>
+            <Col xs={12} sm={12} md={12} lg={6} className="title">
+              <Typography variant="title4">
+                {productDetailsCard1Props.title}
+              </Typography>
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
               <BannerContainer>
@@ -130,7 +134,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 {...productDetailsCard6Props}
               />
               {!isPendingAccount && (
-                <ProductSellerCard location={productDetailsCard1Props.location} isSmallName {...sellerRatingProps} />
+                <ProductSellerCard
+                  location={productDetailsCard1Props.location}
+                  isSmallName
+                  {...sellerRatingProps}
+                />
               )}
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
@@ -143,6 +151,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 />
               ) : (
                 <DesiredQuantityContainer>
+                  <Divider />
                   <div className="content">
                     <TextFieldWrapper>
                       <TextField

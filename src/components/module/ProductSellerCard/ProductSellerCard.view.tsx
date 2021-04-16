@@ -39,7 +39,7 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
   } = props;
 
 
-  const nameLenMaxVisible = 16;
+  const nameLenMaxVisible = 21;
   const [defaultImage, setDefaultImage] = useState(uri);
   return (
     <SellerCardContainer>

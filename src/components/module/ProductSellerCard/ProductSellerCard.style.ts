@@ -71,7 +71,7 @@ export const StarContainer = styled.div<{ location?: string }>`
 `;
 
 export const SellerCardContainer = styled.div<{ fishermanNotes?: string }>`
-  padding: 24px;
+  padding: 16px;
   background-color: ${({ theme }) => theme.grey.noshade};
   border-color: ${({ theme }) => theme.grey.shade2};
 

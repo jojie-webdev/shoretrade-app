@@ -5,7 +5,6 @@ import styled, { css } from 'utils/styled';
 
 export const Container = styled.div`
   flex-direction: row;
-  padding: 8px;
 
   .description {
     text-align: center;
@@ -30,13 +29,11 @@ export const BannerContainer = styled.div`
 
 export const DetailsContainer = styled(Row)`
   height: 100%;
-
+  padding: 16px;
   .title {
     margin-bottom: 1rem;
   }
 `;
-
-
 
 export const BoxContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
@@ -45,7 +42,6 @@ export const BoxContainer = styled.div`
 export const DesiredQuantityContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 24px;
 
   @media (max-width: 991px) {
     border-width: 1px 2px 2px 2px;
@@ -59,6 +55,7 @@ export const DesiredQuantityContainer = styled.div`
 
   .content {
     display: flex;
+    margin-top: -16px;
     flex-direction: column;
   }
 

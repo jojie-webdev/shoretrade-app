@@ -5,7 +5,7 @@ import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 
 export const Container = styled.div<ProductDetailsCard6Props>`
   width: 100%;
-  padding: 24px;
+  padding: 16px 0px;
   border-width: ${({ cBorderWidth }) => cBorderWidth || '2px'};
   border-radius: ${({ cBorderRadius }) => cBorderRadius || '8px'};
 `;
