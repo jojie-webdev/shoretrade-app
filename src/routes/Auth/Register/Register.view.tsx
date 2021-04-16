@@ -51,7 +51,6 @@ import {
   Container,
   Content,
   GetStartedTitle,
-  GetStartedTitleWrapper,
   GetStartedButton,
   StepCount,
   Title,
@@ -1271,19 +1270,10 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                     </LogInLinkAction>
                   </LogInLinkContainer>
                 </SignUpHeader>
-                <GetStartedTitleWrapper>
-                  <Touchable dark onPress={() => backToLogin()}>
-                    <BackIcon
-                      width={16}
-                      height={16}
-                      fill={theme.brand.primary}
-                    />
-                  </Touchable>
-                  <GetStartedTitle variant="title5">
-                    Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
-                    simple steps
-                  </GetStartedTitle>
-                </GetStartedTitleWrapper>
+                <GetStartedTitle variant="title5">
+                  Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
+                  simple steps
+                </GetStartedTitle>
 
                 {steps
                   .filter((i) => i.title !== 'Summary')
@@ -1312,7 +1302,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     <AuthContainer
       isRegister
       // noLogo
-      logoContainerMarginBottomHeight={36}
+      logoContainerMarginBottomHeight={1}
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
       containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
