@@ -16,7 +16,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { BulkUploadPreviewGeneratedProps } from './BulkUploadPreview.props';
-import { Container } from './BulkUploadPreview.style';
+import { Container, ErrorButton } from './BulkUploadPreview.style';
 import {
   getTotalWeight,
   showListingCount,
@@ -29,16 +29,27 @@ const COLUMNS = [
   'BOXES',
   'STOCK',
   'PRICE',
+  'CATCH DATE',
   'VALID UNTIL',
-  'SHIPPING',
 ];
 
-const Error = () => {
-  return <InfoFilled width={20} height={20} />;
+const Error = (props: { onClick?: () => void }) => {
+  return (
+    <ErrorButton
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+    >
+      <InfoFilled width={20} height={20} />
+    </ErrorButton>
+  );
 };
 
 const BulkUploadPreviewView = ({
   data,
+  onEdit,
   ...props
 }: BulkUploadPreviewGeneratedProps) => {
   // const theme = useTheme();
@@ -111,104 +122,146 @@ const BulkUploadPreviewView = ({
               ))}
             </div>
 
-            {data.map((d, index) => (
-              <div key={index} className="listings-data-row">
-                <div className="column-item">
-                  <img src={placeholderImage} />
-                </div>
+            {data.map((d, index) => {
+              return (
+                <div key={index} className="listings-data-row">
+                  <div className="column-item">
+                    <img src={placeholderImage} />
+                  </div>
 
-                <div className="column-item">
-                  <Typography variant="caption" color="noshade">
-                    {d.typeDisplayText || <Error />}
-                  </Typography>
-                  <Typography variant="small" color="shade7">
-                    {!isEmpty(d.specifications[0]) ? (
-                      d.specificationsDisplayText.join(' | ')
+                  <div className="column-item">
+                    <Typography variant="caption" color="noshade">
+                      {d.typeDisplayText || <Error />}
+                    </Typography>
+                    <Typography variant="small" color="shade7">
+                      {!isEmpty(d.specifications[0]) ? (
+                        d.specificationsDisplayText.join(' | ')
+                      ) : (
+                        <Error
+                          onClick={() => {
+                            onEdit(index, 3, d);
+                          }}
+                        />
+                      )}
+                    </Typography>
+
+                    <Typography variant="small" color="shade7">
+                      {d.isUngraded || d.sizeFrom ? (
+                        sizeToString(d.metric as string, d.sizeFrom, d.sizeTo)
+                      ) : (
+                        <Error
+                          onClick={() => {
+                            onEdit(index, 4, d);
+                          }}
+                        />
+                      )}
+                    </Typography>
+                  </div>
+
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {d.origin.suburb && d.origin.state ? (
+                      `${d.origin.suburb}, ${d.origin.state}`
                     ) : (
-                      <Error />
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 7, d);
+                        }}
+                      />
                     )}
                   </Typography>
 
-                  <Typography variant="small" color="shade7">
-                    {d.isUngraded || d.sizeFrom ? (
-                      sizeToString(d.metric as string, d.sizeFrom, d.sizeTo)
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {!isEmpty(d.boxes) ? (
+                      <>
+                        {d.boxes.map((b, bIndex) => (
+                          <span key={bIndex}>
+                            {b.weight} {d.measurementUnit} x{b.quantity} <br />
+                          </span>
+                        ))}
+                      </>
                     ) : (
-                      <Error />
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 6, d);
+                        }}
+                      />
+                    )}
+                  </Typography>
+
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {!isNaN(getTotalWeight(d.boxes)) ? (
+                      `${getTotalWeight(d.boxes)} ${d.measurementUnit}`
+                    ) : (
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 6, d);
+                        }}
+                      />
+                    )}
+                  </Typography>
+
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {d.pricePerKilo ? (
+                      `${toPrice(d.pricePerKilo)} / ${d.measurementUnit}`
+                    ) : (
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 7, d);
+                        }}
+                      />
+                    )}
+                  </Typography>
+
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {d.catchDate ? (
+                      `${moment(d.catchDate).format('ddd D MMM ')}`
+                    ) : (
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 7, d);
+                        }}
+                      />
+                    )}
+                  </Typography>
+
+                  <Typography
+                    variant="caption"
+                    color="noshade"
+                    className="column-item"
+                  >
+                    {d.ends ? (
+                      `${getTimeDiff(moment(d.ends).toDate())}`
+                    ) : (
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 7, d);
+                        }}
+                      />
                     )}
                   </Typography>
                 </div>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {d.origin.suburb && d.origin.state ? (
-                    `${d.origin.suburb}, ${d.origin.state}`
-                  ) : (
-                    <Error />
-                  )}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {!isEmpty(d.boxes) ? (
-                    <>
-                      {d.boxes.map((b, bIndex) => (
-                        <span key={bIndex}>
-                          {b.weight} {d.measurementUnit} x{b.quantity}
-                        </span>
-                      ))}
-                    </>
-                  ) : (
-                    <Error />
-                  )}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {!isNaN(getTotalWeight(d.boxes)) ? (
-                    `${getTotalWeight(d.boxes)} ${d.measurementUnit}`
-                  ) : (
-                    <Error />
-                  )}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {d.pricePerKilo ? (
-                    `${toPrice(d.pricePerKilo)} / ${d.measurementUnit}`
-                  ) : (
-                    <Error />
-                  )}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {getTimeDiff(moment(d.ends).toDate())}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="noshade"
-                  className="column-item"
-                >
-                  {moment(d.ends).format('ddd D MMM ')}
-                </Typography>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {props.errorMessage.length > 0 && (

@@ -1,9 +1,14 @@
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createBulkListingActions, uploadBulkActions } from 'store/actions';
+import {
+  createBulkListingActions,
+  modifyBulkUploadActions,
+  uploadBulkActions,
+} from 'store/actions';
 import { GetCompanyAddresses } from 'store/selectors/seller/addresses';
 import { Store } from 'types/store/Store';
+import { UploadBulkState } from 'types/store/UploadBulkState';
 
 import BulkUploadPreviewView from './BulkUploadPreview.view';
 
@@ -12,6 +17,15 @@ const BulkUploadPreview = (): JSX.Element => {
 
   const getUser = useSelector((state: Store) => state.getUser);
   const uploadBulk = useSelector((store: Store) => store.uploadBulk);
+
+  const modifiedData = useSelector(
+    (store: Store) => store.modifyBulkUpload.modifiedData
+  );
+  const uploadBulkData: UploadBulkState[] = uploadBulk.data?.data.editableListings || [];
+  const actualData = uploadBulkData.map((a, i) => ({
+    ...a,
+    ...modifiedData[i],
+  }));
   const createBulkListing = useSelector(
     (store: Store) => store.createBulkListing
   );
@@ -46,20 +60,35 @@ const BulkUploadPreview = (): JSX.Element => {
   const onSubmit = (shippingAddress: string) => {
     dispatch(
       createBulkListingActions.request({
-        data: uploadBulk.data?.data.editableListings || [],
+        data: actualData,
         shippingAddress,
       })
     );
   };
 
+  const onEdit = (
+    index: number,
+    step: number,
+    data: Partial<UploadBulkState>
+  ) => {
+    dispatch(
+      modifyBulkUploadActions.edit({
+        index,
+        currentStep: step,
+        ...data,
+      })
+    );
+  };
+
   const generatedProps = {
-    data: uploadBulk.data?.data.editableListings || [],
+    data: actualData,
     onUploadCSV,
     onSubmit,
     isUploadingCSV: uploadBulk?.pending || false,
     isSubmitting: createBulkListing?.pending || false,
     shippingAddressOptions,
     errorMessage: createBulkListing.error || '',
+    onEdit,
   };
   return <BulkUploadPreviewView {...generatedProps} />;
 };

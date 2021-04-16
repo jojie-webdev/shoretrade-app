@@ -11,4 +11,5 @@ export interface BulkUploadPreviewGeneratedProps {
     value: string;
   }[];
   errorMessage: string;
+  onEdit: (index: number, step: number, data: Partial<UploadBulkState>) => void;
 }

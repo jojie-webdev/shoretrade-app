@@ -54,6 +54,7 @@ import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
@@ -131,6 +132,7 @@ const sagas = [
   marketOfferNegotiate,
   marketRequestAcceptOffer,
   marketRequestNegotiation,
+  modifyBulkUpload,
   order,
   placeOrder,
   readMarketNotification,
