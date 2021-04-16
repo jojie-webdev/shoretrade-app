@@ -159,14 +159,12 @@ const MarketRequestDetail = (): JSX.Element => {
         );
       }
 
-      lastNegotiationsOffers = sortedNegotiations
-        .slice(
-          Math.max(
-            sortedNegotiations.length - (sortedNegotiations.length > 2 ? 2 : 1),
-            0
-          )
+      lastNegotiationsOffers = sortedNegotiations.slice(
+        Math.max(
+          sortedNegotiations.length - (sortedNegotiations.length >= 2 ? 2 : 1),
+          0
         )
-        .reverse();
+      );
 
       counterOfferArr.forEach((off, index) => {
         const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
