@@ -111,7 +111,7 @@ const Step1 = ({
         <div className="offer-container">
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
-              Your original offer
+              Your Offer
             </Typography>
             <Typography variant="label" weight="bold" color="noshade">
               {toPrice(activeOffer.price)}/{unit}
@@ -182,11 +182,11 @@ const Step1 = ({
       latestSellerNego.price === latestBuyerNego.price;
 
     const lastNegotiationsArray = negotiations.slice(
-      Math.max(negotiations.length - (negotiations.length > 3 ? 3 : 2), 0)
+      Math.max(negotiations.length - (negotiations.length >= 2 ? 2 : 1), 0)
     );
 
     const modalLastNegotiationsArray = negotiations.slice(
-      Math.max(negotiations.length - (negotiations.length >= 3 ? 2 : 1), 0)
+      Math.max(negotiations.length - (negotiations.length >= 2 ? 2 : 1), 0)
     );
 
     sellerNegos.map((off, index) => {
@@ -227,45 +227,46 @@ const Step1 = ({
     return (
       <>
         <div className="offer-container">
-          <div className="computation-item-container">
-            <Typography variant="label" color="noshade">
-              Your original offer
-            </Typography>
-            <Typography variant="label" weight="bold" color="noshade">
-              {toPrice(activeOffer.price)}/{unit}
-            </Typography>
-          </div>
-          {negotiations.length !== 0 && negotiations.length <= 3 && (
+          {negotiations.length <= 1 && (
+            <div className="computation-item-container">
+              <Typography variant="label" color="noshade">
+                Your Offer
+              </Typography>
+              <Typography variant="label" weight="bold" color="noshade">
+                {toPrice(activeOffer.price)}/{unit}
+              </Typography>
+            </div>
+          )}
+
+          {negotiations.length !== 0 && negotiations.length <= 1 && (
             <>
               <div className="computation-item-container">
                 <Typography variant="label" color="noshade">
-                  Buyer&apos;s counter offer
+                  Buyer&apos;s Counter Offer
                 </Typography>
                 <Typography variant="label" color="noshade" weight="bold">
                   {toPrice(latestBuyerNego.price)}/{unit}
                 </Typography>
               </div>
-              {negotiations.length === 2 && (
-                <div className="computation-item-container">
-                  <Typography variant="label" color="noshade">
-                    Your 2nd offer
-                  </Typography>
-                  <Typography variant="label" color="noshade" weight="bold">
-                    {toPrice(negotiations[1].price)}/{unit}
-                  </Typography>
-                </div>
-              )}
             </>
           )}
 
-          {negotiations.length > 3 &&
+          {negotiations.length >= 2 &&
             lastNegotiationsArray.map((offer) => {
               return (
                 <div key={offer.id} className="computation-item-container">
                   <Typography variant="label" color="noshade">
-                    {`${offer.type === 'COUNTER_OFFER' ? `Buyer's` : 'Your'} ${
-                      offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                    } offer`}
+                    {`${
+                      offer.type === 'COUNTER_OFFER'
+                        ? `Buyer's ${
+                            lastNegotiationsArray[
+                              lastNegotiationsArray.length - 1
+                            ].type === 'COUNTER_OFFER'
+                              ? 'Counter'
+                              : 'Previous'
+                          }`
+                        : 'Your'
+                    } Offer `}
                   </Typography>
                   <Typography variant="label" color="noshade" weight="bold">
                     {toPrice(offer.price)}/{unit}
@@ -285,7 +286,7 @@ const Step1 = ({
                 variant="label"
                 weight="bold"
               >
-                {toPrice(-discountValue)}/{unit}
+                {toPrice(discountValue)}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color="noshade">

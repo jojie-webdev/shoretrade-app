@@ -122,19 +122,21 @@ const OfferDetailView = (props: any) => {
         </div>
         <div className="footer">
           <div className="computation-container">
-            <div className="computation-item-container">
-              <TypographyView variant="label" color="shade9">
-                Seller&apos;s original offer
-              </TypographyView>
-              <TypographyView variant="label" weight="bold" color="shade9">
-                {toPrice(selectedOffer?.price)}/{unit}
-              </TypographyView>
-            </div>
-
-            {counterOffer !== '' && sortedNegotiations.length <= 2 && (
+            {sortedNegotiations.length === 0 && (
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
-                  Your counter offer
+                  {`Seller's Current Offer`}
+                </TypographyView>
+                <TypographyView variant="label" weight="bold" color="shade9">
+                  {toPrice(selectedOffer?.price)}/{unit}
+                </TypographyView>
+              </div>
+            )}
+
+            {counterOffer !== '' && sortedNegotiations.length <= 1 && (
+              <div className="computation-item-container">
+                <TypographyView variant="label" color="shade9">
+                  Your Offer
                 </TypographyView>
                 <TypographyView variant="label" weight="bold" color="shade9">
                   {toPrice(counterOffer)}/{unit}
@@ -149,10 +151,20 @@ const OfferDetailView = (props: any) => {
                   <div key={offer.id} className="computation-item-container">
                     <TypographyView variant="label" color="shade9">
                       {`${
-                        offer.type === 'COUNTER_OFFER' ? 'Your' : `Seller's`
-                      } ${
-                        offer.ordinal && toOrdinalSuffix(offer.ordinal)
-                      } offer`}
+                        offer.type === 'COUNTER_OFFER'
+                          ? `Your ${
+                              sortedNegotiations[sortedNegotiations.length - 1]
+                                .type === 'COUNTER_OFFER'
+                                ? ''
+                                : 'Previous '
+                            }`
+                          : `Seller's ${
+                              sortedNegotiations[sortedNegotiations.length - 1]
+                                .type === 'NEW_OFFER'
+                                ? 'Current '
+                                : 'Previous '
+                            }`
+                      }Offer `}
                     </TypographyView>
                     <TypographyView
                       variant="label"
@@ -164,26 +176,28 @@ const OfferDetailView = (props: any) => {
                   </div>
                 );
               })}
+            {sortedNegotiations.length > 0 && (
+              <div className="computation-item-container">
+                <TypographyView variant="label" color="shade9">
+                  Change in Price{' '}
+                  <span className="indicator">{discountPercentage}%</span>
+                </TypographyView>
+                {discountValue !== 0 ? (
+                  <TypographyView
+                    color={discountValue < 0 ? 'error' : 'success'}
+                    variant="label"
+                    weight="bold"
+                  >
+                    {toPrice(discountValue)}/{unit}
+                  </TypographyView>
+                ) : (
+                  <TypographyView variant="label" weight="bold" color="shade9">
+                    0
+                  </TypographyView>
+                )}
+              </div>
+            )}
 
-            <div className="computation-item-container">
-              <TypographyView variant="label" color="shade9">
-                Change in Price{' '}
-                <span className="indicator">{discountPercentage}%</span>
-              </TypographyView>
-              {discountValue !== 0 ? (
-                <TypographyView
-                  color={discountValue < 0 ? 'error' : 'success'}
-                  variant="label"
-                  weight="bold"
-                >
-                  {toPrice(discountValue)}/{unit}
-                </TypographyView>
-              ) : (
-                <TypographyView variant="label" weight="bold" color="shade9">
-                  0
-                </TypographyView>
-              )}
-            </div>
             <div className="computation-item-container border-bottom">
               <TypographyView variant="label" color="shade9">
                 Total Value
