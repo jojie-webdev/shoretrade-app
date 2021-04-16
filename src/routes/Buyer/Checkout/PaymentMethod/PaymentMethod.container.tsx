@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import moment from 'moment';
 import { groupBy } from 'ramda';
@@ -7,7 +7,7 @@ import {
   CardDetails,
   PaymentMethodPublicProps,
 } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.props';
-import { addCardAndPayActions } from 'store/actions';
+import { addCardAndPayActions, getPaymentMethodsActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { OrderCartItem } from 'types/store/AddCardAndPayState';
 import { CartItem } from 'types/store/CartState';
@@ -19,12 +19,20 @@ import PaymentMethodView from './PaymentMethod.view';
 const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
+  const companyId = currentCompany?.id || '';
+
+  const [selectedCard, setSelectedCard] = useState('');
 
   const user =
     useSelector((state: Store) => state.getUser.data?.data.user.email) || '';
   const addresses =
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
+
+  const cards =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data.cards
+    ) || [];
 
   const pendingAddCard =
     useSelector((state: Store) => state.addCardAndPay.pending) || false;
@@ -85,19 +93,61 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
             cvc: Number(values.cvc),
             name: values.name,
           },
-          companyId: currentCompany?.id || '',
+          companyId: companyId,
           default: values.isDefault,
         })
       );
     }
   };
 
+  const onExistingCard = () => {
+    if (!pendingAddCard && currentAddress) {
+      const groupCartItemByCompany = groupBy(
+        (item: CartItem) => item.companyId
+      );
+      const groupedCartItems = groupCartItemByCompany(cartItems);
+      const payload = Object.keys(groupedCartItems).reduce(
+        (orderData: OrderCartItem[][], companyId) => {
+          const companySpecificOrder = groupedCartItems[companyId].map(
+            (item) => ({
+              ...item,
+              shipping: props.selectedShipping[item.companyId],
+            })
+          );
+          return [...orderData, companySpecificOrder];
+        },
+        []
+      );
+
+      dispatch(
+        addCardAndPayActions.request({
+          cart: payload,
+          currentAddress,
+          totalPrice: props.totalValue,
+          email: user,
+          existingCard: selectedCard,
+          companyId: companyId,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(getPaymentMethodsActions.request({ companyId }));
+    }
+  }, [companyId]);
+
   const generatedProps = {
     balance: currentCompany?.credit || '',
+    cards,
     cardDetails,
     setCardDetails,
+    selectedCard,
+    setSelectedCard,
     isLoading: pendingAddCard || isLoadingAccountCredit,
     onAddCard,
+    onExistingCard,
     addCardAndPayError,
     ...props,
   };

@@ -1,4 +1,6 @@
-import { Dispatch } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+
+import { GetPaymentMethodsResponseItem } from 'types/store/GetPaymentMethodsState';
 
 export interface CardDetails {
   number: string;
@@ -19,9 +21,13 @@ export interface PaymentMethodPublicProps {
 
 export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {
   balance: string;
+  cards: GetPaymentMethodsResponseItem[];
   cardDetails: CardDetails;
   setCardDetails: Dispatch<Partial<CardDetails>>;
+  selectedCard: string;
+  setSelectedCard: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
   onAddCard: (values: CardDetails) => void;
+  onExistingCard: () => void;
   addCardAndPayError: string;
 }

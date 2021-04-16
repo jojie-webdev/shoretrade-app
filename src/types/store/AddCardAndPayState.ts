@@ -28,7 +28,8 @@ export type AddCardAndPayMeta = {
   email: string;
   companyId: string;
   cardToken?: string;
-  card: {
+  existingCard?: string;
+  card?: {
     number: number;
     exp_month: string;
     exp_year: string;
@@ -44,7 +45,8 @@ export type AddCardAndPayRealPayload = {
   totalPrice: number;
   email: string;
   companyId: string;
-  cardToken: string;
+  cardToken?: string;
+  existingCard?: string;
   currency: string;
 };
 
