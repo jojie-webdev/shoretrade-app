@@ -138,6 +138,10 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     }
   }, [companyId]);
 
+  useEffect(() => {
+    setSelectedCard('');
+  }, [cardDetails]);
+
   const generatedProps = {
     balance: currentCompany?.credit || '',
     cards,
