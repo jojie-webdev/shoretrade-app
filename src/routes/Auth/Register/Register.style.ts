@@ -74,11 +74,6 @@ export const GetStartedButton = styled(Button)`
   margin-top: 32px;
 `;
 
-export const GetStartedTitleWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
-
 export const GetStartedTitle = styled(Typography)`
   color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
