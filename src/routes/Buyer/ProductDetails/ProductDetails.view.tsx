@@ -10,20 +10,20 @@ import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
 import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
-import ProductSellerRating from 'components/module/ProductSellerRating';
+import ProductDetailCard from 'components/module/ProductDetailCard';
 import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import ProductSellerCard from 'components/module/ProductSellerCard';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
   Container,
   BannerContainer,
   DetailsContainer,
-  SellerRatingContainer,
   BoxContainer,
   DesiredQuantityContainer,
   TextFieldWrapper,
@@ -94,6 +94,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
+          <Col xs={12} sm={12} md={12} lg={6} className="title">
+            <Typography variant="title4">{productDetailsCard1Props.title}</Typography>
+            </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
               <BannerContainer>
                 <CarouselV2
@@ -112,7 +115,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   {newCurrentListing.description}
                 </Typography>
               ) : null}
-              <ProductDetailsCard1View
+              {/* <ProductDetailsCard1View
                 cBorderRadius={
                   verticalView ? '8px 8px 0px 0px' : '8px 8px 0px 0px'
                 }
@@ -120,16 +123,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 isFavorite={favorite}
                 onFavorite={onFavorite}
                 {...productDetailsCard1Props}
-              />
+              /> */}
               <ProductDetailsCard6View
                 cBorderRadius="0"
                 cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
                 {...productDetailsCard6Props}
               />
               {!isPendingAccount && (
-                <SellerRatingContainer>
-                  <ProductSellerRating isSmallName {...sellerRatingProps} />
-                </SellerRatingContainer>
+                <ProductSellerCard location={productDetailsCard1Props.location} isSmallName {...sellerRatingProps} />
               )}
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>

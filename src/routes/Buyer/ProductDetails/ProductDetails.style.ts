@@ -30,25 +30,13 @@ export const BannerContainer = styled.div`
 
 export const DetailsContainer = styled(Row)`
   height: 100%;
-`;
 
-export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
-  padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-
-  border: 2px solid #edeffa;
-
-  @media (max-width: 991px) {
-    border-width: 2px 2px 1px 2px;
-    border-radius: 0 0 0 0;
-  }
-
-  @media (min-width: 992px) {
-    border-width: 2px;
-    border-radius: 0px 0px 8px 8px;
+  .title {
+    margin-bottom: 1rem;
   }
 `;
+
+
 
 export const BoxContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
@@ -58,9 +46,6 @@ export const DesiredQuantityContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 24px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-  border: 2px solid #edeffa;
 
   @media (max-width: 991px) {
     border-width: 1px 2px 2px 2px;

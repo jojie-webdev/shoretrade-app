@@ -141,7 +141,11 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
         >
           {showSwiperItems && swiperItems}
         </Swiper>
-        <div className="swiper-pagination"></div>
+        {
+          images.length > 1 && (
+            <div className="swiper-pagination"></div>
+          )
+        }
       </SwiperArea>
     </SwiperContainer>
   );

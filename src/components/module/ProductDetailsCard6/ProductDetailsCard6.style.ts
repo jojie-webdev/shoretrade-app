@@ -5,9 +5,7 @@ import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 
 export const Container = styled.div<ProductDetailsCard6Props>`
   width: 100%;
-  background: #ffffff;
-  border: 2px solid #edeffa;
-  padding: 16px;
+  padding: 24px;
   border-width: ${({ cBorderWidth }) => cBorderWidth || '2px'};
   border-radius: ${({ cBorderRadius }) => cBorderRadius || '8px'};
 `;
@@ -15,6 +13,7 @@ export const Container = styled.div<ProductDetailsCard6Props>`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const Price = styled(Typography)`

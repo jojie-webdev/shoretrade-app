@@ -12,8 +12,6 @@ storiesOf('module/CarouselV2', module).add('Summary', () => (
       loop
       autoplay
       images={[
-        'https://picsum.photos/500/300.jpg',
-        'https://picsum.photos/501/300.jpg',
         'https://picsum.photos/502/300.jpg',
       ]}
     />
