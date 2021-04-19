@@ -37,15 +37,20 @@ export const FilterRow = styled(Row)`
 
 export const TotalSalesRow = styled(Row)`
   margin-bottom: 32px;
-
-  .paid-col {
-    @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 8px;
-    }
-  }
 `;
 
 export const MonthlyRow = styled(Row)``;
+export const SalesRow = styled(Row)`
+  width: 100%;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-left: 24px;
+    .figma-width {
+      width: 156px;
+      min-width: 156px;
+    }
+  }
+`;
 
 export const MonthlyContainer = styled.div`
   margin-bottom: 32px;
@@ -62,15 +67,18 @@ export const SalesCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   border-radius: 4px;
   margin-right: 24px;
-  min-width: 200px;
+  min-width: 170px;
   height: 100%;
-  
   .price {
     margin-bottom: 16px;
   }
 
   .overline {
     margin-bottom: 8px;
+  }
+  @media ${BREAKPOINTS['sm']} {
+    width: 170px;
+    margin-right: 16px;
   }
 `;
 

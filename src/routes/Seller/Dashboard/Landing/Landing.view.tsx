@@ -10,9 +10,11 @@ import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
 import LinePath from 'components/module/LinePath';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { getGraphData } from 'routes/Seller/Dashboard/Landing/Landing.transforms';
 import getFiscalQuarter from 'utils/Date/getFiscalQuarter';
@@ -35,6 +37,7 @@ import {
   CategoryImageContainer,
   SpinnerContainer,
   NotificationsContainer,
+  SalesRow,
 } from './Landing.style';
 
 const MarketNotification = (props: { type: string; onPress: () => void }) => {
@@ -88,16 +91,16 @@ const hasIncreased = (percentage: string) =>
 
 const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   const theme = useTheme();
-
   const getYearText = (year: number) => {
     return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
   };
 
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <FilterRow>
       <Col className="filter-col">
         <Button
-          text="Custom"
+          text={isSmallScreen ? 'Filter' : 'Custom'}
           size="sm"
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
           className="btn"
@@ -113,46 +116,53 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           }
           iconPosition="after"
         />
-        <Button
-          text={getYearText(getFiscalYear())}
-          variant={
-            getValidDateRangeByFinancialYear().start.id === dateRange.start.id
-              ? 'primary'
-              : 'unselected'
-          }
-          size="sm"
-          className="btn"
-          onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
-        />
-        {[4, 3, 2, 1].map((v) => (
-          <Button
-            key={v}
-            text={`Q${v}`}
-            variant={
-              getFiscalQuarter(v).start.id === dateRange.start.id
-                ? 'primary'
-                : 'unselected'
-            }
-            size="sm"
-            onClick={() => setDateRange(getFiscalQuarter(v))}
-            className="btn"
-          />
-        ))}
-        {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
-          <Button
-            key={v}
-            text={getYearText(v)}
-            variant={
-              getValidDateRangeByFinancialYear(v).start.id ===
-              dateRange.start.id
-                ? 'primary'
-                : 'unselected'
-            }
-            size="sm"
-            className="btn"
-            onClick={() => setDateRange(getValidDateRangeByFinancialYear(v))}
-          />
-        ))}
+        {!isSmallScreen && (
+          <>
+            <Button
+              text={getYearText(getFiscalYear())}
+              variant={
+                getValidDateRangeByFinancialYear().start.id ===
+                dateRange.start.id
+                  ? 'primary'
+                  : 'unselected'
+              }
+              size="sm"
+              className="btn"
+              onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+            />
+            {[4, 3, 2, 1].map((v) => (
+              <Button
+                key={v}
+                text={`Q${v}`}
+                variant={
+                  getFiscalQuarter(v).start.id === dateRange.start.id
+                    ? 'primary'
+                    : 'unselected'
+                }
+                size="sm"
+                onClick={() => setDateRange(getFiscalQuarter(v))}
+                className="btn"
+              />
+            ))}
+            {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
+              <Button
+                key={v}
+                text={getYearText(v)}
+                variant={
+                  getValidDateRangeByFinancialYear(v).start.id ===
+                  dateRange.start.id
+                    ? 'primary'
+                    : 'unselected'
+                }
+                size="sm"
+                className="btn"
+                onClick={() =>
+                  setDateRange(getValidDateRangeByFinancialYear(v))
+                }
+              />
+            ))}
+          </>
+        )}
       </Col>
     </FilterRow>
   );
@@ -161,9 +171,9 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
 const TotalSales = (props: any) => {
   const PaidCard = (ownProps: any) => {
     return (
-      <SalesCard>
+      <SalesCard className="figma-width">
         <Typography variant="overline" color="shade6" className="overline">
-          Total Paid
+          Paid
         </Typography>
         <Typography variant="title4" color="noshade">
           {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
@@ -177,11 +187,11 @@ const TotalSales = (props: any) => {
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
-            Payment
+            Total Sales
           </Typography>
         </Link>
       </Col>
-      <Col md={6} className="paid-col">
+      <SalesRow nowrap gutterWidth={24}>
         {props.data.paid ? (
           <Link to={props.toPaid}>
             <PaidCard {...props} />
@@ -189,17 +199,15 @@ const TotalSales = (props: any) => {
         ) : (
           <PaidCard {...props} />
         )}
-      </Col>
-      <Col md={6}>
-        <SalesCard>
+        <SalesCard className="figma-width">
           <Typography variant="overline" color="shade6" className="overline">
-            Pending Payment
+            Pending
           </Typography>
           <Typography variant="title4" color="noshade">
             {numberToShortenAmount(props.data.pending ? props.data.pending : 0)}
           </Typography>
         </SalesCard>
-      </Col>
+      </SalesRow>
     </TotalSalesRow>
   );
 };

@@ -526,13 +526,13 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           gridMax={yMax}
           style={{ flex: 1 }}
           data={graphData}
-          xScale={d3Scale.scaleTime}
+          xScale={d3Scale.scaleLinear}
           numberOfTicks={xTick}
           yAccessor={({ item }: any) => item.value}
           xAccessor={({ item }: any) => item.date}
           svg={{ stroke: theme.brand[stroke], strokeWidth }}
           contentInset={{ left: 5, top: 20 }}
-          curve={shape.curveLinear}
+          curve={shape.curveBasis}
         >
           <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />
