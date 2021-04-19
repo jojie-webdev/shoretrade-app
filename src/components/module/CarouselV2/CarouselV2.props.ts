@@ -13,6 +13,8 @@ export interface CarouselV2Props {
   arrowInside?: boolean;
   showAquafuture?: boolean;
   showAlmostGone?: boolean;
+  showActionButton?: boolean;
+  actionButton?: React.ReactNode;
 }
 
 export type AspectRatio = '16:9' | '9:4';

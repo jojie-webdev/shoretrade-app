@@ -39,9 +39,19 @@ export const BoxContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const DesiredQuantityContainer = styled.div`
+export const DesiredQuantityContainer = styled.div<{ withBackground: boolean }>`
   display: flex;
   flex-direction: column;
+
+  margin-top: ${({ theme, withBackground }) => (withBackground ? '24px' : 0)};
+
+  box-shadow: ${({ theme, withBackground }) =>
+    withBackground ? '0 4px 12px rgba(41,43,50,0.04)' : ''};
+
+  background: ${({ theme, withBackground }) =>
+    withBackground ? theme.grey.noshade : 'rgba(0,0,0,0)'};
+
+  padding: ${({ theme, withBackground }) => (withBackground ? '24px' : 0)};
 
   @media (max-width: 991px) {
     border-width: 1px 2px 2px 2px;
@@ -88,4 +98,10 @@ export const AddToCartButton = styled(Button)`
   @media ${BREAKPOINTS['sm']} {
     width: 50%;
   }
+`;
+
+export const EstimationsContainer = styled.div`
+  display: flex;
+  padding: 8px;
+  flex-direction: row;
 `;

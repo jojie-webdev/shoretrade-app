@@ -143,3 +143,12 @@ export const Image = styled.img`
   background: ${(props) => props.theme.grey.noshade};
   border-radius: 4px;
 `;
+
+export const ActionButtonContainer = styled.div`
+  display: block;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: auto;
+  z-index: 999;
+`;

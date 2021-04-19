@@ -7,7 +7,6 @@ export const Row = styled.div`
   align-items: center;
 `;
 
-
 export const RatingRow = styled(Row)`
   align-items: center;
 
@@ -16,8 +15,7 @@ export const RatingRow = styled(Row)`
   }
 `;
 
-export const EndRow = styled(Row)`
-`;
+export const EndRow = styled(Row)``;
 
 export const AvatarContainer = styled.div`
   display: flex;
@@ -44,16 +42,6 @@ export const AvatarPlaceholder = styled.div`
   align-items: center;
 `;
 
-export const Favorite = styled.button`
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-width: 0;
-  background-color: white;
-  padding-top: 8px;
-`;
-
 export const FlexShrinked = styled.div`
   display: flex;
   cursor: pointer;
@@ -70,12 +58,18 @@ export const StarContainer = styled.div<{ location?: string }>`
   margin-right: 6px;
 `;
 
-export const SellerCardContainer = styled.div<{ fishermanNotes?: string }>`
-  padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-
+export const SellerCardContainer = styled.div<{
+  fishermanNotes?: string;
+  withBackground?: boolean;
+}>`
+  padding: ${({ theme, withBackground }) => (withBackground ? '16px' : 0)};
+  margin-bottom: ${({ theme, withBackground }) =>
+    withBackground ? 0 : '32px'};
+  background-color: ${({ theme, withBackground }) =>
+    withBackground ? theme.grey.noshade : 'rgba(0, 0 ,0 ,0, 0)'};
   border: 2px solid #edeffa;
+  border: ${({ theme, withBackground }) =>
+    withBackground ? '2px solid #edeffa' : 0};
 
   border-radius: 8px;
 

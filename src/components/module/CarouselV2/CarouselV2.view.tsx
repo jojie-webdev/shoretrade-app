@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import Badge from 'components/base/Badge';
+import FavoriteButtonView from 'components/base/FavoriteButton';
 import { Ellipse } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -19,6 +20,7 @@ import {
   ArrowButton,
   PaginationArea,
   BadgeContainer,
+  ActionButtonContainer,
 } from './CarouselV2.style';
 
 SwiperCore.use([Autoplay, Pagination]);
@@ -39,6 +41,8 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
     arrowInside,
     showAquafuture,
     showAlmostGone,
+    showActionButton,
+    actionButton,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
@@ -49,6 +53,10 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
       </SwiperSlide>
     );
   });
+
+  const handleFavoriteClick = () => {
+    console.log('clicked');
+  };
 
   const [showSwiperItems, setShowSwiperItems] = useState(true);
 
@@ -100,6 +108,10 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
       }}
     >
       <SwiperArea>
+        <ActionButtonContainer>
+          {showActionButton ? actionButton : ''}
+        </ActionButtonContainer>
+
         <BadgeContainer>
           {showAquafuture && (
             <Badge badgeColor="#111E2B">
@@ -124,9 +136,6 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
           initialSlide={0}
           pagination={{
             el: '.swiper-pagination',
-            renderCustom: (swiper, current, total) => {
-              return current + ' of ' + total;
-            },
           }}
           autoplay={
             images.length !== 0 && autoplay
@@ -141,11 +150,7 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
         >
           {showSwiperItems && swiperItems}
         </Swiper>
-        {
-          images.length > 1 && (
-            <div className="swiper-pagination"></div>
-          )
-        }
+        {images.length > 1 && <div className="swiper-pagination"></div>}
       </SwiperArea>
     </SwiperContainer>
   );
