@@ -5,14 +5,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
-import {
-  Amex,
-  Cart,
-  Mastercard,
-  Paypal,
-  Visa,
-  Zippay,
-} from 'components/base/SVG';
+import { Amex, Cart, Mastercard, Visa } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -30,7 +23,12 @@ import {
   CardDetails,
   PaymentMethodGeneratedProps,
 } from './PaymentMethod.props';
-import { Container, Method, CCImage } from './PaymentMethod.style';
+import {
+  Container,
+  Method,
+  CCImage,
+  CreditCardInteraction,
+} from './PaymentMethod.style';
 import { isValid } from './PaymentMethod.validation';
 
 const PAYMENT_METHODS = [
@@ -47,7 +45,7 @@ const CardFields = (props: { formik?: any }) => {
   return (
     <>
       <Row>
-        <Col className="form-card-col" md={12} xl={4}>
+        <Col className="form-card-col" md={12} xl={10}>
           <FormikTextField
             type="text"
             name="number"
@@ -94,7 +92,7 @@ const CardFields = (props: { formik?: any }) => {
       </Row>
 
       <Row>
-        <Col className="form-card-col" md={12} lg={6} xl={2}>
+        <Col className="form-card-col" md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
             name="exp"
@@ -119,7 +117,7 @@ const CardFields = (props: { formik?: any }) => {
             }}
           />
         </Col>
-        <Col className="form-card-col" md={12} lg={6} xl={2}>
+        <Col className="form-card-col" md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
             name="cvc"
@@ -131,7 +129,7 @@ const CardFields = (props: { formik?: any }) => {
       </Row>
 
       <Row>
-        <Col className="form-card-col" md={12} lg={6} xl={4}>
+        <Col className="form-card-col" md={12} lg={6} xl={10}>
           <FormikTextField
             type="text"
             name="name"
@@ -148,7 +146,13 @@ const CardFields = (props: { formik?: any }) => {
 const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cardDetails, setCardDetails, processingOrder, isLoading } = props;
+  const {
+    cards,
+    cardDetails,
+    setCardDetails,
+    processingOrder,
+    isLoading,
+  } = props;
   const theme = useTheme();
 
   const formRef = useRef<FormikProps<CardDetails>>(null);
@@ -240,49 +244,72 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         )}
 
         {paymentMethod === 'card' && (
-          <>
-            <div className="cc-image-row">
-              <CCImage>
-                <Visa height={32} />
-              </CCImage>
-              <CCImage>
-                <Mastercard height={32} />
-              </CCImage>
-              <CCImage>
-                <Amex height={32} />
-              </CCImage>
-            </div>
+          <Row style={{ marginBottom: 24 }}>
+            <Col md={12} xl={6}>
+              <div className="cc-image-row">
+                <CCImage>
+                  <Visa height={32} />
+                </CCImage>
+                <CCImage>
+                  <Mastercard height={32} />
+                </CCImage>
+                <CCImage>
+                  <Amex height={32} />
+                </CCImage>
+              </div>
 
-            <Formik
-              innerRef={formRef}
-              initialValues={cardDetails}
-              onSubmit={(values: CardDetails) => {
-                const finalValues = {
-                  ...values,
-                  isDefault: cardDetails.isDefault,
-                };
-                props.onAddCard(finalValues);
-              }}
-              validate={isValid}
-            >
-              <Form>
-                <ConnectedCardFields />
-              </Form>
-            </Formik>
-
-            <div className="form-card-checkbox">
-              <Checkbox
-                label="Set as default card"
-                name="isDefault"
-                checked={cardDetails.isDefault}
-                onClick={() => {
-                  setCardDetails({
-                    isDefault: !cardDetails.isDefault,
-                  });
+              <Formik
+                innerRef={formRef}
+                initialValues={cardDetails}
+                onSubmit={(values: CardDetails) => {
+                  const finalValues = {
+                    ...values,
+                    isDefault: cardDetails.isDefault,
+                  };
+                  props.onAddCard(finalValues);
                 }}
-              />
-            </div>
-          </>
+                validate={isValid}
+              >
+                <Form>
+                  <ConnectedCardFields />
+                </Form>
+              </Formik>
+
+              <div className="form-card-checkbox">
+                <Checkbox
+                  label="Set as default card"
+                  name="isDefault"
+                  checked={cardDetails.isDefault}
+                  onClick={() => {
+                    setCardDetails({
+                      isDefault: !cardDetails.isDefault,
+                    });
+                  }}
+                />
+              </div>
+            </Col>
+
+            <Col md={12} xl={6}>
+              <Typography className="cc-title" variant="copy">
+                Credit Cards
+              </Typography>
+
+              {cards.map((card) => (
+                <CreditCardInteraction
+                  key={card.id}
+                  {...card}
+                  type="radio"
+                  pressed={props.selectedCard === card.id}
+                  onClick={() =>
+                    props.setSelectedCard((prevState) => {
+                      if (prevState === card.id) return '';
+                      else return card.id;
+                    })
+                  }
+                />
+              ))}
+            </Col>
+          </Row>
         )}
 
         <div className="bottom-row">
@@ -351,7 +378,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
             }
 
             if (paymentMethod === 'card') {
-              if (formRef.current) {
+              if (props.selectedCard) {
+                props.onExistingCard();
+              } else if (formRef.current) {
                 formRef.current.handleSubmit();
               }
             }
