@@ -232,7 +232,7 @@ const MonthlySales = (props: any) => {
               `${moment(m.startDate).format('MM-DD-YYYY')}`
             )}
           >
-            <SalesCard>
+            <SalesCard className="many-cards">
               <Typography
                 variant="overline"
                 color="shade6"
@@ -296,7 +296,7 @@ const TopCategories = (props: any) => {
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.categories.map((c: any, i: any) => (
           <Link key={i} to={props.toDetails(c.id, c.name)}>
-            <SalesCard>
+            <SalesCard className="many-cards">
               <Typography
                 variant="overline"
                 color="shade6"
