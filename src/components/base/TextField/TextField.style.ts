@@ -1,15 +1,8 @@
 import Typography from 'components/base/Typography';
+import { fontStyle } from 'consts/textField';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
-
-const fontStyle = `
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  
-`;
 
 export const FieldContainer = styled.div<{
   error: boolean;

@@ -718,14 +718,14 @@ const StepForm = ({
                 <>
                   <MobileField
                     name="mobile"
-                    label="MOBILE"
+                    label="MOBILE NUMBER"
                     callingCode={registrationDetails.callingCode}
                     setCallingCode={(value) =>
                       updateRegistrationDetails({ callingCode: value })
                     }
                   />
                   <Alert
-                    variant="infoAlert"
+                    variant={isSeller ? 'info' : 'infoAlert'}
                     fullWidth
                     content={`You can add more people to your ${
                       isSeller ? 'seller' : 'buyer'
@@ -766,7 +766,7 @@ const StepForm = ({
                   />
 
                   <Alert
-                    variant="infoAlert"
+                    variant={isSeller ? 'info' : 'infoAlert'}
                     fullWidth
                     content={
                       isSeller ? SELLER_LOCATION_NOTES : BUYER_LOCATION_NOTES

@@ -20,6 +20,8 @@ import {
 
 const TextField = (props: TextFieldProps): JSX.Element => {
   const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+
   const {
     id,
     type,
@@ -104,7 +106,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
 
       {alert && (
         <Alert
-          variant="infoAlert"
+          variant={isSeller ? 'info' : 'infoAlert'}
           content={alert}
           fullWidth
           style={{ marginTop: 8 }}
