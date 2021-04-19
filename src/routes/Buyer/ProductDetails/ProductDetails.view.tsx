@@ -5,7 +5,13 @@ import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
-import { Expand, Heart, HeartFilled, Location } from 'components/base/SVG';
+import {
+  Expand,
+  Heart,
+  HeartFilled,
+  Location,
+  Cart,
+} from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
@@ -21,6 +27,7 @@ import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import theme from 'utils/Theme';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
@@ -263,6 +270,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <AddToCartButton
                       text="Add to Cart"
                       onClick={onAddToCart}
+                      iconPosition="before"
+                      icon={
+                        <Cart fill={pressedBoxRadio ? '' : theme.grey.shade5} />
+                      }
                       variant={pressedBoxRadio ? undefined : 'disabled'}
                     />
                   </ButtonContainer>

@@ -97,7 +97,7 @@ export const BoxRadioContainer = styled.div`
 export const ButtonContainer = styled.div`
   margin-top: 32px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 export const AddToCartButton = styled(Button)`
