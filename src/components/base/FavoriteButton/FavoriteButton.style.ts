@@ -1,13 +1,15 @@
 import styled from 'utils/styled';
+
 import Touchable from '../Touchable';
 
 export const Container = styled(Touchable)`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  padding: 4px;
 
-  width: 40px;
-  height: 40px;
+  
 
   background: #FFFFFF;
   border: 1px solid #DADFF2;
@@ -15,10 +17,13 @@ export const Container = styled(Touchable)`
   border-radius: 8px;
 
   min-width 40px;
-  min-height: 40px;
+  height: 40px;
 `;
 
 export const SvgContainer = styled.div`
-  display: block;
-  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -111,3 +111,9 @@ export const EstimationsContainer = styled.div`
   padding: 8px;
   flex-direction: row;
 `;
+
+export const TopBarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

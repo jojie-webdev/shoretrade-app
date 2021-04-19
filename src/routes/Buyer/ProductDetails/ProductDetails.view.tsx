@@ -35,6 +35,7 @@ import {
   ButtonContainer,
   AddToCartButton,
   EstimationsContainer,
+  TopBarContainer,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -103,28 +104,39 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         <>
           <DetailsContainer>
             <Col xs={12} sm={12} md={12} lg={12} className="title">
-              <Typography variant="title4">
-                {productDetailsCard1Props.title}
-              </Typography>
-              {!isMobile && (
-                <EstimationsContainer>
-                  <div style={{ marginRight: 6 }}>
-                    <Location width={14} height={16} />
-                  </div>
-                  <Typography
-                    variant="label"
-                    style={{ fontWeight: 500, marginRight: 10 }}
-                  >
-                    {productDetailsCard1Props.location}
+              <TopBarContainer>
+                <div>
+                  <Typography variant="title4">
+                    {productDetailsCard1Props.title}
                   </Typography>
-                  <div style={{ marginLeft: 6 }}>
-                    <Expand />
-                  </div>
-                  <Typography variant="label" style={{ fontWeight: 500 }}>
-                    {productDetailsCard1Props.size}
-                  </Typography>
-                </EstimationsContainer>
-              )}
+                  {!isMobile && (
+                    <EstimationsContainer>
+                      <div style={{ marginRight: 6 }}>
+                        <Location width={14} height={16} />
+                      </div>
+                      <Typography
+                        variant="label"
+                        style={{ fontWeight: 500, marginRight: 10 }}
+                      >
+                        {productDetailsCard1Props.location}
+                      </Typography>
+                      <div style={{ marginLeft: 6 }}>
+                        <Expand />
+                      </div>
+                      <Typography variant="label" style={{ fontWeight: 500 }}>
+                        {productDetailsCard1Props.size}
+                      </Typography>
+                    </EstimationsContainer>
+                  )}
+                </div>
+                {!isMobile && (
+                  <FavoriteButtonView
+                    onClick={onFavorite}
+                    isFavorite={favorite}
+                    iconOnly={false}
+                  />
+                )}
+              </TopBarContainer>
             </Col>
             <Col xs={12} sm={12} md={12} lg={6} className="title">
               <BannerContainer>
