@@ -111,14 +111,19 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 `;
 
-export const SidebarItem = styled(Link)`
-  height: 24px;
+export const SidebarItem = styled(Link)<{ isActive: boolean }>`
+  height: 48px;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   border-bottom: none;
   text-decoration: none;
+  padding-left: 14px;
+  ${(props) =>
+    props.isActive &&
+    `background: ${props.theme.brand.primary};
+      border-radius: 4px;`}
 
   .icon-container {
     margin-right: 12px;

@@ -49,16 +49,19 @@ const NavLink = ({
   linkText,
   Icon,
   onClick,
-}: NavLinkProps) => (
-  <SidebarItem to={to} onClick={onClick}>
-    <div className="icon-container">
-      {Icon && <Icon fill={iconColor} height={20} width={20} />}
-    </div>
-    <Typography className="link" color={color} weight="500">
-      {linkText}
-    </Typography>
-  </SidebarItem>
-);
+  isActive,
+}: NavLinkProps) => {
+  return (
+    <SidebarItem to={to} onClick={onClick} isActive={isActive}>
+      <div className="icon-container">
+        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+      </div>
+      <Typography className="link" color={color} weight="500">
+        {linkText}
+      </Typography>
+    </SidebarItem>
+  );
+};
 
 const Header = ({
   pageTitle,
@@ -223,10 +226,11 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 }
               }}
               key={`sidenav-${route.path}`}
+              isActive={isInnerRoute(route.path)}
               to={route.path}
-              color={isInnerRoute(route.path) ? 'primary' : textColor}
+              color={isInnerRoute(route.path) ? 'noshade' : textColor}
               iconColor={
-                isInnerRoute(route.path) ? theme.brand.primary : iconColor
+                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
               }
               linkText={route.title || ''}
               Icon={route.icon}

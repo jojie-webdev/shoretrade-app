@@ -63,7 +63,8 @@ export const SalesCard = styled.div`
   border-radius: 4px;
   margin-right: 24px;
   min-width: 200px;
-
+  height: 100%;
+  
   .price {
     margin-bottom: 16px;
   }
