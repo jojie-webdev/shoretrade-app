@@ -98,7 +98,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   });
 
   return (
-    <Container>
+    <Container isMobile={isMobile}>
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>

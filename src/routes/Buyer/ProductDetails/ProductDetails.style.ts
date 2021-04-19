@@ -3,8 +3,14 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isMobile: boolean }>`
   flex-direction: row;
+
+  @media (min-width: 577px) {
+    background-color: ${({ theme }) => theme.grey.shade2};
+    padding: 24px;
+    border-radiu: 8px;
+  }
 
   .description {
     text-align: center;
