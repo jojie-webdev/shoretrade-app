@@ -23,7 +23,7 @@ const LinePath = (props: LinePathProps): JSX.Element => {
     height,
     width,
     stroke = 'success',
-    strokeWidth = 3,
+    strokeWidth = 2,
     cStyle,
   } = props;
 
@@ -50,7 +50,7 @@ const LinePath = (props: LinePathProps): JSX.Element => {
     .line<Points>()
     .x((p) => scaleX(p.date))
     .y((p) => scaleY(p.value))
-    .curve(shape.curveLinear)(graphData) as string;
+    .curve(shape.curveBasis)(graphData) as string;
 
   return (
     <Container cHeight={cHeight} cWidth={cWidth} style={cStyle}>
