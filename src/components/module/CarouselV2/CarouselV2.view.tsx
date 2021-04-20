@@ -5,7 +5,7 @@ import FavoriteButtonView from 'components/base/FavoriteButton';
 import { Ellipse } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import SwiperContainer from 'components/layout/SwiperContainer';
+import SwiperContainerV2 from 'components/layout/SwiperContainerV2';
 import SwiperCore, { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -99,7 +99,7 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
 
   const hideOutsideArrows = arrowInside || hideArrowArea || false;
   return (
-    <SwiperContainer
+    <SwiperContainerV2
       height={height}
       aspectRatio={aspectRatio}
       addMargin={addMargin}
@@ -152,7 +152,7 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
         </Swiper>
         {images.length > 1 && <div className="swiper-pagination"></div>}
       </SwiperArea>
-    </SwiperContainer>
+    </SwiperContainerV2>
   );
 };
 

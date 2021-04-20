@@ -25,62 +25,41 @@ export const Parent = styled.div<{
   addMargin?: boolean;
 }>`
   display: flex;
-  height: ${({ height }) => height || '325px'};
+  height: ${({ height }) => height || '295px'};
   width: 100%;
 
   @media (min-width: 375px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375] + 30}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375]}px`};
   }
 
   @media (min-width: 768px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][768] + 30}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][768]}px`};
   }
 
   @media (min-width: 1024px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1024] + 30}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1024]}px`};
     margin-top: 0px;
   }
 
   @media (min-width: 1366px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1366] + 30}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1366]}px`};
   }
 
   @media (min-width: 1440px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1440] + 30}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1440]}px`};
   }
 `;
 
 export const Container = styled.div`
   height: 100%;
   width: 100%;
-  flex-direction: column;
-  align-items: center;
+  display: flex;
+  flex-direction: row;
 
   .swiper-container {
     width: 100%;
     max-width: 100%;
     height: 100%;
     border-radius: 4px;
-  }
-
-  .swiper-pagination {
-    display: block;
-    position: relative;
-    bottom: 0;
-
-    .swiper-pagination-bullet {
-      width: 8px;
-      height: 8px;
-      display: inline-block;
-      border-radius: 100%;
-      background: ${({ theme }) => theme.grey.shade5};
-      opacity: 0.2;
-      margin: 0 4px;
-    }
-
-    .swiper-pagination-bullet-active {
-      opacity: 1;
-      background: ${({ theme }) => theme.brand.primary};
-    }
   }
 `;
