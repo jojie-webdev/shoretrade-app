@@ -24,12 +24,24 @@ export const FilterRow = styled(Row)`
     align-items: center;
     flex-wrap: wrap;
 
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 24px;
+    }
+
     .btn {
       margin-right: 12px;
       margin-bottom: 24px;
 
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
+      }
+    }
+
+    .btn-abso {
+      @media ${BREAKPOINTS['sm']} {
+        position: absolute;
+        right: 0;
+        margin-right: 16px;
       }
     }
   }

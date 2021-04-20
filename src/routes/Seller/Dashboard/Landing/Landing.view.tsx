@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { ArrowRight, DropdownArrow } from 'components/base/SVG';
+import { ArrowRight, DropdownArrow, Filter } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
@@ -99,20 +99,29 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   return (
     <FilterRow>
       <Col className="filter-col">
+        {isSmallScreen && (
+          <Typography variant="title5" color="noshade">
+            Dashboard
+          </Typography>
+        )}
         <Button
           text={isSmallScreen ? 'Filter' : 'Custom'}
           size="sm"
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
-          className="btn"
+          className={`${isSmallScreen ? 'btn-abso' : 'btn'}`}
           onClick={props.toggleModal}
           icon={
-            <DropdownArrow
-              fill={
-                dateRange.start.id === 'custom'
-                  ? theme.grey.noshade
-                  : theme.grey.shade6
-              }
-            />
+            isSmallScreen ? (
+              <Filter fill={theme.brand.primary} />
+            ) : (
+              <DropdownArrow
+                fill={
+                  dateRange.start.id === 'custom'
+                    ? theme.grey.noshade
+                    : theme.grey.shade6
+                }
+              />
+            )
           }
           iconPosition="after"
         />
