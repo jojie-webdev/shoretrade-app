@@ -10,7 +10,7 @@ export const Container = styled.div<{ isMobile: boolean }>`
   @media (min-width: 577px) {
     background-color: ${({ theme }) => theme.grey.shade2};
     padding: 24px;
-    border-radiu: 8px;
+    border-radius: 8px;
   }
 
   .description {
@@ -42,7 +42,7 @@ export const DetailsContainer = styled(Row)`
   }
 `;
 
-export const BoxContainer = styled.div`
+export const ProductBoxContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
 `;
 

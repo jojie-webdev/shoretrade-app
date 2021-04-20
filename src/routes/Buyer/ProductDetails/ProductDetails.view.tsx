@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
+import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
-import Badge from 'components/base/Badge';
 import {
   Expand,
   Heart,
@@ -15,6 +15,7 @@ import {
 } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import BoxRadio from 'components/module/BoxRadio';
 import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
@@ -35,7 +36,7 @@ import {
   Container,
   BannerContainer,
   DetailsContainer,
-  BoxContainer,
+  ProductBoxContainer,
   DesiredQuantityContainer,
   TextFieldWrapper,
   RemainingWrapper,
@@ -47,6 +48,7 @@ import {
   StatusContainer,
   BadgeText,
 } from './ProductDetails.style';
+
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -109,7 +111,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   });
 
   return (
-    <Container isMobile={isMobile}>
+    <BoxContainer>
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
@@ -260,7 +262,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     </RemainingWrapper>
 
                     {!isEmpty(groupedBox) ? (
-                      <BoxContainer>
+                      <ProductBoxContainer>
                         <Typography
                           variant="overline"
                           color="shade6"
@@ -285,7 +287,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                             />
                           </BoxRadioContainer>
                         ))}
-                      </BoxContainer>
+                      </ProductBoxContainer>
                     ) : (
                       isLoadingListingBoxes && (
                         <div className="box-loading">
@@ -313,7 +315,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ) : (
         <Loading />
       )}
-    </Container>
+    </BoxContainer>
   );
 };
 
