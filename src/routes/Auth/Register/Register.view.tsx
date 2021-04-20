@@ -51,7 +51,6 @@ import {
   Container,
   Content,
   GetStartedTitle,
-  GetStartedTitleWrapper,
   GetStartedButton,
   StepCount,
   Title,
@@ -85,6 +84,12 @@ import {
   SellerSummaryContainer,
   TopContainer,
   LicensePreview,
+  LogInLinkContainer,
+  LogInLinkPrefix,
+  LogInLinkAction,
+  LogInLink,
+  SignUpHeader,
+  AppTypeTitle,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -1069,6 +1074,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSuccess,
     setSummaryEdit,
     isSummaryEdit,
+    goToLogIn,
   } = props;
 
   const [step, setStep] = useState(0);
@@ -1246,19 +1252,28 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <ColumnWrapper>
             <Container>
               <Content>
-                <GetStartedTitleWrapper>
-                  <Touchable dark onPress={() => backToLogin()}>
-                    <BackIcon
-                      width={16}
-                      height={16}
-                      fill={theme.brand.primary}
-                    />
-                  </Touchable>
-                  <GetStartedTitle variant="title5">
-                    Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
-                    simple steps
-                  </GetStartedTitle>
-                </GetStartedTitleWrapper>
+                <SignUpHeader>
+                  <AppTypeTitle variant="title3" weight="700">
+                    {isSeller ? 'Seller' : 'Buyer'} Sign Up
+                  </AppTypeTitle>
+                  <LogInLinkContainer>
+                    <LogInLinkPrefix
+                      variant="label"
+                      color={isSeller ? 'shade6' : 'shade7'}
+                    >
+                      Already have an account?
+                    </LogInLinkPrefix>
+                    <LogInLinkAction onClick={() => goToLogIn()}>
+                      <LogInLink variant="label" color="primary">
+                        Log In
+                      </LogInLink>
+                    </LogInLinkAction>
+                  </LogInLinkContainer>
+                </SignUpHeader>
+                <GetStartedTitle variant="title5">
+                  Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
+                  simple steps
+                </GetStartedTitle>
 
                 {steps
                   .filter((i) => i.title !== 'Summary')
@@ -1286,7 +1301,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   return (
     <AuthContainer
       isRegister
-      noLogo
+      // noLogo
+      logoContainerMarginBottomHeight={1}
       currentStep={step + 1}
       totalSteps={MAX_STEP + 1}
       containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}

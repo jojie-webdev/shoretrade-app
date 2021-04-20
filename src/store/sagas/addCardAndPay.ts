@@ -24,25 +24,43 @@ function* addCardAndPayRequest(
   const state: Store = yield select();
   if (state.auth.token) {
     try {
-      const { data: cardTokenData } = yield call(
-        createCardToken,
-        action.meta.card
-      );
-      const { data } = yield call(
-        addCardAndPay,
-        {
-          companyId: action.meta.companyId,
-          cardToken: cardTokenData.id,
-          currency: 'aud',
-          email: action.meta.email,
-          cart: action.meta.cart,
-          currentAddress: action.meta.currentAddress,
-          totalPrice: action.meta.totalPrice,
-          ...(action.meta.default ? { default: true } : {}),
-        },
-        state.auth.token
-      );
-      yield put(addCardAndPayActions.success(data));
+      if (action.meta.existingCard) {
+        const { data } = yield call(
+          addCardAndPay,
+          {
+            companyId: action.meta.companyId,
+            existingCard: action.meta.existingCard,
+            currency: 'aud',
+            email: action.meta.email,
+            cart: action.meta.cart,
+            currentAddress: action.meta.currentAddress,
+            totalPrice: action.meta.totalPrice,
+          },
+          state.auth.token
+        );
+
+        yield put(addCardAndPayActions.success(data));
+      } else if (action.meta.card) {
+        const { data: cardTokenData } = yield call(
+          createCardToken,
+          action.meta.card
+        );
+        const { data } = yield call(
+          addCardAndPay,
+          {
+            companyId: action.meta.companyId,
+            cardToken: cardTokenData.id,
+            currency: 'aud',
+            email: action.meta.email,
+            cart: action.meta.cart,
+            currentAddress: action.meta.currentAddress,
+            totalPrice: action.meta.totalPrice,
+            ...(action.meta.default ? { default: true } : {}),
+          },
+          state.auth.token
+        );
+        yield put(addCardAndPayActions.success(data));
+      }
     } catch (e) {
       yield put(addCardAndPayActions.failed(e.message));
     }

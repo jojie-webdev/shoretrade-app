@@ -1,3 +1,4 @@
+import InteractionCreditCard from 'components/module/InteractionCreditCard/InteractionCreditCard.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -21,6 +22,10 @@ export const Container = styled.div`
   .cc-image-row {
     display: flex;
     flex-flow: row nowrap;
+    margin-bottom: 32px;
+  }
+
+  .cc-title {
     margin-bottom: 32px;
   }
 
@@ -119,4 +124,9 @@ export const CCImage = styled.div`
   & > svg {
     vertical-align: middle;
   }
+`;
+
+export const CreditCardInteraction = styled(InteractionCreditCard)`
+  max-height: 74px;
+  margin-top: 12px;
 `;

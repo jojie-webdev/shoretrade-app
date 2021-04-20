@@ -258,6 +258,10 @@ const Register = (): JSX.Element => {
     useSelector((state: Store) => (state.register.data?.status || 0) === 200) ||
     false;
 
+  const goToLogIn = () => {
+    history.push(isSeller ? SELLER_ROUTES.LOGIN : BUYER_ROUTES.LOGIN);
+  };
+
   const generatedProps = {
     // generated props here
     backToLogin,
@@ -285,6 +289,7 @@ const Register = (): JSX.Element => {
     handleSelectShorePay,
     handleDownloadApplicationForm,
     setSearchTerm,
+    goToLogIn,
   };
   return <RegisterView {...generatedProps} />;
 };

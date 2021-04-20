@@ -1,16 +1,9 @@
 import React from 'react';
 
 import CreditCard from 'components/base/CreditCard';
-import {
-  ChevronRight,
-  Visa,
-  Mastercard,
-  Zippay,
-  Paypal,
-} from 'components/base/SVG';
+import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
-// import { useTheme } from 'utils/Theme';
 import { InteractionCreditCardProps } from './InteractionCreditCard.props';
 import {
   LeftComponent,
@@ -22,8 +15,6 @@ import {
 const InteractionCreditCard = (
   props: InteractionCreditCardProps
 ): JSX.Element => {
-  // const theme = useTheme();
-
   return (
     <CustomInteractions
       {...props}
