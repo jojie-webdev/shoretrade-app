@@ -42,6 +42,7 @@ export const Background = styled.div`
   }
   @media ${BREAKPOINTS['sm']} {
     background-size: cover;
+    height: 0%;
   }
 `;
 
@@ -133,7 +134,7 @@ export const Content = styled.div<{
     max-height: 100vh;
     max-width: 100%;
 
-    padding: ${({ isLogin }) => (isLogin ? '40px 24px' : '0px 40px 24px 40px')};
+    padding: ${({ isLogin }) => (isLogin ? '40px 24px' : '0px 24px 40px 24px')};
   }
 `;
 
@@ -148,6 +149,7 @@ export const LogoContainer = styled.div<{
 }>`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: ${(props) =>
     props.logoContainerMarginBottomHeight
@@ -162,6 +164,10 @@ export const LogoContainer = styled.div<{
 `;
 
 export const MobileFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   width: 100%;

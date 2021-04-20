@@ -15,6 +15,10 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   height: 32px;
+
+  .back-touchable {
+    margin-right: 8px;
+  }
 `;
 
 export const Email = styled(FormikTextField)`

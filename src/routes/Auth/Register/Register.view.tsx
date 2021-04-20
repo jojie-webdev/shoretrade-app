@@ -11,14 +11,17 @@ import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
+import MobileNav from 'components/layout/MobileNav';
 import Add from 'components/module/Add/Add.view';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
 import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, FormikProps } from 'formik';
 import { isEmpty } from 'ramda';
+import { useMediaQuery } from 'react-responsive';
 import { validateAccount } from 'services/auth';
 import {
   Category,
@@ -56,7 +59,7 @@ import {
   Title,
   TextField,
   FormikContainer,
-  ColumnWrapper,
+  GetStartedWrapper,
   InputContainer,
   DownloadTermsContainer,
   DownloadIcon,
@@ -90,6 +93,7 @@ import {
   LogInLink,
   SignUpHeader,
   AppTypeTitle,
+  MobileFooter,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -132,6 +136,7 @@ const StepForm = ({
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const MAX_STEP: number = !isSeller ? 6 : 7;
 
   const [license, setLicense] = useState<{
@@ -500,9 +505,12 @@ const StepForm = ({
               <CustomInteraction
                 label="Market Sector"
                 value={
-                  SELLER_VARIATIONS.filter(
-                    (i) => i.key === registrationDetails.categoryMarketSector
-                  )[0].label
+                  !isEmpty(registrationDetails.categoryMarketSector)
+                    ? SELLER_VARIATIONS.filter(
+                        (i) =>
+                          i.key === registrationDetails.categoryMarketSector
+                      )[0].label
+                    : ''
                 }
                 onClick={() => {
                   summaryHandleStep(5);
@@ -517,9 +525,12 @@ const StepForm = ({
               <CustomInteraction
                 label="Market Sector"
                 value={
-                  BUYER_VARIATIONS.filter(
-                    (i) => i.key === registrationDetails.categoryMarketSector
-                  )[0].label
+                  !isEmpty(registrationDetails.categoryMarketSector)
+                    ? BUYER_VARIATIONS.filter(
+                        (i) =>
+                          i.key === registrationDetails.categoryMarketSector
+                      )[0].label
+                    : ''
                 }
                 onClick={() => {
                   summaryHandleStep(4);
@@ -1025,6 +1036,7 @@ const StepForm = ({
             {!isSuccess ? (
               <>
                 <NextButton
+                  takeFullWidth={isSmallScreen}
                   loading={isPending && step === MAX_STEP}
                   type={step === MAX_STEP ? 'submit' : 'button'}
                   text={buttonTextHandler(step)}
@@ -1036,11 +1048,16 @@ const StepForm = ({
               </>
             ) : null}
             {isGotoDetails && (
-              <NextButton text={'ADD MORE'} onClick={() => hideDetails()} />
+              <NextButton
+                takeFullWidth={isSmallScreen}
+                text={'ADD MORE'}
+                onClick={() => hideDetails()}
+              />
             )}
 
             {step === 4 && isSeller && (
               <NextButton
+                takeFullWidth={isSmallScreen}
                 text={'ADD'}
                 type={'button'}
                 onClick={() => onAddMoreLicense()}
@@ -1049,6 +1066,7 @@ const StepForm = ({
 
             {isSuccess && (
               <NextButton
+                takeFullWidth={isSmallScreen}
                 text={'OK'}
                 type="button"
                 onClick={() => backToLogin()}
@@ -1065,6 +1083,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const {
     backToLogin,
     registrationDetails,
@@ -1248,134 +1268,156 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       );
     } else {
       return (
-        <>
-          <ColumnWrapper>
-            <Container>
-              <Content>
-                <SignUpHeader>
-                  <AppTypeTitle variant="title3" weight="700">
-                    {isSeller ? 'Seller' : 'Buyer'} Sign Up
-                  </AppTypeTitle>
-                  <LogInLinkContainer>
-                    <LogInLinkPrefix
-                      variant="label"
-                      color={isSeller ? 'shade6' : 'shade7'}
-                    >
-                      Already have an account?
-                    </LogInLinkPrefix>
-                    <LogInLinkAction onClick={() => goToLogIn()}>
-                      <LogInLink variant="label" color="primary">
-                        Log In
-                      </LogInLink>
-                    </LogInLinkAction>
-                  </LogInLinkContainer>
-                </SignUpHeader>
-                <GetStartedTitle variant="title5">
-                  Signing up is free and complete with {isSeller ? '6' : '5'}{' '}
-                  simple steps
-                </GetStartedTitle>
+        <GetStartedWrapper>
+          <SignUpHeader>
+            <AppTypeTitle variant="title3" weight="700">
+              {isSeller ? 'Seller' : 'Buyer'} Sign Up
+            </AppTypeTitle>
+            <LogInLinkContainer>
+              <LogInLinkPrefix
+                variant="label"
+                color={isSeller ? 'shade6' : 'shade7'}
+              >
+                Already have an account?
+              </LogInLinkPrefix>
+              <LogInLinkAction onClick={() => goToLogIn()}>
+                <LogInLink variant="label" color="primary">
+                  Log In
+                </LogInLink>
+              </LogInLinkAction>
+            </LogInLinkContainer>
+          </SignUpHeader>
+          <GetStartedTitle variant="title5">
+            Signing up is free and complete with {isSeller ? '6' : '5'} simple
+            steps
+          </GetStartedTitle>
 
-                {steps
-                  .filter((i) => i.title !== 'Summary')
-                  .map((step, index) => (
-                    <StepDetails
-                      key={step.title}
-                      step={index + 1}
-                      title={step.title}
-                      description={step.description}
-                      style={{ marginTop: index === 0 ? 24 : 32 }}
-                    />
-                  ))}
-                <GetStartedButton
-                  text="GET STARTED"
-                  onClick={() => nextStep()}
-                />
-              </Content>
-            </Container>
-          </ColumnWrapper>
-        </>
+          {steps
+            .filter((i) => i.title !== 'Summary')
+            .map((step, index) => (
+              <StepDetails
+                key={step.title}
+                step={index + 1}
+                title={step.title}
+                description={step.description}
+                style={{ marginTop: index === 0 ? 24 : 32 }}
+              />
+            ))}
+          {!isSmallScreen ? (
+            <GetStartedButton text="GET STARTED" onClick={() => nextStep()} />
+          ) : (
+            <MobileFooter>
+              <Button
+                takeFullWidth
+                text="GET STARTED"
+                onClick={() => nextStep()}
+              />
+            </MobileFooter>
+          )}
+        </GetStartedWrapper>
       );
     }
   };
 
   return (
-    <AuthContainer
-      isRegister
-      // noLogo
-      logoContainerMarginBottomHeight={1}
-      currentStep={step + 1}
-      totalSteps={MAX_STEP + 1}
-      containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
-      minHeight={'660px'}
+    <MobileNav
+      {...(step > 0
+        ? {
+            onBackOverride: () => setStep((prevState) => prevState - 1),
+          }
+        : {})}
     >
-      <RenderContainer step={step}>
-        {!props.isGotoDetails && step > 0 && !isSuccess && (
-          <TopContainer>
-            <StepCount variant="overline">{`STEP ${step} / ${MAX_STEP}`}</StepCount>
-            <TitleContainer>
-              <Touchable dark onPress={() => previousStep()}>
-                <BackIcon width={16} height={16} fill={theme.brand.primary} />
-              </Touchable>
-              <Title
-                variant="title5"
-                weight="500"
-                color={isSeller ? 'noshade' : 'shade8'}
-              >
-                {steps[step - 1].title}
-              </Title>
-            </TitleContainer>
-
-            {!isSeller && BUYER_STEP_SUBTITLE[step] && (
-              <Typography
-                variant="label"
+      <AuthContainer
+        isRegister
+        noLogo={isSmallScreen}
+        logoContainerMarginBottomHeight={1}
+        currentStep={step + 1}
+        totalSteps={MAX_STEP + 1}
+        containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
+        minHeight={'660px'}
+      >
+        <RenderContainer step={step}>
+          {!props.isGotoDetails && step > 0 && !isSuccess && (
+            <TopContainer>
+              <StepCount
+                variant="overline"
                 color="shade6"
-                style={{ marginLeft: 35 }}
-              >
-                {BUYER_STEP_SUBTITLE[step]}
-              </Typography>
-            )}
+              >{`STEP ${step} / ${MAX_STEP}`}</StepCount>
+              <TitleContainer>
+                {!isSmallScreen && (
+                  <Touchable dark onPress={() => previousStep()}>
+                    <BackIcon
+                      width={16}
+                      height={16}
+                      fill={theme.brand.primary}
+                    />
+                  </Touchable>
+                )}
+                <Title
+                  variant="title5"
+                  weight="500"
+                  color={isSeller ? 'noshade' : 'shade8'}
+                >
+                  {steps[step - 1].title}
+                </Title>
+              </TitleContainer>
 
-            {isSeller && SELLER_STEP_SUBTITLE[step] && (
-              <Typography
-                variant="label"
-                color="shade6"
-                style={{ marginLeft: 35 }}
-              >
-                {SELLER_STEP_SUBTITLE[step]}
-              </Typography>
-            )}
-          </TopContainer>
-        )}
+              {!isSeller && BUYER_STEP_SUBTITLE[step] && (
+                <Typography
+                  variant="label"
+                  color="shade6"
+                  style={{ marginLeft: isSmallScreen ? 0 : 35 }}
+                >
+                  {BUYER_STEP_SUBTITLE[step]}
+                </Typography>
+              )}
 
-        {props.isGotoDetails && (
-          <>
-            <TitleContainer>
-              <Button
-                className="back-badge"
-                text="Back"
-                size="sm"
-                iconPosition="before"
-                textVariant="overline"
-                textWeight="900"
-                textColor={theme.appType === 'buyer' ? 'shade9' : 'noshade'}
-                icon={
-                  <BackIcon fill={theme.brand.primary} height={16} width={16} />
-                }
-                onClick={() => props.hideDetails()}
-                style={{
-                  background:
-                    theme.appType === 'seller'
-                      ? theme.grey.shade9
-                      : theme.grey.shade3,
-                }}
-              />
-            </TitleContainer>
-          </>
-        )}
+              {isSeller && SELLER_STEP_SUBTITLE[step] && (
+                <Typography
+                  variant="label"
+                  color="shade6"
+                  style={{ marginLeft: isSmallScreen ? 0 : 35 }}
+                >
+                  {SELLER_STEP_SUBTITLE[step]}
+                </Typography>
+              )}
+            </TopContainer>
+          )}
 
-        {renderCurrentStep()}
-      </RenderContainer>
-    </AuthContainer>
+          {props.isGotoDetails && (
+            <>
+              <TitleContainer>
+                <Button
+                  className="back-badge"
+                  text="Back"
+                  size="sm"
+                  iconPosition="before"
+                  textVariant="overline"
+                  textWeight="900"
+                  textColor={theme.appType === 'buyer' ? 'shade9' : 'noshade'}
+                  icon={
+                    <BackIcon
+                      fill={theme.brand.primary}
+                      height={16}
+                      width={16}
+                    />
+                  }
+                  onClick={() => props.hideDetails()}
+                  style={{
+                    background:
+                      theme.appType === 'seller'
+                        ? theme.grey.shade9
+                        : theme.grey.shade3,
+                  }}
+                />
+              </TitleContainer>
+            </>
+          )}
+
+          {renderCurrentStep()}
+        </RenderContainer>
+      </AuthContainer>
+    </MobileNav>
   );
 };
 
