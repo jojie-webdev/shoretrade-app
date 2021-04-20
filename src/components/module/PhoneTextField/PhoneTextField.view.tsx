@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import Interactions from 'components/base/Interactions/Interactions.view';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import Search from 'components/module/Search';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import CALLING_CODES from 'consts/callingCodes';
 import { useField } from 'formik';
-import { useTheme } from 'utils/Theme';
+import { useMediaQuery } from 'react-responsive';
 
 import { PhoneTextFieldProps } from './PhoneTextField.props';
 import {
@@ -19,17 +21,49 @@ import {
   Error,
 } from './PhoneTextField.style';
 
-const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
-  const theme = useTheme();
+const ResultsView = (
+  props: PhoneTextFieldProps & { setIsOpen: Dispatch<SetStateAction<boolean>> }
+) => {
+  const { setCallingCode, setIsOpen } = props;
+  const [search, setSearch] = useState('');
 
+  return (
+    <Results>
+      <Search
+        rounded
+        value={search}
+        onChange={(e) => setSearch(e.currentTarget.value)}
+        placeholder="Search for your Country"
+      />
+
+      {CALLING_CODES.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase())
+      ).map((item) => (
+        <InteractionsContainer key={item.name}>
+          <Interactions
+            type="next"
+            value={`${item.flag} ${item.name} +${item.callingCode} `}
+            onClick={() => {
+              setCallingCode(item.callingCode);
+              setIsOpen(false);
+            }}
+          />
+        </InteractionsContainer>
+      ))}
+    </Results>
+  );
+};
+
+const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
   const { name, callingCode, setCallingCode, ...textFieldProps } = props;
   const [field, meta] = useField<string>(name);
   const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState('');
+
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const australia = { callingCode: '61', flag: '🇦🇺' };
   const initCountry = callingCode
-    ? CALLING_CODES.find((cc) => callingCode.includes(cc.callingCode)) ||
+    ? CALLING_CODES.find((cc) => cc.callingCode.includes(callingCode)) ||
       australia
     : australia;
 
@@ -67,29 +101,15 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
         </Error>
       )}
 
-      <Modal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
-        <Results>
-          <Search
-            rounded
-            value={search}
-            onChange={(e) => setSearch(e.currentTarget.value)}
-            placeholder="Search for your Country"
-          />
-
-          {CALLING_CODES.filter((c) => c.name.includes(search)).map((item) => (
-            <InteractionsContainer key={item.name}>
-              <Interactions
-                type="next"
-                value={`${item.flag} ${item.name} +${item.callingCode} `}
-                onClick={() => {
-                  setCallingCode(item.callingCode);
-                  setIsOpen(false);
-                }}
-              />
-            </InteractionsContainer>
-          ))}
-        </Results>
-      </Modal>
+      {isSmallScreen ? (
+        <MobileModal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
+          <ResultsView {...props} setIsOpen={setIsOpen} />
+        </MobileModal>
+      ) : (
+        <Modal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
+          <ResultsView {...props} setIsOpen={setIsOpen} />
+        </Modal>
+      )}
     </>
   );
 };
