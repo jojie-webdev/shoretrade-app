@@ -12,6 +12,10 @@ export const RatingRow = styled(Row)`
 
   .rating-value {
     margin-right: 4px;
+    font-size: 16px;
+    line-height: 20px;
+    display: block;
+    height: 16px;
   }
 `;
 
@@ -72,6 +76,9 @@ export const SellerCardContainer = styled.div<{
     withBackground ? '2px solid #edeffa' : 0};
 
   border-radius: 8px;
+
+  height: 100%;
+  max-height: 120px;
 
   @media (min-width: 992px) {
     border-width: 2px;

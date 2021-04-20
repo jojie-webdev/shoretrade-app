@@ -38,7 +38,6 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
     onClickSeller,
   } = props;
 
-  const nameLenMaxVisible = 21;
   const [defaultImage, setDefaultImage] = useState(uri);
   return (
     <SellerCardContainer withBackground={props.withBackground}>
@@ -63,20 +62,9 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>
-          {isSmallName ? (
-            <Typography variant="body" weight="bold" color="shade9">
-              {name.length < nameLenMaxVisible
-                ? `${name}`
-                : `${name.substring(0, nameLenMaxVisible)}...`}
-            </Typography>
-          ) : (
-            <Typography variant="body" weight="bold" color="shade9">
-              {name.length < nameLenMaxVisible
-                ? `${name}`
-                : `${name.substring(0, nameLenMaxVisible)}...`}
-            </Typography>
-          )}
-
+          <Typography variant="body" weight="bold" color="shade9">
+            {name}
+          </Typography>
           <RatingRow>
             <Typography
               className="rating-value"

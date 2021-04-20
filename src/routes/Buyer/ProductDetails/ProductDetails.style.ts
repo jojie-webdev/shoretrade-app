@@ -1,4 +1,5 @@
 import Button from 'components/base/Button';
+import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import styled, { css } from 'utils/styled';
@@ -116,4 +117,14 @@ export const TopBarContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: 12px;
 `;

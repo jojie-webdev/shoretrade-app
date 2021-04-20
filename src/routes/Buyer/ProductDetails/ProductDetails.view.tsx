@@ -5,6 +5,7 @@ import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
+import Badge from 'components/base/Badge';
 import {
   Expand,
   Heart,
@@ -43,6 +44,8 @@ import {
   AddToCartButton,
   EstimationsContainer,
   TopBarContainer,
+  StatusContainer,
+  BadgeText,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -117,23 +120,49 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     {productDetailsCard1Props.title}
                   </Typography>
                   {!isMobile && (
-                    <EstimationsContainer>
-                      <div style={{ marginRight: 6 }}>
-                        <Location width={14} height={16} />
-                      </div>
-                      <Typography
-                        variant="label"
-                        style={{ fontWeight: 500, marginRight: 10 }}
-                      >
-                        {productDetailsCard1Props.location}
-                      </Typography>
-                      <div style={{ marginLeft: 6 }}>
-                        <Expand />
-                      </div>
-                      <Typography variant="label" style={{ fontWeight: 500 }}>
-                        {productDetailsCard1Props.size}
-                      </Typography>
-                    </EstimationsContainer>
+                    <>
+                      <EstimationsContainer>
+                        <div style={{ marginRight: 6 }}>
+                          <Location
+                            fill={theme.grey.shade5}
+                            width={14}
+                            height={16}
+                          />
+                        </div>
+                        <Typography
+                          color="shade6"
+                          variant="label"
+                          style={{ fontWeight: 500, marginRight: 10 }}
+                        >
+                          {productDetailsCard1Props.location}
+                        </Typography>
+                        <div style={{ marginLeft: 6 }}>
+                          <Expand fill={theme.grey.shade5} />
+                        </div>
+                        <Typography
+                          color="shade6"
+                          variant="label"
+                          style={{ fontWeight: 500 }}
+                        >
+                          {productDetailsCard1Props.size}
+                        </Typography>
+                      </EstimationsContainer>
+                      <StatusContainer>
+                        {productDetailsCard1Props.tags?.map((item, index) => {
+                          return (
+                            <Badge
+                              key={index}
+                              fontColor={theme.grey.shade9}
+                              badgeColor={theme.grey.shade3}
+                            >
+                              <BadgeText variant="caption" weight="bold">
+                                {item.label}
+                              </BadgeText>
+                            </Badge>
+                          );
+                        })}
+                      </StatusContainer>
+                    </>
                   )}
                 </div>
                 {!isMobile && (
@@ -173,7 +202,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
               <ProductDetailsCard6View
-                cBorderRadius="0"
                 withBackground={!isMobile}
                 cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
                 {...productDetailsCard6Props}
