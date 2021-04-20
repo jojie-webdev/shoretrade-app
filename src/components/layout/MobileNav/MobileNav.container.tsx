@@ -13,6 +13,7 @@ const MobileNav = (props: MobileNavPublicProps): JSX.Element => {
   const includes = (route: string) => pathname.includes(route);
 
   const showBack = () => {
+    if (props.onBackOverride) return true;
     if (
       includes(SELLER_ROUTES.FORGOT_PASSWORD) ||
       includes(BUYER_ROUTES.FORGOT_PASSWORD) ||
@@ -29,6 +30,8 @@ const MobileNav = (props: MobileNavPublicProps): JSX.Element => {
     if (includes(MAIN_ROUTES.FORGOT_PASSWORD)) return 'Forgot Password?';
     if (includes(SELLER_ROUTES.VERIFY2FA) || includes(BUYER_ROUTES.VERIFY2FA))
       return '2-Step Verification';
+    if (includes(SELLER_ROUTES.REGISTER) || includes(BUYER_ROUTES.REGISTER))
+      return 'Register';
 
     return '';
   };

@@ -67,10 +67,12 @@ const ForgotPasswordView = (
     <AuthContainer>
       <TitleContainer>
         {!isMain && (
-          <Touchable dark={isSeller} onPress={() => backToLogin()}>
-            <div style={{ marginRight: 8 }}>
-              <ArrowLeft width={16} height={16} fill={theme.brand.primary} />
-            </div>
+          <Touchable
+            dark={isSeller}
+            onPress={() => backToLogin()}
+            className="back-touchable"
+          >
+            <ArrowLeft width={16} height={16} fill={theme.brand.primary} />
           </Touchable>
         )}
         <Typography variant="title5" color={isSeller ? 'noshade' : 'shade8'}>
