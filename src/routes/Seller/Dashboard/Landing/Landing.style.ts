@@ -50,7 +50,7 @@ export const SalesRow = styled(Row)`
 
   @media ${BREAKPOINTS['sm']} {
     .figma-width {
-      width: 156px;
+      width: 156px !important;
       min-width: 156px;
     }
   }
