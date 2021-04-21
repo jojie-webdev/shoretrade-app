@@ -3,7 +3,7 @@ import calendarStartDay from 'res/images/calendar-day-start.svg';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +13,8 @@ export const Container = styled.div`
     margin-top: 8px;
   }
   .calendar-title {
-    width: 90%;
+    width: ${({ isDatePickerDashboard }) =>
+      isDatePickerDashboard ? '100%' : '90%'};
   }
 
   .button-container {

@@ -25,10 +25,13 @@ const DatePickerModal = ({
 }: DatePickerModalProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return isSmallScreen ? (
-    <MobileModal {...modalProps} backgroundColor={theme.grey.shade9}>
-      <Container>
+    <MobileModal
+      {...modalProps}
+      backgroundColor={`${isDatePickerDashboard && theme.grey.shade9}`}
+    >
+      <Container isDatePickerDashboard={isDatePickerDashboard}>
         <Typography className="calendar-title" variant="title5" color="noshade">
-          Calendar
+          Dates
         </Typography>
         {children && isSmallScreen && (
           <div className="filters"> {children}</div>
@@ -59,18 +62,19 @@ const DatePickerModal = ({
         <Typography className="calendar-title" variant="title5" color="noshade">
           Calendar
         </Typography>
-        {children}
-        <DayPickerRangeController
-          horizontalMonthPadding={0}
-          verticalHeight={500}
-          startDate={startDate}
-          endDate={endDate}
-          onDatesChange={onDateChange}
-          focusedInput={focusedInput}
-          onFocusChange={onFocusChange}
-          daySize={50}
-          hideKeyboardShortcutsPanel
-        />
+        <CalendarContainer>
+          <DayPickerRangeController
+            horizontalMonthPadding={0}
+            verticalHeight={500}
+            startDate={startDate}
+            endDate={endDate}
+            onDatesChange={onDateChange}
+            focusedInput={focusedInput}
+            onFocusChange={onFocusChange}
+            daySize={50}
+            hideKeyboardShortcutsPanel
+          />
+        </CalendarContainer>
 
         <div className="button-container">
           <Button text="Apply" takeFullWidth onClick={onClickApply} />
