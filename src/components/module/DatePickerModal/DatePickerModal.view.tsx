@@ -7,9 +7,10 @@ import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { DayPickerRangeController, FocusedInputShape } from 'react-dates';
 import { useMediaQuery } from 'react-responsive';
+import theme from 'utils/Theme';
 
 import { DatePickerModalProps } from './DatePickerModal.props';
-import { Container } from './DatePickerModal.style';
+import { Container, CalendarContainer } from './DatePickerModal.style';
 
 const DatePickerModal = ({
   startDate,
@@ -18,27 +19,34 @@ const DatePickerModal = ({
   focusedInput,
   onFocusChange,
   onClickApply,
+  children,
+  isDatePickerDashboard,
   ...modalProps
 }: DatePickerModalProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return isSmallScreen ? (
-    <MobileModal {...modalProps}>
+    <MobileModal {...modalProps} backgroundColor={theme.grey.shade9}>
       <Container>
         <Typography className="calendar-title" variant="title5" color="noshade">
           Calendar
         </Typography>
+        {children && isSmallScreen && (
+          <div className="filters"> {children}</div>
+        )}
 
-        <DayPickerRangeController
-          horizontalMonthPadding={0}
-          verticalHeight={500}
-          startDate={startDate}
-          endDate={endDate}
-          onDatesChange={onDateChange}
-          focusedInput={focusedInput}
-          onFocusChange={onFocusChange}
-          daySize={50}
-          hideKeyboardShortcutsPanel
-        />
+        <CalendarContainer isDatePickerDashboard={isDatePickerDashboard}>
+          <DayPickerRangeController
+            horizontalMonthPadding={0}
+            verticalHeight={500}
+            startDate={startDate}
+            endDate={endDate}
+            onDatesChange={onDateChange}
+            focusedInput={focusedInput}
+            onFocusChange={onFocusChange}
+            daySize={50}
+            hideKeyboardShortcutsPanel
+          />
+        </CalendarContainer>
 
         <div className="button-container">
           <Button text="Apply" takeFullWidth onClick={onClickApply} />
@@ -51,7 +59,7 @@ const DatePickerModal = ({
         <Typography className="calendar-title" variant="title5" color="noshade">
           Calendar
         </Typography>
-
+        {children}
         <DayPickerRangeController
           horizontalMonthPadding={0}
           verticalHeight={500}

@@ -9,6 +9,9 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  .filters {
+    margin-top: 8px;
+  }
   .calendar-title {
     width: 90%;
   }
@@ -17,7 +20,11 @@ export const Container = styled.div`
     margin-top: 32px;
     width: 90%;
   }
+`;
 
+export const CalendarContainer = styled.div<{
+  isDatePickerDashboard?: boolean;
+}>`
   /* Calendar Overrides */
 
   .CalendarDay__default,
@@ -26,7 +33,10 @@ export const Container = styled.div`
   .CalendarMonthGrid,
   .DayPicker_transitionContainer,
   .DayPicker__withBorder {
-    background: ${(props) => props.theme.grey.shade8};
+    background: ${(props) =>
+      props.isDatePickerDashboard
+        ? props.theme.grey.shade9
+        : props.theme.grey.shade8};
     border: none;
 
     :hover {
@@ -78,7 +88,10 @@ export const Container = styled.div`
 
   /* Will edit everything selected including everything between a range of dates */
   .CalendarDay__selected_span {
-    background: ${(props) => props.theme.grey.shade9};
+    background: ${(props) =>
+      props.isDatePickerDashboard
+        ? props.theme.grey.shade8
+        : props.theme.grey.shade9};
     color: ${(props) => props.theme.grey.shade7};
     border: none;
 

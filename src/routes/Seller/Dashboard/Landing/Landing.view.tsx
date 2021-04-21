@@ -39,6 +39,7 @@ import {
   SpinnerContainer,
   NotificationsContainer,
   SalesRow,
+  MobileFilterButton,
 } from './Landing.style';
 
 const MarketNotification = (props: { type: string; onPress: () => void }) => {
@@ -173,6 +174,60 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
             ))}
           </>
         )}
+      </Col>
+    </FilterRow>
+  );
+};
+
+const MobileFilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
+  const theme = useTheme();
+  const getYearText = (year: number) => {
+    return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
+  };
+
+  return (
+    <FilterRow>
+      <Col className="filter-col modal-col">
+        <MobileFilterButton
+          text={getYearText(getFiscalYear())}
+          variant={
+            getValidDateRangeByFinancialYear().start.id === dateRange.start.id
+              ? 'primary'
+              : 'unselected'
+          }
+          size="sm"
+          className="btn"
+          onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+        />
+        {[4, 3, 2, 1].map((v) => (
+          <MobileFilterButton
+            key={v}
+            text={`Q${v}`}
+            variant={
+              getFiscalQuarter(v).start.id === dateRange.start.id
+                ? 'primary'
+                : 'unselected'
+            }
+            size="sm"
+            onClick={() => setDateRange(getFiscalQuarter(v))}
+            className="btn"
+          />
+        ))}
+        {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
+          <MobileFilterButton
+            key={v}
+            text={getYearText(v)}
+            variant={
+              getValidDateRangeByFinancialYear(v).start.id ===
+              dateRange.start.id
+                ? 'primary'
+                : 'unselected'
+            }
+            size="sm"
+            className="btn"
+            onClick={() => setDateRange(getValidDateRangeByFinancialYear(v))}
+          />
+        ))}
       </Col>
     </FilterRow>
   );
@@ -442,7 +497,10 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
                 props.onApplyCustom({ start: startDate, end: endDate })
               }
               onClickClose={toggleModal}
-            />
+              isDatePickerDashboard
+            >
+              {isSmallScreen && <MobileFilterHeader {...props} />}
+            </DatePickerModal>
           )}
         </>
       )}

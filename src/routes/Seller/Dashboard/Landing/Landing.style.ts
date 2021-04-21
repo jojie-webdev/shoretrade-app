@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
@@ -31,7 +32,6 @@ export const FilterRow = styled(Row)`
     .btn {
       margin-right: 12px;
       margin-bottom: 24px;
-
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }
@@ -45,6 +45,17 @@ export const FilterRow = styled(Row)`
       }
     }
   }
+
+  .modal-col {
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0px;
+    }
+  }
+`;
+
+export const MobileFilterButton = styled(Button)`
+  background-color: ${(props) =>
+    props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`
