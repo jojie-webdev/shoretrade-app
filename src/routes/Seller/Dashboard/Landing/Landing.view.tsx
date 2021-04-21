@@ -179,7 +179,12 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   );
 };
 
-const MobileFilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
+const MobileFilterHeader = ({
+  dateRange,
+  setDateRange,
+  toggleModal,
+  ...props
+}: any) => {
   const theme = useTheme();
   const getYearText = (year: number) => {
     return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
@@ -197,7 +202,10 @@ const MobileFilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           }
           size="sm"
           className="btn"
-          onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+          onClick={() => {
+            setDateRange(getValidDateRangeByFinancialYear());
+            toggleModal();
+          }}
         />
         {[4, 3, 2, 1].map((v) => (
           <MobileFilterButton
@@ -209,7 +217,10 @@ const MobileFilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                 : 'unselected'
             }
             size="sm"
-            onClick={() => setDateRange(getFiscalQuarter(v))}
+            onClick={() => {
+              setDateRange(getFiscalQuarter(v));
+              toggleModal();
+            }}
             className="btn"
           />
         ))}
@@ -225,7 +236,10 @@ const MobileFilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
             }
             size="sm"
             className="btn"
-            onClick={() => setDateRange(getValidDateRangeByFinancialYear(v))}
+            onClick={() => {
+              setDateRange(getValidDateRangeByFinancialYear(v));
+              toggleModal();
+            }}
           />
         ))}
       </Col>
