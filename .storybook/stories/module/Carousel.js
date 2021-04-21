@@ -10,6 +10,7 @@ storiesOf('module/Carousel', module).add('Summary', () => (
     <Carousel
       id="carousel"
       loop
+      hideArrowArea
       autoplay
       images={[
         'https://picsum.photos/500/300.jpg',

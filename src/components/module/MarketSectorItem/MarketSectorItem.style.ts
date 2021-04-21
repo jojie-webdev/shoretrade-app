@@ -1,9 +1,11 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 162px;
+  width: 152px;
   height: 172px;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade1};
@@ -12,6 +14,11 @@ export const Container = styled.div`
       ? 'unset'
       : '0px 6px 12px rgba(41, 43, 50, 0.12)'};
   border-radius: 8px;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 150px;
+    height: 172px;
+  }
 `;
 
 export const Content = styled.div`

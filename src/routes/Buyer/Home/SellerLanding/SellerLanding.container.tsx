@@ -1,21 +1,11 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import {
-  getBuyerSearchFilterDataActions,
-  getListingsByTypeActions,
-  currentAddressActions,
-} from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
+import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
-import { SellerLandingGeneratedProps } from './SellerLanding.props';
 import SellerLandingView from './SellerLanding.view';
 
 const SellerLanding = (): JSX.Element => {
-  const dispatch = useDispatch();
-
   const [search, setSearch] = useState('');
 
   const results = (

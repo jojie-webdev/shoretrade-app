@@ -17,7 +17,6 @@ import {
   Description,
   ButtonContainer,
   PrevButton,
-  Footer,
 } from './Onboarding.style';
 
 const OnboardingView = (props: OnboardingGeneratedProps) => {
@@ -34,10 +33,11 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
 
   return (
     <AuthContainer
+      horizontalLogo={isSmallScreen}
       logoContainerMarginBottomHeight={20}
       onSkipAction={onClickSkip}
       mobileFooter={
-        <Footer>
+        <>
           <Pagination
             variant="dots"
             currentValue={currentPage + 1}
@@ -45,7 +45,7 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
             spacing={8}
           />
           <Button text="Next" onClick={onClickNext} />
-        </Footer>
+        </>
       }
     >
       <Container>

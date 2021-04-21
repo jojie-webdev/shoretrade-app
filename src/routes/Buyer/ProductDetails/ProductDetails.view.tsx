@@ -2,36 +2,49 @@ import React, { useEffect, useState, useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
-import Button from 'components/base/Button';
+import Badge from 'components/base/Badge';
+import Divider from 'components/base/Divider';
+import FavoriteButtonView from 'components/base/FavoriteButton';
+import {
+  Expand,
+  Heart,
+  HeartFilled,
+  Location,
+  Cart,
+} from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import BoxRadio from 'components/module/BoxRadio';
-import Carousel from 'components/module/Carousel';
+import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
-import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
-import ProductSellerRating from 'components/module/ProductSellerRating';
-import { placeholderImage } from 'consts';
+import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import theme from 'utils/Theme';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
   Container,
   BannerContainer,
   DetailsContainer,
-  SellerRatingContainer,
-  BoxContainer,
+  ProductBoxContainer,
   DesiredQuantityContainer,
   TextFieldWrapper,
   RemainingWrapper,
   BoxRadioContainer,
   ButtonContainer,
   AddToCartButton,
+  EstimationsContainer,
+  TopBarContainer,
+  StatusContainer,
+  BadgeText,
 } from './ProductDetails.style';
+
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
     currentListing,
@@ -66,6 +79,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     GetListingResponseItem
   >();
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   useEffect(() => {
     selectAddress(listingId);
     // onLoad(listingId);
@@ -86,25 +101,89 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     }
   }, [groupedBox]);
 
-  const verticalView = useMediaQuery({
-    query: `(max-width: 991px)`,
-  });
   return (
-    <Container>
+    <BoxContainer>
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
-            <Col xs={12} sm={12} md={12} lg={6}>
+            <Col xs={12} sm={12} md={12} lg={12} className="title">
+              <TopBarContainer>
+                <div>
+                  <Typography variant="title4">
+                    {productDetailsCard1Props.title}
+                  </Typography>
+                  {!isMobile && (
+                    <>
+                      <EstimationsContainer>
+                        <div style={{ marginRight: 6 }}>
+                          <Location
+                            fill={theme.grey.shade5}
+                            width={14}
+                            height={16}
+                          />
+                        </div>
+                        <Typography
+                          color="shade6"
+                          variant="label"
+                          style={{ fontWeight: 500, marginRight: 10 }}
+                        >
+                          {productDetailsCard1Props.location}
+                        </Typography>
+                        <div style={{ marginLeft: 6 }}>
+                          <Expand fill={theme.grey.shade5} />
+                        </div>
+                        <Typography
+                          color="shade6"
+                          variant="label"
+                          style={{ fontWeight: 500 }}
+                        >
+                          {productDetailsCard1Props.size}
+                        </Typography>
+                      </EstimationsContainer>
+                      <StatusContainer>
+                        {productDetailsCard1Props.tags?.map((item, index) => {
+                          return (
+                            <Badge
+                              key={index}
+                              fontColor={theme.grey.shade9}
+                              badgeColor={theme.grey.shade3}
+                            >
+                              <BadgeText variant="caption" weight="bold">
+                                {item.label}
+                              </BadgeText>
+                            </Badge>
+                          );
+                        })}
+                      </StatusContainer>
+                    </>
+                  )}
+                </div>
+                {!isMobile && (
+                  <FavoriteButtonView
+                    onClick={onFavorite}
+                    isFavorite={favorite}
+                    iconOnly={false}
+                  />
+                )}
+              </TopBarContainer>
+            </Col>
+            <Col xs={12} sm={12} md={12} lg={6} className="title">
               <BannerContainer>
-                <Carousel
+                <CarouselV2
                   id={'product-details-carousel'}
                   images={images}
                   loop
                   // autoplay
                   aspectRatio="9:4"
-                  arrowInside
                   showAlmostGone={Number(remainingWeight) <= 50}
                   showAquafuture={isAquafuture}
+                  showActionButton={isMobile}
+                  actionButton={
+                    <FavoriteButtonView
+                      isFavorite={favorite}
+                      onClick={onFavorite}
+                    />
+                  }
                 />
               </BannerContainer>
 
@@ -113,27 +192,33 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   {newCurrentListing.description}
                 </Typography>
               ) : null}
-              <ProductDetailsCard1View
-                cBorderRadius={
-                  verticalView ? '8px 8px 0px 0px' : '8px 8px 0px 0px'
-                }
-                cBorderWidth={'2px 2px 1px 2px'}
-                isFavorite={favorite}
-                onFavorite={onFavorite}
-                {...productDetailsCard1Props}
-              />
-              <ProductDetailsCard6View
-                cBorderRadius="0"
-                cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
-                {...productDetailsCard6Props}
-              />
-              {!isPendingAccount && (
-                <SellerRatingContainer>
-                  <ProductSellerRating isSmallName {...sellerRatingProps} />
-                </SellerRatingContainer>
-              )}
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
+              <ProductDetailsCard6View
+                withBackground={!isMobile}
+                cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
+                {...productDetailsCard6Props}
+                SellerCard={
+                  !isMobile ? (
+                    <ProductSellerCard
+                      location={productDetailsCard1Props.location}
+                      withBackground={false}
+                      showFavoriteButton={false}
+                      {...sellerRatingProps}
+                    />
+                  ) : null
+                }
+              />
+              {!isPendingAccount && isMobile ? (
+                <ProductSellerCard
+                  location={productDetailsCard1Props.location}
+                  withBackground={true}
+                  showFavoriteButton={true}
+                  {...sellerRatingProps}
+                />
+              ) : (
+                ''
+              )}
               {isPendingAccount ? (
                 <Alert
                   variant="alert"
@@ -142,7 +227,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   alignText="center"
                 />
               ) : (
-                <DesiredQuantityContainer>
+                <DesiredQuantityContainer withBackground={!isMobile}>
+                  {isMobile && <Divider />}
                   <div className="content">
                     <TextFieldWrapper>
                       <TextField
@@ -165,7 +251,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     </RemainingWrapper>
 
                     {!isEmpty(groupedBox) ? (
-                      <BoxContainer>
+                      <ProductBoxContainer>
                         <Typography
                           variant="overline"
                           color="shade6"
@@ -190,7 +276,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                             />
                           </BoxRadioContainer>
                         ))}
-                      </BoxContainer>
+                      </ProductBoxContainer>
                     ) : (
                       isLoadingListingBoxes && (
                         <div className="box-loading">
@@ -203,6 +289,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <AddToCartButton
                       text="Add to Cart"
                       onClick={onAddToCart}
+                      iconPosition="before"
+                      icon={
+                        <Cart fill={pressedBoxRadio ? '' : theme.grey.shade5} />
+                      }
                       variant={pressedBoxRadio ? undefined : 'disabled'}
                     />
                   </ButtonContainer>
@@ -214,7 +304,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ) : (
         <Loading />
       )}
-    </Container>
+    </BoxContainer>
   );
 };
 

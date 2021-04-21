@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 import {
   /* PLOP_INJECT_IMPORT */
   Fish2,
+  Ellipse,
   Minus,
   ChevronDown,
   SubtractHollow,
@@ -158,286 +159,289 @@ storiesOf('base/SVG', module).add('Summary', () => {
   };
 
   return (
-    <Container background="white">
+    <Container background='white'>
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
-        <Wrapper label="Fish2">
+        <Wrapper label='Fish2'>
           <Fish2 width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Minus">
+        <Wrapper label='Ellipse'>
+          <Ellipse width={30} height={30} />
+        </Wrapper>
+        <Wrapper label='Minus'>
           <Minus width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ChevronDown">
+        <Wrapper label='ChevronDown'>
           <ChevronDown width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Weight">
+        <Wrapper label='Weight'>
           <Weight width={30} height={30} />
         </Wrapper>
-        <Wrapper label="FileUpload">
+        <Wrapper label='FileUpload'>
           <FileUpload width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Bolt">
+        <Wrapper label='Bolt'>
           <Bolt width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Wetshop">
+        <Wrapper label='Wetshop'>
           <Wetshop width={30} height={30} />
         </Wrapper>
-        <Wrapper label="BuyerRestaurantBar">
+        <Wrapper label='BuyerRestaurantBar'>
           <BuyerRestaurantBar width={30} height={30} />
         </Wrapper>
-        <Wrapper label="BuyerHotel">
+        <Wrapper label='BuyerHotel'>
           <BuyerHotel width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Retailer">
+        <Wrapper label='Retailer'>
           <Retailer width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Processor">
+        <Wrapper label='Processor'>
           <Processor width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Wholesaler">
+        <Wrapper label='Wholesaler'>
           <Wholesaler width={30} height={30} />
         </Wrapper>
-        <Wrapper label="AquacultureProducer">
+        <Wrapper label='AquacultureProducer'>
           <AquacultureProducer width={30} height={30} />
         </Wrapper>
-        <Wrapper label="WildCatchFishingCompany">
+        <Wrapper label='WildCatchFishingCompany'>
           <WildCatchFishingCompany width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Tuna">
+        <Wrapper label='Tuna'>
           <Tuna width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Logo">
+        <Wrapper label='Logo'>
           <Logo width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Message">
+        <Wrapper label='Message'>
           <Message width={30} height={30} />
         </Wrapper>
-        <Wrapper label="CheckList">
+        <Wrapper label='CheckList'>
           <CheckList width={30} height={30} />
         </Wrapper>
-        <Wrapper label="DownloadFile">
+        <Wrapper label='DownloadFile'>
           <DownloadFile width={30} height={30} />
         </Wrapper>
-        <Wrapper label="TrashCan">
+        <Wrapper label='TrashCan'>
           <TrashCan width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Amex">
+        <Wrapper label='Amex'>
           <Amex width={30} height={30} />
         </Wrapper>
-        <Wrapper label="PlaceholderProfile">
+        <Wrapper label='PlaceholderProfile'>
           <PlaceholderProfile width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ShoretradeLogo2">
+        <Wrapper label='ShoretradeLogo2'>
           <ShoretradeLogo2 width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorWholesaler">
+        <Wrapper label='MarketSectorWholesaler'>
           <MarketSectorWholesaler width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorWetShop">
+        <Wrapper label='MarketSectorWetShop'>
           <MarketSectorWetShop width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorRetailer">
+        <Wrapper label='MarketSectorRetailer'>
           <MarketSectorRetailer width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorRestaurantBar">
+        <Wrapper label='MarketSectorRestaurantBar'>
           <MarketSectorRestaurantBar width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorProcessor">
+        <Wrapper label='MarketSectorProcessor'>
           <MarketSectorProcessor width={30} height={30} />
         </Wrapper>
-        <Wrapper label="MarketSectorHotel">
+        <Wrapper label='MarketSectorHotel'>
           <MarketSectorHotel width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Clock">
+        <Wrapper label='Clock'>
           <Clock width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Paypal">
+        <Wrapper label='Paypal'>
           <Paypal width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Zippay">
+        <Wrapper label='Zippay'>
           <Zippay width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Mastercard">
+        <Wrapper label='Mastercard'>
           <Mastercard width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Visa">
+        <Wrapper label='Visa'>
           <Visa width={30} height={30} />
         </Wrapper>
-        <Wrapper label="RoundedTickInactive">
+        <Wrapper label='RoundedTickInactive'>
           <RoundedTickInactive width={30} height={30} />
         </Wrapper>
-        <Wrapper label="RoundedTickActive">
+        <Wrapper label='RoundedTickActive'>
           <RoundedTickActive width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Menu">
+        <Wrapper label='Menu'>
           <Menu width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Expand">
+        <Wrapper label='Expand'>
           <Expand width={30} height={30} />
         </Wrapper>
-        <Wrapper label="CarouselChevronRight">
+        <Wrapper label='CarouselChevronRight'>
           <CarouselChevronRight width={30} height={30} />
         </Wrapper>
-        <Wrapper label="CarouselChevronLeft">
+        <Wrapper label='CarouselChevronLeft'>
           <CarouselChevronLeft width={30} height={30} />
         </Wrapper>
-        <Wrapper label="PlaceholderIcon">
+        <Wrapper label='PlaceholderIcon'>
           <PlaceholderIcon width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Notepad">
+        <Wrapper label='Notepad'>
           <Notepad width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Category">
+        <Wrapper label='Category'>
           <Category width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Home">
+        <Wrapper label='Home'>
           <Home width={30} height={30} />
         </Wrapper>
-        <Wrapper label="HeartFilled">
+        <Wrapper label='HeartFilled'>
           <HeartFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Heart">
+        <Wrapper label='Heart'>
           <Heart width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Star">
+        <Wrapper label='Star'>
           <Star width={30} height={30} />
         </Wrapper>
-        <Wrapper label="StarFilled">
+        <Wrapper label='StarFilled'>
           <StarFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Oysters">
+        <Wrapper label='Oysters'>
           <Oysters width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Download">
+        <Wrapper label='Download'>
           <Download width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Fish">
+        <Wrapper label='Fish'>
           <Fish width={30} height={30} />
         </Wrapper>
-        <Wrapper label="UpArrow">
+        <Wrapper label='UpArrow'>
           <UpArrow width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Filter">
+        <Wrapper label='Filter'>
           <Filter width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Plane">
+        <Wrapper label='Plane'>
           <Plane width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Scale">
+        <Wrapper label='Scale'>
           <Scale width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Truck">
+        <Wrapper label='Truck'>
           <Truck width={30} height={30} />
         </Wrapper>
-        <Wrapper label="PaperPlane">
+        <Wrapper label='PaperPlane'>
           <PaperPlane width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Octopus">
+        <Wrapper label='Octopus'>
           <Octopus width={30} height={30} />
         </Wrapper>
-        <Wrapper label="DollarSign">
+        <Wrapper label='DollarSign'>
           <DollarSign width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Location">
+        <Wrapper label='Location'>
           <Location width={30} height={30} />
         </Wrapper>
-        <Wrapper label="SubtractHollow">
+        <Wrapper label='SubtractHollow'>
           <SubtractHollow width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Subtract">
+        <Wrapper label='Subtract'>
           <Subtract width={30} height={30} fill={'#F23742'} />
         </Wrapper>
-        <Wrapper label="Box">
+        <Wrapper label='Box'>
           <Box width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Camera">
+        <Wrapper label='Camera'>
           <Camera width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Check">
-          <Check width={30} height={30} fill="black" />
+        <Wrapper label='Check'>
+          <Check width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="Help">
-          <Help width={30} height={30} fill="black" />
+        <Wrapper label='Help'>
+          <Help width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="Crab">
+        <Wrapper label='Crab'>
           <Crab width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Calendar">
+        <Wrapper label='Calendar'>
           <Calendar width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ArrowRight">
+        <Wrapper label='ArrowRight'>
           <ArrowRight width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ArrowLeft">
+        <Wrapper label='ArrowLeft'>
           <ArrowLeft width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Lock">
-          <Lock width={30} height={30} fill="#000" />
+        <Wrapper label='Lock'>
+          <Lock width={30} height={30} fill='#000' />
         </Wrapper>
-        <Wrapper label="Spin">
+        <Wrapper label='Spin'>
           <Spin width={30} height={30} />
         </Wrapper>
-        <Wrapper label="DropdownArrow">
+        <Wrapper label='DropdownArrow'>
           <DropdownArrow width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Pen">
+        <Wrapper label='Pen'>
           <Pen width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Exit">
-          <Exit width={30} height={30} fill="black" />
+        <Wrapper label='Exit'>
+          <Exit width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="ShoretradeLogo">
+        <Wrapper label='ShoretradeLogo'>
           <ShoretradeLogo width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Dashboard">
-          <Dashboard width={30} height={30} fill="black" />
+        <Wrapper label='Dashboard'>
+          <Dashboard width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="AddBorder">
-          <AddBorder width={30} height={30} fill="black" />
+        <Wrapper label='AddBorder'>
+          <AddBorder width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="Cart">
-          <Cart width={30} height={30} fill="black" />
+        <Wrapper label='Cart'>
+          <Cart width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="CheckBorder">
-          <CheckBorder width={30} height={30} fill="black" />
+        <Wrapper label='CheckBorder'>
+          <CheckBorder width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="Account">
-          <Account width={30} height={30} fill="black" />
+        <Wrapper label='Account'>
+          <Account width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="FileCheck">
-          <FileCheck width={30} height={30} fill="black" />
+        <Wrapper label='FileCheck'>
+          <FileCheck width={30} height={30} fill='black' />
         </Wrapper>
-        <Wrapper label="ChevronRight">
+        <Wrapper label='ChevronRight'>
           <ChevronRight width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ChevronLeft">
+        <Wrapper label='ChevronLeft'>
           <ChevronLeft width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Search">
+        <Wrapper label='Search'>
           <Search width={30} height={30} />
         </Wrapper>
-        <Wrapper label="CheckFilled">
+        <Wrapper label='CheckFilled'>
           <CheckFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="CloseFilled">
+        <Wrapper label='CloseFilled'>
           <CloseFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ExclamationFilled">
+        <Wrapper label='ExclamationFilled'>
           <ExclamationFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="QuestionFilled">
+        <Wrapper label='QuestionFilled'>
           <QuestionFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="InfoFilled">
+        <Wrapper label='InfoFilled'>
           <InfoFilled width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Close">
+        <Wrapper label='Close'>
           <Close width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Eye">
+        <Wrapper label='Eye'>
           <Eye width={30} height={30} />
         </Wrapper>
-        <Wrapper label="EyeOff">
+        <Wrapper label='EyeOff'>
           <EyeOff width={30} height={30} />
         </Wrapper>
       </Content>

@@ -1,24 +1,4 @@
-import Typography from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
-
-import { CategoriesContainer } from '../Home.style';
-
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
+import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
   display: flex;
@@ -50,4 +30,4 @@ export const LoadingContainer = styled.div`
   height: 100%;
 `;
 
-export const SellerContainer = styled(CategoriesContainer)``;
+export const SellerContainer = styled.div``;
