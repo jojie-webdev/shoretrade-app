@@ -480,7 +480,6 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
     isEarning,
   } = props;
   let stroke = props.stroke;
-  console.log(props);
   if (data.dates.length === 0) return null;
   stroke = !isEarning ? 'error' : 'success';
   const graphData = data.dates.map((d, i) => ({
