@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Fish2,
   Minus,
   ChevronDown,
   SubtractHollow,
@@ -160,6 +161,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Fish2">
+          <Fish2 width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Minus">
           <Minus width={30} height={30} />
         </Wrapper>

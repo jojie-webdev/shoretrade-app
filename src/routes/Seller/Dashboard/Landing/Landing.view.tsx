@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { ArrowRight, DropdownArrow, Filter } from 'components/base/SVG';
+import { ArrowRight, DropdownArrow, Filter, Fish2 } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
+import EmptyDashboard from 'components/module/EmptyDashboard';
 import LinePath from 'components/module/LinePath';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -351,19 +352,20 @@ const TopCategories = (props: any) => {
   );
 };
 
-const DashboardView = ({
-  data,
-  isLoading,
-  isCalendarModalOpen,
-  toggleModal,
-  toPaidGraph,
-  toCategories,
-  toCategoryDetails,
-  currentNotificationType,
-  onClickMarketNotification,
-  userPending,
-  ...props
-}: DashboardLandingGeneratedProps) => {
+const DashboardView = (props: DashboardLandingGeneratedProps) => {
+  const {
+    data,
+    isLoading,
+    isCalendarModalOpen,
+    toggleModal,
+    toPaidGraph,
+    toCategories,
+    toCategoryDetails,
+    currentNotificationType,
+    onClickMarketNotification,
+    userPending,
+  } = props;
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('day', 7));
   const [focus, setFocus] = useState<FocusedInputShape>('startDate');
@@ -376,7 +378,7 @@ const DashboardView = ({
   const onFocusChange = (arg: any) => {
     setFocus(!arg ? 'startDate' : arg);
   };
-
+  console.log(data);
   return (
     <Container>
       {isLoading ? (
@@ -402,18 +404,24 @@ const DashboardView = ({
               />
             </NotificationsContainer>
           )}
-          <FilterHeader toggleModal={toggleModal} {...props} />
-          <TotalSales data={data} toPaid={toPaidGraph} />
+          <FilterHeader {...props} />
 
-          {(data.paid || data.pending) && (
+          {data.months.length > 0 ? (
             <>
-              <MonthlySales data={data} />
-              <TopCategories
-                data={data}
-                to={toCategories}
-                toDetails={toCategoryDetails}
-              />
+              <TotalSales data={data} toPaid={toPaidGraph} />
+              {(data.paid || data.pending) && (
+                <>
+                  <MonthlySales data={data} />
+                  <TopCategories
+                    data={data}
+                    to={toCategories}
+                    toDetails={toCategoryDetails}
+                  />
+                </>
+              )}
             </>
+          ) : (
+            <>{!isSmallScreen && <EmptyDashboard Svg={Fish2} />}</>
           )}
 
           {isCalendarModalOpen && (
