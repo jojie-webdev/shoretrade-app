@@ -471,18 +471,18 @@ const XAxis = (props: any) => {
 // https://github.com/JesperLekland/react-native-svg-charts
 const LineChart = (props: LineChartProps): JSX.Element | null => {
   const theme = useTheme();
-
   const {
     title,
     data,
     yAxisLabelFormat = (value: number) => `${value}`,
     cHeight,
-    stroke = 'success',
     strokeWidth = 3,
+    isEarning,
   } = props;
-
+  let stroke = props.stroke;
+  console.log(props);
   if (data.dates.length === 0) return null;
-
+  stroke = !isEarning ? 'error' : 'success';
   const graphData = data.dates.map((d, i) => ({
     date: moment(d).toDate().getTime(),
     value: data.values[i],

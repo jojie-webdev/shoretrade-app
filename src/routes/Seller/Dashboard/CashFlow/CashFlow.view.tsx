@@ -42,6 +42,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
           <Col>
             <LineChart
               title="Paid"
+              isEarning={props.isEarning}
               data={props.data}
               yAxisLabelFormat={(v) =>
                 `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`

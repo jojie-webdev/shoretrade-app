@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -10,16 +11,19 @@ import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CashFlowView from './CashFlow.view';
-import { SELLER_ROUTES } from 'consts/routes';
 
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CashFlow = (): JSX.Element => {
   const location: { state: any } = useLocation();
-  const { months = 'FY' }: { months: string } = useParams();
+  const {
+    months = 'FY',
+    isEarning,
+  }: { months: string; isEarning: string } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
 
-  const innerRouteTitle = location.state?.innerRouteTitle || 'Cash Flow Details';
+  const innerRouteTitle =
+    location.state?.innerRouteTitle || 'Cash Flow Details';
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
     { label: 'Dashboard', link: SELLER_ROUTES.DASHBOARD },
@@ -37,7 +41,8 @@ const CashFlow = (): JSX.Element => {
   const name = () => {
     const fiscalYear = getFiscalYear();
 
-    if (months === 'FY') return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
+    if (months === 'FY')
+      return `FY ${`${fiscalYear}`.slice(2)}/${`${fiscalYear + 1}`.slice(2)}`;
 
     if (months.includes('_')) {
       const monthsParam = months.split('_');
@@ -52,7 +57,9 @@ const CashFlow = (): JSX.Element => {
       }
     } else {
       const start = moment(months, 'MM-DD-YYYY').format('D MMM');
-      const end = moment(months, 'MM-DD-YYYY').endOf('month').format('D MMM YYYY');
+      const end = moment(months, 'MM-DD-YYYY')
+        .endOf('month')
+        .format('D MMM YYYY');
 
       return start.includes('Invalid') ? 'Invalid Date' : `${start} - ${end}`;
     }
@@ -78,7 +85,9 @@ const CashFlow = (): JSX.Element => {
           dateTo = moment(monthsParam[1], 'MM-DD-YYYY').format('YYYYMMDD');
         } else {
           dateFrom = moment(months, 'MM-DD-YYYY').format('YYYYMMDD');
-          dateTo = moment(months, 'MM-DD-YYYY').endOf('month').format('YYYYMMDD');
+          dateTo = moment(months, 'MM-DD-YYYY')
+            .endOf('month')
+            .format('YYYYMMDD');
         }
       }
 
@@ -112,6 +121,7 @@ const CashFlow = (): JSX.Element => {
     isLoading,
     data,
     breadCrumbSections,
+    isEarning: isEarning === 'true' ? true : false,
   };
   return <CashFlowView {...generatedProps} />;
 };

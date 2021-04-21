@@ -22,11 +22,12 @@ const LinePath = (props: LinePathProps): JSX.Element => {
     cWidth,
     height,
     width,
-    stroke = 'success',
     strokeWidth = 2,
     cStyle,
+    isEarning,
   } = props;
-
+  let stroke = props.stroke;
+  stroke = isEarning ? 'success' : 'error';
   const graphData = data.dates.map((d, i) => ({
     date: moment(d).toDate().getTime(),
     value: data.values[i],

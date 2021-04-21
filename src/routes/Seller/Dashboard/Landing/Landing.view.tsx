@@ -239,7 +239,8 @@ const MonthlySales = (props: any) => {
           <Link
             key={i}
             to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
-              `${moment(m.startDate).format('MM-DD-YYYY')}`
+              `${moment(m.startDate).format('MM-DD-YYYY')}`,
+              hasIncreased(m.percentage).toString()
             )}
           >
             <SalesCard className="many-cards">
@@ -279,6 +280,7 @@ const MonthlySales = (props: any) => {
                   cHeight={25}
                   cWidth={60}
                   cStyle={{ alignSelf: 'center' }}
+                  isEarning={hasIncreased(m.percentage)}
                 />
               </ChartContentContainer>
             </SalesCard>
@@ -378,7 +380,6 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   const onFocusChange = (arg: any) => {
     setFocus(!arg ? 'startDate' : arg);
   };
-  console.log(data);
   return (
     <Container>
       {isLoading ? (
