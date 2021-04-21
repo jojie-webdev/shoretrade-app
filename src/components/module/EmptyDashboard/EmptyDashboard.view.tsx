@@ -32,10 +32,13 @@ const EmptyDashboard = (props: EmptyDashboardProps): JSX.Element => {
         </MainText>
         <div className="refresh-container">
           <MainText variant="label" color="shade6">
-            Please change selected criterias or try to
-          </MainText>
-          <MainText variant="label" color="primary" className="refresh-text">
-            <a onClick={(e) => window.location.reload()}>refresh</a>
+            Please change selected criterias or try to{' '}
+            <a
+              className="refresh-text"
+              onClick={(e) => window.location.reload()}
+            >
+              refresh
+            </a>
           </MainText>
         </div>
       </div>

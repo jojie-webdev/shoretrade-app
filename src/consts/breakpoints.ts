@@ -4,4 +4,5 @@ export const BREAKPOINTS = {
   lg: `(min-width: 769px) and (max-width: 992px)`,
   xl: `(min-width: 993px) and (max-width: 1200px)`,
   xxl: `(min-width: 1201px)`,
+  ipadPro: `(min-width: 1024px) and (max-width: 1366px)`
 };

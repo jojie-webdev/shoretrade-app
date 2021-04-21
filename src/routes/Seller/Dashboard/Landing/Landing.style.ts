@@ -59,11 +59,17 @@ export const MonthlyRow = styled(Row)`
 export const SalesRow = styled(Row)`
   width: 100%;
   padding-left: 24px;
-
+  
   @media ${BREAKPOINTS['sm']} {
     .figma-width {
       width: 156px !important;
       min-width: 156px;
+    }
+  }
+  @media ${BREAKPOINTS['ipadPro']} {
+    .figma-width {
+      width: 200px !important;
+      min-width: 200px;
     }
   }
 `;

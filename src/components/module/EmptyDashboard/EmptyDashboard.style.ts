@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div<{ fluid: boolean }>`
@@ -14,11 +15,18 @@ export const Container = styled.div<{ fluid: boolean }>`
     .refresh-container {
       display: flex;
       flex-direction: row;
+
       .refresh-text {
-        margin-left: 4px;
         text-decoration: underline;
         cursor: pointer;
+        color: ${(props) => props.theme.brand.primary};
       }
+      @media ${BREAKPOINTS['ipadPro']} {
+        display: inline;
+      }
+    }
+    @media ${BREAKPOINTS['ipadPro']} {
+      margin-right: 20px;
     }
   }
 `;
