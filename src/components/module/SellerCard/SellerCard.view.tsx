@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 
 import { PlaceholderProfile } from 'components/base/SVG';
 
-// import { useTheme } from 'utils/Theme';
 import { SellerCardProps } from './SellerCard.props';
 import { Container, StyledTypography } from './SellerCard.style';
 
 const SellerCard = (props: SellerCardProps): JSX.Element => {
-  // const theme = useTheme();
   const { companyName, companyImage } = props;
   const [defaultImage, setDefaultImage] = useState(props.companyImage);
 
