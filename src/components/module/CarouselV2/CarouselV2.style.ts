@@ -1,4 +1,3 @@
-import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { AspectRatio, MediaQueries } from './CarouselV2.props';
@@ -24,7 +23,6 @@ export const SwiperArea = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: calc(100% - 200px);
   overflow-x: hidden;
   position: relative;
   width: 100%;

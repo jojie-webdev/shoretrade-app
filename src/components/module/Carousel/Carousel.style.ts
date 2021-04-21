@@ -1,4 +1,3 @@
-import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { AspectRatio, MediaQueries } from './Carousel.props';

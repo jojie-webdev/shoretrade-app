@@ -1,24 +1,14 @@
 import React from 'react';
 
-import Typography from 'components/base/Typography';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { useMediaQuery } from 'react-responsive';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 
-import ProductSellerCard from '../ProductSellerCard';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
-import {
-  Container,
-  Row,
-  Price,
-  Label,
-  Value,
-} from './ProductDetailsCard6.style';
+import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
 
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {

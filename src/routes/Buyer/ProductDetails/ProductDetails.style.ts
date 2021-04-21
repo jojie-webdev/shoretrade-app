@@ -1,8 +1,8 @@
 import Button from 'components/base/Button';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row, Col } from 'react-grid-system';
-import styled, { css } from 'utils/styled';
+import { Row } from 'react-grid-system';
+import styled from 'utils/styled';
 
 export const Container = styled.div<{ isMobile: boolean }>`
   flex-direction: row;
@@ -36,9 +36,13 @@ export const BannerContainer = styled.div`
 
 export const DetailsContainer = styled(Row)`
   height: 100%;
-  padding: 16px;
+
   .title {
     margin-bottom: 1rem;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 40px;
   }
 `;
 
@@ -109,8 +113,7 @@ export const AddToCartButton = styled(Button)`
 
 export const EstimationsContainer = styled.div`
   display: flex;
-  padding: 8px;
-  flex-direction: row;
+  margin-top: 8px;
 `;
 
 export const TopBarContainer = styled.div`

@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 
 import FavoriteButton from 'components/base/FavoriteButton';
-import PlaceholderImage from 'components/base/PlaceholderImage';
-import {
-  Star,
-  StarFilled,
-  HeartFilled,
-  Heart,
-  PlaceholderProfile,
-} from 'components/base/SVG';
+import { Star, StarFilled, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 import { ProductSellerRatingProps } from './ProductSellerCard.props';
 import {
   Row,
   FlexShrinked,
-  Bold,
   RatingRow,
   StarContainer,
   EndRow,
@@ -28,7 +20,6 @@ import {
 const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
   const {
     name,
-    isSmallName,
     uri,
     location,
     rating,
@@ -62,7 +53,7 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>
-          <Typography variant="body" weight="bold" color="shade9">
+          <Typography variant="body" weight="500" color="shade9">
             {name}
           </Typography>
           <RatingRow>

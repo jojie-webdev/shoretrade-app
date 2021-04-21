@@ -1,5 +1,5 @@
 import Typography from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 
 export const Row = styled.div`
   display: flex;
@@ -55,8 +55,6 @@ export const FlexShrinked = styled.div`
 
   max-height: 56px;
 `;
-
-export const Bold = styled(Typography)``;
 
 export const StarContainer = styled.div<{ location?: string }>`
   margin-right: 6px;

@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from 'react';
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
-import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
 import {
@@ -19,11 +18,8 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import BoxRadio from 'components/module/BoxRadio';
 import CarouselV2 from 'components/module/CarouselV2';
 import Loading from 'components/module/Loading';
-import ProductDetailCard from 'components/module/ProductDetailCard';
-import ProductDetailsCard1View from 'components/module/ProductDetailsCard1';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerCard from 'components/module/ProductSellerCard';
-import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
@@ -48,7 +44,6 @@ import {
   StatusContainer,
   BadgeText,
 } from './ProductDetails.style';
-
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
@@ -105,10 +100,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [groupedBox]);
-
-  const verticalView = useMediaQuery({
-    query: `(max-width: 991px)`,
-  });
 
   return (
     <BoxContainer>
@@ -211,7 +202,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   !isMobile ? (
                     <ProductSellerCard
                       location={productDetailsCard1Props.location}
-                      isSmallName
                       withBackground={false}
                       showFavoriteButton={false}
                       {...sellerRatingProps}
@@ -222,7 +212,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
                   location={productDetailsCard1Props.location}
-                  isSmallName
                   withBackground={true}
                   showFavoriteButton={true}
                   {...sellerRatingProps}

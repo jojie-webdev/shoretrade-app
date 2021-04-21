@@ -11,8 +11,6 @@ export const Container = styled.div<ProductDetailsCard6Props>`
 
   padding: ${({ theme, withBackground }) =>
     withBackground ? '24px' : '16px 0'};
-  border: ${({ theme, withBackground }) =>
-    withBackground ? `solid ${theme.grey.shade2}` : ''};
   border-width: ${({ cBorderWidth }) => cBorderWidth || '2px'};
   border-radius: ${({ cBorderRadius }) => cBorderRadius || '8px'};
 
@@ -33,5 +31,3 @@ export const Price = styled(Typography)`
 export const Label = styled(Typography)`
   margin-bottom: 8px;
 `;
-
-export const Value = styled(Typography)``;

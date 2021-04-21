@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Badge from 'components/base/Badge';
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
@@ -7,6 +7,7 @@ import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useTheme } from 'utils/Theme';
 
 import { CarouselProps } from './Carousel.props';
 import {
@@ -23,6 +24,8 @@ import {
 SwiperCore.use([Autoplay]);
 
 const Carousel = (props: CarouselProps): JSX.Element => {
+  const theme = useTheme();
+
   const {
     images,
     id,
@@ -150,14 +153,14 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         )}
         <BadgeContainer>
           {showAquafuture && (
-            <Badge badgeColor="#111E2B">
+            <Badge badgeColor={theme.grey.shade8}>
               <Typography color="shade4" variant="overline">
                 Aquafuture
               </Typography>
             </Badge>
           )}
           {showAlmostGone && (
-            <Badge badgeColor="#FFA26B">
+            <Badge badgeColor={theme.brand.warning}>
               <Typography style={{ color: '#FFF1E9' }} variant="overline">
                 Almost Gone!
               </Typography>
