@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
 import SellerLandingView from './SellerLanding.view';
