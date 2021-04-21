@@ -531,7 +531,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           xAccessor={({ item }: any) => item.date}
           svg={{ stroke: theme.brand[stroke], strokeWidth }}
           contentInset={{ left: 5, top: 20 }}
-          curve={shape.curveBasis}
+          curve={shape.curveLinear}
         >
           <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />

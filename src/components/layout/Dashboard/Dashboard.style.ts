@@ -201,6 +201,10 @@ export const Content = styled.div<{
       overflow-x: hidden;
       overflow-y: auto;
 
+      @media ${BREAKPOINTS['sm']} {
+        border-radius: 0px;
+      }
+
       .container {
         min-height: 100%;
         width: 100%;
@@ -249,7 +253,7 @@ export const Content = styled.div<{
           props.theme.appType === 'buyer' ? '0 8px' : '16px'};
 
         //TODO: remove on deletion of BoxContainer
-        margin: ${(props) => (props.theme.appType === 'seller' ? '0 8px' : 0)};
+        margin: ${(props) => (props.theme.appType === 'seller' ? '0 0px' : 0)};
 
         .container {
           position: static !important; // needed to override react-grid-system .container

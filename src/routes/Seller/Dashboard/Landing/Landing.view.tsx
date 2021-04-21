@@ -209,13 +209,17 @@ const TotalSales = (props: any) => {
         ) : (
           <PaidCard {...props} />
         )}
-        <SalesCard className="figma-width">
-          <Typography variant="overline" color="shade6" className="overline">
-            Pending
-          </Typography>
-          <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.pending ? props.data.pending : 0)}
-          </Typography>
+        <SalesCard className="pending-card">
+          <div>
+            <Typography variant="overline" color="shade6" className="overline">
+              Pending
+            </Typography>
+            <Typography variant="title4" color="noshade">
+              {numberToShortenAmount(
+                props.data.pending ? props.data.pending : 0
+              )}
+            </Typography>
+          </div>
         </SalesCard>
       </SalesRow>
     </TotalSalesRow>
@@ -367,10 +371,11 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     onClickMarketNotification,
     userPending,
   } = props;
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('day', 7));
   const [focus, setFocus] = useState<FocusedInputShape>('startDate');
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const onDateChange = (newDates: any) => {
     setStartDate(newDates.startDate);

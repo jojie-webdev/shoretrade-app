@@ -59,11 +59,16 @@ export const MonthlyRow = styled(Row)`
 export const SalesRow = styled(Row)`
   width: 100%;
   padding-left: 24px;
-  
+
   @media ${BREAKPOINTS['sm']} {
     .figma-width {
       width: 156px !important;
       min-width: 156px;
+    }
+
+    .pending-card {
+      width: 170px !important;
+      min-width: 170px;
     }
   }
   @media ${BREAKPOINTS['ipadPro']} {
