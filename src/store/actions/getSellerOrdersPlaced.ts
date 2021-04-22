@@ -1,4 +1,5 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
+import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
@@ -45,12 +46,9 @@ const getSellerOrdersPlacedActions = {
   }),
 
   // For Confirm Weight
-  updateOptimistically: (orderId: string, orderLineItemId: string) => ({
+  updateOptimistically: (meta: Partial<ConfirmWeightMeta>) => ({
     type: asyncAction.UPDATE_OPTIMISTICALLY,
-    meta: {
-      orderId,
-      orderLineItemId,
-    },
+    meta,
   }),
 };
 
