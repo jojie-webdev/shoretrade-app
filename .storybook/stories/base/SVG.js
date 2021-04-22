@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  FileBookMarkAlt,
   Ellipse,
   Minus,
   ChevronDown,
@@ -161,6 +162,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="FileBookMarkAlt">
+          <FileBookMarkAlt width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Ellipse">
           <Ellipse width={30} height={30} />
         </Wrapper>

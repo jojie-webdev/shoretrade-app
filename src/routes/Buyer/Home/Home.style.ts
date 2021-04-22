@@ -30,6 +30,7 @@ export const ViewContainer = styled.div`
 export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
+  padding-top: 48px;
 `;
 
 export const CategoriesContainer = styled.div``;

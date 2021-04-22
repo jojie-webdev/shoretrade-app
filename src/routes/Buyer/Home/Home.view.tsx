@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
-import { ChevronRight, InfoFilled } from 'components/base/SVG';
+import {
+  ChevronRight,
+  InfoFilled,
+  Bolt,
+  FileBookMarkAlt,
+} from 'components/base/SVG';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import CarouselV2 from 'components/module/CarouselV2';
 import Card from 'components/module/CategoryCards/Landing';
@@ -9,6 +14,7 @@ import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
+import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import SearchAddress from 'components/module/SearchAddress';
@@ -119,7 +125,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <BoxContainer ref={cbRef}>
-      {isPendingAccount && (
+      {!isPendingAccount && (
         <div className="wrapper" style={{ marginBottom: 16 }}>
           <Col xs={12}>
             <Alert
@@ -143,6 +149,16 @@ const HomeView = (props: HomeGeneratedProps) => {
         <Loading />
       ) : (
         <>
+          <div className="wrapper">
+            <ViewCol style={{ paddingTop: '48px' }}>
+              <ListCard
+                icon={<FileBookMarkAlt />}
+                totalCount={0}
+                data={[]}
+                title="Pending Offers"
+              />
+            </ViewCol>
+          </div>
           <SwiperContainer>
             <CarouselV2
               id="featured-carousel"
@@ -183,7 +199,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           <div className="wrapper">
             <ViewCol>
               <HomeSectionHeader
-                title="Categories"
+                title="Your Favorite Categories"
                 onClick={() =>
                   history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
                 }
