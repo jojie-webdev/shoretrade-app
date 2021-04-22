@@ -38,7 +38,6 @@ export const SearchFilterRow = styled.div`
 export const SearchContainer = styled.div`
   width: 480px;
   position: relative;
-}
 `;
 
 export const DateRangeContainer = styled.div`

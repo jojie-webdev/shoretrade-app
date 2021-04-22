@@ -23,8 +23,9 @@ import MessageModal from 'components/module/MessageModal';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import Pagination from 'components/module/Pagination';
 import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
-import { API, SELLER_SOLD_ROUTES } from 'consts';
+import { API, DEFAULT_PAGE_LIMIT, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
+import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -41,6 +42,7 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { PendingToShipItemData, SoldGeneratedProps } from '../Sold.props';
+import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
 import {
   StyledInteraction,
@@ -360,7 +362,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   const [isOpen, setIsOpen] = useState<string[]>([]);
   const [lastOpenAccordion, setLastOpenAccordion] = useState('');
 
-  const toShipPagesTotal = Math.ceil(Number(toShipCount) / 10);
+  const toShipPagesTotal = Math.ceil(Number(toShipCount) / DEFAULT_PAGE_LIMIT);
   const addHorizontalRowMargin = useMediaQuery({
     query: '(min-width: 1080px)',
   });
@@ -538,12 +540,12 @@ const ToShip = (props: SoldGeneratedProps) => {
       <TitleRow style={{ marginTop: 24 }}>
         <Col md={12} className="title-col">
           <Typography variant="overline" color="shade6">
-            TO SHIP
+            TO SHIP - {toShip.length}
           </Typography>
         </Col>
       </TitleRow>
 
-      {toShip.map((group) => {
+      {sort(sortByDate, toShip).map((group) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
 

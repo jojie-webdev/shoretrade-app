@@ -4,7 +4,9 @@ import { InfoFilled, Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import OrderItemView from 'components/module/OrderItem';
-import { BUYER_ROUTES } from 'consts';
+import Pagination from 'components/module/Pagination';
+import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
+import sort from 'ramda/src/sort';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { useTheme } from 'utils/Theme';
@@ -16,46 +18,27 @@ import {
   AccordionTitleContainer,
   TitleRow,
 } from '../Orders.style';
+import { sortByDate } from '../Orders.transform';
 
 const Pending = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
-  const { pendingOrders } = props;
+  const {
+    pendingOrders,
+    toShipOrders,
+    toShipOrdersCount,
+    filters,
+    updateFilters,
+  } = props;
 
-  const [confirmedOrdersFormatted, setConfirmedOrdersFormatted] = useState({});
-  const [pendingOrdersFormatted, setPendingOrdersFormatted] = useState({});
-
-  useEffect(() => {
-    if (pendingOrders) {
-      const co: {
-        [key: string]: OrderItem;
-      } = {};
-      const po: {
-        [key: string]: OrderItem;
-      } = {};
-
-      Object.keys(pendingOrders).forEach((key) => {
-        const orders = pendingOrders[key];
-
-        orders.forEach((o) => {
-          if (o.confirmed) {
-            co[key] = o;
-          } else {
-            po[key] = o;
-          }
-        });
-        setConfirmedOrdersFormatted(co);
-        setPendingOrdersFormatted(po);
-      });
-    }
-  }, [pendingOrders]);
-
-  const pendingOrdersKeys = Object.keys(pendingOrdersFormatted);
-  const confirmedOrdersKeys = Object.keys(confirmedOrdersFormatted);
+  const toShipOrdersPagesTotal = Math.ceil(
+    Number(toShipOrdersCount) / DEFAULT_PAGE_LIMIT
+  );
 
   return (
     <>
-      {Object.keys(pendingOrders).length === 0 ? (
+      {Object.keys(pendingOrders).length === 0 &&
+      Object.keys(toShipOrders).length === 0 ? (
         <Row className="emptystate-row" align="center" justify="center">
           <Col>
             <EmptyState
@@ -74,12 +57,12 @@ const Pending = (props: OrdersGeneratedProps) => {
                 <InfoFilled fill={theme.brand.alert} height={18} width={18} />
               </div>
               <Typography color="alert">
-                Pending Confirmation - {pendingOrdersKeys.length}
+                Pending Confirmation - {Object.keys(pendingOrders).length}
               </Typography>
             </Col>
           </TitleRow>
 
-          {pendingOrdersKeys.map((key) => (
+          {sort(sortByDate, Object.keys(pendingOrders)).map((key) => (
             <StyledAccordion
               key={key}
               title={''}
@@ -117,12 +100,12 @@ const Pending = (props: OrdersGeneratedProps) => {
           <TitleRow style={{ marginTop: '24px' }}>
             <Col md={12} className="title-col">
               <Typography color="shade6" variant="overline">
-                TO SHIP - {confirmedOrdersKeys.length}
+                TO SHIP - {toShipOrdersCount}
               </Typography>
             </Col>
           </TitleRow>
 
-          {confirmedOrdersKeys.map((key) => (
+          {sort(sortByDate, Object.keys(toShipOrders)).map((key) => (
             <StyledAccordion
               key={key}
               title={''}
@@ -133,11 +116,7 @@ const Pending = (props: OrdersGeneratedProps) => {
               leftComponent={
                 <AccordionTitleContainer>
                   <Typography color="shade7" className="title">
-                    Estimated{' '}
-                    {pendingOrders[key][0].isAquafuture
-                      ? 'Catchment'
-                      : 'Delivery'}
-                    :
+                    Estimated Delivery:
                   </Typography>
                   <Typography color="shade9">{key}</Typography>
                 </AccordionTitleContainer>
@@ -145,17 +124,32 @@ const Pending = (props: OrdersGeneratedProps) => {
               rightComponent={
                 <OrderBadge>
                   <Typography color="shade9" variant="overline">
-                    {pendingOrders[key].length}{' '}
-                    {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
+                    {toShipOrders[key].length}{' '}
+                    {toShipOrders[key].length > 1 ? 'Orders' : 'Order'}
                   </Typography>
                 </OrderBadge>
               }
             >
-              {pendingOrders[key].map((d) => (
+              {toShipOrders[key].map((d) => (
                 <OrderItemView {...d} token={props.token} key={d.id} />
               ))}
             </StyledAccordion>
           ))}
+
+          {toShipOrdersPagesTotal > 1 && (
+            <Row justify="center">
+              <Pagination
+                numPages={toShipOrdersPagesTotal}
+                currentValue={Number(filters.toShipOrdersFilter.page)}
+                onClickButton={(value) =>
+                  updateFilters.updateToShipOrdersFilter({
+                    page: value.toFixed(0),
+                  })
+                }
+                variant="number"
+              />
+            </Row>
+          )}
         </>
       )}
     </>

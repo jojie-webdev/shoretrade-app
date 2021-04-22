@@ -6,6 +6,7 @@ import theme from 'utils/Theme';
 export const Container = styled.div`
   display: flex;
   align-items: center;
+  padding-bottom: 16px;
 `;
 
 // Number Variant

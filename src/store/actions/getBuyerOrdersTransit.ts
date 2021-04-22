@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_LIMIT } from 'consts';
 import {
   GetBuyerOrdersMeta,
   GetBuyerOrdersPayload,
@@ -14,6 +15,7 @@ const getBuyerOrdersTransitActions = {
   ...asyncAction,
   request: (filter?: {
     term: string;
+    page: string;
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
   }): {
@@ -26,6 +28,8 @@ const getBuyerOrdersTransitActions = {
       dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
       dateTo: filter?.dateTo?.format('M/DD/yyyy'),
       term: filter?.term,
+      limit: DEFAULT_PAGE_LIMIT,
+      page: filter?.page,
     },
   }),
 };

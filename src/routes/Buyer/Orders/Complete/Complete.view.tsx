@@ -4,7 +4,9 @@ import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import OrderItemView from 'components/module/OrderItem';
-import { BUYER_ROUTES } from 'consts';
+import Pagination from 'components/module/Pagination';
+import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
+import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { useTheme } from 'utils/Theme';
@@ -15,11 +17,21 @@ import {
   StyledAccordion,
   OrderBadge,
 } from '../Orders.style';
+import { sortByDate } from '../Orders.transform';
 
 const Complete = (props: OrdersGeneratedProps) => {
-  const { completedOrders } = props;
+  const {
+    completedOrders,
+    completedOrdersCount,
+    updateFilters,
+    filters,
+  } = props;
   const theme = useTheme();
   const history = useHistory();
+
+  const completePagesTotal = Math.ceil(
+    Number(completedOrdersCount) / DEFAULT_PAGE_LIMIT
+  );
 
   return (
     <>
@@ -35,7 +47,7 @@ const Complete = (props: OrdersGeneratedProps) => {
           </Col>
         </Row>
       ) : (
-        Object.keys(completedOrders).map((key) => (
+        sort(sortByDate, Object.keys(completedOrders)).map((key) => (
           <StyledAccordion
             key={key}
             title={''}
@@ -65,6 +77,20 @@ const Complete = (props: OrdersGeneratedProps) => {
             ))}
           </StyledAccordion>
         ))
+      )}
+      {completePagesTotal > 1 && (
+        <Row justify="center">
+          <Pagination
+            numPages={completePagesTotal}
+            currentValue={Number(filters.completedOrdersFilter.page)}
+            onClickButton={(value) =>
+              updateFilters.updateCompletedOrdersFilter({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        </Row>
       )}
     </>
   );

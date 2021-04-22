@@ -3,6 +3,7 @@ import { GenericResponse } from 'types/GenericResponse';
 export type GetSellerOrdersMeta = {
   status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   limit?: number;
+  page?: string;
   term?: string;
   dateFrom?: Date | string;
   dateTo?: Date | string;

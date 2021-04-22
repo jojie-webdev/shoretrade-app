@@ -44,6 +44,7 @@ export interface OrderItem {
 }
 
 export type RequestFilters = {
+  page: string;
   term: string;
   dateFrom: moment.Moment | null;
   dateTo: moment.Moment | null;
@@ -53,6 +54,9 @@ export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
 
 export interface OrdersGeneratedProps {
   pendingOrders: {
+    [index: string]: OrderItem[];
+  };
+  toShipOrders: {
     [index: string]: OrderItem[];
   };
   inTransitOrders: {
@@ -65,21 +69,20 @@ export interface OrdersGeneratedProps {
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;
   getAllOrders: () => void;
-  pendingOrdersCount: string;
+  toShipOrdersCount: string;
   completedOrdersCount: string;
   inTransitOrdersCount: string;
   filters: {
-    pendingOrdersFilter: RequestFilters;
+    toShipOrdersFilter: RequestFilters;
     completedOrdersFilter: RequestFilters;
     inTransitOrdersFilter: RequestFilters;
   };
   updateFilters: {
-    updatePendingOrdersFilter: Dispatch<Partial<RequestFilters>>;
+    updateToShipOrdersFilter: Dispatch<Partial<RequestFilters>>;
     updateCompletedOrdersFilter: Dispatch<Partial<RequestFilters>>;
     updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
-  currentFilter: RequestFilters;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';

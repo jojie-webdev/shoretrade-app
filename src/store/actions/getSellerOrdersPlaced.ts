@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_LIMIT } from 'consts';
 import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
@@ -17,9 +18,10 @@ const getSellerOrdersPlacedActions = {
   ...asyncAction,
 
   request: (filter?: {
+    term: string;
     page: string;
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
   }): {
     type: string;
     meta: GetSellerOrdersMeta;
@@ -27,8 +29,11 @@ const getSellerOrdersPlacedActions = {
     type: asyncAction.REQUEST,
     meta: {
       status: 'PLACED',
-      limit: 10,
-      ...filter,
+      dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
+      dateTo: filter?.dateTo?.format('M/DD/yyyy'),
+      term: filter?.term,
+      limit: DEFAULT_PAGE_LIMIT,
+      page: filter?.page,
     },
   }),
 
