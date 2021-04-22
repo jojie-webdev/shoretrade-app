@@ -1,14 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { Link } from 'react-router-dom';
+import SwiperCore, { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
 
 import { MultipleCarouselProps } from './MultipleCarousel.props';
 import { ArrowArea, Container, EmptyContainer } from './MultipleCarousel.style';
+
+SwiperCore.use([Pagination]);
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
@@ -28,6 +31,15 @@ function MultipleCarousel<D extends { id: string }, CP>(
     onSlideChange,
     emptyText,
   } = props;
+
+
+  useEffect(() => {
+    if (ref) {
+      setTimeout(() => {
+        ref.update();
+      }, 1000);
+    }
+  }, [data]);
 
   function slidesPerView() {
     if (containerWidthRef.current) {
@@ -54,11 +66,11 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const arrowColor =
     theme.appType === 'seller' ? theme.brand.primary : theme.grey.shade9;
 
-  const showArrow = data.length > slidesPerView();
+  const showPagination = data.length > slidesPerView();
 
   return (
     <Container ref={containerWidthRef}>
-      {showArrow && (
+      {/* {showArrow && (
         <ArrowArea left>
           <Touchable
             onPress={() => ref.slideTo(currentNdx - slidesPerView())}
@@ -67,12 +79,15 @@ function MultipleCarousel<D extends { id: string }, CP>(
             <CarouselChevronLeft width={18} height={18} fill={arrowColor} />
           </Touchable>
         </ArrowArea>
-      )}
+      )} */}
 
       <Swiper
         id={id}
         onSwiper={(swiper) => {
           setRef(swiper);
+        }}
+        pagination={{
+          el: '.multiple-swiper-pagination',
         }}
         slidesPerView="auto"
         spaceBetween={32}
@@ -96,8 +111,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
           );
         })}
       </Swiper>
-
-      {showArrow && (
+      {showPagination && <div className="multiple-swiper-pagination" />}
+      {/* {showArrow && (
         <ArrowArea right>
           <Touchable
             onPress={() => ref.slideTo(currentNdx + slidesPerView())}
@@ -106,7 +121,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
             <CarouselChevronRight width={18} height={18} fill={arrowColor} />
           </Touchable>
         </ArrowArea>
-      )}
+      )} */}
     </Container>
   );
 }

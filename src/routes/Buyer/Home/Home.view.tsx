@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
 import { ChevronRight, InfoFilled } from 'components/base/SVG';
-import Carousel from 'components/module/Carousel';
+import { BoxContainer } from 'components/layout/BoxContainer';
+import CarouselV2 from 'components/module/CarouselV2';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
@@ -117,7 +118,7 @@ const HomeView = (props: HomeGeneratedProps) => {
   );
 
   return (
-    <ViewContainer ref={cbRef}>
+    <BoxContainer ref={cbRef}>
       {isPendingAccount && (
         <div className="wrapper" style={{ marginBottom: 16 }}>
           <Col xs={12}>
@@ -143,7 +144,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       ) : (
         <>
           <SwiperContainer>
-            <Carousel
+            <CarouselV2
               id="featured-carousel"
               images={featured}
               loop
@@ -272,7 +273,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           )}
         </>
       )}
-    </ViewContainer>
+    </BoxContainer>
   );
 };
 
