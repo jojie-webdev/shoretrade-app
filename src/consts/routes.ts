@@ -31,8 +31,8 @@ export const SELLER_ROUTES = {
 
 export const SELLER_DASHBOARD_ROUTES = {
   LANDING: SELLER_ROUTES.DASHBOARD,
-  CASH_FLOW: (months = ':months') =>
-    `${SELLER_ROUTES.DASHBOARD}/cash-flow/${months}`,
+  CASH_FLOW: (months = ':months', isEarning = ':isEarning') =>
+    `${SELLER_ROUTES.DASHBOARD}/cash-flow/${months}/${isEarning}`,
   CATEGORIES: (months = ':months') =>
     `${SELLER_ROUTES.DASHBOARD}/categories/${months}`,
   CATEGORY_DETAIL: (title = ':title', months = ':months', id = ':id') =>

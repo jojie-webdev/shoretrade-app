@@ -111,14 +111,19 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 `;
 
-export const SidebarItem = styled(Link)`
-  height: 24px;
+export const SidebarItem = styled(Link)<{ isActive: boolean }>`
+  height: 48px;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   border-bottom: none;
   text-decoration: none;
+  padding-left: 14px;
+  ${(props) =>
+    props.isActive &&
+    `background: ${props.theme.brand.primary};
+      border-radius: 4px;`}
 
   .icon-container {
     margin-right: 12px;
@@ -196,6 +201,10 @@ export const Content = styled.div<{
       overflow-x: hidden;
       overflow-y: auto;
 
+      @media ${BREAKPOINTS['sm']} {
+        border-radius: 0px;
+      }
+
       .container {
         min-height: 100%;
         width: 100%;
@@ -244,7 +253,7 @@ export const Content = styled.div<{
           props.theme.appType === 'buyer' ? '0 8px' : '16px'};
 
         //TODO: remove on deletion of BoxContainer
-        margin: ${(props) => (props.theme.appType === 'seller' ? '0 8px' : 0)};
+        margin: ${(props) => (props.theme.appType === 'seller' ? '0 0px' : 0)};
 
         .container {
           position: static !important; // needed to override react-grid-system .container

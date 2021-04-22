@@ -1,11 +1,14 @@
 import React from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Spinner from 'components/base/Spinner/Spinner.view';
 import { UpArrow, DropdownArrow } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage/CategoryImage.view';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
@@ -23,14 +26,22 @@ const hasIncreased = (percentage: string) =>
 
 const CategoriesView = ({ data, ...props }: CategoriesGeneratedProps) => {
   const theme = useTheme();
-
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
       <HeaderRow align="center" justify="between">
-        <InnerRouteHeader title="Categories" fullRow={false} />
-        <Typography variant="overline" color="shade6">
-          {props.dateRange}
-        </Typography>
+        {isSmallScreen ? (
+          <>
+            <InnerRouteHeader title="Categories" fullRow={false} />
+            <Typography variant="overline" color="shade6" className="text">
+              {props.dateRange}
+            </Typography>
+          </>
+        ) : (
+          <div className="padding-bread">
+            <Breadcrumbs sections={props.breadCrumbSections} />
+          </div>
+        )}
       </HeaderRow>
 
       {props.isLoading ? (

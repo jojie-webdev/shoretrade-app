@@ -44,6 +44,7 @@ export type NavLinkProps = {
   iconColor?: string;
   Icon?: React.FC<SVGProps>;
   onClick: () => void;
+  isActive: boolean;
 };
 
 export type HeaderProps = {
