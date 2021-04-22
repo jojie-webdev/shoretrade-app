@@ -22,8 +22,8 @@ export const Container = styled.div<InteractionsProps>`
   }};
 
   margin-top: ${({ label }) => (label ? '20px' : 0)};
-  box-shadow: ${({ theme, noBg }) => {
-    if (noBg) {
+  box-shadow: ${({ theme, noBg, flat }) => {
+    if (noBg || flat) {
       return 'none';
     }
 

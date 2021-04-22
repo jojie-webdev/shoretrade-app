@@ -7,6 +7,7 @@ import {
   Bolt,
   FileBookMarkAlt,
 } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import CarouselV2 from 'components/module/CarouselV2';
 import Card from 'components/module/CategoryCards/Landing';
@@ -125,6 +126,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <BoxContainer ref={cbRef}>
+      {/* TODO: update appbar instead to show welcome */}
+      {/* <Typography style={{ paddingBottom: '32px' }} variant="title4">
+        Welcome {}
+      </Typography> */}
       {!isPendingAccount && (
         <div className="wrapper" style={{ marginBottom: 16 }}>
           <Col xs={12}>
@@ -151,6 +156,8 @@ const HomeView = (props: HomeGeneratedProps) => {
         <>
           <div className="wrapper">
             <ViewCol style={{ paddingTop: '48px' }}>
+              {/* TODO Update getHomeBuyerHomepage ? or  */}
+              {/* use other action/service? */}
               <ListCard
                 icon={<FileBookMarkAlt />}
                 totalCount={0}
