@@ -4,7 +4,9 @@ import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import OrderItemView from 'components/module/OrderItem';
-import { BUYER_ROUTES } from 'consts';
+import Pagination from 'components/module/Pagination';
+import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
+import sort from 'ramda/src/sort';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { useTheme } from 'utils/Theme';
@@ -15,11 +17,21 @@ import {
   StyledAccordion,
   OrderBadge,
 } from '../Orders.style';
+import { sortByDate } from '../Orders.transform';
 
 const InTransit = (props: OrdersGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
-  const { inTransitOrders } = props;
+  const {
+    inTransitOrders,
+    inTransitOrdersCount,
+    filters,
+    updateFilters,
+  } = props;
+
+  const inTransitPagesTotal = Math.ceil(
+    Number(inTransitOrdersCount) / DEFAULT_PAGE_LIMIT
+  );
 
   return (
     <>
@@ -35,7 +47,7 @@ const InTransit = (props: OrdersGeneratedProps) => {
           </Col>
         </Row>
       ) : (
-        Object.keys(inTransitOrders).map((key) => (
+        sort(sortByDate, Object.keys(inTransitOrders)).map((key) => (
           <StyledAccordion
             key={key}
             title={''}
@@ -46,11 +58,7 @@ const InTransit = (props: OrdersGeneratedProps) => {
             leftComponent={
               <AccordionTitleContainer>
                 <Typography color="shade7" className="title">
-                  Estimated{' '}
-                  {inTransitOrders[key][0].isAquafuture
-                    ? 'Catchment'
-                    : 'Delivery'}
-                  :
+                  Estimated Delivery:
                 </Typography>
                 <Typography color="shade9">{key}</Typography>
               </AccordionTitleContainer>
@@ -69,6 +77,20 @@ const InTransit = (props: OrdersGeneratedProps) => {
             ))}
           </StyledAccordion>
         ))
+      )}
+      {inTransitPagesTotal > 1 && (
+        <Row justify="center">
+          <Pagination
+            numPages={inTransitPagesTotal}
+            currentValue={Number(filters.inTransitOrdersFilter.page)}
+            onClickButton={(value) =>
+              updateFilters.updateInTransitOrdersFilter({
+                page: value.toFixed(0),
+              })
+            }
+            variant="number"
+          />
+        </Row>
       )}
     </>
   );

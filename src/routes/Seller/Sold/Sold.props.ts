@@ -45,8 +45,9 @@ export type SoldItem = {
 
 export type RequestFilters = {
   page: string;
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: moment.Moment | null;
+  dateTo: moment.Moment | null;
+  term: string;
 };
 
 export type TabOptions = 'To Ship' | 'In Transit' | 'Delivered';
@@ -57,6 +58,7 @@ export interface SoldGeneratedProps {
   inTransit: SoldItem[];
   delivered: SoldItem[];
   toShipCount: string;
+  inTransitCount: string;
   deliveredCount: string;
   currentTab: TabOptions;
   onChangeCurrentTab: (newTab: TabOptions) => void;
@@ -76,10 +78,12 @@ export interface SoldGeneratedProps {
   // };
   filters: {
     toShipFilters: RequestFilters;
+    inTransitFilters: RequestFilters;
     deliveredFilters: RequestFilters;
   };
   updateFilters: {
     updateToShipFilters: Dispatch<Partial<RequestFilters>>;
+    updateInTransitFilters: Dispatch<Partial<RequestFilters>>;
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
