@@ -28,7 +28,7 @@ const EmptyDashboard = (props: EmptyDashboardProps): JSX.Element => {
     <Container fluid={fluid}>
       <div className="text-container">
         <MainText variant="title4" className="title" color={textColor}>
-          There is still no available data
+          There is still no available data.
         </MainText>
         <div className="refresh-container">
           <MainText variant="label" color="shade6">

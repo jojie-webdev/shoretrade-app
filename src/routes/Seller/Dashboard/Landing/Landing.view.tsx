@@ -496,7 +496,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
               )}
             </>
           ) : (
-            <>{!isSmallScreen && <EmptyDashboard Svg={Fish2} />}</>
+            <EmptyDashboard Svg={Fish2} />
           )}
 
           {isCalendarModalOpen && (

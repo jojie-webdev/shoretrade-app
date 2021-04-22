@@ -9,6 +9,10 @@ export const Container = styled.div<{ fluid: boolean }>`
   height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
   width: 100%;
 
+  @media ${BREAKPOINTS['sm']} {
+    flex-direction: column;
+  }
+
   .text-container {
     flex-direction: column;
     margin-right: 161px;
@@ -25,8 +29,18 @@ export const Container = styled.div<{ fluid: boolean }>`
         display: inline;
       }
     }
+
+    @media ${BREAKPOINTS['iPad']} {
+      margin-right: 20px;
+    }
+
     @media ${BREAKPOINTS['ipadPro']} {
       margin-right: 20px;
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-right: 0px;
+      margin-top: 24px;
     }
   }
 `;
@@ -42,8 +56,6 @@ export const SVGContainer = styled.div<{
   margin-top: ${({ fluid }) => (fluid ? '0' : '70px')};
   margin-bottom: ${({ fluid }) => (fluid ? '0' : '60px')};
   position: relative;
-  height: 350px;
-  width: 245px;
 
   display: flex;
   justify-content: center;
@@ -52,7 +64,9 @@ export const SVGContainer = styled.div<{
   svg {
     z-index: 2;
   }
-
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: -12px;
+  }
   :before {
     position: absolute;
     content: '';
