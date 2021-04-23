@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import FavoriteButton from 'components/base/FavoriteButton';
 import { Star, StarFilled, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
-import { ProductSellerRatingProps } from './ProductSellerCard.props';
+import { ProductSellerProps } from './ProductSellerCard.props';
 import {
+  SellerCardContainer,
   Row,
   FlexShrinked,
   RatingRow,
@@ -14,10 +16,10 @@ import {
   AvatarContainer,
   AvatarPreview,
   AvatarPlaceholder,
-  SellerCardContainer,
 } from './ProductSellerCard.style';
 
-const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
+const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
+  const theme = useTheme();
   const {
     name,
     uri,
@@ -31,7 +33,10 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
 
   const [defaultImage, setDefaultImage] = useState(uri);
   return (
-    <SellerCardContainer withBackground={props.withBackground}>
+    <SellerCardContainer
+      withBackground={props.withBackground}
+      fullWidth={props.fullWidth}
+    >
       <Row>
         <AvatarContainer>
           {(defaultImage || '').length > 0 ? (
@@ -49,7 +54,7 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
           )}
         </AvatarContainer>
 
-        <FlexShrinked onClick={() => onClickSeller()}>
+        <FlexShrinked onClick={() => onClickSeller && onClickSeller()}>
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>
@@ -67,7 +72,11 @@ const ProductSellerCard = (props: ProductSellerRatingProps): JSX.Element => {
             </Typography>
             {[...Array(5).keys()].map((r) => (
               <StarContainer key={r} location={location}>
-                {Number(rating) > r ? <StarFilled /> : <Star />}
+                {Number(rating) > r ? (
+                  <StarFilled fill={theme.brand.alert} />
+                ) : (
+                  <Star />
+                )}
               </StarContainer>
             ))}
           </RatingRow>

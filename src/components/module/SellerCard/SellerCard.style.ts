@@ -1,7 +1,6 @@
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-
-import { Typography } from '../CategoryCards/Landing/Card.style';
 
 export const Container = styled.div`
   img {

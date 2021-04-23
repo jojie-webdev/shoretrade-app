@@ -8,13 +8,8 @@ import {
   Star,
   PlaceholderProfile,
 } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import ProductSellerRating from 'components/module/ProductSellerRating';
-import { API } from 'consts';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { base64ToFile } from 'utils/File';
@@ -122,7 +117,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 <div className="ratings-container">
                   {[...Array(5).keys()].map((r) =>
                     Number(productDetails.vendor.rating || 0) > r ? (
-                      <StarFilled />
+                      <StarFilled fill={theme.brand.alert} />
                     ) : (
                       <Star />
                     )

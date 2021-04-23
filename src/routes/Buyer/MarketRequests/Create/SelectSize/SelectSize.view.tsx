@@ -5,8 +5,7 @@ import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
-import TypographyView from 'components/base/Typography';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { pathOr } from 'ramda';
 import { Row, Col } from 'react-grid-system';
@@ -211,7 +210,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">Select Size</TypographyView>
+            <Typography variant="title4">Select Size</Typography>
           </div>
         </div>
       </CreateRequestHeaderContainer>
