@@ -55,6 +55,6 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const Typography = styled(TypographyView)`
+export const Text = styled(TypographyView)`
   margin-bottom: 4px;
 `;

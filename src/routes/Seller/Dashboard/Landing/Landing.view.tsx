@@ -3,16 +3,19 @@ import React, { useState } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { ArrowRight, DropdownArrow } from 'components/base/SVG';
+import { ArrowRight, DropdownArrow, Filter, Fish2 } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
+import EmptyDashboard from 'components/module/EmptyDashboard';
 import LinePath from 'components/module/LinePath';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { getGraphData } from 'routes/Seller/Dashboard/Landing/Landing.transforms';
 import getFiscalQuarter from 'utils/Date/getFiscalQuarter';
@@ -35,6 +38,8 @@ import {
   CategoryImageContainer,
   SpinnerContainer,
   NotificationsContainer,
+  SalesRow,
+  MobileFilterButton,
 } from './Landing.style';
 
 const MarketNotification = (props: { type: string; onPress: () => void }) => {
@@ -88,32 +93,107 @@ const hasIncreased = (percentage: string) =>
 
 const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   const theme = useTheme();
+  const getYearText = (year: number) => {
+    return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
+  };
 
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  return (
+    <FilterRow>
+      <Col className="filter-col">
+        {isSmallScreen && (
+          <Typography variant="title5" color="noshade">
+            Dashboard
+          </Typography>
+        )}
+        <Button
+          text={isSmallScreen ? 'Filter' : 'Custom'}
+          size="sm"
+          variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
+          className={`${isSmallScreen ? 'btn-abso' : 'btn'}`}
+          onClick={props.toggleModal}
+          icon={
+            isSmallScreen ? (
+              <Filter fill={theme.brand.primary} />
+            ) : (
+              <DropdownArrow
+                fill={
+                  dateRange.start.id === 'custom'
+                    ? theme.grey.noshade
+                    : theme.grey.shade6
+                }
+              />
+            )
+          }
+          iconPosition="after"
+        />
+        {!isSmallScreen && (
+          <>
+            <Button
+              text={getYearText(getFiscalYear())}
+              variant={
+                getValidDateRangeByFinancialYear().start.id ===
+                dateRange.start.id
+                  ? 'primary'
+                  : 'unselected'
+              }
+              size="sm"
+              className="btn"
+              onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+            />
+            {[4, 3, 2, 1].map((v) => (
+              <Button
+                key={v}
+                text={`Q${v}`}
+                variant={
+                  getFiscalQuarter(v).start.id === dateRange.start.id
+                    ? 'primary'
+                    : 'unselected'
+                }
+                size="sm"
+                onClick={() => setDateRange(getFiscalQuarter(v))}
+                className="btn"
+              />
+            ))}
+            {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
+              <Button
+                key={v}
+                text={getYearText(v)}
+                variant={
+                  getValidDateRangeByFinancialYear(v).start.id ===
+                  dateRange.start.id
+                    ? 'primary'
+                    : 'unselected'
+                }
+                size="sm"
+                className="btn"
+                onClick={() =>
+                  setDateRange(getValidDateRangeByFinancialYear(v))
+                }
+              />
+            ))}
+          </>
+        )}
+      </Col>
+    </FilterRow>
+  );
+};
+
+const MobileFilterHeader = ({
+  dateRange,
+  setDateRange,
+  toggleModal,
+  ...props
+}: any) => {
+  const theme = useTheme();
   const getYearText = (year: number) => {
     return `FY${String(year).substr(2, 4)}/${String(year + 1).substr(2, 4)}`;
   };
 
   return (
     <FilterRow>
-      <Col className="filter-col">
-        <Button
-          text="Custom"
-          size="sm"
-          variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
-          className="btn"
-          onClick={props.toggleModal}
-          icon={
-            <DropdownArrow
-              fill={
-                dateRange.start.id === 'custom'
-                  ? theme.grey.noshade
-                  : theme.grey.shade6
-              }
-            />
-          }
-          iconPosition="after"
-        />
-        <Button
+      <Col className="filter-col modal-col">
+        <MobileFilterButton
           text={getYearText(getFiscalYear())}
           variant={
             getValidDateRangeByFinancialYear().start.id === dateRange.start.id
@@ -122,10 +202,13 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           }
           size="sm"
           className="btn"
-          onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
+          onClick={() => {
+            setDateRange(getValidDateRangeByFinancialYear());
+            toggleModal();
+          }}
         />
         {[4, 3, 2, 1].map((v) => (
-          <Button
+          <MobileFilterButton
             key={v}
             text={`Q${v}`}
             variant={
@@ -134,12 +217,15 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                 : 'unselected'
             }
             size="sm"
-            onClick={() => setDateRange(getFiscalQuarter(v))}
+            onClick={() => {
+              setDateRange(getFiscalQuarter(v));
+              toggleModal();
+            }}
             className="btn"
           />
         ))}
         {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
-          <Button
+          <MobileFilterButton
             key={v}
             text={getYearText(v)}
             variant={
@@ -150,7 +236,10 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
             }
             size="sm"
             className="btn"
-            onClick={() => setDateRange(getValidDateRangeByFinancialYear(v))}
+            onClick={() => {
+              setDateRange(getValidDateRangeByFinancialYear(v));
+              toggleModal();
+            }}
           />
         ))}
       </Col>
@@ -161,9 +250,9 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
 const TotalSales = (props: any) => {
   const PaidCard = (ownProps: any) => {
     return (
-      <SalesCard>
+      <SalesCard className="figma-width">
         <Typography variant="overline" color="shade6" className="overline">
-          Total Paid
+          Paid
         </Typography>
         <Typography variant="title4" color="noshade">
           {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
@@ -177,11 +266,11 @@ const TotalSales = (props: any) => {
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
-            Payment
+            Total Sales
           </Typography>
         </Link>
       </Col>
-      <Col md={6} className="paid-col">
+      <SalesRow nowrap gutterWidth={24}>
         {props.data.paid ? (
           <Link to={props.toPaid}>
             <PaidCard {...props} />
@@ -189,17 +278,19 @@ const TotalSales = (props: any) => {
         ) : (
           <PaidCard {...props} />
         )}
-      </Col>
-      <Col md={6}>
-        <SalesCard>
-          <Typography variant="overline" color="shade6" className="overline">
-            Pending Payment
-          </Typography>
-          <Typography variant="title4" color="noshade">
-            {numberToShortenAmount(props.data.pending ? props.data.pending : 0)}
-          </Typography>
+        <SalesCard className="pending-card">
+          <div>
+            <Typography variant="overline" color="shade6" className="overline">
+              Pending
+            </Typography>
+            <Typography variant="title4" color="noshade">
+              {numberToShortenAmount(
+                props.data.pending ? props.data.pending : 0
+              )}
+            </Typography>
+          </div>
         </SalesCard>
-      </Col>
+      </SalesRow>
     </TotalSalesRow>
   );
 };
@@ -221,10 +312,11 @@ const MonthlySales = (props: any) => {
           <Link
             key={i}
             to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
-              `${moment(m.startDate).format('MM-DD-YYYY')}`
+              `${moment(m.startDate).format('MM-DD-YYYY')}`,
+              hasIncreased(m.percentage).toString()
             )}
           >
-            <SalesCard>
+            <SalesCard className="many-cards">
               <Typography
                 variant="overline"
                 color="shade6"
@@ -261,6 +353,7 @@ const MonthlySales = (props: any) => {
                   cHeight={25}
                   cWidth={60}
                   cStyle={{ alignSelf: 'center' }}
+                  isEarning={hasIncreased(m.percentage)}
                 />
               </ChartContentContainer>
             </SalesCard>
@@ -288,7 +381,7 @@ const TopCategories = (props: any) => {
       <MonthlyRow nowrap gutterWidth={24}>
         {props.data.categories.map((c: any, i: any) => (
           <Link key={i} to={props.toDetails(c.id, c.name)}>
-            <SalesCard>
+            <SalesCard className="many-cards">
               <Typography
                 variant="overline"
                 color="shade6"
@@ -334,22 +427,24 @@ const TopCategories = (props: any) => {
   );
 };
 
-const DashboardView = ({
-  data,
-  isLoading,
-  isCalendarModalOpen,
-  toggleModal,
-  toPaidGraph,
-  toCategories,
-  toCategoryDetails,
-  currentNotificationType,
-  onClickMarketNotification,
-  userPending,
-  ...props
-}: DashboardLandingGeneratedProps) => {
+const DashboardView = (props: DashboardLandingGeneratedProps) => {
+  const {
+    data,
+    isLoading,
+    isCalendarModalOpen,
+    toggleModal,
+    toPaidGraph,
+    toCategories,
+    toCategoryDetails,
+    currentNotificationType,
+    onClickMarketNotification,
+    userPending,
+  } = props;
+
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('day', 7));
   const [focus, setFocus] = useState<FocusedInputShape>('startDate');
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const onDateChange = (newDates: any) => {
     setStartDate(newDates.startDate);
@@ -359,7 +454,6 @@ const DashboardView = ({
   const onFocusChange = (arg: any) => {
     setFocus(!arg ? 'startDate' : arg);
   };
-
   return (
     <Container>
       {isLoading ? (
@@ -385,18 +479,24 @@ const DashboardView = ({
               />
             </NotificationsContainer>
           )}
-          <FilterHeader toggleModal={toggleModal} {...props} />
-          <TotalSales data={data} toPaid={toPaidGraph} />
+          <FilterHeader {...props} />
 
-          {(data.paid || data.pending) && (
+          {data.months.length > 0 ? (
             <>
-              <MonthlySales data={data} />
-              <TopCategories
-                data={data}
-                to={toCategories}
-                toDetails={toCategoryDetails}
-              />
+              <TotalSales data={data} toPaid={toPaidGraph} />
+              {(data.paid || data.pending) && (
+                <>
+                  <MonthlySales data={data} />
+                  <TopCategories
+                    data={data}
+                    to={toCategories}
+                    toDetails={toCategoryDetails}
+                  />
+                </>
+              )}
             </>
+          ) : (
+            <EmptyDashboard Svg={Fish2} />
           )}
 
           {isCalendarModalOpen && (
@@ -411,7 +511,10 @@ const DashboardView = ({
                 props.onApplyCustom({ start: startDate, end: endDate })
               }
               onClickClose={toggleModal}
-            />
+              isDatePickerDashboard
+            >
+              {isSmallScreen && <MobileFilterHeader {...props} />}
+            </DatePickerModal>
           )}
         </>
       )}

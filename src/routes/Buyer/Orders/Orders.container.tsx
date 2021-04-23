@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
+import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router';
 import {
   getBuyerOrdersActions,
   getBuyerOrdersPlacedActions,
@@ -9,6 +12,7 @@ import {
   getBuyerOrdersDeliveredActions,
 } from 'store/actions';
 import {
+  GetBuyerOrdersToShipPending,
   GetBuyerOrdersToShip,
   GetBuyerOrdersInTransit,
   GetBuyerOrdersDelivered,
@@ -22,11 +26,16 @@ import {
   RequestFilters,
   OrderItem,
 } from './Orders.props';
-import { groupByDate, sortByDateAsc, transformOrder } from './Orders.transform';
+import { groupByDate, transformOrder } from './Orders.transform';
 import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
+    tab: TabOptions;
+  };
 
   const token = useSelector((state: Store) => state.auth.token) || '';
 
@@ -37,6 +46,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const getOrdersPlaced = (filter?: {
+    page: string;
     term: string;
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
@@ -45,6 +55,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const getOrdersTransit = (filter?: {
+    page: string;
     term: string;
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
@@ -53,6 +64,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const getOrdersDelivered = (filter?: {
+    page: string;
     term: string;
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
@@ -76,14 +88,22 @@ const OrdersContainer = (): JSX.Element => {
     useSelector((state: Store) => state.getBuyerOrdersDelivered.pending) ||
     false;
 
-  const pendingOrders = GetBuyerOrdersToShip().map(transformOrder);
+  const pendingOrders = GetBuyerOrdersToShipPending().map(transformOrder);
+  const toShipOrders = GetBuyerOrdersToShip().map(transformOrder);
   const inTransitOrders = GetBuyerOrdersInTransit().map(transformOrder);
   const completedOrders = GetBuyerOrdersDelivered().map(transformOrder);
 
-  const [currentTab, setCurrentTab] = useState<TabOptions>('Pending');
-  const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
+  const currentTab: TabOptions = tab ? tab : 'Pending';
+  const onChangeCurrentTab = (newTab: TabOptions) => {
+    history.push(
+      `${BUYER_ROUTES.ORDERS}${qs.stringify(
+        { tab: newTab },
+        { addQueryPrefix: true }
+      )}`
+    );
+  };
 
-  const pendingOrdersCount =
+  const toShipOrdersCount =
     useSelector(
       (state: Store) => state.getBuyerOrdersPlaced.data?.data.count
     ) || '1';
@@ -98,12 +118,10 @@ const OrdersContainer = (): JSX.Element => {
       (state: Store) => state.getBuyerOrdersDelivered.data?.data.count
     ) || '1';
 
-  const today = moment();
-  const last7Days = moment().subtract(7, 'days');
-
-  const [pendingOrdersFilter, updatePendingOrdersFilter] = useReducer(
+  const [toShipOrdersFilter, updateToShipOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
+      page: '1',
       term: '',
       dateFrom: null,
       dateTo: null,
@@ -113,6 +131,7 @@ const OrdersContainer = (): JSX.Element => {
   const [inTransitOrdersFilter, updateInTransitOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
+      page: '1',
       term: '',
       dateFrom: null,
       dateTo: null,
@@ -122,49 +141,46 @@ const OrdersContainer = (): JSX.Element => {
   const [completedOrdersFilter, updateCompletedOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
+      page: '1',
       term: '',
       dateFrom: null,
       dateTo: null,
     }
   );
 
-  let currentFilter = pendingOrdersFilter;
   const updateFilters = {
-    updatePendingOrdersFilter,
+    updateToShipOrdersFilter,
     updateCompletedOrdersFilter,
     updateInTransitOrdersFilter,
   };
 
-  useEffect(() => {
-    if (currentTab === 'Pending' && !initialPending) {
-      if (pendingOrders.length === 0) {
-        getOrders.placed(pendingOrdersFilter);
-      }
-      currentFilter = pendingOrdersFilter;
-    }
-    if (currentTab === 'In Transit') {
-      if (inTransitOrders.length === 0) {
-        getOrders.transit(inTransitOrdersFilter);
-      }
-      currentFilter = inTransitOrdersFilter;
-    }
-    if (currentTab === 'Complete') {
-      if (completedOrders.length === 0) {
-        getOrders.delivered(completedOrdersFilter);
-      }
-      currentFilter = completedOrdersFilter;
-    }
-  }, [currentTab]);
+  // useEffect(() => {
+  //   if (currentTab === 'Pending' && !initialPending) {
+  //     getOrders.placed(toShipOrdersFilter);
+
+  //     currentFilter = toShipOrdersFilter;
+  //   }
+  //   if (currentTab === 'In Transit') {
+  //     getOrders.transit(inTransitOrdersFilter);
+
+  //     currentFilter = inTransitOrdersFilter;
+  //   }
+  //   if (currentTab === 'Complete') {
+  //     getOrders.delivered(completedOrdersFilter);
+  //     currentFilter = completedOrdersFilter;
+  //   }
+  // }, [currentTab]);
 
   useEffect(() => {
     if (currentTab === 'Pending') {
-      getOrders.placed(pendingOrdersFilter);
-      setInitialPending(false);
+      getOrders.placed(toShipOrdersFilter);
     }
   }, [
-    pendingOrdersFilter.term,
-    pendingOrdersFilter.dateFrom,
-    pendingOrdersFilter.dateTo,
+    currentTab,
+    toShipOrdersFilter.page,
+    toShipOrdersFilter.term,
+    toShipOrdersFilter.dateFrom,
+    toShipOrdersFilter.dateTo,
   ]);
 
   useEffect(() => {
@@ -172,6 +188,8 @@ const OrdersContainer = (): JSX.Element => {
       getOrders.transit(inTransitOrdersFilter);
     }
   }, [
+    currentTab,
+    inTransitOrdersFilter.page,
     inTransitOrdersFilter.term,
     inTransitOrdersFilter.dateFrom,
     inTransitOrdersFilter.dateTo,
@@ -182,13 +200,15 @@ const OrdersContainer = (): JSX.Element => {
       getOrders.delivered(completedOrdersFilter);
     }
   }, [
+    currentTab,
+    completedOrdersFilter.page,
     completedOrdersFilter.term,
     completedOrdersFilter.dateFrom,
     completedOrdersFilter.dateTo,
   ]);
 
   const filters = {
-    pendingOrdersFilter,
+    toShipOrdersFilter,
     completedOrdersFilter,
     inTransitOrdersFilter,
   };
@@ -202,23 +222,16 @@ const OrdersContainer = (): JSX.Element => {
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
   const generatedProps: OrdersGeneratedProps = {
-    pendingOrders: groupByDate('estCatchmentDate')(
-      sortByDateAsc(pendingOrders, 'estCatchmentDate')
-    ),
-    inTransitOrders: groupByDate('estDeliveryDate')(
-      sortByDateAsc(inTransitOrders, 'estDeliveryDate')
-    ),
-    completedOrders: groupByDate('deliveredDate')(
-      sortByDateAsc(completedOrders, 'deliveredDate')
-    ),
-
+    pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
+    toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
+    inTransitOrders: groupByDate('estDeliveryDate')(inTransitOrders),
+    completedOrders: groupByDate('deliveredDate')(completedOrders),
     getAllOrders,
-    pendingOrdersCount,
+    toShipOrdersCount,
     completedOrdersCount,
     inTransitOrdersCount,
     filters,
     updateFilters,
-    currentFilter,
     currentTab,
     loadingCurrentTab,
     onChangeCurrentTab,

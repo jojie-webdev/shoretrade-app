@@ -9,6 +9,13 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 export const Content = styled.div`
@@ -27,9 +34,7 @@ export const Content = styled.div`
 
 export const Footer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: space-between;
   height: 64px;
 `;
 
@@ -100,7 +105,6 @@ export const ForgotPasswordIcon = styled(Lock)`
 export const SignupContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 22px 26px;
 `;
 
 export const Signup = styled(Typography)`

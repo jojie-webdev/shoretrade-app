@@ -8,4 +8,5 @@ export interface LineChartProps {
   cHeight: number;
   stroke?: keyof Theme['brand'];
   strokeWidth?: number;
+  isEarning?: boolean;
 }

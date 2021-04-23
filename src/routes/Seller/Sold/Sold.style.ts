@@ -50,3 +50,22 @@ export const DeliveryItem = styled(Interaction)`
     }
   }
 `;
+
+export const SearchFilterRow = styled.div`
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
+export const SearchContainer = styled.div`
+  width: 480px;
+  position: relative;
+`;
+
+export const DateRangeContainer = styled.div`
+  width: 100%;
+  max-width: 280px;
+  position: relative;
+  bottom: 10px; //offset
+`;

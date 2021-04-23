@@ -10,7 +10,7 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 
-import { SoldItemData, PendingToShipItemData } from './Sold.props';
+import { SoldItemData, PendingToShipItemData, SoldItem } from './Sold.props';
 
 const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
   if (!order.sellerDropOffCutOffTime && order.deliveryMethod === 'AIR') {
@@ -27,8 +27,8 @@ const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
 
   const deliveryMoment = moment(
     order.sellerDropOffCutOffTime ||
-      order.originalExpectedDeliveryDate ||
-      order.latestExpectedDeliveryDate
+      order.latestExpectedDeliveryDate ||
+      order.originalExpectedDeliveryDate
   );
 
   const momentDateFormat = 'yyyy-MM-DD';
@@ -172,4 +172,12 @@ export const orderItemToSoldItemData = (data: {
   }
 
   return newObj;
+};
+
+export const sortByDate = function (a: SoldItem, b: SoldItem) {
+  const getTime = (z: Date) => {
+    return moment(z).toDate().getTime();
+  };
+
+  return getTime(b.title) - getTime(a.title);
 };

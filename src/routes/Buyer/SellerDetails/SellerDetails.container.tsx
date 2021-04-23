@@ -1,17 +1,18 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 
-import { SellerRatingProps } from 'components/module/SellerRating/SellerRating.props';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
   getSellerByIdActions,
   updateFavoriteSellerActions,
 } from 'store/actions';
-import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
 
-import { SellerDetailsGeneratedProps } from './SellerDetails.props';
+import {
+  SellerDetailsGeneratedProps,
+  SellerRatingProps,
+} from './SellerDetails.props';
 import SellerDetailsView from './SellerDetails.view';
 
 const SellerDetails = (): JSX.Element => {
@@ -52,9 +53,6 @@ const SellerDetails = (): JSX.Element => {
     }
   }, [sellerIdParsed]);
 
-  const recent =
-    useSelector((state: Store) => state.history.buyerRecentSearch) || [];
-
   const loading: boolean | undefined = useSelector(
     (state: Store) => state.getSellerById.pending || false
   );
@@ -93,7 +91,11 @@ const SellerDetails = (): JSX.Element => {
   const sellerRatingProps: SellerRatingProps = {
     companyName: seller?.companyName || '',
     companyImage: seller?.companyImage || '',
-    companyLocation: seller?.companyLocation,
+    companyLocation: `${seller?.companyLocation.state || ''}${
+      seller?.companyLocation.countryCode
+        ? `, ${seller?.companyLocation.countryCode}`
+        : ''
+    }`,
     rating: seller?.rating || 0,
     isFavorite,
     onFavorite,

@@ -6,7 +6,7 @@ import CategoryImageView from 'components/module/CategoryImage';
 import { Row, Col } from 'react-grid-system';
 
 import { CardProps } from './Card.props';
-import { CardContainer, Typography } from './Card.style';
+import { CardContainer, Text } from './Card.style';
 
 const Card = (props: CardProps): JSX.Element => {
   return (
@@ -23,7 +23,7 @@ const Card = (props: CardProps): JSX.Element => {
           />
         </picture>
         <div className="card-content">
-          <Typography variant="label">{props.label}</Typography>
+          <Text variant="label">{props.label}</Text>
         </div>
       </div>
     </CardContainer>

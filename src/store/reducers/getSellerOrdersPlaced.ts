@@ -1,4 +1,7 @@
+// TODO: refactor to avoid mutation
+
 import { pathOr } from 'ramda';
+import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
@@ -10,17 +13,16 @@ import { getSellerOrdersPlacedActions } from '../actions';
 
 const updateToConfirmed = (
   pendingOrders: GetSellerOrdersResponseItem[],
-  id: string,
-  orderLineItemId: string
+  meta: Partial<ConfirmWeightMeta>
 ): GetSellerOrdersResponseItem[] => {
-  const ndx = pendingOrders.findIndex((po) => po.orderId === id);
+  const ndx = pendingOrders.findIndex((po) => po.orderId === meta.orderId);
 
   if (ndx === -1) {
     return pendingOrders;
   }
 
   const lineItemNdx = pendingOrders[ndx].orderLineItem.findIndex(
-    (oli) => oli.id === orderLineItemId
+    (oli) => oli.id === meta.orderLineItemId
   );
 
   if (lineItemNdx === -1) {
@@ -29,6 +31,39 @@ const updateToConfirmed = (
 
   const newPendingOrders = [...pendingOrders];
   newPendingOrders[ndx].orderLineItem[lineItemNdx].weightConfirmed = true;
+  if ((meta.listingBoxes || []).length > 0) {
+    newPendingOrders[ndx].orderLineItem[lineItemNdx].listingBoxes = (
+      meta.listingBoxes || []
+    ).map((a) => ({
+      ...a,
+      count: a.count || null,
+    }));
+
+    // recompute total price from  updated boxes
+    newPendingOrders[ndx].totalPrice = newPendingOrders[ndx].orderLineItem
+      .reduce((accumA, currentA, index) => {
+        const subTotalWeight = currentA.listingBoxes.reduce(
+          (accumB: number, currentB) => {
+            return accumB + currentB.quantity * currentB.weight;
+          },
+          0
+        );
+
+        const subTotalPrice = currentA.listing.pricePerKilo * subTotalWeight;
+
+        if (index === lineItemNdx) {
+          newPendingOrders[ndx].orderLineItem[
+            lineItemNdx
+          ].price = subTotalPrice;
+          newPendingOrders[ndx].orderLineItem[
+            lineItemNdx
+          ].weight = subTotalWeight;
+        }
+
+        return accumA + subTotalPrice;
+      }, 0)
+      .toFixed(2);
+  }
 
   return newPendingOrders;
 };
@@ -75,8 +110,7 @@ export default createAsyncReducer<GetSellerOrdersMeta, GetSellerOrdersPayload>(
             ...state.data?.data,
             pendingOrders: updateToConfirmed(
               state.data?.data?.pendingOrders || [],
-              action.meta?.orderId || '',
-              action.meta?.orderLineItemId || ''
+              action.meta || {}
             ),
           },
         },

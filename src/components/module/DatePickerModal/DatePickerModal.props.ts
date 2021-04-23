@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 import { FocusedInputShape } from 'react-dates';
 
@@ -11,4 +13,6 @@ export interface DatePickerModalProps extends ModalProps {
     endDate: moment.Moment | null;
   }) => void;
   onClickApply: () => void;
+  children?: ReactNode;
+  isDatePickerDashboard?: boolean;
 }

@@ -3,6 +3,8 @@ import { GenericResponse } from 'types/GenericResponse';
 export type GetBuyerOrdersMeta = {
   status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   term?: string;
+  page?: string;
+  limit?: number;
   dateFrom?: Date | string;
   dateTo?: Date | string;
 };
@@ -108,4 +110,5 @@ export type GetBuyerOrdersPayload = GenericResponse<{
   token: string;
   count: string;
   orders: GetBuyerOrdersResponseItem[];
+  pendingOrders: GetBuyerOrdersResponseItem[];
 }>;

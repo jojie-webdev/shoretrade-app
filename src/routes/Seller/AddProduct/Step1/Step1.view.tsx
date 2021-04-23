@@ -82,7 +82,7 @@ const Step1 = ({
             Download template files
           </Typography>
           <Typography variant="label" color="shade6" className="blk-sub2">
-            You can use Microsoft Excel or the free Google Slides to complete
+            You can use Microsoft Excel or the free Google Sheets to complete
           </Typography>
 
           <Typography
