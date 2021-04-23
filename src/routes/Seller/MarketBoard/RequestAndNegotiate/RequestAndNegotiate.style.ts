@@ -37,6 +37,16 @@ export const SummaryContentContainer = styled.div`
     }
   }
 
+  .shipping-to {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+
+    p:first-child {
+      margin-right: 4px;
+    }
+  }
+
   .offer-container {
     padding-top: 32px;
     margin: 16px 0;

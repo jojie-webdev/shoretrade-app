@@ -39,6 +39,9 @@ const Sold = (): JSX.Element => {
   // MARK:- Hooks
   const dispatch = useDispatch();
   const location = useLocation();
+  const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
+    tab: TabOptions;
+  };
 
   // MARK:- Selectors
   const token = useSelector((state: Store) => state.auth.token) || '';
@@ -46,6 +49,11 @@ const Sold = (): JSX.Element => {
   const toShipCount =
     useSelector(
       (state: Store) => state.getSellerOrdersPlaced.data?.data.count
+    ) || '1';
+
+  const inTransitCount =
+    useSelector(
+      (state: Store) => state.getSellerOrdersTransit.data?.data.count
     ) || '1';
 
   const deliveredCount =
@@ -75,8 +83,19 @@ const Sold = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: '',
-      dateTo: '',
+      term: '',
+      dateFrom: null,
+      dateTo: null,
+    }
+  );
+
+  const [inTransitFilters, updateInTransitFilters] = useReducer(
+    createUpdateReducer<RequestFilters>(),
+    {
+      page: '1',
+      term: '',
+      dateFrom: null,
+      dateTo: null,
     }
   );
 
@@ -84,29 +103,16 @@ const Sold = (): JSX.Element => {
     createUpdateReducer<RequestFilters>(),
     {
       page: '1',
-      dateFrom: '',
-      dateTo: '',
+      term: '',
+      dateFrom: null,
+      dateTo: null,
     }
   );
 
   // MARK:- State
-  const [currentTab, setCurrentTab] = useState<TabOptions>('To Ship');
-  const [pendingToShipState, setPendingToShipState] = useState<
-    PendingToShipItemData[]
-  >();
-  const [initialized, setInitialized] = useState(false);
+  const currentTab: TabOptions = tab ? tab : 'To Ship';
 
   // MARK: Methods
-  const getOrdersPlaced = (filter?: {
-    page: string;
-    dateFrom: string;
-    dateTo: string;
-  }) => {
-    if (filter?.page) {
-      // prevent firing action twice on mount
-      dispatch(getSellerOrdersPlacedActions.request(filter));
-    }
-  };
 
   const sendMessage = (buyerId: string, message: string) => {
     if (buyerId && message) {
@@ -119,14 +125,29 @@ const Sold = (): JSX.Element => {
     }
   };
 
-  const getOrdersTransit = () => {
-    dispatch(getSellerOrdersTransitActions.request());
+  const getOrdersPlaced = (filter?: {
+    page: string;
+    term: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
+  }) => {
+    dispatch(getSellerOrdersPlacedActions.request(filter));
+  };
+
+  const getOrdersTransit = (filter?: {
+    page: string;
+    term: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
+  }) => {
+    dispatch(getSellerOrdersTransitActions.request(filter));
   };
 
   const getOrdersDelivered = (filter?: {
     page: string;
-    dateFrom: string;
-    dateTo: string;
+    term: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
   }) => {
     dispatch(getSellerOrdersDeliveredActions.request(filter));
   };
@@ -185,11 +206,13 @@ const Sold = (): JSX.Element => {
 
   const filters = {
     toShipFilters,
+    inTransitFilters,
     deliveredFilters,
   };
 
   const updateFilters = {
     updateToShipFilters,
+    updateInTransitFilters,
     updateDeliveredFilters,
   };
 
@@ -203,59 +226,40 @@ const Sold = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    if (initialized && currentTab === 'To Ship') {
+    if (currentTab === 'To Ship') {
       getOrders.placed(toShipFilters);
     }
-  }, [toShipFilters.page, toShipFilters.dateFrom]);
+  }, [
+    currentTab,
+    toShipFilters.page,
+    toShipFilters.term,
+    toShipFilters.dateFrom,
+    toShipFilters.dateTo,
+  ]);
+
+  useEffect(() => {
+    if (currentTab === 'In Transit') {
+      getOrders.transit(inTransitFilters);
+    }
+  }, [
+    currentTab,
+    inTransitFilters.page,
+    inTransitFilters.term,
+    inTransitFilters.dateFrom,
+    inTransitFilters.dateTo,
+  ]);
 
   useEffect(() => {
     if (currentTab === 'Delivered') {
       getOrders.delivered(deliveredFilters);
     }
-  }, [deliveredFilters.page, deliveredFilters.dateFrom]);
-
-  useEffect(() => {
-    const { tab } = qs.parse(location.search, { ignoreQueryPrefix: true }) as {
-      tab: TabOptions;
-    };
-
-    if (!tab) {
-      setCurrentTab('To Ship');
-      return;
-    }
-
-    setCurrentTab(tab);
-  }, [location.search]);
-
-  useEffect(() => {
-    if (currentTab === 'To Ship') {
-      if (toShip.length === 0 && pendingToShip.length === 0) {
-        getOrders.placed({
-          page: '1',
-          dateFrom: '',
-          dateTo: '',
-        });
-
-        setInitialized(true);
-      }
-    }
-
-    if (currentTab === 'In Transit') {
-      if (inTransit.length === 0) {
-        getOrders.transit();
-      }
-    }
-
-    if (currentTab === 'Delivered') {
-      if (delivered.length === 0) {
-        getOrders.delivered({
-          page: '1',
-          dateFrom: '',
-          dateTo: '',
-        });
-      }
-    }
-  }, [currentTab]);
+  }, [
+    currentTab,
+    deliveredFilters.page,
+    deliveredFilters.term,
+    deliveredFilters.dateFrom,
+    deliveredFilters.dateTo,
+  ]);
 
   const generatedProps: SoldGeneratedProps = {
     // generated props here
@@ -268,6 +272,7 @@ const Sold = (): JSX.Element => {
     inTransit,
     delivered,
     toShipCount,
+    inTransitCount,
     deliveredCount,
     filters,
     updateFilters,

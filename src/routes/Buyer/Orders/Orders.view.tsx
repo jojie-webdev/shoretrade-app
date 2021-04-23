@@ -36,17 +36,21 @@ const OrdersView = (props: OrdersGeneratedProps) => {
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const { currentTab, loadingCurrentTab, onChangeCurrentTab } = props;
-
-  const { filters, updateFilters } = props;
+  const {
+    currentTab,
+    loadingCurrentTab,
+    onChangeCurrentTab,
+    filters,
+    updateFilters,
+  } = props;
 
   const currentFilter = {
-    [PENDING]: filters.pendingOrdersFilter,
+    [PENDING]: filters.toShipOrdersFilter,
     [IN_TRANSIT]: filters.inTransitOrdersFilter,
     [COMPLETE]: filters.completedOrdersFilter,
   }[currentTab];
   const updateFilter = {
-    [PENDING]: updateFilters.updatePendingOrdersFilter,
+    [PENDING]: updateFilters.updateToShipOrdersFilter,
     [IN_TRANSIT]: updateFilters.updateInTransitOrdersFilter,
     [COMPLETE]: updateFilters.updateCompletedOrdersFilter,
   }[currentTab];
@@ -57,6 +61,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     updateFilter({
       ...currentFilter,
       term: parsedValue,
+      page: '1',
     });
   };
 
@@ -64,6 +69,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     updateFilter({
       ...currentFilter,
       term: '',
+      page: '1',
     });
     setSearchValue('');
   };
@@ -73,6 +79,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       ...currentFilter,
       dateFrom: value.startDate,
       dateTo: value.endDate,
+      page: '1',
     });
   };
 

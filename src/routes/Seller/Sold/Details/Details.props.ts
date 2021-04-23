@@ -15,7 +15,7 @@ export type Details = {
     size: string;
     boxes: {
       id: string;
-      count: number;
+      count: number | null;
       weight: number;
       quantity: number;
     }[];

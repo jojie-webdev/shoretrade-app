@@ -110,10 +110,6 @@ export const transformOrder = (
   };
 };
 
-const isToday = (date: Date) => moment(date).isSame(moment(), 'day');
-const isTomorrow = (date: Date) =>
-  moment(date).isSame(moment().add(1, 'day'), 'day');
-
 export const groupByDate = (dateType: DateType) =>
   groupBy((order: OrderItem) => {
     const momentDateFormat = 'MMM. D, YYYY';
@@ -128,28 +124,38 @@ export const groupByDate = (dateType: DateType) =>
       date = order[dateType];
     }
 
-    if (isToday(date)) {
+    const currentDate = moment();
+    const dateDiff = Math.floor(currentDate.diff(moment(date), 'days', true));
+    // 1 -> 1.99
+    if (dateDiff === 1) {
+      return 'Yesterday';
+      // 0 -> 0.99
+    } else if (dateDiff === 0) {
       return 'Today';
-    }
-
-    if (isTomorrow(date)) {
+      // -1 -> -0
+    } else if (dateDiff === -1) {
       return 'Tomorrow';
     }
 
     return moment(date).format(momentDateFormat);
   });
 
-export const sortByDateAsc = (orders: OrderItem[], dateType: DateType) =>
-  orders.sort((a, b) => {
-    let date1, date2;
-
-    if (dateType === 'estCatchmentDate') {
-      date1 = a.isAquafuture ? a.estCatchmentDate : a.estDeliveryDate;
-      date2 = b.isAquafuture ? b.estCatchmentDate : b.estDeliveryDate;
-    } else {
-      date1 = a[dateType];
-      date2 = b[dateType];
+export const sortByDate = function (a: string, b: string) {
+  const getTime = (z: string) => {
+    if (z === 'Today') {
+      return moment().toDate().getTime();
     }
 
-    return date1.getTime() - date2.getTime();
-  });
+    if (z === 'Tomorrow') {
+      return moment().add(1, 'day').toDate().getTime();
+    }
+
+    if (z === 'Yesterday') {
+      return moment().subtract(1, 'day').toDate().getTime();
+    }
+
+    return moment(z, 'MMM. D, YYYY').toDate().getTime();
+  };
+
+  return getTime(b) - getTime(a);
+};
