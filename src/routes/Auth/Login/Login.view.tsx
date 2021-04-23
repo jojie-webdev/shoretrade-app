@@ -36,7 +36,15 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // is implemented.
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const { login, pending, goToForgotPassword, isError, goToRegister } = props;
+
+  const {
+    login,
+    pending,
+    goToForgotPassword,
+    isError,
+    goToRegister,
+    switchType,
+  } = props;
 
   const formikProps = {
     initialValues: {
@@ -45,6 +53,34 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
     },
     validate,
     onSubmit: login,
+  };
+
+  const ForgotPasswordView = () => {
+    return (
+      <>
+        <Touchable
+          dark={isSeller}
+          onPress={() => goToForgotPassword()}
+          className="touchable"
+        >
+          <ForgotPasswordContainer>
+            <ForgotPasswordIcon
+              fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+            />
+            <Typography variant="label" color={isSeller ? 'noshade' : 'shade9'}>
+              Forgot Password?
+            </Typography>
+          </ForgotPasswordContainer>
+        </Touchable>
+        <Touchable dark={isSeller} onPress={() => switchType()}>
+          <ForgotPasswordContainer>
+            <Typography variant="label" color={isSeller ? 'noshade' : 'shade9'}>
+              Log in as {isSeller ? 'Buyer' : 'Seller'}
+            </Typography>
+          </ForgotPasswordContainer>
+        </Touchable>
+      </>
+    );
   };
 
   return (
@@ -85,11 +121,13 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
                 {isSeller ? 'Seller' : 'Buyer'} Log in
               </Typography>
               <RegisterLinkContainer>
-                <RegisterLinkPrefix color="shade6">
+                <RegisterLinkPrefix variant="label" weight="400" color="shade6">
                   New user?
                 </RegisterLinkPrefix>
                 <RegisterLinkAction onClick={() => goToRegister()}>
-                  <RegisterLink color="primary">Create an Account</RegisterLink>
+                  <RegisterLink color="primary" variant="label" weight="700">
+                    Create an Account
+                  </RegisterLink>
                 </RegisterLinkAction>
               </RegisterLinkContainer>
             </>
@@ -111,23 +149,9 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
           </Formik>
 
           {isSmallScreen && (
-            <Touchable
-              dark={isSeller}
-              onPress={() => goToForgotPassword()}
-              className="touchable"
-            >
-              <ForgotPasswordContainer>
-                <ForgotPasswordIcon
-                  fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
-                />
-                <Typography
-                  variant="label"
-                  color={isSeller ? 'noshade' : 'shade9'}
-                >
-                  Forgot Password?
-                </Typography>
-              </ForgotPasswordContainer>
-            </Touchable>
+            <div className="row">
+              <ForgotPasswordView />
+            </div>
           )}
 
           {isError && (
@@ -143,19 +167,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
         </Content>
         {!isSmallScreen && (
           <Footer>
-            <Touchable dark={isSeller} onPress={() => goToForgotPassword()}>
-              <ForgotPasswordContainer>
-                <ForgotPasswordIcon
-                  fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
-                />
-                <Typography
-                  variant="label"
-                  color={isSeller ? 'noshade' : 'shade9'}
-                >
-                  Forgot Password?
-                </Typography>
-              </ForgotPasswordContainer>
-            </Touchable>
+            <ForgotPasswordView />
           </Footer>
         )}
       </ContentWrapper>

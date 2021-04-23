@@ -3,6 +3,7 @@ import { GenericResponse } from 'types/GenericResponse';
 export type GetSellerOrdersMeta = {
   status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   limit?: number;
+  page?: string;
   term?: string;
   dateFrom?: Date | string;
   dateTo?: Date | string;
@@ -67,7 +68,7 @@ export type GetSellerOrdersResponseItem = {
       price: number;
       listingBoxes: {
         id: string;
-        count: number;
+        count: number | null;
         weight: number;
         quantity: number;
       }[];

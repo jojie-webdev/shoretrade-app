@@ -4,13 +4,15 @@ import Button from 'components/base/Button';
 import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
-import { API, SELLER_SOLD_ROUTES } from 'consts';
+import { API, DEFAULT_PAGE_LIMIT, SELLER_SOLD_ROUTES } from 'consts';
 import moment from 'moment';
+import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps } from '../Sold.props';
+import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
 import {
   StyledInteraction,
@@ -38,21 +40,27 @@ const Delivered = (props: SoldGeneratedProps) => {
     }
   };
 
-  const deliveredPagesTotal = Math.ceil(Number(deliveredCount) / 10);
+  const deliveredPagesTotal = Math.ceil(
+    Number(deliveredCount) / DEFAULT_PAGE_LIMIT
+  );
 
   return (
     <>
-      {delivered.map((group) => {
+      {sort(sortByDate, delivered).map((group) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
           const currentDate = moment();
-          const dateDiff = targetDate.diff(currentDate, 'days');
-
-          if (dateDiff === -1) {
+          const dateDiff = Math.floor(
+            currentDate.diff(targetDate, 'days', true)
+          );
+          // 1 -> 1.99
+          if (dateDiff === 1) {
             return 'Yesterday';
+            // 0 -> 0.99
           } else if (dateDiff === 0) {
             return 'Today';
-          } else if (dateDiff === 1) {
+            // -1 -> -0
+          } else if (dateDiff === -1) {
             return 'Tomorrow';
           }
 

@@ -11,4 +11,5 @@ export interface LoginGeneratedProps {
   goToForgotPassword: () => void;
   isError: boolean;
   goToRegister: () => void;
+  switchType: () => void;
 }
