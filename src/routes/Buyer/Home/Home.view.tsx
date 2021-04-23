@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
+import Interactions from 'components/base/Interactions';
 import {
   ChevronRight,
   InfoFilled,
   Bolt,
   FileBookMarkAlt,
+  PlaceholderProfile,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -18,15 +20,16 @@ import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
+import ResponsiveMultiCarousel from 'components/module/ResponsiveMultiCarousel';
 import SearchAddress from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
-import { Col } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
@@ -43,10 +46,12 @@ import {
   Bold,
   FavouritesContainer,
   ViewCol,
-  ViewContainer,
+  Wrapper,
   RecentContainer,
   SellerContainer,
   SwiperContainer,
+  Image,
+  PlaceholderImage,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -107,6 +112,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     isPendingAccount,
   } = props;
 
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const hideCarouselArrowArea = useMediaQuery({
     query: `(max-width: 565px)`,
   });
@@ -131,7 +138,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         Welcome {}
       </Typography> */}
       {!isPendingAccount && (
-        <div className="wrapper" style={{ marginBottom: 16 }}>
+        <Wrapper>
           <Col xs={12}>
             <Alert
               variant="alert"
@@ -140,21 +147,21 @@ const HomeView = (props: HomeGeneratedProps) => {
               alignText="center"
             />
           </Col>
-        </div>
+        </Wrapper>
       )}
-      <div className="wrapper">
+      <Wrapper>
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
           <SearchAddress />
         </Col>
-      </div>
+      </Wrapper>
 
       {/* Main Content */}
       {loadingHomePage ? (
         <Loading />
       ) : (
         <>
-          <div className="wrapper">
+          <Wrapper>
             <ViewCol style={{ paddingTop: '48px' }}>
               {/* TODO Update getHomeBuyerHomepage ? or  */}
               {/* use other action/service? */}
@@ -165,7 +172,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                 title="Pending Offers"
               />
             </ViewCol>
-          </div>
+          </Wrapper>
           <SwiperContainer>
             <CarouselV2
               id="featured-carousel"
@@ -177,55 +184,88 @@ const HomeView = (props: HomeGeneratedProps) => {
               addMargin
             />
           </SwiperContainer>
-          {!isPendingAccount && (
-            <div className="wrapper">
-              <ViewCol style={{ paddingTop: '48px' }}>
+
+          <Wrapper>
+            <Row gutterWidth={16}>
+              <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
-                  title="Favourites"
-                  onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                  title="Your Favorite Categories"
+                  onClick={() =>
+                    history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
+                  }
                   noMargin
                 />
 
-                <FavouritesContainer>
-                  <MultipleCarousel<
-                    GetBuyerHomepageResponseListingItem,
-                    PreviewProps
-                  >
-                    data={favourites}
-                    transform={favouritesToPreviewProps}
-                    Component={PreviewCard}
-                    link={BUYER_ROUTES.PRODUCT_DETAIL}
-                    emptyText="No Favourite Products"
-                    id="favourites"
+                <CategoriesContainer isSmallScreen={isSmallScreen}>
+                  <ResponsiveMultiCarousel<CategoryResults, CardProps>
+                    data={categories}
+                    transform={categoriesToCardProps}
+                    Component={Card}
+                    link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+                    id="categories"
                   />
-                </FavouritesContainer>
+                </CategoriesContainer>
               </ViewCol>
-            </div>
-          )}
+              {!isPendingAccount && (
+                <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                  <HomeSectionHeader
+                    title="Favourites"
+                    onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                    noMargin
+                  />
 
-          <div className="wrapper">
-            <ViewCol>
-              <HomeSectionHeader
-                title="Your Favorite Categories"
-                onClick={() =>
-                  history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
-                }
-                noMargin
-              />
+                  <FavouritesContainer>
+                    {isSmallScreen ? (
+                      <MultipleCarousel<
+                        GetBuyerHomepageResponseListingItem,
+                        PreviewProps
+                      >
+                        data={favourites}
+                        transform={favouritesToPreviewProps}
+                        Component={PreviewCard}
+                        link={BUYER_ROUTES.PRODUCT_DETAIL}
+                        emptyText="No Favourite Products"
+                        id="favourites"
+                      />
+                    ) : (
+                      <>
+                        {favourites?.map((fav) => {
+                          return (
+                            <Interactions
+                              key={fav.id}
+                              type="next"
+                              padding="8px 24px 8px 8px"
+                              onClick={() => {
+                                history.push(
+                                  BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
+                                );
+                              }}
+                              leftComponent={
+                                <>
+                                  {fav.images.length > 0 ? (
+                                    <Image src={fav.images[0]} />
+                                  ) : (
+                                    <PlaceholderImage>
+                                      <PlaceholderProfile />
+                                    </PlaceholderImage>
+                                  )}
+                                  <Typography variant="label" color="shade9">
+                                    {fav.coop?.name}
+                                  </Typography>
+                                </>
+                              }
+                            />
+                          );
+                        })}
+                      </>
+                    )}
+                  </FavouritesContainer>
+                </ViewCol>
+              )}
+            </Row>
+          </Wrapper>
 
-              <CategoriesContainer>
-                <MultipleCarousel<CategoryResults, CardProps>
-                  data={categories}
-                  transform={categoriesToCardProps}
-                  Component={Card}
-                  link={BUYER_ROUTES.CATEGORY_PRODUCTS}
-                  id="categories"
-                />
-              </CategoriesContainer>
-            </ViewCol>
-          </div>
-
-          <div className="wrapper">
+          <Wrapper>
             <ViewCol>
               <HomeSectionHeader
                 title="Recently Added"
@@ -248,11 +288,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                 />
               </RecentContainer>
             </ViewCol>
-          </div>
+          </Wrapper>
 
           {!isPendingAccount && (
             <>
-              <div className="wrapper">
+              <Wrapper>
                 <ViewCol>
                   <HomeSectionHeader
                     title="Favourite Sellers"
@@ -260,7 +300,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     noMargin
                   />
 
-                  <SellerContainer>
+                  <SellerContainer isSmallScreen={isSmallScreen}>
                     <MultipleCarousel<SellerResults, SellerCardProps>
                       data={favouriteSellers}
                       transform={favouriteSellersToSellerCardProps}
@@ -271,9 +311,9 @@ const HomeView = (props: HomeGeneratedProps) => {
                     />
                   </SellerContainer>
                 </ViewCol>
-              </div>
+              </Wrapper>
 
-              <div className="wrapper">
+              <Wrapper>
                 <ViewCol>
                   <HomeSectionHeader
                     title="Sellers"
@@ -281,7 +321,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     noMargin
                   />
 
-                  <SellerContainer>
+                  <SellerContainer isSmallScreen={isSmallScreen}>
                     <MultipleCarousel<SellerResults, SellerCardProps>
                       data={sellers}
                       transform={favouriteSellersToSellerCardProps}
@@ -291,7 +331,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     />
                   </SellerContainer>
                 </ViewCol>
-              </div>
+              </Wrapper>
             </>
           )}
         </>

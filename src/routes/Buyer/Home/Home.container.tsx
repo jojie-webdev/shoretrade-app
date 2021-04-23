@@ -1,6 +1,8 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { updateAddressActions, cartActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { PlaceData } from 'types/PlaceData';
@@ -23,6 +25,8 @@ const Home = (): JSX.Element => {
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
+
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   // MARK:- Variables
   const {
