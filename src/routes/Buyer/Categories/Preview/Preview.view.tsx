@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';

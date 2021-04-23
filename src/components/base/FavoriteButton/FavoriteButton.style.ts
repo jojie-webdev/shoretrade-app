@@ -19,6 +19,7 @@ export const Container = styled(Touchable)`
 `;
 
 export const SvgContainer = styled.div`
+  padding-top: 4px;
   width: 40px;
   height: 40px;
   display: flex;

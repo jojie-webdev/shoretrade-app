@@ -2,7 +2,7 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import { HeartFilled, Heart } from 'components/base/SVG';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
 
 import { FavoriteButtonProps } from './FavoriteButton.props';
 import { Container, SvgContainer } from './FavoriteButton.style';

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
-import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { pathOr, splitEvery, take } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { ProductSellerRatingProps } from 'routes/Buyer/ProductDetails/ProductDetails.props';
 import {
   getListingActions,
   getListingBoxesActions,

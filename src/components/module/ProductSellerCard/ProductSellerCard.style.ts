@@ -1,5 +1,28 @@
-import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
+
+export const SellerCardContainer = styled.div<{
+  fishermanNotes?: string;
+  withBackground?: boolean;
+  fullWidth?: boolean;
+}>`
+  padding: ${({ theme, withBackground }) => (withBackground ? '16px' : 0)};
+  margin-bottom: ${({ theme, withBackground }) =>
+    withBackground ? 0 : '32px'};
+  background-color: ${({ theme, withBackground }) =>
+    withBackground ? theme.grey.noshade : 'rgba(0, 0 ,0 ,0, 0)'};
+  border: ${({ theme, withBackground }) =>
+    withBackground ? '2px solid #edeffa' : 0};
+
+  border-radius: 8px;
+
+  height: 100%;
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
+
+  @media (min-width: 992px) {
+    border-width: 2px;
+    border-radius: 0px 0px 8px 8px;
+  }
+`;
 
 export const Row = styled.div`
   display: flex;
@@ -52,34 +75,8 @@ export const FlexShrinked = styled.div`
   flex-direction: column;
   margin-left: 1rem;
   flex: 1 auto;
-
-  max-height: 56px;
 `;
 
 export const StarContainer = styled.div<{ location?: string }>`
   margin-right: 6px;
-`;
-
-export const SellerCardContainer = styled.div<{
-  fishermanNotes?: string;
-  withBackground?: boolean;
-}>`
-  padding: ${({ theme, withBackground }) => (withBackground ? '16px' : 0)};
-  margin-bottom: ${({ theme, withBackground }) =>
-    withBackground ? 0 : '32px'};
-  background-color: ${({ theme, withBackground }) =>
-    withBackground ? theme.grey.noshade : 'rgba(0, 0 ,0 ,0, 0)'};
-  border: 2px solid #edeffa;
-  border: ${({ theme, withBackground }) =>
-    withBackground ? '2px solid #edeffa' : 0};
-
-  border-radius: 8px;
-
-  height: 100%;
-  max-height: 120px;
-
-  @media (min-width: 992px) {
-    border-width: 2px;
-    border-radius: 0px 0px 8px 8px;
-  }
 `;

@@ -3,7 +3,7 @@ import React from 'react';
 import Accordion from 'components/base/Accordion';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
 import moment from 'moment-timezone';
 import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
