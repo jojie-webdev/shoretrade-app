@@ -27,8 +27,8 @@ const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
 
   const deliveryMoment = moment(
     order.sellerDropOffCutOffTime ||
-      order.originalExpectedDeliveryDate ||
-      order.latestExpectedDeliveryDate
+      order.latestExpectedDeliveryDate ||
+      order.originalExpectedDeliveryDate
   );
 
   const momentDateFormat = 'yyyy-MM-DD';
