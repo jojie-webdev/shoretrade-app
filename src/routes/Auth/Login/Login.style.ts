@@ -34,6 +34,13 @@ export const Footer = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 64px;
+
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 export const Title = styled(Typography)`

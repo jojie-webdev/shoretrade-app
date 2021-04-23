@@ -175,6 +175,19 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                           {formatMeasurementUnit(b.measurementUnit)}
                         </Typography>
                       </div>
+
+                      <div className="shipping-to">
+                        <Typography variant="small" color="shade6">
+                          Shipping to
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="noshade"
+                          weight="bold"
+                        >
+                          {`${b.shippingTo.suburb}, ${b.shippingTo.state} ${b.shippingTo.postcode}`}
+                        </Typography>
+                      </div>
                     </div>
                   </div>
                 }
