@@ -48,6 +48,16 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
       }
+
+      .shipping-to {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+
+        p:first-child {
+          margin-right: 4px;
+        }
+      }
     }
   }
 `;

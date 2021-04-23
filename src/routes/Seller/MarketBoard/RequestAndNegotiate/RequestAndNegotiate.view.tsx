@@ -481,6 +481,17 @@ const Step1 = ({
             )}
           </div>
 
+          {isReview && (
+            <div className="shipping-to">
+              <Typography variant="label" color="shade6">
+                Shipping to
+              </Typography>
+              <Typography variant="label" color="noshade" weight="bold">
+                {`${buyerRequest.shippingTo.suburb}, ${buyerRequest.shippingTo.state} ${buyerRequest.shippingTo.postcode}`}
+              </Typography>
+            </div>
+          )}
+
           <Negotiations activeOffer={activeOffer} />
 
           {isReview && (
