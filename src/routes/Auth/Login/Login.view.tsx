@@ -34,7 +34,14 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
   // is implemented.
   const isSeller = theme.appType === 'seller';
   // const isSeller = true;
-  const { login, pending, goToForgotPassword, isError, goToRegister } = props;
+  const {
+    login,
+    pending,
+    goToForgotPassword,
+    isError,
+    goToRegister,
+    switchType,
+  } = props;
 
   const formikProps = {
     initialValues: {
@@ -86,16 +93,25 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
           </Formik>
         </Content>
         <Footer>
-          <Touchable dark={isSeller} onPress={() => goToForgotPassword()}>
-            <ForgotPasswordContainer>
-              <ForgotPasswordIcon
-                fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
-              />
-              <ForgotPasswordText color={isSeller ? 'noshade' : 'shade9'}>
-                Forgot Password?
-              </ForgotPasswordText>
-            </ForgotPasswordContainer>
-          </Touchable>
+          <div className="row">
+            <Touchable dark={isSeller} onPress={() => goToForgotPassword()}>
+              <ForgotPasswordContainer>
+                <ForgotPasswordIcon
+                  fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+                />
+                <ForgotPasswordText color={isSeller ? 'noshade' : 'shade9'}>
+                  Forgot Password?
+                </ForgotPasswordText>
+              </ForgotPasswordContainer>
+            </Touchable>
+            <Touchable dark={isSeller} onPress={() => switchType()}>
+              <ForgotPasswordContainer>
+                <ForgotPasswordText color={isSeller ? 'noshade' : 'shade9'}>
+                  Log in as {isSeller ? 'Buyer' : 'Seller'}
+                </ForgotPasswordText>
+              </ForgotPasswordContainer>
+            </Touchable>
+          </div>
         </Footer>
       </ContentWrapper>
     </AuthContainer>

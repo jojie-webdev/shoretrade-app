@@ -24,6 +24,10 @@ const Login = (): JSX.Element => {
     dispatch(loginActions.request(credentials));
   };
 
+  const switchType = () => {
+    history.push(isSeller ? BUYER_ROUTES.LOGIN : SELLER_ROUTES.LOGIN);
+  };
+
   const goToForgotPassword = () => {
     history.push(
       isSeller ? SELLER_ROUTES.FORGOT_PASSWORD : BUYER_ROUTES.FORGOT_PASSWORD
@@ -39,6 +43,7 @@ const Login = (): JSX.Element => {
     login,
     pending,
     goToForgotPassword,
+    switchType,
     goToRegister,
     isError,
   };
