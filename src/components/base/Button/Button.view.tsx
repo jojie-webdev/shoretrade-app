@@ -24,7 +24,6 @@ const Button = (props: ButtonProps): JSX.Element => {
     takeFullWidth = false,
     size = 'md',
     textColor,
-    isSellerDashboardFilter,
     ...buttonProps
   } = props;
 
@@ -41,7 +40,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     } else if (variant === 'success') {
       defaultTextColor = 'noshade';
     } else if (variant === 'unselected') {
-      defaultTextColor = isSellerDashboardFilter ? 'shade6' : 'noshade';
+      defaultTextColor = 'noshade';
     } else {
       defaultTextColor = 'shade5';
     }

@@ -98,6 +98,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   };
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <FilterRow>
       <Col className="filter-col">
@@ -112,7 +113,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
           className={`${isSmallScreen ? 'btn-abso' : 'btn'}`}
           onClick={props.toggleModal}
-          isSellerDashboardFilter
+          textColor={'shade6'}
           icon={
             isSmallScreen ? (
               <Filter fill={theme.brand.primary} />
@@ -140,7 +141,12 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
               }
               size="sm"
               className="btn"
-              isSellerDashboardFilter
+              textColor={
+                getValidDateRangeByFinancialYear().start.id ===
+                dateRange.start.id
+                  ? 'noshade'
+                  : 'shade6'
+              }
               onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
             />
             {[4, 3, 2, 1].map((v) => (
@@ -153,7 +159,11 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                     : 'unselected'
                 }
                 size="sm"
-                isSellerDashboardFilter
+                textColor={
+                  getFiscalQuarter(v).start.id === dateRange.start.id
+                    ? 'noshade'
+                    : 'shade6'
+                }
                 onClick={() => setDateRange(getFiscalQuarter(v))}
                 className="btn"
               />
@@ -169,7 +179,12 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                     : 'unselected'
                 }
                 size="sm"
-                isSellerDashboardFilter
+                textColor={
+                  getValidDateRangeByFinancialYear(v).start.id ===
+                  dateRange.start.id
+                    ? 'noshade'
+                    : 'shade6'
+                }
                 className="btn"
                 onClick={() =>
                   setDateRange(getValidDateRangeByFinancialYear(v))
