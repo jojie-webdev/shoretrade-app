@@ -8,5 +8,4 @@ export interface SellerLandingGeneratedProps {
     id: string;
   }[];
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  resetSearchValue: () => void;
 }

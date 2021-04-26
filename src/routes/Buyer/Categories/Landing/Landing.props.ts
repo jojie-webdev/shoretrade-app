@@ -1,4 +1,4 @@
-import { Dispatch, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 
 export type Results = {
   id: string;
@@ -10,4 +10,7 @@ export type Results = {
 export interface CategoriesLandingGeneratedProps {
   categories: Results[];
   currentPath: string;
+
+  search: string;
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
 }
