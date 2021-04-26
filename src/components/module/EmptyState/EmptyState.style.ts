@@ -5,11 +5,14 @@ export const Container = styled.div<{ fluid: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
   width: 100%;
 `;
 
-export const MainText = styled(Typography)``;
+export const MainText = styled(Typography)<{ isSellerDashboard?: boolean }>`
+  ${(props) => props.isSellerDashboard && `text-align: center;`}
+`;
 
 export const SVGContainer = styled.div<{
   circleColor: string;

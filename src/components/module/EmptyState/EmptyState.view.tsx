@@ -17,6 +17,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
     Svg,
     height,
     width,
+    isSellerDashboard,
   } = props;
 
   const textColor = theme.appType === 'buyer' ? 'shade9' : 'noshade';
@@ -28,7 +29,12 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
   return (
     <Container fluid={fluid}>
       {title && (
-        <MainText variant="title5" className="title" color={textColor}>
+        <MainText
+          variant="title5"
+          className="title"
+          color={textColor}
+          isSellerDashboard={isSellerDashboard}
+        >
           {title}
         </MainText>
       )}

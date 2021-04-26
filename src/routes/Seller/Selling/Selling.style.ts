@@ -1,6 +1,7 @@
 import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -165,5 +166,94 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     font-size: 14px;
     margin-left: ${(props) => (props.row ? '8px' : '0')};
     line-height: 24px;
+  }
+`;
+
+export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
+  width: 100%;
+
+  @media ${BREAKPOINTS['sm']} {
+    flex-direction: column;
+  }
+  @media ${BREAKPOINTS['ipadPro']} {
+    flex-direction: column;
+  }
+
+  .parent-details {
+    .title-text {
+      margin-bottom: 40px;
+    }
+    .add-product-btn {
+      width: 308px;
+      margin-top: 40px;
+    }
+
+    .details-container {
+      display: flex;
+      flex-direction: row;
+      margin-top: 16px;
+
+      .circle {
+        width: 12px;
+        height: 12px;
+        background-color: ${(props) => props.theme.brand.success};
+        border-radius: 50%;
+        box-shadow: 0 0 0 8px rgba(0, 196, 140, 0.1);
+        margin-right: 24px;
+      }
+
+      .text-container {
+        margin-top: -8px;
+        flex-direction: column;
+        max-width: 360px;
+      }
+    }
+  }
+`;
+
+export const SVGContainer = styled.div<{
+  circleColor: string;
+  circleHeight?: number;
+  circleWidth?: number;
+}>`
+  margin-top: 0px;
+  margin-bottom: 0px;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 200px;
+
+  @media ${BREAKPOINTS['ipadPro']} {
+    margin-left: -40px !important;
+  }
+
+  @media ${BREAKPOINTS['iPad']} {
+    margin-left: 80px;
+  }
+
+  svg {
+    z-index: 2;
+  }
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: -12px;
+  }
+
+  :before {
+    position: absolute;
+    content: '';
+    height: ${(props) =>
+      props.circleHeight ? `${props.circleHeight}px` : '210px'};
+    width: ${(props) =>
+      props.circleWidth ? `${props.circleWidth}px` : '210px'};
+    border-radius: 210px;
+    z-index: 1;
+
+    background: ${(props) =>
+      props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
   }
 `;
