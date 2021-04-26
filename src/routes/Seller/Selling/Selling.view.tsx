@@ -248,7 +248,6 @@ const SellingView = (props: SellingGeneratedProps) => {
                     history.push(SELLER_ROUTES.ADD_PRODUCT)
                   }
                   fluid
-                  isSellerDashboard
                 />
               ) : (
                 <NoSelling />
