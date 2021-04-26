@@ -1,3 +1,4 @@
+import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -14,4 +15,9 @@ export const Container = styled.div`
 export const RightIconContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
+`;
+
+export const ListCardTotal = styled(TypographyView)`
+  font-size: 40px;
+  margin-bottom: 1rem;
 `;

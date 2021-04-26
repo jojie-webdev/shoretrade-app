@@ -5,4 +5,5 @@ export interface ListCardProps {
   totalCount: number;
   data: any;
   icon: ReactNode;
+  listItems: ReactNode;
 }

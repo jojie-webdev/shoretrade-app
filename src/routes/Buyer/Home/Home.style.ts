@@ -1,3 +1,5 @@
+import AccordionView from 'components/base/Accordion';
+import InteractionsView from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Container, Col } from 'react-grid-system';
@@ -9,19 +11,10 @@ export const ViewContainer = styled.div`
   padding: 0 8px 8px 8px;
 
   .wrapper {
-    width: calc(100% - 200px);
-    margin: auto;
     position: relative;
 
     margin-top: 24px;
-
-    @media ${BREAKPOINTS['sm']} {
-      width: 100%;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: calc(100% - 150px);
-    }
+    width: 100%;
   }
 
   .buying-for {
@@ -30,19 +23,8 @@ export const ViewContainer = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: calc(100% - 200px);
-  margin: auto;
   position: relative;
-
   margin-top: 24px;
-
-  @media ${BREAKPOINTS['sm']} {
-    width: 100%;
-  }
-
-  @media ${BREAKPOINTS['md']} {
-    width: calc(100% - 150px);
-  }
 `;
 
 export const SwiperContainer = styled.div`
@@ -111,4 +93,40 @@ export const PlaceholderImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const InteractionTitleContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  .title {
+    margin-right: 4px;
+    font-size: ${pxToRem(12)};
+  }
+
+  .value {
+    font-size: ${pxToRem(12)};
+  }
+`;
+export const StyledInteractions = styled(InteractionsView)`
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background: ${(props) => props.theme.grey.shade1};
+`;
+
+export const OrderBadge = styled.div`
+  padding: 8px 16px;
+  background: ${(props) => props.theme.grey.shade3};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  margin-right: 24px;
+  white-space: nowrap;
+  width: 100px;
+
+  p {
+    line-height: 100%;
+  }
 `;

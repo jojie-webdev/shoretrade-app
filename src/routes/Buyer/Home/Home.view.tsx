@@ -27,6 +27,7 @@ import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
+import sort from 'ramda/src/sort';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
@@ -34,6 +35,7 @@ import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepag
 import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
 
+import { sortByDate } from '../Orders/Orders.transform';
 import {
   HomeGeneratedProps,
   CreditState,
@@ -52,6 +54,9 @@ import {
   SwiperContainer,
   Image,
   PlaceholderImage,
+  InteractionTitleContainer,
+  StyledInteractions,
+  OrderBadge,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -110,7 +115,10 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
     isPendingAccount,
+    pendingOrders,
   } = props;
+
+  console.log(pendingOrders);
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -130,6 +138,42 @@ const HomeView = (props: HomeGeneratedProps) => {
     },
     [history.location]
   );
+
+  const listItems = () => {
+    return sort(sortByDate, Object.keys(pendingOrders))
+      .slice(0, 3)
+      .map((key) => (
+        <StyledInteractions
+          flat
+          key={key}
+          padding="24px"
+          keepIcon
+          type="next"
+          leftComponent={
+            <InteractionTitleContainer>
+              <Typography variant="caption" color="shade7" className="title">
+                Estimated{' '}
+                {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
+              </Typography>
+              <Typography variant="caption" className="value" color="shade9">
+                {key}
+              </Typography>
+            </InteractionTitleContainer>
+          }
+          rightComponent={
+            <InteractionTitleContainer>
+              <Typography className="title" color="shade7" variant="caption">
+                {pendingOrders[key].length}{' '}
+                {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
+              </Typography>
+              <Typography className="value" color="shade9" variant="caption">
+                {pendingOrders[key][0].price}
+              </Typography>
+            </InteractionTitleContainer>
+          }
+        />
+      ));
+  };
 
   return (
     <BoxContainer ref={cbRef}>
@@ -167,23 +211,28 @@ const HomeView = (props: HomeGeneratedProps) => {
               {/* use other action/service? */}
               <ListCard
                 icon={<FileBookMarkAlt />}
-                totalCount={0}
-                data={[]}
+                totalCount={Object.keys(pendingOrders).length}
+                data={pendingOrders}
+                listItems={listItems()}
                 title="Pending Offers"
               />
             </ViewCol>
           </Wrapper>
-          <SwiperContainer>
-            <CarouselV2
-              id="featured-carousel"
-              images={featured}
-              loop
-              // autoplay
-              hideArrowArea={hideCarouselArrowArea}
-              arrowWidth={mediumArrowWidth ? 75 : undefined}
-              addMargin
-            />
-          </SwiperContainer>
+          <Wrapper>
+            <Row gutterWidth={16}>
+              <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                <CarouselV2
+                  id="featured-carousel"
+                  images={featured}
+                  loop
+                  // autoplay
+                  hideArrowArea={hideCarouselArrowArea}
+                  arrowWidth={mediumArrowWidth ? 75 : undefined}
+                  addMargin
+                />
+              </ViewCol>
+            </Row>
+          </Wrapper>
 
           <Wrapper>
             <Row gutterWidth={16}>

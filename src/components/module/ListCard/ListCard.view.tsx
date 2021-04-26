@@ -6,14 +6,14 @@ import { Col, Row } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { ListCardProps } from './ListCard.props';
-import { Container, RightIconContainer } from './ListCard.style';
+import { Container, RightIconContainer, ListCardTotal } from './ListCard.style';
 
 const ListCard = (props: ListCardProps): JSX.Element => {
   // const theme = useTheme();
-  const { title, icon } = props;
+  const { title, icon, listItems, totalCount } = props;
   return (
     <Container>
-      <Row justify="between">
+      <Row style={{ marginBottom: 16 }} justify="between">
         <Col>
           <Typography color="shade6" variant="overline">
             {title}
@@ -22,6 +22,16 @@ const ListCard = (props: ListCardProps): JSX.Element => {
         <Col>
           <RightIconContainer>{icon}</RightIconContainer>
         </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ListCardTotal color="shade9" variant="title3">
+            {totalCount}
+          </ListCardTotal>
+        </Col>
+      </Row>
+      <Row>
+        <Col>{listItems}</Col>
       </Row>
     </Container>
   );
