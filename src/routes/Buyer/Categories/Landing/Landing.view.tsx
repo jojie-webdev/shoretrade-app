@@ -43,9 +43,13 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
         )}
 
         {categories.length <= 0 ? (
-          <LoadingContainer>
-            <Spinner />
-          </LoadingContainer>
+          <>
+            {!isSmallScreen && (
+              <LoadingContainer>
+                <Spinner />
+              </LoadingContainer>
+            )}
+          </>
         ) : (
           <>
             {!isSmallScreen ? (
