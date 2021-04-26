@@ -17,6 +17,7 @@ export const CardContainer = styled.div`
   .card:hover {
     box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
     transform: scale(1.1);
+    z-index: 1000;
 
     @media ${BREAKPOINTS.sm} {
       transform: none;

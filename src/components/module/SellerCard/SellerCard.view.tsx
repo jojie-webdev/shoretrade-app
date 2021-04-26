@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import { PlaceholderProfile } from 'components/base/SVG';
+import Typography from 'components/base/Typography/Typography.view';
 
 import { SellerCardProps } from './SellerCard.props';
-import { Container, StyledTypography } from './SellerCard.style';
+import { Container } from './SellerCard.style';
 
 const SellerCard = (props: SellerCardProps): JSX.Element => {
   const { companyName, companyImage } = props;
@@ -27,7 +28,9 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
         )}
 
         <div className="card-content">
-          <StyledTypography variant="label">{companyName}</StyledTypography>
+          <Typography variant="label" weight="bold">
+            {companyName}
+          </Typography>
         </div>
       </div>
     </Container>
