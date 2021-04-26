@@ -91,8 +91,8 @@ export const Image = styled.img`
 `;
 
 export const PlaceholderImage = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 8px;
   margin-right: 16px;
   background-color: ${({ theme }) => theme.grey.shade2};

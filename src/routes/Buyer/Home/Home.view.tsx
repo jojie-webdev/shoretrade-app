@@ -5,9 +5,6 @@ import Badge from 'components/base/Badge';
 import Interactions from 'components/base/Interactions';
 import {
   ChevronRight,
-  InfoFilled,
-  Bolt,
-  FileBookMarkAlt,
   PlaceholderProfile,
   ArrowRight,
 } from 'components/base/SVG';
@@ -34,12 +31,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
-import {
-  formatMeasurementUnit,
-  formatUnitToPricePerUnit,
-} from 'utils/Listing/formatMeasurementUnit';
 import { autoScrollToTop } from 'utils/scrollToTop';
-import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { sortByDate } from '../Orders/Orders.transform';
@@ -62,10 +54,6 @@ import {
   PlaceholderImage,
   InteractionTitleContainer,
   StyledInteractions,
-  OrderBadge,
-  TagsContainer,
-  Tag,
-  TagText,
   DetailsContainer,
   ResultContainer,
   FavouriteProductThumbnail,
@@ -138,6 +126,7 @@ const HomeView = (props: HomeGeneratedProps) => {
   const theme = useTheme();
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
 
   const hideCarouselArrowArea = useMediaQuery({
     query: `(max-width: 565px)`,
@@ -195,7 +184,9 @@ const HomeView = (props: HomeGeneratedProps) => {
       ));
   };
 
-  const InteractionsChildren = (props: GetBuyerHomepageResponseListingItem) => (
+  const FavouriteProductInteractionContent = (
+    props: GetBuyerHomepageResponseListingItem
+  ) => (
     <>
       <FavouriteProductThumbnail src={props.images[0]} />
       <DetailsContainer>
@@ -271,10 +262,11 @@ const HomeView = (props: HomeGeneratedProps) => {
         <Loading />
       ) : (
         <>
-          <Wrapper>
+          {/* TODO Update getHomeBuyerHomepage ? or  */}
+          {/* use other action/service? PENDING */}
+          {/* <Wrapper>
             <ViewCol style={{ paddingTop: '48px' }}>
-              {/* TODO Update getHomeBuyerHomepage ? or  */}
-              {/* use other action/service? */}
+            
               <ListCard
                 icon={<FileBookMarkAlt />}
                 totalCount={Object.keys(pendingOrders).length}
@@ -283,7 +275,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                 title="Pending Offers"
               />
             </ViewCol>
-          </Wrapper>
+          </Wrapper> */}
           <Wrapper>
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
@@ -299,11 +291,11 @@ const HomeView = (props: HomeGeneratedProps) => {
               </ViewCol>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
-                  title="Top Sellers"
+                  title="Favourite Sellers"
                   onClick={() => history.push(BUYER_ROUTES.SELLERS)}
                   noMargin
                 />
-                {isSmallScreen ? (
+                {isIpad || isSmallScreen ? (
                   <>
                     <SellerContainer>
                       <MultipleCarousel<SellerResults, SellerCardProps>
@@ -317,7 +309,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   </>
                 ) : (
                   <SellerInteractionsContainer>
-                    {sellers?.slice(0, 5).map((seller) => {
+                    {favouriteSellers?.slice(0, 5).map((seller) => {
                       return (
                         <SellerInteraction
                           key={seller.id}
@@ -336,7 +328,9 @@ const HomeView = (props: HomeGeneratedProps) => {
                                   src={seller.companyImage}
                                 />
                               ) : (
-                                <PlaceholderProfile />
+                                <PlaceholderImage>
+                                  <PlaceholderProfile />
+                                </PlaceholderImage>
                               )}
                               <Typography variant="body">
                                 {seller.companyName}
@@ -407,7 +401,9 @@ const HomeView = (props: HomeGeneratedProps) => {
                                   BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
                                 );
                               }}
-                              leftComponent={<InteractionsChildren {...fav} />}
+                              leftComponent={
+                                <FavouriteProductInteractionContent {...fav} />
+                              }
                             />
                           );
                         })}
@@ -449,14 +445,14 @@ const HomeView = (props: HomeGeneratedProps) => {
               <Wrapper>
                 <ViewCol>
                   <HomeSectionHeader
-                    title="Favourite Sellers"
+                    title="Sellers"
                     onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
                     noMargin
                   />
 
                   <SellerContainer>
                     <MultipleCarousel<SellerResults, SellerCardProps>
-                      data={favouriteSellers}
+                      data={sellers}
                       transform={favouriteSellersToSellerCardProps}
                       Component={HomeSellerCard}
                       link={BUYER_ROUTES.SELLER_DETAILS}
