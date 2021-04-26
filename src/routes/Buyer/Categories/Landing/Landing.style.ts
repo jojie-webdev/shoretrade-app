@@ -1,29 +1,30 @@
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 
 export const CategoriesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0 16px;
+  .header-title {
+    margin-bottom: 24px;
+  }
 
   .cards {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+  }
+
+  .interactions {
+    margin-bottom: 8px;
   }
 `;
 
 export const LoadingContainer = styled.div`
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
-  height: 100%;
 `;
 
-export const FilterButton = styled.button`
-  background: #111e2b;
-  border-radius: 4px;
-  color: white;
-  margin-top: 4px;
+export const Image = styled.div`
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  margin-right: 16px;
 `;

@@ -212,15 +212,6 @@ export const Content = styled.div<{
     }
   }
 
-  @media (max-width: 935px) {
-    .screen-wrapper {
-      .screen {
-        width: 90%;
-        padding: 24px;
-      }
-    }
-  }
-
   @media ${BREAKPOINTS['md']} {
     min-height: 100vh;
 

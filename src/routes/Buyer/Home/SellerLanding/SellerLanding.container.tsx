@@ -22,15 +22,10 @@ const SellerLanding = (): JSX.Element => {
     setSearch(event.target.value);
   };
 
-  const resetSearchValue = () => {
-    setSearch('');
-  };
-
   const generatedProps = {
     results,
     onChangeSearchValue,
     search,
-    resetSearchValue,
   };
 
   return <SellerLandingView {...generatedProps} />;
