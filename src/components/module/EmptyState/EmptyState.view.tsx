@@ -17,7 +17,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
     Svg,
     height,
     width,
-    isSellerDashboard,
+    textAlign,
   } = props;
 
   const textColor = theme.appType === 'buyer' ? 'shade9' : 'noshade';
@@ -33,7 +33,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
           variant="title5"
           className="title"
           color={textColor}
-          isSellerDashboard={isSellerDashboard}
+          align={textAlign ? textAlign : 'left'}
         >
           {title}
         </MainText>

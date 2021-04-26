@@ -3,7 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import Button from 'components/base/Button';
-import { Crab, Pen, TrashCan, Fish2 } from 'components/base/SVG';
+import { Crab, Pen, TrashCan, Fish2, ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
@@ -34,6 +34,24 @@ import { listingToItem } from './Selling.transform';
 
 const Item = (props: ItemProp) => {
   const formattedExpiresIn = () => moment().to(props.expiresIn);
+  const theme = useTheme();
+
+  const flatMap = (array: [], fn: any) => {
+    let result: any[] = [];
+    array.forEach((element) => {
+      const mapping = fn(element);
+      result = result.concat(mapping);
+    });
+    return result;
+  };
+
+  const renderSize = (size: any) => {
+    size = flatMap(size.split('-'), function (part: any) {
+      return [part, <ArrowRight fill={theme.grey.shade7} />];
+    });
+    size.pop();
+    return size;
+  };
 
   return (
     <ItemCard>
@@ -59,7 +77,14 @@ const Item = (props: ItemProp) => {
             </div>
 
             <ItemDetail variant="caption" color="shade6" row>
-              Size: <span>{props.size}</span>
+              Size:{' '}
+              <span>
+                {props.size?.includes('-') ? (
+                  <>{renderSize(props.size)}</>
+                ) : (
+                  props.size
+                )}
+              </span>
             </ItemDetail>
           </div>
         </div>
@@ -215,6 +240,7 @@ const SellingView = (props: SellingGeneratedProps) => {
             {listings.length === 0 && !search ? (
               isSmallScreen ? (
                 <EmptyState
+                  textAlign="center"
                   title="The are no listings here at the moment"
                   buttonText="Add a product"
                   Svg={Crab}

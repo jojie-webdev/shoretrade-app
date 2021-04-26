@@ -11,4 +11,5 @@ export interface EmptyStateProps {
   circleHeight?: number;
   circleWidth?: number;
   isSellerDashboard?: boolean;
+  textAlign?: 'left' | 'right' | 'center';
 }

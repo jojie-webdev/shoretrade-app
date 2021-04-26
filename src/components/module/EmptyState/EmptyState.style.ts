@@ -10,9 +10,7 @@ export const Container = styled.div<{ fluid: boolean }>`
   width: 100%;
 `;
 
-export const MainText = styled(Typography)<{ isSellerDashboard?: boolean }>`
-  ${(props) => props.isSellerDashboard && `text-align: center;`}
-`;
+export const MainText = styled(Typography)``;
 
 export const SVGContainer = styled.div<{
   circleColor: string;
