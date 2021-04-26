@@ -33,7 +33,7 @@ export const SwiperContainer = styled.div`
   padding-top: 48px;
 `;
 
-export const CategoriesContainer = styled.div<{ isSmallScreen: boolean }>``;
+export const CategoriesContainer = styled.div``;
 
 export const Text = styled(Typography)`
   display: inline;
@@ -75,7 +75,13 @@ export const ViewCol = styled(Col)``;
 
 export const RecentContainer = styled.div``;
 
-export const SellerContainer = styled(CategoriesContainer)``;
+export const SellerInteractionsContainer = styled(CategoriesContainer)`
+  padding-top: 16px;
+`;
+
+export const SellerContainer = styled(CategoriesContainer)`
+`;
+
 
 export const Image = styled.img`
   width: 48px;
@@ -129,4 +135,73 @@ export const OrderBadge = styled.div`
   p {
     line-height: 100%;
   }
+`;
+
+export const TagsContainer = styled(Row)`
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+`;
+
+export const Tag = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 4px 8px 2px;
+  background: ${({ theme }) => theme.grey.shade2};
+  align-items: center;
+  min-height: 16px;
+  border-radius: 2px;
+  margin-right: 4px;
+`;
+
+export const TagText = styled(Typography)``;
+
+export const DetailsContainer = styled.div`
+  flex-direction: row;
+  padding: 8px;
+
+  .title {
+    font-size: 16px;
+  }
+`;
+
+export const ResultContainer = styled.div`
+  flex: none;
+  order: 0;
+  align-self: center;
+  flex-direction: column;
+  display: flex;
+
+  .size {
+    display: flex;
+    flex-direction: row;
+    justify-
+  }
+`;
+
+export const FavouriteProductThumbnail = styled(Image)`
+  width: 92px;
+  height: 92px;
+`;
+
+export const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: ${pxToRem(12)};
+`;
+
+export const SellerInteractionContent = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .thumbnail {
+    width: 56px;
+    height: 56px;
+  }
+`;
+
+export const SellerInteraction = styled(InteractionsView)`
+  margin-bottom: 12px;
 `;

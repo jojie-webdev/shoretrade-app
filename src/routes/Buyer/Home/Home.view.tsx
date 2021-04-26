@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
+import Badge from 'components/base/Badge';
 import Interactions from 'components/base/Interactions';
 import {
   ChevronRight,
@@ -8,6 +9,7 @@ import {
   Bolt,
   FileBookMarkAlt,
   PlaceholderProfile,
+  ArrowRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -17,12 +19,12 @@ import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
+import HomeSellerCard from 'components/module/HomeSellerCard';
 import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
 import ResponsiveMultiCarousel from 'components/module/ResponsiveMultiCarousel';
 import SearchAddress from 'components/module/SearchAddress';
-import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -32,7 +34,12 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { autoScrollToTop } from 'utils/scrollToTop';
+import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { sortByDate } from '../Orders/Orders.transform';
@@ -51,12 +58,22 @@ import {
   Wrapper,
   RecentContainer,
   SellerContainer,
-  SwiperContainer,
   Image,
   PlaceholderImage,
   InteractionTitleContainer,
   StyledInteractions,
   OrderBadge,
+  TagsContainer,
+  Tag,
+  TagText,
+  DetailsContainer,
+  ResultContainer,
+  FavouriteProductThumbnail,
+  StatusContainer,
+  BadgeText,
+  SellerInteractionContent,
+  SellerInteraction,
+  SellerInteractionsContainer,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -118,7 +135,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     pendingOrders,
   } = props;
 
-  console.log(pendingOrders);
+  const theme = useTheme();
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -145,6 +162,9 @@ const HomeView = (props: HomeGeneratedProps) => {
       .map((key) => (
         <StyledInteractions
           flat
+          onClick={() => {
+            history.push(`${BUYER_ROUTES.ORDERS}?tab=Pending`);
+          }}
           key={key}
           padding="24px"
           keepIcon
@@ -174,6 +194,52 @@ const HomeView = (props: HomeGeneratedProps) => {
         />
       ));
   };
+
+  const InteractionsChildren = (props: GetBuyerHomepageResponseListingItem) => (
+    <>
+      <FavouriteProductThumbnail src={props.images[0]} />
+      <DetailsContainer>
+        <Typography className="title">{props.description}</Typography>
+        <ResultContainer>
+          <Typography>{props.type}</Typography>
+          <StatusContainer>
+            {props.state?.map((item) => {
+              return (
+                <Badge
+                  key={item}
+                  fontColor={theme.grey.shade9}
+                  badgeColor={theme.grey.shade2}
+                >
+                  <BadgeText
+                    variant="caption"
+                    weight="bold"
+                    style={{
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {item}
+                  </BadgeText>
+                </Badge>
+              );
+            })}
+          </StatusContainer>
+          <div className="size">
+            <Typography style={{ marginRight: '4px' }}>
+              {props.size.from}
+            </Typography>
+            {props.size.to && (
+              <>
+                <ArrowRight />
+                <Typography>{props.size.to}</Typography>
+              </>
+            )}
+          </div>
+        </ResultContainer>
+      </DetailsContainer>
+    </>
+  );
 
   return (
     <BoxContainer ref={cbRef}>
@@ -231,6 +297,58 @@ const HomeView = (props: HomeGeneratedProps) => {
                   addMargin
                 />
               </ViewCol>
+              <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                <HomeSectionHeader
+                  title="Top Sellers"
+                  onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+                  noMargin
+                />
+                {isSmallScreen ? (
+                  <>
+                    <SellerContainer>
+                      <MultipleCarousel<SellerResults, SellerCardProps>
+                        data={sellers}
+                        transform={favouriteSellersToSellerCardProps}
+                        Component={HomeSellerCard}
+                        link={BUYER_ROUTES.SELLER_DETAILS}
+                        id="sellers"
+                      />
+                    </SellerContainer>
+                  </>
+                ) : (
+                  <SellerInteractionsContainer>
+                    {sellers?.slice(0, 5).map((seller) => {
+                      return (
+                        <SellerInteraction
+                          key={seller.id}
+                          type="next"
+                          padding="8px 24px 8px 8px"
+                          onClick={() => {
+                            history.push(
+                              BUYER_ROUTES.SELLER_DETAILS(seller.id)
+                            );
+                          }}
+                          leftComponent={
+                            <SellerInteractionContent>
+                              {seller.companyImage ? (
+                                <Image
+                                  className="thumbnail"
+                                  src={seller.companyImage}
+                                />
+                              ) : (
+                                <PlaceholderProfile />
+                              )}
+                              <Typography variant="body">
+                                {seller.companyName}
+                              </Typography>
+                            </SellerInteractionContent>
+                          }
+                        />
+                      );
+                    })}
+                  </SellerInteractionsContainer>
+                )}
+              </ViewCol>
             </Row>
           </Wrapper>
 
@@ -245,7 +363,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   noMargin
                 />
 
-                <CategoriesContainer isSmallScreen={isSmallScreen}>
+                <CategoriesContainer>
                   <ResponsiveMultiCarousel<CategoryResults, CardProps>
                     data={categories}
                     transform={categoriesToCardProps}
@@ -258,7 +376,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               {!isPendingAccount && (
                 <ViewCol xxl={6} xl={6} md={12} sm={12}>
                   <HomeSectionHeader
-                    title="Favourites"
+                    title="Your Favourite Products"
                     onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
                     noMargin
                   />
@@ -289,20 +407,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                                   BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
                                 );
                               }}
-                              leftComponent={
-                                <>
-                                  {fav.images.length > 0 ? (
-                                    <Image src={fav.images[0]} />
-                                  ) : (
-                                    <PlaceholderImage>
-                                      <PlaceholderProfile />
-                                    </PlaceholderImage>
-                                  )}
-                                  <Typography variant="label" color="shade9">
-                                    {fav.coop?.name}
-                                  </Typography>
-                                </>
-                              }
+                              leftComponent={<InteractionsChildren {...fav} />}
                             />
                           );
                         })}
@@ -349,34 +454,14 @@ const HomeView = (props: HomeGeneratedProps) => {
                     noMargin
                   />
 
-                  <SellerContainer isSmallScreen={isSmallScreen}>
+                  <SellerContainer>
                     <MultipleCarousel<SellerResults, SellerCardProps>
                       data={favouriteSellers}
                       transform={favouriteSellersToSellerCardProps}
-                      Component={SellerCard}
+                      Component={HomeSellerCard}
                       link={BUYER_ROUTES.SELLER_DETAILS}
                       emptyText="No Favourite Sellers"
                       id="favouriteSellers"
-                    />
-                  </SellerContainer>
-                </ViewCol>
-              </Wrapper>
-
-              <Wrapper>
-                <ViewCol>
-                  <HomeSectionHeader
-                    title="Sellers"
-                    onClick={() => history.push(BUYER_ROUTES.SELLERS)}
-                    noMargin
-                  />
-
-                  <SellerContainer isSmallScreen={isSmallScreen}>
-                    <MultipleCarousel<SellerResults, SellerCardProps>
-                      data={sellers}
-                      transform={favouriteSellersToSellerCardProps}
-                      Component={SellerCard}
-                      link={BUYER_ROUTES.SELLER_DETAILS}
-                      id="sellers"
                     />
                   </SellerContainer>
                 </ViewCol>
