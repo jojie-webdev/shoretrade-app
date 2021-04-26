@@ -18,10 +18,10 @@ export const Container = styled.div<{
   border-radius: ${({ cBorderRadius }) => cBorderRadius || '0'};
 `;
 
-export const Circle = styled.div`
-  height: 75px;
-  width: 75px;
-  border-radius: 32px;
+export const Circle = styled.div<{ circleSize?: number }>`
+  height: ${({ circleSize }) => (circleSize ? `${circleSize}px` : '75px')};
+  width: ${({ circleSize }) => (circleSize ? `${circleSize}px` : '75px')};
+  border-radius: 50%;
   background-color: ${({ theme }) => theme.grey.shade9};
   display: flex;
   align-items: center;

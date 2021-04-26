@@ -42,6 +42,12 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
         </SpinnerContainer>
       ) : (
         <Container>
+          {isSmallScreen && (
+            <Typography variant="title4" weight="500" className="header-title">
+              Seller
+            </Typography>
+          )}
+
           <SellerHeader>
             <ProductSellerCard
               name={sellerRatingProps.companyName}

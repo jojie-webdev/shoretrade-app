@@ -22,7 +22,7 @@ import {
 
 const SellerLanding = (props: SellerLandingGeneratedProps) => {
   const history = useHistory();
-  const { results, onChangeSearchValue, search, resetSearchValue } = props;
+  const { results, onChangeSearchValue, search } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -30,7 +30,7 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
       <Row nogutter>
         <Col xs={12}>
           <Search
-            placeholder="Search for a seller"
+            placeholder="Search for a Seller"
             value={search}
             onChange={onChangeSearchValue}
             rounded={isSmallScreen}
