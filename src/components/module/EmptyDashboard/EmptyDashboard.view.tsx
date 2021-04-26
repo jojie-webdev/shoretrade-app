@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
+import { Fish2 } from 'components/base/SVG';
 import { useTheme } from 'utils/Theme';
 
 import { EmptyDashboardProps } from './EmptyDashboard.props';
@@ -9,18 +10,10 @@ import { Container, MainText, SVGContainer } from './EmptyDashboard.style';
 const EmptyDashboard = (props: EmptyDashboardProps): JSX.Element => {
   const theme = useTheme();
 
-  const {
-    buttonText,
-    onButtonClicked,
-    fluid = false,
-    Svg,
-    height,
-    width,
-  } = props;
+  const { buttonText, onButtonClicked, fluid = false, height, width } = props;
 
   const textColor = theme.appType === 'buyer' ? 'shade9' : 'noshade';
-  const svgColor =
-    theme.appType === 'buyer' ? theme.grey.shade7 : theme.grey.shade6;
+
   const circleColor =
     theme.appType === 'buyer' ? theme.grey.shade2 : theme.grey.shade9;
 
@@ -48,7 +41,11 @@ const EmptyDashboard = (props: EmptyDashboardProps): JSX.Element => {
         circleColor={circleColor}
         fluid={fluid}
       >
-        <Svg height={height || 311} width={width || 311} fill={svgColor} />
+        <Fish2
+          height={height || 311}
+          width={width || 311}
+          fill={theme.grey.shade6}
+        />
       </SVGContainer>
 
       {onButtonClicked && (

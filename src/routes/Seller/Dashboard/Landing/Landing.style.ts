@@ -32,6 +32,7 @@ export const FilterRow = styled(Row)`
     .btn {
       margin-right: 12px;
       margin-bottom: 24px;
+      padding:14px;
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }

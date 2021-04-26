@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Spinner from 'components/base/Spinner';
-import { ArrowRight, DropdownArrow, Filter, Fish2 } from 'components/base/SVG';
+import { ArrowRight, DropdownArrow, Filter } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
@@ -98,6 +98,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
   };
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <FilterRow>
       <Col className="filter-col">
@@ -112,6 +113,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
           variant={dateRange.start.id === 'custom' ? 'primary' : 'unselected'}
           className={`${isSmallScreen ? 'btn-abso' : 'btn'}`}
           onClick={props.toggleModal}
+          textColor={'shade6'}
           icon={
             isSmallScreen ? (
               <Filter fill={theme.brand.primary} />
@@ -139,6 +141,12 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
               }
               size="sm"
               className="btn"
+              textColor={
+                getValidDateRangeByFinancialYear().start.id ===
+                dateRange.start.id
+                  ? 'noshade'
+                  : 'shade6'
+              }
               onClick={() => setDateRange(getValidDateRangeByFinancialYear())}
             />
             {[4, 3, 2, 1].map((v) => (
@@ -151,6 +159,11 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                     : 'unselected'
                 }
                 size="sm"
+                textColor={
+                  getFiscalQuarter(v).start.id === dateRange.start.id
+                    ? 'noshade'
+                    : 'shade6'
+                }
                 onClick={() => setDateRange(getFiscalQuarter(v))}
                 className="btn"
               />
@@ -166,6 +179,12 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
                     : 'unselected'
                 }
                 size="sm"
+                textColor={
+                  getValidDateRangeByFinancialYear(v).start.id ===
+                  dateRange.start.id
+                    ? 'noshade'
+                    : 'shade6'
+                }
                 className="btn"
                 onClick={() =>
                   setDateRange(getValidDateRangeByFinancialYear(v))
@@ -496,7 +515,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
               )}
             </>
           ) : (
-            <EmptyDashboard Svg={Fish2} />
+            <EmptyDashboard />
           )}
 
           {isCalendarModalOpen && (
