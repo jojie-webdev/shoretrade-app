@@ -5,6 +5,10 @@ import { UploadBulkState } from 'types/store/UploadBulkState';
 export const showListingCount = (listings: UploadBulkState[]): number[] => {
   return listings.reduce(
     (acc: Array<number>, listing): Array<number> => {
+      const specifications: boolean =
+        listing.specifications.length > 0 &&
+        listing.specifications.every((a) => a.length > 0);
+
       const boxErrorCounter: number = listing.boxes.reduce(
         (boxCount: number, box): number => {
           const isSuccess: boolean =
@@ -25,7 +29,7 @@ export const showListingCount = (listings: UploadBulkState[]): number[] => {
         listing.type &&
         listing.pricePerKilo &&
         Boolean(boxErrorCounter) &&
-        !isEmpty(listing.specifications[0]) &&
+        specifications &&
         !isNaN(stock);
       return [acc[0] + Number(!isSuccess), acc[1] + Number(isSuccess)];
     },

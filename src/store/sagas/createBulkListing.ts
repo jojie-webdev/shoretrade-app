@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES } from 'consts';
+import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { createBulkListing } from 'services/listing';
 import { AsyncAction } from 'types/Action';
@@ -31,10 +32,18 @@ function* createBulkListingRequest(
       const { data } = yield call(createBulkListing, payload, state.auth.token);
       yield put(createBulkListingActions.success(data));
     } catch (e) {
-      const errorData = e.response.data;
-      const message = errorData.errors.map(
-        (e: string) => e.charAt(0).toUpperCase() + e.slice(1)
+      const errorData = pathOr(
+        {
+          errors: [],
+        },
+        ['response', 'data'],
+        e
       );
+
+      const message = errorData.errors
+        .filter((e) => e)
+        .map((e: string) => e.charAt(0).toUpperCase() + e.slice(1))
+        .join(', ');
 
       yield put(createBulkListingActions.failed(message));
     }

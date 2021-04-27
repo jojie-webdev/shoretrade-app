@@ -6,11 +6,16 @@ import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { UploadBulkMeta, UploadBulkPayload } from 'types/store/UploadBulkState';
 
-import { modifyBulkUploadActions, uploadBulkActions } from '../actions';
+import {
+  createBulkListingActions,
+  modifyBulkUploadActions,
+  uploadBulkActions,
+} from '../actions';
 
 function* uploadBulkRequest(
   action: AsyncAction<UploadBulkMeta, UploadBulkPayload>
 ) {
+  yield put(createBulkListingActions.clear());
   const state: Store = yield select();
   if (state.auth.token) {
     try {
