@@ -1,63 +1,56 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const SearchContainer = styled.div`
-  padding: 0px 6px;
-
-  .search-row {
-    margin-bottom: 24px;
-  }
-  .cards {
+  .header {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 34px;
+
+    .header-title {
+      margin-bottom: 24px;
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0px;
+    }
+
+    .search {
+      width: 308px;
+
+      @media ${BREAKPOINTS['sm']} {
+        width: 100%;
+      }
+    }
   }
 
   .interactions {
-    padding: 0px;
-    margin-top: 16px;
+    margin-bottom: 12px;
+    padding: 16px 42px 16px 16px;
+
+    @media ${BREAKPOINTS['sm']} {
+      padding: 16px 27px 16px 16px;
+    }
   }
-
-  .interactions-right {
-    padding: 16px;
-    padding-right: 32px;
-  }
-`;
-
-export const Image = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 4px;
-`;
-
-export const ItemContainer = styled.div`
-  height: 72px;
-  background: ${(props) => props.theme.grey.shade9};
-  padding: 24px;
-`;
-
-export const SpinnerContainer = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
 `;
 
 export const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
-  height: 100%;
 `;
 
-export const DetailsContainer = styled.div`
-  flex-direction: row;
-  padding: 8px;
-  margin-left: 24px;
+export const Image = styled.img`
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  margin-right: 16px;
 
-  .title {
-    font-size: 16px;
+  @media ${BREAKPOINTS['sm']} {
+    width: 48px;
+    height: 48px;
   }
 `;
 
@@ -69,18 +62,11 @@ export const ResultContainer = styled.div`
   display: flex;
 
   .per {
-    margin-left: 3px;
-  }
-
-  .result-count {
-    margin-left: 10px;
+    margin-left: 16px;
+    margin-right: 4px;
   }
 
   .measure {
-    margin-left: 2px;
-  }
-
-  .result-length {
-    margin-left: 10px;
+    margin: 0 4px;
   }
 `;
