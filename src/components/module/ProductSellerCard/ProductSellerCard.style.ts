@@ -12,16 +12,8 @@ export const SellerCardContainer = styled.div<{
     withBackground ? theme.grey.noshade : 'rgba(0, 0 ,0 ,0, 0)'};
   border: ${({ theme, withBackground }) =>
     withBackground ? '2px solid #edeffa' : 0};
-
   border-radius: 8px;
-
-  height: 100%;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
-
-  @media (min-width: 992px) {
-    border-width: 2px;
-    border-radius: 0px 0px 8px 8px;
-  }
 `;
 
 export const Row = styled.div`
@@ -69,12 +61,13 @@ export const AvatarPlaceholder = styled.div`
   align-items: center;
 `;
 
-export const FlexShrinked = styled.div`
+export const FlexShrinked = styled.div<{ showCursor?: boolean }>`
   display: flex;
-  cursor: pointer;
   flex-direction: column;
   margin-left: 1rem;
   flex: 1 auto;
+
+  cursor: ${({ showCursor }) => (showCursor ? 'pointer' : 'inherit')};
 `;
 
 export const StarContainer = styled.div<{ location?: string }>`

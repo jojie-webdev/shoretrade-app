@@ -1,62 +1,119 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import { Filter } from 'components/base/SVG';
+import Typography from 'components/base/Typography/Typography.view';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
-import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
-import { Row, Col, Container } from 'react-grid-system';
+import CategoryImageView from 'components/module/CategoryImage/CategoryImage.view';
+import Search from 'components/module/Search/Search.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { CategoriesLandingGeneratedProps } from './Landing.props';
-import {
-  CategoriesContainer,
-  LoadingContainer,
-  FilterButton,
-} from './Landing.style';
+import { CategoriesContainer, LoadingContainer, Image } from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
-  // const theme = useTheme();
-  const { categories, currentPath } = props;
+  const history = useHistory();
+  const { categories, currentPath, search, onChangeSearchValue } = props;
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <CategoriesContainer>
-      <Row nogutter className="search-row">
-        <Col xs={12}>
-          <SearchAddressView />
-        </Col>
-      </Row>
-      {categories.length <= 0 ? (
-        <LoadingContainer>
-          <Spinner width={24} height={24} />
-        </LoadingContainer>
-      ) : (
-        <Row className="cards">
-          {categories.length > 0 &&
-            categories.map((category) => {
-              return (
-                <Col xs={6} sm={6} md={6} lg={4} xl={3} key={category.id}>
-                  <Link
-                    to={{
-                      pathname: `${currentPath}/${category.id}`,
-                      state: { title: category.name },
-                    }}
-                  >
-                    <Card
-                      sortIndex={category.sortIndex}
-                      id={category.id}
-                      image={category.thumbnail}
-                      label={category.name}
-                    />
-                  </Link>
-                </Col>
-              );
-            })}
-        </Row>
-      )}
-    </CategoriesContainer>
+    <BoxContainer>
+      <CategoriesContainer>
+        {isSmallScreen && (
+          <>
+            <Typography variant="title4" weight="500" className="header-title">
+              Categories
+            </Typography>
+            <Row nogutter>
+              <Col xs={12}>
+                <Search
+                  placeholder="Search for a Product"
+                  value={search}
+                  onChange={onChangeSearchValue}
+                  rounded
+                />
+              </Col>
+            </Row>
+          </>
+        )}
+
+        {categories.length <= 0 ? (
+          <>
+            {!isSmallScreen && (
+              <LoadingContainer>
+                <Spinner />
+              </LoadingContainer>
+            )}
+          </>
+        ) : (
+          <>
+            {!isSmallScreen ? (
+              <div className="cards">
+                {categories.length > 0 &&
+                  categories.map((category) => {
+                    return (
+                      <Link
+                        key={category.id}
+                        to={{
+                          pathname: `${currentPath}/${category.id}`,
+                          state: { title: category.name },
+                        }}
+                      >
+                        <Card
+                          sortIndex={category.sortIndex}
+                          id={category.id}
+                          image={category.thumbnail}
+                          label={category.name}
+                        />
+                      </Link>
+                    );
+                  })}
+              </div>
+            ) : (
+              <>
+                {categories.length > 0 &&
+                  categories.map((category) => {
+                    return (
+                      <Interactions
+                        key={category.id}
+                        padding="8px 16px 8px 8px"
+                        onClick={() => {
+                          history.push(`${currentPath}/${category.id}`, {
+                            title: category.name,
+                          });
+                        }}
+                        leftComponent={
+                          <>
+                            <Image>
+                              <CategoryImageView
+                                id={category.id}
+                                maxHeight={56}
+                                containerHeight={72}
+                                cBorderRadius={'8px'}
+                                customSVGSize={1}
+                                circled
+                                circleSize={64}
+                              />
+                            </Image>
+                            <Typography variant="label" color="shade9">
+                              {category.name}
+                            </Typography>
+                          </>
+                        }
+                      />
+                    );
+                  })}
+              </>
+            )}
+          </>
+        )}
+      </CategoriesContainer>
+    </BoxContainer>
   );
 };
 
