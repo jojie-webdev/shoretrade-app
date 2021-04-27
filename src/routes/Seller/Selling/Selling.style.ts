@@ -3,6 +3,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   height: 100%;
@@ -23,7 +24,7 @@ export const StyledAlert = styled(Alert)`
 
 export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  padding: 8px 12px;
+  padding: 16px;
   margin-bottom: 8px;
   border-radius: 8px;
 
@@ -43,6 +44,10 @@ export const ItemCard = styled.div`
 
     :hover {
       cursor: pointer;
+    }
+    @media ${BREAKPOINTS['iPad']} {
+      align-items: unset;
+      flex-direction: column;
     }
   }
 
@@ -72,7 +77,18 @@ export const ItemCard = styled.div`
       display: flex;
       align-items: center;
       flex: 1;
-      justify-content: space-between;
+
+      @media ${BREAKPOINTS['iPad']} {
+        margin-left: 42px;
+      }
+
+      .column-order {
+        flex-direction: column;
+      }
+
+      .bottom-space {
+        margin-bottom: 20px;
+      }
     }
   }
 
@@ -129,8 +145,8 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 56px;
-  height: 56px;
+  width: 92px;
+  height: 92px;
   object-fit: contain;
   background: ${(props) => props.theme.grey.noshade};
 
@@ -212,6 +228,84 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
       }
     }
   }
+`;
+
+export const ItemCardMobile = styled.div`
+  background: ${(props) => props.theme.grey.shade9};
+
+  margin-bottom: 24px;
+  border-radius: 4px;
+
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  .parent-container {
+    padding: 12px;
+  }
+
+  .product-container {
+    display: flex;
+    flex-direction: row;
+
+    .price-container {
+      display: flex;
+      flex-direction: column;
+      width: 64px;
+      position: absolute;
+      right: 3%;
+    }
+  }
+
+  .tags-container {
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0;
+    margin-top: 8px;
+  }
+
+  .details-container {
+    margin-top: 4px;
+  }
+
+  .label-container {
+    flex-direction: row;
+    display: flex;
+
+    .left-text {
+      margin-right: 4px;
+    }
+  }
+`;
+
+export const ItemImageMobile = styled.img`
+  width: 100%;
+  max-height: 148px;
+  object-fit: fill;
+  background: ${(props) => props.theme.grey.noshade};
+  border-radius: 4px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+`;
+
+export const ItemDetailMobile = styled(Typography)<{ row?: boolean }>`
+  white-space: nowrap;
+  line-height: 16px;
 `;
 
 export const SVGContainer = styled.div<{

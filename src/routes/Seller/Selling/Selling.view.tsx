@@ -3,7 +3,14 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 
 import Button from 'components/base/Button';
-import { Crab, Pen, TrashCan, Fish2, ArrowRight } from 'components/base/SVG';
+import {
+  Crab,
+  Pen,
+  TrashCan,
+  Fish2,
+  ArrowRight,
+  ChevronRight,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
@@ -29,6 +36,9 @@ import {
   StyledAlert,
   NoSellingContainer,
   SVGContainer,
+  ItemCardMobile,
+  ItemImageMobile,
+  ItemDetailMobile,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -76,8 +86,7 @@ const Item = (props: ItemProp) => {
                 ))}
             </div>
 
-            <ItemDetail variant="caption" color="shade6" row>
-              Size:{' '}
+            <ItemDetail variant="small" weight="regular" color="shade6" row>
               <span>
                 {props.size?.includes('-') ? (
                   <>{renderSize(props.size)}</>
@@ -91,43 +100,169 @@ const Item = (props: ItemProp) => {
 
         <div className="right-content">
           <div className="item-data">
-            <ItemDetail variant="caption" color="shade6">
-              Remaining Stock:{' '}
-              <span>
-                {Number(props.remaining).toFixed(0)} /{' '}
-                {Number(props.originalWeight).toFixed(0)}{' '}
-                {props.unit?.toLowerCase()}
-              </span>
-            </ItemDetail>
+            <div className="column-order">
+              <div className="label-container">
+                <ItemDetail variant="overlineSmall" color="shade6">
+                  Remaining Stock:{' '}
+                </ItemDetail>
+                <ItemDetail
+                  variant="label"
+                  color="noshade"
+                  className="bottom-space"
+                >
+                  {Number(props.remaining).toFixed(0)} /{' '}
+                  {Number(props.originalWeight).toFixed(0)}{' '}
+                  {props.unit?.toLowerCase()}
+                </ItemDetail>
+              </div>
+              <div className="label-container">
+                <ItemDetail variant="overlineSmall" color="shade6">
+                  Price:{' '}
+                </ItemDetail>
+                <ItemDetail variant="label" color="noshade">
+                  ${props.price} / {formatUnitToPricePerUnit(props.unit)}
+                </ItemDetail>
+              </div>
+            </div>
 
-            <ItemDetail variant="caption" color="shade6">
-              Price:{' '}
-              <span>
-                ${props.price} per {formatUnitToPricePerUnit(props.unit)}
-              </span>
-            </ItemDetail>
-
-            <ItemDetail variant="caption" color="shade6">
-              Sold: <span>{props.sales}</span>
-            </ItemDetail>
-
-            <ItemDetail variant="caption" color="shade6">
-              Time left: <span>{props.expiresIn && formattedExpiresIn()}</span>
-            </ItemDetail>
+            <div className="column-order">
+              <div className="label-container">
+                <ItemDetail variant="overlineSmall" color="shade6">
+                  Sales:
+                </ItemDetail>
+                <ItemDetail
+                  variant="label"
+                  color="noshade"
+                  className="bottom-space"
+                >
+                  {props.sales}
+                </ItemDetail>
+              </div>
+              <div className="label-container">
+                <ItemDetail variant="overlineSmall" color="shade6">
+                  Time left:{' '}
+                </ItemDetail>
+                <ItemDetail variant="label" color="noshade">
+                  {props.expiresIn && formattedExpiresIn()}
+                </ItemDetail>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="buttons">
-        <StyledTouchable onPress={props.onClickEdit} dark>
-          <Pen height={20} width={20}></Pen>
-        </StyledTouchable>
-
-        <StyledTouchable onPress={props.onRemove} dark>
-          <TrashCan height={18} width={20}></TrashCan>
+        <StyledTouchable onPress={props.onClick} dark>
+          <ChevronRight height={12} width={12}></ChevronRight>
         </StyledTouchable>
       </div>
     </ItemCard>
+  );
+};
+
+const ItemMobile = (props: ItemProp) => {
+  const formattedExpiresIn = () => moment().to(props.expiresIn);
+  const formattedListedOn = () => moment(props.listedOn).format('d MMMM YY');
+  return (
+    <ItemCardMobile>
+      <div className="wrapper" onClick={props.onClick}>
+        <ItemImageMobile src={props.data.images[0]} alt="" />
+        <div className="parent-container">
+          <div className="product-container">
+            <Typography variant="label" color="noshade">
+              {props.title}
+            </Typography>
+            <div className="price-container">
+              <Typography variant="label" color="noshade" align="right">
+                ${props.price}
+              </Typography>
+              <Typography variant="small" color="shade6" align="right">
+                per {formatUnitToPricePerUnit(props.unit)}
+              </Typography>
+            </div>
+          </div>
+
+          <div className="tags-container">
+            {props.tags &&
+              props.tags.length !== 0 &&
+              props.tags.map((tag) => (
+                <Tag key={tag.label}>
+                  <Typography variant="caption" color="noshade">
+                    {tag.label}
+                  </Typography>
+                </Tag>
+              ))}
+          </div>
+
+          <div className="details-container">
+            <div className="label-container">
+              <ItemDetailMobile
+                variant="small"
+                color="shade6"
+                className="left-text"
+              >
+                Size:
+              </ItemDetailMobile>
+              <ItemDetailMobile
+                variant="small"
+                color="noshade"
+                className="bottom-space"
+              >
+                {props.size}
+              </ItemDetailMobile>
+            </div>
+            <div className="label-container">
+              <ItemDetailMobile
+                variant="small"
+                color="shade6"
+                className="left-text"
+              >
+                Listed on:
+              </ItemDetailMobile>
+              <ItemDetailMobile
+                variant="small"
+                color="noshade"
+                className="bottom-space"
+              >
+                {props.listedOn && formattedListedOn()}
+              </ItemDetailMobile>
+            </div>
+            <div className="label-container">
+              <ItemDetailMobile
+                variant="small"
+                color="shade6"
+                className="left-text"
+              >
+                Remaining:
+              </ItemDetailMobile>
+              <ItemDetailMobile
+                variant="small"
+                color="noshade"
+                className="bottom-space"
+              >
+                {Number(props.remaining).toFixed(0)}
+              </ItemDetailMobile>
+            </div>
+            <div className="label-container">
+              <ItemDetailMobile
+                variant="small"
+                color="shade6"
+                className="left-text"
+              >
+                Expires in:
+              </ItemDetailMobile>
+              <ItemDetailMobile
+                variant="small"
+                color="noshade"
+                className="bottom-space"
+              >
+                {props.expiresIn && formattedExpiresIn()}
+              </ItemDetailMobile>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ItemCardMobile>
   );
 };
 
@@ -252,6 +387,18 @@ const SellingView = (props: SellingGeneratedProps) => {
               ) : (
                 <NoSelling />
               )
+            ) : isSmallScreen ? (
+              listings.map((listing) => (
+                <ItemMobile
+                  key={listing.id}
+                  {...listingToItem(listing)}
+                  onClick={() => goToListingDetails(listing.id)}
+                  onClickEdit={() => onClickEdit(listing.id)}
+                  onRemove={() =>
+                    onClickRemoveListing(listing.id, listing.coopId)
+                  }
+                />
+              ))
             ) : (
               listings.map((listing) => (
                 <Item
