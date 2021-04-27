@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { SELLING_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -53,11 +53,19 @@ const ListingDetailsContainer = (
     }
   }, []);
 
+  const sellingDetailsBreadCrumbs = [
+    { label: 'Selling', link: SELLER_ROUTES.SELLING },
+    {
+      label: listing.productDetails.title,
+    },
+  ];
+
   const generatedProps: ListingDetailsGeneratedProps = {
     // generated props here
     listing,
     onEdit,
     onRemove,
+    sellingDetailsBreadCrumbs,
   };
   return <ListingDetailsView {...props} {...generatedProps} />;
 };

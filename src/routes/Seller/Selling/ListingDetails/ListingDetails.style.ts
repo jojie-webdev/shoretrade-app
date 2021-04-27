@@ -1,9 +1,11 @@
+import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
   .wrapper {
@@ -15,6 +17,21 @@ export const Wrapper = styled.div`
     height: 2px;
     background-color: ${({ theme }) => theme.grey.shade2};
     margin: 16px 0px;
+  }
+
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    padding: 18px;
+    background-color: ${({ theme }) => theme.grey.noshade};
+    margin-bottom: 40px;
+    box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  .breadcrumbs-container {
+    margin-bottom: 40px;
   }
 `;
 
@@ -185,7 +202,6 @@ const imgStyle = css`
   cursor: pointer;
 `;
 
-
 export const NoProfilePic = styled.div`
   ${imgStyle}
   display: flex;
@@ -193,3 +209,86 @@ export const NoProfilePic = styled.div`
   justify-content: center;
   background-color: #edeffa;
 `;
+
+export const TopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 18px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  margin-bottom: 40px;
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+  border-radius: 8px;
+  width: 100%;
+
+  .arrow-container {
+    margin-top: 8px;
+  }
+
+  .left-content {
+    margin-left: 28px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .label-container {
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .end-left-content {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 1%;
+
+    .pen-container {
+      margin-right: 16px;
+      margin-top: 8px;
+    }
+    .trash-container {
+      margin-top: 8px;
+    }
+  }
+`;
+
+export const TopDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .size-location-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+  }
+
+  .size-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+  }
+
+  .location-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    svg {
+      margin-right: 6px;
+    }
+  }
+
+  .tags-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    & div:not(:last-child) {
+      margin-right: 4px;
+    }
+    margin-bottom: 24px;
+  }
+`;
+
+export const StyledTouchable = styled(Touchable)``;

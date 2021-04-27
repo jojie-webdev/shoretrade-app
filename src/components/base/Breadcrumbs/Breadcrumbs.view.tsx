@@ -11,7 +11,7 @@ import { Container } from './Breadcrumbs.style';
 const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-
+  const { isLight } = props;
   return (
     <Container>
       {props.sections.map((section, i) => {
@@ -19,12 +19,18 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
           <React.Fragment key={i}>
             {i > 0 && (
               <div className="divider">
-                <ChevronRight width={8} height={12} fill={theme.grey.shade4} />
+                <ChevronRight
+                  width={8}
+                  height={12}
+                  fill={isLight ? theme.grey.shade5 : theme.grey.shade4}
+                />
               </div>
             )}
             {section.link && (
               <Link key={i} to={section.link}>
-                <Typography color={isSeller ? 'noshade' : 'shade9'}>
+                <Typography
+                  color={isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9'}
+                >
                   {section.label}
                 </Typography>
               </Link>
@@ -33,7 +39,7 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
             {section.onClick && (
               <Typography
                 className="alt-link"
-                color={isSeller ? 'noshade' : 'shade9'}
+                color={isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9'}
                 onClick={section.onClick}
               >
                 {section.label}

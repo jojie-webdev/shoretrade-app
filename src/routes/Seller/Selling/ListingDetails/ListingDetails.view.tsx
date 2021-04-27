@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import {
   Expand,
@@ -7,6 +8,9 @@ import {
   StarFilled,
   Star,
   PlaceholderProfile,
+  ArrowLeft,
+  Pen,
+  TrashCan,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
@@ -26,11 +30,22 @@ import {
   ActionsContainer,
   ActionContainer,
   NoProfilePic,
+  TopContainer,
+  StyledTouchable,
+  TopDetailsContainer,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
-  const { listing, onRemove, onEdit, onCreate, isExisting, isPending } = props;
+  const {
+    listing,
+    onRemove,
+    onEdit,
+    onCreate,
+    isExisting,
+    isPending,
+    sellingDetailsBreadCrumbs,
+  } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
 
@@ -62,8 +77,74 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
   return (
     <Wrapper>
+      <TopContainer>
+        <div className="left-content">
+          <div className="arrow-container">
+            <StyledTouchable onPress={() => {}}>
+              <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
+            </StyledTouchable>
+          </div>
+          <div className="label-container">
+            <Typography variant="body" color="shade9" weight="bold">
+              This is a preview of your listed product
+            </Typography>
+            <Typography variant="label" color="shade6" weight="regular">
+              Buyers will check this page and eventually buy the product from
+              their buyer account.
+            </Typography>
+          </div>
+          <div className="end-left-content">
+            <div className="pen-container">
+              <StyledTouchable onPress={() => {}}>
+                <Pen fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
+
+            <div className="trash-container">
+              <StyledTouchable onPress={() => {}}>
+                <TrashCan fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
+          </div>
+        </div>
+      </TopContainer>
+      {props.sellingDetailsBreadCrumbs && (
+        <div className="breadcrumbs-container">
+          <Breadcrumbs sections={props.sellingDetailsBreadCrumbs} isLight />
+        </div>
+      )}
+      <TopDetailsContainer>
+        <div>
+          <Typography variant="title4" weight="500">
+            {productDetails.title}
+          </Typography>
+          <div className="size-location-container">
+            <div className="location-container">
+              <Location width={16} height={16} fill={theme.grey.shade5} />
+              <Typography variant="label" color="shade9">
+                {productDetails.location}
+              </Typography>
+            </div>
+            <div className="size-container">
+              <Expand width={16} height={16} fill={theme.grey.shade5} />
+              <Typography variant="label" color="shade9">
+                {productDetails.size}
+              </Typography>
+            </div>
+          </div>
+          <div className="tags-container">
+            {productDetails.tags.map(({ label }) => (
+              <Tag key={label}>
+                <Typography variant="caption" color="shade9" weight="bold">
+                  {label}
+                </Typography>
+              </Tag>
+            ))}
+          </div>
+        </div>
+      </TopDetailsContainer>
       <Row nogutter className="wrapper">
-        <Col sm={12} md={12} lg={5} xl={5}>
+        <Col xs={12} sm={12} md={12} lg={5} xl={5}>
           <DetailsCard>
             <div style={{ width: '100%' }}>
               <Carousel
