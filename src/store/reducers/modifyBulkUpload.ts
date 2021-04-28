@@ -34,6 +34,7 @@ export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
         state.currentData.index !== undefined
           ? {
               [state.currentData.index]: {
+                ...state.modifiedData[state.currentData.index],
                 ...omit(['index', 'currentStep'], action.payload),
               },
             }
