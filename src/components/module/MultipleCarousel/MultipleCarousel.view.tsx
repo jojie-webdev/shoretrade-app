@@ -10,6 +10,8 @@ import { useTheme } from 'utils/Theme';
 
 import { MultipleCarouselProps } from './MultipleCarousel.props';
 import { ArrowArea, Container, EmptyContainer } from './MultipleCarousel.style';
+import { useMediaQuery } from 'react-responsive';
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 SwiperCore.use([Pagination]);
 
@@ -21,6 +23,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const [currentNdx, setCurrentNdx] = useState(0);
   const containerWidthRef = useRef<HTMLDivElement | null>(null);
 
+
+
   const {
     id,
     Component,
@@ -30,7 +34,12 @@ function MultipleCarousel<D extends { id: string }, CP>(
     breakpoints,
     onSlideChange,
     emptyText,
+    responsive = false,
   } = props;
+
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
+  const multiline = responsive && (!isSmallScreen && !isIpad );
 
 
   useEffect(() => {
@@ -89,7 +98,9 @@ function MultipleCarousel<D extends { id: string }, CP>(
         pagination={{
           el: '.multiple-swiper-pagination',
         }}
-        slidesPerView="auto"
+        slidesPerView={multiline ? 3: 1}
+        slidesPerColumn={multiline ? 3 : 1}
+        slidesPerColumnFill="row"
         spaceBetween={32}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {

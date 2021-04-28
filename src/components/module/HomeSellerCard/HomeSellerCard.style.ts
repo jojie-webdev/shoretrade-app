@@ -18,6 +18,7 @@ export const Container = styled.div`
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
     border-radius: 4px;
     width: 100%;
+    min-width: 265px;
     box-sizing: border-box;
     max-height: 205px;
     transition: transform 0.2s;

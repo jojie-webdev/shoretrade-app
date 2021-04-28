@@ -20,7 +20,6 @@ import HomeSellerCard from 'components/module/HomeSellerCard';
 import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
-import ResponsiveMultiCarousel from 'components/module/ResponsiveMultiCarousel';
 import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ROUTES } from 'consts';
@@ -358,7 +357,8 @@ const HomeView = (props: HomeGeneratedProps) => {
                 />
 
                 <CategoriesContainer>
-                  <ResponsiveMultiCarousel<CategoryResults, CardProps>
+                  <MultipleCarousel<CategoryResults, CardProps>
+                    responsive
                     data={categories}
                     transform={categoriesToCardProps}
                     Component={Card}
