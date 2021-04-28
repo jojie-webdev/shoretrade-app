@@ -4,21 +4,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isMobile: boolean }>`
-  flex-direction: row;
-
-  @media (min-width: 577px) {
-    background-color: ${({ theme }) => theme.grey.shade2};
-    padding: 24px;
-    border-radius: 8px;
-  }
-
-  .description {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-`;
-
 export const BannerContainer = styled.div`
   margin-bottom: 8px;
   width: 100%;
@@ -39,10 +24,6 @@ export const DetailsContainer = styled(Row)`
 
   .title {
     margin-bottom: 1rem;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 40px;
   }
 `;
 
@@ -84,6 +65,10 @@ export const DesiredQuantityContainer = styled.div<{ withBackground: boolean }>`
     display: flex;
     flex-direction: column;
     padding-top: 48px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 40px;
   }
 `;
 

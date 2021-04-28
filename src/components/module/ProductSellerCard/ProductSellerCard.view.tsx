@@ -54,7 +54,10 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           )}
         </AvatarContainer>
 
-        <FlexShrinked onClick={() => onClickSeller && onClickSeller()}>
+        <FlexShrinked
+          onClick={() => onClickSeller && onClickSeller()}
+          showCursor={!!onClickSeller}
+        >
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>

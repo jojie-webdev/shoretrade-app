@@ -5,13 +5,7 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
-import {
-  Expand,
-  Heart,
-  HeartFilled,
-  Location,
-  Cart,
-} from 'components/base/SVG';
+import { Expand, Location, Cart } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -29,7 +23,6 @@ import theme from 'utils/Theme';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
 import {
-  Container,
   BannerContainer,
   DetailsContainer,
   ProductBoxContainer,
@@ -112,7 +105,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   <Typography variant="title4">
                     {productDetailsCard1Props.title}
                   </Typography>
-                  {!isMobile && (
+                  {!isMobile ? (
                     <>
                       <EstimationsContainer>
                         <div style={{ marginRight: 6 }}>
@@ -156,6 +149,22 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         })}
                       </StatusContainer>
                     </>
+                  ) : (
+                    <StatusContainer>
+                      {productDetailsCard1Props.tags?.map((item, index) => {
+                        return (
+                          <Badge
+                            key={index}
+                            fontColor={theme.grey.shade9}
+                            badgeColor={theme.grey.shade3}
+                          >
+                            <BadgeText variant="caption" weight="bold">
+                              {item.label}
+                            </BadgeText>
+                          </Badge>
+                        );
+                      })}
+                    </StatusContainer>
                   )}
                 </div>
                 {!isMobile && (
@@ -174,6 +183,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   images={images}
                   loop
                   // autoplay
+                  variant={isMobile ? 'bullet' : 'thumbnail'}
                   aspectRatio="9:4"
                   showAlmostGone={Number(remainingWeight) <= 50}
                   showAquafuture={isAquafuture}

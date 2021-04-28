@@ -5,6 +5,8 @@ import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesBy
 export interface CategoriesSearchGeneratedProps {
   loading: boolean;
   results: GetListingTypesByCategoryTypeItem[];
-  isSuccess: boolean;
   isPendingAccount: boolean;
+
+  search: string;
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
 }

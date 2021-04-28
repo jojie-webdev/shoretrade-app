@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
-import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
+import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
-import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { Link, useLocation } from 'react-router-dom';
 import { GetListingTypesByCategoryTypeItem } from 'types/store/GetListingTypesByCategoryState';
 import {
   formatMeasurementUnit,
@@ -21,85 +23,115 @@ import {
   SearchContainer,
   LoadingContainer,
   Image,
-  DetailsContainer,
   ResultContainer,
 } from './Search.style';
 
-const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
-  const { results, loading, isSuccess, isPendingAccount } = props;
+const InteractionsChildren = (
+  result: GetListingTypesByCategoryTypeItem & { isPendingAccount: boolean }
+) => {
+  const { isPendingAccount } = result;
 
-  const InteractionsChildren = (result: GetListingTypesByCategoryTypeItem) => (
+  return (
     <>
       <Image src={result.thumbnail} />
-      <DetailsContainer>
-        <Typography className="title">{result.name}</Typography>
+      <div>
+        <Typography weight="bold">{result.name}</Typography>
         <ResultContainer>
           {!isPendingAccount && (
             <>
-              {result.price.from != result.price.to ? (
-                <Typography variant="caption" weight="bold">
-                  {toPrice(result.price.from)} - {toPrice(result.price.to)}
-                </Typography>
-              ) : (
-                <Typography variant="caption" weight="bold">
-                  {toPrice(result.price.from)}
-                </Typography>
-              )}
-              <Typography variant="caption" color="shade6" className="per">
-                per
+              <Typography variant="caption" color="shade6" weight="400">
+                Price per
               </Typography>
-              <Typography variant="caption" color="shade6" className="measure">
+              <Typography
+                className="measure"
+                variant="caption"
+                color="shade6"
+                weight="400"
+              >
                 {formatUnitToPricePerUnit(
                   formatMeasurementUnit(result.measurementUnit)
                 )}
               </Typography>
+              {result.price.from != result.price.to ? (
+                <Typography variant="caption" weight="500" color="shade8">
+                  {toPrice(result.price.from)} - {toPrice(result.price.to)}
+                </Typography>
+              ) : (
+                <Typography variant="caption" weight="500" color="shade8">
+                  {toPrice(result.price.from)}
+                </Typography>
+              )}
             </>
           )}
-          <Typography weight="bold" variant="caption" className="result-count">
+          <Typography
+            className="per"
+            variant="caption"
+            color="shade6"
+            weight="400"
+          >
+            Units
+          </Typography>
+          <Typography variant="caption" color="shade8" weight="400">
             {result.count}
           </Typography>
-          <Typography variant="caption" color="shade6" className="per">
-            item
-          </Typography>
         </ResultContainer>
-      </DetailsContainer>
+      </div>
     </>
   );
+};
+
+const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
+  const {
+    results,
+    loading,
+    isPendingAccount,
+    search,
+    onChangeSearchValue,
+  } = props;
+  const location = useLocation();
+  const locationState: {
+    title?: string;
+  } = location.state || {};
+  const title = locationState?.title || 'Category';
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <SearchContainer>
-      <Row className="search-row">
-        <Col xs={12}>
-          <SearchAddressView />
-        </Col>
-      </Row>
-      {loading && (
-        <LoadingContainer>
-          <Spinner width={24} height={24} />
-        </LoadingContainer>
-      )}
-      {isSuccess && (
-        <>
-          <ResultContainer style={{ paddingLeft: 15 }}>
-            <Row>
-              <Typography variant="title5" weight="regular">
-                Results
-              </Typography>
-              <Typography
-                className="result-length"
-                variant="title5"
-                weight="bold"
-              >
-                {results.length}
-              </Typography>
-            </Row>
-          </ResultContainer>
-          <Row className="items-row">
+    <BoxContainer>
+      <SearchContainer>
+        <div className="header">
+          {!isSmallScreen ? (
+            <Breadcrumbs
+              sections={[
+                { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+                { label: title },
+              ]}
+            />
+          ) : (
+            <Typography variant="title4" weight="500" className="header-title">
+              {title}
+            </Typography>
+          )}
+
+          <Search
+            className="search"
+            placeholder={`Search for a ${title}`}
+            value={search}
+            onChange={onChangeSearchValue}
+            rounded
+          />
+        </div>
+
+        {loading ? (
+          <LoadingContainer>
+            <Spinner />
+          </LoadingContainer>
+        ) : (
+          <Row>
             <Col xs={12}>
               {results.map((result) => (
                 <Link
                   to={{
-                    pathname: `/buyer/categories/products/${result.id}`,
+                    pathname: BUYER_ROUTES.PRODUCT_PREVIEW(result.id),
                     state: {
                       title: result.name,
                     },
@@ -108,15 +140,18 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
                   key={result.id}
                 >
                   <Interactions>
-                    <InteractionsChildren {...result} />
+                    <InteractionsChildren
+                      {...result}
+                      isPendingAccount={isPendingAccount}
+                    />
                   </Interactions>
                 </Link>
               ))}
             </Col>
           </Row>
-        </>
-      )}
-    </SearchContainer>
+        )}
+      </SearchContainer>
+    </BoxContainer>
   );
 };
 

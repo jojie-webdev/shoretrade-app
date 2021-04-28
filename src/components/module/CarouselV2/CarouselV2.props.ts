@@ -15,6 +15,7 @@ export interface CarouselV2Props {
   showAlmostGone?: boolean;
   showActionButton?: boolean;
   actionButton?: React.ReactNode;
+  variant?: 'thumbnail' | 'bullet'; 
 }
 
 export type AspectRatio = '16:9' | '9:4' | '8:7';
