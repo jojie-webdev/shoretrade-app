@@ -14,6 +14,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
+import CarouselV2 from 'components/module/CarouselV2';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -58,6 +59,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     moment(orderDetails.catchDate).format('DD MMMM YYYY');
   const [images, setImages] = useState<string[]>([]);
   const isIpad = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const history = useHistory();
 
   useEffect(() => {
@@ -169,14 +171,19 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
         <Col xs={12} sm={12} md={12} lg={10} xl={5}>
           <DetailsCard>
             <div style={{ width: '100%' }}>
-              <Carousel
+              <CarouselV2
                 id="product-carousel"
                 images={images}
                 loop
                 arrowInside
+                variant={isMobile ? 'bullet' : 'thumbnail'}
                 aspectRatio="9:4"
+                showActionButton={isMobile}
               />
             </div>
+            <Typography variant="overline" color="shade6" weight="bold">
+              
+            </Typography>
           </DetailsCard>
         </Col>
         <Col

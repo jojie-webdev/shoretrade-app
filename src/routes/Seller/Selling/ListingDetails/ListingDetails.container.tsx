@@ -35,7 +35,6 @@ const ListingDetailsContainer = (
       })
     );
   };
-
   const onRemove = () => {
     dispatch(
       endListingActions.request({
