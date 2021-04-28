@@ -10,6 +10,13 @@ export const Wrapper = styled.div`
 
   .wrapper {
     width: 100%;
+
+    .card-container {
+      @media ${BREAKPOINTS['ipadPro']} {
+        padding-left: 0px !important;
+        margin-top: 23px !important;
+      }
+    }
   }
 
   .separator {
@@ -91,11 +98,6 @@ export const DetailsCard = styled.div`
     }
   }
 
-  .seller-container {
-    display: flex;
-    flex-direction: column;
-  }
-
   .ratings-container {
     display: flex;
     flex-direction: row;
@@ -125,12 +127,57 @@ export const SalesCard = styled.div`
   width: 100%;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
-  & p:not(:first-child) {
-    margin-top: 4px;
-  }
 
   @media (max-width: 991px) {
     margin-top: 32px;
+  }
+
+  .seller-details-container {
+    display: flex;
+    flex-direction: row;
+
+    .seller-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 3%;
+    }
+  }
+
+  .price-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 33px;
+    margin-bottom: 37px;
+
+    .per-label {
+      margin-left: 12.5px;
+      margin-top: 10px;
+    }
+  }
+`;
+
+export const ProductDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .seperator {
+    width: 100%;
+    height: 2px;
+    background-color: ${({ theme }) => theme.grey.shade2};
+    margin: 16px 0px;
+  }
+`;
+
+export const ProductLabelContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .product-value {
+    .product-desc {
+      line-height: 12px;
+    }
   }
 `;
 
@@ -220,8 +267,12 @@ export const TopContainer = styled.div`
   border-radius: 8px;
   width: 100%;
 
+  @media ${BREAKPOINTS['ipadPro']} {
+    padding: 12px;
+  }
+
   .arrow-container {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .left-content {
@@ -229,6 +280,16 @@ export const TopContainer = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
+    justify-content: space-between;
+
+    @media ${BREAKPOINTS['ipadPro']} {
+      margin-left: 0px;
+    }
+
+    .left-container {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .label-container {
@@ -239,15 +300,20 @@ export const TopContainer = styled.div`
   .end-left-content {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    right: 1%;
 
     .pen-container {
       margin-right: 16px;
       margin-top: 8px;
+      @media ${BREAKPOINTS['iPad']} {
+        margin-right: 4px;
+      }
     }
     .trash-container {
       margin-top: 8px;
+    }
+
+    @media ${BREAKPOINTS['iPad']} {
+      margin-left: 8px;
     }
   }
 `;

@@ -34,6 +34,7 @@ export interface ListingProps {
       name?: string;
       rating?: any;
     };
+    avgBoxSize: string;
   };
   orderDetails: {
     price: string;

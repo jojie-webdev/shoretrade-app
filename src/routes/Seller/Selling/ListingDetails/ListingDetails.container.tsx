@@ -27,9 +27,7 @@ const ListingDetailsContainer = (
   const listingId = props.match?.params.listingId || '';
 
   const currentListing = GetListingSelector(listingId);
-
   const listing = listingToListingProps(currentListing);
-
   const onEdit = () => {
     dispatch(
       editSelectedListingActions.update({
@@ -55,6 +53,10 @@ const ListingDetailsContainer = (
 
   const sellingDetailsBreadCrumbs = [
     { label: 'Selling', link: SELLER_ROUTES.SELLING },
+    {
+      label: currentListing?.categoryName,
+      link: SELLER_ROUTES.SELLING,
+    },
     {
       label: listing.productDetails.title,
     },

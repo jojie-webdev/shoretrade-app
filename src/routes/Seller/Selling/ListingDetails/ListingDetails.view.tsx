@@ -14,8 +14,11 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router-dom';
 import { base64ToFile } from 'utils/File';
 import { useTheme } from 'utils/Theme';
 
@@ -33,6 +36,8 @@ import {
   TopContainer,
   StyledTouchable,
   TopDetailsContainer,
+  ProductDetailsContainer,
+  ProductLabelContainer,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
@@ -48,8 +53,12 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
-
+  const formattedValidUntil = () => moment().to(orderDetails.validUntil);
+  const formattedCatchDate = () =>
+    moment(orderDetails.catchDate).format('DD MMMM YYYY');
   const [images, setImages] = useState<string[]>([]);
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
+  const history = useHistory();
 
   useEffect(() => {
     if (carousel.items) {
@@ -79,33 +88,46 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     <Wrapper>
       <TopContainer>
         <div className="left-content">
-          <div className="arrow-container">
-            <StyledTouchable onPress={() => {}}>
-              <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
-            </StyledTouchable>
-          </div>
-          <div className="label-container">
-            <Typography variant="body" color="shade9" weight="bold">
-              This is a preview of your listed product
-            </Typography>
-            <Typography variant="label" color="shade6" weight="regular">
-              Buyers will check this page and eventually buy the product from
-              their buyer account.
-            </Typography>
-          </div>
-          <div className="end-left-content">
-            <div className="pen-container">
-              <StyledTouchable onPress={() => {}}>
-                <Pen fill={theme.brand.primary} height={20} width={20} />
+          <div className="left-container">
+            <div className="arrow-container">
+              <StyledTouchable onPress={() => history.goBack()}>
+                <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
               </StyledTouchable>
             </div>
+            <div className="label-container">
+              <Typography variant="body" color="shade9" weight="bold">
+                This is a preview of your listed product
+              </Typography>
+              <Typography variant="label" color="shade6" weight="regular">
+                Buyers will check this page and eventually buy the product from
+                their buyer account.
+              </Typography>
+            </div>
+          </div>
 
-            <div className="trash-container">
-              <StyledTouchable onPress={() => {}}>
-                <TrashCan fill={theme.brand.primary} height={20} width={20} />
-              </StyledTouchable>
-            </div>
-          </div>
+          {!isIpad && (
+            <>
+              <div className="end-left-content">
+                <div className="pen-container">
+                  <StyledTouchable
+                    onPress={() => onRemove && onEdit && onEdit()}
+                  >
+                    <Pen fill={theme.brand.primary} height={20} width={20} />
+                  </StyledTouchable>
+                </div>
+
+                <div className="trash-container">
+                  <StyledTouchable onPress={() => onRemove && onRemove()}>
+                    <TrashCan
+                      fill={theme.brand.primary}
+                      height={20}
+                      width={20}
+                    />
+                  </StyledTouchable>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </TopContainer>
       {props.sellingDetailsBreadCrumbs && (
@@ -144,7 +166,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
         </div>
       </TopDetailsContainer>
       <Row nogutter className="wrapper">
-        <Col xs={12} sm={12} md={12} lg={5} xl={5}>
+        <Col xs={12} sm={12} md={12} lg={10} xl={5}>
           <DetailsCard>
             <div style={{ width: '100%' }}>
               <Carousel
@@ -155,46 +177,29 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 aspectRatio="9:4"
               />
             </div>
-            <div className="details-container">
-              <Typography variant="title5" color="shade9" weight="bold">
-                {productDetails.title}
-              </Typography>
-              <div className="size-location-container">
-                <div className="size-container">
-                  <Expand width={16} height={16} fill={theme.grey.shade5} />
-                  <Typography variant="label" color="shade9">
-                    {productDetails.size}
-                  </Typography>
-                </div>
-                <div className="location-container">
-                  <Location width={16} height={16} fill={theme.grey.shade5} />
-                  <Typography variant="label" color="shade9">
-                    {productDetails.location}
-                  </Typography>
-                </div>
-              </div>
-              <div className="tags-container">
-                {productDetails.tags.map(({ label }) => (
-                  <Tag key={label}>
-                    <Typography variant="caption" color="shade9" weight="bold">
-                      {label}
-                    </Typography>
-                  </Tag>
-                ))}
-              </div>
-              <div className="separator" />
+          </DetailsCard>
+        </Col>
+        <Col
+          sm={12}
+          md={12}
+          lg={8}
+          xl={7}
+          style={{ paddingLeft: addSeperatorSpacing ? 32 : 0 }}
+          className="card-container"
+        >
+          <SalesCard>
+            <div className="seller-details-container">
+              {productDetails.vendor.uri ? (
+                <SellerPreview src={productDetails.vendor.uri} />
+              ) : (
+                <NoProfilePic>
+                  <PlaceholderProfile width={90} height={90} />
+                </NoProfilePic>
+              )}
               <div className="seller-container">
-                {productDetails.vendor.uri ? (
-                  <SellerPreview src={productDetails.vendor.uri} />
-                ) : (
-                  <NoProfilePic>
-                    <PlaceholderProfile width={90} height={90} />
-                  </NoProfilePic>
-                )}
                 <Typography color="shade9" weight="bold">
                   {productDetails.vendor.name}
                 </Typography>
-
                 <div className="ratings-container">
                   {[...Array(5).keys()].map((r) =>
                     Number(productDetails.vendor.rating || 0) > r ? (
@@ -206,94 +211,87 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </div>
               </div>
             </div>
-          </DetailsCard>
-        </Col>
-        <Col
-          sm={12}
-          md={12}
-          lg={7}
-          xl={7}
-          style={{ paddingLeft: addSeperatorSpacing ? 32 : 0 }}
-        >
-          <SalesCard>
-            <Typography variant="overline" color="shade9">
-              SALES
-            </Typography>
-            <Typography variant="title5" color="shade9" weight="bold">
-              {sales.sales}
-            </Typography>
-            <Typography color="shade6">
-              {`${orderDetails.remaining} / ${sales.totalWeight}${sales.unit}`}
-            </Typography>
-          </SalesCard>
-          <OrderBoxCard>
-            <Typography variant="overline" color="shade9">
-              ORDER
-            </Typography>
-            <div className="order-details-row">
-              <div className="order-details-item">
-                <Typography color="shade6" weight="bold">
-                  Min. Order
-                </Typography>
-                <Typography color="shade9" weight="bold">
-                  {orderDetails.minOrder}
-                  {orderDetails.unit}
-                </Typography>
-              </div>
-              <div className="order-details-item">
-                <Typography color="shade6" weight="bold">
-                  Remaining
-                </Typography>
-                <Typography color="shade9" weight="bold">
-                  {orderDetails.remaining}
-                  {orderDetails.unit}
-                </Typography>
-              </div>
-            </div>
-            <div className="separator" />
-            <Typography variant="overline" color="shade9">
-              BOX DETAILS
-            </Typography>
-            <div className="box-details-row">
-              <Typography color="shade6" weight="bold">
-                {boxDetails.unit} per Box
+            <div className="price-container">
+              <Typography variant="title5" color="shade9" weight="bold">
+                ${orderDetails.price}
               </Typography>
-              <Typography color="shade6" weight="bold">
-                Number of Boxes
-              </Typography>
-              <Typography color="shade6" weight="bold">
-                Subtotal
-              </Typography>
-              <Typography color="shade6" weight="bold">
-                Count per Box
+
+              <Typography
+                variant="caption"
+                color="shade6"
+                weight="regular"
+                className="per-label"
+              >
+                per {sales.unit}
               </Typography>
             </div>
-            {boxDetails.boxes &&
-              boxDetails.boxes?.map((b) => (
-                <div key={b.id} className="box-details-row">
-                  <Typography color="shade9" weight="bold">
-                    {b.weight}
-                    {boxDetails.unit}
-                  </Typography>
-                  <Typography color="shade9" weight="bold">
-                    x {b.quantity}
-                  </Typography>
-                  <Typography color="shade9" weight="bold">
-                    {b.quantity * b.weight}
-                    {boxDetails.unit}
-                  </Typography>
-                  <Typography color="shade9" weight="bold">
-                    {b.count}
+
+            <ProductDetailsContainer>
+              <ProductLabelContainer>
+                <Typography variant="overline" color="shade6" weight="bold">
+                  Time Left
+                </Typography>
+                <div className="product-value">
+                  <Typography
+                    variant="label"
+                    color="shade9"
+                    weight="bold"
+                    className="product-desc"
+                  >
+                    {orderDetails.validUntil && formattedValidUntil()}
                   </Typography>
                 </div>
-              ))}
-          </OrderBoxCard>
-          {onRemove && (
-            <ActionsContainer>
-              <Button text="Edit" variant="outline" onClick={onEdit} />
-              <Button text="Remove" onClick={onRemove} />
-            </ActionsContainer>
-          )}
+              </ProductLabelContainer>
+              <div className="seperator" />
+              <ProductLabelContainer>
+                <Typography variant="overline" color="shade6" weight="bold">
+                  Average Box Size:
+                </Typography>
+                <div className="product-value">
+                  <Typography
+                    variant="label"
+                    color="shade9"
+                    weight="bold"
+                    className="product-desc"
+                  >
+                    {productDetails.avgBoxSize} {orderDetails.unit}
+                  </Typography>
+                </div>
+              </ProductLabelContainer>
+              <div className="seperator" />
+              <ProductLabelContainer>
+                <Typography variant="overline" color="shade6" weight="bold">
+                  Catch Date:
+                </Typography>
+                <div className="product-value">
+                  <Typography
+                    variant="label"
+                    color="shade9"
+                    weight="bold"
+                    className="product-desc"
+                  >
+                    {orderDetails.catchDate && formattedCatchDate()}
+                  </Typography>
+                </div>
+              </ProductLabelContainer>
+              <div className="seperator" />
+              <ProductLabelContainer>
+                <Typography variant="overline" color="shade6" weight="bold">
+                  Minimum Order:
+                </Typography>
+                <div className="product-value">
+                  <Typography
+                    variant="label"
+                    color="shade9"
+                    weight="bold"
+                    className="product-desc"
+                  >
+                    {orderDetails.minOrder} {orderDetails.unit}
+                  </Typography>
+                </div>
+              </ProductLabelContainer>
+            </ProductDetailsContainer>
+          </SalesCard>
 
           {onCreate && (
             <ActionContainer>
