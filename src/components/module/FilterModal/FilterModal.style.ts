@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
@@ -59,4 +60,12 @@ export const InputContainer = styled.div`
 export const Scroll = styled.div`
   overflow-y: auto;
   max-height: 50vh;
+`;
+
+export const ButtonContainer = styled.div`
+  @media ${BREAKPOINTS.sm} {
+    width: calc(100% - 48px);
+    position: absolute;
+    bottom: 24px;
+  }
 `;
