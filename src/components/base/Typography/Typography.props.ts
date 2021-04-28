@@ -16,8 +16,6 @@ export type Variants =
   | 'small'
   | 'overline'
   | 'overlineSmall'
-  | 'overlineBig';
-
 export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   children: any;
   variant?: Variants;

@@ -60,13 +60,6 @@ const styles: Record<Variants, string> = {
       text-transform: uppercase;
       letter-spacing: 2px;
     `,
-  overlineBig: `
-    font-size: ${pxToRem(11)};
-    line-height: 12px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  `,
 };
 
 const weights: Record<string, string> = {

@@ -15,7 +15,7 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
 
   return (
     <Container noMargin={noMargin}>
-      <Typography variant="overlineBig" color="shade6">
+      <Typography variant="overline" color="shade6">
         {title}
       </Typography>
       {/* <Button
