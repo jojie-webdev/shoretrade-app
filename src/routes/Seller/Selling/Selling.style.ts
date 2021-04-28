@@ -296,7 +296,7 @@ export const ItemCardMobile = styled.div`
 export const ItemImageMobile = styled.img`
   width: 100%;
   max-height: 148px;
-  object-fit: fill;
+  object-fit: cover;
   background: ${(props) => props.theme.grey.noshade};
   border-radius: 4px;
   border-bottom-left-radius: 0px;
