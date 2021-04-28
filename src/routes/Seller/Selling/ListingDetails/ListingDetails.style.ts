@@ -66,37 +66,6 @@ export const DetailsCard = styled.div`
       width: 100%;
     }
   }
-  .size-location-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 8px;
-  }
-
-  .size-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-right: 10px;
-  }
-
-  .location-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    svg {
-      margin-right: 6px;
-    }
-  }
-
-  .tags-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 8px;
-    & div:not(:last-child) {
-      margin-right: 4px;
-    }
-  }
 
   .ratings-container {
     display: flex;

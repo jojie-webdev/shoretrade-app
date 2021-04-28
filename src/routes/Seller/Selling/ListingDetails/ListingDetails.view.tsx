@@ -181,9 +181,6 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 showActionButton={isMobile}
               />
             </div>
-            <Typography variant="overline" color="shade6" weight="bold">
-              
-            </Typography>
           </DetailsCard>
         </Col>
         <Col
