@@ -172,12 +172,19 @@ function Step6({
     editableListing?.isAquafuture || false
   );
 
-  const initialBoxes: BoxType[] = isExisting
+  const initialBoxes: BoxType[] = (isExisting
     ? (editableListing?.boxes || []).map((b) => ({
         ...b,
         fixed: true,
       }))
-    : editableListing?.boxes || [];
+    : editableListing?.boxes || []
+  ).filter(
+    (b) =>
+      b.weight !== undefined &&
+      b.quantity !== undefined &&
+      b.weight !== null &&
+      b.quantity !== null
+  );
 
   const [boxes, setBoxes] = useState<BoxType[]>(initialBoxes);
 

@@ -111,200 +111,201 @@ const BulkUploadPreviewView = ({
         </Col>
       </Row>
 
-      {hasListing && (
-        <>
-          <div className="listings-row">
-            <div className="header">
-              {COLUMNS.map((c) => (
-                <Typography key={c} variant="overlineSmall" color="shade6">
-                  {c}
-                </Typography>
-              ))}
-            </div>
+      <>
+        <div className="listings-row">
+          <div className="header">
+            {COLUMNS.map((c) => (
+              <Typography key={c} variant="overlineSmall" color="shade6">
+                {c}
+              </Typography>
+            ))}
+          </div>
 
-            {data.map((d, index) => {
-              return (
-                <div key={index} className="listings-data-row">
-                  <div className="column-item">
-                    <img src={placeholderImage} />
-                  </div>
+          {data.map((d, index) => {
+            return (
+              <div key={index} className="listings-data-row">
+                <div className="column-item">
+                  <img src={placeholderImage} />
+                </div>
 
-                  <div className="column-item">
-                    <Typography variant="caption" color="noshade">
-                      {d.typeDisplayText || <Error />}
-                    </Typography>
-                    <Typography variant="small" color="shade7">
-                      {!isEmpty(d.specifications[0]) ? (
-                        d.specificationsDisplayText.join(' | ')
-                      ) : (
-                        <Error
-                          onClick={() => {
-                            onEdit(index, 3, d);
-                          }}
-                        />
-                      )}
-                    </Typography>
-
-                    <Typography variant="small" color="shade7">
-                      {d.isUngraded || d.sizeFrom ? (
-                        sizeToString(d.metric as string, d.sizeFrom, d.sizeTo)
-                      ) : (
-                        <Error
-                          onClick={() => {
-                            onEdit(index, 4, d);
-                          }}
-                        />
-                      )}
-                    </Typography>
-                  </div>
-
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {d.origin.suburb && d.origin.state ? (
-                      `${d.origin.suburb}, ${d.origin.state}`
+                <div className="column-item">
+                  <Typography variant="caption" color="noshade">
+                    {d.typeDisplayText || <Error />}
+                  </Typography>
+                  <Typography variant="small" color="shade7">
+                    {d.specifications.length > 0 &&
+                    d.specifications.every((a) => a.length > 0) ? (
+                      d.specificationsDisplayText.join(' | ')
                     ) : (
                       <Error
                         onClick={() => {
-                          onEdit(index, 7, d);
+                          onEdit(index, 3, d);
                         }}
                       />
                     )}
                   </Typography>
 
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {!isEmpty(d.boxes) ? (
-                      <>
-                        {d.boxes.map((b, bIndex) => (
-                          <span key={bIndex}>
-                            {b.weight} {d.measurementUnit} x{b.quantity} <br />
-                          </span>
-                        ))}
-                      </>
+                  <Typography variant="small" color="shade7">
+                    {d.isUngraded || d.sizeFrom ? (
+                      sizeToString(d.metric as string, d.sizeFrom, d.sizeTo)
                     ) : (
                       <Error
                         onClick={() => {
-                          onEdit(index, 6, d);
-                        }}
-                      />
-                    )}
-                  </Typography>
-
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {!isNaN(getTotalWeight(d.boxes)) ? (
-                      `${getTotalWeight(d.boxes)} ${d.measurementUnit}`
-                    ) : (
-                      <Error
-                        onClick={() => {
-                          onEdit(index, 6, d);
-                        }}
-                      />
-                    )}
-                  </Typography>
-
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {d.pricePerKilo ? (
-                      `${toPrice(d.pricePerKilo)} / ${d.measurementUnit}`
-                    ) : (
-                      <Error
-                        onClick={() => {
-                          onEdit(index, 7, d);
-                        }}
-                      />
-                    )}
-                  </Typography>
-
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {d.catchDate ? (
-                      `${moment(d.catchDate).format('ddd D MMM ')}`
-                    ) : (
-                      <Error
-                        onClick={() => {
-                          onEdit(index, 7, d);
-                        }}
-                      />
-                    )}
-                  </Typography>
-
-                  <Typography
-                    variant="caption"
-                    color="noshade"
-                    className="column-item"
-                  >
-                    {d.ends ? (
-                      `${getTimeDiff(moment(d.ends).toDate())}`
-                    ) : (
-                      <Error
-                        onClick={() => {
-                          onEdit(index, 7, d);
+                          onEdit(index, 4, d);
                         }}
                       />
                     )}
                   </Typography>
                 </div>
-              );
-            })}
-          </div>
 
-          {props.errorMessage.length > 0 && (
-            <Alert
-              content={props.errorMessage}
-              variant="error"
-              alignText="center"
-              fullWidth
-              style={{
-                marginBottom: 24,
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.origin.suburb && d.origin.state ? (
+                    `${d.origin.suburb}, ${d.origin.state}`
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 7, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.boxes.length > 0 &&
+                  d.boxes.every((a) => a.quantity && a.weight) ? (
+                    <>
+                      {d.boxes.map((b, bIndex) => (
+                        <span key={bIndex}>
+                          {b.weight} {d.measurementUnit} x{b.quantity} <br />
+                        </span>
+                      ))}
+                    </>
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 6, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.boxes.length > 0 &&
+                  d.boxes.every((a) => a.quantity && a.weight) ? (
+                    `${getTotalWeight(d.boxes)} ${d.measurementUnit}`
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 6, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.pricePerKilo ? (
+                    `${toPrice(d.pricePerKilo)} / ${d.measurementUnit}`
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 7, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.catchDate ? (
+                    `${moment(d.catchDate).format('ddd D MMM ')}`
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 7, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  className="column-item"
+                >
+                  {d.ends ? (
+                    `${getTimeDiff(moment(d.ends).toDate())}`
+                  ) : (
+                    <Error
+                      onClick={() => {
+                        onEdit(index, 7, d);
+                      }}
+                    />
+                  )}
+                </Typography>
+              </div>
+            );
+          })}
+        </div>
+
+        {props.errorMessage.length > 0 && (
+          <Alert
+            content={props.errorMessage}
+            variant="error"
+            alignText="center"
+            fullWidth
+            style={{
+              marginBottom: 24,
+            }}
+          />
+        )}
+
+        <Row>
+          <Col md={12} xl={5}>
+            <Select
+              value={shippingAddress}
+              onChange={(option) => {
+                setShippingAddress(option.value);
               }}
+              options={props.shippingAddressOptions}
+              label="Shipping Address"
             />
-          )}
+          </Col>
+        </Row>
 
-          <Row>
-            <Col md={12} xl={5}>
-              <Select
-                value={shippingAddress}
-                onChange={(option) => {
-                  setShippingAddress(option.value);
-                }}
-                options={props.shippingAddressOptions}
-                label="Shipping Address"
-              />
-            </Col>
-          </Row>
-
-          <Row nogutter className="btns-row">
-            <Button
-              text="Cancel"
-              variant="outline"
-              onClick={() => history.replace(SELLER_ROUTES.ADD_PRODUCT)}
-              style={{ width: 88 }}
-            />
-            <Button
-              text="List products"
-              loading={props.isSubmitting}
-              disabled={!canSubmit}
-              onClick={() => props.onSubmit(shippingAddress)}
-            />
-          </Row>
-        </>
-      )}
+        <Row nogutter className="btns-row">
+          <Button
+            text="Cancel"
+            variant="outline"
+            onClick={() => history.replace(SELLER_ROUTES.ADD_PRODUCT)}
+            style={{ width: 88 }}
+          />
+          <Button
+            text="List products"
+            loading={props.isSubmitting}
+            disabled={!canSubmit}
+            onClick={() => props.onSubmit(shippingAddress)}
+          />
+        </Row>
+      </>
     </Container>
   );
 };
