@@ -150,3 +150,25 @@ export const ActionButtonContainer = styled.div`
   width: auto;
   z-index: 999;
 `;
+
+export const ThumbNavContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+
+  .swiper-slide {
+    margin-right: 8px;
+    width: 48px;
+    height: 48px;
+  }
+`;
+
+export const ThumbNav = styled(Image)<{ active: boolean }>`
+  width: 44px;
+  height: 44px;
+
+  cursor: pointer;
+  margin-right: 8px;
+  
+  opacity: ${(props) => (props.active ? 1: 0.5)};
+`;

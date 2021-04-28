@@ -183,6 +183,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   images={images}
                   loop
                   // autoplay
+                  variant={isMobile ? 'bullet' : 'thumbnail'}
                   aspectRatio="9:4"
                   showAlmostGone={Number(remainingWeight) <= 50}
                   showAquafuture={isAquafuture}
