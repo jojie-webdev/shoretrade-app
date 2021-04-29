@@ -51,8 +51,6 @@ import {
   SellerContainer,
   Image,
   PlaceholderImage,
-  InteractionTitleContainer,
-  StyledInteractions,
   DetailsContainer,
   ResultContainer,
   FavouriteProductThumbnail,
@@ -62,6 +60,7 @@ import {
   SellerInteraction,
   SellerInteractionsContainer,
   EmptyContainer,
+  StatusBadge,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -190,13 +189,12 @@ const HomeView = (props: HomeGeneratedProps) => {
     <>
       <FavouriteProductThumbnail src={props.images[0]} />
       <DetailsContainer>
-        <Typography className="title">{props.description}</Typography>
         <ResultContainer>
           <Typography>{props.type}</Typography>
           <StatusContainer>
             {props.state?.map((item) => {
               return (
-                <Badge
+                <StatusBadge
                   key={item}
                   fontColor={theme.grey.shade9}
                   badgeColor={theme.grey.shade2}
@@ -212,20 +210,23 @@ const HomeView = (props: HomeGeneratedProps) => {
                   >
                     {item}
                   </BadgeText>
-                </Badge>
+                </StatusBadge>
               );
             })}
           </StatusContainer>
           <div className="size">
-            <Typography style={{ marginRight: '4px' }}>
+            <Typography variant="small" style={{ marginRight: '4px' }}>
               {props.size.from}
             </Typography>
+            <div>
             {props.size.to && (
               <>
                 <ArrowRight />
-                <Typography>{props.size.to}</Typography>
+                <Typography variant="small">{props.size.to}</Typography>
               </>
             )}
+            </div>
+         
           </div>
         </ResultContainer>
       </DetailsContainer>

@@ -1,4 +1,5 @@
 import AccordionView from 'components/base/Accordion';
+import BadgeView from 'components/base/Badge';
 import InteractionsView from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -157,6 +158,7 @@ export const TagText = styled(Typography)``;
 
 export const DetailsContainer = styled.div`
   flex-direction: row;
+  display: flex;
   padding: 8px;
 
   .title {
@@ -165,16 +167,18 @@ export const DetailsContainer = styled.div`
 `;
 
 export const ResultContainer = styled.div`
-  flex: none;
-  order: 0;
-  align-self: center;
   flex-direction: column;
   display: flex;
+  justify-content: space-between;
+
+  > div, p {
+    margin-bottom: 4px;
+  }
 
   .size {
+    margin-top: 4px;
     display: flex;
     flex-direction: row;
-    justify-
   }
 `;
 
@@ -190,6 +194,11 @@ export const StatusContainer = styled.div`
 
 export const BadgeText = styled(Typography)`
   font-size: ${pxToRem(12)};
+`;
+
+export const StatusBadge = styled(BadgeView)`
+  margin: 0;
+  margin-right: 4px;
 `;
 
 export const SellerInteractionContent = styled.div`
