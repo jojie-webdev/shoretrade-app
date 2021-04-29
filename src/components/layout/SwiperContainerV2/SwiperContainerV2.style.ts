@@ -18,6 +18,13 @@ const ParentHeight: Record<AspectRatio, MediaQueries> = {
     '768': 240,
     '375': 156,
   },
+  '8:7': {
+    '1440': 445,
+    '1366': 445,
+    '1024': 445,
+    '768': 595,
+    '375': 287,
+  },
 };
 
 export const Parent = styled.div<{

@@ -14,4 +14,5 @@ export interface MultipleCarouselProps<D, CP> {
     [width: number]: SwiperOptions;
   };
   emptyText?: string;
+  responsive?: boolean;
 }

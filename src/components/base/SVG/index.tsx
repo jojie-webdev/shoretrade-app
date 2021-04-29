@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as FileBookMarkAlt } from './FileBookMarkAlt';
+export { default as Ellipse } from './Ellipse';
 export { default as Fish2 } from './Fish2';
 export { default as Minus } from './Minus';
 export { default as ChevronDown } from './ChevronDown';

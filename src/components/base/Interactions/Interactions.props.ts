@@ -27,4 +27,5 @@ export interface InteractionsProps {
   noBg?: boolean;
   fullWidth?: boolean;
   keepIcon?: boolean;
+  flat?: boolean;
 }

@@ -14,6 +14,8 @@ export const Container = styled.div`
 
   .swiper-slide {
     width: ${(props) => (props.theme.appType === 'buyer' ? '265px' : 'auto')};
+    min-width: 156px;
+    margin-top: 0px !important;
   }
 `;
 
