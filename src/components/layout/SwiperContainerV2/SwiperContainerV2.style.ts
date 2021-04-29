@@ -55,6 +55,9 @@ export const Parent = styled.div<{
     `  @media ${BREAKPOINTS['ipadPro']} {
     min-height: 394px;
   }`}
+  @media ${BREAKPOINTS['sm']} {
+    min-height: 242px;
+  }
 `;
 
 export const Container = styled.div<{ variant?: string }>`
@@ -90,11 +93,17 @@ export const Container = styled.div<{ variant?: string }>`
       background: ${({ theme }) => theme.grey.shade5};
       opacity: 0.2;
       margin: 0 4px;
+      @media ${BREAKPOINTS['sm']} {
+        background: ${({ theme }) => theme.grey.noshade};
+      }
     }
 
     .swiper-pagination-bullet-active {
       opacity: 1;
       background: ${({ theme }) => theme.brand.primary};
+      @media ${BREAKPOINTS['sm']} {
+        background: ${({ theme }) => theme.grey.noshade};
+      }
     }
   }
 `;

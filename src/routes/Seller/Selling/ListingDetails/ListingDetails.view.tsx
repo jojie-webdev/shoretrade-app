@@ -21,6 +21,7 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { base64ToFile } from 'utils/File';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { useTheme } from 'utils/Theme';
 
 import { ListingDetailsProps } from './ListingDetails.props';
@@ -39,6 +40,10 @@ import {
   TopDetailsContainer,
   ProductDetailsContainer,
   ProductLabelContainer,
+  MobileWrapper,
+  MobileSalesCard,
+  Progress,
+  ProductLabelMobileContainer,
 } from './ListingDetails.style';
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
@@ -54,7 +59,6 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
-  const formattedValidUntil = () => moment().to(orderDetails.validUntil);
   const formattedCatchDate = () =>
     moment(orderDetails.catchDate).format('DD MMMM YYYY');
   const [images, setImages] = useState<string[]>([]);
@@ -85,6 +89,152 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const addSeperatorSpacing = useMediaQuery({
     query: '(min-width: 992px)',
   });
+
+  if (isMobile) {
+    let percent =
+      (Number(orderDetails.remaining) / Number(sales.totalWeight)) * 100;
+    if (percent >= 100) percent = 100;
+    return (
+      <MobileWrapper>
+        <Row nogutter>
+          <CarouselV2
+            id="product-carousel"
+            images={images}
+            loop
+            arrowInside
+            variant={isMobile ? 'bullet' : 'thumbnail'}
+            aspectRatio="9:4"
+            showActionButton={isMobile}
+          />
+
+          <MobileSalesCard>
+            <div className="sales-container">
+              <Typography variant="title4" color="shade6" weight="regular">
+                Sales:
+              </Typography>
+
+              <Typography
+                variant="title4"
+                color="shade9"
+                weight="bold"
+                className="per-label"
+              >
+                {sales.sales}
+              </Typography>
+            </div>
+            <div className="sold-container">
+              <Typography variant="body" color="shade9">
+                {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
+              </Typography>
+            </div>
+            <div className="progress-container">
+              <Progress percent={percent} />
+            </div>
+          </MobileSalesCard>
+
+          <div className="product-details">
+            <Typography variant="title5" color="shade9" weight="bold">
+              {productDetails.title}
+            </Typography>
+            <div className="tags-container">
+              {productDetails.tags.map(({ label }) => (
+                <Tag key={label}>
+                  <Typography variant="caption" color="shade9" weight="bold">
+                    {label}
+                  </Typography>
+                </Tag>
+              ))}
+            </div>
+            <div className="size-location-container">
+              <div className="size-container">
+                <Expand width={16} height={16} fill={theme.grey.shade5} />
+                <Typography variant="label" color="shade9">
+                  {productDetails.size}
+                </Typography>
+              </div>
+              <div className="location-container">
+                <Location width={16} height={16} fill={theme.grey.shade5} />
+                <Typography variant="label" color="shade9">
+                  {productDetails.location}
+                </Typography>
+              </div>
+            </div>
+
+            <div className="label-container">
+              <ProductLabelMobileContainer>
+                <Typography variant="title5" color="shade9" weight="bold">
+                  {orderDetails.price}
+                </Typography>
+                <div className="product-value">
+                  <Typography
+                    variant="caption"
+                    color="shade6"
+                    weight="bold"
+                    className="product-title-desc"
+                  >
+                    per {orderDetails.unit}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+              <ProductLabelMobileContainer>
+                <Typography variant="label" color="shade6" weight="regular">
+                  Min Order:
+                </Typography>
+                <div className="product-value">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {orderDetails.minOrder}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+              <ProductLabelMobileContainer>
+                <Typography variant="label" color="shade6" weight="regular">
+                  Average Box Size:
+                </Typography>
+                <div className="product-value">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {productDetails.avgBoxSize} {orderDetails.unit}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+              <ProductLabelMobileContainer>
+                <Typography variant="label" color="shade6" weight="regular">
+                  Listing Valid Until:
+                </Typography>
+                <div className="product-value">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {orderDetails.validUntil &&
+                      formatRunningDateDifference(
+                        orderDetails.validUntil.toUTCString()
+                      )}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+              <ProductLabelMobileContainer>
+                <Typography variant="label" color="shade6" weight="regular">
+                  Remaining:
+                </Typography>
+                <div className="product-value">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {orderDetails.remaining} {orderDetails.unit}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+              <ProductLabelMobileContainer>
+                <Typography variant="label" color="shade6" weight="regular">
+                  Catch Date:
+                </Typography>
+                <div className="product-value">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {orderDetails.catchDate && formattedCatchDate()}
+                  </Typography>
+                </div>
+              </ProductLabelMobileContainer>
+            </div>
+          </div>
+        </Row>
+      </MobileWrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -242,7 +392,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     weight="bold"
                     className="product-desc"
                   >
-                    {orderDetails.validUntil && formattedValidUntil()}
+                    {orderDetails.validUntil &&
+                      formatRunningDateDifference(
+                        orderDetails.validUntil.toUTCString()
+                      )}
                   </Typography>
                 </div>
               </ProductLabelContainer>

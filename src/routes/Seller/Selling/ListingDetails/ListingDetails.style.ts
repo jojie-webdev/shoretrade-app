@@ -42,6 +42,86 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const MobileWrapper = styled.div`
+  .sales-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sold-container {
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: ${({ theme }) => theme.grey.shade3};
+    border-radius: 1px;
+    position: relative;
+  }
+
+  .product-details {
+    padding: 0px 16px;
+    margin-top: 24px;
+
+    .tags-container {
+      display: flex;
+      flex-direction: row;
+      margin-top: 8px;
+      & div:not(:last-child) {
+        margin-right: 4px;
+      }
+      margin-bottom: 16px;
+    }
+  }
+  .size-location-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+  }
+
+  .size-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+  }
+  .location-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    svg {
+      margin-right: 6px;
+    }
+  }
+
+  .label-container {
+    margin-top: 28px;
+  }
+`;
+
+export const ProductLabelMobileContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8;
+
+  .product-value {
+    margin-left: 4px;
+    .product-title-desc {
+      line-height: 35px;
+    }
+  }
+`;
+
+export const Progress = styled.div<{ percent: number }>`
+  width: ${({ percent }) => `${percent}%`};
+  height: 4px;
+  background-color: ${({ theme }) => theme.brand.success};
+  position: absolute;
+`;
+
 export const DetailsCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -327,3 +407,33 @@ export const TopDetailsContainer = styled.div`
 `;
 
 export const StyledTouchable = styled(Touchable)``;
+export const MobileSalesCard = styled.div`
+  padding: 16px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  width: 100%;
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  border-radius: 4px;
+
+  .seller-details-container {
+    display: flex;
+    flex-direction: row;
+
+    .seller-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 3%;
+    }
+  }
+
+  .price-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 33px;
+    margin-bottom: 37px;
+
+    .per-label {
+      margin-left: 12.5px;
+      margin-top: 10px;
+    }
+  }
+`;

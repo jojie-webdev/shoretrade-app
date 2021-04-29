@@ -138,7 +138,11 @@ export const ImageContainer = styled.div<{
   @media ${BREAKPOINTS['ipadPro']} {
     min-height: 342px;
   }
+  @media ${BREAKPOINTS['sm']} {
+    min-height: 242px;
+  }
 `;
+
 
 export const Image = styled.img`
   width: 100%;
