@@ -37,11 +37,6 @@ function MultipleCarousel<D extends { id: string }, CP>(
     responsive = false,
   } = props;
 
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
-  const multiline = responsive && (!isSmallScreen && !isIpad );
-
-
   useEffect(() => {
     if (ref) {
       setTimeout(() => {
@@ -79,17 +74,6 @@ function MultipleCarousel<D extends { id: string }, CP>(
 
   return (
     <Container ref={containerWidthRef}>
-      {/* {showArrow && (
-        <ArrowArea left>
-          <Touchable
-            onPress={() => ref.slideTo(currentNdx - slidesPerView())}
-            circle
-          >
-            <CarouselChevronLeft width={18} height={18} fill={arrowColor} />
-          </Touchable>
-        </ArrowArea>
-      )} */}
-
       <Swiper
         id={id}
         onSwiper={(swiper) => {
@@ -98,8 +82,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
         pagination={{
           el: '.multiple-swiper-pagination',
         }}
-        slidesPerView={multiline ? 3: 1}
-        slidesPerColumn={multiline ? 3 : 1}
+        slidesPerView="auto"
         slidesPerColumnFill="row"
         spaceBetween={32}
         style={{ width: '100%', padding: '8px 16px' }}
@@ -110,29 +93,56 @@ function MultipleCarousel<D extends { id: string }, CP>(
             onSlideChange(swiper.activeIndex);
           }
         }}
-        breakpoints={breakpoints}
+        breakpoints={ !responsive ? {} : {
+          
+            // when window width is >= 320px
+            375: {
+              slidesPerView: 2,
+              spaceBetween: 40,
+              slidesPerColumn: 1,
+              slidesPerColumnFill: 'row'
+            },
+            576: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+              slidesPerColumn: 1,
+            },
+            // when window width is >= 480px
+            768: {
+              slidesPerView: 3,
+              slidesPerColumn: undefined,
+              spaceBetween: 30,
+            },
+            // when window width is >= 640px
+            992: {
+              slidesPerView: 3,
+              slidesPerColumn: 3,
+              spaceBetween: 20
+            },
+            1200: {
+              slidesPerView: 2,
+              slidesPerColumn: 3,
+              spaceBetween: 10
+            },
+            1366: {
+              slidesPerView: 3,
+              slidesPerColumn: 3,
+              spaceBetween: 10
+            }
+            
+        }}
       >
         {data.map((d) => {
           return (
             <SwiperSlide key={d.id}>
               <Link to={link(d.id)}>
-                <Component {...transform(d)} />
+                <Component responsive {...transform(d)} />
               </Link>
             </SwiperSlide>
           );
         })}
       </Swiper>
       {showPagination && <div className="multiple-swiper-pagination" />}
-      {/* {showArrow && (
-        <ArrowArea right>
-          <Touchable
-            onPress={() => ref.slideTo(currentNdx + slidesPerView())}
-            circle
-          >
-            <CarouselChevronRight width={18} height={18} fill={arrowColor} />
-          </Touchable>
-        </ArrowArea>
-      )} */}
     </Container>
   );
 }

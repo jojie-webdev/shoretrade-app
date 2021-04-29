@@ -3,4 +3,5 @@ export interface CardProps {
   label: string;
   id: string;
   sortIndex?: number;
+  responsive?: boolean;
 }

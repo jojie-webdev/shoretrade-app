@@ -9,7 +9,7 @@ import { CardContainer } from './Card.style';
 
 const Card = (props: CardProps): JSX.Element => {
   return (
-    <CardContainer>
+    <CardContainer responsive={props.responsive}>
       <div className="card">
         <CategoryImageView
           id={props.id}
