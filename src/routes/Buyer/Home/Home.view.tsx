@@ -145,44 +145,44 @@ const HomeView = (props: HomeGeneratedProps) => {
     [history.location]
   );
 
-  const listItems = () => {
-    return sort(sortByDate, Object.keys(pendingOrders))
-      .slice(0, 3)
-      .map((key) => (
-        <StyledInteractions
-          flat
-          onClick={() => {
-            history.push(`${BUYER_ROUTES.ORDERS}?tab=Pending`);
-          }}
-          key={key}
-          padding="24px"
-          keepIcon
-          type="next"
-          leftComponent={
-            <InteractionTitleContainer>
-              <Typography variant="caption" color="shade7" className="title">
-                Estimated{' '}
-                {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
-              </Typography>
-              <Typography variant="caption" className="value" color="shade9">
-                {key}
-              </Typography>
-            </InteractionTitleContainer>
-          }
-          rightComponent={
-            <InteractionTitleContainer>
-              <Typography className="title" color="shade7" variant="caption">
-                {pendingOrders[key].length}{' '}
-                {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
-              </Typography>
-              <Typography className="value" color="shade9" variant="caption">
-                {pendingOrders[key][0].price}
-              </Typography>
-            </InteractionTitleContainer>
-          }
-        />
-      ));
-  };
+  // const listItems = () => {
+  //   return sort(sortByDate, Object.keys(pendingOrders))
+  //     .slice(0, 3)
+  //     .map((key) => (
+  //       <StyledInteractions
+  //         flat
+  //         onClick={() => {
+  //           history.push(`${BUYER_ROUTES.ORDERS}?tab=Pending`);
+  //         }}
+  //         key={key}
+  //         padding="24px"
+  //         keepIcon
+  //         type="next"
+  //         leftComponent={
+  //           <InteractionTitleContainer>
+  //             <Typography variant="caption" color="shade7" className="title">
+  //               Estimated{' '}
+  //               {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
+  //             </Typography>
+  //             <Typography variant="caption" className="value" color="shade9">
+  //               {key}
+  //             </Typography>
+  //           </InteractionTitleContainer>
+  //         }
+  //         rightComponent={
+  //           <InteractionTitleContainer>
+  //             <Typography className="title" color="shade7" variant="caption">
+  //               {pendingOrders[key].length}{' '}
+  //               {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
+  //             </Typography>
+  //             <Typography className="value" color="shade9" variant="caption">
+  //               {pendingOrders[key][0].price}
+  //             </Typography>
+  //           </InteractionTitleContainer>
+  //         }
+  //       />
+  //     ));
+  // };
 
   const FavouriteProductInteractionContent = (
     props: GetBuyerHomepageResponseListingItem
@@ -253,7 +253,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       <Wrapper>
         <Credit creditState={creditState} loading={loading} />
         <Col xs={12}>
-          <SearchAddress />
+          {/* <SearchAddress /> */}
         </Col>
       </Wrapper>
 
