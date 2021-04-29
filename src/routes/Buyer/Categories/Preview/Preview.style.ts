@@ -81,3 +81,25 @@ export const FilterButton = styled.button`
     margin-right: 4px;
   }
 `;
+
+export const EmptyResults = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media ${BREAKPOINTS.sm} {
+    flex-direction: column;
+  }
+
+  img {
+    @media ${BREAKPOINTS.xxl} {
+      margin-right: 10%;
+    }
+
+    @media ${BREAKPOINTS.sm} {
+      width: 50%;
+      margin-top: 24px;
+    }
+  }
+`;

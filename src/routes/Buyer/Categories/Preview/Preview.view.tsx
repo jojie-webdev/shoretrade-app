@@ -14,6 +14,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useLocation } from 'react-router-dom';
+import anchorImg from 'res/images/anchor.svg';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -22,6 +23,7 @@ import {
   PreviewContainer,
   LoadingContainer,
   FilterButton,
+  EmptyResults,
 } from './Preview.style';
 
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
@@ -102,6 +104,21 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           <LoadingContainer>
             <Spinner />
           </LoadingContainer>
+        )}
+
+        {!isLoadingResults && results && results.length === 0 && (
+          <EmptyResults>
+            <div>
+              <Typography variant="title5" weight="700">
+                No search results for &quot;{searchValue}&quot;
+              </Typography>
+              <Typography variant="label" weight="400" color="shade7">
+                It seems we can’t find any results based on your search.
+              </Typography>
+            </div>
+
+            <img src={anchorImg} />
+          </EmptyResults>
         )}
 
         {!isLoadingResults && results && results.length > 0 && (
