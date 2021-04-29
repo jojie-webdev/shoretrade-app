@@ -35,7 +35,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
   } = props;
   const theme = useTheme();
   return (
-    <CardContainer img={props.images[0]}>
+    <CardContainer className="category-preview-card" img={props.images[0]}>
       <div
         className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}

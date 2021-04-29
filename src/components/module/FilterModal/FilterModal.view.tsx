@@ -8,9 +8,12 @@ import Select from 'components/base/Select';
 import { ArrowLeft, ChevronRight } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { FilterModalProps, Filters, FilterType } from './FilterModal.props';
@@ -25,11 +28,13 @@ import {
   Scroll,
   ClickableRow,
   Filter,
+  ButtonContainer,
 } from './FilterModal.style';
 
 const FilterModal = (props: FilterModalProps): JSX.Element => {
   const theme = useTheme();
-  const isSeller = theme.appType == 'seller';
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const ModalLayout = isSmallScreen ? MobileModal : Modal;
 
   const {
     filters,
@@ -221,7 +226,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
   }, [sizeFrom, sizeTo]);
 
   return (
-    <Modal {...modalProps}>
+    <ModalLayout {...modalProps}>
       <>
         <HeaderContainer>
           {selecting ? (
@@ -350,19 +355,20 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
           </Scroll>
         )}
 
-        {selecting && (
-          <Button
-            onClick={onBack}
-            disabled={sizeErrors.length > 0}
-            text="Done"
-            takeFullWidth
-          />
-        )}
-        {!selecting && (
-          <Button onClick={props.onApply} text="Apply" takeFullWidth />
-        )}
+        <ButtonContainer>
+          {selecting ? (
+            <Button
+              onClick={onBack}
+              disabled={sizeErrors.length > 0}
+              text="Done"
+              takeFullWidth
+            />
+          ) : (
+            <Button onClick={props.onApply} text="Apply" takeFullWidth />
+          )}
+        </ButtonContainer>
       </>
-    </Modal>
+    </ModalLayout>
   );
 };
 
