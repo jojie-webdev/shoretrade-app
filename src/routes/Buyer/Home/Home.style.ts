@@ -80,9 +80,7 @@ export const SellerInteractionsContainer = styled(CategoriesContainer)`
   padding-top: 16px;
 `;
 
-export const SellerContainer = styled(CategoriesContainer)`
-`;
-
+export const SellerContainer = styled(CategoriesContainer)``;
 
 export const Image = styled.img`
   width: 48px;
@@ -171,7 +169,8 @@ export const ResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  > div, p {
+  > div,
+  p {
     margin-bottom: 4px;
   }
 

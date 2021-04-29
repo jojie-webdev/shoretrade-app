@@ -68,6 +68,7 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState } = props;
@@ -217,16 +218,17 @@ const HomeView = (props: HomeGeneratedProps) => {
           <div className="size">
             <Typography variant="small" style={{ marginRight: '4px' }}>
               {props.size.from}
+              {formatMeasurementUnit(props.measurementUnit)}
             </Typography>
-            <div>
             {props.size.to && (
               <>
-                <ArrowRight />
-                <Typography variant="small">{props.size.to}</Typography>
+                <ArrowRight fill={theme.grey.shade7} />
+                <Typography style={{ marginLeft: '4px' }} variant="small">
+                  {props.size.to}
+                  {formatMeasurementUnit(props.measurementUnit)}
+                </Typography>
               </>
             )}
-            </div>
-         
           </div>
         </ResultContainer>
       </DetailsContainer>
@@ -253,9 +255,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       )}
       <Wrapper>
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>
-          {/* <SearchAddress /> */}
-        </Col>
+        <Col xs={12}>{/* <SearchAddress /> */}</Col>
       </Wrapper>
 
       {/* Main Content */}
@@ -310,39 +310,43 @@ const HomeView = (props: HomeGeneratedProps) => {
                   </>
                 ) : (
                   <SellerInteractionsContainer>
-                    { (favouriteSellers?.length > 0) ? favouriteSellers?.slice(0, 5).map((seller) => {
-                      return (
-                        <SellerInteraction
-                          key={seller.id}
-                          type="next"
-                          padding="8px 24px 8px 8px"
-                          onClick={() => {
-                            history.push(
-                              BUYER_ROUTES.SELLER_DETAILS(seller.id)
-                            );
-                          }}
-                          leftComponent={
-                            <SellerInteractionContent>
-                              {seller.companyImage ? (
-                                <Image
-                                  className="thumbnail"
-                                  src={seller.companyImage}
-                                />
-                              ) : (
-                                <PlaceholderImage>
-                                  <PlaceholderProfile />
-                                </PlaceholderImage>
-                              )}
-                              <Typography variant="body">
-                                {seller.companyName}
-                              </Typography>
-                            </SellerInteractionContent>
-                          }
-                        />
-                      );
-                    }): (
+                    {favouriteSellers?.length > 0 ? (
+                      favouriteSellers?.slice(0, 5).map((seller) => {
+                        return (
+                          <SellerInteraction
+                            key={seller.id}
+                            type="next"
+                            padding="8px 24px 8px 8px"
+                            onClick={() => {
+                              history.push(
+                                BUYER_ROUTES.SELLER_DETAILS(seller.id)
+                              );
+                            }}
+                            leftComponent={
+                              <SellerInteractionContent>
+                                {seller.companyImage ? (
+                                  <Image
+                                    className="thumbnail"
+                                    src={seller.companyImage}
+                                  />
+                                ) : (
+                                  <PlaceholderImage>
+                                    <PlaceholderProfile />
+                                  </PlaceholderImage>
+                                )}
+                                <Typography variant="body">
+                                  {seller.companyName}
+                                </Typography>
+                              </SellerInteractionContent>
+                            }
+                          />
+                        );
+                      })
+                    ) : (
                       <EmptyContainer>
-                        <Typography variant="title5">No Favourite Sellers</Typography>
+                        <Typography variant="title5">
+                          No Favourite Sellers
+                        </Typography>
                       </EmptyContainer>
                     )}
                   </SellerInteractionsContainer>
@@ -396,25 +400,31 @@ const HomeView = (props: HomeGeneratedProps) => {
                       />
                     ) : (
                       <>
-                        { favourites?.length > 0 ? favourites?.map((fav) => {
-                          return (
-                            <Interactions
-                              key={fav.id}
-                              type="next"
-                              padding="8px 24px 8px 8px"
-                              onClick={() => {
-                                history.push(
-                                  BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
-                                );
-                              }}
-                              leftComponent={
-                                <FavouriteProductInteractionContent {...fav} />
-                              }
-                            />
-                          );
-                        }): (
+                        {favourites?.length > 0 ? (
+                          favourites?.map((fav) => {
+                            return (
+                              <Interactions
+                                key={fav.id}
+                                type="next"
+                                padding="8px 24px 8px 8px"
+                                onClick={() => {
+                                  history.push(
+                                    BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
+                                  );
+                                }}
+                                leftComponent={
+                                  <FavouriteProductInteractionContent
+                                    {...fav}
+                                  />
+                                }
+                              />
+                            );
+                          })
+                        ) : (
                           <EmptyContainer>
-                            <Typography variant="title5">No Favourite Sellers</Typography>
+                            <Typography variant="title5">
+                              No Favourite Sellers
+                            </Typography>
                           </EmptyContainer>
                         )}
                       </>
