@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { AspectRatio, MediaQueries } from './CarouselV2.props';
@@ -26,13 +27,14 @@ const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
   },
 };
 
-export const SwiperArea = styled.div`
+export const SwiperArea = styled.div<{ variant?: 'thumbnail' }>`
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow-x: hidden;
   position: relative;
   width: 100%;
+  ${(props) => props.variant === 'thumbnail' && `min-height: 342px;`}
 `;
 
 export const LeftInsideArrowArea = styled.div`
@@ -139,6 +141,10 @@ export const ImageContainer = styled.div<{
     height: ${({ aspectRatio }) =>
       `${ImageContainerHeight[aspectRatio][1440]}px`};
   }
+
+  @media ${BREAKPOINTS['ipadPro']} {
+    min-height: 342px;
+  }
 `;
 
 export const Image = styled.img`
@@ -173,9 +179,7 @@ export const ThumbNavContainer = styled.div`
 export const ThumbNav = styled(Image)<{ active: boolean }>`
   width: 44px;
   height: 44px;
-
   cursor: pointer;
   margin-right: 8px;
-  
-  opacity: ${(props) => (props.active ? 1: 0.5)};
+  opacity: ${(props) => (props.active ? 1 : 0.5)};
 `;

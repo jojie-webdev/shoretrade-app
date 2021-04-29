@@ -6,7 +6,6 @@ import { pxToRem } from 'utils/Theme';
 const imgUrl = (url: string) => `"${url}"`;
 
 export const CardContainer = styled.div<{ img: string }>`
-  /* width: 265px; */
   width: 265px;
 
   .imgContainer {

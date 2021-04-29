@@ -22,7 +22,14 @@ const debounce = (fn: () => void, ms: number) => {
  *
  */
 const SwiperContainerV2 = (props: SwiperContainerV2Props): JSX.Element => {
-  const { children, height, aspectRatio = '9:4', addMargin, onResize } = props;
+  const {
+    children,
+    height,
+    aspectRatio = '16:9',
+    addMargin,
+    onResize,
+    variant,
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
@@ -72,6 +79,7 @@ const SwiperContainerV2 = (props: SwiperContainerV2Props): JSX.Element => {
       height={height}
       aspectRatio={aspectRatio}
       addMargin={addMargin}
+      variant={variant}
     >
       {containerWidth && (
         <Container style={{ width: containerWidth }}>{children}</Container>
