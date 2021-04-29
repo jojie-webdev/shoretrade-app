@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { AspectRatio, MediaQueries } from './SwiperContainerV2.props';
@@ -23,6 +24,7 @@ export const Parent = styled.div<{
   height?: string;
   aspectRatio: AspectRatio;
   addMargin?: boolean;
+  variant?: string;
 }>`
   display: flex;
   height: ${({ height }) => height || '325px'};
@@ -48,9 +50,14 @@ export const Parent = styled.div<{
   @media (min-width: 1440px) {
     height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1440] + 30}px`};
   }
+  ${(props) =>
+    props.variant === 'thumbnail' &&
+    `  @media ${BREAKPOINTS['ipadPro']} {
+    min-height: 394px;
+  }`}
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ variant?: string }>`
   height: 100%;
   width: 100%;
   flex-direction: column;
@@ -61,6 +68,13 @@ export const Container = styled.div`
     max-width: 100%;
     height: 100%;
     border-radius: 4px;
+
+    ${(props) =>
+      props.variant === 'thumbnail' &&
+      `   @media ${BREAKPOINTS['ipadPro']} {
+      min-height: 342px;
+      height: 342px;
+    }`}
   }
 
   .swiper-pagination {

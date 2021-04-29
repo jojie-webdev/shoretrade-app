@@ -45,7 +45,7 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
     showAlmostGone,
     showActionButton,
     actionButton,
-    variant = 'bullet'
+    variant = 'bullet',
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState<any>(0);
@@ -95,70 +95,71 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
     return <></>;
   }
 
-  if(variant === 'thumbnail') {
+  if (variant === 'thumbnail') {
     return (
-    <SwiperContainerV2
-      height={height}
-      aspectRatio={aspectRatio}
-      addMargin={addMargin}
-      onResize={() => {
-        setShowSwiperItems(false);
-      }}
-    >
-      <SwiperArea>
-        <BadgeContainer>
-          {showAquafuture && (
-            <Badge badgeColor={theme.grey.shade8}>
-              <Typography color="shade4" variant="overline">
-                Aquafuture
-              </Typography>
-            </Badge>
-          )}
-          {showAlmostGone && (
-            <Badge badgeColor={theme.brand.warning}>
-              <Typography style={{ color: '#FFF1E9' }} variant="overline">
-                Almost Gone!
-              </Typography>
-            </Badge>
-          )}
-        </BadgeContainer>
-        <Swiper
-          preloadImages={false}
-          lazy={true}
-          pagination={{
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true,
-          }}
-          loop={false}
-          spaceBetween={30}
-          onSwiper={(swiper) => {
-            setSwiperRef(swiper);
-          }}
-          onSlideChange={(swiper) => {
-            console.log(swiper.activeIndex);
-            swiper.update();
-          }}
-        >
-          {swiperItems}
-        </Swiper>
-        <ThumbNavContainer>
-          {images.map((image, idx) => (
-            <ThumbNav
-              active={swiperRef && activeSlideIndex === idx}
-              onClick={() => {
-                swiperRef.slideTo(idx, 1000);
-                setActiveSlideIndex(idx);
-              }}
-              key={image}
-              className="swiper-lazy"
-              src={image}
-            />
-          ))}
-        </ThumbNavContainer>
-      </SwiperArea>
-    </SwiperContainerV2>
-    )
+      <SwiperContainerV2
+        height={height}
+        aspectRatio={aspectRatio}
+        addMargin={addMargin}
+        onResize={() => {
+          setShowSwiperItems(false);
+        }}
+        variant={variant}
+      >
+        <SwiperArea>
+          <BadgeContainer>
+            {showAquafuture && (
+              <Badge badgeColor={theme.grey.shade8}>
+                <Typography color="shade4" variant="overline">
+                  Aquafuture
+                </Typography>
+              </Badge>
+            )}
+            {showAlmostGone && (
+              <Badge badgeColor={theme.brand.warning}>
+                <Typography style={{ color: '#FFF1E9' }} variant="overline">
+                  Almost Gone!
+                </Typography>
+              </Badge>
+            )}
+          </BadgeContainer>
+          <Swiper
+            preloadImages={false}
+            lazy={true}
+            pagination={{
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable: true,
+            }}
+            loop={false}
+            spaceBetween={30}
+            onSwiper={(swiper) => {
+              setSwiperRef(swiper);
+            }}
+            onSlideChange={(swiper) => {
+              console.log(swiper.activeIndex);
+              swiper.update();
+            }}
+          >
+            {swiperItems}
+          </Swiper>
+          <ThumbNavContainer>
+            {images.map((image, idx) => (
+              <ThumbNav
+                active={swiperRef && activeSlideIndex === idx}
+                onClick={() => {
+                  swiperRef.slideTo(idx, 1000);
+                  setActiveSlideIndex(idx);
+                }}
+                key={image}
+                className="swiper-lazy"
+                src={image}
+              />
+            ))}
+          </ThumbNavContainer>
+        </SwiperArea>
+      </SwiperContainerV2>
+    );
   }
 
   return (
@@ -169,6 +170,7 @@ const CarouselV2 = (props: CarouselV2Props): JSX.Element => {
       onResize={() => {
         setShowSwiperItems(false);
       }}
+      variant="bullet"
     >
       <SwiperArea>
         <ActionButtonContainer>
