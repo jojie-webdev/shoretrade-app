@@ -61,6 +61,7 @@ import {
   SellerInteractionContent,
   SellerInteraction,
   SellerInteractionsContainer,
+  EmptyContainer,
 } from './Home.style';
 import {
   categoriesToCardProps,
@@ -308,7 +309,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   </>
                 ) : (
                   <SellerInteractionsContainer>
-                    {favouriteSellers?.slice(0, 5).map((seller) => {
+                    { (favouriteSellers?.length > 0) ? favouriteSellers?.slice(0, 5).map((seller) => {
                       return (
                         <SellerInteraction
                           key={seller.id}
@@ -338,7 +339,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                           }
                         />
                       );
-                    })}
+                    }): (
+                      <EmptyContainer>
+                        <Typography variant="title5">No Favourite Sellers</Typography>
+                      </EmptyContainer>
+                    )}
                   </SellerInteractionsContainer>
                 )}
               </ViewCol>
@@ -390,7 +395,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                       />
                     ) : (
                       <>
-                        {favourites?.map((fav) => {
+                        { favourites?.length > 0 ? favourites?.map((fav) => {
                           return (
                             <Interactions
                               key={fav.id}
@@ -406,7 +411,11 @@ const HomeView = (props: HomeGeneratedProps) => {
                               }
                             />
                           );
-                        })}
+                        }): (
+                          <EmptyContainer>
+                            <Typography variant="title5">No Favourite Sellers</Typography>
+                          </EmptyContainer>
+                        )}
                       </>
                     )}
                   </FavouritesContainer>

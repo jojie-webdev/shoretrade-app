@@ -206,3 +206,12 @@ export const SellerInteractionContent = styled.div`
 export const SellerInteraction = styled(InteractionsView)`
   margin-bottom: 12px;
 `;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 64px 0;
+`;
