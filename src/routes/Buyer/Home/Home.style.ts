@@ -195,6 +195,7 @@ export const BadgeText = styled(Typography)`
 export const SellerInteractionContent = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   .thumbnail {
     width: 56px;
