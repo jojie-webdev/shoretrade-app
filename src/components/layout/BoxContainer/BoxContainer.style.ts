@@ -10,7 +10,7 @@ export const Container = styled.div<{ isPreview?: boolean }>`
         : theme.grey.shade8
       : theme.grey.shade2};
   border: ${({ theme }) => {
-    if (theme.appType === 'seller') return 'none';
+    //  if (theme.appType === 'seller') return 'none';
 
     return `2px solid ${theme.grey.shade3}`;
   }};
