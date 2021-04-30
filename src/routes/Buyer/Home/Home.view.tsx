@@ -354,7 +354,7 @@ const HomeView = (props: HomeGeneratedProps) => {
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
-                  title="Your Favorite Categories"
+                  title="Your Categories"
                   onClick={() =>
                     history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
                   }
