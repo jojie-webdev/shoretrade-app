@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
@@ -28,7 +28,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -131,15 +130,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     query: BREAKPOINTS['md'],
   });
 
-  const cbRef = useCallback(
-    (node: any) => {
-      if (node !== null) {
-        autoScrollToTop(history, node);
-      }
-    },
-    [history.location]
-  );
-
   // const listItems = () => {
   //   return sort(sortByDate, Object.keys(pendingOrders))
   //     .slice(0, 3)
@@ -231,7 +221,7 @@ const HomeView = (props: HomeGeneratedProps) => {
   );
 
   return (
-    <BoxContainer ref={cbRef}>
+    <BoxContainer>
       {/* TODO: update appbar instead to show welcome */}
       {/* <Typography style={{ paddingBottom: '32px' }} variant="title4">
         Welcome {}

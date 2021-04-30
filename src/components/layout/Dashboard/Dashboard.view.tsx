@@ -14,11 +14,10 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
-import { Container, Hidden, Visible } from 'react-grid-system';
+import { Container, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
-import { autoScrollToTop } from 'utils/scrollToTop';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -188,13 +187,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
-  const cbRef = useCallback(
-    (node: any) => {
-      if (node !== null) autoScrollToTop(history, node);
-    },
-    [history.location]
-  );
-
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
@@ -286,7 +278,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         background={background}
         screenBackground={screenBackground}
         color={color}
-        ref={cbRef}
       >
         {useOuterWrapper ? (
           <Container
