@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import Alert from 'components/base/Alert';
-import Badge from 'components/base/Badge';
 import Interactions from 'components/base/Interactions';
 import {
   ChevronRight,
@@ -20,21 +19,18 @@ import HomeSellerCard from 'components/module/HomeSellerCard';
 import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
-import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
-import { BUYER_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
-import sort from 'ramda/src/sort';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
 
-import { sortByDate } from '../Orders/Orders.transform';
 import {
   HomeGeneratedProps,
   CreditState,
@@ -43,7 +39,6 @@ import {
 } from './Home.props';
 import {
   CategoriesContainer,
-  Text,
   Bold,
   FavouritesContainer,
   ViewCol,
@@ -99,7 +94,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
         iconRight={
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
         }
-        onClick={() => history.push('/buyer/account/bank-details')}
+        onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
         style={{ cursor: 'pointer', marginBottom: 24 }}
       />
     );

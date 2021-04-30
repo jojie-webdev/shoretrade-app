@@ -14,7 +14,6 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import Carousel from 'components/module/Carousel';
 import CarouselV2 from 'components/module/CarouselV2';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -32,8 +31,6 @@ import {
   Tag,
   SellerPreview,
   SalesCard,
-  OrderBoxCard,
-  ActionsContainer,
   ActionContainer,
   NoProfilePic,
   TopContainer,
@@ -87,7 +84,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     }
   }, [carousel.items]);
 
-  const addSeperatorSpacing = useMediaQuery({
+  const addSeparatorSpacing = useMediaQuery({
     query: '(min-width: 992px)',
   });
 
@@ -343,7 +340,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             md={12}
             lg={8}
             xl={7}
-            style={{ paddingLeft: addSeperatorSpacing ? 32 : 0 }}
+            style={{ paddingLeft: addSeparatorSpacing ? 32 : 0 }}
             className="card-container"
           >
             <SalesCard>
@@ -404,7 +401,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Average Box Size:
@@ -420,7 +417,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Catch Date:
@@ -436,7 +433,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Minimum Order:

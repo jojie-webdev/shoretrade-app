@@ -130,7 +130,7 @@ export const ProductDetailsContainer = styled.div`
   flex-direction: column;
   width: 100%;
 
-  .seperator {
+  .separator {
     width: 100%;
     height: 2px;
     background-color: ${({ theme }) => theme.grey.shade2};
@@ -150,55 +150,6 @@ export const ProductLabelContainer = styled.div`
   }
 `;
 
-export const OrderBoxCard = styled.div`
-  padding: 24px;
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme.grey.shade5};
-  box-sizing: border-box;
-  border-radius: 4px;
-  margin-top: 32px;
-
-  .order-details-row {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-    & div:not(:last-child) {
-      margin-right: 32px;
-    }
-  }
-
-  .order-details-item {
-    display: flex;
-    flex-direction: column;
-    & p:not(:first-child) {
-      margin-top: 4px;
-    }
-  }
-  .box-details-row {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-    justify-content: space-between;
-    /* & p:not(:last-child) {
-      margin-right: 24px;
-    } */
-  }
-`;
-
-export const ActionsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 16px;
-
-  & button {
-    width: 50%;
-  }
-
-  & button:not(:last-child) {
-    margin-right: 16px;
-  }
-`;
-
 export const ActionContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -209,7 +160,6 @@ export const ActionContainer = styled.div`
   }
 `;
 
-// TODO :- should be a layout
 const imgStyle = css`
   width: 96px;
   height: 96px;
@@ -219,7 +169,7 @@ const imgStyle = css`
 `;
 
 export const NoProfilePic = styled.div`
-  ${imgStyle}
+  ${imgStyle};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -327,6 +277,7 @@ export const TopDetailsContainer = styled.div`
 `;
 
 export const StyledTouchable = styled(Touchable)``;
+
 export const MobileWrapper = styled.div`
   .sales-container {
     display: flex;
@@ -400,7 +351,7 @@ export const MobileWrapper = styled.div`
 export const ProductLabelMobileContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 8;
+  margin-bottom: 8px;
 
   .product-value {
     margin-left: 4px;

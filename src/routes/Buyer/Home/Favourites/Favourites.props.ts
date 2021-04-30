@@ -7,4 +7,5 @@ export interface FavouritesGeneratedProps {
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   search: string;
   resetSearchValue: () => void;
+  isPendingAccount: boolean;
 }

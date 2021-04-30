@@ -1,22 +1,19 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import {
-  getBuyerSearchFilterDataActions,
-  getListingsByTypeActions,
-  currentAddressActions,
-} from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
+import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
-import { FavouritesGeneratedProps } from './Favourites.props';
 import FavouritesView from './Favourites.view';
 
 const Favourites = (): JSX.Element => {
-  const dispatch = useDispatch();
-
   const [search, setSearch] = useState('');
+
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
 
   const results = (
     useSelector(
@@ -36,6 +33,7 @@ const Favourites = (): JSX.Element => {
 
   const generatedProps = {
     results,
+    isPendingAccount,
     onChangeSearchValue,
     search,
     resetSearchValue,

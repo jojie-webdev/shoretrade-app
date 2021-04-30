@@ -153,7 +153,7 @@ const Item = (props: ItemProp) => {
 
       <div className="buttons">
         <StyledTouchable onPress={props.onClick} dark>
-          <ChevronRight height={12} width={12}></ChevronRight>
+          <ChevronRight height={12} width={12} />
         </StyledTouchable>
       </div>
     </ItemCard>
@@ -345,7 +345,7 @@ const SellingView = (props: SellingGeneratedProps) => {
   } = props;
 
   if (pending) {
-    return <LoadingView></LoadingView>;
+    return <LoadingView />;
   }
 
   return (

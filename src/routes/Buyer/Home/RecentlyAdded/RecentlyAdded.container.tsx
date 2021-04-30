@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';

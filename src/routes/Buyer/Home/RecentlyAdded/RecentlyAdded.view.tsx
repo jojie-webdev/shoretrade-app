@@ -1,31 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
-import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
 import PreviewCard from 'components/module/CategoryCards/Preview';
-import EmptyState from 'components/module/EmptyState';
-import Search from 'components/module/Search';
-import SearchAddressView from 'components/module/SearchAddress';
-import { Row, Col } from 'react-grid-system';
+import { BUYER_ROUTES } from 'consts';
+import { Row } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';
-import { PreviewContainer, LoadingContainer } from './RecentlyAdded.style';
+import { PreviewContainer } from './RecentlyAdded.style';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
-  // const theme = useTheme();
   const { results, isPendingAccount } = props;
 
   return (
     <PreviewContainer>
-      <Row nogutter>
-        <Col xs={12}>
-          <SearchAddressView />
-        </Col>
-      </Row>
       {results.length > 0 ? (
         <>
           <Row nogutter className="cards" style={{ marginTop: 20 }}>
@@ -33,7 +22,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
               return (
                 <Link
                   key={rec.id}
-                  to={`/buyer/product/${rec.id}`}
+                  to={BUYER_ROUTES.PRODUCT_DETAIL(rec.id)}
                   className="market-item"
                 >
                   <PreviewCard
