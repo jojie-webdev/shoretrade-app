@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import CarouselV2 from '../../../src/components/module/CarouselV2';
+import CarouselV2 from '../../../src/components/module/Carousel';
 import Container from '../../components/Container';
 
 storiesOf('module/CarouselV2', module).add('Summary', () => (
@@ -11,9 +11,7 @@ storiesOf('module/CarouselV2', module).add('Summary', () => (
       id="carousel"
       loop
       autoplay
-      images={[
-        'https://picsum.photos/502/300.jpg',
-      ]}
+      images={['https://picsum.photos/502/300.jpg']}
     />
   </Container>
 ));

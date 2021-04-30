@@ -9,7 +9,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import CarouselV2 from 'components/module/CarouselV2';
+import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
@@ -275,7 +275,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           <Wrapper>
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
-                <CarouselV2
+                <Carousel
                   id="featured-carousel"
                   images={featured}
                   loop

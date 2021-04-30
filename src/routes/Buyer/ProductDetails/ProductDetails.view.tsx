@@ -10,7 +10,7 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import BoxRadio from 'components/module/BoxRadio';
-import CarouselV2 from 'components/module/CarouselV2';
+import Carousel from 'components/module/Carousel';
 import Loading from 'components/module/Loading';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerCard from 'components/module/ProductSellerCard';
@@ -178,7 +178,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Col>
             <Col xs={12} sm={12} md={12} lg={6} className="title">
               <BannerContainer>
-                <CarouselV2
+                <Carousel
                   id={'product-details-carousel'}
                   images={images}
                   loop

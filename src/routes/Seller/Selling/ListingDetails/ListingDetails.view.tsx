@@ -14,7 +14,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import CarouselV2 from 'components/module/CarouselV2';
+import Carousel from 'components/module/Carousel';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -95,7 +95,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     return (
       <MobileWrapper>
         <Row nogutter>
-          <CarouselV2
+          <Carousel
             id="product-carousel"
             images={images}
             loop
@@ -323,7 +323,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           <Col xs={12} sm={12} md={12} lg={10} xl={5}>
             <DetailsCard>
               <div style={{ width: '100%' }}>
-                <CarouselV2
+                <Carousel
                   id="product-carousel"
                   images={images}
                   loop
