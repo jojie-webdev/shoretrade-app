@@ -30,6 +30,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, Link } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
 
@@ -68,7 +69,6 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState } = props;
@@ -267,7 +267,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           {/* use other action/service? PENDING */}
           {/* <Wrapper>
             <ViewCol style={{ paddingTop: '48px' }}>
-            
+
               <ListCard
                 icon={<FileBookMarkAlt />}
                 totalCount={Object.keys(pendingOrders).length}

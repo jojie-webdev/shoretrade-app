@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
 const dashboardWidth = (isSeller: boolean) =>
-  isSeller ? 'calc(100% - 200px)' : 'calc(100% - 64px)';
+  isSeller ? 'calc(100% - 150px)' : 'calc(100% - 150px)';
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
