@@ -1,10 +1,14 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isPreview?: boolean }>`
   padding: 48px;
-  background: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade2};
+  background: ${({ theme, isPreview }) =>
+    theme.appType === 'seller'
+      ? isPreview
+        ? theme.grey.shade2
+        : theme.grey.shade8
+      : theme.grey.shade2};
   border: ${({ theme }) => {
     if (theme.appType === 'seller') return 'none';
 

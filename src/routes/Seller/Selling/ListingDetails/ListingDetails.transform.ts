@@ -38,6 +38,7 @@ export const listingToListingProps = (
         name: data?.coopName,
         rating: data?.rating,
       },
+      avgBoxSize: data?.average.toFixed(2) || '',
     },
     orderDetails: {
       price: toPrice(data?.pricePerKilo || 0, false),

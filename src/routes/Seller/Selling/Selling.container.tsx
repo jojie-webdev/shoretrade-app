@@ -22,6 +22,9 @@ const Selling = (): JSX.Element => {
   const pending =
     useSelector((state: Store) => state.getAllListings.pending) || false;
 
+  const staticListings =
+    useSelector((state: Store) => state.getAllListings.data?.data.orders) || [];
+
   const listings =
     useSelector((state: Store) => state.getAllListings.data?.data.orders) || [];
 
@@ -121,6 +124,7 @@ const Selling = (): JSX.Element => {
     search,
     onChangeSearch,
     resetSearch,
+    staticListings,
   };
   return <SellingView {...generatedProps} />;
 };

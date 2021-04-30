@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { SELLING_ROUTES } from 'consts';
+import { SELLER_ROUTES, SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -27,9 +27,7 @@ const ListingDetailsContainer = (
   const listingId = props.match?.params.listingId || '';
 
   const currentListing = GetListingSelector(listingId);
-
   const listing = listingToListingProps(currentListing);
-
   const onEdit = () => {
     dispatch(
       editSelectedListingActions.update({
@@ -37,7 +35,6 @@ const ListingDetailsContainer = (
       })
     );
   };
-
   const onRemove = () => {
     dispatch(
       endListingActions.request({
@@ -53,11 +50,23 @@ const ListingDetailsContainer = (
     }
   }, []);
 
+  const sellingDetailsBreadCrumbs = [
+    { label: 'Selling', link: SELLER_ROUTES.SELLING },
+    {
+      label: currentListing?.categoryName,
+      link: SELLER_ROUTES.SELLING,
+    },
+    {
+      label: listing.productDetails.title,
+    },
+  ];
+
   const generatedProps: ListingDetailsGeneratedProps = {
     // generated props here
     listing,
     onEdit,
     onRemove,
+    sellingDetailsBreadCrumbs,
   };
   return <ListingDetailsView {...props} {...generatedProps} />;
 };

@@ -1,7 +1,9 @@
 import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   height: 100%;
@@ -22,7 +24,7 @@ export const StyledAlert = styled(Alert)`
 
 export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  padding: 8px 12px;
+  padding: 16px;
   margin-bottom: 8px;
   border-radius: 8px;
 
@@ -42,6 +44,10 @@ export const ItemCard = styled.div`
 
     :hover {
       cursor: pointer;
+    }
+    @media ${BREAKPOINTS['iPad']} {
+      align-items: unset;
+      flex-direction: column;
     }
   }
 
@@ -71,7 +77,18 @@ export const ItemCard = styled.div`
       display: flex;
       align-items: center;
       flex: 1;
-      justify-content: space-between;
+
+      @media ${BREAKPOINTS['iPad']} {
+        margin-left: 42px;
+      }
+
+      .column-order {
+        flex-direction: column;
+      }
+
+      .bottom-space {
+        margin-bottom: 20px;
+      }
     }
   }
 
@@ -128,8 +145,8 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 56px;
-  height: 56px;
+  width: 92px;
+  height: 92px;
   object-fit: contain;
   background: ${(props) => props.theme.grey.noshade};
 
@@ -165,5 +182,172 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     font-size: 14px;
     margin-left: ${(props) => (props.row ? '8px' : '0')};
     line-height: 24px;
+  }
+`;
+
+export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
+  width: 100%;
+
+  @media ${BREAKPOINTS['sm']} {
+    flex-direction: column;
+  }
+  @media ${BREAKPOINTS['ipadPro']} {
+    flex-direction: column;
+  }
+
+  .parent-details {
+    .title-text {
+      margin-bottom: 40px;
+    }
+    .add-product-btn {
+      width: 308px;
+      margin-top: 40px;
+    }
+
+    .details-container {
+      display: flex;
+      flex-direction: row;
+      margin-top: 16px;
+
+      .circle {
+        width: 12px;
+        height: 12px;
+        background-color: ${(props) => props.theme.brand.success};
+        border-radius: 50%;
+        box-shadow: 0 0 0 8px rgba(0, 196, 140, 0.1);
+        margin-right: 24px;
+      }
+
+      .text-container {
+        margin-top: -8px;
+        flex-direction: column;
+        max-width: 360px;
+      }
+    }
+  }
+`;
+
+export const ItemCardMobile = styled.div`
+  background: ${(props) => props.theme.grey.shade9};
+
+  margin-bottom: 24px;
+  border-radius: 4px;
+
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  .parent-container {
+    padding: 12px;
+  }
+
+  .product-container {
+    display: flex;
+    flex-direction: row;
+
+    .price-container {
+      display: flex;
+      flex-direction: column;
+      width: 64px;
+      position: absolute;
+      right: 3%;
+    }
+  }
+
+  .tags-container {
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0;
+    margin-top: 8px;
+  }
+
+  .details-container {
+    margin-top: 4px;
+  }
+
+  .label-container {
+    flex-direction: row;
+    display: flex;
+
+    .left-text {
+      margin-right: 4px;
+    }
+  }
+`;
+
+export const ItemImageMobile = styled.img`
+  width: 100%;
+  max-height: 148px;
+  object-fit: cover;
+  background: ${(props) => props.theme.grey.noshade};
+  border-radius: 4px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+`;
+
+export const ItemDetailMobile = styled(Typography)<{ row?: boolean }>`
+  white-space: nowrap;
+  line-height: 16px;
+`;
+
+export const SVGContainer = styled.div<{
+  circleColor: string;
+  circleHeight?: number;
+  circleWidth?: number;
+}>`
+  margin-top: 0px;
+  margin-bottom: 0px;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 200px;
+
+  @media ${BREAKPOINTS['ipadPro']} {
+    margin-left: -40px !important;
+  }
+
+  @media ${BREAKPOINTS['iPad']} {
+    margin-left: 80px;
+  }
+
+  svg {
+    z-index: 2;
+  }
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: -12px;
+  }
+
+  :before {
+    position: absolute;
+    content: '';
+    height: ${(props) =>
+      props.circleHeight ? `${props.circleHeight}px` : '210px'};
+    width: ${(props) =>
+      props.circleWidth ? `${props.circleWidth}px` : '210px'};
+    border-radius: 210px;
+    z-index: 1;
+
+    background: ${(props) =>
+      props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
   }
 `;
