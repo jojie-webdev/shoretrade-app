@@ -4,8 +4,9 @@ import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepag
 
 export interface FavouritesGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-  resetSearchValue: () => void;
   isPendingAccount: boolean;
+  isLoadingResults: boolean;
+
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  searchValue: string;
 }

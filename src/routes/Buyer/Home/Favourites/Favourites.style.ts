@@ -1,35 +1,58 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
-  padding: 0 8px 8px 8px;
-
-  .cards {
+  .header {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 34px;
 
-    a {
-      margin-right: 32px;
+    .header-title {
+      margin-bottom: 24px;
+    }
 
-      .card {
-        width: 281px;
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 16px;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .right-header {
+      @media ${BREAKPOINTS['sm']} {
+        width: 100%;
+      }
+    }
+
+    .search {
+      width: 220px;
+      margin-bottom: 0;
+
+      @media ${BREAKPOINTS['sm']} {
+        width: 100%;
       }
     }
   }
 
-  .search-row {
-    margin-bottom: 24px;
+  .category-preview-card {
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+
+      .card,
+      .img {
+        width: 100%;
+      }
+
+      .img {
+        height: 180px;
+      }
+    }
   }
 `;
 
 export const LoadingContainer = styled.div`
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
-  height: 100%;
 `;

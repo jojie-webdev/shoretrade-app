@@ -3,7 +3,6 @@ import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
-import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';
 import RecentlyAddedView from './RecentlyAdded.view';
 
 const RecentlyAdded = (): JSX.Element => {
@@ -34,7 +33,7 @@ const RecentlyAdded = (): JSX.Element => {
     setSearchValue(event.target.value);
   };
 
-  const generatedProps: RecentlyAddedGeneratedProps = {
+  const generatedProps = {
     results,
     isPendingAccount,
     isLoadingResults,

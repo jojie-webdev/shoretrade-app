@@ -6,11 +6,12 @@ import { Store } from 'types/store/Store';
 import FavouritesView from './Favourites.view';
 
 const Favourites = (): JSX.Element => {
-  const [search, setSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
   );
+
   const isPendingAccount =
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
@@ -19,24 +20,25 @@ const Favourites = (): JSX.Element => {
     useSelector(
       (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteListing
     ) || []
-  ).filter((result) =>
-    search ? result.type.toLowerCase().includes(search.toLowerCase()) : true
-  );
+  ).filter((result) => {
+    return searchValue
+      ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
+      : true;
+  });
+
+  const isLoadingResults =
+    useSelector((state: Store) => state.getBuyerHomepage.pending) || false;
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const resetSearchValue = () => {
-    setSearch('');
+    setSearchValue(event.target.value);
   };
 
   const generatedProps = {
     results,
     isPendingAccount,
     onChangeSearchValue,
-    search,
-    resetSearchValue,
+    searchValue,
+    isLoadingResults,
   };
 
   return <FavouritesView {...generatedProps} />;
