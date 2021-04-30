@@ -1,10 +1,8 @@
-import AccordionView from 'components/base/Accordion';
 import BadgeView from 'components/base/Badge';
 import InteractionsView from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row, Container, Col } from 'react-grid-system';
-import styled, { css } from 'utils/styled';
+import { Row, Col } from 'react-grid-system';
+import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const ViewContainer = styled.div`
@@ -36,12 +34,6 @@ export const SwiperContainer = styled.div`
 
 export const CategoriesContainer = styled.div``;
 
-export const Text = styled(Typography)`
-  display: inline;
-  flex: 1;
-  margin-left: 5px;
-`;
-
 export const Bold = styled.span`
   margin-left: 0.4em;
   margin-right: 0.4em;
@@ -55,7 +47,6 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
   display: flex;
   position: absolute;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   bottom: 24px;
@@ -114,6 +105,7 @@ export const InteractionTitleContainer = styled.div`
     font-size: ${pxToRem(12)};
   }
 `;
+
 export const StyledInteractions = styled(InteractionsView)`
   margin-bottom: 16px;
   padding: 8px 16px;

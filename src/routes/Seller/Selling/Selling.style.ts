@@ -3,7 +3,6 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   height: 100%;

@@ -3,13 +3,12 @@ import React from 'react';
 import Badge from 'components/base/Badge/Badge.view';
 import { Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
-import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import { Col, Row } from 'react-grid-system';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutCardProps } from './CheckoutCard.props';
-import { Container, Image, TextValue } from './CheckoutCard.style';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { Container, Image, TextValue, BadgeText } from './CheckoutCard.style';
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();

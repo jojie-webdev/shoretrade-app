@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 
 import Alert from 'components/base/Alert';
-import Badge from 'components/base/Badge';
 import Interactions from 'components/base/Interactions';
 import {
   ChevronRight,
@@ -10,7 +9,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import CarouselV2 from 'components/module/CarouselV2';
+import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
@@ -20,21 +19,17 @@ import HomeSellerCard from 'components/module/HomeSellerCard';
 import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
-import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
-import { BUYER_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
-import sort from 'ramda/src/sort';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { autoScrollToTop } from 'utils/scrollToTop';
 import { useTheme } from 'utils/Theme';
 
-import { sortByDate } from '../Orders/Orders.transform';
 import {
   HomeGeneratedProps,
   CreditState,
@@ -43,7 +38,6 @@ import {
 } from './Home.props';
 import {
   CategoriesContainer,
-  Text,
   Bold,
   FavouritesContainer,
   ViewCol,
@@ -99,7 +93,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
         iconRight={
           <ChevronRight height={20} width={20} fill={theme.grey.shade8} />
         }
-        onClick={() => history.push('/buyer/account/bank-details')}
+        onClick={() => history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS)}
         style={{ cursor: 'pointer', marginBottom: 24 }}
       />
     );
@@ -135,15 +129,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const mediumArrowWidth = useMediaQuery({
     query: BREAKPOINTS['md'],
   });
-
-  const cbRef = useCallback(
-    (node: any) => {
-      if (node !== null) {
-        autoScrollToTop(history, node);
-      }
-    },
-    [history.location]
-  );
 
   // const listItems = () => {
   //   return sort(sortByDate, Object.keys(pendingOrders))
@@ -236,26 +221,21 @@ const HomeView = (props: HomeGeneratedProps) => {
   );
 
   return (
-    <BoxContainer ref={cbRef}>
+    <BoxContainer>
       {/* TODO: update appbar instead to show welcome */}
       {/* <Typography style={{ paddingBottom: '32px' }} variant="title4">
         Welcome {}
       </Typography> */}
       {!isPendingAccount && (
-        <Wrapper>
-          <Col xs={12}>
-            <Alert
-              variant="alert"
-              content={`Account Pending. You cannot make purchases until approved.`}
-              fullWidth
-              alignText="center"
-            />
-          </Col>
-        </Wrapper>
+        <Alert
+          variant="alert"
+          content={`Account Pending. You cannot make purchases until approved.`}
+          fullWidth
+          alignText="center"
+        />
       )}
       <Wrapper>
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>{/* <SearchAddress /> */}</Col>
       </Wrapper>
 
       {/* Main Content */}
@@ -280,7 +260,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           <Wrapper>
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
-                <CarouselV2
+                <Carousel
                   id="featured-carousel"
                   images={featured}
                   loop
@@ -359,7 +339,7 @@ const HomeView = (props: HomeGeneratedProps) => {
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
-                  title="Your Favorite Categories"
+                  title="Categories"
                   onClick={() =>
                     history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
                   }

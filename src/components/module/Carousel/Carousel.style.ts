@@ -1,6 +1,9 @@
+import {
+  AspectRatio,
+  MediaQueries,
+} from 'components/module/Carousel/Carousel.props';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-
-import { AspectRatio, MediaQueries } from './Carousel.props';
 
 const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
   '16:9': {
@@ -17,15 +20,23 @@ const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
     '768': 240,
     '375': 156,
   },
+  '8:7': {
+    '1440': 445,
+    '1366': 445,
+    '1024': 445,
+    '768': 595,
+    '375': 287,
+  },
 };
 
-export const SwiperArea = styled.div`
+export const SwiperArea = styled.div<{ variant?: 'thumbnail' }>`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: calc(100% - 200px);
   overflow-x: hidden;
   position: relative;
+  width: 100%;
+  ${(props) => props.variant === 'thumbnail' && `min-height: 342px;`}
 `;
 
 export const LeftInsideArrowArea = styled.div`
@@ -50,7 +61,7 @@ export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
   position: absolute;
-  bottom: 12px;
+  bottom: 42px;
   left: 16px;
   width: 100%;
   z-index: 999;
@@ -72,6 +83,14 @@ export const ArrowButton = styled.div`
 `;
 
 export const ArrowArea = styled.div`
+  display: flex;
+  width: 100px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PaginationArea = styled.div`
   display: flex;
   width: 100px;
   height: 100%;
@@ -124,6 +143,13 @@ export const ImageContainer = styled.div<{
     height: ${({ aspectRatio }) =>
       `${ImageContainerHeight[aspectRatio][1440]}px`};
   }
+
+  @media ${BREAKPOINTS['ipadPro']} {
+    min-height: 342px;
+  }
+  @media ${BREAKPOINTS['sm']} {
+    min-height: 242px;
+  }
 `;
 
 export const Image = styled.img`
@@ -132,4 +158,33 @@ export const Image = styled.img`
   object-fit: cover;
   background: ${(props) => props.theme.grey.noshade};
   border-radius: 4px;
+`;
+
+export const ActionButtonContainer = styled.div`
+  display: block;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: auto;
+  z-index: 999;
+`;
+
+export const ThumbNavContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+
+  .swiper-slide {
+    margin-right: 8px;
+    width: 48px;
+    height: 48px;
+  }
+`;
+
+export const ThumbNav = styled(Image)<{ active: boolean }>`
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  margin-right: 8px;
+  opacity: ${(props) => (props.active ? 1 : 0.5)};
 `;

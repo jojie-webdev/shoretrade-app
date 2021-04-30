@@ -4,9 +4,10 @@ export interface SwiperContainerProps {
   aspectRatio?: AspectRatio;
   addMargin?: boolean;
   onResize?: () => void;
+  variant: 'bullet' | 'thumbnail';
 }
 
-export type AspectRatio = '16:9' | '9:4';
+export type AspectRatio = '16:9' | '9:4' | '8:7';
 
 export type MediaQueries = {
   '1440': number;

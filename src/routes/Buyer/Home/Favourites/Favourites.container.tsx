@@ -1,44 +1,44 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import {
-  getBuyerSearchFilterDataActions,
-  getListingsByTypeActions,
-  currentAddressActions,
-} from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
+import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
 
-import { FavouritesGeneratedProps } from './Favourites.props';
 import FavouritesView from './Favourites.view';
 
 const Favourites = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState('');
 
-  const [search, setSearch] = useState('');
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
 
   const results = (
     useSelector(
       (state: Store) => state.getBuyerHomepage.data?.data.data.favouriteListing
     ) || []
-  ).filter((result) =>
-    search ? result.type.toLowerCase().includes(search.toLowerCase()) : true
-  );
+  ).filter((result) => {
+    return searchValue
+      ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
+      : true;
+  });
+
+  const isLoadingResults =
+    useSelector((state: Store) => state.getBuyerHomepage.pending) || false;
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const resetSearchValue = () => {
-    setSearch('');
+    setSearchValue(event.target.value);
   };
 
   const generatedProps = {
     results,
+    isPendingAccount,
     onChangeSearchValue,
-    search,
-    resetSearchValue,
+    searchValue,
+    isLoadingResults,
   };
 
   return <FavouritesView {...generatedProps} />;
