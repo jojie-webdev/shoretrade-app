@@ -6,12 +6,11 @@ import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions/Interactions.view';
 import { Weight, DollarSign, SubtractHollow, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
-import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { ReviewOfferGeneratedProps } from './ReviewOffer.props';
-import { Container } from './ReviewOffer.style';
+import { Container, BadgeText } from './ReviewOffer.style';
 
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
