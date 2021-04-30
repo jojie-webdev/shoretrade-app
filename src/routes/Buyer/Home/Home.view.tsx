@@ -237,20 +237,15 @@ const HomeView = (props: HomeGeneratedProps) => {
         Welcome {}
       </Typography> */}
       {!isPendingAccount && (
-        <Wrapper>
-          <Col xs={12}>
-            <Alert
-              variant="alert"
-              content={`Account Pending. You cannot make purchases until approved.`}
-              fullWidth
-              alignText="center"
-            />
-          </Col>
-        </Wrapper>
+        <Alert
+          variant="alert"
+          content={`Account Pending. You cannot make purchases until approved.`}
+          fullWidth
+          alignText="center"
+        />
       )}
       <Wrapper>
         <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>{/* <SearchAddress /> */}</Col>
       </Wrapper>
 
       {/* Main Content */}
@@ -354,7 +349,7 @@ const HomeView = (props: HomeGeneratedProps) => {
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
-                  title="Your Categories"
+                  title="Categories"
                   onClick={() =>
                     history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
                   }

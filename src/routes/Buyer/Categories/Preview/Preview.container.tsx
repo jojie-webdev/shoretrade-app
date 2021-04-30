@@ -7,7 +7,6 @@ import {
   getListingsByTypeActions,
   currentAddressActions,
 } from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import {
