@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -19,6 +20,12 @@ export const Container = styled.div`
     .item-container {
       margin-bottom: 8px;
     }
+    .interactions {
+      height: 64px;
+      @media ${BREAKPOINTS['sm']} {
+        height: 40px;
+      }
+    }
   }
 
   .textfield-row {
@@ -28,4 +35,24 @@ export const Container = styled.div`
       margin-bottom: 36px;
     }
   }
+`;
+export const Image = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+  margin-left: -16px;
+`;
+
+export const BackButton = styled(Button)`
+  border-radius: 8px;
+  width: 67px;
+  margin-top: 40px;
+`;
+
+export const SearchContainerDesktop = styled.div`
+  position: absolute;
+  top: 0;
+  right: 5%;
+  width: 211px;
 `;

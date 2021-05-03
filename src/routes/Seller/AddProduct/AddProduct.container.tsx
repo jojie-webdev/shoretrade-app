@@ -443,6 +443,10 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const navBack = () => {
+    onChangeCurrentPage(currentPage - 1);
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -478,6 +482,7 @@ const AddProduct = (): JSX.Element => {
     userPending,
     isBulkUpload,
     discardBulkUploadChanges,
+    navBack,
   };
 
   return <AddProductView {...generatedProps} />;

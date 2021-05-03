@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import Search from 'components/module/Search';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { isEmpty } from 'ramda';
+import { useMediaQuery } from 'react-responsive';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
-import { Container, ProgressIndicator } from './AddProduct.style';
+import {
+  Container,
+  ProgressIndicator,
+  SearchContainerDesktop,
+  InnerHeaderContainer,
+} from './AddProduct.style';
 import Step1 from './Step1/Step1.view';
 import Step2 from './Step2/Step2.view';
 import Step3 from './Step3/Step3.view';
@@ -54,8 +63,9 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     userPending,
     isBulkUpload,
     discardBulkUploadChanges,
+    navBack,
   } = props;
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const currentStep = () => {
     switch (currentPage) {
       default:
@@ -82,6 +92,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             categories={categories}
             getCustomFormData={getCustomFormData}
             selectCustomType={selectCustomType}
+            navBack={navBack}
           />
         );
       case 3:
@@ -171,9 +182,32 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     }
   };
 
+  const [searchKey, setSearchKey] = useState<string>('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [isTriggered, setIsTriggered] = useState(false);
+  useEffect(() => {
+    setSearchKey(searchKey);
+
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    if (searchKey.length > 2) {
+      const timerId = setTimeout(() => {
+        search(searchKey);
+        setIsTriggered(true);
+      }, 800);
+      setTimer(timerId);
+    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+      search('');
+    }
+  }, [searchKey]);
+
   return (
     <Container>
-      <ProgressIndicator style={{ width: `${(currentPage / 8) * 100}%` }} />
+      {currentPage > 1 && (
+        <ProgressIndicator style={{ width: `${(currentPage / 8) * 100}%` }} />
+      )}
       <div>
         {userPending && (
           <Alert
@@ -184,27 +218,52 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             style={{ marginBottom: 16 }}
           />
         )}
-        <Typography variant="overline" color="shade6">
-          Step {currentPage} / 8
-        </Typography>
-        <InnerRouteHeader
-          title={pageTitle()}
-          onClickBack={() => {
-            if (isExisting) {
-              if (currentPage === 8) {
-                discardChanges();
+        {isMobile && (
+          <Typography
+            variant="title5"
+            color="noshade"
+            className="title-step-text "
+          >
+            Add a Product
+          </Typography>
+        )}
+
+        {currentPage > 1 && (
+          <Typography variant="overline" color="shade6">
+            Step {currentPage - 1} / 7
+          </Typography>
+        )}
+
+        <InnerHeaderContainer currentPage={currentPage}>
+          <InnerRouteHeader
+            title={currentPage > 1 ? pageTitle() : ''}
+            onClickBack={() => {
+              if (isExisting) {
+                if (currentPage === 8) {
+                  discardChanges();
+                } else {
+                  onChangeCurrentPage(8);
+                }
+              } else if (isBulkUpload) {
+                discardBulkUploadChanges();
               } else {
-                onChangeCurrentPage(8);
+                onChangeCurrentPage(currentPage - 1);
               }
-            } else if (isBulkUpload) {
-              discardBulkUploadChanges();
-            } else {
-              onChangeCurrentPage(currentPage - 1);
-            }
-          }}
-          showIcon={currentPage !== 1}
-          subtitle={currentPage > 2 ? typeName : undefined}
-        />
+            }}
+            showIcon={currentPage !== 1}
+            // subtitle={currentPage > 2 ? typeName : undefined}
+          />
+          {currentPage === 2 && !isMobile && (
+            <SearchContainerDesktop>
+              <Search
+                value={searchKey}
+                placeholder="e.g. Ocean Trout"
+                onChange={(e) => setSearchKey(e.currentTarget.value)}
+                resetValue={() => setSearchKey('')}
+              />
+            </SearchContainerDesktop>
+          )}
+        </InnerHeaderContainer>
       </div>
       {currentStep()}
     </Container>
