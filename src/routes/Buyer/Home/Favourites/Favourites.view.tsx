@@ -34,11 +34,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
         <div className="header">
           {isSmallScreen && (
             <div className="left-header">
-              <Typography
-                variant="title4"
-                weight="500"
-                className="header-title"
-              >
+              <Typography variant="title4" className="header-title">
                 Favourites
               </Typography>
             </div>
