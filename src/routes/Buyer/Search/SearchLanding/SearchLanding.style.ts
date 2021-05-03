@@ -3,6 +3,8 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  padding-bottom: 48px;
+
   .header-title {
     @media (min-width: 769px) and (max-width: 1100px) {
       margin-bottom: 40px;
@@ -21,28 +23,6 @@ export const Container = styled.div`
     }
   }
 
-  .results {
-    margin-top: 16px;
-  }
-
-  .recent-searches {
-    width: 50%;
-    margin-top: 50px;
-
-    @media (min-width: 769px) and (max-width: 1100px) {
-      width: 100%;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: 75%;
-    }
-
-    @media ${BREAKPOINTS['sm']} {
-      margin-top: 16px;
-      width: 100%;
-    }
-  }
-
   .no-search-results {
     margin-top: 32px;
 
@@ -53,6 +33,41 @@ export const Container = styled.div`
 
   .interactions {
     margin-bottom: 12px;
+  }
+`;
+
+export const Results = styled.div<{ notRecent?: boolean }>`
+  width: ${({ notRecent }) => (notRecent ? '100%' : '50%')};
+  margin-top: ${({ notRecent }) => (notRecent ? '16px' : '50px')};
+
+  @media (min-width: 769px) and (max-width: 1100px) {
+    width: 100%;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    width: 75%;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 16px;
+    width: 100%;
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  margin-left: 120px;
+
+  @media (min-width: 769px) and (max-width: 1100px) {
+    margin-top: 50px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 16px;
+    margin-left: 0px;
   }
 `;
 

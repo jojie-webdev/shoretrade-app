@@ -2,21 +2,40 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
+import Spinner from 'components/base/Spinner/Spinner.view';
 import { Fish2 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Search from 'components/module/Search/Search.view';
+import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 import { useTheme } from 'utils/Theme';
 
 import { SearchLandingGeneratedProps } from './SearchLanding.props';
-import { Container, Label, SVGContainer } from './SearchLanding.style';
+import {
+  Container,
+  LoadingContainer,
+  Results,
+  Label,
+  SVGContainer,
+} from './SearchLanding.style';
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const {
+    data,
+    isSearching,
+    searchTerm,
+    setSearchTerm,
+    onReset,
+    saveSearchHistory,
+  } = props;
 
   return (
     <BoxContainer>
@@ -26,9 +45,13 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
             <>Search</>
           ) : (
             <>
-              Discover 100.000+ products,
-              <br />
-              categories and sellers
+              {searchTerm.length <= 2 && (
+                <>
+                  Discover 100.000+ products,
+                  <br />
+                  categories and sellers
+                </>
+              )}
             </>
           )}
         </Typography>
@@ -37,57 +60,72 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           <div className="search-container">
             <Search
               placeholder={`e.g. Ocean Trout`}
-              value={''}
-              onChange={() => {}}
-              resetValue={() => {}}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              resetValue={onReset}
               rounded
             />
           </div>
 
-          {!isSmallScreen && (
+          {!isSmallScreen && searchTerm.length <= 2 && (
             <SVGContainer>
               <Fish2 height={186} width={326} fill={theme.grey.shade7} />
             </SVGContainer>
           )}
         </Row>
 
-        {/*<Row justify="between" nogutter className="no-search-results">*/}
-        {/*  <div>*/}
-        {/*    <Typography variant="title4">No search results</Typography>*/}
-        {/*    <Typography variant="label" weight="400" color="shade7">*/}
-        {/*      It seems we can’t find any results based on your search.*/}
-        {/*    </Typography>*/}
-        {/*  </div>*/}
+        {isSearching && (
+          <LoadingContainer>
+            <Spinner />
+          </LoadingContainer>
+        )}
 
-        {/*  {!isSmallScreen && (*/}
-        {/*    <SVGContainer>*/}
-        {/*      <Fish2 height={186} width={326} fill={theme.grey.shade7} />*/}
-        {/*    </SVGContainer>*/}
-        {/*  )}*/}
-        {/*</Row>*/}
+        {searchTerm.length > 2 && !isSearching && data.length === 0 && (
+          <>
+            <Row justify="between" nogutter className="no-search-results">
+              <div>
+                <Typography variant="title4">No search results</Typography>
+                <Typography variant="label" weight="400" color="shade7">
+                  It seems we can’t find any results based on your search.
+                </Typography>
+              </div>
 
-        {/*<Button*/}
-        {/*  variant="primary"*/}
-        {/*  text="Create a market request"*/}
-        {/*  onClick={() => {}}*/}
-        {/*  style={{ margin: '25px 0' }}*/}
-        {/*/>*/}
+              {!isSmallScreen && (
+                <SVGContainer>
+                  <Fish2 height={186} width={326} fill={theme.grey.shade7} />
+                </SVGContainer>
+              )}
+            </Row>
 
-        {/*<div className="results">*/}
-        {/*  <Label variant="overline" color="shade6">*/}
-        {/*    Results*/}
-        {/*  </Label>*/}
+            <Button
+              variant="primary"
+              text="Create a market request"
+              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+              style={{ margin: '25px 0' }}
+            />
+          </>
+        )}
 
-        {/*  <Interactions key={1} value="Result 1" onClick={() => {}} />*/}
-        {/*</div>*/}
+        {data.length > 0 && (
+          <Results notRecent={searchTerm.length > 2}>
+            <Label variant="overline" color="shade6">
+              {searchTerm.length <= 2 ? 'Recent searches' : 'Results'}
+            </Label>
 
-        <div className="recent-searches">
-          <Label variant="overline" color="shade6">
-            Recent searches
-          </Label>
-
-          <Interactions key={1} value="Result 1" onClick={() => {}} />
-        </div>
+            {data.map((item, i) => (
+              <Interactions
+                key={i}
+                value={item.label}
+                onClick={() => {
+                  saveSearchHistory(item.value, item.label, item.count);
+                  history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value), {
+                    title: item.label,
+                  });
+                }}
+              />
+            ))}
+          </Results>
+        )}
       </Container>
     </BoxContainer>
   );
