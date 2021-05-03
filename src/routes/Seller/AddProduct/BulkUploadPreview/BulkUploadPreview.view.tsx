@@ -130,7 +130,15 @@ const BulkUploadPreviewView = ({
 
                 <div className="column-item">
                   <Typography variant="caption" color="noshade">
-                    {d.typeDisplayText || <Error />}
+                    {d.type ? (
+                      d.typeDisplayText
+                    ) : (
+                      <Error
+                        onClick={() => {
+                          onEdit(index, 2, d);
+                        }}
+                      />
+                    )}
                   </Typography>
                   <Typography variant="small" color="shade7">
                     {d.specifications.length > 0 &&
