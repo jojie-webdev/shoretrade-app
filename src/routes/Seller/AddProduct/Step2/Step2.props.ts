@@ -1,33 +1,17 @@
-import { Dispatch } from 'react';
-
 import { EditableListingState } from 'types/store/EditableListingState';
-import { CategoryData } from 'types/store/GetCustomFormDataState';
-import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
+import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-export type Step2PublicProps = {
-  search: (term: string) => void;
-  pendingSearch: boolean;
-  searchResults: SearchProductTypeResponseItem[];
-  selectProductType: (typeId: string) => void;
-  showCustomTypeSettings: boolean;
-  setShowCustomTypeSettings: Dispatch<boolean>;
-  getCustomFormData: () => void;
-  categories: CategoryData[];
-  selectCustomType: ({
-    customTypeName,
-    selectedCategory,
-    selectedMetric,
-  }: {
-    customTypeName: string;
-    selectedCategory: string;
-    selectedMetric: {
-      id: string;
-      name: string;
-    };
-  }) => void;
-  navBack: () => void;
+export type Option = { label: string; value: string; groupOrder: number };
+
+export type Step3PublicProps = {
+  onSelectSpecifications: (
+    specificationIds: string[],
+    onSelectSpecifications: string[]
+  ) => void;
 };
 
-export type Step2Props = Step2PublicProps & {
+export type Step3Props = Step3PublicProps & {
+  listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  isCustomType: boolean;
 };

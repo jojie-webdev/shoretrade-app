@@ -16,6 +16,7 @@ import {
   SearchContainerDesktop,
   InnerHeaderContainer,
 } from './AddProduct.style';
+import Step0 from './Step0/Step0.view';
 import Step1 from './Step1/Step1.view';
 import Step2 from './Step2/Step2.view';
 import Step3 from './Step3/Step3.view';
@@ -23,7 +24,6 @@ import Step4 from './Step4/Step4.view';
 import Step5 from './Step5/Step5.view';
 import Step6 from './Step6/Step6.view';
 import Step7 from './Step7/Step7.view';
-import Step8 from './Step8/Step8.view';
 
 const AddProductView = (props: AddProductGeneratedProps) => {
   // const theme = useTheme();
@@ -71,7 +71,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       default:
       case 1:
         return (
-          <Step1
+          <Step0
             accountOptions={accountOptions}
             onSelectAccount={onSelectAccount}
             onUploadCSV={onUploadCSV}
@@ -81,7 +81,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 2:
         return (
-          <Step2
+          <Step1
             editableListing={editableListing}
             showCustomTypeSettings={showCustomTypeSettings}
             setShowCustomTypeSettings={setShowCustomTypeSettings}
@@ -97,7 +97,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 3:
         return (
-          <Step3
+          <Step2
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -106,7 +106,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 4:
         return (
-          <Step4
+          <Step3
             editableListing={editableListing}
             listingFormData={listingFormData}
             isCustomType={isCustomType}
@@ -115,7 +115,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 5:
         return (
-          <Step5
+          <Step4
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -124,7 +124,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 6:
         return (
-          <Step6
+          <Step5
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -134,7 +134,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 7:
         return (
-          <Step7
+          <Step6
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -144,7 +144,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 8:
         return (
-          <Step8
+          <Step7
             measurementUnit={measurementUnit}
             boxesDetails={boxesDetails}
             onChangeCurrentPage={onChangeCurrentPage}
@@ -182,6 +182,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     }
   };
 
+  //#region Modified Search
   const [searchKey, setSearchKey] = useState<string>('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [isTriggered, setIsTriggered] = useState(false);
@@ -202,11 +203,15 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       search('');
     }
   }, [searchKey]);
+  //#endregion Modified Search
 
+  const actualCurrentPage = currentPage - 1;
   return (
     <Container>
       {currentPage > 1 && (
-        <ProgressIndicator style={{ width: `${(currentPage / 8) * 100}%` }} />
+        <ProgressIndicator
+          style={{ width: `${(actualCurrentPage / 7) * 100}%` }}
+        />
       )}
       <div>
         {userPending && (

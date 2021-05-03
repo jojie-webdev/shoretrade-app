@@ -1,140 +1,215 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
-import Interaction from 'components/base/Interactions';
+import Checkbox from 'components/base/Checkbox';
+import Select from 'components/base/Select';
+import TextField from 'components/base/TextField';
+import Typography from 'components/base/Typography';
 import pathOr from 'ramda/es/pathOr';
-import uniq from 'ramda/es/uniq';
-import unnest from 'ramda/es/unnest';
-import { GetCategoryData } from 'store/selectors/seller/categories';
+import { Row, Col } from 'react-grid-system';
 
-import { Step3Props, Option } from './Step3.props';
+import { SIZE_METRICS } from './Step3.constants';
+import { Step4Props, SizeInputProps } from './Step3.props';
 import { Container } from './Step3.style';
 
-function Step3({
+const SizeInput = (props: SizeInputProps) => {
+  const { metric, fromSize, toSize, setFromSize, setToSize, disabled } = props;
+  const metricString = metric.toUpperCase().replace(/\s/g, '_');
+  const sizeMetrics = pathOr<{ value: string; label: string }[]>(
+    [],
+    [metricString],
+    SIZE_METRICS
+  );
+
+  useEffect(() => {
+    if (fromSize !== '' && toSize !== '') {
+      if (metricString !== 'GRAMS' && metricString !== 'UNITS_PER_POUND') {
+        const fromIndex = sizeMetrics.findIndex(
+          (options) => fromSize === options.value
+        );
+        const toIndex = sizeMetrics.findIndex(
+          (options) => toSize === options.value
+        );
+        if (fromIndex > toIndex) {
+          setToSize(fromSize);
+        }
+      }
+    }
+  }, [fromSize, toSize]);
+
+  if (
+    metricString === 'PORTIONS' ||
+    metricString === 'GRAMS' ||
+    metricString === 'UNITS_PER_POUND'
+  ) {
+    return (
+      <Row className="select-row">
+        <Col md={6}>
+          <TextField
+            label="Size From"
+            value={fromSize}
+            onChangeText={(v) => {
+              if (!Number.isNaN(Number(v))) {
+                setFromSize(v);
+              }
+            }}
+            placeholder=""
+            onBlur={() => {
+              if (
+                fromSize !== '' &&
+                toSize !== '' &&
+                Number(fromSize) > Number(toSize)
+              ) {
+                setToSize(fromSize);
+              }
+            }}
+            readOnly={disabled}
+          />
+        </Col>
+
+        <Col md={6}>
+          <TextField
+            label={`Size To\n(Optional)`}
+            value={toSize}
+            onChangeText={(v) => {
+              if (!Number.isNaN(Number(v))) {
+                setToSize(v);
+              }
+            }}
+            placeholder=""
+            onBlur={() => {
+              if (
+                fromSize !== '' &&
+                toSize !== '' &&
+                Number(fromSize) > Number(toSize)
+              ) {
+                setFromSize(toSize);
+              }
+            }}
+            readOnly={disabled}
+          />
+        </Col>
+      </Row>
+    );
+  }
+
+  return (
+    <Row className="select-row">
+      <Col md={6}>
+        <Select
+          options={sizeMetrics}
+          value={fromSize}
+          onChange={(o) => setFromSize(o.value)}
+          label="Size From"
+          disabled={disabled}
+        />
+      </Col>
+      <Col md={6}>
+        <Select
+          options={sizeMetrics}
+          value={toSize}
+          onChange={(o) => setToSize(o.value)}
+          label="Size To"
+          disabled={disabled}
+        />
+      </Col>
+    </Row>
+  );
+};
+
+function Step4({
+  isCustomType,
   editableListing,
   listingFormData,
-  onSelectSpecifications,
-  isCustomType,
-}: Step3Props) {
-  const categoryData = GetCategoryData(
-    editableListing?.customTypeData?.categoryId || ''
-  );
-
-  const typeName =
+  onSelectSizes,
+}: Step4Props) {
+  const metric =
     (isCustomType
-      ? editableListing?.customTypeData?.name
-      : listingFormData?.type.name) || '';
-
-  const stateOptions = (
-    (isCustomType ? categoryData?.states : listingFormData?.stateOptions) || []
-  ).map((group) =>
-    group.map((item) => ({
-      label: item.state.name,
-      value: item.categoryStateOptionId,
-      groupOrder: item.groupOrder,
-    }))
+      ? editableListing?.customTypeData?.metric.name
+      : listingFormData?.metric.name) || '';
+  const [isUngraded, setIsUngraded] = useState(
+    editableListing?.isUngraded || false
   );
+  const [fromSize, setFromSize] = useState<string>(
+    editableListing?.sizeFrom || ''
+  );
+  const [toSize, setToSize] = useState<string>(editableListing?.sizeTo || '');
+  const [showError, setShowError] = useState(false);
 
-  const stateRules =
-    (isCustomType ? categoryData?.stateRules : listingFormData?.stateRules) ||
-    {};
-  const preselectedSpecifications = (editableListing?.states || []).map(
-    (specificationId, i) => {
-      const options = pathOr<
-        { label: string; value: string; groupOrder: number }[]
-      >([], [i], stateOptions);
-      return (
-        options.find((option) => option.value === specificationId) || {
-          label: '',
-          value: specificationId,
-          groupOrder: i,
-        }
-      );
+  useEffect(() => {
+    if (isUngraded && (fromSize || toSize)) {
+      setFromSize('');
+      setToSize('');
     }
-  );
 
-  const [specifications, setSpecifications] = useState<Option[]>(
-    preselectedSpecifications
-  );
-
-  const specificationIds = specifications.map((s) => s.value);
-  const specificationLabels = specifications.map((s) => s.label);
-
-  const disabledOptions = uniq(
-    unnest(specifications.map((s) => stateRules[s.label.toUpperCase()] || []))
-  );
-
-  const isComplete = specificationIds.length === stateOptions.length;
-
-  const computeGroup = (
-    group: {
-      label: string;
-      value: string;
-      groupOrder: number;
-    }[]
-  ) => {
-    const result = group.filter((i) => {
-      if (typeName.toLowerCase().includes('meat')) {
-        return i.label !== 'Live';
-      }
-      if (disabledOptions.includes(i.label.toUpperCase())) {
-        return;
-      }
-      return i;
-    });
-
-    // return to render to let the user se;ect
-    if (result.length > 1) {
-      return result;
-    } else if (result.length === 1) {
-      // add in the id in the selected specs if not already existing
-      if (!specificationIds.includes(result[0].value)) {
-        setSpecifications([
-          ...specifications.slice(0, result[0].groupOrder - 1),
-          result[0],
-        ]);
+    if (showError) {
+      if (fromSize || isUngraded) {
+        setShowError(false);
       }
     }
-    return [];
-  };
+  }, [toSize, fromSize, isUngraded]);
+
+  const isComplete = !showError && (isUngraded || fromSize);
 
   return (
     <Container>
-      {stateOptions.slice(0, specifications.length + 1).map((group) => (
-        <div key={group[0].groupOrder} className="interaction-group">
-          {computeGroup(group).map((item) => {
-            return (
-              <div key={item.value} className="interaction-container">
-                <Interaction
-                  type="radio"
-                  value={item.label}
-                  pressed={specificationIds.includes(item.value)}
-                  onClick={() => {
-                    setSpecifications([
-                      ...specifications.slice(0, item.groupOrder - 1),
-                      item,
-                    ]);
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-      ))}
+      <div className="metric-row">
+        <Typography color="shade6">{`Metric:`}&nbsp;</Typography>
+        <Typography color="shade1" weight="bold">
+          {metric}
+        </Typography>
+      </div>
+      {metric.toUpperCase() !== 'N/A' && (
+        <SizeInput
+          metric={metric}
+          fromSize={fromSize}
+          setFromSize={setFromSize}
+          toSize={toSize}
+          setToSize={setToSize}
+          disabled={isUngraded}
+        />
+      )}
 
-      <div className="btn-container">
+      {metric.toUpperCase() !== 'N/A' && (
+        <Row className="or-row">
+          <Col className="or-col">
+            <div className="line left" />
+            <Typography variant="overline" color="shade6">
+              {' '}
+              OR
+            </Typography>
+            <div className="line right" />
+          </Col>
+        </Row>
+      )}
+
+      <Row className="checkbox-row">
+        <Col>
+          <Checkbox
+            checked={isUngraded}
+            onClick={() => setIsUngraded((v) => !v)}
+            label="Ungraded"
+          />
+        </Col>
+      </Row>
+
+      <Row justify="end" style={{ padding: '0 15px' }}>
         <Button
-          text="Next"
           variant={isComplete ? 'primary' : 'disabled'}
+          text="Next"
           onClick={() => {
             if (isComplete) {
-              onSelectSpecifications(specificationIds, specificationLabels);
+              onSelectSizes({
+                sizeFrom: isUngraded ? undefined : fromSize,
+                sizeTo: isUngraded ? undefined : toSize,
+                isUngraded,
+              });
             }
           }}
         />
-      </div>
+      </Row>
     </Container>
   );
 }
 
-export default Step3;
+export default Step4;

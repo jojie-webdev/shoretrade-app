@@ -1,215 +1,126 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import Button from 'components/base/Button';
-import Checkbox from 'components/base/Checkbox';
-import Select from 'components/base/Select';
-import TextField from 'components/base/TextField';
+import { Camera, Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import pathOr from 'ramda/es/pathOr';
+import Add from 'components/module/Add';
+import AddImage from 'components/module/AddImage';
 import { Row, Col } from 'react-grid-system';
+import { GetCategoryData } from 'store/selectors/seller/categories';
+import { base64ToFile } from 'utils/File';
+import { createUpdateReducer } from 'utils/Hooks';
+import { useTheme } from 'utils/Theme';
 
-import { SIZE_METRICS } from './Step4.constants';
-import { Step4Props, SizeInputProps } from './Step4.props';
-import { Container } from './Step4.style';
+import { Step5Props } from './Step4.props';
+import { Container, DeleteBadge } from './Step4.style';
 
-const SizeInput = (props: SizeInputProps) => {
-  const { metric, fromSize, toSize, setFromSize, setToSize, disabled } = props;
-  const metricString = metric.toUpperCase().replace(/\s/g, '_');
-  const sizeMetrics = pathOr<{ value: string; label: string }[]>(
-    [],
-    [metricString],
-    SIZE_METRICS
-  );
-
-  useEffect(() => {
-    if (fromSize !== '' && toSize !== '') {
-      if (metricString !== 'GRAMS' && metricString !== 'UNITS_PER_POUND') {
-        const fromIndex = sizeMetrics.findIndex(
-          (options) => fromSize === options.value
-        );
-        const toIndex = sizeMetrics.findIndex(
-          (options) => toSize === options.value
-        );
-        if (fromIndex > toIndex) {
-          setToSize(fromSize);
-        }
-      }
-    }
-  }, [fromSize, toSize]);
-
-  if (
-    metricString === 'PORTIONS' ||
-    metricString === 'GRAMS' ||
-    metricString === 'UNITS_PER_POUND'
-  ) {
-    return (
-      <Row className="select-row">
-        <Col md={6}>
-          <TextField
-            label="Size From"
-            value={fromSize}
-            onChangeText={(v) => {
-              if (!Number.isNaN(Number(v))) {
-                setFromSize(v);
-              }
-            }}
-            placeholder=""
-            onBlur={() => {
-              if (
-                fromSize !== '' &&
-                toSize !== '' &&
-                Number(fromSize) > Number(toSize)
-              ) {
-                setToSize(fromSize);
-              }
-            }}
-            readOnly={disabled}
-          />
-        </Col>
-
-        <Col md={6}>
-          <TextField
-            label={`Size To\n(Optional)`}
-            value={toSize}
-            onChangeText={(v) => {
-              if (!Number.isNaN(Number(v))) {
-                setToSize(v);
-              }
-            }}
-            placeholder=""
-            onBlur={() => {
-              if (
-                fromSize !== '' &&
-                toSize !== '' &&
-                Number(fromSize) > Number(toSize)
-              ) {
-                setFromSize(toSize);
-              }
-            }}
-            readOnly={disabled}
-          />
-        </Col>
-      </Row>
-    );
-  }
-
-  return (
-    <Row className="select-row">
-      <Col md={6}>
-        <Select
-          options={sizeMetrics}
-          value={fromSize}
-          onChange={(o) => setFromSize(o.value)}
-          label="Size From"
-          disabled={disabled}
-        />
-      </Col>
-      <Col md={6}>
-        <Select
-          options={sizeMetrics}
-          value={toSize}
-          onChange={(o) => setToSize(o.value)}
-          label="Size To"
-          disabled={disabled}
-        />
-      </Col>
-    </Row>
-  );
-};
-
-function Step4({
+function Step5({
   isCustomType,
-  editableListing,
   listingFormData,
-  onSelectSizes,
-}: Step4Props) {
-  const metric =
+  editableListing,
+  onUpdateImage,
+}: Step5Props) {
+  const theme = useTheme();
+
+  const categoryData = GetCategoryData(
+    editableListing?.customTypeData?.categoryId || ''
+  );
+
+  const photoRequirements =
     (isCustomType
-      ? editableListing?.customTypeData?.metric.name
-      : listingFormData?.metric.name) || '';
-  const [isUngraded, setIsUngraded] = useState(
-    editableListing?.isUngraded || false
+      ? categoryData?.photoRequirements
+      : listingFormData?.photoRequirements) || [];
+
+  const initialExistingImages = (editableListing?.existingImages || []).reduce<
+    Record<string, string>
+  >(
+    (accumulator, current) => ({
+      ...accumulator,
+      [current.requirementId]: current.image || '',
+    }),
+    {}
   );
-  const [fromSize, setFromSize] = useState<string>(
-    editableListing?.sizeFrom || ''
+
+  // const initialImages = (editableListing?.images || []).reduce<
+  //   Record<string, File | null>
+  // >(
+  //   (accumulator, current) => ({
+  //     ...accumulator,
+  //     [current.requirementId]: current.image,
+  //   }),
+  //   {}
+  // );
+
+  const [existingImages, setExistingImages] = useReducer(
+    createUpdateReducer<Record<string, string>>(),
+    initialExistingImages
   );
-  const [toSize, setToSize] = useState<string>(editableListing?.sizeTo || '');
-  const [showError, setShowError] = useState(false);
+
+  const [images, setImages] = useReducer(
+    createUpdateReducer<Record<string, File | null>>(),
+    {}
+  );
+
+  const isExisting = (editableListing?.currentListingId || '').length > 0;
 
   useEffect(() => {
-    if (isUngraded && (fromSize || toSize)) {
-      setFromSize('');
-      setToSize('');
+    if (editableListing.images) {
+      Promise.all(
+        editableListing.images.map((imgData) =>
+          base64ToFile(
+            imgData.image.data,
+            imgData.image.name,
+            imgData.image.type
+          )
+        )
+      ).then((imageFiles) => {
+        const initialImages = (editableListing?.images || []).reduce<
+          Record<string, File | null>
+        >(
+          (accumulator, current, index) => ({
+            ...accumulator,
+            [current.requirementId]: imageFiles[index],
+          }),
+          {}
+        );
+        setImages(initialImages);
+      });
     }
-
-    if (showError) {
-      if (fromSize || isUngraded) {
-        setShowError(false);
-      }
-    }
-  }, [toSize, fromSize, isUngraded]);
-
-  const isComplete = !showError && (isUngraded || fromSize);
+  }, [editableListing.images]);
 
   return (
     <Container>
-      <div className="metric-row">
-        <Typography color="shade6">{`Metric:`}&nbsp;</Typography>
-        <Typography color="shade1" weight="bold">
-          {metric}
-        </Typography>
-      </div>
-      {metric.toUpperCase() !== 'N/A' && (
-        <SizeInput
-          metric={metric}
-          fromSize={fromSize}
-          setFromSize={setFromSize}
-          toSize={toSize}
-          setToSize={setToSize}
-          disabled={isUngraded}
-        />
-      )}
-
-      {metric.toUpperCase() !== 'N/A' && (
-        <Row className="or-row">
-          <Col className="or-col">
-            <div className="line left" />
-            <Typography variant="overline" color="shade6">
-              {' '}
-              OR
+      <Row className="preview-row">
+        {photoRequirements.map((requirement) => (
+          <Col key={requirement.id} md={6} className="add-col">
+            <Typography color="shade2" variant="label" className="text">
+              {requirement.title}
             </Typography>
-            <div className="line right" />
+            <AddImage
+              image={images[requirement.id] || existingImages[requirement.id]}
+              onSelectImage={(data) => {
+                setImages({ [requirement.id]: data });
+              }}
+              onRemoveImage={() => {
+                if (existingImages[requirement.id]) {
+                  setExistingImages({ [requirement.id]: '' });
+                } else {
+                  setImages({ [requirement.id]: null });
+                }
+              }}
+            />
           </Col>
-        </Row>
-      )}
-
-      <Row className="checkbox-row">
-        <Col>
-          <Checkbox
-            checked={isUngraded}
-            onClick={() => setIsUngraded((v) => !v)}
-            label="Ungraded"
-          />
-        </Col>
+        ))}
       </Row>
 
       <Row justify="end" style={{ padding: '0 15px' }}>
         <Button
-          variant={isComplete ? 'primary' : 'disabled'}
-          text="Next"
-          onClick={() => {
-            if (isComplete) {
-              onSelectSizes({
-                sizeFrom: isUngraded ? undefined : fromSize,
-                sizeTo: isUngraded ? undefined : toSize,
-                isUngraded,
-              });
-            }
-          }}
+          text={isExisting ? 'Review' : 'Next'}
+          onClick={() => onUpdateImage(images, existingImages)}
         />
       </Row>
     </Container>
   );
 }
 
-export default Step4;
+export default Step5;

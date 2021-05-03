@@ -1,14 +1,33 @@
-export type AccountOption = {
-  value: string;
-  label: string;
+import { Dispatch } from 'react';
+
+import { EditableListingState } from 'types/store/EditableListingState';
+import { CategoryData } from 'types/store/GetCustomFormDataState';
+import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
+
+export type Step2PublicProps = {
+  search: (term: string) => void;
+  pendingSearch: boolean;
+  searchResults: SearchProductTypeResponseItem[];
+  selectProductType: (typeId: string) => void;
+  showCustomTypeSettings: boolean;
+  setShowCustomTypeSettings: Dispatch<boolean>;
+  getCustomFormData: () => void;
+  categories: CategoryData[];
+  selectCustomType: ({
+    customTypeName,
+    selectedCategory,
+    selectedMetric,
+  }: {
+    customTypeName: string;
+    selectedCategory: string;
+    selectedMetric: {
+      id: string;
+      name: string;
+    };
+  }) => void;
+  navBack: () => void;
 };
 
-export type Step1PublicProps = {
-  accountOptions: AccountOption[];
-  onSelectAccount: (account: string) => void;
-  onUploadCSV: (csv: File, account: string) => void;
-  isUploadingCSV: boolean;
-  userPending: boolean;
+export type Step2Props = Step2PublicProps & {
+  editableListing: EditableListingState;
 };
-
-export type Step1Props = Step1PublicProps;

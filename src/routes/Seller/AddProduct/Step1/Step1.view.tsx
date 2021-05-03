@@ -1,27 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
+import { Fish } from 'components/base/SVG';
+import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
-import Modal from 'components/layout/Modal';
+import EmptyState from 'components/module/EmptyState';
+import Loading from 'components/module/Loading';
+import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import pathOr from 'ramda/es/pathOr';
+import { isEmpty } from 'ramda';
+import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-//@ts-ignore
-import template from 'res/docs/bulkUpload.xlsx';
+import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
 
-import { AccountOption, Step1Props } from './Step1.props';
-import { Container, Image, ButtonImport } from './Step1.style';
+import { Step2Props } from './Step1.props';
+import {
+  Container,
+  Image,
+  BackButton,
+  SearchContainerDesktop,
+} from './Step1.style';
 
-const AccountsView = (props: AccountOption) => {
+const ProductView = (props: SearchProductTypeResponseItem) => {
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <>
-      <Image
-        src={
-          'https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c545f7acd3d5e85baf5_Nathan-headshot.png'
-        }
-      />
+      {!isMobile && (
+        <Image
+          src={
+            'https://i.guim.co.uk/img/media/319a308c175c2c78bf21fe593a3442dfe614187f/0_261_5315_3189/master/5315.jpg?width=1200&quality=85&auto=format&fit=max&s=34b1e209daace5151a8eedc83a57c8b8'
+          }
+        />
+      )}
       <Typography variant="body" color="noshade">
         {props.label}
       </Typography>
@@ -29,160 +42,195 @@ const AccountsView = (props: AccountOption) => {
   );
 };
 
-const Step1 = ({
-  onSelectAccount,
-  accountOptions,
-  onUploadCSV,
-  isUploadingCSV,
-  userPending,
-}: Step1Props) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const aRef = useRef<HTMLAnchorElement>(null);
-
-  const [selected, setSelected] = useState('');
-  const [isAddInBulk, setIsAddInBulk] = useState(false);
+function Step2({
+  search,
+  selectProductType,
+  searchResults,
+  pendingSearch,
+  showCustomTypeSettings,
+  setShowCustomTypeSettings,
+  categories,
+  getCustomFormData,
+  selectCustomType,
+  editableListing,
+  navBack,
+}: Step2Props) {
+  const [searchKey, setSearchKey] = useState<string>('');
+  const [isTriggered, setIsTriggered] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
-    if (selected === '') {
-      setSelected(pathOr('', ['0', 'value'], accountOptions));
-    }
-  }, [accountOptions]);
+    setSearchKey(searchKey);
 
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    if (searchKey.length > 2) {
+      const timerId = setTimeout(() => {
+        search(searchKey);
+        setIsTriggered(true);
+      }, 800);
+      setTimer(timerId);
+    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+      search('');
+    }
+  }, [searchKey]);
+
+  // Custom type states
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    editableListing.customTypeData?.categoryId || ''
+  );
+  const [customTypeName, setCustomTypeName] = useState(
+    editableListing.customTypeData?.name || ''
+  );
+  const [selectedMetric, setSelectedMetric] = useState(
+    editableListing.customTypeData?.metric.id || ''
+  );
+
+  const categoryOptions = categories.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }));
+
+  const metricOptions = (
+    categories.find((c) => c.id === selectedCategory)?.metrics || []
+  ).map((c) => ({
+    label: c.label,
+    value: c.id,
+  }));
+
+  useEffect(() => {
+    if (showCustomTypeSettings && searchKey) {
+      setCustomTypeName(searchKey);
+    }
+
+    if (showCustomTypeSettings && categoryOptions.length === 0) {
+      getCustomFormData();
+    }
+  }, [showCustomTypeSettings, searchKey]);
+
+  useEffect(() => {
+    if (metricOptions.length > 0) {
+      setSelectedMetric(metricOptions[0].value);
+    }
+  }, [selectedCategory]);
+
+  if (showCustomTypeSettings) {
+    return (
+      <Container>
+        <Row className="textfield-row">
+          <Col md={6} className="textfield-col">
+            <Select
+              value={selectedCategory}
+              onChange={(option) => {
+                setSelectedCategory(option.value);
+              }}
+              options={categoryOptions}
+              label="Category"
+            />
+          </Col>
+          <Col md={6} className="textfield-col">
+            <TextField
+              label="Custom Type Name"
+              value={customTypeName}
+              onChangeText={setCustomTypeName}
+            />
+          </Col>
+          <Col md={6} className="textfield-col">
+            <Select
+              value={selectedMetric}
+              onChange={(option) => {
+                setSelectedMetric(option.value);
+              }}
+              options={metricOptions}
+              label="Metric"
+            />
+          </Col>
+        </Row>
+        <Row justify="end" style={{ padding: '0 15px' }}>
+          <Button
+            variant={
+              selectedCategory && selectedMetric && customTypeName
+                ? 'primary'
+                : 'disabled'
+            }
+            text="Next"
+            onClick={() => {
+              if (selectedCategory && selectedMetric && customTypeName) {
+                selectCustomType({
+                  customTypeName,
+                  selectedCategory,
+                  selectedMetric: {
+                    id: selectedMetric,
+                    name:
+                      metricOptions.find((o) => o.value === selectedMetric)
+                        ?.label || '',
+                  },
+                });
+              }
+            }}
+          />
+        </Row>
+      </Container>
+    );
+  }
   return (
     <Container>
-      {!isMobile && (
-        <div className="title-container">
-          <Typography variant="overline" color="shade6" className="title-text">
-            Select Account
-          </Typography>
-          <ButtonImport
-            variant={userPending ? 'disabled' : undefined}
-            disabled={userPending}
-            text="Bulk import"
-            onClick={() => setIsAddInBulk(true)}
-          />
-        </div>
+      {isMobile && (
+        <Row className="search-row">
+          <Col xs={12}>
+            <Search
+              value={searchKey}
+              placeholder="e.g. Ocean Trout"
+              onChange={(e) => setSearchKey(e.currentTarget.value)}
+              resetValue={() => setSearchKey('')}
+            />
+          </Col>
+        </Row>
       )}
 
-      {isMobile ? (
-        <Select
-          value={selected}
-          onChange={(option) => {
-            setSelected(option.value);
-          }}
-          options={accountOptions}
-          label="Choose Account"
-        />
-      ) : (
-        <>
-          {accountOptions.map((option) => {
-            return (
-              <Interactions
-                onClick={() => {
-                  setSelected(option.value);
-                  onSelectAccount(selected);
-                }}
-              >
-                <AccountsView {...option} />
-              </Interactions>
-            );
-          })}
-        </>
-      )}
+      <Row className="results-row">
+        <Col xs={12}>
+          {pendingSearch ? (
+            <Loading label="Searching" />
+          ) : !isTriggered || searchResults.length > 0 ? (
+            <>
+              {isMobile && (
+                <Typography variant="overline" color="shade6" className="title">
+                  Results
+                </Typography>
+              )}
 
-      <div className="btn-container">
-        {isMobile && (
-          <Button
-            variant={userPending ? 'disabled' : undefined}
-            disabled={userPending}
-            text="Add a new product"
-            onClick={() => {
-              onSelectAccount(selected);
-            }}
+              {searchResults.map((item, index) => (
+                <div className="item-container" key={item.value}>
+                  <Interactions onClick={() => selectProductType(item.value)}>
+                    <ProductView {...item} />
+                  </Interactions>
+                </div>
+              ))}
+            </>
+          ) : (
+            <EmptyState
+              title="There are no types which match your search"
+              buttonText="Create Custom Type"
+              Svg={Fish}
+              onButtonClicked={() => setShowCustomTypeSettings(true)}
+              height={211}
+              width={211}
+            />
+          )}
+          <BackButton
+            variant={'outline'}
+            text="Back"
+            onClick={() => navBack()}
           />
-        )}
-      </div>
-
-      <Modal
-        isOpen={isAddInBulk}
-        onClickClose={() => setIsAddInBulk(false)}
-        style={{
-          padding: 48,
-          width: 522,
-        }}
-      >
-        <div>
-          <Typography variant="title4" weight="bold" color="noshade">
-            Bulk Spreadsheet Upload
-          </Typography>
-          <Typography color="shade6" className="blk-sub">
-            If you have many items to list, you can upload a spreadsheet to add
-            many quickly.
-          </Typography>
-
-          <Typography variant="overline" color="shade6">
-            Step 1
-          </Typography>
-          <Typography variant="title6" color="shade2">
-            Download template files
-          </Typography>
-          <Typography variant="label" color="shade6" className="blk-sub2">
-            You can use Microsoft Excel or the free Google Sheets to complete
-          </Typography>
-
-          <Typography
-            className="template-btn"
-            variant="overline"
-            color="noshade"
-            onClick={() => {
-              if (aRef.current !== null) {
-                aRef.current.click();
-              }
-            }}
-          >
-            <a
-              ref={aRef}
-              href={template}
-              download="bulkUpload.xlsx"
-              onClick={(e) => e.stopPropagation()}
-            >
-              DOWNLOAD TEMPLATE
-            </a>
-          </Typography>
-
-          <Typography variant="overline" color="shade6">
-            Step 2
-          </Typography>
-          <Typography variant="title6" color="shade2">
-            Upload your completed spreadsheet
-          </Typography>
-          <Typography variant="label" color="shade6" className="blk-sub2">
-            Edit and save the spreadsheet in .csv format
-          </Typography>
-          <input
-            id="csvUpload"
-            ref={inputRef}
-            type="file"
-            accept=".csv"
-            onChange={(e) => {
-              if (e.currentTarget.files) {
-                onUploadCSV(e.currentTarget.files[0], selected);
-              }
-            }}
-          />
-
-          <Button
-            text="Upload csv file"
-            loading={isUploadingCSV}
-            onClick={() => {
-              if (inputRef.current) inputRef.current.click();
-            }}
-          />
-        </div>
-      </Modal>
+        </Col>
+      </Row>
     </Container>
   );
-};
+}
 
-export default Step1;
+export default Step2;

@@ -1,27 +1,15 @@
-import { Dispatch } from 'react';
-
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-export type SizeInputProps = {
-  metric: string;
-  fromSize: string;
-  setFromSize: Dispatch<string>;
-  toSize: string;
-  setToSize: Dispatch<string>;
-  disabled?: boolean;
+export type Step5PublicProps = {
+  onUpdateImage: (
+    images: Record<string, File | null>,
+    existingImages: Record<string, string>
+  ) => void;
 };
 
-export type Step4PublicProps = {
-  onSelectSizes: (sizes: {
-    sizeFrom?: string;
-    sizeTo?: string;
-    isUngraded: boolean;
-  }) => void;
-};
-
-export type Step4Props = Step4PublicProps & {
+export type Step5Props = Step5PublicProps & {
+  isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
-  isCustomType: boolean;
 };

@@ -1,14 +1,14 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-import { Step1PublicProps } from './Step1/Step1.props';
-import { Step2PublicProps } from './Step2/Step2.props';
-import { Step3PublicProps } from './Step3/Step3.props';
-import { Step4PublicProps } from './Step4/Step4.props';
-import { Step5PublicProps } from './Step5/Step5.props';
-import { Step6PublicProps } from './Step6/Step6.props';
-import { Step7PublicProps } from './Step7/Step7.props';
-import { Step8PublicProps } from './Step8/Step8.props';
+import { Step1PublicProps } from './Step0/Step0.props';
+import { Step2PublicProps } from './Step1/Step1.props';
+import { Step3PublicProps } from './Step2/Step2.props';
+import { Step4PublicProps } from './Step3/Step3.props';
+import { Step5PublicProps } from './Step4/Step4.props';
+import { Step6PublicProps } from './Step5/Step5.props';
+import { Step7PublicProps } from './Step6/Step6.props';
+import { Step8PublicProps } from './Step7/Step7.props';
 
 export interface AddProductGeneratedProps
   extends Step1PublicProps,
