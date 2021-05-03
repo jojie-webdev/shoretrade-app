@@ -108,7 +108,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
               ]}
             />
           ) : (
-            <Typography variant="title4" weight="500" className="header-title">
+            <Typography variant="title4" className="header-title">
               {title}
             </Typography>
           )}
