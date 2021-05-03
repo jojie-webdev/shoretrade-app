@@ -87,6 +87,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     isPendingAccount,
     search,
     onChangeSearchValue,
+    onResetSearchValue,
   } = props;
   const location = useLocation();
   const locationState: {
@@ -117,6 +118,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             placeholder={`Search for a ${title}`}
             value={search}
             onChange={onChangeSearchValue}
+            resetValue={onResetSearchValue}
             rounded
           />
         </div>

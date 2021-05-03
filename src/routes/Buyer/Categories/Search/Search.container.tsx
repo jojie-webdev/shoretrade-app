@@ -48,6 +48,10 @@ const CategoriesSearch = (): JSX.Element => {
     setSearch(event.target.value);
   };
 
+  const onResetSearchValue = () => {
+    setSearch('');
+  };
+
   useEffect(() => {
     if (addressCount > 0 && id && previousId !== id) {
       onLoad(id);
@@ -60,6 +64,7 @@ const CategoriesSearch = (): JSX.Element => {
     isPendingAccount,
     search,
     onChangeSearchValue,
+    onResetSearchValue,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };

@@ -29,8 +29,9 @@ import {
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   const {
     results,
-    onChangeSearchValue,
     searchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     onLoad,
     typeId,
     selectAddress,
@@ -95,6 +96,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
               placeholder={`Search for vendor`}
               value={searchValue}
               onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
               rounded
             />
           </div>

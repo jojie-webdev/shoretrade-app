@@ -4,7 +4,7 @@ import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
-import Search from 'components/module/Search/Search.view';
+import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
@@ -22,6 +22,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     results,
     isPendingAccount,
     onChangeSearchValue,
+    onResetSearchValue,
     searchValue,
     isLoadingResults,
   } = props;
@@ -49,6 +50,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
               placeholder={`Search for vendor`}
               value={searchValue}
               onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
               rounded
             />
           </div>

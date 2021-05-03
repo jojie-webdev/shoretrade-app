@@ -66,6 +66,10 @@ const CategoriesPreview = (): JSX.Element => {
     setSearchValue(event.target.value);
   };
 
+  const onResetSearchValue = () => {
+    setSearchValue('');
+  };
+
   useEffect(() => {
     if (typeIdParsed && previousId !== typeIdParsed) {
       onLoad(typeIdParsed);
@@ -146,8 +150,9 @@ const CategoriesPreview = (): JSX.Element => {
   // };
 
   const generatedProps = {
-    onChangeSearchValue,
     searchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     results,
     isLoadingResults,
     typeId: typeIdParsed,
