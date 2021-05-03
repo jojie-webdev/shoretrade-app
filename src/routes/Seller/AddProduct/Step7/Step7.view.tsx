@@ -13,7 +13,7 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { BoxDetails } from '../Step5/Step5.view';
-import { BoxItemProps, Step8Props } from './Step7.props';
+import { BoxItemProps, Step7Props } from './Step7.props';
 import {
   Container,
   ButtonRow,
@@ -30,7 +30,7 @@ function Step8({
   preview,
   boxesDetails,
   measurementUnit,
-}: Step8Props) {
+}: Step7Props) {
   const theme = useTheme();
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''

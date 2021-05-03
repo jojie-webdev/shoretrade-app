@@ -56,3 +56,8 @@ export const SearchContainerDesktop = styled.div`
   right: 5%;
   width: 211px;
 `;
+
+export const EmptyResultDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

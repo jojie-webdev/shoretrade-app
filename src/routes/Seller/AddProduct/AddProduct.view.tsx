@@ -66,6 +66,30 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     navBack,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  //#region Modified Search
+  const [searchKey, setSearchKey] = useState<string>('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [isTriggered, setIsTriggered] = useState(false);
+  useEffect(() => {
+    setSearchKey(searchKey);
+
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+    if (searchKey.length > 2) {
+      const timerId = setTimeout(() => {
+        search(searchKey);
+        setIsTriggered(true);
+      }, 800);
+      setTimer(timerId);
+    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+      search('');
+    }
+  }, [searchKey]);
+  //#endregion
+
   const currentStep = () => {
     switch (currentPage) {
       default:
@@ -93,6 +117,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             getCustomFormData={getCustomFormData}
             selectCustomType={selectCustomType}
             navBack={navBack}
+            desktopSearchValue={searchKey}
           />
         );
       case 3:
@@ -158,12 +183,18 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     }
   };
 
+  const [title, setTitle] = useState('Summary');
   const pageTitle = () => {
     switch (currentPage) {
       case 1:
         return 'Product Type';
+
       case 2:
-        return showCustomTypeSettings ? 'Custom Type' : 'Product Type';
+        return showCustomTypeSettings
+          ? 'Custom Type'
+          : !isTriggered || searchResults.length > 0
+          ? 'Product Type'
+          : 'No Results found';
       case 3:
         return 'Enter Type';
       case 4:
@@ -176,34 +207,14 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         return 'Details';
       case 8:
         return 'Summary';
-
       default:
         return 'Summary';
     }
   };
 
-  //#region Modified Search
-  const [searchKey, setSearchKey] = useState<string>('');
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const [isTriggered, setIsTriggered] = useState(false);
   useEffect(() => {
-    setSearchKey(searchKey);
-
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-    if (searchKey.length > 2) {
-      const timerId = setTimeout(() => {
-        search(searchKey);
-        setIsTriggered(true);
-      }, 800);
-      setTimer(timerId);
-    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
-      search('');
-    }
-  }, [searchKey]);
-  //#endregion Modified Search
+    setTitle(pageTitle());
+  }, [currentPage, searchResults]);
 
   const actualCurrentPage = currentPage - 1;
   return (
@@ -241,7 +252,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
         <InnerHeaderContainer currentPage={currentPage}>
           <InnerRouteHeader
-            title={currentPage > 1 ? pageTitle() : ''}
+            title={currentPage > 1 ? title : ''}
             onClickBack={() => {
               if (isExisting) {
                 if (currentPage === 8) {

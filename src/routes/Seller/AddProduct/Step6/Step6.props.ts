@@ -1,7 +1,7 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-export type Step7PublicProps = {
+export type Step6PublicProps = {
   onUpdateDetails: ({
     pricePerKilo,
     catchDate,
@@ -27,7 +27,7 @@ export type Step7PublicProps = {
   };
 };
 
-export type Step7Props = Step7PublicProps & {
+export type Step6Props = Step6PublicProps & {
   isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;

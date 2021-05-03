@@ -9,7 +9,7 @@ export type BoxType = {
   fixed?: boolean;
 };
 
-export type Step6PublicProps = {
+export type Step5PublicProps = {
   onAddBoxes: ({
     isAquafuture,
     sellInMultiples,
@@ -28,7 +28,7 @@ export type Step6PublicProps = {
   }) => void;
 };
 
-export type Step6Props = Step6PublicProps & {
+export type Step5Props = Step5PublicProps & {
   isCustomType: boolean;
   isExisting: boolean;
   listingFormData: GetListingFormDataResponse | null;

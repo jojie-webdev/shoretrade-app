@@ -12,7 +12,7 @@ export type SizeInputProps = {
   disabled?: boolean;
 };
 
-export type Step4PublicProps = {
+export type Step3PublicProps = {
   onSelectSizes: (sizes: {
     sizeFrom?: string;
     sizeTo?: string;
@@ -20,7 +20,7 @@ export type Step4PublicProps = {
   }) => void;
 };
 
-export type Step4Props = Step4PublicProps & {
+export type Step3Props = Step3PublicProps & {
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
   isCustomType: boolean;

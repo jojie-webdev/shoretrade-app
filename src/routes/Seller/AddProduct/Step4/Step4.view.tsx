@@ -11,7 +11,7 @@ import { base64ToFile } from 'utils/File';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
-import { Step5Props } from './Step4.props';
+import { Step4Props } from './Step4.props';
 import { Container, DeleteBadge } from './Step4.style';
 
 function Step5({
@@ -19,7 +19,7 @@ function Step5({
   listingFormData,
   editableListing,
   onUpdateImage,
-}: Step5Props) {
+}: Step4Props) {
   const theme = useTheme();
 
   const categoryData = GetCategoryData(

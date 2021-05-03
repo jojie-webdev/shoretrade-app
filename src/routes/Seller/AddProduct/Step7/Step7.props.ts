@@ -1,7 +1,7 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-export type Step8PublicProps = {
+export type Step7PublicProps = {
   preview: () => void;
   boxesDetails: Box[];
   measurementUnit: string;
@@ -21,7 +21,7 @@ export interface Box {
   count?: number;
 }
 
-export type Step8Props = Step8PublicProps & {
+export type Step7Props = Step7PublicProps & {
   isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;

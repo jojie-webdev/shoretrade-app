@@ -11,7 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 //@ts-ignore
 import template from 'res/docs/bulkUpload.xlsx';
 
-import { AccountOption, Step1Props } from './Step0.props';
+import { AccountOption, Step0Props } from './Step0.props';
 import { Container, Image, ButtonImport } from './Step0.style';
 
 const AccountsView = (props: AccountOption) => {
@@ -35,7 +35,7 @@ const Step1 = ({
   onUploadCSV,
   isUploadingCSV,
   userPending,
-}: Step1Props) => {
+}: Step0Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const aRef = useRef<HTMLAnchorElement>(null);
 

@@ -3,7 +3,7 @@ export type AccountOption = {
   label: string;
 };
 
-export type Step1PublicProps = {
+export type Step0PublicProps = {
   accountOptions: AccountOption[];
   onSelectAccount: (account: string) => void;
   onUploadCSV: (csv: File, account: string) => void;
@@ -11,4 +11,4 @@ export type Step1PublicProps = {
   userPending: boolean;
 };
 
-export type Step1Props = Step1PublicProps;
+export type Step0Props = Step0PublicProps;

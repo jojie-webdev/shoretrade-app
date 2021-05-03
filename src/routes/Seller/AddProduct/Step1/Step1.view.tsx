@@ -15,12 +15,12 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
 
-import { Step2Props } from './Step1.props';
+import { Step1Props } from './Step1.props';
 import {
   Container,
   Image,
   BackButton,
-  SearchContainerDesktop,
+  EmptyResultDesktop,
 } from './Step1.style';
 
 const ProductView = (props: SearchProductTypeResponseItem) => {
@@ -54,7 +54,8 @@ function Step2({
   selectCustomType,
   editableListing,
   navBack,
-}: Step2Props) {
+  desktopSearchValue,
+}: Step1Props) {
   const [searchKey, setSearchKey] = useState<string>('');
   const [isTriggered, setIsTriggered] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -196,7 +197,7 @@ function Step2({
         <Col xs={12}>
           {pendingSearch ? (
             <Loading label="Searching" />
-          ) : !isTriggered || searchResults.length > 0 ? (
+          ) : (isMobile && !isTriggered) || searchResults.length > 0 ? (
             <>
               {isMobile && (
                 <Typography variant="overline" color="shade6" className="title">
@@ -213,20 +214,37 @@ function Step2({
               ))}
             </>
           ) : (
-            <EmptyState
-              title="There are no types which match your search"
-              buttonText="Create Custom Type"
-              Svg={Fish}
-              onButtonClicked={() => setShowCustomTypeSettings(true)}
-              height={211}
-              width={211}
+            <>
+              {!isMobile ? (
+                <EmptyResultDesktop>
+                  <Typography variant="body" color="noshade">
+                    {`We didn’t find anything for “${
+                      desktopSearchValue || searchKey
+                    }” `}
+                  </Typography>
+                  <Typography variant="label" color="shade6">
+                    Check the spelling or try a more general term
+                  </Typography>
+                </EmptyResultDesktop>
+              ) : (
+                <EmptyState
+                  title="There are no types which match your search"
+                  buttonText="Create Custom Type"
+                  Svg={Fish}
+                  onButtonClicked={() => setShowCustomTypeSettings(true)}
+                  height={211}
+                  width={211}
+                />
+              )}
+            </>
+          )}
+          {!pendingSearch && (
+            <BackButton
+              variant={'outline'}
+              text="Back"
+              onClick={() => navBack()}
             />
           )}
-          <BackButton
-            variant={'outline'}
-            text="Back"
-            onClick={() => navBack()}
-          />
         </Col>
       </Row>
     </Container>

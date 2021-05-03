@@ -9,7 +9,7 @@ import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 
 import { SIZE_METRICS } from './Step3.constants';
-import { Step4Props, SizeInputProps } from './Step3.props';
+import { Step3Props, SizeInputProps } from './Step3.props';
 import { Container } from './Step3.style';
 
 const SizeInput = (props: SizeInputProps) => {
@@ -122,7 +122,7 @@ function Step4({
   editableListing,
   listingFormData,
   onSelectSizes,
-}: Step4Props) {
+}: Step3Props) {
   const metric =
     (isCustomType
       ? editableListing?.customTypeData?.metric.name

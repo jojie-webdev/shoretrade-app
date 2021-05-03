@@ -4,7 +4,7 @@ import { EditableListingState } from 'types/store/EditableListingState';
 import { CategoryData } from 'types/store/GetCustomFormDataState';
 import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
 
-export type Step2PublicProps = {
+export type Step1PublicProps = {
   search: (term: string) => void;
   pendingSearch: boolean;
   searchResults: SearchProductTypeResponseItem[];
@@ -26,8 +26,9 @@ export type Step2PublicProps = {
     };
   }) => void;
   navBack: () => void;
+  desktopSearchValue?: string;
 };
 
-export type Step2Props = Step2PublicProps & {
+export type Step1Props = Step1PublicProps & {
   editableListing: EditableListingState;
 };

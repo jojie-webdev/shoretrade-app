@@ -23,7 +23,7 @@ import {
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
-import { Step7Props } from './Step6.props';
+import { Step6Props } from './Step6.props';
 import { Container } from './Step6.style';
 import { combineDateTime } from './Step6.transform';
 import { isValid, isDateRangeValid } from './Step6.validation';
@@ -45,7 +45,7 @@ function Step7({
   onUpdateDetails,
   marketEstimate,
   listingFormData,
-}: Step7Props) {
+}: Step6Props) {
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
     {}

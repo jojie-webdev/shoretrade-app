@@ -16,7 +16,7 @@ import { GetCategoryData } from 'store/selectors/seller/categories';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
-import { Step6Props, BoxType } from './Step5.props';
+import { Step5Props, BoxType } from './Step5.props';
 import {
   Container,
   BoxDetailsContainer,
@@ -155,7 +155,7 @@ function Step6({
   isCustomType,
   onAddBoxes,
   isExisting,
-}: Step6Props) {
+}: Step5Props) {
   const [showModal, setShowModal] = useState(false);
 
   const categoryData = GetCategoryData(

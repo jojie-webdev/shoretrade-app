@@ -7,7 +7,7 @@ import uniq from 'ramda/es/uniq';
 import unnest from 'ramda/es/unnest';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 
-import { Step3Props, Option } from './Step2.props';
+import { Step2Props, Option } from './Step2.props';
 import { Container } from './Step2.style';
 
 function Step3({
@@ -15,7 +15,7 @@ function Step3({
   listingFormData,
   onSelectSpecifications,
   isCustomType,
-}: Step3Props) {
+}: Step2Props) {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
   );
