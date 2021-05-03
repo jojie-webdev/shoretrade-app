@@ -12,7 +12,7 @@ import { useMediaQuery } from 'react-responsive';
 import template from 'res/docs/bulkUpload.xlsx';
 
 import { AccountOption, Step1Props } from './Step1.props';
-import { Container, Image } from './Step1.style';
+import { Container, Image, ButtonImport } from './Step1.style';
 
 const AccountsView = (props: AccountOption) => {
   return (
@@ -51,6 +51,20 @@ const Step1 = ({
 
   return (
     <Container>
+      {!isMobile && (
+        <div className="title-container">
+          <Typography variant="overline" color="shade6" className="title-text">
+            Select Account
+          </Typography>
+          <ButtonImport
+            variant={userPending ? 'disabled' : undefined}
+            disabled={userPending}
+            text="Bulk import"
+            onClick={() => setIsAddInBulk(true)}
+          />
+        </div>
+      )}
+
       {isMobile ? (
         <Select
           value={selected}
@@ -78,13 +92,6 @@ const Step1 = ({
       )}
 
       <div className="btn-container">
-        <Button
-          variant={userPending ? 'disabled' : undefined}
-          disabled={userPending}
-          text="Bulk import"
-          onClick={() => setIsAddInBulk(true)}
-        />
-
         {isMobile && (
           <Button
             variant={userPending ? 'disabled' : undefined}

@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -6,7 +7,7 @@ import { pxToRem } from 'utils/Theme';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+
   width: 100%;
 
   .btn-container {
@@ -19,8 +20,6 @@ export const Container = styled.div`
   }
 
   .btn-container > button {
-    margin-left: 16px;
-
     @media ${BREAKPOINTS['sm']} {
       margin-bottom: 16px;
     }
@@ -66,6 +65,17 @@ export const Container = styled.div`
     height: 64px;
     margin-bottom: 8px;
   }
+  .title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .title-text {
+      margin-top: 16px;
+    }
+    margin-bottom: 40px;
+  }
 `;
 
 export const Image = styled.img`
@@ -74,4 +84,9 @@ export const Image = styled.img`
   border-radius: 8px;
   margin-right: 16px;
   margin-left: -16px;
+`;
+
+export const ButtonImport = styled(Button)`
+  border-radius: 8px;
+  height: 32px;
 `;
