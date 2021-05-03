@@ -1,15 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import Button from 'components/base/Button';
+import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
+import { useMediaQuery } from 'react-responsive';
 //@ts-ignore
 import template from 'res/docs/bulkUpload.xlsx';
 
-import { Step1Props } from './Step1.props';
-import { Container } from './Step1.style';
+import { AccountOption, Step1Props } from './Step1.props';
+import { Container, Image } from './Step1.style';
+
+const AccountsView = (props: AccountOption) => {
+  return (
+    <>
+      <Image
+        src={
+          'https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c545f7acd3d5e85baf5_Nathan-headshot.png'
+        }
+      />
+      <Typography variant="body" color="noshade">
+        {props.label}
+      </Typography>
+    </>
+  );
+};
 
 const Step1 = ({
   onSelectAccount,
@@ -23,6 +41,7 @@ const Step1 = ({
 
   const [selected, setSelected] = useState('');
   const [isAddInBulk, setIsAddInBulk] = useState(false);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
     if (selected === '') {
@@ -32,14 +51,32 @@ const Step1 = ({
 
   return (
     <Container>
-      <Select
-        value={selected}
-        onChange={(option) => {
-          setSelected(option.value);
-        }}
-        options={accountOptions}
-        label="Choose Account"
-      />
+      {isMobile ? (
+        <Select
+          value={selected}
+          onChange={(option) => {
+            setSelected(option.value);
+          }}
+          options={accountOptions}
+          label="Choose Account"
+        />
+      ) : (
+        <>
+          {accountOptions.map((option) => {
+            return (
+              <Interactions
+                onClick={() => {
+                  setSelected(option.value);
+                  onSelectAccount(selected);
+                }}
+              >
+                <AccountsView {...option} />
+              </Interactions>
+            );
+          })}
+        </>
+      )}
+
       <div className="btn-container">
         <Button
           variant={userPending ? 'disabled' : undefined}
@@ -48,14 +85,16 @@ const Step1 = ({
           onClick={() => setIsAddInBulk(true)}
         />
 
-        <Button
-          variant={userPending ? 'disabled' : undefined}
-          disabled={userPending}
-          text="Add a new product"
-          onClick={() => {
-            onSelectAccount(selected);
-          }}
-        />
+        {isMobile && (
+          <Button
+            variant={userPending ? 'disabled' : undefined}
+            disabled={userPending}
+            text="Add a new product"
+            onClick={() => {
+              onSelectAccount(selected);
+            }}
+          />
+        )}
       </div>
 
       <Modal

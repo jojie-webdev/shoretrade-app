@@ -61,4 +61,17 @@ export const Container = styled.div`
   input {
     display: none;
   }
+
+  .interactions {
+    height: 64px;
+    margin-bottom: 8px;
+  }
+`;
+
+export const Image = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+  margin-left: -16px;
 `;
