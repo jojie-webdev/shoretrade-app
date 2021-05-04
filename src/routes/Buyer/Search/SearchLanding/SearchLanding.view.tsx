@@ -27,6 +27,9 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isBetween = useMediaQuery({
+    query: '(min-width: 577px) and (max-width: 747px)',
+  });
 
   const {
     data,
@@ -90,7 +93,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
                 </Typography>
               </div>
 
-              {!isSmallScreen && (
+              {!isSmallScreen && isBetween && (
                 <SVGContainer>
                   <Fish2 height={186} width={326} fill={theme.grey.shade7} />
                 </SVGContainer>
