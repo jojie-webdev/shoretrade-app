@@ -25,6 +25,7 @@ export type Step6PublicProps = {
     min: number | null;
     max: number | null;
   };
+  navBack: () => void;
 };
 
 export type Step6Props = Step6PublicProps & {

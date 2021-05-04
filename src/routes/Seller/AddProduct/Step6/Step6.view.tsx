@@ -45,6 +45,7 @@ function Step7({
   onUpdateDetails,
   marketEstimate,
   listingFormData,
+  navBack,
 }: Step6Props) {
   const [errors, setErrors] = useReducer(
     createUpdateReducer<Record<string, string[]>>(),
@@ -311,7 +312,7 @@ function Step7({
           />
         </Col>
 
-        <Col md={12} className="textfield-col">
+        <Col md={12} className="textfield-col text-area">
           <TextArea
             label="Additional notes (Optional)"
             value={description}
@@ -322,8 +323,17 @@ function Step7({
         </Col>
       </Row>
 
-      <Row justify="end" style={{ padding: '0 15px' }}>
+      <Row justify="start" style={{ padding: '0 15px' }}>
         <Button
+          variant="outline"
+          className="back-btn"
+          text="Back"
+          onClick={() => {
+            navBack();
+          }}
+        />
+        <Button
+          className="next-btn"
           text="Next"
           onClick={() => {
             onNext();

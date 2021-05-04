@@ -31,13 +31,13 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
     <Modal
       style={{
         width: 'unset',
-        padding: isSmallScreen ? '48px 16px' : '48px 80px',
+        padding: isSmallScreen ? '48px 16px' : '48px',
       }}
       {...modalProps}
     >
       <>
         <Typography variant="title5" color="shade1">
-          Add a Box
+          Add Box
         </Typography>
         <Inputs>
           <StyledTextField
@@ -86,8 +86,9 @@ const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
         </Inputs>
         <ButtonContainer>
           <Button
+            className="btn-add "
             variant="primary"
-            text="ADD A BOX"
+            text="ADD BOX"
             onClick={() => {
               onAdd(values);
               modalProps.onClickClose();

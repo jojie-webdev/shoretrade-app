@@ -50,6 +50,18 @@ export const Container = styled.div`
     width: 100%;
     display: flex;
   }
+  .back-btn {
+    margin-right: 16px;
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .next-btn {
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .text-field > div {
+    border-radius: 8px;
+  }
 `;
 
 export const BoxDetailsContainer = styled.div`

@@ -15,6 +15,7 @@ function Step3({
   listingFormData,
   onSelectSpecifications,
   isCustomType,
+  navBack,
 }: Step2Props) {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
@@ -124,7 +125,16 @@ function Step3({
 
       <div className="btn-container">
         <Button
+          text="Back"
+          className="back-btn"
+          variant={'outline'}
+          onClick={() => {
+            navBack();
+          }}
+        />
+        <Button
           text="Next"
+          className="next-btn"
           variant={isComplete ? 'primary' : 'disabled'}
           onClick={() => {
             if (isComplete) {

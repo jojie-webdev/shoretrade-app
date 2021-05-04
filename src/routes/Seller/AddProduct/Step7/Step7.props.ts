@@ -28,4 +28,5 @@ export type Step7Props = Step7PublicProps & {
   saveListing: () => void;
   onChangeCurrentPage: (page: number) => void;
   preview: () => void;
+  navBack: () => void;
 };

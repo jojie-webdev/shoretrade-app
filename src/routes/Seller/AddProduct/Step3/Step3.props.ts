@@ -18,6 +18,7 @@ export type Step3PublicProps = {
     sizeTo?: string;
     isUngraded: boolean;
   }) => void;
+  navBack: () => void;
 };
 
 export type Step3Props = Step3PublicProps & {

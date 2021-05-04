@@ -19,6 +19,7 @@ function Step5({
   listingFormData,
   editableListing,
   onUpdateImage,
+  navBack,
 }: Step4Props) {
   const theme = useTheme();
 
@@ -113,8 +114,17 @@ function Step5({
         ))}
       </Row>
 
-      <Row justify="end" style={{ padding: '0 15px' }}>
+      <Row justify="start" style={{ padding: '0 15px' }}>
         <Button
+          variant={'outline'}
+          text="Back"
+          onClick={() => {
+            navBack();
+          }}
+          className="back-btn"
+        />
+        <Button
+          className="next-btn"
           text={isExisting ? 'Review' : 'Next'}
           onClick={() => onUpdateImage(images, existingImages)}
         />

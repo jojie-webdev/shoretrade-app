@@ -126,6 +126,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
+            navBack={navBack}
             onSelectSpecifications={onSelectSpecifications}
           />
         );
@@ -135,6 +136,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             isCustomType={isCustomType}
+            navBack={navBack}
             onSelectSizes={onSelectSizes}
           />
         );
@@ -144,6 +146,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
+            navBack={navBack}
             onUpdateImage={onUpdateImage}
           />
         );
@@ -154,6 +157,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             onAddBoxes={onAddBoxes}
+            navBack={navBack}
             isExisting={isExisting}
           />
         );
@@ -164,6 +168,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             onUpdateDetails={onUpdateDetails}
+            navBack={navBack}
             marketEstimate={marketEstimate}
           />
         );
@@ -177,6 +182,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             saveListing={saveListing}
+            navBack={navBack}
             preview={preview}
           />
         );
@@ -198,11 +204,11 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       case 3:
         return 'Enter Type';
       case 4:
-        return 'Enter Size';
+        return 'Set Size';
       case 5:
-        return 'Add Photos';
+        return 'Upload Photos';
       case 6:
-        return 'Enter Boxes';
+        return 'Upload Boxes';
       case 7:
         return 'Details';
       case 8:

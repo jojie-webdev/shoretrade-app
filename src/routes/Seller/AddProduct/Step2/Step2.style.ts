@@ -17,6 +17,15 @@ export const Container = styled.div`
 
   .btn-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    .back-btn{
+      margin-right:16px;
+      border-radius:8px;
+      max-width:67px;
+    }
+    .next-btn{
+      border-radius:8px;
+      max-width:67px;
+    }
   }
 `;

@@ -8,6 +8,7 @@ export type Step2PublicProps = {
     specificationIds: string[],
     onSelectSpecifications: string[]
   ) => void;
+  navBack: () => void;
 };
 
 export type Step2Props = Step2PublicProps & {

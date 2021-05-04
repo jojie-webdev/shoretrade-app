@@ -155,6 +155,7 @@ function Step6({
   isCustomType,
   onAddBoxes,
   isExisting,
+  navBack,
 }: Step5Props) {
   const [showModal, setShowModal] = useState(false);
 
@@ -274,6 +275,7 @@ function Step6({
       >
         <Col md={6}>
           <TextField
+            className="text-field"
             label="Minimum Order"
             value={minimumOrder}
             onChangeText={(v) => {
@@ -297,6 +299,39 @@ function Step6({
             label="Sell in multiples of the minimum"
           />
         </Col>
+        <Row
+          justify="start"
+          style={{
+            padding: '0 15px 0 15px',
+            marginTop: 40,
+            marginLeft: 0,
+          }}
+        >
+          <Button
+            variant={'outline'}
+            text="Back"
+            onClick={() => {
+              navBack();
+            }}
+            className="back-btn"
+          />
+          <Button
+            className="next-btn"
+            text={'Next'}
+            onClick={() => {
+              if (boxes.length > 0 && minimumOrder) {
+                onAddBoxes({
+                  isAquafuture,
+                  sellInMultiples,
+                  boxes,
+                  minimumOrder,
+                });
+              } else {
+                setShowError(true);
+              }
+            }}
+          />
+        </Row>
       </Row>
 
       <FooterPadding />
@@ -313,7 +348,7 @@ function Step6({
           </div>
         )}
 
-        <BoxSummary
+        {/* <BoxSummary
           unit={measurementUnit}
           summary={summary}
           onClick={() => {
@@ -328,7 +363,7 @@ function Step6({
               setShowError(true);
             }
           }}
-        />
+        /> */}
       </div>
 
       {showModal && (

@@ -11,8 +11,8 @@ export const Container = styled.div`
 
 export const ButtonRow = styled(Row)`
   .button {
-    width: 200px;
-
+    max-width: 200px;
+    border-radius: 8px;
     &:not(:last-child) {
       margin-right: 16px;
     }

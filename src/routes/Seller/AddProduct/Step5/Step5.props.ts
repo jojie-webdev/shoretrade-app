@@ -26,6 +26,7 @@ export type Step5PublicProps = {
     }[];
     minimumOrder: string;
   }) => void;
+  navBack: () => void;
 };
 
 export type Step5Props = Step5PublicProps & {

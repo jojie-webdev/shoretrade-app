@@ -47,4 +47,13 @@ export const Container = styled.div`
   .checkbox-row {
     margin-bottom: 48px;
   }
+  .back-btn {
+    margin-right: 16px;
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .next-btn {
+    border-radius: 8px;
+    max-width: 67px;
+  }
 `;

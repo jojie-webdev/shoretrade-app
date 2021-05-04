@@ -194,7 +194,14 @@ function Step8({
           />
         </Col>
       </Row>
-      <ButtonRow justify="end">
+      <ButtonRow
+        justify="start"
+        style={{
+          padding: '0 15px 0 15px',
+          marginTop: 40,
+          marginLeft: 0,
+        }}
+      >
         <Button
           text="Preview"
           variant="outline"
@@ -202,7 +209,7 @@ function Step8({
           className="button"
         />
         <Button
-          text={isExisting ? 'Update' : 'Add'}
+          text={isExisting ? 'Update Listing' : 'Add Listing'}
           onClick={() => saveListing()}
           className="button"
         />

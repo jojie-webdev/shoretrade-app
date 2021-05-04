@@ -122,6 +122,7 @@ function Step4({
   editableListing,
   listingFormData,
   onSelectSizes,
+  navBack,
 }: Step3Props) {
   const metric =
     (isCustomType
@@ -193,10 +194,19 @@ function Step4({
         </Col>
       </Row>
 
-      <Row justify="end" style={{ padding: '0 15px' }}>
+      <Row justify="start" style={{ padding: '0 15px' }}>
+        <Button
+          variant={'outline'}
+          text="Back"
+          onClick={() => {
+            navBack();
+          }}
+          className="back-btn"
+        />
         <Button
           variant={isComplete ? 'primary' : 'disabled'}
           text="Next"
+          className="next-btn"
           onClick={() => {
             if (isComplete) {
               onSelectSizes({
