@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { SellingGeneratedProps, ItemProp } from './Selling.props';
 import {
@@ -33,7 +34,7 @@ const Item = (props: ItemProp) => {
     <ItemCard>
       <div className="wrapper" onClick={props.onClick}>
         <div className="left-content">
-          <ItemImage src={props.data.images[0]} alt="" />
+          <ItemImage src={parseImageUrl(props.data.images[0])} alt="" />
 
           <div className="text-content">
             <Typography variant="label" color="noshade" className="item-title">
