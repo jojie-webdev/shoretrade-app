@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import {
   ShoretradeLogo,
@@ -14,6 +14,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Container, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -25,20 +26,23 @@ import {
   DashboardGeneratedProps,
   NavLinkProps,
   HeaderProps,
+  IconLinkProps,
 } from './Dashboard.props';
 import {
   DashboardContainer,
   Sidebar,
+  SidebarItem,
+  TabletSidebar,
+  TabletSidebarItem,
   Content,
   HeaderContainer,
-  SidebarItem,
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
+  HamburgerWrapper,
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
-  HeaderWrapper,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -62,6 +66,22 @@ const NavLink = ({
   );
 };
 
+const IconLink = ({
+  to,
+  iconColor,
+  Icon,
+  onClick,
+  isActive,
+}: IconLinkProps) => {
+  return (
+    <TabletSidebarItem to={to} onClick={onClick} isActive={isActive}>
+      <div className="icon-container">
+        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+      </div>
+    </TabletSidebarItem>
+  );
+};
+
 const Header = ({
   pageTitle,
   userData,
@@ -71,7 +91,6 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
-  useOuterWrapper,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -80,17 +99,29 @@ const Header = ({
     query: '(max-width: 768px)',
   });
 
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
+
   return (
-    <HeaderContainer className="appbar" useOuterWrapper={useOuterWrapper}>
+    <HeaderContainer className="appbar">
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
             <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
           </Touchable>
         ) : (
-          <MenuIcon onClick={onClick}>
-            <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
-          </MenuIcon>
+          <>
+            {!isTablet && (
+              <MenuIcon onClick={onClick}>
+                <Hamburger
+                  onClick={onClick}
+                  isActive={openSidebar}
+                  width={30}
+                />
+              </MenuIcon>
+            )}
+          </>
         )}
 
         <div className="title-container">
@@ -178,7 +209,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
-    useOuterWrapper,
   } = props;
 
   const history = useHistory();
@@ -187,12 +217,54 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
+
+  /*
+    1: add sidebar on tablet
+    2: open sidebar same behavior as before
+    3: change close icon to arrow left
+    4: change icons
+   */
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
       />
+
+      {isTablet && (
+        <TabletSidebar>
+          <HamburgerWrapper onClick={() => setOpenSidebar(!openSidebar)}>
+            <Hamburger
+              onClick={() => setOpenSidebar(!openSidebar)}
+              isActive={openSidebar}
+              width={20}
+              height={10}
+              color={theme.grey.noshade}
+            />
+          </HamburgerWrapper>
+
+          {routes.map((route) => (
+            <IconLink
+              onClick={() => {
+                if (openSidebar) {
+                  setOpenSidebar(false);
+                }
+              }}
+              key={`sidenav-${route.path}`}
+              isActive={isInnerRoute(route.path)}
+              to={route.path}
+              iconColor={
+                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
+              }
+              Icon={route.icon}
+            />
+          ))}
+        </TabletSidebar>
+      )}
 
       <Sidebar openSidebar={openSidebar}>
         <div>
@@ -272,64 +344,39 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Content
         openSidebar={openSidebar}
         shouldIncludePadding={shouldIncludePadding}
-        shouldUseFullWidth={
-          props.shouldUseFullWidth ? props.shouldUseFullWidth : false
-        }
         background={background}
         screenBackground={screenBackground}
         color={color}
       >
-        {useOuterWrapper ? (
-          <Container
-            className="container"
-            style={{ width: '100%', height: '100%' }}
-          >
-            <HeaderWrapper>
-              <Header
-                pageTitle={pageTitle}
-                userData={userData}
-                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-                onClick={() => setOpenSidebar(!openSidebar)}
-                openSidebar={openSidebar}
-                onBack={onBack}
-                cartItems={cartItems}
-                onClickAccount={onClickAccount}
-                useOuterWrapper
-              />
-            </HeaderWrapper>
-            {children}
-          </Container>
-        ) : (
-          <>
-            <Header
-              pageTitle={pageTitle}
-              userData={userData}
-              textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-              onClick={() => setOpenSidebar(!openSidebar)}
-              openSidebar={openSidebar}
-              onBack={onBack}
-              cartItems={cartItems}
-              onClickAccount={onClickAccount}
-            />
+        <>
+          <Header
+            pageTitle={pageTitle}
+            userData={userData}
+            textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+            onClick={() => setOpenSidebar(!openSidebar)}
+            openSidebar={openSidebar}
+            onBack={onBack}
+            cartItems={cartItems}
+            onClickAccount={onClickAccount}
+          />
 
-            <div className="screen-wrapper">
-              <div className="screen">
-                <Container
-                  className="container"
-                  style={{
-                    padding: 0,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    width: '100%',
-                    maxWidth: '100%',
-                  }}
-                >
-                  {children}
-                </Container>
-              </div>
+          <div className="screen-wrapper">
+            <div className="screen">
+              <Container
+                className="container"
+                style={{
+                  padding: 0,
+                  marginLeft: 0,
+                  marginRight: 0,
+                  width: '100%',
+                  maxWidth: '100%',
+                }}
+              >
+                {children}
+              </Container>
             </div>
-          </>
-        )}
+          </div>
+        </>
       </Content>
     </DashboardContainer>
   );

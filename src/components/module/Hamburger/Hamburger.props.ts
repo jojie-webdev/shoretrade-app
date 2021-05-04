@@ -1,9 +1,7 @@
-import { Theme } from 'types/Theme';
-
 export interface HamburgerProps {
   isActive: boolean;
   onClick: () => void;
-  color?: keyof Theme['brand'] | keyof Theme['grey'];
+  color?: string;
   height?: number;
   width?: number;
 }

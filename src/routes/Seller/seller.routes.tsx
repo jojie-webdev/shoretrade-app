@@ -112,7 +112,6 @@ const SellerRoutes = (): JSX.Element => {
     screenBackground?: string;
     color?: string;
     headerTextColor?: keyof Theme['grey'];
-    shouldUseFullWidth?: boolean;
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
