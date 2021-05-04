@@ -38,6 +38,9 @@ export const Container = styled.div`
   .template-btn {
     max-height: 48px;
     padding: 18px 32px;
+    @media ${BREAKPOINTS['iPad']} {
+      padding: 48px 32px 80px 53px;
+    }
     margin-bottom: 32px;
     background-color: ${({ theme }) => theme.brand.primary};
     border-radius: 4px;

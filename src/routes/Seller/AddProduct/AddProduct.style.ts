@@ -5,6 +5,10 @@ export const Container = styled.div`
   padding: 40px 80px;
   /* position: relative; */
 
+  @media ${BREAKPOINTS['iPad']} {
+    padding: 48px 32px 80px 53px;
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding: 20px 20px;
     padding-top: 16px;
@@ -32,6 +36,9 @@ export const ProgressIndicator = styled.div`
 export const SearchContainerDesktop = styled.div`
   width: 308px;
   margin-top: -10px;
+  @media ${BREAKPOINTS['iPad']} {
+    width: 211px;
+  }
 `;
 
 export const InnerHeaderContainer = styled.div<{ currentPage: number }>`
