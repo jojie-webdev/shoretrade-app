@@ -6,7 +6,7 @@ export const Container = styled.div`
   padding-bottom: 48px;
 
   .header-title {
-    @media (min-width: 769px) and (max-width: 1100px) {
+    @media (min-width: 577px) and (max-width: 1110px) {
       margin-bottom: 40px;
     }
 
@@ -40,7 +40,7 @@ export const Results = styled.div<{ notRecent?: boolean }>`
   width: ${({ notRecent }) => (notRecent ? '100%' : '50%')};
   margin-top: ${({ notRecent }) => (notRecent ? '16px' : '50px')};
 
-  @media (min-width: 769px) and (max-width: 1100px) {
+  @media (min-width: 769px) and (max-width: 1110px) {
     width: 100%;
   }
 
@@ -57,7 +57,7 @@ export const Results = styled.div<{ notRecent?: boolean }>`
 export const LoadingContainer = styled.div`
   margin-left: 120px;
 
-  @media (min-width: 769px) and (max-width: 1100px) {
+  @media (min-width: 769px) and (max-width: 1110px) {
     margin-top: 50px;
   }
 
@@ -104,7 +104,11 @@ export const SVGContainer = styled.div`
     }
   }
 
-  @media (min-width: 769px) and (max-width: 1100px) {
+  @media (min-width: 577px) and (max-width: 747px) {
+    display: none;
+  }
+
+  @media (min-width: 769px) and (max-width: 1110px) {
     display: none;
   }
 `;
