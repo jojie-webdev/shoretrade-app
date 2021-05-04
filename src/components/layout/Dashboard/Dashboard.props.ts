@@ -10,7 +10,6 @@ export interface DashboardPublicProps {
   children: any;
   routes: Route[];
   onBack?: () => void;
-  shouldUseFullWidth?: boolean;
   background?: string;
   screenBackground?: string;
   color?: string;

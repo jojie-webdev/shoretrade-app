@@ -150,7 +150,6 @@ export const LogoutButton = styled(Touchable)`
 export const Content = styled.div<{
   shouldIncludePadding: boolean;
   openSidebar: boolean;
-  shouldUseFullWidth: boolean;
   background?: string;
   screenBackground?: string;
   color?: string;
@@ -192,10 +191,7 @@ export const Content = styled.div<{
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
-      width: ${(props) =>
-        props.shouldUseFullWidth
-          ? '100%'
-          : dashboardWidth(props.theme.appType === 'seller')};
+      width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
       padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
       border-radius: 8px;
       overflow-x: hidden;
@@ -219,8 +215,7 @@ export const Content = styled.div<{
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 
       .screen {
-        width: ${(props) =>
-          props.shouldUseFullWidth ? '100%' : 'calc(100% - 32px)'};
+        width: calc(100% - 32px);
         padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
     }
@@ -339,6 +334,10 @@ export const HeaderContainer = styled.nav`
     padding: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    width: calc(100% - 32px);
   }
 `;
 

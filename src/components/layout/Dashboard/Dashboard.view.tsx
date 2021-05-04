@@ -14,6 +14,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Container, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -77,6 +78,9 @@ const Header = ({
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
   });
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
 
   return (
     <HeaderContainer className="appbar">
@@ -86,9 +90,17 @@ const Header = ({
             <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
           </Touchable>
         ) : (
-          <MenuIcon onClick={onClick}>
-            <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
-          </MenuIcon>
+          <>
+            {!isTablet && (
+              <MenuIcon onClick={onClick}>
+                <Hamburger
+                  onClick={onClick}
+                  isActive={openSidebar}
+                  width={30}
+                />
+              </MenuIcon>
+            )}
+          </>
         )}
 
         <div className="title-container">
@@ -269,9 +281,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Content
         openSidebar={openSidebar}
         shouldIncludePadding={shouldIncludePadding}
-        shouldUseFullWidth={
-          props.shouldUseFullWidth ? props.shouldUseFullWidth : false
-        }
         background={background}
         screenBackground={screenBackground}
         color={color}
