@@ -164,6 +164,7 @@ const AddProduct = (): JSX.Element => {
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
 
   const editableListing = useSelector((state: Store) => state.editableListing);
+
   const modifyBulkUpload = useSelector(
     (state: Store) => state.modifyBulkUpload
   );
@@ -398,6 +399,7 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
+        history.push(ADD_PRODUCT_ROUTES.PREVIEW);
       }
     }
   };

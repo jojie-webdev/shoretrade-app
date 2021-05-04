@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 
 import { SELLER_ROUTES } from 'consts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  createListingActions,
   editSelectedListingActions,
   endListingActions,
   getAllListingsActions,
 } from 'store/actions';
 import { GetListingSelector } from 'store/selectors/seller/listings';
+import { Store } from 'types/store/Store';
 
 import {
   ListingDetailsPublicProps,
@@ -32,6 +34,11 @@ const ListingDetailsContainer = (
       })
     );
   };
+
+  const clearListing = () => {
+    dispatch(createListingActions.clear());
+  };
+
   const onRemove = () => {
     dispatch(
       endListingActions.request({
@@ -64,6 +71,7 @@ const ListingDetailsContainer = (
     onEdit,
     onRemove,
     sellingDetailsBreadCrumbs,
+    clearListing,
   };
   return <ListingDetailsView {...props} {...generatedProps} />;
 };

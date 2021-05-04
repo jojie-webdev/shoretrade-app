@@ -197,7 +197,6 @@ function Step8({
       <ButtonRow
         justify="start"
         style={{
-          padding: '0 15px 0 15px',
           marginTop: 40,
           marginLeft: 0,
         }}

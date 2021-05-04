@@ -1,18 +1,23 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isPreview?: boolean }>`
+export const Container = styled.div<{
+  isPreview?: boolean;
+  isCreatListingSuccess?: boolean;
+}>`
   padding: 48px;
-  background: ${({ theme, isPreview }) =>
+  background: ${({ theme, isPreview, isCreatListingSuccess }) =>
     theme.appType === 'seller'
-      ? isPreview
-        ? theme.grey.shade2
-        : theme.grey.shade8
+      ? isPreview && isCreatListingSuccess
+        ? theme.grey.shade8
+        : theme.grey.shade2
       : theme.grey.shade2};
-  border: ${({ theme }) => {
+  border: ${({ theme, isCreatListingSuccess }) => {
     //  if (theme.appType === 'seller') return 'none';
 
-    return `2px solid ${theme.grey.shade3}`;
+    return `2px solid ${
+      isCreatListingSuccess ? theme.grey.shade9 : theme.grey.shade3
+    }`;
   }};
   border-radius: 8px;
 
