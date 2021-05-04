@@ -64,6 +64,8 @@ import {
   recentlyAddedToPreviewProps,
 } from './Home.transform';
 
+import { sizeToString } from 'utils/Listing';
+
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState } = props;
   const theme = useTheme();
@@ -201,19 +203,13 @@ const HomeView = (props: HomeGeneratedProps) => {
             })}
           </StatusContainer>
           <div className="size">
-            <Typography variant="small" style={{ marginRight: '4px' }}>
-              {props.size.from}
-              {formatMeasurementUnit(props.measurementUnit)}
+            <Typography variant="small">
+              {sizeToString(
+                props.size.unit,
+                props.size.from,
+                props.size.to
+              )}
             </Typography>
-            {props.size.to && (
-              <>
-                <ArrowRight fill={theme.grey.shade7} />
-                <Typography style={{ marginLeft: '4px' }} variant="small">
-                  {props.size.to}
-                  {formatMeasurementUnit(props.measurementUnit)}
-                </Typography>
-              </>
-            )}
           </div>
         </ResultContainer>
       </DetailsContainer>
