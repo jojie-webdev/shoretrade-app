@@ -164,12 +164,13 @@ const AddProduct = (): JSX.Element => {
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
 
   const editableListing = useSelector((state: Store) => state.editableListing);
+  const modifyBulkUpload = useSelector(
+    (state: Store) => state.modifyBulkUpload
+  );
 
   const isCustomType = editableListing?.isCustomType || false;
 
-  const isBulkUpload = useSelector(
-    (state: Store) => state.modifyBulkUpload.currentData.index !== undefined
-  );
+  const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
 
   useEffect(() => {
     if (isCustomType && currentPage !== 1) {
@@ -193,6 +194,14 @@ const AddProduct = (): JSX.Element => {
     if (isBulkUpload) {
       dispatch(
         modifyBulkUploadActions.update({
+          ...(!modifyBulkUpload.currentData.type
+            ? {
+                typeDisplayText: typeName,
+                type: editableListing.type,
+                sizeFrom: '',
+                sizeTo: '',
+              }
+            : {}),
           specifications: specificationIds,
           specificationsDisplayText: specificationLabels,
         })

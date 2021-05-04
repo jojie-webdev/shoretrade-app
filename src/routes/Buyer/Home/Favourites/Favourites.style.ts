@@ -25,7 +25,7 @@ export const PreviewContainer = styled.div`
     }
 
     .search {
-      width: 220px;
+      width: 240px;
       margin-bottom: 0;
 
       @media ${BREAKPOINTS['sm']} {

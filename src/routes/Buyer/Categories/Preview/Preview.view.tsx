@@ -29,8 +29,9 @@ import {
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   const {
     results,
-    onChangeSearchValue,
     searchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     onLoad,
     typeId,
     selectAddress,
@@ -46,6 +47,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   const locationState: {
     title?: string;
   } = location.state || {};
+  const isSearch = location.pathname.includes(BUYER_ROUTES.SEARCH);
   const title = locationState?.title || 'Category';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -54,17 +56,23 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     onLoad(typeId);
   }, []);
 
-  //TODO: search preview
   return (
     <BoxContainer>
       <PreviewContainer>
         <div className="header">
           {!isSmallScreen ? (
             <Breadcrumbs
-              sections={[
-                { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
-                { label: title },
-              ]}
+              sections={
+                isSearch
+                  ? [
+                      { label: 'Search', link: BUYER_ROUTES.SEARCH },
+                      { label: title },
+                    ]
+                  : [
+                      { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+                      { label: title },
+                    ]
+              }
             />
           ) : (
             <div className="left-header">
@@ -95,6 +103,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
               placeholder={`Search for vendor`}
               value={searchValue}
               onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
               rounded
             />
           </div>
@@ -133,6 +142,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                   md={12}
                   sm={6}
                   xs={12}
+                  className="preview-col"
                 >
                   <Link to={BUYER_ROUTES.PRODUCT_DETAIL(product.id)}>
                     <PreviewCard

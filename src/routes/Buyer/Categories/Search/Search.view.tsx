@@ -87,6 +87,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     isPendingAccount,
     search,
     onChangeSearchValue,
+    onResetSearchValue,
   } = props;
   const location = useLocation();
   const locationState: {
@@ -107,7 +108,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
               ]}
             />
           ) : (
-            <Typography variant="title4" weight="500" className="header-title">
+            <Typography variant="title4" className="header-title">
               {title}
             </Typography>
           )}
@@ -117,6 +118,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             placeholder={`Search for a ${title}`}
             value={search}
             onChange={onChangeSearchValue}
+            resetValue={onResetSearchValue}
             rounded
           />
         </div>

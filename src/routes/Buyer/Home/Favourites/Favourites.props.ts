@@ -8,5 +8,6 @@ export interface FavouritesGeneratedProps {
   isLoadingResults: boolean;
 
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
   searchValue: string;
 }

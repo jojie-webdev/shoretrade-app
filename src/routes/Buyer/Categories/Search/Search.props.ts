@@ -9,4 +9,5 @@ export interface CategoriesSearchGeneratedProps {
 
   search: string;
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
 }

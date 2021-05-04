@@ -4,7 +4,7 @@ import { UploadBulkState } from 'types/store/UploadBulkState';
 //left is error, right is valid
 export const showListingCount = (listings: UploadBulkState[]): number[] => {
   return listings.reduce(
-    (acc: Array<number>, listing): Array<number> => {
+    (acc: Array<number>, listing, index: number): Array<number> => {
       const specifications: boolean =
         listing.specifications.length > 0 &&
         listing.specifications.every((a) => a.length > 0);
@@ -31,6 +31,11 @@ export const showListingCount = (listings: UploadBulkState[]): number[] => {
         Boolean(boxErrorCounter) &&
         specifications &&
         !isNaN(stock);
+
+      if (!isSuccess) {
+        console.log(`Row ${index}: FAIL`);
+      }
+
       return [acc[0] + Number(!isSuccess), acc[1] + Number(isSuccess)];
     },
     [0, 0]

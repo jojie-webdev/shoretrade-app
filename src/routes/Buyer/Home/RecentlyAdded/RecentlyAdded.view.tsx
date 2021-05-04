@@ -21,6 +21,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     results,
     isPendingAccount,
     onChangeSearchValue,
+    onResetSearchValue,
     searchValue,
     isLoadingResults,
   } = props;
@@ -48,6 +49,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
               placeholder={`Search for vendor`}
               value={searchValue}
               onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
               rounded
             />
           </div>

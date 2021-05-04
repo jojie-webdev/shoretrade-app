@@ -33,11 +33,16 @@ const RecentlyAdded = (): JSX.Element => {
     setSearchValue(event.target.value);
   };
 
+  const onResetSearchValue = () => {
+    setSearchValue('');
+  };
+
   const generatedProps = {
     results,
     isPendingAccount,
     isLoadingResults,
     onChangeSearchValue,
+    onResetSearchValue,
     searchValue,
   };
 
