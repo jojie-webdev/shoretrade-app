@@ -35,7 +35,9 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const theme = useTheme();
   const textColor = 'shade9';
 
-  const [negotiationPrice, setNegotiationPrice] = useState(0);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
+    undefined
+  );
 
   const handleCheck = () => {
     if (setCloseOnAccept) {
@@ -119,7 +121,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 Your New Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
-                {toPrice(negotiationPrice)}/{unit}
+                {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
           )}
@@ -157,7 +159,9 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice >= 1) onSubmit(negotiationPrice);
+              if (negotiationPrice && negotiationPrice >= 1) {
+                onSubmit(negotiationPrice);
+              }
             }}
             loading={isNegotiating}
           />
