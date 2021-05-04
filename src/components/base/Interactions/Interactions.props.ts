@@ -28,4 +28,5 @@ export interface InteractionsProps {
   fullWidth?: boolean;
   keepIcon?: boolean;
   flat?: boolean;
+  swipeable?: boolean;
 }
