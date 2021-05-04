@@ -42,6 +42,16 @@ export type NavLinkProps = {
   isActive: boolean;
 };
 
+// Inner component props
+export type IconLinkProps = {
+  to: string;
+  iconColor?: string;
+  Icon?: React.FC<SVGProps>;
+  onClick: () => void;
+  isActive: boolean;
+  isOpen?: boolean;
+};
+
 export type HeaderProps = {
   pageTitle: string | undefined;
   userData: GetUserPayload['data']['user'] | undefined;

@@ -33,15 +33,22 @@ export const MenuIcon = styled.div`
   height: 24px;
   width: 24px;
 
-  @media ${BREAKPOINTS['md']} {
-    display: block;
-    margin-right: 32px;
-  }
-
   @media ${BREAKPOINTS['sm']} {
     display: block;
     margin-right: 24px;
   }
+`;
+
+export const HamburgerWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.grey.shade8};
+  border-radius: 8px;
+
+  margin-bottom: 64px;
 `;
 
 export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
@@ -70,8 +77,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
-  background: ${(props) =>
-    props.theme.appType === 'buyer' ? props.theme.grey.shade9 : '#020a13'};
+  background: #050e16;
   width: 235px;
   display: flex;
   flex-direction: column;
@@ -80,7 +86,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   overflow: hidden;
 
   .logo-container {
-    margin-top: 68px;
+    margin-top: 75px;
     margin-bottom: 60px;
     display: flex;
     align-items: center;
@@ -92,10 +98,10 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
 
   @media ${BREAKPOINTS['md']} {
     display: static;
-    width: 90%;
+    width: 50%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-50%')};
     z-index: 9999;
     min-height: 100vh;
   }
@@ -128,6 +134,32 @@ export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   .icon-container {
     margin-right: 12px;
   }
+`;
+
+export const TabletSidebar = styled.aside`
+  background: #050e16;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  padding-top: 75px;
+  padding-bottom: 60px;
+`;
+
+export const TabletSidebarItem = styled(Link)<{ isActive: boolean }>`
+  height: 40px;
+  width: 40px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+  ${(props) =>
+    props.isActive &&
+    `background: ${props.theme.brand.primary};
+      border-radius: 4px;`}
 `;
 
 export const LogoutContainer = styled.div`

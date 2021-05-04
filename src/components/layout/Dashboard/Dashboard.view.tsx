@@ -26,16 +26,20 @@ import {
   DashboardGeneratedProps,
   NavLinkProps,
   HeaderProps,
+  IconLinkProps,
 } from './Dashboard.props';
 import {
   DashboardContainer,
   Sidebar,
+  SidebarItem,
+  TabletSidebar,
+  TabletSidebarItem,
   Content,
   HeaderContainer,
-  SidebarItem,
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
+  HamburgerWrapper,
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
@@ -62,6 +66,22 @@ const NavLink = ({
   );
 };
 
+const IconLink = ({
+  to,
+  iconColor,
+  Icon,
+  onClick,
+  isActive,
+}: IconLinkProps) => {
+  return (
+    <TabletSidebarItem to={to} onClick={onClick} isActive={isActive}>
+      <div className="icon-container">
+        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+      </div>
+    </TabletSidebarItem>
+  );
+};
+
 const Header = ({
   pageTitle,
   userData,
@@ -78,6 +98,7 @@ const Header = ({
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
   });
+
   const isTablet = useMediaQuery({
     query: BREAKPOINTS.md,
   });
@@ -196,12 +217,54 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
+
+  /*
+    1: add sidebar on tablet
+    2: open sidebar same behavior as before
+    3: change close icon to arrow left
+    4: change icons
+   */
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
       />
+
+      {isTablet && (
+        <TabletSidebar>
+          <HamburgerWrapper onClick={() => setOpenSidebar(!openSidebar)}>
+            <Hamburger
+              onClick={() => setOpenSidebar(!openSidebar)}
+              isActive={openSidebar}
+              width={20}
+              height={10}
+              color={theme.grey.noshade}
+            />
+          </HamburgerWrapper>
+
+          {routes.map((route) => (
+            <IconLink
+              onClick={() => {
+                if (openSidebar) {
+                  setOpenSidebar(false);
+                }
+              }}
+              key={`sidenav-${route.path}`}
+              isActive={isInnerRoute(route.path)}
+              to={route.path}
+              iconColor={
+                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
+              }
+              Icon={route.icon}
+            />
+          ))}
+        </TabletSidebar>
+      )}
 
       <Sidebar openSidebar={openSidebar}>
         <div>
