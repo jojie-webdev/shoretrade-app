@@ -254,17 +254,13 @@ export const Content = styled.div<{
   }
 `;
 
-export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
+export const HeaderContainer = styled.nav`
   display: flex;
   flex-direction: row;
-  margin-top: ${({ useOuterWrapper }) => (!useOuterWrapper ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) =>
-    props.useOuterWrapper
-      ? '100%'
-      : dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
@@ -338,24 +334,12 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
     }
   }
 
-  ${(props) =>
-    props.useOuterWrapper
-      ? css`
-          @media ${BREAKPOINTS['sm']} {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-          }
-        `
-      : css`
-          @media ${BREAKPOINTS['sm']} {
-            width: 90%;
-            padding: 8px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-          }
-        `}
+  @media ${BREAKPOINTS['sm']} {
+    width: 90%;
+    padding: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
 `;
 
 export const CreditBalanceContainer = styled.div`
@@ -398,18 +382,4 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
-`;
-
-export const HeaderWrapper = styled.div`
-  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
-  margin: auto;
-  position: relative;
-
-  @media ${BREAKPOINTS['sm']} {
-    width: 100%;
-  }
-
-  @media ${BREAKPOINTS['md']} {
-    width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
-  }
 `;

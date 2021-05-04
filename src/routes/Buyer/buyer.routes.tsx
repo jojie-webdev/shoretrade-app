@@ -153,7 +153,6 @@ const BuyerRoutes = (): JSX.Element => {
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
-    useOuterWrapper?: boolean;
   } => {
     if (pathname.includes('/buyer/home')) {
       return {
@@ -225,7 +224,7 @@ const BuyerRoutes = (): JSX.Element => {
           </Route>
         ))}
         <Route>
-          <Redirect to="/buyer/home"></Redirect>
+          <Redirect to="/buyer/home" />
         </Route>
       </Switch>
     </DashboardLayout>

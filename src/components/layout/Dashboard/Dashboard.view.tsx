@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import {
   ShoretradeLogo,
@@ -38,7 +38,6 @@ import {
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
-  HeaderWrapper,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -71,7 +70,6 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
-  useOuterWrapper,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -81,7 +79,7 @@ const Header = ({
   });
 
   return (
-    <HeaderContainer className="appbar" useOuterWrapper={useOuterWrapper}>
+    <HeaderContainer className="appbar">
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
@@ -178,7 +176,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
-    useOuterWrapper,
   } = props;
 
   const history = useHistory();
@@ -279,57 +276,35 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         screenBackground={screenBackground}
         color={color}
       >
-        {useOuterWrapper ? (
-          <Container
-            className="container"
-            style={{ width: '100%', height: '100%' }}
-          >
-            <HeaderWrapper>
-              <Header
-                pageTitle={pageTitle}
-                userData={userData}
-                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-                onClick={() => setOpenSidebar(!openSidebar)}
-                openSidebar={openSidebar}
-                onBack={onBack}
-                cartItems={cartItems}
-                onClickAccount={onClickAccount}
-                useOuterWrapper
-              />
-            </HeaderWrapper>
-            {children}
-          </Container>
-        ) : (
-          <>
-            <Header
-              pageTitle={pageTitle}
-              userData={userData}
-              textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-              onClick={() => setOpenSidebar(!openSidebar)}
-              openSidebar={openSidebar}
-              onBack={onBack}
-              cartItems={cartItems}
-              onClickAccount={onClickAccount}
-            />
+        <>
+          <Header
+            pageTitle={pageTitle}
+            userData={userData}
+            textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+            onClick={() => setOpenSidebar(!openSidebar)}
+            openSidebar={openSidebar}
+            onBack={onBack}
+            cartItems={cartItems}
+            onClickAccount={onClickAccount}
+          />
 
-            <div className="screen-wrapper">
-              <div className="screen">
-                <Container
-                  className="container"
-                  style={{
-                    padding: 0,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    width: '100%',
-                    maxWidth: '100%',
-                  }}
-                >
-                  {children}
-                </Container>
-              </div>
+          <div className="screen-wrapper">
+            <div className="screen">
+              <Container
+                className="container"
+                style={{
+                  padding: 0,
+                  marginLeft: 0,
+                  marginRight: 0,
+                  width: '100%',
+                  maxWidth: '100%',
+                }}
+              >
+                {children}
+              </Container>
             </div>
-          </>
-        )}
+          </div>
+        </>
       </Content>
     </DashboardContainer>
   );
