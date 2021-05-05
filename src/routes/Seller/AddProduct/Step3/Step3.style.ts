@@ -19,6 +19,12 @@ export const Container = styled.div`
       & > div:not(:last-child) {
         margin-bottom: 16px;
       }
+      > div > div > div {
+        border-radius: 8px;
+      }
+      > div > div > div > div {
+        border-radius: 8px;
+      }
     }
 
     @media ${BREAKPOINTS['sm']} {
