@@ -124,6 +124,10 @@ export const groupByDate = (dateType: DateType) =>
       date = order[dateType];
     }
 
+    if (isNaN(date.getTime())) {
+      date = moment().add(1, 'day').toDate();
+    }
+
     const currentDate = moment();
     const dateDiff = Math.floor(currentDate.diff(moment(date), 'days', true));
     // 1 -> 1.99

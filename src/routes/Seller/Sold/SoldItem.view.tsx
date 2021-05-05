@@ -5,6 +5,7 @@ import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { SoldItemData } from './Sold.props';
@@ -248,7 +249,7 @@ const SoldItem = (props: {
                   </div>
                   <div className="content">
                     <div className="left-content">
-                      <ItemImage src={order.uri} alt="" />
+                      <ItemImage src={parseImageUrl(order.uri)} alt="" />
 
                       <div className="text-content">
                         <Typography

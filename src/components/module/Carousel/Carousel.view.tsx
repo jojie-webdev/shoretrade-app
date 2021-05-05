@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Badge from 'components/base/Badge';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
-import { CarouselProps } from 'components/module/Carousel/Carousel.props';
 import {
   SwiperArea,
   ArrowArea,
@@ -20,7 +19,10 @@ import {
 } from 'components/module/Carousel/Carousel.style';
 import SwiperCore, { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
+
+import { CarouselProps } from './Carousel.props';
 
 SwiperCore.use([Autoplay, Pagination]);
 
@@ -52,7 +54,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer img={image} aspectRatio={aspectRatio} />
+        <ImageContainer img={parseImageUrl(image)} aspectRatio={aspectRatio} />
       </SwiperSlide>
     );
   });

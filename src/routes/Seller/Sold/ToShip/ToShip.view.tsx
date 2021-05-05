@@ -29,6 +29,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -211,7 +212,10 @@ export const PendingItem = (props: {
             >
               <ItemCard>
                 <div className="left-content">
-                  <ItemImage src={lineItem.listing.images[0]} alt="" />
+                  <ItemImage
+                    src={parseImageUrl(lineItem.listing.images[0])}
+                    alt=""
+                  />
 
                   <div className="text-content">
                     <Typography
