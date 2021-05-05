@@ -42,10 +42,11 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
         </Touchable>
       )}
       <TitleRow>
-        <Typography variant="title5" color={isSeller ? 'shade1' : 'shade8'}>
-          {title}
-        </Typography>
-
+        {title && (
+          <Typography variant="title5" color={isSeller ? 'shade1' : 'shade8'}>
+            {title}
+          </Typography>
+        )}
         {subtitle && (
           <Typography variant="label" color={isSeller ? 'shade1' : 'shade8'}>
             {subtitle}

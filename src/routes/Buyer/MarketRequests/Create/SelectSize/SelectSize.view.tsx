@@ -9,7 +9,7 @@ import Typography from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { pathOr } from 'ramda';
 import { Row, Col } from 'react-grid-system';
-import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step4/Step4.constants';
+import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step3/Step3.constants';
 import theme from 'utils/Theme';
 
 import {

@@ -2,7 +2,7 @@ import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,8 @@ export const Wrapper = styled.div`
   .separator {
     width: 100%;
     height: 2px;
-    background-color: ${({ theme }) => theme.grey.shade2};
+    background-color: ${({ theme, isCreatListingSuccess }) =>
+      !isCreatListingSuccess ? theme.grey.shade2 : theme.grey.shade8};
     margin: 16px 0px;
   }
 
@@ -90,9 +91,10 @@ export const SellerPreview = styled.img`
   margin-bottom: 16px;
 `;
 
-export const SalesCard = styled.div`
+export const SalesCard = styled.div<{ isCreatListingSuccess?: boolean }>`
   padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
+  background-color: ${({ theme, isCreatListingSuccess }) =>
+    !isCreatListingSuccess ? theme.grey.noshade : theme.grey.shade9};
   width: 100%;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
@@ -109,6 +111,7 @@ export const SalesCard = styled.div`
       display: flex;
       flex-direction: column;
       margin-top: 3%;
+      margin-left: 26px;
     }
   }
 
@@ -125,7 +128,9 @@ export const SalesCard = styled.div`
   }
 `;
 
-export const ProductDetailsContainer = styled.div`
+export const ProductDetailsContainer = styled.div<{
+  isCreatListingSuccess?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -133,7 +138,8 @@ export const ProductDetailsContainer = styled.div`
   .separator {
     width: 100%;
     height: 2px;
-    background-color: ${({ theme }) => theme.grey.shade2};
+    background-color: ${({ theme, isCreatListingSuccess }) =>
+      !isCreatListingSuccess ? theme.grey.shade2 : theme.grey.shade8};
     margin: 16px 0px;
   }
 `;
@@ -241,7 +247,7 @@ export const TopDetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  width: 100%;
   .size-location-container {
     display: flex;
     flex-direction: row;
@@ -273,6 +279,16 @@ export const TopDetailsContainer = styled.div`
       margin-right: 4px;
     }
     margin-bottom: 24px;
+  }
+
+  .success-listing-creation-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    .product-listed-desc {
+      margin-top: 1.35%;
+    }
   }
 `;
 

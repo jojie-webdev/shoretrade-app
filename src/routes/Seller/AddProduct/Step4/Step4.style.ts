@@ -2,49 +2,59 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .metric-row {
-    display: flex;
-    flex-direction: row;
+  .preview-row {
     margin-bottom: 16px;
-  }
 
-  .select-row {
-    margin-bottom: 12px;
+    .add-col {
+      margin-bottom: 48px;
 
-    & > div:not(:last-child) {
-      margin-bottom: 16px;
+      .text {
+        margin-bottom: 4px;
+      }
     }
-  }
 
-  .select-col {
-    @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 24px;
-    }
-  }
-
-  .or-row {
-    margin: 36px 0;
-
-    .or-col {
+    .preview-col {
       display: flex;
       align-items: center;
 
-      .line {
-        border: 1px solid ${(props) => props.theme.grey.shade7};
-        flex: 1;
+      .img-preview {
+        height: 96px;
+        width: 96px;
+        border: 1px solid red;
+        margin-right: 8px;
+        border-radius: 4px;
+      }
 
-        &.left {
-          margin-right: 8px;
-        }
-
-        &.right {
-          margin-left: 8px;
-        }
+      @media ${BREAKPOINTS['sm']} {
+        margin-bottom: 16px;
       }
     }
   }
+  .back-btn {
+    margin-right: 16px;
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .next-btn {
+    border-radius: 8px;
+    max-width: 67px;
+  }
+`;
 
-  .checkbox-row {
-    margin-bottom: 48px;
+export const DeleteBadge = styled.button`
+  padding: 4px 8px;
+  background: ${(props) => props.theme.brand.error};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: none;
+
+  :focus {
+    outline: none;
+  }
+
+  .badge-text {
+    margin-left: 4px;
   }
 `;

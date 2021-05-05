@@ -1,6 +1,6 @@
 export interface InnerRouteHeaderProps {
   fullRow?: boolean;
-  title: string;
+  title?: string;
   onClickBack?: () => void;
   showIcon?: boolean;
   subtitle?: string;

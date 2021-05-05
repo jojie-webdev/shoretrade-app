@@ -63,6 +63,8 @@ export interface ListingDetailsGeneratedProps {
   isExisting?: boolean;
   isPending?: boolean;
   sellingDetailsBreadCrumbs?: any[];
+  isCreatListingSuccess?: boolean;
+  clearListing?: () => void;
 }
 
 export interface ListingDetailsProps
