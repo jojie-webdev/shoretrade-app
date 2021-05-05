@@ -2,23 +2,29 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .metric-row {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 16px;
-  }
-
   .size-container {
     background-color: ${({ theme }) => theme.grey.shade9};
     padding: 24px;
     border-radius: 8px;
-  }
 
-  .select-row {
-    margin-bottom: 12px;
-
-    & > div:not(:last-child) {
+    .metric-row {
+      display: flex;
+      flex-direction: row;
       margin-bottom: 16px;
+    }
+
+    .select-row {
+      margin-bottom: 12px;
+
+      & > div:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      background-color: unset;
+      padding: unset;
+      border-radius: unset;
     }
   }
 
