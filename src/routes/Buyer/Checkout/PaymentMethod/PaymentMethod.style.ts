@@ -36,12 +36,17 @@ export const Container = styled.div`
   .form-card-checkbox {
     margin-bottom: 60px;
   }
+`;
 
-  .bottom-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+export const BottomRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
   }
 
   .btns-container {
@@ -64,12 +69,22 @@ export const Container = styled.div`
     min-width: 357px;
     margin-bottom: 10px;
 
+    @media ${BREAKPOINTS['genericTablet']} {
+      min-width: 100%;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+    }
+
     @media ${BREAKPOINTS['sm']} {
       flex-direction: column;
       min-width: 100%;
     }
 
     .total-value {
+      @media ${BREAKPOINTS['genericTablet']} {
+        margin: 0 26px;
+      }
+
       @media ${BREAKPOINTS['sm']} {
         margin: 10px 0;
       }

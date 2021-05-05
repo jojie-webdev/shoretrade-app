@@ -10,8 +10,10 @@ import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form, Formik, connect, FormikProps } from 'formik';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import accountCredit from 'res/images/pm-account-credit.svg';
 import credit from 'res/images/pm-credit.svg';
 import finance from 'res/images/pm-finance-invoice.svg';
@@ -26,6 +28,7 @@ import {
 import {
   Container,
   Method,
+  BottomRow,
   CCImage,
   CreditCardInteraction,
 } from './PaymentMethod.style';
@@ -162,6 +165,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
     ''
   );
 
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isTablet = useMediaQuery({ query: BREAKPOINTS['genericTablet'] });
+
   return (
     <Container>
       <BoxContainer>
@@ -211,7 +217,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         {(paymentMethod === '' || paymentMethod === 'account') && (
           <Row className="payment-methods" align="center" justify="between">
             {PAYMENT_METHODS.map(({ disabled, ...p }) => (
-              <Col key={p.label} width={225}>
+              <Col key={p.label} width={isTablet ? '50%' : 225}>
                 <Method
                   onClick={() => setPaymentMethod(p.value as any)}
                   disabled={disabled}
@@ -312,7 +318,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           </Row>
         )}
 
-        <div className="bottom-row">
+        <BottomRow>
           <div className="btns-container">
             <Button
               className="pay-btn"
@@ -358,7 +364,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
             <Cart fill={theme.grey.shade4} />
           </div>
-        </div>
+        </BottomRow>
 
         <ConfirmationModal
           title="Final Order Confirmation?"
