@@ -12,6 +12,7 @@ import { BUYER_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -59,7 +60,7 @@ export const MarketRequestItem = (props: {
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
-        <img src={image} />
+        <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
         <TypographyView variant="body">{type}</TypographyView>

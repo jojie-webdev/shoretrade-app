@@ -26,6 +26,7 @@ import {
   Box,
   Footer,
 } from './Details.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const OrderDetail = (props: { label?: string; value?: string }) => {
   const { label, value } = props;
@@ -179,7 +180,7 @@ const DetailsView = (props: DetailsProps) => {
         {packingList.map((list) => (
           <ItemContainer key={list.name}>
             <ItemRow>
-              <ItemImage src={list.imgSrc} alt="" />
+              <ItemImage src={parseImageUrl(list.imgSrc)} alt="" />
               <ItemColumn>
                 <Typography variant="title5" color="noshade">
                   {list.name}

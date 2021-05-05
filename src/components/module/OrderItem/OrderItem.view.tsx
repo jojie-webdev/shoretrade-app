@@ -14,6 +14,7 @@ import {
   RightContent,
   Tag,
 } from './OrderItem.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
   // const theme = useTheme();
@@ -58,7 +59,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
         {props.data.detailsProps.map((d, ndx) => (
           <div key={d.name + d.weight + ndx} className="item-detail-container">
             <ItemDetail type="left" row style={{ flex: 1 }}>
-              <img src={d.uri} alt="Product" />
+              <img src={parseImageUrl(d.uri)} alt="Product" />
 
               <div>
                 <Typography color="shade9">{d.name}</Typography>

@@ -19,6 +19,7 @@ import {
   NavInteraction,
   NoProfilePic,
 } from './Landing.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [
@@ -110,7 +111,7 @@ const LandingView = (props: LandingGeneratedProps) => {
                     src={
                       hideBrokenProfileImage
                         ? DefaultProfileImage
-                        : profilePicture || DefaultProfileImage
+                        : parseImageUrl(profilePicture) || DefaultProfileImage
                     }
                     alt="profile picture"
                     onError={() => {
