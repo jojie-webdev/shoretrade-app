@@ -5,6 +5,7 @@ import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { useMediaQuery } from 'react-responsive';
@@ -15,13 +16,19 @@ import { AccountOption, Step0Props } from './Step0.props';
 import { Container, Image, ButtonImport } from './Step0.style';
 
 const AccountsView = (props: AccountOption) => {
+  const image = false;
   return (
     <>
-      <Image
-        src={
-          'https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c545f7acd3d5e85baf5_Nathan-headshot.png'
-        }
-      />
+      {image ? (
+        <Image
+          src={
+            'https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c545f7acd3d5e85baf5_Nathan-headshot.png'
+          }
+        />
+      ) : (
+        <Image src={placeholderImage} />
+      )}
+
       <Typography variant="body" color="noshade">
         {props.label}
       </Typography>

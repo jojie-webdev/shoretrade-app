@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
@@ -25,15 +26,17 @@ import {
 
 const ProductView = (props: SearchProductTypeResponseItem) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
+  const image = false;
   return (
     <>
       {!isMobile && (
-        <Image
-          src={
-            'https://i.guim.co.uk/img/media/319a308c175c2c78bf21fe593a3442dfe614187f/0_261_5315_3189/master/5315.jpg?width=1200&quality=85&auto=format&fit=max&s=34b1e209daace5151a8eedc83a57c8b8'
-          }
-        />
+        <>
+          {image ? (
+            <Image src={placeholderImage} />
+          ) : (
+            <Image src={placeholderImage} />
+          )}
+        </>
       )}
       <Typography variant="body" color="noshade">
         {props.label}
