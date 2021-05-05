@@ -37,7 +37,7 @@ export const SearchContainerDesktop = styled.div`
   width: 308px;
   margin-top: -10px;
   @media ${BREAKPOINTS['iPad']} {
-    width: 211px;
+    width: 250px;
   }
 `;
 
