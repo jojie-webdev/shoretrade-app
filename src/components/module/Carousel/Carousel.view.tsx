@@ -7,6 +7,7 @@ import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { CarouselProps } from './Carousel.props';
 import {
@@ -44,7 +45,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer img={image} aspectRatio={aspectRatio} />
+        <ImageContainer img={parseImageUrl(image)} aspectRatio={aspectRatio} />
       </SwiperSlide>
     );
   });

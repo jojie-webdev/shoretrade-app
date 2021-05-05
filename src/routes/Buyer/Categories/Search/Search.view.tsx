@@ -14,6 +14,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
@@ -30,7 +31,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
 
   const InteractionsChildren = (result: GetListingTypesByCategoryTypeItem) => (
     <>
-      <Image src={result.thumbnail} />
+      <Image src={parseImageUrl(result.thumbnail)} />
       <DetailsContainer>
         <Typography className="title">{result.name}</Typography>
         <ResultContainer>

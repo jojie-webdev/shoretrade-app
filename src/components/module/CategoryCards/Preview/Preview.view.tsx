@@ -8,6 +8,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { PreviewProps } from './Preview.props';
@@ -35,7 +36,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
   } = props;
   const theme = useTheme();
   return (
-    <CardContainer img={props.images[0]}>
+    <CardContainer img={parseImageUrl(props.images[0])}>
       <div
         className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}
