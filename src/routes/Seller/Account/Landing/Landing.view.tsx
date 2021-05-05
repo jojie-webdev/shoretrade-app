@@ -11,6 +11,7 @@ import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
 import { useHistory } from 'react-router-dom';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
 import {
@@ -145,7 +146,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                   src={
                     hideBrokenProfileImage
                       ? DefaultProfileImage
-                      : profilePicture || DefaultProfileImage
+                      : parseImageUrl(profilePicture) || DefaultProfileImage
                   }
                   alt="profile picture"
                   onError={() => {

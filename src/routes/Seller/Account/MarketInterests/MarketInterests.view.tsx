@@ -17,6 +17,7 @@ import {
   BadgeContainer,
 } from 'routes/Seller/Account/MarketInterests/MarketInterests.style';
 import { useTheme } from 'utils/Theme';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const MarketInterestsView = ({
   isInner,
@@ -165,7 +166,7 @@ const MarketInterestsView = ({
           }
           leftComponent={
             <div className="category-container">
-              <img src={c.thumbnail} />
+              <img src={parseImageUrl(c.thumbnail)} />
               <Typography variant="label" color="noshade">
                 {c.name}
               </Typography>
