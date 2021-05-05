@@ -15,6 +15,7 @@ import {
   DeleteBadge,
   DeleteText,
 } from 'routes/Seller/Account/Licenses/Licenses.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 const LicensesView = ({
@@ -102,7 +103,8 @@ const LicensesView = ({
                 <div className="license-details">
                   <div>
                     <img
-                      src={placeholder}
+                      style={{ width: 116 }}
+                      src={parseImageUrl(l.url, placeholder)}
                       onClick={() => window.open(l.url, '_blank')}
                     />
                   </div>

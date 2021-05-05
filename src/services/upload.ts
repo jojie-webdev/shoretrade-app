@@ -1,5 +1,6 @@
 import axios from 'axios';
 import md5 from 'blueimp-md5';
+import Compressor from 'compressorjs';
 import { API } from 'consts';
 import last from 'ramda/es/last';
 import pathOr from 'ramda/es/pathOr';
@@ -25,7 +26,7 @@ export const uploadImageData = async ({
     url: `${BASE_URL}/get-public-signed-url?name=${newFileName}&type=data:${type}&asset=${asset}`,
   });
 
-  const uploadUrl = pathOr('', ['data', 'url', 'url'], uploadURLData);
+  const uploadUrl: string = pathOr('', ['data', 'url', 'url'], uploadURLData);
 
   const downloadUrl = uploadUrl.substr(0, uploadUrl.indexOf('?'));
 
@@ -34,6 +35,48 @@ export const uploadImageData = async ({
       'content-type': 'multipart/form-data',
     },
   });
+
+  // BE only returns mobileUrl for jpeg/png
+  const uploadMobileUrl: string = pathOr(
+    '',
+    ['data', 'url', 'mobileUrl'],
+    uploadURLData
+  );
+
+  if (uploadMobileUrl) {
+    // Do compression
+    const compressedFile = await new Promise<File>((resolve, reject) => {
+      new Compressor(newFile, {
+        quality: 0.7,
+        maxWidth: 800,
+        success: (compressedResult) => {
+          resolve(new File([compressedResult], newFileName, { type }));
+        },
+        error: (e) => {
+          reject(e.message);
+        },
+      });
+    });
+
+    // Upload file
+    const { status: uploadMobileStatus } = await axios.put(
+      uploadMobileUrl,
+      compressedFile,
+      {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+    );
+
+    const downloadMobileUrl = uploadMobileUrl.substr(
+      0,
+      uploadMobileUrl.indexOf('?')
+    );
+
+    console.log(uploadMobileStatus);
+    console.log(downloadMobileUrl);
+  }
 
   return {
     status: uploadStatus,

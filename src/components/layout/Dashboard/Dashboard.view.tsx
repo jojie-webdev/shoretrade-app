@@ -1,21 +1,20 @@
 import React from 'react';
 
 import {
-  ShoretradeLogo,
   ShoretradeLogo2,
   Exit,
   Cart,
   ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
-  Close,
+  ArrowLeftAlt,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Container, Visible } from 'react-grid-system';
+import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
@@ -43,6 +42,7 @@ import {
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
+  SidebarLogoContainer,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -217,16 +217,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
-  const isTablet = useMediaQuery({
-    query: BREAKPOINTS.md,
+  const showSmallSidebar = useMediaQuery({
+    query: BREAKPOINTS.genericTablet,
   });
-
-  /*
-    1: add sidebar on tablet
-    2: open sidebar same behavior as before
-    3: change close icon to arrow left
-    4: change icons
-   */
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -235,7 +228,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         onClick={() => setOpenSidebar(!openSidebar)}
       />
 
-      {isTablet && (
+      {showSmallSidebar && (
         <TabletSidebar>
           <HamburgerWrapper onClick={() => setOpenSidebar(!openSidebar)}>
             <Hamburger
@@ -268,20 +261,15 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
       <Sidebar openSidebar={openSidebar}>
         <div>
-          <div className="logo-container">
-            <Visible xs sm>
-              <div
-                className="close-container"
-                onClick={() => setOpenSidebar(false)}
-              >
-                <Close fill={theme.brand.primary} height={20} width={20} />
-              </div>
-              <ShoretradeLogo fill={theme.grey.noshade} />
-            </Visible>
-            <Visible md lg xl xxl>
-              <ShoretradeLogo2 />
-            </Visible>
-          </div>
+          <SidebarLogoContainer>
+            <ShoretradeLogo2 />
+            <div
+              className="close-container"
+              onClick={() => setOpenSidebar(false)}
+            >
+              <ArrowLeftAlt />
+            </div>
+          </SidebarLogoContainer>
           {routes.map((route) => (
             <NavLink
               onClick={() => {

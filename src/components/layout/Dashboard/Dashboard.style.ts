@@ -17,7 +17,7 @@ export const DashboardContainer = styled.div<{
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
 
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     max-height: 100vh;
     height: -webkit-fill-available;
   }
@@ -64,7 +64,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   height: 100%;
   overflow: hidden;
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     z-index: 999;
     display: ${(props) => (props.openSidebar ? 'block' : 'none')};
   }
@@ -85,18 +85,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   transition: all 0.3s ease-in-out;
   overflow: hidden;
 
-  .logo-container {
-    margin-top: 75px;
-    margin-bottom: 60px;
-    display: flex;
-    align-items: center;
-
-    .close-container {
-      margin-right: 16px;
-    }
-  }
-
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     display: static;
     width: 50%;
     position: absolute;
@@ -114,6 +103,29 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
     z-index: 9999;
     min-height: 100vh;
+  }
+`;
+
+export const SidebarLogoContainer = styled.div`
+  margin-top: 75px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .close-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    background-color: ${({ theme }) => theme.grey.shade8};
+    cursor: pointer;
+
+    @media (min-width: 835px) {
+      display: none;
+    }
   }
 `;
 
@@ -240,7 +252,7 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     min-height: 100vh;
 
     .screen-wrapper {
@@ -368,7 +380,7 @@ export const HeaderContainer = styled.nav`
     margin-bottom: 8px;
   }
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     width: calc(100% - 32px);
   }
 `;
