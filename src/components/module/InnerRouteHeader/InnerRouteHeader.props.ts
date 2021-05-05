@@ -5,4 +5,5 @@ export interface InnerRouteHeaderProps {
   showIcon?: boolean;
   subtitle?: string;
   rightContent?: React.ReactNode;
+  addProductSubtitle?: boolean;
 }
