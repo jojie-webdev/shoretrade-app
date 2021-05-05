@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -20,6 +21,10 @@ export const Container = styled.div`
       > div {
         width: 50%;
         padding-right: 16px;
+        @media ${BREAKPOINTS['sm']} {
+          width: 100%;
+          padding-right: 0px;
+        }
       }
     }
   }

@@ -22,7 +22,7 @@ export const ButtonRow = styled(Row)`
     margin-right: 0px;
 
     .button:not(:last-child) {
-      margin-right: 0px;
+      margin-right: 8px;
       margin-bottom: 8px;
     }
   }
