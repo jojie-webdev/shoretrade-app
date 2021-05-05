@@ -66,8 +66,7 @@ export const PreviewContainer = styled.div`
       max-width: 100% !important;
     }
 
-    //iPad
-    @media (min-width: 768px) and (max-width: 768px) {
+    @media (min-width: 768px) and (max-width: 834px) {
       width: 50% !important;
       max-width: 50% !important;
     }
