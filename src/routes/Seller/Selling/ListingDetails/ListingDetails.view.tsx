@@ -544,7 +544,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               </ProductDetailsContainer>
             </SalesCard>
 
-            {onCreate && (
+            {onCreate && !isCreatListingSuccess && (
               <ActionContainer>
                 <Button
                   text={isExisting ? 'Update' : 'Create Listing'}
