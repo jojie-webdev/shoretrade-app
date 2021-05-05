@@ -69,7 +69,7 @@ const SizeInput = (props: SizeInputProps) => {
 
         <Col md={6}>
           <TextField
-            label={`Size To\n(Optional)`}
+            label={`To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {
               if (!Number.isNaN(Number(v))) {
@@ -154,22 +154,26 @@ function Step4({
 
   return (
     <Container>
-      <div className="metric-row">
-        <Typography color="shade6">{`Metric:`}&nbsp;</Typography>
-        <Typography color="shade1" weight="bold">
-          {metric}
-        </Typography>
+      <div className="size-container">
+        <div className="metric-row">
+          <Typography color="shade6" weight="regular">
+            {`Metric:`}&nbsp;
+          </Typography>
+          <Typography color="shade1" weight="regular">
+            {metric}
+          </Typography>
+        </div>
+        {metric.toUpperCase() !== 'N/A' && (
+          <SizeInput
+            metric={metric}
+            fromSize={fromSize}
+            setFromSize={setFromSize}
+            toSize={toSize}
+            setToSize={setToSize}
+            disabled={isUngraded}
+          />
+        )}
       </div>
-      {metric.toUpperCase() !== 'N/A' && (
-        <SizeInput
-          metric={metric}
-          fromSize={fromSize}
-          setFromSize={setFromSize}
-          toSize={toSize}
-          setToSize={setToSize}
-          disabled={isUngraded}
-        />
-      )}
 
       {metric.toUpperCase() !== 'N/A' && (
         <Row className="or-row">

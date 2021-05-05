@@ -8,6 +8,12 @@ export const Container = styled.div`
     margin-bottom: 16px;
   }
 
+  .size-container {
+    background-color: ${({ theme }) => theme.grey.shade9};
+    padding: 24px;
+    border-radius: 8px;
+  }
+
   .select-row {
     margin-bottom: 12px;
 
