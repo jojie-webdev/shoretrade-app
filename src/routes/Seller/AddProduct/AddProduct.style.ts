@@ -6,7 +6,7 @@ export const Container = styled.div`
   /* position: relative; */
 
   @media ${BREAKPOINTS['iPad']} {
-    padding: 48px 32px 80px 53px;
+    padding: 32px;
   }
 
   @media ${BREAKPOINTS['sm']} {
