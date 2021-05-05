@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import { PlaceholderProfile } from 'components/base/SVG';
+import { parseImageUrl } from 'utils/parseImageURL';
 
-// import { useTheme } from 'utils/Theme';
 import { SellerCardProps } from './SellerCard.props';
 import { Container, StyledTypography } from './SellerCard.style';
 
@@ -16,7 +16,7 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
       <div className="card">
         {(defaultImage || '').length > 0 ? (
           <img
-            src={defaultImage}
+            src={parseImageUrl(defaultImage)}
             alt={`${companyName}-image`}
             onError={() => {
               setDefaultImage('');

@@ -24,6 +24,7 @@ import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
+import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { MarketRequestItem } from '../Landing/Landing.view';
@@ -55,7 +56,7 @@ export const OffersSellerAccordionContent = (props: {
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
-        {image ? <img src={image} /> : <PlaceholderProfile />}
+        {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
       </div>
       <div className="info-container">
         <TypographyView variant="copy" color="shade8">

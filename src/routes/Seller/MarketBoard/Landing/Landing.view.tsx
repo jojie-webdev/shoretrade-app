@@ -15,6 +15,7 @@ import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
@@ -104,7 +105,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 onClick={() => props.onClickOffer(b)}
                 leftComponent={
                   <div className="left-component">
-                    <img src={b.image} />
+                    <img src={parseImageUrl(b.image)} />
                     <div>
                       <Typography color="noshade">{b.type}</Typography>
                       <Typography
@@ -205,7 +206,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   onClick={() => props.onClickActiveOffer(v)}
                   leftComponent={
                     <div className="left-component">
-                      <img src={v.image} />
+                      <img src={parseImageUrl(v.image)} />
                       <div>
                         <Typography color="noshade">{v.name}</Typography>
                         <Typography
