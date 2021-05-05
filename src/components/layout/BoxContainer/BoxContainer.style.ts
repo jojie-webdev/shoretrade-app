@@ -21,7 +21,7 @@ export const Container = styled.div<{
   }};
   border-radius: 8px;
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     padding: 24px;
   }
 

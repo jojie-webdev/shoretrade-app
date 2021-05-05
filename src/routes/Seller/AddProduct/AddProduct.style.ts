@@ -2,7 +2,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 40px 80px;
+  padding: 48px;
   /* position: relative; */
 
   @media ${BREAKPOINTS['iPad']} {
