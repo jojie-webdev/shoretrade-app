@@ -81,15 +81,17 @@ export const BoxDetails = ({
       </div>
 
       {onRemove && !fixed ? (
-        <Touchable
-          onPress={() => {
-            onRemove();
-          }}
-          circle
-          dark
-        >
-          <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
-        </Touchable>
+        <div className="minus-mobile">
+          <Touchable
+            onPress={() => {
+              onRemove();
+            }}
+            circle
+            dark
+          >
+            <Subtract fill={theme.brand.error} innerFill={theme.grey.noshade} />
+          </Touchable>
+        </div>
       ) : (
         ''
       )}

@@ -105,6 +105,12 @@ export const BoxDetailsContainer = styled.div`
     padding: 12px 16px;
   }
 
+  .minus-mobile {
+    @media ${BREAKPOINTS['sm']} {
+      margin-left: -40px;
+    }
+  }
+
   .text-container {
     display: flex;
 

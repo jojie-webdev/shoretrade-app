@@ -66,10 +66,8 @@ function* createListingRequest(
 function* createListingSuccess(
   action: AsyncAction<CreateListingMeta, CreateListingPayload>
 ) {
-  yield put(push(ADD_PRODUCT_ROUTES.PREVIEW));
   yield put(getAllListingsActions.request());
   yield delay(10000);
-  yield put(push(SELLER_ROUTES.SELLING));
   yield put(editableListingActions.clear());
 }
 
