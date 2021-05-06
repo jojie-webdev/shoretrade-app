@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
 const dashboardWidth = (isSeller: boolean) =>
-  isSeller ? 'calc(100% - 200px)' : 'calc(100% - 200px)';
+  isSeller ? 'calc(100% - 150px)' : 'calc(100% - 150px)';
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
@@ -17,7 +17,7 @@ export const DashboardContainer = styled.div<{
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
 
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     max-height: 100vh;
     height: -webkit-fill-available;
   }
@@ -33,15 +33,22 @@ export const MenuIcon = styled.div`
   height: 24px;
   width: 24px;
 
-  @media ${BREAKPOINTS['md']} {
-    display: block;
-    margin-right: 32px;
-  }
-
   @media ${BREAKPOINTS['sm']} {
     display: block;
     margin-right: 24px;
   }
+`;
+
+export const HamburgerWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.grey.shade8};
+  border-radius: 8px;
+
+  margin-bottom: 64px;
 `;
 
 export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
@@ -57,7 +64,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   height: 100%;
   overflow: hidden;
 
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     z-index: 999;
     display: ${(props) => (props.openSidebar ? 'block' : 'none')};
   }
@@ -70,8 +77,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
-  background: ${(props) =>
-    props.theme.appType === 'buyer' ? props.theme.grey.shade9 : '#020a13'};
+  background: #050e16;
   width: 235px;
   display: flex;
   flex-direction: column;
@@ -79,23 +85,12 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   transition: all 0.3s ease-in-out;
   overflow: hidden;
 
-  .logo-container {
-    margin-top: 68px;
-    margin-bottom: 60px;
-    display: flex;
-    align-items: center;
-
-    .close-container {
-      margin-right: 16px;
-    }
-  }
-
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     display: static;
-    width: 90%;
+    width: 50%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-50%')};
     z-index: 9999;
     min-height: 100vh;
   }
@@ -111,18 +106,72 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   }
 `;
 
-export const SidebarItem = styled(Link)`
-  height: 24px;
+export const SidebarLogoContainer = styled.div`
+  margin-top: 75px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .close-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    background-color: ${({ theme }) => theme.grey.shade8};
+    cursor: pointer;
+
+    @media (min-width: 835px) {
+      display: none;
+    }
+  }
+`;
+
+export const SidebarItem = styled(Link)<{ isActive: boolean }>`
+  height: 48px;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   border-bottom: none;
   text-decoration: none;
+  padding-left: 14px;
+  ${(props) =>
+    props.isActive &&
+    `background: ${props.theme.brand.primary};
+      border-radius: 4px;`}
 
   .icon-container {
     margin-right: 12px;
   }
+`;
+
+export const TabletSidebar = styled.aside`
+  background: #050e16;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  padding-top: 75px;
+  padding-bottom: 60px;
+`;
+
+export const TabletSidebarItem = styled(Link)<{ isActive: boolean }>`
+  height: 40px;
+  width: 40px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+  ${(props) =>
+    props.isActive &&
+    `background: ${props.theme.brand.primary};
+      border-radius: 4px;`}
 `;
 
 export const LogoutContainer = styled.div`
@@ -145,7 +194,6 @@ export const LogoutButton = styled(Touchable)`
 export const Content = styled.div<{
   shouldIncludePadding: boolean;
   openSidebar: boolean;
-  shouldUseFullWidth: boolean;
   background?: string;
   screenBackground?: string;
   color?: string;
@@ -187,14 +235,15 @@ export const Content = styled.div<{
           ? props.theme.grey.shade1
           : props.theme.grey.shade8};
 
-      width: ${(props) =>
-        props.shouldUseFullWidth
-          ? '100%'
-          : dashboardWidth(props.theme.appType === 'seller')};
+      width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
       padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
       border-radius: 8px;
       overflow-x: hidden;
       overflow-y: auto;
+
+      @media ${BREAKPOINTS['sm']} {
+        border-radius: 0px;
+      }
 
       .container {
         min-height: 100%;
@@ -203,24 +252,14 @@ export const Content = styled.div<{
     }
   }
 
-  @media (max-width: 935px) {
-    .screen-wrapper {
-      .screen {
-        width: 90%;
-        padding: 24px;
-      }
-    }
-  }
-
-  @media ${BREAKPOINTS['md']} {
+  @media ${BREAKPOINTS['genericTablet']} {
     min-height: 100vh;
 
     .screen-wrapper {
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
 
       .screen {
-        width: ${(props) =>
-          props.shouldUseFullWidth ? '100%' : 'calc(100% - 32px)'};
+        width: calc(100% - 32px);
         padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
       }
     }
@@ -244,7 +283,7 @@ export const Content = styled.div<{
           props.theme.appType === 'buyer' ? '0 8px' : '16px'};
 
         //TODO: remove on deletion of BoxContainer
-        margin: ${(props) => (props.theme.appType === 'seller' ? '0 8px' : 0)};
+        margin: ${(props) => (props.theme.appType === 'seller' ? '0 0px' : 0)};
 
         .container {
           position: static !important; // needed to override react-grid-system .container
@@ -254,17 +293,13 @@ export const Content = styled.div<{
   }
 `;
 
-export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
+export const HeaderContainer = styled.nav`
   display: flex;
   flex-direction: row;
-  margin-top: ${({ useOuterWrapper }) => (!useOuterWrapper ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) =>
-    props.useOuterWrapper
-      ? '100%'
-      : dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
@@ -338,24 +373,16 @@ export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
     }
   }
 
-  ${(props) =>
-    props.useOuterWrapper
-      ? css`
-          @media ${BREAKPOINTS['sm']} {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-          }
-        `
-      : css`
-          @media ${BREAKPOINTS['sm']} {
-            width: 90%;
-            padding: 8px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-          }
-        `}
+  @media ${BREAKPOINTS['sm']} {
+    width: 90%;
+    padding: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    width: calc(100% - 32px);
+  }
 `;
 
 export const CreditBalanceContainer = styled.div`
@@ -398,18 +425,4 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
-`;
-
-export const HeaderWrapper = styled.div`
-  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
-  margin: auto;
-  position: relative;
-
-  @media ${BREAKPOINTS['sm']} {
-    width: 100%;
-  }
-
-  @media ${BREAKPOINTS['md']} {
-    width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
-  }
 `;

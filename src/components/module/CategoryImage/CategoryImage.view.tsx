@@ -28,6 +28,7 @@ const CategoryImage = ({
   id,
   cBorderRadius,
   circled = false,
+  circleSize,
   maxHeight,
   customSVGSize,
   containerHeight,
@@ -192,7 +193,11 @@ const CategoryImage = ({
       cBorderRadius={cBorderRadius}
       circled={circled}
     >
-      {circled ? <Circle>{SVG()}</Circle> : <>{SVG()}</>}
+      {circled ? (
+        <Circle circleSize={circleSize}>{SVG()}</Circle>
+      ) : (
+        <>{SVG()}</>
+      )}
     </Container>
   );
 };

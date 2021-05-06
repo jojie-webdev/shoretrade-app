@@ -12,4 +12,5 @@ export interface LinePathProps {
   stroke?: keyof Theme['brand'];
   strokeWidth?: number;
   cStyle?: CSSProperties;
+  isEarning?: boolean;
 }

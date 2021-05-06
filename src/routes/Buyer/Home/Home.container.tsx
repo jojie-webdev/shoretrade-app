@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateAddressActions, cartActions } from 'store/actions';
+import { useMediaQuery } from 'react-responsive';
+import {
+  getBuyerOrdersActions,
+  getBuyerOrdersPlacedActions,
+} from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
-import { PlaceData } from 'types/PlaceData';
+import { GetBuyerOrdersToShipPending } from 'store/selectors/buyer/';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
+import { transformOrder, groupByDate } from '../Orders/Orders.transform';
 import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
-import {
-  addressToPlaceData,
-  placeDataToUpdateAddressMeta,
-} from './Home.transform';
 import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
+  const dispatch = useDispatch();
   // MARK:- Store
   const buyerHomePageData = useSelector(
     (state: Store) => state.getBuyerHomepage
   );
+
+  const getOrdersPlaced = (filter?: {
+    page: string;
+    term: string;
+    dateFrom: moment.Moment | null;
+    dateTo: moment.Moment | null;
+    limit: number;
+  }) => {
+    dispatch(getBuyerOrdersPlacedActions.request(filter));
+  };
+
+  const pendingOrders = GetBuyerOrdersToShipPending().map(transformOrder);
 
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
@@ -73,6 +88,16 @@ const Home = (): JSX.Element => {
     }
   }, [company]);
 
+  useEffect(() => {
+    getOrdersPlaced({
+      limit: 10,
+      page: '1',
+      term: '',
+      dateFrom: null,
+      dateTo: null,
+    });
+  }, []);
+
   // MARK:- Bottom Variables
   const creditBalance = currentCompany?.credit || '0';
   const creditState: CreditState = getCreditState();
@@ -91,6 +116,7 @@ const Home = (): JSX.Element => {
     favouriteSellers,
     sellers,
     loadingHomePage,
+    pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
   };
 
   return <HomeView {...generatedProps} />;

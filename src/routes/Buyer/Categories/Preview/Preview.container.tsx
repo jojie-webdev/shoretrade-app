@@ -1,15 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import { CategoriesGeneratedProps } from 'routes/Seller/Dashboard/Categories/Categories.props';
+import { useParams } from 'react-router-dom';
 import {
   getBuyerSearchFilterDataActions,
   getListingsByTypeActions,
   currentAddressActions,
 } from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import {
@@ -21,28 +18,19 @@ import {
 import CategoriesPreviewView from './Preview.view';
 
 const CategoriesPreview = (): JSX.Element => {
-  // MARK:- States / Variables
-  const location = useLocation();
   const dispatch = useDispatch();
+  const { id: typeIdParsed } = useParams();
+
   const [searchValue, setSearchValue] = useState('');
+
   const addressesData = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
   );
+
   const isPendingAccount =
     addressesData !== undefined &&
     !(addressesData || []).some((a) => a.approved === 'APPROVED');
-  const addresses = GetAddressOptions();
-  const { id } = useParams();
-  const typeIdParsed = id; // consider removing this and use `id` instead
-  const selectedAddress =
-    useSelector((state: Store) => state.currentAddress.id) || '';
-  const selectAddress = (id: string) => {
-    dispatch(
-      currentAddressActions.update({
-        id,
-      })
-    );
-  };
+
   const previousId =
     useSelector(
       (state: Store) => state.getListingTypesByCategory.request?.categoryId
@@ -54,14 +42,21 @@ const CategoriesPreview = (): JSX.Element => {
     ) || []
   ).filter((result) => {
     return searchValue
-      ? result.type.toLowerCase().includes(searchValue.toLowerCase())
+      ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
       : true;
   });
 
   const isLoadingResults =
     useSelector((state: Store) => state.getListingsByType.pending) || false;
 
-  // MARK:- Methods
+  const selectAddress = (id: string) => {
+    dispatch(
+      currentAddressActions.update({
+        id,
+      })
+    );
+  };
+
   const onLoad = (typeId: string) => {
     dispatch(getBuyerSearchFilterDataActions.request({ typeId: typeId }));
     dispatch(getListingsByTypeActions.request({ typeId: typeId }));
@@ -71,10 +66,10 @@ const CategoriesPreview = (): JSX.Element => {
     setSearchValue(event.target.value);
   };
 
-  const resetSearchValue = () => {
+  const onResetSearchValue = () => {
     setSearchValue('');
   };
-  // MARK:- Effects
+
   useEffect(() => {
     if (typeIdParsed && previousId !== typeIdParsed) {
       onLoad(typeIdParsed);
@@ -139,33 +134,30 @@ const CategoriesPreview = (): JSX.Element => {
   };
 
   // used by FilterArea
-  const onChangeFilter = (f: {
-    catchmentArea?: string;
-    sizeRangeFrom?: number | string;
-    sizeRangeTo?: number | string;
-    specifications?: string;
-    showUngraded?: boolean;
-  }) => {
-    dispatch(
-      getListingsByTypeActions.request({
-        typeId: typeIdParsed,
-        filterData: f,
-      })
-    );
-  };
+  // const onChangeFilter = (f: {
+  //   catchmentArea?: string;
+  //   sizeRangeFrom?: number | string;
+  //   sizeRangeTo?: number | string;
+  //   specifications?: string;
+  //   showUngraded?: boolean;
+  // }) => {
+  //   dispatch(
+  //     getListingsByTypeActions.request({
+  //       typeId: typeIdParsed,
+  //       filterData: f,
+  //     })
+  //   );
+  // };
 
   const generatedProps = {
-    onChangeSearchValue,
     searchValue,
-    resetSearchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     results,
     isLoadingResults,
     typeId: typeIdParsed,
-    addresses,
-    selectedAddress,
     selectAddress,
     onLoad,
-    setVisible,
     modalFilterProps: {
       isOpen,
       filters: modalFilters,
@@ -180,9 +172,10 @@ const CategoriesPreview = (): JSX.Element => {
       onReset,
       onClickClose,
     },
-    filterData,
-    onChangeFilter,
     isPendingAccount,
+
+    //filterData,
+    // onChangeFilter,
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };

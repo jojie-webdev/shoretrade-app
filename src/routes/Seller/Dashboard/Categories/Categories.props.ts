@@ -3,4 +3,5 @@ export interface CategoriesGeneratedProps {
   data: any[];
   isLoading: boolean;
   toCategoryDetails: (id: string, title: string) => Record<string, unknown>;
+  breadCrumbSections: any[];
 }

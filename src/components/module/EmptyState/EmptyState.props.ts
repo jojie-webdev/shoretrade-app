@@ -10,4 +10,5 @@ export interface EmptyStateProps {
   width?: number;
   circleHeight?: number;
   circleWidth?: number;
+  textAlign?: 'left' | 'right' | 'center';
 }

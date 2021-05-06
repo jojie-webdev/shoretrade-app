@@ -118,7 +118,7 @@ const Dashboard = (): JSX.Element => {
 
     return {
       pathname,
-      state: { innerRouteTitle: 'Historical Sales' },
+      state: { innerRouteTitle: 'Paid/Pending' },
     };
   };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Typography from 'components/base/Typography';
 import moment from 'moment';
 import {
   formatMeasurementUnit,
@@ -9,13 +8,7 @@ import {
 import { toPrice } from 'utils/String/toPrice';
 
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
-import {
-  Container,
-  Row,
-  Price,
-  Label,
-  Value,
-} from './ProductDetailsCard6.style';
+import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
 
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {
@@ -26,6 +19,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     minOrder,
     unit = 'kg',
     hiddenPrice,
+    SellerCard,
   } = props;
 
   const formattedTimeLeft = () => moment().to(timeLeft);
@@ -33,6 +27,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
 
   return (
     <Container {...props}>
+      {SellerCard ? SellerCard : <></>}
       {!hiddenPrice && (
         <Row>
           <Price variant="title5" weight="900">

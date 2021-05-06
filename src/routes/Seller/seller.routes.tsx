@@ -11,6 +11,7 @@ import {
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ROUTES } from 'consts';
+import { useSelector } from 'react-redux';
 import {
   Route,
   Switch,
@@ -20,6 +21,7 @@ import {
 } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 // Screens
+import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -99,13 +101,17 @@ const SellerRoutes = (): JSX.Element => {
   const location = useLocation();
   const theme = useTheme();
   const { pathname } = location;
+  const creatingListingStatus = useSelector(
+    (state: Store) => state.createListing
+  );
+  const isCreatListingSuccess =
+    creatingListingStatus.data?.status === 200 ? true : false;
 
   const getThemeOverride = (): {
     background?: string;
     screenBackground?: string;
     color?: string;
     headerTextColor?: keyof Theme['grey'];
-    shouldUseFullWidth?: boolean;
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
@@ -125,9 +131,13 @@ const SellerRoutes = (): JSX.Element => {
     if (pathname.includes('/seller/add-product/preview')) {
       return {
         color: theme.grey.shade9,
-        background: theme.grey.shade1,
-        screenBackground: theme.grey.shade1,
-        headerTextColor: 'shade9',
+        background: isCreatListingSuccess
+          ? theme.grey.shade9
+          : theme.grey.shade1,
+        screenBackground: isCreatListingSuccess
+          ? theme.grey.shade9
+          : theme.grey.shade1,
+        headerTextColor: isCreatListingSuccess ? 'noshade' : 'shade9',
         shouldIncludePadding: false,
         onBack: history.goBack,
         pageTitle: 'Product Preview',

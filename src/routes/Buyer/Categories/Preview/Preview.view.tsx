@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
-import { Typography } from 'components/module/CategoryCards/Landing/Card.style';
+import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
-import SearchAddressView from 'components/module/SearchAddress';
+import Search from 'components/module/Search/Search.view';
+import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row, Col, Visible, Hidden } from 'react-grid-system';
-import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
+import { Link, useLocation } from 'react-router-dom';
+import anchorImg from 'res/images/anchor.svg';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -20,26 +23,33 @@ import {
   PreviewContainer,
   LoadingContainer,
   FilterButton,
+  EmptyResults,
 } from './Preview.style';
 
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
-  // const theme = useTheme();
   const {
     results,
-    onChangeSearchValue,
     searchValue,
-    resetSearchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     onLoad,
     typeId,
-    addresses,
-    selectedAddress,
     selectAddress,
     modalFilterProps,
-    filterData,
-    onChangeFilter,
     isLoadingResults,
     isPendingAccount,
+
+    //filterData
+    //onChangeFilter,
   } = props;
+
+  const location = useLocation();
+  const locationState: {
+    title?: string;
+  } = location.state || {};
+  const isSearch = location.pathname.includes(BUYER_ROUTES.SEARCH);
+  const title = locationState?.title || 'Category';
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
     selectAddress(typeId);
@@ -47,103 +57,125 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   }, []);
 
   return (
-    <PreviewContainer>
-      <Row className="search-row">
-        <Col md={12}>
-          <SearchAddressView />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <div className="subheader">
-            <div className="result-count-container">
-              <Typography variant="title5" weight="regular">
-                Results
+    <BoxContainer>
+      <PreviewContainer>
+        <div className="header">
+          {!isSmallScreen ? (
+            <Breadcrumbs
+              sections={
+                isSearch
+                  ? [
+                      { label: 'Search', link: BUYER_ROUTES.SEARCH },
+                      { label: title },
+                    ]
+                  : [
+                      { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+                      { label: title },
+                    ]
+              }
+            />
+          ) : (
+            <div className="left-header">
+              <Typography variant="title4" weight="500">
+                {title}
               </Typography>
-              <Typography
-                style={{ marginLeft: 10 }}
-                variant="title5"
-                weight="bold"
-              >
-                {results.length}
+              <FilterButton onClick={modalFilterProps.onClickClose}>
+                <Typography variant="overline" className="btn-text">
+                  Filters
+                </Typography>
+                <Filter />
+              </FilterButton>
+            </div>
+          )}
+
+          <div className="right-header">
+            {!isSmallScreen && (
+              <FilterButton onClick={modalFilterProps.onClickClose}>
+                <Typography variant="overline" className="btn-text">
+                  Filters
+                </Typography>
+                <Filter />
+              </FilterButton>
+            )}
+
+            <Search
+              className="search"
+              placeholder={`Search for vendor`}
+              value={searchValue}
+              onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
+              rounded
+            />
+          </div>
+        </div>
+
+        {isLoadingResults && (
+          <LoadingContainer>
+            <Spinner />
+          </LoadingContainer>
+        )}
+
+        {!isLoadingResults && results && results.length === 0 && (
+          <EmptyResults>
+            <div>
+              <Typography variant="title5" weight="700">
+                No search results for &quot;{searchValue}&quot;
+              </Typography>
+              <Typography variant="label" weight="400" color="shade7">
+                It seems we can’t find any results based on your search.
               </Typography>
             </div>
-            <Visible xs sm>
-              <FilterButton
-                onClick={modalFilterProps.onClickClose}
-                text="Filters"
-                icon={<Filter />}
-                textVariant="caption"
-                textWeight="500"
-              />
-            </Visible>
-          </div>
-        </Col>
-      </Row>
 
-      <Row style={{ paddingLeft: 8 }}>
-        <Hidden xs sm>
-          <Col md={4} lg={4} xl={3}>
-            <FilterArea
-              filterData={filterData}
-              onChangeFilter={onChangeFilter}
-            />
-          </Col>
-        </Hidden>
-        <Col xs={12} sm={12} md={8} lg={8} xl={9}>
-          {!isLoadingResults && results && results.length > 0 && (
-            <Row>
-              {results.map((product) => {
-                return (
-                  <Col
-                    xxl={4}
-                    xl={6}
-                    lg={12}
-                    md={12}
-                    sm={6}
-                    xs={12}
-                    key={product.id}
-                    className="market-item"
-                  >
-                    <Link to={`/buyer/product/${product.id}`}>
-                      <PreviewCard
-                        key={product.id}
-                        id={product.id}
-                        images={product.images}
-                        type={product.type}
-                        price={toPrice(product.price)}
-                        remaining={product.remaining.toFixed(2)}
-                        coop={product.coop}
-                        minimumOrder={product.minimumOrder}
-                        origin={product.origin}
-                        weight={sizeToString(
-                          product.size.unit,
-                          product.size.from,
-                          product.size.to
-                        )}
-                        isAquafuture={product.isAquafuture}
-                        unit={product.measurementUnit}
-                        state={product.state}
-                        hiddenVendor={isPendingAccount}
-                        hiddenPrice={isPendingAccount}
-                      />
-                    </Link>
-                  </Col>
-                );
-              })}
-            </Row>
-          )}
-          {isLoadingResults && (
-            <LoadingContainer>
-              <Spinner width={24} height={24} />
-            </LoadingContainer>
-          )}
-        </Col>
-      </Row>
+            <img src={anchorImg} />
+          </EmptyResults>
+        )}
 
-      <FilterModal {...modalFilterProps} />
-    </PreviewContainer>
+        {!isLoadingResults && results && results.length > 0 && (
+          <Row>
+            {results.map((product) => {
+              return (
+                <Col
+                  key={product.id}
+                  xxl={3}
+                  xl={4}
+                  lg={6}
+                  md={12}
+                  sm={6}
+                  xs={12}
+                  className="preview-col"
+                >
+                  <Link to={BUYER_ROUTES.PRODUCT_DETAIL(product.id)}>
+                    <PreviewCard
+                      key={product.id}
+                      id={product.id}
+                      images={product.images}
+                      type={product.type}
+                      price={toPrice(product.price)}
+                      remaining={product.remaining.toFixed(2)}
+                      coop={product.coop}
+                      minimumOrder={product.minimumOrder}
+                      origin={product.origin}
+                      weight={sizeToString(
+                        product.size.unit,
+                        product.size.from,
+                        product.size.to
+                      )}
+                      isAquafuture={product.isAquafuture}
+                      unit={product.measurementUnit}
+                      state={product.state}
+                      hiddenVendor={isPendingAccount}
+                      hiddenPrice={isPendingAccount}
+                    />
+                  </Link>
+                </Col>
+              );
+            })}
+          </Row>
+        )}
+
+        <FilterModal {...modalFilterProps} />
+      </PreviewContainer>
+    </BoxContainer>
   );
 };
 

@@ -19,6 +19,7 @@ export type GetAllListingsResponseItem = {
   sizeId: string;
   sizeFrom?: string;
   sizeTo?: string;
+  categoryName: string;
   catchDate: string; // ex. yyyy-mm-dd
   description: string; // note
   fishermanId: string;

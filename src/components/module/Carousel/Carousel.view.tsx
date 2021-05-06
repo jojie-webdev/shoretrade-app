@@ -1,15 +1,8 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Badge from 'components/base/Badge';
-import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
-import SwiperCore, { Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { parseImageUrl } from 'utils/parseImageURL';
-
-import { CarouselProps } from './Carousel.props';
 import {
   SwiperArea,
   ArrowArea,
@@ -18,12 +11,24 @@ import {
   LeftInsideArrowArea,
   RightInsideArrowArea,
   ArrowButton,
+  PaginationArea,
   BadgeContainer,
-} from './Carousel.style';
+  ActionButtonContainer,
+  ThumbNavContainer,
+  ThumbNav,
+} from 'components/module/Carousel/Carousel.style';
+import SwiperCore, { Autoplay, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
-SwiperCore.use([Autoplay]);
+import { CarouselProps } from './Carousel.props';
+
+SwiperCore.use([Autoplay, Pagination]);
 
 const Carousel = (props: CarouselProps): JSX.Element => {
+  const theme = useTheme();
+
   const {
     images,
     id,
@@ -34,13 +39,17 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowWidth,
     justifyArrows,
     hideArrowArea,
-    aspectRatio = '16:9',
+    aspectRatio = '8:7',
     addMargin,
     arrowInside,
     showAquafuture,
     showAlmostGone,
+    showActionButton,
+    actionButton,
+    variant = 'bullet',
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState<any>(0);
 
   const swiperItems = images.map((image) => {
     return (
@@ -87,7 +96,73 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     return <></>;
   }
 
-  const hideOutsideArrows = arrowInside || hideArrowArea || false;
+  if (variant === 'thumbnail') {
+    return (
+      <SwiperContainer
+        height={height}
+        aspectRatio={aspectRatio}
+        addMargin={addMargin}
+        onResize={() => {
+          setShowSwiperItems(false);
+        }}
+        variant={variant}
+      >
+        <SwiperArea>
+          <BadgeContainer>
+            {showAquafuture && (
+              <Badge badgeColor={theme.grey.shade8}>
+                <Typography color="shade4" variant="overline">
+                  Aquafuture
+                </Typography>
+              </Badge>
+            )}
+            {showAlmostGone && (
+              <Badge badgeColor={theme.brand.warning}>
+                <Typography style={{ color: '#FFF1E9' }} variant="overline">
+                  Almost Gone!
+                </Typography>
+              </Badge>
+            )}
+          </BadgeContainer>
+          <Swiper
+            preloadImages={false}
+            lazy={true}
+            pagination={{
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable: true,
+            }}
+            loop={false}
+            spaceBetween={30}
+            onSwiper={(swiper) => {
+              setSwiperRef(swiper);
+            }}
+            onSlideChange={(swiper) => {
+              console.log(swiper.activeIndex);
+              swiper.update();
+            }}
+          >
+            {swiperItems}
+          </Swiper>
+          <ThumbNavContainer>
+            {images.map((image, idx) => (
+              <ThumbNav
+                active={swiperRef && activeSlideIndex === idx}
+                onClick={() => {
+                  swiperRef.slideTo(idx, 1000);
+                  setActiveSlideIndex(idx);
+                }}
+                key={image}
+                className="swiper-lazy"
+                src={image}
+              />
+            ))}
+          </ThumbNavContainer>
+        </SwiperArea>
+      </SwiperContainer>
+    );
+  }
+
   return (
     <SwiperContainer
       height={height}
@@ -96,69 +171,23 @@ const Carousel = (props: CarouselProps): JSX.Element => {
       onResize={() => {
         setShowSwiperItems(false);
       }}
+      variant="bullet"
     >
-      {!hideOutsideArrows && (
-        <ArrowArea
-          style={{
-            width: arrowAreaWidth,
-            justifyContent: justifyArrows ? 'flex-start' : undefined,
-          }}
-        >
-          {images.length > 1 && (
-            <Touchable
-              circle
-              onPress={() => {
-                if (swiperRef) {
-                  swiperRef.slidePrev();
-                }
-              }}
-            >
-              <CarouselChevronLeft width={18} height={18} />
-            </Touchable>
-          )}
-        </ArrowArea>
-      )}
-      <SwiperArea
-        style={{
-          width: hideOutsideArrows ? '100%' : swiperAreaWidth,
-        }}
-      >
-        {arrowInside && images.length > 1 && (
-          <>
-            <LeftInsideArrowArea>
-              <ArrowButton
-                onClick={() => {
-                  if (swiperRef) {
-                    swiperRef.slidePrev();
-                  }
-                }}
-              >
-                <CarouselChevronLeft width={14} height={14} />
-              </ArrowButton>
-            </LeftInsideArrowArea>
-            <RightInsideArrowArea>
-              <ArrowButton
-                onClick={() => {
-                  if (swiperRef) {
-                    swiperRef.slideNext();
-                  }
-                }}
-              >
-                <CarouselChevronRight width={14} height={14} />
-              </ArrowButton>
-            </RightInsideArrowArea>
-          </>
-        )}
+      <SwiperArea>
+        <ActionButtonContainer>
+          {showActionButton ? actionButton : ''}
+        </ActionButtonContainer>
+
         <BadgeContainer>
           {showAquafuture && (
-            <Badge badgeColor="#111E2B">
+            <Badge badgeColor={theme.grey.shade8}>
               <Typography color="shade4" variant="overline">
                 Aquafuture
               </Typography>
             </Badge>
           )}
           {showAlmostGone && (
-            <Badge badgeColor="#FFA26B">
+            <Badge badgeColor={theme.brand.warning}>
               <Typography style={{ color: '#FFF1E9' }} variant="overline">
                 Almost Gone!
               </Typography>
@@ -171,6 +200,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           slidesPerView={1}
           loop={loop && images.length > 1}
           initialSlide={0}
+          pagination={{
+            el: '.swiper-pagination',
+          }}
           autoplay={
             images.length !== 0 && autoplay
               ? {
@@ -184,28 +216,8 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         >
           {showSwiperItems && swiperItems}
         </Swiper>
+        {images.length > 1 && <div className="swiper-pagination" />}
       </SwiperArea>
-      {!hideOutsideArrows && (
-        <ArrowArea
-          style={{
-            width: arrowAreaWidth,
-            justifyContent: justifyArrows ? 'flex-end' : undefined,
-          }}
-        >
-          {images.length > 1 && (
-            <Touchable
-              circle
-              onPress={() => {
-                if (swiperRef) {
-                  swiperRef.slideNext();
-                }
-              }}
-            >
-              <CarouselChevronRight width={18} height={18} />
-            </Touchable>
-          )}
-        </ArrowArea>
-      )}
     </SwiperContainer>
   );
 };

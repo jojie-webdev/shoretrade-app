@@ -1,13 +1,24 @@
+import { Dispatch } from 'react';
+
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-export type Option = { label: string; value: string; groupOrder: number };
+export type SizeInputProps = {
+  metric: string;
+  fromSize: string;
+  setFromSize: Dispatch<string>;
+  toSize: string;
+  setToSize: Dispatch<string>;
+  disabled?: boolean;
+};
 
 export type Step3PublicProps = {
-  onSelectSpecifications: (
-    specificationIds: string[],
-    onSelectSpecifications: string[]
-  ) => void;
+  onSelectSizes: (sizes: {
+    sizeFrom?: string;
+    sizeTo?: string;
+    isUngraded: boolean;
+  }) => void;
+  navBack: () => void;
 };
 
 export type Step3Props = Step3PublicProps & {

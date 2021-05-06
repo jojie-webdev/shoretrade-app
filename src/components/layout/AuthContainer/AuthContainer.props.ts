@@ -9,7 +9,9 @@ export interface AuthContainerProps {
   containerBackground?: string;
   minHeight?: string;
   noLogo?: boolean;
+  horizontalLogo?: boolean;
   logoContainerMarginBottomHeight?: number;
   isRegister?: boolean;
+  isLogin?: boolean;
   mobileFooter?: React.ReactNode;
 }

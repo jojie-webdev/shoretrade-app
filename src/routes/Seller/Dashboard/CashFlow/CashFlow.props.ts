@@ -6,4 +6,6 @@ export interface CashFlowGeneratedProps {
     values: any[];
     dates: any[];
   };
+  breadCrumbSections: any[];
+  isEarning: boolean;
 }

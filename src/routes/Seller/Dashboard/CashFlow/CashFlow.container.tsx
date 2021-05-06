@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -15,11 +16,22 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 const CashFlow = (): JSX.Element => {
   const location: { state: any } = useLocation();
-  const { months = 'FY' }: { months: string } = useParams();
+  const {
+    months = 'FY',
+    isEarning,
+  }: { months: string; isEarning: string } = useParams();
   const token = useSelector((state: Store) => state.auth.token) || '';
 
-  const innerRouteTitle = location.state?.innerRouteTitle || 'Cash Flow';
-
+  const innerRouteTitle =
+    location.state?.innerRouteTitle || 'Cash Flow Details';
+  let breadCrumbSections = [];
+  const offerListBreadCrumb = [
+    { label: 'Dashboard', link: SELLER_ROUTES.DASHBOARD },
+    {
+      label: innerRouteTitle,
+    },
+  ];
+  breadCrumbSections = offerListBreadCrumb;
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState<{ values: number[]; dates: string[] }>({
     values: [],
@@ -108,6 +120,8 @@ const CashFlow = (): JSX.Element => {
     name: name(),
     isLoading,
     data,
+    breadCrumbSections,
+    isEarning: isEarning === 'true' ? true : false,
   };
   return <CashFlowView {...generatedProps} />;
 };

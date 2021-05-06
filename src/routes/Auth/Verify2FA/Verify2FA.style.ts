@@ -1,19 +1,14 @@
-import { Help, ArrowLeft } from 'components/base/SVG';
+import { Help } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import FormikTextField from 'components/module/FormikTextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
-  padding: 40px 40px 24px;
-  padding: 40px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  overflow-y: auto;
-  overflow-x: hidden;
+export const MobileContainer = styled.div`
+  padding: 16px 24px 24px 24px;
+  min-height: calc(100vh - ${MOBILE_HEADER_HEIGHT}px);
+  background-color: ${({ theme }) =>
+    theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};
 `;
 
 export const ContentWrapper = styled.div`
@@ -33,7 +28,6 @@ export const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  /* margin-top: 347px; */
   position: absolute;
   bottom: 0;
   left: 5%;
@@ -47,18 +41,13 @@ export const TitleContainer = styled.div`
   height: 32px;
 `;
 
-export const BackIcon = styled(ArrowLeft)``;
-
 export const Title = styled(Typography)`
   margin-left: 8px;
 `;
 
 export const GuideContainer = styled.div`
   margin-top: 8px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 `;
 
 export const GuideText = styled(Typography)`
@@ -111,7 +100,11 @@ export const CodeField = styled.input`
 export const Verify2FAButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 56px;
+  margin-top: 24px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 32px;
+  }
 `;
 
 export const FooterContainer = styled.div`
@@ -125,12 +118,6 @@ export const FooterIcon = styled(Help)`
   margin-bottom: 2px;
 `;
 
-export const FooterText = styled(Typography)``;
-
 export const FooterLink = styled(Typography)`
-border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
-  /* border-bottom: 1px solid
-    ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.shade6 : theme.brand.primary}; */
-  
+  border-bottom: 1px solid ${({ theme }) => theme.grey.shade6};
 `;

@@ -5,6 +5,7 @@ export const Container = styled.div<{ fluid: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: ${({ fluid }) => (fluid ? 'auto' : '100%')};
   width: 100%;
 `;

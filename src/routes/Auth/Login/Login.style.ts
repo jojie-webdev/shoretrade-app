@@ -1,39 +1,14 @@
-import { Lock } from 'components/base/SVG';
+import { Help, Lock } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
-
-export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
 
 export const ContentWrapper = styled.div`
   width: 100%;
   display: flex;
   flex: 1;
   flex-direction: column;
-`;
-
-export const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-`;
-
-export const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  height: 64px;
 
   .row {
     display: flex;
@@ -43,8 +18,24 @@ export const Footer = styled.div`
   }
 `;
 
-export const Title = styled(Typography)`
-  font-weight: bold;
+export const Content = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  @media ${BREAKPOINTS['sm']} {
+    .touchable {
+      justify-content: flex-start;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
 `;
 
 export const RegisterLinkContainer = styled.div`
@@ -71,6 +62,10 @@ export const RegisterLink = styled(Typography)`
 
 export const Email = styled(FormikTextField)`
   margin-top: 48px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 12px;
+  }
 `;
 
 export const Password = styled(FormikTextField)`
@@ -81,6 +76,11 @@ export const LoginButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 28px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 44px;
+    margin-bottom: 8px;
+  }
 `;
 
 export const ForgotPasswordContainer = styled.div`
@@ -91,6 +91,10 @@ export const ForgotPasswordContainer = styled.div`
     `1px solid ${
       theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade7
     }`};
+
+  @media ${BREAKPOINTS['sm']} {
+    border-bottom: none;
+  }
 `;
 
 export const ForgotPasswordIcon = styled(Lock)`
@@ -98,6 +102,20 @@ export const ForgotPasswordIcon = styled(Lock)`
   margin-bottom: 2px;
 `;
 
-export const ForgotPasswordText = styled(Typography)`
-  font-size: ${pxToRem(14)};
+export const SignupContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Signup = styled(Typography)`
+  margin-left: 8px;
+  border-bottom: ${({ theme }) =>
+    `1px solid ${
+      theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade7
+    }`};
+`;
+
+export const SignupIcon = styled(Help)`
+  margin-right: 11px;
+  margin-bottom: 2px;
 `;

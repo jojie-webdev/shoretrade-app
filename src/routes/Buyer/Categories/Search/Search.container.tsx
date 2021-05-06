@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,8 @@ import CategoriesSearchView from './Search.view';
 const CategoriesSearch = (): JSX.Element => {
   const dispatch = useDispatch();
   const { id }: any = useParams();
+
+  const [search, setSearch] = useState('');
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -28,21 +30,28 @@ const CategoriesSearch = (): JSX.Element => {
     useSelector((state: Store) => state.getListingTypesByCategory.pending) ||
     false;
 
-  const isSuccess =
-    useSelector(
-      (state: Store) => state.getListingTypesByCategory.data?.status === 200
-    ) || false;
-
-  const results =
+  const results = (
     useSelector(
       (state: Store) => state.getListingTypesByCategory.data?.data.type
-    ) || [];
+    ) || []
+  ).filter((c) =>
+    search ? c.name.toLowerCase().includes(search.toLowerCase()) : true
+  );
 
   const onLoad = (categoryId: string) => {
     dispatch(
       getListingTypesByCategoryActions.request({ categoryId: categoryId })
     );
   };
+
+  const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const onResetSearchValue = () => {
+    setSearch('');
+  };
+
   useEffect(() => {
     if (addressCount > 0 && id && previousId !== id) {
       onLoad(id);
@@ -52,8 +61,10 @@ const CategoriesSearch = (): JSX.Element => {
   const generatedProps: CategoriesSearchGeneratedProps = {
     loading,
     results,
-    isSuccess,
     isPendingAccount,
+    search,
+    onChangeSearchValue,
+    onResetSearchValue,
   };
   return <CategoriesSearchView {...generatedProps} />;
 };

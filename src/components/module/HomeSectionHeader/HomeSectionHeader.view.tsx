@@ -15,17 +15,22 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
 
   return (
     <Container noMargin={noMargin}>
-      <Typography variant="title5" color="shade8">
+      <Typography
+        variant="overline"
+        color="shade6"
+        style={{ cursor: 'pointer' }}
+        onClick={onClick}
+      >
         {title}
       </Typography>
-      <Button
+      {/* <Button
         text="See All"
         variant="unselected"
         size="sm"
         icon={<ArrowRight fill="#E35D32" />}
         style={{ padding: '4px 8px' }}
         onClick={onClick}
-      />
+      /> */}
     </Container>
   );
 };

@@ -2,11 +2,20 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 40px 80px;
+  padding: 48px;
   /* position: relative; */
 
+  @media ${BREAKPOINTS['genericTablet']} {
+    padding: 32px;
+  }
+
   @media ${BREAKPOINTS['sm']} {
-    padding: 40px 20px;
+    padding: 20px 20px;
+    padding-top: 16px;
+  }
+
+  .title-step-text {
+    margin-bottom: 20px;
   }
 `;
 
@@ -23,4 +32,19 @@ export const ProgressIndicator = styled.div`
     height: 5px;
     z-index: 100;
   }
+`;
+export const SearchContainerDesktop = styled.div`
+  width: 308px;
+  margin-top: -10px;
+  @media ${BREAKPOINTS['iPad']} {
+    width: 250px;
+  }
+`;
+
+export const InnerHeaderContainer = styled.div<{ currentPage: number }>`
+  ${(props) =>
+    props.currentPage === 2 &&
+    `display: flex;
+    flex-direction: row;
+    justify-content: space-between;`}
 `;

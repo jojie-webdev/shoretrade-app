@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
@@ -24,28 +25,71 @@ export const FilterRow = styled(Row)`
     align-items: center;
     flex-wrap: wrap;
 
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 24px;
+    }
+
     .btn {
       margin-right: 12px;
       margin-bottom: 24px;
-
+      padding:14px;
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }
     }
+
+    .btn-abso {
+      @media ${BREAKPOINTS['sm']} {
+        position: absolute;
+        right: 0;
+        margin-right: 16px;
+      }
+    }
   }
-`;
 
-export const TotalSalesRow = styled(Row)`
-  margin-bottom: 32px;
-
-  .paid-col {
+  .modal-col {
     @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 8px;
+      margin-bottom: 0px;
     }
   }
 `;
 
-export const MonthlyRow = styled(Row)``;
+export const MobileFilterButton = styled(Button)`
+  background-color: ${(props) =>
+    props.variant === 'unselected' && props.theme.grey.shade8};
+`;
+
+export const TotalSalesRow = styled(Row)`
+  margin-bottom: 32px;
+`;
+
+export const MonthlyRow = styled(Row)`
+  .many-cards {
+    width: 202px;
+  }
+`;
+export const SalesRow = styled(Row)`
+  width: 100%;
+  padding-left: 24px;
+
+  @media ${BREAKPOINTS['sm']} {
+    .figma-width {
+      width: 156px !important;
+      min-width: 156px;
+    }
+
+    .pending-card {
+      width: 170px !important;
+      min-width: 170px;
+    }
+  }
+  @media ${BREAKPOINTS['ipadPro']} {
+    .figma-width {
+      width: 200px !important;
+      min-width: 200px;
+    }
+  }
+`;
 
 export const MonthlyContainer = styled.div`
   margin-bottom: 32px;
@@ -62,14 +106,21 @@ export const SalesCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
   border-radius: 4px;
   margin-right: 24px;
-  min-width: 200px;
-
+  width: 308px;
+  min-width: 202px;
+  height: 100%;
   .price {
     margin-bottom: 16px;
   }
 
   .overline {
     margin-bottom: 8px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 170px !important;
+    min-width: 170px;
+    margin-right: 16px;
   }
 `;
 

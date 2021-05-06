@@ -2,33 +2,31 @@ import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
 export type Step7PublicProps = {
-  onUpdateDetails: ({
-    pricePerKilo,
-    catchDate,
-    ends,
-    origin,
-    description,
-    addressId,
-  }: {
-    pricePerKilo: number;
-    catchDate: Date;
-    ends: Date;
-    origin: {
-      suburb: string;
-      state: string;
-      countryCode: string;
-    };
-    description: string;
-    addressId: string;
-  }) => void;
-  marketEstimate: {
-    min: number | null;
-    max: number | null;
-  };
+  preview: () => void;
+  boxesDetails: Box[];
+  measurementUnit: string;
 };
+
+export interface BoxItemProps {
+  weight: number;
+  quantity: number;
+  count?: number;
+  unit: string;
+}
+
+export interface Box {
+  id: string;
+  weight: number;
+  quantity: number;
+  count?: number;
+}
 
 export type Step7Props = Step7PublicProps & {
   isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  saveListing: () => void;
+  onChangeCurrentPage: (page: number) => void;
+  preview: () => void;
+  navBack: () => void;
 };

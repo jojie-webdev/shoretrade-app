@@ -1,7 +1,5 @@
 import { ChangeEvent } from 'react';
 
-import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
-
 export interface SellerLandingGeneratedProps {
   search: string;
   results: {
@@ -10,5 +8,4 @@ export interface SellerLandingGeneratedProps {
     id: string;
   }[];
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  resetSearchValue: () => void;
 }

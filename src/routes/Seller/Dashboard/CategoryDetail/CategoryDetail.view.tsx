@@ -1,9 +1,12 @@
 import React from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Spinner from 'components/base/Spinner/Spinner.view';
 import { DropdownArrow, UpArrow } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
 
@@ -23,14 +26,22 @@ const CategoryDetailView = ({
   ...props
 }: CategoryDetailGeneratedProps) => {
   const theme = useTheme();
-
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
       <HeaderRow align="center" justify="between">
-        <InnerRouteHeader title={props.title} fullRow={false} />
-        <Typography variant="overline" color="shade6">
-          {props.dateRange}
-        </Typography>
+        {isSmallScreen ? (
+          <>
+            <InnerRouteHeader title="Categories" fullRow={false} />
+            <Typography variant="overline" color="shade6" className="text">
+              {props.dateRange}
+            </Typography>
+          </>
+        ) : (
+          <div className="padding-bread">
+            <Breadcrumbs sections={props.breadCrumbSections} />
+          </div>
+        )}
       </HeaderRow>
 
       {props.isLoading ? (

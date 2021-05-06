@@ -1,17 +1,8 @@
 import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row, Col } from 'react-grid-system';
-import styled, { css } from 'utils/styled';
-
-export const Container = styled.div`
-  flex-direction: row;
-  padding: 8px;
-
-  .description {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-`;
+import { Row } from 'react-grid-system';
+import styled from 'utils/styled';
 
 export const BannerContainer = styled.div`
   margin-bottom: 8px;
@@ -30,37 +21,29 @@ export const BannerContainer = styled.div`
 
 export const DetailsContainer = styled(Row)`
   height: 100%;
-`;
 
-export const SellerRatingContainer = styled.div<{ fishermanNotes?: string }>`
-  padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-
-  border: 2px solid #edeffa;
-
-  @media (max-width: 991px) {
-    border-width: 2px 2px 1px 2px;
-    border-radius: 0 0 0 0;
-  }
-
-  @media (min-width: 992px) {
-    border-width: 2px;
-    border-radius: 0px 0px 8px 8px;
+  .title {
+    margin-bottom: 1rem;
   }
 `;
 
-export const BoxContainer = styled.div`
+export const ProductBoxContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.noshade};
 `;
 
-export const DesiredQuantityContainer = styled.div`
+export const DesiredQuantityContainer = styled.div<{ withBackground: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  border-color: ${({ theme }) => theme.grey.shade2};
-  border: 2px solid #edeffa;
+
+  margin-top: ${({ theme, withBackground }) => (withBackground ? '24px' : 0)};
+
+  box-shadow: ${({ theme, withBackground }) =>
+    withBackground ? '0 4px 12px rgba(41,43,50,0.04)' : ''};
+
+  background: ${({ theme, withBackground }) =>
+    withBackground ? theme.grey.noshade : 'rgba(0,0,0,0)'};
+
+  padding: ${({ theme, withBackground }) => (withBackground ? '24px' : 0)};
 
   @media (max-width: 991px) {
     border-width: 1px 2px 2px 2px;
@@ -74,6 +57,7 @@ export const DesiredQuantityContainer = styled.div`
 
   .content {
     display: flex;
+    margin-top: -16px;
     flex-direction: column;
   }
 
@@ -81,6 +65,10 @@ export const DesiredQuantityContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding-top: 48px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 40px;
   }
 `;
 
@@ -99,11 +87,32 @@ export const BoxRadioContainer = styled.div`
 export const ButtonContainer = styled.div`
   margin-top: 32px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 export const AddToCartButton = styled(Button)`
   @media ${BREAKPOINTS['sm']} {
     width: 50%;
   }
+`;
+
+export const EstimationsContainer = styled.div`
+  display: flex;
+  margin-top: 8px;
+`;
+
+export const TopBarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: 12px;
 `;

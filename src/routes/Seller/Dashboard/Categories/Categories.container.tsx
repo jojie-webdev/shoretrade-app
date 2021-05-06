@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { SELLER_DASHBOARD_ROUTES } from 'consts';
+import { SELLER_DASHBOARD_ROUTES, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -95,11 +95,21 @@ const Categories = (): JSX.Element => {
     };
   };
 
+  let breadCrumbSections = [];
+  const offerListBreadCrumb = [
+    { label: 'Categories', link: SELLER_ROUTES.DASHBOARD },
+    {
+      label: 'Categories Stats',
+    },
+  ];
+  breadCrumbSections = offerListBreadCrumb;
+
   const generatedProps = {
     dateRange: dateRange(),
     data,
     isLoading,
     toCategoryDetails,
+    breadCrumbSections,
   };
   return <CategoriesView {...generatedProps} />;
 };

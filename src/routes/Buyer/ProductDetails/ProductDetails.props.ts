@@ -1,9 +1,29 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-import { ProductDetailsCard1Props } from 'components/module/ProductDetailsCard1/ProductDetailsCard1.props';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
-import { ProductSellerRatingProps } from 'components/module/ProductSellerRating/ProductSellerRating.props';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+
+export interface ProductSellerRatingProps {
+  name: string;
+  isSmallName?: boolean;
+  uri?: string;
+  location?: string;
+  rating: string;
+  isFavorite?: boolean;
+  onFavorite: () => Promise<void>;
+  onClickSeller: () => void;
+}
+
+interface ProductDetailsCard1Props {
+  cBorderWidth?: string;
+  cBorderRadius?: string;
+  title: string;
+  tags?: { label: string }[];
+  size?: string;
+  location?: string;
+  isFavorite?: boolean;
+  onFavorite?: () => void;
+}
 
 export interface ProductDetailsGeneratedProps {
   currentListing: GetListingResponseItem;
