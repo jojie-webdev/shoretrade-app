@@ -1,18 +1,19 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  background: ${(props) => props.theme.grey.shade9};
 `;
 
 export const PreviewImage = styled.img`
-  height: 96px;
-  width: 96px;
-  border: 1px solid red;
-  margin-right: 8px;
-  border-radius: 4px;
+  height: 66px;
+  width: 66px;
+  margin: 11px 17px;
+  border-radius: 8px;
 `;
 
 export const DeleteBadge = styled.button`
@@ -30,4 +31,20 @@ export const DeleteBadge = styled.button`
 `;
 export const DeleteText = styled(Typography)`
   margin-left: 4px;
+`;
+
+export const FileDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 38%;
+  @media ${BREAKPOINTS['sm']} {
+    margin-right: 8px;
+  }
+  .format-size {
+    display: flex;
+    flex-direction: row;
+    .filesize-text {
+      margin-right: 8px;
+    }
+  }
 `;
