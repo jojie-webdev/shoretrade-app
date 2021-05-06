@@ -19,7 +19,7 @@ import EmptyStateView from 'components/module/EmptyState';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -308,13 +308,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 <></>
               )}
             </RequestDetailsCardContainer>
-            {data.status !== 'DELETED' && (
-              <Button
-                text="Delete"
-                onClick={() => setShowDelete(true)}
-                variant="primary"
-              />
-            )}
+            <Hidden xs>
+              {data.status !== 'DELETED' && (
+                <Button
+                  text="Delete"
+                  onClick={() => setShowDelete(true)}
+                  variant="primary"
+                />
+              )}
+            </Hidden>
           </Col>
           <Col md={12} sm={12} xl={8}>
             <Switch>

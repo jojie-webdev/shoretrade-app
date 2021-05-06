@@ -25,7 +25,7 @@ export const Content = styled.div<{
 }>`
   width: 100%;
   overflow: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  padding: ${(props) => (props.isOpen ? '16px 0' : '0px')};
+  padding: ${(props) => (props.isOpen ? '16px' : '0px')};
   padding-top: ${({ withBackground, isOpen }) => {
     if (!isOpen) {
       return '0';

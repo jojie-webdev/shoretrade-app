@@ -7,10 +7,10 @@ import { MobileStickyBottomProps } from './MobileStickyBottom.props';
 import { Container } from './MobileStickyBottom.style';
 
 const MobileStickyBottom = (props: MobileStickyBottomProps): JSX.Element => {
-  const { children } = props;
+  const { children, withBackground = false } = props;
   return (
     <Visible xs sm>
-      <Container>{children}</Container>
+      <Container withBackground={withBackground}>{children}</Container>
     </Visible>
   );
 };

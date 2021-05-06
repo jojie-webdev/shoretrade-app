@@ -17,6 +17,10 @@ export const RequestDetailsContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 16vh;
+  }
 `;
 
 export const RequestDetailsCardContainer = styled(Interactions)`
