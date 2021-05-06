@@ -5,6 +5,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
+import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
 import { Amex, Cart, Mastercard, Visa } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -14,10 +15,10 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form, Formik, connect, FormikProps } from 'formik';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import accountCredit from 'res/images/pm-account-credit.svg';
-import credit from 'res/images/pm-credit.svg';
-import finance from 'res/images/pm-finance-invoice.svg';
-import payLater from 'res/images/pm-pay-later.svg';
+import {
+  PAYMENT_METHODS,
+  TABS,
+} from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.constants';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -29,17 +30,12 @@ import {
   Container,
   Method,
   BottomRow,
+  Footer,
   CCImage,
   CreditCardInteraction,
+  MobileTopRow,
 } from './PaymentMethod.style';
 import { isValid } from './PaymentMethod.validation';
-
-const PAYMENT_METHODS = [
-  { label: 'Account Credit', value: 'account', img: accountCredit },
-  { label: 'Credit Card', value: 'card', img: credit },
-  { label: 'Buy Now, Pay Later', value: '', img: payLater, disabled: true },
-  { label: 'Finance & Invoice', value: '', img: finance, disabled: true },
-];
 
 //TODO: refactor with field set card
 const CardFields = (props: { formik?: any }) => {
@@ -95,7 +91,7 @@ const CardFields = (props: { formik?: any }) => {
       </Row>
 
       <Row>
-        <Col className="form-card-col" md={12} lg={6} xl={5}>
+        <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
             name="exp"
@@ -120,7 +116,7 @@ const CardFields = (props: { formik?: any }) => {
             }}
           />
         </Col>
-        <Col className="form-card-col" md={12} lg={6} xl={5}>
+        <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
             name="cvc"
@@ -164,8 +160,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
   const [paymentMethod, setPaymentMethod] = useState<'account' | 'card' | ''>(
     ''
   );
+  const [currentTab, setCurrentTab] = useState(TABS[0]);
 
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isTablet = useMediaQuery({ query: BREAKPOINTS['genericTablet'] });
 
   return (
@@ -214,10 +211,37 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           </div>
         )}
 
-        {(paymentMethod === '' || paymentMethod === 'account') && (
+        {isMobile && (paymentMethod === 'card' || paymentMethod === 'account') && (
+          <MobileTopRow>
+            {PAYMENT_METHODS.map((p) => (
+              <div
+                key={p.label}
+                className={`method ${
+                  p.value === paymentMethod ? 'method-active' : ''
+                }`}
+                onClick={() => {
+                  if (p.disabled) return;
+                  setPaymentMethod(p.value as any);
+                }}
+              >
+                <img src={p.img} style={{ width: p.mTopWidth }} />
+                <Typography variant="caption" align="center" weight="400">
+                  {p.label}
+                </Typography>
+              </div>
+            ))}
+          </MobileTopRow>
+        )}
+
+        {(paymentMethod === '' ||
+          (paymentMethod === 'account' && !isMobile)) && (
           <Row className="payment-methods" align="center" justify="between">
             {PAYMENT_METHODS.map(({ disabled, ...p }) => (
-              <Col key={p.label} width={isTablet ? '50%' : 225}>
+              <Col
+                key={p.label}
+                width={isTablet || isMobile ? '50%' : 225}
+                className="payment-method-col"
+              >
                 <Method
                   onClick={() => setPaymentMethod(p.value as any)}
                   disabled={disabled}
@@ -229,9 +253,17 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                       <Radio checked={paymentMethod === p.value} />
                     )}
                   </div>
-                  <img src={p.img} />
+                  <img
+                    src={p.img}
+                    style={{ width: isMobile ? p.mWidth : 'inherit' }}
+                  />
                   <div>
-                    <Typography align="center">{p.label}</Typography>
+                    <Typography
+                      variant={isMobile ? 'label' : 'body'}
+                      align="center"
+                    >
+                      {p.label}
+                    </Typography>
                     <Typography
                       variant="overlineSmall"
                       color="shade5"
@@ -251,120 +283,214 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
         {paymentMethod === 'card' && (
           <Row style={{ marginBottom: 24 }}>
-            <Col md={12} xl={6}>
-              <div className="cc-image-row">
-                <CCImage>
-                  <Visa height={32} />
-                </CCImage>
-                <CCImage>
-                  <Mastercard height={32} />
-                </CCImage>
-                <CCImage>
-                  <Amex height={32} />
-                </CCImage>
-              </div>
-
-              <Formik
-                innerRef={formRef}
-                initialValues={cardDetails}
-                onSubmit={(values: CardDetails) => {
-                  const finalValues = {
-                    ...values,
-                    isDefault: cardDetails.isDefault,
-                  };
-                  props.onAddCard(finalValues);
-                }}
-                validate={isValid}
-              >
-                <Form>
-                  <ConnectedCardFields />
-                </Form>
-              </Formik>
-
-              <div className="form-card-checkbox">
-                <Checkbox
-                  label="Set as default card"
-                  name="isDefault"
-                  checked={cardDetails.isDefault}
-                  onClick={() => {
-                    setCardDetails({
-                      isDefault: !cardDetails.isDefault,
-                    });
+            {isMobile && (
+              <Col style={{ marginBottom: 12 }}>
+                <SegmentedControls
+                  options={TABS}
+                  selectedOption={currentTab}
+                  onClickControl={(value) => {
+                    props.setSelectedCard('');
+                    setCurrentTab(value);
                   }}
                 />
-              </div>
-            </Col>
+              </Col>
+            )}
 
-            <Col md={12} xl={6}>
-              <Typography className="cc-title" variant="copy">
-                Credit Cards
-              </Typography>
+            {currentTab === TABS[0] ? (
+              <Col md={12} xl={6}>
+                <div className="cc-image-row">
+                  <CCImage>
+                    <Visa height={32} />
+                  </CCImage>
+                  <CCImage>
+                    <Mastercard height={32} />
+                  </CCImage>
+                  <CCImage>
+                    <Amex height={32} />
+                  </CCImage>
+                </div>
 
-              {cards.map((card) => (
-                <CreditCardInteraction
-                  key={card.id}
-                  {...card}
-                  type="radio"
-                  pressed={props.selectedCard === card.id}
-                  onClick={() =>
-                    props.setSelectedCard((prevState) => {
-                      if (prevState === card.id) return '';
-                      else return card.id;
-                    })
-                  }
-                />
-              ))}
-            </Col>
+                <Formik
+                  innerRef={formRef}
+                  initialValues={cardDetails}
+                  onSubmit={(values: CardDetails) => {
+                    const finalValues = {
+                      ...values,
+                      isDefault: cardDetails.isDefault,
+                    };
+                    props.onAddCard(finalValues);
+                  }}
+                  validate={isValid}
+                >
+                  <Form>
+                    <ConnectedCardFields />
+                  </Form>
+                </Formik>
+
+                <div className="form-card-checkbox">
+                  <Checkbox
+                    label="Set as default card"
+                    name="isDefault"
+                    checked={cardDetails.isDefault}
+                    onClick={() => {
+                      setCardDetails({
+                        isDefault: !cardDetails.isDefault,
+                      });
+                    }}
+                  />
+                </div>
+              </Col>
+            ) : (
+              <Col xs={12}>
+                {!isMobile && (
+                  <Typography className="cc-title" variant="copy">
+                    Credit Cards
+                  </Typography>
+                )}
+
+                {cards.map((card) => (
+                  <CreditCardInteraction
+                    key={card.id}
+                    {...card}
+                    type="radio"
+                    pressed={props.selectedCard === card.id}
+                    onClick={() =>
+                      props.setSelectedCard((prevState) => {
+                        if (prevState === card.id) return '';
+                        else return card.id;
+                      })
+                    }
+                  />
+                ))}
+              </Col>
+            )}
+
+            {!isMobile && (
+              <Col md={12} xl={6}>
+                <Typography className="cc-title" variant="copy">
+                  Credit Cards
+                </Typography>
+
+                {cards.map((card) => (
+                  <CreditCardInteraction
+                    key={card.id}
+                    {...card}
+                    type="radio"
+                    pressed={props.selectedCard === card.id}
+                    onClick={() =>
+                      props.setSelectedCard((prevState) => {
+                        if (prevState === card.id) return '';
+                        else return card.id;
+                      })
+                    }
+                  />
+                ))}
+              </Col>
+            )}
           </Row>
         )}
 
-        <BottomRow>
-          <div className="btns-container">
-            <Button
-              className="pay-btn"
-              text={
-                paymentMethod === 'card'
-                  ? 'Pay using credit card'
-                  : 'Pay using this method'
-              }
-              disabled={processingOrder || isLoading}
-              loading={processingOrder || isLoading}
-              onClick={() => setShowConfirmationModal(true)}
-            />
-          </div>
-
-          <div className="balances">
-            <div>
-              <Typography variant="overline" color="shade6">
-                CREDIT BALANCE
-              </Typography>
-              <Typography
-                variant="title6"
-                weight="bold"
-                align="right"
-                color="shade6"
-              >
-                {toPrice(props.balance)}
-              </Typography>
+        {!isMobile ? (
+          <BottomRow>
+            <div className="btns-container">
+              <Button
+                className="pay-btn"
+                text={
+                  paymentMethod === 'card'
+                    ? 'Pay using credit card'
+                    : 'Pay using this method'
+                }
+                disabled={processingOrder || isLoading || paymentMethod === ''}
+                loading={processingOrder || isLoading}
+                onClick={() => setShowConfirmationModal(true)}
+              />
             </div>
 
-            <div className="total-value">
-              <Typography variant="overline" color="shade6">
-                TOTAL VALUE
-              </Typography>
-              <Typography
-                variant="title6"
-                weight="bold"
-                align="right"
-                color="shade9"
-              >
-                {toPrice(props.totalValue)}
-              </Typography>
+            <div className="balances">
+              <div>
+                <Typography variant="overline" color="shade6">
+                  CREDIT BALANCE
+                </Typography>
+                <Typography
+                  variant="title6"
+                  weight="bold"
+                  align="right"
+                  color="shade6"
+                >
+                  {toPrice(props.balance)}
+                </Typography>
+              </div>
+
+              <div className="total-value">
+                <Typography variant="overline" color="shade6">
+                  TOTAL VALUE
+                </Typography>
+                <Typography
+                  variant="title6"
+                  weight="bold"
+                  align="right"
+                  color="shade9"
+                >
+                  {toPrice(props.totalValue)}
+                </Typography>
+              </div>
+
+              <Cart fill={theme.grey.shade4} />
+            </div>
+          </BottomRow>
+        ) : (
+          <Footer>
+            <div className="balances">
+              <div>
+                <Typography variant="caption" color="shade6" weight="400">
+                  Credit Balance
+                </Typography>
+                <Typography color="shade6" weight="400">
+                  {toPrice(props.balance)}
+                </Typography>
+              </div>
+
+              <div className="total-value">
+                <Typography
+                  variant="caption"
+                  color="shade6"
+                  weight="400"
+                  align="right"
+                >
+                  Total
+                </Typography>
+                <Typography
+                  variant="body"
+                  weight="bold"
+                  align="right"
+                  color="shade9"
+                >
+                  {toPrice(props.totalValue)}
+                </Typography>
+              </div>
             </div>
 
-            <Cart fill={theme.grey.shade4} />
-          </div>
-        </BottomRow>
+            <div className="btns-container">
+              <Button
+                className="pay-btn"
+                text={
+                  paymentMethod === 'card'
+                    ? 'Pay using credit card'
+                    : 'Pay using this method'
+                }
+                disabled={
+                  processingOrder ||
+                  isLoading ||
+                  paymentMethod === '' ||
+                  (currentTab === TABS[1] && !props.selectedCard)
+                }
+                loading={processingOrder || isLoading}
+                onClick={() => setShowConfirmationModal(true)}
+                takeFullWidth
+              />
+            </div>
+          </Footer>
+        )}
 
         <ConfirmationModal
           title="Final Order Confirmation?"

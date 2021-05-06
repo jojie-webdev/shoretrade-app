@@ -3,6 +3,10 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 150px;
+  }
+
   .breadcrumb-container {
     margin-bottom: 40px;
   }
@@ -14,8 +18,10 @@ export const Container = styled.div`
   .payment-methods {
     margin-bottom: 40px;
 
-    @media ${BREAKPOINTS['sm']} {
-      justify-content: center !important;
+    .payment-method-col {
+      @media ${BREAKPOINTS['sm']} {
+        padding: 0 8px !important;
+      }
     }
   }
 
@@ -75,19 +81,78 @@ export const BottomRow = styled.div`
       margin-bottom: 32px;
     }
 
-    @media ${BREAKPOINTS['sm']} {
-      flex-direction: column;
-      min-width: 100%;
-    }
-
     .total-value {
       @media ${BREAKPOINTS['genericTablet']} {
         margin: 0 26px;
       }
+    }
+  }
+`;
 
-      @media ${BREAKPOINTS['sm']} {
-        margin: 10px 0;
-      }
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  padding: 8px 0;
+  background-color: ${({ theme }) => theme.grey.shade2};
+  margin-left: -24px;
+
+  .btns-container {
+    padding: 0 24px;
+    margin-top: 16px;
+  }
+
+  .balances {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 8px 24px;
+    border-bottom: 1px solid ${({ theme }) => theme.grey.shade5};
+  }
+`;
+
+export const MobileTopRow = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 20px;
+  margin: -20px -20px 0 -20px;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .method {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 116px;
+    height: 80px;
+    padding: 14px 4px 8px 4px;
+    background-color: #ffffff;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    border-radius: 4px;
+    margin-right: 16px;
+  }
+
+  .method-active {
+    background-color: ${({ theme }) => theme.grey.shade8};
+    box-shadow: none;
+
+    img {
+      //primary
+      filter: invert(46%) sepia(86%) saturate(3223%) hue-rotate(347deg)
+        brightness(98%) contrast(82%);
+    }
+
+    p {
+      color: #ffffff;
     }
   }
 `;
@@ -102,8 +167,15 @@ export const Method = styled.div<{ disabled?: boolean }>`
   border-radius: 8px;
   padding: 19px 17px;
   margin-bottom: 24px;
-
   cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
+
+  @media ${BREAKPOINTS['sm']} {
+    height: 156px;
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    margin-bottom: 16px;
+    padding: 8px;
+  }
 
   &:hover {
     opacity: ${({ disabled }) => (disabled ? 1 : 0.75)};
