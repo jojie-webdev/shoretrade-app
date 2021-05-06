@@ -32,6 +32,11 @@ const PreviewContainer = (): JSX.Element => {
   const history = useHistory();
 
   const editableListing = useSelector((state: Store) => state.editableListing);
+  const creatingListingStatus = useSelector(
+    (state: Store) => state.createListing
+  );
+  const isCreatListingSuccess =
+    creatingListingStatus.data?.status === 200 ? true : false;
 
   const getFormData = () => {
     dispatch(
@@ -105,6 +110,7 @@ const PreviewContainer = (): JSX.Element => {
     listing,
     onCreate,
     isExisting,
+    isCreatListingSuccess,
   };
   return <ListingDetailsView {...generatedProps} />;
 };

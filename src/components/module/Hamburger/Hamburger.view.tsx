@@ -16,7 +16,7 @@ const Hamburger = (props: HamburgerProps): JSX.Element => {
         type="button"
       >
         <span className="hamburger-box">
-          <span className="hamburger-inner"></span>
+          <span className="hamburger-inner" />
         </span>
       </button>
     </Container>

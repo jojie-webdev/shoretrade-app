@@ -2,6 +2,7 @@ import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
 
 export interface SellingGeneratedProps {
   listings: GetAllListingsResponseItem[];
+  staticListings: GetAllListingsResponseItem[];
   pending: boolean;
   goToListingDetails: (id: string) => void;
   onClickRemoveListing: (listingId: string, companyId: string) => void;

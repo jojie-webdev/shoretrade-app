@@ -7,23 +7,21 @@ import { GetListingsByTypeResponseListingItem } from 'types/store/GetListingsByT
 export interface CategoriesPreviewGeneratedProps {
   results: GetListingsByTypeResponseListingItem[];
   isLoadingResults: boolean;
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   searchValue: string;
-  resetSearchValue: () => void;
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
   onLoad: (typeId: string) => void;
   typeId: string;
-  addresses: { label: string; value: string }[];
-  selectedAddress: string;
   selectAddress: (id: string) => void;
-  // setVisible: Dispatch<SetStateAction<boolean>>;
   modalFilterProps: FilterModalProps;
-  filterData?: FilterDataResponse;
-  onChangeFilter: (f: {
-    catchmentArea?: string;
-    sizeRangeFrom?: number | string;
-    sizeRangeTo?: number | string;
-    specifications?: string;
-    showUngraded?: boolean;
-  }) => void;
   isPendingAccount: boolean;
+
+  //filterData?: FilterDataResponse;
+  // onChangeFilter: (f: {
+  //   catchmentArea?: string;
+  //   sizeRangeFrom?: number | string;
+  //   sizeRangeTo?: number | string;
+  //   specifications?: string;
+  //   showUngraded?: boolean;
+  // }) => void;
 }

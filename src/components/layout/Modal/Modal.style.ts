@@ -29,6 +29,7 @@ export const ModalContainer = styled.div<{ backgroundColor?: string }>`
 
   @media ${BREAKPOINTS.sm} {
     max-width: 90%;
+    padding: 40px 24px;
   }
 `;
 
@@ -49,5 +50,9 @@ export const ExitButton = styled.button`
 
   :focus {
     outline: none;
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    right: calc(50vw - 35px);
   }
 `;

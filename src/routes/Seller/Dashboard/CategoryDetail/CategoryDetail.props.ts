@@ -3,4 +3,5 @@ export interface CategoryDetailGeneratedProps {
   dateRange: string;
   data: any[];
   isLoading: boolean;
+  breadCrumbSections: any[];
 }

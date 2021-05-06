@@ -34,6 +34,7 @@ export interface ListingProps {
       name?: string;
       rating?: any;
     };
+    avgBoxSize: string;
   };
   orderDetails: {
     price: string;
@@ -61,6 +62,9 @@ export interface ListingDetailsGeneratedProps {
   onCreate?: () => void;
   isExisting?: boolean;
   isPending?: boolean;
+  sellingDetailsBreadCrumbs?: any[];
+  isCreatListingSuccess?: boolean;
+  clearListing?: () => void;
 }
 
 export interface ListingDetailsProps

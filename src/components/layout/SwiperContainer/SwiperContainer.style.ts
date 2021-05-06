@@ -1,6 +1,9 @@
+import {
+  AspectRatio,
+  MediaQueries,
+} from 'components/layout/SwiperContainer/SwiperContainer.props';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-
-import { AspectRatio, MediaQueries } from './SwiperContainer.props';
 
 const ParentHeight: Record<AspectRatio, MediaQueries> = {
   '16:9': {
@@ -17,49 +20,99 @@ const ParentHeight: Record<AspectRatio, MediaQueries> = {
     '768': 240,
     '375': 156,
   },
+  '8:7': {
+    '1440': 445,
+    '1366': 445,
+    '1024': 445,
+    '768': 595,
+    '375': 287,
+  },
 };
 
 export const Parent = styled.div<{
   height?: string;
   aspectRatio: AspectRatio;
   addMargin?: boolean;
+  variant?: string;
 }>`
   display: flex;
-  height: ${({ height }) => height || '295px'};
+  height: ${({ height }) => height || '325px'};
   width: 100%;
 
   @media (min-width: 375px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375]}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375] + 30}px`};
   }
 
   @media (min-width: 768px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][768]}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][768] + 30}px`};
   }
 
   @media (min-width: 1024px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1024]}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1024] + 30}px`};
     margin-top: 0px;
   }
 
   @media (min-width: 1366px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1366]}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1366] + 30}px`};
   }
 
   @media (min-width: 1440px) {
-    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1440]}px`};
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][1440] + 30}px`};
+  }
+  ${(props) =>
+    props.variant === 'thumbnail' &&
+    `  @media ${BREAKPOINTS['ipadPro']} {
+    min-height: 394px;
+  }`}
+  @media ${BREAKPOINTS['sm']} {
+    min-height: 242px;
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ variant?: string }>`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
 
   .swiper-container {
     width: 100%;
     max-width: 100%;
     height: 100%;
     border-radius: 4px;
+
+    ${(props) =>
+      props.variant === 'thumbnail' &&
+      `   @media ${BREAKPOINTS['ipadPro']} {
+      min-height: 342px;
+      height: 342px;
+    }`}
+  }
+
+  .swiper-pagination {
+    display: block;
+    position: relative;
+    bottom: 0;
+
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border-radius: 100%;
+      background: ${({ theme }) => theme.grey.shade5};
+      opacity: 0.2;
+      margin: 0 4px;
+      @media ${BREAKPOINTS['sm']} {
+        background: ${({ theme }) => theme.grey.noshade};
+      }
+    }
+
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+      background: ${({ theme }) => theme.brand.primary};
+      @media ${BREAKPOINTS['sm']} {
+        background: ${({ theme }) => theme.grey.noshade};
+      }
+    }
   }
 `;

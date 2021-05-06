@@ -6,7 +6,6 @@ import Interactions from 'components/base/Interactions';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
 import { ArrowRight, DollarSign, Filter, Weight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -19,7 +18,7 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
-import { Container, FilterButton } from './Landing.style';
+import { Container, FilterButton, BadgeText } from './Landing.style';
 
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();

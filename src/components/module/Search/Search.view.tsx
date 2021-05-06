@@ -12,12 +12,7 @@ const Search = (props: SearchProps): JSX.Element => {
   return (
     <InputContainer className={className} rounded={rounded}>
       <SearchSVG height={16} width={16} />
-      <input
-        type="text"
-        placeholder="Placeholder"
-        {...inputProps}
-        value={value}
-      />
+      <input type="text" {...inputProps} value={value} />
       {resetValue && (
         <div onClick={resetValue} className="close-svg-container">
           <CloseFilled

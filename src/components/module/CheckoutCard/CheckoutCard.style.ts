@@ -1,6 +1,7 @@
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   margin-bottom: 16px;
@@ -72,4 +73,8 @@ export const Image = styled.img`
 export const TextValue = styled(Typography)`
   margin-left: 8px;
   margin-right: 16px;
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: ${pxToRem(12)};
 `;

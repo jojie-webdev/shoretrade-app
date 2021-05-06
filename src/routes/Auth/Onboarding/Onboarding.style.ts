@@ -8,6 +8,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 100px;
+  }
 `;
 
 export const SvgContainer = styled.div`

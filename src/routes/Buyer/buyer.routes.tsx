@@ -149,18 +149,13 @@ const BuyerRoutes = (): JSX.Element => {
     screenBackground?: string;
     color?: string;
     headerTextColor?: keyof Theme['grey'];
-    shouldUseFullWidth?: boolean;
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
-    useOuterWrapper?: boolean;
   } => {
     if (pathname.includes('/buyer/home')) {
       return {
-        shouldUseFullWidth: true,
-        shouldIncludePadding: false,
         pageTitle: firstName ? `Hello, ${firstName}` : '',
-        useOuterWrapper: true,
       };
     }
 
@@ -228,7 +223,7 @@ const BuyerRoutes = (): JSX.Element => {
           </Route>
         ))}
         <Route>
-          <Redirect to="/buyer/home"></Redirect>
+          <Redirect to="/buyer/home" />
         </Route>
       </Switch>
     </DashboardLayout>

@@ -6,7 +6,6 @@ import { pxToRem } from 'utils/Theme';
 const imgUrl = (url: string) => `"${url}"`;
 
 export const CardContainer = styled.div<{ img: string }>`
-  /* width: 265px; */
   width: 265px;
 
   .imgContainer {
@@ -18,7 +17,7 @@ export const CardContainer = styled.div<{ img: string }>`
   .card {
     background: white;
     margin-bottom: 2em;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
     border-radius: 4px;
     padding-bottom: 16px;
     width: 265px;

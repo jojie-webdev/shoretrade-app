@@ -1,64 +1,63 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
 
-// Step 1
+// Step 2
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-
-  .btn-container {
-    display: flex;
-    margin-top: 20px;
+  .search-row {
+    margin-bottom: 32px;
 
     @media ${BREAKPOINTS['sm']} {
-      flex-direction: column;
+      margin-bottom: 8px;
     }
   }
 
-  .btn-container > button {
-    margin-left: 16px;
-
-    @media ${BREAKPOINTS['sm']} {
+  .results-row {
+    .title {
       margin-bottom: 16px;
     }
+
+    .item-container {
+      margin-bottom: 8px;
+    }
+    .interactions {
+      height: 64px;
+      @media ${BREAKPOINTS['sm']} {
+        height: 40px;
+      }
+    }
   }
 
-  .blk-sub {
-    margin-top: 4px;
-    margin-bottom: 40px;
-  }
-
-  .blk-sub2 {
-    margin-top: 4px;
+  .textfield-row {
     margin-bottom: 8px;
-  }
 
-  .template-btn {
-    max-height: 48px;
-    padding: 18px 32px;
-    margin-bottom: 32px;
-    background-color: ${({ theme }) => theme.brand.primary};
-    border-radius: 4px;
-    cursor: pointer;
-    width: fit-content;
-
-    :focus {
-      outline: none;
-    }
-
-    :hover {
-      opacity: 0.5;
-    }
-
-    @media ${BREAKPOINTS['sm']} {
-      padding: 18px;
+    .textfield-col {
+      margin-bottom: 36px;
     }
   }
+`;
+export const Image = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+  margin-left: -16px;
+`;
 
-  input {
-    display: none;
-  }
+export const BackButton = styled(Button)`
+  border-radius: 8px;
+  width: 67px;
+  margin-top: 40px;
+`;
+
+export const SearchContainerDesktop = styled.div`
+  position: absolute;
+  top: 0;
+  right: 5%;
+  width: 211px;
+`;
+
+export const EmptyResultDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

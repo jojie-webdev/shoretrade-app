@@ -1,24 +1,23 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import {
-  ShoretradeLogo,
   ShoretradeLogo2,
   Exit,
   Cart,
   ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
-  Close,
+  ArrowLeftAlt,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
-import { Container, Hidden, Visible } from 'react-grid-system';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
-import { autoScrollToTop } from 'utils/scrollToTop';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -26,20 +25,24 @@ import {
   DashboardGeneratedProps,
   NavLinkProps,
   HeaderProps,
+  IconLinkProps,
 } from './Dashboard.props';
 import {
   DashboardContainer,
   Sidebar,
+  SidebarItem,
+  TabletSidebar,
+  TabletSidebarItem,
   Content,
   HeaderContainer,
-  SidebarItem,
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
+  HamburgerWrapper,
   MenuIcon,
   MenuOverlay,
   CheckoutCount,
-  HeaderWrapper,
+  SidebarLogoContainer,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -49,16 +52,35 @@ const NavLink = ({
   linkText,
   Icon,
   onClick,
-}: NavLinkProps) => (
-  <SidebarItem to={to} onClick={onClick}>
-    <div className="icon-container">
-      {Icon && <Icon fill={iconColor} height={20} width={20} />}
-    </div>
-    <Typography className="link" color={color} weight="500">
-      {linkText}
-    </Typography>
-  </SidebarItem>
-);
+  isActive,
+}: NavLinkProps) => {
+  return (
+    <SidebarItem to={to} onClick={onClick} isActive={isActive}>
+      <div className="icon-container">
+        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+      </div>
+      <Typography className="link" color={color} weight="500">
+        {linkText}
+      </Typography>
+    </SidebarItem>
+  );
+};
+
+const IconLink = ({
+  to,
+  iconColor,
+  Icon,
+  onClick,
+  isActive,
+}: IconLinkProps) => {
+  return (
+    <TabletSidebarItem to={to} onClick={onClick} isActive={isActive}>
+      <div className="icon-container">
+        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+      </div>
+    </TabletSidebarItem>
+  );
+};
 
 const Header = ({
   pageTitle,
@@ -69,7 +91,6 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
-  useOuterWrapper,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -78,17 +99,29 @@ const Header = ({
     query: '(max-width: 768px)',
   });
 
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.md,
+  });
+
   return (
-    <HeaderContainer className="appbar" useOuterWrapper={useOuterWrapper}>
+    <HeaderContainer className="appbar">
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
             <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
           </Touchable>
         ) : (
-          <MenuIcon onClick={onClick}>
-            <Hamburger onClick={onClick} isActive={openSidebar} width={30} />
-          </MenuIcon>
+          <>
+            {!isTablet && (
+              <MenuIcon onClick={onClick}>
+                <Hamburger
+                  onClick={onClick}
+                  isActive={openSidebar}
+                  width={30}
+                />
+              </MenuIcon>
+            )}
+          </>
         )}
 
         <div className="title-container">
@@ -176,7 +209,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
-    useOuterWrapper,
   } = props;
 
   const history = useHistory();
@@ -185,12 +217,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
 
-  const cbRef = useCallback(
-    (node: any) => {
-      if (node !== null) autoScrollToTop(history, node);
-    },
-    [history.location]
-  );
+  const showSmallSidebar = useMediaQuery({
+    query: BREAKPOINTS.genericTablet,
+  });
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -199,22 +228,48 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         onClick={() => setOpenSidebar(!openSidebar)}
       />
 
+      {showSmallSidebar && (
+        <TabletSidebar>
+          <HamburgerWrapper onClick={() => setOpenSidebar(!openSidebar)}>
+            <Hamburger
+              onClick={() => setOpenSidebar(!openSidebar)}
+              isActive={openSidebar}
+              width={20}
+              height={10}
+              color={theme.grey.noshade}
+            />
+          </HamburgerWrapper>
+
+          {routes.map((route) => (
+            <IconLink
+              onClick={() => {
+                if (openSidebar) {
+                  setOpenSidebar(false);
+                }
+              }}
+              key={`sidenav-${route.path}`}
+              isActive={isInnerRoute(route.path)}
+              to={route.path}
+              iconColor={
+                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
+              }
+              Icon={route.icon}
+            />
+          ))}
+        </TabletSidebar>
+      )}
+
       <Sidebar openSidebar={openSidebar}>
         <div>
-          <div className="logo-container">
-            <Visible xs sm>
-              <div
-                className="close-container"
-                onClick={() => setOpenSidebar(false)}
-              >
-                <Close fill={theme.brand.primary} height={20} width={20} />
-              </div>
-              <ShoretradeLogo fill={theme.grey.noshade} />
-            </Visible>
-            <Visible md lg xl xxl>
-              <ShoretradeLogo2 />
-            </Visible>
-          </div>
+          <SidebarLogoContainer>
+            <ShoretradeLogo2 />
+            <div
+              className="close-container"
+              onClick={() => setOpenSidebar(false)}
+            >
+              <ArrowLeftAlt />
+            </div>
+          </SidebarLogoContainer>
           {routes.map((route) => (
             <NavLink
               onClick={() => {
@@ -223,10 +278,11 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 }
               }}
               key={`sidenav-${route.path}`}
+              isActive={isInnerRoute(route.path)}
               to={route.path}
-              color={isInnerRoute(route.path) ? 'primary' : textColor}
+              color={isInnerRoute(route.path) ? 'noshade' : textColor}
               iconColor={
-                isInnerRoute(route.path) ? theme.brand.primary : iconColor
+                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
               }
               linkText={route.title || ''}
               Icon={route.icon}
@@ -276,65 +332,39 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Content
         openSidebar={openSidebar}
         shouldIncludePadding={shouldIncludePadding}
-        shouldUseFullWidth={
-          props.shouldUseFullWidth ? props.shouldUseFullWidth : false
-        }
         background={background}
         screenBackground={screenBackground}
         color={color}
-        ref={cbRef}
       >
-        {useOuterWrapper ? (
-          <Container
-            className="container"
-            style={{ width: '100%', height: '100%' }}
-          >
-            <HeaderWrapper>
-              <Header
-                pageTitle={pageTitle}
-                userData={userData}
-                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-                onClick={() => setOpenSidebar(!openSidebar)}
-                openSidebar={openSidebar}
-                onBack={onBack}
-                cartItems={cartItems}
-                onClickAccount={onClickAccount}
-                useOuterWrapper
-              />
-            </HeaderWrapper>
-            {children}
-          </Container>
-        ) : (
-          <>
-            <Header
-              pageTitle={pageTitle}
-              userData={userData}
-              textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-              onClick={() => setOpenSidebar(!openSidebar)}
-              openSidebar={openSidebar}
-              onBack={onBack}
-              cartItems={cartItems}
-              onClickAccount={onClickAccount}
-            />
+        <>
+          <Header
+            pageTitle={pageTitle}
+            userData={userData}
+            textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+            onClick={() => setOpenSidebar(!openSidebar)}
+            openSidebar={openSidebar}
+            onBack={onBack}
+            cartItems={cartItems}
+            onClickAccount={onClickAccount}
+          />
 
-            <div className="screen-wrapper">
-              <div className="screen">
-                <Container
-                  className="container"
-                  style={{
-                    padding: 0,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    width: '100%',
-                    maxWidth: '100%',
-                  }}
-                >
-                  {children}
-                </Container>
-              </div>
+          <div className="screen-wrapper">
+            <div className="screen">
+              <Container
+                className="container"
+                style={{
+                  padding: 0,
+                  marginLeft: 0,
+                  marginRight: 0,
+                  width: '100%',
+                  maxWidth: '100%',
+                }}
+              >
+                {children}
+              </Container>
             </div>
-          </>
-        )}
+          </div>
+        </>
       </Content>
     </DashboardContainer>
   );

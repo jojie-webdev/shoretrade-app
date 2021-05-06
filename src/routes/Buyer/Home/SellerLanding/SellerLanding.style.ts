@@ -1,40 +1,9 @@
-import Typography from 'components/base/Typography';
-import styled, { css } from 'utils/styled';
-
-import { CategoriesContainer } from '../Home.style';
-
-const customScrollbar = (props: any) =>
-  css`
-    ::-webkit-scrollbar {
-      width: 0.7rem;
-    }
-
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-  `;
+import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
-  padding: 0 8px 8px 8px;
-
   .cards {
     display: flex;
     flex-wrap: wrap;
-
-    a {
-      margin-right: 32px;
-    }
   }
 
   .search-row {
@@ -42,12 +11,28 @@ export const PreviewContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
+export const SellerContainer = styled.div`
+  margin-top: 10px;
+
+  .interactions {
+    margin-bottom: 8px;
+  }
+`;
+
+export const Image = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+`;
+
+export const PlaceholderImage = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+  background-color: ${({ theme }) => theme.grey.shade2};
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
-  height: 100%;
 `;
-
-export const SellerContainer = styled(CategoriesContainer)``;

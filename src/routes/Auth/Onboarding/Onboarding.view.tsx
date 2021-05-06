@@ -33,6 +33,7 @@ const OnboardingView = (props: OnboardingGeneratedProps) => {
 
   return (
     <AuthContainer
+      horizontalLogo={isSmallScreen}
       logoContainerMarginBottomHeight={20}
       onSkipAction={onClickSkip}
       mobileFooter={

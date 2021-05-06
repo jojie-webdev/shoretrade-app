@@ -8,4 +8,6 @@ export interface ProductDetailsCard6Props {
   minOrder?: string;
   unit?: string;
   hiddenPrice?: boolean;
+  SellerCard?: React.ReactNode;
+  withBackground?: boolean;
 }

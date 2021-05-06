@@ -36,7 +36,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
   } = props;
   const theme = useTheme();
   return (
-    <CardContainer img={parseImageUrl(props.images[0])}>
+    <CardContainer
+      className="category-preview-card"
+      img={parseImageUrl(props.images[0])}
+    >
       <div
         className={`card zoom ${cardContainerClass ? cardContainerClass : ''}`}
         style={cardContainerStyle}
@@ -47,7 +50,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
           <LocationContainer>
             <Badge>
               <div style={{ flexDirection: 'row', display: 'flex' }}>
-                <Location height={10.06} width={8.5}></Location>
+                <Location height={10.06} width={8.5} />
                 <Typography
                   className="location-font"
                   variant="small"

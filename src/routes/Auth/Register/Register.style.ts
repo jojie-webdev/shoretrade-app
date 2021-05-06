@@ -6,7 +6,6 @@ import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;
@@ -26,25 +25,22 @@ export const TitleContainer = styled.div`
 
   .back-badge {
     margin-left: 35px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-left: 0px;
+    }
   }
 `;
 
 export const RenderContainer = styled.div<{ step?: number }>`
-  margin-top:60px;
-  /* margin-top: ${({ step }) =>
-    (theme.appType === 'seller' && step === 7) || step === 6
-      ? '60px'
-      : (theme.appType === 'buyer' && step === 6) || step === 5
-      ? '60px'
-      : '80px'}; */
+  margin-top: 60px;
   height: 100vh;
   max-height: 100vh;
   overflow: auto;
 
   @media ${BREAKPOINTS['sm']} {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    overflow: auto;
+    margin-top: 0px;
+    padding-top: 24px;
   }
 `;
 
@@ -69,6 +65,16 @@ export const Content = styled.div`
   flex: 1;
 `;
 
+export const GetStartedWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 100px;
+  }
+`;
+
 export const GetStartedButton = styled(Button)`
   width: 148px;
   margin-top: 32px;
@@ -82,14 +88,6 @@ export const GetStartedTitle = styled(Typography)`
 export const Spacer = styled.div`
   min-height: 16px;
   max-height: 16px;
-`;
-
-export const ColumnWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
 `;
 
 export const FormikContainer = styled(Form)`
@@ -112,6 +110,7 @@ export const FormikContainer = styled(Form)`
   .market-sector-description {
     margin-top: 8px;
   }
+
   .market-sector-list {
     display: flex;
     flex-direction: row;
@@ -119,22 +118,29 @@ export const FormikContainer = styled(Form)`
     justify-content: center;
     margin-top: 16px;
   }
+
   .market-sector-item {
     margin-right: 8px;
     margin-bottom: 8px;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-left: 0px;
+    margin-bottom: 100px;
+  }
 `;
 
 export const StepCount = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade6};
-  font-weight: 900;
   padding-left: 33px;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-left: 0px;
+  }
 `;
 
 export const Title = styled(Typography)`
   color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
-  font-weight: 400;
   margin-top: 4px;
 `;
 
@@ -194,13 +200,19 @@ export const MarketSectorContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 32px;
+
+  @media ${BREAKPOINTS['sm']} {
+    justify-content: space-evenly;
+  }
 `;
 
 export const MarketSectorItemContainer = styled.div`
   flex: 0 50%;
-  height: 162px;
-  width: 162px;
-  margin: 0px 0px 24px 0px;
+  margin-bottom: 24px;
+
+  @media ${BREAKPOINTS['sm']} {
+    flex: 0;
+  }
 `;
 
 export const CategoryContainer = styled.div`
@@ -258,12 +270,6 @@ export const BadgeContainer = styled.div`
 export const BadgeItemContainer = styled.div`
   margin-right: 8px;
   margin-top: 8px;
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 `;
 
 export const SellerSummaryContainer = styled.div`
@@ -324,4 +330,36 @@ export const LogInLink = styled(Typography)`
 export const AppTypeTitle = styled(Typography)`
   color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+`;
+
+// @ts-ignore
+const footerStyle = ({ theme }) => `
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px;
+  background-color: ${
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2
+  };
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+
+  margin-left: -24px;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @media ${BREAKPOINTS['sm']} {
+    ${footerStyle};
+    flex-wrap: nowrap;
+  }
+`;
+
+export const MobileFooter = styled.div`
+  ${footerStyle};
 `;

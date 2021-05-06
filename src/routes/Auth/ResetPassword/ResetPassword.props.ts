@@ -1,5 +1,3 @@
-import { Dispatch } from 'react';
-
 export interface ResetPasswordForm {
   newPassword: string;
   confirmNewPassword: string;

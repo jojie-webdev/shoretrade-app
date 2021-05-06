@@ -100,6 +100,7 @@ export const editableListingToListingProps = (
         name: editableListing.company,
         rating: '0.0',
       },
+      avgBoxSize: (0).toFixed(2),
     },
     orderDetails: {
       price: toPrice(editableListing?.pricePerKilo || 0, false),

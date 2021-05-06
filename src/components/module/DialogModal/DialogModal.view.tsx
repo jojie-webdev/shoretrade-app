@@ -4,6 +4,8 @@ import React from 'react';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 
 import { DialogModalProps } from './DialogModal.props';
 import { Content } from './DialogModal.style';
@@ -11,20 +13,27 @@ import { Content } from './DialogModal.style';
 const DialogModal = (props: DialogModalProps): JSX.Element => {
   // const theme = useTheme();s
   const { children, title, overline, ...modalProps } = props;
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
     <Modal {...modalProps}>
       <Content>
-        <Typography variant="title4" color="noshade" className="title">
+        <Typography
+          variant="title5"
+          color="noshade"
+          className="title"
+          align={isSmallScreen ? 'center' : 'left'}
+        >
           {title}
         </Typography>
 
         <div className="content-container">
           <Typography
             variant="overline"
-            color="warning"
+            color="alert"
             weight="Black"
             className="overline"
+            align={isSmallScreen ? 'center' : 'left'}
           >
             {overline}
           </Typography>
@@ -32,7 +41,12 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
           {children}
         </div>
 
-        <Button variant="primary" text="Ok" onClick={modalProps.onClickClose} />
+        <Button
+          variant="primary"
+          text="Ok"
+          onClick={modalProps.onClickClose}
+          takeFullWidth={isSmallScreen}
+        />
       </Content>
     </Modal>
   );

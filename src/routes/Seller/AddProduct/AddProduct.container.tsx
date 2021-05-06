@@ -164,6 +164,7 @@ const AddProduct = (): JSX.Element => {
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
 
   const editableListing = useSelector((state: Store) => state.editableListing);
+
   const modifyBulkUpload = useSelector(
     (state: Store) => state.modifyBulkUpload
   );
@@ -398,6 +399,7 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
+        history.push(ADD_PRODUCT_ROUTES.PREVIEW);
       }
     }
   };
@@ -452,6 +454,10 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const navBack = () => {
+    onChangeCurrentPage(currentPage - 1);
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -487,6 +493,7 @@ const AddProduct = (): JSX.Element => {
     userPending,
     isBulkUpload,
     discardBulkUploadChanges,
+    navBack,
   };
 
   return <AddProductView {...generatedProps} />;

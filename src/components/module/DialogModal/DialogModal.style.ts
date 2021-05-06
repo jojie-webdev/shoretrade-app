@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Content = styled.div`
@@ -11,5 +12,8 @@ export const Content = styled.div`
     .overline {
       margin-bottom: 8px;
     }
+  }
+
+  @media ${BREAKPOINTS.sm} {
   }
 `;

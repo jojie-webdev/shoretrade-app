@@ -1,31 +1,31 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-// Step 2
+// Step 3
 export const Container = styled.div`
-  .search-row {
-    margin-bottom: 32px;
+  .interaction-group {
+    margin-bottom: 40px;
 
-    @media ${BREAKPOINTS['sm']} {
+    .interaction-container:not(:last-child) {
       margin-bottom: 8px;
     }
-  }
 
-  .results-row {
-    .title {
-      margin-bottom: 16px;
-    }
-
-    .item-container {
+    /* @media ${BREAKPOINTS['sm']} {
       margin-bottom: 8px;
-    }
+    } */
   }
 
-  .textfield-row {
-    margin-bottom: 8px;
-
-    .textfield-col {
-      margin-bottom: 36px;
+  .btn-container {
+    display: flex;
+    justify-content: flex-start;
+    .back-btn{
+      margin-right:16px;
+      border-radius:8px;
+      max-width:67px;
+    }
+    .next-btn{
+      border-radius:8px;
+      max-width:67px;
     }
   }
 `;
