@@ -60,7 +60,7 @@ const AddImage = (props: AddImageProps): JSX.Element => {
         </div>
 
         <DeleteBadge onClick={() => onRemoveImage()}>
-          <Subtract innerFill={theme.grey.shade9} fill={theme.grey.error} />
+          <Subtract innerFill={theme.grey.shade9} fill={theme.brand.error} />
         </DeleteBadge>
       </PreviewContainer>
     );

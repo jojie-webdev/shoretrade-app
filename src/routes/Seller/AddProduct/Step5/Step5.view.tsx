@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Box, Subtract } from 'components/base/SVG';
+import { Box, Close, InfoFilled, Subtract } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
 import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import remove from 'ramda/es/remove';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -36,16 +38,17 @@ export const BoxDetails = ({
   onRemove?: () => void;
 }) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
     <BoxDetailsContainer>
       <div className="text-container">
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant={isMobile ? 'caption' : 'overline'}
             color="shade6"
             className="overline"
-            weight="900"
+            weight={isMobile ? '400' : '900'}
           >
             {unit} per Box
           </Typography>
@@ -55,10 +58,10 @@ export const BoxDetails = ({
         </div>
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant={isMobile ? 'caption' : 'overline'}
             color="shade6"
             className="overline"
-            weight="900"
+            weight={isMobile ? '400' : '900'}
           >
             Number of Boxes
           </Typography>
@@ -66,10 +69,10 @@ export const BoxDetails = ({
         </div>
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant={isMobile ? 'caption' : 'overline'}
             color="shade6"
             className="overline"
-            weight="900"
+            weight={isMobile ? '400' : '900'}
           >
             Count per Box
           </Typography>
@@ -158,7 +161,7 @@ function Step6({
   navBack,
 }: Step5Props) {
   const [showModal, setShowModal] = useState(false);
-
+  const theme = useTheme();
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
   );
@@ -226,10 +229,13 @@ function Step6({
     <Container>
       <Row className="checkbox-row">
         <Col className="checkbox-col">
-          <Checkbox
-            checked={isAquafuture}
-            onClick={() => setIsAquafuture((a) => !a)}
-          />
+          <div className="checkbox-view">
+            <Checkbox
+              checked={isAquafuture}
+              onClick={() => setIsAquafuture((a) => !a)}
+            />
+          </div>
+
           <div className="text-container">
             <Typography
               className="checkbox-alt-label"
@@ -298,6 +304,12 @@ function Step6({
             onClick={() => setSellInMultiples((s) => !s)}
             label="Sell in multiples of the minimum"
           />
+          <div className="tooltip">
+            <InfoFilled width={20} height={20} fill={theme.grey.shade5} />
+            <span className="tooltip-text">
+              Suspendisse sed dictum nisi Ut at dui enim cras dignissim buyer.
+            </span>
+          </div>
         </Col>
         <Row
           justify="start"

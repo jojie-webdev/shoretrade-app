@@ -13,6 +13,7 @@ export const Container = styled.div`
 
   @media ${BREAKPOINTS['sm']} {
     border: unset;
+    max-height: 64px;
   }
 
   padding: 28px 0;

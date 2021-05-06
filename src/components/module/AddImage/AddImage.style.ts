@@ -51,7 +51,7 @@ export const FileDetailsContainer = styled.div`
     display: flex;
     flex-direction: row;
     .filesize-text {
-      margin-right: 8px;
+      margin-right: 3px;
     }
   }
 `;
