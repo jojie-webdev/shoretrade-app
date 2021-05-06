@@ -30,38 +30,37 @@ const AddImage = (props: AddImageProps): JSX.Element => {
   if (image !== null && image !== undefined && !isEmpty(image)) {
     return (
       <PreviewContainer>
-        <PreviewImage
-          src={typeof image === 'string' ? image : URL.createObjectURL(image)}
-          alt="Product Preview"
-        />
-        <FileDetailsContainer>
-          {image.name && (
-            <>
-              <Typography variant="caption" color="noshade">
-                {image.name}
-              </Typography>
+        <div className="left-content">
+          <PreviewImage
+            src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+            alt="Product Preview"
+          />
+          <FileDetailsContainer>
+            {image.name && (
+              <>
+                <Typography variant="caption" color="noshade">
+                  {image.name}
+                </Typography>
 
-              <div className="format-size">
-                <Typography
-                  variant="small"
-                  color="shade7"
-                  className="filesize-text"
-                >
-                  {bytesToSize(image.size)}
-                </Typography>
-                <Typography variant="small" color="shade7">
-                  {image.type.toUpperCase().replace('IMAGE/', '')} Format
-                </Typography>
-              </div>
-            </>
-          )}
-        </FileDetailsContainer>
+                <div className="format-size">
+                  <Typography
+                    variant="small"
+                    color="shade7"
+                    className="filesize-text"
+                  >
+                    {bytesToSize(image.size)}
+                  </Typography>
+                  <Typography variant="small" color="shade7">
+                    {image.type.toUpperCase().replace('IMAGE/', '')} Format
+                  </Typography>
+                </div>
+              </>
+            )}
+          </FileDetailsContainer>
+        </div>
 
         <DeleteBadge onClick={() => onRemoveImage()}>
-          <Subtract innerFill={theme.brand.error} fill={theme.grey.noshade} />
-          <DeleteText color="shade2" variant="label">
-            Delete
-          </DeleteText>
+          <Subtract innerFill={theme.grey.shade9} fill={theme.grey.error} />
         </DeleteBadge>
       </PreviewContainer>
     );

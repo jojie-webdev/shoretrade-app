@@ -7,6 +7,11 @@ export const PreviewContainer = styled.div`
   flex-direction: row;
   align-items: center;
   background: ${(props) => props.theme.grey.shade9};
+  justify-content: space-between;
+  .left-content {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
 export const PreviewImage = styled.img`
@@ -18,13 +23,13 @@ export const PreviewImage = styled.img`
 
 export const DeleteBadge = styled.button`
   padding: 4px 8px;
-  background: ${(props) => props.theme.brand.error};
+  background: ${(props) => props.theme.grey.shade9};
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   border: none;
-
+  margin-right: 24px;
   :focus {
     outline: none;
   }
@@ -37,6 +42,8 @@ export const FileDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 38%;
+  margin-top: 24px;
+
   @media ${BREAKPOINTS['sm']} {
     margin-right: 8px;
   }
