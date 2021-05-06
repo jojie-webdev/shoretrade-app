@@ -8,8 +8,9 @@ import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import EmptyStateView from 'components/module/EmptyState';
+import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 import { BUYER_ROUTES } from 'consts';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -108,13 +109,15 @@ const MarketRequestsLandingView = (
             <Typography>My Requests</Typography>
           </Col>
           <Col xs="content">
-            <Button
-              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-              text="CREATE MARKET REQUEST"
-              variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              size="md"
-              disabled={props.isPendingAccount}
-            />
+            <Visible md lg xl xxl>
+              <Button
+                onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+                text="CREATE MARKET REQUEST"
+                variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                size="md"
+                disabled={props.isPendingAccount}
+              />
+            </Visible>
           </Col>
         </Row>
         <StyledAlert
@@ -142,6 +145,15 @@ const MarketRequestsLandingView = (
         ) : (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}
+        <MobileStickyBottomView>
+          <Button
+            onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+            text="CREATE MARKET REQUEST"
+            variant={props.isPendingAccount ? 'disabled' : 'primary'}
+            takeFullWidth
+            disabled={props.isPendingAccount}
+          />
+        </MobileStickyBottomView>
       </BoxContainer>
     </MarketRequestsContainer>
   );

@@ -128,6 +128,10 @@ export const MainAgreementContainer = styled.div`
   .btn-get-started {
     max-width: 325px;
     margin-top: 1rem;
+
+    @media ${BREAKPOINTS['sm']} {
+      max-width: 100%;
+    }
   }
 
   .terms-and-conditions {
