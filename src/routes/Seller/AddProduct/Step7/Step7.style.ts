@@ -6,6 +6,20 @@ import styled from 'utils/styled';
 export const Container = styled.div`
   .interaction-col {
     margin-bottom: 16px;
+
+    @media ${BREAKPOINTS.sm} {
+      .interactions {
+        height: 48px;
+      }
+    }
+
+    .text-area {
+      @media ${BREAKPOINTS.sm} {
+        .interactions {
+          height: 100% !important;
+        }
+      }
+    }
   }
 `;
 
