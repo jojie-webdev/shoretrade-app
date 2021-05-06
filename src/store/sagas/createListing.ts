@@ -69,6 +69,7 @@ function* createListingSuccess(
   yield put(getAllListingsActions.request());
   yield delay(10000);
   yield put(editableListingActions.clear());
+  yield put(push(SELLER_ROUTES.SELLING));
 }
 
 function* createListingWatcher() {
