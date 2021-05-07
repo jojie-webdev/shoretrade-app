@@ -10,6 +10,7 @@ import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Col, Row } from 'react-grid-system';
+import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
@@ -59,6 +60,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         onClickControl={(value) =>
           props.onChangeCurrentTab(value as TabOptions)
         }
+        tooltips={[{ option: 'Buyer Requests', value: BuyerRequestsTooltip }]}
       />
 
       <Row nogutter className="search-row" justify="between">

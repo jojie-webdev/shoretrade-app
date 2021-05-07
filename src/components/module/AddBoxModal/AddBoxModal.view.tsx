@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
+import { Close } from 'components/base/SVG';
 import { P } from 'components/base/Typography/Typography.style';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
+import { useTheme } from 'utils/Theme';
 
 import { AddBoxModalProps, BoxValues } from './AddBoxModal.props';
-import { Inputs, ButtonContainer, StyledTextField } from './AddBoxModal.style';
+import {
+  Inputs,
+  ButtonContainer,
+  StyledTextField,
+  CloseBadge,
+  TopContainer,
+} from './AddBoxModal.style';
 
 const Content = (props: AddBoxModalProps) => {
   const { onAdd, unit = 'kg', ...modalProps } = props;
@@ -18,6 +26,7 @@ const Content = (props: AddBoxModalProps) => {
     quantity: '',
     count: '',
   });
+  const theme = useTheme();
 
   useEffect(() => {
     const isWhole = (v: string) => Number.isInteger(Number(v));
@@ -30,9 +39,20 @@ const Content = (props: AddBoxModalProps) => {
 
   return (
     <>
-      <Typography variant="title5" color="shade1">
-        Add Box
-      </Typography>
+      <TopContainer>
+        <Typography variant="title5" color="shade1">
+          Add Box
+        </Typography>
+
+        <CloseBadge
+          onClick={() => {
+            modalProps.onClickClose();
+          }}
+        >
+          <Close fill={theme.grey.shade8} />
+        </CloseBadge>
+      </TopContainer>
+
       <Inputs>
         <StyledTextField
           type="number"
@@ -90,9 +110,14 @@ const Content = (props: AddBoxModalProps) => {
 const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const { onAdd, unit = 'kg', ...modalProps } = props;
-
+  const theme = useTheme();
   return isSmallScreen ? (
     <MobileModal
+      backgroundColor={theme.grey.shade9}
+      backdropStyle={{
+        backgroundColor: theme.grey.shade8,
+        borderRadiusBottom: 8,
+      }}
       style={{
         width: 'unset',
         padding: isSmallScreen ? '48px 16px' : '48px',
