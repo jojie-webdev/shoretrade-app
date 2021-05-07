@@ -52,31 +52,22 @@ export const ContainerWithCategoryImagePreview = styled.div`
   margin-top: 40px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  max-width: 1201px;
+  justify-content: space-between;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 16vh;
+  }
 `;
 
 export const ContainerWithCategoryImageContent = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 280px;
-  margin-left: 4rem;
-
-  @media ${BREAKPOINTS['lg']} {
-    margin-left: 0;
-  }
-
-  @media ${BREAKPOINTS['md']} {
-    margin-left: 0;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    margin-left: 0;
-  }
+  padding-top: 2rem;
 `;
 
 export const HeroImageContainer = styled.div`
-  width: ${pxToRem(300)};
-  height: ${pxToRem(300)};
   background-color: ${(props) => props.theme.grey.shade4};
   border-radius: 50%;
   margin: 0 auto;

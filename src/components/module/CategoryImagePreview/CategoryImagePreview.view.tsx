@@ -29,7 +29,7 @@ const CategoryImagePreview = (
         </MarketBoardBadge>
       )}
       <div className="imgContainer">
-        <div className="img" style={{ maxHeight: 280 }} />
+        <div className="img" />
         {marketBoard ? (
           ''
         ) : (

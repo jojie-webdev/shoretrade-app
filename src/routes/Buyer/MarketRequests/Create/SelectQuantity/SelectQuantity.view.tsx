@@ -14,6 +14,8 @@ import {
 } from '../Create.style';
 import { SelectQuantityProps } from './SelectQuantity.props';
 import { QuantityFormContainer, StyledTextField } from './SelectQuantity.style';
+import MobileStickyBottomView from 'components/module/MobileStickyBottom';
+import { Hidden } from 'react-grid-system';
 
 const SelectQuantityView = (props: SelectQuantityProps) => {
   const {
@@ -100,14 +102,25 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               </TypographyView>
             }
           />
-
-          <Button
-            onClick={() => handleSubmit()}
-            className="submit-btn"
-            disabled={from === '' || to === ''}
-            text="Select This Quantity"
-            variant="primary"
-          />
+          <Hidden xs>
+            <Button
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              disabled={from === '' || to === ''}
+              text="Select This Quantity"
+              variant="primary"
+            />
+          </Hidden>
+          <MobileStickyBottomView withBackground>
+            <Button
+              takeFullWidth
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              disabled={from === '' || to === ''}
+              text="Select This Quantity"
+              variant="primary"
+            />
+          </MobileStickyBottomView>
         </QuantityFormContainer>
       </ContainerWithCategoryImagePreview>
     </>
