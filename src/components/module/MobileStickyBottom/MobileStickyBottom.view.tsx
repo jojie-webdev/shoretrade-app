@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { Visible, setConfiguration } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';

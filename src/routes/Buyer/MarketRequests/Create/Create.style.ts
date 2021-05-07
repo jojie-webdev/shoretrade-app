@@ -183,3 +183,7 @@ export const CheckBoxContainer = styled.div`
     margin-left: 4px;
   }
 `;
+
+export const HeaderContainer = styled.div`
+  margin-bottom: 40px;
+`;
