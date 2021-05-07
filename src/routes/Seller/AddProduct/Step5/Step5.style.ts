@@ -47,7 +47,7 @@ export const Container = styled.div`
 
   .absolute-container {
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
     justify-content: space-between;

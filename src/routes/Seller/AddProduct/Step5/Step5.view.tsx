@@ -278,7 +278,7 @@ function Step6({
         className="minimum-row"
         align="center"
         style={{
-          marginBottom: showError ? 200 : 40,
+          marginBottom: 40,
         }}
       >
         <Col md={6}>
@@ -349,20 +349,18 @@ function Step6({
         </Row>
       </Row>
 
+      <div className="box-error-container">
+        <Alert
+          fullWidth
+          alignText="center"
+          variant="error"
+          content="Please include at least 1 box and set minimum order"
+        />
+      </div>
+
       <FooterPadding />
 
       <div className="absolute-container">
-        {showError && (
-          <div className="box-error-container">
-            <Alert
-              fullWidth
-              alignText="center"
-              variant="error"
-              content="Please include at least 1 box and set minimum order"
-            />
-          </div>
-        )}
-
         {/* <BoxSummary
           unit={measurementUnit}
           summary={summary}
