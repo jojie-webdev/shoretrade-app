@@ -29,6 +29,7 @@ export const MarketRequestsContainer = styled.div`
 export const MarketRequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
+  padding: 16px 32px 16px 16px;
 `;
 
 export const MarketRequestItemContainer = styled.div`
