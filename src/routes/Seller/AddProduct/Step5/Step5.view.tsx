@@ -306,12 +306,13 @@ function Step6({
             onClick={() => setSellInMultiples((s) => !s)}
             label="Sell in multiples of the minimum"
           />
-          <div className="tooltip">
-            <InfoFilled width={20} height={20} fill={theme.grey.shade5} />
-            <span className="tooltip-text">
-              Suspendisse sed dictum nisi Ut at dui enim cras dignissim buyer.
-            </span>
-          </div>
+
+          {/*<div className="tooltip">*/}
+          {/*  <InfoFilled width={20} height={20} fill={theme.grey.shade5} />*/}
+          {/*  <span className="tooltip-text">*/}
+          {/*    Suspendisse sed dictum nisi Ut at dui enim cras dignissim buyer.*/}
+          {/*  </span>*/}
+          {/*</div>*/}
         </Col>
         <Row
           justify="start"
