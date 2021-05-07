@@ -17,6 +17,13 @@ export const Container = styled.div`
         }
       }
     }
+
+    .checkbox-view {
+      margin-top: 24px;
+      @media ${BREAKPOINTS['sm']} {
+        margin-top: 20px;
+      }
+    }
   }
 
   .checkbox-alt-label {
@@ -40,7 +47,7 @@ export const Container = styled.div`
 
   .absolute-container {
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
     justify-content: space-between;
@@ -62,6 +69,27 @@ export const Container = styled.div`
   .text-field > div {
     border-radius: 8px;
   }
+  .tooltip {
+    margin-left: 8px;
+  }
+
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 192px;
+    background-color: black;
+    color: ${({ theme }) => theme.grey.noshade};
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    margin-top: 30px;
+    margin-left: -120px;
+  }
+
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }
 `;
 
 export const BoxDetailsContainer = styled.div`
@@ -73,6 +101,16 @@ export const BoxDetailsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px 16px;
+  }
+
+  .minus-mobile {
+    @media ${BREAKPOINTS['sm']} {
+      margin-left: -40px;
+    }
+  }
+
   .text-container {
     display: flex;
 
@@ -81,6 +119,9 @@ export const BoxDetailsContainer = styled.div`
 
       .overline {
         margin-bottom: 2px;
+      }
+      @media ${BREAKPOINTS['sm']} {
+        min-width: 61px;
       }
     }
   }

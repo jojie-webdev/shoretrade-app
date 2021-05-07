@@ -10,22 +10,24 @@ export const Container = styled.div`
       margin-bottom: 8px;
     }
 
-    /* @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 8px;
-    } */
+    @media ${BREAKPOINTS['sm']} {
+      .interactions {
+        max-height: 40px;
+      }
+    }
   }
 
   .btn-container {
     display: flex;
     justify-content: flex-start;
-    .back-btn{
-      margin-right:16px;
-      border-radius:8px;
-      max-width:67px;
+    .back-btn {
+      margin-right: 16px;
+      border-radius: 8px;
+      max-width: 67px;
     }
-    .next-btn{
-      border-radius:8px;
-      max-width:67px;
+    .next-btn {
+      border-radius: 8px;
+      max-width: 67px;
     }
   }
 `;

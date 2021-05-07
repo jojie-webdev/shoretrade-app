@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/src/pathOr';
 import pick from 'ramda/src/pick';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import {
   uploadBulkActions,
@@ -390,7 +392,7 @@ const AddProduct = (): JSX.Element => {
     isPendingCreateListing ||
     isPendingCreateCustomListing ||
     isPendingUpdateListing;
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const saveListing = () => {
     if (!isPending) {
       if (isExisting) {
@@ -399,7 +401,11 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
-        history.push(ADD_PRODUCT_ROUTES.PREVIEW);
+        if (isMobile) {
+          history.push(SELLER_ROUTES.SELLING);
+        } else {
+          history.push(ADD_PRODUCT_ROUTES.PREVIEW);
+        }
       }
     }
   };

@@ -70,11 +70,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
-
-    .title-text {
-      margin-top: 16px;
-    }
+    align-items: center;
     margin-bottom: 40px;
   }
 `;

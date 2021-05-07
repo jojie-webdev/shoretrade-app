@@ -21,6 +21,7 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
     onClickBack,
     subtitle,
     rightContent,
+    addProductSubtitle,
   } = props;
 
   const isSeller = theme.appType === 'seller';
@@ -48,7 +49,10 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
           </Typography>
         )}
         {subtitle && (
-          <Typography variant="label" color={isSeller ? 'shade1' : 'shade8'}>
+          <Typography
+            variant={addProductSubtitle ? 'title5' : 'label'}
+            color={isSeller ? 'shade1' : 'shade8'}
+          >
             {subtitle}
           </Typography>
         )}
