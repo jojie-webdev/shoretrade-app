@@ -11,34 +11,33 @@ import { Container, ControlButton } from './SegmentedControls.style';
 const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
   // const theme = useTheme();
 
-  const { options, selectedOption, onClickControl } = props;
+  const { options, selectedOption, onClickControl, tooltips } = props;
   const Icon: React.FC<SVGProps> = InfoFilled;
   const theme = useTheme();
   return (
     <Container>
       <Row className="row" nogutter>
-        {options.map((option) => (
-          <Col key={option}>
-            <ControlButton
-              active={option === selectedOption}
-              onClick={() => onClickControl(option)}
-            >
-              {option}
-              {option === 'Buyer Requests' && (
-                <div className="tooltip">
-                  <Icon width={20} height={20} fill={theme.brand.info}></Icon>
-                  <span className="tooltip-text">
-                    Buyer requests detail products buyers want to purchase. You
-                    will be able to view requests and make offers. Both parties
-                    can negotiate the price until an offer is accepted. It is
-                    the seller's responsibility to organise shipping of these
-                    products to the buyer.
-                  </span>
-                </div>
-              )}
-            </ControlButton>
-          </Col>
-        ))}
+        {options.map((option) => {
+          const currentTooltip = tooltips?.find((t) => t.option === option);
+          const value = currentTooltip ? currentTooltip.value : '';
+
+          return (
+            <Col key={option}>
+              <ControlButton
+                active={option === selectedOption}
+                onClick={() => onClickControl(option)}
+              >
+                {option}
+                {value && (
+                  <div className="tooltip">
+                    <Icon width={20} height={20} fill={theme.brand.info} />
+                    <span className="tooltip-text">{value}</span>
+                  </div>
+                )}
+              </ControlButton>
+            </Col>
+          );
+        })}
       </Row>
     </Container>
   );
