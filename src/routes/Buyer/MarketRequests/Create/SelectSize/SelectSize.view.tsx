@@ -7,8 +7,9 @@ import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 import { pathOr } from 'ramda';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Hidden } from 'react-grid-system';
 import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step3/Step3.constants';
 import theme from 'utils/Theme';
 
@@ -17,7 +18,7 @@ import {
   CreateRequestHeaderContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
-import { SizeFormContainer, MetricLabelContainer } from './SelectSize.style';
+import { SizeFormContainer, MetricLabelContainer, SelectRowContainer } from './SelectSize.style';
 
 const SizeInput = (props: SizeInputProps) => {
   const {
@@ -77,66 +78,64 @@ const SizeInput = (props: SizeInputProps) => {
             {metric}
           </Typography>
         </MetricLabelContainer>
-        <Row className="select-row">
-          <Col xs={12} sm={12} md={12}>
-            <TextField
-              label="Size From"
-              value={fromSize}
-              onChangeText={(v) => {
-                if (!Number.isNaN(Number(v))) {
-                  setFromSize(v);
-                }
-              }}
-              placeholder=""
-              onBlur={() => {
-                if (
-                  fromSize !== '' &&
-                  toSize !== '' &&
-                  Number(fromSize) > Number(toSize)
-                ) {
-                  setToSize(fromSize);
-                }
-              }}
-              readOnly={disabled}
-            />
-          </Col>
+        <SelectRowContainer>
+          <TextField
+            label="Size From"
+            value={fromSize}
+            onChangeText={(v) => {
+              if (!Number.isNaN(Number(v))) {
+                setFromSize(v);
+              }
+            }}
+            placeholder=""
+            onBlur={() => {
+              if (
+                fromSize !== '' &&
+                toSize !== '' &&
+                Number(fromSize) > Number(toSize)
+              ) {
+                setToSize(fromSize);
+              }
+            }}
+            readOnly={disabled}
+          />
 
-          <Col xs={12} sm={12} md={12}>
-            <TextField
-              label={`Size To\n(Optional)`}
-              value={toSize}
-              onChangeText={(v) => {
-                if (!Number.isNaN(Number(v))) {
-                  setToSize(v);
-                }
-              }}
-              placeholder=""
-              onBlur={() => {
-                if (
-                  fromSize !== '' &&
-                  toSize !== '' &&
-                  Number(fromSize) > Number(toSize)
-                ) {
-                  setFromSize(`${Number(toSize) - 1}`);
-                }
-              }}
-              readOnly={disabled}
-            />
-          </Col>
-        </Row>
+          <TextField
+            label={`Size To\n(Optional)`}
+            value={toSize}
+            onChangeText={(v) => {
+              if (!Number.isNaN(Number(v))) {
+                setToSize(v);
+              }
+            }}
+            placeholder=""
+            onBlur={() => {
+              if (
+                fromSize !== '' &&
+                toSize !== '' &&
+                Number(fromSize) > Number(toSize)
+              ) {
+                setFromSize(`${Number(toSize) - 1}`);
+              }
+            }}
+            readOnly={disabled}
+          />
+        </SelectRowContainer>
       </>
     );
   }
 
   if (sizeMetrics && sizeMetrics.length > 0) {
     const sizeOptions = sizeMetrics.map((metric) => (
-      <Checkbox
-        checked={sizeItemChecked.items.includes(metric.value)}
-        onClick={() => handleStateCheck(metric.value)}
-        key={metric.value}
-        value={metric.value}
-        label={metric.label}
-      />
+      <div key={metric.value} style={{ marginBottom: '1rem' }}>
+        <Checkbox
+          checked={sizeItemChecked.items.includes(metric.value)}
+          onClick={() => handleStateCheck(metric.value)}
+          key={metric.value}
+          value={metric.value}
+          label={metric.label}
+        />
+      </div>
     ));
     return <>{sizeOptions}</>;
   }
@@ -234,13 +233,25 @@ const SelectSizeView = (props: SelectSizeProps) => {
                 sizeItemChecked={sizeItemChecked}
                 setSizeItemChecked={setSizeItemChecked}
               />
-              <Button
-                onClick={() => handleSubmit()}
-                className="submit-btn"
-                text="Select Size"
-                disabled={disabledNext()}
-                variant="primary"
-              />
+              <Hidden xs>
+                <Button
+                  onClick={() => handleSubmit()}
+                  className="submit-btn"
+                  text="Select Size"
+                  disabled={disabledNext()}
+                  variant="primary"
+                />
+              </Hidden>
+              <MobileStickyBottomView withBackground>
+                <Button
+                  onClick={() => handleSubmit()}
+                  className="submit-btn"
+                  text="Select Size"
+                  disabled={disabledNext()}
+                  variant="primary"
+                  takeFullWidth
+                />
+              </MobileStickyBottomView>
             </>
           ) : (
             ''

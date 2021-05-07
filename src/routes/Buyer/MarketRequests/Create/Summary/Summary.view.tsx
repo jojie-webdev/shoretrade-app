@@ -8,7 +8,7 @@ import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
@@ -24,6 +24,7 @@ import {
   BadgeText,
   StyledTextField,
 } from './Summary.style';
+import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 
 const SummaryView = (props: SummaryProps) => {
   const {
@@ -166,12 +167,23 @@ const SummaryView = (props: SummaryProps) => {
               requested is reached
             </TypographyView>
           </div>
-          <Button
-            onClick={() => handleSubmit()}
-            className="submit-btn"
-            text="Send Request to the Market"
-            variant="primary"
-          />
+          <Hidden xs>
+            <Button
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              text="Send Request to the Market"
+              variant="primary"
+            />
+          </Hidden>
+          <MobileStickyBottomView withBackground>
+            <Button
+              takeFullWidth
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              text="Send Request to the Market"
+              variant="primary"
+            />
+          </MobileStickyBottomView>
         </SummaryContentContainer>
       </ContainerWithCategoryImagePreview>
     </>
