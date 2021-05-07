@@ -185,13 +185,15 @@ function Step8({
             onClick={() => onChangeCurrentPage(7)}
           />
         </Col>
-        <Col md={12} className="interaction-col">
-          <Interactions
-            label="Notes"
-            value={notes}
-            type="edit"
-            onClick={() => onChangeCurrentPage(7)}
-          />
+        <Col md={12} className="interaction-col ">
+          <div className="text-area">
+            <Interactions
+              label="Notes"
+              value={notes}
+              type="edit"
+              onClick={() => onChangeCurrentPage(7)}
+            />
+          </div>
         </Col>
       </Row>
       <ButtonRow

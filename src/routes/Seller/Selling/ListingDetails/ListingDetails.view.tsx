@@ -109,30 +109,32 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             aspectRatio="9:4"
             showActionButton={isMobile}
           />
-          <MobileSalesCard>
-            <div className="sales-container">
-              <Typography variant="title4" color="shade6" weight="regular">
-                Sales:
-              </Typography>
+          {!isCreatListingSuccess && (
+            <MobileSalesCard>
+              <div className="sales-container">
+                <Typography variant="title4" color="shade6" weight="regular">
+                  Sales:
+                </Typography>
 
-              <Typography
-                variant="title4"
-                color="shade9"
-                weight="bold"
-                className="per-label"
-              >
-                {sales.sales}
-              </Typography>
-            </div>
-            <div className="sold-container">
-              <Typography variant="body" color="shade9">
-                {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
-              </Typography>
-            </div>
-            <div className="progress-container">
-              <Progress percent={percent} />
-            </div>
-          </MobileSalesCard>
+                <Typography
+                  variant="title4"
+                  color="shade9"
+                  weight="bold"
+                  className="per-label"
+                >
+                  {sales.sales}
+                </Typography>
+              </div>
+              <div className="sold-container">
+                <Typography variant="body" color="shade9">
+                  {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
+                </Typography>
+              </div>
+              <div className="progress-container">
+                <Progress percent={percent} />
+              </div>
+            </MobileSalesCard>
+          )}
 
           <div className="product-details">
             <Typography
@@ -145,11 +147,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             <div className="tags-container">
               {productDetails.tags.map(({ label }) => (
                 <Tag key={label}>
-                  <Typography
-                    variant="caption"
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
+                  <Typography variant="caption" color={'shade9'} weight="bold">
                     {label}
                   </Typography>
                 </Tag>
@@ -157,11 +155,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
             <div className="size-location-container">
               <div className="size-container">
-                <Expand
-                  width={16}
-                  height={16}
-                  fill={isExisting ? theme.grey.shade5 : theme.grey.noshade}
-                />
+                <Expand width={16} height={16} fill={theme.grey.shade5} />
                 <Typography
                   variant="label"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
@@ -170,11 +164,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </Typography>
               </div>
               <div className="location-container">
-                <Location
-                  width={16}
-                  height={16}
-                  fill={isExisting ? theme.grey.shade5 : theme.grey.noshade}
-                />
+                <Location width={16} height={16} fill={theme.grey.shade5} />
                 <Typography
                   variant="label"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
@@ -209,7 +199,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Min Order:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.minOrder}
                   </Typography>
                 </div>
@@ -219,7 +213,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Average Box Size:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {productDetails.avgBoxSize} {orderDetails.unit}
                   </Typography>
                 </div>
@@ -229,7 +227,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Listing Valid Until:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.validUntil &&
                       formatRunningDateDifference(
                         orderDetails.validUntil.toUTCString()
@@ -242,7 +244,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Remaining:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.remaining} {orderDetails.unit}
                   </Typography>
                 </div>
@@ -252,7 +258,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Catch Date:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.catchDate && formattedCatchDate()}
                   </Typography>
                 </div>
