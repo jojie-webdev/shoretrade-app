@@ -16,7 +16,9 @@ import TypographyView from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
+import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
+import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
@@ -41,6 +43,7 @@ import {
   BadgeText,
   StatusBadgeText,
   SellerOfferInteractionContentContainer,
+  FilterButton,
 } from './RequestDetails.style';
 
 export const OffersSellerAccordionContent = (props: {
@@ -271,6 +274,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         sortedNegotiations={sortedNegotiations}
         modalLastNegotiationsArray={lastNegotiationsOffers}
       />
+      <MarketRequestOfferFilterModalView {...props.filterModalProps} />
       <ConfirmationModal
         isOpen={showDelete}
         title="Delete Market Request"
@@ -340,6 +344,33 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       <span className="label">Sellers</span>
                     </div>
                   </div>
+                  <Row nogutter className="search-row" justify="between">
+                    <Col xl={4}>
+                      <Search
+                        className="filter-search"
+                        value={props.searchTerm}
+                        onChange={(event: any) =>
+                          props.setSearchTerm(event.currentTarget.value)
+                        }
+                        resetValue={() => props.setSearchTerm('')}
+                        placeholder="Search for any product..."
+                        rounded
+                      />
+                    </Col>
+
+                    <FilterButton onClick={props.onClickFilterButton}>
+                      <TypographyView
+                        variant="label"
+                        color="shade9"
+                        weight="500"
+                        className="btn-text"
+                      >
+                        Sort
+                      </TypographyView>
+
+                      <Filter />
+                    </FilterButton>
+                  </Row>
                   {/* NUMBERS CONTAINER END */}
                   {totalOffers < 1 || sellerOffers === undefined ? (
                     <EmptyStateView

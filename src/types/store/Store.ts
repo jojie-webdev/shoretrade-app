@@ -50,7 +50,11 @@ import {
   UpdateSellerLicenseMeta,
   UpdateSellerLicensePayload,
 } from 'types/store/UpdateSellerLicenseState';
-import { UploadBulkMeta, UploadBulkPayload, UploadBulkState } from 'types/store/UploadBulkState';
+import {
+  UploadBulkMeta,
+  UploadBulkPayload,
+  UploadBulkState,
+} from 'types/store/UploadBulkState';
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
@@ -144,6 +148,10 @@ import {
   GetMarketNotificationMeta,
   GetMarketNotificationPayload,
 } from './GetMarketNotificationState';
+import {
+  GetMarketRequestBuyerFiltersMeta,
+  GetMarketRequestBuyerFiltersPayload,
+} from './GetMarketRequestBuyerFiltersState';
 import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
@@ -350,6 +358,10 @@ export interface Store {
   getMarketInterests: AsyncState<
     GetMarketInterestsMeta,
     GetMarketInterestsPayload
+  >;
+  getMarketRequestBuyerFilters: AsyncState<
+    GetMarketRequestBuyerFiltersMeta,
+    GetMarketRequestBuyerFiltersPayload
   >;
   updateMarketInterests: AsyncState<
     UpdateMarketInterestsMeta,

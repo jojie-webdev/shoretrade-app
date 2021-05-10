@@ -8,12 +8,20 @@ import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDet
 import {
   deleteMarketRequestActions,
   getActiveOffersActions,
+  getAllMarketRequestActions,
+  getMarketRequestBuyerFiltersActions,
   marketRequestAcceptOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
 
+import {
+  getFavouriteSellers,
+  getLocation,
+  getRating,
+  requestToModalFilter,
+} from './RequestDetails.transform';
 import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
@@ -27,7 +35,18 @@ const MarketRequestDetail = (): JSX.Element => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
   };
 
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+
+  const buyerRequestsFilters = useSelector(
+    (store: Store) => store.getMarketRequestBuyerFilters.data?.data
+  );
+
+  const test = useSelector(
+    (store: Store) => store.getMarketRequestBuyerFilters
+  );
+
+  const { filters } = requestToModalFilter(buyerRequestsFilters);
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
@@ -67,11 +86,19 @@ const MarketRequestDetail = (): JSX.Element => {
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
+  //filters
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
+
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
     setSelectedCompany(company);
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id, row.id));
+  };
+
+  const onClickFilterButton = () => {
+    setIsFilterModalOpen((prevState) => !prevState);
   };
 
   const handleAcceptOffer = () => {
@@ -111,6 +138,28 @@ const MarketRequestDetail = (): JSX.Element => {
     setNegotiating(false);
   };
 
+  const onApply = () => {
+    setIsFilterModalOpen(false);
+
+    dispatch(
+      getActiveOffersActions.request({
+        queryParams: {
+          marketRequestId: id,
+          location: getLocation(selectedFilters, buyerRequestsFilters!),
+          rating: getRating(selectedFilters, buyerRequestsFilters!),
+          favouriteSellers: getFavouriteSellers(
+            selectedFilters,
+            buyerRequestsFilters!
+          ),
+        },
+      })
+    );
+  };
+
+  const onReset = () => {
+    setSelectedFilters([]);
+  };
+
   useEffect(() => {
     dispatch(
       getActiveOffersActions.request({
@@ -120,6 +169,19 @@ const MarketRequestDetail = (): JSX.Element => {
       })
     );
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      getMarketRequestBuyerFiltersActions.request({
+        buyerId: user?.id || '',
+      })
+    );
+  }, [user]);
+
+  useEffect(() => {
+    console.log(buyerRequestsFilters);
+  }, [buyerRequestsFilters]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -220,6 +282,10 @@ const MarketRequestDetail = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
+  console.log(filters);
+  console.log(buyerRequestsFilters);
+  console.log(test);
+
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
@@ -255,6 +321,16 @@ const MarketRequestDetail = (): JSX.Element => {
     setShowDelete,
     sortedNegotiations,
     lastNegotiationsOffers,
+    filterModalProps: {
+      isOpen: isFilterModalOpen,
+      filters,
+      selectedFilters,
+      setSelectedFilters,
+      onApply,
+      onReset,
+      onClickClose: () => setIsFilterModalOpen(false),
+    },
+    onClickFilterButton,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

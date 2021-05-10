@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { FilterModalProps } from 'components/module/FilterModal/FilterModal.props';
 import {
   GetActiveOffersRequestResponseItem,
   Negotiations,
@@ -74,4 +75,6 @@ export interface MarketRequestDetailProps {
   setShowDelete: Dispatch<SetStateAction<boolean>>;
   sortedNegotiations: Negotiations[];
   lastNegotiationsOffers: Negotiations[];
+  filterModalProps: FilterModalProps;
+  onClickFilterButton: () => void;
 }
