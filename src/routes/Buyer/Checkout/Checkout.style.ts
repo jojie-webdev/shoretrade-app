@@ -27,11 +27,7 @@ export const Container = styled.div`
   }
 
   .accordion-content-container {
-    padding: 24px;
-
-    @media ${BREAKPOINTS['sm']} {
-      padding: 24px 0 0 0;
-    }
+    padding: 24px 0 0 0;
   }
 `;
 

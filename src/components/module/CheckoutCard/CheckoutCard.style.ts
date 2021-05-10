@@ -4,39 +4,44 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
-  margin-bottom: 16px;
+  padding: 16px 24px;
+  margin-bottom: 12px;
   background: #ffffff;
-  border-radius: 4px;
-  border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
 
   .checkout-row {
     display: flex;
   }
 
   .checkout-card-texts {
-    padding: 12px 24px;
-  }
-
-  .checkout-card-end {
-    display: flex;
-    justify-content: flex-end;
-    padding: 12px 26px;
-  }
-
-  .checkout-card-price {
-    margin: 0 34px;
+    padding-right: 24px;
   }
 
   .checkout-tags {
     display: flex;
     margin: 4px 0 4px -2px;
     white-space: nowrap;
+    flex-wrap: wrap;
   }
 
-  .checkout-card-delete {
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
+  .checkout-card-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+
+    .checkout-card-delete {
+      cursor: pointer;
+
+      svg {
+        margin-bottom: 4px;
+        margin-left: 26px;
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 `;
@@ -79,15 +84,12 @@ export const MobileContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  width: 120px;
-  height: 120px;
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+  border-radius: 8px;
 
   @media ${BREAKPOINTS.sm} {
-    width: 64px;
-    height: 64px;
-    border-radius: 4px;
     margin-right: 8px;
   }
 `;

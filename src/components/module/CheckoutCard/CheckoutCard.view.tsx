@@ -4,8 +4,7 @@ import Badge from 'components/base/Badge/Badge.view';
 import { Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { is } from 'ramda';
-import { Col, Row } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -32,9 +31,7 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
     tags,
     onRemove,
   } = props;
-
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
   const Layout = isMobile ? MobileContainer : Container;
 
   return (
@@ -50,8 +47,8 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
         </div>
       )}
 
-      <Row align="center">
-        <Col>
+      <Row align="center" justify="between" nogutter>
+        <div>
           <div
             className="checkout-row"
             style={{ marginBottom: isMobile ? 8 : 0 }}
@@ -90,11 +87,40 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                   ))}
                 </div>
               )}
+
+              {!isMobile && (
+                <>
+                  <div className="checkout-row" style={{ flexWrap: 'wrap' }}>
+                    <Typography variant="caption" color="shade6">
+                      Vendor
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {vendor}
+                    </TextValue>
+                  </div>
+
+                  <div className="checkout-row">
+                    <Typography variant="caption" color="shade6">
+                      Weight
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {weight} {formatMeasurementUnit(unit)}
+                    </TextValue>
+
+                    <Typography variant="caption" color="shade6">
+                      Size
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {size}
+                    </TextValue>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
-          <>
-            {isMobile && (
+          {isMobile && (
+            <>
               <div className="checkout-row">
                 <Typography variant="caption" color="shade6">
                   Vendor
@@ -103,47 +129,33 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                   {vendor}
                 </TextValue>
               </div>
-            )}
-            <div className="checkout-row">
-              {!isMobile && (
-                <>
-                  <Typography variant="caption" color="shade6">
-                    Vendor
-                  </Typography>
-                  <TextValue variant="caption" color="shade8">
-                    {vendor}
-                  </TextValue>
-                </>
-              )}
 
-              <Typography variant="caption" color="shade6">
-                Weight
-              </Typography>
-              <TextValue variant="caption" color="shade8">
-                {weight} {formatMeasurementUnit(unit)}
-              </TextValue>
+              <div className="checkout-row">
+                <Typography variant="caption" color="shade6">
+                  Weight
+                </Typography>
+                <TextValue variant="caption" color="shade8">
+                  {weight} {formatMeasurementUnit(unit)}
+                </TextValue>
 
-              <Typography variant="caption" color="shade6">
-                Size
-              </Typography>
-              <TextValue variant="caption" color="shade8">
-                {size}
-              </TextValue>
-            </div>
-          </>
-        </Col>
+                <Typography variant="caption" color="shade6">
+                  Size
+                </Typography>
+                <TextValue variant="caption" color="shade8">
+                  {size}
+                </TextValue>
+              </div>
+            </>
+          )}
+        </div>
 
         {!isMobile && (
-          <Col>
-            <div className="checkout-card-end">
-              <Typography className="checkout-card-price" color="shade8">
-                ${price}
-              </Typography>
-              <div className="checkout-card-delete" onClick={onRemove}>
-                <Subtract />
-              </div>
+          <div className="checkout-card-end">
+            <Typography color="shade8">${price}</Typography>
+            <div className="checkout-card-delete" onClick={onRemove}>
+              <Subtract />
             </div>
-          </Col>
+          </div>
         )}
       </Row>
     </Layout>

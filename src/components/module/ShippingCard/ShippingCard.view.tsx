@@ -18,7 +18,7 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   return (
     <Container>
       {options.length === 0 && (
-        <Typography variant="caption" color="shade9">
+        <Typography variant="caption" color="shade9" style={{ marginTop: 12 }}>
           Shipping rates are currently unavailable for this location. Please
           call ShoreTrade on 1300 095 746 or email info@shoretrade.com to
           organise this shipment.
@@ -72,13 +72,13 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                 </Typography>
                 {selectedPriceId === o.priceId ? (
                   <CheckFilled
-                    width={isMobile ? 14 : 24}
-                    height={isMobile ? 14 : 24}
+                    width={isMobile ? 14 : 20}
+                    height={isMobile ? 14 : 20}
                   />
                 ) : (
                   <CheckBorder
-                    width={isMobile ? 14 : 24}
-                    height={isMobile ? 14 : 24}
+                    width={isMobile ? 14 : 20}
+                    height={isMobile ? 14 : 20}
                     fill={theme.grey.shade5}
                   />
                 )}
