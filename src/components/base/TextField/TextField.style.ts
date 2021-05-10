@@ -16,15 +16,12 @@ export const FieldContainer = styled.div<{
   height: 48px;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px solid
-    ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
-  background-color: ${({ readOnly, theme }) =>
-    readOnly ? theme.grey.shade3 : theme.grey.noshade};
+  border: 1px solid ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
+  background-color: ${({ readOnly, theme }) => (readOnly ? theme.grey.shade3 : theme.grey.noshade)};
 `;
 
-export const Field = styled.input`
-  background-color: ${({ readOnly, theme }) =>
-    readOnly ? theme.grey.shade3 : theme.grey.noshade};
+export const Field = styled.input<{ disabled?: boolean; readOnly?: boolean }>`
+  background-color: ${({ readOnly, theme, disabled }) => (readOnly || disabled ? theme.grey.shade3 : theme.grey.noshade)};
   display: flex;
   flex: 1;
   border-radius: 4px;
@@ -44,7 +41,7 @@ export const Field = styled.input`
   }
 `;
 
-export const LeftComponentContainer = styled.div`
+export const LeftComponentContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
   min-width: 48px;
   padding: 0px 2px;
@@ -52,7 +49,8 @@ export const LeftComponentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid ${({ theme }) => theme.grey.shade5};
+  border-right: 1px solid ${({ theme }) => theme.grey.shade6};
+  ${(props) => props.disabled && `background-color: ${props.theme.grey.shade3}`}
 `;
 
 export const RightComponentContainer = styled.div`
@@ -61,7 +59,7 @@ export const RightComponentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid ${({ theme }) => theme.grey.shade5};
+  border-left: 1px solid ${({ theme }) => theme.grey.shade6};
 `;
 
 export const VisibilityContainer = styled.div`

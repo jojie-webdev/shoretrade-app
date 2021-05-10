@@ -1,4 +1,5 @@
 import TypographyView from 'components/base/Typography/Typography.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -14,11 +15,12 @@ export const Container = styled.div`
   .submit-btn {
     margin-top: 1rem;
     margin-right: 8px;
+    border-radius: 8px;
+    max-width: 148px;
   }
 
   .step-1-container {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
   }
 `;
@@ -27,6 +29,10 @@ export const SummaryContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 320px;
+
+  @media (min-width: 1450px) {
+    margin-left: 107px;
+  }
 
   .quantity-container {
     display: flex;

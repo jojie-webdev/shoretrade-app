@@ -78,9 +78,9 @@ const Step1 = ({
       <Badge
         key={item}
         className="offers-state-badge"
-        badgeColor={theme.grey.shade3}
+        badgeColor={theme.grey.shade9}
       >
-        <BadgeText color="shade8" weight="bold" variant="overline">
+        <BadgeText color="noshade" weight="bold" variant="overline">
           {item}
         </BadgeText>
       </Badge>
@@ -410,6 +410,11 @@ const Step1 = ({
                       ? buyerRequest.sizeFrom || 0
                       : activeOffer.size.from || 0
                   }
+                  LeftComponent={
+                    <Typography variant="label" weight="bold" color="shade6">
+                      {unit}
+                    </Typography>
+                  }
                   disabled
                 />
 
@@ -420,6 +425,11 @@ const Step1 = ({
                     label="To"
                     value={buyerRequest.sizeTo || 0}
                     disabled
+                    LeftComponent={
+                      <Typography variant="label" weight="bold" color="shade6">
+                        {unit}
+                      </Typography>
+                    }
                   />
                 )}
 
