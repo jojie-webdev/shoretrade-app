@@ -4,8 +4,8 @@ import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
 import { Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
-import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
@@ -17,7 +17,12 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
-import { Container, Footer } from './Checkout.style';
+import {
+  Container,
+  EmptyContainer,
+  SVGContainer,
+  Footer,
+} from './Checkout.style';
 
 const Orders = (props: CheckoutGeneratedProps) => {
   const {
@@ -135,16 +140,27 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
       ) : (
         <>
           {isEmpty(groupedOrders) ? (
-            <Row className="row" align="center" justify="center">
-              <Col>
-                <EmptyState
-                  title="No orders yet"
-                  buttonText="Start an order"
-                  Svg={Crab}
-                  onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
-                />
-              </Col>
-            </Row>
+            <BoxContainer>
+              <EmptyContainer>
+                <Row nogutter className="row">
+                  <Typography variant="title4">No orders yet</Typography>
+                </Row>
+                <Row nogutter className="row">
+                  <Col className="svg-col-spacer" />
+                  <Col>
+                    <SVGContainer>
+                      <Crab height={268} width={268} fill={theme.grey.shade7} />
+                    </SVGContainer>
+                  </Col>
+                </Row>
+                <Row nogutter className="row">
+                  <Button
+                    text="Start an order"
+                    onClick={() => history.push(BUYER_ROUTES.SEARCH)}
+                  />
+                </Row>
+              </EmptyContainer>
+            </BoxContainer>
           ) : (
             //  @ts-ignore
             <Orders {...props} />

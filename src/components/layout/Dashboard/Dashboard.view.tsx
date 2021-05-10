@@ -100,7 +100,7 @@ const Header = ({
   });
 
   const isTablet = useMediaQuery({
-    query: BREAKPOINTS.md,
+    query: BREAKPOINTS.genericTablet,
   });
 
   return (
