@@ -15,12 +15,6 @@ export const Container = styled.div`
     margin-bottom: 16px;
   }
 
-  .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .accordion-container {
     margin-bottom: 8px;
     padding-top: 0px;
