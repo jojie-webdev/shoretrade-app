@@ -15,6 +15,7 @@ import {
   orderActions,
   cartActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { CartItem } from 'types/store/CartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
@@ -34,6 +35,8 @@ import CheckoutView from './Checkout.view';
 const Checkout = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const currentCompany = GetDefaultCompany();
 
   const removeItem = (id: string) => {
     dispatch(cartActions.remove(id));
@@ -292,6 +295,7 @@ const Checkout = (): JSX.Element => {
   }, [cartItems.length]);
 
   const generatedProps = {
+    balance: currentCompany?.credit || '',
     groupedOrders,
     totalValue,
     keepShopping,

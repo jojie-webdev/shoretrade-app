@@ -41,6 +41,7 @@ const Accordion = ({
         keepIcon={keepIcon}
       />
       <Content
+        className="accordion-content-wrapper"
         isOpen={isOpen}
         withBackground={props.withBackground}
         padding={padding}

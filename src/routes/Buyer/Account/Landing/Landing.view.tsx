@@ -8,9 +8,9 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
-
 // import { useTheme } from 'utils/Theme';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { LandingGeneratedProps } from './Landing.props';
 import {
@@ -19,7 +19,6 @@ import {
   NavInteraction,
   NoProfilePic,
 } from './Landing.style';
-import { parseImageUrl } from 'utils/parseImageURL';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const INTERACTIONS = [

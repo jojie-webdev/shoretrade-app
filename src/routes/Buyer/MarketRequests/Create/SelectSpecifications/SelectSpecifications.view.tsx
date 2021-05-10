@@ -15,6 +15,8 @@ import {
 } from '../Create.style';
 import { SpecificationFormContainer } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
+import { Hidden } from 'react-grid-system';
+import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 
 const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   const {
@@ -117,12 +119,23 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
               </div>
             </div>
           ))}
+          <Hidden xs>
+            <Button
+              onClick={() => handleSelectSpecs()}
+              disabled={isEmpty(groupOrders) || isDisabled}
+              text="Select Specification"
+              variant="primary"
+            />
+          </Hidden>
+          <MobileStickyBottomView withBackground>
           <Button
-            onClick={() => handleSelectSpecs()}
-            disabled={isEmpty(groupOrders) || isDisabled}
-            text="Select Specification"
-            variant="primary"
-          />
+              onClick={() => handleSelectSpecs()}
+              disabled={isEmpty(groupOrders) || isDisabled}
+              text="Select Specification"
+              variant="primary"
+              takeFullWidth
+            />
+          </MobileStickyBottomView>
         </SpecificationFormContainer>
       </ContainerWithCategoryImagePreview>
     </>
