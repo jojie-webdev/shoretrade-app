@@ -11,10 +11,6 @@ export const Container = styled.div`
 
   .checkout-row {
     display: flex;
-
-    @media ${BREAKPOINTS.sm} {
-      flex-direction: column;
-    }
   }
 
   .checkout-card-texts {
@@ -25,19 +21,10 @@ export const Container = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 12px 26px;
-
-    @media ${BREAKPOINTS.sm} {
-      padding: 12px 0;
-      justify-content: flex-start;
-    }
   }
 
   .checkout-card-price {
     margin: 0 34px;
-
-    @media ${BREAKPOINTS.sm} {
-      margin: 0px 24px;
-    }
   }
 
   .checkout-tags {
@@ -54,25 +41,65 @@ export const Container = styled.div`
   }
 `;
 
+export const MobileContainer = styled.div`
+  padding: 16px;
+  border-bottom: 2px solid ${({ theme }) => theme.grey.shade2};
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .checkout-row {
+    display: flex;
+  }
+
+  .checkout-card-texts {
+    width: 100%;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .checkout-card-price {
+    margin-left: 8px;
+  }
+
+  .checkout-tags {
+    display: flex;
+    margin: 4px 0 4px -2px;
+    white-space: nowrap;
+    flex-wrap: wrap;
+  }
+`;
+
 export const Image = styled.img`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  min-width: 120px;
   width: 120px;
   height: 120px;
-  overflow: hidden;
 
   @media ${BREAKPOINTS.sm} {
-    flex: 1;
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    margin-right: 8px;
   }
 `;
 
 export const TextValue = styled(Typography)`
   margin-left: 8px;
   margin-right: 16px;
+
+  @media ${BREAKPOINTS.sm} {
+    margin-left: 4px;
+    margin-right: 8px;
+  }
 `;
 
 export const BadgeText = styled(Typography)`

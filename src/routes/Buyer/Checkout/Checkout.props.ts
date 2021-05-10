@@ -22,6 +22,7 @@ export type OrderItem = {
 };
 
 export interface CheckoutGeneratedProps {
+  balance: string;
   groupedOrders: Record<string, OrderItem[]>;
   loadingShippingQuotes: boolean;
   totalValue: number;

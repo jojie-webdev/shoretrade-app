@@ -1,28 +1,37 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  //height: 100%;
-  //padding: 0 8px 48px 8px;
-  //position: relative;
-
-  .order-summary {
-    margin-bottom: 16px;
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 150px;
   }
 
-  .checkout-shipping {
-    margin-top: 32px;
+  .order-summary {
     margin-bottom: 16px;
   }
 
   .accordion-container {
     margin-bottom: 8px;
     padding-top: 0px;
+
+    .border {
+      display: none;
+    }
+
+    .accordion-content-wrapper {
+      @media ${BREAKPOINTS['sm']} {
+        padding: 0;
+      }
+    }
   }
 
   .accordion-content-container {
-    background: ${(props) => props.theme.grey.noshade};
     padding: 24px;
+
+    @media ${BREAKPOINTS['sm']} {
+      padding: 24px 0 0 0;
+    }
   }
 `;
 
@@ -38,6 +47,35 @@ export const EmptyContainer = styled.div`
     @media ${BREAKPOINTS['sm']} {
       display: none;
     }
+  }
+`;
+
+export const CheckoutCardRow = styled(Row)`
+  @media ${BREAKPOINTS['sm']} {
+    background-color: #ffffff;
+    border: 2px solid ${({ theme }) => theme.grey.shade2};
+    border-bottom: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+`;
+
+export const ShippingRow = styled(Row)`
+  .checkout-shipping {
+    margin-top: 32px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-top: 0;
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 16px;
+    background-color: #ffffff;
+    border: 2px solid ${({ theme }) => theme.grey.shade2};
+    border-top: 1px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 `;
 
@@ -79,32 +117,76 @@ export const SVGContainer = styled.div`
       height: 250px;
     }
   }
-  //@media (min-width: 577px) and (max-width: 747px) {
-  //  display: none;
-  //}
-  //
-  //@media (min-width: 769px) and (max-width: 1110px) {
-  //  display: none;
-  //}
+`;
+
+export const BottomRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+
+  .btns-container {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .balances {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid ${({ theme }) => theme.grey.shade3};
+    border-radius: 8px;
+    min-width: 357px;
+    margin-bottom: 10px;
+
+    @media ${BREAKPOINTS['genericTablet']} {
+      min-width: 100%;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .total-value {
+      @media ${BREAKPOINTS['genericTablet']} {
+        margin: 0 26px;
+      }
+    }
+  }
 `;
 
 export const Footer = styled.div`
-  margin-top: 32px;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  padding: 8px 0;
+  background-color: ${({ theme }) => theme.grey.shade2};
+  margin-left: -24px;
 
-  .footer-separator {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid ${(props) => props.theme.grey.shade5};
-    width: 100%;
+  .btns-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding: 0 24px;
+    margin-top: 16px;
+
+    button {
+      width: 50%;
+    }
   }
 
-  .keep-shopping-wrapper {
-    margin-right: 16px;
+  .balances {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 8px 24px;
+    border-bottom: 1px solid ${({ theme }) => theme.grey.shade5};
   }
 `;
