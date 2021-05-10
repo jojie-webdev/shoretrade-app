@@ -27,6 +27,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
@@ -63,8 +64,6 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
-
-import { sizeToString } from 'utils/Listing';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState } = props;
@@ -204,11 +203,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           </StatusContainer>
           <div className="size">
             <Typography variant="small">
-              {sizeToString(
-                props.size.unit,
-                props.size.from,
-                props.size.to
-              )}
+              {sizeToString(props.size.unit, props.size.from, props.size.to)}
             </Typography>
           </div>
         </ResultContainer>
@@ -222,7 +217,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       {/* <Typography style={{ paddingBottom: '32px' }} variant="title4">
         Welcome {}
       </Typography> */}
-      {!isPendingAccount && (
+      {isPendingAccount && (
         <Alert
           variant="alert"
           content={`Account Pending. You cannot make purchases until approved.`}
