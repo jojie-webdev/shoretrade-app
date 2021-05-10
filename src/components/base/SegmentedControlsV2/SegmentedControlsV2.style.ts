@@ -28,6 +28,16 @@ export const Container = styled.div`
     padding: 7px;
     min-height: 36px;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    justify-content: space-evenly !important;
+  }
+  @media ${BREAKPOINTS['genericTablet']} {
+    justify-content: space-evenly !important;
+  }
+  @media ${BREAKPOINTS['iPad']} {
+    justify-content: space-evenly !important;
+  }
   @media ${BREAKPOINTS['sm']} {
     padding: 6px;
   }

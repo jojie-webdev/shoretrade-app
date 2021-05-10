@@ -83,6 +83,14 @@ export const SalesRow = styled(Row)`
       min-width: 170px;
     }
   }
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    .figma-width {
+      width: 190px !important;
+      min-width: 190px;
+    }
+  }
+
   @media ${BREAKPOINTS['ipadPro']} {
     .figma-width {
       width: 200px !important;

@@ -26,7 +26,8 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
+  const isGenericTablet = useMediaQuery({ query: BREAKPOINTS['genericTablet'] });
+  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
   const getStatusBadgeColor = (status: GetActiveOffersRequestResponseItem['status']) => {
     if (status === 'OPEN') return theme.brand.warning;
     if (status === 'ACCEPTED') return theme.brand.success;
@@ -70,7 +71,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           </>
         )}
       </SegmentedControls>
-      {isMobile && (
+      {(isMobile || isGenericTablet || isIpadPro) && (
         <Row nogutter className='search-row' justify='between'>
           {props.currentTab === 'Buyer Requests' && (
             <>
