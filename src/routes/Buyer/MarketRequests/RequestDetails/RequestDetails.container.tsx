@@ -79,6 +79,9 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections = offerBreadCrumb;
   }
   const [searchTerm, setSearchTerm] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [initial, setInitial] = useState(true);
+
   const [negotiating, setNegotiating] = useState(false);
   const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
@@ -145,6 +148,7 @@ const MarketRequestDetail = (): JSX.Element => {
       getActiveOffersActions.request({
         queryParams: {
           marketRequestId: id,
+          searchTerm: searchTerm,
           location: getLocation(selectedFilters, buyerRequestsFilters!),
           rating: getRating(selectedFilters, buyerRequestsFilters!),
           favouriteSellers: getFavouriteSellers(
@@ -169,6 +173,38 @@ const MarketRequestDetail = (): JSX.Element => {
       })
     );
   }, []);
+
+  useEffect(() => {
+    setInitial(false);
+  }, [activeOffers]);
+
+  useEffect(() => {
+    if (initial) return;
+
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    const timerId = setTimeout(() => {
+      dispatch(
+        getActiveOffersActions.request({
+          queryParams: {
+            marketRequestId: id,
+            term: searchTerm,
+            location: getLocation(selectedFilters, buyerRequestsFilters!),
+            rating: getRating(selectedFilters, buyerRequestsFilters!),
+            favouriteSellers: getFavouriteSellers(
+              selectedFilters,
+              buyerRequestsFilters!
+            ),
+          },
+        })
+      );
+    }, 800);
+
+    setTimer(timerId);
+  }, [searchTerm]);
 
   useEffect(() => {
     dispatch(
