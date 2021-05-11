@@ -11,7 +11,7 @@ import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,
 } from './EditAddress.transform';
-import EditAddresView from './EditAddress.view';
+import EditAddressView from './EditAddress.view';
 
 const EditAddress = (): JSX.Element => {
   // MARK:- Variables
@@ -31,7 +31,6 @@ const EditAddress = (): JSX.Element => {
 
   const [submitted, setIsSubmitted] = useState(false);
   const [unitNumber, setUnitNumber] = useState('');
-  const [isDelete, setIsDelete] = useState(false);
   const [isDefault, setIsDefault] = useState<boolean | null>(null);
   const currentAddress = addresses.find((a) => a.id === addressId);
   const initialAddress = currentAddress
@@ -77,7 +76,6 @@ const EditAddress = (): JSX.Element => {
       history.goBack();
     }
   };
-  const toggleisDelete = () => setIsDelete(!isDelete);
   const toggleIsDefault = () => setIsDefault(!isDefault);
 
   // MARK:- Effects
@@ -113,10 +111,8 @@ const EditAddress = (): JSX.Element => {
     unitNumber,
     setUnitNumber,
     isSuccess: updateAddress.data?.status === 200 && submitted,
-    toggleisDelete,
-    isDelete,
   };
-  return <EditAddresView {...generatedProps} />;
+  return <EditAddressView {...generatedProps} />;
 };
 
 export default EditAddress;
