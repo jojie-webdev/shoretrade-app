@@ -82,6 +82,37 @@ export const Container = styled.div`
   }
 `;
 
+export const ItemDetail = styled(Typography)<{ row?: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.row ? 'row' : 'column')};
+  align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
+  margin-left: -6px;
+  width: auto;
+  white-space: nowrap;
+  line-height: 16px;
+
+  margin-right: 56px;
+
+  @media (max-width: 1052px) {
+    margin-right: 32px;
+  }
+
+  @media (max-width: 980px) {
+    margin-right: 16px;
+  }
+
+  @media (max-width: 550px) {
+    flex: 1;
+  }
+
+  span {
+    color: ${(props) => props.theme.grey.noshade};
+    font-size: 14px;
+    margin-left: ${(props) => (props.row ? '8px' : '0')};
+    line-height: 24px;
+  }
+`;
+
 export const BadgeText = styled(Typography)`
   font-size: ${pxToRem(12)};
 `;

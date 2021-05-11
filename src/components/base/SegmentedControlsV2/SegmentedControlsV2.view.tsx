@@ -1,5 +1,6 @@
-import { BREAKPOINTS } from 'consts/breakpoints';
 import React from 'react';
+
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 // import { useTheme } from 'utils/Theme';
 import { Row, Col } from 'react-grid-system';
@@ -15,7 +16,7 @@ const ControlsContent = (props: SegmentedControlsV2Props) => {
   const { options, selectedOption, onClickControl, tooltips, children } = props;
   const Icon: React.FC<SVGProps> = InfoFilled;
   const theme = useTheme();
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <>
       {options.map((option) => {
@@ -23,12 +24,27 @@ const ControlsContent = (props: SegmentedControlsV2Props) => {
         const value = currentTooltip ? currentTooltip.value : '';
 
         return (
-          <ControlButton key={option} active={option === selectedOption} onClick={() => onClickControl(option)}>
+          <ControlButton
+            key={option}
+            active={option === selectedOption}
+            onClick={() => onClickControl(option)}
+            isMobile={isMobile}
+          >
             {option}
             {value && (
-              <div className='tooltip'>
-                <Icon width={20} height={20} fill={option === selectedOption ? theme.grey.noshade : theme.brand.info} />
-                <span className='tooltip-text'>{value}</span>
+              <div className="tooltip">
+                <Icon
+                  width={20}
+                  height={20}
+                  fill={
+                    option === selectedOption
+                      ? isMobile
+                        ? theme.brand.info
+                        : theme.grey.noshade
+                      : theme.brand.info
+                  }
+                />
+                <span className="tooltip-text">{value}</span>
               </div>
             )}
           </ControlButton>
@@ -50,10 +66,10 @@ const SegmentedControlsV2 = (props: SegmentedControlsV2Props): JSX.Element => {
         <ControlsContent {...props} />
       ) : (
         <>
-          <div className='controls'>
+          <div className="controls">
             <ControlsContent {...props} />
           </div>
-          <div className='search-row'>{children}</div>
+          <div className="search-row">{children}</div>
         </>
       )}
     </Container>

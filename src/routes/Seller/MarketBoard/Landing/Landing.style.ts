@@ -58,6 +58,10 @@ export const Container = styled.div`
       }
     }
   }
+
+  .title-board {
+    margin-bottom: 16px;
+  }
 `;
 
 export const FilterButton = styled.button`

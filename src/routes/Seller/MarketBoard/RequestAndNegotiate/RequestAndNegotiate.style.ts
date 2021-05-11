@@ -1,3 +1,4 @@
+import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
@@ -19,9 +20,41 @@ export const Container = styled.div`
     max-width: 148px;
   }
 
+  .submit-btns-step1 {
+    display: flex;
+    @media ${BREAKPOINTS['sm']} {
+      margin: 16px -16px -16px -16px;
+      background-color: ${(props) => props.theme.grey.shade9};
+    }
+  }
+
+  .submit-btn-step1 {
+    margin-top: 1rem;
+    margin-right: 8px;
+    border-radius: 8px;
+    max-width: 148px;
+
+    @media ${BREAKPOINTS['sm']} {
+      max-width: 100%;
+      width: 100%;
+      margin: 24px;
+    }
+  }
+
   .step-1-container {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .mobile-back-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+
+    .product-name {
+      margin-top: 2.5px;
+      margin-left: 8px;
+    }
   }
 `;
 
@@ -97,3 +130,4 @@ export const MetricContainer = styled.div`
 
   margin-bottom: 16px;
 `;
+export const StyledTouchable = styled(Touchable)``;

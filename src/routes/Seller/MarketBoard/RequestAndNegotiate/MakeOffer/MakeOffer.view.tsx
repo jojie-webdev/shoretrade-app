@@ -13,6 +13,7 @@ import moment from 'moment';
 import { pathOr } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import theme from 'utils/Theme';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
 import { Container, Error, MetricContainer } from './MakeOffer.style';
@@ -53,6 +54,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             {options.map((o) => (
               <Col key={o.value} md={12} lg={6} xl={4}>
                 <Interactions
+                  backgroundColor={theme.grey.noshade}
+                  fontColor={theme.grey.shade9}
                   value={o.label}
                   type="radio"
                   padding="14px 18px"
@@ -244,12 +247,14 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         </Typography>
       </div>
 
-      <Button
-        onClick={props.addToMarketOffers}
-        className="submit-btn"
-        text="Review offer"
-        variant="primary"
-      />
+      <div className="submit-btns-step2">
+        <Button
+          onClick={props.addToMarketOffers}
+          className="submit-btn-step2"
+          text="Review offer"
+          variant="primary"
+        />
+      </div>
     </Container>
   );
 };

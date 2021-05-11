@@ -4,14 +4,17 @@ import React, { useState } from 'react';
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
+import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview/CategoryImagePreview.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import moment from 'moment';
+import moment, { isMoment } from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
@@ -30,6 +33,7 @@ import {
   BadgesContainer,
   BadgeText,
   MetricContainer,
+  StyledTouchable,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
@@ -356,6 +360,7 @@ const Step1 = ({
     );
   };
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <>
       <div className="step-1-container">
@@ -504,7 +509,7 @@ const Step1 = ({
 
           <Negotiations activeOffer={activeOffer} />
 
-          {isReview && (
+          {isReview && !isMobile && (
             <div className="submit-btns">
               <Button
                 onClick={() => props.setStep && props.setStep(2)}
@@ -534,40 +539,64 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const handleNavigation = () => {
+    if (step === 1) {
+      history.goBack();
+    }
+    if (step === 2) {
+      setStep(1);
+    }
+    if (step === 3) {
+      setStep(2);
+    }
+  };
 
   return (
     <Container>
-      <div className="breadcrumb-container">
-        <Breadcrumbs
-          sections={[
-            {
-              label: 'Market Board',
-              onClick: () => {
-                if (!isEmpty(props.offer)) {
-                  setIsOpen(true);
-                } else if (props.isReview) {
-                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
-                } else {
-                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-                    currentTab: 'My Active Offers',
-                  });
-                }
+      {!isMobile ? (
+        <div className="breadcrumb-container">
+          <Breadcrumbs
+            sections={[
+              {
+                label: 'Market Board',
+                onClick: () => {
+                  if (!isEmpty(props.offer)) {
+                    setIsOpen(true);
+                  } else if (props.isReview) {
+                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+                  } else {
+                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+                      currentTab: 'My Active Offers',
+                    });
+                  }
+                },
               },
-            },
-            {
-              label: props.isReview ? 'Review Request' : 'Negotiate',
-              ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
-            },
-            ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
-            ...(step === 3
-              ? [
-                  { label: 'Make an Offer', onClick: () => setStep(2) },
-                  { label: 'Review Offer' },
-                ]
-              : []),
-          ]}
-        />
-      </div>
+              {
+                label: props.isReview ? 'Review Request' : 'Negotiate',
+                ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
+              },
+              ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
+              ...(step === 3
+                ? [
+                    { label: 'Make an Offer', onClick: () => setStep(2) },
+                    { label: 'Review Offer' },
+                  ]
+                : []),
+            ]}
+          />
+        </div>
+      ) : (
+        <div className="mobile-back-container">
+          <StyledTouchable onPress={() => handleNavigation()}>
+            <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
+          </StyledTouchable>
+          <Typography variant="title5" color="noshade" className="product-name">
+            {props.buyerRequest.type}
+          </Typography>
+        </div>
+      )}
 
       {step === 1 && (
         <Step1 setStep={setStep} {...props} userPending={props.userPending} />
@@ -588,6 +617,17 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         actionText="Clear"
         onClickClose={() => setIsOpen(false)}
       />
+      {props.isReview && step === 1 && isMobile && (
+        <div className="submit-btns-step1">
+          <Button
+            onClick={() => setStep && setStep(2)}
+            className="submit-btn-step1"
+            disabled={props.userPending}
+            text="Make an offer"
+            variant={props.userPending ? 'disabled' : 'primary'}
+          />
+        </div>
+      )}
     </Container>
   );
 };
