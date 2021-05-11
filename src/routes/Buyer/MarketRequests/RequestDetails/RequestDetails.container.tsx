@@ -42,9 +42,6 @@ const MarketRequestDetail = (): JSX.Element => {
     (store: Store) => store.getMarketRequestBuyerFilters.data?.data
   );
 
-  const test = useSelector(
-    (store: Store) => store.getMarketRequestBuyerFilters
-  );
 
   const { filters } = requestToModalFilter(buyerRequestsFilters);
 
@@ -214,9 +211,7 @@ const MarketRequestDetail = (): JSX.Element => {
     );
   }, [user]);
 
-  useEffect(() => {
-    console.log(buyerRequestsFilters);
-  }, [buyerRequestsFilters]);
+
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -318,9 +313,7 @@ const MarketRequestDetail = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-  console.log(filters);
-  console.log(buyerRequestsFilters);
-  console.log(test);
+
 
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
@@ -331,9 +324,9 @@ const MarketRequestDetail = (): JSX.Element => {
     newOffer,
     selectedOffer,
     marketRequestId: id,
-    data: activeOffers.data?.data.marketOffers[0]?.marketRequest || {},
+    data: activeOffers.data?.data?.marketOffers[0]?.marketRequest || {},
     measurementUnit:
-      activeOffers.data?.data.marketOffers[0]?.offers[0].measurementUnit || '',
+      activeOffers.data?.data?.marketOffers[0]?.offers[0]?.measurementUnit || '',
     sellerOffers: activeOffers.data?.data.marketOffers || [],
     searchTerm,
     negotiating,
