@@ -8,8 +8,10 @@ import FilterModal from 'components/module/FilterModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
 import LinePath from 'components/module/LinePath';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { MarketPriceDetailGeneratedProps } from './MarketPriceDetail.props';
@@ -23,6 +25,8 @@ import {
 
 const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
   const theme = useTheme();
+
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const { openFilterModal, name, data, graphData, ...filterModalProps } = props;
 
@@ -40,7 +44,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
         </HeaderRow>
       ) : (
         <>
-          <HeaderRow justify="between" align="center">
+          <HeaderRow nogutter justify="between" align="center">
             <InnerRouteHeader title={name} fullRow={false} />
 
             <FilterButton onClick={openFilterModal}>
@@ -62,7 +66,10 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
               <Interactions
                 label="Paid"
                 leftComponent={
-                  <Typography variant="title4" color="noshade">
+                  <Typography
+                    variant={isSmallScreen ? 'title5' : 'title4'}
+                    color="noshade"
+                  >
                     {price}
                   </Typography>
                 }
@@ -85,14 +92,16 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
                         </Typography>
                       </>
                     )}
-                    <LinePath
-                      width={60}
-                      height={15}
-                      data={graphData}
-                      cHeight={15}
-                      cWidth={60}
-                      cStyle={{ alignSelf: 'center' }}
-                    />
+                    <Hidden xs>
+                      <LinePath
+                        width={60}
+                        height={15}
+                        data={graphData}
+                        cHeight={15}
+                        cWidth={60}
+                        cStyle={{ alignSelf: 'center' }}
+                      />
+                    </Hidden>
                   </StockContainer>
                 }
               />
