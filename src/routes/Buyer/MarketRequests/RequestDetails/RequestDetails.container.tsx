@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -37,11 +38,13 @@ const MarketRequestDetail = (): JSX.Element => {
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  const activeOffersData = (activeOffers.data?.data.marketOffers || []).filter(
+    (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
+  );
 
   const buyerRequestsFilters = useSelector(
     (store: Store) => store.getMarketRequestBuyerFilters.data?.data
   );
-
 
   const { filters } = requestToModalFilter(buyerRequestsFilters);
 
@@ -211,8 +214,6 @@ const MarketRequestDetail = (): JSX.Element => {
     );
   }, [user]);
 
-
-
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -313,21 +314,18 @@ const MarketRequestDetail = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-
-
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
-    totalOffers: activeOffers.data?.data.count || 0,
+    totalOffers: activeOffersData.length || 0,
     deliveryTotal,
     counterOffer,
     newOffer,
     selectedOffer,
     marketRequestId: id,
-    data: activeOffers.data?.data?.marketOffers[0]?.marketRequest || {},
-    measurementUnit:
-      activeOffers.data?.data?.marketOffers[0]?.offers[0]?.measurementUnit || '',
-    sellerOffers: activeOffers.data?.data.marketOffers || [],
+    data: activeOffersData[0]?.marketRequest || {},
+    measurementUnit: activeOffersData[0]?.offers[0].measurementUnit || '',
+    sellerOffers: activeOffersData || [],
     searchTerm,
     negotiating,
     setNegotiating,
@@ -350,6 +348,7 @@ const MarketRequestDetail = (): JSX.Element => {
     setShowDelete,
     sortedNegotiations,
     lastNegotiationsOffers,
+    isLoading: activeOffers.pending || false,
     filterModalProps: {
       isOpen: isFilterModalOpen,
       filters,

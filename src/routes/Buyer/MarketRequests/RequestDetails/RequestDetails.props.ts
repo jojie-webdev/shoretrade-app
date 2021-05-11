@@ -77,4 +77,5 @@ export interface MarketRequestDetailProps {
   lastNegotiationsOffers: Negotiations[];
   filterModalProps: FilterModalProps;
   onClickFilterButton: () => void;
+  isLoading: boolean;
 }
