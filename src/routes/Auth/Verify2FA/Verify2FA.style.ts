@@ -95,6 +95,12 @@ export const CodeField = styled.input`
   :focus {
     outline: none;
   }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export const Verify2FAButtonContainer = styled.div`
