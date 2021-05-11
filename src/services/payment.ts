@@ -6,6 +6,7 @@ import { AddCardTokenRequestData } from 'types/store/AddCardTokenState';
 import { ChargeCardMeta } from 'types/store/ChargeCardState';
 import { DeleteCardMeta } from 'types/store/DeleteCardState';
 import { GetPaymentMethodsMeta } from 'types/store/GetPaymentMethodsState';
+import { GetPaymentModeMeta } from 'types/store/GetPaymentMode';
 import { UpdateDefaultCardMeta } from 'types/store/UpdateDefaultCardState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
@@ -18,6 +19,16 @@ export const getPaymentMethods = (
   return axios({
     method: 'get',
     url: `${PAYMENT_URL}/customer-cards/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getPaymentMode = (data: GetPaymentModeMeta, token: string) => {
+  return axios({
+    method: 'get',
+    url: `${PAYMENT_URL}/get-payment-mode`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -37,6 +37,7 @@ export type AddCardAndPayMeta = {
     name: string;
   };
   default?: boolean;
+  paymentMode: string;
 };
 
 export type AddCardAndPayRealPayload = {
@@ -48,6 +49,7 @@ export type AddCardAndPayRealPayload = {
   cardToken?: string;
   existingCard?: string;
   currency: string;
+  paymentMode: string;
 };
 
 export type AddCardAndPayPayload = GenericResponse;
