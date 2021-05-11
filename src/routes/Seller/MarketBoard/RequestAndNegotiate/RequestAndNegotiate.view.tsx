@@ -552,7 +552,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
       setStep(2);
     }
   };
-
+  console.log(props);
   return (
     <Container>
       {!isMobile ? (
@@ -593,7 +593,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
             <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
           </StyledTouchable>
           <Typography variant="title5" color="noshade" className="product-name">
-            {props.buyerRequest.type}
+            {props.buyerRequest?.type || props.activeOffer?.name || ''}
           </Typography>
         </div>
       )}
