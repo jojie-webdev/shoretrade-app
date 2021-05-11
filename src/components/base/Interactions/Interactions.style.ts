@@ -18,7 +18,9 @@ export const Container = styled.div<InteractionsProps>`
       return 'transparent';
     }
 
-    return backgroundColor || (isSeller ? theme.grey.shade9 : '#ffffff');
+    return (
+      backgroundColor || (isSeller ? theme.grey.shade9 : theme.grey.noshade)
+    );
   }};
 
   margin-top: ${({ label }) => (label ? '20px' : 0)};
@@ -47,10 +49,10 @@ export const Container = styled.div<InteractionsProps>`
   }
 `;
 
-export const Value = styled(Typography)`
-  color: ${({ theme }) => {
+export const Value = styled(Typography)<{ fontColor?: string }>`
+  color: ${({ theme, fontColor }) => {
     const isSeller = theme.appType !== 'buyer';
-    return isSeller ? '#ffffff' : theme.grey.shade9;
+    return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);
   }};
   padding-right: 16px;
 `;

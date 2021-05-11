@@ -32,6 +32,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     customFontSize,
     fullWidth,
     keepIcon,
+    fontColor,
   } = props;
 
   const getIcon = () => {
@@ -78,7 +79,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         {leftComponent ? (
           leftComponent
         ) : (
-          <>{value ? <Value>{value}</Value> : null}</>
+          <>{value ? <Value fontColor={fontColor}>{value}</Value> : null}</>
         )}
         {children}
       </div>
