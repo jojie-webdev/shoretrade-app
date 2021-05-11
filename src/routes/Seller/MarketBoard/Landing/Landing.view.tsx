@@ -30,9 +30,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     query: BREAKPOINTS['genericTablet'],
   });
   const isIpadPro = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
-  const getStatusBadgeColor = (
-    status: GetActiveOffersRequestResponseItem['status']
-  ) => {
+  const getStatusBadgeColor = (status: GetActiveOffersRequestResponseItem['status']) => {
     if (status === 'OPEN') return theme.brand.warning;
     if (status === 'ACCEPTED') return theme.brand.success;
     if (status === 'DECLINED') return theme.brand.error;
@@ -50,47 +48,23 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 
   return (
     <Container>
-      {props.userPending && (
-        <Alert
-          variant="alert"
-          content={`Your account needs approval.`}
-          fullWidth
-          alignText="center"
-          style={{ marginBottom: 16 }}
-        />
-      )}
+      {props.userPending && <Alert variant='alert' content={`Your account needs approval.`} fullWidth alignText='center' style={{ marginBottom: 16 }} />}
       {isMobile && (
-        <Typography className="title-board" variant="title5" color="noshade">
+        <Typography className='title-board' variant='title5' color='noshade'>
           Market Board
         </Typography>
       )}
       <SegmentedControls
         options={['Buyer Requests', 'My Active Offers']}
         selectedOption={props.currentTab}
-        onClickControl={(value) =>
-          props.onChangeCurrentTab(value as TabOptions)
-        }
+        onClickControl={(value) => props.onChangeCurrentTab(value as TabOptions)}
         tooltips={[{ option: 'Buyer Requests', value: BuyerRequestsTooltip }]}
       >
         {!isMobile && props.currentTab === 'Buyer Requests' && (
           <>
-            <Search
-              className="search"
-              value={props.searchTerm}
-              onChange={(event: any) =>
-                props.setSearchTerm(event.currentTarget.value)
-              }
-              resetValue={() => props.setSearchTerm('')}
-              placeholder="Search order"
-              rounded
-            />
+            <Search className='search' value={props.searchTerm} onChange={(event: any) => props.setSearchTerm(event.currentTarget.value)} resetValue={() => props.setSearchTerm('')} placeholder='Search order' rounded />
             <FilterButton onClick={props.onClickFilterButton}>
-              <Typography
-                variant="label"
-                color="noshade"
-                weight="500"
-                className="btn-text"
-              >
+              <Typography variant='label' color='noshade' weight='500' className='btn-text'>
                 Filters
               </Typography>
 
@@ -100,29 +74,15 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         )}
       </SegmentedControls>
       {(isMobile || isGenericTablet || isIpadPro) && (
-        <Row nogutter className="search-row" justify="between">
+        <Row nogutter className='search-row' justify='between'>
           {props.currentTab === 'Buyer Requests' && (
             <>
               <Col xl={4}>
-                <Search
-                  className="filter-search"
-                  value={props.searchTerm}
-                  onChange={(event: any) =>
-                    props.setSearchTerm(event.currentTarget.value)
-                  }
-                  resetValue={() => props.setSearchTerm('')}
-                  placeholder="Search order"
-                  rounded
-                />
+                <Search className='filter-search' value={props.searchTerm} onChange={(event: any) => props.setSearchTerm(event.currentTarget.value)} resetValue={() => props.setSearchTerm('')} placeholder='Search order' rounded />
               </Col>
 
               <FilterButton onClick={props.onClickFilterButton}>
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  weight="500"
-                  className="btn-text"
-                >
+                <Typography variant='label' color='noshade' weight='500' className='btn-text'>
                   Filters
                 </Typography>
 
@@ -143,25 +103,17 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 key={b.id}
                 onClick={() => props.onClickOffer(b)}
                 leftComponent={
-                  <div className="left-component">
+                  <div className='left-component'>
                     <img src={parseImageUrl(b.image)} />
                     <div>
-                      <Typography color="noshade">{b.type}</Typography>
-                      <Typography
-                        className="expiry"
-                        color="error"
-                        variant="caption"
-                      >
+                      <Typography color='noshade'>{b.type}</Typography>
+                      <Typography className='expiry' color='error' variant='caption'>
                         {getExpiry(b.createdAt)}
                       </Typography>
-                      <div className="badges-container">
+                      <div className='badges-container'>
                         {b.specifications.map((s) => (
-                          <Badge
-                            key={s.stateId}
-                            className="badge"
-                            badgeColor={theme.grey.shade8}
-                          >
-                            <BadgeText variant="overlineSmall" color="noshade">
+                          <Badge key={s.stateId} className='badge' badgeColor={theme.grey.shade8}>
+                            <BadgeText variant='overlineSmall' color='noshade'>
                               {s.stateName}
                             </BadgeText>
                           </Badge>
@@ -169,69 +121,50 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       </div>
 
                       {Object.keys(b.sizeOptions).length != 0 ? (
-                        <div className="badges-container">
+                        <div className='badges-container'>
                           {b.sizeOptions.map((opt: any, idx: number) => (
-                            <Badge
-                              key={idx}
-                              className="badge"
-                              badgeColor={theme.grey.shade8}
-                            >
-                              <BadgeText
-                                variant="overlineSmall"
-                                color="noshade"
-                              >
+                            <Badge key={idx} className='badge' badgeColor={theme.grey.shade8}>
+                              <BadgeText variant='overlineSmall' color='noshade'>
                                 {opt}
                               </BadgeText>
                             </Badge>
                           ))}
                         </div>
                       ) : (
-                        <div className="weights">
-                          <Typography color="noshade" variant="small">
-                            {sizeToString(
-                              b.metric,
-                              (b.sizeFrom || '').toString(),
-                              (b.sizeTo || '').toString()
-                            )}
+                        <div className='weights'>
+                          <Typography color='noshade' variant='small'>
+                            {sizeToString(b.metric, (b.sizeFrom || '').toString(), (b.sizeTo || '').toString())}
                           </Typography>
                         </div>
                       )}
 
-                      <div className="weights">
-                        <Typography color="noshade" variant="small">
+                      <div className='weights'>
+                        <Typography color='noshade' variant='small'>
                           {b.weight?.from || ''}
                           {formatMeasurementUnit(b.measurementUnit)}
                         </Typography>
                         <div style={{ margin: '0 6px' }}>
-                          <ArrowRight
-                            width={10}
-                            height={10}
-                            fill={theme.grey.shade7}
-                          />
+                          <ArrowRight width={10} height={10} fill={theme.grey.shade7} />
                         </div>
 
-                        <Typography color="noshade" variant="small">
+                        <Typography color='noshade' variant='small'>
                           {b.weight?.to || ''}
                           {formatMeasurementUnit(b.measurementUnit)}
                         </Typography>
                       </div>
 
-                      <div className="shipping-to">
-                        <Typography variant="small" color="shade6">
+                      <div className='shipping-to'>
+                        <Typography variant='small' color='shade6'>
                           Shipping to
                         </Typography>
-                        <Typography
-                          variant="small"
-                          color="noshade"
-                          weight="bold"
-                        >
+                        <Typography variant='small' color='noshade' weight='bold'>
                           {`${b.shippingTo.suburb}, ${b.shippingTo.state} ${b.shippingTo.postcode}`}
                         </Typography>
                       </div>
                     </div>
                   </div>
                 }
-                padding="16px 24px 16px 16px"
+                padding='16px 24px 16px 16px'
               />
             ))}
 
@@ -244,63 +177,43 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   key={i}
                   onClick={() => props.onClickActiveOffer(v)}
                   leftComponent={
-                    <div className="left-component">
+                    <div className='left-component'>
                       <img src={parseImageUrl(v.image)} />
                       <div>
-                        <Typography color="noshade">{v.name}</Typography>
-                        <Typography
-                          className="expiry"
-                          color="error"
-                          variant="caption"
-                        >
+                        <Typography color='noshade'>{v.name}</Typography>
+                        <Typography className='expiry' color='error' variant='caption'>
                           {getExpiry(v.marketRequest.createdAt)}
                         </Typography>
 
                         {status && (
-                          <div className="badges-container">
-                            <Badge
-                              className="badge"
-                              badgeColor={getStatusBadgeColor(v.status)}
-                            >
-                              <BadgeText
-                                variant="overlineSmall"
-                                color={
-                                  v.status === 'OPEN' ? 'shade9' : 'noshade'
-                                }
-                              >
+                          <div className='badges-container'>
+                            <Badge className='badge' badgeColor={getStatusBadgeColor(v.status)}>
+                              <BadgeText variant='overlineSmall' color={v.status === 'OPEN' ? 'shade9' : 'noshade'}>
                                 {status}
                               </BadgeText>
                             </Badge>
                           </div>
                         )}
 
-                        <div className="weights">
+                        <div className='weights'>
                           <div style={{ margin: '0 4px 4px 0' }}>
-                            <Weight
-                              fill={theme.grey.noshade}
-                              width={12}
-                              height={12}
-                            />
+                            <Weight fill={theme.grey.noshade} width={12} height={12} />
                           </div>
-                          <Typography color="noshade" variant="small">
+                          <Typography color='noshade' variant='small'>
                             {v.weight}
                             {formatMeasurementUnit(v.measurementUnit)}
                           </Typography>
                           <div style={{ margin: '0 2px 4px 8px' }}>
-                            <DollarSign
-                              fill={theme.grey.noshade}
-                              width={11}
-                              height={11}
-                            />
+                            <DollarSign fill={theme.grey.noshade} width={11} height={11} />
                           </div>
-                          <Typography color="noshade" variant="small">
+                          <Typography color='noshade' variant='small'>
                             {v.price}/{formatMeasurementUnit(v.measurementUnit)}
                           </Typography>
                         </div>
                       </div>
                     </div>
                   }
-                  padding="16px 24px 16px 16px"
+                  padding='16px 24px 16px 16px'
                 />
               );
             })}
