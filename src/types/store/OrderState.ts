@@ -25,6 +25,7 @@ export type OrderMeta = {
   cart: OrderCartItem[][]; // Array of listings inside array of sellers
   currentAddress: GetAddressesResponseItem;
   totalPrice: number;
+  paymentMode?: string;
 };
 
 export type OrderPayload = GenericResponse;

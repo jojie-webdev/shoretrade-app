@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import {
   getBuyerOrdersActions,
   getBuyerOrdersPlacedActions,
+  getPaymentModeActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetBuyerOrdersToShipPending } from 'store/selectors/buyer/';
@@ -96,6 +97,10 @@ const Home = (): JSX.Element => {
       dateFrom: null,
       dateTo: null,
     });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getPaymentModeActions.request({}));
   }, []);
 
   // MARK:- Bottom Variables
