@@ -158,6 +158,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
               return (
                 <CodeFieldContainer key={key}>
                   <CodeField
+                    type="number"
                     ref={(el) => (inputRefs.current[index] = el)}
                     id={key}
                     maxLength={1}
@@ -216,6 +217,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
                 return (
                   <CodeFieldContainer key={key}>
                     <CodeField
+                      type="number"
                       ref={(el) => (inputRefs.current[index] = el)}
                       id={key}
                       maxLength={1}
