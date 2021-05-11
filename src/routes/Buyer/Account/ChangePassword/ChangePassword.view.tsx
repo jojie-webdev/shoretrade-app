@@ -101,15 +101,14 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
             />
           </div>
 
+          <Alerts {...props} />
+
           {!isMobile && (
-            <>
-              <Alerts {...props} />
-              <Row style={{ marginBottom: 24 }}>
-                <Col md={12} xl={8}>
-                  <InfoAlert />
-                </Col>
-              </Row>
-            </>
+            <Row style={{ marginBottom: 24 }}>
+              <Col md={12} xl={8}>
+                <InfoAlert />
+              </Col>
+            </Row>
           )}
 
           {/*
@@ -157,7 +156,6 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
 
           {isMobile && (
             <div style={{ marginTop: 24 }}>
-              <Alerts {...props} />
               <InfoAlert />
             </div>
           )}
