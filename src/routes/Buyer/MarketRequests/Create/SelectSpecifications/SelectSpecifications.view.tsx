@@ -5,8 +5,10 @@ import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq } from 'ramda';
+import { Hidden } from 'react-grid-system';
 import theme from 'utils/Theme';
 
 import {
@@ -15,8 +17,6 @@ import {
 } from '../Create.style';
 import { SpecificationFormContainer } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
-import { Hidden } from 'react-grid-system';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 
 const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   const {
@@ -127,15 +127,15 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
               variant="primary"
             />
           </Hidden>
-          <MobileStickyBottomView withBackground>
-          <Button
+          <MobileFooter>
+            <Button
               onClick={() => handleSelectSpecs()}
               disabled={isEmpty(groupOrders) || isDisabled}
               text="Select Specification"
               variant="primary"
               takeFullWidth
             />
-          </MobileStickyBottomView>
+          </MobileFooter>
         </SpecificationFormContainer>
       </ContainerWithCategoryImagePreview>
     </>

@@ -9,7 +9,6 @@ export const Container = styled.div<InteractionsProps>`
   padding: ${({ padding }) => padding || '24px'};
   display: flex;
   justify-content: space-between;
-  flex-wrap: nowrap;
   position: relative;
 
   background-color: ${({ theme, backgroundColor, noBg }) => {
@@ -44,7 +43,6 @@ export const Container = styled.div<InteractionsProps>`
   .left-content,
   .right-content {
     display: flex;
-    flex-wrap: nowrap;
     align-items: center;
   }
 `;

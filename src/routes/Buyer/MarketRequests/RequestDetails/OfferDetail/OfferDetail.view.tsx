@@ -3,12 +3,9 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
-import { BUYER_ROUTES } from 'consts';
+import MobileFooter from 'components/layout/MobileFooter';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
-import { useHistory } from 'react-router';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -263,35 +260,27 @@ const OfferDetailView = (props: any) => {
           )}
         </OfferActionsContainer>
       </Hidden>
-      <Visible xs>
-        <MobileStickyBottomView withBackground>
-          <Row>
-            <Col xs={6}>
-              {!hideNegotiate && (
-                <Button
-                  onClick={() => handleStartNegotiate()}
-                  className="button"
-                  variant="outline"
-                  text="Negotiate"
-                  takeFullWidth
-                />
-              )}
-            </Col>
-            <Col xs={6}>
-              {!isAccepted && (
-                <Button
-                  onClick={() => handleAcceptOffer()}
-                  className="button"
-                  variant="primary"
-                  disabled={disableAccept}
-                  text="Accept"
-                  takeFullWidth
-                />
-              )}
-            </Col>
-          </Row>
-        </MobileStickyBottomView>
-      </Visible>
+      <MobileFooter>
+        {!hideNegotiate && (
+          <Button
+            onClick={() => handleStartNegotiate()}
+            className="button"
+            variant="outline"
+            text="Negotiate"
+            takeFullWidth
+          />
+        )}
+        {!isAccepted && (
+          <Button
+            onClick={() => handleAcceptOffer()}
+            className="button"
+            variant="primary"
+            disabled={disableAccept}
+            text="Accept"
+            takeFullWidth
+          />
+        )}
+      </MobileFooter>
     </>
   );
 };

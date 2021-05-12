@@ -6,8 +6,8 @@ import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 import { pathOr } from 'ramda';
 import { Row, Col, Hidden } from 'react-grid-system';
 import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step3/Step3.constants';
@@ -18,7 +18,11 @@ import {
   CreateRequestHeaderContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
-import { SizeFormContainer, MetricLabelContainer, SelectRowContainer } from './SelectSize.style';
+import {
+  SizeFormContainer,
+  MetricLabelContainer,
+  SelectRowContainer,
+} from './SelectSize.style';
 
 const SizeInput = (props: SizeInputProps) => {
   const {
@@ -242,7 +246,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   variant="primary"
                 />
               </Hidden>
-              <MobileStickyBottomView withBackground>
+              <MobileFooter>
                 <Button
                   onClick={() => handleSubmit()}
                   className="submit-btn"
@@ -251,7 +255,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   variant="primary"
                   takeFullWidth
                 />
-              </MobileStickyBottomView>
+              </MobileFooter>
             </>
           ) : (
             ''
