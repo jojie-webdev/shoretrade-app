@@ -142,7 +142,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           onClick={props.onSubmit}
           className={isMobile ? 'submit-btn-2' : 'submit-btn'}
           text="submit"
-          variant="primary"
+          variant={!isChecked ? 'disabled' : 'primary'}
           disabled={!isChecked}
           loading={props.isSubmitting}
         />

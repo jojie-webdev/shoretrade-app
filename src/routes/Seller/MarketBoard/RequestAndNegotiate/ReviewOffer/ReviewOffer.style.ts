@@ -91,6 +91,7 @@ export const Container = styled.div`
     padding: 16px;
     margin: -16px;
     background-color: ${({ theme }) => theme.grey.shade9};
+    
     .submit-btn-1 {
       width: 50%;
       margin-right: 12px;

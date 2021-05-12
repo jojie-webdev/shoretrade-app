@@ -20,6 +20,27 @@ export const Container = styled.div`
     max-width: 148px;
   }
 
+  .button-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 1%;
+    padding: 16px;
+    margin: -16px;
+    background-color: ${({ theme }) => theme.grey.shade9};
+
+    .submit-btn-1 {
+      width: 50%;
+      margin-right: 12px;
+      margin-left: -4px;
+    }
+    .submit-btn-2 {
+      width: 50%;
+    }
+  }
+
   .submit-btns-step1 {
     display: flex;
     @media ${BREAKPOINTS['sm']} {
@@ -65,6 +86,9 @@ export const SummaryContentContainer = styled.div`
 
   @media (min-width: 1450px) {
     margin-left: 107px;
+  }
+  @media ${BREAKPOINTS['sm']} {
+    min-width: 100%;
   }
 
   .quantity-container {

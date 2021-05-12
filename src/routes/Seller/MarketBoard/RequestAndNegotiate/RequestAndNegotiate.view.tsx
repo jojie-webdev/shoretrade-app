@@ -316,7 +316,7 @@ const Step1 = ({
           )}
         </div>
 
-        <div className="submit-btns">
+        <div className={isMobile ? 'button-container' : 'submit-btns'}>
           {!isReview &&
             !noNegotiations &&
             isNegoOpen &&
@@ -325,7 +325,7 @@ const Step1 = ({
               <>
                 <Button
                   onClick={() => setIsOpen(true)}
-                  className="submit-btn"
+                  className={isMobile ? 'submit-btn-1' : 'submit-btn'}
                   text="Negotiate"
                   variant="outline"
                 />
@@ -338,7 +338,7 @@ const Step1 = ({
                       true
                     )
                   }
-                  className="submit-btn"
+                  className={isMobile ? 'submit-btn-2' : 'submit-btn'}
                   text="accept"
                   variant="primary"
                 />
