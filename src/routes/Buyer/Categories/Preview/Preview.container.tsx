@@ -19,7 +19,7 @@ import CategoriesPreviewView from './Preview.view';
 
 const CategoriesPreview = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { id: typeIdParsed } = useParams();
+  const { id: typeIdParsed } = useParams<any>();
 
   const [searchValue, setSearchValue] = useState('');
 

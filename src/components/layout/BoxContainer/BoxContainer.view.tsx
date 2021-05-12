@@ -7,7 +7,10 @@ import { Container } from './BoxContainer.style';
 // temporary container for new stuff, seller has its own container in dashboard but full height
 const BoxContainerView = (props: BoxContainerPublicProps): JSX.Element => {
   return (
-    <Container isPreview={props.isPreview} isCreatListingSuccess={props.isCreatListingSuccess}>
+    <Container
+      isPreview={props.isPreview}
+      isCreatListingSuccess={props.isCreatListingSuccess}
+    >
       {props.children}
     </Container>
   );

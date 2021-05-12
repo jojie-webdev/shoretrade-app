@@ -17,6 +17,7 @@ function* createMarketRequestOfferDatabase(
   const state: Store = yield select();
   if (state.auth.token) {
     const cleanedData = [...action.meta].map((item) => {
+      //@ts-ignore
       delete item.editId;
       delete item.listStateOptions;
       delete item.type;

@@ -19,5 +19,9 @@ export const Container = styled.div`
 
   .accordion-container {
     margin-bottom: 8px;
+
+    .interactions {
+      box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12) !important;
+    }
   }
 `;

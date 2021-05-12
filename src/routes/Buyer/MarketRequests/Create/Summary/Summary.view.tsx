@@ -7,6 +7,7 @@ import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { Row, Col, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -24,7 +25,6 @@ import {
   BadgeText,
   StyledTextField,
 } from './Summary.style';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 
 const SummaryView = (props: SummaryProps) => {
   const {
@@ -175,7 +175,7 @@ const SummaryView = (props: SummaryProps) => {
               variant="primary"
             />
           </Hidden>
-          <MobileStickyBottomView withBackground>
+          <MobileFooter>
             <Button
               takeFullWidth
               onClick={() => handleSubmit()}
@@ -183,7 +183,7 @@ const SummaryView = (props: SummaryProps) => {
               text="Send Request to the Market"
               variant="primary"
             />
-          </MobileStickyBottomView>
+          </MobileFooter>
         </SummaryContentContainer>
       </ContainerWithCategoryImagePreview>
     </>

@@ -96,9 +96,9 @@ export const Footer = styled.div`
   z-index: 999;
   position: fixed;
   bottom: 0;
+  left: 0;
   padding: 8px 0;
   background-color: ${({ theme }) => theme.grey.shade2};
-  margin-left: -24px;
 
   .btns-container {
     padding: 0 24px;

@@ -20,7 +20,7 @@ import {
 import MarketPriceDetailView from './MarketPriceDetail.view';
 
 const MarketPriceDetail = (): JSX.Element => {
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const token = useSelector((state: Store) => state.auth.token) || '';
 
   const [name, setName] = useState('');

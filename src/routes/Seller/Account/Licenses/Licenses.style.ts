@@ -1,7 +1,12 @@
 import Typography from 'components/base/Typography/Typography.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 125px;
+  }
+
   .breadcrumb-container {
     margin-bottom: 40px;
   }

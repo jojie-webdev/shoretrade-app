@@ -1,6 +1,10 @@
 import styled from 'utils/styled';
 
 export const MarketContainer = styled.div`
+  .title-row {
+    margin-bottom: 24px;
+  }
+
   .search-row {
     margin-bottom: 24px;
   }
