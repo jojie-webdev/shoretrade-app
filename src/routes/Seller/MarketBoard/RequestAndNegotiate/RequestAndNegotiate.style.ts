@@ -90,13 +90,21 @@ export const SummaryContentContainer = styled.div`
   @media ${BREAKPOINTS['sm']} {
     min-width: 100%;
   }
-
+  @media ${BREAKPOINTS['iPad']} {
+    min-width: 100%;
+  }
+  @media ${BREAKPOINTS['ipadPro']} {
+    min-width: 100%;
+  }
   .quantity-container {
     display: flex;
 
     .text-field {
       margin-bottom: 1rem;
       margin-right: 16px;
+      > div {
+        border-radius: 8px;
+      }
     }
   }
 
