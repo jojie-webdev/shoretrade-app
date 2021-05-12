@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { updateUserActions } from 'store/actions';
+import {
+  authActions,
+  cartActions,
+  editableListingActions,
+  updateUserActions,
+} from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
@@ -11,6 +15,7 @@ import AccountLandingView from './Landing.view';
 const AccountLanding = (): JSX.Element => {
   // Mark:- State / Store
   const dispatch = useDispatch();
+
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
   >();
@@ -37,6 +42,12 @@ const AccountLanding = (): JSX.Element => {
     );
   };
 
+  const logout = () => {
+    dispatch(editableListingActions.clear());
+    dispatch(cartActions.clear());
+    dispatch(authActions.clear());
+  };
+
   // Mark:- Effects
   useEffect(() => {
     if (!loadingUser) {
@@ -55,8 +66,9 @@ const AccountLanding = (): JSX.Element => {
     loadingUser,
     profileName,
     companyRelationship,
-    updateImage,
     updatingImage,
+    updateImage,
+    logout,
   };
   return <AccountLandingView {...generatedProps} />;
 };

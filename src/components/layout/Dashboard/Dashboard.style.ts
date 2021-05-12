@@ -280,10 +280,7 @@ export const Content = styled.div<{
         height: 100%;
         width: 100%;
         padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '0 8px' : '16px'};
-
-        //TODO: remove on deletion of BoxContainer
-        margin: ${(props) => (props.theme.appType === 'seller' ? '0 0px' : 0)};
+          props.theme.appType === 'buyer' ? '0 8px' : '16px 24px'};
 
         .container {
           position: static !important; // needed to override react-grid-system .container

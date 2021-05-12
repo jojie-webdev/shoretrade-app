@@ -20,6 +20,7 @@ const Accordion = ({
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
+
   return (
     <Container
       withBackground={props.withBackground}

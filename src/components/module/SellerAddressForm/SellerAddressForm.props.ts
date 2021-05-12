@@ -15,8 +15,6 @@ export interface SellerAddressFormProps {
   setUnitNumber: Dispatch<string>;
   type: 'EDIT' | 'CREATE';
   onDeleteAddress?: () => void;
-  isDelete?: boolean;
-  toggleisDelete?: () => void;
 }
 
 export type QueryParams = { companyId: string; addressId: string };

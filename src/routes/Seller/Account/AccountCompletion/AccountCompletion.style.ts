@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -18,6 +19,10 @@ export const Container = styled.div`
       width: 34px;
       height: 34px;
       border-radius: 50%;
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-top: 12px;
     }
   }
 
@@ -47,10 +52,26 @@ export const InfoContainer = styled.div`
   .owner-container {
     margin-left: 16px;
     align-self: center;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-left: 13px;
+      margin-top: 14px;
+    }
   }
 
   .percent-badge {
     margin-left: auto;
     height: fit-content;
+
+    @media ${BREAKPOINTS['sm']} {
+      position: absolute;
+      right: 32px;
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 8px 21px 21px;
   }
 `;
