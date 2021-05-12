@@ -100,6 +100,20 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
               placeholder="Search order"
               rounded
             />
+            {(!isIpadPro || !isIpad) && (
+              <FilterButton onClick={props.onClickFilterButton}>
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  weight="500"
+                  className="btn-text"
+                >
+                  Filters
+                </Typography>
+
+                <Filter />
+              </FilterButton>
+            )}
           </>
         )}
       </SegmentedControlsV2>
