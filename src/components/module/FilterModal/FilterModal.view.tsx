@@ -5,7 +5,7 @@ import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
-import { ArrowLeft, ChevronRight } from 'components/base/SVG';
+import { ArrowLeft, ChevronRight, Close } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
@@ -242,6 +242,14 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
 
           <ClickableRow onClick={onReset} align="center" nogutter>
             {!selecting && <Reset variant="overline">Reset</Reset>}
+          </ClickableRow>
+          <ClickableRow onClick={onReset} align="center" nogutter>
+            <Button
+              style={{ width: '32px', height: '32px' }}
+              circular
+              variant="white"
+              icon={<Close />}
+            />
           </ClickableRow>
         </HeaderContainer>
 

@@ -9,7 +9,8 @@ export type Variants =
   | 'outline'
   | 'disabled'
   | 'success'
-  | 'unselected';
+  | 'unselected'
+  | 'white';
 export type IconPosition = 'before' | 'after';
 export type ButtonSizes = 'lg' | 'md' | 'sm';
 
@@ -25,6 +26,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   takeFullWidth?: boolean;
   size?: ButtonSizes; // defaults to md
   textColor?: keyof Theme['brand'] | keyof Theme['grey'];
+  circular?: boolean;
 }
 
 // Styles

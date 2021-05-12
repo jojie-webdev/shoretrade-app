@@ -3,6 +3,7 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
+import TypographyView from 'components/base/Typography';
 import Search from 'components/module/Search';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -23,6 +24,13 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
 
   return (
     <MarketContainer>
+      <Row className="title-row">
+        <Col xs={12}>
+          <TypographyView variant="title5" color="noshade">
+            Market Prices
+          </TypographyView>
+        </Col>
+      </Row>
       <Row className="search-row">
         <Col xs={12}>
           <Search
