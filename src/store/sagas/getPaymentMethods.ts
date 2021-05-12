@@ -18,7 +18,7 @@ function* getPaymentMethodsRequest(
       const { data } = yield call(
         getPaymentMethods,
         action.meta,
-        state.auth.token,
+        state.auth.token
       );
       yield put(getPaymentMethodsActions.success(data));
     } catch (e) {
