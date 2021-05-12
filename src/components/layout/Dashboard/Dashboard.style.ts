@@ -291,6 +291,23 @@ export const Content = styled.div<{
       }
     }
   }
+
+  @media ${BREAKPOINTS['iPad']} {
+    min-height: 100vh;
+
+    .screen-wrapper {
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+
+      .screen {
+        width: calc(100% - 32px);
+        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
+      }
+    }
+
+    .container {
+      max-width: 100% !important;
+    }
+  }
 `;
 
 export const HeaderContainer = styled.nav`

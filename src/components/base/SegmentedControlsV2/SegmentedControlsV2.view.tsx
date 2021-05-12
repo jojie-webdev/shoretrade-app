@@ -62,7 +62,7 @@ const SegmentedControlsV2 = (props: SegmentedControlsV2Props): JSX.Element => {
   const theme = useTheme();
   return (
     <Container>
-      {isGenericTable || isMobile || isIpadPro ? (
+      {isMobile ? (
         <ControlsContent {...props} />
       ) : (
         <>

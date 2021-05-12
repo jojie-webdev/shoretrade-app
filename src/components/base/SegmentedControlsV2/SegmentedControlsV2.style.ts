@@ -14,7 +14,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
   padding: 12px;
   max-height: 60px;
   margin-bottom: 32px;
@@ -33,17 +32,13 @@ export const Container = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    justify-content: space-evenly !important;
-  }
-  @media ${BREAKPOINTS['genericTablet']} {
-    justify-content: space-evenly !important;
-  }
-  @media ${BREAKPOINTS['iPad']} {
-    justify-content: space-evenly !important;
-  }
-  @media ${BREAKPOINTS['sm']} {
     padding: 0px;
     margin-bottom: 16px;
+    justify-content: space-evenly !important;
+  }
+  
+  @media ${BREAKPOINTS['iPad']} {
+    /* justify-content: space-evenly !important; */
   }
 `;
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
-import SegmentedControls from 'components/base/SegmentedControlsV2';
+import SegmentedControlsV2 from 'components/base/SegmentedControlsV2';
 import {
   ArrowRight,
   DollarSign,
@@ -34,10 +34,9 @@ import { Container, FilterButton, BadgeText } from './Landing.style';
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const isGenericTablet = useMediaQuery({
-    query: BREAKPOINTS['genericTablet'],
-  });
+
   const isIpadPro = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
   ) => {
@@ -81,7 +80,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           Market Board
         </Typography>
       )}
-      <SegmentedControls
+      <SegmentedControlsV2
         options={['Buyer Requests', 'My Active Offers']}
         selectedOption={props.currentTab}
         onClickControl={(value) =>
@@ -101,22 +100,26 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
               placeholder="Search order"
               rounded
             />
-            <FilterButton onClick={props.onClickFilterButton}>
-              <Typography
-                variant="label"
-                color="noshade"
-                weight="500"
-                className="btn-text"
-              >
-                Filters
-              </Typography>
-
-              <Filter />
-            </FilterButton>
           </>
         )}
-      </SegmentedControls>
-      {(isMobile || isGenericTablet || isIpadPro) && (
+      </SegmentedControlsV2>
+      {(isIpadPro || isIpad) && (
+        <div className="filter-ipad-container">
+          <FilterButton onClick={props.onClickFilterButton}>
+            <Typography
+              variant="label"
+              color="noshade"
+              weight="500"
+              className="btn-text"
+            >
+              Filters
+            </Typography>
+
+            <Filter />
+          </FilterButton>
+        </div>
+      )}
+      {isMobile && (
         <Row nogutter className="search-row" justify="between">
           {props.currentTab === 'Buyer Requests' && (
             <>
