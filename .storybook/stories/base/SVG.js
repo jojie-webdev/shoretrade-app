@@ -4,6 +4,10 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  CaviarHero,
+  OctopusHero,
+  AnchorHero,
+  ArrowLeftAlt,
   FileBookMarkAlt,
   Fish2,
   Ellipse,
@@ -163,6 +167,18 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="CaviarHero">
+          <CaviarHero width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="OctopusHero">
+          <OctopusHero width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="AnchorHero">
+          <AnchorHero width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ArrowLeftAlt">
+          <ArrowLeftAlt width={30} height={30} />
+        </Wrapper>
         <Wrapper label="FileBookMarkAlt">
           <FileBookMarkAlt width={30} height={30} />
         </Wrapper>

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/src/pathOr';
 import pick from 'ramda/src/pick';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import {
   uploadBulkActions,
@@ -165,11 +167,13 @@ const AddProduct = (): JSX.Element => {
 
   const editableListing = useSelector((state: Store) => state.editableListing);
 
+  const modifyBulkUpload = useSelector(
+    (state: Store) => state.modifyBulkUpload
+  );
+
   const isCustomType = editableListing?.isCustomType || false;
 
-  const isBulkUpload = useSelector(
-    (state: Store) => state.modifyBulkUpload.currentData.index !== undefined
-  );
+  const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
 
   useEffect(() => {
     if (isCustomType && currentPage !== 1) {
@@ -193,6 +197,14 @@ const AddProduct = (): JSX.Element => {
     if (isBulkUpload) {
       dispatch(
         modifyBulkUploadActions.update({
+          ...(!modifyBulkUpload.currentData.type
+            ? {
+                typeDisplayText: typeName,
+                type: editableListing.type,
+                sizeFrom: '',
+                sizeTo: '',
+              }
+            : {}),
           specifications: specificationIds,
           specificationsDisplayText: specificationLabels,
         })
@@ -380,7 +392,7 @@ const AddProduct = (): JSX.Element => {
     isPendingCreateListing ||
     isPendingCreateCustomListing ||
     isPendingUpdateListing;
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const saveListing = () => {
     if (!isPending) {
       if (isExisting) {
@@ -389,6 +401,11 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
+        if (isMobile) {
+          history.push(SELLER_ROUTES.SELLING);
+        } else {
+          history.push(ADD_PRODUCT_ROUTES.PREVIEW);
+        }
       }
     }
   };
@@ -443,6 +460,10 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const navBack = () => {
+    onChangeCurrentPage(currentPage - 1);
+  };
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -478,6 +499,7 @@ const AddProduct = (): JSX.Element => {
     userPending,
     isBulkUpload,
     discardBulkUploadChanges,
+    navBack,
   };
 
   return <AddProductView {...generatedProps} />;

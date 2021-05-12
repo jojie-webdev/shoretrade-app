@@ -5,4 +5,9 @@ import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepag
 export interface RecentlyAddedGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
   isPendingAccount: boolean;
+  isLoadingResults: boolean;
+
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
+  searchValue: string;
 }

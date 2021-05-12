@@ -16,6 +16,7 @@ import {
   placeDataToUpdateAddressMeta,
 } from './EditAddress.transform';
 import EditAddressView from './EditAddress.view';
+
 const EditAddress = (): JSX.Element => {
   // MARK:- Store
   const history = useHistory();
@@ -41,7 +42,6 @@ const EditAddress = (): JSX.Element => {
     ? addressToPlaceData(currentAddress)
     : null;
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
-  const [isDelete, setIsDelete] = useState(false);
 
   // MARK:- Methods
   const onClickSave = () => {
@@ -82,7 +82,6 @@ const EditAddress = (): JSX.Element => {
     }
   };
   const toggleIsDefault = () => setIsDefault(!isDefault);
-  const toggleisDelete = () => setIsDelete(!isDelete);
 
   // MARK:- Effects
   useEffect(() => {
@@ -139,8 +138,6 @@ const EditAddress = (): JSX.Element => {
     setUnitNumber,
     onDeleteAddress,
     isSuccess: updateAddress.data?.status === 200 && submitted,
-    isDelete,
-    toggleisDelete,
   };
   return <EditAddressView {...generatedProps} />;
 };

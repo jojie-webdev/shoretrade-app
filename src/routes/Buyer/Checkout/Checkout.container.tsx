@@ -15,10 +15,12 @@ import {
   orderActions,
   cartActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { CartItem } from 'types/store/CartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
+import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -34,6 +36,12 @@ import CheckoutView from './Checkout.view';
 const Checkout = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const paymentModes = useSelector(
+    (state: Store) => state.getPaymentMode.data?.data.payment_mode
+  );
+
+  const currentCompany = GetDefaultCompany();
 
   const removeItem = (id: string) => {
     dispatch(cartActions.remove(id));
@@ -177,7 +185,11 @@ const Checkout = (): JSX.Element => {
   };
 
   const placeOrder = () => {
-    if (currentAddress && !processingOrder) {
+    if (
+      currentAddress &&
+      !processingOrder &&
+      isPaymentMethodAvailable(paymentModes, 'ACCT_CRED')
+    ) {
       const groupCartItemByCompany = groupBy(
         (item: CartItem) => item.companyId
       );
@@ -199,6 +211,7 @@ const Checkout = (): JSX.Element => {
           cart: payload,
           currentAddress,
           totalPrice: totalValue,
+          paymentMode: 'ACCT_CRED',
         })
       );
     }
@@ -292,6 +305,7 @@ const Checkout = (): JSX.Element => {
   }, [cartItems.length]);
 
   const generatedProps = {
+    balance: currentCompany?.credit || '',
     groupedOrders,
     totalValue,
     keepShopping,

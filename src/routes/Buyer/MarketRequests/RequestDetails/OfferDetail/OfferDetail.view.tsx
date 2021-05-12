@@ -3,10 +3,9 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
-import { BUYER_ROUTES } from 'consts';
-import { useHistory } from 'react-router';
+import MobileFooter from 'components/layout/MobileFooter';
+import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -239,16 +238,38 @@ const OfferDetailView = (props: any) => {
           </div>
         </div>
       </OfferDetailsContainer>
-      <OfferActionsContainer>
+      <Hidden xs>
+        <OfferActionsContainer>
+          {!hideNegotiate && (
+            <Button
+              onClick={() => handleStartNegotiate()}
+              className="button"
+              variant="outline"
+              text="Negotiate"
+            />
+          )}
+
+          {!isAccepted && (
+            <Button
+              onClick={() => handleAcceptOffer()}
+              className="button"
+              variant="primary"
+              disabled={disableAccept}
+              text="Accept"
+            />
+          )}
+        </OfferActionsContainer>
+      </Hidden>
+      <MobileFooter>
         {!hideNegotiate && (
           <Button
             onClick={() => handleStartNegotiate()}
             className="button"
             variant="outline"
             text="Negotiate"
+            takeFullWidth
           />
         )}
-
         {!isAccepted && (
           <Button
             onClick={() => handleAcceptOffer()}
@@ -256,9 +277,10 @@ const OfferDetailView = (props: any) => {
             variant="primary"
             disabled={disableAccept}
             text="Accept"
+            takeFullWidth
           />
         )}
-      </OfferActionsContainer>
+      </MobileFooter>
     </>
   );
 };

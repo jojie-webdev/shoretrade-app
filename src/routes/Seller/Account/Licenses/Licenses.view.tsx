@@ -5,9 +5,12 @@ import Button from 'components/base/Button';
 import { FileCheck, Subtract } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import Add from 'components/module/Add/Add.view';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import placeholder from 'res/images/license-placeholder.svg';
 import { LicensesGeneratedProps } from 'routes/Seller/Account/Licenses/Licenses.props';
 import {
@@ -15,6 +18,7 @@ import {
   DeleteBadge,
   DeleteText,
 } from 'routes/Seller/Account/Licenses/Licenses.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 const LicensesView = ({
@@ -24,6 +28,8 @@ const LicensesView = ({
   ...props
 }: LicensesGeneratedProps) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const [error, setError] = useState('');
 
   const validate = (callback?: () => void) => {
@@ -82,13 +88,15 @@ const LicensesView = ({
           </Row>
 
           <Row justify="start" className="btn-save-row">
-            <Col>
-              <Button
-                text="Save"
-                onClick={() => validate(props.onSave)}
-                loading={props.isUpdating}
-              />
-            </Col>
+            {!isMobile && (
+              <Col>
+                <Button
+                  text="Save"
+                  onClick={() => validate(props.onSave)}
+                  loading={props.isUpdating}
+                />
+              </Col>
+            )}
           </Row>
         </Col>
 
@@ -102,8 +110,13 @@ const LicensesView = ({
                 <div className="license-details">
                   <div>
                     <img
-                      src={placeholder}
+                      style={{ width: 116 }}
+                      src={parseImageUrl(l.url, placeholder)}
                       onClick={() => window.open(l.url, '_blank')}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = placeholder;
+                      }}
                     />
                   </div>
                   <div>
@@ -126,6 +139,15 @@ const LicensesView = ({
           </Row>
         </Col>
       </Row>
+
+      <MobileFooter>
+        <Button
+          text="Save"
+          takeFullWidth
+          onClick={() => validate(props.onSave)}
+          loading={props.isUpdating}
+        />
+      </MobileFooter>
     </Container>
   );
 };

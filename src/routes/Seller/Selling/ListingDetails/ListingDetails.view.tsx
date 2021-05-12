@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import {
@@ -11,11 +12,13 @@ import {
   ArrowLeft,
   Pen,
   TrashCan,
+  Close,
 } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Carousel from 'components/module/Carousel';
-import CarouselV2 from 'components/module/CarouselV2';
+import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -32,8 +35,6 @@ import {
   Tag,
   SellerPreview,
   SalesCard,
-  OrderBoxCard,
-  ActionsContainer,
   ActionContainer,
   NoProfilePic,
   TopContainer,
@@ -57,6 +58,8 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     isExisting,
     isPending,
     sellingDetailsBreadCrumbs,
+    isCreatListingSuccess,
+    clearListing,
   } = props;
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
@@ -87,10 +90,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     }
   }, [carousel.items]);
 
-  const addSeperatorSpacing = useMediaQuery({
+  const addSeparatorSpacing = useMediaQuery({
     query: '(min-width: 992px)',
   });
-
   if (isMobile) {
     let percent =
       (Number(orderDetails.remaining) / Number(sales.totalWeight)) * 100;
@@ -98,7 +100,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     return (
       <MobileWrapper>
         <Row nogutter>
-          <CarouselV2
+          <Carousel
             id="product-carousel"
             images={images}
             loop
@@ -107,39 +109,45 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             aspectRatio="9:4"
             showActionButton={isMobile}
           />
-          <MobileSalesCard>
-            <div className="sales-container">
-              <Typography variant="title4" color="shade6" weight="regular">
-                Sales:
-              </Typography>
+          {!isCreatListingSuccess && (
+            <MobileSalesCard>
+              <div className="sales-container">
+                <Typography variant="title4" color="shade6" weight="regular">
+                  Sales:
+                </Typography>
 
-              <Typography
-                variant="title4"
-                color="shade9"
-                weight="bold"
-                className="per-label"
-              >
-                {sales.sales}
-              </Typography>
-            </div>
-            <div className="sold-container">
-              <Typography variant="body" color="shade9">
-                {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
-              </Typography>
-            </div>
-            <div className="progress-container">
-              <Progress percent={percent} />
-            </div>
-          </MobileSalesCard>
+                <Typography
+                  variant="title4"
+                  color="shade9"
+                  weight="bold"
+                  className="per-label"
+                >
+                  {sales.sales}
+                </Typography>
+              </div>
+              <div className="sold-container">
+                <Typography variant="body" color="shade9">
+                  {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
+                </Typography>
+              </div>
+              <div className="progress-container">
+                <Progress percent={percent} />
+              </div>
+            </MobileSalesCard>
+          )}
 
           <div className="product-details">
-            <Typography variant="title5" color="shade9" weight="bold">
+            <Typography
+              variant="title5"
+              color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+              weight="bold"
+            >
               {productDetails.title}
             </Typography>
             <div className="tags-container">
               {productDetails.tags.map(({ label }) => (
                 <Tag key={label}>
-                  <Typography variant="caption" color="shade9" weight="bold">
+                  <Typography variant="caption" color={'shade9'} weight="bold">
                     {label}
                   </Typography>
                 </Tag>
@@ -148,13 +156,19 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             <div className="size-location-container">
               <div className="size-container">
                 <Expand width={16} height={16} fill={theme.grey.shade5} />
-                <Typography variant="label" color="shade9">
+                <Typography
+                  variant="label"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                >
                   {productDetails.size}
                 </Typography>
               </div>
               <div className="location-container">
                 <Location width={16} height={16} fill={theme.grey.shade5} />
-                <Typography variant="label" color="shade9">
+                <Typography
+                  variant="label"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                >
                   {productDetails.location}
                 </Typography>
               </div>
@@ -162,7 +176,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
             <div className="label-container">
               <ProductLabelMobileContainer>
-                <Typography variant="title5" color="shade9" weight="bold">
+                <Typography
+                  variant="title5"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                  weight="bold"
+                >
                   {orderDetails.price}
                 </Typography>
                 <div className="product-value">
@@ -181,7 +199,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Min Order:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.minOrder}
                   </Typography>
                 </div>
@@ -191,7 +213,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Average Box Size:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {productDetails.avgBoxSize} {orderDetails.unit}
                   </Typography>
                 </div>
@@ -201,7 +227,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Listing Valid Until:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.validUntil &&
                       formatRunningDateDifference(
                         orderDetails.validUntil.toUTCString()
@@ -214,7 +244,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Remaining:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.remaining} {orderDetails.unit}
                   </Typography>
                 </div>
@@ -224,7 +258,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   Catch Date:
                 </Typography>
                 <div className="product-value">
-                  <Typography variant="label" color="shade9" weight="bold">
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {orderDetails.catchDate && formattedCatchDate()}
                   </Typography>
                 </div>
@@ -235,78 +273,130 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
       </MobileWrapper>
     );
   }
-
   return (
-    <BoxContainer isPreview>
-      <Wrapper>
-        <TopContainer>
-          <div className="left-content">
-            <div className="left-container">
-              <div className="arrow-container">
-                <StyledTouchable onPress={() => history.goBack()}>
-                  <ArrowLeft
-                    fill={theme.brand.primary}
-                    height={20}
-                    width={20}
-                  />
-                </StyledTouchable>
-              </div>
-              <div className="label-container">
-                <Typography variant="body" color="shade9" weight="bold">
-                  This is a preview of your listed product
-                </Typography>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Buyers will check this page and eventually buy the product
-                  from their buyer account.
-                </Typography>
-              </div>
-            </div>
+    <BoxContainer isPreview isCreatListingSuccess={isCreatListingSuccess}>
+      <Wrapper isCreatListingSuccess={isCreatListingSuccess}>
+        {isCreatListingSuccess && (
+          <Alert
+            fullWidth
+            content="Clients will now start to see your listed product. You can manage clients orders in Buyer Request."
+            header="Product successfully added to Selling"
+            variant="success"
+            iconRight={
+              <Close height={12} width={12} fill={theme.grey.shade7} />
+            }
+          />
+        )}
 
-            {!isIpad && (
-              <>
-                <div className="end-left-content">
-                  <div className="pen-container">
-                    <StyledTouchable
-                      onPress={() => onRemove && onEdit && onEdit()}
-                    >
-                      <Pen fill={theme.brand.primary} height={20} width={20} />
-                    </StyledTouchable>
-                  </div>
-
-                  <div className="trash-container">
-                    <StyledTouchable onPress={() => onRemove && onRemove()}>
-                      <TrashCan
-                        fill={theme.brand.primary}
-                        height={20}
-                        width={20}
-                      />
-                    </StyledTouchable>
-                  </div>
+        {!isCreatListingSuccess && (
+          <TopContainer>
+            <div className="left-content">
+              <div className="left-container">
+                <div className="arrow-container">
+                  <StyledTouchable onPress={() => history.goBack()}>
+                    <ArrowLeft
+                      fill={theme.brand.primary}
+                      height={20}
+                      width={20}
+                    />
+                  </StyledTouchable>
                 </div>
-              </>
-            )}
-          </div>
-        </TopContainer>
+                <div className="label-container">
+                  <Typography variant="body" color="shade9" weight="bold">
+                    This is a preview of your listed product
+                  </Typography>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Buyers will check this page and eventually buy the product
+                    from their buyer account.
+                  </Typography>
+                </div>
+              </div>
+
+              {!isIpad && (
+                <>
+                  <div className="end-left-content">
+                    <div className="pen-container">
+                      <StyledTouchable
+                        onPress={() => onRemove && onEdit && onEdit()}
+                      >
+                        <Pen
+                          fill={theme.brand.primary}
+                          height={20}
+                          width={20}
+                        />
+                      </StyledTouchable>
+                    </div>
+
+                    <div className="trash-container">
+                      <StyledTouchable onPress={() => onRemove && onRemove()}>
+                        <TrashCan
+                          fill={theme.brand.primary}
+                          height={20}
+                          width={20}
+                        />
+                      </StyledTouchable>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </TopContainer>
+        )}
+
         {props.sellingDetailsBreadCrumbs && (
           <div className="breadcrumbs-container">
             <Breadcrumbs sections={props.sellingDetailsBreadCrumbs} isLight />
           </div>
         )}
         <TopDetailsContainer>
-          <div>
-            <Typography variant="title4" weight="500">
+          <div style={{ width: '100%' }}>
+            {isCreatListingSuccess && (
+              <div className="success-listing-creation-container">
+                <Typography
+                  variant="overline"
+                  weight="900"
+                  color={'shade6'}
+                  className="product-listed-desc"
+                >
+                  Your product listed
+                </Typography>
+
+                <Touchable
+                  onPress={() => {
+                    clearListing && clearListing();
+                    history.push(SELLER_ROUTES.SELLING);
+                  }}
+                >
+                  <Typography variant="body" weight="500" color={'primary'}>
+                    Go to Selling
+                  </Typography>
+                </Touchable>
+              </div>
+            )}
+
+            <Typography
+              variant="title4"
+              weight="500"
+              color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+            >
               {productDetails.title}
             </Typography>
             <div className="size-location-container">
               <div className="location-container">
                 <Location width={16} height={16} fill={theme.grey.shade5} />
-                <Typography variant="label" color="shade9">
+                <Typography
+                  variant="label"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                >
                   {productDetails.location}
                 </Typography>
               </div>
               <div className="size-container">
                 <Expand width={16} height={16} fill={theme.grey.shade5} />
-                <Typography variant="label" color="shade9">
+                <Typography
+                  variant="label"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                >
                   {productDetails.size}
                 </Typography>
               </div>
@@ -314,7 +404,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             <div className="tags-container">
               {productDetails.tags.map(({ label }) => (
                 <Tag key={label}>
-                  <Typography variant="caption" color="shade9" weight="bold">
+                  <Typography variant="caption" color={'shade9'} weight="bold">
                     {label}
                   </Typography>
                 </Tag>
@@ -326,7 +416,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           <Col xs={12} sm={12} md={12} lg={10} xl={5}>
             <DetailsCard>
               <div style={{ width: '100%' }}>
-                <CarouselV2
+                <Carousel
                   id="product-carousel"
                   images={images}
                   loop
@@ -343,10 +433,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             md={12}
             lg={8}
             xl={7}
-            style={{ paddingLeft: addSeperatorSpacing ? 32 : 0 }}
+            style={{ paddingLeft: addSeparatorSpacing ? 32 : 0 }}
             className="card-container"
           >
-            <SalesCard>
+            <SalesCard isCreatListingSuccess={isCreatListingSuccess}>
               <div className="seller-details-container">
                 {productDetails.vendor.uri ? (
                   <SellerPreview src={productDetails.vendor.uri} />
@@ -356,7 +446,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </NoProfilePic>
                 )}
                 <div className="seller-container">
-                  <Typography color="shade9" weight="bold">
+                  <Typography
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
                     {productDetails.vendor.name}
                   </Typography>
                   <div className="ratings-container">
@@ -371,7 +464,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </div>
               </div>
               <div className="price-container">
-                <Typography variant="title5" color="shade9" weight="bold">
+                <Typography
+                  variant="title5"
+                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                  weight="bold"
+                >
                   ${orderDetails.price}
                 </Typography>
 
@@ -385,7 +482,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </Typography>
               </div>
 
-              <ProductDetailsContainer>
+              <ProductDetailsContainer
+                isCreatListingSuccess={isCreatListingSuccess}
+              >
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Time Left
@@ -393,7 +492,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   <div className="product-value">
                     <Typography
                       variant="label"
-                      color="shade9"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                       weight="bold"
                       className="product-desc"
                     >
@@ -404,7 +503,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Average Box Size:
@@ -412,7 +511,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   <div className="product-value">
                     <Typography
                       variant="label"
-                      color="shade9"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                       weight="bold"
                       className="product-desc"
                     >
@@ -420,7 +519,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Catch Date:
@@ -428,7 +527,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   <div className="product-value">
                     <Typography
                       variant="label"
-                      color="shade9"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                       weight="bold"
                       className="product-desc"
                     >
@@ -436,7 +535,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
-                <div className="seperator" />
+                <div className="separator" />
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Minimum Order:
@@ -444,7 +543,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   <div className="product-value">
                     <Typography
                       variant="label"
-                      color="shade9"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                       weight="bold"
                       className="product-desc"
                     >
@@ -455,7 +554,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               </ProductDetailsContainer>
             </SalesCard>
 
-            {onCreate && (
+            {onCreate && !isCreatListingSuccess && (
               <ActionContainer>
                 <Button
                   text={isExisting ? 'Update' : 'Create Listing'}

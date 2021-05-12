@@ -8,8 +8,8 @@ export const CardContainer = styled.div<{ responsive?: boolean }>`
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
     border-radius: 8px;
     box-sizing: border-box;
-    width:${(props) => props.responsive ? '100%': '142px' };
-    max-width:${(props) => props.responsive ? '156px': '142px' };
+    width: ${(props) => (props.responsive ? '100%' : '142px')};
+    max-width: ${(props) => (props.responsive ? '156px' : '142px')};
     min-height: 160px;
     margin-right: 24px;
     transition: transform 0.2s;

@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter';
 import FormikTextField from 'components/module/FormikTextField';
 import Loading from 'components/module/Loading';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 
-// import { useTheme } from 'utils/Theme';
 import { YourDetailsGeneratedProps } from './YourDetails.props';
 import { Container, InputRow } from './YourDetails.style';
 import { validate } from './YourDetails.validation';
-const YourDetailsView = (props: YourDetailsGeneratedProps) => {
-  // const theme = useTheme();
 
+const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   const {
     userDetails,
     businessDetails,
@@ -28,6 +29,8 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     callingCode,
     setCallingCode,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const formRef = useRef();
 
   if (loadingUser && !userDetails.firstName) {
     return <Loading />;
@@ -69,7 +72,10 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             }}
           />
         )}
-        <Formik {...formikProps}>
+
+        {/*
+            // @ts-ignore*/}
+        <Formik innerRef={formRef} {...formikProps}>
           <Form>
             <InputRow>
               <Col md={12} xl={4} className="input-col">
@@ -102,13 +108,29 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
               </Col>
             </InputRow>
 
-            <Row justify="start">
-              <Col>
-                <Button text="Save" type="submit" loading={updatingUser} />
-              </Col>
-            </Row>
+            {!isMobile && (
+              <Row justify="start">
+                <Col>
+                  <Button text="Save" type="submit" loading={updatingUser} />
+                </Col>
+              </Row>
+            )}
           </Form>
         </Formik>
+
+        <MobileFooter>
+          <Button
+            text="Save"
+            takeFullWidth
+            onClick={() => {
+              if (formRef.current) {
+                // @ts-ignore
+                formRef.current.handleSubmit();
+              }
+            }}
+            loading={updatingUser}
+          />
+        </MobileFooter>
       </BoxContainer>
     </Container>
   );

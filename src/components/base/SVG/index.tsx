@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+export { default as CaviarHero } from './CaviarHero';
+export { default as OctopusHero } from './OctopusHero';
+export { default as AnchorHero } from './AnchorHero';
+export { default as ArrowLeftAlt } from './ArrowLeftAlt';
 export { default as FileBookMarkAlt } from './FileBookMarkAlt';
 export { default as Ellipse } from './Ellipse';
 export { default as Fish2 } from './Fish2';

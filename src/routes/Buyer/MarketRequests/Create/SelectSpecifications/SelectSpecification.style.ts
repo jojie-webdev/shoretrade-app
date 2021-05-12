@@ -5,8 +5,6 @@ import { ContainerWithCategoryImageContent } from '../Create.style';
 export const SpecificationFormContainer = styled(
   ContainerWithCategoryImageContent
 )`
-  max-width: 300px;
-
   .spec-row {
     min-width: 180px;
     display: flex;

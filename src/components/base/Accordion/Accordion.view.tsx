@@ -20,6 +20,7 @@ const Accordion = ({
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
+
   return (
     <Container
       withBackground={props.withBackground}
@@ -41,6 +42,7 @@ const Accordion = ({
         keepIcon={keepIcon}
       />
       <Content
+        className="accordion-content-wrapper"
         isOpen={isOpen}
         withBackground={props.withBackground}
         padding={padding}

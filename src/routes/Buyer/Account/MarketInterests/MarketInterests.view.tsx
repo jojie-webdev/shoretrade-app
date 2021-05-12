@@ -6,17 +6,21 @@ import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
 import Search from 'components/module/Search';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { MarketInterestsGeneratedProps } from 'routes/Buyer/Account/MarketInterests/MarketInterests.props';
 import {
   Container,
   BadgeContainer,
 } from 'routes/Buyer/Account/MarketInterests/MarketInterests.style';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 const MarketInterestsView = ({
@@ -36,6 +40,7 @@ const MarketInterestsView = ({
   ...props
 }: MarketInterestsGeneratedProps) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   if (!categories || loadingInnerCategories) {
     return <Loading />;
@@ -49,34 +54,41 @@ const MarketInterestsView = ({
           justify="between"
           align="center"
           style={{
-            marginBottom: !isInner && isEmpty(innerCategories) ? 40 : 0,
+            marginBottom:
+              !isInner && isEmpty(innerCategories) && isMobile
+                ? 20
+                : !isInner && isEmpty(innerCategories)
+                ? 40
+                : 0,
           }}
         >
           <Col>
-            <Breadcrumbs
-              sections={[
-                { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-                ...(!isInner
-                  ? [{ label: "Products I'm Buying" }]
-                  : [
-                      {
-                        label: "Products I'm Buying",
-                        onClick: () => {
-                          setIsInner(false);
-                          setCurrentCategoryId('');
-                          setSearchTerm('');
-                          props.setCategories([]);
-                          props.setInnerCategories([]);
+            <div style={{ marginRight: 20 }}>
+              <Breadcrumbs
+                sections={[
+                  { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+                  ...(!isInner
+                    ? [{ label: "Products I'm Buying" }]
+                    : [
+                        {
+                          label: "Products I'm Buying",
+                          onClick: () => {
+                            setIsInner(false);
+                            setCurrentCategoryId('');
+                            setSearchTerm('');
+                            props.setCategories([]);
+                            props.setInnerCategories([]);
+                          },
                         },
-                      },
-                      {
-                        label:
-                          categories.find((c) => c.id === currentCategoryId)
-                            ?.name || 'Details',
-                      },
-                    ]),
-              ]}
-            />
+                        {
+                          label:
+                            categories.find((c) => c.id === currentCategoryId)
+                              ?.name || 'Details',
+                        },
+                      ]),
+                ]}
+              />
+            </div>
           </Col>
           <Col xs="content">
             <div style={{ width: 300 }}>
@@ -91,7 +103,7 @@ const MarketInterestsView = ({
           </Col>
         </Row>
 
-        {!isEmpty(innerCategories) && (
+        {!isEmpty(innerCategories) && !isMobile && (
           <Row style={{ marginBottom: 16 }}>
             <Col />
             <Col xs="content">
@@ -163,13 +175,23 @@ const MarketInterestsView = ({
             }
             leftComponent={
               <div className="category-container">
-                <img src={c.thumbnail} />
+                <img src={parseImageUrl(c.thumbnail)} />
                 <Typography variant="label">{c.name}</Typography>
               </div>
             }
           />
         ))}
       </BoxContainer>
+
+      <MobileFooter>
+        <Button
+          disabled={isEmpty(innerCategories)}
+          loading={props.isSaving}
+          onClick={props.onSave}
+          text="Save"
+          takeFullWidth
+        />
+      </MobileFooter>
     </Container>
   );
 };

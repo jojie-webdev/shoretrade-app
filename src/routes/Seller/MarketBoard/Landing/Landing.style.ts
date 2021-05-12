@@ -1,5 +1,7 @@
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   .search-row {
@@ -75,4 +77,8 @@ export const FilterButton = styled.button`
   .btn-text {
     margin-right: 4px;
   }
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: ${pxToRem(12)};
 `;

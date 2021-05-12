@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter';
+import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { NegotiateBuyerModalProps } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.props';
 import {
@@ -12,8 +14,10 @@ import {
   ComputationContainer,
   CheckBoxContainer,
 } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.style';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { Hidden, Visible } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -34,8 +38,12 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const { unit: measurementUnit, value: weightValue } = weight;
   const theme = useTheme();
   const textColor = 'shade9';
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const ModalLayout = isSmallScreen ? MobileModal : Modal;
 
-  const [negotiationPrice, setNegotiationPrice] = useState(0);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
+    undefined
+  );
 
   const handleCheck = () => {
     if (setCloseOnAccept) {
@@ -62,7 +70,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     modalLastNegotiationsArray[modalLastNegotiationsArray.length - 1];
 
   return (
-    <Modal
+    <ModalLayout
       backgroundColor={theme.grey.noshade}
       style={{
         width: '',
@@ -119,7 +127,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 Your New Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
-                {toPrice(negotiationPrice)}/{unit}
+                {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
           )}
@@ -152,18 +160,36 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             </Typography>
           </div>
         </ComputationContainer>
-        <ButtonContainer>
+        <Hidden xs>
+          <ButtonContainer>
+            <Button
+              variant="primary"
+              text="Negotiate"
+              onClick={() => {
+                if (negotiationPrice && negotiationPrice >= 1) {
+                  onSubmit(negotiationPrice);
+                }
+              }}
+              takeFullWidth={isSmallScreen}
+              loading={isNegotiating}
+            />
+          </ButtonContainer>
+        </Hidden>
+        <MobileFooter>
           <Button
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice >= 1) onSubmit(negotiationPrice);
+              if (negotiationPrice && negotiationPrice >= 1) {
+                onSubmit(negotiationPrice);
+              }
             }}
+            takeFullWidth={isSmallScreen}
             loading={isNegotiating}
           />
-        </ButtonContainer>
+        </MobileFooter>
       </>
-    </Modal>
+    </ModalLayout>
   );
 };
 

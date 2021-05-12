@@ -10,11 +10,11 @@ import { Store } from 'types/store/Store';
 
 import { AddAssistantGeneratedProps } from './AddAssistant.props';
 import { isValid } from './AddAssistant.validation';
-import AddAssistantView from './AddAssistant.view';
 
 const AddAssistant = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
   const addLinkedAccount = useSelector(
@@ -52,6 +52,7 @@ const AddAssistant = (): JSX.Element => {
     validate: isValid,
     onSubmit: onClickCreate,
   };
+
   const generatedProps: AddAssistantGeneratedProps = {
     type: 'CREATE',
     callingCode,

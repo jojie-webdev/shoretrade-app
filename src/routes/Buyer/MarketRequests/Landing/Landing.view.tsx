@@ -7,12 +7,13 @@ import { Filter, Crab } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
-import BottomButtonActionView from 'components/module/BottomButtonAction';
+import MobileFooter from 'components/layout/MobileFooter';
 import EmptyStateView from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
@@ -60,7 +61,7 @@ export const MarketRequestItem = (props: {
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
-        <img src={image} />
+        <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
         <TypographyView variant="body">{type}</TypographyView>
@@ -107,8 +108,8 @@ const MarketRequestsLandingView = (
           <Col>
             <Typography>My Requests</Typography>
           </Col>
-          <Col sm="content">
-            <Visible md lg>
+          <Col xs="content">
+            <Visible sm md lg xl xxl>
               <Button
                 onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
                 text="CREATE MARKET REQUEST"
@@ -144,20 +145,15 @@ const MarketRequestsLandingView = (
         ) : (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}
-        <Visible xs sm>
-          <BottomButtonActionView
-            layout="vertical"
-            ActionButtonMain={
-              <Button
-                onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-                text="CREATE MARKET REQUEST"
-                variant={props.isPendingAccount ? 'disabled' : 'primary'}
-                takeFullWidth
-                disabled={props.isPendingAccount}
-              />
-            }
+        <MobileFooter>
+          <Button
+            onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+            text="CREATE MARKET REQUEST"
+            variant={props.isPendingAccount ? 'disabled' : 'primary'}
+            takeFullWidth
+            disabled={props.isPendingAccount}
           />
-        </Visible>
+        </MobileFooter>
       </BoxContainer>
     </MarketRequestsContainer>
   );

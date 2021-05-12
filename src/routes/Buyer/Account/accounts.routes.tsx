@@ -2,7 +2,6 @@ import React from 'react';
 
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { Route, Switch } from 'react-router-dom';
-import ChangePassword from 'routes/Seller/Account/ChangePassword';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import AccountCompletion from './AccountCompletion';
@@ -13,6 +12,7 @@ import Address from './Address';
 import Balance from './Balance';
 import BalanceHistory from './BalanceHistory';
 import Card from './Card';
+import ChangePassword from './ChangePassword';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';

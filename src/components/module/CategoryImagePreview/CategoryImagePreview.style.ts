@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 const imgUrl = (url: string) => `"${url}"`;
@@ -11,6 +12,10 @@ export const Container = styled.div<{ img?: string }>`
     position: relative;
     text-align: center;
     color: white;
+
+    @media ${BREAKPOINTS['genericTablet']} {
+      max-width: 671px;
+    }
   }
   .img {
     background-image: url(${(props) => imgUrl(props.img ? props.img : '')});
@@ -26,6 +31,11 @@ export const Container = styled.div<{ img?: string }>`
   .label {
     margin-top: 1rem;
   }
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    max-width: 671px;
+  }
+
 `;
 
 export const BadgeContainer = styled.div`

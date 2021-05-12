@@ -1,6 +1,3 @@
-import { Dispatch, SetStateAction, ChangeEvent } from 'react';
-
-import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
 import { OrderItem } from '../Orders/Orders.props';

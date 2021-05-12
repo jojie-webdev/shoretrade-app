@@ -23,6 +23,7 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { SellingGeneratedProps, ItemProp } from './Selling.props';
@@ -67,7 +68,7 @@ const Item = (props: ItemProp) => {
     <ItemCard>
       <div className="wrapper" onClick={props.onClick}>
         <div className="left-content">
-          <ItemImage src={props.data.images[0]} alt="" />
+          <ItemImage src={parseImageUrl(props.data.images[0])} alt="" />
 
           <div className="text-content">
             <Typography variant="label" color="noshade" className="item-title">
@@ -153,7 +154,7 @@ const Item = (props: ItemProp) => {
 
       <div className="buttons">
         <StyledTouchable onPress={props.onClick} dark>
-          <ChevronRight height={12} width={12}></ChevronRight>
+          <ChevronRight height={12} width={12} />
         </StyledTouchable>
       </div>
     </ItemCard>
@@ -345,7 +346,7 @@ const SellingView = (props: SellingGeneratedProps) => {
   } = props;
 
   if (pending) {
-    return <LoadingView></LoadingView>;
+    return <LoadingView />;
   }
 
   return (

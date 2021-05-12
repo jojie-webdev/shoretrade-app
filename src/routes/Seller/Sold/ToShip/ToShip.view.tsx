@@ -10,34 +10,26 @@ import React, {
 import Button from 'components/base/Button';
 import {
   InfoFilled,
-  Plane,
-  Truck,
   Message,
   CheckList,
   CheckFilled,
-  DownloadFile,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import SwiperContainer from 'components/layout/SwiperContainer';
 import MessageModal from 'components/module/MessageModal';
-import MultipleCarousel from 'components/module/MultipleCarousel';
 import Pagination from 'components/module/Pagination';
-import ToShipAccordionContent from 'components/module/ToShipAccordionContent';
-import { API, DEFAULT_PAGE_LIMIT, SELLER_SOLD_ROUTES } from 'consts';
+import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
-import getCalendarDate from 'utils/Date/getCalendarDate';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -220,7 +212,10 @@ export const PendingItem = (props: {
             >
               <ItemCard>
                 <div className="left-content">
-                  <ItemImage src={lineItem.listing.images[0]} alt="" />
+                  <ItemImage
+                    src={parseImageUrl(lineItem.listing.images[0])}
+                    alt=""
+                  />
 
                   <div className="text-content">
                     <Typography

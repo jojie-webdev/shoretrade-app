@@ -63,7 +63,7 @@ const CardView = (props: FieldsetCardProps) => {
       </Row>
 
       <Row>
-        <Col className="form-card-col" md={12} lg={6} xl={2}>
+        <Col className="form-card-col" xs={6} md={6} lg={4} xl={2}>
           <FormikTextField
             readOnly={isExisting}
             type="text"
@@ -89,7 +89,7 @@ const CardView = (props: FieldsetCardProps) => {
             }}
           />
         </Col>
-        <Col className="form-card-col" md={12} lg={6} xl={2}>
+        <Col className="form-card-col" xs={6} md={6} lg={4} xl={2}>
           <FormikTextField
             readOnly={isExisting}
             type="text"
@@ -100,7 +100,7 @@ const CardView = (props: FieldsetCardProps) => {
           />
         </Col>
 
-        <Col className="form-card-col" md={12} lg={6} xl={4}>
+        <Col className="form-card-col" md={6} lg={4} xl={4}>
           <FormikTextField
             readOnly={isExisting}
             type="text"

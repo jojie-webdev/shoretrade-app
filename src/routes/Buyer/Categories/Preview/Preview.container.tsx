@@ -7,7 +7,6 @@ import {
   getListingsByTypeActions,
   currentAddressActions,
 } from 'store/actions';
-import { GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import {
@@ -65,6 +64,10 @@ const CategoriesPreview = (): JSX.Element => {
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
+  };
+
+  const onResetSearchValue = () => {
+    setSearchValue('');
   };
 
   useEffect(() => {
@@ -147,8 +150,9 @@ const CategoriesPreview = (): JSX.Element => {
   // };
 
   const generatedProps = {
-    onChangeSearchValue,
     searchValue,
+    onChangeSearchValue,
+    onResetSearchValue,
     results,
     isLoadingResults,
     typeId: typeIdParsed,

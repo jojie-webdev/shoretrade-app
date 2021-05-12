@@ -4,4 +4,5 @@ export interface BoxContainerPublicProps {
   children: ReactNode;
   ref: any;
   isPreview?: boolean;
+  isCreatListingSuccess?: boolean;
 }

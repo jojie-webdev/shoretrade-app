@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
-
+import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
 import {
@@ -21,8 +23,8 @@ import {
 } from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
-  // const theme = useTheme();
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const {
     companies,
@@ -145,7 +147,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                   src={
                     hideBrokenProfileImage
                       ? DefaultProfileImage
-                      : profilePicture || DefaultProfileImage
+                      : parseImageUrl(profilePicture) || DefaultProfileImage
                   }
                   alt="profile picture"
                   onError={() => {
@@ -174,18 +176,32 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
             <Typography variant="title5" color="noshade">
               {profileName}
             </Typography>
+
+            {isMobile && (
+              <div style={{ width: 167, marginTop: 8 }}>
+                <Select
+                  label=""
+                  options={companyOptions}
+                  value={currentCompany?.id}
+                  size="small"
+                  dark={true}
+                />
+              </div>
+            )}
           </div>
         </div>
 
-        <div>
-          <Select
-            label=""
-            options={companyOptions}
-            value={currentCompany?.id}
-            size="small"
-            dark={true}
-          />
-        </div>
+        {!isMobile && (
+          <div>
+            <Select
+              label=""
+              options={companyOptions}
+              value={currentCompany?.id}
+              size="small"
+              dark={true}
+            />
+          </div>
+        )}
       </Header>
 
       {INTERACTIONS.map((interaction) => (
@@ -195,6 +211,16 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
           onClick={() => history.push(interaction.path)}
         />
       ))}
+
+      {isMobile && (
+        <Button
+          variant="outline"
+          text="logout"
+          takeFullWidth
+          onClick={props.logout}
+          style={{ marginTop: 24 }}
+        />
+      )}
     </Container>
   );
 };

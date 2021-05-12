@@ -3,13 +3,20 @@ import React from 'react';
 import Badge from 'components/base/Badge/Badge.view';
 import { Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
-import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
-import { Col, Row } from 'react-grid-system';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutCardProps } from './CheckoutCard.props';
-import { Container, Image, TextValue } from './CheckoutCard.style';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import {
+  Container,
+  MobileContainer,
+  Image,
+  TextValue,
+  BadgeText,
+} from './CheckoutCard.style';
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();
@@ -24,17 +31,46 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
     tags,
     onRemove,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const Layout = isMobile ? MobileContainer : Container;
 
   return (
-    <Container>
-      <Row align="center">
-        <Col>
-          <div className="checkout-row">
+    <Layout>
+      {isMobile && (
+        <div className="header">
+          <Typography variant="overline" color="shade6">
+            Order Summary
+          </Typography>
+          <div className="checkout-card-delete" onClick={onRemove}>
+            <Subtract width={14} height={14} />
+          </div>
+        </div>
+      )}
+
+      <Row align="center" justify="between" nogutter>
+        <div>
+          <div
+            className="checkout-row"
+            style={{ marginBottom: isMobile ? 8 : 0 }}
+          >
             <Image alt="checkout-image" src={uri} />
             <div className="checkout-card-texts">
-              <Typography color="shade9" weight="700">
-                {name}
-              </Typography>
+              {isMobile ? (
+                <div className="name-row">
+                  <Typography variant="label" weight="700">
+                    {name}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    className="checkout-card-price"
+                    weight="700"
+                  >
+                    ${price}
+                  </Typography>
+                </div>
+              ) : (
+                <Typography weight="700">{name}</Typography>
+              )}
 
               {tags && (
                 <div className="checkout-tags">
@@ -52,6 +88,39 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                 </div>
               )}
 
+              {!isMobile && (
+                <>
+                  <div className="checkout-row" style={{ flexWrap: 'wrap' }}>
+                    <Typography variant="caption" color="shade6">
+                      Vendor
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {vendor}
+                    </TextValue>
+                  </div>
+
+                  <div className="checkout-row">
+                    <Typography variant="caption" color="shade6">
+                      Weight
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {weight} {formatMeasurementUnit(unit)}
+                    </TextValue>
+
+                    <Typography variant="caption" color="shade6">
+                      Size
+                    </Typography>
+                    <TextValue variant="caption" color="shade8">
+                      {size}
+                    </TextValue>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {isMobile && (
+            <>
               <div className="checkout-row">
                 <Typography variant="caption" color="shade6">
                   Vendor
@@ -59,7 +128,9 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                 <TextValue variant="caption" color="shade8">
                   {vendor}
                 </TextValue>
+              </div>
 
+              <div className="checkout-row">
                 <Typography variant="caption" color="shade6">
                   Weight
                 </Typography>
@@ -74,22 +145,20 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
                   {size}
                 </TextValue>
               </div>
-            </div>
-          </div>
-        </Col>
+            </>
+          )}
+        </div>
 
-        <Col>
+        {!isMobile && (
           <div className="checkout-card-end">
-            <Typography className="checkout-card-price" color="shade8">
-              ${price}
-            </Typography>
+            <Typography color="shade8">${price}</Typography>
             <div className="checkout-card-delete" onClick={onRemove}>
               <Subtract />
             </div>
           </div>
-        </Col>
+        )}
       </Row>
-    </Container>
+    </Layout>
   );
 };
 

@@ -6,19 +6,20 @@ import Interactions from 'components/base/Interactions';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
 import { ArrowRight, DollarSign, Filter, Weight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BadgeText } from 'components/module/CategoryCards/Preview/Preview.style';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Col, Row } from 'react-grid-system';
+import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
-import { Container, FilterButton } from './Landing.style';
+import { Container, FilterButton, BadgeText } from './Landing.style';
 
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
@@ -59,6 +60,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         onClickControl={(value) =>
           props.onChangeCurrentTab(value as TabOptions)
         }
+        tooltips={[{ option: 'Buyer Requests', value: BuyerRequestsTooltip }]}
       />
 
       <Row nogutter className="search-row" justify="between">
@@ -104,7 +106,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 onClick={() => props.onClickOffer(b)}
                 leftComponent={
                   <div className="left-component">
-                    <img src={b.image} />
+                    <img src={parseImageUrl(b.image)} />
                     <div>
                       <Typography color="noshade">{b.type}</Typography>
                       <Typography
@@ -205,7 +207,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   onClick={() => props.onClickActiveOffer(v)}
                   leftComponent={
                     <div className="left-component">
-                      <img src={v.image} />
+                      <img src={parseImageUrl(v.image)} />
                       <div>
                         <Typography color="noshade">{v.name}</Typography>
                         <Typography

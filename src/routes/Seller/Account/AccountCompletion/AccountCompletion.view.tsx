@@ -15,6 +15,7 @@ import {
   InfoContainer,
 } from 'routes/Seller/Account/AccountCompletion/AccountCompletion.style';
 import { useTheme } from 'utils/Theme';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const AccountCompletionView = ({
   accountCompletion,
@@ -47,7 +48,7 @@ const AccountCompletionView = ({
           />
           <div className="profile-image">
             {props.profileImage ? (
-              <img src={props.profileImage} alt="Profile" />
+              <img src={parseImageUrl(props.profileImage)} alt="Profile" />
             ) : (
               <PlaceholderProfile width={34} height={34} />
             )}

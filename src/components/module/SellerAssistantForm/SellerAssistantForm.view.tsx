@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Radio from 'components/base/Radio';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
 import qs from 'qs';
 import { Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 
 import {
   SellerAssistantFormProps,
@@ -54,20 +56,20 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
     type,
     onClickDelete,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   let routeHeader = '';
-  let successContent = '';
   let buttonText = '';
 
   if (type === 'CREATE') {
     routeHeader = 'Create Fisherman / Assistant';
-    successContent = 'Fisherman / Assistant successfully created!';
     buttonText = 'Create Linked Account';
   } else if (type === 'EDIT') {
     routeHeader = 'Update Fisherman / Assistant';
     buttonText = 'Delete Linked Account';
   }
 
+  const formRef = useRef();
   const [showDelete, setShowDelete] = useState(false);
 
   return (
@@ -104,6 +106,8 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
       )}
 
       <Formik
+        // @ts-ignore
+        innerRef={formRef}
         initialValues={formikInitial.initialValues}
         onSubmit={formikInitial.onSubmit}
         validate={formikInitial?.validate}
@@ -175,18 +179,38 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
             </RolesRow>
           )}
 
-          <Button
-            text={buttonText}
-            type={type === 'CREATE' ? 'submit' : 'button'}
-            loading={pending}
-            onClick={() => {
-              if (type === 'EDIT') {
-                setShowDelete(true);
-              }
-            }}
-          />
+          {!isMobile && (
+            <Button
+              text={buttonText}
+              type={type === 'CREATE' ? 'submit' : 'button'}
+              loading={pending}
+              onClick={() => {
+                if (type === 'EDIT') {
+                  setShowDelete(true);
+                }
+              }}
+            />
+          )}
         </Form>
       </Formik>
+
+      <MobileFooter>
+        <Button
+          text={buttonText}
+          takeFullWidth
+          onClick={() => {
+            if (type === 'EDIT') {
+              setShowDelete(true);
+            } else {
+              if (formRef.current) {
+                // @ts-ignore
+                formRef.current.handleSubmit();
+              }
+            }
+          }}
+          loading={pending}
+        />
+      </MobileFooter>
 
       <ConfirmationModal
         isOpen={showDelete}

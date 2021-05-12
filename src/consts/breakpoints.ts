@@ -6,4 +6,5 @@ export const BREAKPOINTS = {
   xxl: `(min-width: 1201px)`,
   ipadPro: `(min-width: 1024px) and (max-width: 1366px)`,
   iPad: `(min-width: 768px) and (max-width: 1024px)`,
+  genericTablet: `(min-width: 577px) and (max-width: 834px)`,
 };

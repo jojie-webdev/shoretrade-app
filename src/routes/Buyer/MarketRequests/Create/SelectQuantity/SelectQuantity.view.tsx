@@ -4,7 +4,9 @@ import Button from 'components/base/Button';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import { Hidden } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -100,14 +102,25 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               </TypographyView>
             }
           />
-
-          <Button
-            onClick={() => handleSubmit()}
-            className="submit-btn"
-            disabled={from === '' || to === ''}
-            text="Select This Quantity"
-            variant="primary"
-          />
+          <Hidden xs>
+            <Button
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              disabled={from === '' || to === ''}
+              text="Select This Quantity"
+              variant="primary"
+            />
+          </Hidden>
+          <MobileFooter>
+            <Button
+              takeFullWidth
+              onClick={() => handleSubmit()}
+              className="submit-btn"
+              disabled={from === '' || to === ''}
+              text="Select This Quantity"
+              variant="primary"
+            />
+          </MobileFooter>
         </QuantityFormContainer>
       </ContainerWithCategoryImagePreview>
     </>

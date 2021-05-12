@@ -10,17 +10,12 @@ export interface DashboardPublicProps {
   children: any;
   routes: Route[];
   onBack?: () => void;
-  shouldUseFullWidth?: boolean;
   background?: string;
   screenBackground?: string;
   color?: string;
   headerTextColor?: keyof Theme['grey'];
   shouldIncludePadding?: boolean;
   pageTitle?: string;
-
-  // This edge case is rushed and needed to fix the
-  // overlapping scrollbar bug (only happens in Buyer Home)
-  useOuterWrapper?: boolean;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
@@ -47,6 +42,16 @@ export type NavLinkProps = {
   isActive: boolean;
 };
 
+// Inner component props
+export type IconLinkProps = {
+  to: string;
+  iconColor?: string;
+  Icon?: React.FC<SVGProps>;
+  onClick: () => void;
+  isActive: boolean;
+  isOpen?: boolean;
+};
+
 export type HeaderProps = {
   pageTitle: string | undefined;
   userData: GetUserPayload['data']['user'] | undefined;
@@ -56,6 +61,4 @@ export type HeaderProps = {
   onBack?: () => void;
   onClickAccount: () => void;
   cartItems: number;
-
-  useOuterWrapper?: boolean;
 };

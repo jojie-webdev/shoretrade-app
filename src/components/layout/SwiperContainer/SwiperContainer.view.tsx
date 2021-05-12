@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { SwiperContainerProps } from './SwiperContainer.props';
-import { Parent, Container } from './SwiperContainer.style';
+import { SwiperContainerProps } from 'components/layout/SwiperContainer/SwiperContainer.props';
+import {
+  Parent,
+  Container,
+} from 'components/layout/SwiperContainer/SwiperContainer.style';
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -22,7 +25,14 @@ const debounce = (fn: () => void, ms: number) => {
  *
  */
 const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
-  const { children, height, aspectRatio = '16:9', addMargin, onResize } = props;
+  const {
+    children,
+    height,
+    aspectRatio = '16:9',
+    addMargin,
+    onResize,
+    variant,
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
@@ -72,6 +82,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
       height={height}
       aspectRatio={aspectRatio}
       addMargin={addMargin}
+      variant={variant}
     >
       {containerWidth && (
         <Container style={{ width: containerWidth }}>{children}</Container>

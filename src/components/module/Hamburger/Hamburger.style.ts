@@ -5,7 +5,7 @@ import styled from 'utils/styled';
 export const Container = styled.div<{
   height?: number;
   width?: number;
-  color?: keyof Theme['brand'] | keyof Theme['grey'];
+  color?: string;
 }>`
   .hamburger {
     padding: 4px;
@@ -15,7 +15,6 @@ export const Container = styled.div<{
     transition-duration: 0.15s;
     transition-timing-function: linear;
     font: inherit;
-    // color: ${(props) => (props.color ? props.color : 'inherit')};
     text-transform: none;
     background-color: transparent;
     border: 0;
@@ -23,13 +22,12 @@ export const Container = styled.div<{
     overflow: visible;
   }
 
-
-
   .hamburger.is-active .hamburger-inner,
-  .hamburger.is-active .hamburger-inner::before,
-  .hamburger.is-active .hamburger-inner::after {
+  .hamburger.is-active .hamburger-inner::before {
     background-color: ${(props) =>
-      props.theme.appType === 'buyer'
+      props.color
+        ? props.color
+        : props.theme.appType === 'buyer'
         ? props.theme.grey.shade9
         : props.theme.grey.noshade};
   }
@@ -48,12 +46,13 @@ export const Container = styled.div<{
   }
 
   .hamburger-inner,
-  .hamburger-inner::before,
-  .hamburger-inner::after {
+  .hamburger-inner::before {
     width: ${(props) => (props.width ? `${props.width}px` : '40px')};
-    height: 4px;
+    height: 3px;
     background-color: ${(props) =>
-      props.theme.appType === 'buyer'
+      props.color
+        ? props.color
+        : props.theme.appType === 'buyer'
         ? props.theme.grey.shade9
         : props.theme.grey.noshade};
     border-radius: 4px;
@@ -63,8 +62,7 @@ export const Container = styled.div<{
     transition-timing-function: ease;
   }
 
-  .hamburger-inner::before,
-  .hamburger-inner::after {
+  .hamburger-inner::before {
     content: '';
     display: block;
   }
@@ -73,22 +71,18 @@ export const Container = styled.div<{
     top: -10px;
   }
 
-  .hamburger-inner::after {
-    bottom: -10px;
-  }
-
   .hamburger--slider .hamburger-inner {
     top: 2px;
   }
 
   .hamburger--slider .hamburger-inner::before {
-    top: 10px;
+    top: 8px;
     transition-property: transform, opacity;
     transition-timing-function: ease;
     transition-duration: 0.15s;
   }
 
-  .hamburger--slider .hamburger-inner::after {
+  .hamburger--slider {
     top: 20px;
   }
 
@@ -98,8 +92,5 @@ export const Container = styled.div<{
   .hamburger--slider.is-active .hamburger-inner::before {
     transform: rotate(-45deg) translate3d(-5.71429px, -6px, 0);
     opacity: 0;
-  }
-  .hamburger--slider.is-active .hamburger-inner::after {
-    transform: translate3d(0, -20px, 0) rotate(-90deg);
   }
 `;

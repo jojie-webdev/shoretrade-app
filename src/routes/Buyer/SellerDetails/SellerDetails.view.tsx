@@ -43,7 +43,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
       ) : (
         <Container>
           {isSmallScreen && (
-            <Typography variant="title4" weight="500" className="header-title">
+            <Typography variant="title4" className="header-title">
               Seller
             </Typography>
           )}

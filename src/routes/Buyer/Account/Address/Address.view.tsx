@@ -6,9 +6,12 @@ import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { AccountDeliveryGeneratedProps } from './Address.props';
@@ -45,6 +48,8 @@ const AddressView = (props: AccountDeliveryGeneratedProps) => {
     notificationMessage,
   } = props;
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   if (pending) {
     return <Loading />;
   }
@@ -115,12 +120,22 @@ const AddressView = (props: AccountDeliveryGeneratedProps) => {
           })}
         </Row>
 
-        <Row className="btn-add-address">
-          <Col>
-            <Button text="Add a new address" onClick={goToAddAddress} />
-          </Col>
-        </Row>
+        {!isMobile && (
+          <Row className="btn-add-address">
+            <Col>
+              <Button text="Add a new address" onClick={goToAddAddress} />
+            </Col>
+          </Row>
+        )}
       </BoxContainer>
+
+      <MobileFooter>
+        <Button
+          text="Add a new address"
+          onClick={goToAddAddress}
+          takeFullWidth
+        />
+      </MobileFooter>
     </Container>
   );
 };

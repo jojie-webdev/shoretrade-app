@@ -4,9 +4,12 @@ import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './Assistants.props';
@@ -23,6 +26,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
     currentCompanyName,
     notifMsg,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   if (pending) {
     return <Loading />;
@@ -79,14 +83,24 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
         />
       ))}
 
-      <Row nogutter className="btn-add-assistant">
-        <Col>
-          <Button
-            text="Add a fisherman / assistant"
-            onClick={goToCreateAssistant}
-          />
-        </Col>
-      </Row>
+      {!isMobile && (
+        <Row nogutter className="btn-add-assistant">
+          <Col>
+            <Button
+              text="Add a fisherman / assistant"
+              onClick={goToCreateAssistant}
+            />
+          </Col>
+        </Row>
+      )}
+
+      <MobileFooter>
+        <Button
+          text="Add a fisherman / assistant"
+          takeFullWidth
+          onClick={goToCreateAssistant}
+        />
+      </MobileFooter>
     </Container>
   );
 };

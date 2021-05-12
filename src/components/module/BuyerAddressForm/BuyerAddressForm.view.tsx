@@ -1,16 +1,18 @@
 import React, { useReducer } from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import LocationSearch from 'components/module/LocationSearch';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import { BuyerAddressFormProps } from './BuyerAddressForm.props';
@@ -30,22 +32,15 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     setUnitNumber,
     isSuccess,
     type,
-    isDelete,
-    toggleisDelete,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  let successContent = '';
   let routeHeader = '';
 
   if (type === 'CREATE') {
     routeHeader = 'Add Address';
-    successContent = 'Address has successfully been created!';
-  } else if (type === 'EDIT' && !isDelete) {
+  } else if (type === 'EDIT') {
     routeHeader = 'Edit Address';
-    successContent = 'Your account details have successfully been updated!';
-  } else if (type === 'EDIT' && isDelete) {
-    routeHeader = 'Edit Address';
-    successContent = 'Your address has been deleted!';
   }
 
   const [errors, setErrors] = useReducer(
@@ -122,24 +117,37 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
           </Col>
         </Row>
 
-        <Row nogutter>
-          <Button text="Submit" onClick={validate} loading={pending} />
-          {type === 'EDIT' ? (
+        {!isMobile && (
+          <Row nogutter>
+            <Button text="Submit" onClick={validate} loading={pending} />
+            {type === 'EDIT' && (
+              <Button
+                className="delete-btn"
+                text="Delete"
+                onClick={onDeleteAddress}
+                loading={pending}
+              />
+            )}
+          </Row>
+        )}
+
+        <MobileFooter>
+          <Button
+            takeFullWidth
+            text="Submit"
+            onClick={validate}
+            loading={pending}
+          />
+          {type === 'EDIT' && (
             <Button
+              takeFullWidth
               className="delete-btn"
               text="Delete"
-              onClick={() => {
-                if (toggleisDelete) {
-                  toggleisDelete();
-                }
-                if (onDeleteAddress) {
-                  onDeleteAddress();
-                }
-              }}
+              onClick={onDeleteAddress}
               loading={pending}
             />
-          ) : null}
-        </Row>
+          )}
+        </MobileFooter>
       </BoxContainer>
     </Container>
   );

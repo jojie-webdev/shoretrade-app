@@ -2,6 +2,7 @@ import React from 'react';
 
 import Badge from 'components/base/Badge';
 import TypographyView from 'components/base/Typography';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { CategoryImagePreviewProps } from './CategoryImagePreview.props';
@@ -19,7 +20,7 @@ const CategoryImagePreview = (
   const isBuyer = theme.appType === 'buyer';
 
   return (
-    <Container img={imgSrc}>
+    <Container img={imgSrc ? parseImageUrl(imgSrc) : undefined}>
       {marketBoard && (
         <MarketBoardBadge>
           <Badge badgeColor={theme.grey.shade3}>
@@ -28,7 +29,7 @@ const CategoryImagePreview = (
         </MarketBoardBadge>
       )}
       <div className="imgContainer">
-        <div className="img" style={{ maxHeight: 280 }} />
+        <div className="img" />
         {marketBoard ? (
           ''
         ) : (

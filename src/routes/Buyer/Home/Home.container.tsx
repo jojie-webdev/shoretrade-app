@@ -4,28 +4,17 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import {
-  updateAddressActions,
-  cartActions,
   getBuyerOrdersActions,
   getBuyerOrdersPlacedActions,
+  getPaymentModeActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
-import {
-  GetBuyerOrdersToShipPending,
-  GetBuyerOrdersToShip,
-  GetBuyerOrdersInTransit,
-  GetBuyerOrdersDelivered,
-} from 'store/selectors/buyer/';
-import { PlaceData } from 'types/PlaceData';
+import { GetBuyerOrdersToShipPending } from 'store/selectors/buyer/';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
 import { transformOrder, groupByDate } from '../Orders/Orders.transform';
 import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
-import {
-  addressToPlaceData,
-  placeDataToUpdateAddressMeta,
-} from './Home.transform';
 import HomeView from './Home.view';
 
 const Home = (): JSX.Element => {
@@ -34,13 +23,6 @@ const Home = (): JSX.Element => {
   const buyerHomePageData = useSelector(
     (state: Store) => state.getBuyerHomepage
   );
-
-  const getAllOrders = () => {
-    dispatch(getBuyerOrdersActions.request());
-  };
-
-  const pendingGetOrdersPlaced =
-    useSelector((state: Store) => state.getBuyerOrdersPlaced.pending) || false;
 
   const getOrdersPlaced = (filter?: {
     page: string;
@@ -53,13 +35,10 @@ const Home = (): JSX.Element => {
   };
 
   const pendingOrders = GetBuyerOrdersToShipPending().map(transformOrder);
-  console.log(groupByDate('estCatchmentDate')(pendingOrders));
 
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
-
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   // MARK:- Variables
   const {
@@ -118,6 +97,10 @@ const Home = (): JSX.Element => {
       dateFrom: null,
       dateTo: null,
     });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getPaymentModeActions.request({}));
   }, []);
 
   // MARK:- Bottom Variables

@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES } from 'consts';
-import { all, put, call, takeLatest, select } from 'redux-saga/effects';
+import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
+import { all, put, call, takeLatest, select, delay } from 'redux-saga/effects';
 import { createListing } from 'services/listing';
 import { uploadImageData } from 'services/upload';
 import { AsyncAction } from 'types/Action';
@@ -66,8 +66,9 @@ function* createListingRequest(
 function* createListingSuccess(
   action: AsyncAction<CreateListingMeta, CreateListingPayload>
 ) {
-  yield put(editableListingActions.clear());
   yield put(getAllListingsActions.request());
+  yield delay(10000);
+  yield put(editableListingActions.clear());
   yield put(push(SELLER_ROUTES.SELLING));
 }
 

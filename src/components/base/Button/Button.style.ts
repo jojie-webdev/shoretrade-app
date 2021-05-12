@@ -15,6 +15,7 @@ const backgroundColor: Record<Variants, string> = {
   disabled: theme.grey.shade3,
   success: theme.brand.success,
   unselected: theme.grey.shade9,
+  white: '#FFF',
 };
 
 const border: Record<Variants, string> = {
@@ -23,6 +24,7 @@ const border: Record<Variants, string> = {
   disabled: `1px solid ${theme.grey.shade5}`,
   success: 'none',
   unselected: 'none',
+  white: 'none',
 };
 
 const padding: Record<ButtonSizes, string> = {
@@ -38,7 +40,7 @@ export const ButtonContainer = styled.button<
   padding: ${({ size }) => padding[size]};
   background-color: ${({ variant }) => backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
-  border-radius: 8px;
+  border-radius: ${(props) => (props.circular ? '50%' : '4px')};
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   white-space: nowrap;

@@ -2,7 +2,9 @@ import React from 'react';
 
 import { CheckBorder, CheckFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { ShippingCardProps } from './ShippingCard.props';
@@ -11,10 +13,12 @@ import { Container, Rectangle, Spacer } from './ShippingCard.style';
 const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   const theme = useTheme();
   const { options, onPress, selectedPriceId } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <Container>
       {options.length === 0 && (
-        <Typography variant="caption" color="shade9">
+        <Typography variant="caption" color="shade9" style={{ marginTop: 12 }}>
           Shipping rates are currently unavailable for this location. Please
           call ShoreTrade on 1300 095 746 or email info@shoretrade.com to
           organise this shipment.
@@ -29,29 +33,29 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
             }
           }}
         >
-          <Row align="center">
+          <Row align="center" nogutter>
             <Col>
               <div className="shipping-option-left">
-                {selectedPriceId === o.priceId ? (
-                  <CheckFilled width={24} height={24} />
-                ) : (
-                  <CheckBorder
-                    width={24}
-                    height={24}
-                    fill={theme.grey.shade5}
-                  />
-                )}
-                <div className="shipping-texts">
-                  <Typography color="shade9" weight="700">
+                <div>
+                  <Typography
+                    variant={isMobile ? 'caption' : 'body'}
+                    weight="700"
+                  >
                     {o.name}
                   </Typography>
                   {o.secondName && (
-                    <Typography color="shade9" weight="700">
+                    <Typography
+                      variant={isMobile ? 'caption' : 'body'}
+                      weight="700"
+                    >
                       {o.secondName}
                     </Typography>
                   )}
                   <Spacer />
-                  <Typography variant="caption" color="shade6">
+                  <Typography
+                    variant={isMobile ? 'small' : 'caption'}
+                    color="shade6"
+                  >
                     {o.est}
                   </Typography>
                 </div>
@@ -59,9 +63,26 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
             </Col>
 
             <Col>
-              <Typography color="shade8" align="right">
-                ${o.price}
-              </Typography>
+              <div className="shipping-option-right">
+                <Typography
+                  variant={isMobile ? 'caption' : 'body'}
+                  align="right"
+                >
+                  ${o.price}
+                </Typography>
+                {selectedPriceId === o.priceId ? (
+                  <CheckFilled
+                    width={isMobile ? 14 : 20}
+                    height={isMobile ? 14 : 20}
+                  />
+                ) : (
+                  <CheckBorder
+                    width={isMobile ? 14 : 20}
+                    height={isMobile ? 14 : 20}
+                    fill={theme.grey.shade5}
+                  />
+                )}
+              </div>
             </Col>
           </Row>
         </Rectangle>

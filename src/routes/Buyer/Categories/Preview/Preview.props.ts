@@ -7,8 +7,9 @@ import { GetListingsByTypeResponseListingItem } from 'types/store/GetListingsByT
 export interface CategoriesPreviewGeneratedProps {
   results: GetListingsByTypeResponseListingItem[];
   isLoadingResults: boolean;
-  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   searchValue: string;
+  onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
   onLoad: (typeId: string) => void;
   typeId: string;
   selectAddress: (id: string) => void;

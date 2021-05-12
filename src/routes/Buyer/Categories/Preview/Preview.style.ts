@@ -1,5 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
   .header {
@@ -57,6 +57,18 @@ export const PreviewContainer = styled.div`
       .img {
         height: 180px;
       }
+    }
+  }
+
+  .preview-col {
+    @media (min-width: 577px) and (max-width: 710px) {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 834px) {
+      width: 50% !important;
+      max-width: 50% !important;
     }
   }
 `;

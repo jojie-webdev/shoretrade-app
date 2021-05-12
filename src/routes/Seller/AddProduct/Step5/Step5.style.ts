@@ -2,50 +2,175 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .preview-row {
-    margin-bottom: 16px;
+  .checkbox-row {
+    margin-bottom: 24px;
 
-    .add-col {
-      margin-bottom: 48px;
+    .checkbox-col {
+      display: flex;
 
-      .text {
-        margin-bottom: 4px;
+      .text-container {
+        margin-left: 8px;
+        margin-top: 16px;
+
+        @media screen and (min-width: 1249px) {
+          padding-bottom: 10px;
+        }
       }
     }
 
-    .preview-col {
+    .checkbox-view {
+      margin-top: 24px;
+      @media ${BREAKPOINTS['sm']} {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .checkbox-alt-label {
+    &:hover {
+      opacity: 0.5;
+    }
+    cursor: pointer;
+  }
+
+  .add-box-row {
+    margin-bottom: 32px;
+  }
+
+  .minimum-row {
+    .checkbox-col {
+      margin-top: 16px;
       display: flex;
       align-items: center;
+    }
+  }
 
-      .img-preview {
-        height: 96px;
-        width: 96px;
-        border: 1px solid red;
-        margin-right: 8px;
-        border-radius: 4px;
+  .absolute-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .box-error-container {
+    width: 100%;
+    display: flex;
+  }
+  .back-btn {
+    margin-right: 16px;
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .next-btn {
+    border-radius: 8px;
+    max-width: 67px;
+  }
+  .text-field > div {
+    border-radius: 8px;
+  }
+  .tooltip {
+    margin-left: 8px;
+  }
+
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 192px;
+    background-color: black;
+    color: ${({ theme }) => theme.grey.noshade};
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    margin-top: 30px;
+    margin-left: -120px;
+  }
+
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }
+`;
+
+export const BoxDetailsContainer = styled.div`
+  background: ${(props) => props.theme.grey.shade9};
+  border-radius: 4px;
+  padding: 16px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px 16px;
+  }
+
+  .minus-mobile {
+    @media ${BREAKPOINTS['sm']} {
+      margin-left: -40px;
+    }
+  }
+
+  .text-container {
+    display: flex;
+
+    .inner-text {
+      margin-right: 40px;
+
+      .overline {
+        margin-bottom: 2px;
       }
-
       @media ${BREAKPOINTS['sm']} {
-        margin-bottom: 16px;
+        min-width: 61px;
+      }
+    }
+  }
+
+  .cancel-btn {
+    border-radius: 100%;
+    border: none;
+    height: 24px;
+    width: 24px;
+    background: none;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+export const BoxSummaryContainer = styled.div`
+  padding: 25px 80px;
+  width: 100%;
+  background: ${(props) => props.theme.grey.shade7};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .text-container {
+    display: flex;
+
+    .inner-text {
+      margin-right: 40px;
+    }
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    padding: 16px;
+
+    .text-container {
+      flex: 1;
+      display: flex;
+
+      .inner-text {
+        flex: 1;
+        margin-right: 0;
+
+        .value {
+          margin-top: 4px;
+        }
       }
     }
   }
 `;
 
-export const DeleteBadge = styled.button`
-  padding: 4px 8px;
-  background: ${(props) => props.theme.brand.error};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  border: none;
-
-  :focus {
-    outline: none;
-  }
-
-  .badge-text {
-    margin-left: 4px;
-  }
+export const FooterPadding = styled.div`
+  height: 35px;
 `;

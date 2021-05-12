@@ -2,7 +2,7 @@ import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,8 @@ export const Wrapper = styled.div`
   .separator {
     width: 100%;
     height: 2px;
-    background-color: ${({ theme }) => theme.grey.shade2};
+    background-color: ${({ theme, isCreatListingSuccess }) =>
+      !isCreatListingSuccess ? theme.grey.shade2 : theme.grey.shade8};
     margin: 16px 0px;
   }
 
@@ -90,9 +91,10 @@ export const SellerPreview = styled.img`
   margin-bottom: 16px;
 `;
 
-export const SalesCard = styled.div`
+export const SalesCard = styled.div<{ isCreatListingSuccess?: boolean }>`
   padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
+  background-color: ${({ theme, isCreatListingSuccess }) =>
+    !isCreatListingSuccess ? theme.grey.noshade : theme.grey.shade9};
   width: 100%;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
@@ -109,6 +111,7 @@ export const SalesCard = styled.div`
       display: flex;
       flex-direction: column;
       margin-top: 3%;
+      margin-left: 26px;
     }
   }
 
@@ -125,15 +128,18 @@ export const SalesCard = styled.div`
   }
 `;
 
-export const ProductDetailsContainer = styled.div`
+export const ProductDetailsContainer = styled.div<{
+  isCreatListingSuccess?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  .seperator {
+  .separator {
     width: 100%;
     height: 2px;
-    background-color: ${({ theme }) => theme.grey.shade2};
+    background-color: ${({ theme, isCreatListingSuccess }) =>
+      !isCreatListingSuccess ? theme.grey.shade2 : theme.grey.shade8};
     margin: 16px 0px;
   }
 `;
@@ -150,55 +156,6 @@ export const ProductLabelContainer = styled.div`
   }
 `;
 
-export const OrderBoxCard = styled.div`
-  padding: 24px;
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme.grey.shade5};
-  box-sizing: border-box;
-  border-radius: 4px;
-  margin-top: 32px;
-
-  .order-details-row {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-    & div:not(:last-child) {
-      margin-right: 32px;
-    }
-  }
-
-  .order-details-item {
-    display: flex;
-    flex-direction: column;
-    & p:not(:first-child) {
-      margin-top: 4px;
-    }
-  }
-  .box-details-row {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-    justify-content: space-between;
-    /* & p:not(:last-child) {
-      margin-right: 24px;
-    } */
-  }
-`;
-
-export const ActionsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 16px;
-
-  & button {
-    width: 50%;
-  }
-
-  & button:not(:last-child) {
-    margin-right: 16px;
-  }
-`;
-
 export const ActionContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -209,7 +166,6 @@ export const ActionContainer = styled.div`
   }
 `;
 
-// TODO :- should be a layout
 const imgStyle = css`
   width: 96px;
   height: 96px;
@@ -219,7 +175,7 @@ const imgStyle = css`
 `;
 
 export const NoProfilePic = styled.div`
-  ${imgStyle}
+  ${imgStyle};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,7 +247,7 @@ export const TopDetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  width: 100%;
   .size-location-container {
     display: flex;
     flex-direction: row;
@@ -324,9 +280,20 @@ export const TopDetailsContainer = styled.div`
     }
     margin-bottom: 24px;
   }
+
+  .success-listing-creation-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    .product-listed-desc {
+      margin-top: 1.35%;
+    }
+  }
 `;
 
 export const StyledTouchable = styled(Touchable)``;
+
 export const MobileWrapper = styled.div`
   .sales-container {
     display: flex;
@@ -364,6 +331,10 @@ export const MobileWrapper = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 8px;
+
+    @media ${BREAKPOINTS['sm']} {
+      flex-direction: column;
+    }
   }
 
   .size-container {
@@ -371,6 +342,9 @@ export const MobileWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     margin-right: 10px;
+    @media ${BREAKPOINTS['sm']} {
+      margin-right: 0px;
+    }
   }
   .location-container {
     display: flex;
@@ -400,7 +374,7 @@ export const MobileWrapper = styled.div`
 export const ProductLabelMobileContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 8;
+  margin-bottom: 8px;
 
   .product-value {
     margin-left: 4px;

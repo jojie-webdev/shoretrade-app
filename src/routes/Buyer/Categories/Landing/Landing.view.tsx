@@ -26,7 +26,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
       <CategoriesContainer>
         {isSmallScreen && (
           <>
-            <Typography variant="title4" weight="500" className="header-title">
+            <Typography variant="title4" className="header-title">
               Categories
             </Typography>
             <Row nogutter>

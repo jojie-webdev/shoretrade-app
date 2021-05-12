@@ -29,7 +29,9 @@ const NegotiateSellerModal = (
   const theme = useTheme();
   const textColor = 'noshade';
 
-  const [negotiationPrice, setNegotiationPrice] = useState(0);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
+    undefined
+  );
 
   const { negotiations, price, weight, measurementUnit } = marketOffer;
 
@@ -41,7 +43,7 @@ const NegotiateSellerModal = (
   );
   const latestNewOffer = newOffers.slice(-1)[0];
   const latestCounterOffer = counterOffers.slice(-1)[0];
-  const currentOfferPrice = price || latestNewOffer?.price;
+  const currentOfferPrice = latestCounterOffer?.price || price;
 
   const currentNewOffer = negotiationPrice || currentOfferPrice;
   const discountValue = currentNewOffer - currentOfferPrice;
@@ -100,7 +102,7 @@ const NegotiateSellerModal = (
                 Your New Offer
               </Typography>
               <Typography variant="label" weight="bold" color={textColor}>
-                {toPrice(negotiationPrice)}/{unit}
+                {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
           )}
@@ -138,7 +140,9 @@ const NegotiateSellerModal = (
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice >= 1) onSubmit(negotiationPrice);
+              if (negotiationPrice && negotiationPrice >= 1) {
+                onSubmit(negotiationPrice);
+              }
             }}
             loading={isNegotiating}
           />

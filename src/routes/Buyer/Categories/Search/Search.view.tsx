@@ -16,6 +16,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
@@ -33,7 +34,7 @@ const InteractionsChildren = (
 
   return (
     <>
-      <Image src={result.thumbnail} />
+      <Image src={parseImageUrl(result.thumbnail)} />
       <div>
         <Typography weight="bold">{result.name}</Typography>
         <ResultContainer>
@@ -87,6 +88,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
     isPendingAccount,
     search,
     onChangeSearchValue,
+    onResetSearchValue,
   } = props;
   const location = useLocation();
   const locationState: {
@@ -107,7 +109,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
               ]}
             />
           ) : (
-            <Typography variant="title4" weight="500" className="header-title">
+            <Typography variant="title4" className="header-title">
               {title}
             </Typography>
           )}
@@ -117,6 +119,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             placeholder={`Search for a ${title}`}
             value={search}
             onChange={onChangeSearchValue}
+            resetValue={onResetSearchValue}
             rounded
           />
         </div>

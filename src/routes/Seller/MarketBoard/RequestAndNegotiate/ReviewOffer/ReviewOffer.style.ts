@@ -1,5 +1,7 @@
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   .interactions {
@@ -78,4 +80,8 @@ export const Container = styled.div`
       margin-left: 8px;
     }
   }
+`;
+
+export const BadgeText = styled(Typography)`
+  font-size: ${pxToRem(12)};
 `;

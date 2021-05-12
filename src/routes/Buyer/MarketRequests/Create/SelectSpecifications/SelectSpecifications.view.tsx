@@ -5,8 +5,10 @@ import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq } from 'ramda';
+import { Hidden } from 'react-grid-system';
 import theme from 'utils/Theme';
 
 import {
@@ -117,12 +119,23 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
               </div>
             </div>
           ))}
-          <Button
-            onClick={() => handleSelectSpecs()}
-            disabled={isEmpty(groupOrders) || isDisabled}
-            text="Select Specification"
-            variant="primary"
-          />
+          <Hidden xs>
+            <Button
+              onClick={() => handleSelectSpecs()}
+              disabled={isEmpty(groupOrders) || isDisabled}
+              text="Select Specification"
+              variant="primary"
+            />
+          </Hidden>
+          <MobileFooter>
+            <Button
+              onClick={() => handleSelectSpecs()}
+              disabled={isEmpty(groupOrders) || isDisabled}
+              text="Select Specification"
+              variant="primary"
+              takeFullWidth
+            />
+          </MobileFooter>
         </SpecificationFormContainer>
       </ContainerWithCategoryImagePreview>
     </>
