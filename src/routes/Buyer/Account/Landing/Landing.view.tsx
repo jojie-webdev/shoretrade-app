@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 
+import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner/Spinner.view';
 import { PlaceholderProfile } from 'components/base/SVG';
@@ -180,6 +181,16 @@ const LandingView = (props: LandingGeneratedProps) => {
             }}
           />
         ))}
+
+        {isMobile && (
+          <Button
+            variant="outline"
+            text="logout"
+            takeFullWidth
+            onClick={props.logout}
+            style={{ marginTop: 24 }}
+          />
+        )}
       </BoxContainer>
     </Container>
   );
