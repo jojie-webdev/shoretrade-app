@@ -11,6 +11,14 @@ export const HeaderContainer = styled.div`
   margin-bottom: 24px;
 `;
 
+export const HeaderRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+`;
+
 export const Title = styled(Typography)<{ marginLeft?: string }>`
   color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade9};
