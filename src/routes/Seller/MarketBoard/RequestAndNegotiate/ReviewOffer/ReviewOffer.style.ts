@@ -26,7 +26,7 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
-          flex-direction: column;
+          flex-direction: row;
         }
 
         .badge {

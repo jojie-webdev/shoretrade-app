@@ -104,7 +104,6 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
 
                     <ItemDetail
                       variant="small"
-                      weight="regular"
                       color="shade6"
                       row
                     >
