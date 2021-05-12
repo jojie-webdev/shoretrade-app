@@ -6,6 +6,7 @@ import Loading from 'components/module/Loading';
 import { EditAssistantGeneratedProps } from './EditAssistant.props';
 const EditAssistantView = (props: EditAssistantGeneratedProps) => {
   const { loading, ...buyerFormProps } = props;
+
   if (loading) {
     return <Loading />;
   }
