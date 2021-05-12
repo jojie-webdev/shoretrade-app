@@ -7,8 +7,9 @@ import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-// import { useTheme } from 'utils/Theme';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
 import { parseImageUrl } from 'utils/parseImageURL';
 
@@ -21,6 +22,20 @@ import {
 } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
+  const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const {
+    currentCompany,
+    companyRelationship,
+    companies,
+    profilePicture,
+    profileName,
+    loadingUser,
+    updateImage,
+    updatingImage,
+  } = props;
+
   const INTERACTIONS = [
     {
       value: 'Account Completion',
@@ -40,18 +55,6 @@ const LandingView = (props: LandingGeneratedProps) => {
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
   ];
-  // const theme = useTheme();
-  const history = useHistory();
-  const {
-    currentCompany,
-    companyRelationship,
-    companies,
-    profilePicture,
-    profileName,
-    loadingUser,
-    updateImage,
-    updatingImage,
-  } = props;
 
   const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const imagePicker = useRef<HTMLInputElement | null>(null);
@@ -141,18 +144,31 @@ const LandingView = (props: LandingGeneratedProps) => {
               <Typography variant="title5" color="shade8">
                 {profileName}
               </Typography>
+              {isMobile && (
+                <div style={{ width: 167, marginTop: 8 }}>
+                  <Select
+                    label=""
+                    options={companyOptions}
+                    value={currentCompany?.id}
+                    size="small"
+                    grey
+                  />
+                </div>
+              )}
             </div>
           </div>
 
-          <div>
-            <Select
-              label=""
-              options={companyOptions}
-              value={currentCompany?.id}
-              size="small"
-              grey
-            />
-          </div>
+          {!isMobile && (
+            <div>
+              <Select
+                label=""
+                options={companyOptions}
+                value={currentCompany?.id}
+                size="small"
+                grey
+              />
+            </div>
+          )}
         </Header>
 
         {INTERACTIONS.map((link) => (
