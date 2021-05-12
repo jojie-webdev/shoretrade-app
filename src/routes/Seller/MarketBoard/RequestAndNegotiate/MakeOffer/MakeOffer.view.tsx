@@ -97,6 +97,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         {props.marketSizes.map((v) => (
           <Col key={v} md={12} lg={6} xl={4}>
             <Interactions
+              backgroundColor={theme.grey.noshade}
+              fontColor={theme.grey.shade9}
               value={v}
               type="radio"
               padding="14px 18px"

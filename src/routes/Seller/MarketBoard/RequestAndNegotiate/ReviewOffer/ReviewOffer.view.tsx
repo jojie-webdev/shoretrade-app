@@ -101,20 +101,6 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                         {v.price}/{formatMeasurementUnit(v.measurementUnit)}
                       </Typography>
                     </div>
-
-                    <ItemDetail
-                      variant="small"
-                      color="shade6"
-                      row
-                    >
-                      <span>
-                        {sizeText?.includes('-') ? (
-                          <>{renderSize(sizeText)}</>
-                        ) : (
-                          sizeText
-                        )}
-                      </span>
-                    </ItemDetail>
                   </div>
                 </div>
               }
