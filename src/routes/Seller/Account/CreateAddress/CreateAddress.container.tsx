@@ -10,7 +10,6 @@ import { useCompany } from 'utils/Hooks';
 
 import { CreateAddressGeneratedProps } from './CreateAddress.props';
 import { placeDataToAddAddressMeta } from './CreateAddress.transform';
-import CreateAddressView from './CreateAddress.view';
 
 const CreateAddress = (): JSX.Element => {
   // MARK:- Store / Hooks

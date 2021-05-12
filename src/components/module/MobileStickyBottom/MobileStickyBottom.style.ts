@@ -1,10 +1,12 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ withBackground?: boolean }>`
   display: block;
   width: 100%;
   position: fixed;
-  bottom: 24px;
+  bottom: 0px;
   left: 0;
-  padding: 0 24px;
+  padding: 24px;
+  background: ${({ theme, withBackground }) =>
+    withBackground ? theme.grey.shade1 : 'none'};
 `;

@@ -6,9 +6,12 @@ import Button from 'components/base/Button';
 import { CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './LinkedAccounts.props';
@@ -23,6 +26,7 @@ import {
 const AssistantsView = (props: AssistantsGeneratedProps) => {
   const theme = useTheme();
   const { pending, addAssistant, accounts, editAssistant, notifMsg } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   if (pending) {
     return <Loading />;
@@ -58,23 +62,15 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
               {`People with linked account…`}
             </Typography>
             <TextContainer>
-              <CheckFilled
-                fill={theme.brand.success}
-                height={16.67}
-                width={16.67}
-              />
-              <Typography variant="label" className="text" color="shade9">
+              <CheckFilled fill={theme.brand.success} />
+              <Typography variant="label" color="shade9">
                 {`Linked Accounts can make purchases and track orders using your stored credit cards or existing credit balance.`}
               </Typography>
             </TextContainer>
 
             <TextContainer>
-              <CloseFilled
-                fill={theme.brand.error}
-                height={16.67}
-                width={16.67}
-              />
-              <Typography variant="label" className="text" color="shade9">
+              <CloseFilled fill={theme.brand.error} />
+              <Typography variant="label" color="shade9">
                 {`Linked Accounts cannot add other linked accounts or use your stored credit card.`}
               </Typography>
             </TextContainer>
@@ -101,11 +97,21 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
           />
         ))}
 
-        <Row className="btn-add-account">
-          <Col>
-            <Button text="Add Linked Account" onClick={addAssistant} />
-          </Col>
-        </Row>
+        {!isMobile && (
+          <Row className="btn-add-account">
+            <Col>
+              <Button text="Add Linked Account" onClick={addAssistant} />
+            </Col>
+          </Row>
+        )}
+
+        <MobileFooter>
+          <Button
+            text="Add Linked Account"
+            takeFullWidth
+            onClick={addAssistant}
+          />
+        </MobileFooter>
       </BoxContainer>
     </Container>
   );

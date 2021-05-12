@@ -1,16 +1,18 @@
 import React from 'react';
 
-import { Visible } from 'react-grid-system';
+import { Visible, setConfiguration } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { MobileStickyBottomProps } from './MobileStickyBottom.props';
 import { Container } from './MobileStickyBottom.style';
 
+setConfiguration({ breakpoints: [567, 768, 992, 1200, 1600] });
+
 const MobileStickyBottom = (props: MobileStickyBottomProps): JSX.Element => {
-  const { children } = props;
+  const { children, withBackground = false } = props;
   return (
-    <Visible xs sm>
-      <Container>{children}</Container>
+    <Visible xs>
+      <Container withBackground={withBackground}>{children}</Container>
     </Visible>
   );
 };

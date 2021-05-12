@@ -19,6 +19,7 @@ import {
   MainAgreementContainer,
   HeroContainer,
   ProgressBar,
+  HeaderContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -109,6 +110,18 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Visible>
             {/* END MOBILE */}
             <Hidden xs>
+              <Row gutterWidth={40}>
+                <Col>
+                  <HeaderContainer>
+                    <TypographyView variant="title5">
+                      Can't find your product?
+                    </TypographyView>
+                    <TypographyView weight="700" variant="title5">
+                      Create a new Market Request
+                    </TypographyView>
+                  </HeaderContainer>
+                </Col>
+              </Row>
               <div>
                 <Row gutterWidth={24}>
                   <Col sm={12} md={12} lg={12} xl={4}>

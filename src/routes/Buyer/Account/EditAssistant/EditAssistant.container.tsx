@@ -7,7 +7,6 @@ import {
   deleteLinkedAccountActions,
   getLinkedAccountsActions,
 } from 'store/actions';
-import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { replaceCallingCode } from 'utils/String/callingCode';
 

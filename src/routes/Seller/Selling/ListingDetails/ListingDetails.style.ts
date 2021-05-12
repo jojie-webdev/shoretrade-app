@@ -331,6 +331,10 @@ export const MobileWrapper = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 8px;
+
+    @media ${BREAKPOINTS['sm']} {
+      flex-direction: column;
+    }
   }
 
   .size-container {
@@ -338,6 +342,9 @@ export const MobileWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     margin-right: 10px;
+    @media ${BREAKPOINTS['sm']} {
+      margin-right: 0px;
+    }
   }
   .location-container {
     display: flex;

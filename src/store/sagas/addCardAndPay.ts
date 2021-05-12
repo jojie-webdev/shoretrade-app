@@ -35,6 +35,7 @@ function* addCardAndPayRequest(
             cart: action.meta.cart,
             currentAddress: action.meta.currentAddress,
             totalPrice: action.meta.totalPrice,
+            paymentMode: action.meta.paymentMode,
           },
           state.auth.token
         );
@@ -55,6 +56,7 @@ function* addCardAndPayRequest(
             cart: action.meta.cart,
             currentAddress: action.meta.currentAddress,
             totalPrice: action.meta.totalPrice,
+            paymentMode: action.meta.paymentMode,
             ...(action.meta.default ? { default: true } : {}),
           },
           state.auth.token

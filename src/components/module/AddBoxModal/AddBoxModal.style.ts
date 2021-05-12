@@ -38,14 +38,42 @@ export const Inputs = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-
+  height: 40px;
   .btn-add {
     border-radius: 8px;
     max-width: 94px;
     padding: 14px 16px;
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 90%;
+      max-width: 90%;
+    }
   }
 
-  @media ${BREAKPOINTS.sm} {
+  @media ${BREAKPOINTS['sm']} {
     width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    height: 48px;
+    position: absolute;
+    bottom: 5%;
+    left: 0;
   }
+`;
+
+export const TopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const CloseBadge = styled.button`
+  height: 32px;
+  width: 32px;
+  background: ${(props) => props.theme.grey.noshade};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
 `;

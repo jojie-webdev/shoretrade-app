@@ -42,7 +42,11 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     ::placeholder {
       color: ${(props) => props.theme.grey.shade5};
       font-size: ${(props) =>
-        props.rounded && props.theme.appType === 'buyer' ? '14px' : '16px'};
+        props.rounded && props.theme.appType === 'buyer'
+          ? '14px'
+          : props.rounded
+          ? '14px'
+          : '16px'};
     }
   }
 `;
