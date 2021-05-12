@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Visa, Mastercard, Zippay, Paypal, Amex } from 'components/base/SVG';
+import { Visa, Mastercard, Amex } from 'components/base/SVG';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik } from 'formik';
+import { useMediaQuery } from 'react-responsive';
 
-// import { useTheme } from 'utils/Theme';
 import { CardGeneratedProps, CardDetails } from './Card.props';
 import {
   Container,
@@ -22,7 +24,6 @@ import { isValid } from './Card.validation';
 import FieldsetCard from './FieldsetCard';
 
 const CardView = (props: CardGeneratedProps) => {
-  // const theme = useTheme();
   const {
     cardDetails,
     setCardDetails,
@@ -34,6 +35,8 @@ const CardView = (props: CardGeneratedProps) => {
     isRemoving,
     addCardResult,
   } = props;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const formRef = useRef();
 
   return (
     <Container>
@@ -73,6 +76,8 @@ const CardView = (props: CardGeneratedProps) => {
         </CCImageRow>
 
         <Formik
+          //@ts-ignore
+          innerRef={formRef}
           initialValues={{
             number: isExisting ? cardDetails.number : '',
             exp: isExisting ? cardDetails.exp : '',
@@ -108,21 +113,49 @@ const CardView = (props: CardGeneratedProps) => {
                 }}
               />
             </div>
-            <ButtonContainer>
-              {isExisting && (
-                <Button
-                  variant="outline"
-                  loading={isRemoving}
-                  text="Remove Card"
-                  style={{ marginRight: '8px' }}
-                  onClick={() => onRemoveCard()}
-                />
-              )}
-              <Button type="submit" loading={isLoading} text="Save" />
-            </ButtonContainer>
+            {!isMobile && (
+              <ButtonContainer>
+                {isExisting && (
+                  <Button
+                    variant="outline"
+                    type="button"
+                    loading={isRemoving}
+                    text="Remove Card"
+                    style={{ marginRight: '8px' }}
+                    onClick={() => onRemoveCard()}
+                  />
+                )}
+                <Button type="submit" loading={isLoading} text="Save" />
+              </ButtonContainer>
+            )}
           </FormAddCard>
         </Formik>
       </BoxContainer>
+
+      <MobileFooter>
+        {isExisting && (
+          <Button
+            variant="outline"
+            type="button"
+            loading={isRemoving}
+            text="Remove Card"
+            style={{ marginRight: '8px' }}
+            onClick={() => onRemoveCard()}
+            takeFullWidth
+          />
+        )}
+        <Button
+          takeFullWidth
+          loading={isLoading}
+          text="Save"
+          onClick={() => {
+            if (formRef.current) {
+              // @ts-ignore
+              formRef.current.handleSubmit();
+            }
+          }}
+        />
+      </MobileFooter>
     </Container>
   );
 };
