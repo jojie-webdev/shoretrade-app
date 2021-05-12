@@ -26,14 +26,19 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
-          flex-direction: column;
+          flex-direction: row;
         }
 
         .badge {
           margin: 0 4px 4px 0;
-
+          display: flex;
+          flex-direction: row;
           @media ${BREAKPOINTS['sm']} {
             width: fit-content;
+          }
+          .svg-container {
+            margin-left: 5px;
+            margin-top: -2px;
           }
         }
       }

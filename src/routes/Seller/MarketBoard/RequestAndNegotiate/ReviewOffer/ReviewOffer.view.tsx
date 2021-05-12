@@ -12,6 +12,8 @@ import {
   ArrowRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
 
@@ -21,6 +23,7 @@ import { Container, BadgeText, ItemDetail } from './ReviewOffer.style';
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
   const [isChecked, setIsChecked] = useState(false);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const flatMap = (array: [], fn: any) => {
     let result: any[] = [];
@@ -65,7 +68,10 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                             className="badge"
                             badgeColor={theme.grey.shade8}
                           >
-                            <BadgeText variant="overlineSmall" color="noshade">
+                            <BadgeText
+                              variant={isMobile ? 'small' : 'overlineSmall'}
+                              color="noshade"
+                            >
                               {ls}
                             </BadgeText>
                           </Badge>
@@ -75,7 +81,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                     <div className="weights">
                       <div style={{ margin: '0 4px 4px 0' }}>
                         <Weight
-                          fill={theme.grey.noshade}
+                          fill={theme.grey.shade7}
                           width={12}
                           height={12}
                         />
@@ -86,7 +92,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
                       </Typography>
                       <div style={{ margin: '0 2px 4px 8px' }}>
                         <DollarSign
-                          fill={theme.grey.noshade}
+                          fill={theme.grey.shade7}
                           width={11}
                           height={11}
                         />
@@ -140,17 +146,16 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         </Typography>
       </div>
 
-      <div className="submit-btns">
+      <div className={isMobile ? 'button-container' : 'submit-btns'}>
         <Button
-          style={{ width: 137 }}
           onClick={() => setStep && setStep(2)}
-          className="submit-btn"
+          className={isMobile ? 'submit-btn-1' : 'submit-btn'}
           text="Add an offer"
           variant="outline"
         />
         <Button
           onClick={props.onSubmit}
-          className="submit-btn"
+          className={isMobile ? 'submit-btn-2' : 'submit-btn'}
           text="submit"
           variant="primary"
           disabled={!isChecked}
