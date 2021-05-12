@@ -5,9 +5,12 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { ShippingAddressesGeneratedProps } from './ShippingAddresses.props';
@@ -49,6 +52,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
   } = props;
 
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   if (pending) {
     return <Loading />;
@@ -129,11 +133,21 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
         })}
       </Row>
 
-      <Row className="btn-add-address">
-        <Col>
-          <Button text="Add a new address" onClick={onClickAddAddress} />
-        </Col>
-      </Row>
+      {!isMobile && (
+        <Row className="btn-add-address">
+          <Col>
+            <Button text="Add a new address" onClick={onClickAddAddress} />
+          </Col>
+        </Row>
+      )}
+
+      <MobileFooter>
+        <Button
+          text="Add a new address"
+          takeFullWidth
+          onClick={onClickAddAddress}
+        />
+      </MobileFooter>
     </Container>
   );
 };

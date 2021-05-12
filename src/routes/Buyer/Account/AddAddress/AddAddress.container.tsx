@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import BuyerAddressForm from 'components/module/BuyerAddressForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addAddressActions } from 'store/actions';
@@ -9,7 +10,6 @@ import { Store } from 'types/store/Store';
 
 import { AddAddressGeneratedProps } from './AddAddress.props';
 import { placeDataToAddAddressMeta } from './AddAddress.transform';
-import AddAddressView from './AddAddress.view';
 
 const AddAddress = (): JSX.Element => {
   // MARK:- States / Variables
@@ -62,7 +62,7 @@ const AddAddress = (): JSX.Element => {
     setAddress,
     setUnitNumber,
   };
-  return <AddAddressView {...generatedProps} />;
+  return <BuyerAddressForm {...generatedProps} />;
 };
 
 export default AddAddress;

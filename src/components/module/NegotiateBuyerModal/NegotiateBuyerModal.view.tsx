@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { NegotiateBuyerModalProps } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.props';
@@ -17,11 +18,8 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
-
-import MobileStickyBottomView from '../MobileStickyBottom';
 
 const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const {
@@ -177,21 +175,19 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             />
           </ButtonContainer>
         </Hidden>
-        <Visible xs>
-          <MobileStickyBottomView withBackground={false}>
-            <Button
-              variant="primary"
-              text="Negotiate"
-              onClick={() => {
-                if (negotiationPrice && negotiationPrice >= 1) {
-                  onSubmit(negotiationPrice);
-                }
-              }}
-              takeFullWidth={isSmallScreen}
-              loading={isNegotiating}
-            />
-          </MobileStickyBottomView>
-        </Visible>
+        <MobileFooter>
+          <Button
+            variant="primary"
+            text="Negotiate"
+            onClick={() => {
+              if (negotiationPrice && negotiationPrice >= 1) {
+                onSubmit(negotiationPrice);
+              }
+            }}
+            takeFullWidth={isSmallScreen}
+            loading={isNegotiating}
+          />
+        </MobileFooter>
       </>
     </ModalLayout>
   );
