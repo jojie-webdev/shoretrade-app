@@ -224,6 +224,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     query: BREAKPOINTS.genericTablet,
   });
 
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.genericTablet,
+  });
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
@@ -341,7 +345,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         useOuterWrapper={useOuterWrapper}
       >
         <>
-          {useOuterWrapper ? (
+          {useOuterWrapper && !isTablet ? (
             <Container
               className="container"
               style={{ width: '100%', height: '100%' }}

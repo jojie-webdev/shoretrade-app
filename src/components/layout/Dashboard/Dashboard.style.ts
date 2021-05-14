@@ -291,7 +291,6 @@ export const Content = styled.div<{
     }
   }
 
-  //for buyer home only
   ${(props) =>
     props.useOuterWrapper
       ? `
@@ -307,10 +306,14 @@ export const Content = styled.div<{
 export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
+  margin-top: ${({ useOuterWrapper }) => (!useOuterWrapper ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) =>
+    props.useOuterWrapper
+      ? '100%'
+      : dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
