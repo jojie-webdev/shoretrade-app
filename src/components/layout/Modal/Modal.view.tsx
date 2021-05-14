@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Close } from 'components/base/SVG';
-import { useTheme } from 'utils/Theme';
 
 import { ModalProps } from './Modal.props';
 import { Backdrop, ModalContainer, ExitButton } from './Modal.style';
 
 const Modal = (props: ModalProps): JSX.Element => {
   const { isOpen, onClickClose, children } = props;
-  const theme = useTheme();
 
   return (
     <Backdrop isOpen={isOpen}>
@@ -22,7 +20,7 @@ const Modal = (props: ModalProps): JSX.Element => {
             onClickClose();
           }}
         >
-          <Close fill={theme.grey.noshade} />
+          <Close />
         </ExitButton>
         {children}
       </ModalContainer>
