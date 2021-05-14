@@ -100,7 +100,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
               placeholder="Search order"
               rounded
             />
-            {(!isIpadPro || !isIpad) && (
+            {!isIpad && (
               <FilterButton onClick={props.onClickFilterButton}>
                 <Typography
                   variant="label"
