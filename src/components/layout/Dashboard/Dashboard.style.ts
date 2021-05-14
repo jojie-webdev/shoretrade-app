@@ -252,23 +252,6 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['genericTablet']} {
-    min-height: 100vh;
-
-    .screen-wrapper {
-      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
-
-      .screen {
-        width: calc(100% - 32px);
-        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
-      }
-    }
-
-    .container {
-      max-width: 100% !important;
-    }
-  }
-
   @media ${BREAKPOINTS['sm']} {
     min-height: 100vh;
 
@@ -286,6 +269,40 @@ export const Content = styled.div<{
           position: static !important; // needed to override react-grid-system .container
         }
       }
+    }
+  }
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    min-height: 100vh;
+
+    .screen-wrapper {
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+
+      .screen {
+        width: calc(100% - 32px);
+        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
+      }
+    }
+
+    .container {
+      max-width: 100% !important;
+    }
+  }
+
+  @media ${BREAKPOINTS['iPad']} {
+    min-height: 100vh;
+
+    .screen-wrapper {
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+
+      .screen {
+        width: calc(100% - 32px);
+        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
+      }
+    }
+
+    .container {
+      max-width: 100% !important;
     }
   }
 
@@ -319,10 +336,6 @@ export const HeaderContainer = styled.nav`
     display: flex;
     align-items: flex-start;
     flex: 1;
-
-    @media ${BREAKPOINTS['xl']} {
-      margin-left: -48px;
-    }
   }
 
   .title-container {
@@ -348,9 +361,7 @@ export const HeaderContainer = styled.nav`
   .right-content {
     display: flex;
     align-items: center;
-    @media ${BREAKPOINTS['xl']} {
-      margin-right: -56px;
-    }
+
     .cart-container {
       margin-right: 45px;
 
@@ -401,6 +412,14 @@ export const HeaderContainer = styled.nav`
   }
 
   @media ${BREAKPOINTS['genericTablet']} {
+    width: calc(100% - 32px);
+  }
+
+  @media ${BREAKPOINTS['iPad']} {
+    width: calc(100% - 32px);
+  }
+
+  @media ${BREAKPOINTS['xl']} {
     width: calc(100% - 32px);
   }
 `;
