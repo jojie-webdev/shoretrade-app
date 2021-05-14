@@ -41,7 +41,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     query: `(min-width: 835px) and (max-width: 1200px) `,
   });
   const customScreenSmall = useMediaQuery({
-    query: `(min-width: 1240px) `,
+    query: `(min-width: 1230px) `,
   });
 
   const getStatusBadgeColor = (
@@ -123,7 +123,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           </>
         )}
       </SegmentedControlsV2>
-      {(isIpadPro || isIpad || customScreen || !customScreenSmall) && (
+      {(isIpadPro || isIpad) && (
         <div className="filter-ipad-container">
           <FilterButton onClick={props.onClickFilterButton}>
             <Typography
