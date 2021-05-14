@@ -144,7 +144,7 @@ export const ImageContainer = styled.div<{
       `${ImageContainerHeight[aspectRatio][1440]}px`};
   }
 
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     min-height: 342px;
   }
   @media ${BREAKPOINTS['sm']} {

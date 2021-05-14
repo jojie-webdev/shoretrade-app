@@ -3,13 +3,23 @@ import React from 'react';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
-import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
-import { ArrowRight, DollarSign, Filter, Weight } from 'components/base/SVG';
+import SegmentedControlsV2 from 'components/base/SegmentedControlsV2';
+import {
+  ArrowRight,
+  DollarSign,
+  Filter,
+  Weight,
+  Sync,
+  CheckFilled,
+  CloseFilled,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -23,7 +33,10 @@ import { Container, FilterButton, BadgeText } from './Landing.style';
 
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
+  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['xl'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
   ) => {
@@ -42,6 +55,15 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     return '';
   };
 
+  const setIcon = (status: GetActiveOffersRequestResponseItem['status']) => {
+    if (status === 'OPEN')
+      return <Sync width={10} height={10} fill={theme.grey.shade9} />;
+    if (status === 'ACCEPTED')
+      return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
+    if (status === 'DECLINED')
+      return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
+  };
+
   return (
     <Container>
       {props.userPending && (
@@ -53,47 +75,97 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           style={{ marginBottom: 16 }}
         />
       )}
-
-      <SegmentedControls
+      {isMobile && (
+        <Typography className="title-board" variant="title5" color="noshade">
+          Market Board
+        </Typography>
+      )}
+      <SegmentedControlsV2
         options={['Buyer Requests', 'My Active Offers']}
         selectedOption={props.currentTab}
         onClickControl={(value) =>
           props.onChangeCurrentTab(value as TabOptions)
         }
         tooltips={[{ option: 'Buyer Requests', value: BuyerRequestsTooltip }]}
-      />
-
-      <Row nogutter className="search-row" justify="between">
-        {props.currentTab === 'Buyer Requests' && (
+      >
+        {!isMobile && props.currentTab === 'Buyer Requests' && (
           <>
-            <Col xl={4}>
-              <Search
-                className="filter-search"
-                value={props.searchTerm}
-                onChange={(event: any) =>
-                  props.setSearchTerm(event.currentTarget.value)
-                }
-                resetValue={() => props.setSearchTerm('')}
-                placeholder="Search for any product..."
-                rounded
-              />
-            </Col>
+            <Search
+              className="search"
+              value={props.searchTerm}
+              onChange={(event: any) =>
+                props.setSearchTerm(event.currentTarget.value)
+              }
+              resetValue={() => props.setSearchTerm('')}
+              placeholder="Search order"
+              rounded
+            />
+            {!isIpad && (
+              <FilterButton onClick={props.onClickFilterButton}>
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  weight="500"
+                  className="btn-text"
+                >
+                  Filters
+                </Typography>
 
-            <FilterButton onClick={props.onClickFilterButton}>
-              <Typography
-                variant="label"
-                color="noshade"
-                weight="500"
-                className="btn-text"
-              >
-                Filters
-              </Typography>
-
-              <Filter />
-            </FilterButton>
+                <Filter />
+              </FilterButton>
+            )}
           </>
         )}
-      </Row>
+      </SegmentedControlsV2>
+      {(isIpadPro || isIpad) && (
+        <div className="filter-ipad-container">
+          <FilterButton onClick={props.onClickFilterButton}>
+            <Typography
+              variant="label"
+              color="noshade"
+              weight="500"
+              className="btn-text"
+            >
+              Filters
+            </Typography>
+
+            <Filter />
+          </FilterButton>
+        </div>
+      )}
+      {isMobile && (
+        <Row nogutter className="search-row" justify="between">
+          {props.currentTab === 'Buyer Requests' && (
+            <>
+              <Col xl={4}>
+                <Search
+                  className="filter-search"
+                  value={props.searchTerm}
+                  onChange={(event: any) =>
+                    props.setSearchTerm(event.currentTarget.value)
+                  }
+                  resetValue={() => props.setSearchTerm('')}
+                  placeholder="Search order"
+                  rounded
+                />
+              </Col>
+
+              <FilterButton onClick={props.onClickFilterButton}>
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  weight="500"
+                  className="btn-text"
+                >
+                  Filters
+                </Typography>
+
+                <Filter />
+              </FilterButton>
+            </>
+          )}
+        </Row>
+      )}
 
       {props.isLoading ? (
         <Loading />
@@ -123,7 +195,10 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                             className="badge"
                             badgeColor={theme.grey.shade8}
                           >
-                            <BadgeText variant="overlineSmall" color="noshade">
+                            <BadgeText
+                              variant={isMobile ? 'small' : 'overlineSmall'}
+                              color="noshade"
+                            >
                               {s.stateName}
                             </BadgeText>
                           </Badge>
@@ -139,7 +214,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                               badgeColor={theme.grey.shade8}
                             >
                               <BadgeText
-                                variant="overlineSmall"
+                                variant={isMobile ? 'small' : 'overlineSmall'}
                                 color="noshade"
                               >
                                 {opt}
@@ -232,6 +307,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                               >
                                 {status}
                               </BadgeText>
+                              <div className="svg-container">
+                                {setIcon(v.status)}
+                              </div>
                             </Badge>
                           </div>
                         )}
@@ -239,9 +317,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         <div className="weights">
                           <div style={{ margin: '0 4px 4px 0' }}>
                             <Weight
-                              fill={theme.grey.noshade}
-                              width={12}
-                              height={12}
+                              fill={theme.grey.shade7}
+                              width={13.33}
+                              height={13.33}
                             />
                           </div>
                           <Typography color="noshade" variant="small">
@@ -250,9 +328,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                           </Typography>
                           <div style={{ margin: '0 2px 4px 8px' }}>
                             <DollarSign
-                              fill={theme.grey.noshade}
-                              width={11}
-                              height={11}
+                              fill={theme.grey.shade7}
+                              width={13.33}
+                              height={13.33}
                             />
                           </div>
                           <Typography color="noshade" variant="small">

@@ -26,7 +26,7 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
-          flex-direction: column;
+          flex-direction: row;
         }
 
         .badge {
@@ -79,6 +79,58 @@ export const Container = styled.div`
     .label {
       margin-left: 8px;
     }
+  }
+
+  .button-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 1%;
+    padding: 16px;
+    margin: -16px;
+    background-color: ${({ theme }) => theme.grey.shade9};
+    
+    .submit-btn-1 {
+      width: 50%;
+      margin-right: 12px;
+      margin-left: -4px;
+    }
+    .submit-btn-2 {
+      width: 50%;
+    }
+  }
+`;
+
+export const ItemDetail = styled(Typography)<{ row?: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.row ? 'row' : 'column')};
+  align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
+  margin-left: -6px;
+  width: auto;
+  white-space: nowrap;
+  line-height: 16px;
+
+  margin-right: 56px;
+
+  @media (max-width: 1052px) {
+    margin-right: 32px;
+  }
+
+  @media (max-width: 980px) {
+    margin-right: 16px;
+  }
+
+  @media (max-width: 550px) {
+    flex: 1;
+  }
+
+  span {
+    color: ${(props) => props.theme.grey.noshade};
+    font-size: 14px;
+    margin-left: ${(props) => (props.row ? '8px' : '0')};
+    line-height: 24px;
   }
 `;
 
