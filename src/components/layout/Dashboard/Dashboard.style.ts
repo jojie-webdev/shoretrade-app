@@ -197,6 +197,7 @@ export const Content = styled.div<{
   background?: string;
   screenBackground?: string;
   color?: string;
+  useOuterWrapper?: boolean;
 }>`
   display: flex;
   flex: 1;
@@ -272,7 +273,8 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['genericTablet']} {
+  //generic tablet till xl
+  @media (min-width: 577px) and (max-width: 1200px) {
     min-height: 100vh;
 
     .screen-wrapper {
@@ -289,42 +291,20 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['iPad']} {
-    min-height: 100vh;
-
-    .screen-wrapper {
-      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
-
-      .screen {
-        width: calc(100% - 32px);
-        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
-      }
-    }
-
+  //for buyer home only
+  ${(props) =>
+    props.useOuterWrapper
+      ? `
+  @media (min-width: 835px) {
     .container {
       max-width: 100% !important;
     }
   }
-
-  @media ${BREAKPOINTS['xl']} {
-    min-height: 100vh;
-
-    .screen-wrapper {
-      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
-
-      .screen {
-        width: calc(100% - 32px);
-        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
-      }
-    }
-
-    .container {
-      max-width: 100% !important;
-    }
-  }
+  `
+      : ``}
 `;
 
-export const HeaderContainer = styled.nav`
+export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
   display: flex;
   flex-direction: row;
   margin-bottom: 24px;
@@ -464,4 +444,10 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
+`;
+
+export const HeaderWrapper = styled.div`
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  margin: auto;
+  position: relative;
 `;

@@ -41,7 +41,7 @@ import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
   HOME: {
-    path: '/buyer/home',
+    path: BUYER_ROUTES.HOME,
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,
@@ -152,10 +152,12 @@ const BuyerRoutes = (): JSX.Element => {
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
+    useOuterWrapper?: boolean;
   } => {
     if (pathname.includes('/buyer/home')) {
       return {
         pageTitle: firstName ? `Hello, ${firstName}` : '',
+        useOuterWrapper: true,
       };
     }
 
