@@ -16,10 +16,6 @@ export interface DashboardPublicProps {
   headerTextColor?: keyof Theme['grey'];
   shouldIncludePadding?: boolean;
   pageTitle?: string;
-
-  // This edge case is rushed and needed to fix the
-  // overlapping scrollbar bug (only happens in Buyer Home)
-  useOuterWrapper?: boolean;
 }
 
 export interface DashboardGeneratedProps extends DashboardPublicProps {
@@ -65,6 +61,4 @@ export type HeaderProps = {
   onBack?: () => void;
   onClickAccount: () => void;
   cartItems: number;
-
-  useOuterWrapper?: boolean;
 };

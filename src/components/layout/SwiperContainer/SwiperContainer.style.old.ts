@@ -1,8 +1,8 @@
 import styled from 'utils/styled';
 
-import { AspectRatioOld, MediaQueries } from './SwiperContainer.props';
+import { AspectRatio, MediaQueries } from './SwiperContainer.props';
 
-const ParentHeight: Record<AspectRatioOld, MediaQueries> = {
+const ParentHeight: Record<AspectRatio, MediaQueries> = {
   '16:9': {
     '1440': 350,
     '1366': 325,
@@ -17,11 +17,18 @@ const ParentHeight: Record<AspectRatioOld, MediaQueries> = {
     '768': 240,
     '375': 156,
   },
+  '8:7': {
+    '1440': 445,
+    '1366': 445,
+    '1024': 445,
+    '768': 595,
+    '375': 287,
+  },
 };
 
 export const Parent = styled.div<{
   height?: string;
-  aspectRatio: AspectRatioOld;
+  aspectRatio: AspectRatio;
   addMargin?: boolean;
 }>`
   display: flex;

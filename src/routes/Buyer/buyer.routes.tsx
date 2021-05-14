@@ -152,12 +152,10 @@ const BuyerRoutes = (): JSX.Element => {
     shouldIncludePadding?: boolean;
     onBack?: () => void;
     pageTitle?: string;
-    useOuterWrapper?: boolean;
   } => {
     if (pathname.includes('/buyer/home')) {
       return {
         pageTitle: firstName ? `Hello, ${firstName}` : '',
-        useOuterWrapper: true,
       };
     }
 

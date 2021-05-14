@@ -9,8 +9,7 @@ import {
   Parent as ParentOld,
   Container as ContainerOld,
 } from 'components/layout/SwiperContainer/SwiperContainer.style.old';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import { useMediaQuery } from 'react-responsive';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -39,7 +38,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     onResize,
     variant,
   } = props;
-  const isOld = useMediaQuery({ query: BREAKPOINTS['homeDesktop'] });
+  const isOld = useHomeOld();
   const Parent = isOld ? ParentOld : ParentNew;
   const Container = isOld ? ContainerOld : ContainerNew;
 
@@ -90,7 +89,6 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     <Parent
       ref={containerRef}
       height={height}
-      //@ts-ignore
       aspectRatio={aspectRatio}
       addMargin={addMargin}
       variant={variant}

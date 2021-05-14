@@ -18,6 +18,7 @@ import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -92,7 +93,6 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
-  useOuterWrapper,
 }: HeaderProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -105,8 +105,10 @@ const Header = ({
     query: BREAKPOINTS.genericTablet,
   });
 
+  const isHomeOld = useHomeOld();
+
   return (
-    <HeaderContainer className="appbar" useOuterWrapper={useOuterWrapper}>
+    <HeaderContainer className="appbar" isHomeOld={isHomeOld}>
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
@@ -211,7 +213,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
-    useOuterWrapper,
   } = props;
 
   const history = useHistory();
@@ -224,9 +225,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     query: BREAKPOINTS.genericTablet,
   });
 
-  const isTablet = useMediaQuery({
-    query: BREAKPOINTS.genericTablet,
-  });
+  const isHomeOld = useHomeOld();
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -342,10 +341,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         background={background}
         screenBackground={screenBackground}
         color={color}
-        useOuterWrapper={useOuterWrapper}
+        isHomeOld={isHomeOld}
       >
         <>
-          {useOuterWrapper && !isTablet ? (
+          {isHomeOld ? (
             <Container
               className="container"
               style={{ width: '100%', height: '100%' }}
@@ -362,7 +361,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   onBack={onBack}
                   cartItems={cartItems}
                   onClickAccount={onClickAccount}
-                  useOuterWrapper
                 />
               </HeaderWrapper>
               {children}

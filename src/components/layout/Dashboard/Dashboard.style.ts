@@ -197,7 +197,7 @@ export const Content = styled.div<{
   background?: string;
   screenBackground?: string;
   color?: string;
-  useOuterWrapper?: boolean;
+  isHomeOld?: boolean;
 }>`
   display: flex;
   flex: 1;
@@ -292,26 +292,24 @@ export const Content = styled.div<{
   }
 
   ${(props) =>
-    props.useOuterWrapper
+    props.isHomeOld
       ? `
-  @media ${BREAKPOINTS['homeDesktop']} {
-    .container {
+  .container {
       max-width: 100% !important;
     }
-  }
   `
       : ``}
 `;
 
-export const HeaderContainer = styled.nav<{ useOuterWrapper?: boolean }>`
+export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   display: flex;
   flex-direction: row;
-  margin-top: ${({ useOuterWrapper }) => (!useOuterWrapper ? '0' : '40px')};
+  margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '40px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
   width: ${(props) =>
-    props.useOuterWrapper
+    props.isHomeOld
       ? '100%'
       : dashboardWidth(props.theme.appType === 'seller')};
 
