@@ -1,1 +1,1 @@
-export { default } from './MultipleCarousel.view';
+export { default } from './MultipleCarousel.container';
