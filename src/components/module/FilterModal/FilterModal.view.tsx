@@ -241,15 +241,19 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
           )}
 
           <ClickableRow onClick={onReset} align="center" nogutter>
-            {!selecting && <Reset variant="overline">Reset</Reset>}
-          </ClickableRow>
-          <ClickableRow onClick={onReset} align="center" nogutter>
-            <Button
-              style={{ width: '32px', height: '32px' }}
-              circular
-              variant="white"
-              icon={<Close />}
-            />
+            {!selecting && (
+              <>
+                <Reset variant="overline">Reset</Reset>
+                {isSmallScreen && (
+                  <Button
+                    style={{ width: '32px', height: '32px' }}
+                    circular
+                    variant="white"
+                    icon={<Close />}
+                  />
+                )}
+              </>
+            )}
           </ClickableRow>
         </HeaderContainer>
 
