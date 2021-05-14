@@ -3,34 +3,43 @@ import React from 'react';
 import Button from 'components/base/Button';
 import { ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 
-// import { useTheme } from 'utils/Theme';
 import { HomeSectionHeaderProps } from './HomeSectionHeader.props';
 import { Container } from './HomeSectionHeader.style';
 
 const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
-  // const theme = useTheme();
-
   const { title, onClick, noMargin } = props;
+
+  const isOld = useHomeOld();
 
   return (
     <Container noMargin={noMargin}>
-      <Typography
-        variant="overline"
-        color="shade6"
-        style={{ cursor: 'pointer' }}
-        onClick={onClick}
-      >
-        {title}
-      </Typography>
-      {/* <Button
-        text="See All"
-        variant="unselected"
-        size="sm"
-        icon={<ArrowRight fill="#E35D32" />}
-        style={{ padding: '4px 8px' }}
-        onClick={onClick}
-      /> */}
+      {isOld ? (
+        <Typography variant="title5" color="shade8">
+          {title}
+        </Typography>
+      ) : (
+        <Typography
+          variant="overline"
+          color="shade6"
+          style={{ cursor: 'pointer' }}
+          onClick={onClick}
+        >
+          {title}
+        </Typography>
+      )}
+
+      {isOld && (
+        <Button
+          text="See All"
+          variant="unselected"
+          size="sm"
+          icon={<ArrowRight fill="#E35D32" />}
+          style={{ padding: '4px 8px' }}
+          onClick={onClick}
+        />
+      )}
     </Container>
   );
 };
