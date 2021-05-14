@@ -93,7 +93,7 @@ export const SummaryContentContainer = styled.div`
   @media ${BREAKPOINTS['iPad']} {
     min-width: 100%;
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     min-width: 100%;
   }
   .quantity-container {

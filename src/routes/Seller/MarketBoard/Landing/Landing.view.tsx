@@ -35,7 +35,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
+  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['xl'] });
   const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']

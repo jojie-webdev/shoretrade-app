@@ -197,7 +197,7 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     flex-direction: column;
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     flex-direction: column;
   }
 
@@ -325,7 +325,7 @@ export const SVGContainer = styled.div<{
   align-items: center;
   margin-left: 200px;
 
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     margin-left: -40px !important;
   }
 

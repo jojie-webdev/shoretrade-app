@@ -61,7 +61,7 @@ export const Parent = styled.div<{
   }
   ${(props) =>
     props.variant === 'thumbnail' &&
-    `  @media ${BREAKPOINTS['ipadPro']} {
+    `  @media ${BREAKPOINTS['xl']} {
     min-height: 394px;
   }`}
   @media ${BREAKPOINTS['sm']} {
@@ -83,7 +83,7 @@ export const Container = styled.div<{ variant?: string }>`
 
     ${(props) =>
       props.variant === 'thumbnail' &&
-      `   @media ${BREAKPOINTS['ipadPro']} {
+      `   @media ${BREAKPOINTS['xl']} {
       min-height: 342px;
       height: 342px;
     }`}

@@ -11,7 +11,7 @@ export const Container = styled.div<{ img?: string }>`
   @media ${BREAKPOINTS['iPad']} {
     max-width: 100%;
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     max-width: 100%;
   }
 
@@ -36,7 +36,7 @@ export const Container = styled.div<{ img?: string }>`
     @media ${BREAKPOINTS['iPad']} {
       height: 374px;
     }
-    @media ${BREAKPOINTS['ipadPro']} {
+    @media ${BREAKPOINTS['xl']} {
       height: 374px;
     }
   }

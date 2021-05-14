@@ -57,8 +57,6 @@ const ControlsContent = (props: SegmentedControlsV2Props) => {
 const SegmentedControlsV2 = (props: SegmentedControlsV2Props): JSX.Element => {
   const { options, selectedOption, onClickControl, tooltips, children } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const isGenericTable = useMediaQuery({ query: BREAKPOINTS['genericTablet'] });
-  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
   const theme = useTheme();
   return (
     <Container>

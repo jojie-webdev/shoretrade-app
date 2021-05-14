@@ -91,7 +91,7 @@ export const SalesRow = styled(Row)`
     }
   }
 
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     .figma-width {
       width: 200px !important;
       min-width: 200px;
