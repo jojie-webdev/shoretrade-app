@@ -66,7 +66,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const formattedCatchDate = () =>
     moment(orderDetails.catchDate).format('DD MMMM YYYY');
   const [images, setImages] = useState<string[]>([]);
-  const isIpad = useMediaQuery({ query: BREAKPOINTS['ipadPro'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['xl'] });
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const history = useHistory();
 

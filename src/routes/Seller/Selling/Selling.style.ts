@@ -81,6 +81,10 @@ export const ItemCard = styled.div`
         margin-left: 42px;
       }
 
+      @media ${BREAKPOINTS['genericTablet']} {
+        margin-left: 40px;
+      }
+
       .column-order {
         flex-direction: column;
       }
@@ -193,7 +197,7 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     flex-direction: column;
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     flex-direction: column;
   }
 
@@ -321,7 +325,7 @@ export const SVGContainer = styled.div<{
   align-items: center;
   margin-left: 200px;
 
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     margin-left: -40px !important;
   }
 
@@ -339,14 +343,11 @@ export const SVGContainer = styled.div<{
   :before {
     position: absolute;
     content: '';
-    height: ${(props) =>
-      props.circleHeight ? `${props.circleHeight}px` : '210px'};
-    width: ${(props) =>
-      props.circleWidth ? `${props.circleWidth}px` : '210px'};
+    height: ${(props) => (props.circleHeight ? `${props.circleHeight}px` : '210px')};
+    width: ${(props) => (props.circleWidth ? `${props.circleWidth}px` : '210px')};
     border-radius: 210px;
     z-index: 1;
 
-    background: ${(props) =>
-      props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
+    background: ${(props) => (props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9)};
   }
 `;

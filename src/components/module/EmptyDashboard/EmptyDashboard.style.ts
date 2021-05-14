@@ -25,7 +25,7 @@ export const Container = styled.div<{ fluid: boolean }>`
         cursor: pointer;
         color: ${(props) => props.theme.brand.primary};
       }
-      @media ${BREAKPOINTS['ipadPro']} {
+      @media ${BREAKPOINTS['xl']} {
         display: inline;
       }
     }
@@ -34,7 +34,7 @@ export const Container = styled.div<{ fluid: boolean }>`
       margin-right: 20px;
     }
 
-    @media ${BREAKPOINTS['ipadPro']} {
+    @media ${BREAKPOINTS['xl']} {
       margin-right: 20px;
     }
 

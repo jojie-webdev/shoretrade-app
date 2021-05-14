@@ -7,12 +7,12 @@ import { useMediaQuery } from 'react-responsive';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
-import { CategoryImagePreviewProps } from './CategoryImagePreview.props';
+import { CategoryImagePreviewProps } from './CategoryImagePreviewSeller.props';
 import {
   Container,
   BadgeContainer,
   MarketBoardBadge,
-} from './CategoryImagePreview.style';
+} from './CategoryImagePreviewSeller.style';
 
 const CategoryImagePreview = (
   props: CategoryImagePreviewProps

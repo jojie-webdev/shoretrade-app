@@ -9,7 +9,6 @@ export const Container = styled.div<InteractionsProps>`
   padding: ${({ padding }) => padding || '24px'};
   display: flex;
   justify-content: space-between;
-  flex-wrap: nowrap;
   position: relative;
 
   background-color: ${({ theme, backgroundColor, noBg }) => {
@@ -19,7 +18,9 @@ export const Container = styled.div<InteractionsProps>`
       return 'transparent';
     }
 
-    return backgroundColor || (isSeller ? theme.grey.shade9 : '#ffffff');
+    return (
+      backgroundColor || (isSeller ? theme.grey.shade9 : theme.grey.noshade)
+    );
   }};
 
   margin-top: ${({ label }) => (label ? '20px' : 0)};
@@ -44,15 +45,14 @@ export const Container = styled.div<InteractionsProps>`
   .left-content,
   .right-content {
     display: flex;
-    flex-wrap: nowrap;
     align-items: center;
   }
 `;
 
-export const Value = styled(Typography)`
-  color: ${({ theme }) => {
+export const Value = styled(Typography)<{ fontColor?: string }>`
+  color: ${({ theme, fontColor }) => {
     const isSeller = theme.appType !== 'buyer';
-    return isSeller ? '#ffffff' : theme.grey.shade9;
+    return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);
   }};
   padding-right: 16px;
 `;

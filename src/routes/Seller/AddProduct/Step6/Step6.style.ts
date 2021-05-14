@@ -25,6 +25,10 @@ export const Container = styled.div`
           width: 100%;
           padding-right: 0px;
         }
+        @media ${BREAKPOINTS['iPad']} {
+          width: 100%;
+          padding-right: 0px;
+        }
       }
     }
   }

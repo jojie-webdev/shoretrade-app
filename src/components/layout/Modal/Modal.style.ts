@@ -37,8 +37,7 @@ export const ExitButton = styled.button`
   position: absolute;
   top: -20px;
   right: -20px;
-  background: ${(props) => props.theme.grey.shade10};
-  color: #ffffff;
+  background: ${(props) => props.theme.grey.noshade};
   box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
   border-radius: 20px;
   height: 40px;

@@ -4,10 +4,6 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
-  .search-row {
-    margin-top: 24px;
-  }
-
   .interactions {
     margin-bottom: 12px;
 
@@ -30,14 +26,19 @@ export const Container = styled.div`
 
         @media ${BREAKPOINTS['sm']} {
           width: 100%;
-          flex-direction: column;
+          flex-direction: row;
         }
 
         .badge {
           margin: 0 4px 4px 0;
-
+          display: flex;
+          flex-direction: row;
           @media ${BREAKPOINTS['sm']} {
             width: fit-content;
+          }
+          .svg-container {
+            margin-left: 5px;
+            margin-top: -2px;
           }
         }
       }
@@ -61,6 +62,18 @@ export const Container = styled.div`
         }
       }
     }
+  }
+
+  .title-board {
+    margin-bottom: 16px;
+  }
+
+  .filter-ipad-container {
+    display:flex;
+    margin-top: -24px;
+    width: 100%;
+    align-content: flex-end;
+    justify-content: flex-end;
   }
 `;
 

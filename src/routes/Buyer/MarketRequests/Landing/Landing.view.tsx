@@ -7,8 +7,8 @@ import { Filter, Crab } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import MobileFooter from 'components/layout/MobileFooter';
 import EmptyStateView from 'components/module/EmptyState';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -145,7 +145,7 @@ const MarketRequestsLandingView = (
         ) : (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}
-        <MobileStickyBottomView>
+        <MobileFooter>
           <Button
             onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
             text="CREATE MARKET REQUEST"
@@ -153,7 +153,7 @@ const MarketRequestsLandingView = (
             takeFullWidth
             disabled={props.isPendingAccount}
           />
-        </MobileStickyBottomView>
+        </MobileFooter>
       </BoxContainer>
     </MarketRequestsContainer>
   );

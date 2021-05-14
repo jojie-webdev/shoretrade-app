@@ -364,9 +364,9 @@ export const HeaderContainer = styled.nav`
     }
 
     img {
-      height: 56px;
-      width: 56px;
-      border-radius: calc(56px / 2);
+      height: 48px;
+      width: 48px;
+      border-radius: calc(56px / 8);
     }
   }
 

@@ -4,7 +4,9 @@ import Button from 'components/base/Button';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import { Hidden } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -14,8 +16,6 @@ import {
 } from '../Create.style';
 import { SelectQuantityProps } from './SelectQuantity.props';
 import { QuantityFormContainer, StyledTextField } from './SelectQuantity.style';
-import MobileStickyBottomView from 'components/module/MobileStickyBottom';
-import { Hidden } from 'react-grid-system';
 
 const SelectQuantityView = (props: SelectQuantityProps) => {
   const {
@@ -111,7 +111,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               variant="primary"
             />
           </Hidden>
-          <MobileStickyBottomView withBackground>
+          <MobileFooter>
             <Button
               takeFullWidth
               onClick={() => handleSubmit()}
@@ -120,7 +120,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               text="Select This Quantity"
               variant="primary"
             />
-          </MobileStickyBottomView>
+          </MobileFooter>
         </QuantityFormContainer>
       </ContainerWithCategoryImagePreview>
     </>
