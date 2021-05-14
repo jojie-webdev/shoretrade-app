@@ -294,7 +294,7 @@ export const Content = styled.div<{
   ${(props) =>
     props.useOuterWrapper
       ? `
-  @media (min-width: 835px) {
+  @media ${BREAKPOINTS['homeDesktop']} {
     .container {
       max-width: 100% !important;
     }

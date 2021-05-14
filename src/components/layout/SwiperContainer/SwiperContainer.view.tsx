@@ -2,9 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { SwiperContainerProps } from 'components/layout/SwiperContainer/SwiperContainer.props';
 import {
-  Parent,
-  Container,
+  Parent as ParentNew,
+  Container as ContainerNew,
 } from 'components/layout/SwiperContainer/SwiperContainer.style';
+import {
+  Parent as ParentOld,
+  Container as ContainerOld,
+} from 'components/layout/SwiperContainer/SwiperContainer.style.old';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -33,6 +39,10 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     onResize,
     variant,
   } = props;
+  const isOld = useMediaQuery({ query: BREAKPOINTS['homeDesktop'] });
+  const Parent = isOld ? ParentOld : ParentNew;
+  const Container = isOld ? ContainerOld : ContainerNew;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
@@ -80,6 +90,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     <Parent
       ref={containerRef}
       height={height}
+      //@ts-ignore
       aspectRatio={aspectRatio}
       addMargin={addMargin}
       variant={variant}
