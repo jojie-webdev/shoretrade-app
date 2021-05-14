@@ -37,6 +37,13 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 
   const isIpadPro = useMediaQuery({ query: BREAKPOINTS['xl'] });
   const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
+  const customScreen = useMediaQuery({
+    query: `(min-width: 835px) and (max-width: 1200px) `,
+  });
+  const customScreenSmall = useMediaQuery({
+    query: `(min-width: 1240px) `,
+  });
+
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
   ) => {
@@ -63,7 +70,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     if (status === 'DECLINED')
       return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
   };
-
   return (
     <Container>
       {props.userPending && (
@@ -100,7 +106,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
               placeholder="Search order"
               rounded
             />
-            {!isIpad && (
+            {customScreenSmall && (
               <FilterButton onClick={props.onClickFilterButton}>
                 <Typography
                   variant="label"
@@ -117,7 +123,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           </>
         )}
       </SegmentedControlsV2>
-      {(isIpadPro || isIpad) && (
+      {(isIpadPro || isIpad || customScreen || !customScreenSmall) && (
         <div className="filter-ipad-container">
           <FilterButton onClick={props.onClickFilterButton}>
             <Typography
