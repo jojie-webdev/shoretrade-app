@@ -30,7 +30,7 @@ export const FilterRow = styled(Row)`
     }
 
     .btn {
-      margin-right: 12px;
+      margin-right: 8px;
       margin-bottom: 24px;
       padding:14px;
       @media ${BREAKPOINTS['sm']} {
@@ -83,7 +83,15 @@ export const SalesRow = styled(Row)`
       min-width: 170px;
     }
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    .figma-width {
+      width: 190px !important;
+      min-width: 190px;
+    }
+  }
+
+  @media ${BREAKPOINTS['xl']} {
     .figma-width {
       width: 200px !important;
       min-width: 200px;
@@ -121,6 +129,7 @@ export const SalesCard = styled.div`
     width: 170px !important;
     min-width: 170px;
     margin-right: 16px;
+    padding: 16px;
   }
 `;
 

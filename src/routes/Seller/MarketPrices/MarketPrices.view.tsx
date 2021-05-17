@@ -5,10 +5,7 @@ import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import TypographyView from 'components/base/Typography';
 import Search from 'components/module/Search';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import { is } from 'ramda';
-import { Row, Col } from 'react-grid-system';
-import { useMediaQuery } from 'react-responsive';
+import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { MarketPricesGeneratedProps } from './MarketPrices.props';
@@ -24,11 +21,10 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
     results,
     currentPath,
   } = props;
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
     <MarketContainer>
-      {isMobile && (
+      <Visible xs>
         <Row className="title-row">
           <Col xs={12}>
             <TypographyView variant="title5" color="noshade">
@@ -36,9 +32,9 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
             </TypographyView>
           </Col>
         </Row>
-      )}
+      </Visible>
       <Row className="search-row">
-        <Col xs={12}>
+        <Col xs={12} md={6}>
           <Search
             value={searchValue}
             onChange={onChangeSearchValue}

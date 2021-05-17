@@ -2,9 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { SwiperContainerProps } from 'components/layout/SwiperContainer/SwiperContainer.props';
 import {
-  Parent,
-  Container,
+  Parent as ParentNew,
+  Container as ContainerNew,
 } from 'components/layout/SwiperContainer/SwiperContainer.style';
+import {
+  Parent as ParentOld,
+  Container as ContainerOld,
+} from 'components/layout/SwiperContainer/SwiperContainer.style.old';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 
 const debounce = (fn: () => void, ms: number) => {
   let timer: NodeJS.Timeout | null;
@@ -33,6 +38,10 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     onResize,
     variant,
   } = props;
+  const isOld = useHomeOld();
+  const Parent = isOld ? ParentOld : ParentNew;
+  const Container = isOld ? ContainerOld : ContainerNew;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);

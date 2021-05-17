@@ -17,7 +17,7 @@ import SellerDetailsView from './SellerDetails.view';
 
 const SellerDetails = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const sellerIdParsed = id;
 
   const [searchValue, setSearchValue] = useState('');

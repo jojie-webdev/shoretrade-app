@@ -19,6 +19,7 @@ export const PreviewImage = styled.img`
   width: 66px;
   margin: 11px 17px;
   border-radius: 8px;
+  object-fit: cover;
 `;
 
 export const DeleteBadge = styled.button`

@@ -1,7 +1,5 @@
 import { SwiperOptions } from 'swiper';
-import { Swiper } from 'swiper/react';
-import styled from 'utils/styled';
-// D = Data, CP = Component Props
+
 export interface MultipleCarouselProps<D, CP> {
   id?: string;
   transform: (data: D) => CP;

@@ -1,7 +1,5 @@
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
-import { OrderItem } from '../Orders/Orders.props';
-
 export type CategoryResults = {
   id: string;
   name: string;
@@ -31,9 +29,6 @@ export interface HomeGeneratedProps {
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
   loadingHomePage: boolean;
-  pendingOrders: {
-    [index: string]: OrderItem[];
-  };
 }
 
 export interface HomeData {
