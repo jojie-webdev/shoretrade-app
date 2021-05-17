@@ -18,6 +18,7 @@ import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -43,6 +44,7 @@ import {
   MenuOverlay,
   CheckoutCount,
   SidebarLogoContainer,
+  HeaderWrapper,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -103,8 +105,10 @@ const Header = ({
     query: BREAKPOINTS.genericTablet,
   });
 
+  const isHomeOld = useHomeOld();
+
   return (
-    <HeaderContainer className="appbar">
+    <HeaderContainer className="appbar" isHomeOld={isHomeOld}>
       <div className="left-content">
         {onBack && isMenuVisible ? (
           <Touchable className="back-button-container" onPress={() => onBack()}>
@@ -221,6 +225,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     query: BREAKPOINTS.genericTablet,
   });
 
+  const isHomeOld = useHomeOld();
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
@@ -335,35 +341,67 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         background={background}
         screenBackground={screenBackground}
         color={color}
+        isHomeOld={isHomeOld}
       >
         <>
-          <Header
-            pageTitle={pageTitle}
-            userData={userData}
-            textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-            onClick={() => setOpenSidebar(!openSidebar)}
-            openSidebar={openSidebar}
-            onBack={onBack}
-            cartItems={cartItems}
-            onClickAccount={onClickAccount}
-          />
+          {isHomeOld ? (
+            <Container
+              className="container"
+              style={{
+                width: '100%',
+                height: '100%',
+                padding: 0,
+                marginLeft: 0,
+                marginRight: 0,
+              }}
+            >
+              <HeaderWrapper>
+                <Header
+                  pageTitle={pageTitle}
+                  userData={userData}
+                  textColor={
+                    headerTextColor || (isSeller ? 'noshade' : 'shade9')
+                  }
+                  onClick={() => setOpenSidebar(!openSidebar)}
+                  openSidebar={openSidebar}
+                  onBack={onBack}
+                  cartItems={cartItems}
+                  onClickAccount={onClickAccount}
+                />
+              </HeaderWrapper>
+              {children}
+            </Container>
+          ) : (
+            <>
+              <Header
+                pageTitle={pageTitle}
+                userData={userData}
+                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+                onClick={() => setOpenSidebar(!openSidebar)}
+                openSidebar={openSidebar}
+                onBack={onBack}
+                cartItems={cartItems}
+                onClickAccount={onClickAccount}
+              />
 
-          <div className="screen-wrapper">
-            <div className="screen">
-              <Container
-                className="container"
-                style={{
-                  padding: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  width: '100%',
-                  maxWidth: '100%',
-                }}
-              >
-                {children}
-              </Container>
-            </div>
-          </div>
+              <div className="screen-wrapper">
+                <div className="screen">
+                  <Container
+                    className="container"
+                    style={{
+                      padding: 0,
+                      marginLeft: 0,
+                      marginRight: 0,
+                      width: '100%',
+                      maxWidth: '100%',
+                    }}
+                  >
+                    {children}
+                  </Container>
+                </div>
+              </div>
+            </>
+          )}
         </>
       </Content>
     </DashboardContainer>

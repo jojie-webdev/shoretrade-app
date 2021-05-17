@@ -197,6 +197,7 @@ export const Content = styled.div<{
   background?: string;
   screenBackground?: string;
   color?: string;
+  isHomeOld?: boolean;
 }>`
   display: flex;
   flex: 1;
@@ -252,23 +253,6 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['genericTablet']} {
-    min-height: 100vh;
-
-    .screen-wrapper {
-      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
-
-      .screen {
-        width: calc(100% - 32px);
-        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
-      }
-    }
-
-    .container {
-      max-width: 100% !important;
-    }
-  }
-
   @media ${BREAKPOINTS['sm']} {
     min-height: 100vh;
 
@@ -289,7 +273,8 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['xl']} {
+  //generic tablet till xl
+  @media (min-width: 577px) and (max-width: 1200px) {
     min-height: 100vh;
 
     .screen-wrapper {
@@ -305,24 +290,33 @@ export const Content = styled.div<{
       max-width: 100% !important;
     }
   }
+
+  ${(props) =>
+    props.isHomeOld
+      ? `
+  .container {
+      max-width: 100% !important;
+    }
+  `
+      : ``}
 `;
 
-export const HeaderContainer = styled.nav`
+export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   display: flex;
   flex-direction: row;
+  margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '45px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) =>
+    props.isHomeOld
+      ? '100%'
+      : dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
     align-items: flex-start;
     flex: 1;
-
-    @media ${BREAKPOINTS['xl']} {
-      margin-left: -48px;
-    }
   }
 
   .title-container {
@@ -348,9 +342,7 @@ export const HeaderContainer = styled.nav`
   .right-content {
     display: flex;
     align-items: center;
-    @media ${BREAKPOINTS['xl']} {
-      margin-right: -56px;
-    }
+
     .cart-container {
       margin-right: 45px;
 
@@ -403,6 +395,14 @@ export const HeaderContainer = styled.nav`
   @media ${BREAKPOINTS['genericTablet']} {
     width: calc(100% - 32px);
   }
+
+  @media ${BREAKPOINTS['iPad']} {
+    width: calc(100% - 32px);
+  }
+
+  @media ${BREAKPOINTS['xl']} {
+    width: calc(100% - 32px);
+  }
 `;
 
 export const CreditBalanceContainer = styled.div`
@@ -445,4 +445,10 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
+`;
+
+export const HeaderWrapper = styled.div`
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  margin: auto;
+  position: relative;
 `;

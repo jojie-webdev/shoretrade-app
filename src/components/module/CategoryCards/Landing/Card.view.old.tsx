@@ -4,22 +4,24 @@ import Typography from 'components/base/Typography/Typography.view';
 import CategoryImageView from 'components/module/CategoryImage';
 
 import { CardProps } from './Card.props';
-import { CardContainer } from './Card.style';
+import { CardContainer } from './Card.style.old';
 
 const Card = (props: CardProps): JSX.Element => {
   return (
-    <CardContainer responsive={props.responsive}>
+    <CardContainer className="centered">
       <div className="card">
-        <CategoryImageView
-          id={props.id}
-          maxHeight={112}
-          containerHeight={112}
-          cBorderRadius={'8px 8px 0px 0px'}
-          customSVGSize={2}
-          circled={true}
-        />
+        <picture className="thumbnail">
+          <CategoryImageView
+            id={props.id}
+            maxHeight={112}
+            containerHeight={112}
+            cBorderRadius={'4px 4px 0px 0px'}
+            customSVGSize={2}
+            circled={true}
+          />
+        </picture>
         <div className="card-content">
-          <Typography variant="label" weight="bold">
+          <Typography variant="label" style={{ marginBottom: 4 }}>
             {props.label}
           </Typography>
         </div>
