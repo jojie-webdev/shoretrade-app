@@ -304,7 +304,7 @@ export const Content = styled.div<{
 export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   display: flex;
   flex-direction: row;
-  margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '40px')};
+  margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '45px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;

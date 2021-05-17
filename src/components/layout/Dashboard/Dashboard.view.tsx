@@ -347,7 +347,13 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           {isHomeOld ? (
             <Container
               className="container"
-              style={{ width: '100%', height: '100%' }}
+              style={{
+                width: '100%',
+                height: '100%',
+                padding: 0,
+                marginLeft: 0,
+                marginRight: 0,
+              }}
             >
               <HeaderWrapper>
                 <Header
