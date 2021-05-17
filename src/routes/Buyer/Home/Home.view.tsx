@@ -18,6 +18,7 @@ import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import HomeSellerCard from 'components/module/HomeSellerCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
+import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -177,11 +178,11 @@ const HomeView = (props: HomeGeneratedProps) => {
           content={`Account Pending. You cannot make purchases until approved.`}
           fullWidth
           alignText="center"
+          style={{ marginBottom: 24 }}
         />
       )}
-      <Wrapper>
-        <Credit creditState={creditState} loading={loading} />
-      </Wrapper>
+      <Credit creditState={creditState} loading={loading} />
+      <SearchAddress />
 
       {/* Main Content */}
       {loadingHomePage ? (
