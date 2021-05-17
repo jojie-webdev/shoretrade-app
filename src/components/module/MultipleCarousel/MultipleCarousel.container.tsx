@@ -5,8 +5,8 @@ import MultipleCarouselNew from 'components/module/MultipleCarousel/MultipleCaro
 import MultipleCarouselOld from 'components/module/MultipleCarousel/MultipleCarousel.view.old';
 import useHomeOld from 'utils/Hooks/useHomeOld';
 
-const MultipleCarousel = (
-  props: MultipleCarouselProps<any, any>
+const MultipleCarousel = <D extends { id: string }, CP>(
+  props: MultipleCarouselProps<D, CP>
 ): JSX.Element => {
   const isOld = useHomeOld();
 
