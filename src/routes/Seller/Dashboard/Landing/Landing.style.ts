@@ -30,7 +30,7 @@ export const FilterRow = styled(Row)`
     }
 
     .btn {
-      margin-right: 12px;
+      margin-right: 8px;
       margin-bottom: 24px;
       padding:14px;
       @media ${BREAKPOINTS['sm']} {
@@ -129,6 +129,7 @@ export const SalesCard = styled.div`
     width: 170px !important;
     min-width: 170px;
     margin-right: 16px;
+    padding: 16px;
   }
 `;
 
