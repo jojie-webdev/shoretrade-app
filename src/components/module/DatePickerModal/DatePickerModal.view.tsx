@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
+import { Close } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
@@ -10,7 +12,13 @@ import { useMediaQuery } from 'react-responsive';
 import theme from 'utils/Theme';
 
 import { DatePickerModalProps } from './DatePickerModal.props';
-import { Container, CalendarContainer } from './DatePickerModal.style';
+import {
+  Container,
+  CalendarContainer,
+  ExitButton,
+  LeftFilterContent,
+  TopMobileHeadercontainer,
+} from './DatePickerModal.style';
 
 const DatePickerModal = ({
   startDate,
@@ -21,22 +29,49 @@ const DatePickerModal = ({
   onClickApply,
   children,
   isDatePickerDashboard,
+  onReset,
+  onClickCloseMobile,
   ...modalProps
 }: DatePickerModalProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return isSmallScreen ? (
     <MobileModal
       {...modalProps}
       backgroundColor={`${isDatePickerDashboard && theme.grey.shade9}`}
     >
-      <Container isDatePickerDashboard={isDatePickerDashboard}>
+      <TopMobileHeadercontainer>
         <Typography className="calendar-title" variant="title5" color="noshade">
           Dates
         </Typography>
-        {children && isSmallScreen && (
-          <div className="filters"> {children}</div>
-        )}
 
+        <LeftFilterContent>
+          {/* <Touchable
+            onPress={() => {
+              onReset && onReset();
+            }}
+          >
+            <Typography
+              className="reset-text"
+              variant="overline"
+              color="primary"
+            >
+              Reset
+            </Typography>
+          </Touchable> */}
+
+          <ExitButton
+            onClick={(e) => {
+              onClickCloseMobile && onClickCloseMobile();
+              e.preventDefault();
+            }}
+          >
+            <Close />
+          </ExitButton>
+        </LeftFilterContent>
+      </TopMobileHeadercontainer>
+      {children && isSmallScreen && <div className="filters"> {children}</div>}
+      <Container isDatePickerDashboard={isDatePickerDashboard}>
         <CalendarContainer isDatePickerDashboard={isDatePickerDashboard}>
           <DayPickerRangeController
             horizontalMonthPadding={0}
