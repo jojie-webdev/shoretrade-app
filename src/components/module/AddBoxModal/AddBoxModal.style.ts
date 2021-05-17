@@ -56,7 +56,7 @@ export const ButtonContainer = styled.div`
     justify-content: center;
     height: 48px;
     position: absolute;
-    bottom: 5%;
+    bottom: 30%;
     left: 0;
   }
 `;
