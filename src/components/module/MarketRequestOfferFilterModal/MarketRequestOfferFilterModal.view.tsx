@@ -94,7 +94,6 @@ const FilterModal = (
     } else {
       props.onReset();
     }
-
     setSizeFrom('');
     setSizeTo('');
   };
@@ -185,7 +184,7 @@ const FilterModal = (
                   rightComponent={
                     <Row align="center" nogutter>
                       <Typography
-                        color="noshade"
+                        color="shade9"
                         variant="label"
                         style={{ marginRight: 16 }}
                       >
