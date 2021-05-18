@@ -345,8 +345,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         <span className="label">Sellers</span>
                       </div>
                     </div>
-                    <Row nogutter className="search-row" justify="between">
-                      <Col xl={4}>
+                    <Row nogutter className="search-row" align="center" justify="between">
+                      <Col sm={6} md={6} lg={6} xl={6}>
                         <Search
                           className="filter-search"
                           value={props.searchTerm}
@@ -358,7 +358,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                           rounded
                         />
                       </Col>
-
                       <FilterButton onClick={props.onClickFilterButton}>
                         <TypographyView
                           variant="label"

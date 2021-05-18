@@ -216,6 +216,21 @@ export const OffersContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  .search-row {
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .search-row {
+      height: 100px;
+    }
+  }
+
+  .filter-search {
+    margin-bottom: 0px;
+  }
+
   .numbers-container {
     margin-bottom: 2rem;
     display: flex;
@@ -241,6 +256,7 @@ export const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
 
