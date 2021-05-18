@@ -81,6 +81,7 @@ const MarketRequestDetail = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [initial, setInitial] = useState(true);
+  const [currentMR, setCurrentMR] = useState<any>();
 
   const [negotiating, setNegotiating] = useState(false);
   const [currentOfferId, setCurrentOfferId] = useState('');
@@ -176,6 +177,9 @@ const MarketRequestDetail = (): JSX.Element => {
 
   useEffect(() => {
     setInitial(false);
+    if (activeOffersData[0]?.marketRequest) {
+      setCurrentMR(activeOffersData[0].marketRequest);
+    }
   }, [activeOffers]);
 
   useEffect(() => {
@@ -323,7 +327,7 @@ const MarketRequestDetail = (): JSX.Element => {
     newOffer,
     selectedOffer,
     marketRequestId: id,
-    data: activeOffersData[0]?.marketRequest || {},
+    data: currentMR || {},
     measurementUnit: activeOffersData[0]?.offers[0].measurementUnit || '',
     sellerOffers: activeOffersData || [],
     searchTerm,
