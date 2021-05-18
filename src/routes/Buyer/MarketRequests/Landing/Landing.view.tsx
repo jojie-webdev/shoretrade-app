@@ -3,12 +3,15 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Filter, Crab } from 'components/base/SVG';
+import { Filter, Crab, TrashCan } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
+import LoadingView from 'components/module/Loading';
+import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
 import { Row, Col, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -99,10 +102,31 @@ const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
 ) => {
   const history = useHistory();
-  const { marketRequests, onClickItem } = props;
+  const {
+    marketRequests,
+    onClickItem,
+    onDelete,
+    itemToDelete,
+    setItemToDelete,
+    pendingDeleteMarketRequest,
+  } = props;
+
+  if (pendingDeleteMarketRequest) {
+    return <LoadingView />;
+  }
 
   return (
     <MarketRequestsContainer>
+      <ConfirmationModal
+        isOpen={itemToDelete.value !== null}
+        title="Delete Market Request"
+        description="Are you sure you want to delete this market request?"
+        action={() => {
+          onDelete && itemToDelete.value && onDelete(itemToDelete.value);
+        }}
+        actionText="DELETE"
+        onClickClose={() => setItemToDelete({ value: null })}
+      />
       <BoxContainer>
         <Row nogutter justify="around" align="center" className="header">
           <Col>
@@ -126,7 +150,7 @@ const MarketRequestsLandingView = (
           alignText="center"
           fullWidth
         />
-        {marketRequests.length > 0 ? (
+        {/* {marketRequests.length > 0 ? (
           marketRequests.map((mr) => (
             <MarketRequestItemInteraction
               key={mr.id}
@@ -142,6 +166,30 @@ const MarketRequestsLandingView = (
               }
             />
           ))
+        ) : (
+          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+        )} */}
+        {marketRequests.length > 0 ? (
+          <SwipeableInteractionsView
+            swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+            swipeActionLabel="Delete"
+            onSwipeTrigger={(id) => setItemToDelete({ value: id })}
+            data={marketRequests.map((mr) => {
+              return {
+                id: mr.id,
+                onClick: () => onClickItem(mr),
+                leftComponent: (
+                  <MarketRequestItem
+                    inDetail={false}
+                    image={mr.image}
+                    offers={mr.offers}
+                    expiry={mr.expiry}
+                    type={mr.type}
+                  />
+                ),
+              };
+            })}
+          />
         ) : (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}

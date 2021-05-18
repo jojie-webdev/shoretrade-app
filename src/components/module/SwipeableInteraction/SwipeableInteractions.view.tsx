@@ -1,40 +1,62 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import { SwipeableInteractionsProps } from './SwipeableInteractions.props';
-import { Container, SwipeableWrapper, SwipeableInteraction, SwipeableContainer, ActionsContainer } from './SwipeableInteraction.style';
-import { useSpring } from '@react-spring/core';
+import { useSprings } from '@react-spring/core';
 import { useDrag } from 'react-use-gesture';
 
-const SwipeableInteractions = (props: SwipeableInteractionsProps): JSX.Element => {
+import {
+  Container,
+  SwipeableWrapper,
+  SwipeableInteraction,
+  SwipeableContainer,
+  ActionsContainer,
+  TouchContainer,
+} from './SwipeableInteraction.style';
+import { SwipeableInteractionsProps } from './SwipeableInteractions.props';
+
+const fn = (active = false, x = 0, originalIndex = 0) => (index: number) =>
+  active && index === originalIndex
+    ? {
+        x: x,
+        scale: 1.1,
+        zIndex: '1',
+        immediate: (n: any) => n === 'x' || n === 'zIndex',
+      }
+    : { x: 0, scale: 1, zIndex: '0', immediate: false };
+
+const SwipeableInteractions = (
+  props: SwipeableInteractionsProps
+): JSX.Element => {
   // const theme = useTheme();
   const { data, swipeActionLabel, swipeActionIcon, onSwipeTrigger } = props;
+  const itemsRef = useRef(data.map((_, index) => index));
 
-  const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
+  const [springProps, set] = useSprings(data.length, fn());
 
   // Set the drag hook and define component movement based on gesture data
-  const bind = useDrag(({ down, movement: [mx] }) => {
-    api.start({ x: down && mx > 0 ? mx : 0 });
-    const trigger = !down && mx > 150;
+  const bind = useDrag(({ args: [id, index], active, movement: [x] }) => {
+    set.start(fn(active, x, index));
+    const trigger = !active && x > 150;
     if (trigger) {
-      console.log("triggered");
-      onSwipeTrigger();
+      onSwipeTrigger(id);
     }
   });
   return (
     <Container>
-      {data.map((item) => (
-        <SwipeableContainer>
-          <SwipeableWrapper { ...bind() } style={{ x }}>
-            <SwipeableInteraction {...item} />
-          </SwipeableWrapper>
-          <ActionsContainer>
+      {springProps.map(({ x, scale }, i) => (
+        <TouchContainer key={i}>
+          <SwipeableContainer>
+            <SwipeableWrapper {...bind(data[i].id, i)} style={{ x }}>
+              <SwipeableInteraction {...data[i]} />
+            </SwipeableWrapper>
+            <ActionsContainer>
               <div className="action">
                 {swipeActionIcon}
                 {swipeActionLabel}
               </div>
             </ActionsContainer>
-        </SwipeableContainer>
+          </SwipeableContainer>
+        </TouchContainer>
       ))}
     </Container>
   );
