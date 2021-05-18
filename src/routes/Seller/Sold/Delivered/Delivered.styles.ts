@@ -1,5 +1,6 @@
 import Interaction from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -42,7 +43,7 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: space-between;
       padding-right: 32px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
 
@@ -63,7 +64,7 @@ export const StyledInteraction = styled(Interaction)`
     .left-content-extended {
       width: 316px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
     }
@@ -75,7 +76,7 @@ export const StyledInteraction = styled(Interaction)`
       width: 210px;
       padding: 16px 0px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
 
@@ -157,7 +158,7 @@ export const ItemCard = styled.div`
     align-items: center;
     width: 300px;
 
-    @media (max-width: 375px) {
+    @media ${BREAKPOINTS['sm']} {
       width: 240px;
     }
 
@@ -169,6 +170,7 @@ export const ItemCard = styled.div`
 
     .tags-container {
       display: flex;
+      flex-wrap: wrap;
       margin: 2px 0;
     }
   }
@@ -180,7 +182,7 @@ export const ItemCard = styled.div`
     padding: 16px 0px;
     justify-content: space-evenly;
 
-    @media (max-width: 375px) {
+    @media ${BREAKPOINTS['sm']} {
       width: 240px;
     }
 
@@ -201,7 +203,7 @@ export const ItemCard = styled.div`
     padding: 16px 0px;
     flex-wrap: wrap;
 
-    @media (max-width: 375px) {
+    @media ${BREAKPOINTS['sm']} {
       width: 240px;
     }
 
