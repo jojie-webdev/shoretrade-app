@@ -13,7 +13,7 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
-import { Row, Col, Visible } from 'react-grid-system';
+import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -150,35 +150,13 @@ const MarketRequestsLandingView = (
           alignText="center"
           fullWidth
         />
-        {/* {marketRequests.length > 0 ? (
-          marketRequests.map((mr) => (
-            <MarketRequestItemInteraction
-              key={mr.id}
-              onClick={() => onClickItem(mr)}
-              leftComponent={
-                <MarketRequestItem
-                  inDetail={false}
-                  image={mr.image}
-                  offers={mr.offers}
-                  expiry={mr.expiry}
-                  type={mr.type}
-                />
-              }
-            />
-          ))
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )} */}
-        {marketRequests.length > 0 ? (
-          <SwipeableInteractionsView
-            swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-            swipeActionLabel="Delete"
-            onSwipeTrigger={(id) => setItemToDelete({ value: id })}
-            data={marketRequests.map((mr) => {
-              return {
-                id: mr.id,
-                onClick: () => onClickItem(mr),
-                leftComponent: (
+        <Hidden xs>
+          {marketRequests.length > 0 ? (
+            marketRequests.map((mr) => (
+              <MarketRequestItemInteraction
+                key={mr.id}
+                onClick={() => onClickItem(mr)}
+                leftComponent={
                   <MarketRequestItem
                     inDetail={false}
                     image={mr.image}
@@ -186,13 +164,42 @@ const MarketRequestsLandingView = (
                     expiry={mr.expiry}
                     type={mr.type}
                   />
-                ),
-              };
-            })}
-          />
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )}
+                }
+              />
+            ))
+          ) : (
+            <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+          )}
+        </Hidden>
+        <Visible xs>
+          {marketRequests.length > 0 ? (
+            <SwipeableInteractionsView
+              swipeActionIcon={
+                <TrashCan fill={'#FFF'} width={16} height={16} />
+              }
+              swipeActionLabel="Delete"
+              onSwipeTrigger={(id) => setItemToDelete({ value: id })}
+              data={marketRequests.map((mr) => {
+                return {
+                  id: mr.id,
+                  onClick: () => onClickItem(mr),
+                  leftComponent: (
+                    <MarketRequestItem
+                      inDetail={false}
+                      image={mr.image}
+                      offers={mr.offers}
+                      expiry={mr.expiry}
+                      type={mr.type}
+                    />
+                  ),
+                };
+              })}
+            />
+          ) : (
+            <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+          )}
+        </Visible>
+
         <MobileFooter>
           <Button
             onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
