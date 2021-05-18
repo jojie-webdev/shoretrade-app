@@ -5,14 +5,14 @@ import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
-import { ArrowLeft, ChevronRight } from 'components/base/SVG';
+import { ArrowLeft, ChevronRight, Close } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
-import { Row } from 'react-grid-system';
+import { Row, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -29,6 +29,7 @@ import {
   ClickableRow,
   Filter,
   ButtonContainer,
+  HeaderRight,
 } from './FilterModal.style';
 
 const FilterModal = (props: FilterModalProps): JSX.Element => {
@@ -45,6 +46,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     setSelectedCheckboxFilters,
     selectedSize,
     setSelectedSize,
+    onClickClose,
     ...modalProps
   } = props;
 
@@ -226,7 +228,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
   }, [sizeFrom, sizeTo]);
 
   return (
-    <ModalLayout {...modalProps}>
+    <ModalLayout {...modalProps} onClickClose={onClickClose}>
       <>
         <HeaderContainer>
           {selecting ? (
@@ -239,10 +241,21 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
           ) : (
             <Title variant="title5">Filters</Title>
           )}
-
-          <ClickableRow onClick={onReset} align="center" nogutter>
-            {!selecting && <Reset variant="overline">Reset</Reset>}
-          </ClickableRow>
+          <HeaderRight>
+            <ClickableRow onClick={onReset} align="center" nogutter>
+              {!selecting && <Reset variant="overline">Reset</Reset>}
+            </ClickableRow>
+            <Visible xs>
+              <ClickableRow onClick={onClickClose} align="center" nogutter>
+                <Button
+                  style={{ width: '32px', height: '32px' }}
+                  circular
+                  variant="white"
+                  icon={<Close />}
+                />
+              </ClickableRow>
+            </Visible>
+          </HeaderRight>
         </HeaderContainer>
 
         {selecting ? (

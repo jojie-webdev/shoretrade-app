@@ -197,6 +197,7 @@ export const Content = styled.div<{
   background?: string;
   screenBackground?: string;
   color?: string;
+  isHomeOld?: boolean;
 }>`
   display: flex;
   flex: 1;
@@ -252,7 +253,28 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['genericTablet']} {
+  @media ${BREAKPOINTS['sm']} {
+    min-height: 100vh;
+
+    .screen-wrapper {
+      height: 100%;
+      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
+      position: relative;
+      .screen {
+        height: 100%;
+        width: 100%;
+        padding: ${(props) =>
+          props.theme.appType === 'buyer' ? '0 8px' : '16px 24px'};
+
+        .container {
+          position: static !important; // needed to override react-grid-system .container
+        }
+      }
+    }
+  }
+
+  //generic tablet till xl
+  @media (min-width: 577px) and (max-width: 1200px) {
     min-height: 100vh;
 
     .screen-wrapper {
@@ -269,37 +291,27 @@ export const Content = styled.div<{
     }
   }
 
-  @media ${BREAKPOINTS['sm']} {
-    min-height: 100vh;
-
-    .screen-wrapper {
-      height: 100%;
-      overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
-      position: relative;
-      .screen {
-        height: 100%;
-        width: 100%;
-        padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '0 8px' : '16px'};
-
-        //TODO: remove on deletion of BoxContainer
-        margin: ${(props) => (props.theme.appType === 'seller' ? '0 0px' : 0)};
-
-        .container {
-          position: static !important; // needed to override react-grid-system .container
-        }
-      }
+  ${(props) =>
+    props.isHomeOld
+      ? `
+  .container {
+      max-width: 100% !important;
     }
-  }
+  `
+      : ``}
 `;
 
-export const HeaderContainer = styled.nav`
+export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   display: flex;
   flex-direction: row;
+  margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '45px')};
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) =>
+    props.isHomeOld
+      ? '100%'
+      : dashboardWidth(props.theme.appType === 'seller')};
 
   .left-content {
     display: flex;
@@ -367,9 +379,9 @@ export const HeaderContainer = styled.nav`
     }
 
     img {
-      height: 56px;
-      width: 56px;
-      border-radius: calc(56px / 2);
+      height: 48px;
+      width: 48px;
+      border-radius: calc(56px / 8);
     }
   }
 
@@ -381,6 +393,14 @@ export const HeaderContainer = styled.nav`
   }
 
   @media ${BREAKPOINTS['genericTablet']} {
+    width: calc(100% - 32px);
+  }
+
+  @media ${BREAKPOINTS['iPad']} {
+    width: calc(100% - 32px);
+  }
+
+  @media ${BREAKPOINTS['xl']} {
     width: calc(100% - 32px);
   }
 `;
@@ -425,4 +445,10 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
+`;
+
+export const HeaderWrapper = styled.div`
+  width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
+  margin: auto;
+  position: relative;
 `;

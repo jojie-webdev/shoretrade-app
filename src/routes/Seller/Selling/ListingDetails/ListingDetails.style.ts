@@ -12,7 +12,7 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
     width: 100%;
 
     .card-container {
-      @media ${BREAKPOINTS['ipadPro']} {
+      @media ${BREAKPOINTS['xl']} {
         padding-left: 0px !important;
         margin-top: 23px !important;
       }
@@ -192,7 +192,7 @@ export const TopContainer = styled.div`
   border-radius: 8px;
   width: 100%;
 
-  @media ${BREAKPOINTS['ipadPro']} {
+  @media ${BREAKPOINTS['xl']} {
     padding: 12px;
   }
 
@@ -207,7 +207,7 @@ export const TopContainer = styled.div`
     width: 100%;
     justify-content: space-between;
 
-    @media ${BREAKPOINTS['ipadPro']} {
+    @media ${BREAKPOINTS['xl']} {
       margin-left: 0px;
     }
 

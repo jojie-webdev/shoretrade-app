@@ -1,39 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
-import {
-  getBuyerOrdersActions,
-  getBuyerOrdersPlacedActions,
-} from 'store/actions';
+import { getPaymentModeActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
-import { GetBuyerOrdersToShipPending } from 'store/selectors/buyer/';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import useHomeOld from 'utils/Hooks/useHomeOld';
 
-import { transformOrder, groupByDate } from '../Orders/Orders.transform';
 import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
 import HomeView from './Home.view';
+import HomeViewOld from './Home.view.old';
 
 const Home = (): JSX.Element => {
   const dispatch = useDispatch();
+  const isOld = useHomeOld();
+
   // MARK:- Store
   const buyerHomePageData = useSelector(
     (state: Store) => state.getBuyerHomepage
   );
-
-  const getOrdersPlaced = (filter?: {
-    page: string;
-    term: string;
-    dateFrom: moment.Moment | null;
-    dateTo: moment.Moment | null;
-    limit: number;
-  }) => {
-    dispatch(getBuyerOrdersPlacedActions.request(filter));
-  };
-
-  const pendingOrders = GetBuyerOrdersToShipPending().map(transformOrder);
 
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
@@ -57,7 +42,7 @@ const Home = (): JSX.Element => {
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const company = GetDefaultCompany();
   const featured: string[] = bannerData?.web || [];
-  const loadingHomePage = buyerHomePageData.pending === null ? true : false;
+  const loadingHomePage = buyerHomePageData.pending === null;
 
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
@@ -89,13 +74,7 @@ const Home = (): JSX.Element => {
   }, [company]);
 
   useEffect(() => {
-    getOrdersPlaced({
-      limit: 10,
-      page: '1',
-      term: '',
-      dateFrom: null,
-      dateTo: null,
-    });
+    dispatch(getPaymentModeActions.request({}));
   }, []);
 
   // MARK:- Bottom Variables
@@ -116,10 +95,13 @@ const Home = (): JSX.Element => {
     favouriteSellers,
     sellers,
     loadingHomePage,
-    pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
   };
 
-  return <HomeView {...generatedProps} />;
+  return isOld ? (
+    <HomeViewOld {...generatedProps} />
+  ) : (
+    <HomeView {...generatedProps} />
+  );
 };
 
 export default Home;

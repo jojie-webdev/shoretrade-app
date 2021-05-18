@@ -49,6 +49,7 @@ import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getPaymentMethods from './getPaymentMethods';
+import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
@@ -176,6 +177,7 @@ export default (routeHistory: History) =>
         updateUser,
         uploadBulk,
         verify,
+        getPaymentMode,
       }).sort()
     )
   );

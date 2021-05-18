@@ -41,7 +41,7 @@ import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
   HOME: {
-    path: '/buyer/home',
+    path: BUYER_ROUTES.HOME,
     children: <Home />,
     title: 'Home',
     icon: HomeIcon,

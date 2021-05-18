@@ -834,7 +834,10 @@ const StepForm = ({
                           <Button
                             text="Download Application Form"
                             variant="outline"
-                            onClick={() => handleDownloadApplicationForm()}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDownloadApplicationForm();
+                            }}
                             icon={
                               <DownloadIcon
                                 fill={theme.brand.primary}

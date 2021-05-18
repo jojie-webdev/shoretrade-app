@@ -42,6 +42,21 @@ const ROUTES: Routes = {
     icon: DashboardSVG,
     nested: true,
   },
+  SELLING: {
+    path: SELLER_ROUTES.SELLING,
+    title: 'Selling',
+    children: <Selling />,
+    icon: Cart,
+    nested: true,
+  },
+  // Add Product
+  ADD_PRODUCT: {
+    path: SELLER_ROUTES.ADD_PRODUCT,
+    title: 'Add a Product',
+    children: <AddProduct />,
+    icon: AddBorder,
+    nested: true,
+  },
   // Market Prices
   MARKET_PRICES: {
     path: SELLER_ROUTES.MARKET_PRICES,
@@ -49,33 +64,12 @@ const ROUTES: Routes = {
     children: <MarketPrices />,
     icon: FileCheck,
   },
-  MARKET_PRICE_DETAIL: {
-    path: SELLER_ROUTES.MARKET_PRICE_DETAIL(),
-    title: '',
-    children: <MarketPriceDetail />,
-    hideFromSidebar: true,
-  },
   //Market Board
   MARKET_BOARD: {
     path: SELLER_ROUTES.MARKET_BOARD,
-    title: 'Buyer Requests',
+    title: 'Market Board',
     children: <MarketBoardRoutes />,
     icon: Bolt,
-    nested: true,
-  },
-  // Add Product
-  ADD_PRODUCT: {
-    path: SELLER_ROUTES.ADD_PRODUCT,
-    title: 'Add Listing',
-    children: <AddProduct />,
-    icon: AddBorder,
-    nested: true,
-  },
-  SELLING: {
-    path: SELLER_ROUTES.SELLING,
-    title: 'Selling',
-    children: <Selling />,
-    icon: Cart,
     nested: true,
   },
   SOLD: {
@@ -91,6 +85,12 @@ const ROUTES: Routes = {
     children: <SellerAccountRoutes />,
     icon: AccountSVG,
     nested: true,
+  },
+  MARKET_PRICE_DETAIL: {
+    path: SELLER_ROUTES.MARKET_PRICE_DETAIL(),
+    title: '',
+    children: <MarketPriceDetail />,
+    hideFromSidebar: true,
   },
 };
 

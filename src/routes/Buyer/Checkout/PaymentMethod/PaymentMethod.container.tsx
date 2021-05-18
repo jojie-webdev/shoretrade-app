@@ -13,6 +13,7 @@ import { OrderCartItem } from 'types/store/AddCardAndPayState';
 import { CartItem } from 'types/store/CartState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
+import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
 import PaymentMethodView from './PaymentMethod.view';
 
@@ -20,7 +21,9 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
-
+  const paymentModes = useSelector(
+    (state: Store) => state.getPaymentMode.data?.data.payment_mode
+  );
   const [selectedCard, setSelectedCard] = useState('');
 
   const user =
@@ -31,7 +34,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
 
   const cards =
     useSelector(
-      (state: Store) => state.getPaymentMethods.data?.data.data.cards
+      (state: Store) => state.getPaymentMethods.data?.data.data?.cards
     ) || [];
 
   const pendingAddCard =
@@ -62,7 +65,11 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   }));
 
   const onAddCard = (values: CardDetails) => {
-    if (!pendingAddCard && currentAddress) {
+    if (
+      !pendingAddCard &&
+      currentAddress &&
+      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
+    ) {
       const groupCartItemByCompany = groupBy(
         (item: CartItem) => item.companyId
       );
@@ -95,13 +102,18 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
           },
           companyId: companyId,
           default: values.isDefault,
+          paymentMode: 'CREDIT_CARD',
         })
       );
     }
   };
 
   const onExistingCard = () => {
-    if (!pendingAddCard && currentAddress) {
+    if (
+      !pendingAddCard &&
+      currentAddress &&
+      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
+    ) {
       const groupCartItemByCompany = groupBy(
         (item: CartItem) => item.companyId
       );
@@ -127,6 +139,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
           email: user,
           existingCard: selectedCard,
           companyId: companyId,
+          paymentMode: 'CREDIT_CARD',
         })
       );
     }

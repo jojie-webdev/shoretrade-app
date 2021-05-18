@@ -40,6 +40,8 @@ import {
   NotificationsContainer,
   SalesRow,
   MobileFilterButton,
+  MobileFilterRow,
+  MobileFilterContainer,
 } from './Landing.style';
 
 const MarketNotification = (props: { type: string; onPress: () => void }) => {
@@ -210,59 +212,56 @@ const MobileFilterHeader = ({
   };
 
   return (
-    <FilterRow>
-      <Col className="filter-col modal-col">
+    <MobileFilterRow nowrap style={{ marginLeft: 0, marginRight: 0 }}>
+      <MobileFilterButton
+        text={getYearText(getFiscalYear())}
+        variant={
+          getValidDateRangeByFinancialYear().start.id === dateRange.start.id
+            ? 'primary'
+            : 'unselected'
+        }
+        size="sm"
+        className="btn"
+        onClick={() => {
+          setDateRange(getValidDateRangeByFinancialYear());
+          toggleModal();
+        }}
+      />
+      {[4, 3, 2, 1].map((v) => (
         <MobileFilterButton
-          text={getYearText(getFiscalYear())}
+          key={v}
+          text={`Q${v}`}
           variant={
-            getValidDateRangeByFinancialYear().start.id === dateRange.start.id
+            getFiscalQuarter(v).start.id === dateRange.start.id
+              ? 'primary'
+              : 'unselected'
+          }
+          size="sm"
+          onClick={() => {
+            setDateRange(getFiscalQuarter(v));
+            toggleModal();
+          }}
+          className="btn"
+        />
+      ))}
+      {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
+        <MobileFilterButton
+          key={v}
+          text={getYearText(v)}
+          variant={
+            getValidDateRangeByFinancialYear(v).start.id === dateRange.start.id
               ? 'primary'
               : 'unselected'
           }
           size="sm"
           className="btn"
           onClick={() => {
-            setDateRange(getValidDateRangeByFinancialYear());
+            setDateRange(getValidDateRangeByFinancialYear(v));
             toggleModal();
           }}
         />
-        {[4, 3, 2, 1].map((v) => (
-          <MobileFilterButton
-            key={v}
-            text={`Q${v}`}
-            variant={
-              getFiscalQuarter(v).start.id === dateRange.start.id
-                ? 'primary'
-                : 'unselected'
-            }
-            size="sm"
-            onClick={() => {
-              setDateRange(getFiscalQuarter(v));
-              toggleModal();
-            }}
-            className="btn"
-          />
-        ))}
-        {[getFiscalYear() - 1, getFiscalYear() - 2].map((v) => (
-          <MobileFilterButton
-            key={v}
-            text={getYearText(v)}
-            variant={
-              getValidDateRangeByFinancialYear(v).start.id ===
-              dateRange.start.id
-                ? 'primary'
-                : 'unselected'
-            }
-            size="sm"
-            className="btn"
-            onClick={() => {
-              setDateRange(getValidDateRangeByFinancialYear(v));
-              toggleModal();
-            }}
-          />
-        ))}
-      </Col>
-    </FilterRow>
+      ))}
+    </MobileFilterRow>
   );
 };
 
@@ -473,6 +472,12 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   const onFocusChange = (arg: any) => {
     setFocus(!arg ? 'startDate' : arg);
   };
+
+  const onReset = () => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
+
   return (
     <Container>
       {isLoading ? (
@@ -530,9 +535,15 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
                 props.onApplyCustom({ start: startDate, end: endDate })
               }
               onClickClose={toggleModal}
+              onClickCloseMobile={toggleModal}
+              onReset={onReset}
               isDatePickerDashboard
             >
-              {isSmallScreen && <MobileFilterHeader {...props} />}
+              {isSmallScreen && (
+                <MobileFilterContainer>
+                  <MobileFilterHeader {...props} />
+                </MobileFilterContainer>
+              )}
             </DatePickerModal>
           )}
         </>

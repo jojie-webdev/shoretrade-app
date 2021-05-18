@@ -1,1 +1,1 @@
-export { default } from 'components/module/Carousel/Carousel.view';
+export { default } from './Carousel.container';

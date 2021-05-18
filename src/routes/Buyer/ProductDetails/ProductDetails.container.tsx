@@ -27,7 +27,10 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import ProductDetailsView from './ProductDetails.view';
 
 const ProductDetails = (): JSX.Element => {
-  // MARK:- States / Variables
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+  const { id } = useParams<any>();
 
   const addressesData = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -36,10 +39,6 @@ const ProductDetails = (): JSX.Element => {
     addressesData !== undefined &&
     !(addressesData || []).some((a) => a.approved === 'APPROVED');
 
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { id } = useParams();
-  const history = useHistory();
   const listingId = id;
   const addresses = GetAddressOptions();
   const previousId =

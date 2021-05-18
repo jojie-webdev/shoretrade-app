@@ -2,6 +2,8 @@ import React from 'react';
 
 import Badge from 'components/base/Badge';
 import TypographyView from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
@@ -18,10 +20,10 @@ const CategoryImagePreview = (
   const theme = useTheme();
   const { imgSrc, categoryName, caption, marketBoard } = props;
   const isBuyer = theme.appType === 'buyer';
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container img={imgSrc ? parseImageUrl(imgSrc) : undefined}>
-      {marketBoard && (
+      {marketBoard && !isMobile && (
         <MarketBoardBadge>
           <Badge badgeColor={theme.grey.shade3}>
             <TypographyView variant="overline">{categoryName}</TypographyView>

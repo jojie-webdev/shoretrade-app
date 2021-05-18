@@ -3,8 +3,9 @@ import React from 'react';
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
+import TypographyView from 'components/base/Typography';
 import Search from 'components/module/Search';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
 import { MarketPricesGeneratedProps } from './MarketPrices.props';
@@ -23,8 +24,17 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
 
   return (
     <MarketContainer>
+      <Visible xs>
+        <Row className="title-row">
+          <Col xs={12}>
+            <TypographyView variant="title5" color="noshade">
+              Market Prices
+            </TypographyView>
+          </Col>
+        </Row>
+      </Visible>
       <Row className="search-row">
-        <Col xs={12}>
+        <Col xs={12} md={6}>
           <Search
             value={searchValue}
             onChange={onChangeSearchValue}

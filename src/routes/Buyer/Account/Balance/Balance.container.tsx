@@ -27,12 +27,12 @@ const Balance = (): JSX.Element => {
 
   const defaultCardId =
     useSelector(
-      (state: Store) => state.getPaymentMethods.data?.data.data.defaultCard
+      (state: Store) => state.getPaymentMethods.data?.data.data?.defaultCard
     ) || '';
 
   const cards = (
     useSelector(
-      (state: Store) => state.getPaymentMethods.data?.data.data.cards
+      (state: Store) => state.getPaymentMethods.data?.data.data?.cards
     ) || []
   ).map((card) => ({
     ...card,

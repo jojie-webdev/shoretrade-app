@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Crab } from 'components/base/SVG';
+import { Cart, Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
-import EmptyState from 'components/module/EmptyState/EmptyState.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
+import { BottomRow } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.style';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
-import { Container, Footer } from './Checkout.style';
+import {
+  Container,
+  EmptyContainer,
+  CheckoutCardRow,
+  ShippingRow,
+  SVGContainer,
+  Footer,
+} from './Checkout.style';
 
 const Orders = (props: CheckoutGeneratedProps) => {
   const {
@@ -40,7 +50,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
     <div className="accordion-container" key={`orders-${i}`}>
       <Accordion title={item.listings[0].vendor} withBackground isOpen>
         <div className="accordion-content-container">
-          <Row>
+          <CheckoutCardRow nogutter>
             <Col
               style={{
                 marginTop: i !== 0 ? 32 : 0,
@@ -54,9 +64,9 @@ const Orders = (props: CheckoutGeneratedProps) => {
                 />
               ))}
             </Col>
-          </Row>
+          </CheckoutCardRow>
 
-          <Row>
+          <ShippingRow nogutter>
             <Col>
               <Typography
                 className="checkout-shipping"
@@ -80,7 +90,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
                 }
               />
             </Col>
-          </Row>
+          </ShippingRow>
         </div>
       </Accordion>
     </div>
@@ -90,7 +100,9 @@ const Orders = (props: CheckoutGeneratedProps) => {
 const CheckoutView = (props: CheckoutGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const {
+    balance,
     groupedOrders,
     totalValue,
     keepShopping,
@@ -127,57 +139,149 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   }
 
   return (
-    <Container>
-      {loadingShippingQuotes ? (
-        <div className="center">
+    <BoxContainer>
+      <Container>
+        {loadingShippingQuotes ? (
           <Loading label="Loading Shipping Quotes" color="shade6" />
-        </div>
-      ) : (
-        <>
-          {isEmpty(groupedOrders) ? (
-            <Row className="row" align="center" justify="center">
-              <Col>
-                <EmptyState
-                  title="No orders yet"
-                  buttonText="Start an order"
-                  Svg={Crab}
-                  onButtonClicked={() => history.push(BUYER_ROUTES.SEARCH)}
-                />
-              </Col>
-            </Row>
-          ) : (
-            //  @ts-ignore
-            <Orders {...props} />
-          )}
-        </>
-      )}
+        ) : (
+          <>
+            {isEmpty(groupedOrders) ? (
+              <EmptyContainer>
+                <Row nogutter className="row">
+                  <Typography variant="title4">No orders yet</Typography>
+                </Row>
+                <Row nogutter className="row">
+                  <Col className="svg-col-spacer" />
+                  <Col>
+                    <SVGContainer>
+                      <Crab height={268} width={268} fill={theme.grey.shade7} />
+                    </SVGContainer>
+                  </Col>
+                </Row>
+                <Row nogutter className="row">
+                  <Button
+                    text="Start an order"
+                    onClick={() => history.push(BUYER_ROUTES.SEARCH)}
+                  />
+                </Row>
+              </EmptyContainer>
+            ) : (
+              <>
+                {/*
+                  //  @ts-ignore*/}
+                <Orders {...props} />
 
-      {!isEmpty(groupedOrders) && !loadingShippingQuotes && (
-        <Footer>
-          <Typography color="shade6">Total</Typography>
-          <Typography variant="title5" color="shade8" weight="900">
-            ${total}
-          </Typography>
-          <div className="footer-separator">
-            <div className="keep-shopping-wrapper">
-              <Button
-                text="Keep Shopping"
-                variant="outline"
-                onClick={keepShopping}
-              />
-            </div>
+                {!isMobile ? (
+                  <BottomRow>
+                    <div className="btns-container">
+                      <Button
+                        text="Keep Shopping"
+                        onClick={keepShopping}
+                        style={{ marginRight: 8 }}
+                        variant="outline"
+                      />
 
-            <Button
-              text="Place Order"
-              disabled={disablePlaceOrder}
-              onClick={() => {
-                setShowPaymentMethod(true);
-              }}
-            />
-          </div>
-        </Footer>
-      )}
-    </Container>
+                      <Button
+                        text="Place Order"
+                        disabled={disablePlaceOrder}
+                        onClick={() => {
+                          setShowPaymentMethod(true);
+                        }}
+                      />
+                    </div>
+
+                    <div className="balances">
+                      <div>
+                        <Typography variant="overline" color="shade6">
+                          CREDIT BALANCE
+                        </Typography>
+                        <Typography
+                          variant="title6"
+                          weight="bold"
+                          align="right"
+                          color="shade6"
+                        >
+                          {toPrice(balance)}
+                        </Typography>
+                      </div>
+
+                      <div className="total-value">
+                        <Typography variant="overline" color="shade6">
+                          TOTAL VALUE
+                        </Typography>
+                        <Typography
+                          variant="title6"
+                          weight="bold"
+                          align="right"
+                          color="shade9"
+                        >
+                          {total}
+                        </Typography>
+                      </div>
+
+                      <Cart fill={theme.grey.shade4} />
+                    </div>
+                  </BottomRow>
+                ) : (
+                  <Footer>
+                    <div className="balances">
+                      <div>
+                        <Typography
+                          variant="caption"
+                          color="shade6"
+                          weight="400"
+                        >
+                          Credit Balance
+                        </Typography>
+                        <Typography color="shade6" weight="400">
+                          {toPrice(balance)}
+                        </Typography>
+                      </div>
+
+                      <div className="total-value">
+                        <Typography
+                          variant="caption"
+                          color="shade6"
+                          weight="400"
+                          align="right"
+                        >
+                          Total
+                        </Typography>
+                        <Typography
+                          variant="body"
+                          weight="bold"
+                          align="right"
+                          color="shade9"
+                        >
+                          {total}
+                        </Typography>
+                      </div>
+                    </div>
+
+                    <div className="btns-container">
+                      <Button
+                        text="Keep Shopping"
+                        onClick={keepShopping}
+                        variant="outline"
+                        style={{ marginRight: 16 }}
+                      />
+
+                      <Button
+                        text="Place Order"
+                        disabled={disablePlaceOrder}
+                        onClick={() => {
+                          setShowPaymentMethod(true);
+                        }}
+                      />
+                    </div>
+                  </Footer>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </Container>
+    </BoxContainer>
   );
 };
 

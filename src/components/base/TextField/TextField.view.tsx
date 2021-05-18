@@ -69,7 +69,9 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         readOnly={props.readOnly}
       >
         {LeftComponent && (
-          <LeftComponentContainer>{LeftComponent}</LeftComponentContainer>
+          <LeftComponentContainer disabled={disabled}>
+            {LeftComponent}
+          </LeftComponentContainer>
         )}
         {!readOnly && (prefix || '').length > 0 && <Prefix>{prefix}</Prefix>}
         <Field

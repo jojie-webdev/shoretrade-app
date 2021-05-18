@@ -30,9 +30,9 @@ export const FilterRow = styled(Row)`
     }
 
     .btn {
-      margin-right: 12px;
+      margin-right: 8px;
       margin-bottom: 24px;
-      padding:14px;
+      padding: 14px;
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }
@@ -54,9 +54,40 @@ export const FilterRow = styled(Row)`
   }
 `;
 
+export const MobileFilterContainer = styled.div`
+  overflow: auto;
+`;
+
+export const MobileFilterRow = styled(Row)`
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 68px;
+  }
+
+  .btn {
+    margin-right: 12px;
+    margin-bottom: 24px;
+    padding: 14px;
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 8px;
+    }
+  }
+
+  .btn-abso {
+    @media ${BREAKPOINTS['sm']} {
+      position: absolute;
+      right: 0;
+      margin-right: 16px;
+    }
+  }
+  .modal-col {
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0px;
+    }
+  }
+`;
+
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) =>
-    props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`
@@ -83,7 +114,15 @@ export const SalesRow = styled(Row)`
       min-width: 170px;
     }
   }
-  @media ${BREAKPOINTS['ipadPro']} {
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    .figma-width {
+      width: 190px !important;
+      min-width: 190px;
+    }
+  }
+
+  @media ${BREAKPOINTS['xl']} {
     .figma-width {
       width: 200px !important;
       min-width: 200px;
@@ -121,6 +160,7 @@ export const SalesCard = styled.div`
     width: 170px !important;
     min-width: 170px;
     margin-right: 16px;
+    padding: 16px;
   }
 `;
 

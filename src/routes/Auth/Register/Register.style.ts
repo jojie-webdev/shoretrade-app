@@ -345,8 +345,7 @@ const footerStyle = ({ theme }) => `
   z-index: 999;
   position: fixed;
   bottom: 0;
-
-  margin-left: -24px;
+  left: 0;
 `;
 
 export const ButtonContainer = styled.div`

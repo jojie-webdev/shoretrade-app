@@ -5,6 +5,7 @@ export type ChargeCardMeta = {
   card: string;
   amount: string;
   currency: 'aud';
+  paymentMode: string;
 };
 
 export type ChargeCardPayload = GenericResponse;

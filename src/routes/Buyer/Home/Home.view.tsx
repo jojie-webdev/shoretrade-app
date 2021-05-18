@@ -16,9 +16,9 @@ import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import HomeSellerCard from 'components/module/HomeSellerCard';
-import ListCard from 'components/module/ListCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
+import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -27,7 +27,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { sizeToString } from 'utils/Listing';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -63,8 +63,6 @@ import {
   favouritesToPreviewProps,
   recentlyAddedToPreviewProps,
 } from './Home.transform';
-
-import { sizeToString } from 'utils/Listing';
 
 const Credit = (props: { creditState: CreditState; loading: boolean }) => {
   const { creditState } = props;
@@ -116,7 +114,6 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
     isPendingAccount,
-    pendingOrders,
   } = props;
 
   const theme = useTheme();
@@ -131,45 +128,6 @@ const HomeView = (props: HomeGeneratedProps) => {
   const mediumArrowWidth = useMediaQuery({
     query: BREAKPOINTS['md'],
   });
-
-  // const listItems = () => {
-  //   return sort(sortByDate, Object.keys(pendingOrders))
-  //     .slice(0, 3)
-  //     .map((key) => (
-  //       <StyledInteractions
-  //         flat
-  //         onClick={() => {
-  //           history.push(`${BUYER_ROUTES.ORDERS}?tab=Pending`);
-  //         }}
-  //         key={key}
-  //         padding="24px"
-  //         keepIcon
-  //         type="next"
-  //         leftComponent={
-  //           <InteractionTitleContainer>
-  //             <Typography variant="caption" color="shade7" className="title">
-  //               Estimated{' '}
-  //               {pendingOrders[key][0].isAquafuture ? 'Catchment' : 'Delivery'}:
-  //             </Typography>
-  //             <Typography variant="caption" className="value" color="shade9">
-  //               {key}
-  //             </Typography>
-  //           </InteractionTitleContainer>
-  //         }
-  //         rightComponent={
-  //           <InteractionTitleContainer>
-  //             <Typography className="title" color="shade7" variant="caption">
-  //               {pendingOrders[key].length}{' '}
-  //               {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
-  //             </Typography>
-  //             <Typography className="value" color="shade9" variant="caption">
-  //               {pendingOrders[key][0].price}
-  //             </Typography>
-  //           </InteractionTitleContainer>
-  //         }
-  //       />
-  //     ));
-  // };
 
   const FavouriteProductInteractionContent = (
     props: GetBuyerHomepageResponseListingItem
@@ -204,11 +162,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           </StatusContainer>
           <div className="size">
             <Typography variant="small">
-              {sizeToString(
-                props.size.unit,
-                props.size.from,
-                props.size.to
-              )}
+              {sizeToString(props.size.unit, props.size.from, props.size.to)}
             </Typography>
           </div>
         </ResultContainer>
@@ -218,41 +172,23 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <BoxContainer>
-      {/* TODO: update appbar instead to show welcome */}
-      {/* <Typography style={{ paddingBottom: '32px' }} variant="title4">
-        Welcome {}
-      </Typography> */}
-      {!isPendingAccount && (
+      {isPendingAccount && (
         <Alert
           variant="alert"
           content={`Account Pending. You cannot make purchases until approved.`}
           fullWidth
           alignText="center"
+          style={{ marginBottom: 24 }}
         />
       )}
-      <Wrapper>
-        <Credit creditState={creditState} loading={loading} />
-      </Wrapper>
+      <Credit creditState={creditState} loading={loading} />
+      <SearchAddress />
 
       {/* Main Content */}
       {loadingHomePage ? (
         <Loading />
       ) : (
         <>
-          {/* TODO Update getHomeBuyerHomepage ? or  */}
-          {/* use other action/service? PENDING */}
-          {/* <Wrapper>
-            <ViewCol style={{ paddingTop: '48px' }}>
-
-              <ListCard
-                icon={<FileBookMarkAlt />}
-                totalCount={Object.keys(pendingOrders).length}
-                data={pendingOrders}
-                listItems={listItems()}
-                title="Pending Offers"
-              />
-            </ViewCol>
-          </Wrapper> */}
           <Wrapper>
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>

@@ -87,6 +87,7 @@ export const BUYER_ROUTES = {
   VERIFY2FA: `${BUYER_ROOT}/verify2fa`,
   ONBOARDING: `${BUYER_ROOT}/onboarding`,
   //Authenticated Routes
+  HOME: `${BUYER_ROOT}/home`,
   CATEGORIES: `${BUYER_ROOT}/categories`,
   CHECKOUT: `${BUYER_ROOT}/checkout`,
   SEARCH: `${BUYER_ROOT}/search`,

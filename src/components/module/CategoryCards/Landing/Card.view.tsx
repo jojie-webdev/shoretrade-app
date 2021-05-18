@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImageView from 'components/module/CategoryImage';
 

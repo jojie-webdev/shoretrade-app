@@ -4,17 +4,20 @@ export const formatOrderReferenceNumber = (n: number) => {
 };
 
 export const parseOrderReferenceNumber = (value: string) => {
-  // check first if valid referenceNumber other wise return
-
-  if (value.match(/^\d+$/)) {
-    let out = '';
-    value = value.replace(/\d+$/, (num) => {
-      out = `${+num}`;
-      return out;
-    });
-
-    return out;
-  } else {
+  // check for letters
+  const letterExists = /[a-zA-Z]/g;
+  if (letterExists.test(value)) {
     return value;
   }
+
+  // check if in reference number format
+  if ((value.includes('#') && value.includes('-')) || value.includes('-')) {
+    return Number(value.replace('#', '').replace('-', '')).toFixed(0);
+  }
+
+  if (!Number.isNaN(Number(value))) {
+    return Number(value).toFixed(0);
+  }
+
+  return value;
 };

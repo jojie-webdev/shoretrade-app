@@ -1,6 +1,6 @@
 import TextField from 'components/base/TextField';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-
 export const StyledTextField = styled(TextField)`
   flex: 1;
 `;
@@ -15,6 +15,17 @@ export const Inputs = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+
+  @media ${BREAKPOINTS['sm']} {
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 24px;
+    width: 90%;
+    .negotiate-btn {
+      width: 100%;
+      margin: 0 24px;
+    }
+  }
 `;
 
 export const CheckBoxContainer = styled.div`
@@ -47,4 +58,20 @@ export const ComputationContainer = styled.div`
       }
     }
   }
+`;
+export const TopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const CloseBadge = styled.button`
+  height: 32px;
+  width: 32px;
+  background: ${(props) => props.theme.grey.noshade};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
 `;

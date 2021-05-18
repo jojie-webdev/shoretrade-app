@@ -156,6 +156,7 @@ import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
+import { GetPaymentModeMeta, GetPaymentModePayload } from './GetPaymentMode';
 import { GetSellerByIdMeta, GetSellerByIdPayload } from './GetSellerByIdState';
 import {
   GetSellerOrdersMeta,
@@ -215,7 +216,6 @@ import {
 import { UpdateListingMeta, UpdateListingPayload } from './UpdateListingState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
-
 export interface Store {
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
@@ -399,6 +399,7 @@ export interface Store {
     ReadMarketNotificationMeta,
     ReadMarketNotificationPayload
   >;
+  getPaymentMode: AsyncState<GetPaymentModeMeta, GetPaymentModePayload>;
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
   notify: NotifyState;
   modifyBulkUpload: {

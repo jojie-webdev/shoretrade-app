@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { chargeCardActions, getPaymentMethodsActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
+import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
 import { AddCreditGeneratedProps } from './AddCredit.props';
 import AddCreditView from './AddCredit.view';
@@ -27,16 +28,20 @@ const AddCredit = (): JSX.Element => {
     getPaymentMethods();
   }, [companyId]);
 
+  const paymentModes = useSelector(
+    (state: Store) => state.getPaymentMode.data?.data.payment_mode
+  );
+
   const isPending =
     useSelector((state: Store) => state.chargeCard.pending) || false;
   const [selectedCardId, setSelectedCardId] = useState('');
 
   const defaultCardId = useSelector(
-    (state: Store) => state.getPaymentMethods.data?.data.data.defaultCard || ''
+    (state: Store) => state.getPaymentMethods.data?.data.data?.defaultCard || ''
   );
 
   const cards = useSelector(
-    (state: Store) => state.getPaymentMethods.data?.data.data.cards || []
+    (state: Store) => state.getPaymentMethods.data?.data.data?.cards || []
   );
 
   const chargeCardResult = useSelector((state: Store) => state.chargeCard);
@@ -54,13 +59,14 @@ const AddCredit = (): JSX.Element => {
   }, [chargeCardResult]);
 
   const addCredit = (amount: string) => {
-    if (!isPending) {
+    if (!isPending && isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')) {
       dispatch(
         chargeCardActions.request({
           card: selectedCardId,
           amount,
           currency: 'aud',
           companyId,
+          paymentMode: 'CREDIT_CARD',
         })
       );
       setSubmitted(true);

@@ -11,4 +11,5 @@ export interface LandingGeneratedProps {
   companyRelationship: string;
   updateImage: (image: File) => void;
   updatingImage: boolean;
+  logout: () => void;
 }
