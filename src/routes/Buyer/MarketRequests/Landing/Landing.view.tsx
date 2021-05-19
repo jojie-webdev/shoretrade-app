@@ -128,9 +128,24 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
       <BoxContainer>
+        <Row nogutter>
+          <StyledAlert
+            content={'All offers below include shipping costs'}
+            variant="info"
+            alignText="center"
+            fullWidth
+          />
+        </Row>
         <Row nogutter justify="around" align="center" className="header">
           <Col>
-            <Typography>My Requests</Typography>
+            <Typography variant="overline" color="shade6">
+              My Requests
+            </Typography>
+            <Visible xs>
+              <TypographyView variant="label" color="shade9">
+                Swipe right to delete a listing
+              </TypographyView>
+            </Visible>
           </Col>
           <Col xs="content">
             <Visible sm md lg xl xxl>
@@ -144,12 +159,6 @@ const MarketRequestsLandingView = (
             </Visible>
           </Col>
         </Row>
-        <StyledAlert
-          content={'All offers below include shipping costs'}
-          variant="info"
-          alignText="center"
-          fullWidth
-        />
         <Hidden xs>
           {marketRequests.length > 0 ? (
             marketRequests.map((mr) => (
@@ -199,7 +208,6 @@ const MarketRequestsLandingView = (
             <EmptyStateView Svg={Crab} height={240} width={249} fluid />
           )}
         </Visible>
-
         <MobileFooter>
           <Button
             onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}

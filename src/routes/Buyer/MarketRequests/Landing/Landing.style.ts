@@ -2,6 +2,7 @@ import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 

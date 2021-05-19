@@ -15,12 +15,17 @@ export const TouchContainer = styled.div`
 
 export const SwipeableContainer = styled(animated.div)`
   width: 100%;
-  height: auto;
+  height: 96px;
   overflow: hidden;
   display: flex;
   position: relative;
   align-items: center;
   cursor: pointer;
+
+  /* Shadow / Medium */
+
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  border-radius: 4px;
 `;
 
 export const ActionsContainer = styled.div`
