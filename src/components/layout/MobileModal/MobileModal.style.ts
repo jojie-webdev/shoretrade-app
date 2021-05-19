@@ -26,7 +26,7 @@ export const ModalContainer = styled.div<{
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   padding: 40px 24px 8px 24px;
-  height: 80vh;
+  height: 140vh;
   width: 100vw;
   background-color: ${({ theme, backgroundColor }) => {
     const isSeller = theme.appType === 'seller';
