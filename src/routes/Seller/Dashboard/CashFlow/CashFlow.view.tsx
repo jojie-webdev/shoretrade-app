@@ -18,16 +18,16 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
-      <HeaderRow align="center" justify="between">
+      <HeaderRow align='center' justify='between'>
         {isSmallScreen ? (
           <>
             <InnerRouteHeader title={props.innerRouteTitle} fullRow={false} />
-            <Typography variant="overline" color="shade6" className="text">
+            <Typography variant='overline' color='shade6' className={props.innerRouteTitle === 'Cash Flow Details' ? 'text-long' : 'text'}>
               {props.name}
             </Typography>
           </>
         ) : (
-          <div className="padding-bread">
+          <div className='padding-bread'>
             <Breadcrumbs sections={breadCrumbSections} />
           </div>
         )}
@@ -40,15 +40,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
       ) : (
         <Row style={{ marginBottom: '56px' }}>
           <Col>
-            <LineChart
-              title="Paid"
-              isEarning={props.isEarning}
-              data={props.data}
-              yAxisLabelFormat={(v) =>
-                `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
-              }
-              cHeight={263}
-            />
+            <LineChart title='Paid' isEarning={props.isEarning} data={props.data} yAxisLabelFormat={(v) => `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`} cHeight={263} />
           </Col>
         </Row>
       )}

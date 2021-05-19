@@ -17,6 +17,11 @@ export const HeaderRow = styled(Row)`
     .text {
       margin-right: 16px;
     }
+    .text-long {
+      margin-right: 16px;
+      margin-top: 12px;
+      margin-left: 16px;
+    }
   }
 `;
 
