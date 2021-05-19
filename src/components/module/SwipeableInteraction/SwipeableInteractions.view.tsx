@@ -35,7 +35,7 @@ const SwipeableInteractions = (
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(({ args: [id, index], active, movement: [x] }) => {
-    set.start(fn(active, x, index));
+    set.start(fn(active, (x = x < 0 ? 0 : x), index));
     const trigger = !active && x > 150;
     if (trigger) {
       onSwipeTrigger(id);
