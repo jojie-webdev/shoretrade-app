@@ -1,17 +1,19 @@
 import React from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import { FileCheck } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { API, SELLER_ROUTES } from 'consts';
-import qs from 'qs';
+import { API } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { DetailsProps } from './Details.props';
 import {
-  Wrapper,
+  Container,
   Header,
   ActionContainer,
   OrderDetailContainer,
@@ -26,10 +28,10 @@ import {
   Box,
   Footer,
 } from './Details.style';
-import { parseImageUrl } from 'utils/parseImageURL';
 
 const OrderDetail = (props: { label?: string; value?: string }) => {
   const { label, value } = props;
+
   return (
     <OrderDetailContainer>
       <Typography variant="overline" color="shade6">
@@ -43,6 +45,7 @@ const OrderDetail = (props: { label?: string; value?: string }) => {
 const DetailsView = (props: DetailsProps) => {
   const theme = useTheme();
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const { details, token } = props;
 
@@ -71,9 +74,19 @@ const DetailsView = (props: DetailsProps) => {
   };
 
   return (
-    <Wrapper>
+    <Container>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Sold', onClick: () => history.goBack() },
+            { label: 'Order Details' },
+          ]}
+        />
+      </div>
       <Header>
-        <InnerRouteHeader title={status} onClickBack={() => history.goBack()} />
+        <Typography color="noshade" variant={isMobile ? 'title5' : 'body'}>
+          {status}
+        </Typography>
         <div className="actions">
           <Touchable
             dark
@@ -149,18 +162,15 @@ const DetailsView = (props: DetailsProps) => {
         <DetailsColumn>
           {!isDelivered && (
             <>
-              <OrderDetail label="Shipping" value={shippingDate} />
-              <OrderDetail
-                label="Estimated Delivery"
-                value={deliveryDate}
-              />{' '}
+              <OrderDetail label="Shipping:" value={shippingDate} />
+              <OrderDetail label="Estimated Delivery:" value={deliveryDate} />
             </>
           )}
-          <OrderDetail label="Order Date" value={orderDate} />
+          <OrderDetail label="Order Date:" value={orderDate} />
         </DetailsColumn>
         <DetailsColumn>
-          <OrderDetail label="Ordered By" value={orderedBy} />
-          <OrderDetail label="Seller" value={seller} />
+          <OrderDetail label="Ordered By:" value={orderedBy} />
+          <OrderDetail label="Seller:" value={seller} />
         </DetailsColumn>
         <DetailsColumn>
           <OrderDetail
@@ -174,7 +184,7 @@ const DetailsView = (props: DetailsProps) => {
         </DetailsColumn>
       </DetailsRow>
       <ProductList>
-        <Typography variant="title5" color="noshade">
+        <Typography variant={isMobile ? 'title5' : 'body'} color="noshade">
           Packing List
         </Typography>
         {packingList.map((list) => (
@@ -182,7 +192,11 @@ const DetailsView = (props: DetailsProps) => {
             <ItemRow>
               <ItemImage src={parseImageUrl(list.imgSrc)} alt="" />
               <ItemColumn>
-                <Typography variant="title5" color="noshade">
+                <Typography
+                  variant={isMobile ? 'caption' : 'label'}
+                  color="noshade"
+                  weight="400"
+                >
                   {list.name}
                 </Typography>
                 <div className="tags-container">
@@ -195,10 +209,21 @@ const DetailsView = (props: DetailsProps) => {
                   ))}
                 </div>
                 <div className="size-container">
-                  <Typography className="size-label" color="shade6">
+                  <Typography
+                    className="size-label"
+                    color="shade6"
+                    variant="small"
+                    weight={isMobile ? '400' : '500'}
+                  >
                     Size:
                   </Typography>
-                  <Typography color="noshade">{list.size}</Typography>
+                  <Typography
+                    color="noshade"
+                    variant="small"
+                    weight={isMobile ? '900' : '500'}
+                  >
+                    {list.size}
+                  </Typography>
                 </div>
               </ItemColumn>
             </ItemRow>
@@ -237,14 +262,14 @@ const DetailsView = (props: DetailsProps) => {
         </Typography>
         <Typography
           className="footer-total-value"
-          variant="title4"
+          variant="title5"
           weight="bold"
           color="noshade"
         >
           {total}
         </Typography>
       </Footer>
-    </Wrapper>
+    </Container>
   );
 };
 
