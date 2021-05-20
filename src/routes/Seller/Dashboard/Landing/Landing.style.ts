@@ -32,13 +32,24 @@ export const FilterRow = styled(Row)`
     .btn {
       margin-right: 8px;
       margin-bottom: 24px;
-      padding: 14px;
+      height: 40px;
+
+      p {
+        color: #ffffff;
+      }
+
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }
     }
 
     .btn-abso {
+      height: 40px;
+
+      p {
+        color: #ffffff;
+      }
+
       @media ${BREAKPOINTS['sm']} {
         position: absolute;
         right: 0;
@@ -87,7 +98,8 @@ export const MobileFilterRow = styled(Row)`
 `;
 
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) =>
+    props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`
