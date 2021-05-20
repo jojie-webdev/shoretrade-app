@@ -8,6 +8,12 @@ import Container from '../../components/Container';
 
 const data = [
   {
+    id: 1,
+    type: 'next',
+    value: 'Test Value',
+  },
+  {
+    id: 2,
     type: 'next',
     value: 'Test Value',
   },
@@ -16,8 +22,8 @@ const data = [
 storiesOf('module/SwipeableInteraction', module).add('Summary', () => (
   <Container>
     <SwipeableInteraction
-      onSwipeTrigger={() => {
-        alert('Triggered');
+      onSwipeTrigger={(id) => {
+        console.log(`Triggered, ${id}`);
       }}
       swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
       swipeActionLabel="Delete"
