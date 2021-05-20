@@ -4,4 +4,5 @@ export interface AccountCompletionGeneratedProps {
   profileImage: string;
   name: string;
   accountCompletion?: GetAccountCompletionRequestData;
+  goToLicenses: () => void;
 }
