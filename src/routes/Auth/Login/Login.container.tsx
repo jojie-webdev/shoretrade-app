@@ -24,6 +24,8 @@ const Login = (): JSX.Element => {
     dispatch(loginActions.request(credentials));
   };
 
+  const isLoggedOut = (useSelector((state: Store) => !!state.logout.data))
+
   const switchType = () => {
     history.push(isSeller ? BUYER_ROUTES.LOGIN : SELLER_ROUTES.LOGIN);
   };
@@ -46,6 +48,7 @@ const Login = (): JSX.Element => {
     switchType,
     goToRegister,
     isError,
+    isLoggedOut
   };
   return <LoginView {...generatedProps} />;
 };
