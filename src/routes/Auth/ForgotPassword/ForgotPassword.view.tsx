@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import { Check, ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
@@ -30,7 +31,7 @@ const ForgotPasswordView = (
   const isMain = !pathname.includes('seller') && !pathname.includes('buyer');
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const { resetPassword, pending, backToLogin, success } = props;
-
+  const [visible, setVisible] = useState(false);
   const formikProps = {
     initialValues: {
       email: '',
@@ -38,6 +39,16 @@ const ForgotPasswordView = (
     validate,
     onSubmit: resetPassword,
   };
+
+  useEffect(() => {
+    if (success) {
+      setVisible(true);
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
 
   return isSmallScreen ? (
     <MobileHeader>
@@ -61,6 +72,13 @@ const ForgotPasswordView = (
             </ForgotPasswordButtonContainer>
           </Form>
         </Formik>
+        {visible && (
+          <Alert
+            content="An email has been sent to reset your password."
+            variant="success"
+            style={{ width: '100%', marginTop: '24px' }}
+          />
+        )}
       </MobileContainer>
     </MobileHeader>
   ) : (
@@ -93,6 +111,13 @@ const ForgotPasswordView = (
           </ForgotPasswordButtonContainer>
         </Form>
       </Formik>
+      {visible && (
+        <Alert
+          content="An email has been sent to reset your password."
+          variant="success"
+          style={{ width: '100%', marginTop: '24px' }}
+        />
+      )}
     </AuthContainer>
   );
 };
