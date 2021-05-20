@@ -8,7 +8,7 @@ export const HeaderRow = styled(Row)`
 `;
 
 export const FilterButton = styled.button`
-  background: none;
+  background: ${({ theme }) => theme.grey.shade9};
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@ export const FilterButton = styled.button`
   height: 40px;
 
   .btn-text {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 `;
 

@@ -69,7 +69,7 @@ export const Container = styled.div`
   }
 
   .filter-ipad-container {
-    display:flex;
+    display: flex;
     margin-top: -24px;
     width: 100%;
     align-content: flex-end;
@@ -88,7 +88,7 @@ export const FilterButton = styled.button`
   margin-bottom: 16px;
 
   .btn-text {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 `;
 

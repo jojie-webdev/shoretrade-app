@@ -90,7 +90,7 @@ export const FilterButton = styled.button`
   height: 32px;
 
   .btn-text {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 `;
 
