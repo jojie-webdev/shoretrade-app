@@ -64,14 +64,15 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
             <TextContainer>
               <CheckFilled fill={theme.brand.success} />
               <Typography variant="label" color="shade9">
-                {`Linked Accounts can make purchases and track orders using your stored credit cards or existing credit balance.`}
+                Can make purchases and track orders using your stored credit
+                cards or existing credit balance.
               </Typography>
             </TextContainer>
 
             <TextContainer>
               <CloseFilled fill={theme.brand.error} />
               <Typography variant="label" color="shade9">
-                {`Linked Accounts cannot add other linked accounts or use your stored credit card.`}
+                Cannot add other linked accounts or use your stored credit card.
               </Typography>
             </TextContainer>
           </InfoContainer>
