@@ -5,7 +5,9 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
@@ -119,6 +121,8 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     content = <Complete {...props} />;
   }
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <BoxContainer>
       <Container>
@@ -150,7 +154,11 @@ const OrdersView = (props: OrdersGeneratedProps) => {
                   [currentTab]: '',
                 });
               }}
-              placeholder="Search by order#, product type & seller..."
+              placeholder={
+                isMobile
+                  ? 'Order#, product type or seller...'
+                  : 'Search by order#, product type or seller...'
+              }
               rounded
             />
           </SearchContainer>
