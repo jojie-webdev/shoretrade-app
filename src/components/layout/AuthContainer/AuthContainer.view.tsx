@@ -73,10 +73,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 props.logoContainerMarginBottomHeight
               }
             >
-              <a
-                href={process.env.REACT_APP_WEB_URL}
-                style={{ cursor: 'pointer' }}
-              >
+              <a href="https://shoretrade.com" style={{ cursor: 'pointer' }}>
                 {!horizontalLogo ? (
                   <Logo fill={!isSeller ? 'black' : 'white'} />
                 ) : (
