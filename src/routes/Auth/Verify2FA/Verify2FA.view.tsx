@@ -135,8 +135,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
               We need to check a few things before you can start selling.
               <br />
               <br />
-              We’ll send you and email and notification when your account is
-              approved. This normally takes less than 24 hours.
+              We’ll send you an email when your account is approved.
             </Typography>
           </DialogModal>
         )}

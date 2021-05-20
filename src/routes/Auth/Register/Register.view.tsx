@@ -1024,9 +1024,7 @@ const StepForm = ({
                         color="noshade"
                         weight="Medium"
                       >
-                        We’ll send you and email and notification when your
-                        account is approved. This normally takes less than 24
-                        hours.
+                        We’ll send you an email when your account is approved.
                       </Typography>
                     </>
                   ) : null}

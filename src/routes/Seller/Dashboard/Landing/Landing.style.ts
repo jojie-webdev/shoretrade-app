@@ -32,7 +32,7 @@ export const FilterRow = styled(Row)`
     .btn {
       margin-right: 8px;
       margin-bottom: 24px;
-      padding:14px;
+      padding: 14px;
       @media ${BREAKPOINTS['sm']} {
         margin-bottom: 8px;
       }
@@ -54,9 +54,40 @@ export const FilterRow = styled(Row)`
   }
 `;
 
+export const MobileFilterContainer = styled.div`
+  overflow: auto;
+`;
+
+export const MobileFilterRow = styled(Row)`
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 68px;
+  }
+
+  .btn {
+    margin-right: 12px;
+    margin-bottom: 24px;
+    padding: 14px;
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 8px;
+    }
+  }
+
+  .btn-abso {
+    @media ${BREAKPOINTS['sm']} {
+      position: absolute;
+      right: 0;
+      margin-right: 16px;
+    }
+  }
+  .modal-col {
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0px;
+    }
+  }
+`;
+
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) =>
-    props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`

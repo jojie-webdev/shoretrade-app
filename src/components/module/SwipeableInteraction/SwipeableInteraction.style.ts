@@ -3,14 +3,19 @@ import InteractionsView from 'components/base/Interactions';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  width: 240px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+`;
+
+export const TouchContainer = styled.div`
+  touch-action: none;
+  margin-bottom: 1rem;
 `;
 
 export const SwipeableContainer = styled(animated.div)`
   width: 100%;
-  height: auto;
+  height: 96px;
   overflow: hidden;
   display: flex;
   position: relative;
@@ -30,13 +35,16 @@ export const ActionsContainer = styled.div`
 
   .action {
     z-index: 0;
-    background: ${({theme}) => theme.brand.error};
+    color: ${({ theme }) => theme.grey.noshade};
+    background: ${({ theme }) => theme.brand.error};
     height: 100%;
     text-align: left;
     padding: 24px;
     width: 100%;
-    display: block;
     border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     svg {
       margin-right: 4px;

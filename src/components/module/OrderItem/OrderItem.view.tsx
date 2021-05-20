@@ -3,6 +3,7 @@ import React from 'react';
 import { DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
+import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 
 // import { useTheme } from 'utils/Theme';
@@ -14,7 +15,6 @@ import {
   RightContent,
   Tag,
 } from './OrderItem.style';
-import { parseImageUrl } from 'utils/parseImageURL';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
   // const theme = useTheme();

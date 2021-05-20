@@ -6,7 +6,7 @@ export const Container = styled.div``;
 export const HeaderRow = styled(Row)`
   margin-bottom: 24px;
 
-  .header {
+  .header-col {
     display: flex;
     align-items: center;
 

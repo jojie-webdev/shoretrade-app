@@ -118,7 +118,7 @@ export const RightContent = styled.div`
   justify-content: space-between;
 
   @media (max-width: 425px) {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 `;
 
