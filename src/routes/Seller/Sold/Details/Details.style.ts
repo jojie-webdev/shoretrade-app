@@ -111,10 +111,6 @@ export const ItemColumn = styled.div`
 
   .size-label {
     margin-right: 8px;
-
-    @media ${BREAKPOINTS['sm']} {
-      margin-top: 4px;
-    }
   }
 `;
 

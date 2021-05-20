@@ -1,5 +1,4 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const ScrollWrapper = styled.div`
@@ -8,13 +7,19 @@ export const ScrollWrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   padding-right: 16px;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-right: 0;
+  }
 `;
 
 export const Wrapper = styled.div`
   padding: 0px 0px 50px 0px;
+
   .add-box-container {
     margin-top: 32px;
   }
+
   .actions-container {
     display: flex;
     flex-direction: row;
@@ -37,10 +42,18 @@ export const OrderDetails = styled.div`
   display: flex;
   flex-direction: row;
 
+  @media ${BREAKPOINTS['sm']} {
+    flex-direction: column;
+  }
+
   .order-details-item {
     display: flex;
     flex-direction: column;
     margin-right: 32px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin: 0 0 12px 0;
+    }
   }
 
   .order-details-item-value {
@@ -58,16 +71,24 @@ export const ItemColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   .tags-container {
-    margin-top: 8px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 8px;
   }
+
   .size-container {
-    margin-top: 8px;
     display: flex;
     flex-direction: row;
+    margin-top: 8px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-top: 4px;
+    }
   }
+
   .size-label {
     margin-right: 8px;
   }
@@ -75,7 +96,7 @@ export const ItemColumn = styled.div`
 
 export const Tag = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  padding: 4px 8px;
+  padding: 4px 0;
   margin-right: 8px;
   border-radius: 4px;
 `;
@@ -87,8 +108,8 @@ export const ItemImage = styled.img`
   border-radius: 4px;
 
   @media ${BREAKPOINTS.sm} {
-    height: 64px;
-    width: 64px;
+    height: 72px;
+    width: 72px;
   }
 `;
 
@@ -98,6 +119,7 @@ export const Box = styled.div`
   padding: 12px 16px;
   background: ${(props) => props.theme.grey.shade9};
   margin-top: 16px;
+
   .box-item {
     display: flex;
     flex-direction: column;
@@ -117,8 +139,16 @@ export const BoxDetailsContainer = styled.div`
   .text-container {
     display: flex;
 
+    @media ${BREAKPOINTS['sm']} {
+      flex-direction: column;
+    }
+
     .inner-text {
       margin-right: 40px;
+
+      @media ${BREAKPOINTS['sm']} {
+        margin: 0 0 12px 0;
+      }
 
       .overline {
         margin-bottom: 2px;
@@ -128,13 +158,22 @@ export const BoxDetailsContainer = styled.div`
 `;
 
 export const BoxSummaryContainer = styled.div`
-  margin-top: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 24px;
+  border-radius: 4px;
   width: 100%;
   background: ${(props) => props.theme.grey.shade9};
+  margin-top: 32px;
+  overflow: scroll;
+
+  .scroll-wrapper {
+    @media ${BREAKPOINTS.sm} {
+      width: 225%;
+      padding-right: 24px;
+    }
+  }
 
   .text-container {
     display: flex;
@@ -143,9 +182,6 @@ export const BoxSummaryContainer = styled.div`
     margin-bottom: 16px;
 
     @media ${BREAKPOINTS.sm} {
-      /* flex-direction: column; */
-      /* align-items: flex-start; */
-      /* justify-content: start; */
       flex: 1;
     }
 
@@ -157,9 +193,9 @@ export const BoxSummaryContainer = styled.div`
       align-items: flex-end;
 
       @media ${BREAKPOINTS.sm} {
-        width: auto;
-        align-items: flex-start;
-        flex: 1;
+        min-width: auto;
+        flex: 2;
+        margin-right: 0;
       }
     }
 
@@ -171,9 +207,9 @@ export const BoxSummaryContainer = styled.div`
       align-items: flex-start;
 
       @media ${BREAKPOINTS.sm} {
-        width: auto;
-        align-items: flex-start;
-        flex: 1;
+        min-width: auto;
+        flex: 2;
+        margin-right: 0;
       }
     }
 
@@ -186,7 +222,7 @@ export const BoxSummaryContainer = styled.div`
 
       @media ${BREAKPOINTS.sm} {
         min-width: auto;
-        flex: 1.5;
+        flex: 2;
       }
     }
   }
