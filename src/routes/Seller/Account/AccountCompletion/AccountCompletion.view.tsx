@@ -89,12 +89,12 @@ const AccountCompletionView = ({
                 className="summary-item-text"
               >
                 {c.label.includes('License') ? (
-                  <div
+                  <span
                     style={{ cursor: 'pointer' }}
                     onClick={() => goToLicenses()}
                   >
                     {c.label}
-                  </div>
+                  </span>
                 ) : (
                   c.label
                 )}
