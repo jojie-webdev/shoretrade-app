@@ -79,14 +79,16 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 <Typography color="shade7" variant="caption">
                   Location
                 </Typography>
-                <Typography color="shade9">{d.location}</Typography>
+                <Typography weight="900" color="shade9">
+                  {d.location}
+                </Typography>
               </ItemDetail>
 
               <ItemDetail type="center">
                 <Typography color="shade7" variant="caption">
                   Weight
                 </Typography>
-                <Typography color="shade9">
+                <Typography weight="900" color="shade9">
                   {d.weight} {d.unit}
                 </Typography>
               </ItemDetail>
@@ -95,7 +97,9 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 <Typography color="shade7" variant="caption">
                   Subtotal
                 </Typography>
-                <Typography color="shade9">{d.price}</Typography>
+                <Typography weight="900" color="shade9">
+                  {d.price}
+                </Typography>
               </ItemDetail>
             </RightContent>
           </div>
@@ -107,6 +111,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           <Typography
             color="shade7"
             variant="label"
+            className="label"
             style={{ marginRight: '4px' }}
           >
             {props.data.shippingOption}:
@@ -115,7 +120,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             color="shade9"
             variant="label"
             weight="bold"
-            style={{ marginRight: '4px' }}
+            className="shipping-value"
           >
             {toPrice(
               props.data.shippingChargeNet + props.data.shippingChargeGst
