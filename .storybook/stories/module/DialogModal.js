@@ -23,8 +23,7 @@ storiesOf('module/DialogModal', module).add('Summary', () => (
       </Typography>
       <br />
       <Typography variant="body" color="noshade" weight="Medium">
-        We’ll send you and email and notification when your account is approved.
-        This normally takes less than 24 hours.
+        We’ll send you an email when your account is approved.
       </Typography>
     </DialogModal>
   </Container>
