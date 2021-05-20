@@ -87,15 +87,15 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
     position: absolute;
-    bottom: 1%;
+    bottom: 3%;
     padding: 16px;
-    margin: -16px;
+    margin: -24px -24px -36px -24px;
     background-color: ${({ theme }) => theme.grey.shade9};
-    
+    min-width: 100vw;
     .submit-btn-1 {
       width: 50%;
       margin-right: 12px;
-      margin-left: -4px;
+      margin-left: 2px;
     }
     .submit-btn-2 {
       width: 50%;

@@ -56,7 +56,7 @@ export const Container = styled.div`
   .submit-btns-step2 {
     display: flex;
     @media ${BREAKPOINTS['sm']} {
-      margin: 16px -16px -16px -16px;
+      margin: 16px -24px -16px -24px;
       background-color: ${(props) => props.theme.grey.shade9};
     }
   }
