@@ -76,7 +76,6 @@ const AccountCompletionView = ({
       </Typography>
       <Row className="summary-row">
         {accountCompletion.checklist.map((c) => {
-          console.log(c.label);
           return (
             <Col lg={12} xl={4} key={c.label} className="summary-item">
               <CheckFilled
