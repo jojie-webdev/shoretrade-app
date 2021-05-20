@@ -73,11 +73,16 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 props.logoContainerMarginBottomHeight
               }
             >
-              {!horizontalLogo ? (
-                <Logo fill={!isSeller ? 'black' : 'white'} />
-              ) : (
-                <ShoretradeLogo height={24} width={190} />
-              )}
+              <a
+                href={process.env.REACT_APP_WEB_URL}
+                style={{ cursor: 'pointer' }}
+              >
+                {!horizontalLogo ? (
+                  <Logo fill={!isSeller ? 'black' : 'white'} />
+                ) : (
+                  <ShoretradeLogo height={24} width={190} />
+                )}
+              </a>
 
               {onSkipAction && (
                 <Button
