@@ -8,8 +8,10 @@ import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { SELLER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import remove from 'ramda/es/remove';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -110,60 +112,62 @@ const BoxSummary = ({
   differencePercentage: string;
 }) => (
   <BoxSummaryContainer>
-    <div className="text-container">
-      <div className="left-text">
-        <Typography variant="label" color="shade6" className="overline">
-          Original Order
-        </Typography>
-        <Typography color="noshade" weight="bold">
-          {`Difference ${differencePercentage}`}
-        </Typography>
+    <div className="scroll-wrapper">
+      <div className="text-container">
+        <div className="left-text">
+          <Typography variant="label" color="shade6" className="overline">
+            Original Order
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {`Difference ${differencePercentage}`}
+          </Typography>
+        </div>
+        <div className="inner-text">
+          <Typography variant="label" color="shade6" className="overline">
+            {originalQuantity}
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {differenceQuantity}
+          </Typography>
+        </div>
+        <div className="inner-text">
+          <Typography variant="label" color="shade6" className="overline">
+            {originalWeight}
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {differenceWeight}
+          </Typography>
+        </div>
+        <div className="right-text">
+          <Typography variant="label" color="shade6" className="overline">
+            {originalAmount}
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {differenceAmount}
+          </Typography>
+        </div>
       </div>
-      <div className="inner-text">
-        <Typography variant="label" color="shade6" className="overline">
-          {originalQuantity}
-        </Typography>
-        <Typography color="noshade" weight="bold">
-          {differenceQuantity}
-        </Typography>
-      </div>
-      <div className="inner-text">
-        <Typography variant="label" color="shade6" className="overline">
-          {originalWeight}
-        </Typography>
-        <Typography color="noshade" weight="bold">
-          {differenceWeight}
-        </Typography>
-      </div>
-      <div className="right-text">
-        <Typography variant="label" color="shade6" className="overline">
-          {originalAmount}
-        </Typography>
-        <Typography color="noshade" weight="bold">
-          {differenceAmount}
-        </Typography>
-      </div>
-    </div>
-    <div className="text-container">
-      <div className="left-text">
-        <Typography color="noshade" weight="bold">
-          New Total
-        </Typography>
-      </div>
-      <div className="inner-text">
-        <Typography color="noshade" weight="bold">
-          {quantities}
-        </Typography>
-      </div>
-      <div className="inner-text">
-        <Typography color="noshade" weight="bold">
-          {weight}
-        </Typography>
-      </div>
-      <div className="right-text">
-        <Typography variant="title5" color="noshade" weight="bold">
-          {amount}
-        </Typography>
+      <div className="text-container">
+        <div className="left-text">
+          <Typography color="noshade" weight="bold">
+            New Total
+          </Typography>
+        </div>
+        <div className="inner-text">
+          <Typography color="noshade" weight="bold">
+            {quantities}
+          </Typography>
+        </div>
+        <div className="inner-text">
+          <Typography color="noshade" weight="bold">
+            {weight}
+          </Typography>
+        </div>
+        <div className="right-text">
+          <Typography variant="title5" color="noshade" weight="bold">
+            {amount}
+          </Typography>
+        </div>
       </div>
     </div>
   </BoxSummaryContainer>
@@ -183,6 +187,7 @@ const ConfirmView = (props: ConfirmProps) => {
   } = props;
 
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const { orderNumber, buyer, uri, price, name, tags, size } = details;
 
@@ -303,7 +308,10 @@ const ConfirmView = (props: ConfirmProps) => {
           <ItemRow>
             <ItemImage src={uri} alt="" />
             <ItemColumn>
-              <Typography variant="title5" color="noshade">
+              <Typography
+                variant={isMobile ? 'caption' : 'title5'}
+                color="noshade"
+              >
                 {name}
               </Typography>
               <div className="tags-container">
@@ -316,10 +324,21 @@ const ConfirmView = (props: ConfirmProps) => {
                 ))}
               </div>
               <div className="size-container">
-                <Typography className="size-label" color="shade6">
+                <Typography
+                  className="size-label"
+                  color="shade6"
+                  variant={isMobile ? 'small' : 'body'}
+                  weight={isMobile ? '400' : '500'}
+                >
                   Size:
                 </Typography>
-                <Typography color="noshade">{size}</Typography>
+                <Typography
+                  color="noshade"
+                  variant={isMobile ? 'small' : 'body'}
+                  weight={isMobile ? '900' : '500'}
+                >
+                  {size}
+                </Typography>
               </div>
             </ItemColumn>
           </ItemRow>

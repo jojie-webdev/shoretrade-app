@@ -63,8 +63,8 @@ const InnerRouteHeader = (props: InnerRouteHeaderProps): JSX.Element => {
   );
 
   return fullRow ? (
-    <HeaderRow nogutter>
-      <Col className="header">{content}</Col>
+    <HeaderRow className="header-row" nogutter>
+      <Col className="header-col">{content}</Col>
     </HeaderRow>
   ) : (
     <div style={{ display: 'flex', alignItems: 'center' }}>{content}</div>

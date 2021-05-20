@@ -80,12 +80,13 @@ const SoldItem = (props: {
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (
-        <Plane height={18} width={18} fill={theme.grey.shade6} />
+        <Plane fill={theme.grey.shade6} />
       ) : (
-        <Truck height={18} width={18} fill={theme.grey.shade6} />
+        <Truck fill={theme.grey.shade6} />
       );
     const toAddress = toAddressState ? `${toAddressState}` : '';
     const key = `${desc}-${toAddress}`;
+
     return (
       <Fragment key={key}>
         <InnerStyledInteraction
@@ -96,8 +97,8 @@ const SoldItem = (props: {
           fullWidth
         >
           <div className="content">
-            <Icon />
             <div className="center-text">
+              <Icon />
               <Typography variant="label" color="shade6">
                 {desc}
               </Typography>

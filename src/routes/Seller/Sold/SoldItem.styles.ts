@@ -1,7 +1,6 @@
 import Interaction from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -22,7 +21,7 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: space-between;
       padding-right: 32px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
 
@@ -39,7 +38,7 @@ export const StyledInteraction = styled(Interaction)`
     .left-content-extended {
       width: 316px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
     }
@@ -50,7 +49,7 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: space-evenly;
       width: 210px;
 
-      @media (max-width: 375px) {
+      @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
 
@@ -96,6 +95,15 @@ export const StyledInteraction = styled(Interaction)`
     .center-text {
       margin: 0 4px;
       display: flex;
+      align-items: flex-start;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        min-height: 18px;
+        min-width: 18px;
+        padding-top: 3px;
+      }
 
       p:not(:first-child) {
         margin-left: 4px;
@@ -169,7 +177,7 @@ export const ItemCard = styled.div`
     align-items: center;
     width: 300px;
 
-    @media (max-width: 375px) {
+    @media ${BREAKPOINTS['sm']} {
       width: 240px;
     }
 
@@ -181,6 +189,7 @@ export const ItemCard = styled.div`
 
     .tags-container {
       display: flex;
+      flex-wrap: wrap;
       margin: 2px 0;
     }
   }
@@ -192,7 +201,7 @@ export const ItemCard = styled.div`
     padding: 16px 0px;
     justify-content: space-evenly;
 
-    @media (max-width: 375px) {
+    @media ${BREAKPOINTS['sm']} {
       width: 240px;
     }
 
@@ -213,8 +222,8 @@ export const ItemCard = styled.div`
     padding: 16px 0px;
     flex-wrap: wrap;
 
-    @media (max-width: 375px) {
-      width: 240px;
+    @media ${BREAKPOINTS['sm']} {
+      display: none;
     }
 
     .data-content {
