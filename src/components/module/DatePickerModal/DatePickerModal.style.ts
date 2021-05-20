@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import calendarDayEnd from 'res/images/calendar-day-end.svg';
 import calendarStartDay from 'res/images/calendar-day-start.svg';
 import styled from 'utils/styled';
@@ -6,11 +7,19 @@ import { pxToRem } from 'utils/Theme';
 export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   align-items: center;
 
   .filters {
     margin-top: 8px;
+    @media ${BREAKPOINTS['sm']} {
+      ${({ isDatePickerDashboard }) =>
+        isDatePickerDashboard &&
+        `  display: flex;
+      justify-content: unset;
+       align-items: unset;`}
+    }
   }
   .calendar-title {
     width: ${({ isDatePickerDashboard }) =>
@@ -20,6 +29,21 @@ export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
   .button-container {
     margin-top: 32px;
     width: 90%;
+  }
+`;
+
+export const TopMobileHeadercontainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const LeftFilterContent = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .reset-text {
+    margin-right: 8px;
   }
 `;
 
@@ -152,5 +176,26 @@ export const CalendarContainer = styled.div<{
   .CalendarDay__firstDayOfWeek {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
+  }
+`;
+
+export const ExitButton = styled.button`
+  background: ${(props) => props.theme.grey.noshade};
+  box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+  border-radius: 20px;
+  height: 32px;
+  width: 32px;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :focus {
+    outline: none;
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    right: calc(50vw - 35px);
   }
 `;

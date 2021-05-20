@@ -26,7 +26,6 @@ const bytesToSize = (bytes) => {
 const AddImage = (props: AddImageProps): JSX.Element => {
   const theme = useTheme();
   const { image, onSelectImage, onRemoveImage } = props;
-  console.log({ image });
   if (image !== null && image !== undefined && !isEmpty(image)) {
     return (
       <PreviewContainer>

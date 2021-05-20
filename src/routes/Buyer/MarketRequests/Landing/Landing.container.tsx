@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+  deleteMarketRequestActions,
   getActiveOffersActions,
   getAllMarketRequestActions,
 } from 'store/actions';
@@ -18,6 +19,14 @@ const MarketRequestsLanding = (): JSX.Element => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
+    value: null,
+  });
+
+  const deleteMarketRequest = useSelector(
+    (store: Store) => store.deleteMarketRequest
+  );
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -34,9 +43,27 @@ const MarketRequestsLanding = (): JSX.Element => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
   };
 
+  const onDelete = (id: string) => {
+    if (id) {
+      dispatch(
+        deleteMarketRequestActions.request({
+          id,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     dispatch(getAllMarketRequestActions.request({}));
   }, []);
+
+  useEffect(() => {
+    if (deleteMarketRequest.pending) {
+      setItemToDelete({ value: null });
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+  }, [deleteMarketRequest]);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
@@ -47,6 +74,10 @@ const MarketRequestsLanding = (): JSX.Element => {
     ), // TODO STATE
     onClickItem,
     isPendingAccount,
+    onDelete,
+    pendingDeleteMarketRequest: deleteMarketRequest.pending || false,
+    itemToDelete,
+    setItemToDelete,
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;

@@ -552,7 +552,6 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
       setStep(2);
     }
   };
-  console.log(props);
   return (
     <Container>
       {!isMobile ? (
