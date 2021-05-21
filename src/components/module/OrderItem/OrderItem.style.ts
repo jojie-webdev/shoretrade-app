@@ -26,6 +26,10 @@ export const ItemContainer = styled.div`
   border-radius: 4px;
   background: ${(props) => props.theme.grey.noshade};
 
+  @media ${BREAKPOINTS['sm']} {
+    background: none;
+  }
+
   .section {
     padding: 16px 16px 8px 16px;
     display: flex;
@@ -34,6 +38,15 @@ export const ItemContainer = styled.div`
     align-items: center;
     white-space: nowrap;
     flex-wrap: wrap;
+
+    .label {
+      font-size: 12px;
+    }
+
+    .shipping-value {
+      margin-right: 4px;
+      flex: 1 0 auto;
+    }
 
     .delivery-section {
       display: flex;
@@ -47,6 +60,13 @@ export const ItemContainer = styled.div`
 
     :not(:last-child) {
       border-bottom: 1px solid ${(props) => props.theme.grey.shade3};
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      .label,
+      .shipping-value {
+        font-size: 12px;
+      }
     }
 
     @media (max-width: 550px) {
@@ -117,6 +137,11 @@ export const RightContent = styled.div`
   display: flex;
   justify-content: space-between;
 
+  @media ${BREAKPOINTS.sm} {
+    p {
+      font-size: 10px;
+    }
+  }
   @media (max-width: 425px) {
     flex-wrap: nowrap;
   }
