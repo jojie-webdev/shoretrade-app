@@ -23,8 +23,9 @@ const Login = (): JSX.Element => {
   const login = (credentials: Credentials) => {
     dispatch(loginActions.request(credentials));
   };
+  const errorMessage = useSelector((state: Store) => state.login.error) || '';
 
-  const isLoggedOut = (useSelector((state: Store) => !!state.logout.data))
+  const isLoggedOut = useSelector((state: Store) => !!state.logout.data);
 
   const switchType = () => {
     history.push(isSeller ? BUYER_ROUTES.LOGIN : SELLER_ROUTES.LOGIN);
@@ -48,7 +49,8 @@ const Login = (): JSX.Element => {
     switchType,
     goToRegister,
     isError,
-    isLoggedOut
+    errorMessage,
+    isLoggedOut,
   };
   return <LoginView {...generatedProps} />;
 };

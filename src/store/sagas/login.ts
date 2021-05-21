@@ -13,7 +13,7 @@ function* loginRequest(action: AsyncAction<LoginMeta, LoginPayload>) {
     const { data } = yield call(login, action.meta);
     yield put(loginActions.success(data));
   } catch (e) {
-    yield put(loginActions.failed(e.message));
+    yield put(loginActions.failed(e.response.data.message));
   }
 }
 
