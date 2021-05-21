@@ -20,6 +20,7 @@ export const Header = styled.div`
   .left-content {
     display: flex;
     align-items: center;
+    position: relative;
 
     img {
       ${imgStyle};
@@ -31,6 +32,27 @@ export const Header = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    .pen {
+      svg {
+        position: absolute;
+        left: 25%;
+        bottom: 0;
+        @media (max-width: 350px) {
+          bottom: 8%;
+        }
+      }
+    }
+    .pen-image {
+      svg {
+        position: absolute;
+        left: 30%;
+        bottom: 0;
+        @media (max-width: 575px) {
+          left: 27%;
+          // bottom: 8%;
+        }
+      }
     }
   }
 `;

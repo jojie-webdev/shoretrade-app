@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner/Spinner.view';
-import { PlaceholderProfile } from 'components/base/SVG';
+import { Pen, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
 import { parseImageUrl } from 'utils/parseImageURL';
+import theme from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
 import {
@@ -110,20 +111,25 @@ const LandingView = (props: LandingGeneratedProps) => {
             ) : (
               <>
                 {profilePicture !== '' ? (
-                  <img
-                    src={
-                      hideBrokenProfileImage
-                        ? DefaultProfileImage
-                        : parseImageUrl(profilePicture) || DefaultProfileImage
-                    }
-                    alt="profile picture"
-                    onError={() => {
-                      setHideBrokenProfileImage(true);
-                    }}
-                    onClick={() => {
-                      handleOnClick();
-                    }}
-                  />
+                  <>
+                    <img
+                      src={
+                        hideBrokenProfileImage
+                          ? DefaultProfileImage
+                          : parseImageUrl(profilePicture) || DefaultProfileImage
+                      }
+                      alt="profile picture"
+                      onError={() => {
+                        setHideBrokenProfileImage(true);
+                      }}
+                      onClick={() => {
+                        handleOnClick();
+                      }}
+                    />
+                    <div className="pen-image">
+                      <Pen fill={theme.grey.shade6} />
+                    </div>
+                  </>
                 ) : (
                   <NoProfilePic
                     onClick={() => {
@@ -131,6 +137,9 @@ const LandingView = (props: LandingGeneratedProps) => {
                     }}
                   >
                     <PlaceholderProfile width={96} height={96} />
+                    <div className="pen">
+                      <Pen fill={theme.grey.shade6} />
+                    </div>
                   </NoProfilePic>
                 )}
               </>

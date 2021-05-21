@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
-import { PlaceholderProfile } from 'components/base/SVG';
+import { Pen, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
 import { parseImageUrl } from 'utils/parseImageURL';
+import theme from 'utils/Theme';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
 import {
@@ -143,20 +144,25 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
           ) : (
             <>
               {profilePicture !== '' ? (
-                <img
-                  src={
-                    hideBrokenProfileImage
-                      ? DefaultProfileImage
-                      : parseImageUrl(profilePicture) || DefaultProfileImage
-                  }
-                  alt="profile picture"
-                  onError={() => {
-                    setHideBrokenProfileImage(true);
-                  }}
-                  onClick={() => {
-                    handleOnClick();
-                  }}
-                />
+                <>
+                  <img
+                    src={
+                      hideBrokenProfileImage
+                        ? DefaultProfileImage
+                        : parseImageUrl(profilePicture) || DefaultProfileImage
+                    }
+                    alt="profile picture"
+                    onError={() => {
+                      setHideBrokenProfileImage(true);
+                    }}
+                    onClick={() => {
+                      handleOnClick();
+                    }}
+                  />
+                  <div className="pen-image">
+                    <Pen fill={theme.grey.shade6} />
+                  </div>
+                </>
               ) : (
                 <NoProfilePic
                   onClick={() => {
@@ -164,6 +170,9 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                   }}
                 >
                   <PlaceholderProfile width={96} height={96} />
+                  <div className="pen">
+                    <Pen fill={theme.grey.shade6} />
+                  </div>
                 </NoProfilePic>
               )}
             </>
