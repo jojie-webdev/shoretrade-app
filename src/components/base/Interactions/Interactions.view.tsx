@@ -29,7 +29,6 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     iconColor,
     children,
     resultCount,
-    customFontSize,
     fullWidth,
     keepIcon,
     fontColor,
@@ -94,10 +93,11 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
             iconAlignment={iconAlignment}
           >
             <Typography
+              className="right-content-text"
               variant="overline"
               weight="bold"
               color="shade6"
-              style={{ marginRight: '8px', fontSize: customFontSize }}
+              style={{ marginRight: '8px' }}
             >
               {resultCount}
             </Typography>

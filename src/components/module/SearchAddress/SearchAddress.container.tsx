@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+import {
+  addressToPlaceData,
+  placeDataToUpdateAddressMeta,
+} from 'components/module/SearchAddress/SearchAddress.transform';
 import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,10 +15,6 @@ import {
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
-import {
-  addressToPlaceData,
-  placeDataToUpdateAddressMeta,
-} from './SearchAddress.transfrom';
 import SearchAddressView from './SearchAddress.view';
 
 const SearchAddress = (): JSX.Element => {

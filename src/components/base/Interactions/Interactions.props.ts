@@ -23,7 +23,6 @@ export interface InteractionsProps {
   children?: any;
   iconColor?: string;
   resultCount?: any;
-  customFontSize?: number;
   noBg?: boolean;
   fullWidth?: boolean;
   keepIcon?: boolean;
