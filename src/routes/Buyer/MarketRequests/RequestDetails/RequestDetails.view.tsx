@@ -345,19 +345,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         <span className="label">Sellers</span>
                       </div>
                     </div>
-                    <Row nogutter className="search-row" align="center" justify="between">
-                      <Col sm={6} md={6} lg={6} xl={6}>
-                        <Search
-                          className="filter-search"
-                          value={props.searchTerm}
-                          onChange={(event: any) =>
-                            props.setSearchTerm(event.currentTarget.value)
-                          }
-                          resetValue={() => props.setSearchTerm('')}
-                          placeholder="Search for any product..."
-                          rounded
-                        />
-                      </Col>
+                    <Row
+                      nogutter
+                      className="search-row"
+                      align="center"
+                      justify="between"
+                    >
                       <FilterButton onClick={props.onClickFilterButton}>
                         <TypographyView
                           variant="label"
