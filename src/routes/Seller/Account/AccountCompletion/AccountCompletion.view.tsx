@@ -14,15 +14,15 @@ import {
   Container,
   InfoContainer,
 } from 'routes/Seller/Account/AccountCompletion/AccountCompletion.style';
-import { useTheme } from 'utils/Theme';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
 const AccountCompletionView = ({
   accountCompletion,
+  goToLicenses,
   ...props
 }: AccountCompletionGeneratedProps) => {
   const theme = useTheme();
-
   if (!accountCompletion) {
     return <Loading />;
   }
@@ -75,22 +75,33 @@ const AccountCompletionView = ({
         SUMMARY
       </Typography>
       <Row className="summary-row">
-        {accountCompletion.checklist.map((c) => (
-          <Col lg={12} xl={4} key={c.label} className="summary-item">
-            <CheckFilled
-              width={24}
-              height={24}
-              fill={!c.isChecked ? theme.grey.shade7 : ''}
-            />
-            <Typography
-              variant="label"
-              color="noshade"
-              className="summary-item-text"
-            >
-              {c.label}
-            </Typography>
-          </Col>
-        ))}
+        {accountCompletion.checklist.map((c) => {
+          return (
+            <Col lg={12} xl={4} key={c.label} className="summary-item">
+              <CheckFilled
+                width={24}
+                height={24}
+                fill={!c.isChecked ? theme.grey.shade7 : ''}
+              />
+              <Typography
+                variant="label"
+                color="noshade"
+                className="summary-item-text"
+              >
+                {c.label.includes('License') ? (
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => goToLicenses()}
+                  >
+                    {c.label}
+                  </span>
+                ) : (
+                  c.label
+                )}
+              </Typography>
+            </Col>
+          );
+        })}
       </Row>
     </Container>
   );

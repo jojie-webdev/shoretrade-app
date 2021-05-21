@@ -260,14 +260,17 @@ export const Content = styled.div<{
       height: 100%;
       overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')};
       position: relative;
+      overflow-x: hidden;
+
       .screen {
         height: 100%;
         width: 100%;
+        display: flex;
         padding: ${(props) =>
           props.theme.appType === 'buyer' ? '0 8px' : '16px 24px'};
 
         .container {
-          position: static !important; // needed to override react-grid-system .container
+          /* position: static !important; // needed to override react-grid-system .container */
         }
       }
     }

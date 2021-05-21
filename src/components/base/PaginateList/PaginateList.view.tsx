@@ -36,7 +36,6 @@ const PaginateList = (props: PaginateListProps): JSX.Element => {
               resultCount={`${item.count} ${
                 item.count > 1 ? 'results' : 'result'
               }`}
-              customFontSize={15}
             />
           );
         })}
