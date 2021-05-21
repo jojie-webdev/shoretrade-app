@@ -41,6 +41,7 @@ function* verifySuccess(action: AsyncAction<VerifyMeta, VerifyPayload>) {
     yield put(
       authActions.update({ token: action.payload.data.token, type: 'buyer' })
     );
+    yield put(verifyActions.failed(''));
   } else if (userGroup === 'SELLER_ADMIN') {
     const isPending =
       pathOr<string>('', ['payload', 'data', 'user', 'status'], action) ===
@@ -52,6 +53,7 @@ function* verifySuccess(action: AsyncAction<VerifyMeta, VerifyPayload>) {
         authActions.update({ token: action.payload.data.token, type: 'seller' })
       );
     }
+    yield put(verifyActions.failed(''));
   }
 }
 

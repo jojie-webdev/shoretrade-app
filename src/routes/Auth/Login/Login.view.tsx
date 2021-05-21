@@ -44,6 +44,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
     isError,
     goToRegister,
     switchType,
+    errorMessage,
   } = props;
 
   const formikProps = {
@@ -156,7 +157,10 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
 
           {isError && (
             <Alert
-              content="Verification Failed! Your email or password were incorrect."
+              content={
+                errorMessage ||
+                'Verification Failed! Your email or password were incorrect.'
+              }
               variant="error"
               fullWidth
               style={{
