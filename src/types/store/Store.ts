@@ -220,6 +220,7 @@ export interface Store {
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;
+  logout: AsyncState<String, LoginPayload>;
   verify: AsyncState<VerifyMeta, VerifyPayload>;
   register: AsyncState<RegisterMeta, RegisterPayload>;
   forgotPassword: AsyncState<ForgotPasswordMeta, ForgotPasswordPayload>;

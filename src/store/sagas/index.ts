@@ -52,6 +52,7 @@ import getShippingQuote from './getShippingQuote';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import login from './login';
+import logout from './logout';
 import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
@@ -132,6 +133,7 @@ const sagas = [
   getUser,
   logRequest,
   login,
+  logout,
   marketOfferNegotiate,
   marketRequestAcceptOffer,
   marketRequestNegotiation,

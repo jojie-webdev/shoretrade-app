@@ -8,10 +8,10 @@ import {
   authActions,
   cartActions,
   editableListingActions,
+  logoutActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
-
 import {
   DashboardPublicProps,
   DashboardGeneratedProps,
@@ -60,6 +60,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   };
 
   const logout = () => {
+    dispatch(logoutActions.request());
     dispatch(editableListingActions.clear());
     dispatch(cartActions.clear());
     dispatch(authActions.clear());
