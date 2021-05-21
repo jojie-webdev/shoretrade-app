@@ -13,4 +13,5 @@ export interface LoginGeneratedProps {
   goToRegister: () => void;
   switchType: () => void;
   errorMessage: string;
+  isLoggedOut: boolean;
 }

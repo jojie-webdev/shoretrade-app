@@ -25,6 +25,8 @@ const Login = (): JSX.Element => {
   };
   const errorMessage = useSelector((state: Store) => state.login.error) || '';
 
+  const isLoggedOut = useSelector((state: Store) => !!state.logout.data);
+
   const switchType = () => {
     history.push(isSeller ? BUYER_ROUTES.LOGIN : SELLER_ROUTES.LOGIN);
   };
@@ -48,6 +50,7 @@ const Login = (): JSX.Element => {
     goToRegister,
     isError,
     errorMessage,
+    isLoggedOut,
   };
   return <LoginView {...generatedProps} />;
 };

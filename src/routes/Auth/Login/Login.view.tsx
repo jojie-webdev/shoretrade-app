@@ -45,6 +45,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
     goToRegister,
     switchType,
     errorMessage,
+    isLoggedOut,
   } = props;
 
   const formikProps = {
@@ -162,6 +163,17 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
                 'Verification Failed! Your email or password were incorrect.'
               }
               variant="error"
+              fullWidth
+              style={{
+                marginTop: 16,
+              }}
+            />
+          )}
+
+          {isLoggedOut && (
+            <Alert
+              content="Successfully logged out."
+              variant="info"
               fullWidth
               style={{
                 marginTop: 16,

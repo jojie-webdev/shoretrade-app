@@ -22,6 +22,18 @@ export const login = (data: LoginMeta) => {
   });
 };
 
+export const logout = (token: string) => {
+  return axios({
+    method: 'post',
+    url: `${AUTH_URL}/logout`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {},
+  });
+};
+
+
 export const verify = (data: VerifyMeta) => {
   return axios({
     method: 'post',

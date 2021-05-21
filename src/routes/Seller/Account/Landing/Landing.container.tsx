@@ -6,6 +6,7 @@ import {
   cartActions,
   editableListingActions,
   updateUserActions,
+  logoutActions,
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -43,6 +44,7 @@ const AccountLanding = (): JSX.Element => {
   };
 
   const logout = () => {
+    dispatch(logoutActions.request());
     dispatch(editableListingActions.clear());
     dispatch(cartActions.clear());
     dispatch(authActions.clear());
