@@ -216,6 +216,21 @@ export const OffersContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  .search-row {
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .search-row {
+      height: 100px;
+    }
+  }
+
+  .filter-search {
+    margin-bottom: 0px;
+  }
+
   .numbers-container {
     margin-bottom: 2rem;
     display: flex;
@@ -241,6 +256,7 @@ export const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
 
@@ -270,5 +286,19 @@ export const FilterContainer = styled.div`
     .filter-sort-container {
       width: 100%;
     }
+  }
+`;
+
+export const FilterButton = styled.button`
+  background: ${({ theme }) => theme.grey.shade3};
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: none;
+  height: 32px;
+
+  .btn-text {
+    margin-right: 4px;
   }
 `;

@@ -78,6 +78,7 @@ export { default as createMarketRequestActions } from './createMarketRequest';
 export { default as editableMarketRequestActions } from './editableMarketRequest';
 export { default as createMarketOfferActions } from './createMarketOffer';
 export { default as getMarketNotificationActions } from './getMarketNotification';
+export { default as getMarketRequestBuyerFiltersActions } from './getMarketRequestBuyerFilters';
 export { default as readMarketNotificationActions } from './readMarketNotification';
 export { default as marketOfferNegotiateActions } from './marketOfferNegotiate';
 export { default as marketRequestAcceptOfferActions } from './marketRequestAcceptOffer';

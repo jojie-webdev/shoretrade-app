@@ -16,6 +16,7 @@ import {
   BadgeText,
   StyledTextField,
   BadgesContainer,
+  MobileFooterContent,
   OfferActionsContainer,
 } from './OfferDetail.style';
 
@@ -261,25 +262,25 @@ const OfferDetailView = (props: any) => {
         </OfferActionsContainer>
       </Hidden>
       <MobileFooter>
-        {!hideNegotiate && (
-          <Button
-            onClick={() => handleStartNegotiate()}
-            className="button"
-            variant="outline"
-            text="Negotiate"
-            takeFullWidth
-          />
-        )}
-        {!isAccepted && (
-          <Button
-            onClick={() => handleAcceptOffer()}
-            className="button"
-            variant="primary"
-            disabled={disableAccept}
-            text="Accept"
-            takeFullWidth
-          />
-        )}
+        <MobileFooterContent>
+          {!hideNegotiate && (
+            <Button
+              onClick={() => handleStartNegotiate()}
+              className="button"
+              variant="outline"
+              text="Negotiate"
+            />
+          )}
+          {!isAccepted && (
+            <Button
+              onClick={() => handleAcceptOffer()}
+              className="button"
+              variant="primary"
+              disabled={disableAccept}
+              text="Accept"
+            />
+          )}
+        </MobileFooterContent>
       </MobileFooter>
     </>
   );

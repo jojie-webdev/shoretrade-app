@@ -47,6 +47,7 @@ import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
+import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -136,6 +137,7 @@ export default (routeHistory: History) =>
         getMarketEstimate,
         getMarketInterests,
         getMarketNotification,
+        getMarketRequestBuyerFilters,
         getPaymentMethods,
         getSellerById,
         getSellerLicense,
