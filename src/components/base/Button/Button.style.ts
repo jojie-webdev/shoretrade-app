@@ -59,6 +59,12 @@ export const ButtonContainer = styled.button<
 
   @media ${BREAKPOINTS['sm']} {
     padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
+    :hover {
+      opacity: 1;
+    }
+    :active {
+      opacity: 0.5;
+    }
   }
 
   p {
