@@ -8,10 +8,10 @@ import {
   authActions,
   cartActions,
   editableListingActions,
+  logoutActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
-import { logoutActions } from 'store/actions';
 import {
   DashboardPublicProps,
   DashboardGeneratedProps,
@@ -58,9 +58,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     str = s.replace('-', ' ');
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
-  const token = useSelector((state: Store) => state.auth.token) || '';
+
   const logout = () => {
-    dispatch(logoutActions.request(token));
+    dispatch(logoutActions.request());
     dispatch(editableListingActions.clear());
     dispatch(cartActions.clear());
     dispatch(authActions.clear());
