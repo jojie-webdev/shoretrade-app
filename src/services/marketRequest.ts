@@ -5,6 +5,7 @@ import { DeleteMarketRequestMeta } from 'types/store/DeleteMarketRequestState';
 import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
 import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersMeta } from 'types/store/GetAllMarketRequestFiltersState';
+import { GetMarketRequestBuyerFiltersMeta } from 'types/store/GetMarketRequestBuyerFiltersState';
 import { AcceptOffer } from 'types/store/MarketOfferState';
 import { ReadMarketNotificationMeta } from 'types/store/ReadMarketNotificationState';
 
@@ -28,6 +29,19 @@ export const getAllMarketRequestFilters = (
   return axios({
     method: 'get',
     url: `${MARKET_REQUEST_URL}/get-seller-search-filter-data/${data.companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getMarketRequestBuyerFilters = (
+  data: GetMarketRequestBuyerFiltersMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${MARKET_REQUEST_URL}/offers/get-buyer-search-filter-data/${data.buyerId}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -8,12 +9,20 @@ import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDet
 import {
   deleteMarketRequestActions,
   getActiveOffersActions,
+  getAllMarketRequestActions,
+  getMarketRequestBuyerFiltersActions,
   marketRequestAcceptOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
 
+import {
+  getFavouriteSellers,
+  getLocation,
+  getRating,
+  requestToModalFilter,
+} from './RequestDetails.transform';
 import MarketRequestDetailView from './RequestDetails.view';
 
 const MarketRequestDetail = (): JSX.Element => {
@@ -27,7 +36,17 @@ const MarketRequestDetail = (): JSX.Element => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
   };
 
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  const activeOffersData = (activeOffers.data?.data.marketOffers || []).filter(
+    (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
+  );
+
+  const buyerRequestsFilters = useSelector(
+    (store: Store) => store.getMarketRequestBuyerFilters.data?.data
+  );
+
+  const { filters } = requestToModalFilter(buyerRequestsFilters);
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
@@ -60,6 +79,10 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections = offerBreadCrumb;
   }
   const [searchTerm, setSearchTerm] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [initial, setInitial] = useState(true);
+  const [currentMR, setCurrentMR] = useState<any>();
+
   const [negotiating, setNegotiating] = useState(false);
   const [currentOfferId, setCurrentOfferId] = useState('');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
@@ -67,11 +90,19 @@ const MarketRequestDetail = (): JSX.Element => {
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
+  //filters
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
+
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
     setSelectedCompany(company);
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id, row.id));
+  };
+
+  const onClickFilterButton = () => {
+    setIsFilterModalOpen((prevState) => !prevState);
   };
 
   const handleAcceptOffer = () => {
@@ -111,6 +142,29 @@ const MarketRequestDetail = (): JSX.Element => {
     setNegotiating(false);
   };
 
+  const onApply = () => {
+    setIsFilterModalOpen(false);
+
+    dispatch(
+      getActiveOffersActions.request({
+        queryParams: {
+          marketRequestId: id,
+          searchTerm: searchTerm,
+          location: getLocation(selectedFilters, buyerRequestsFilters!),
+          rating: getRating(selectedFilters, buyerRequestsFilters!),
+          favouriteSellers: getFavouriteSellers(
+            selectedFilters,
+            buyerRequestsFilters!
+          ),
+        },
+      })
+    );
+  };
+
+  const onReset = () => {
+    setSelectedFilters([]);
+  };
+
   useEffect(() => {
     dispatch(
       getActiveOffersActions.request({
@@ -120,6 +174,50 @@ const MarketRequestDetail = (): JSX.Element => {
       })
     );
   }, []);
+
+  useEffect(() => {
+    setInitial(false);
+    if (activeOffersData[0]?.marketRequest) {
+      setCurrentMR(activeOffersData[0].marketRequest);
+    }
+  }, [activeOffers]);
+
+  useEffect(() => {
+    if (initial) return;
+
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    const timerId = setTimeout(() => {
+      dispatch(
+        getActiveOffersActions.request({
+          queryParams: {
+            marketRequestId: id,
+            term: searchTerm,
+            location: getLocation(selectedFilters, buyerRequestsFilters!),
+            rating: getRating(selectedFilters, buyerRequestsFilters!),
+            favouriteSellers: getFavouriteSellers(
+              selectedFilters,
+              buyerRequestsFilters!
+            ),
+          },
+        })
+      );
+    }, 800);
+
+    setTimer(timerId);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    dispatch(
+      getMarketRequestBuyerFiltersActions.request({
+        buyerId: user?.id || '',
+      })
+    );
+  }, [user]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -223,16 +321,15 @@ const MarketRequestDetail = (): JSX.Element => {
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,
-    totalOffers: activeOffers.data?.data.count || 0,
+    totalOffers: activeOffersData.length || 0,
     deliveryTotal,
     counterOffer,
     newOffer,
     selectedOffer,
     marketRequestId: id,
-    data: activeOffers.data?.data.marketOffers[0]?.marketRequest || {},
-    measurementUnit:
-      activeOffers.data?.data.marketOffers[0]?.offers[0].measurementUnit || '',
-    sellerOffers: activeOffers.data?.data.marketOffers || [],
+    data: currentMR || {},
+    measurementUnit: activeOffersData[0]?.offers[0].measurementUnit || '',
+    sellerOffers: activeOffersData || [],
     searchTerm,
     negotiating,
     setNegotiating,
@@ -255,6 +352,17 @@ const MarketRequestDetail = (): JSX.Element => {
     setShowDelete,
     sortedNegotiations,
     lastNegotiationsOffers,
+    isLoading: activeOffers.pending || false,
+    filterModalProps: {
+      isOpen: isFilterModalOpen,
+      filters,
+      selectedFilters,
+      setSelectedFilters,
+      onApply,
+      onReset,
+      onClickClose: () => setIsFilterModalOpen(false),
+    },
+    onClickFilterButton,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

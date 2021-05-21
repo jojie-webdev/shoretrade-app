@@ -1,7 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
 export type GetActiveOffersMeta = {
-  queryParams?: Record<string, string>;
+  queryParams?: Record<string, any>;
 };
 
 export type GetActiveOffersRequestResponseItem = {

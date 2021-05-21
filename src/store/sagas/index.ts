@@ -42,6 +42,7 @@ import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
+import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -121,6 +122,7 @@ const sagas = [
   getMarketEstimate,
   getMarketInterests,
   getMarketNotification,
+  getMarketRequestBuyerFilters,
   getPaymentMethods,
   getSellerById,
   getSellerLicense,

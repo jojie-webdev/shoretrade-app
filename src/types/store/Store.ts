@@ -149,6 +149,10 @@ import {
   GetMarketNotificationPayload,
 } from './GetMarketNotificationState';
 import {
+  GetMarketRequestBuyerFiltersMeta,
+  GetMarketRequestBuyerFiltersPayload,
+} from './GetMarketRequestBuyerFiltersState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -354,6 +358,10 @@ export interface Store {
   getMarketInterests: AsyncState<
     GetMarketInterestsMeta,
     GetMarketInterestsPayload
+  >;
+  getMarketRequestBuyerFilters: AsyncState<
+    GetMarketRequestBuyerFiltersMeta,
+    GetMarketRequestBuyerFiltersPayload
   >;
   updateMarketInterests: AsyncState<
     UpdateMarketInterestsMeta,
