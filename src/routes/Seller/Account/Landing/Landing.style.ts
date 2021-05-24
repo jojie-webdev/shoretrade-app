@@ -20,9 +20,12 @@ export const Header = styled.div`
   .left-content {
     display: flex;
     align-items: center;
-
+    position: relative;
     img {
       ${imgStyle}
+    }
+    .img-container {
+      position: relative;
     }
 
     .loading-indicator {
@@ -31,6 +34,14 @@ export const Header = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .pen {
+      svg {
+        position: absolute;
+        right: 16px;
+        bottom: 0px;
+      }
     }
   }
 `;

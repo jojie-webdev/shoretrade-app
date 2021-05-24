@@ -24,13 +24,23 @@ export const Header = styled.div`
     img {
       ${imgStyle};
     }
-
+    .img-container {
+      position: relative;
+    }
     .loading-indicator {
       width: 96px;
       height: 96px;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .pen {
+      svg {
+        position: absolute;
+        right: 16px;
+        bottom: 0px;
+      }
     }
   }
 `;
