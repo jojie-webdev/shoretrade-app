@@ -43,7 +43,6 @@ export const RequestItemInteraction = styled(Interactions)`
 
 export const HeaderContainer = styled.header`
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
@@ -219,12 +218,6 @@ export const OffersContainer = styled.div`
   .search-row {
     align-items: center;
     margin-bottom: 16px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    .search-row {
-      height: 100px;
-    }
   }
 
   .filter-search {

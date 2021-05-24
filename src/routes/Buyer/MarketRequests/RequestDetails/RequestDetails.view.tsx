@@ -313,15 +313,20 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   <></>
                 )}
               </RequestDetailsCardContainer>
-              <Hidden xs>
-                {data.status !== 'DELETED' && (
-                  <Button
-                    text="Delete"
-                    onClick={() => setShowDelete(true)}
-                    variant="primary"
-                  />
-                )}
-              </Hidden>
+              <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
+                <Col xs={12}>
+                  <Hidden xs>
+                    {data.status !== 'DELETED' && (
+                      <Button
+                        text="Delete"
+                        size="sm"
+                        onClick={() => setShowDelete(true)}
+                        variant="primary"
+                      />
+                    )}
+                  </Hidden>
+                </Col>
+              </Row>
             </Col>
             <Col md={12} sm={12} xl={8}>
               <Switch>
