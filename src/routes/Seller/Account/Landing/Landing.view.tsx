@@ -142,40 +142,39 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
               <Spinner />
             </div>
           ) : (
-            <>
-              {profilePicture !== '' ? (
-                <>
-                  <img
-                    src={
-                      hideBrokenProfileImage
-                        ? DefaultProfileImage
-                        : parseImageUrl(profilePicture) || DefaultProfileImage
-                    }
-                    alt="profile picture"
-                    onError={() => {
-                      setHideBrokenProfileImage(true);
-                    }}
+            <div className="img-container">
+              <>
+                {profilePicture !== '' ? (
+                  <>
+                    <img
+                      src={
+                        hideBrokenProfileImage
+                          ? DefaultProfileImage
+                          : parseImageUrl(profilePicture) || DefaultProfileImage
+                      }
+                      alt="profile picture"
+                      onError={() => {
+                        setHideBrokenProfileImage(true);
+                      }}
+                      onClick={() => {
+                        handleOnClick();
+                      }}
+                    />
+                  </>
+                ) : (
+                  <NoProfilePic
                     onClick={() => {
                       handleOnClick();
                     }}
-                  />
-                  <div className="pen-image">
-                    <Pen fill={theme.brand.primary} />
-                  </div>
-                </>
-              ) : (
-                <NoProfilePic
-                  onClick={() => {
-                    handleOnClick();
-                  }}
-                >
-                  <PlaceholderProfile width={96} height={96} />
-                  <div className="pen">
-                    <Pen fill={theme.grey.shade6} />
-                  </div>
-                </NoProfilePic>
-              )}
-            </>
+                  >
+                    <PlaceholderProfile width={96} height={96} />
+                  </NoProfilePic>
+                )}
+              </>
+              <div className="pen">
+                <Pen fill={theme.brand.primary} />
+              </div>
+            </div>
           )}
 
           <div>

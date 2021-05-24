@@ -24,6 +24,9 @@ export const Header = styled.div`
     img {
       ${imgStyle}
     }
+    .img-container {
+      position: relative;
+    }
 
     .loading-indicator {
       width: 96px;
@@ -36,24 +39,8 @@ export const Header = styled.div`
     .pen {
       svg {
         position: absolute;
-        left: 29%;
-        bottom: 0;
-        @media (max-width: 576px) and (min-width: 320px) {
-          left: 27%;
-        }
-      }
-    }
-    .pen-image {
-      svg {
-        position: absolute;
-        left: 28.5%;
-        bottom: 0;
-        @media (max-width: 576px) and (min-width: 320px) {
-          left: 27%;
-        }
-        @media (max-width: 595px) and (min-width: 577px) {
-          left: 29%;
-        }
+        right: 16px;
+        bottom: 0px;
       }
     }
   }
