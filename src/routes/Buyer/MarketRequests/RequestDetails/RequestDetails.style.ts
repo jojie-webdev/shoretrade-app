@@ -147,9 +147,10 @@ export const SellerOfferInteractionContentContainer = styled.div`
 
 export const TagsContainer = styled.div`
   display: flex;
-
+  flex-wrap: wrap;
   .offers-state-badge {
     margin-right: 0.6rem;
+    margin-bottom: 0.6rem;
   }
 `;
 
