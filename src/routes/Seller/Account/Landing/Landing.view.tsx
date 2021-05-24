@@ -160,7 +160,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                     }}
                   />
                   <div className="pen-image">
-                    <Pen fill={theme.grey.shade6} />
+                    <Pen fill={theme.brand.primary} />
                   </div>
                 </>
               ) : (
