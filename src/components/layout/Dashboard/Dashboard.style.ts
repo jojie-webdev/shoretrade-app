@@ -395,15 +395,8 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
     margin-bottom: 8px;
   }
 
-  @media ${BREAKPOINTS['genericTablet']} {
-    width: calc(100% - 32px);
-  }
-
-  @media ${BREAKPOINTS['iPad']} {
-    width: calc(100% - 32px);
-  }
-
-  @media ${BREAKPOINTS['xl']} {
+  //generic tablet till xl
+  @media (min-width: 577px) and (max-width: 1200px) {
     width: calc(100% - 32px);
   }
 `;
