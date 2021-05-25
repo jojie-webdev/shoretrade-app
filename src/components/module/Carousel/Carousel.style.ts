@@ -61,10 +61,14 @@ export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
   position: absolute;
-  bottom: 42px;
+  bottom: 64px;
   left: 16px;
   width: 100%;
   z-index: 999;
+
+  @media ${BREAKPOINTS['sm']} {
+    bottom: 12px;
+  }
 `;
 
 export const ArrowButton = styled.div`
