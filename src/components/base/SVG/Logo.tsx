@@ -7,13 +7,13 @@ import { SVGProps } from './SVG.props';
 const Logo = (props: SVGProps): JSX.Element => {
   const theme = useTheme();
   const { width, height, fill } = props;
+
   return (
     <svg
-      width="82"
-      height="44"
+      width={width || '82'}
+      height={height || '44'}
       viewBox="0 0 82 44"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M29.9397 8.62671L29.8382 0H25.3727V8.52521H20.7041V0H16.2385V19.7907H20.7041V12.4834H25.3727V19.7907H29.9397V8.62671Z"
