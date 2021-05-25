@@ -52,6 +52,7 @@ export const ItemContainer = styled.div`
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      flex: 3;
 
       .shipping-from {
         margin-right: 80px;
@@ -100,6 +101,40 @@ export const ItemContainer = styled.div`
   .wrap-content {
     flex-wrap: wrap;
   }
+
+  .right-section {
+    flex: 1.2;
+    display: flex;
+    justify-content: space-between;
+
+    @media ${BREAKPOINTS.sm} {
+      display: block;
+      button {
+        margin-bottom: 12px;
+      }
+    }
+    @media ${BREAKPOINTS.md} {
+      display: block;
+      button {
+        margin-bottom: 12px;
+      }
+    }
+    @media ${BREAKPOINTS.lg} {
+      display: block;
+      button {
+        margin-bottom: 12px;
+      }
+    }
+    @media ${BREAKPOINTS.iPad} {
+      display: block;
+      button {
+        margin-bottom: 12px;
+      }
+    }
+    @media (max-width: 425px) {
+      flex-wrap: nowrap;
+    }
+  }
 `;
 
 export const ItemDetail = styled.div<{
@@ -128,6 +163,7 @@ export const ItemDetail = styled.div<{
 
   @media ${BREAKPOINTS.sm} {
     align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
+    display: block;
   }
 `;
 

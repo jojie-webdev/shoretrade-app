@@ -131,46 +131,18 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             (incl. GST)
           </Typography>
         </ItemDetail>
-        {props.completedOrder ? (
-          <RightContent>
-            <ItemDetail type="center" style={{ marginRight: 6 }}>
-              <Button
-                text="Raise Dispute"
-                icon={<Message fill="#FFF" height={16} width={16} />}
-                iconPosition="before"
-                variant="primary"
-                size="sm"
-                onClick={props.onClick}
-              />
-            </ItemDetail>
-
-            <ItemDetail type="right" row>
-              <Typography
-                color="shade7"
-                variant="label"
-                style={{ marginRight: '6px' }}
-              >
-                Total
-              </Typography>
-              <Typography color="shade9" variant="title5" weight="bold">
-                {props.data.total}
-              </Typography>
-            </ItemDetail>
-          </RightContent>
-        ) : (
-          <ItemDetail type="right" row>
-            <Typography
-              color="shade7"
-              variant="label"
-              style={{ marginRight: '6px' }}
-            >
-              Total
-            </Typography>
-            <Typography color="shade9" variant="title5" weight="bold">
-              {props.data.total}
-            </Typography>
-          </ItemDetail>
-        )}
+        <ItemDetail type="right" row>
+          <Typography
+            color="shade7"
+            variant="label"
+            style={{ marginRight: '6px' }}
+          >
+            Total
+          </Typography>
+          <Typography color="shade9" variant="title5" weight="bold">
+            {props.data.total}
+          </Typography>
+        </ItemDetail>
       </div>
 
       <div className="section wrap-content">
@@ -189,13 +161,33 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Typography color="shade9">{props.data.shippingTo}</Typography>
           </ItemDetail>
         </div>
-
-        <ItemDetail type="right">
-          <Typography color="shade7" variant="caption">
-            Order No.
-          </Typography>
-          <Typography color="shade9">{props.data.orderNumber}</Typography>
-        </ItemDetail>
+        {props.completedOrder ? (
+          <div className="right-section">
+            <ItemDetail type="center" style={{ margin: '6px 6px 0 0' }}>
+              <Button
+                text="Raise Dispute"
+                icon={<Message fill="#FFF" height={16} width={16} />}
+                iconPosition="before"
+                variant="primary"
+                size="sm"
+                onClick={props.onClick}
+              />
+            </ItemDetail>
+            <ItemDetail type="right">
+              <Typography color="shade7" variant="caption">
+                Order No.
+              </Typography>
+              <Typography color="shade9">{props.data.orderNumber}</Typography>
+            </ItemDetail>
+          </div>
+        ) : (
+          <ItemDetail type="right">
+            <Typography color="shade7" variant="caption">
+              Order No.
+            </Typography>
+            <Typography color="shade9">{props.data.orderNumber}</Typography>
+          </ItemDetail>
+        )}
       </div>
     </ItemContainer>
   );

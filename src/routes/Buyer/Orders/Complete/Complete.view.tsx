@@ -46,7 +46,6 @@ const Complete = (props: OrdersGeneratedProps) => {
       isOpen: false,
     }
   );
-  const [isOpen, setIsOpen] = useState<string[]>([]);
   return (
     <>
       <MessageModal
@@ -105,11 +104,7 @@ const Complete = (props: OrdersGeneratedProps) => {
                 token={props.token}
                 key={d.id}
                 onClick={(e) => {
-                  // updateDisputeModal({
-                  //   isOpen: true,
-                  //   orderId: d.orderId,
-                  //   sellerName: d.
-                  // })
+                  console.log(d.id);
                   updateDisputeModal({ isOpen: true, orderId: d.id });
                   e.stopPropagation();
                 }}

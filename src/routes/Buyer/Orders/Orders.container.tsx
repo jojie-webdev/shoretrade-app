@@ -10,6 +10,7 @@ import {
   getBuyerOrdersPlacedActions,
   getBuyerOrdersTransitActions,
   getBuyerOrdersDeliveredActions,
+  sendDisputeActions,
 } from 'store/actions';
 import {
   GetBuyerOrdersToShipPending,
@@ -221,10 +222,19 @@ const OrdersContainer = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
-  const isSendingDispute = false;
+  const isSendingDispute = useSelector(
+    (state: Store) => state.sendDispute.pending || false
+  );
 
   const sendDispute = (orderId: string, message: string) => {
-    console.log(orderId, message);
+    if (orderId && message) {
+      dispatch(
+        sendDisputeActions.request({
+          orderId,
+          message,
+        })
+      );
+    }
   };
   const generatedProps: OrdersGeneratedProps = {
     pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
