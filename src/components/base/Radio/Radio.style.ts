@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -9,6 +10,16 @@ export const Container = styled.div`
     opacity: 0.5;
   }
   cursor: pointer;
+
+  @media ${BREAKPOINTS['sm']} {
+    &:hover {
+      opacity: 1;
+    }
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
 `;
 
 export const HiddenRadio = styled.input`
