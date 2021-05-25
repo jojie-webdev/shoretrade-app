@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft, Logo } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { MobileNavGeneratedProps } from 'components/layout/MobileNav/MobileNav.props';
 import {
@@ -12,19 +12,26 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
-//TODO: Top Nav, Bottom NavBar?
-const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element => {
+const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
   const theme = useTheme();
-  const { children, onBack, showBack } = props;
+  const {
+    children,
+    rightContent,
+    onBack,
+    showLogo,
+    showBack,
+    position = 'fixed',
+  } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  if (!isSmallScreen) return <>{children}</>;
+  if (!isSmallScreen) return children ? <>{children}</> : null;
 
   return (
     <>
-      <Container>
+      <Container position={position}>
         <>
+          {showLogo && <Logo width={58} height={28} />}
           {showBack() && (
             <div onClick={onBack}>
               <ArrowLeft fill={theme.grey.noshade} height={14} width={14} />
@@ -35,10 +42,11 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element => {
               {props.getTitle()}
             </Typography>
           </Title>
+          {rightContent && <div className="right-content">{rightContent}</div>}
         </>
       </Container>
 
-      <Content>{children}</Content>
+      {children && <Content>{children}</Content>}
     </>
   );
 };

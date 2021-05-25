@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import {
   ShoretradeLogo2,
   Exit,
-  Cart,
+  Cart as CartIcon,
   ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
@@ -11,6 +11,7 @@ import {
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -45,6 +46,7 @@ import {
   CheckoutCount,
   SidebarLogoContainer,
   HeaderWrapper,
+  HeaderRightContent,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -84,6 +86,33 @@ const IconLink = ({
   );
 };
 
+const Cart = ({ cartItems }: { cartItems: number }) => {
+  const theme = useTheme();
+  const history = useHistory();
+
+  const isMobile = useMediaQuery({
+    query: BREAKPOINTS.sm,
+  });
+
+  return (
+    <div className="cart-container">
+      <div
+        className="cart-wrapper"
+        onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
+      >
+        <CartIcon fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
+        {cartItems > 0 && (
+          <CheckoutCount>
+            <Typography color="noshade" variant="small" weight="900">
+              {cartItems}
+            </Typography>
+          </CheckoutCount>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const Header = ({
   pageTitle,
   userData,
@@ -95,7 +124,6 @@ const Header = ({
   onClickAccount,
 }: HeaderProps) => {
   const theme = useTheme();
-  const history = useHistory();
 
   const isMenuVisible = useMediaQuery({
     query: '(max-width: 768px)',
@@ -105,9 +133,38 @@ const Header = ({
     query: BREAKPOINTS.genericTablet,
   });
 
+  const isMobile = useMediaQuery({
+    query: BREAKPOINTS.sm,
+  });
+
   const isHomeOld = useHomeOld();
 
-  return (
+  return isMobile ? (
+    <MobileNav
+      position="initial"
+      onBackOverride={onBack}
+      showLogo={!onBack}
+      rightContent={
+        <HeaderRightContent>
+          {!onBack && theme.appType === 'buyer' && (
+            <Cart cartItems={cartItems} />
+          )}
+          <Typography variant="overlineSmall" component="span" color="noshade">
+            MENU
+          </Typography>
+          <HamburgerWrapper>
+            <Hamburger
+              onClick={onClick}
+              isActive={openSidebar}
+              width={18}
+              height={11}
+              color={theme.grey.noshade}
+            />
+          </HamburgerWrapper>
+        </HeaderRightContent>
+      }
+    />
+  ) : (
     <HeaderContainer className="appbar" isHomeOld={isHomeOld}>
       <div className="left-content">
         {onBack && isMenuVisible ? (
@@ -144,24 +201,8 @@ const Header = ({
         </div>
       </div>
 
-      <div className="right-content">
-        {theme.appType === 'buyer' && (
-          <div className="cart-container">
-            <div
-              className="cart-wrapper"
-              onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
-            >
-              <Cart fill={theme.grey.shade8} />
-              {cartItems > 0 && (
-                <CheckoutCount>
-                  <Typography color="noshade" variant="small" weight="900">
-                    {cartItems}
-                  </Typography>
-                </CheckoutCount>
-              )}
-            </div>
-          </div>
-        )}
+      <HeaderRightContent>
+        {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
 
         <Touchable
           className="dashboard-account-container"
@@ -187,7 +228,7 @@ const Header = ({
             <PlaceholderProfile />
           )}
         </Touchable>
-      </div>
+      </HeaderRightContent>
     </HeaderContainer>
   );
 };
