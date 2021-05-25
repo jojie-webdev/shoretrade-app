@@ -164,6 +164,7 @@ const MarketRequestsLandingView = (
             marketRequests.map((mr) => (
               <MarketRequestItemInteraction
                 key={mr.id}
+                type={mr.offers > 0 ? 'next' : 'none'}
                 onClick={() => onClickItem(mr)}
                 leftComponent={
                   <MarketRequestItem
@@ -191,6 +192,7 @@ const MarketRequestsLandingView = (
               data={marketRequests.map((mr) => {
                 return {
                   id: mr.id,
+                  type: mr.offers > 0 ? 'next' : 'none',
                   onClick: () => onClickItem(mr),
                   leftComponent: (
                     <MarketRequestItem

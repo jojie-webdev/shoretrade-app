@@ -10,7 +10,7 @@ import {
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
-import { MarketRequestsLandingGeneratedProps } from './Landing.props';
+import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
 
@@ -39,8 +39,10 @@ const MarketRequestsLanding = (): JSX.Element => {
     (store: Store) => store.getAllMarketRequest
   );
 
-  const onClickItem = (row: any) => {
-    history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
+  const onClickItem = (row: Result) => {
+    if (row.offers > 0) {
+      history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
+    }
   };
 
   const onDelete = (id: string) => {

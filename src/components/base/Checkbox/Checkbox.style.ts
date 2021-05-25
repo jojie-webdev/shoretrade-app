@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -8,6 +9,17 @@ export const Container = styled.div`
   &:hover {
     opacity: 0.5;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    &:hover {
+      opacity: 1;
+    }
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
+
   cursor: pointer;
 `;
 

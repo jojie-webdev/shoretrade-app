@@ -109,7 +109,7 @@ export const MainAgreementContainer = styled.div`
     flex-direction: row;
     flex: 0 1 auto;
 
-    margin-top: 8rem;
+    margin-top: 1rem;
     width: 16rem;
 
     .label {
