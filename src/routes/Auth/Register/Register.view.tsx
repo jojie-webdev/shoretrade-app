@@ -1,4 +1,11 @@
-import React, { useState, Fragment, useReducer, useRef } from 'react';
+import React, {
+  useState,
+  Fragment,
+  useReducer,
+  useRef,
+  useEffect,
+  RefObject,
+} from 'react';
 
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
@@ -1081,11 +1088,6 @@ const StepForm = ({
 };
 
 const RegisterView = (props: RegisterGeneratedProps) => {
-  const theme = useTheme();
-  const isSeller = theme.appType === 'seller';
-  const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
   const {
     backToLogin,
     registrationDetails,
@@ -1097,6 +1099,13 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     isSummaryEdit,
     goToLogIn,
   } = props;
+
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+  const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
   const MAX_STEP = !isSeller ? 6 : 7;
@@ -1320,6 +1329,10 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     }
   };
 
+  useEffect(() => {
+    if (renderRef) renderRef.current?.scrollTo(0, 0);
+  }, [step, renderRef]);
+
   return (
     <MobileNav
       {...(step > 0
@@ -1337,7 +1350,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         containerBackground={isSeller ? theme.grey.shade8 : theme.grey.shade1}
         minHeight={'660px'}
       >
-        <RenderContainer step={step}>
+        <RenderContainer step={step} ref={renderRef}>
           {!props.isGotoDetails && step > 0 && !isSuccess && (
             <TopContainer>
               <StepCount
