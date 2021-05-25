@@ -4,6 +4,7 @@ import Button from 'components/base/Button';
 import { DownloadFile, Message } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
+import moment from 'moment-timezone';
 import { createUpdateReducer } from 'utils/Hooks';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
@@ -21,6 +22,9 @@ import {
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
   const theme = useTheme();
+  const tomorrow = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24);
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+
   return (
     <ItemContainer>
       <div className="section wrap-content">
@@ -161,7 +165,9 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Typography color="shade9">{props.data.shippingTo}</Typography>
           </ItemDetail>
         </div>
-        {props.completedOrder ? (
+        {props.completedOrder &&
+        props.deliveredDate >= yesterday &&
+        props.deliveredDate <= tomorrow ? (
           <div className="right-section">
             <ItemDetail type="center" style={{ margin: '6px 6px 0 0' }}>
               <Button

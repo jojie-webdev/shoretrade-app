@@ -7,6 +7,7 @@ import MessageModal from 'components/module/MessageModal';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
+import moment from 'moment-timezone';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router';
@@ -46,6 +47,7 @@ const Complete = (props: OrdersGeneratedProps) => {
       isOpen: false,
     }
   );
+
   return (
     <>
       <MessageModal
@@ -104,10 +106,10 @@ const Complete = (props: OrdersGeneratedProps) => {
                 token={props.token}
                 key={d.id}
                 onClick={(e) => {
-                  console.log(d.id);
                   updateDisputeModal({ isOpen: true, orderId: d.id });
                   e.stopPropagation();
                 }}
+                deliveredDate={d.deliveredDate}
                 completedOrder
               />
             ))}
