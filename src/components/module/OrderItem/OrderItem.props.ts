@@ -1,4 +1,10 @@
-export interface OrderItemProps extends OrderItem {}
+import { MouseEventHandler } from 'react';
+
+export interface OrderItemProps extends OrderItem {
+  isLoading?: boolean;
+  onClick?: MouseEventHandler<any>;
+  completedOrder?: boolean;
+}
 
 export interface OrderItem {
   id: string;

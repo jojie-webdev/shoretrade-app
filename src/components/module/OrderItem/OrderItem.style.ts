@@ -122,7 +122,6 @@ export const ItemDetail = styled.div<{
     display: flex;
     flex-wrap: wrap;
   }
-
   @media (max-width: 1135px) {
     align-items: flex-start;
   }

@@ -92,7 +92,7 @@ const OrdersContainer = (): JSX.Element => {
   const toShipOrders = GetBuyerOrdersToShip().map(transformOrder);
   const inTransitOrders = GetBuyerOrdersInTransit().map(transformOrder);
   const completedOrders = GetBuyerOrdersDelivered().map(transformOrder);
-
+  // console.log(GetBuyerOrdersDelivered());
   const currentTab: TabOptions = tab ? tab : 'Pending';
   const onChangeCurrentTab = (newTab: TabOptions) => {
     history.push(
@@ -221,6 +221,11 @@ const OrdersContainer = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
+  const isSendingDispute = false;
+
+  const sendDispute = (orderId: string, message: string) => {
+    console.log(orderId, message);
+  };
   const generatedProps: OrdersGeneratedProps = {
     pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
     toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
@@ -236,6 +241,9 @@ const OrdersContainer = (): JSX.Element => {
     loadingCurrentTab,
     onChangeCurrentTab,
     token,
+
+    isSendingDispute,
+    sendDispute,
   };
 
   return <OrdersView {...generatedProps} />;
