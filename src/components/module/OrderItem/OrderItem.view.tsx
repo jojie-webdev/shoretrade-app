@@ -24,7 +24,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const theme = useTheme();
   const tomorrow = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24);
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-
+  const today = new Date(new Date().valueOf());
   return (
     <ItemContainer>
       <div className="section wrap-content">
@@ -166,7 +166,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           </ItemDetail>
         </div>
         {props.completedOrder &&
-        props.deliveredDate >= yesterday &&
+        props.deliveredDate >= today &&
         props.deliveredDate <= tomorrow ? (
           <div className="right-section">
             <ItemDetail type="center" style={{ margin: '6px 6px 0 0' }}>
