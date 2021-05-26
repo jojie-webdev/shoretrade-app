@@ -29,8 +29,10 @@ const constraints = {
       allowEmpty: false,
     },
     length: {
-      is: 3,
-      wrongLength: '^CVC must contain 3 digits',
+      minimum: 3,
+      maximum: 4,
+      tooShort: '^CVC must contain 3 or 4 digits',
+      tooLong: '^CVC must contain 3 or 4 digits',
     },
   },
   name: {
