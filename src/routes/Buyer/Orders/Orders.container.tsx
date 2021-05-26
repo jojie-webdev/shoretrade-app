@@ -10,6 +10,7 @@ import {
   getBuyerOrdersPlacedActions,
   getBuyerOrdersTransitActions,
   getBuyerOrdersDeliveredActions,
+  sendDisputeActions,
 } from 'store/actions';
 import {
   GetBuyerOrdersToShipPending,
@@ -92,7 +93,7 @@ const OrdersContainer = (): JSX.Element => {
   const toShipOrders = GetBuyerOrdersToShip().map(transformOrder);
   const inTransitOrders = GetBuyerOrdersInTransit().map(transformOrder);
   const completedOrders = GetBuyerOrdersDelivered().map(transformOrder);
-
+  // console.log(GetBuyerOrdersDelivered());
   const currentTab: TabOptions = tab ? tab : 'Pending';
   const onChangeCurrentTab = (newTab: TabOptions) => {
     history.push(
@@ -221,6 +222,20 @@ const OrdersContainer = (): JSX.Element => {
 
   const loadingCurrentTab = pendingGetOrders[currentTab];
 
+  const isSendingDispute = useSelector(
+    (state: Store) => state.sendDispute.pending || false
+  );
+
+  const sendDispute = (orderId: string, message: string) => {
+    if (orderId && message) {
+      dispatch(
+        sendDisputeActions.request({
+          orderId,
+          message,
+        })
+      );
+    }
+  };
   const generatedProps: OrdersGeneratedProps = {
     pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
     toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
@@ -236,6 +251,9 @@ const OrdersContainer = (): JSX.Element => {
     loadingCurrentTab,
     onChangeCurrentTab,
     token,
+
+    isSendingDispute,
+    sendDispute,
   };
 
   return <OrdersView {...generatedProps} />;

@@ -67,6 +67,7 @@ import resetPassword from './resetPassword';
 import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -160,6 +161,7 @@ const sagas = [
   uploadBulk,
   verify,
   getPaymentMode,
+  sendDispute,
 ];
 
 export default function* root() {

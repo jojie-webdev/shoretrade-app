@@ -1,4 +1,14 @@
-export interface OrderItemProps extends OrderItem {}
+import { MouseEventHandler } from 'react';
+
+// eslint-disable-next-line import/named
+import { Moment } from 'moment';
+
+export interface OrderItemProps extends OrderItem {
+  isLoading?: boolean;
+  onClick?: MouseEventHandler<any>;
+  completedOrder?: boolean;
+  validity?: string;
+}
 
 export interface OrderItem {
   id: string;

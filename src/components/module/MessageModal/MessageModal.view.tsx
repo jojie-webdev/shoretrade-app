@@ -4,15 +4,14 @@ import Button from 'components/base/Button';
 import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import theme from 'utils/Theme';
 
 import { MessageModalProps } from './MessageModal.props';
 import { Content } from './MessageModal.style';
 
 const MessageModal = (props: MessageModalProps): JSX.Element => {
   const { children, recipient, onSend, loading, ...modalProps } = props;
-
   const [message, setMessage] = useState('');
-
   useEffect(() => {
     if (!modalProps.isOpen) {
       setMessage('');
@@ -22,16 +21,30 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
   return (
     <Modal {...modalProps} style={{ maxWidth: '438px' }}>
       <Content>
-        <Typography variant="title4" color={'noshade'} className="title">
-          Message: {recipient}
+        <Typography
+          variant="title4"
+          color={!props.buyerApp ? 'noshade' : 'shade9'}
+          className="title"
+        >
+          {/* Message: {recipient} */}
+          {!props.buyerApp ? `Message: ${recipient}` : `${recipient}`}
         </Typography>
 
         <div className="content-container">
-          <Typography variant="body" color={'shade5'} weight="Medium">
-            Consider messaging the buyer directly to update them on the progress
-            of an order. If you think you&apos;ll be unable to fulfill all the
-            orders, please contact Shoretrade for assistance instead.
-          </Typography>
+          {!props.buyerApp ? (
+            <Typography variant="body" color={'shade5'} weight="Medium">
+              Consider messaging the buyer directly to update them on the
+              progress of an order. If you think you&apos;ll be unable to
+              fulfill all the orders, please contact Shoretrade for assistance
+              instead.
+            </Typography>
+          ) : (
+            <Typography variant="body" color="shade9" weight="Medium">
+              Raising a dispute will send the order details to ShoreTrade for
+              review. Please enter any information about the dispute below for
+              our Disputes team to consider.
+            </Typography>
+          )}
 
           <TextArea
             style={{ marginTop: 16 }}

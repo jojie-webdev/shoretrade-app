@@ -6,6 +6,7 @@ import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import { GetSellerOrdersMeta } from 'types/store/GetSellerOrdersState';
 import { OrderMeta } from 'types/store/OrderState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
+import { SendDisputeMeta } from 'types/store/SendDisputeState';
 import { SendMessageMeta } from 'types/store/SendMessageState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
@@ -94,5 +95,16 @@ export const sendMessage = (data: SendMessageMeta, token: string) => {
       Authorization: `Bearer ${token}`,
     },
     data: omit(['buyerId'], data),
+  });
+};
+
+export const sendDispute = (data: SendDisputeMeta, token: string) => {
+  return axios({
+    method: 'post',
+    url: `${ORDER_URL}/dispute-messages/${data.orderId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: omit(['orderId'], data),
   });
 };
