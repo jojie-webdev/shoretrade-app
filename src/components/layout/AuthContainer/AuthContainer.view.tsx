@@ -48,10 +48,10 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
-      <BackgroundContainer md={5} lg={6} xl={7} xxl={7}>
+      <BackgroundContainer sm={3} md={5} lg={6} xl={7} xxl={7}>
         <Background />
       </BackgroundContainer>
-      <Wrapper xs={12} sm={12} md={7} lg={6} xl={5} xxl={5}>
+      <Wrapper xs={12} sm={9} md={7} lg={6} xl={5} xxl={5}>
         <ProgressContainer
           background={containerBackground}
           isRegister={isRegister}
