@@ -22,9 +22,10 @@ import {
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
   const theme = useTheme();
-  const tomorrow = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24);
-  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const today = new Date(new Date().valueOf());
+  const deliveredDate = new Date(props.deliveredDate);
+  const dateToday = new Date();
+  const diff = dateToday.getTime() - deliveredDate.getTime();
+  const diffDays = diff / (1000 * 3600 * 24);
   return (
     <ItemContainer>
       <div className="section wrap-content">
@@ -165,9 +166,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Typography color="shade9">{props.data.shippingTo}</Typography>
           </ItemDetail>
         </div>
-        {props.completedOrder &&
-        props.deliveredDate >= today &&
-        props.deliveredDate <= tomorrow ? (
+        {props.completedOrder && diffDays < 1 ? (
           <div className="right-section">
             <ItemDetail type="center" style={{ margin: '6px 6px 0 0' }}>
               <Button
