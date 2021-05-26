@@ -4,14 +4,18 @@ import Button from 'components/base/Button';
 import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { MessageModalProps } from './MessageModal.props';
 import { Content } from './MessageModal.style';
 
 const MessageModal = (props: MessageModalProps): JSX.Element => {
   const { children, recipient, onSend, loading, ...modalProps } = props;
+  const theme = useTheme();
+  const buyerApp = theme.appType === 'buyer';
+
   const [message, setMessage] = useState('');
+
   useEffect(() => {
     if (!modalProps.isOpen) {
       setMessage('');
@@ -23,15 +27,15 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
       <Content>
         <Typography
           variant="title4"
-          color={!props.buyerApp ? 'noshade' : 'shade9'}
+          color={!buyerApp ? 'noshade' : 'shade9'}
           className="title"
         >
           {/* Message: {recipient} */}
-          {!props.buyerApp ? `Message: ${recipient}` : `${recipient}`}
+          {!buyerApp ? `Message: ${recipient}` : `${recipient}`}
         </Typography>
 
         <div className="content-container">
-          {!props.buyerApp ? (
+          {!buyerApp ? (
             <Typography variant="body" color={'shade5'} weight="Medium">
               Consider messaging the buyer directly to update them on the
               progress of an order. If you think you&apos;ll be unable to
