@@ -40,16 +40,6 @@ const ForgotPasswordView = (
     onSubmit: resetPassword,
   };
 
-  useEffect(() => {
-    if (success) {
-      setVisible(true);
-      const timer = setTimeout(() => {
-        setVisible(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [success]);
-
   return isSmallScreen ? (
     <MobileHeader>
       <MobileContainer>
@@ -111,7 +101,7 @@ const ForgotPasswordView = (
           </ForgotPasswordButtonContainer>
         </Form>
       </Formik>
-      {visible && (
+      {success && (
         <Alert
           content="An email has been sent to reset your password."
           variant="success"
