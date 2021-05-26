@@ -1,4 +1,5 @@
 import { push } from 'connected-react-router';
+import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { verify } from 'services/auth';
@@ -11,6 +12,7 @@ import {
   authActions,
   historyActions,
   notifyActions,
+  loginActions,
 } from '../actions';
 
 function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
@@ -18,6 +20,19 @@ function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
     const { data } = yield call(verify, action.meta);
     yield put(verifyActions.success(data));
   } catch (e) {
+    if(e.response.status === 401) {
+      yield put(loginActions.failed(e.response.data.message));
+      const pathname: string = yield select(
+        (state: Store) => state.router.location.pathname
+      );
+      const isSeller = pathname.includes('seller');
+      if (isSeller) {
+        yield put(push(SELLER_ROUTES.LOGIN));
+      } else {
+        yield put(push(BUYER_ROUTES.LOGIN));
+      }
+
+    }
     yield put(verifyActions.failed(e.message));
   }
 }

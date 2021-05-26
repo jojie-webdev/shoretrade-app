@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,13 +8,17 @@ import {
   resendVerificationActions,
   notifyActions,
 } from 'store/actions';
+import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { Store } from 'types/store/Store';
+import { useTheme } from 'utils/Theme';
 
 import Verify2FAView from './Verify2FA.view';
 
 const Verify2FA = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
 
   const email = useSelector((state: Store) => state.login.request?.email) || '';
 
@@ -53,6 +57,16 @@ const Verify2FA = (): JSX.Element => {
       dispatch(resendVerificationActions.request());
     }
   };
+
+  useEffect(() => {
+    if (!email) {
+      if (isSeller) {
+        history.replace(SELLER_ROUTES.LOGIN)
+      } else {
+        history.replace(BUYER_ROUTES.LOGIN)
+      }
+    }
+  }, [email])
 
   const generatedProps = {
     // generated props here
