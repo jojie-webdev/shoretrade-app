@@ -139,7 +139,12 @@ const LandingView = (props: LandingGeneratedProps) => {
                     </NoProfilePic>
                   )}
                 </>
-                <div className="pen">
+                <div
+                  className="pen"
+                  onClick={() => {
+                    handleOnClick();
+                  }}
+                >
                   <Pen fill={theme.grey.shade6} />
                 </div>
               </div>

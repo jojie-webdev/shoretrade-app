@@ -36,6 +36,7 @@ export const Header = styled.div`
     }
 
     .pen {
+      cursor: pointer;
       svg {
         position: absolute;
         right: 16px;
