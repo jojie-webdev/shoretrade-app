@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 
-import { DownloadFile } from 'components/base/SVG';
+import Button from 'components/base/Button';
+import { DownloadFile, Message } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
+import moment from 'moment-timezone';
+import { createUpdateReducer } from 'utils/Hooks';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
 
-// import { useTheme } from 'utils/Theme';
+import MessageModal from '../MessageModal';
 import { OrderItemProps } from './OrderItem.props';
 import {
   ItemDetail,
@@ -17,7 +21,10 @@ import {
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
+  const tomorrow = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24);
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+
   return (
     <ItemContainer>
       <div className="section wrap-content">
@@ -107,7 +114,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
       </div>
 
       <div className="section">
-        <ItemDetail type="center" row className="wrap-text">
+        <ItemDetail type="left" row className="wrap-text" style={{ flex: 2.5 }}>
           <Typography
             color="shade7"
             variant="label"
@@ -128,7 +135,6 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             (incl. GST)
           </Typography>
         </ItemDetail>
-
         <ItemDetail type="right" row>
           <Typography
             color="shade7"
@@ -159,13 +165,35 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Typography color="shade9">{props.data.shippingTo}</Typography>
           </ItemDetail>
         </div>
-
-        <ItemDetail type="right">
-          <Typography color="shade7" variant="caption">
-            Order No.
-          </Typography>
-          <Typography color="shade9">{props.data.orderNumber}</Typography>
-        </ItemDetail>
+        {props.completedOrder &&
+        props.deliveredDate >= yesterday &&
+        props.deliveredDate <= tomorrow ? (
+          <div className="right-section">
+            <ItemDetail type="center" style={{ margin: '6px 6px 0 0' }}>
+              <Button
+                text="Raise Dispute"
+                icon={<Message fill="#FFF" height={16} width={16} />}
+                iconPosition="before"
+                variant="primary"
+                size="sm"
+                onClick={props.onClick}
+              />
+            </ItemDetail>
+            <ItemDetail type="right">
+              <Typography color="shade7" variant="caption">
+                Order No.
+              </Typography>
+              <Typography color="shade9">{props.data.orderNumber}</Typography>
+            </ItemDetail>
+          </div>
+        ) : (
+          <ItemDetail type="right">
+            <Typography color="shade7" variant="caption">
+              Order No.
+            </Typography>
+            <Typography color="shade9">{props.data.orderNumber}</Typography>
+          </ItemDetail>
+        )}
       </div>
     </ItemContainer>
   );

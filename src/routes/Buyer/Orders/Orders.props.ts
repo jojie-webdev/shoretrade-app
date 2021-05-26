@@ -41,6 +41,7 @@ export interface OrderItem {
   price: string;
   isAquafuture: boolean;
   token?: string;
+
 }
 
 export type RequestFilters = {
@@ -83,6 +84,9 @@ export interface OrdersGeneratedProps {
     updateInTransitOrdersFilter: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
+
+  sendDispute: (orderId: string, message: string) => void;
+  isSendingDispute: boolean;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';

@@ -195,6 +195,7 @@ import {
   SearchProductTypeMeta,
   SearchProductTypePayload,
 } from './SearchProductTypeState';
+import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
@@ -346,6 +347,7 @@ export interface Store {
   >;
   sellerDashboardDate: any;
   sendMessage: AsyncState<SendMessageMeta, SendMessagePayload>;
+  sendDispute: AsyncState<SendDisputeMeta, SendDisputePayload>;
   getMarketEstimate: AsyncState<
     GetMarketEstimateMeta,
     GetMarketEstimatePayload
