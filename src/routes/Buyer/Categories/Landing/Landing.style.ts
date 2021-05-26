@@ -8,6 +8,7 @@ export const CategoriesContainer = styled.div`
   .cards {
     display: flex;
     flex-wrap: wrap;
+    margin-right: -24px;
   }
 
   .interactions {

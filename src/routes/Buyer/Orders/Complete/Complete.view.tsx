@@ -61,7 +61,6 @@ const Complete = (props: OrdersGeneratedProps) => {
           updateDisputeModal({ isOpen: false });
         }}
         loading={isSendingDispute}
-        buyerApp
       />
       {Object.keys(completedOrders).length === 0 ? (
         <Row className="emptystate-row" align="center" justify="center">
