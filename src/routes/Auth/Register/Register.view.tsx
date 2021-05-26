@@ -837,7 +837,7 @@ const StepForm = ({
                           options={INTERESTED_SHOREPAY_OPTIONS}
                           label="Are you interested in applying for ShorePay?"
                         />
-                        {interestedInShorePay ? (
+                        {interestedInShorePay && (
                           <Button
                             text="Download Application Form"
                             variant="outline"
@@ -845,6 +845,7 @@ const StepForm = ({
                               e.preventDefault();
                               handleDownloadApplicationForm();
                             }}
+                            takeFullWidth
                             icon={
                               <DownloadIcon
                                 fill={theme.brand.primary}
@@ -854,8 +855,6 @@ const StepForm = ({
                             }
                             style={{ margin: '10px 0' }}
                           />
-                        ) : (
-                          ''
                         )}
                       </div>
                     </>
