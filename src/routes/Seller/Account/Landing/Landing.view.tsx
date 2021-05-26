@@ -171,7 +171,12 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
                   </NoProfilePic>
                 )}
               </>
-              <div className="pen">
+              <div
+                className="pen"
+                onClick={() => {
+                  handleOnClick();
+                }}
+              >
                 <Pen fill={theme.brand.primary} />
               </div>
             </div>
