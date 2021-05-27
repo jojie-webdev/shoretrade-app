@@ -1,6 +1,11 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const MarketContainer = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 24px;
+  }
+
   .title-row {
     margin-bottom: 24px;
   }
