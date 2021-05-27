@@ -23,7 +23,6 @@ export const Container = styled.div<{
 
   @media ${BREAKPOINTS['genericTablet']} {
     padding: 24px;
-    padding-bottom: 160px;
   }
 
   @media ${BREAKPOINTS['sm']} {
