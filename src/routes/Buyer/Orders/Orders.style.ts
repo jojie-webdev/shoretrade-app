@@ -1,8 +1,13 @@
 import AccordionView from 'components/base/Accordion';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 24px;
+  }
+
   .controls-row {
     margin-bottom: 48px;
   }
