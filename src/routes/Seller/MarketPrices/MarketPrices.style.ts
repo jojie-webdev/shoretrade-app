@@ -1,9 +1,10 @@
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const MarketContainer = styled.div`
+export const MarketContainer = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 24px;
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
   }
 
   .title-row {

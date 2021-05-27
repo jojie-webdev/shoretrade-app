@@ -1,7 +1,8 @@
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
   padding: 48px;
   /* position: relative; */
 
@@ -11,7 +12,7 @@ export const Container = styled.div`
 
   @media ${BREAKPOINTS['sm']} {
     padding: 8px;
-    padding-top: 16px;
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '16px')};
   }
 
   .title-step-text {

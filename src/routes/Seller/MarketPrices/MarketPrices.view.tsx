@@ -5,6 +5,7 @@ import Interactions from 'components/base/Interactions';
 import Spinner from 'components/base/Spinner';
 import TypographyView from 'components/base/Typography';
 import Search from 'components/module/Search';
+import { isIOS } from 'react-device-detect';
 import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +24,7 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
   } = props;
 
   return (
-    <MarketContainer>
+    <MarketContainer isIOS={isIOS}>
       <Visible xs>
         <Row className="title-row">
           <Col xs={12}>

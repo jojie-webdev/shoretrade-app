@@ -1,18 +1,21 @@
 import Alert from 'components/base/Alert';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
-  height: 100%;
-
+export const Container = styled.div<{ isIOS?: boolean }>`
   .row {
     height: 100%;
   }
 
   .search-row {
     margin-bottom: 24px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
   }
 `;
 

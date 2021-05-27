@@ -8,6 +8,7 @@ const dashboardWidth = (isSeller: boolean) =>
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
+  isIOS?: boolean;
 }>`
   height: 100vh;
   width: 100%;
@@ -15,17 +16,7 @@ export const DashboardContainer = styled.div<{
   flex-direction: row;
   position: relative;
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
-
-
-  @media ${BREAKPOINTS['genericTablet']} {
-    max-height: 100vh;
-    height: -webkit-fill-available;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    max-height: 100vh;
-    height: -webkit-fill-available;
-  }
+ 
 `;
 
 export const MenuIcon = styled.div`
@@ -205,6 +196,7 @@ export const Content = styled.div<{
   screenBackground?: string;
   color?: string;
   isHomeOld?: boolean;
+  isIOS?: boolean;
 }>`
   display: flex;
   flex: 1;

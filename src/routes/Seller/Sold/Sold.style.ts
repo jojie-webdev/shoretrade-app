@@ -1,8 +1,9 @@
 import Interaction from 'components/base/Interactions';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
   width: 100%;
 
   .emptystate-row {
@@ -19,7 +20,7 @@ export const Container = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 32px;
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
   }
 `;
 

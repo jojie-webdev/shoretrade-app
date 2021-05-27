@@ -18,6 +18,7 @@ import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
@@ -71,7 +72,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
   };
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       {props.userPending && (
         <Alert
           variant="alert"
