@@ -6,6 +6,7 @@ import { pxToRem } from 'utils/Theme';
 export const Container = styled.div`
   .interactions {
     margin-bottom: 12px;
+    padding: 16px 12px;
 
     .left-component {
       display: flex;
