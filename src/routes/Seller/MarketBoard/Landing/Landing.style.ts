@@ -4,8 +4,13 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 24px;
+  }
+
   .interactions {
     margin-bottom: 12px;
+    padding: 16px 12px;
 
     .left-component {
       display: flex;

@@ -169,7 +169,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   variant="label"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                 >
-                  {productDetails.location}
+                {productDetails.location}
                 </Typography>
               </div>
             </div>
@@ -181,7 +181,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                   weight="bold"
                 >
-                  {orderDetails.price}
+                  ${orderDetails.price}
                 </Typography>
                 <div className="product-value">
                   <Typography
@@ -204,7 +204,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                     weight="bold"
                   >
-                    {orderDetails.minOrder}
+                    {orderDetails.minOrder} {orderDetails.unit}
                   </Typography>
                 </div>
               </ProductLabelMobileContainer>

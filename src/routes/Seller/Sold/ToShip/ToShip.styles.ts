@@ -249,6 +249,7 @@ export const ItemCard = styled.div`
     flex: 1;
     align-items: center;
     justify-content: flex-end;
+    margin-right: 32px;
   }
 `;
 

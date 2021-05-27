@@ -343,11 +343,14 @@ export const SVGContainer = styled.div<{
   :before {
     position: absolute;
     content: '';
-    height: ${(props) => (props.circleHeight ? `${props.circleHeight}px` : '210px')};
-    width: ${(props) => (props.circleWidth ? `${props.circleWidth}px` : '210px')};
+    height: ${(props) =>
+      props.circleHeight ? `${props.circleHeight}px` : '210px'};
+    width: ${(props) =>
+      props.circleWidth ? `${props.circleWidth}px` : '210px'};
     border-radius: 210px;
     z-index: 1;
 
-    background: ${(props) => (props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9)};
+    background: ${(props) =>
+      props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
   }
 `;

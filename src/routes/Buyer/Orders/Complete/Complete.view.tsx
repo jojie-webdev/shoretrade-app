@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
+import MessageModal from 'components/module/MessageModal';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
+import moment from 'moment-timezone';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router';
+import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
 import { OrdersGeneratedProps } from '../Orders.props';
@@ -25,6 +28,8 @@ const Complete = (props: OrdersGeneratedProps) => {
     completedOrdersCount,
     updateFilters,
     filters,
+    isSendingDispute,
+    sendDispute,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -32,9 +37,31 @@ const Complete = (props: OrdersGeneratedProps) => {
   const completePagesTotal = Math.ceil(
     Number(completedOrdersCount) / DEFAULT_PAGE_LIMIT
   );
+  const [disputeModal, updateDisputeModal] = useReducer(
+    createUpdateReducer<{
+      orderId: string;
+      isOpen: boolean;
+    }>(),
+    {
+      orderId: '',
+      isOpen: false,
+    }
+  );
 
   return (
     <>
+      <MessageModal
+        isOpen={isSendingDispute || disputeModal.isOpen}
+        recipient="Raise Dispute"
+        onSend={(message) => {
+          sendDispute(disputeModal.orderId, message);
+          updateDisputeModal({ isOpen: false });
+        }}
+        onClickClose={() => {
+          updateDisputeModal({ isOpen: false });
+        }}
+        loading={isSendingDispute}
+      />
       {Object.keys(completedOrders).length === 0 ? (
         <Row className="emptystate-row" align="center" justify="center">
           <Col>
@@ -73,7 +100,17 @@ const Complete = (props: OrdersGeneratedProps) => {
             }
           >
             {completedOrders[key].map((d) => (
-              <OrderItemView {...d} token={props.token} key={d.id} />
+              <OrderItemView
+                {...d}
+                token={props.token}
+                key={d.id}
+                onClick={(e) => {
+                  updateDisputeModal({ isOpen: true, orderId: d.id });
+                  e.stopPropagation();
+                }}
+                deliveredDate={d.deliveredDate}
+                completedOrder
+              />
             ))}
           </StyledAccordion>
         ))

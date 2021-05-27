@@ -76,6 +76,7 @@ import resetPassword from './resetPassword';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
+import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -180,6 +181,7 @@ export default (routeHistory: History) =>
         uploadBulk,
         verify,
         getPaymentMode,
+        sendDispute,
       }).sort()
     )
   );

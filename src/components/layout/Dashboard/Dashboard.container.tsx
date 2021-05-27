@@ -12,6 +12,7 @@ import {
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
+
 import {
   DashboardPublicProps,
   DashboardGeneratedProps,

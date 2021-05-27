@@ -1,7 +1,12 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 24px;
+  }
+`;
 
 export const HeaderRow = styled(Row)`
   margin-bottom: 32px;

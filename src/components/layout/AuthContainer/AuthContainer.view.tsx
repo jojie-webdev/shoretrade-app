@@ -3,6 +3,7 @@ import React from 'react';
 import Button from 'components/base/Button';
 import { ArrowRight, Close, Logo, ShoretradeLogo } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
+import { SHORETRADE_HOME } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -47,10 +48,10 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <Container>
-      <BackgroundContainer md={5} lg={6} xl={7} xxl={7}>
+      <BackgroundContainer sm={3} md={5} lg={6} xl={7} xxl={7}>
         <Background />
       </BackgroundContainer>
-      <Wrapper xs={12} sm={12} md={7} lg={6} xl={5} xxl={5}>
+      <Wrapper xs={12} sm={9} md={7} lg={6} xl={5} xxl={5}>
         <ProgressContainer
           background={containerBackground}
           isRegister={isRegister}
@@ -73,7 +74,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 props.logoContainerMarginBottomHeight
               }
             >
-              <a href="https://shoretrade.com" style={{ cursor: 'pointer' }}>
+              <a href={SHORETRADE_HOME} style={{ cursor: 'pointer' }}>
                 {!horizontalLogo ? (
                   <Logo fill={!isSeller ? 'black' : 'white'} />
                 ) : (

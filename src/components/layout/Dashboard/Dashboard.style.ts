@@ -49,6 +49,13 @@ export const HamburgerWrapper = styled.div`
   border-radius: 8px;
 
   margin-bottom: 64px;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 37px;
+    height: 37px;
+    margin-left: 4px;
+    margin-bottom: 0;
+  }
 `;
 
 export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
@@ -82,7 +89,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
   overflow: hidden;
 
   @media ${BREAKPOINTS['genericTablet']} {
@@ -342,52 +349,6 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
     margin-bottom: 4px;
   }
 
-  .right-content {
-    display: flex;
-    align-items: center;
-
-    .cart-container {
-      margin-right: 45px;
-
-      @media ${BREAKPOINTS.sm} {
-        margin-right: 8px;
-      }
-    }
-
-    .cart-wrapper {
-      cursor: pointer;
-      position: relative;
-    }
-
-    .dashboard-account-container {
-      :hover {
-        background-color: transparent;
-      }
-
-      @media ${BREAKPOINTS.sm} {
-        padding-right: 0;
-
-        img {
-          display: none;
-        }
-
-        svg {
-          display: none;
-        }
-      }
-    }
-
-    .text-container {
-      margin-right: 8px;
-    }
-
-    img {
-      height: 48px;
-      width: 48px;
-      border-radius: calc(56px / 8);
-    }
-  }
-
   @media ${BREAKPOINTS['sm']} {
     width: 90%;
     padding: 8px;
@@ -398,6 +359,52 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   //generic tablet till xl
   @media (min-width: 577px) and (max-width: 1200px) {
     width: calc(100% - 32px);
+  }
+`;
+
+export const HeaderRightContent = styled.div`
+  display: flex;
+  align-items: center;
+
+  .cart-container {
+    margin-right: 45px;
+
+    @media ${BREAKPOINTS.sm} {
+      margin-right: 24px;
+    }
+  }
+
+  .cart-wrapper {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .dashboard-account-container {
+    :hover {
+      background-color: transparent;
+    }
+
+    @media ${BREAKPOINTS.sm} {
+      padding-right: 0;
+
+      img {
+        display: none;
+      }
+
+      svg {
+        display: none;
+      }
+    }
+  }
+
+  .text-container {
+    margin-right: 8px;
+  }
+
+  img {
+    height: 48px;
+    width: 48px;
+    border-radius: calc(56px / 8);
   }
 `;
 

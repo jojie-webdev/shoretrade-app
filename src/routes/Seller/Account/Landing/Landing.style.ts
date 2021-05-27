@@ -1,4 +1,5 @@
 import Interactions from 'components/base/Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
 const imgStyle = css`
@@ -9,7 +10,11 @@ const imgStyle = css`
   cursor: pointer;
 `;
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 24px;
+  }
+`;
 
 export const Header = styled.div`
   display: flex;
@@ -37,6 +42,7 @@ export const Header = styled.div`
     }
 
     .pen {
+      cursor: pointer;
       svg {
         position: absolute;
         right: 16px;
