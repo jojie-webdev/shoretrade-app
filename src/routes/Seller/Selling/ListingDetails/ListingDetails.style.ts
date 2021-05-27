@@ -267,6 +267,7 @@ export const TopDetailsContainer = styled.div`
     align-items: center;
 
     svg {
+
       margin-right: 6px;
     }
   }
@@ -352,7 +353,8 @@ export const MobileWrapper = styled.div`
     align-items: center;
 
     svg {
-      margin-right: 6px;
+      margin-left:-3px;
+      margin-right: 4px;
     }
   }
 
