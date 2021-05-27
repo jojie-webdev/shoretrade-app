@@ -1,14 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 
-import Button from 'components/base/Button';
-import { Plane, Truck, DownloadFile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
-import { API, DEFAULT_PAGE_LIMIT, SELLER_SOLD_ROUTES } from 'consts';
+import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps } from '../Sold.props';
@@ -17,7 +14,6 @@ import SoldItem from '../SoldItem.view';
 import {
   StyledInteraction,
   CollapsibleContent,
-  Spacer,
   ItemRow,
 } from './Delivered.styles';
 
@@ -25,7 +21,6 @@ const Delivered = (props: SoldGeneratedProps) => {
   const { delivered, token, deliveredCount, updateFilters, filters } = props;
 
   const theme = useTheme();
-  const history = useHistory();
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
   const toggleAccordion = (title: string) => {
@@ -95,9 +90,6 @@ const Delivered = (props: SoldGeneratedProps) => {
                       </Typography>
                     </div>
                   </div>
-                  <Spacer />
-                  <div className="right-content" />
-                  <div className="buttons" />
                 </div>
               </StyledInteraction>
 
