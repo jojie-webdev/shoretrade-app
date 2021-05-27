@@ -23,11 +23,13 @@ export const Container = styled.div<{
 
   @media ${BREAKPOINTS['genericTablet']} {
     padding: 24px;
+    padding-bottom: 160px;
   }
 
   @media ${BREAKPOINTS['sm']} {
     padding: 16px;
     background: none;
     border: 0;
+    padding-bottom: 160px;
   }
 `;
