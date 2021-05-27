@@ -241,7 +241,9 @@ const ItemMobile = (props: ItemProp) => {
                 color="noshade"
                 className="bottom-space"
               >
-                {Number(props.remaining).toFixed(0)}
+                {Number(props.remaining).toFixed(0)} /{' '}
+                {Number(props.originalWeight).toFixed(0)}{' '}
+                {props.unit?.toLowerCase()}
               </ItemDetailMobile>
             </div>
             <div className="label-container">

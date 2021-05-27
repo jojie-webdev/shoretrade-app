@@ -49,6 +49,8 @@ export const LeftComponentContainer = styled.div<{ disabled?: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
   border-right: 1px solid ${({ theme }) => theme.grey.shade6};
   ${(props) => props.disabled && `background-color: ${props.theme.grey.shade3}`}
 `;
