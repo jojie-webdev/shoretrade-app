@@ -4,7 +4,7 @@ import styled from 'utils/styled';
 
 export const MarketContainer = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '24px')};
   }
 
   .title-row {
