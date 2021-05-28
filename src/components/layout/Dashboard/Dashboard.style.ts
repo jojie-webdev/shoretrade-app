@@ -340,7 +340,7 @@ export const HeaderRightContent = styled.div`
     margin-right: 45px;
 
     @media ${BREAKPOINTS.sm} {
-      margin-right: 24px;
+      margin-right: 0px;
     }
   }
 
