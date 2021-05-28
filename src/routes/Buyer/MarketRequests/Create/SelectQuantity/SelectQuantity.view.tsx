@@ -62,6 +62,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
         <QuantityFormContainer>
           <StyledTextField
             type="number"
+            inputType="numeric"
             label="From"
             value={from}
             onChangeText={(v) => {
@@ -83,6 +84,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
           />
           <StyledTextField
             type="number"
+            inputType="numeric"
             label="To"
             value={to}
             onChangeText={(v) => {

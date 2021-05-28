@@ -125,6 +125,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               }
               min={props.buyerRequest.sizeFrom}
               type="number"
+              inputType="numeric"
               error={pathOr('', ['sizeFrom', '0'], errors)}
             />
           </Col>
@@ -148,6 +149,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               min={1}
               max={props.buyerRequest.sizeTo}
               type="number"
+              inputType="numeric"
               error={pathOr('', ['sizeTo', '0'], errors)}
             />
           </Col>
@@ -189,6 +191,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             onChangeText={props.setWeight}
             min={1}
             type="number"
+            inputType="numeric"
             error={pathOr('', ['weight', '0'], errors)}
           />
         </Col>
@@ -205,6 +208,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             onChangeText={props.setPrice}
             min={1}
             type="number"
+            inputType="numeric"
             error={pathOr('', ['price', '0'], errors)}
           />
 

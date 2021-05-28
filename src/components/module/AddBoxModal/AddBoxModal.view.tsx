@@ -56,6 +56,7 @@ const Content = (props: AddBoxModalProps) => {
       <Inputs>
         <StyledTextField
           type="number"
+          inputType="numeric"
           label={`${unit} per box`}
           value={values.weight}
           onChangeText={(v) => {
@@ -71,6 +72,7 @@ const Content = (props: AddBoxModalProps) => {
         />
         <StyledTextField
           type="number"
+          inputType="numeric"
           label="Number of Boxes"
           value={values.quantity}
           onChangeText={(v) => {
@@ -81,6 +83,7 @@ const Content = (props: AddBoxModalProps) => {
         />
         <StyledTextField
           type="number"
+          inputType="numeric"
           readOnly={unit === 'portions'}
           label="Count per Box (Optional)"
           value={values.count}
