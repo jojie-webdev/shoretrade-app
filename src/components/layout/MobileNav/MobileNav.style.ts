@@ -4,7 +4,7 @@ import styled from 'utils/styled';
 export const Container = styled.div<{ position?: string }>`
   display: flex;
   align-items: center;
-  padding: 0 27px;
+  padding: 0 24px;
   position: ${({ position }) => position};
   top: 0;
   width: 100%;
@@ -17,7 +17,6 @@ export const Container = styled.div<{ position?: string }>`
 
   .left-content {
     justify-content: flex-start;
-    margin-left: -8px;
     margin-right: 12px;
   }
 `;
