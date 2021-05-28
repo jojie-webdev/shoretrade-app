@@ -16,6 +16,7 @@ import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isIOS } from 'react-device-detect';
 import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -314,18 +315,20 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         </TabletSidebar>
       )}
 
-      <Sidebar openSidebar={openSidebar}>
+      <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
+        <div>
+          <SidebarLogoContainer>
+            <div
+              className="close-container"
+              onClick={() => setOpenSidebar(false)}
+            >
+              <Close height={13} width={13} fill={theme.grey.noshade} />
+            </div>
+            <Logo2 />
+          </SidebarLogoContainer>
+        </div>
         <div className="wrapper">
-          <div>
-            <SidebarLogoContainer>
-              <div
-                className="close-container"
-                onClick={() => setOpenSidebar(false)}
-              >
-                <Close height={13} width={13} fill={theme.grey.noshade} />
-              </div>
-              <Logo2 />
-            </SidebarLogoContainer>
+          <div className="nav-items-container">
             {routes.map((route) => (
               <NavLink
                 onClick={() => {
@@ -345,7 +348,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               />
             ))}
           </div>
-
           <div>
             {theme.appType === 'buyer' && (
               <CreditBalanceContainer
