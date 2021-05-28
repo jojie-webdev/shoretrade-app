@@ -19,6 +19,7 @@ import Search from 'components/module/Search';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -353,7 +354,7 @@ const SellingView = (props: SellingGeneratedProps) => {
 
   return (
     <>
-      <Container>
+      <Container isIOS={isIOS}>
         {showDeletedSuccess && (
           <StyledAlert
             variant="success"

@@ -1,4 +1,5 @@
 import Interactions from 'components/base/Interactions';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
@@ -10,9 +11,10 @@ const imgStyle = css`
   cursor: pointer;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 24px;
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 24px)` : '24px'};
   }
 `;
 

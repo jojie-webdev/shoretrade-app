@@ -8,10 +8,14 @@ import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select/Select.view';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
+import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerDropdown.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { pathOr } from 'ramda';
+import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -19,10 +23,10 @@ import { MakeOfferGeneratedProps } from './MakeOffer.props';
 import { Container, Error, MetricContainer } from './MakeOffer.style';
 
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
-  // const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       <Alert
         variant="infoAlert"
         fullWidth
@@ -125,6 +129,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               }
               min={props.buyerRequest.sizeFrom}
               type="number"
+              inputType="numeric"
               error={pathOr('', ['sizeFrom', '0'], errors)}
             />
           </Col>
@@ -148,6 +153,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               min={1}
               max={props.buyerRequest.sizeTo}
               type="number"
+              inputType="numeric"
               error={pathOr('', ['sizeTo', '0'], errors)}
             />
           </Col>
@@ -189,6 +195,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             onChangeText={props.setWeight}
             min={1}
             type="number"
+            inputType="numeric"
             error={pathOr('', ['weight', '0'], errors)}
           />
         </Col>
@@ -205,6 +212,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             onChangeText={props.setPrice}
             min={1}
             type="number"
+            inputType="numeric"
             error={pathOr('', ['price', '0'], errors)}
           />
 
@@ -249,14 +257,25 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
         </Typography>
       </div>
 
-      <div className="submit-btns-step2">
+      {!isMobile && (
+        <div className="submit-btns-step2">
+          <Button
+            onClick={props.addToMarketOffers}
+            className="submit-btn-step2"
+            text="Review offer"
+            variant="primary"
+          />
+        </div>
+      )}
+
+      <MobileFooter>
         <Button
           onClick={props.addToMarketOffers}
-          className="submit-btn-step2"
           text="Review offer"
           variant="primary"
+          takeFullWidth
         />
-      </div>
+      </MobileFooter>
     </Container>
   );
 };

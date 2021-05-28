@@ -15,17 +15,7 @@ export const DashboardContainer = styled.div<{
   flex-direction: row;
   position: relative;
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
-
-
-  @media ${BREAKPOINTS['genericTablet']} {
-    max-height: 100vh;
-    height: -webkit-fill-available;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    max-height: 100vh;
-    height: -webkit-fill-available;
-  }
+ 
 `;
 
 export const MenuIcon = styled.div`

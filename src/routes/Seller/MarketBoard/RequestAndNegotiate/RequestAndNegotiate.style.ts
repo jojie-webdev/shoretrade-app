@@ -1,10 +1,16 @@
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography/Typography.view';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 140px)` : '140px'};
+  }
+
   .breadcrumb-container {
     margin-bottom: 40px;
   }
@@ -20,51 +26,14 @@ export const Container = styled.div`
     max-width: 148px;
   }
 
-  .button-container {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    position: absolute;
-    bottom: 1%;
-    padding: 16px;
-    margin: -16px;
-    background-color: ${({ theme }) => theme.grey.shade9};
-
-    .submit-btn-1 {
-      width: 50%;
-      margin-right: 12px;
-      margin-left: -4px;
-    }
-    .submit-btn-2 {
-      width: 50%;
-    }
-  }
-
-  .submit-btns-step1 {
-    display: flex;
-    @media ${BREAKPOINTS['sm']} {
-      margin: 16px -24px -16px -24px;
-      background-color: ${(props) => props.theme.grey.shade9};
-    }
-  }
-
-  .submit-btn-step1 {
-    margin-top: 1rem;
-    margin-right: 8px;
-    border-radius: 8px;
-    max-width: 148px;
-
-    @media ${BREAKPOINTS['sm']} {
-      max-width: 100%;
-      width: 100%;
-      margin: 24px;
-    }
-  }
-
   .step-1-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+
+    @media (min-width: 1560px) {
+      justify-content: flex-start;
+    }
   }
 
   .mobile-back-container {
@@ -77,6 +46,16 @@ export const Container = styled.div`
       margin-left: 8px;
     }
   }
+
+  .spacer {
+    @media (min-width: 1440px) {
+      margin-right: 20px;
+    }
+
+    @media (min-width: 1560px) {
+      margin-right: 107px;
+    }
+  }
 `;
 
 export const SummaryContentContainer = styled.div`
@@ -84,18 +63,6 @@ export const SummaryContentContainer = styled.div`
   flex-direction: column;
   min-width: 320px;
 
-  @media (min-width: 1450px) {
-    margin-left: 107px;
-  }
-  @media ${BREAKPOINTS['sm']} {
-    min-width: 100%;
-  }
-  @media ${BREAKPOINTS['iPad']} {
-    min-width: 100%;
-  }
-  @media ${BREAKPOINTS['xl']} {
-    min-width: 100%;
-  }
   .quantity-container {
     display: flex;
 

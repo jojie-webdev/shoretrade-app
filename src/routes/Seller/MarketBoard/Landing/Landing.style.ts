@@ -1,11 +1,13 @@
 import Typography from 'components/base/Typography';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: 24px;
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 24px)` : '24px'};
   }
 
   .interactions {

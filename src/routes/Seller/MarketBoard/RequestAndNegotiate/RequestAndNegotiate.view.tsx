@@ -7,13 +7,15 @@ import Button from 'components/base/Button';
 import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewSeller from 'components/module/CategoryImagePreviewSeller';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
-import moment, { isMoment } from 'moment';
+import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
+import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -228,6 +230,13 @@ const Step1 = ({
       }
     });
 
+    const showButtons =
+      !isReview &&
+      !noNegotiations &&
+      isNegoOpen &&
+      isNegotiationAllowed &&
+      !isNegotiationEqual;
+
     return (
       <>
         <div className="offer-container">
@@ -316,35 +325,54 @@ const Step1 = ({
           )}
         </div>
 
-        <div className={isMobile ? 'button-container' : 'submit-btns'}>
-          {!isReview &&
-            !noNegotiations &&
-            isNegoOpen &&
-            isNegotiationAllowed &&
-            !isNegotiationEqual && (
-              <>
-                <Button
-                  onClick={() => setIsOpen(true)}
-                  className={isMobile ? 'submit-btn-1' : 'submit-btn'}
-                  text="Negotiate"
-                  variant="outline"
-                />
-                <Button
-                  loading={props.isNegotiating}
-                  onClick={() =>
-                    props.onNegotiateOffer(
-                      activeOffer.id,
-                      latestBuyerNego.price,
-                      true
-                    )
-                  }
-                  className={isMobile ? 'submit-btn-2' : 'submit-btn'}
-                  text="accept"
-                  variant="primary"
-                />
-              </>
-            )}
-        </div>
+        {showButtons && !isMobile && (
+          <div className={'submit-btns'}>
+            <Button
+              onClick={() => setIsOpen(true)}
+              className={'submit-btn'}
+              text="Negotiate"
+              variant="outline"
+            />
+            <Button
+              loading={props.isNegotiating}
+              onClick={() =>
+                props.onNegotiateOffer(
+                  activeOffer.id,
+                  latestBuyerNego.price,
+                  true
+                )
+              }
+              className={'submit-btn'}
+              text="accept"
+              variant="primary"
+            />
+          </div>
+        )}
+
+        {showButtons && isMobile && (
+          <MobileFooter>
+            <Button
+              onClick={() => setIsOpen(true)}
+              takeFullWidth
+              text="Negotiate"
+              variant="outline"
+            />
+            <Button
+              loading={props.isNegotiating}
+              onClick={() =>
+                props.onNegotiateOffer(
+                  activeOffer.id,
+                  latestBuyerNego.price,
+                  true
+                )
+              }
+              takeFullWidth
+              style={{ marginLeft: 8 }}
+              text="accept"
+              variant="primary"
+            />
+          </MobileFooter>
+        )}
 
         <NegotiateSellerModal
           marketOffer={activeOffer}
@@ -369,6 +397,8 @@ const Step1 = ({
           imgSrc={isReview ? buyerRequest.image : activeOffer.image}
           marketBoard
         />
+
+        <div className="spacer" />
 
         <SummaryContentContainer>
           <SummaryBadges
@@ -510,15 +540,13 @@ const Step1 = ({
           <Negotiations activeOffer={activeOffer} />
 
           {isReview && !isMobile && (
-            <div className="submit-btns">
-              <Button
-                onClick={() => props.setStep && props.setStep(2)}
-                className="submit-btn"
-                disabled={userPending}
-                text="Make an offer"
-                variant={userPending ? 'disabled' : 'primary'}
-              />
-            </div>
+            <Button
+              onClick={() => props.setStep && props.setStep(2)}
+              className="submit-btn"
+              disabled={userPending}
+              text="Make an offer"
+              variant={userPending ? 'disabled' : 'primary'}
+            />
           )}
         </SummaryContentContainer>
       </div>
@@ -553,7 +581,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
     }
   };
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       {!isMobile ? (
         <div className="breadcrumb-container">
           <Breadcrumbs
@@ -617,15 +645,15 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         onClickClose={() => setIsOpen(false)}
       />
       {props.isReview && step === 1 && isMobile && (
-        <div className="submit-btns-step1">
+        <MobileFooter>
           <Button
             onClick={() => setStep && setStep(2)}
-            className="submit-btn-step1"
+            takeFullWidth
             disabled={props.userPending}
             text="Make an offer"
             variant={props.userPending ? 'disabled' : 'primary'}
           />
-        </div>
+        </MobileFooter>
       )}
     </Container>
   );
