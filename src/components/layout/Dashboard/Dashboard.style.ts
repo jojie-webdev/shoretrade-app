@@ -103,7 +103,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
 `;
 
 export const SidebarLogoContainer = styled.div`
-  margin-top: 75px;
+  margin-top: 40px;
   margin-bottom: 60px;
   display: flex;
   align-items: center;
@@ -128,7 +128,7 @@ export const SidebarLogoContainer = styled.div`
 export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   height: 48px;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   display: flex;
   align-items: center;
   border-bottom: none;
