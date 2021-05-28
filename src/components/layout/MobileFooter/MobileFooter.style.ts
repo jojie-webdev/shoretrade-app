@@ -6,7 +6,7 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 24px;
   background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade1};
   width: 100%;
   z-index: 999;
   position: fixed;
