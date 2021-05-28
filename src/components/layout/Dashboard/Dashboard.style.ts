@@ -84,8 +84,8 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
 
   .wrapper {
     display: flex;
-    height: 100vh;
     flex-direction: column;
+    height: 100vh;
     justify-content: space-between;
   }
 
