@@ -7,6 +7,7 @@ import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
+import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
@@ -224,7 +225,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
   const actualCurrentPage = currentPage - 1;
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       {currentPage > 1 && (
         <ProgressIndicator
           style={{ width: `${(actualCurrentPage / 7) * 100}%` }}

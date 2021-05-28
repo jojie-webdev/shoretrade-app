@@ -1,4 +1,5 @@
 import Touchable from 'components/base/Touchable';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
@@ -267,7 +268,6 @@ export const TopDetailsContainer = styled.div`
     align-items: center;
 
     svg {
-
       margin-right: 6px;
     }
   }
@@ -295,7 +295,11 @@ export const TopDetailsContainer = styled.div`
 
 export const StyledTouchable = styled(Touchable)``;
 
-export const MobileWrapper = styled.div`
+export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+  }
+
   .sales-container {
     display: flex;
     flex-direction: row;
@@ -353,7 +357,7 @@ export const MobileWrapper = styled.div`
     align-items: center;
 
     svg {
-      margin-left:-3px;
+      margin-left: -3px;
       margin-right: 4px;
     }
   }

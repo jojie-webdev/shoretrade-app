@@ -10,6 +10,7 @@ import LineChart from 'components/module/LineChart';
 import LinePath from 'components/module/LinePath';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
+import { isIOS } from 'react-device-detect';
 import { Row, Col, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -37,7 +38,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
       : '';
 
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       {!data ? (
         <HeaderRow justify="center" align="center">
           <Spinner />

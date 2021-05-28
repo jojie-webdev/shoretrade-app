@@ -8,6 +8,7 @@ import { BoxContainer } from 'components/layout/BoxContainer';
 import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading/Loading.view';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { AccountCompletionGeneratedProps } from 'routes/Seller/Account/AccountCompletion/AccountCompletion.props';
 import {
@@ -28,7 +29,7 @@ const AccountCompletionView = ({
   }
 
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
