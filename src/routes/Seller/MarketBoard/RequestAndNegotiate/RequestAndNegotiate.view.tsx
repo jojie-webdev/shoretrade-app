@@ -398,6 +398,8 @@ const Step1 = ({
           marketBoard
         />
 
+        <div className="spacer" />
+
         <SummaryContentContainer>
           <SummaryBadges
             label="Specs"
