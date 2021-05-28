@@ -14,6 +14,12 @@ export const Container = styled.div<{ position?: string }>`
   .right-content {
     justify-content: flex-end;
   }
+
+  .left-content {
+    justify-content: flex-start;
+    margin-left: -8px;
+    margin-right: 12px;
+  }
 `;
 
 export const Content = styled.div`

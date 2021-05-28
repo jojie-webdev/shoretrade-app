@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 
 import {
-  ShoretradeLogo2,
   Exit,
   Cart as CartIcon,
   ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
   ArrowLeftAlt,
+  Logo2,
+  Close,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -144,14 +145,8 @@ const Header = ({
       position="initial"
       onBackOverride={onBack}
       showLogo={!onBack}
-      rightContent={
-        <HeaderRightContent>
-          {!onBack && theme.appType === 'buyer' && (
-            <Cart cartItems={cartItems} />
-          )}
-          <Typography variant="overlineSmall" component="span" color="noshade">
-            MENU
-          </Typography>
+      leftContent={
+        <>
           <HamburgerWrapper>
             <Hamburger
               onClick={onClick}
@@ -161,6 +156,13 @@ const Header = ({
               color={theme.grey.noshade}
             />
           </HamburgerWrapper>
+        </>
+      }
+      rightContent={
+        <HeaderRightContent>
+          {!onBack && theme.appType === 'buyer' && (
+            <Cart cartItems={cartItems} />
+          )}
         </HeaderRightContent>
       }
     />
@@ -262,7 +264,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
-  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
+  const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade7;
 
   const showSmallSidebar = useMediaQuery({
     query: BREAKPOINTS.genericTablet,
@@ -315,13 +317,13 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar openSidebar={openSidebar}>
         <div>
           <SidebarLogoContainer>
-            <ShoretradeLogo2 />
             <div
               className="close-container"
               onClick={() => setOpenSidebar(false)}
             >
-              <ArrowLeftAlt />
+              <Close height={13} width={13} fill={theme.grey.noshade} />
             </div>
+            <Logo2 />
           </SidebarLogoContainer>
           {routes.map((route) => (
             <NavLink
@@ -335,7 +337,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               to={route.path}
               color={isInnerRoute(route.path) ? 'noshade' : textColor}
               iconColor={
-                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
+                isInnerRoute(route.path) ? theme.brand.primary : iconColor
               }
               linkText={route.title || ''}
               Icon={route.icon}

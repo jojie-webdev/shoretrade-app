@@ -3,8 +3,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
-const dashboardWidth = (isSeller: boolean) =>
-  isSeller ? 'calc(100% - 150px)' : 'calc(100% - 150px)';
+const dashboardWidth = (isSeller: boolean) => (isSeller ? 'calc(100% - 150px)' : 'calc(100% - 150px)');
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
@@ -94,10 +93,10 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
 
   @media ${BREAKPOINTS['sm']} {
     display: static;
-    width: 90%;
+    width: 100%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-100%')};
     z-index: 9999;
     min-height: 100vh;
   }
@@ -108,7 +107,6 @@ export const SidebarLogoContainer = styled.div`
   margin-bottom: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   .close-container {
     display: flex;
@@ -119,7 +117,8 @@ export const SidebarLogoContainer = styled.div`
     height: 38px;
     background-color: ${({ theme }) => theme.grey.shade8};
     cursor: pointer;
-
+    margin-right: 12px;
+    margin-left: 12px;
     @media (min-width: 835px) {
       display: none;
     }
@@ -137,8 +136,8 @@ export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   padding-left: 14px;
   ${(props) =>
     props.isActive &&
-    `background: ${props.theme.brand.primary};
-      border-radius: 4px;`}
+    `background: ${props.theme.grey.shade8};
+      border-radius: 8px;`}
 
   .icon-container {
     margin-right: 12px;
@@ -204,19 +203,9 @@ export const Content = styled.div<{
   transition: margin 0.3s ease-in-out, padding 0.3s ease-in-out;
   overflow-x: hidden;
 
-  background: ${(props) =>
-    props.background
-      ? props.background
-      : props.theme.appType === 'buyer'
-      ? props.theme.grey.shade1
-      : props.theme.grey.shade9};
+  background: ${(props) => (props.background ? props.background : props.theme.appType === 'buyer' ? props.theme.grey.shade1 : props.theme.grey.shade9)};
 
-  color: ${(props) =>
-    props.color
-      ? props.color
-      : props.theme.appType === 'buyer'
-      ? props.theme.grey.shade9
-      : props.theme.grey.shade1};
+  color: ${(props) => (props.color ? props.color : props.theme.appType === 'buyer' ? props.theme.grey.shade9 : props.theme.grey.shade1)};
 
   .screen-wrapper {
     height: 80%;
@@ -226,12 +215,7 @@ export const Content = styled.div<{
     justify-content: center;
 
     .screen {
-      background: ${(props) =>
-        props.screenBackground
-          ? props.screenBackground
-          : props.theme.appType === 'buyer'
-          ? props.theme.grey.shade1
-          : props.theme.grey.shade8};
+      background: ${(props) => (props.screenBackground ? props.screenBackground : props.theme.appType === 'buyer' ? props.theme.grey.shade1 : props.theme.grey.shade8)};
 
       width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
       padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
@@ -263,8 +247,7 @@ export const Content = styled.div<{
         height: 100%;
         width: 100%;
         display: flex;
-        padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '0 8px' : '16px 24px'};
+        padding: ${(props) => (props.theme.appType === 'buyer' ? '0 8px' : '16px 24px')};
 
         .container {
           /* position: static !important; // needed to override react-grid-system .container */
@@ -308,10 +291,7 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   margin-bottom: 24px;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) =>
-    props.isHomeOld
-      ? '100%'
-      : dashboardWidth(props.theme.appType === 'seller')};
+  width: ${(props) => (props.isHomeOld ? '100%' : dashboardWidth(props.theme.appType === 'seller'))};
 
   .left-content {
     display: flex;
@@ -340,7 +320,7 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    width: 90%;
+    width: 100%;
     padding: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -360,7 +340,7 @@ export const HeaderRightContent = styled.div`
     margin-right: 45px;
 
     @media ${BREAKPOINTS.sm} {
-      margin-right: 24px;
+      margin-right: 0px;
     }
   }
 
