@@ -400,7 +400,13 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                     ? 'Pay using credit card'
                     : 'Pay using this method'
                 }
-                disabled={processingOrder || isLoading || paymentMethod === ''}
+                disabled={
+                  processingOrder ||
+                  isLoading ||
+                  paymentMethod === '' ||
+                  (paymentMethod === 'account' &&
+                    Number(props.balance) < Number(props.totalValue))
+                }
                 loading={processingOrder || isLoading}
                 onClick={() => setShowConfirmationModal(true)}
               />
@@ -482,6 +488,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   processingOrder ||
                   isLoading ||
                   paymentMethod === '' ||
+                  (paymentMethod === 'account' &&
+                    Number(props.balance) < Number(props.totalValue)) ||
                   (currentTab === TABS[1] && !props.selectedCard)
                 }
                 loading={processingOrder || isLoading}

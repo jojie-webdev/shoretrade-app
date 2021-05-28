@@ -39,7 +39,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowWidth,
     justifyArrows,
     hideArrowArea,
-    aspectRatio = '8:7',
+    aspectRatio = '16:9',
     addMargin,
     arrowInside,
     showAquafuture,

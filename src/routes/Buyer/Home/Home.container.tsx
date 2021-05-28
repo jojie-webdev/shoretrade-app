@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { getPaymentModeActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
@@ -14,6 +16,7 @@ import HomeViewOld from './Home.view.old';
 const Home = (): JSX.Element => {
   const dispatch = useDispatch();
   const isOld = useHomeOld();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   // MARK:- Store
   const buyerHomePageData = useSelector(
@@ -41,7 +44,8 @@ const Home = (): JSX.Element => {
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const company = GetDefaultCompany();
-  const featured: string[] = bannerData?.web || [];
+  const featured: string[] =
+    (isMobile ? bannerData?.app : bannerData?.web) || [];
   const loadingHomePage = buyerHomePageData.pending === null;
 
   // MARK:- State
