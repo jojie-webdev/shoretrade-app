@@ -202,6 +202,86 @@ const HomeView = (props: HomeGeneratedProps) => {
                   addMargin
                 />
               </ViewCol>
+              {!isPendingAccount && (
+                <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                  <HomeSectionHeader
+                    title="Your Favourite Products"
+                    onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                    noMargin
+                  />
+
+                  <FavouritesContainer>
+                    {isSmallScreen ? (
+                      <MultipleCarousel<
+                        GetBuyerHomepageResponseListingItem,
+                        PreviewProps
+                      >
+                        data={favourites}
+                        transform={favouritesToPreviewProps}
+                        Component={PreviewCard}
+                        link={BUYER_ROUTES.PRODUCT_DETAIL}
+                        emptyText="No Favourite Products"
+                        id="favourites"
+                      />
+                    ) : (
+                      <>
+                        {favourites?.length > 0 ? (
+                          favourites?.map((fav) => {
+                            return (
+                              <Interactions
+                                key={fav.id}
+                                type="next"
+                                padding="8px 24px 8px 8px"
+                                onClick={() => {
+                                  history.push(
+                                    BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
+                                  );
+                                }}
+                                leftComponent={
+                                  <FavouriteProductInteractionContent
+                                    {...fav}
+                                  />
+                                }
+                              />
+                            );
+                          })
+                        ) : (
+                          <EmptyContainer>
+                            <Typography variant="title5">
+                              No Favourite Sellers
+                            </Typography>
+                          </EmptyContainer>
+                        )}
+                      </>
+                    )}
+                  </FavouritesContainer>
+                </ViewCol>
+              )}
+            </Row>
+          </Wrapper>
+
+          <Wrapper>
+            <Row gutterWidth={16}>
+              <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                <HomeSectionHeader
+                  title="Categories"
+                  onClick={() =>
+                    history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
+                  }
+                  noMargin
+                />
+
+                <CategoriesContainer>
+                  <MultipleCarousel<CategoryResults, CardProps>
+                    responsive
+                    data={categories}
+                    transform={categoriesToCardProps}
+                    Component={Card}
+                    link={BUYER_ROUTES.CATEGORY_PRODUCTS}
+                    id="categories"
+                  />
+                </CategoriesContainer>
+              </ViewCol>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
                   title="Favourite Sellers"
@@ -264,86 +344,6 @@ const HomeView = (props: HomeGeneratedProps) => {
                   </SellerInteractionsContainer>
                 )}
               </ViewCol>
-            </Row>
-          </Wrapper>
-
-          <Wrapper>
-            <Row gutterWidth={16}>
-              <ViewCol xxl={6} xl={6} md={12} sm={12}>
-                <HomeSectionHeader
-                  title="Categories"
-                  onClick={() =>
-                    history.push(BUYER_ROUTES.CATEGORIES, { ref: 'home' })
-                  }
-                  noMargin
-                />
-
-                <CategoriesContainer>
-                  <MultipleCarousel<CategoryResults, CardProps>
-                    responsive
-                    data={categories}
-                    transform={categoriesToCardProps}
-                    Component={Card}
-                    link={BUYER_ROUTES.CATEGORY_PRODUCTS}
-                    id="categories"
-                  />
-                </CategoriesContainer>
-              </ViewCol>
-              {!isPendingAccount && (
-                <ViewCol xxl={6} xl={6} md={12} sm={12}>
-                  <HomeSectionHeader
-                    title="Your Favourite Products"
-                    onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
-                    noMargin
-                  />
-
-                  <FavouritesContainer>
-                    {isSmallScreen ? (
-                      <MultipleCarousel<
-                        GetBuyerHomepageResponseListingItem,
-                        PreviewProps
-                      >
-                        data={favourites}
-                        transform={favouritesToPreviewProps}
-                        Component={PreviewCard}
-                        link={BUYER_ROUTES.PRODUCT_DETAIL}
-                        emptyText="No Favourite Products"
-                        id="favourites"
-                      />
-                    ) : (
-                      <>
-                        {favourites?.length > 0 ? (
-                          favourites?.map((fav) => {
-                            return (
-                              <Interactions
-                                key={fav.id}
-                                type="next"
-                                padding="8px 24px 8px 8px"
-                                onClick={() => {
-                                  history.push(
-                                    BUYER_ROUTES.PRODUCT_DETAIL(fav.id)
-                                  );
-                                }}
-                                leftComponent={
-                                  <FavouriteProductInteractionContent
-                                    {...fav}
-                                  />
-                                }
-                              />
-                            );
-                          })
-                        ) : (
-                          <EmptyContainer>
-                            <Typography variant="title5">
-                              No Favourite Sellers
-                            </Typography>
-                          </EmptyContainer>
-                        )}
-                      </>
-                    )}
-                  </FavouritesContainer>
-                </ViewCol>
-              )}
             </Row>
           </Wrapper>
 
