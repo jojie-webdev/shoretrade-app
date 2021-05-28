@@ -538,15 +538,13 @@ const Step1 = ({
           <Negotiations activeOffer={activeOffer} />
 
           {isReview && !isMobile && (
-            <div className="submit-btns">
-              <Button
-                onClick={() => props.setStep && props.setStep(2)}
-                className="submit-btn"
-                disabled={userPending}
-                text="Make an offer"
-                variant={userPending ? 'disabled' : 'primary'}
-              />
-            </div>
+            <Button
+              onClick={() => props.setStep && props.setStep(2)}
+              className="submit-btn"
+              disabled={userPending}
+              text="Make an offer"
+              variant={userPending ? 'disabled' : 'primary'}
+            />
           )}
         </SummaryContentContainer>
       </div>
