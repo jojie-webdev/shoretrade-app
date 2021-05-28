@@ -1,5 +1,6 @@
 import { animated } from '@react-spring/web';
 import InteractionsView from 'components/base/Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -65,4 +66,10 @@ export const SwipeableWrapper = styled(animated.div)`
 
 export const SwipeableInteraction = styled(InteractionsView)`
   height: 100%;
+
+  @media ${BREAKPOINTS['sm']} {
+    &:hover {
+      opacity: 1;
+    }
+  }
 `;

@@ -13,6 +13,7 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
+import { isIOS } from 'react-device-detect';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -109,14 +110,15 @@ const MarketRequestsLandingView = (
     itemToDelete,
     setItemToDelete,
     pendingDeleteMarketRequest,
+    loading,
   } = props;
 
-  if (pendingDeleteMarketRequest) {
+  if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
   }
 
   return (
-    <MarketRequestsContainer>
+    <MarketRequestsContainer isIOS={isIOS}>
       <ConfirmationModal
         isOpen={itemToDelete.value !== null}
         title="Delete Market Request"
