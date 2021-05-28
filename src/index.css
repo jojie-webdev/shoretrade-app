@@ -29,19 +29,21 @@ body {
   margin: 0;
 }
 
-@media (max-width: 576px) {
-  html {
-    position: fixed;
-    height: 100%;
-    overflow: hidden;
-  }
-  body {
-    margin: 0;
-    width: 100vw; 
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 576px) {
+    html {
+      position: fixed;
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }
 
