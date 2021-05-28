@@ -93,5 +93,7 @@ export const addCardAndPay = (
       Authorization: `Bearer ${token}`,
     },
     data: data,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
   });
 };
