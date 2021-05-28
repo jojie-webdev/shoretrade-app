@@ -315,72 +315,78 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       )}
 
       <Sidebar openSidebar={openSidebar}>
-        <div>
-          <SidebarLogoContainer>
-            <div
-              className="close-container"
-              onClick={() => setOpenSidebar(false)}
-            >
-              <Close height={13} width={13} fill={theme.grey.noshade} />
-            </div>
-            <Logo2 />
-          </SidebarLogoContainer>
-          {routes.map((route) => (
-            <NavLink
-              onClick={() => {
-                if (openSidebar) {
-                  setOpenSidebar(false);
+        <div className="wrapper">
+          <div>
+            <SidebarLogoContainer>
+              <div
+                className="close-container"
+                onClick={() => setOpenSidebar(false)}
+              >
+                <Close height={13} width={13} fill={theme.grey.noshade} />
+              </div>
+              <Logo2 />
+            </SidebarLogoContainer>
+            {routes.map((route) => (
+              <NavLink
+                onClick={() => {
+                  if (openSidebar) {
+                    setOpenSidebar(false);
+                  }
+                }}
+                key={`sidenav-${route.path}`}
+                isActive={isInnerRoute(route.path)}
+                to={route.path}
+                color={isInnerRoute(route.path) ? 'noshade' : textColor}
+                iconColor={
+                  isInnerRoute(route.path) ? theme.brand.primary : iconColor
                 }
-              }}
-              key={`sidenav-${route.path}`}
-              isActive={isInnerRoute(route.path)}
-              to={route.path}
-              color={isInnerRoute(route.path) ? 'noshade' : textColor}
-              iconColor={
-                isInnerRoute(route.path) ? theme.brand.primary : iconColor
-              }
-              linkText={route.title || ''}
-              Icon={route.icon}
-            />
-          ))}
-        </div>
+                linkText={route.title || ''}
+                Icon={route.icon}
+              />
+            ))}
+          </div>
 
-        <div>
-          {theme.appType === 'buyer' && (
-            <CreditBalanceContainer
-              onClick={() => {
-                if (openSidebar) {
-                  setOpenSidebar(false);
-                }
-                history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
-              }}
-            >
-              <Typography color="shade6" variant="overline" weight="900">
-                Credit balance
-              </Typography>
-              <div className="balance-arrow">
-                <Typography color="noshade" variant="title5" className="amount">
-                  {credit ? toPrice(credit) : '$0.00'}
+          <div>
+            {theme.appType === 'buyer' && (
+              <CreditBalanceContainer
+                onClick={() => {
+                  if (openSidebar) {
+                    setOpenSidebar(false);
+                  }
+                  history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
+                }}
+              >
+                <Typography color="shade6" variant="overline" weight="900">
+                  Credit balance
                 </Typography>
-                <ChevronRight />
-              </div>
-            </CreditBalanceContainer>
-          )}
+                <div className="balance-arrow">
+                  <Typography
+                    color="noshade"
+                    variant="title5"
+                    className="amount"
+                  >
+                    {credit ? toPrice(credit) : '$0.00'}
+                  </Typography>
+                  <ChevronRight />
+                </div>
+              </CreditBalanceContainer>
+            )}
 
-          <LogoutButton
-            style={{ marginBottom: 24 }}
-            onPress={() => logout()}
-            dark={isSeller}
-          >
-            <LogoutContainer>
-              <div className="icon-container">
-                <Exit />
-              </div>
-              <Typography color="shade7" className="link" weight="500">
-                Logout
-              </Typography>
-            </LogoutContainer>
-          </LogoutButton>
+            <LogoutButton
+              style={{ marginBottom: 24 }}
+              onPress={() => logout()}
+              dark={isSeller}
+            >
+              <LogoutContainer>
+                <div className="icon-container">
+                  <Exit />
+                </div>
+                <Typography color="shade7" className="link" weight="500">
+                  Logout
+                </Typography>
+              </LogoutContainer>
+            </LogoutButton>
+          </div>
         </div>
       </Sidebar>
 
