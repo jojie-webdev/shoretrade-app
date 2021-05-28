@@ -99,6 +99,7 @@ const OfferDetailView = (props: any) => {
         <div className="sizes-container">
           <StyledTextField
             type="number"
+            inputType="numeric"
             label="From"
             value={selectedOffer.weight}
             disabled
@@ -110,6 +111,7 @@ const OfferDetailView = (props: any) => {
           />
           <StyledTextField
             type="number"
+            inputType="numeric"
             label="To"
             value={selectedOffer.weight}
             disabled
