@@ -19,4 +19,5 @@ export interface MarketRequestsLandingGeneratedProps {
   };
   pendingDeleteMarketRequest: boolean;
   setItemToDelete: Dispatch<SetStateAction<{ value: null | string }>>;
+  loading: boolean;
 }
