@@ -262,7 +262,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
-  const iconColor = isSeller ? theme.grey.noshade : theme.grey.shade7;
+  const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade7;
 
   const showSmallSidebar = useMediaQuery({
     query: BREAKPOINTS.genericTablet,
@@ -335,7 +335,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               to={route.path}
               color={isInnerRoute(route.path) ? 'noshade' : textColor}
               iconColor={
-                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
+                isInnerRoute(route.path) ? theme.brand.primary : iconColor
               }
               linkText={route.title || ''}
               Icon={route.icon}

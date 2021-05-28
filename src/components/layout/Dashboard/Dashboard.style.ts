@@ -104,10 +104,10 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
 
   @media ${BREAKPOINTS['sm']} {
     display: static;
-    width: 90%;
+    width: 100%;
     position: absolute;
     top: 0;
-    left: ${(props) => (props.openSidebar ? '0px' : '-90%')};
+    left: ${(props) => (props.openSidebar ? '0px' : '-100%')};
     z-index: 9999;
     min-height: 100vh;
   }
@@ -147,8 +147,8 @@ export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   padding-left: 14px;
   ${(props) =>
     props.isActive &&
-    `background: ${props.theme.brand.primary};
-      border-radius: 4px;`}
+    `background: ${props.theme.grey.shade8};
+      border-radius: 8px;`}
 
   .icon-container {
     margin-right: 12px;
@@ -350,7 +350,7 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    width: 90%;
+    width: 100%;
     padding: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
