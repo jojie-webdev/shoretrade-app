@@ -29,6 +29,11 @@ export const Container = styled.div<{ isIOS?: boolean }>`
   .step-1-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+
+    @media (min-width: 1560px) {
+      justify-content: flex-start;
+    }
   }
 
   .mobile-back-container {
@@ -41,6 +46,16 @@ export const Container = styled.div<{ isIOS?: boolean }>`
       margin-left: 8px;
     }
   }
+
+  .spacer {
+    @media (min-width: 1440px) {
+      margin-right: 20px;
+    }
+
+    @media (min-width: 1560px) {
+      margin-right: 107px;
+    }
+  }
 `;
 
 export const SummaryContentContainer = styled.div`
@@ -48,18 +63,6 @@ export const SummaryContentContainer = styled.div`
   flex-direction: column;
   min-width: 320px;
 
-  @media (min-width: 1450px) {
-    margin-left: 107px;
-  }
-  @media ${BREAKPOINTS['sm']} {
-    min-width: 100%;
-  }
-  @media ${BREAKPOINTS['iPad']} {
-    min-width: 100%;
-  }
-  @media ${BREAKPOINTS['xl']} {
-    min-width: 100%;
-  }
   .quantity-container {
     display: flex;
 
