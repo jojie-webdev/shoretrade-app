@@ -1,7 +1,12 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { ArrowRight, Close, Logo, ShoretradeLogo } from 'components/base/SVG';
+import {
+  ArrowRight,
+  Close,
+  ShoretradeLogo,
+  ShoretradeLogo2,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import { SHORETRADE_HOME } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -76,7 +81,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
             >
               <a href={SHORETRADE_HOME} style={{ cursor: 'pointer' }}>
                 {!horizontalLogo ? (
-                  <Logo fill={!isSeller ? 'black' : 'white'} />
+                  <ShoretradeLogo2 fill={!isSeller ? 'black' : 'white'} />
                 ) : (
                   <ShoretradeLogo height={24} width={190} />
                 )}

@@ -1,5 +1,4 @@
 /* PLOP_INJECT_IMPORT */
-export { default as Logo2 } from './Logo2';
 export { default as Sync } from './Sync';
 export { default as CaviarHero } from './CaviarHero';
 export { default as OctopusHero } from './OctopusHero';
@@ -23,14 +22,12 @@ export { default as Wholesaler } from './Wholesaler';
 export { default as AquacultureProducer } from './AquacultureProducer';
 export { default as WildCatchFishingCompany } from './WildCatchFishingCompany';
 export { default as Tuna } from './Tuna';
-export { default as Logo } from './Logo';
 export { default as Message } from './Message';
 export { default as CheckList } from './CheckList';
 export { default as DownloadFile } from './DownloadFile';
 export { default as TrashCan } from './TrashCan';
 export { default as Amex } from './Amex';
 export { default as PlaceholderProfile } from './PlaceholderProfile';
-export { default as ShoretradeLogo2 } from './ShoretradeLogo2';
 export { default as MarketSectorWholesaler } from './MarketSectorWholesaler';
 export { default as MarketSectorWetShop } from './MarketSectorWetShop';
 export { default as MarketSectorRetailer } from './MarketSectorRetailer';
@@ -82,6 +79,7 @@ export { default as DropdownArrow } from './DropdownArrow';
 export { default as Pen } from './Pen';
 export { default as Exit } from './Exit';
 export { default as ShoretradeLogo } from './ShoretradeLogo';
+export { default as ShoretradeLogo2 } from './ShoretradeLogo2';
 export { default as Dashboard } from './Dashboard';
 export { default as AddBorder } from './AddBorder';
 export { default as Cart } from './Cart';

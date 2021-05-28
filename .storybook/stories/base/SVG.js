@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
-  Logo2,
   Sync,
   CaviarHero,
   OctopusHero,
@@ -27,14 +26,12 @@ import {
   AquacultureProducer,
   WildCatchFishingCompany,
   Tuna,
-  Logo,
   Message,
   CheckList,
   DownloadFile,
   TrashCan,
   Amex,
   PlaceholderProfile,
-  ShoretradeLogo2,
   MarketSectorWholesaler,
   MarketSectorWetShop,
   MarketSectorRetailer,
@@ -85,6 +82,7 @@ import {
   Pen,
   Exit,
   ShoretradeLogo,
+  ShoretradeLogo2,
   Dashboard,
   AddBorder,
   Cart,
@@ -169,9 +167,6 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
-        <Wrapper label="Logo2">
-          <Logo2 width={30} height={30} />
-        </Wrapper>
         <Wrapper label="Sync">
           <Sync width={30} height={30} />
         </Wrapper>
@@ -238,9 +233,6 @@ storiesOf('base/SVG', module).add('Summary', () => {
         <Wrapper label="Tuna">
           <Tuna width={30} height={30} />
         </Wrapper>
-        <Wrapper label="Logo">
-          <Logo width={30} height={30} />
-        </Wrapper>
         <Wrapper label="Message">
           <Message width={30} height={30} />
         </Wrapper>
@@ -259,9 +251,7 @@ storiesOf('base/SVG', module).add('Summary', () => {
         <Wrapper label="PlaceholderProfile">
           <PlaceholderProfile width={30} height={30} />
         </Wrapper>
-        <Wrapper label="ShoretradeLogo2">
-          <ShoretradeLogo2 width={30} height={30} />
-        </Wrapper>
+
         <Wrapper label="MarketSectorWholesaler">
           <MarketSectorWholesaler width={30} height={30} />
         </Wrapper>
@@ -420,6 +410,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="ShoretradeLogo">
           <ShoretradeLogo width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ShoretradeLogo2">
+          <ShoretradeLogo2 width={30} height={30} />
         </Wrapper>
         <Wrapper label="Dashboard">
           <Dashboard width={30} height={30} fill="black" />
