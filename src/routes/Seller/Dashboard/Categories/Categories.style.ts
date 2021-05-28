@@ -1,8 +1,11 @@
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div<{ isIOS?: boolean }>`
+  padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+`;
 
 export const HeaderRow = styled(Row)`
   margin-bottom: 32px;

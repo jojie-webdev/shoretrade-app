@@ -21,6 +21,7 @@ import Carousel from 'components/module/Carousel';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -98,7 +99,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
       (Number(orderDetails.remaining) / Number(sales.totalWeight)) * 100;
     if (percent >= 100) percent = 100;
     return (
-      <MobileWrapper>
+      <MobileWrapper isIOS={isIOS}>
         <Row nogutter>
           <Carousel
             id="product-carousel"
@@ -169,7 +170,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   variant="label"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                 >
-                {productDetails.location}
+                  {productDetails.location}
                 </Typography>
               </div>
             </div>

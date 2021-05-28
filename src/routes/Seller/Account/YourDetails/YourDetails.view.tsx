@@ -10,6 +10,7 @@ import PhoneTextField from 'components/module/PhoneTextField';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
+import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
@@ -49,7 +50,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   };
 
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

@@ -80,6 +80,7 @@ const Content = (props: NegotiateSellerModalProps) => {
       <Inputs>
         <StyledTextField
           type="number"
+          inputType="numeric"
           label={'Make a new Offer'}
           value={negotiationPrice}
           onChangeText={(v) => {

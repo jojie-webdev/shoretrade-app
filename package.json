@@ -28,6 +28,7 @@
     "ramda": "^0.27.1",
     "react": "^16.13.1",
     "react-dates": "^21.8.0",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
     "react-gradient-progress": "^1.0.3",

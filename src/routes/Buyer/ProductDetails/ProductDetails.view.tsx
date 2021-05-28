@@ -248,7 +248,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         }
                         value={weight}
                         onChangeText={setWeight}
-                        type="numeric"
+                        inputType="numeric"
                       />
                     </TextFieldWrapper>
                     <RemainingWrapper>

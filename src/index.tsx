@@ -24,6 +24,13 @@ import 'swiper/swiper-bundle.min.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+// We listen to the resize event
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 // create the saga middleware
 sagaMiddleware.run(sagas);
 

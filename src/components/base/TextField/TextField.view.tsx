@@ -45,6 +45,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     onKeyUp,
     onKeyDown,
     disabled,
+    inputType,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -77,6 +78,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         <Field
           id={id}
           type={secured && !showSecuredText ? 'password' : defaultInputType}
+          inputMode={inputType}
           value={
             readOnly && (prefix || '').length > 0 ? `${prefix} ${value}` : value
           }
