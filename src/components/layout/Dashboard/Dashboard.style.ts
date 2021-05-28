@@ -8,7 +8,6 @@ const dashboardWidth = (isSeller: boolean) =>
 
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
-  isIOS?: boolean;
 }>`
   height: 100vh;
   width: 100%;
@@ -196,7 +195,6 @@ export const Content = styled.div<{
   screenBackground?: string;
   color?: string;
   isHomeOld?: boolean;
-  isIOS?: boolean;
 }>`
   display: flex;
   flex: 1;

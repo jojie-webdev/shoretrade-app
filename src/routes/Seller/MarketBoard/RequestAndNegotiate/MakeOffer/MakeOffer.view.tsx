@@ -11,6 +11,7 @@ import Typography from 'components/base/Typography';
 import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerDropdown.view';
 import moment from 'moment';
 import { pathOr } from 'ramda';
+import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
@@ -22,7 +23,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   // const theme = useTheme();
 
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       <Alert
         variant="infoAlert"
         fullWidth

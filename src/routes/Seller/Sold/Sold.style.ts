@@ -15,10 +15,6 @@ export const Container = styled.div<{ isIOS?: boolean }>`
     margin-bottom: 32px;
   }
 
-  @media ${BREAKPOINTS['md']} {
-    padding-bottom: 32px;
-  }
-
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '32px')};
   }

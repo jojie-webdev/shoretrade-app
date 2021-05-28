@@ -15,7 +15,6 @@ import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -276,7 +275,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   }, [history.location]);
 
   return (
-    <DashboardContainer isIOS={isIOS} openSidebar={openSidebar}>
+    <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => setOpenSidebar(!openSidebar)}
@@ -390,7 +389,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         screenBackground={screenBackground}
         color={color}
         isHomeOld={isHomeOld}
-        isIOS={isIOS}
       >
         <>
           {isHomeOld ? (
