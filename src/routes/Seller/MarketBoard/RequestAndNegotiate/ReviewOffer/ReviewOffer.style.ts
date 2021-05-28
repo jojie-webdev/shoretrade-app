@@ -1,9 +1,15 @@
 import Typography from 'components/base/Typography';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isIOS?: boolean }>`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 140px)` : '140px'};
+  }
+
   .interactions {
     margin-bottom: 12px;
 
@@ -78,27 +84,6 @@ export const Container = styled.div`
 
     .label {
       margin-left: 8px;
-    }
-  }
-
-  .button-container {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    position: absolute;
-    bottom: 3%;
-    padding: 16px;
-    margin: -24px -24px -36px -24px;
-    background-color: ${({ theme }) => theme.grey.shade9};
-    min-width: 100vw;
-    .submit-btn-1 {
-      width: 50%;
-      margin-right: 12px;
-      margin-left: 2px;
-    }
-    .submit-btn-2 {
-      width: 50%;
     }
   }
 `;

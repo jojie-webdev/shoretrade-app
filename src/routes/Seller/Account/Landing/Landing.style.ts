@@ -13,7 +13,8 @@ const imgStyle = css`
 
 export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '24px')};
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 24px)` : '24px'};
   }
 `;
 

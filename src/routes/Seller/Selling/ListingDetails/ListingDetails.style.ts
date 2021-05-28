@@ -296,6 +296,10 @@ export const TopDetailsContainer = styled.div`
 export const StyledTouchable = styled(Touchable)``;
 
 export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+  }
+
   .sales-container {
     display: flex;
     flex-direction: row;
@@ -370,10 +374,6 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
   }
   .row-test {
     margin-top: 242px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
   }
 `;
 

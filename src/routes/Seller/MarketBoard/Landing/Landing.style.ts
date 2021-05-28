@@ -6,7 +6,8 @@ import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 24)};
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 24px)` : '24px'};
   }
 
   .interactions {

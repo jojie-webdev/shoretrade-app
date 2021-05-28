@@ -7,7 +7,8 @@ export const Container = styled.div<{ isIOS?: boolean }>`
   padding-bottom: 180px;
 
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 140px)` : '140px'};
   }
 
   .shipping-to {
@@ -56,10 +57,6 @@ export const Container = styled.div<{ isIOS?: boolean }>`
 
   .submit-btns-step2 {
     display: flex;
-    @media ${BREAKPOINTS['sm']} {
-      margin: 16px -24px -16px -24px;
-      background-color: ${(props) => props.theme.grey.shade9};
-    }
   }
 
   .submit-btn-step2 {
@@ -67,12 +64,6 @@ export const Container = styled.div<{ isIOS?: boolean }>`
     margin-right: 8px;
     border-radius: 8px;
     max-width: 148px;
-
-    @media ${BREAKPOINTS['sm']} {
-      max-width: 100%;
-      width: 100%;
-      margin: 24px;
-    }
   }
 `;
 

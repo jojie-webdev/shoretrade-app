@@ -12,7 +12,9 @@ import {
   ArrowRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -42,7 +44,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
     return size;
   };
   return (
-    <Container>
+    <Container isIOS={isIOS}>
       <div>
         {props.offer.map((v) => {
           const sizeText = `${v.size.from} ${formatMeasurementUnit(
@@ -131,22 +133,42 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         </Typography>
       </div>
 
-      <div className={isMobile ? 'button-container' : 'submit-btns'}>
+      {!isMobile && (
+        <div className={'submit-btns'}>
+          <Button
+            onClick={() => setStep && setStep(2)}
+            className={'submit-btn'}
+            text="Add an offer"
+            variant="outline"
+          />
+          <Button
+            onClick={props.onSubmit}
+            className={'submit-btn'}
+            text="submit"
+            variant={!isChecked ? 'disabled' : 'primary'}
+            disabled={!isChecked}
+            loading={props.isSubmitting}
+          />
+        </div>
+      )}
+
+      <MobileFooter>
         <Button
           onClick={() => setStep && setStep(2)}
-          className={isMobile ? 'submit-btn-1' : 'submit-btn'}
+          takeFullWidth
           text="Add an offer"
           variant="outline"
         />
         <Button
           onClick={props.onSubmit}
-          className={isMobile ? 'submit-btn-2' : 'submit-btn'}
+          takeFullWidth
           text="submit"
           variant={!isChecked ? 'disabled' : 'primary'}
           disabled={!isChecked}
           loading={props.isSubmitting}
+          style={{ marginLeft: 8 }}
         />
-      </div>
+      </MobileFooter>
     </Container>
   );
 };

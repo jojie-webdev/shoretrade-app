@@ -6,6 +6,11 @@ import styled from 'utils/styled';
 export const Container = styled.div<{ isIOS?: boolean }>`
   width: 100%;
 
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 32px)` : '32px'};
+  }
+
   .emptystate-row {
     height: 100%;
   }
@@ -13,10 +18,6 @@ export const Container = styled.div<{ isIOS?: boolean }>`
   .controls-row {
     width: 100%;
     margin-bottom: 32px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '32px')};
   }
 `;
 

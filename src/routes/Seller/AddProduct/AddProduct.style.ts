@@ -13,7 +13,8 @@ export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     padding: 8px;
     padding-top: 16px;
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '16px')};
+    padding-bottom: ${(props) =>
+      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 16px)` : '16px'};
   }
 
   .title-step-text {

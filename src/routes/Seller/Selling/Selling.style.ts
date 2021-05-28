@@ -6,16 +6,16 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div<{ isIOS?: boolean }>`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+  }
+
   .row {
     height: 100%;
   }
 
   .search-row {
     margin-bottom: 24px;
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
   }
 `;
 
