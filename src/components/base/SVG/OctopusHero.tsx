@@ -8,15 +8,12 @@ const OctopusHero = (props: SVGProps): JSX.Element => {
   const theme = useTheme();
   const { width, height, fill } = props;
 
-  // Paste converted svg below
-  // https://react-svgr.com/playground/?typescript=true
   return (
     <svg
-      width="178"
-      height="178"
+      width={width || '178'}
+      height={height || '178'}
       viewBox="0 0 178 178"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="88" cy="89" r="59" fill="#F4F6FF" />
       <g clipPath="url(#clip0)">

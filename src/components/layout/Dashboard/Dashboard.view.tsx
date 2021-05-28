@@ -7,7 +7,7 @@ import {
   PlaceholderProfile,
   ChevronRight,
   ArrowLeftAlt,
-  Logo2,
+  ShoretradeLogo,
   Close,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
@@ -324,7 +324,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             >
               <Close height={13} width={13} fill={theme.grey.noshade} />
             </div>
-            <Logo2 />
+            <ShoretradeLogo fill={theme.grey.noshade} width={133} height={16} />
           </SidebarLogoContainer>
         </div>
         <div className="wrapper">

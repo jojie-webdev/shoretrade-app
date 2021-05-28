@@ -44,7 +44,6 @@ export const HamburgerWrapper = styled.div`
   @media ${BREAKPOINTS['sm']} {
     width: 37px;
     height: 37px;
-    margin-left: 4px;
     margin-bottom: 0;
   }
 `;
@@ -137,7 +136,7 @@ export const SidebarLogoContainer = styled.div`
     background-color: ${({ theme }) => theme.grey.shade8};
     cursor: pointer;
     margin-right: 12px;
-    margin-left: 12px;
+
     @media (min-width: 835px) {
       display: none;
     }
