@@ -31,5 +31,5 @@ export const Container = styled.div<{
     padding: 16px;
     background: none;
     border: 0;
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)}
+    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '16px')}
 `;
