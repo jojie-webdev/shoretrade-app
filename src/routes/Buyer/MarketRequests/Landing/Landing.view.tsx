@@ -110,9 +110,10 @@ const MarketRequestsLandingView = (
     itemToDelete,
     setItemToDelete,
     pendingDeleteMarketRequest,
+    loading,
   } = props;
 
-  if (pendingDeleteMarketRequest) {
+  if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
   }
 

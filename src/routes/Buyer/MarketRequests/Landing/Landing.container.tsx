@@ -39,6 +39,10 @@ const MarketRequestsLanding = (): JSX.Element => {
     (store: Store) => store.getAllMarketRequest
   );
 
+  const loading = useSelector(
+    (store: Store) => store.getAllMarketRequest.pending
+  );
+
   const onClickItem = (row: Result) => {
     if (row.offers > 0) {
       history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
@@ -80,6 +84,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     pendingDeleteMarketRequest: deleteMarketRequest.pending || false,
     itemToDelete,
     setItemToDelete,
+    loading: loading || false,
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;
