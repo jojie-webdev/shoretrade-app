@@ -130,7 +130,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
 
 export const SidebarLogoContainer = styled.div`
   margin-top: 40px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
 

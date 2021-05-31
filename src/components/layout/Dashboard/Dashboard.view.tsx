@@ -318,7 +318,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
         <div className="wrapper">
           <div>
-            <div>
               <SidebarLogoContainer>
                 <div
                   className="close-container"
@@ -332,8 +331,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   height={16}
                 />
               </SidebarLogoContainer>
-            </div>
-
             <div className="nav-items-container">
               {routes.map((route) => (
                 <NavLink
@@ -353,7 +350,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   Icon={route.icon}
                 />
               ))}
-            </div>
+          </div>
           </div>
           <div>
             {theme.appType === 'buyer' && (
