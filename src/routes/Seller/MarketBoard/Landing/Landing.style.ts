@@ -19,10 +19,11 @@ export const Container = styled.div<{ isIOS?: boolean }>`
       align-items: center;
 
       img {
-        width: 92px;
-        height: 92px;
+        width: 66px;
+        height: 66px;
         border-radius: 8px;
         margin-right: 16px;
+        margin-top: -68px;
       }
 
       .badges-container {
