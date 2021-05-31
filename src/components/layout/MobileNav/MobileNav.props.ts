@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export interface MobileNavPublicProps {
   children?: ReactNode;
@@ -14,4 +14,5 @@ export interface MobileNavGeneratedProps extends MobileNavPublicProps {
   onBack: () => void;
   showBack: () => boolean;
   getTitle: () => string;
+  onHome: () => void;
 }

@@ -5,10 +5,13 @@ import MobileNavView from 'components/layout/MobileNav/MobileNav.view';
 import { BUYER_ROUTES, MAIN_ROUTES, SELLER_ROUTES } from 'consts';
 import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
+import { useTheme } from 'utils/Theme';
 
 const MobileNav = (props: MobileNavPublicProps): JSX.Element => {
+  const theme = useTheme();
   const history = useHistory();
   const { pathname } = useLocation();
+  const isSeller = theme.appType === 'seller';
 
   const includes = (route: string) => pathname.includes(route);
 
@@ -41,9 +44,14 @@ const MobileNav = (props: MobileNavPublicProps): JSX.Element => {
     else history.goBack();
   };
 
+  const onHome = () => {
+    history.push(isSeller ? SELLER_ROUTES.DASHBOARD : BUYER_ROUTES.HOME);
+  };
+
   const generatedProps = {
     showBack,
     onBack,
+    onHome,
     getTitle,
     ...props,
   };
