@@ -8,10 +8,6 @@ export const Container = styled.div`
   /* Needed to compensate for the padding on the items */
   margin-left: -16px;
 
-  .swiper-wrapper {
-    padding-top: 16px;
-  }
-
   .swiper-slide {
     width: ${(props) => (props.theme.appType === 'buyer' ? '265px' : 'auto')};
     min-width: 156px;

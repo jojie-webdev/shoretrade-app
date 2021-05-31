@@ -143,7 +143,7 @@ const Header = ({
 
   return isMobile ? (
     <MobileNav
-      position="initial"
+      position="fixed"
       onBackOverride={onBack}
       showLogo={!onBack}
       leftContent={
@@ -249,7 +249,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     logout,
     credit,
     openSidebar,
-    setOpenSidebar,
+    onClickOpenSideBar,
     onBack,
     background,
     screenBackground,
@@ -281,14 +281,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
-        onClick={() => setOpenSidebar(!openSidebar)}
+        onClick={() => onClickOpenSideBar(!openSidebar)}
       />
 
       {showSmallSidebar && (
         <TabletSidebar>
-          <HamburgerWrapper onClick={() => setOpenSidebar(!openSidebar)}>
+          <HamburgerWrapper onClick={() => onClickOpenSideBar(!openSidebar)}>
             <Hamburger
-              onClick={() => setOpenSidebar(!openSidebar)}
+              onClick={() => onClickOpenSideBar(!openSidebar)}
               isActive={openSidebar}
               width={20}
               height={10}
@@ -300,7 +300,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             <IconLink
               onClick={() => {
                 if (openSidebar) {
-                  setOpenSidebar(false);
+                  onClickOpenSideBar(false);
                 }
               }}
               key={`sidenav-${route.path}`}
@@ -318,28 +318,25 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
         <div className="wrapper">
           <div>
-            <div>
-              <SidebarLogoContainer>
-                <div
-                  className="close-container"
-                  onClick={() => setOpenSidebar(false)}
-                >
-                  <Close height={13} width={13} fill={theme.grey.noshade} />
-                </div>
-                <ShoretradeLogo
-                  fill={theme.grey.noshade}
-                  width={133}
-                  height={16}
-                />
-              </SidebarLogoContainer>
-            </div>
-
+            <SidebarLogoContainer>
+              <div
+                className="close-container"
+                onClick={() => onClickOpenSideBar(false)}
+              >
+                <Close height={13} width={13} fill={theme.grey.noshade} />
+              </div>
+              <ShoretradeLogo
+                fill={theme.grey.noshade}
+                width={133}
+                height={16}
+              />
+            </SidebarLogoContainer>
             <div className="nav-items-container">
               {routes.map((route) => (
                 <NavLink
                   onClick={() => {
                     if (openSidebar) {
-                      setOpenSidebar(false);
+                      onClickOpenSideBar(false);
                     }
                   }}
                   key={`sidenav-${route.path}`}
@@ -360,7 +357,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               <CreditBalanceContainer
                 onClick={() => {
                   if (openSidebar) {
-                    setOpenSidebar(false);
+                    onClickOpenSideBar(false);
                   }
                   history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
                 }}
@@ -426,7 +423,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   textColor={
                     headerTextColor || (isSeller ? 'noshade' : 'shade9')
                   }
-                  onClick={() => setOpenSidebar(!openSidebar)}
+                  onClick={() => onClickOpenSideBar(!openSidebar)}
                   openSidebar={openSidebar}
                   onBack={onBack}
                   cartItems={cartItems}
@@ -441,7 +438,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 pageTitle={pageTitle}
                 userData={userData}
                 textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
-                onClick={() => setOpenSidebar(!openSidebar)}
+                onClick={() => onClickOpenSideBar(!openSidebar)}
                 openSidebar={openSidebar}
                 onBack={onBack}
                 cartItems={cartItems}

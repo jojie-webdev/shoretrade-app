@@ -33,6 +33,15 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
+  const onClickOpenSideBar = (value: boolean) => {
+    if (value) {
+      document.getElementsByTagName('body')[0].classList.add('no-scroll');
+    } else {
+      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+    }
+    setOpenSidebar(value);
+  };
+
   const getUser = useSelector((state: Store) => state.getUser);
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
@@ -111,7 +120,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     logout,
     credit: defaultCompany?.credit || '',
     openSidebar,
-    setOpenSidebar,
+    onClickOpenSideBar,
     cartItems,
     onClickAccount,
   };
