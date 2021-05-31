@@ -23,7 +23,6 @@ export const ViewContainer = styled.div`
 
 export const Wrapper = styled.div`
   position: relative;
-  margin-top: 24px;
 `;
 
 export const SwiperContainer = styled.div`
@@ -56,8 +55,6 @@ export const ArrowArea = styled.div<{ left?: boolean; right?: boolean }>`
 `;
 
 export const FavouritesContainer = styled.div`
-  padding-top: 16px;
-
   .interactions {
     margin-bottom: 8px;
   }

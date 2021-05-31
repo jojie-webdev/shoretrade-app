@@ -192,6 +192,11 @@ const HomeView = (props: HomeGeneratedProps) => {
           <Wrapper>
             <Row gutterWidth={16}>
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
+                <HomeSectionHeader
+                  title="Featured"
+                  onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
+                  noMargin
+                />
                 <Carousel
                   id="featured-carousel"
                   images={featured}
