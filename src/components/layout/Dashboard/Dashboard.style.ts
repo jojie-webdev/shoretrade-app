@@ -9,11 +9,13 @@ const dashboardWidth = (isSeller: boolean) =>
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
 }>`
-  height: 100vh;
   width: 100%;
   display: flex;
+  padding-top: 40px;
+  ${({ openSidebar }) => openSidebar && `height: 100vh;  margin-top: 0px;`}
   flex-direction: row;
   position: relative;
+  z-index: 9999;
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
  
 `;
