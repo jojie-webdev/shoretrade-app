@@ -12,6 +12,12 @@ const MobileModal = (props: MobileModalProps): JSX.Element => {
 
   if (!isSmallScreen) return <></>;
 
+  if (isOpen) {
+    document.getElementsByTagName('body')[0].classList.add('no-scroll');
+  } else {
+    document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+  }
+
   return (
     <Container isOpen={isOpen}>
       <Backdrop

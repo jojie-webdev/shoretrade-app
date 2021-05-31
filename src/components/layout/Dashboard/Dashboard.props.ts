@@ -26,7 +26,7 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   logout: () => void;
   credit: string;
   openSidebar: boolean;
-  setOpenSidebar: Dispatch<SetStateAction<boolean>>;
+  onClickOpenSideBar: (value: boolean) => void;
   cartItems: number;
   onClickAccount: () => void;
 }

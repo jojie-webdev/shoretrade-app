@@ -29,7 +29,7 @@ body {
   margin: 0;
 }
 
-@supports (-webkit-touch-callout: none) {
+/* @supports (-webkit-touch-callout: none) {
   @media (max-width: 576px) {
     html {
       position: fixed;
@@ -45,11 +45,15 @@ body {
       -webkit-overflow-scrolling: touch;
     }
   }
-}
+} */
 
 body * {
   font-family: "Basis Grotesque Pro", sans-serif;
   box-sizing: border-box;
+}
+
+body.no-scroll {
+  overflow: hidden;
 }
 
 button:hover {

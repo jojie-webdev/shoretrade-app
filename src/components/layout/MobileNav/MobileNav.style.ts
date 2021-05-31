@@ -5,9 +5,11 @@ export const Container = styled.div<{ position?: string }>`
   display: flex;
   align-items: center;
   padding: 0 24px;
-  position: ${({ position }) => position};
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
+  z-index: 999;
   height: ${MOBILE_HEADER_HEIGHT}px;
   background-color: ${({ theme }) => theme.grey.shade9};
 

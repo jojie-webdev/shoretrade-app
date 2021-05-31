@@ -72,7 +72,7 @@ export const Scroll = styled.div`
 export const ButtonContainer = styled.div`
   @media ${BREAKPOINTS.sm} {
     width: calc(100% - 48px);
-    position: absolute;
+    position: fixed;
     bottom: 24px;
   }
 `;

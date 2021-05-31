@@ -1,6 +1,7 @@
 import Touchable from 'components/base/Touchable';
 import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
@@ -10,14 +11,20 @@ const dashboardWidth = (isSeller: boolean) =>
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
 }>`
-
-  height: 100vh;
   width: 100%;
   display: flex;
+
+  height: 100vh;
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: ${MOBILE_HEADER_HEIGHT}px;
+    height: auto;
+  }
+
+  ${({ openSidebar }) =>
+    openSidebar && ` height: calc(var(--vh, 1vh) * 100); margin-top: 0px;`}
   flex-direction: row;
   position: relative;
-  /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
- 
+  z-index: 9999;
 `;
 
 export const MenuIcon = styled.div`
@@ -82,6 +89,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   justify-content: space-between;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
+  z-index: 999;
 
   .wrapper {
     display: flex;
@@ -113,7 +121,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     display: static;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-100%')};
     z-index: 9999;
@@ -123,7 +131,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
 
 export const SidebarLogoContainer = styled.div`
   margin-top: 40px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
 

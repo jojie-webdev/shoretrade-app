@@ -4,7 +4,7 @@ export const Container = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: fixed;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   top: 0;
   right: 0;
@@ -26,8 +26,8 @@ export const ModalContainer = styled.div<{
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   padding: 40px 24px 8px 24px;
-  height: 140vh;
   width: 100vw;
+  height: 100vh;
   background-color: ${({ theme, backgroundColor }) => {
     const isSeller = theme.appType === 'seller';
 
