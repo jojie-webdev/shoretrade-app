@@ -84,7 +84,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
         <DetailsContainer>
           <HeaderContainer>
             <Row nogutter>
-              <div style={{ flex: 1, height: 48 }}>
+              <div style={{ flex: 1, height: 40 }}>
                 <Title style={{ width: '100%' }} variant="body" weight="bold">
                   {props.type}
                 </Title>
