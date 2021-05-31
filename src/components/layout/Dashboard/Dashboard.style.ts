@@ -1,4 +1,5 @@
 import Touchable from 'components/base/Touchable';
+import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
@@ -71,7 +72,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   }
 `;
 
-export const Sidebar = styled.aside<{ openSidebar: boolean }>`
+export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   padding: 0 24px;
   background: #050e16;
   width: 235px;
@@ -80,6 +81,23 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   justify-content: space-between;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    .nav-items-container {
+      margin-bottom: 2rem;
+    }
+    .wrapper {
+      height: auto;
+      padding-bottom: ${IOSBOTTOMPADDING};
+    }
+  }
 
   @media ${BREAKPOINTS['genericTablet']} {
     display: static;
