@@ -141,23 +141,20 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         </div>
       )}
       {isMobile && (
-        <Row nogutter className="search-row" justify="between">
+        <Row nogutter className="search-row">
           {props.currentTab === 'Buyer Requests' && (
             <>
-              <Col xl={4}>
-                <Search
-                  className="filter-search"
-                  value={props.searchTerm}
-                  onChange={(event: any) =>
-                    props.setSearchTerm(event.currentTarget.value)
-                  }
-                  resetValue={() => props.setSearchTerm('')}
-                  placeholder="Search order"
-                  rounded
-                />
-              </Col>
-
-              <FilterButton onClick={props.onClickFilterButton}>
+              <Search
+                className="filter-search"
+                value={props.searchTerm}
+                onChange={(event: any) =>
+                  props.setSearchTerm(event.currentTarget.value)
+                }
+                resetValue={() => props.setSearchTerm('')}
+                placeholder="Search order"
+                rounded
+              />
+              <FilterButton className="mobile-filter" onClick={props.onClickFilterButton}>
                 <Typography
                   variant="label"
                   color="noshade"

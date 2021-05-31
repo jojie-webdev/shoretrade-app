@@ -8,6 +8,18 @@ export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: ${(props) =>
       props.isIOS ? `calc(${IOSBOTTOMPADDING} + 24px)` : '24px'};
+
+    .search-row {
+      display: flex;
+      flex-direction: row;
+      .filter-search {
+        width: 70%;
+        margin-right: 16px;
+      }
+      .mobile-filter {
+        width: 25%;
+      }
+    }
   }
 
   .interactions {
