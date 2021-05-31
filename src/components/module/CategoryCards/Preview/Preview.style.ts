@@ -127,5 +127,22 @@ export const Title = styled(TypographyView)`
 `;
 
 export const ResultText = styled(TypographyView)`
-  font-size: ${pxToRem(14)};
+  font-size: ${pxToRem(12)};
+
+  @media ${BREAKPOINTS.sm} {
+    font-size: ${pxToRem(14)};
+  }
+  min-height: 24px;
+`;
+
+export const ResultTextValue = styled(TypographyView)`
+  font-size: ${pxToRem(12)};
+
+  @media ${BREAKPOINTS.sm} {
+    font-size: ${pxToRem(14)};
+  }
+
+  max-width: 160px;
+  text-wrap: wrap;
+  text-align: right;
 `;

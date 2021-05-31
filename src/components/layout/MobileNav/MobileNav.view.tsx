@@ -21,6 +21,7 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
     onBack,
     showLogo,
     showBack,
+    onHome,
     position = 'fixed',
   } = props;
 
@@ -36,7 +37,13 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
             <div className="left-content">{leftContent}</div>
           )}
           {showLogo && (
-            <ShoretradeLogo fill={theme.grey.noshade} width={133} height={16} />
+            <div onClick={onHome}>
+              <ShoretradeLogo
+                fill={theme.grey.noshade}
+                width={133}
+                height={16}
+              />
+            </div>
           )}
           {showBack() && (
             <div onClick={onBack}>
