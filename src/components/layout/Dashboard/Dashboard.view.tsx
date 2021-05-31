@@ -318,19 +318,19 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
       <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
         <div className="wrapper">
           <div>
-              <SidebarLogoContainer>
-                <div
-                  className="close-container"
-                  onClick={() => setOpenSidebar(false)}
-                >
-                  <Close height={13} width={13} fill={theme.grey.noshade} />
-                </div>
-                <ShoretradeLogo
-                  fill={theme.grey.noshade}
-                  width={133}
-                  height={16}
-                />
-              </SidebarLogoContainer>
+            <SidebarLogoContainer>
+              <div
+                className="close-container"
+                onClick={() => setOpenSidebar(false)}
+              >
+                <Close height={13} width={13} fill={theme.grey.noshade} />
+              </div>
+              <ShoretradeLogo
+                fill={theme.grey.noshade}
+                width={133}
+                height={16}
+              />
+            </SidebarLogoContainer>
             <div className="nav-items-container">
               {routes.map((route) => (
                 <NavLink
@@ -350,7 +350,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   Icon={route.icon}
                 />
               ))}
-          </div>
+            </div>
           </div>
           <div>
             {theme.appType === 'buyer' && (
