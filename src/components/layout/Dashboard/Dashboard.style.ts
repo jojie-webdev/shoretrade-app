@@ -89,6 +89,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   justify-content: space-between;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
+  z-index: 999;
 
   .wrapper {
     display: flex;
