@@ -205,7 +205,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Col>
             <Col xs={12} sm={12} md={12} lg={6}>
               <ProductDetailsCard6View
-                withBackground={!isMobile}
+                withBackground={false}
                 cBorderWidth={`1px 2px ${isPendingAccount ? 2 : 0}px 2px`}
                 {...productDetailsCard6Props}
                 SellerCard={
@@ -222,7 +222,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
                   location={productDetailsCard1Props.location}
-                  withBackground={true}
+                  withBackground={false}
                   showFavoriteButton={true}
                   {...sellerRatingProps}
                 />

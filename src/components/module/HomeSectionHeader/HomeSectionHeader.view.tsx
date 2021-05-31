@@ -19,16 +19,14 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
         {title}
       </Typography>
 
-      {isOld && (
-        <Button
-          text="See All"
-          variant="unselected"
-          size="sm"
-          icon={<ArrowRight fill="#E35D32" />}
-          style={{ padding: '4px 8px' }}
-          onClick={onClick}
-        />
-      )}
+      <Button
+        text="See All"
+        variant="unselected"
+        size="sm"
+        icon={<ArrowRight fill="#E35D32" />}
+        style={{ padding: '4px 8px' }}
+        onClick={onClick}
+      />
     </Container>
   );
 };
