@@ -282,7 +282,7 @@ export const Content = styled.div<{
         width: 100%;
         display: flex;
         padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '0 8px' : '16px 24px'};
+          props.theme.appType === 'buyer' ? '8px' : '16px 24px'};
 
         .container {
           /* position: static !important; // needed to override react-grid-system .container */
