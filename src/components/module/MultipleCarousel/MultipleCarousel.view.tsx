@@ -98,20 +98,20 @@ function MultipleCarousel<D extends { id: string }, CP>(
                 // when window width is >= 320px
                 375: {
                   slidesPerView: 2,
-                  spaceBetween: 40,
+                  spaceBetween: 15,
                   slidesPerColumn: 1,
                   slidesPerColumnFill: 'row',
                 },
                 576: {
                   slidesPerView: 3,
-                  spaceBetween: 40,
+                  spaceBetween: 15,
                   slidesPerColumn: 1,
                 },
                 // when window width is >= 480px
                 768: {
                   slidesPerView: 3,
                   slidesPerColumn: undefined,
-                  spaceBetween: 30,
+                  spaceBetween: 15,
                 },
                 // when window width is >= 640px
                 992: {

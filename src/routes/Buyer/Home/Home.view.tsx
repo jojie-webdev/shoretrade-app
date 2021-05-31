@@ -205,7 +205,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               {!isPendingAccount && (
                 <ViewCol xxl={6} xl={6} md={12} sm={12}>
                   <HomeSectionHeader
-                    title="Your Favourite Products"
+                    title="Favourites"
                     onClick={() => history.push(BUYER_ROUTES.FAVOURITES)}
                     noMargin
                   />

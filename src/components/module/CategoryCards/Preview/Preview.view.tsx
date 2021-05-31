@@ -25,6 +25,7 @@ import {
   StatusContainer,
   BadgeText,
   ResultText,
+  ResultTextValue,
 } from './Preview.style';
 
 const Preview = (props: PreviewProps): JSX.Element => {
@@ -133,7 +134,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
             </StatusContainer>
           </div>
           <BodyContainer>
-            <Row nogutter style={{ height: 24, alignItems: 'center' }}>
+            <Row nogutter justify="between">
               <ResultText
                 style={{ paddingRight: 8 }}
                 variant="small"
@@ -141,11 +142,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Remaining:
               </ResultText>
-              <ResultText variant="small" weight="bold">
+              <ResultTextValue variant="small" weight="bold">
                 {props.remaining} {formatMeasurementUnit(props.unit)}
-              </ResultText>
+              </ResultTextValue>
             </Row>
-            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+            <Row justify="between" nogutter>
               <ResultText
                 variant="small"
                 color="shade6"
@@ -153,12 +154,12 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Size:
               </ResultText>
-              <ResultText variant="small" weight="bold">
+              <ResultTextValue variant="small" weight="bold">
                 {props.weight}
-              </ResultText>
+              </ResultTextValue>
             </Row>
             {!hiddenVendor && (
-              <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+              <Row justify="between" nogutter>
                 <ResultText
                   variant="small"
                   color="shade6"
@@ -166,12 +167,12 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 >
                   Vendor:
                 </ResultText>
-                <ResultText variant="small" weight="700">
+                <ResultTextValue variant="small" weight="700">
                   {props.coop?.name}
-                </ResultText>
+                </ResultTextValue>
               </Row>
             )}
-            <Row style={{ height: 24, alignItems: 'center' }} nogutter>
+            <Row justify="between" nogutter>
               <ResultText
                 variant="small"
                 color="shade6"
@@ -179,9 +180,9 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Min Order:
               </ResultText>
-              <ResultText variant="small" weight="bold">
+              <ResultTextValue variant="small" weight="bold">
                 {props.minimumOrder} {props.unit}
-              </ResultText>
+              </ResultTextValue>
             </Row>
           </BodyContainer>
         </DetailsContainer>
