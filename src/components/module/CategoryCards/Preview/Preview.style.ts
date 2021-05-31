@@ -19,7 +19,7 @@ export const CardContainer = styled.div<{ img: string }>`
     margin-bottom: 2em;
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
     border-radius: 4px;
-    padding-bottom: 16px;
+    padding-bottom: 8px;
     width: 265px;
     /* flex-wrap: wrap; */
     transition: transform 0.2s;
@@ -127,22 +127,15 @@ export const Title = styled(TypographyView)`
 `;
 
 export const ResultText = styled(TypographyView)`
-  font-size: ${pxToRem(12)};
-
-  @media ${BREAKPOINTS.sm} {
-    font-size: ${pxToRem(14)};
-  }
-  min-height: 24px;
+  font-size: ${pxToRem(14)};
+  margin-bottom: 0.6rem;
 `;
 
 export const ResultTextValue = styled(TypographyView)`
-  font-size: ${pxToRem(12)};
-
-  @media ${BREAKPOINTS.sm} {
-    font-size: ${pxToRem(14)};
-  }
+  font-size: ${pxToRem(14)};
 
   max-width: 160px;
-  text-wrap: wrap;
+  margin-bottom: 0.6rem;
+  overflow-wrap: wrap;
   text-align: right;
 `;

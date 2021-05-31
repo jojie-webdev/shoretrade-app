@@ -4,6 +4,7 @@ import Typography from 'components/base/Typography';
 import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
@@ -214,6 +215,7 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
     }
 
     .details-container {
+      font-size: ${pxToRem(14)};
       display: flex;
       flex-direction: row;
       margin-top: 16px;
@@ -262,6 +264,7 @@ export const ItemCardMobile = styled.div`
   }
 
   .parent-container {
+    width: 100%;
     padding: 12px;
   }
 
@@ -281,8 +284,7 @@ export const ItemCardMobile = styled.div`
   .tags-container {
     display: flex;
     flex-direction: row;
-    margin: 2px 0;
-    margin-top: 8px;
+    margin: 8px 0;
   }
 
   .details-container {
@@ -292,16 +294,14 @@ export const ItemCardMobile = styled.div`
   .label-container {
     flex-direction: row;
     display: flex;
-
-    .left-text {
-      margin-right: 4px;
-    }
+    justify-content: space-between;
+    width: 100%;
   }
 `;
 
 export const ItemImageMobile = styled.img`
   width: 100%;
-  max-height: 148px;
+  max-height: 200px;
   object-fit: cover;
   background: ${(props) => props.theme.grey.noshade};
   border-radius: 4px;
@@ -310,8 +310,10 @@ export const ItemImageMobile = styled.img`
 `;
 
 export const ItemDetailMobile = styled(Typography)<{ row?: boolean }>`
+  font-size: ${pxToRem(14)};
   white-space: nowrap;
   line-height: 16px;
+  margin-bottom: 0.6rem;
 `;
 
 export const SVGContainer = styled.div<{
