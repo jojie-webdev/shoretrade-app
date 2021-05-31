@@ -15,20 +15,9 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
 
   return (
     <Container noMargin={noMargin}>
-      {isOld ? (
-        <Typography variant="title5" color="shade8">
-          {title}
-        </Typography>
-      ) : (
-        <Typography
-          variant="overline"
-          color="shade6"
-          style={{ cursor: 'pointer' }}
-          onClick={onClick}
-        >
-          {title}
-        </Typography>
-      )}
+      <Typography variant="title5" color="shade8">
+        {title}
+      </Typography>
 
       {isOld && (
         <Button
