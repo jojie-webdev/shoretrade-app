@@ -16,6 +16,7 @@ import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isIOS } from 'react-device-detect';
 import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -314,40 +315,45 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         </TabletSidebar>
       )}
 
-      <Sidebar openSidebar={openSidebar}>
-        <div>
+      <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
+        <div className="wrapper">
           <div>
-            <SidebarLogoContainer>
-              <div
-                className="close-container"
-                onClick={() => setOpenSidebar(false)}
-              >
-                <Close height={13} width={13} fill={theme.grey.noshade} />
-              </div>
-              <ShoretradeLogo
-                fill={theme.grey.noshade}
-                width={133}
-                height={16}
-              />
-            </SidebarLogoContainer>
-            {routes.map((route) => (
-              <NavLink
-                onClick={() => {
-                  if (openSidebar) {
-                    setOpenSidebar(false);
+            <div>
+              <SidebarLogoContainer>
+                <div
+                  className="close-container"
+                  onClick={() => setOpenSidebar(false)}
+                >
+                  <Close height={13} width={13} fill={theme.grey.noshade} />
+                </div>
+                <ShoretradeLogo
+                  fill={theme.grey.noshade}
+                  width={133}
+                  height={16}
+                />
+              </SidebarLogoContainer>
+            </div>
+
+            <div className="nav-items-container">
+              {routes.map((route) => (
+                <NavLink
+                  onClick={() => {
+                    if (openSidebar) {
+                      setOpenSidebar(false);
+                    }
+                  }}
+                  key={`sidenav-${route.path}`}
+                  isActive={isInnerRoute(route.path)}
+                  to={route.path}
+                  color={isInnerRoute(route.path) ? 'noshade' : textColor}
+                  iconColor={
+                    isInnerRoute(route.path) ? theme.brand.primary : iconColor
                   }
-                }}
-                key={`sidenav-${route.path}`}
-                isActive={isInnerRoute(route.path)}
-                to={route.path}
-                color={isInnerRoute(route.path) ? 'noshade' : textColor}
-                iconColor={
-                  isInnerRoute(route.path) ? theme.brand.primary : iconColor
-                }
-                linkText={route.title || ''}
-                Icon={route.icon}
-              />
-            ))}
+                  linkText={route.title || ''}
+                  Icon={route.icon}
+                />
+              ))}
+            </div>
           </div>
           <div>
             {theme.appType === 'buyer' && (
@@ -385,7 +391,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   <Exit />
                 </div>
                 <Typography color="shade7" className="link" weight="500">
-                  {/* Logout */}
+                  Logout
                 </Typography>
               </LogoutContainer>
             </LogoutButton>
