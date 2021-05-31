@@ -16,7 +16,6 @@ import {
   addCardAndPayActions,
   cartActions,
   getUserActions,
-  getBuyerHomepageActions,
 } from '../actions';
 
 function* addCardAndPayRequest(
@@ -78,7 +77,6 @@ function* addCardAndPaySuccess(
   yield put(push(BUYER_ROUTES.ORDERS));
   yield put(cartActions.clear());
   yield put(getUserActions.request());
-  yield put(getBuyerHomepageActions.request());
 
   const companyId = pathOr('', ['payload', 'data', 'companyId'], action);
   if (companyId) {

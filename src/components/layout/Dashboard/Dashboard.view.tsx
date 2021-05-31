@@ -16,6 +16,7 @@ import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isIOS } from 'react-device-detect';
 import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -314,73 +315,87 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         </TabletSidebar>
       )}
 
-      <Sidebar openSidebar={openSidebar}>
-        <div>
-          <SidebarLogoContainer>
-            <div
-              className="close-container"
-              onClick={() => setOpenSidebar(false)}
-            >
-              <Close height={13} width={13} fill={theme.grey.noshade} />
+      <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
+        <div className="wrapper">
+          <div>
+            <div>
+              <SidebarLogoContainer>
+                <div
+                  className="close-container"
+                  onClick={() => setOpenSidebar(false)}
+                >
+                  <Close height={13} width={13} fill={theme.grey.noshade} />
+                </div>
+                <ShoretradeLogo
+                  fill={theme.grey.noshade}
+                  width={133}
+                  height={16}
+                />
+              </SidebarLogoContainer>
             </div>
-            <ShoretradeLogo fill={theme.grey.noshade} width={133} height={16} />
-          </SidebarLogoContainer>
-          {routes.map((route) => (
-            <NavLink
-              onClick={() => {
-                if (openSidebar) {
-                  setOpenSidebar(false);
-                }
-              }}
-              key={`sidenav-${route.path}`}
-              isActive={isInnerRoute(route.path)}
-              to={route.path}
-              color={isInnerRoute(route.path) ? 'noshade' : textColor}
-              iconColor={
-                isInnerRoute(route.path) ? theme.brand.primary : iconColor
-              }
-              linkText={route.title || ''}
-              Icon={route.icon}
-            />
-          ))}
-        </div>
 
-        <div>
-          {theme.appType === 'buyer' && (
-            <CreditBalanceContainer
-              onClick={() => {
-                if (openSidebar) {
-                  setOpenSidebar(false);
-                }
-                history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
-              }}
-            >
-              <Typography color="shade6" variant="overline" weight="900">
-                Credit balance
-              </Typography>
-              <div className="balance-arrow">
-                <Typography color="noshade" variant="title5" className="amount">
-                  {credit ? toPrice(credit) : '$0.00'}
+            <div className="nav-items-container">
+              {routes.map((route) => (
+                <NavLink
+                  onClick={() => {
+                    if (openSidebar) {
+                      setOpenSidebar(false);
+                    }
+                  }}
+                  key={`sidenav-${route.path}`}
+                  isActive={isInnerRoute(route.path)}
+                  to={route.path}
+                  color={isInnerRoute(route.path) ? 'noshade' : textColor}
+                  iconColor={
+                    isInnerRoute(route.path) ? theme.brand.primary : iconColor
+                  }
+                  linkText={route.title || ''}
+                  Icon={route.icon}
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            {theme.appType === 'buyer' && (
+              <CreditBalanceContainer
+                onClick={() => {
+                  if (openSidebar) {
+                    setOpenSidebar(false);
+                  }
+                  history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
+                }}
+              >
+                <Typography color="shade6" variant="overline" weight="900">
+                  Credit balance
                 </Typography>
-                <ChevronRight />
-              </div>
-            </CreditBalanceContainer>
-          )}
+                <div className="balance-arrow">
+                  <Typography
+                    color="noshade"
+                    variant="title5"
+                    className="amount"
+                  >
+                    {credit ? toPrice(credit) : '$0.00'}
+                  </Typography>
+                  <ChevronRight />
+                </div>
+              </CreditBalanceContainer>
+            )}
 
-          <LogoutButton
-            style={{ marginBottom: 24 }}
-            onPress={() => logout()}
-            dark={isSeller}
-          >
-            <LogoutContainer>
-              <div className="icon-container">
-                <Exit />
-              </div>
-              <Typography color="shade7" className="link" weight="500">
-                Logout
-              </Typography>
-            </LogoutContainer>
-          </LogoutButton>
+            <LogoutButton
+              style={{ marginBottom: 24 }}
+              onPress={() => logout()}
+              dark={isSeller}
+            >
+              <LogoutContainer>
+                <div className="icon-container">
+                  <Exit />
+                </div>
+                <Typography color="shade7" className="link" weight="500">
+                  Logout
+                </Typography>
+              </LogoutContainer>
+            </LogoutButton>
+          </div>
         </div>
       </Sidebar>
 
