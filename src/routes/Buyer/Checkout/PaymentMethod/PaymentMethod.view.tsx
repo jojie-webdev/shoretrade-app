@@ -164,7 +164,6 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isTablet = useMediaQuery({ query: BREAKPOINTS['genericTablet'] });
-
   return (
     <Container>
       <BoxContainer>
@@ -174,14 +173,17 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               { label: 'Orders', onClick: props.onBack },
               {
                 label: 'Payment Method',
-                ...(paymentMethod === 'card'
+                ...(paymentMethod === 'card' || paymentMethod === 'account'
                   ? { onClick: () => setPaymentMethod('') }
                   : {}),
               },
-              ...(paymentMethod === 'card'
+              ...(paymentMethod === 'card' || paymentMethod === 'account'
                 ? [
                     {
-                      label: 'Credit Card',
+                      label:
+                        paymentMethod === 'card'
+                          ? 'Credit Card'
+                          : 'Account Credit',
                     },
                   ]
                 : []),
