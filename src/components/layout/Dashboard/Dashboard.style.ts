@@ -12,8 +12,11 @@ export const DashboardContainer = styled.div<{
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   display: flex;
+  padding-top: 40px;
+  ${({ openSidebar }) => openSidebar && `height: 100vh;  margin-top: 0px;`}
   flex-direction: row;
   position: relative;
+  z-index: 9999;
   /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
  
 `;
