@@ -1,5 +1,6 @@
 import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
@@ -10,15 +11,19 @@ export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
 }>`
   width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
   display: flex;
-  padding-top: 40px;
-  ${({ openSidebar }) => openSidebar && `height: 100vh;  margin-top: 0px;`}
+
+  height: 100vh;
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: ${MOBILE_HEADER_HEIGHT}px;
+    height: auto;
+  }
+
+  ${({ openSidebar }) =>
+    openSidebar && ` height: calc(var(--vh, 1vh) * 100); margin-top: 0px;`}
   flex-direction: row;
   position: relative;
   z-index: 9999;
-  /* overflow: ${(props) => (props.openSidebar ? 'hidden' : 'auto')}; */
- 
 `;
 
 export const MenuIcon = styled.div`
@@ -97,7 +102,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     display: static;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-100%')};
     z-index: 9999;
