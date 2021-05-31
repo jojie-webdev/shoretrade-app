@@ -35,7 +35,7 @@ export const Container = styled.div<{ isIOS?: boolean }>`
         height: 66px;
         border-radius: 8px;
         margin-right: 16px;
-        margin-top: -68px;
+        margin-top: -60px;
       }
 
       .badges-container {
