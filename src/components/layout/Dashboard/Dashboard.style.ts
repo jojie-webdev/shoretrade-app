@@ -9,8 +9,8 @@ const dashboardWidth = (isSeller: boolean) =>
 export const DashboardContainer = styled.div<{
   openSidebar?: boolean;
 }>`
-  height: 100vh;
   width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: row;
   position: relative;
