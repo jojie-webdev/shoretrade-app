@@ -1,5 +1,5 @@
 export interface HomeSectionHeaderProps {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
   noMargin?: boolean;
 }

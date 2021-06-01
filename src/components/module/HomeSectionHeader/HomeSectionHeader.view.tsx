@@ -11,22 +11,22 @@ import { Container } from './HomeSectionHeader.style';
 const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
   const { title, onClick, noMargin } = props;
 
-  const isOld = useHomeOld();
-
   return (
     <Container noMargin={noMargin}>
       <Typography variant="title5" color="shade8">
         {title}
       </Typography>
 
-      <Button
-        text="See All"
-        variant="unselected"
-        size="sm"
-        icon={<ArrowRight fill="#E35D32" />}
-        style={{ padding: '4px 8px' }}
-        onClick={onClick}
-      />
+      {onClick && (
+        <Button
+          text="See All"
+          variant="unselected"
+          size="sm"
+          icon={<ArrowRight fill="#E35D32" />}
+          style={{ padding: '4px 8px' }}
+          onClick={onClick}
+        />
+      )}
     </Container>
   );
 };
