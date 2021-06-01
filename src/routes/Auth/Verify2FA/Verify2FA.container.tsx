@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -8,7 +9,6 @@ import {
   resendVerificationActions,
   notifyActions,
 } from 'store/actions';
-import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
@@ -38,6 +38,7 @@ const Verify2FA = (): JSX.Element => {
     (useSelector((state: Store) => state.verify.error) || '').length > 0;
 
   const verify = (code: string) => {
+    console.log(code);
     dispatch(verifyActions.request({ verify2Fa: code, email }));
   };
 
@@ -61,12 +62,12 @@ const Verify2FA = (): JSX.Element => {
   useEffect(() => {
     if (!email) {
       if (isSeller) {
-        history.replace(SELLER_ROUTES.LOGIN)
+        history.replace(SELLER_ROUTES.LOGIN);
       } else {
-        history.replace(BUYER_ROUTES.LOGIN)
+        history.replace(BUYER_ROUTES.LOGIN);
       }
     }
-  }, [email])
+  }, [email]);
 
   const generatedProps = {
     // generated props here
