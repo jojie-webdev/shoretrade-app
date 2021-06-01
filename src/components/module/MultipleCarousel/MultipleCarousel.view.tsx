@@ -35,6 +35,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
     responsive = false,
   } = props;
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   useEffect(() => {
     if (ref) {
       setTimeout(() => {
@@ -46,7 +48,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
   function slidesPerView() {
     if (containerWidthRef.current) {
       const num =
-        containerWidthRef.current.getBoundingClientRect().width / (265 + 32);
+        containerWidthRef.current.getBoundingClientRect().width / (265 + 16);
       return +num.toFixed(1);
     }
 
@@ -70,10 +72,13 @@ function MultipleCarousel<D extends { id: string }, CP>(
 
   const showPagination = data.length > slidesPerView();
 
+  const freeMode = isMobile ? true : false;
+
   return (
     <Container ref={containerWidthRef}>
       <Swiper
         id={id}
+        freeMode={freeMode}
         onSwiper={(swiper) => {
           setRef(swiper);
         }}
@@ -82,7 +87,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
         }}
         slidesPerView="auto"
         slidesPerColumnFill="row"
-        spaceBetween={32}
+        spaceBetween={16}
         style={{ width: '100%', padding: '8px 16px' }}
         onSlideChange={(swiper) => {
           setCurrentNdx(swiper.activeIndex);
