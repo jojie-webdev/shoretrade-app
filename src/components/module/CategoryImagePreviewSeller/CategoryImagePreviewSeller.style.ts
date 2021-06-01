@@ -39,6 +39,9 @@ export const Container = styled.div<{ img?: string }>`
     @media ${BREAKPOINTS['xl']} {
       height: 374px;
     }
+    @media ${BREAKPOINTS['sm']} {
+      max-height: 140px;
+    }
   }
 
   .label {
