@@ -6,6 +6,7 @@ import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import { PreviewDetail } from 'components/module/CategoryCards/Preview/Preview.view';
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Search from 'components/module/Search/Search.view';
@@ -24,6 +25,7 @@ import {
   LoadingContainer,
   FilterButton,
   EmptyResults,
+  StyledInteraction,
 } from './Preview.style';
 
 const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
@@ -144,8 +146,9 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                   xs={12}
                   className="preview-col"
                 >
-                  <Link to={BUYER_ROUTES.PRODUCT_DETAIL(product.id)}>
-                    <PreviewCard
+                  <StyledInteraction>
+                    <PreviewDetail
+                      alternate
                       key={product.id}
                       id={product.id}
                       images={product.images}
@@ -166,7 +169,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       hiddenVendor={isPendingAccount}
                       hiddenPrice={isPendingAccount}
                     />
-                  </Link>
+                  </StyledInteraction>
                 </Col>
               );
             })}

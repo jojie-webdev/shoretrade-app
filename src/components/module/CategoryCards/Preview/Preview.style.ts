@@ -117,6 +117,16 @@ export const PriceContainer = styled.div`
   padding-left: 8px;
 `;
 
+export const PriceContainerAlt = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .price {
+    margin-right: 4px;
+  }
+`;
+
 export const Price = styled(TypographyView)`
   text-align: right;
 `;
