@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
@@ -9,8 +9,8 @@ import AuthContainer from 'components/layout/AuthContainer';
 import MobileHeader from 'components/layout/MobileNav';
 import DialogModal from 'components/module/DialogModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { useFormik } from 'formik';
 import { useMediaQuery } from 'react-responsive';
+import ReactCodeInput from 'react-verification-code-input';
 import { useTheme } from 'utils/Theme';
 
 import { Verify2FAGeneratedProps } from './Verify2FA.props';
@@ -24,23 +24,11 @@ import {
   GuideContainer,
   GuideText,
   CodeFieldLabel,
-  CodeFieldRow,
-  CodeField,
-  CodeFieldContainer,
   Verify2FAButtonContainer,
   FooterContainer,
   FooterIcon,
   FooterLink,
 } from './Verify2FA.style';
-
-const CODE_LENGTH = 6;
-const initialValues = [...Array(CODE_LENGTH).keys()].reduce(
-  (values, key) => ({
-    ...values,
-    [`code${key}`]: '',
-  }),
-  {}
-);
 
 const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
   const theme = useTheme();
@@ -55,14 +43,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
     showSellerPendingModal,
   } = props;
 
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-  const formik = useFormik({
-    initialValues,
-    onSubmit: (record: Record<string, string>) => {
-      verify(Object.values(record).join(''));
-    },
-  });
+  const [code, setCode] = useState('');
 
   const Guide = () => {
     return (
@@ -72,6 +53,34 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
           mobile phone number.
         </GuideText>
       </GuideContainer>
+    );
+  };
+
+  const CodeForm = () => {
+    return (
+      <>
+        <CodeFieldLabel variant="overline" color={'shade6'}>
+          ENTER CODE
+        </CodeFieldLabel>
+
+        <ReactCodeInput
+          className="code-field"
+          type="number"
+          fields={6}
+          fieldHeight={48}
+          fieldWidth={48}
+          onComplete={setCode}
+        />
+
+        <Verify2FAButtonContainer>
+          <Button
+            onClick={() => verify(code)}
+            text="VERIFY"
+            loading={pending}
+            takeFullWidth
+          />
+        </Verify2FAButtonContainer>
+      </>
     );
   };
 
@@ -147,47 +156,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
     <MobileHeader>
       <MobileContainer>
         <Guide />
-
-        <form onSubmit={formik.handleSubmit}>
-          <CodeFieldLabel variant="overline" color={'shade6'}>
-            ENTER CODE
-          </CodeFieldLabel>
-          <CodeFieldRow>
-            {Object.keys(initialValues).map((key, index) => {
-              return (
-                <CodeFieldContainer key={key}>
-                  <CodeField
-                    type="number"
-                    inputMode="numeric"
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    id={key}
-                    maxLength={1}
-                    {...formik.getFieldProps(key)}
-                    onInput={(e) => {
-                      const value = e.currentTarget.value;
-                      if (value.length >= 1 && index < CODE_LENGTH - 1) {
-                        const nextTarget = inputRefs.current[index + 1];
-                        if (nextTarget) {
-                          nextTarget.focus();
-                        }
-                      }
-                    }}
-                  />
-                </CodeFieldContainer>
-              );
-            })}
-          </CodeFieldRow>
-
-          <Verify2FAButtonContainer>
-            <Button
-              type="submit"
-              text="VERIFY"
-              loading={pending}
-              takeFullWidth={isSmallScreen}
-            />
-          </Verify2FAButtonContainer>
-        </form>
-
+        <CodeForm />
         <AlertView />
         <FooterContent />
         <Modal />
@@ -207,41 +176,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
           </TitleContainer>
 
           <Guide />
-
-          <form onSubmit={formik.handleSubmit}>
-            <CodeFieldLabel variant="overline" color={'shade6'}>
-              ENTER CODE
-            </CodeFieldLabel>
-            <CodeFieldRow>
-              {Object.keys(initialValues).map((key, index) => {
-                return (
-                  <CodeFieldContainer key={key}>
-                    <CodeField
-                      type="number"
-                      inputMode="numeric"
-                      ref={(el) => (inputRefs.current[index] = el)}
-                      id={key}
-                      maxLength={1}
-                      {...formik.getFieldProps(key)}
-                      onInput={(e) => {
-                        const value = e.currentTarget.value;
-                        if (value.length >= 1 && index < CODE_LENGTH - 1) {
-                          const nextTarget = inputRefs.current[index + 1];
-                          if (nextTarget) {
-                            nextTarget.focus();
-                          }
-                        }
-                      }}
-                    />
-                  </CodeFieldContainer>
-                );
-              })}
-            </CodeFieldRow>
-
-            <Verify2FAButtonContainer>
-              <Button type="submit" text="VERIFY" loading={pending} />
-            </Verify2FAButtonContainer>
-          </form>
+          <CodeForm />
         </Content>
 
         <AlertView />
