@@ -2,6 +2,7 @@ import { Help } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
+import { fontStyle } from 'consts/textField';
 import styled from 'utils/styled';
 
 export const MobileContainer = styled.div`
@@ -9,12 +10,54 @@ export const MobileContainer = styled.div`
   min-height: calc(100vh - ${MOBILE_HEADER_HEIGHT}px);
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};
+
+  .code-field {
+    width: 100% !important;
+
+    .styles_react-code-input__CRulA {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    input {
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid ${({ theme }) => theme.grey.shade5} !important;
+      background-color: ${({ theme }) => theme.grey.noshade} !important;
+
+      ${fontStyle};
+      font-family: 'Basis Grotesque Pro', sans-serif;
+      color: ${({ theme }) => theme.grey.shade10};
+    }
+  }
 `;
 
 export const ContentWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  .code-field {
+    width: 100% !important;
+
+    .styles_react-code-input__CRulA {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    input {
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid ${({ theme }) => theme.grey.shade5} !important;
+      background-color: ${({ theme }) => theme.grey.noshade} !important;
+
+      ${fontStyle};
+      font-family: 'Basis Grotesque Pro', sans-serif;
+      color: ${({ theme }) => theme.grey.shade10};
+    }
+  }
 `;
 
 export const Content = styled.div`
@@ -56,51 +99,7 @@ export const GuideText = styled(Typography)`
 
 export const CodeFieldLabel = styled(Typography)`
   margin-top: 14px;
-`;
-
-export const CodeFieldRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 4px;
-`;
-
-export const CodeFieldContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 48px;
-  width: 48px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.grey.shade5};
-  background-color: ${({ theme }) => theme.grey.noshade};
-`;
-
-export const CodeField = styled.input`
-  background-color: ${({ theme }) => theme.grey.noshade};
-  display: flex;
-  flex: 1;
-  border-radius: 4px;
-  padding: 12px 16px;
-  border: 0px;
-  height: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  text-align: center;
-  color: 1px solid ${({ theme }) => theme.appType};
-  :focus {
-    outline: none;
-  }
-
-  ::-webkit-outer-spin-button,
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  margin-bottom: 4px;
 `;
 
 export const Verify2FAButtonContainer = styled.div`
