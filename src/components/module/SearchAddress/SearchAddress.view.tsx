@@ -84,36 +84,35 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           }
         />
       </AddressContainer>
-      <div className="search-result">
-        {!shouldHideResult && !isSearching && (
-          <>
-            {data.length === 0 && searchTerm.length > 2 && (
-              <EmptyState
-                onButtonClicked={onReset}
-                Svg={Octopus}
-                title="No search result"
-                buttonText="Reset Search"
+
+      {!shouldHideResult && !isSearching && searchTerm !== '' && (
+        <div className="search-result">
+          {data.length === 0 && searchTerm.length > 2 && (
+            <EmptyState
+              onButtonClicked={onReset}
+              Svg={Octopus}
+              title="No search result"
+              buttonText="Reset Search"
+            />
+          )}
+          {isFocused && data.length > 0 && (
+            <>
+              <Typography variant="overline" color="shade6">
+                {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
+              </Typography>
+              <PaginateList
+                list={data}
+                labelPath={['label']}
+                maxItemPerPage={6}
+                onClickItem={(item) => {
+                  saveSearchHistory(item.value, item.label, item.count);
+                  history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
+                }}
               />
-            )}
-            {isFocused && data.length > 0 && (
-              <>
-                <Typography variant="overline" color="shade6">
-                  {searchTerm.length === 0 ? 'Recent Searches' : 'Results'}
-                </Typography>
-                <PaginateList
-                  list={data}
-                  labelPath={['label']}
-                  maxItemPerPage={6}
-                  onClickItem={(item) => {
-                    saveSearchHistory(item.value, item.label, item.count);
-                    history.push(BUYER_ROUTES.SEARCH_PREVIEW(item.value));
-                  }}
-                />
-              </>
-            )}
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      )}
     </Container>
   );
 };

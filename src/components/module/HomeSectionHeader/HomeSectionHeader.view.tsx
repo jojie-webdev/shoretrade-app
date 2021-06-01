@@ -9,9 +9,7 @@ import { HomeSectionHeaderProps } from './HomeSectionHeader.props';
 import { Container } from './HomeSectionHeader.style';
 
 const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
-  const { title, onClick, noMargin } = props;
-
-  const isOld = useHomeOld();
+  const { title, onClick, noMargin, showSeeAll = true } = props;
 
   return (
     <Container noMargin={noMargin}>
@@ -19,14 +17,16 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
         {title}
       </Typography>
 
-      <Button
-        text="See All"
-        variant="unselected"
-        size="sm"
-        icon={<ArrowRight fill="#E35D32" />}
-        style={{ padding: '4px 8px' }}
-        onClick={onClick}
-      />
+      {showSeeAll && (
+        <Button
+          text="See All"
+          variant="unselected"
+          size="sm"
+          icon={<ArrowRight fill="#E35D32" />}
+          style={{ padding: '4px 8px' }}
+          onClick={onClick}
+        />
+      )}
     </Container>
   );
 };
