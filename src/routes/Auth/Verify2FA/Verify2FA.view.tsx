@@ -56,34 +56,6 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
     );
   };
 
-  const CodeForm = () => {
-    return (
-      <>
-        <CodeFieldLabel variant="overline" color={'shade6'}>
-          ENTER CODE
-        </CodeFieldLabel>
-
-        <ReactCodeInput
-          className="code-field"
-          type="number"
-          fields={6}
-          fieldHeight={48}
-          fieldWidth={48}
-          onComplete={setCode}
-        />
-
-        <Verify2FAButtonContainer>
-          <Button
-            onClick={() => verify(code)}
-            text="VERIFY"
-            loading={pending}
-            takeFullWidth={isSmallScreen}
-          />
-        </Verify2FAButtonContainer>
-      </>
-    );
-  };
-
   const FooterContent = () => {
     return (
       <FooterContainer>
@@ -156,7 +128,28 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
     <MobileHeader>
       <MobileContainer>
         <Guide />
-        <CodeForm />
+        <CodeFieldLabel variant="overline" color={'shade6'}>
+          ENTER CODE
+        </CodeFieldLabel>
+
+        <ReactCodeInput
+          className="code-field"
+          type="number"
+          fields={6}
+          fieldHeight={48}
+          fieldWidth={48}
+          onComplete={setCode}
+        />
+
+        <Verify2FAButtonContainer>
+          <Button
+            onClick={() => verify(code)}
+            text="VERIFY"
+            loading={pending}
+            takeFullWidth={isSmallScreen}
+          />
+        </Verify2FAButtonContainer>
+
         <AlertView />
         <FooterContent />
         <Modal />
@@ -176,7 +169,28 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
           </TitleContainer>
 
           <Guide />
-          <CodeForm />
+
+          <CodeFieldLabel variant="overline" color={'shade6'}>
+            ENTER CODE
+          </CodeFieldLabel>
+
+          <ReactCodeInput
+            className="code-field"
+            type="number"
+            fields={6}
+            fieldHeight={48}
+            fieldWidth={48}
+            onComplete={setCode}
+          />
+
+          <Verify2FAButtonContainer>
+            <Button
+              onClick={() => verify(code)}
+              text="VERIFY"
+              loading={pending}
+              takeFullWidth={isSmallScreen}
+            />
+          </Verify2FAButtonContainer>
         </Content>
 
         <AlertView />
