@@ -69,7 +69,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <ItemDetail type="left" row style={{ flex: 1 }}>
               <img src={parseImageUrl(d.uri)} alt="Product" />
 
-              <div>
+              <div className="left-details">
                 <Typography color="shade9">{d.name}</Typography>
 
                 <div className="tags">

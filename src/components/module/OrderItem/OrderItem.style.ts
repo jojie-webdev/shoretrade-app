@@ -157,6 +157,13 @@ export const ItemDetail = styled.div<{
     display: flex;
     flex-wrap: wrap;
   }
+
+  .left-details {
+    @media ${BREAKPOINTS.sm} {
+      min-width: 375px;
+    }
+  }
+
   @media (max-width: 1135px) {
     align-items: flex-start;
   }
@@ -173,6 +180,7 @@ export const RightContent = styled.div`
   justify-content: space-between;
 
   @media ${BREAKPOINTS.sm} {
+    flex: 2;
     p {
       font-size: 10px;
     }
