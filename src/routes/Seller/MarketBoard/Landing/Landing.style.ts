@@ -28,14 +28,13 @@ export const Container = styled.div<{ isIOS?: boolean }>`
 
     .left-component {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
 
       img {
         width: 66px;
         height: 66px;
         border-radius: 8px;
         margin-right: 16px;
-        margin-top: -60px;
       }
 
       .badges-container {
