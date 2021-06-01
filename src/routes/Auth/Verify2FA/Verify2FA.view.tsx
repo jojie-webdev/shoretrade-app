@@ -77,7 +77,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
             onClick={() => verify(code)}
             text="VERIFY"
             loading={pending}
-            takeFullWidth
+            takeFullWidth={isSmallScreen}
           />
         </Verify2FAButtonContainer>
       </>
