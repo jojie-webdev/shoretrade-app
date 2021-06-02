@@ -283,6 +283,7 @@ function Step6({
       >
         <Col md={6}>
           <TextField
+            inputType="numeric"
             className="text-field"
             label="Minimum Order"
             value={minimumOrder}

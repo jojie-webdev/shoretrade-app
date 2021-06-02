@@ -46,6 +46,7 @@ const SizeInput = (props: SizeInputProps) => {
       <Row className="select-row">
         <Col md={6} xs={6}>
           <TextField
+            inputType="decimal"
             className="text-input"
             label="Size From"
             value={fromSize}
@@ -71,6 +72,7 @@ const SizeInput = (props: SizeInputProps) => {
         <Col md={6} xs={6}>
           <TextField
             className="text-input"
+            inputType="decimal"
             label={`To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {
