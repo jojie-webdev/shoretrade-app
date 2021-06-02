@@ -46,6 +46,7 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
   document.addEventListener('scroll', handleScroll);
 
   useEffect(() => {
+    rootElement.scrollTop = 0;
     return () => {
       document.removeEventListener('scroll', handleScroll);
     };

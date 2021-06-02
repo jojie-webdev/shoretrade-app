@@ -11,6 +11,7 @@ export const Container = styled.div<{ position?: string }>`
   width: 100%;
   z-index: 9998;
   height: ${MOBILE_HEADER_HEIGHT}px;
+  min-height: ${MOBILE_HEADER_HEIGHT}px;
   background-color: ${({ theme }) => theme.grey.shade9};
 
   .right-content {

@@ -152,8 +152,8 @@ export const SidebarLogoContainer = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    margin-top: 35px;
-    margin-bottom: 20px;
+    margin-top: 36px;
+    margin-bottom: 36px;
   }
 `;
 
