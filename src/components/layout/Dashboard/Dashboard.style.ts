@@ -100,10 +100,11 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     .nav-items-container {
       margin-bottom: 2rem;
+      max-height: 50vh;
+      overflow-y: scroll;
     }
     .wrapper {
       height: auto;
-      padding-bottom: ${IOSBOTTOMPADDING};
     }
   }
 
@@ -148,6 +149,11 @@ export const SidebarLogoContainer = styled.div`
     @media (min-width: 835px) {
       display: none;
     }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 35px;
+    margin-bottom: 20px;
   }
 `;
 
