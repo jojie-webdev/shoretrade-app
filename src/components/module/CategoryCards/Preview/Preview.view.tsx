@@ -26,7 +26,139 @@ import {
   BadgeText,
   ResultText,
   ResultTextValue,
+  PriceContainerAlt,
 } from './Preview.style';
+
+export const PreviewDetail = (props: PreviewProps) => {
+  const {
+    cardContainerStyle,
+    cardContainerClass,
+    hiddenPrice,
+    hiddenVendor,
+    alternate,
+  } = props;
+  const theme = useTheme();
+  return (
+    <DetailsContainer>
+      <HeaderContainer>
+        <Row nogutter>
+          <div style={{ flex: 1, height: alternate ? 'auto' : 40 }}>
+            <Title style={{ width: '100%' }} variant="body" weight="bold">
+              {props.type}
+            </Title>
+            {!hiddenPrice && alternate && (
+              <PriceContainerAlt>
+                <Price className="price" variant="body" weight="bold">
+                  {props.price}
+                </Price>
+                <Typography
+                  style={{ textAlign: 'end' }}
+                  variant="small"
+                  color="shade6"
+                >
+                  per{' '}
+                  {formatUnitToPricePerUnit(formatMeasurementUnit(props.unit))}
+                </Typography>
+              </PriceContainerAlt>
+            )}
+          </div>
+          {!hiddenPrice && !alternate && (
+            <PriceContainer>
+              <Price variant="body" weight="bold">
+                {props.price}
+              </Price>
+              <Typography
+                style={{ textAlign: 'end' }}
+                variant="small"
+                color="shade6"
+              >
+                per{' '}
+                {formatUnitToPricePerUnit(formatMeasurementUnit(props.unit))}
+              </Typography>
+            </PriceContainer>
+          )}
+        </Row>
+      </HeaderContainer>
+      <div style={{ display: 'flex' }}>
+        <StatusContainer>
+          {props.state?.map((item) => {
+            return (
+              <Badge
+                key={item}
+                fontColor={theme.grey.shade9}
+                badgeColor={theme.grey.shade2}
+              >
+                <BadgeText
+                  variant="caption"
+                  weight="bold"
+                  style={{
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {item}
+                </BadgeText>
+              </Badge>
+            );
+          })}
+        </StatusContainer>
+      </div>
+      <BodyContainer>
+        <Row nogutter justify="between">
+          <ResultText
+            style={{ paddingRight: 8 }}
+            variant="small"
+            color="shade6"
+          >
+            Remaining:
+          </ResultText>
+          <ResultTextValue variant="small" weight="bold">
+            {props.remaining} {formatMeasurementUnit(props.unit)}
+          </ResultTextValue>
+        </Row>
+        <Row justify="between" nogutter>
+          <ResultText
+            variant="small"
+            color="shade6"
+            style={{ paddingRight: 8 }}
+          >
+            Size:
+          </ResultText>
+          <ResultTextValue variant="small" weight="bold">
+            {props.weight}
+          </ResultTextValue>
+        </Row>
+        {!hiddenVendor && (
+          <Row justify="between" nogutter>
+            <ResultText
+              variant="small"
+              color="shade6"
+              style={{ paddingRight: 8 }}
+            >
+              Vendor:
+            </ResultText>
+            <ResultTextValue variant="small" weight="700">
+              {props.coop?.name}
+            </ResultTextValue>
+          </Row>
+        )}
+        <Row justify="between" nogutter>
+          <ResultText
+            variant="small"
+            color="shade6"
+            style={{ paddingRight: 8 }}
+          >
+            Min Order:
+          </ResultText>
+          <ResultTextValue variant="small" weight="bold">
+            {props.minimumOrder} {props.unit}
+          </ResultTextValue>
+        </Row>
+      </BodyContainer>
+    </DetailsContainer>
+  );
+};
 
 const Preview = (props: PreviewProps): JSX.Element => {
   const {
@@ -79,113 +211,8 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </Badge>
             ) : null}
           </BadgeContainer>
+          <DetailsContainer {...props} />
         </div>
-
-        <DetailsContainer>
-          <HeaderContainer>
-            <Row nogutter>
-              <div style={{ flex: 1, height: 40 }}>
-                <Title style={{ width: '100%' }} variant="body" weight="bold">
-                  {props.type}
-                </Title>
-              </div>
-              {!hiddenPrice && (
-                <PriceContainer>
-                  <Price variant="body" weight="bold">
-                    {props.price}
-                  </Price>
-                  <Typography
-                    style={{ textAlign: 'end' }}
-                    variant="small"
-                    color="shade6"
-                  >
-                    per{' '}
-                    {formatUnitToPricePerUnit(
-                      formatMeasurementUnit(props.unit)
-                    )}
-                  </Typography>
-                </PriceContainer>
-              )}
-            </Row>
-          </HeaderContainer>
-          <div style={{ display: 'flex' }}>
-            <StatusContainer>
-              {props.state?.map((item) => {
-                return (
-                  <Badge
-                    key={item}
-                    fontColor={theme.grey.shade9}
-                    badgeColor={theme.grey.shade2}
-                  >
-                    <BadgeText
-                      variant="caption"
-                      weight="bold"
-                      style={{
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {item}
-                    </BadgeText>
-                  </Badge>
-                );
-              })}
-            </StatusContainer>
-          </div>
-          <BodyContainer>
-            <Row nogutter justify="between">
-              <ResultText
-                style={{ paddingRight: 8 }}
-                variant="small"
-                color="shade6"
-              >
-                Remaining:
-              </ResultText>
-              <ResultTextValue variant="small" weight="bold">
-                {props.remaining} {formatMeasurementUnit(props.unit)}
-              </ResultTextValue>
-            </Row>
-            <Row justify="between" nogutter>
-              <ResultText
-                variant="small"
-                color="shade6"
-                style={{ paddingRight: 8 }}
-              >
-                Size:
-              </ResultText>
-              <ResultTextValue variant="small" weight="bold">
-                {props.weight}
-              </ResultTextValue>
-            </Row>
-            {!hiddenVendor && (
-              <Row justify="between" nogutter>
-                <ResultText
-                  variant="small"
-                  color="shade6"
-                  style={{ paddingRight: 8 }}
-                >
-                  Vendor:
-                </ResultText>
-                <ResultTextValue variant="small" weight="700">
-                  {props.coop?.name}
-                </ResultTextValue>
-              </Row>
-            )}
-            <Row justify="between" nogutter>
-              <ResultText
-                variant="small"
-                color="shade6"
-                style={{ paddingRight: 8 }}
-              >
-                Min Order:
-              </ResultText>
-              <ResultTextValue variant="small" weight="bold">
-                {props.minimumOrder} {props.unit}
-              </ResultTextValue>
-            </Row>
-          </BodyContainer>
-        </DetailsContainer>
       </div>
     </CardContainer>
   );
