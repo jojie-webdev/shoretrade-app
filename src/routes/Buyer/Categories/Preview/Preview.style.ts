@@ -126,6 +126,7 @@ export const StyledInteraction = styled(InteractionsView)`
   .left-content {
     flex: 1 0 auto;
     max-width: 90%;
+    padding-right: 0px;
   }
 
   .right-content {
