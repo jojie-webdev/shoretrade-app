@@ -211,7 +211,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </Badge>
             ) : null}
           </BadgeContainer>
-          <DetailsContainer {...props} />
+          <PreviewDetail {...props} />
         </div>
       </div>
     </CardContainer>
