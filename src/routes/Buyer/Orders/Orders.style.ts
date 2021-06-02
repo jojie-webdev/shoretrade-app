@@ -36,7 +36,7 @@ export const SearchFilterRow = styled.div`
 `;
 
 export const SearchContainer = styled.div`
-  width: 480px;
+  width: 380px;
   position: relative;
 `;
 
