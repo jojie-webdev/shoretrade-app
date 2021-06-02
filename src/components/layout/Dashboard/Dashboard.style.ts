@@ -16,7 +16,6 @@ export const DashboardContainer = styled.div<{
 
   height: 100vh;
   @media ${BREAKPOINTS['sm']} {
-    margin-top: ${MOBILE_HEADER_HEIGHT}px;
     height: auto;
   }
 

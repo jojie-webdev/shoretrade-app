@@ -5,7 +5,7 @@ export const Container = styled.div<{ position?: string }>`
   display: flex;
   align-items: center;
   padding: 0 24px;
-  position: fixed;
+  position: ${(props) => props.position};
   top: 0;
   left: 0;
   width: 100%;
