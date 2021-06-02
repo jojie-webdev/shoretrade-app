@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
@@ -10,12 +10,16 @@ const MobileModal = (props: MobileModalProps): JSX.Element => {
   const { isOpen, onClickClose, children } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
+  useEffect(() => {
+    return () => {
+      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+    };
+  }, []);
+
   if (!isSmallScreen) return <></>;
 
   if (isOpen) {
     document.getElementsByTagName('body')[0].classList.add('no-scroll');
-  } else {
-    document.getElementsByTagName('body')[0].classList.remove('no-scroll');
   }
 
   return (
