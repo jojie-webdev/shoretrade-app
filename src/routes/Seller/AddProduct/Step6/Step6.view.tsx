@@ -225,6 +225,7 @@ function Step7({
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
+            inputType="decimal"
             label={`Price per ${formatUnitToPricePerUnit(
               formatMeasurementUnit(listingFormData?.measurementUnit)
             )} (excluding freight)`}
