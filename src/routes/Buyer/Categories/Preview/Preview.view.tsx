@@ -146,30 +146,32 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                   xs={12}
                   className="preview-col"
                 >
-                  <StyledInteraction>
-                    <PreviewDetail
-                      alternate
-                      key={product.id}
-                      id={product.id}
-                      images={product.images}
-                      type={product.type}
-                      price={toPrice(product.price)}
-                      remaining={product.remaining.toFixed(2)}
-                      coop={product.coop}
-                      minimumOrder={product.minimumOrder}
-                      origin={product.origin}
-                      weight={sizeToString(
-                        product.size.unit,
-                        product.size.from,
-                        product.size.to
-                      )}
-                      isAquafuture={product.isAquafuture}
-                      unit={product.measurementUnit}
-                      state={product.state}
-                      hiddenVendor={isPendingAccount}
-                      hiddenPrice={isPendingAccount}
-                    />
-                  </StyledInteraction>
+                  <Link to={BUYER_ROUTES.PRODUCT_DETAIL(product.id)}>
+                    <StyledInteraction>
+                      <PreviewDetail
+                        alternate
+                        key={product.id}
+                        id={product.id}
+                        images={product.images}
+                        type={product.type}
+                        price={toPrice(product.price)}
+                        remaining={product.remaining.toFixed(2)}
+                        coop={product.coop}
+                        minimumOrder={product.minimumOrder}
+                        origin={product.origin}
+                        weight={sizeToString(
+                          product.size.unit,
+                          product.size.from,
+                          product.size.to
+                        )}
+                        isAquafuture={product.isAquafuture}
+                        unit={product.measurementUnit}
+                        state={product.state}
+                        hiddenVendor={isPendingAccount}
+                        hiddenPrice={isPendingAccount}
+                      />
+                    </StyledInteraction>
+                  </Link>
                 </Col>
               );
             })}

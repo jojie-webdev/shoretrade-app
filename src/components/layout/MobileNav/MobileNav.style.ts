@@ -9,7 +9,7 @@ export const Container = styled.div<{ position?: string }>`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 9998;
   height: ${MOBILE_HEADER_HEIGHT}px;
   background-color: ${({ theme }) => theme.grey.shade9};
 
