@@ -27,4 +27,5 @@ export interface PreviewProps {
   cardContainerClass?: any;
   hiddenPrice?: boolean;
   hiddenVendor?: boolean;
+  alternate?: boolean;
 }

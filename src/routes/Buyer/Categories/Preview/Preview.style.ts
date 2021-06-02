@@ -1,3 +1,4 @@
+import InteractionsView from 'components/base/Interactions';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -113,5 +114,22 @@ export const EmptyResults = styled.div`
       width: 50%;
       margin-top: 24px;
     }
+  }
+`;
+
+
+export const StyledInteraction = styled(InteractionsView)`
+  padding: 0;
+  margin-bottom: 16px;
+
+  align-items: flex-start;
+
+  .left-content {
+    flex: 1 0 auto;
+    max-width: 90%;
+  }
+
+  .right-content {
+    padding: 24px 18px 0px 0px;
   }
 `;
