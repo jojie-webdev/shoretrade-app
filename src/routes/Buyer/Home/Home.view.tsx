@@ -197,7 +197,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     id="featured-carousel"
                     images={featured}
                     loop
-                    // autoplay
+                    autoplay
                     hideArrowArea={hideCarouselArrowArea}
                     arrowWidth={mediumArrowWidth ? 75 : undefined}
                     addMargin
@@ -294,7 +294,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   <>
                     <SellerContainer>
                       <MultipleCarousel<SellerResults, SellerCardProps>
-                        data={sellers}
+                        data={favouriteSellers}
                         transform={favouriteSellersToSellerCardProps}
                         Component={HomeSellerCard}
                         link={BUYER_ROUTES.SELLER_DETAILS}

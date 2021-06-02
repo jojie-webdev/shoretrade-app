@@ -215,7 +215,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                           align="right"
                           color="shade9"
                         >
-                          {total}
+                          ${total}
                         </Typography>
                       </div>
 
@@ -253,7 +253,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                           align="right"
                           color="shade9"
                         >
-                          {total}
+                          ${total}
                         </Typography>
                       </div>
                     </div>

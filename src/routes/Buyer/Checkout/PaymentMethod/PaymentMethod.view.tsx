@@ -47,6 +47,7 @@ const CardFields = (props: { formik?: any }) => {
         <Col className="form-card-col" md={12} xl={10}>
           <FormikTextField
             type="text"
+            inputType="numeric"
             name="number"
             id="number"
             label="CARD NUMBER"
@@ -94,6 +95,7 @@ const CardFields = (props: { formik?: any }) => {
         <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
+            inputType="numeric"
             name="exp"
             id="exp"
             label="EXPIRY DATE"
@@ -119,6 +121,7 @@ const CardFields = (props: { formik?: any }) => {
         <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
           <FormikTextField
             type="text"
+            inputType="numeric"
             name="cvc"
             id="cvc"
             label="CVC"

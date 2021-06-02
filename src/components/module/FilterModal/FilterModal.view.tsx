@@ -303,7 +303,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                     value={sizeFrom}
                     onChangeText={setSizeFrom}
                     type="number"
-                    inputType="numeric"
+                    inputType="decimal"
                     placeholder={filterValues ? filterValues[0] : ''}
                   />
                 </InputContainer>
@@ -316,7 +316,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                     value={sizeTo}
                     onChangeText={setSizeTo}
                     type="number"
-                    inputType="numeric"
+                    inputType="decimal"
                     placeholder={filterValues ? filterValues[1] : ''}
                   />
                 </InputContainer>

@@ -106,6 +106,7 @@ const MarketInterests = (): JSX.Element => {
           companyId,
         })
       );
+      setIsInner(false);
     }
   }, [updateMarketInterests?.data?.status]);
 

@@ -84,6 +84,8 @@ const SizeInput = (props: SizeInputProps) => {
         </MetricLabelContainer>
         <SelectRowContainer>
           <TextField
+            type="text"
+            inputType="numeric"
             label="Size From"
             value={fromSize}
             onChangeText={(v) => {
@@ -105,6 +107,8 @@ const SizeInput = (props: SizeInputProps) => {
           />
 
           <TextField
+            type="text"
+            inputType="numeric"
             label={`Size To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {

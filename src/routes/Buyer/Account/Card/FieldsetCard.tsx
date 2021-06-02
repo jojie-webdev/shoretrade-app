@@ -18,6 +18,7 @@ const CardView = (props: FieldsetCardProps) => {
           <FormikTextField
             readOnly={isExisting}
             type="text"
+            inputType="numeric"
             name="number"
             id="number"
             label="CARD NUMBER"
@@ -67,6 +68,7 @@ const CardView = (props: FieldsetCardProps) => {
           <FormikTextField
             readOnly={isExisting}
             type="text"
+            inputType="numeric"
             name="exp"
             id="exp"
             label="EXPIRY DATE"
@@ -93,6 +95,7 @@ const CardView = (props: FieldsetCardProps) => {
           <FormikTextField
             readOnly={isExisting}
             type="text"
+            inputType="numeric"
             name="cvc"
             id="cvc"
             label="CVC"
