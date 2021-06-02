@@ -17,6 +17,7 @@ export const DashboardContainer = styled.div<{
   height: 100vh;
   @media ${BREAKPOINTS['sm']} {
     height: auto;
+    margin-top: 48px;
   }
 
   ${({ openSidebar }) =>
