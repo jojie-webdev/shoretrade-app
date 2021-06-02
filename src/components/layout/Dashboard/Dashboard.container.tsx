@@ -117,6 +117,13 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     }
   }, [props.pageTitle]);
 
+  useEffect(() => {
+    return () => {
+      // cleanup
+      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+    };
+  }, []);
+
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {
     ...props,
