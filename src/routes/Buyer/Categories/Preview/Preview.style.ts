@@ -117,7 +117,6 @@ export const EmptyResults = styled.div`
   }
 `;
 
-
 export const StyledInteraction = styled(InteractionsView)`
   padding: 0;
   margin-bottom: 16px;
