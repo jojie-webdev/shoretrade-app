@@ -6,7 +6,7 @@ import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
-import { PreviewDetail } from 'components/module/CategoryCards/Preview/Preview.view';
+import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Search from 'components/module/Search/Search.view';
@@ -147,9 +147,33 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                   className="preview-col"
                 >
                   <Link to={BUYER_ROUTES.PRODUCT_DETAIL(product.id)}>
-                    <StyledInteraction>
-                      <PreviewDetail
-                        alternate
+                    {isSmallScreen ? (
+                      <StyledInteraction>
+                        <PreviewDetailAlt
+                          alternate
+                          key={product.id}
+                          id={product.id}
+                          images={product.images}
+                          type={product.type}
+                          price={toPrice(product.price)}
+                          remaining={product.remaining.toFixed(2)}
+                          coop={product.coop}
+                          minimumOrder={product.minimumOrder}
+                          origin={product.origin}
+                          weight={sizeToString(
+                            product.size.unit,
+                            product.size.from,
+                            product.size.to
+                          )}
+                          isAquafuture={product.isAquafuture}
+                          unit={product.measurementUnit}
+                          state={product.state}
+                          hiddenVendor={isPendingAccount}
+                          hiddenPrice={isPendingAccount}
+                        />
+                      </StyledInteraction>
+                    ) : (
+                      <PreviewCard
                         key={product.id}
                         id={product.id}
                         images={product.images}
@@ -170,7 +194,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         hiddenVendor={isPendingAccount}
                         hiddenPrice={isPendingAccount}
                       />
-                    </StyledInteraction>
+                    )}
                   </Link>
                 </Col>
               );

@@ -103,11 +103,28 @@ export const HeaderContainer = styled.div`
   margin-top: 16px;
 `;
 
+
+export const BodyContainerAlt = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 8px;
+`;
+
 export const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 8px;
+`;
+
+export const BodyColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+  padding-right: 8px;
 `;
 
 export const PriceContainer = styled.div`
@@ -139,6 +156,13 @@ export const Title = styled(TypographyView)`
 export const ResultText = styled(TypographyView)`
   font-size: ${pxToRem(14)};
   margin-bottom: 0.6rem;
+
+`;
+
+export const ResultTextAlt = styled(TypographyView)`
+  font-size: ${pxToRem(12)};
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.6px;
 `;
 
 export const ResultTextValue = styled(TypographyView)`
@@ -148,4 +172,28 @@ export const ResultTextValue = styled(TypographyView)`
   margin-bottom: 0.6rem;
   overflow-wrap: wrap;
   text-align: right;
+`;
+
+export const ResultTextValueAlt = styled(TypographyView)`
+  font-size: ${pxToRem(12)};
+
+  max-width: 160px;
+  margin-bottom: 0.6rem;
+  overflow-wrap: wrap;
+  text-align: right;
+  letter-spacing: -0.6px;
+`;
+
+export const Image = styled.div<{ imgSrc: string }>`
+  width: 40px;
+  height: 40px;
+  background-image: url(${(props) => props.imgSrc});
+  background-size: cover;
+  margin-right: 8px;
+  min-width: 40px;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  margin-bottom: 8px;
 `;
