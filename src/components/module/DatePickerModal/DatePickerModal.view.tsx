@@ -61,9 +61,7 @@ const DatePickerModal = ({
               onClickCloseMobile && onClickCloseMobile();
             }}
           >
-            <Touchable onPress={() => {}}>
-              <Close width={13} height={13} fill={theme.grey.shade9} />
-            </Touchable>
+            <Close width={13} height={13} fill={theme.grey.shade9} />
           </ExitButton>
         </LeftFilterContent>
       </TopMobileHeaderContainer>
