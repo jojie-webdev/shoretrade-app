@@ -322,10 +322,6 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
         margin-right: 4px;
       }
       margin-bottom: 16px;
-
-      @media ${BREAKPOINTS['sm']} {
-        flex-direction: column;
-      }
     }
   }
   .size-location-container {
