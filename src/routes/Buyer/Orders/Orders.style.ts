@@ -42,7 +42,7 @@ export const SearchContainer = styled.div`
 
 export const DateRangeContainer = styled.div`
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   position: relative;
   bottom: 10px; //offset
 `;
