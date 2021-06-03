@@ -9,7 +9,6 @@ import {
   StarFilled,
   Star,
   PlaceholderProfile,
-  ArrowLeft,
   Pen,
   TrashCan,
   Close,
@@ -49,6 +48,43 @@ import {
   ProductLabelMobileContainer,
 } from './ListingDetails.style';
 
+const Actions = (props: ListingDetailsProps) => {
+  const theme = useTheme();
+  const { onRemove, onEdit } = props;
+
+  return (
+    <TopContainer>
+      <div className="left-content">
+        <div className="left-container">
+          <div className="left-text-container">
+            <Typography variant="body" color="shade9" weight="bold">
+              This is a preview of your listed product
+            </Typography>
+            <Typography variant="label" color="shade6" weight="regular">
+              Buyers will check this page and eventually buy the product from
+              their buyer account.
+            </Typography>
+          </div>
+        </div>
+
+        <div className="end-left-content">
+          <div className="pen-container">
+            <StyledTouchable onPress={() => onRemove && onEdit && onEdit()}>
+              <Pen fill={theme.brand.primary} height={20} width={20} />
+            </StyledTouchable>
+          </div>
+
+          <div className="trash-container">
+            <StyledTouchable onPress={() => onRemove && onRemove()}>
+              <TrashCan fill={theme.brand.primary} height={20} width={20} />
+            </StyledTouchable>
+          </div>
+        </div>
+      </div>
+    </TopContainer>
+  );
+};
+
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
   const {
@@ -67,7 +103,6 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const formattedCatchDate = () =>
     moment(orderDetails.catchDate).format('DD MMMM YYYY');
   const [images, setImages] = useState<string[]>([]);
-  const isIpad = useMediaQuery({ query: BREAKPOINTS['xl'] });
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const history = useHistory();
 
@@ -98,9 +133,12 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     let percent =
       (Number(orderDetails.remaining) / Number(sales.totalWeight)) * 100;
     if (percent >= 100) percent = 100;
+
     return (
       <MobileWrapper isIOS={isIOS}>
         <Row nogutter>
+          {!isCreatListingSuccess && <Actions {...props} />}
+
           <Carousel
             id="product-carousel"
             images={images}
@@ -114,7 +152,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             <MobileSalesCard>
               <div className="sales-container">
                 <Typography variant="title4" color="shade6" weight="regular">
-                  Sales:
+                  Sales:{' '}
                 </Typography>
 
                 <Typography
@@ -289,66 +327,14 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           />
         )}
 
-        {!isCreatListingSuccess && (
-          <TopContainer>
-            <div className="left-content">
-              <div className="left-container">
-                <div className="arrow-container">
-                  <StyledTouchable onPress={() => history.goBack()}>
-                    <ArrowLeft
-                      fill={theme.brand.primary}
-                      height={20}
-                      width={20}
-                    />
-                  </StyledTouchable>
-                </div>
-                <div className="label-container">
-                  <Typography variant="body" color="shade9" weight="bold">
-                    This is a preview of your listed product
-                  </Typography>
-                  <Typography variant="label" color="shade6" weight="regular">
-                    Buyers will check this page and eventually buy the product
-                    from their buyer account.
-                  </Typography>
-                </div>
-              </div>
-
-              {!isIpad && (
-                <>
-                  <div className="end-left-content">
-                    <div className="pen-container">
-                      <StyledTouchable
-                        onPress={() => onRemove && onEdit && onEdit()}
-                      >
-                        <Pen
-                          fill={theme.brand.primary}
-                          height={20}
-                          width={20}
-                        />
-                      </StyledTouchable>
-                    </div>
-
-                    <div className="trash-container">
-                      <StyledTouchable onPress={() => onRemove && onRemove()}>
-                        <TrashCan
-                          fill={theme.brand.primary}
-                          height={20}
-                          width={20}
-                        />
-                      </StyledTouchable>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </TopContainer>
-        )}
+        {!isCreatListingSuccess && <Actions {...props} />}
 
         {props.sellingDetailsBreadCrumbs && (
           <div className="breadcrumbs-container">
             <Breadcrumbs sections={props.sellingDetailsBreadCrumbs} isLight />
           </div>
         )}
+
         <TopDetailsContainer>
           <div style={{ width: '100%' }}>
             {isCreatListingSuccess && (
