@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ArrowLeft, ShoretradeLogo } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -22,10 +22,37 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
     showLogo,
     showBack,
     onHome,
-    position = 'fixed',
+    position,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  // const [computedPosition, setComputedPosition] = useState('sticky');
+
+  // const rootElement = document.documentElement;
+  // const body = document.getElementsByTagName('body')[0];
+
+  // function handleScroll() {
+  //   const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+  //   if (rootElement.scrollTop > 1) {
+  //     // fixed navbar always visible
+  //     body.style.paddingTop = '48px';
+  //     setComputedPosition('fixed');
+  //   } else {
+  //     // sticky navbar to avoid cutting off the page
+  //     setComputedPosition('sticky');
+  //     body.style.paddingTop = '0px';
+  //   }
+  // }
+
+  // document.addEventListener('scroll', handleScroll);
+
+  // need some adjustments on auth screens
+
+  // useEffect(() => {
+  //   return () => {
+  //     document.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   if (!isSmallScreen) return children ? <>{children}</> : null;
 

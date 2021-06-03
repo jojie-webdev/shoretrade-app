@@ -13,6 +13,7 @@ import Routes from 'routes/index.routes';
 import { store, persistor, sagaMiddleware, history } from 'store';
 import sagas from 'store/sagas';
 import { Store } from 'types/store/Store';
+import ScrollToTop from 'utils/ScrollToTop';
 import theme from 'utils/Theme';
 
 // Initialize languages
@@ -58,6 +59,7 @@ const App = () => {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor(onRehydate)}>
         <ConnectedRouter history={history}>
+          <ScrollToTop />
           <React.StrictMode>
             <Theme>
               <Routes />

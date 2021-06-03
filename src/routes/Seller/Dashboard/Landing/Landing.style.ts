@@ -72,7 +72,7 @@ export const MobileFilterContainer = styled.div`
 
 export const MobileFilterRow = styled(Row)`
   @media ${BREAKPOINTS['sm']} {
-    margin-top: 68px;
+    margin-top: 36px;
   }
 
   .btn {

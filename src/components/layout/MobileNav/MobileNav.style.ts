@@ -5,12 +5,13 @@ export const Container = styled.div<{ position?: string }>`
   display: flex;
   align-items: center;
   padding: 0 24px;
-  position: fixed;
+  position: ${(props) => props.position};
   top: 0;
   left: 0;
   width: 100%;
   z-index: 9998;
   height: ${MOBILE_HEADER_HEIGHT}px;
+  min-height: ${MOBILE_HEADER_HEIGHT}px;
   background-color: ${({ theme }) => theme.grey.shade9};
 
   .right-content {
