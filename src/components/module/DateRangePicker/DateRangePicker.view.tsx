@@ -160,7 +160,7 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
                 setShow(false);
               }}
             />
-            {startDate !== null && endDate !== null && (
+            {(startDate !== null || endDate !== null) && (
               <StyledButton
                 id={clearId}
                 variant="primary"
