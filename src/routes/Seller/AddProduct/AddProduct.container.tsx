@@ -401,11 +401,7 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
-        if (isMobile) {
-          history.push(SELLER_ROUTES.SELLING);
-        } else {
-          history.push(ADD_PRODUCT_ROUTES.PREVIEW);
-        }
+        history.push(ADD_PRODUCT_ROUTES.PREVIEW);
       }
     }
   };
