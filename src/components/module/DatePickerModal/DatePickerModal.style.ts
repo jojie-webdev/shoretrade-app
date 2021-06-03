@@ -4,7 +4,7 @@ import calendarStartDay from 'res/images/calendar-day-start.svg';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -13,17 +13,15 @@ export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
 
   .filters {
     margin-top: 8px;
+
     @media ${BREAKPOINTS['sm']} {
-      ${({ isDatePickerDashboard }) =>
-        isDatePickerDashboard &&
-        `  display: flex;
+      display: flex;
       justify-content: unset;
-       align-items: unset;`}
+      align-items: unset;
     }
   }
   .calendar-title {
-    width: ${({ isDatePickerDashboard }) =>
-      isDatePickerDashboard ? '100%' : '90%'};
+    width: 90%;
   }
 
   .button-container {
@@ -32,7 +30,7 @@ export const Container = styled.div<{ isDatePickerDashboard?: boolean }>`
   }
 `;
 
-export const TopMobileHeadercontainer = styled.div`
+export const TopMobileHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -47,9 +45,7 @@ export const LeftFilterContent = styled.div`
   }
 `;
 
-export const CalendarContainer = styled.div<{
-  isDatePickerDashboard?: boolean;
-}>`
+export const CalendarContainer = styled.div`
   /* Calendar Overrides */
 
   .CalendarDay__default,
@@ -58,10 +54,7 @@ export const CalendarContainer = styled.div<{
   .CalendarMonthGrid,
   .DayPicker_transitionContainer,
   .DayPicker__withBorder {
-    background: ${(props) =>
-      props.isDatePickerDashboard
-        ? props.theme.grey.shade9
-        : props.theme.grey.shade8};
+    background: ${(props) => props.theme.grey.shade9};
     border: none;
 
     :hover {
@@ -70,7 +63,7 @@ export const CalendarContainer = styled.div<{
   }
 
   .DayPicker_transitionContainer {
-    height: 369px !important;
+    height: 420px !important;
   }
 
   .DayPickerNavigation_button__default {
@@ -118,10 +111,7 @@ export const CalendarContainer = styled.div<{
 
   /* Will edit everything selected including everything between a range of dates */
   .CalendarDay__selected_span {
-    background: ${(props) =>
-      props.isDatePickerDashboard
-        ? props.theme.grey.shade8
-        : props.theme.grey.shade9};
+    background: ${(props) => props.theme.grey.shade8};
     color: ${(props) => props.theme.grey.shade7};
     border: none;
 

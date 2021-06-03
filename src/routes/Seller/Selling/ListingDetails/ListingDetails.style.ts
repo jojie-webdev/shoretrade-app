@@ -186,60 +186,51 @@ export const NoProfilePic = styled.div`
 export const TopContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 18px;
+  padding: 18px 18px 18px 30px;
   background-color: ${({ theme }) => theme.grey.noshade};
   margin-bottom: 40px;
   box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
   border-radius: 8px;
   width: 100%;
 
-  @media ${BREAKPOINTS['xl']} {
-    padding: 12px;
-  }
-
-  .arrow-container {
-    margin-top: 4px;
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 8px;
   }
 
   .left-content {
-    margin-left: 28px;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
 
-    @media ${BREAKPOINTS['xl']} {
-      margin-left: 0px;
-    }
-
     .left-container {
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
   }
 
-  .label-container {
-    margin-left: 12px;
+  .left-text-container {
     display: flex;
     flex-direction: column;
   }
+
   .end-left-content {
     display: flex;
     flex-direction: row;
+    margin-top: 8px;
+
+    @media ${BREAKPOINTS['sm']} {
+      align-items: center;
+      margin-top: 0;
+    }
 
     .pen-container {
       margin-right: 16px;
-      margin-top: 8px;
+
       @media ${BREAKPOINTS['iPad']} {
         margin-right: 4px;
       }
-    }
-    .trash-container {
-      margin-top: 8px;
-    }
-
-    @media ${BREAKPOINTS['iPad']} {
-      margin-left: 8px;
     }
   }
 `;

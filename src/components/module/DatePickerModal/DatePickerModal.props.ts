@@ -14,7 +14,6 @@ export interface DatePickerModalProps extends ModalProps {
   }) => void;
   onClickApply: () => void;
   children?: ReactNode;
-  isDatePickerDashboard?: boolean;
   onReset?: () => void;
   onClickCloseMobile?: () => void;
 }

@@ -538,7 +538,6 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
               onClickClose={toggleModal}
               onClickCloseMobile={toggleModal}
               onReset={onReset}
-              isDatePickerDashboard
             >
               {isSmallScreen && (
                 <MobileFilterContainer>

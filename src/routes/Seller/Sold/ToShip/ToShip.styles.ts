@@ -101,6 +101,13 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: flex-end;
       flex: 1;
       margin-right: 16px;
+
+      @media ${BREAKPOINTS['xl']} {
+        justify-content: center;
+        > button {
+          margin-left: 190px;
+        }
+      }
     }
 
     .center-text {
@@ -250,6 +257,11 @@ export const ItemCard = styled.div`
     align-items: center;
     justify-content: flex-end;
     margin-right: 32px;
+
+    @media ${BREAKPOINTS['xl']} {
+      justify-content: center;
+      margin-left: 190px;
+    }
   }
 `;
 
