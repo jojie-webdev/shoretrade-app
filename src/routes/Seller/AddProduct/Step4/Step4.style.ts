@@ -8,6 +8,10 @@ export const Container = styled.div`
     .add-col {
       margin-bottom: 48px;
 
+      @media ${BREAKPOINTS['sm']} {
+        margin-bottom: 16px;
+      }
+
       .text {
         margin-bottom: 4px;
       }
