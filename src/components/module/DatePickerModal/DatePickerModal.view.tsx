@@ -2,7 +2,6 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import { Close } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
@@ -17,7 +16,7 @@ import {
   CalendarContainer,
   ExitButton,
   LeftFilterContent,
-  TopMobileHeadercontainer,
+  TopMobileHeaderContainer,
 } from './DatePickerModal.style';
 
 const DatePickerModal = ({
@@ -28,7 +27,6 @@ const DatePickerModal = ({
   onFocusChange,
   onClickApply,
   children,
-  isDatePickerDashboard,
   onReset,
   onClickCloseMobile,
   ...modalProps
@@ -36,30 +34,13 @@ const DatePickerModal = ({
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return isSmallScreen ? (
-    <MobileModal
-      {...modalProps}
-      backgroundColor={`${isDatePickerDashboard && theme.grey.shade9}`}
-    >
-      <TopMobileHeadercontainer>
+    <MobileModal {...modalProps} backgroundColor={theme.grey.shade9}>
+      <TopMobileHeaderContainer>
         <Typography className="calendar-title" variant="title5" color="noshade">
           Dates
         </Typography>
 
         <LeftFilterContent>
-          {/* <Touchable
-            onPress={() => {
-              onReset && onReset();
-            }}
-          >
-            <Typography
-              className="reset-text"
-              variant="overline"
-              color="primary"
-            >
-              Reset
-            </Typography>
-          </Touchable> */}
-
           <ExitButton
             onClick={(e) => {
               onClickCloseMobile && onClickCloseMobile();
@@ -69,10 +50,10 @@ const DatePickerModal = ({
             <Close />
           </ExitButton>
         </LeftFilterContent>
-      </TopMobileHeadercontainer>
+      </TopMobileHeaderContainer>
       {children && isSmallScreen && <div className="filters"> {children}</div>}
-      <Container isDatePickerDashboard={isDatePickerDashboard}>
-        <CalendarContainer isDatePickerDashboard={isDatePickerDashboard}>
+      <Container>
+        <CalendarContainer>
           <DayPickerRangeController
             horizontalMonthPadding={0}
             verticalHeight={500}
