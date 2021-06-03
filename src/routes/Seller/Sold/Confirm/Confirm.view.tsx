@@ -261,7 +261,7 @@ const ConfirmView = (props: ConfirmProps) => {
       <Wrapper>
         <InnerRouteHeader title={'Confirm Weights'} showIcon={false} />
         <Typography color="shade5">
-          Confirming this order will move it into:
+          Weight must be confirmed before products can be moved to{' '}
         </Typography>
         <Typography variant="title5" color="noshade">
           “To Ship”
