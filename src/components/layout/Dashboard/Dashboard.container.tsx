@@ -18,6 +18,7 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
+import { isMobile } from 'react-device-detect';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();
@@ -41,6 +42,12 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     }
     setOpenSidebar(value);
   };
+
+  // body background set for seller
+  if (theme.appType === 'seller' && isMobile) {
+    document.getElementsByTagName('body')[0].style.backgroundColor =
+      theme.grey.shade9;
+  }
 
   const getUser = useSelector((state: Store) => state.getUser);
   const defaultCompany = useMemo(() => {
@@ -109,6 +116,13 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       setPageTitle(props.pageTitle);
     }
   }, [props.pageTitle]);
+
+  useEffect(() => {
+    return () => {
+      // cleanup
+      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+    };
+  }, []);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

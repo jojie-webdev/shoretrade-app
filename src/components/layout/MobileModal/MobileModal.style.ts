@@ -6,15 +6,15 @@ export const Container = styled.div<{ isOpen: boolean }>`
   position: fixed;
   height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
-  top: 0;
+  bottom: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   background-color: rgba(9, 19, 29, 0.9);
 `;
 
 export const Backdrop = styled.div`
   position: relative;
-  height: 20vh;
+  height: calc(var(--vh, 1vh) * 20);
   width: 100vw;
 `;
 
@@ -25,9 +25,10 @@ export const ModalContainer = styled.div<{
   position: relative;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  padding: 40px 24px 8px 24px;
+  padding: 40px 24px 0px 24px;
   width: 100vw;
-  height: 100vh;
+  overflow-y: scroll;
+  height: calc(var(--vh, 1vh) * 80);
   background-color: ${({ theme, backgroundColor }) => {
     const isSeller = theme.appType === 'seller';
 

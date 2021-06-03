@@ -16,8 +16,8 @@ export const DashboardContainer = styled.div<{
 
   height: 100vh;
   @media ${BREAKPOINTS['sm']} {
-    margin-top: ${MOBILE_HEADER_HEIGHT}px;
     height: auto;
+    margin-top: 48px;
   }
 
   ${({ openSidebar }) =>
@@ -101,10 +101,11 @@ export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
     .nav-items-container {
       margin-bottom: 2rem;
+      max-height: 50vh;
+      overflow-y: scroll;
     }
     .wrapper {
       height: auto;
-      padding-bottom: ${IOSBOTTOMPADDING};
     }
   }
 
@@ -149,6 +150,11 @@ export const SidebarLogoContainer = styled.div`
     @media (min-width: 835px) {
       display: none;
     }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 36px;
+    margin-bottom: 36px;
   }
 `;
 

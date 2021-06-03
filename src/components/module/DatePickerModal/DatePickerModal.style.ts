@@ -81,6 +81,11 @@ export const CalendarContainer = styled.div<{
 
   .DayPicker__withBorder {
     box-shadow: none;
+    @media ${BREAKPOINTS.sm} {
+      max-height: calc(var(--vh, 1vh) * 46);
+      overflow-y: scroll;
+      display: block;
+    }
   }
 
   .DayPicker_weekHeader {

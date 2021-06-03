@@ -22,7 +22,7 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
     showLogo,
     showBack,
     onHome,
-    position = 'fixed',
+    position,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
