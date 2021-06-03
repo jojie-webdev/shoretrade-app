@@ -34,11 +34,6 @@ export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding: 0px;
     margin-bottom: 16px;
-    justify-content: space-evenly !important;
-  }
-
-  @media ${BREAKPOINTS['iPad']} {
-    /* justify-content: space-evenly !important; */
   }
 `;
 
@@ -66,6 +61,7 @@ const ControlButtonTextColor = (
 export const ControlButton = styled.button<{
   active: boolean;
   isMobile?: boolean;
+  count: number;
 }>`
   height: 100%;
   min-width: 166px;
@@ -82,6 +78,8 @@ export const ControlButton = styled.button<{
       : 'none'};
 
   @media ${BREAKPOINTS['sm']} {
+    min-width: calc(100% / ${({ count }) => count});
+    max-width: calc(100% / ${({ count }) => count});
     max-height: 40px;
     height: 40px;
   }

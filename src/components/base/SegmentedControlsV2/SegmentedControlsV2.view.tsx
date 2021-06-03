@@ -1,9 +1,6 @@
 import React from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
-
-// import { useTheme } from 'utils/Theme';
-import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -17,6 +14,7 @@ const ControlsContent = (props: SegmentedControlsV2Props) => {
   const Icon: React.FC<SVGProps> = InfoFilled;
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <>
       {options.map((option) => {
@@ -29,6 +27,7 @@ const ControlsContent = (props: SegmentedControlsV2Props) => {
             active={option === selectedOption}
             onClick={() => onClickControl(option)}
             isMobile={isMobile}
+            count={options.length}
           >
             {option}
             {value && (
