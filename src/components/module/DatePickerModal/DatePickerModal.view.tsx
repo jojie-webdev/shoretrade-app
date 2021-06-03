@@ -17,7 +17,7 @@ import {
   CalendarContainer,
   ExitButton,
   LeftFilterContent,
-  TopMobileHeadercontainer,
+  TopMobileHeaderContainer,
 } from './DatePickerModal.style';
 
 const DatePickerModal = ({
@@ -28,7 +28,6 @@ const DatePickerModal = ({
   onFocusChange,
   onClickApply,
   children,
-  isDatePickerDashboard,
   onReset,
   onClickCloseMobile,
   ...modalProps
@@ -36,17 +35,14 @@ const DatePickerModal = ({
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return isSmallScreen ? (
-    <MobileModal
-      {...modalProps}
-      backgroundColor={`${isDatePickerDashboard && theme.grey.shade9}`}
-    >
-      <TopMobileHeadercontainer>
+    <MobileModal {...modalProps} backgroundColor={theme.grey.shade9}>
+      <TopMobileHeaderContainer>
         <Typography className="calendar-title" variant="title5" color="noshade">
           Dates
         </Typography>
 
         <LeftFilterContent>
-          {/* <Touchable
+          <Touchable
             onPress={() => {
               onReset && onReset();
             }}
@@ -58,21 +54,20 @@ const DatePickerModal = ({
             >
               Reset
             </Typography>
-          </Touchable> */}
-
+          </Touchable>
           <ExitButton
             onClick={(e) => {
-              onClickCloseMobile && onClickCloseMobile();
               e.preventDefault();
+              onClickCloseMobile && onClickCloseMobile();
             }}
           >
-            <Close />
+            <Close width={13} height={13} fill={theme.grey.shade9} />
           </ExitButton>
         </LeftFilterContent>
-      </TopMobileHeadercontainer>
+      </TopMobileHeaderContainer>
       {children && isSmallScreen && <div className="filters"> {children}</div>}
-      <Container isDatePickerDashboard={isDatePickerDashboard}>
-        <CalendarContainer isDatePickerDashboard={isDatePickerDashboard}>
+      <Container>
+        <CalendarContainer>
           <DayPickerRangeController
             horizontalMonthPadding={0}
             verticalHeight={500}

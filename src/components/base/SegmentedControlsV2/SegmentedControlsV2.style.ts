@@ -36,7 +36,7 @@ export const Container = styled.div`
     margin-bottom: 16px;
     justify-content: space-evenly !important;
   }
-  
+
   @media ${BREAKPOINTS['iPad']} {
     /* justify-content: space-evenly !important; */
   }
@@ -116,6 +116,10 @@ export const ControlButton = styled.button<{
     padding: 8px;
     position: absolute;
     z-index: 1;
+
+    @media ${BREAKPOINTS['sm']} {
+      left: 10%;
+    }
   }
 
   .tooltip:hover .tooltip-text {

@@ -104,7 +104,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 props.setSearchTerm(event.currentTarget.value)
               }
               resetValue={() => props.setSearchTerm('')}
-              placeholder="Search order"
+              placeholder="Search for a product"
               rounded
             />
             {customScreenSmall && (

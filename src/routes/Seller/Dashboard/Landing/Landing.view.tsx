@@ -326,7 +326,7 @@ const MonthlySales = (props: any) => {
           </Typography>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24}>
+      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
         {props.data.months.map((m: any, i: any) => (
           <Link
             key={i}
@@ -397,7 +397,7 @@ const TopCategories = (props: any) => {
           </Link>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24}>
+      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
         {props.data.categories.map((c: any, i: any) => (
           <Link key={i} to={props.toDetails(c.id, c.name)}>
             <SalesCard className="many-cards">
@@ -475,8 +475,8 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   };
 
   const onReset = () => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+    setStartDate(moment());
+    setEndDate(moment().add('day', 7));
   };
 
   return (
@@ -538,7 +538,6 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
               onClickClose={toggleModal}
               onClickCloseMobile={toggleModal}
               onReset={onReset}
-              isDatePickerDashboard
             >
               {isSmallScreen && (
                 <MobileFilterContainer>
