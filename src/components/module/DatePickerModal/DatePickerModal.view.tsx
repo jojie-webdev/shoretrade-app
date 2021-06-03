@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import { Close } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
@@ -41,13 +42,26 @@ const DatePickerModal = ({
         </Typography>
 
         <LeftFilterContent>
-          <ExitButton
-            onClick={(e) => {
-              onClickCloseMobile && onClickCloseMobile();
-              e.preventDefault();
+          <Touchable
+            onPress={() => {
+              onReset && onReset();
             }}
           >
-            <Close />
+            <Typography
+              className="reset-text"
+              variant="overline"
+              color="primary"
+            >
+              Reset
+            </Typography>
+          </Touchable>
+          <ExitButton
+            onClick={(e) => {
+              e.preventDefault();
+              onClickCloseMobile && onClickCloseMobile();
+            }}
+          >
+            <Close width={13} height={13} fill={theme.grey.shade9} />
           </ExitButton>
         </LeftFilterContent>
       </TopMobileHeaderContainer>
