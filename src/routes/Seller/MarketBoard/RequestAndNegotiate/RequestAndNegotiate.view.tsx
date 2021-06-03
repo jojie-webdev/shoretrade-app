@@ -486,7 +486,7 @@ const Step1 = ({
             </>
           )}
           <Typography
-            style={{ margin: '16px 0' }}
+            style={{ margin: isMobile ? '8px 0' : '16px 0' }}
             color="shade6"
             variant="overline"
           >
@@ -582,43 +582,40 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   };
   return (
     <Container isIOS={isIOS}>
-      {!isMobile ? (
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              {
-                label: 'Market Board',
-                onClick: () => {
-                  if (!isEmpty(props.offer)) {
-                    setIsOpen(true);
-                  } else if (props.isReview) {
-                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
-                  } else {
-                    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-                      currentTab: 'My Active Offers',
-                    });
-                  }
-                },
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            {
+              label: 'Market Board',
+              onClick: () => {
+                if (!isEmpty(props.offer)) {
+                  setIsOpen(true);
+                } else if (props.isReview) {
+                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+                } else {
+                  history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+                    currentTab: 'My Active Offers',
+                  });
+                }
               },
-              {
-                label: props.isReview ? 'Review Request' : 'Negotiate',
-                ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
-              },
-              ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
-              ...(step === 3
-                ? [
-                    { label: 'Make an Offer', onClick: () => setStep(2) },
-                    { label: 'Review Offer' },
-                  ]
-                : []),
-            ]}
-          />
-        </div>
-      ) : (
-        <div className="mobile-back-container">
-          <StyledTouchable onPress={() => handleNavigation()}>
-            <ArrowLeft fill={theme.brand.primary} height={20} width={20} />
-          </StyledTouchable>
+            },
+            {
+              label: props.isReview ? 'Review Request' : 'Negotiate',
+              ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
+            },
+            ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
+            ...(step === 3
+              ? [
+                  { label: 'Make an Offer', onClick: () => setStep(2) },
+                  { label: 'Review Offer' },
+                ]
+              : []),
+          ]}
+        />
+      </div>
+
+      {isMobile && (
+        <div className="mobile-header">
           <Typography variant="title5" color="noshade" className="product-name">
             {props.buyerRequest?.type || props.activeOffer?.name || ''}
           </Typography>

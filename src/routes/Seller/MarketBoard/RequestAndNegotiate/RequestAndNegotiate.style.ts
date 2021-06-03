@@ -13,6 +13,10 @@ export const Container = styled.div<{ isIOS?: boolean }>`
 
   .breadcrumb-container {
     margin-bottom: 40px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 4px;
+    }
   }
 
   .submit-btns {
@@ -36,15 +40,9 @@ export const Container = styled.div<{ isIOS?: boolean }>`
     }
   }
 
-  .mobile-back-container {
+  .mobile-header {
     display: flex;
-    flex-direction: row;
     margin-bottom: 16px;
-
-    .product-name {
-      margin-top: 2.5px;
-      margin-left: 8px;
-    }
   }
 
   .spacer {
@@ -112,9 +110,17 @@ export const BadgesContainer = styled.div`
   flex-wrap: wrap;
   margin-bottom: 30px;
 
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 15px;
+  }
+
   .offers-state-badge {
     margin-right: 0.6rem;
     margin-bottom: 0.6rem;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0.2rem;
+    }
   }
 `;
 
