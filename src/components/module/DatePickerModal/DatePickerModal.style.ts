@@ -21,12 +21,12 @@ export const Container = styled.div`
     }
   }
   .calendar-title {
-    width: 90%;
+    width: 100%;
   }
 
   .button-container {
     margin-top: 32px;
-    width: 90%;
+    width: 100%;
   }
 `;
 
