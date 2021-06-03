@@ -45,6 +45,7 @@ import {
   MobileWrapper,
   MobileSalesCard,
   Progress,
+  ListingCard,
   ProductLabelMobileContainer,
 } from './ListingDetails.style';
 
@@ -176,137 +177,144 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
           )}
 
           <div className="product-details">
-            <Typography
-              variant="title5"
-              color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-              weight="bold"
-            >
-              {productDetails.title}
-            </Typography>
-            <div className="tags-container">
-              {productDetails.tags.map(({ label }) => (
-                <Tag key={label}>
-                  <Typography variant="caption" color={'shade9'} weight="bold">
-                    {label}
-                  </Typography>
-                </Tag>
-              ))}
-            </div>
-            <div className="size-location-container">
-              <div className="size-container">
-                <Expand width={16} height={16} fill={theme.grey.shade5} />
-                <Typography
-                  variant="label"
-                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                >
-                  {productDetails.size}
-                </Typography>
+            <ListingCard>
+              <Typography
+                variant="title5"
+                color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                weight="bold"
+              >
+                {productDetails.title}
+              </Typography>
+              <div className="tags-container">
+                {productDetails.tags.map(({ label }) => (
+                  <Tag key={label}>
+                    <Typography
+                      variant="caption"
+                      color={'shade9'}
+                      weight="bold"
+                    >
+                      {label}
+                    </Typography>
+                  </Tag>
+                ))}
               </div>
-              <div className="location-container">
-                <Location width={16} height={16} fill={theme.grey.shade5} />
-                <Typography
-                  variant="label"
-                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                >
-                  {productDetails.location}
-                </Typography>
+              <div className="size-location-container">
+                <div className="size-container">
+                  <Expand width={16} height={16} fill={theme.grey.shade5} />
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                  >
+                    {productDetails.size}
+                  </Typography>
+                </div>
+                <div className="location-container">
+                  <Location width={16} height={16} fill={theme.grey.shade5} />
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                  >
+                    {productDetails.location}
+                  </Typography>
+                </div>
               </div>
-            </div>
-
-            <div className="label-container">
-              <ProductLabelMobileContainer>
-                <Typography
-                  variant="title5"
-                  color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                  weight="bold"
-                >
-                  ${orderDetails.price}
-                </Typography>
-                <div className="product-value">
+            </ListingCard>
+            <ListingCard>
+              <div className="label-container">
+                <ProductLabelMobileContainer>
                   <Typography
-                    variant="caption"
-                    color="shade6"
-                    weight="bold"
-                    className="product-title-desc"
-                  >
-                    per {orderDetails.unit}
-                  </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-              <ProductLabelMobileContainer>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Min Order:
-                </Typography>
-                <div className="product-value">
-                  <Typography
-                    variant="label"
+                    variant="title5"
                     color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                     weight="bold"
                   >
-                    {orderDetails.minOrder} {orderDetails.unit}
+                    ${orderDetails.price}
                   </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-              <ProductLabelMobileContainer>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Average Box Size:
-                </Typography>
-                <div className="product-value">
-                  <Typography
-                    variant="label"
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
-                    {productDetails.avgBoxSize} {orderDetails.unit}
+                  <div className="product-value">
+                    <Typography
+                      variant="caption"
+                      color="shade6"
+                      weight="bold"
+                      className="product-title-desc"
+                    >
+                      per {orderDetails.unit}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+                <ProductLabelMobileContainer>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Min Order:
                   </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-              <ProductLabelMobileContainer>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Listing Valid Until:
-                </Typography>
-                <div className="product-value">
-                  <Typography
-                    variant="label"
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
-                    {orderDetails.validUntil &&
-                      formatRunningDateDifference(
-                        orderDetails.validUntil.toUTCString()
-                      )}
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {orderDetails.minOrder} {orderDetails.unit}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+                <ProductLabelMobileContainer>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Average Box Size:
                   </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-              <ProductLabelMobileContainer>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Remaining:
-                </Typography>
-                <div className="product-value">
-                  <Typography
-                    variant="label"
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
-                    {orderDetails.remaining} {orderDetails.unit}
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {productDetails.avgBoxSize} {orderDetails.unit}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+                <ProductLabelMobileContainer>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Listing Valid Until:
                   </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-              <ProductLabelMobileContainer>
-                <Typography variant="label" color="shade6" weight="regular">
-                  Catch Date:
-                </Typography>
-                <div className="product-value">
-                  <Typography
-                    variant="label"
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
-                    {orderDetails.catchDate && formattedCatchDate()}
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {orderDetails.validUntil &&
+                        formatRunningDateDifference(
+                          orderDetails.validUntil.toUTCString()
+                        )}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+                <ProductLabelMobileContainer>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Remaining:
                   </Typography>
-                </div>
-              </ProductLabelMobileContainer>
-            </div>
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {orderDetails.remaining} {orderDetails.unit}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+                <ProductLabelMobileContainer>
+                  <Typography variant="label" color="shade6" weight="regular">
+                    Catch Date:
+                  </Typography>
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {orderDetails.catchDate && formattedCatchDate()}
+                    </Typography>
+                  </div>
+                </ProductLabelMobileContainer>
+              </div>
+            </ListingCard>
           </div>
         </Row>
       </MobileWrapper>
