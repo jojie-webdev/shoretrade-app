@@ -5,7 +5,6 @@ import 'react-dates/lib/css/_datepicker.css';
 import { ConnectedRouter } from 'connected-react-router';
 import { SELLER_ROUTES } from 'consts';
 import { ThemeProvider } from 'emotion-theming';
-import { props } from 'ramda';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';

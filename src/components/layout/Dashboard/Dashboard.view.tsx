@@ -259,8 +259,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     onClickAccount,
   } = props;
 
-  const screenRef = useRef<HTMLDivElement | null>(null);
-
   const history = useHistory();
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
@@ -272,10 +270,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   });
 
   const isHomeOld = useHomeOld();
-
-  useEffect(() => {
-    if (screenRef) screenRef.current?.scrollTo(0, 0);
-  }, [history.location]);
 
   return (
     <DashboardContainer openSidebar={openSidebar}>
@@ -446,7 +440,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               />
 
               <div className="screen-wrapper">
-                <div ref={screenRef} className="screen">
+                <div className="screen">
                   <Container
                     className="container"
                     style={{
