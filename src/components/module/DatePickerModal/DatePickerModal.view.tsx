@@ -46,7 +46,7 @@ const DatePickerModal = ({
         </Typography>
 
         <LeftFilterContent>
-          {/* <Touchable
+          <Touchable
             onPress={() => {
               onReset && onReset();
             }}
@@ -58,7 +58,7 @@ const DatePickerModal = ({
             >
               Reset
             </Typography>
-          </Touchable> */}
+          </Touchable>
 
           <ExitButton
             onClick={(e) => {
@@ -66,7 +66,9 @@ const DatePickerModal = ({
               e.preventDefault();
             }}
           >
-            <Close />
+            <Touchable onPress={()=>{}}>
+              <Close width={13} height={13} fill={theme.grey.shade9} />
+            </Touchable>
           </ExitButton>
         </LeftFilterContent>
       </TopMobileHeadercontainer>

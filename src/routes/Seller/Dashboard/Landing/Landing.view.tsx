@@ -475,8 +475,8 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   };
 
   const onReset = () => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+    setStartDate(moment());
+    setEndDate(moment().add('day', 7));
   };
 
   return (
