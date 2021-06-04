@@ -7,7 +7,6 @@ import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage/CategoryImage.view';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -30,7 +29,7 @@ const CategoriesView = ({ data, ...props }: CategoriesGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <HeaderRow align="center" justify="between">
         {isSmallScreen ? (
           <>

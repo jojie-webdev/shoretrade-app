@@ -4,7 +4,6 @@ import Accordion from 'components/base/Accordion';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import { isIOS } from 'react-device-detect';
 import { useTheme } from 'utils/Theme';
 
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
@@ -59,7 +58,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
   const theme = useTheme();
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

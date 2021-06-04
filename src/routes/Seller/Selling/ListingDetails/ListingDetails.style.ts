@@ -1,5 +1,4 @@
 import Touchable from 'components/base/Touchable';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
@@ -287,7 +286,7 @@ export const TopDetailsContainer = styled.div`
 
 export const StyledTouchable = styled(Touchable)``;
 
-export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
+export const MobileWrapper = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 125px;
   }
