@@ -388,12 +388,14 @@ export const Progress = styled.div<{ percent: number }>`
   position: absolute;
 `;
 
-export const ListingCard = styled.div`
+export const ListingCard = styled.div<{ isCreatListingSuccess?: boolean }>`
   padding: 16px;
-  background-color: ${({ theme }) => theme.grey.noshade};
+  background-color: ${({ isCreatListingSuccess, theme }) =>
+    isCreatListingSuccess ? theme.grey.shade9 : theme.grey.noshade};
   width: 100%;
   border-radius: 4px;
-  border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+  border: ${({ theme, isCreatListingSuccess }) =>
+    isCreatListingSuccess ? 'none' : `1px solid ${theme.grey.shade3}`};
 `;
 
 export const MobileSalesCard = styled(ListingCard)`

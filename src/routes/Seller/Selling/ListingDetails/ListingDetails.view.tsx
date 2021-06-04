@@ -137,21 +137,21 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
     return (
       <>
+        <Carousel
+          id="product-carousel"
+          images={images}
+          loop
+          arrowInside
+          variant={isMobile ? 'bullet' : 'thumbnail'}
+          aspectRatio="9:4"
+          showActionButton={isMobile}
+        />
         <MobileWrapper>
-          <Carousel
-            id="product-carousel"
-            images={images}
-            loop
-            arrowInside
-            variant={isMobile ? 'bullet' : 'thumbnail'}
-            aspectRatio="9:4"
-            showActionButton={isMobile}
-          />
           <Row nogutter>
             {/* {!isCreatListingSuccess && <Actions {...props} />} */}
 
             {!isCreatListingSuccess && (
-              <MobileSalesCard>
+              <MobileSalesCard isCreatListingSuccess={isCreatListingSuccess}>
                 <div className="sales-container">
                   <Typography variant="title4" color="shade6" weight="regular">
                     Sales:{' '}
@@ -178,7 +178,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             )}
 
             <div className="product-details">
-              <ListingCard>
+              <ListingCard isCreatListingSuccess={isCreatListingSuccess}>
                 <Typography
                   variant="title5"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
@@ -220,7 +220,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </div>
                 </div>
               </ListingCard>
-              <ListingCard>
+              <ListingCard isCreatListingSuccess={isCreatListingSuccess}>
                 <div className="label-container">
                   <ProductLabelMobileContainer>
                     <Typography
