@@ -195,20 +195,21 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         {getExpiry(b.createdAt)}
                       </Typography>
                       <div className="badges-container">
-                        {b.specifications.map((s) => (
-                          <Badge
-                            key={s.stateId}
-                            className="badge"
-                            badgeColor={theme.grey.shade8}
-                          >
-                            <BadgeText
-                              variant={isMobile ? 'small' : 'overlineSmall'}
-                              color="noshade"
+                        {b.specifications &&
+                          b.specifications.map((s) => (
+                            <Badge
+                              key={s.stateId}
+                              className="badge"
+                              badgeColor={theme.grey.shade8}
                             >
-                              {s.stateName}
-                            </BadgeText>
-                          </Badge>
-                        ))}
+                              <BadgeText
+                                variant={isMobile ? 'small' : 'overlineSmall'}
+                                color="noshade"
+                              >
+                                {s.stateName}
+                              </BadgeText>
+                            </Badge>
+                          ))}
                       </div>
 
                       {Object.keys(b.sizeOptions).length != 0 ? (
