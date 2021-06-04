@@ -29,6 +29,12 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
   return (
     <BoxContainer>
       <PreviewContainer>
+        {isSmallScreen && (
+          <Typography variant="title4" weight="500" className="header-title">
+            Sellers
+          </Typography>
+        )}
+
         <Row nogutter>
           <Col xs={12}>
             <Search
