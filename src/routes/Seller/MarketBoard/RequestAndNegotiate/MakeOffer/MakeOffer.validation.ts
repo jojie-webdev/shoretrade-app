@@ -3,7 +3,7 @@ import { createValidator } from 'utils/Validation';
 const constraints = {
   specifications: {
     presence: {
-      message: '^Please pick your specifications',
+      message: '^Select at least 1 specification from each section',
       allowEmpty: false,
     },
   },

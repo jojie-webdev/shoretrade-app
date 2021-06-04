@@ -190,6 +190,12 @@ export const ExitButton = styled.button`
     outline: none;
   }
 
+  .close-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media ${BREAKPOINTS.sm} {
     right: calc(50vw - 35px);
   }

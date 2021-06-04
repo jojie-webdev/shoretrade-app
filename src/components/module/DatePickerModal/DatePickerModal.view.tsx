@@ -61,7 +61,9 @@ const DatePickerModal = ({
               onClickCloseMobile && onClickCloseMobile();
             }}
           >
-            <Close width={13} height={13} fill={theme.grey.shade9} />
+            <div className="close-wrapper">
+              <Close width={13} height={13} fill={theme.grey.shade9} />
+            </div>
           </ExitButton>
         </LeftFilterContent>
       </TopMobileHeaderContainer>

@@ -14,6 +14,8 @@ export const Container = styled.div`
     margin-top: 8px;
     position: relative;
     width: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .DayPicker {
@@ -97,6 +99,7 @@ export const Dropdown = styled.div<{ disabled?: boolean }>`
   border: 1px solid ${({ theme }) => theme.grey.shade6};
 
   display: flex;
+  flex: 1 0 auto;
   align-items: center;
   justify-content: space-between;
 
@@ -147,7 +150,5 @@ export const AllTextTypography = styled(Typography)`
 
 export const StyledButton = styled(Button)`
   position: relative;
-  z-index: 2;
-  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-  top: 300px;
+  margin-left: 4px;
 `;
