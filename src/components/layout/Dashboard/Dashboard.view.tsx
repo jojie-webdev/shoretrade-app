@@ -16,7 +16,6 @@ import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Container } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -309,7 +308,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         </TabletSidebar>
       )}
 
-      <Sidebar isIOS={isIOS} openSidebar={openSidebar}>
+      <Sidebar openSidebar={openSidebar}>
         <div className="wrapper">
           <div>
             <SidebarLogoContainer>

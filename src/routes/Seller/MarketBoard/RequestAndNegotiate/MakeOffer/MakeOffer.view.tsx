@@ -13,7 +13,6 @@ import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerD
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { pathOr } from 'ramda';
-import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -26,7 +25,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <Alert
         variant="infoAlert"
         fullWidth

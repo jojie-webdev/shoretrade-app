@@ -11,7 +11,6 @@ import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import pathOr from 'ramda/es/pathOr';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -65,7 +64,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
   };
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

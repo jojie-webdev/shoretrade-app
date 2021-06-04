@@ -1,7 +1,5 @@
 import Touchable from 'components/base/Touchable';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 
@@ -80,7 +78,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   }
 `;
 
-export const Sidebar = styled.aside<{ openSidebar: boolean; isIOS?: boolean }>`
+export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
   background: #050e16;
   width: 235px;

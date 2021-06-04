@@ -24,5 +24,3 @@ export const collectAddressShort = 'Sydney Seafood Market';
 export const DEFAULT_PAGE_LIMIT = 10;
 
 export const SHORETRADE_HOME = 'https://shoretrade.com';
-
-export const IOSBOTTOMPADDING = '0px'; // TO BE REMOVED FROM ALL FILES

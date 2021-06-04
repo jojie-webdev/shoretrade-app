@@ -9,7 +9,6 @@ import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
-import { isIOS } from 'react-device-detect';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
@@ -44,7 +43,7 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
   };
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

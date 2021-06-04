@@ -4,7 +4,6 @@ import styled from 'utils/styled';
 export const Container = styled.div<{
   isPreview?: boolean;
   isCreatListingSuccess?: boolean;
-  isIOS?: boolean;
 }>`
   padding: 48px;
   background: ${({ theme, isPreview, isCreatListingSuccess }) =>

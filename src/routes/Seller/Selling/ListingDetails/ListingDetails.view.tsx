@@ -21,7 +21,6 @@ import Carousel from 'components/module/Carousel';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -138,7 +137,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
     return (
       <>
-        <MobileWrapper isIOS={isIOS}>
+        <MobileWrapper>
           <Carousel
             id="product-carousel"
             images={images}

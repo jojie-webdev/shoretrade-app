@@ -1,15 +1,12 @@
 import Button from 'components/base/Button';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isIOS?: boolean }>`
+export const Container = styled.div`
   .title-col {
     margin-bottom: 8px;
   }
-
-  padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
 `;
 
 export const SpinnerContainer = styled.div`
