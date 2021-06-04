@@ -1,13 +1,11 @@
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const MarketRequestsContainer = styled.div<{ isIOS?: boolean }>`
+export const MarketRequestsContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -15,7 +13,7 @@ export const MarketRequestsContainer = styled.div<{ isIOS?: boolean }>`
 
   @media ${BREAKPOINTS['sm']} {
     height: auto;
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : '16vh')};
+    padding-bottom: 125px;
   }
 
   .header {

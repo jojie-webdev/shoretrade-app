@@ -1,6 +1,10 @@
 import styled from 'utils/styled';
 
 export const PreviewContainer = styled.div`
+  .header-title {
+    margin-bottom: 24px;
+  }
+
   .cards {
     display: flex;
     flex-wrap: wrap;

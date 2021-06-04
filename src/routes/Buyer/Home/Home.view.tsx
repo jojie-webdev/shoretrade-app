@@ -287,7 +287,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               <ViewCol xxl={6} xl={6} md={12} sm={12}>
                 <HomeSectionHeader
                   title="Favourite Sellers"
-                  onClick={() => history.push(BUYER_ROUTES.SELLERS)}
+                  onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
                   noMargin
                 />
                 {isIpad || isSmallScreen ? (
@@ -298,6 +298,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                         transform={favouriteSellersToSellerCardProps}
                         Component={HomeSellerCard}
                         link={BUYER_ROUTES.SELLER_DETAILS}
+                        emptyText="No Favourite Sellers"
                         id="sellers"
                       />
                     </SellerContainer>
@@ -380,7 +381,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                 <ViewCol>
                   <HomeSectionHeader
                     title="Sellers"
-                    onClick={() => history.push(BUYER_ROUTES.FAVOURITE_SELLERS)}
+                    onClick={() => history.push(BUYER_ROUTES.SELLERS)}
                     noMargin
                   />
 
@@ -390,7 +391,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                       transform={favouriteSellersToSellerCardProps}
                       Component={HomeSellerCard}
                       link={BUYER_ROUTES.SELLER_DETAILS}
-                      emptyText="No Favourite Sellers"
+                      emptyText="No Sellers"
                       id="favouriteSellers"
                     />
                   </SellerContainer>

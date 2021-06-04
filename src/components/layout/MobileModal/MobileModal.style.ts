@@ -20,7 +20,6 @@ export const Backdrop = styled.div`
 
 export const ModalContainer = styled.div<{
   backgroundColor?: string;
-  containerHeight?: string;
 }>`
   position: relative;
   border-top-left-radius: 24px;

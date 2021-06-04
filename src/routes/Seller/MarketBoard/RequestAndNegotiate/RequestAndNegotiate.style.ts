@@ -1,18 +1,20 @@
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography/Typography.view';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const Container = styled.div<{ isIOS?: boolean }>`
+export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) =>
-      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 140px)` : '140px'};
+    padding-bottom: 140px;
   }
 
   .breadcrumb-container {
     margin-bottom: 40px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 4px;
+    }
   }
 
   .submit-btns {
@@ -36,15 +38,9 @@ export const Container = styled.div<{ isIOS?: boolean }>`
     }
   }
 
-  .mobile-back-container {
+  .mobile-header {
     display: flex;
-    flex-direction: row;
     margin-bottom: 16px;
-
-    .product-name {
-      margin-top: 2.5px;
-      margin-left: 8px;
-    }
   }
 
   .spacer {
@@ -112,9 +108,17 @@ export const BadgesContainer = styled.div`
   flex-wrap: wrap;
   margin-bottom: 30px;
 
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 15px;
+  }
+
   .offers-state-badge {
     margin-right: 0.6rem;
     margin-bottom: 0.6rem;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 0.2rem;
+    }
   }
 `;
 

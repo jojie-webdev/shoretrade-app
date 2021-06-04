@@ -6,7 +6,6 @@ import { DropdownArrow, UpArrow } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
@@ -30,7 +29,7 @@ const CategoryDetailView = ({
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <HeaderRow align="center" justify="between">
         {isSmallScreen ? (
           <>

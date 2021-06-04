@@ -6,6 +6,10 @@ export const Container = styled.div`
     padding-bottom: 125px;
   }
 
+  .search {
+    margin-bottom: 0;
+  }
+
   .interactions {
     margin-top: 12px;
 

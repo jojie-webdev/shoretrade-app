@@ -32,21 +32,15 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
       <PreviewContainer>
         <div className="header">
           {isSmallScreen && (
-            <div className="left-header">
-              <Typography
-                variant="title4"
-                weight="500"
-                className="header-title"
-              >
-                Recently Added
-              </Typography>
-            </div>
+            <Typography variant="title4" weight="500" className="header-title">
+              Recently Added
+            </Typography>
           )}
 
           <div className="right-header">
             <Search
               className="search"
-              placeholder={`Search for vendor`}
+              placeholder={`Search for a Seller`}
               value={searchValue}
               onChange={onChangeSearchValue}
               resetValue={onResetSearchValue}

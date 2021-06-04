@@ -1,11 +1,13 @@
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isIOS?: boolean }>`
+export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) =>
-      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 125px)` : '125px'};
+    padding-bottom: 125px;
+  }
+
+  .search {
+    margin-bottom: 0;
   }
 
   .interactions {

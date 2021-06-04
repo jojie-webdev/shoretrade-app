@@ -9,7 +9,6 @@ import FormikTextField from 'components/module/FormikTextField';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
@@ -86,7 +85,7 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
   };
 
   return (
-    <Wrapper isIOS={isIOS}>
+    <Wrapper>
       <>
         <div className="breadcrumb-container">
           <Breadcrumbs

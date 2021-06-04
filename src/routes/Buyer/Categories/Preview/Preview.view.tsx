@@ -102,7 +102,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
 
             <Search
               className="search"
-              placeholder={`Search for vendor`}
+              placeholder={`Search for a Seller`}
               value={searchValue}
               onChange={onChangeSearchValue}
               resetValue={onResetSearchValue}

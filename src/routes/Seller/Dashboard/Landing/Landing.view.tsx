@@ -14,7 +14,6 @@ import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -326,7 +325,7 @@ const MonthlySales = (props: any) => {
           </Typography>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24}>
+      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
         {props.data.months.map((m: any, i: any) => (
           <Link
             key={i}
@@ -397,7 +396,7 @@ const TopCategories = (props: any) => {
           </Link>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24}>
+      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
         {props.data.categories.map((c: any, i: any) => (
           <Link key={i} to={props.toDetails(c.id, c.name)}>
             <SalesCard className="many-cards">
@@ -475,12 +474,12 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   };
 
   const onReset = () => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+    setStartDate(moment());
+    setEndDate(moment().add('day', 7));
   };
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       {isLoading ? (
         <SpinnerContainer>
           <Spinner />
@@ -538,7 +537,6 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
               onClickClose={toggleModal}
               onClickCloseMobile={toggleModal}
               onReset={onReset}
-              isDatePickerDashboard
             >
               {isSmallScreen && (
                 <MobileFilterContainer>

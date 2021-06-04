@@ -12,7 +12,6 @@ import Search from 'components/module/Search';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
-import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { MarketInterestsGeneratedProps } from 'routes/Seller/Account/MarketInterests/MarketInterests.props';
@@ -47,22 +46,18 @@ const MarketInterestsView = ({
   }
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <Row
         nogutter
         justify="between"
         align="center"
         style={{
           marginBottom:
-            !isInner && isEmpty(innerCategories) && isMobile
-              ? 20
-              : !isInner && isEmpty(innerCategories)
-              ? 40
-              : 0,
+            !isInner && isEmpty(innerCategories) && !isMobile ? 40 : 0,
         }}
       >
         <Col>
-          <div style={{ marginRight: 20 }}>
+          <div style={{ marginRight: 20, marginBottom: isMobile ? 40 : 0 }}>
             <Breadcrumbs
               sections={[
                 { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
@@ -89,13 +84,14 @@ const MarketInterestsView = ({
             />
           </div>
         </Col>
-        <Col xs="content">
-          <div style={{ width: 300 }}>
+        <Col xs={12} sm="content">
+          <div style={{ width: isMobile ? '100%' : 300 }}>
             <Search
+              className="search"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.currentTarget.value)}
               resetValue={() => setSearchTerm('')}
-              placeholder="Search for a product..."
+              placeholder="Search for a product or category"
               rounded
             />
           </div>

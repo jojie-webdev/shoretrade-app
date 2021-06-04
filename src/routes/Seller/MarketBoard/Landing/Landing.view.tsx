@@ -18,7 +18,6 @@ import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
@@ -72,7 +71,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
   };
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       {props.userPending && (
         <Alert
           variant="alert"
@@ -104,7 +103,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 props.setSearchTerm(event.currentTarget.value)
               }
               resetValue={() => props.setSearchTerm('')}
-              placeholder="Search order"
+              placeholder="Search for a product"
               rounded
             />
             {customScreenSmall && (
@@ -154,7 +153,10 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 placeholder="Search order"
                 rounded
               />
-              <FilterButton className="mobile-filter" onClick={props.onClickFilterButton}>
+              <FilterButton
+                className="mobile-filter"
+                onClick={props.onClickFilterButton}
+              >
                 <Typography
                   variant="label"
                   color="noshade"
@@ -193,20 +195,21 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         {getExpiry(b.createdAt)}
                       </Typography>
                       <div className="badges-container">
-                        {b.specifications.map((s) => (
-                          <Badge
-                            key={s.stateId}
-                            className="badge"
-                            badgeColor={theme.grey.shade8}
-                          >
-                            <BadgeText
-                              variant={isMobile ? 'small' : 'overlineSmall'}
-                              color="noshade"
+                        {b.specifications &&
+                          b.specifications.map((s) => (
+                            <Badge
+                              key={s.stateId}
+                              className="badge"
+                              badgeColor={theme.grey.shade8}
                             >
-                              {s.stateName}
-                            </BadgeText>
-                          </Badge>
-                        ))}
+                              <BadgeText
+                                variant={isMobile ? 'small' : 'overlineSmall'}
+                                color="noshade"
+                              >
+                                {s.stateName}
+                              </BadgeText>
+                            </Badge>
+                          ))}
                       </div>
 
                       {Object.keys(b.sizeOptions).length != 0 ? (
