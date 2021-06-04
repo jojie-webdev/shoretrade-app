@@ -14,7 +14,6 @@ import {
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { useTheme } from 'utils/Theme';
@@ -44,7 +43,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
     return size;
   };
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div>
         {props.offer.map((v) => {
           const sizeText = `${v.size.from} ${formatMeasurementUnit(

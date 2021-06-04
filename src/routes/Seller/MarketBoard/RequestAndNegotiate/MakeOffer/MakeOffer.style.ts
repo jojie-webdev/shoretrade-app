@@ -1,14 +1,12 @@
 import Typography from 'components/base/Typography/Typography.view';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isIOS?: boolean }>`
+export const Container = styled.div`
   padding-bottom: 180px;
 
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) =>
-      props.isIOS ? `calc(${IOSBOTTOMPADDING} + 140px)` : '140px'};
+    padding-bottom: 140px;
   }
 
   .shipping-to {

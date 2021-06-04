@@ -1,5 +1,4 @@
 import Touchable from 'components/base/Touchable';
-import { IOSBOTTOMPADDING } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
@@ -83,6 +82,7 @@ export const Tag = styled.div`
   padding: 2px 8px;
   background-color: ${({ theme }) => theme.grey.shade2};
   border-radius: 2px;
+  width: fit-content;
 `;
 
 export const SellerPreview = styled.img`
@@ -286,9 +286,9 @@ export const TopDetailsContainer = styled.div`
 
 export const StyledTouchable = styled(Touchable)``;
 
-export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
+export const MobileWrapper = styled.div`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+    padding-bottom: 125px;
   }
 
   .sales-container {
@@ -310,8 +310,8 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
   }
 
   .product-details {
-    padding: 0px 16px;
     margin-top: 24px;
+    width: 100%;
 
     .tags-container {
       display: flex;
@@ -329,7 +329,6 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
     margin-top: 8px;
 
     @media ${BREAKPOINTS['sm']} {
-      flex-direction: column;
     }
   }
 
@@ -339,7 +338,6 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
     align-items: center;
     margin-right: 10px;
     @media ${BREAKPOINTS['sm']} {
-      margin-right: 0px;
     }
   }
   .location-container {
@@ -354,7 +352,9 @@ export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
   }
 
   .label-container {
-    margin-top: 28px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
   }
 
   .test {
@@ -388,12 +388,16 @@ export const Progress = styled.div<{ percent: number }>`
   position: absolute;
 `;
 
-export const MobileSalesCard = styled.div`
+export const ListingCard = styled.div`
   padding: 16px;
   background-color: ${({ theme }) => theme.grey.noshade};
   width: 100%;
-  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
+  border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+`;
+
+export const MobileSalesCard = styled(ListingCard)`
+  margin-top: 24px;
 
   .seller-details-container {
     display: flex;

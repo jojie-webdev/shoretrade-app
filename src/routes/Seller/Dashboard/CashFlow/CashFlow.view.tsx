@@ -7,7 +7,6 @@ import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
@@ -19,7 +18,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <HeaderRow align="center" justify="between">
         {isSmallScreen ? (
           <>

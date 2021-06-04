@@ -9,7 +9,6 @@ import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
-import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import DefaultProfileImage from 'res/images/seller-profile-default.png';
@@ -128,7 +127,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   });
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <Header>
         <div className="left-content">
           <input

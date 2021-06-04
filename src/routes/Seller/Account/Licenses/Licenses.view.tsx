@@ -9,7 +9,6 @@ import MobileFooter from 'components/layout/MobileFooter';
 import Add from 'components/module/Add/Add.view';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import placeholder from 'res/images/license-placeholder.svg';
@@ -46,7 +45,7 @@ const LicensesView = ({
   };
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

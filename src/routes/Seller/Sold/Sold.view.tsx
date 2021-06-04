@@ -9,7 +9,6 @@ import Search from 'components/module/Search';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -175,7 +174,7 @@ const SoldView = (props: SoldGeneratedProps) => {
   }
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="controls-row">
         <SegmentedControls
           options={[TO_SHIP, IN_TRANSIT, DELIVERED]}

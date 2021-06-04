@@ -15,7 +15,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
-import { isIOS } from 'react-device-detect';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -581,7 +580,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
     }
   };
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

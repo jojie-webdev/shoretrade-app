@@ -8,7 +8,6 @@ import MobileFooter from 'components/layout/MobileFooter';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -34,7 +33,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
   }
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

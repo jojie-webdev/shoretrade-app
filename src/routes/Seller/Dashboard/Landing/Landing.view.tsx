@@ -14,7 +14,6 @@ import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
-import { isIOS } from 'react-device-detect';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -480,7 +479,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   };
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       {isLoading ? (
         <SpinnerContainer>
           <Spinner />

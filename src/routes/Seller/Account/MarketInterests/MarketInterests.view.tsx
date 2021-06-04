@@ -12,7 +12,6 @@ import Search from 'components/module/Search';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
-import { isIOS } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { MarketInterestsGeneratedProps } from 'routes/Seller/Account/MarketInterests/MarketInterests.props';
@@ -47,7 +46,7 @@ const MarketInterestsView = ({
   }
 
   return (
-    <Container isIOS={isIOS}>
+    <Container>
       <Row
         nogutter
         justify="between"
