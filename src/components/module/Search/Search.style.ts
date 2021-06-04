@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const InputContainer = styled.div<{ rounded?: boolean }>`
@@ -47,6 +48,9 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
           : props.rounded
           ? '14px'
           : '16px'};
+    }
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
     }
   }
 `;
