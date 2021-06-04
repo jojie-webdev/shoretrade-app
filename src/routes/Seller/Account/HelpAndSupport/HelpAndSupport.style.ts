@@ -1,7 +1,7 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isIOS?: boolean }>`
+export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 24px;
   }
