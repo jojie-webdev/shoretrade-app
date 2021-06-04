@@ -60,11 +60,13 @@ export const ButtonContainer = styled.button<
   @media ${BREAKPOINTS['sm']} {
     padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
     :hover {
-      opacity: 1;
+      opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
     }
     :active {
-      opacity: 0.5;
+      filter: brightness(85%);
+      backdrop-filter: brightness(0.8);
     }
+    opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   }
 
   p {
