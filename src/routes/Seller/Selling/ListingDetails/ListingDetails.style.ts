@@ -289,7 +289,7 @@ export const StyledTouchable = styled(Touchable)``;
 
 export const MobileWrapper = styled.div<{ isIOS?: boolean }>`
   @media ${BREAKPOINTS['sm']} {
-    padding-bottom: ${(props) => (props.isIOS ? IOSBOTTOMPADDING : 0)};
+    padding-bottom: 125px;
   }
 
   .sales-container {
@@ -398,7 +398,6 @@ export const ListingCard = styled.div`
 `;
 
 export const MobileSalesCard = styled(ListingCard)`
-
   margin-top: 24px;
 
   .seller-details-container {
