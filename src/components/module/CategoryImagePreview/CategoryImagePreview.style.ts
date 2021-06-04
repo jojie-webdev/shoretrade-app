@@ -8,6 +8,13 @@ export const Container = styled.div<{ img?: string }>`
   max-width: 474px;
   margin-bottom: 1rem;
 
+  @media ${BREAKPOINTS['iPad']} {
+    max-width: 100%;
+  }
+  @media ${BREAKPOINTS['xl']} {
+    max-width: 100%;
+  }
+
   .imgContainer {
     position: relative;
     text-align: center;
@@ -26,6 +33,15 @@ export const Container = styled.div<{ img?: string }>`
     width: 100%;
     height: 280px;
     border-radius: 8px;
+    @media ${BREAKPOINTS['iPad']} {
+      height: 374px;
+    }
+    @media ${BREAKPOINTS['xl']} {
+      height: 374px;
+    }
+    @media ${BREAKPOINTS['sm']} {
+      max-height: 140px;
+    }
   }
 
   .label {
@@ -35,7 +51,6 @@ export const Container = styled.div<{ img?: string }>`
   @media ${BREAKPOINTS['genericTablet']} {
     max-width: 671px;
   }
-
 `;
 
 export const BadgeContainer = styled.div`

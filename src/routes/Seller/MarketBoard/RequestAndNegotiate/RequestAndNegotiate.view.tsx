@@ -8,7 +8,7 @@ import { ArrowLeft } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewSeller from 'components/module/CategoryImagePreviewSeller';
+import CategoryImagePreview from 'components/module/CategoryImagePreview';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -392,7 +392,7 @@ const Step1 = ({
   return (
     <>
       <div className="step-1-container">
-        <CategoryImagePreviewSeller
+        <CategoryImagePreview
           categoryName={isReview ? buyerRequest.type : activeOffer.name}
           imgSrc={isReview ? buyerRequest.image : activeOffer.image}
           marketBoard
