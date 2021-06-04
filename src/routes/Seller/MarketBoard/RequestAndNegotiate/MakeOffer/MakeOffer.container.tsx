@@ -21,14 +21,15 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     (item) => item.editId === currentOfferItem
   );
 
-  const stateOptions =
-    buyerRequest.specifications.map((group) => {
-      return {
-        label: group.stateName,
-        value: group.stateId,
-        groupOrder: group.stateGroup,
-      };
-    }) || [];
+  const stateOptions = buyerRequest.specifications
+    ? buyerRequest.specifications.map((group) => {
+        return {
+          label: group.stateName,
+          value: group.stateId,
+          groupOrder: group.stateGroup,
+        };
+      })
+    : [];
 
   const groupedStateOptions = Object.values(
     groupBy((s) => s.groupOrder.toString(), stateOptions)

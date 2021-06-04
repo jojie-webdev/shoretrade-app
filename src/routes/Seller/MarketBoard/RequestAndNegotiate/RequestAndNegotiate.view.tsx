@@ -404,7 +404,9 @@ const Step1 = ({
             label="Specs"
             items={
               isReview
-                ? buyerRequest.specifications.map((v) => v.stateName)
+                ? buyerRequest.specifications
+                  ? buyerRequest.specifications.map((v) => v.stateName)
+                  : []
                 : activeOffer.specifications
             }
           />
