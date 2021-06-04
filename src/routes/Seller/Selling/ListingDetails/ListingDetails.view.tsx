@@ -138,16 +138,16 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
     return (
       <>
+        <Carousel
+          id="product-carousel"
+          images={images}
+          loop
+          arrowInside
+          variant={isMobile ? 'bullet' : 'thumbnail'}
+          aspectRatio="9:4"
+          showActionButton={isMobile}
+        />
         <MobileWrapper isIOS={isIOS}>
-          <Carousel
-            id="product-carousel"
-            images={images}
-            loop
-            arrowInside
-            variant={isMobile ? 'bullet' : 'thumbnail'}
-            aspectRatio="9:4"
-            showActionButton={isMobile}
-          />
           <Row nogutter>
             {/* {!isCreatListingSuccess && <Actions {...props} />} */}
 

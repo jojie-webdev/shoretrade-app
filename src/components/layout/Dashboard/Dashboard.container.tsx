@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 
 import { push } from 'connected-react-router';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import { isMobile } from 'react-device-detect';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
@@ -18,7 +19,6 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
-import { isMobile } from 'react-device-detect';
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();

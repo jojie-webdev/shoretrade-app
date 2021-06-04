@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import MobileModalView from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -12,7 +14,10 @@ import {
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
 import { sizeToString } from 'utils/Listing';
-import { formatMeasurementUnit, formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -119,8 +124,12 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   };
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const ModalWrapper = isMobile ? MobileModalView : Modal;
+
   return (
-    <Modal
+    <ModalWrapper
       onClickClose={onClickClose}
       isOpen={isOpen}
       style={{
@@ -129,7 +138,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
       }}
     >
       <ConfirmView {...props} {...generatedProps} />
-    </Modal>
+    </ModalWrapper>
   );
 };
 

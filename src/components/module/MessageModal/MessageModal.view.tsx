@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Button from 'components/base/Button';
 import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
+import MobileModalView from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { MessageModalProps } from './MessageModal.props';
@@ -22,8 +25,11 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
     }
   }, [modalProps.isOpen]);
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const ModalWrapper = isMobile ? MobileModalView : Modal;
+
   return (
-    <Modal {...modalProps} style={{ maxWidth: '438px' }}>
+    <ModalWrapper {...modalProps} style={{ maxWidth: '438px' }}>
       <Content>
         <Typography
           variant="title4"
@@ -78,7 +84,7 @@ const MessageModal = (props: MessageModalProps): JSX.Element => {
           />
         </div>
       </Content>
-    </Modal>
+    </ModalWrapper>
   );
 };
 
