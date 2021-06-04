@@ -8,6 +8,10 @@ export const Container = styled.div<{ isIOS?: boolean }>`
       props.isIOS ? `calc(${IOSBOTTOMPADDING} + 125px)` : '125px'};
   }
 
+  .search {
+    margin-bottom: 0;
+  }
+
   .interactions {
     margin-top: 12px;
 
