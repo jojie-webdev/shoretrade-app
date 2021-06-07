@@ -32,7 +32,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
             <Row nogutter>
               <Col xs={12}>
                 <Search
-                  placeholder="Search for a Product"
+                  placeholder="Search for a Category"
                   value={search}
                   onChange={onChangeSearchValue}
                   rounded
