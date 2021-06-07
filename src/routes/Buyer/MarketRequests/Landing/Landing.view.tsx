@@ -144,7 +144,7 @@ const MarketRequestsLandingView = (
             </Typography>
             <Visible xs>
               <TypographyView variant="label" color="shade9">
-                Swipe right to delete a listing
+                Swipe right to delete a request
               </TypographyView>
             </Visible>
           </Col>
