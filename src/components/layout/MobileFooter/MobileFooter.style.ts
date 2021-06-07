@@ -12,5 +12,4 @@ export const Container = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
 `;
