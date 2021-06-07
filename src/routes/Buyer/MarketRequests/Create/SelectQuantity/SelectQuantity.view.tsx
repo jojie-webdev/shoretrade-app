@@ -62,7 +62,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
         <QuantityFormContainer>
           <StyledTextField
             type="number"
-            inputType="numeric"
+            inputType="decimal"
             label="From"
             value={from}
             onChangeText={(v) => {
@@ -113,17 +113,17 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               variant="primary"
             />
           </Hidden>
-          <MobileFooter>
-            <Button
-              takeFullWidth
-              onClick={() => handleSubmit()}
-              className="submit-btn"
-              disabled={from === '' || to === ''}
-              text="Select This Quantity"
-              variant="primary"
-            />
-          </MobileFooter>
         </QuantityFormContainer>
+        <MobileFooter>
+          <Button
+            takeFullWidth
+            onClick={() => handleSubmit()}
+            className="submit-btn"
+            disabled={from === '' || to === ''}
+            text="Select This Quantity"
+            variant="primary"
+          />
+        </MobileFooter>
       </ContainerWithCategoryImagePreview>
     </>
   );

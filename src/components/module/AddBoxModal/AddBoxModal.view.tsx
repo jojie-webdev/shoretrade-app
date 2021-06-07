@@ -43,9 +43,8 @@ const Content = (props: AddBoxModalProps) => {
         <Typography variant="title5" color="shade1">
           Add Box
         </Typography>
-
         <CloseBadge
-          onClick={() => {
+          onPress={() => {
             modalProps.onClickClose();
           }}
         >

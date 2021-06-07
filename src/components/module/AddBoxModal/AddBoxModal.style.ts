@@ -1,4 +1,5 @@
 import TextField from 'components/base/TextField';
+import TouchableView from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -67,13 +68,13 @@ export const TopContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const CloseBadge = styled.button`
-  height: 32px;
-  width: 32px;
+export const CloseBadge = styled(TouchableView)`
   background: ${(props) => props.theme.grey.noshade};
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   border: none;
+  height: 32px;
+  width: 32px;
 `;
