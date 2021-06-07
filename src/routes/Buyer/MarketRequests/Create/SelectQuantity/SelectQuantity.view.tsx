@@ -48,7 +48,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">Select Quantity</TypographyView>
+            <TypographyView variant="title5">Select Quantity</TypographyView>
           </div>
         </div>
       </CreateRequestHeaderContainer>

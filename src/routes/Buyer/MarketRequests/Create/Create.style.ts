@@ -29,6 +29,7 @@ export const CreateRequestHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin-bottom: 1rem;
+    align-items: center;
   }
 
   .search-container {
