@@ -8,7 +8,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Hidden } from 'react-grid-system';
+import { Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -45,13 +45,15 @@ const Content = (props: AddBoxModalProps) => {
         <Typography variant="title5" color="shade1">
           Add Box
         </Typography>
-        <CloseBadge
-          onPress={() => {
-            modalProps.onClickClose();
-          }}
-        >
-          <Close fill={theme.grey.shade8} />
-        </CloseBadge>
+        <Visible xs>
+          <CloseBadge
+            onPress={() => {
+              modalProps.onClickClose();
+            }}
+          >
+            <Close fill={theme.grey.shade8} />
+          </CloseBadge>
+        </Visible>
       </TopContainer>
 
       <Inputs>
