@@ -40,15 +40,13 @@ const InteractionsChildren = (
         <ResultContainer>
           {!isPendingAccount && (
             <>
-              <Typography variant="caption" color="shade6" weight="400">
-                Price per
-              </Typography>
               <Typography
                 className="measure"
                 variant="caption"
                 color="shade6"
                 weight="400"
               >
+                Price per{' '}
                 {formatUnitToPricePerUnit(
                   formatMeasurementUnit(result.measurementUnit)
                 )}
@@ -116,7 +114,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
 
           <Search
             className="search"
-            placeholder={`Search for a category`}
+            placeholder={`Search for a Category`}
             value={search}
             onChange={onChangeSearchValue}
             resetValue={onResetSearchValue}

@@ -8,6 +8,7 @@ import styled from 'utils/styled';
 export const MobileContainer = styled.div`
   padding: 16px 24px 24px 24px;
   min-height: calc(100vh - ${MOBILE_HEADER_HEIGHT}px);
+
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};
 

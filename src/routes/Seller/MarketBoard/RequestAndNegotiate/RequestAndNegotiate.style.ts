@@ -24,7 +24,6 @@ export const Container = styled.div`
   .submit-btn {
     margin-top: 1rem;
     margin-right: 8px;
-    border-radius: 8px;
     max-width: 148px;
   }
 

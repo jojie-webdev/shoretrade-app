@@ -8,6 +8,8 @@ export interface EmptyStateProps {
   Svg: React.FC<SVGProps>;
   height?: number;
   width?: number;
+  containerHeight?: number;
+  containerWidth?: number;
   circleHeight?: number;
   circleWidth?: number;
   textAlign?: 'left' | 'right' | 'center';

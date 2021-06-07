@@ -272,7 +272,7 @@ const StepForm = ({
           <Search height={16} width={16} />
           <input
             type="search"
-            placeholder="Search for a product..."
+            placeholder="Search for a Product"
             onChange={(e) => onChangeSearch(e.target.value)}
             value={searchTerm}
           />

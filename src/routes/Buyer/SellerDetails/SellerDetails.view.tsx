@@ -77,7 +77,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
                 value={searchValue}
                 resetValue={resetSearchValue}
                 onChange={onChangeSearchValue}
-                placeholder="Search for a listing..."
+                placeholder="Search for a Listing"
                 rounded
               />
             </div>
