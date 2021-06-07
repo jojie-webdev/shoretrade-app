@@ -93,7 +93,7 @@ const MarketInterestsView = ({
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.currentTarget.value)}
                 resetValue={() => setSearchTerm('')}
-                placeholder="Search for a Product or Category"
+                placeholder="Search for a Product"
                 rounded
               />
             </div>
