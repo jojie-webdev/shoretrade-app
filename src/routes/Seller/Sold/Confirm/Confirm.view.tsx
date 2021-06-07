@@ -110,9 +110,45 @@ const BoxSummary = ({
   differenceAmount: string;
   amount: string;
   differencePercentage: string;
-}) => (
-  <BoxSummaryContainer>
-    <div className="scroll-wrapper">
+}) => {
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  return isSmallScreen ? (
+    <BoxSummaryContainer>
+      <Typography color="noshade" variant="title5" weight="bold">
+        {`Difference ${differencePercentage}`}
+      </Typography>
+      <div className="text-container">
+        <div>
+          <Typography variant="caption" color="shade6">
+            Quantity
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {quantities}
+          </Typography>
+        </div>
+
+        <div>
+          <Typography variant="caption" color="shade6">
+            Weight
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {weight}
+          </Typography>
+        </div>
+
+        <div>
+          <Typography variant="caption" color="shade6">
+            Total
+          </Typography>
+          <Typography color="noshade" weight="bold">
+            {amount}
+          </Typography>
+        </div>
+      </div>
+    </BoxSummaryContainer>
+  ) : (
+    <BoxSummaryContainer>
       <div className="text-container">
         <div className="left-text">
           <Typography variant="label" color="shade6" className="overline">
@@ -169,9 +205,9 @@ const BoxSummary = ({
           </Typography>
         </div>
       </div>
-    </div>
-  </BoxSummaryContainer>
-);
+    </BoxSummaryContainer>
+  );
+};
 
 const ConfirmView = (props: ConfirmProps) => {
   const theme = useTheme();
