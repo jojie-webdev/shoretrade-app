@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import AlertView from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
@@ -99,6 +100,13 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           caption="Select your product specifications for this request."
           marketBoard
         />
+        {isDisabled && (
+          <AlertView
+            content="Select at least 1 specification from each section"
+            variant="error"
+          />
+        )}
+
         <SpecificationFormContainer>
           {stateOptions.map((group) => (
             <div key={group[0].groupOrder} className="interaction-group">
