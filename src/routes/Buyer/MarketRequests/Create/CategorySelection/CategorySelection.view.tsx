@@ -49,7 +49,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
-            placeholder="Search a category..."
+            placeholder="Search a Category"
             rounded
           />
         </div>
