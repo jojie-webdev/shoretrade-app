@@ -38,7 +38,6 @@ const Verify2FA = (): JSX.Element => {
     (useSelector((state: Store) => state.verify.error) || '').length > 0;
 
   const verify = (code: string) => {
-    console.log(code);
     dispatch(verifyActions.request({ verify2Fa: code, email }));
   };
 
