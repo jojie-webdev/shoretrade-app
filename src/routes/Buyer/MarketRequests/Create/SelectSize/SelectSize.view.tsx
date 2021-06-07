@@ -202,6 +202,10 @@ const SelectSizeView = (props: SelectSizeProps) => {
       return sizeToFrom.from === '';
     }
 
+    if (sizeItemChecked.items.length < 1) {
+      return true;
+    }
+
     return false;
   };
 
