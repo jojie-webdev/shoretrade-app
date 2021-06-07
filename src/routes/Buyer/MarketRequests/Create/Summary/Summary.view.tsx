@@ -120,7 +120,7 @@ const SummaryView = (props: SummaryProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">Summary</TypographyView>
+            <TypographyView variant="title5">Summary</TypographyView>
           </div>
         </div>
       </CreateRequestHeaderContainer>

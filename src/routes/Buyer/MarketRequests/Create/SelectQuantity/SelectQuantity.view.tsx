@@ -48,7 +48,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">Select Quantity</TypographyView>
+            <TypographyView variant="title5">Select Quantity</TypographyView>
           </div>
         </div>
       </CreateRequestHeaderContainer>
@@ -62,7 +62,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
         <QuantityFormContainer>
           <StyledTextField
             type="number"
-            inputType="numeric"
+            inputType="decimal"
             label="From"
             value={from}
             onChangeText={(v) => {
@@ -84,7 +84,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
           />
           <StyledTextField
             type="number"
-            inputType="numeric"
+            inputType="decimal"
             label="To"
             value={to}
             onChangeText={(v) => {
@@ -113,17 +113,17 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               variant="primary"
             />
           </Hidden>
-          <MobileFooter>
-            <Button
-              takeFullWidth
-              onClick={() => handleSubmit()}
-              className="submit-btn"
-              disabled={from === '' || to === ''}
-              text="Select This Quantity"
-              variant="primary"
-            />
-          </MobileFooter>
         </QuantityFormContainer>
+        <MobileFooter>
+          <Button
+            takeFullWidth
+            onClick={() => handleSubmit()}
+            className="submit-btn"
+            disabled={from === '' || to === ''}
+            text="Select This Quantity"
+            variant="primary"
+          />
+        </MobileFooter>
       </ContainerWithCategoryImagePreview>
     </>
   );

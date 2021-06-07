@@ -4,9 +4,11 @@ import Button from 'components/base/Button';
 import { Close } from 'components/base/SVG';
 import { P } from 'components/base/Typography/Typography.style';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
@@ -43,14 +45,15 @@ const Content = (props: AddBoxModalProps) => {
         <Typography variant="title5" color="shade1">
           Add Box
         </Typography>
-
-        <CloseBadge
-          onClick={() => {
-            modalProps.onClickClose();
-          }}
-        >
-          <Close fill={theme.grey.shade8} />
-        </CloseBadge>
+        <Visible xs>
+          <CloseBadge
+            onPress={() => {
+              modalProps.onClickClose();
+            }}
+          >
+            <Close fill={theme.grey.shade8} />
+          </CloseBadge>
+        </Visible>
       </TopContainer>
 
       <Inputs>
@@ -95,8 +98,22 @@ const Content = (props: AddBoxModalProps) => {
           onKeyDown={(v) => inputFilters.includes(v.key) && v.preventDefault()}
         />
       </Inputs>
-      <ButtonContainer>
+      <Hidden xs>
+        <ButtonContainer>
+          <Button
+            className="btn-add "
+            variant="primary"
+            text="ADD BOX"
+            onClick={() => {
+              onAdd(values);
+              modalProps.onClickClose();
+            }}
+          />
+        </ButtonContainer>
+      </Hidden>
+      <MobileFooter>
         <Button
+          takeFullWidth
           className="btn-add "
           variant="primary"
           text="ADD BOX"
@@ -105,7 +122,7 @@ const Content = (props: AddBoxModalProps) => {
             modalProps.onClickClose();
           }}
         />
-      </ButtonContainer>
+      </MobileFooter>
     </>
   );
 };

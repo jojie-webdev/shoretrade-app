@@ -145,6 +145,10 @@ const CreateRequest = (): JSX.Element => {
   }, [companyId]);
 
   useEffect(() => {
+    window.scrollTo(0, 0); //reset scroll to top
+  }, [currentStep]);
+
+  useEffect(() => {
     if (selectedCategory?.id != '') {
       //reset
       setSelectedSize({ from: '', to: '', items: [] });
