@@ -10,6 +10,12 @@ export const ProgressBar = styled.div<{
   position: absolute;
   top: 2px;
   left: 0;
+
+  @media ${BREAKPOINTS['sm']} {
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+  }
 `;
 
 export const CreateRequestContainer = styled.div`
