@@ -168,21 +168,16 @@ export const BoxSummaryContainer = styled.div`
   margin-top: 32px;
   overflow: scroll;
 
-  .scroll-wrapper {
-    @media ${BREAKPOINTS.sm} {
-      width: 225%;
-      padding-right: 24px;
-    }
-  }
-
   .text-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 16px;
 
-    @media ${BREAKPOINTS.sm} {
-      flex: 1;
+    @media ${BREAKPOINTS['sm']} {
+      justify-content: space-between;
+      margin-top: 16px;
+      margin-bottom: 0;
     }
 
     .inner-text {
@@ -191,12 +186,6 @@ export const BoxSummaryContainer = styled.div`
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-
-      @media ${BREAKPOINTS.sm} {
-        min-width: auto;
-        flex: 2;
-        margin-right: 0;
-      }
     }
 
     .left-text {
@@ -205,12 +194,6 @@ export const BoxSummaryContainer = styled.div`
       margin-right: 16px;
       flex-direction: column;
       align-items: flex-start;
-
-      @media ${BREAKPOINTS.sm} {
-        min-width: auto;
-        flex: 2;
-        margin-right: 0;
-      }
     }
 
     .right-text {
@@ -219,11 +202,6 @@ export const BoxSummaryContainer = styled.div`
       flex-direction: column;
       flex: 1;
       align-items: flex-end;
-
-      @media ${BREAKPOINTS.sm} {
-        min-width: auto;
-        flex: 2;
-      }
     }
   }
 `;

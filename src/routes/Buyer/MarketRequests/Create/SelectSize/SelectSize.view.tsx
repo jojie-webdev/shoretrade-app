@@ -85,7 +85,7 @@ const SizeInput = (props: SizeInputProps) => {
         <SelectRowContainer>
           <TextField
             type="text"
-            inputType="numeric"
+            inputType="decimal"
             label="Size From"
             value={fromSize}
             onChangeText={(v) => {
@@ -108,7 +108,7 @@ const SizeInput = (props: SizeInputProps) => {
 
           <TextField
             type="text"
-            inputType="numeric"
+            inputType="decimal"
             label={`Size To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {
@@ -202,6 +202,10 @@ const SelectSizeView = (props: SelectSizeProps) => {
       return sizeToFrom.from === '';
     }
 
+    if (sizeItemChecked.items.length < 1) {
+      return true;
+    }
+
     return false;
   };
 
@@ -217,7 +221,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <Typography variant="title4">Select Size</Typography>
+            <Typography variant="title5">Select Size</Typography>
           </div>
         </div>
       </CreateRequestHeaderContainer>

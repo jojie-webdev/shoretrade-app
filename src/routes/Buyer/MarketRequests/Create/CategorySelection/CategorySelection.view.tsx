@@ -39,7 +39,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
         <div>
           {stepCountComponent}
           <div className="title-container">
-            <TypographyView variant="title4">
+            <TypographyView variant="title5">
               Choose Product Type
             </TypographyView>
           </div>
@@ -49,7 +49,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
-            placeholder="Search a category..."
+            placeholder="Search a Category"
             rounded
           />
         </div>

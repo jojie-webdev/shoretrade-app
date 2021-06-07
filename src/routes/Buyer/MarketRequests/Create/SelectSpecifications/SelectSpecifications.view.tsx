@@ -86,7 +86,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title4">
+            <TypographyView variant="title5">
               Select Specifications
             </TypographyView>
           </div>
