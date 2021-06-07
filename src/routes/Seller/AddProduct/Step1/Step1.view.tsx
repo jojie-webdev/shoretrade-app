@@ -20,6 +20,7 @@ import { Step1Props } from './Step1.props';
 import {
   Container,
   Image,
+  ButtonContainer,
   BackButton,
   EmptyResultDesktop,
 } from './Step1.style';
@@ -237,16 +238,24 @@ function Step2({
                   onButtonClicked={() => setShowCustomTypeSettings(true)}
                   height={211}
                   width={211}
+                  fluid
                 />
               )}
             </>
           )}
           {!pendingSearch && (
-            <BackButton
-              variant={'outline'}
-              text="Back"
-              onClick={() => navBack()}
-            />
+            <ButtonContainer>
+              <BackButton
+                variant={'outline'}
+                text="Back"
+                className="back-btn"
+                onClick={() => navBack()}
+              />
+              <Button
+                text="Create Custom Type"
+                onClick={() => setShowCustomTypeSettings(true)}
+              />
+            </ButtonContainer>
           )}
         </Col>
       </Row>

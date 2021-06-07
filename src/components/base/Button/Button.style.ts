@@ -40,7 +40,7 @@ export const ButtonContainer = styled.button<
   padding: ${({ size }) => padding[size]};
   background-color: ${({ variant }) => backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
-  border-radius: ${(props) => (props.circular ? '50%' : '4px')};
+  border-radius: ${(props) => (props.circular ? '50%' : '8px')};
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   white-space: nowrap;
