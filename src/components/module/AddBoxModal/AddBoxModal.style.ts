@@ -39,8 +39,8 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 40px;
+
   .btn-add {
-    border-radius: 8px;
     max-width: 94px;
     padding: 14px 16px;
 

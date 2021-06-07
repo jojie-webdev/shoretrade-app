@@ -60,7 +60,6 @@ export const Container = styled.div`
   .submit-btn-step2 {
     margin-top: 1rem;
     margin-right: 8px;
-    border-radius: 8px;
     max-width: 148px;
   }
 `;

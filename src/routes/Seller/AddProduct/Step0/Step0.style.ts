@@ -84,6 +84,5 @@ export const Image = styled.img`
 `;
 
 export const ButtonImport = styled(Button)`
-  border-radius: 8px;
   height: 32px;
 `;

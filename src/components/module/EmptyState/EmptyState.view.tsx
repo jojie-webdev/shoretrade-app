@@ -31,7 +31,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
       {title && (
         <MainText
           variant="title5"
-          className="title"
+          className="empty-state-title"
           color={textColor}
           align={textAlign ? textAlign : 'left'}
         >
@@ -39,6 +39,8 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
         </MainText>
       )}
       <SVGContainer
+        containerHeight={props.containerHeight}
+        containerWidth={props.containerWidth}
         circleHeight={props.circleHeight}
         circleWidth={props.circleWidth}
         circleColor={circleColor}
@@ -48,7 +50,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
       </SVGContainer>
 
       {onButtonClicked && (
-        <Button text={buttonText} onClick={onButtonClicked}></Button>
+        <Button text={buttonText} onClick={onButtonClicked} />
       )}
     </Container>
   );
