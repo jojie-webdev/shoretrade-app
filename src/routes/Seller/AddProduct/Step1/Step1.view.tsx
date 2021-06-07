@@ -155,7 +155,12 @@ function Step2({
             />
           </Col>
         </Row>
-        <Row justify="end" style={{ padding: '0 15px' }}>
+        <Row justify="end" nogutter>
+          <BackButton
+            variant={'outline'}
+            text="Back"
+            onClick={() => setShowCustomTypeSettings(false)}
+          />
           <Button
             variant={
               selectedCategory && selectedMetric && customTypeName
@@ -248,13 +253,14 @@ function Step2({
               <BackButton
                 variant={'outline'}
                 text="Back"
-                className="back-btn"
                 onClick={() => navBack()}
               />
-              <Button
-                text="Create Custom Type"
-                onClick={() => setShowCustomTypeSettings(true)}
-              />
+              {searchResults.length === 0 && !isMobile && (
+                <Button
+                  text="Create Custom Type"
+                  onClick={() => setShowCustomTypeSettings(true)}
+                />
+              )}
             </ButtonContainer>
           )}
         </Col>
