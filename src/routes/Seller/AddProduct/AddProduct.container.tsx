@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
+import { ADD_PRODUCT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/src/pathOr';
 import pick from 'ramda/src/pick';
@@ -408,7 +408,7 @@ const AddProduct = (): JSX.Element => {
 
   const discardChanges = () => {
     dispatch(editableListingActions.clear());
-    history.push(ADD_PRODUCT_ROUTES.PREVIEW);
+    history.push(ADD_PRODUCT_ROUTES.LANDING);
   };
 
   const discardBulkUploadChanges = () => {
