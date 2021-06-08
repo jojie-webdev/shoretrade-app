@@ -67,11 +67,9 @@ export const Container = styled.div`
   }
   .back-btn {
     margin-right: 16px;
-    border-radius: 8px;
     max-width: 67px;
   }
   .next-btn {
-    border-radius: 8px;
     max-width: 67px;
   }
 `;

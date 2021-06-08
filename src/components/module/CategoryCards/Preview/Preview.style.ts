@@ -103,7 +103,6 @@ export const HeaderContainer = styled.div`
   margin-top: 16px;
 `;
 
-
 export const BodyContainerAlt = styled.div`
   display: flex;
   flex-direction: row;
@@ -156,7 +155,6 @@ export const Title = styled(TypographyView)`
 export const ResultText = styled(TypographyView)`
   font-size: ${pxToRem(14)};
   margin-bottom: 0.6rem;
-
 `;
 
 export const ResultTextAlt = styled(TypographyView)`
@@ -191,6 +189,7 @@ export const Image = styled.div<{ imgSrc: string }>`
   background-size: cover;
   margin-right: 8px;
   min-width: 40px;
+  border-radius: 4px;
 `;
 
 export const TitleContainer = styled.div`

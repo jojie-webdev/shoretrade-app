@@ -285,7 +285,7 @@ export const FilterContainer = styled.div`
 
 export const FilterButton = styled.button`
   background: ${({ theme }) => theme.grey.shade3};
-  border-radius: 8px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 8px 12px;

@@ -36,18 +36,13 @@ export const Container = styled.div`
     }
   }
 `;
+
 export const Image = styled.img`
   width: 48px;
   height: 48px;
   border-radius: 8px;
   margin-right: 16px;
   margin-left: -16px;
-`;
-
-export const BackButton = styled(Button)`
-  border-radius: 8px;
-  width: 67px;
-  margin-top: 40px;
 `;
 
 export const SearchContainerDesktop = styled.div`
@@ -60,4 +55,14 @@ export const SearchContainerDesktop = styled.div`
 export const EmptyResultDesktop = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 40px;
+`;
+
+export const BackButton = styled(Button)`
+  width: 67px;
+  margin-right: 16px;
 `;

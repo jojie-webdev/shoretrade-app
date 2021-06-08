@@ -17,6 +17,8 @@ export const SVGContainer = styled.div<{
   fluid: boolean;
   circleHeight?: number;
   circleWidth?: number;
+  containerHeight?: number;
+  containerWidth?: number;
 }>`
   margin-top: ${({ fluid }) => (fluid ? '0' : '70px')};
   margin-bottom: ${({ fluid }) => (fluid ? '0' : '60px')};

@@ -67,6 +67,6 @@ export const ResultContainer = styled.div`
   }
 
   .measure {
-    margin: 0 4px;
+    margin-right: 8px;
   }
 `;

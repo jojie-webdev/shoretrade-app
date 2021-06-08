@@ -85,7 +85,7 @@ const SizeInput = (props: SizeInputProps) => {
         <SelectRowContainer>
           <TextField
             type="text"
-            inputType="numeric"
+            inputType="decimal"
             label="Size From"
             value={fromSize}
             onChangeText={(v) => {
@@ -108,7 +108,7 @@ const SizeInput = (props: SizeInputProps) => {
 
           <TextField
             type="text"
-            inputType="numeric"
+            inputType="decimal"
             label={`Size To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {

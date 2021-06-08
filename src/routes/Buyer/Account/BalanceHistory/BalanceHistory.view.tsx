@@ -18,6 +18,36 @@ import {
 } from './BalanceHistory.style';
 
 const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
+  const getTransactionLabel = (
+    desc: string
+  ): {
+    title: string;
+    subtitle: string;
+  } => {
+    const isCreditAdjustment = desc.includes('Credit Adjustment - ');
+    if (isCreditAdjustment) {
+      const includesOrderNumber = desc.includes('- Order #');
+      if (includesOrderNumber) {
+        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
+        return {
+          title: `Credit Adjustment - #${orderNumber}`,
+          subtitle: desc
+            .replace('Credit Adjustment - ', '')
+            .replace(` - Order #${orderNumber}`, ''),
+        };
+      }
+
+      return {
+        title: 'Credit Adjustment',
+        subtitle: desc.replace('Credit Adjustment - ', ''),
+      };
+    }
+
+    return {
+      title: desc,
+      subtitle: '',
+    };
+  };
   return (
     <Container>
       <BoxContainer>
@@ -37,12 +67,20 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
         <Col md={12}>
           {props.isLoading && <Loading />}
           {props.transactions.map((transaction, idx) => {
+            const { title, subtitle } = getTransactionLabel(
+              transaction.description
+            );
             return (
               <Transx key={idx}>
                 <TransxLeft>
                   <Typography variant="body" color="shade9">
-                    {transaction.description}
+                    {title}
                   </Typography>
+                  {subtitle.length > 0 && (
+                    <Typography variant="caption" color="shade9">
+                      {subtitle}
+                    </Typography>
+                  )}
                   <Typography variant="caption" color="shade6">
                     {moment(transaction.createdAt).format('DD MMM YYYY')}
                   </Typography>

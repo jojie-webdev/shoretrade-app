@@ -407,8 +407,8 @@ const AddProduct = (): JSX.Element => {
   };
 
   const discardChanges = () => {
-    history.push(SELLER_ROUTES.SELLING);
     dispatch(editableListingActions.clear());
+    history.push(ADD_PRODUCT_ROUTES.PREVIEW);
   };
 
   const discardBulkUploadChanges = () => {

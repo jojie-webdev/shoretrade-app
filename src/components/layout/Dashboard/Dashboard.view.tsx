@@ -142,7 +142,6 @@ const Header = ({
 
   return isMobile ? (
     <MobileNav
-      position="fixed"
       onBackOverride={onBack}
       showLogo={!onBack}
       leftContent={

@@ -4,6 +4,7 @@ import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
+import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -15,7 +16,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
-import { PreviewContainer } from './Favourites.style';
+import { PreviewContainer, StyledInteraction } from './Favourites.style';
 
 const FavouritesView = (props: FavouritesGeneratedProps) => {
   const {
@@ -43,7 +44,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
           <div className="right-header">
             <Search
               className="search"
-              placeholder={`Search for vendor`}
+              placeholder={`Search for a Seller`}
               value={searchValue}
               onChange={onChangeSearchValue}
               resetValue={onResetSearchValue}
@@ -73,26 +74,52 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                     xs={12}
                   >
                     <Link to={BUYER_ROUTES.PRODUCT_DETAIL(fav.id)}>
-                      <PreviewCard
-                        id={fav.id}
-                        images={fav.images}
-                        type={fav.type}
-                        price={toPrice(fav.price)}
-                        remaining={fav.remaining.toFixed(2)}
-                        coop={fav.coop}
-                        minimumOrder={fav.minimumOrder}
-                        origin={fav.origin}
-                        weight={sizeToString(
-                          fav.size.unit,
-                          fav.size.from,
-                          fav.size.to
-                        )}
-                        isAquafuture={fav.isAquafuture}
-                        unit={fav.measurementUnit}
-                        state={fav.state}
-                        hiddenPrice={isPendingAccount}
-                        hiddenVendor={isPendingAccount}
-                      />
+                      {isSmallScreen ? (
+                        <StyledInteraction>
+                          <PreviewDetailAlt
+                            alternate
+                            id={fav.id}
+                            images={fav.images}
+                            type={fav.type}
+                            price={toPrice(fav.price)}
+                            remaining={fav.remaining.toFixed(2)}
+                            coop={fav.coop}
+                            minimumOrder={fav.minimumOrder}
+                            origin={fav.origin}
+                            weight={sizeToString(
+                              fav.size.unit,
+                              fav.size.from,
+                              fav.size.to
+                            )}
+                            isAquafuture={fav.isAquafuture}
+                            unit={fav.measurementUnit}
+                            state={fav.state}
+                            hiddenPrice={isPendingAccount}
+                            hiddenVendor={isPendingAccount}
+                          />
+                        </StyledInteraction>
+                      ) : (
+                        <PreviewCard
+                          id={fav.id}
+                          images={fav.images}
+                          type={fav.type}
+                          price={toPrice(fav.price)}
+                          remaining={fav.remaining.toFixed(2)}
+                          coop={fav.coop}
+                          minimumOrder={fav.minimumOrder}
+                          origin={fav.origin}
+                          weight={sizeToString(
+                            fav.size.unit,
+                            fav.size.from,
+                            fav.size.to
+                          )}
+                          isAquafuture={fav.isAquafuture}
+                          unit={fav.measurementUnit}
+                          state={fav.state}
+                          hiddenPrice={isPendingAccount}
+                          hiddenVendor={isPendingAccount}
+                        />
+                      )}
                     </Link>
                   </Col>
                 );
