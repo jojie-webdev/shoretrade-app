@@ -216,7 +216,7 @@ export const NotificationsContainer = styled.div`
 export const TotalSalesCard = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.grey.shade9};
-  border-radius: 8px;
+  border-radius: 4px;
   margin-right: 24px;
   width: 308px;
   min-width: 202px;
