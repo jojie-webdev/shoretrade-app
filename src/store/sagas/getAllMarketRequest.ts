@@ -19,7 +19,7 @@ function* getAllMarketRequestRequest(
       const { data } = yield call(
         getAllMarketRequest,
         state.auth.token,
-        qs.stringify(action.meta.queryParams)
+        action.meta.queryParams
       );
       yield put(getAllMarketRequestActions.success(data));
     } catch (e) {

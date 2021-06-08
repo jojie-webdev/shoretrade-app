@@ -47,6 +47,9 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
     selectedSize,
     setSelectedSize,
     onClickClose,
+    isBuyerRequestFilters,
+    buyerRequestFilter,
+    setBuyerRequestFilter,
     ...modalProps
   } = props;
 
@@ -144,7 +147,11 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
 
   const onPressFilter = (label: string, fType: FilterType) => {
     setSelecting(label);
-    setType(fType);
+    if (isBuyerRequestFilters) {
+      setType('multiple');
+    } else {
+      setType(fType);
+    }
   };
 
   const onCheckboxPress = (label: string) => {
@@ -189,6 +196,21 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
       }
     }
   }, [sizeFrom, sizeTo]);
+
+  const onBuyerRequestPress = (label: string) => {
+    if (buyerRequestFilter && setBuyerRequestFilter) {
+      const isExisting = buyerRequestFilter.some((f) => f.value === label);
+      if (!isExisting) {
+        setBuyerRequestFilter([
+          ...buyerRequestFilter,
+          { label: getFilter().label, value: label },
+        ]);
+      } else {
+        const newValues = buyerRequestFilter.filter((f) => f.value !== label);
+        setBuyerRequestFilter(newValues);
+      }
+    }
+  };
 
   useEffect(() => {
     if (sizeFrom && sizeTo && type === 'size_input') {
@@ -330,6 +352,25 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                 </InputContainer>
               </Scroll>
             )}
+
+            {buyerRequestFilter &&
+              setBuyerRequestFilter &&
+              type === 'multiple' && (
+                <Scroll>
+                  {filterValues &&
+                    filterValues.map((v) => (
+                      <RadioContainer key={v}>
+                        <Checkbox
+                          label={v}
+                          checked={buyerRequestFilter.some(
+                            (x) => x.value === v
+                          )}
+                          onClick={() => onBuyerRequestPress(v)}
+                        />
+                      </RadioContainer>
+                    ))}
+                </Scroll>
+              )}
           </>
         ) : (
           <Scroll>
