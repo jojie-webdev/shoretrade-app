@@ -48,6 +48,7 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
   const {
     cardContainerStyle,
     cardContainerClass,
+
     hiddenPrice,
     hiddenVendor,
     alternate,
@@ -120,7 +121,7 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
       </div>
       <BodyContainerAlt>
         <BodyColumnContainer>
-          <Row nogutter >
+          <Row nogutter>
             <ResultTextAlt
               style={{ paddingRight: 8 }}
               variant="small"
@@ -169,7 +170,7 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
               Min Order:
             </ResultTextAlt>
             <ResultTextValueAlt variant="small" weight="bold">
-             {minOrder}
+              {minOrder}
             </ResultTextValueAlt>
           </Row>
         </BodyColumnContainer>
