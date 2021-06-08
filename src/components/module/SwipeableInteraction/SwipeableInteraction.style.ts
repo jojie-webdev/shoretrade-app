@@ -10,8 +10,8 @@ export const Container = styled.div`
 `;
 
 export const TouchContainer = styled.div`
-  touch-action: none;
   margin-bottom: 1rem;
+  touch-action: pan-y;
 `;
 
 export const SwipeableContainer = styled(animated.div)`
