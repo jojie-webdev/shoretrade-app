@@ -19,7 +19,7 @@ export const FilterButton = styled.button`
   align-items: center;
   padding: 8px 12px;
   border: none;
-  height: 40px;
+  height: 32px;
 
   .btn-text {
     margin-right: 8px;
