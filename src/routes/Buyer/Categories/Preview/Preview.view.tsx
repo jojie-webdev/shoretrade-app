@@ -151,7 +151,6 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       <StyledInteraction>
                         <PreviewDetailAlt
                           alternate
-                          key={product.id}
                           id={product.id}
                           images={product.images}
                           type={product.type}
@@ -174,7 +173,6 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       </StyledInteraction>
                     ) : (
                       <PreviewCard
-                        key={product.id}
                         id={product.id}
                         images={product.images}
                         type={product.type}
