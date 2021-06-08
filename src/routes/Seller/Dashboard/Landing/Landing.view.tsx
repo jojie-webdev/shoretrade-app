@@ -301,7 +301,7 @@ const TotalSales = (props: any) => {
         ) : (
           <PaidCard {...props} />
         )}
-        <TotalSalesCard className="pending156" >
+        <TotalSalesCard>
           <div>
             <Typography variant="overline" color="shade6" className="overline">
               Pending
@@ -330,7 +330,7 @@ const MonthlySales = (props: any) => {
           </Typography>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
+      <MonthlyRow nowrap gutterWidth={24}>
         {props.data.months.map((m: any, i: any) => (
           <Link
             key={i}
@@ -401,7 +401,7 @@ const TopCategories = (props: any) => {
           </Link>
         </Col>
       </Row>
-      <MonthlyRow nowrap gutterWidth={24} style={{ paddingLeft: 8 }}>
+      <MonthlyRow nowrap gutterWidth={24}>
         {props.data.categories.map((c: any, i: any) => (
           <Link key={i} to={props.toDetails(c.id, c.name)}>
             <SalesCard className="many-cards">

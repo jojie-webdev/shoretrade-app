@@ -104,6 +104,9 @@ export const TotalSalesRow = styled(Row)`
 `;
 
 export const MonthlyRow = styled(Row)`
+  margin-left: 0px !important;
+  padding: 0px !important;
+
   .many-cards {
     width: 202px;
   }
