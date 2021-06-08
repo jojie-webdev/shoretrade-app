@@ -412,29 +412,6 @@ const SellingView = (props: SellingGeneratedProps) => {
               )
             ) : isSmallScreen ? (
               listings.map((listing) => (
-                // <StyledInteraction>
-                //         <PreviewDetailAlt
-                //           alternate
-                //           id={product.id}
-                //           images={product.images}
-                //           type={product.type}
-                //           price={toPrice(product.price)}
-                //           remaining={product.remaining.toFixed(2)}
-                //           coop={product.coop}
-                //           minimumOrder={product.minimumOrder}
-                //           origin={product.origin}
-                //           weight={sizeToString(
-                //             product.size.unit,
-                //             product.size.from,
-                //             product.size.to
-                //           )}
-                //           isAquafuture={product.isAquafuture}
-                //           unit={product.measurementUnit}
-                //           state={product.state}
-                //           hiddenVendor={isPendingAccount}
-                //           hiddenPrice={isPendingAccount}
-                //         />
-                //       </StyledInteraction>
                 <StyledInteraction key={listing.id}>
                   <ItemMobile
                     {...listingToItem(listing)}
