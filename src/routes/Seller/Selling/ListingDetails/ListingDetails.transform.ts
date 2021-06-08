@@ -11,6 +11,7 @@ export const listingToListingProps = (
 ): ListingProps => {
   const soldWeight = (data?.originalWeight || 0) - (data?.remaining || 0);
   const sales = soldWeight * Number(data?.pricePerKilo || 0);
+
   return {
     carousel: {
       items: (data?.images || []).map((image) => ({

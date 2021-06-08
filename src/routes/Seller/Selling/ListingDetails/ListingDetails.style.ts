@@ -80,7 +80,7 @@ export const DetailsCard = styled.div`
 
 export const Tag = styled.div`
   padding: 2px 8px;
-  background-color: ${({ theme }) => theme.grey.shade2};
+  background-color: ${({ theme }) => theme.grey.shade3};
   border-radius: 2px;
   width: fit-content;
 `;
@@ -294,6 +294,10 @@ export const MobileWrapper = styled.div`
   .sales-container {
     display: flex;
     flex-direction: row;
+
+    .per-label {
+      margin-left: 4px;
+    }
   }
 
   .sold-container {

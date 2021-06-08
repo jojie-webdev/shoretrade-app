@@ -130,9 +130,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const addSeparatorSpacing = useMediaQuery({
     query: '(min-width: 992px)',
   });
+
   if (isMobile) {
-    let percent =
-      (Number(orderDetails.remaining) / Number(sales.totalWeight)) * 100;
+    let percent = (Number(sales.soldWeight) / Number(sales.totalWeight)) * 100;
     if (percent >= 100) percent = 100;
 
     return (
@@ -154,7 +154,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               <MobileSalesCard isCreatListingSuccess={isCreatListingSuccess}>
                 <div className="sales-container">
                   <Typography variant="title4" color="shade6" weight="regular">
-                    Sales:{' '}
+                    Sales:
                   </Typography>
 
                   <Typography
@@ -168,7 +168,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </div>
                 <div className="sold-container">
                   <Typography variant="body" color="shade9">
-                    {`${orderDetails.remaining} / ${sales.totalWeight} ${sales.unit} Sold`}
+                    {`${sales.soldWeight} / ${sales.totalWeight} ${sales.unit} Sold`}
                   </Typography>
                 </div>
                 <div className="progress-container">
@@ -337,6 +337,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
       </>
     );
   }
+
   return (
     <BoxContainer isPreview isCreatListingSuccess={isCreatListingSuccess}>
       <Wrapper isCreatListingSuccess={isCreatListingSuccess}>
