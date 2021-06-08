@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
+import qs from 'qs';
 import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   getLocation,
+  getRespectiveValues,
   getSize,
   getSpecs,
   getType,
@@ -73,6 +75,9 @@ const MarketBoardLanding = (): JSX.Element => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [buyerRequestFilter, setBuyerRequestFilter] = useState<
+    { label: string; value: string }[]
+  >([]);
 
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
@@ -105,9 +110,9 @@ const MarketBoardLanding = (): JSX.Element => {
     const timerId = setTimeout(() => {
       dispatch(
         getAllMarketRequestActions.request({
-          queryParams: {
+          queryParams: qs.stringify({
             term: searchTerm.length > 2 ? searchTerm : '',
-          },
+          }),
         })
       );
     }, 800);
@@ -139,16 +144,35 @@ const MarketBoardLanding = (): JSX.Element => {
       ? sizesFilter?.filter((v) => v !== 'Ungraded')
       : undefined;
     const isUngraded = (sizesFilter || []).includes('Ungraded');
+    const payload = {
+      address: getRespectiveValues(
+        'Location',
+        buyerRequestFilter,
+        buyerRequestsFilters!
+      ),
+      sizes: isUngraded
+        ? undefined
+        : getRespectiveValues(
+            'Size',
+            buyerRequestFilter,
+            buyerRequestsFilters!
+          ),
+      typeId: getRespectiveValues(
+        'Type',
+        buyerRequestFilter,
+        buyerRequestsFilters!
+      ),
+      specifications: getRespectiveValues(
+        'Specs',
+        buyerRequestFilter,
+        buyerRequestsFilters!
+      ),
+      ungraded: isUngraded ? true : undefined,
+    };
 
     dispatch(
       getAllMarketRequestActions.request({
-        queryParams: {
-          address: getLocation(selectedFilters, buyerRequestsFilters!),
-          sizes: isUngraded ? undefined : actualSizesFilter,
-          typeId: getType(selectedFilters, buyerRequestsFilters!),
-          specifications: getSpecs(selectedFilters, buyerRequestsFilters!),
-          ungraded: isUngraded ? true : undefined,
-        },
+        queryParams: qs.stringify(payload),
       })
     );
   };
@@ -156,6 +180,7 @@ const MarketBoardLanding = (): JSX.Element => {
   const onReset = () => {
     setSelectedFilters([]);
     setSelectedSize(null);
+    setBuyerRequestFilter([]);
   };
 
   const generatedProps = {
@@ -181,6 +206,8 @@ const MarketBoardLanding = (): JSX.Element => {
       onApply,
       onReset,
       onClickClose: () => setIsFilterModalOpen(false),
+      setBuyerRequestFilter,
+      buyerRequestFilter,
     },
     userPending,
   };
