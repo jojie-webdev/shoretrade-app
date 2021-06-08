@@ -1,4 +1,5 @@
 import Alert from 'components/base/Alert';
+import InteractionsView from 'components/base/Interactions';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -210,24 +211,29 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
     }
 
     .details-container {
-      font-size: ${pxToRem(14)};
       display: flex;
       flex-direction: row;
-      margin-top: 16px;
 
-      .circle {
-        width: 12px;
-        height: 12px;
-        background-color: ${(props) => props.theme.brand.success};
-        border-radius: 50%;
-        box-shadow: 0 0 0 8px rgba(0, 196, 140, 0.1);
-        margin-right: 24px;
-      }
+      .details-column-container {
+        font-size: ${pxToRem(14)};
+        display: flex;
+        flex-direction: row;
+        margin-top: 16px;
 
-      .text-container {
-        margin-top: -8px;
-        flex-direction: column;
-        max-width: 360px;
+        .circle {
+          width: 12px;
+          height: 12px;
+          background-color: ${(props) => props.theme.brand.success};
+          border-radius: 50%;
+          box-shadow: 0 0 0 8px rgba(0, 196, 140, 0.1);
+          margin-right: 24px;
+        }
+
+        .text-container {
+          margin-top: -8px;
+          flex-direction: column;
+          max-width: 360px;
+        }
       }
     }
   }
@@ -236,7 +242,6 @@ export const NoSellingContainer = styled.div<{ fluid?: boolean }>`
 export const ItemCardMobile = styled.div`
   background: ${(props) => props.theme.grey.shade9};
 
-  margin-bottom: 24px;
   border-radius: 4px;
 
   display: flex;
@@ -283,25 +288,50 @@ export const ItemCardMobile = styled.div`
   }
 
   .details-container {
-    margin-top: 4px;
-  }
-
-  .label-container {
-    flex-direction: row;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     width: 100%;
+
+    .details-column-container {
+      font-size: ${pxToRem(12)};
+      display: flex;
+      flex-direction: column;
+      margin-top: 16px;
+      padding-right: 8px;
+      flex: 1 0 auto;
+
+      .circle {
+        width: 12px;
+        height: 12px;
+        background-color: ${(props) => props.theme.brand.success};
+        border-radius: 50%;
+        box-shadow: 0 0 0 8px rgba(0, 196, 140, 0.1);
+        margin-right: 24px;
+      }
+
+      .label-container {
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .right-text,
+        .left-text {
+          font-size: ${pxToRem(12)};
+          letter-spacing: -0.6px;
+        }
+      }
+    }
   }
 `;
 
 export const ItemImageMobile = styled.img`
-  width: 100%;
-  max-height: 200px;
+  width: 40px;
+  max-height: 40px;
+  margin-right: 8px;
   object-fit: cover;
-  background: ${(props) => props.theme.grey.noshade};
   border-radius: 4px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  background: ${(props) => props.theme.grey.noshade};
 `;
 
 export const ItemDetailMobile = styled(Typography)<{ row?: boolean }>`
@@ -352,5 +382,22 @@ export const SVGContainer = styled.div<{
 
     background: ${(props) =>
       props.circleColor !== '' ? props.circleColor : props.theme.grey.shade9};
+  }
+`;
+
+export const StyledInteraction = styled(InteractionsView)`
+  padding: 0;
+  margin-bottom: 16px;
+
+  align-items: flex-start;
+
+  .left-content {
+    flex: 1 0 auto;
+    max-width: 90%;
+    padding-right: 0px;
+  }
+
+  .right-content {
+    padding: 24px 18px 0px 0px;
   }
 `;

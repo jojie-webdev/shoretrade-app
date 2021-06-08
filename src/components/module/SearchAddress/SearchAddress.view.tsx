@@ -59,7 +59,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       <Search
         className="search-product"
         inputRef={inputRef}
-        placeholder="Search for a Product"
+        placeholder="Search for a product"
         onChange={(e) => setSearchTerm(e.target.value)}
         value={searchTerm}
         onFocus={() => {

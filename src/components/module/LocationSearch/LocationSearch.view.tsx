@@ -186,7 +186,7 @@ const LocationSearch = ({
         //   ) : null
         // }
         // disabled={doSearch}
-        placeholder="Search for a Location"
+        placeholder="Search for a location"
         onKeyUp={onKeyUp}
         value={searchValue}
         onChangeText={(val) => setSearchValue(val)}
