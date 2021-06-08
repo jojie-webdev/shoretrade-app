@@ -113,8 +113,7 @@ const Item = (props: ItemProp) => {
                   color="noshade"
                   className="bottom-space"
                 >
-                  {Number(props.remaining).toFixed(0)} /{' '}
-                  {Number(props.originalWeight).toFixed(0)}{' '}
+                  {Number(props.remaining).toFixed(0)}{' '}
                   {props.unit?.toLowerCase()}
                 </ItemDetail>
               </div>
@@ -172,11 +171,9 @@ const ItemMobile = (props: ItemProp) => {
   };
 
   const formattedRemaining = () => {
-    if (props.remaining && props.originalWeight && props.unit) {
+    if (props.remaining && props.unit) {
       return ellipsisOnOverflow(
-        `${Number(props.remaining).toFixed(0)} / ${Number(
-          props.originalWeight
-        ).toFixed(0)} ${props.unit?.toLowerCase()}`,
+        `${Number(props.remaining).toFixed(0)} ${props.unit?.toLowerCase()}`,
         15
       );
     }
