@@ -96,8 +96,7 @@ export const MobileFilterRow = styled(Row)`
 `;
 
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) =>
-    props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`
@@ -208,5 +207,30 @@ export const NotificationsContainer = styled.div`
 
   .content-container {
     cursor: pointer;
+  }
+`;
+
+export const TotalSalesCard = styled.div`
+  padding: 24px;
+  background: ${(props) => props.theme.grey.shade9};
+  border-radius: 8px;
+  margin-right: 24px;
+  width: 308px;
+  min-width: 202px;
+  height: 100%;
+
+  .price {
+    margin-bottom: 16px;
+  }
+
+  .overline {
+    margin-bottom: 8px;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 156px !important;
+    min-width: 156px;
+    margin-right: 16px;
+    padding: 16px;
   }
 `;

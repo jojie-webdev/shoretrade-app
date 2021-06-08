@@ -42,6 +42,7 @@ import {
   MobileFilterButton,
   MobileFilterRow,
   MobileFilterContainer,
+  TotalSalesCard,
 } from './Landing.style';
 
 const MarketNotification = (props: { type: string; onPress: () => void }) => {
@@ -268,19 +269,19 @@ const MobileFilterHeader = ({
 const TotalSales = (props: any) => {
   const PaidCard = (ownProps: any) => {
     return (
-      <SalesCard className="figma-width">
+      <TotalSalesCard className="figma-width">
         <Typography variant="overline" color="shade6" className="overline">
           Paid
         </Typography>
         <Typography variant="title4" color="noshade">
           {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
         </Typography>
-      </SalesCard>
+      </TotalSalesCard>
     );
   };
 
   return (
-    <TotalSalesRow gutterWidth={24} justify="between">
+    <TotalSalesRow justify="between">
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
@@ -290,13 +291,17 @@ const TotalSales = (props: any) => {
       </Col>
       <SalesRow nowrap gutterWidth={24}>
         {props.data.paid ? (
-          <Link to={props.toPaid}>
+          <Link
+            to={props.toPaid}
+            className="figma-width"
+            style={{ marginRight: 16 }}
+          >
             <PaidCard {...props} />
           </Link>
         ) : (
           <PaidCard {...props} />
         )}
-        <SalesCard className="pending-card">
+        <TotalSalesCard className="pending156" >
           <div>
             <Typography variant="overline" color="shade6" className="overline">
               Pending
@@ -307,7 +312,7 @@ const TotalSales = (props: any) => {
               )}
             </Typography>
           </div>
-        </SalesCard>
+        </TotalSalesCard>
       </SalesRow>
     </TotalSalesRow>
   );
