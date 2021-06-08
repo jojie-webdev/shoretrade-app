@@ -330,6 +330,7 @@ export const ItemImageMobile = styled.img`
   max-height: 40px;
   margin-right: 8px;
   object-fit: cover;
+  border-radius: 4px;
   background: ${(props) => props.theme.grey.noshade};
 `;
 
