@@ -167,9 +167,9 @@ const ItemMobile = (props: ItemProp) => {
   return (
     <ItemCardMobile>
       <div className="wrapper" onClick={props.onClick}>
-        <ItemImageMobile src={props.data.images[0]} alt="" />
         <div className="parent-container">
           <div className="product-container">
+          <ItemImageMobile src={props.data.images[0]} alt="" />
             <Typography variant="label" color="noshade">
               {props.title}
             </Typography>

@@ -295,13 +295,11 @@ export const ItemCardMobile = styled.div`
 `;
 
 export const ItemImageMobile = styled.img`
-  width: 100%;
-  max-height: 200px;
+  width: 40px;
+  max-height: 40px;
+  margin-right: 8px;
   object-fit: cover;
   background: ${(props) => props.theme.grey.noshade};
-  border-radius: 4px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 `;
 
 export const ItemDetailMobile = styled(Typography)<{ row?: boolean }>`
