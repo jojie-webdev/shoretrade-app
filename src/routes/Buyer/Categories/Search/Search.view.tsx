@@ -114,7 +114,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
 
           <Search
             className="search"
-            placeholder={`Search for a Category`}
+            placeholder={`Search for a product`}
             value={search}
             onChange={onChangeSearchValue}
             resetValue={onResetSearchValue}

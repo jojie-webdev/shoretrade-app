@@ -27,12 +27,12 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
         {isSmallScreen && (
           <>
             <Typography variant="title4" className="header-title">
-              Categories
+              Buyer - Categories
             </Typography>
             <Row nogutter>
               <Col xs={12}>
                 <Search
-                  placeholder="Search for a Category"
+                  placeholder="Search for a category"
                   value={search}
                   onChange={onChangeSearchValue}
                   rounded
