@@ -24,6 +24,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
 import { SellingGeneratedProps, ItemProp } from './Selling.props';
@@ -40,6 +41,7 @@ import {
   ItemCardMobile,
   ItemImageMobile,
   ItemDetailMobile,
+  StyledInteraction,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -162,14 +164,31 @@ const Item = (props: ItemProp) => {
 };
 
 const ItemMobile = (props: ItemProp) => {
-  const formattedExpiresIn = () => moment().to(props.expiresIn);
-  const formattedListedOn = () => moment(props.listedOn).format('d MMMM YY');
+  const formattedExpiresIn = () => {
+    return ellipsisOnOverflow(moment().to(props.expiresIn), 15);
+  };
+  const formattedListedOn = () => {
+    return ellipsisOnOverflow(moment(props.listedOn).format('d MMMM YY'), 15);
+  };
+
+  const formattedRemaining = () => {
+    if (props.remaining && props.originalWeight && props.unit) {
+      return ellipsisOnOverflow(
+        `${Number(props.remaining).toFixed(0)} / ${Number(
+          props.originalWeight
+        ).toFixed(0)} ${props.unit?.toLowerCase()}`,
+        15
+      );
+    }
+    return '';
+  };
+
   return (
     <ItemCardMobile>
       <div className="wrapper" onClick={props.onClick}>
         <div className="parent-container">
           <div className="product-container">
-          <ItemImageMobile src={props.data.images[0]} alt="" />
+            <ItemImageMobile src={props.data.images[0]} alt="" />
             <Typography variant="label" color="noshade">
               {props.title}
             </Typography>
@@ -194,73 +213,74 @@ const ItemMobile = (props: ItemProp) => {
                 </Tag>
               ))}
           </div>
-
           <div className="details-container">
-            <div className="label-container">
-              <ItemDetailMobile
-                variant="small"
-                color="shade6"
-                className="left-text"
-              >
-                Size:
-              </ItemDetailMobile>
-              <ItemDetailMobile
-                variant="small"
-                color="noshade"
-                className="bottom-space"
-              >
-                {props.size}
-              </ItemDetailMobile>
+            <div className="details-column-container">
+              <div className="label-container">
+                <ItemDetailMobile
+                  variant="small"
+                  color="shade6"
+                  className="left-text"
+                >
+                  Size:
+                </ItemDetailMobile>
+                <ItemDetailMobile
+                  variant="small"
+                  color="noshade"
+                  className="right-text"
+                >
+                  {ellipsisOnOverflow(props.size || '', 15)}
+                </ItemDetailMobile>
+              </div>
+              <div className="label-container">
+                <ItemDetailMobile
+                  variant="small"
+                  color="shade6"
+                  className="left-text"
+                >
+                  Listed on:
+                </ItemDetailMobile>
+                <ItemDetailMobile
+                  variant="small"
+                  color="noshade"
+                  className="right-text"
+                >
+                  {props.listedOn && formattedListedOn()}
+                </ItemDetailMobile>
+              </div>
             </div>
-            <div className="label-container">
-              <ItemDetailMobile
-                variant="small"
-                color="shade6"
-                className="left-text"
-              >
-                Listed on:
-              </ItemDetailMobile>
-              <ItemDetailMobile
-                variant="small"
-                color="noshade"
-                className="bottom-space"
-              >
-                {props.listedOn && formattedListedOn()}
-              </ItemDetailMobile>
-            </div>
-            <div className="label-container">
-              <ItemDetailMobile
-                variant="small"
-                color="shade6"
-                className="left-text"
-              >
-                Remaining:
-              </ItemDetailMobile>
-              <ItemDetailMobile
-                variant="small"
-                color="noshade"
-                className="bottom-space"
-              >
-                {Number(props.remaining).toFixed(0)} /{' '}
-                {Number(props.originalWeight).toFixed(0)}{' '}
-                {props.unit?.toLowerCase()}
-              </ItemDetailMobile>
-            </div>
-            <div className="label-container">
-              <ItemDetailMobile
-                variant="small"
-                color="shade6"
-                className="left-text"
-              >
-                Expires in:
-              </ItemDetailMobile>
-              <ItemDetailMobile
-                variant="small"
-                color="noshade"
-                className="bottom-space"
-              >
-                {props.expiresIn && formattedExpiresIn()}
-              </ItemDetailMobile>
+            <div className="details-column-container">
+              <div className="label-container">
+                <ItemDetailMobile
+                  variant="small"
+                  color="shade6"
+                  className="left-text"
+                >
+                  Remaining:
+                </ItemDetailMobile>
+                <ItemDetailMobile
+                  variant="small"
+                  color="noshade"
+                  className="right-text"
+                >
+                  {formattedRemaining()}
+                </ItemDetailMobile>
+              </div>
+              <div className="label-container">
+                <ItemDetailMobile
+                  variant="small"
+                  color="shade6"
+                  className="left-text"
+                >
+                  Expires in:
+                </ItemDetailMobile>
+                <ItemDetailMobile
+                  variant="small"
+                  color="noshade"
+                  className="right-text"
+                >
+                  {props.expiresIn && formattedExpiresIn()}
+                </ItemDetailMobile>
+              </div>
             </div>
           </div>
         </div>
@@ -392,15 +412,39 @@ const SellingView = (props: SellingGeneratedProps) => {
               )
             ) : isSmallScreen ? (
               listings.map((listing) => (
-                <ItemMobile
-                  key={listing.id}
-                  {...listingToItem(listing)}
-                  onClick={() => goToListingDetails(listing.id)}
-                  onClickEdit={() => onClickEdit(listing.id)}
-                  onRemove={() =>
-                    onClickRemoveListing(listing.id, listing.coopId)
-                  }
-                />
+                // <StyledInteraction>
+                //         <PreviewDetailAlt
+                //           alternate
+                //           id={product.id}
+                //           images={product.images}
+                //           type={product.type}
+                //           price={toPrice(product.price)}
+                //           remaining={product.remaining.toFixed(2)}
+                //           coop={product.coop}
+                //           minimumOrder={product.minimumOrder}
+                //           origin={product.origin}
+                //           weight={sizeToString(
+                //             product.size.unit,
+                //             product.size.from,
+                //             product.size.to
+                //           )}
+                //           isAquafuture={product.isAquafuture}
+                //           unit={product.measurementUnit}
+                //           state={product.state}
+                //           hiddenVendor={isPendingAccount}
+                //           hiddenPrice={isPendingAccount}
+                //         />
+                //       </StyledInteraction>
+                <StyledInteraction key={listing.id}>
+                  <ItemMobile
+                    {...listingToItem(listing)}
+                    onClick={() => goToListingDetails(listing.id)}
+                    onClickEdit={() => onClickEdit(listing.id)}
+                    onRemove={() =>
+                      onClickRemoveListing(listing.id, listing.coopId)
+                    }
+                  />
+                </StyledInteraction>
               ))
             ) : (
               listings.map((listing) => (

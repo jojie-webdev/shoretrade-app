@@ -9,6 +9,7 @@ import {
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
 import { PreviewProps } from './Preview.props';
@@ -34,15 +35,6 @@ import {
   BodyColumnContainer,
   BodyContainerAlt,
 } from './Preview.style';
-
-const ellipsisOnOverflow = (text: string, maxlen: number) => {
-  let newtext = text;
-  if (text.length > maxlen) {
-    newtext = `${text.substring(0, maxlen - 3)}...`;
-  }
-
-  return newtext;
-};
 
 export const PreviewDetailAlt = (props: PreviewProps) => {
   const {
