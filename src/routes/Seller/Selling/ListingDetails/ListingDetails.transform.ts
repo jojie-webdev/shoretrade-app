@@ -21,7 +21,7 @@ export const listingToListingProps = (
     },
     sales: {
       sales: toPrice(sales),
-      soldWeight: sales.toFixed(2),
+      soldWeight: soldWeight.toFixed(2),
       totalWeight: (data?.originalWeight || 0).toFixed(2),
       unit: formatMeasurementUnit(data?.measurementUnit),
     },

@@ -22,10 +22,7 @@ export const getAllMarketRequest = (token: string, queryString?: string) => {
   });
 };
 
-export const getAllMarketRequestFilters = (
-  data: GetAllMarketRequestFiltersMeta,
-  token: string
-) => {
+export const getAllMarketRequestFilters = (data: GetAllMarketRequestFiltersMeta, token: string) => {
   return axios({
     method: 'get',
     url: `${MARKET_REQUEST_URL}/get-seller-search-filter-data/${data.companyId}`,
@@ -35,10 +32,7 @@ export const getAllMarketRequestFilters = (
   });
 };
 
-export const getMarketRequestBuyerFilters = (
-  data: GetMarketRequestBuyerFiltersMeta,
-  token: string
-) => {
+export const getMarketRequestBuyerFilters = (data: GetMarketRequestBuyerFiltersMeta, token: string) => {
   return axios({
     method: 'get',
     url: `${MARKET_REQUEST_URL}/offers/get-buyer-search-filter-data/${data.buyerId}`,
@@ -58,10 +52,7 @@ export const getActiveOffers = (token: string, queryString?: string) => {
   });
 };
 
-export const createMarketRequest = (
-  data: EditableMarketRequestPayload,
-  token: string
-) => {
+export const createMarketRequest = (data: EditableMarketRequestPayload, token: string) => {
   return axios({
     method: 'post',
     url: `${MARKET_REQUEST_URL}/create`,
@@ -72,10 +63,7 @@ export const createMarketRequest = (
   });
 };
 
-export const createMarketOffer = (
-  data: CreateMarketOfferRequestData,
-  token: string
-) => {
+export const createMarketOffer = (data: CreateMarketOfferRequestData, token: string) => {
   return axios({
     method: 'post',
     url: `${MARKET_REQUEST_URL}/offer`,
@@ -96,10 +84,7 @@ export const getMarketNotification = (token: string) => {
   });
 };
 
-export const readMarketNotification = (
-  data: ReadMarketNotificationMeta,
-  token: string
-) => {
+export const readMarketNotification = (data: ReadMarketNotificationMeta, token: string) => {
   return axios({
     method: 'post',
     url: `${MARKET_REQUEST_URL}/notification/read`,

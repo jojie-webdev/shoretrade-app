@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 
-export type FilterType = 'location' | 'choice' | 'size_dropdown' | 'size_input';
+export type FilterType = 'location' | 'choice' | 'size_dropdown' | 'size_input' | 'multiple';
 
 export interface Filters {
   label: string;
@@ -31,4 +31,7 @@ export interface FilterModalProps extends ModalProps {
   selectedSize?: string | null;
   setSelectedSize?: Dispatch<SetStateAction<string | null>>;
   onApply: () => void;
+  isBuyerRequestFilters?: boolean;
+  buyerRequestFilter?: CheckboxFilter[];
+  setBuyerRequestFilter?: Dispatch<SetStateAction<CheckboxFilter[]>>;
 }

@@ -354,7 +354,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         </>
       )}
 
-      <FilterModal {...props.filterModalProps} />
+      <FilterModal {...props.filterModalProps} isBuyerRequestFilters />
     </Container>
   );
 };
