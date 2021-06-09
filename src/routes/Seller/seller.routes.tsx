@@ -109,7 +109,6 @@ const SellerRoutes = (): JSX.Element => {
   const getThemeOverride = (): {
     background?: string;
     screenBackground?: string;
-    color?: string;
     headerTextColor?: keyof Theme['grey'];
     shouldIncludePadding?: boolean;
     onBack?: () => void;
@@ -117,7 +116,6 @@ const SellerRoutes = (): JSX.Element => {
   } => {
     if (pathname.includes('/seller/selling/details')) {
       return {
-        color: theme.grey.shade9,
         background: theme.grey.shade1,
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
@@ -129,7 +127,6 @@ const SellerRoutes = (): JSX.Element => {
 
     if (pathname.includes('/seller/add-product/preview')) {
       return {
-        color: theme.grey.shade9,
         background: isCreatListingSuccess
           ? theme.grey.shade9
           : theme.grey.shade1,

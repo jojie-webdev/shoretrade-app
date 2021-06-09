@@ -252,7 +252,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     onBack,
     background,
     screenBackground,
-    color,
     headerTextColor,
     cartItems,
     onClickAccount,
@@ -394,7 +393,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         shouldIncludePadding={shouldIncludePadding}
         background={background}
         screenBackground={screenBackground}
-        color={color}
         isHomeOld={isHomeOld}
       >
         <>

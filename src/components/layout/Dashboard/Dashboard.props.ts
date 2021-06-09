@@ -12,7 +12,6 @@ export interface DashboardPublicProps {
   onBack?: () => void;
   background?: string;
   screenBackground?: string;
-  color?: string;
   headerTextColor?: keyof Theme['grey'];
   shouldIncludePadding?: boolean;
   pageTitle?: string;

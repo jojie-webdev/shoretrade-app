@@ -241,13 +241,6 @@ export const Content = styled.div<{
       ? props.theme.grey.shade1
       : props.theme.grey.shade9};
 
-  color: ${(props) =>
-    props.color
-      ? props.color
-      : props.theme.appType === 'buyer'
-      ? props.theme.grey.shade9
-      : props.theme.grey.shade1};
-
   .screen-wrapper {
     height: 80%;
     position: relative;
