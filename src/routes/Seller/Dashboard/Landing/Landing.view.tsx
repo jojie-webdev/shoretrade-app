@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
-import Spinner from 'components/base/Spinner';
 import { ArrowRight, DropdownArrow, Filter } from 'components/base/SVG';
 import UpArrow from 'components/base/SVG/UpArrow';
 import Typography from 'components/base/Typography';
@@ -10,6 +9,7 @@ import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
 import EmptyDashboard from 'components/module/EmptyDashboard';
 import LinePath from 'components/module/LinePath';
+import Loading from 'components/module/Loading';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -36,7 +36,6 @@ import {
   TopCategoriesContainer,
   IllustrationContainer,
   CategoryImageContainer,
-  SpinnerContainer,
   NotificationsContainer,
   SalesRow,
   MobileFilterButton,
@@ -486,9 +485,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   return (
     <Container>
       {isLoading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
+        <Loading />
       ) : (
         <>
           {userPending && (

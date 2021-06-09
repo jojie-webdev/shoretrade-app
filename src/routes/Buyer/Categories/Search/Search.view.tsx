@@ -2,9 +2,9 @@ import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -20,12 +20,7 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
-import {
-  SearchContainer,
-  LoadingContainer,
-  Image,
-  ResultContainer,
-} from './Search.style';
+import { SearchContainer, Image, ResultContainer } from './Search.style';
 
 const InteractionsChildren = (
   result: GetListingTypesByCategoryTypeItem & { isPendingAccount: boolean }
@@ -123,9 +118,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
         </div>
 
         {loading ? (
-          <LoadingContainer>
-            <Spinner />
-          </LoadingContainer>
+          <Loading />
         ) : (
           <Row>
             <Col xs={12}>

@@ -36,12 +36,6 @@ export const SearchContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Image = styled.img`
   width: 64px;
   height: 64px;

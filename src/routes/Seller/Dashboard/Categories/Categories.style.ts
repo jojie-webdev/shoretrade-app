@@ -19,12 +19,6 @@ export const HeaderRow = styled(Row)`
   }
 `;
 
-export const SpinnerContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const CategoryContainer = styled.div<{ progress: number }>`
   padding: 16px 24px;
   background: ${(props) => props.theme.grey.shade9};

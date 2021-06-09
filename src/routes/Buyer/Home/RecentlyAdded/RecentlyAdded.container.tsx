@@ -20,11 +20,15 @@ const RecentlyAdded = (): JSX.Element => {
     useSelector(
       (state: Store) => state.getBuyerHomepage.data?.data.data.recentListing
     ) || []
-  ).filter((result) => {
-    return searchValue
-      ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
-      : true;
-  });
+  ).filter(
+    (result) =>
+      (searchValue
+        ? result.type.toLowerCase().includes(searchValue.toLowerCase())
+        : true) ||
+      (searchValue
+        ? result.coop.name.toLowerCase().includes(searchValue.toLowerCase())
+        : true)
+  );
 
   const isLoadingResults =
     useSelector((state: Store) => state.getBuyerHomepage.pending) || false;

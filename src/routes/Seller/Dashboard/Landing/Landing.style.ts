@@ -9,14 +9,6 @@ export const Container = styled.div`
   }
 `;
 
-export const SpinnerContainer = styled.div`
-  flex: 1;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const FilterRow = styled(Row)`
   .filter-col {
     display: flex;
@@ -96,7 +88,8 @@ export const MobileFilterRow = styled(Row)`
 `;
 
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) =>
+    props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`

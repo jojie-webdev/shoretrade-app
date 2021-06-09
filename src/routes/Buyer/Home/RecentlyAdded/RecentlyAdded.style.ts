@@ -51,13 +51,6 @@ export const PreviewContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const StyledInteraction = styled(InteractionsView)`
   padding: 0;
   margin-bottom: 16px;

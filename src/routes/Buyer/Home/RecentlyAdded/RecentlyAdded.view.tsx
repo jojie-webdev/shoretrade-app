@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -15,11 +15,7 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';
-import {
-  PreviewContainer,
-  LoadingContainer,
-  StyledInteraction,
-} from './RecentlyAdded.style';
+import { PreviewContainer, StyledInteraction } from './RecentlyAdded.style';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   const {
@@ -45,7 +41,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
           <div className="right-header">
             <Search
               className="search"
-              placeholder={`Search for a Seller`}
+              placeholder={`Search for a product or seller`}
               value={searchValue}
               onChange={onChangeSearchValue}
               resetValue={onResetSearchValue}
@@ -54,11 +50,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
           </div>
         </div>
 
-        {isLoadingResults && (
-          <LoadingContainer>
-            <Spinner />
-          </LoadingContainer>
-        )}
+        {isLoadingResults && <Loading />}
 
         {results.length > 0 ? (
           <>
