@@ -34,7 +34,7 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
         </Row>
       </Visible>
       <Row className="search-row">
-        <Col xs={12} md={6}>
+        <Col xs={12}>
           <Search
             value={searchValue}
             onChange={onChangeSearchValue}

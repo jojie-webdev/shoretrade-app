@@ -359,13 +359,15 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
                 <Scroll>
                   {filterValues &&
                     filterValues.map((v) => (
-                      <RadioContainer key={v}>
+                      <RadioContainer
+                        key={v}
+                        onClick={() => onBuyerRequestPress(v)}
+                      >
                         <Checkbox
                           label={v}
                           checked={buyerRequestFilter.some(
                             (x) => x.value === v
                           )}
-                          onClick={() => onBuyerRequestPress(v)}
                         />
                       </RadioContainer>
                     ))}
