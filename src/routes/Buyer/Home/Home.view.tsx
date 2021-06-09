@@ -8,7 +8,6 @@ import {
   ArrowRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -171,7 +170,7 @@ const HomeView = (props: HomeGeneratedProps) => {
   );
 
   return (
-    <BoxContainer>
+    <>
       {isPendingAccount && (
         <Alert
           variant="alert"
@@ -401,7 +400,7 @@ const HomeView = (props: HomeGeneratedProps) => {
           )}
         </>
       )}
-    </BoxContainer>
+    </>
   );
 };
 

@@ -3,7 +3,6 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
@@ -91,61 +90,59 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <BoxContainer>
-      <SearchContainer>
-        <div className="header">
-          {!isSmallScreen ? (
-            <Breadcrumbs
-              sections={[
-                { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
-                { label: title },
-              ]}
-            />
-          ) : (
-            <Typography variant="title4" className="header-title">
-              {title}
-            </Typography>
-          )}
-
-          <Search
-            className="search"
-            placeholder={`Search for a product`}
-            value={search}
-            onChange={onChangeSearchValue}
-            resetValue={onResetSearchValue}
-            rounded
+    <SearchContainer>
+      <div className="header">
+        {!isSmallScreen ? (
+          <Breadcrumbs
+            sections={[
+              { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+              { label: title },
+            ]}
           />
-        </div>
-
-        {loading ? (
-          <Loading />
         ) : (
-          <Row>
-            <Col xs={12}>
-              {results.map((result) => (
-                <Link
-                  to={{
-                    pathname: BUYER_ROUTES.PRODUCT_PREVIEW(result.id),
-                    state: {
-                      title: result.name,
-                    },
-                  }}
-                  className="market-item"
-                  key={result.id}
-                >
-                  <Interactions>
-                    <InteractionsChildren
-                      {...result}
-                      isPendingAccount={isPendingAccount}
-                    />
-                  </Interactions>
-                </Link>
-              ))}
-            </Col>
-          </Row>
+          <Typography variant="title4" className="header-title">
+            {title}
+          </Typography>
         )}
-      </SearchContainer>
-    </BoxContainer>
+
+        <Search
+          className="search"
+          placeholder={`Search for a product`}
+          value={search}
+          onChange={onChangeSearchValue}
+          resetValue={onResetSearchValue}
+          rounded
+        />
+      </div>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <Row>
+          <Col xs={12}>
+            {results.map((result) => (
+              <Link
+                to={{
+                  pathname: BUYER_ROUTES.PRODUCT_PREVIEW(result.id),
+                  state: {
+                    title: result.name,
+                  },
+                }}
+                className="market-item"
+                key={result.id}
+              >
+                <Interactions>
+                  <InteractionsChildren
+                    {...result}
+                    isPendingAccount={isPendingAccount}
+                  />
+                </Interactions>
+              </Link>
+            ))}
+          </Col>
+        </Row>
+      )}
+    </SearchContainer>
   );
 };
 

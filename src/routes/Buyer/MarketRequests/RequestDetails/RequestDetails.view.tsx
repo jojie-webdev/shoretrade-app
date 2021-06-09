@@ -13,7 +13,6 @@ import {
   Weight,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
@@ -283,184 +282,179 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         actionText="DELETE"
         onClickClose={() => setShowDelete(false)}
       />
-      <BoxContainer>
-        <HeaderContainer>
-          <div>
-            <Breadcrumbs sections={breadCrumbSections} />
-          </div>
-        </HeaderContainer>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <Row gutterWidth={30}>
-            <Col md={12} sm={12} xl={4}>
-              <RequestDetailsCardContainer type={'none'}>
-                {data && data.name ? (
-                  <MarketRequestItem
-                    inDetail={true}
-                    type={data.name}
-                    expiry={
-                      moment(data.createdAt).add(7, 'd').isBefore()
-                        ? 'Expired'
-                        : formatRunningDateDifference(data.createdAt)
-                    }
-                    offers={totalOffers}
-                    image={data.image}
-                    measurementUnit={measurementUnit}
-                    weight={data.weight}
-                  />
-                ) : (
-                  <></>
-                )}
-              </RequestDetailsCardContainer>
-              <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
-                <Col xs={12}>
-                  <Hidden xs>
-                    {data.status !== 'DELETED' && (
-                      <Button
-                        text="Delete"
-                        size="sm"
-                        onClick={() => setShowDelete(true)}
-                        variant="primary"
-                      />
-                    )}
-                  </Hidden>
-                </Col>
-              </Row>
-            </Col>
-            <Col md={12} sm={12} xl={8}>
-              <Switch>
-                <Route
-                  path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
-                    data.id
-                  )}`}
-                >
-                  <OffersContainer>
-                    {/* NUMBERS CONTAINER START */}
-                    <div className="numbers-container">
-                      <div className="item">
-                        <span className="value">{totalOffers} &nbsp;</span>
-                        <span className="label">Offers</span>
-                      </div>
-                      <span className="divider">,</span>
-                      <div className="item">
-                        <span className="value">
-                          {sellerOffers.length} &nbsp;
-                        </span>
-                        <span className="label">Sellers</span>
-                      </div>
-                    </div>
-                    <Row
-                      nogutter
-                      className="search-row"
-                      align="center"
-                      justify="between"
-                    >
-                      <FilterButton onClick={props.onClickFilterButton}>
-                        <TypographyView
-                          variant="label"
-                          color="shade9"
-                          weight="500"
-                          className="btn-text"
-                        >
-                          Sort
-                        </TypographyView>
 
-                        <Filter />
-                      </FilterButton>
-                    </Row>
-                    {/* NUMBERS CONTAINER END */}
-                    {totalOffers < 1 || sellerOffers === undefined ? (
-                      <EmptyStateView
-                        title="There are currently no offers for this request."
-                        Svg={Crab}
-                        height={240}
-                        width={249}
-                        fluid
-                      />
-                    ) : (
-                      sellerOffers.map((seller) => (
-                        <RequestOffersAccordion
-                          key={seller.company.name}
-                          title=""
-                          noBg={true}
-                          padding={'16px'}
-                          withBackground={false}
-                          border={`1px solid ${theme.grey.shade3}`}
-                          background={theme.grey.shade1}
-                          marginBottom={'12px'}
-                          leftComponent={
-                            <OffersSellerAccordionContent
-                              image={seller.company.image}
-                              sellerLocation={
-                                seller.company.address.countryCode
-                              }
-                              sellerName={seller.company.name}
-                              sellerRating={seller.company.rating}
-                              sellerId={seller.company.id}
-                            />
-                          }
-                          iconColor={theme.brand.primary}
-                        >
-                          {seller.offers.map((item) => (
-                            <RequestOfferItemInteraction
-                              key={item.id}
-                              onClick={() => onClickItem(item, seller.company)}
-                              leftComponent={
-                                <SellerOfferInteractionContent
-                                  averagePrice={
-                                    seller.marketRequest.averagePrice
-                                  }
-                                  price={item.price}
-                                  isUnderNegotiations={
-                                    !item.negotiations?.find(
-                                      (i) => i.is_accepted === true
-                                    )
-                                  }
-                                  status={item.status}
-                                  weight={item.weight}
-                                  tags={item.specifications}
-                                  weightUnit={formatMeasurementUnit(
-                                    item.measurementUnit
-                                  )}
-                                />
-                              }
-                            />
-                          ))}
-                        </RequestOffersAccordion>
-                      ))
-                    )}
-                  </OffersContainer>
-                </Route>
-                <Route
-                  path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-                    marketRequestId,
-                    currentOfferId
+      <HeaderContainer>
+        <div>
+          <Breadcrumbs sections={breadCrumbSections} />
+        </div>
+      </HeaderContainer>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Row gutterWidth={30}>
+          <Col md={12} sm={12} xl={4}>
+            <RequestDetailsCardContainer type={'none'}>
+              {data && data.name ? (
+                <MarketRequestItem
+                  inDetail={true}
+                  type={data.name}
+                  expiry={
+                    moment(data.createdAt).add(7, 'd').isBefore()
+                      ? 'Expired'
+                      : formatRunningDateDifference(data.createdAt)
+                  }
+                  offers={totalOffers}
+                  image={data.image}
+                  measurementUnit={measurementUnit}
+                  weight={data.weight}
+                />
+              ) : (
+                <></>
+              )}
+            </RequestDetailsCardContainer>
+            <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
+              <Col xs={12}>
+                <Hidden xs>
+                  {data.status !== 'DELETED' && (
+                    <Button
+                      text="Delete"
+                      size="sm"
+                      onClick={() => setShowDelete(true)}
+                      variant="primary"
+                    />
                   )}
-                >
-                  <OfferDetailView
-                    handleAcceptOffer={handleAcceptOffer}
-                    company={selectedCompany}
-                    selectedOffer={selectedOffer}
-                    deliveryTotal={deliveryTotal}
-                    handleStartNegotiate={handleStartNegotiate}
-                    hideNegotiate={hideNegotiate}
-                    counterOffer={counterOffer}
-                    discountPercentage={discountPercentage}
-                    discountValue={discountValue}
-                    newOffer={newOffer}
-                    thereIsNewOffer={thereIsNewOffer}
-                    disableAccept={disableAccept}
-                    isAccepted={isAccepted}
-                    sortedNegotiations={sortedNegotiations}
-                    lastNegotiationsOffers={lastNegotiationsOffers}
-                  />
-                </Route>
-              </Switch>
-            </Col>
-          </Row>
-        )}
-      </BoxContainer>
+                </Hidden>
+              </Col>
+            </Row>
+          </Col>
+          <Col md={12} sm={12} xl={8}>
+            <Switch>
+              <Route
+                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
+                  data.id
+                )}`}
+              >
+                <OffersContainer>
+                  {/* NUMBERS CONTAINER START */}
+                  <div className="numbers-container">
+                    <div className="item">
+                      <span className="value">{totalOffers} &nbsp;</span>
+                      <span className="label">Offers</span>
+                    </div>
+                    <span className="divider">,</span>
+                    <div className="item">
+                      <span className="value">
+                        {sellerOffers.length} &nbsp;
+                      </span>
+                      <span className="label">Sellers</span>
+                    </div>
+                  </div>
+                  <Row
+                    nogutter
+                    className="search-row"
+                    align="center"
+                    justify="between"
+                  >
+                    <FilterButton onClick={props.onClickFilterButton}>
+                      <TypographyView
+                        variant="label"
+                        color="shade9"
+                        weight="500"
+                        className="btn-text"
+                      >
+                        Sort
+                      </TypographyView>
+
+                      <Filter />
+                    </FilterButton>
+                  </Row>
+                  {/* NUMBERS CONTAINER END */}
+                  {totalOffers < 1 || sellerOffers === undefined ? (
+                    <EmptyStateView
+                      title="There are currently no offers for this request."
+                      Svg={Crab}
+                      height={240}
+                      width={249}
+                      fluid
+                    />
+                  ) : (
+                    sellerOffers.map((seller) => (
+                      <RequestOffersAccordion
+                        key={seller.company.name}
+                        title=""
+                        noBg={true}
+                        padding={'16px'}
+                        withBackground={false}
+                        border={`1px solid ${theme.grey.shade3}`}
+                        background={theme.grey.shade1}
+                        marginBottom={'12px'}
+                        leftComponent={
+                          <OffersSellerAccordionContent
+                            image={seller.company.image}
+                            sellerLocation={seller.company.address.countryCode}
+                            sellerName={seller.company.name}
+                            sellerRating={seller.company.rating}
+                            sellerId={seller.company.id}
+                          />
+                        }
+                        iconColor={theme.brand.primary}
+                      >
+                        {seller.offers.map((item) => (
+                          <RequestOfferItemInteraction
+                            key={item.id}
+                            onClick={() => onClickItem(item, seller.company)}
+                            leftComponent={
+                              <SellerOfferInteractionContent
+                                averagePrice={seller.marketRequest.averagePrice}
+                                price={item.price}
+                                isUnderNegotiations={
+                                  !item.negotiations?.find(
+                                    (i) => i.is_accepted === true
+                                  )
+                                }
+                                status={item.status}
+                                weight={item.weight}
+                                tags={item.specifications}
+                                weightUnit={formatMeasurementUnit(
+                                  item.measurementUnit
+                                )}
+                              />
+                            }
+                          />
+                        ))}
+                      </RequestOffersAccordion>
+                    ))
+                  )}
+                </OffersContainer>
+              </Route>
+              <Route
+                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+                  marketRequestId,
+                  currentOfferId
+                )}
+              >
+                <OfferDetailView
+                  handleAcceptOffer={handleAcceptOffer}
+                  company={selectedCompany}
+                  selectedOffer={selectedOffer}
+                  deliveryTotal={deliveryTotal}
+                  handleStartNegotiate={handleStartNegotiate}
+                  hideNegotiate={hideNegotiate}
+                  counterOffer={counterOffer}
+                  discountPercentage={discountPercentage}
+                  discountValue={discountValue}
+                  newOffer={newOffer}
+                  thereIsNewOffer={thereIsNewOffer}
+                  disableAccept={disableAccept}
+                  isAccepted={isAccepted}
+                  sortedNegotiations={sortedNegotiations}
+                  lastNegotiationsOffers={lastNegotiationsOffers}
+                />
+              </Route>
+            </Switch>
+          </Col>
+        </Row>
+      )}
     </RequestDetailsContainer>
   );
 };

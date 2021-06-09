@@ -3,7 +3,6 @@ import React, { useRef } from 'react';
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter';
 import FormikTextField from 'components/module/FormikTextField';
 import Loading from 'components/module/Loading';
@@ -51,87 +50,82 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
 
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Your Details' },
-            ]}
-          />
-        </div>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Your Details' },
+          ]}
+        />
+      </div>
 
-        {updateUserSuccess && (
-          <Alert
-            content="Your account details have successfully been updated!"
-            variant="success"
-            alignText="center"
-            fullWidth
-            style={{
-              marginBottom: 16,
-            }}
-          />
-        )}
+      {updateUserSuccess && (
+        <Alert
+          content="Your account details have successfully been updated!"
+          variant="success"
+          alignText="center"
+          fullWidth
+          style={{
+            marginBottom: 16,
+          }}
+        />
+      )}
 
-        {/*
+      {/*
             // @ts-ignore*/}
-        <Formik innerRef={formRef} {...formikProps}>
-          <Form>
-            <InputRow>
-              <Col md={12} xl={4} className="input-col">
-                <FormikTextField label="First Name" name="firstName" />
-              </Col>
-              <Col md={12} xl={4} className="input-col">
-                <FormikTextField label="Last Name" name="lastName" />
-              </Col>
-              <Col xl={4} />
-              <Col md={12} xl={4} className="input-col">
-                <PhoneTextField
-                  label="Mobile"
-                  name="mobile"
-                  callingCode={callingCode}
-                  setCallingCode={setCallingCode}
-                />
-              </Col>
-              <Col md={12} xl={4} className="input-col">
-                <FormikTextField label="Email" name="email" />
-              </Col>
-              <Col xl={4} />
-              <Col md={12} xl={4} className="input-col">
-                <FormikTextField label="Business" name="businessName" />
-              </Col>
-              <Col md={12} xl={4} className="input-col">
-                <FormikTextField
-                  label="Business number (optional)"
-                  name="abn"
-                />
-              </Col>
-            </InputRow>
+      <Formik innerRef={formRef} {...formikProps}>
+        <Form>
+          <InputRow>
+            <Col md={12} xl={4} className="input-col">
+              <FormikTextField label="First Name" name="firstName" />
+            </Col>
+            <Col md={12} xl={4} className="input-col">
+              <FormikTextField label="Last Name" name="lastName" />
+            </Col>
+            <Col xl={4} />
+            <Col md={12} xl={4} className="input-col">
+              <PhoneTextField
+                label="Mobile"
+                name="mobile"
+                callingCode={callingCode}
+                setCallingCode={setCallingCode}
+              />
+            </Col>
+            <Col md={12} xl={4} className="input-col">
+              <FormikTextField label="Email" name="email" />
+            </Col>
+            <Col xl={4} />
+            <Col md={12} xl={4} className="input-col">
+              <FormikTextField label="Business" name="businessName" />
+            </Col>
+            <Col md={12} xl={4} className="input-col">
+              <FormikTextField label="Business number (optional)" name="abn" />
+            </Col>
+          </InputRow>
 
-            {!isMobile && (
-              <Row justify="start">
-                <Col>
-                  <Button text="Save" type="submit" loading={updatingUser} />
-                </Col>
-              </Row>
-            )}
-          </Form>
-        </Formik>
+          {!isMobile && (
+            <Row justify="start">
+              <Col>
+                <Button text="Save" type="submit" loading={updatingUser} />
+              </Col>
+            </Row>
+          )}
+        </Form>
+      </Formik>
 
-        <MobileFooter>
-          <Button
-            text="Save"
-            takeFullWidth
-            onClick={() => {
-              if (formRef.current) {
-                // @ts-ignore
-                formRef.current.handleSubmit();
-              }
-            }}
-            loading={updatingUser}
-          />
-        </MobileFooter>
-      </BoxContainer>
+      <MobileFooter>
+        <Button
+          text="Save"
+          takeFullWidth
+          onClick={() => {
+            if (formRef.current) {
+              // @ts-ignore
+              formRef.current.handleSubmit();
+            }
+          }}
+          loading={updatingUser}
+        />
+      </MobileFooter>
     </Container>
   );
 };

@@ -104,8 +104,7 @@ const SellerRoutes = (): JSX.Element => {
   const creatingListingStatus = useSelector(
     (state: Store) => state.createListing
   );
-  const isCreatListingSuccess =
-    creatingListingStatus.data?.status === 200 ? true : false;
+  const isCreatListingSuccess = creatingListingStatus.data?.status === 200;
 
   const getThemeOverride = (): {
     background?: string;
@@ -148,7 +147,6 @@ const SellerRoutes = (): JSX.Element => {
       if (pathname.includes('/bulk-upload-preview')) {
         return {
           pageTitle: 'Bulk Spreadsheet Upload',
-          shouldIncludePadding: false,
         };
       }
 

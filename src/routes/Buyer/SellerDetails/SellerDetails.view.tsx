@@ -3,7 +3,6 @@ import React from 'react';
 import FavoriteButton from 'components/base/FavoriteButton';
 import Interactions from 'components/base/Interactions/Interactions.view';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import Search from 'components/module/Search';
@@ -34,7 +33,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
   } = props;
 
   return (
-    <BoxContainer>
+    <>
       {loading ? (
         <Loading />
       ) : (
@@ -105,7 +104,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
           )}
         </Container>
       )}
-    </BoxContainer>
+    </>
   );
 };
 

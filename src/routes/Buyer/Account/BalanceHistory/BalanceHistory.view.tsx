@@ -2,7 +2,6 @@ import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
@@ -50,54 +49,52 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
   };
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              {
-                label: 'Balance & Payments',
-                link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
-              },
-              { label: 'Credit History' },
-            ]}
-          />
-        </div>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            {
+              label: 'Balance & Payments',
+              link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+            },
+            { label: 'Credit History' },
+          ]}
+        />
+      </div>
 
-        <Col md={12}>
-          {props.isLoading && <Loading />}
-          {props.transactions.map((transaction, idx) => {
-            const { title, subtitle } = getTransactionLabel(
-              transaction.description
-            );
-            return (
-              <Transx key={idx}>
-                <TransxLeft>
-                  <Typography variant="body" color="shade9">
-                    {title}
+      <Col md={12}>
+        {props.isLoading && <Loading />}
+        {props.transactions.map((transaction, idx) => {
+          const { title, subtitle } = getTransactionLabel(
+            transaction.description
+          );
+          return (
+            <Transx key={idx}>
+              <TransxLeft>
+                <Typography variant="body" color="shade9">
+                  {title}
+                </Typography>
+                {subtitle.length > 0 && (
+                  <Typography variant="caption" color="shade9">
+                    {subtitle}
                   </Typography>
-                  {subtitle.length > 0 && (
-                    <Typography variant="caption" color="shade9">
-                      {subtitle}
-                    </Typography>
-                  )}
-                  <Typography variant="caption" color="shade6">
-                    {moment(transaction.createdAt).format('DD MMM YYYY')}
-                  </Typography>
-                </TransxLeft>
-                <TransxRight>
-                  <Typography variant="body" color="shade9">
-                    {toPrice(transaction.adjustmentAmount)}
-                  </Typography>
-                  <Typography variant="caption" color="shade6">
-                    Balance: {toPrice(transaction.balance)}
-                  </Typography>
-                </TransxRight>
-              </Transx>
-            );
-          })}
-        </Col>
-      </BoxContainer>
+                )}
+                <Typography variant="caption" color="shade6">
+                  {moment(transaction.createdAt).format('DD MMM YYYY')}
+                </Typography>
+              </TransxLeft>
+              <TransxRight>
+                <Typography variant="body" color="shade9">
+                  {toPrice(transaction.adjustmentAmount)}
+                </Typography>
+                <Typography variant="caption" color="shade6">
+                  Balance: {toPrice(transaction.balance)}
+                </Typography>
+              </TransxRight>
+            </Transx>
+          );
+        })}
+      </Col>
     </Container>
   );
 };

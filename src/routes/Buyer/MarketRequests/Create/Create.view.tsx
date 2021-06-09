@@ -5,7 +5,6 @@ import Checkbox from 'components/base/Checkbox';
 import { Crab, AnchorHero, CaviarHero, OctopusHero } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import NumberedHeroView from 'components/module/NumberedHero';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
@@ -70,122 +69,119 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
 
   if (!termsAgreement) {
     return (
-      <BoxContainer>
-        <MainAgreementContainer>
-          <TextAgreementContainer>
-            {/* BEGIN MOBILE */}
-            <Visible xs>
-              <div>
-                <TypographyView variant="title4">Market Request</TypographyView>
-                <TypographyView
-                  className="text-content"
-                  variant="label"
-                  color="shade7"
-                >
-                  A Market Request sends a notification directly to our sellers,
-                  detailing the product, specifications, size and quantity you
-                  want, allowing them to make an offer directly to your
-                  business.
-                </TypographyView>
-                <TypographyView
-                  className="text-content"
-                  variant="label"
-                  color="shade7"
-                >
-                  There are hundreds of products in our database that you can
-                  request from. Once your request has been sent, you have the
-                  ability to review, negotiate, decline or accept your offers.
-                  The seller will arrange freight and you will be able to view
-                  the real time tracking of your products.
-                </TypographyView>
-                <TypographyView
-                  className="text-content"
-                  variant="label"
-                  color="shade7"
-                >
-                  Your market request will automatically close after 7 days or
-                  once the maximum quantity requested has been reached.
-                </TypographyView>
-              </div>
-            </Visible>
-            {/* END MOBILE */}
-            <Hidden xs>
-              <Row gutterWidth={40}>
-                <Col>
-                  <HeaderContainer>
-                    <TypographyView variant="title5">
-                      Can't find your product?
-                    </TypographyView>
-                    <TypographyView weight="700" variant="title5">
-                      Create a new Market Request
-                    </TypographyView>
-                  </HeaderContainer>
+      <MainAgreementContainer>
+        <TextAgreementContainer>
+          {/* BEGIN MOBILE */}
+          <Visible xs>
+            <div>
+              <TypographyView variant="title4">Market Request</TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                A Market Request sends a notification directly to our sellers,
+                detailing the product, specifications, size and quantity you
+                want, allowing them to make an offer directly to your business.
+              </TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                There are hundreds of products in our database that you can
+                request from. Once your request has been sent, you have the
+                ability to review, negotiate, decline or accept your offers. The
+                seller will arrange freight and you will be able to view the
+                real time tracking of your products.
+              </TypographyView>
+              <TypographyView
+                className="text-content"
+                variant="label"
+                color="shade7"
+              >
+                Your market request will automatically close after 7 days or
+                once the maximum quantity requested has been reached.
+              </TypographyView>
+            </div>
+          </Visible>
+          {/* END MOBILE */}
+          <Hidden xs>
+            <Row gutterWidth={40}>
+              <Col>
+                <HeaderContainer>
+                  <TypographyView variant="title5">
+                    Can't find your product?
+                  </TypographyView>
+                  <TypographyView weight="700" variant="title5">
+                    Create a new Market Request
+                  </TypographyView>
+                </HeaderContainer>
+              </Col>
+            </Row>
+            <div>
+              <Row gutterWidth={24}>
+                <Col sm={12} md={12} lg={12} xl={4}>
+                  <NumberedHeroView
+                    number={1}
+                    title="Search in our Database and choose between more than 50+  Categories "
+                    heroImage={<AnchorHero />}
+                  />
+                </Col>
+                <Col sm={12} md={12} lg={12} xl={4}>
+                  <NumberedHeroView
+                    number={2}
+                    title="Select specifications, size, quantity and send your request to the market"
+                    heroImage={<CaviarHero />}
+                  />
+                </Col>
+                <Col sm={12} md={12} lg={12} xl={4}>
+                  <NumberedHeroView
+                    number={3}
+                    title="Check and negotiate offers from more than 10.000+ sellers from ShoreTrade"
+                    heroImage={<OctopusHero />}
+                  />
                 </Col>
               </Row>
-              <div>
-                <Row gutterWidth={24}>
-                  <Col sm={12} md={12} lg={12} xl={4}>
-                    <NumberedHeroView
-                      number={1}
-                      title="Search in our Database and choose between more than 50+  Categories "
-                      heroImage={<AnchorHero />}
-                    />
-                  </Col>
-                  <Col sm={12} md={12} lg={12} xl={4}>
-                    <NumberedHeroView
-                      number={2}
-                      title="Select specifications, size, quantity and send your request to the market"
-                      heroImage={<CaviarHero />}
-                    />
-                  </Col>
-                  <Col sm={12} md={12} lg={12} xl={4}>
-                    <NumberedHeroView
-                      number={3}
-                      title="Check and negotiate offers from more than 10.000+ sellers from ShoreTrade"
-                      heroImage={<OctopusHero />}
-                    />
-                  </Col>
-                </Row>
-              </div>
-            </Hidden>
-            <Visible xs>
-              <HeroContainer>
-                <HeroImageContainer>
-                  <Crab />
-                </HeroImageContainer>
-              </HeroContainer>
-            </Visible>
-          </TextAgreementContainer>
-          <div>
-            <div className="checkbox">
-              <Checkbox
-                onClick={(v: any) => handleCheck(v)}
-                className="checkbox"
-                checked={checkAgree}
-              />
-              <Typography className="label" variant="label" color="shade7">
-                Accept{' '}
-                <span
-                  className="terms-and-conditions"
-                  onClick={() => getTermsAndConditions()}
-                >
-                  Terms &amp; Conditions
-                </span>
-              </Typography>
             </div>
-            <Button
-              takeFullWidth
-              className="btn-get-started"
-              disabled={!checkAgree}
-              variant="primary"
-              text="Get Started"
-              onClick={() => {
-                handleGetStarted();
-              }}
+          </Hidden>
+          <Visible xs>
+            <HeroContainer>
+              <HeroImageContainer>
+                <Crab />
+              </HeroImageContainer>
+            </HeroContainer>
+          </Visible>
+        </TextAgreementContainer>
+        <div>
+          <div className="checkbox">
+            <Checkbox
+              onClick={(v: any) => handleCheck(v)}
+              className="checkbox"
+              checked={checkAgree}
             />
+            <Typography className="label" variant="label" color="shade7">
+              Accept{' '}
+              <span
+                className="terms-and-conditions"
+                onClick={() => getTermsAndConditions()}
+              >
+                Terms &amp; Conditions
+              </span>
+            </Typography>
           </div>
-        </MainAgreementContainer>
-      </BoxContainer>
+          <Button
+            takeFullWidth
+            className="btn-get-started"
+            disabled={!checkAgree}
+            variant="primary"
+            text="Get Started"
+            onClick={() => {
+              handleGetStarted();
+            }}
+          />
+        </div>
+      </MainAgreementContainer>
     );
   }
 
@@ -301,10 +297,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
       />
-      <BoxContainer>
-        <ProgressBar progress={(step.current / step.total) * 100} />
-        {StepView({ step })}
-      </BoxContainer>
+      <ProgressBar progress={(step.current / step.total) * 100} />
+      {StepView({ step })}
     </>
   );
 };
