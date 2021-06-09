@@ -260,7 +260,7 @@ export const Content = styled.div<{
         props.screenBackground
           ? props.screenBackground
           : props.theme.appType === 'buyer'
-          ? props.theme.grey.shade1
+          ? props.theme.grey.shade2
           : props.theme.grey.shade8};
 
       width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
@@ -269,9 +269,11 @@ export const Content = styled.div<{
       overflow-x: hidden;
       overflow-y: auto;
 
-      @media ${BREAKPOINTS['sm']} {
-        border-radius: 0px;
-      }
+      border: ${({ theme }) => {
+        return `2px solid ${
+          theme.appType === 'seller' ? 'transparent' : theme.grey.shade3
+        }`;
+      }};
 
       .container {
         min-height: 100%;
@@ -293,8 +295,15 @@ export const Content = styled.div<{
         height: 100%;
         width: 100%;
         display: flex;
-        padding: ${(props) =>
-          props.theme.appType === 'buyer' ? '8px' : '16px 24px'};
+        padding: 24px;
+        border: 0;
+
+        background: ${(props) =>
+          props.screenBackground
+            ? props.screenBackground
+            : props.theme.appType === 'buyer'
+            ? props.theme.grey.shade1
+            : props.theme.grey.shade8};
 
         .container {
           /* position: static !important; // needed to override react-grid-system .container */

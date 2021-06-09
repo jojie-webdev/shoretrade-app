@@ -450,11 +450,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                       maxWidth: '100%',
                     }}
                   >
-                    {theme.appType === 'buyer' ? (
-                      <BoxContainer>{children}</BoxContainer>
-                    ) : (
-                      <>{children}</>
-                    )}
+                    {children}
                   </Container>
                 </div>
               </div>
