@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Player } from '@lottiefiles/react-lottie-player';
-import dark from 'res/lottie/Staked – Dark.json';
-import light from 'res/lottie/Staked – Light.json';
+import dark from 'res/lottie/Horizontal – Dark.json';
+import light from 'res/lottie/Horizontal – Light.json';
 import { useTheme } from 'utils/Theme';
 
 import { SpinnerLogoProps } from './SpinnerLogo.props';
@@ -25,8 +25,7 @@ const SpinnerLogo = (props: SpinnerLogoProps): JSX.Element => {
       autoplay
       loop
       src={src}
-      //marginRight to center
-      style={{ width: '75px', margin: '0 5px 0 0', ...style }}
+      style={{ width: '100px', ...style }}
       {...playerProps}
     />
   );

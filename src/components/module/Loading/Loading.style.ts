@@ -11,5 +11,5 @@ export const Container = styled.div`
 `;
 
 export const Label = styled(Typography)`
-  margin-top: 20px;
+  margin-top: 10px;
 `;
