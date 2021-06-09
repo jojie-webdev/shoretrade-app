@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
 import { DropdownArrow, Filter, UpArrow } from 'components/base/SVG/';
 import Typography from 'components/base/Typography';
 import FilterModal from 'components/module/FilterModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
 import LinePath from 'components/module/LinePath';
+import Loading from 'components/module/Loading';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
 import { Row, Col, Hidden } from 'react-grid-system';
@@ -40,7 +40,7 @@ const MarketPriceDetailView = (props: MarketPriceDetailGeneratedProps) => {
     <Container>
       {!data ? (
         <HeaderRow justify="center" align="center">
-          <Spinner />
+          <Loading />
         </HeaderRow>
       ) : (
         <>

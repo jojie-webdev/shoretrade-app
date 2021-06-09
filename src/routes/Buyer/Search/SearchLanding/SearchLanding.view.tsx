@@ -2,10 +2,10 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner/Spinner.view';
 import { Fish2 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -79,7 +79,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
 
         {isSearching && (
           <LoadingContainer>
-            <Spinner />
+            <Loading />
           </LoadingContainer>
         )}
 

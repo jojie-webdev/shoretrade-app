@@ -9,7 +9,7 @@ import { Container, Label } from './Loading.style';
 const Loading = (props: LoadingProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { label = 'Loading...', color = 'shade2', spinnerLogoProps } = props;
+  const { label = 'Loading...', color, spinnerLogoProps } = props;
   const defaultColor = isSeller ? 'shade2' : 'shade6';
 
   return (

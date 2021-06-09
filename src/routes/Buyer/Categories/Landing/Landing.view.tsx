@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import Card from 'components/module/CategoryCards/Landing';
 import CategoryImageView from 'components/module/CategoryImage/CategoryImage.view';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search/Search.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
@@ -14,7 +14,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { CategoriesLandingGeneratedProps } from './Landing.props';
-import { CategoriesContainer, LoadingContainer, Image } from './Landing.style';
+import { CategoriesContainer, Image } from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   const history = useHistory();
@@ -43,13 +43,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
         )}
 
         {categories.length <= 0 ? (
-          <>
-            {!isSmallScreen && (
-              <LoadingContainer>
-                <Spinner />
-              </LoadingContainer>
-            )}
-          </>
+          <>{!isSmallScreen && <Loading />}</>
         ) : (
           <>
             {!isSmallScreen ? (

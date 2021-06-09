@@ -74,13 +74,6 @@ export const PreviewContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const FilterButton = styled.button`
   background: ${({ theme }) => theme.grey.shade3};
   border-radius: 4px;

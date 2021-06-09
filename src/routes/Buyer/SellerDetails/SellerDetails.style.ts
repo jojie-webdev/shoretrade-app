@@ -22,13 +22,6 @@ export const SellerHeader = styled.div`
   }
 `;
 
-export const SpinnerContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const ListingCounter = styled.span`
   font-weight: 900;
   color: ${({ theme }) => theme.grey.shade9};

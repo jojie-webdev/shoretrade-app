@@ -1,17 +1,16 @@
 import React from 'react';
 
-import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography/Typography.view';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import { LoadingContainer } from 'routes/Buyer/Home/RecentlyAdded/RecentlyAdded.style';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -53,11 +52,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
           </div>
         </div>
 
-        {isLoadingResults && (
-          <LoadingContainer>
-            <Spinner />
-          </LoadingContainer>
-        )}
+        {isLoadingResults && <Loading />}
 
         {results.length > 0 ? (
           <>

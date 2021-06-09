@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Spinner from 'components/base/Spinner/Spinner.view';
 import { DropdownArrow, UpArrow } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import Loading from 'components/module/Loading';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
@@ -13,7 +13,6 @@ import { useTheme } from 'utils/Theme';
 import { CategoryDetailGeneratedProps } from './CategoryDetail.props';
 import {
   Container,
-  SpinnerContainer,
   HeaderRow,
   CategoryContainer,
 } from './CategoryDetail.style';
@@ -46,9 +45,7 @@ const CategoryDetailView = ({
       </HeaderRow>
 
       {props.isLoading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
+        <Loading />
       ) : (
         <>
           {data.map((d, i) => (

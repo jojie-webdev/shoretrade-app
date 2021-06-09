@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
-import Spinner from 'components/base/Spinner';
 import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
@@ -9,6 +8,7 @@ import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -22,7 +22,6 @@ import { toPrice } from 'utils/String/toPrice';
 import { CategoriesPreviewGeneratedProps } from './Preview.props';
 import {
   PreviewContainer,
-  LoadingContainer,
   FilterButton,
   EmptyResults,
   StyledInteraction,
@@ -111,11 +110,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           </div>
         </div>
 
-        {isLoadingResults && (
-          <LoadingContainer>
-            <Spinner />
-          </LoadingContainer>
-        )}
+        {isLoadingResults && <Loading />}
 
         {!isLoadingResults && results && results.length === 0 && (
           <EmptyResults>

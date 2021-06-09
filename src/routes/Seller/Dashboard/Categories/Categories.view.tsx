@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Spinner from 'components/base/Spinner/Spinner.view';
 import { UpArrow, DropdownArrow } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage/CategoryImage.view';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import Loading from 'components/module/Loading';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -14,12 +14,7 @@ import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
 
 import { CategoriesGeneratedProps } from './Categories.props';
-import {
-  Container,
-  HeaderRow,
-  SpinnerContainer,
-  CategoryContainer,
-} from './Categories.style';
+import { Container, HeaderRow, CategoryContainer } from './Categories.style';
 
 const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
@@ -46,9 +41,7 @@ const CategoriesView = ({ data, ...props }: CategoriesGeneratedProps) => {
       </HeaderRow>
 
       {props.isLoading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
+        <Loading />
       ) : (
         <Row>
           {data.map((d, i) => (

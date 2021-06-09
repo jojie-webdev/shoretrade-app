@@ -25,7 +25,8 @@ const SpinnerLogo = (props: SpinnerLogoProps): JSX.Element => {
       autoplay
       loop
       src={src}
-      style={{ width: '75px', ...style }}
+      //marginRight to center
+      style={{ width: '75px', margin: '0 5px 0 0', ...style }}
       {...playerProps}
     />
   );
