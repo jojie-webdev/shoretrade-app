@@ -45,7 +45,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
           <div className="right-header">
             <Search
               className="search"
-              placeholder={`Search for a Seller`}
+              placeholder={`Search for a product or seller`}
               value={searchValue}
               onChange={onChangeSearchValue}
               resetValue={onResetSearchValue}
