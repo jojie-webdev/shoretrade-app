@@ -100,14 +100,19 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           caption="Select your product specifications for this request."
           marketBoard
         />
-        {isDisabled && (
-          <AlertView
-            content="Select at least 1 specification from each section"
-            variant="error"
-          />
-        )}
 
         <SpecificationFormContainer>
+          {isDisabled && (
+            <AlertView
+              content="Select at least 1 specification from each section"
+              variant="error"
+              fullWidth
+              style={{
+                marginBottom: 24,
+              }}
+            />
+          )}
+
           {stateOptions.map((group) => (
             <div key={group[0].groupOrder} className="interaction-group">
               <div className="spec-row">
