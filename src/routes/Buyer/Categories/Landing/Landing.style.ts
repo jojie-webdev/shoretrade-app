@@ -16,13 +16,6 @@ export const CategoriesContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Image = styled.div`
   width: 72px;
   height: 72px;

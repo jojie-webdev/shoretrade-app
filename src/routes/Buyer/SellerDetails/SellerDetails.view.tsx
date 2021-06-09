@@ -2,9 +2,9 @@ import React from 'react';
 
 import FavoriteButton from 'components/base/FavoriteButton';
 import Interactions from 'components/base/Interactions/Interactions.view';
-import Spinner from 'components/base/Spinner';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import Loading from 'components/module/Loading';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
@@ -16,7 +16,6 @@ import { SellerDetailsGeneratedProps } from './SellerDetails.props';
 import {
   Container,
   SellerHeader,
-  SpinnerContainer,
   ListingCounter,
   ListingHeader,
   Image,
@@ -37,9 +36,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
   return (
     <BoxContainer>
       {loading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
+        <Loading />
       ) : (
         <Container>
           {isSmallScreen && (

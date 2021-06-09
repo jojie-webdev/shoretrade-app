@@ -1,17 +1,17 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
+import Loading from 'components/module/Loading';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
 import { CashFlowGeneratedProps } from './CashFlow.props';
-import { Container, HeaderRow, SpinnerContainer } from './CashFlow.style';
+import { Container, HeaderRow } from './CashFlow.style';
 
 const CashFlowView = (props: CashFlowGeneratedProps) => {
   const { breadCrumbSections } = props;
@@ -43,9 +43,7 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
       </HeaderRow>
 
       {props.isLoading ? (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
+        <Loading />
       ) : (
         <Row style={{ marginBottom: '56px' }}>
           <Col>

@@ -29,9 +29,5 @@ export const MarketItemContainer = styled.div`
 `;
 
 export const SpinnerContainer = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 15px;
 `;

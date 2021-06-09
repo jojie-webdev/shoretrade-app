@@ -2,8 +2,8 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
-import Spinner from 'components/base/Spinner';
 import TypographyView from 'components/base/Typography';
+import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -48,7 +48,7 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
         <Col xs={12}>
           {loading ? (
             <SpinnerContainer>
-              <Spinner />
+              <Loading />
             </SpinnerContainer>
           ) : (
             <>
