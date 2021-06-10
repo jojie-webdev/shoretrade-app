@@ -1,4 +1,5 @@
-import { goBack } from 'connected-react-router';
+import { goBack, push } from 'connected-react-router';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteCard } from 'services/payment';
@@ -23,7 +24,7 @@ function* deleteCardRequest(
             ...data.data,
             companyId: action.meta.companyId,
           },
-        }),
+        })
       );
     } catch (e) {
       yield put(deleteCardActions.failed(e.message));
@@ -40,7 +41,7 @@ function* deleteCardSuccess(
   if (companyId) {
     yield put(getPaymentMethodsActions.request({ companyId }));
   }
-  goBack();
+  yield put(push(`${BUYER_ACCOUNT_ROUTES.BANK_DETAILS}`));
 }
 
 function* deleteCardWatcher() {
