@@ -29,117 +29,112 @@ const BalanceView = (props: BalanceGeneratedProps) => {
 
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Balance & Payments' },
-            ]}
-          />
-        </div>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Balance & Payments' },
+          ]}
+        />
+      </div>
 
-        {notifMessage && (
-          <Notification>
-            <Alert variant="success" content={notifMessage} />
-          </Notification>
-        )}
+      {notifMessage && (
+        <Notification>
+          <Alert variant="success" content={notifMessage} />
+        </Notification>
+      )}
 
-        <Row>
-          <Col md={12} xl={6}>
-            <Typography
-              className="balance-header"
-              variant={isMobile ? 'overline' : 'copy'}
-              color={isMobile ? 'shade6' : 'shade9'}
-            >
-              Credit Balance
-            </Typography>
+      <Row>
+        <Col md={12} xl={6}>
+          <Typography
+            className="balance-header"
+            variant={isMobile ? 'overline' : 'copy'}
+            color={isMobile ? 'shade6' : 'shade9'}
+          >
+            Credit Balance
+          </Typography>
 
-            <CreditWrapper>
-              {!isMobile && (
-                <Typography variant="overline" color="shade6">
-                  Account Balance
-                </Typography>
-              )}
-
-              <Typography
-                variant={isMobile ? 'title2' : 'title4'}
-                color="shade9"
-              >
-                {toPrice(props.credit)}
-              </Typography>
-            </CreditWrapper>
-
+          <CreditWrapper>
             {!isMobile && (
-              <LinkCreditHistory
-                value="Credit History"
-                onClick={() => {
-                  history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
-                }}
-              />
+              <Typography variant="overline" color="shade6">
+                Account Balance
+              </Typography>
             )}
 
-            <Button
-              takeFullWidth={isMobile}
-              className="balance-btn"
-              text="Add Credit"
+            <Typography variant={isMobile ? 'title2' : 'title4'} color="shade9">
+              {toPrice(props.credit)}
+            </Typography>
+          </CreditWrapper>
+
+          {!isMobile && (
+            <LinkCreditHistory
+              value="Credit History"
               onClick={() => {
-                history.push(`${BUYER_ACCOUNT_ROUTES.ADD_CREDIT}`);
+                history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
               }}
             />
+          )}
 
-            {isMobile && (
-              <LinkCreditHistory
-                value="Credit History"
-                onClick={() => {
-                  history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
-                }}
-              />
-            )}
-          </Col>
-
-          <Col md={12} xl={6}>
-            {!isMobile && (
-              <Typography className="balance-header" variant="copy">
-                Credit Cards
-              </Typography>
-            )}
-
-            {cards.map((card) => (
-              <LinkCreditCard
-                key={card.id}
-                {...card}
-                onClick={() => {
-                  history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, { card });
-                }}
-              />
-            ))}
-            {!isMobile && (
-              <Button
-                className="balance-btn"
-                text="Add Card"
-                onClick={() => {
-                  history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
-                    card: {},
-                  });
-                }}
-              />
-            )}
-          </Col>
-        </Row>
-
-        <MobileFooter>
           <Button
-            takeFullWidth
-            text="Add Card"
+            takeFullWidth={isMobile}
+            className="balance-btn"
+            text="Add Credit"
             onClick={() => {
-              history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
-                card: {},
-              });
+              history.push(`${BUYER_ACCOUNT_ROUTES.ADD_CREDIT}`);
             }}
           />
-        </MobileFooter>
-      </BoxContainer>
+
+          {isMobile && (
+            <LinkCreditHistory
+              value="Credit History"
+              onClick={() => {
+                history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
+              }}
+            />
+          )}
+        </Col>
+
+        <Col md={12} xl={6}>
+          {!isMobile && (
+            <Typography className="balance-header" variant="copy">
+              Credit Cards
+            </Typography>
+          )}
+
+          {cards.map((card) => (
+            <LinkCreditCard
+              key={card.id}
+              {...card}
+              onClick={() => {
+                history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, { card });
+              }}
+            />
+          ))}
+          {!isMobile && (
+            <Button
+              className="balance-btn"
+              text="Add Card"
+              onClick={() => {
+                history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+                  card: {},
+                });
+              }}
+            />
+          )}
+        </Col>
+      </Row>
+
+      <MobileFooter>
+        <Button
+          takeFullWidth
+          text="Add Card"
+          onClick={() => {
+            history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+              card: {},
+            });
+          }}
+        />
+      </MobileFooter>
     </Container>
   );
 };

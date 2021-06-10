@@ -23,7 +23,7 @@ export const Container = styled.div`
   }
 
   .accordion-container {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 
     .interactions {
       box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04) !important;

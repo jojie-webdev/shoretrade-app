@@ -5,7 +5,6 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import { CheckFilled, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -34,86 +33,84 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
 
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Linked Accounts' },
-            ]}
-          />
-        </div>
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Linked Accounts' },
+          ]}
+        />
+      </div>
 
-        {notifMsg && (
-          <Alert
-            content={notifMsg}
-            variant="success"
-            fullWidth
-            style={{ marginBottom: 16 }}
-          />
-        )}
+      {notifMsg && (
+        <Alert
+          content={notifMsg}
+          variant="success"
+          fullWidth
+          style={{ marginBottom: 16 }}
+        />
+      )}
 
-        {!notifMsg && (
-          <InfoContainer>
+      {!notifMsg && (
+        <InfoContainer>
+          <Typography variant="label" color="shade9">
+            {`If you want to give others access to you account, you can add a “linked account”.`}
+          </Typography>
+          <Typography variant="label" className="text-people" color="shade9">
+            {`People with linked accounts…`}
+          </Typography>
+          <TextContainer>
+            <CheckFilled fill={theme.brand.success} />
             <Typography variant="label" color="shade9">
-              {`If you want to give others access to you account, you can add a “linked account”.`}
+              Can make purchases and track orders using your stored credit cards
+              or existing credit balance.
             </Typography>
-            <Typography variant="label" className="text-people" color="shade9">
-              {`People with linked accounts…`}
+          </TextContainer>
+
+          <TextContainer>
+            <CloseFilled fill={theme.brand.error} />
+            <Typography variant="label" color="shade9">
+              Cannot add other linked accounts or use your stored credit card.
             </Typography>
-            <TextContainer>
-              <CheckFilled fill={theme.brand.success} />
-              <Typography variant="label" color="shade9">
-                Can make purchases and track orders using your stored credit
-                cards or existing credit balance.
+          </TextContainer>
+        </InfoContainer>
+      )}
+
+      {accounts.map((account) => (
+        <StyledInteraction
+          onClick={() => editAssistant(account.userId)}
+          key={account.userId}
+          leftComponent={
+            <div>
+              <Typography color="shade5" variant="overlineSmall">
+                {account.relationship}
               </Typography>
-            </TextContainer>
-
-            <TextContainer>
-              <CloseFilled fill={theme.brand.error} />
-              <Typography variant="label" color="shade9">
-                Cannot add other linked accounts or use your stored credit card.
+              <AccountName>
+                {account.firstName} {account.lastName}
+              </AccountName>
+              <Typography color="shade6" variant="caption">
+                {account.email}
               </Typography>
-            </TextContainer>
-          </InfoContainer>
-        )}
+            </div>
+          }
+        />
+      ))}
 
-        {accounts.map((account) => (
-          <StyledInteraction
-            onClick={() => editAssistant(account.userId)}
-            key={account.userId}
-            leftComponent={
-              <div>
-                <Typography color="shade5" variant="overlineSmall">
-                  {account.relationship}
-                </Typography>
-                <AccountName>
-                  {account.firstName} {account.lastName}
-                </AccountName>
-                <Typography color="shade6" variant="caption">
-                  {account.email}
-                </Typography>
-              </div>
-            }
-          />
-        ))}
+      {!isMobile && (
+        <Row className="btn-add-account">
+          <Col>
+            <Button text="Add Linked Account" onClick={addAssistant} />
+          </Col>
+        </Row>
+      )}
 
-        {!isMobile && (
-          <Row className="btn-add-account">
-            <Col>
-              <Button text="Add Linked Account" onClick={addAssistant} />
-            </Col>
-          </Row>
-        )}
-
-        <MobileFooter>
-          <Button
-            text="Add Linked Account"
-            takeFullWidth
-            onClick={addAssistant}
-          />
-        </MobileFooter>
-      </BoxContainer>
+      <MobileFooter>
+        <Button
+          text="Add Linked Account"
+          takeFullWidth
+          onClick={addAssistant}
+        />
+      </MobileFooter>
     </Container>
   );
 };

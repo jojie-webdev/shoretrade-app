@@ -30,7 +30,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const shouldIncludePadding =
     props.shouldIncludePadding !== undefined
       ? props.shouldIncludePadding
-      : theme.appType === 'seller';
+      : true;
 
   const [openSidebar, setOpenSidebar] = useState(false);
 

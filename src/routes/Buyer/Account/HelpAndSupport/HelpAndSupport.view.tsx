@@ -3,7 +3,6 @@ import React from 'react';
 import Accordion from 'components/base/Accordion';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useTheme } from 'utils/Theme';
 
@@ -55,32 +54,30 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
 
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Help & Support' },
-            ]}
-          />
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Help & Support' },
+          ]}
+        />
+      </div>
+
+      <p className="help-text">
+        You’ll find answers to common questions below. <br />
+        For everything else contact us on <span>1300 095 746</span> or{' '}
+        <span>buyers@shoretrade.com</span>
+      </p>
+
+      {HELP_AND_SUPPORT.map((help, ndx) => (
+        <div className="accordion-container" key={`help${ndx}`}>
+          <Accordion title={help.title} iconColor={theme.brand.primary}>
+            <Typography variant="label" color="shade9">
+              {help.description}
+            </Typography>
+          </Accordion>
         </div>
-
-        <p className="help-text">
-          You’ll find answers to common questions below. <br />
-          For everything else contact us on <span>1300 095 746</span> or{' '}
-          <span>buyers@shoretrade.com</span>
-        </p>
-
-        {HELP_AND_SUPPORT.map((help, ndx) => (
-          <div className="accordion-container" key={`help${ndx}`}>
-            <Accordion title={help.title} iconColor={theme.brand.primary}>
-              <Typography variant="label" color="shade9">
-                {help.description}
-              </Typography>
-            </Accordion>
-          </div>
-        ))}
-      </BoxContainer>
+      ))}
     </Container>
   );
 };

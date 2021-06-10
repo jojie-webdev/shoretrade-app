@@ -4,7 +4,6 @@ import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
 import { Cart, Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
@@ -139,149 +138,143 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   }
 
   return (
-    <BoxContainer>
-      <Container>
-        {loadingShippingQuotes ? (
-          <Loading label="Loading Shipping Quotes" />
-        ) : (
-          <>
-            {isEmpty(groupedOrders) ? (
-              <EmptyContainer>
-                <Row nogutter className="row">
-                  <Typography variant="title4">No orders yet</Typography>
-                </Row>
-                <Row nogutter className="row">
-                  <Col className="svg-col-spacer" />
-                  <Col>
-                    <SVGContainer>
-                      <Crab height={268} width={268} fill={theme.grey.shade7} />
-                    </SVGContainer>
-                  </Col>
-                </Row>
-                <Row nogutter className="row">
-                  <Button
-                    text="Start an order"
-                    onClick={() => history.push(BUYER_ROUTES.SEARCH)}
-                  />
-                </Row>
-              </EmptyContainer>
-            ) : (
-              <>
-                {/*
+    <Container>
+      {loadingShippingQuotes ? (
+        <Loading label="Loading Shipping Quotes" />
+      ) : (
+        <>
+          {isEmpty(groupedOrders) ? (
+            <EmptyContainer>
+              <Row nogutter className="row">
+                <Typography variant="title4">No orders yet</Typography>
+              </Row>
+              <Row nogutter className="row">
+                <Col className="svg-col-spacer" />
+                <Col>
+                  <SVGContainer>
+                    <Crab height={268} width={268} fill={theme.grey.shade7} />
+                  </SVGContainer>
+                </Col>
+              </Row>
+              <Row nogutter className="row">
+                <Button
+                  text="Start an order"
+                  onClick={() => history.push(BUYER_ROUTES.SEARCH)}
+                />
+              </Row>
+            </EmptyContainer>
+          ) : (
+            <>
+              {/*
                   //  @ts-ignore*/}
-                <Orders {...props} />
+              <Orders {...props} />
 
-                {!isMobile ? (
-                  <BottomRow>
-                    <div className="btns-container">
-                      <Button
-                        text="Keep Shopping"
-                        onClick={keepShopping}
-                        style={{ marginRight: 8 }}
-                        variant="outline"
-                      />
+              {!isMobile ? (
+                <BottomRow>
+                  <div className="btns-container">
+                    <Button
+                      text="Keep Shopping"
+                      onClick={keepShopping}
+                      style={{ marginRight: 8 }}
+                      variant="outline"
+                    />
 
-                      <Button
-                        text="Place Order"
-                        disabled={disablePlaceOrder}
-                        onClick={() => {
-                          setShowPaymentMethod(true);
-                        }}
-                      />
+                    <Button
+                      text="Place Order"
+                      disabled={disablePlaceOrder}
+                      onClick={() => {
+                        setShowPaymentMethod(true);
+                      }}
+                    />
+                  </div>
+
+                  <div className="balances">
+                    <div>
+                      <Typography variant="overline" color="shade6">
+                        CREDIT BALANCE
+                      </Typography>
+                      <Typography
+                        variant="title6"
+                        weight="bold"
+                        align="right"
+                        color="shade6"
+                      >
+                        {toPrice(balance)}
+                      </Typography>
                     </div>
 
-                    <div className="balances">
-                      <div>
-                        <Typography variant="overline" color="shade6">
-                          CREDIT BALANCE
-                        </Typography>
-                        <Typography
-                          variant="title6"
-                          weight="bold"
-                          align="right"
-                          color="shade6"
-                        >
-                          {toPrice(balance)}
-                        </Typography>
-                      </div>
-
-                      <div className="total-value">
-                        <Typography variant="overline" color="shade6">
-                          TOTAL VALUE
-                        </Typography>
-                        <Typography
-                          variant="title6"
-                          weight="bold"
-                          align="right"
-                          color="shade9"
-                        >
-                          ${total}
-                        </Typography>
-                      </div>
-
-                      <Cart fill={theme.grey.shade4} />
-                    </div>
-                  </BottomRow>
-                ) : (
-                  <Footer>
-                    <div className="balances">
-                      <div>
-                        <Typography
-                          variant="caption"
-                          color="shade6"
-                          weight="400"
-                        >
-                          Credit Balance
-                        </Typography>
-                        <Typography color="shade6" weight="400">
-                          {toPrice(balance)}
-                        </Typography>
-                      </div>
-
-                      <div className="total-value">
-                        <Typography
-                          variant="caption"
-                          color="shade6"
-                          weight="400"
-                          align="right"
-                        >
-                          Total
-                        </Typography>
-                        <Typography
-                          variant="body"
-                          weight="bold"
-                          align="right"
-                          color="shade9"
-                        >
-                          ${total}
-                        </Typography>
-                      </div>
+                    <div className="total-value">
+                      <Typography variant="overline" color="shade6">
+                        TOTAL VALUE
+                      </Typography>
+                      <Typography
+                        variant="title6"
+                        weight="bold"
+                        align="right"
+                        color="shade9"
+                      >
+                        ${total}
+                      </Typography>
                     </div>
 
-                    <div className="btns-container">
-                      <Button
-                        text="Keep Shopping"
-                        onClick={keepShopping}
-                        variant="outline"
-                        style={{ marginRight: 16 }}
-                      />
-
-                      <Button
-                        text="Place Order"
-                        disabled={disablePlaceOrder}
-                        onClick={() => {
-                          setShowPaymentMethod(true);
-                        }}
-                      />
+                    <Cart fill={theme.grey.shade4} />
+                  </div>
+                </BottomRow>
+              ) : (
+                <Footer>
+                  <div className="balances">
+                    <div>
+                      <Typography variant="caption" color="shade6" weight="400">
+                        Credit Balance
+                      </Typography>
+                      <Typography color="shade6" weight="400">
+                        {toPrice(balance)}
+                      </Typography>
                     </div>
-                  </Footer>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </Container>
-    </BoxContainer>
+
+                    <div className="total-value">
+                      <Typography
+                        variant="caption"
+                        color="shade6"
+                        weight="400"
+                        align="right"
+                      >
+                        Total
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        weight="bold"
+                        align="right"
+                        color="shade9"
+                      >
+                        ${total}
+                      </Typography>
+                    </div>
+                  </div>
+
+                  <div className="btns-container">
+                    <Button
+                      text="Keep Shopping"
+                      onClick={keepShopping}
+                      variant="outline"
+                      style={{ marginRight: 16 }}
+                    />
+
+                    <Button
+                      text="Place Order"
+                      disabled={disablePlaceOrder}
+                      onClick={() => {
+                        setShowPaymentMethod(true);
+                      }}
+                    />
+                  </div>
+                </Footer>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </Container>
   );
 };
 
