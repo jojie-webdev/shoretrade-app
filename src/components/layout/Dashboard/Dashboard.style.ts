@@ -292,6 +292,7 @@ export const Content = styled.div<{
         display: flex;
         padding: 24px;
         border: 0;
+        border-radius: 0;
 
         background: ${(props) =>
           props.screenBackground

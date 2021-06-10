@@ -6,10 +6,6 @@ export const MarketContainer = styled.div`
     padding-bottom: 24px;
   }
 
-  .title-row {
-    margin-bottom: 24px;
-  }
-
   .search-row {
     margin-bottom: 24px;
   }

@@ -1,1 +1,1 @@
-export { default as SearchLanding } from './SearchLanding/SearchLanding.container';
+export { default } from './SearchLanding.container';

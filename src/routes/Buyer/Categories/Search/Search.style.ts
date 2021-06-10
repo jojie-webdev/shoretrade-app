@@ -9,10 +9,6 @@ export const SearchContainer = styled.div`
     flex-wrap: wrap;
     margin-bottom: 34px;
 
-    .header-title {
-      margin-bottom: 24px;
-    }
-
     @media ${BREAKPOINTS['sm']} {
       margin-bottom: 0px;
     }
