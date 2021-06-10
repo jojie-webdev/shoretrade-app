@@ -9,10 +9,6 @@ export const Container = styled.div`
     @media (min-width: 577px) and (max-width: 1110px) {
       margin-bottom: 40px;
     }
-
-    @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 24px;
-    }
   }
 
   .search-container {

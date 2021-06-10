@@ -4,6 +4,7 @@ import Typography from 'components/base/Typography/Typography.view';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -30,13 +31,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
   return (
     <PreviewContainer>
       <div className="header">
-        {isSmallScreen && (
-          <div className="left-header">
-            <Typography variant="title4" className="header-title">
-              Favourites
-            </Typography>
-          </div>
-        )}
+        {isSmallScreen && <MobileHeader>Favourites</MobileHeader>}
 
         <div className="right-header">
           <Search

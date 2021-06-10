@@ -1,7 +1,9 @@
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 const dashboardWidth = (isSeller: boolean) =>
   isSeller ? 'calc(100% - 150px)' : 'calc(100% - 150px)';
@@ -290,6 +292,7 @@ export const Content = styled.div<{
         display: flex;
         padding: 24px;
         border: 0;
+        border-radius: 0;
 
         background: ${(props) =>
           props.screenBackground
@@ -382,6 +385,13 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   @media (min-width: 577px) and (max-width: 1200px) {
     width: calc(100% - 32px);
   }
+`;
+
+export const PageTitle = styled(Typography)`
+  font-family: 'Media Sans', sans-serif;
+  font-weight: bold;
+  font-size: ${pxToRem(32)};
+  line-height: 40px;
 `;
 
 export const HeaderRightContent = styled.div`

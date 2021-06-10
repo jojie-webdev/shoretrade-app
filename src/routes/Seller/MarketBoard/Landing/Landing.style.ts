@@ -81,10 +81,6 @@ export const Container = styled.div`
     }
   }
 
-  .title-board {
-    margin-bottom: 16px;
-  }
-
   .filter-ipad-container {
     display: flex;
     margin-top: -24px;

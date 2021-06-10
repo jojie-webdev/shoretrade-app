@@ -16,6 +16,7 @@ import {
 import Typography from 'components/base/Typography';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
@@ -37,9 +38,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 
   const isIpadPro = useMediaQuery({ query: BREAKPOINTS['xl'] });
   const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
-  const customScreen = useMediaQuery({
-    query: `(min-width: 835px) and (max-width: 1200px) `,
-  });
+
   const customScreenSmall = useMediaQuery({
     query: `(min-width: 1230px) `,
   });
@@ -81,11 +80,9 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           style={{ marginBottom: 16 }}
         />
       )}
-      {isMobile && (
-        <Typography className="title-board" variant="title5" color="noshade">
-          Market Board
-        </Typography>
-      )}
+
+      {isMobile && <MobileHeader>Market Board</MobileHeader>}
+
       <SegmentedControlsV2
         options={['Buyer Requests', 'My Active Offers']}
         selectedOption={props.currentTab}

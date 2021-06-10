@@ -9,10 +9,6 @@ export const PreviewContainer = styled.div`
     justify-content: flex-end;
     margin-bottom: 34px;
 
-    .header-title {
-      margin-bottom: 24px;
-    }
-
     @media ${BREAKPOINTS['sm']} {
       margin-bottom: 16px;
       align-items: flex-start;
@@ -26,7 +22,7 @@ export const PreviewContainer = styled.div`
     }
 
     .search {
-      width: 240px;
+      width: 280px;
       margin-bottom: 0;
 
       @media ${BREAKPOINTS['sm']} {

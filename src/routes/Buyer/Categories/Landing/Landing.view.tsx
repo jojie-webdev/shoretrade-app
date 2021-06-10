@@ -5,6 +5,7 @@ import Typography from 'components/base/Typography/Typography.view';
 import Card from 'components/module/CategoryCards/Landing';
 import CategoryImageView from 'components/module/CategoryImage/CategoryImage.view';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search/Search.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
@@ -24,9 +25,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
     <CategoriesContainer>
       {isSmallScreen && (
         <>
-          <Typography variant="title4" className="header-title">
-            Buyer - Categories
-          </Typography>
+          <MobileHeader>Buyer - Categories</MobileHeader>
           <Row nogutter>
             <Col xs={12}>
               <Search

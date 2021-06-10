@@ -10,6 +10,7 @@ import DatePickerModal from 'components/module/DatePickerModal';
 import EmptyDashboard from 'components/module/EmptyDashboard';
 import LinePath from 'components/module/LinePath';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -105,9 +106,7 @@ const FilterHeader = ({ dateRange, setDateRange, ...props }: any) => {
     <FilterRow>
       <Col className="filter-col">
         {isSmallScreen && (
-          <Typography variant="title5" color="noshade">
-            Dashboard
-          </Typography>
+          <MobileHeader style={{ marginBottom: 0 }}>Dashboard</MobileHeader>
         )}
         <Button
           text={isSmallScreen ? 'Filter' : 'Custom'}

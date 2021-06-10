@@ -5,22 +5,22 @@ import Interactions from 'components/base/Interactions';
 import { Fish2 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
-import { useTheme } from 'utils/Theme';
-
-import { SearchLandingGeneratedProps } from './SearchLanding.props';
+import { SearchLandingGeneratedProps } from 'routes/Buyer/Search/SearchLanding.props';
 import {
   Container,
   LoadingContainer,
   Results,
   Label,
   SVGContainer,
-} from './SearchLanding.style';
+} from 'routes/Buyer/Search/SearchLanding.style';
+import { useTheme } from 'utils/Theme';
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   const theme = useTheme();
@@ -41,10 +41,8 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
 
   return (
     <Container>
-      <Typography variant="title4" className="header-title">
-        {isSmallScreen ? (
-          <>Search</>
-        ) : (
+      {!isSmallScreen ? (
+        <Typography variant="title4" className="header-title">
           <>
             {searchTerm.length <= 2 && (
               <>
@@ -54,8 +52,10 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
               </>
             )}
           </>
-        )}
-      </Typography>
+        </Typography>
+      ) : (
+        <MobileHeader>Search</MobileHeader>
+      )}
 
       <Row align="center" justify="between" nogutter>
         <div className="search-container">

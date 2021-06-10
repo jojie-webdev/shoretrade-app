@@ -2,10 +2,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  .header-title {
-    margin-bottom: 24px;
-  }
-
   .interactions {
     margin-bottom: 8px;
   }
