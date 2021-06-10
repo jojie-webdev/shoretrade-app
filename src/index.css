@@ -25,6 +25,14 @@
   font-weight: 900;
 }
 
+@font-face {
+  font-family: "Media Sans";
+  src: url("res/fonts/Media Sans Bold.woff2") format("woff2"),
+  url("res/fonts/Media Sans Bold.woff") format("woff");
+  font-weight: 700;
+}
+
+
 body {
   margin: 0;
 }
