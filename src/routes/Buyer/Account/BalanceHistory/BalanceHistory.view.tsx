@@ -17,11 +17,6 @@ import {
 } from './BalanceHistory.style';
 
 const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
-  // const getSubtitle = (description: string) => {
-  //   switch (description.includes('Credit Adjustment')){
-  //     case:
-  //   }
-  // }
   const getTransactionLabel = (
     desc: string
   ): {
