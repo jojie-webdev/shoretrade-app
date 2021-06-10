@@ -36,7 +36,7 @@ import SellerLanding from './Home/SellerLanding';
 import Market from './MarketRequests/market-requests.routes';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
-import { SearchLanding } from './Search';
+import Search from './Search';
 import SellerDetails from './SellerDetails';
 
 const ROUTES: Routes = {
@@ -73,7 +73,7 @@ const ROUTES: Routes = {
   },
   SEARCH: {
     path: BUYER_ROUTES.SEARCH,
-    children: <SearchLanding />,
+    children: <Search />,
     title: 'Search',
     icon: SearchIcon,
   },

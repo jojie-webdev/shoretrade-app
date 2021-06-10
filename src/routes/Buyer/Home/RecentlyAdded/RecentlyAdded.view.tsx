@@ -4,6 +4,7 @@ import Typography from 'components/base/Typography/Typography.view';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -30,11 +31,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   return (
     <PreviewContainer>
       <div className="header">
-        {isSmallScreen && (
-          <Typography variant="title4" weight="500" className="header-title">
-            Recently Added
-          </Typography>
-        )}
+        {isSmallScreen && <MobileHeader>Recently Added</MobileHeader>}
 
         <div className="right-header">
           <Search

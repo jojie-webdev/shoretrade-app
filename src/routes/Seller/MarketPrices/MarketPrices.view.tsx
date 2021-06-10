@@ -4,6 +4,7 @@ import React from 'react';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
@@ -25,11 +26,9 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
   return (
     <MarketContainer>
       <Visible xs>
-        <Row className="title-row">
+        <Row>
           <Col xs={12}>
-            <TypographyView variant="title5" color="noshade">
-              Market Prices
-            </TypographyView>
+            <MobileHeader>Market Prices</MobileHeader>
           </Col>
         </Row>
       </Visible>

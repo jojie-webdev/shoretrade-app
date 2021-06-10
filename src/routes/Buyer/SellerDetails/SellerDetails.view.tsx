@@ -4,6 +4,7 @@ import FavoriteButton from 'components/base/FavoriteButton';
 import Interactions from 'components/base/Interactions/Interactions.view';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
@@ -38,11 +39,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
         <Loading />
       ) : (
         <Container>
-          {isSmallScreen && (
-            <Typography variant="title4" className="header-title">
-              Seller
-            </Typography>
-          )}
+          {isSmallScreen && <MobileHeader>Seller</MobileHeader>}
 
           <SellerHeader>
             <ProductSellerCard

@@ -15,6 +15,7 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -377,6 +378,9 @@ const SellingView = (props: SellingGeneratedProps) => {
             content="Your listing has successfully been removed"
           />
         )}
+
+        {isSmallScreen && <MobileHeader>Selling</MobileHeader>}
+
         {staticListings.length > 0 && (
           <Row className="search-row">
             <Col>

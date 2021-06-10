@@ -12,10 +12,6 @@ export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding: 16px 8px;
   }
-
-  .title-step-text {
-    margin-bottom: 20px;
-  }
 `;
 
 export const ProgressIndicator = styled.div`

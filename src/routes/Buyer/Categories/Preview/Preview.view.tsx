@@ -8,6 +8,7 @@ import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Previe
 import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search/Search.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -75,9 +76,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
           />
         ) : (
           <div className="left-header">
-            <Typography variant="title4" weight="500">
-              {title}
-            </Typography>
+            <MobileHeader style={{ marginBottom: 0 }}>{title}</MobileHeader>
             <FilterButton onClick={modalFilterProps.onClickClose}>
               <Typography variant="overline" className="btn-text">
                 Filters

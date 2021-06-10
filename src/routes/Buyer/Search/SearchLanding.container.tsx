@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useDispatch, useSelector } from 'react-redux';
+import { SearchLandingGeneratedProps } from 'routes/Buyer/Search/SearchLanding.props';
+import SearchLandingView from 'routes/Buyer/Search/SearchLanding.view';
 import {
   historyActions,
   searchAndCountProductTypeActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
-
-import { SearchLandingGeneratedProps } from './SearchLanding.props';
-import SearchLandingView from './SearchLanding.view';
 
 const SearchLanding = (): JSX.Element => {
   const dispatch = useDispatch();

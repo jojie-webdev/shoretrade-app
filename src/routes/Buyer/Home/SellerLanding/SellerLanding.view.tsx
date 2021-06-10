@@ -3,6 +3,7 @@ import React from 'react';
 import Interactions from 'components/base/Interactions';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import SellerCard from 'components/module/SellerCard';
 import { BUYER_ROUTES } from 'consts';
@@ -27,11 +28,7 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
 
   return (
     <PreviewContainer>
-      {isSmallScreen && (
-        <Typography variant="title4" weight="500" className="header-title">
-          Sellers
-        </Typography>
-      )}
+      {isSmallScreen && <MobileHeader>Sellers</MobileHeader>}
 
       <Row nogutter>
         <Col xs={12}>

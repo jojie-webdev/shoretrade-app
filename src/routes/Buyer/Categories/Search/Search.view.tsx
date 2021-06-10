@@ -4,6 +4,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -100,9 +101,7 @@ const CategoriesSearchView = (props: CategoriesSearchGeneratedProps) => {
             ]}
           />
         ) : (
-          <Typography variant="title4" className="header-title">
-            {title}
-          </Typography>
+          <MobileHeader>{title}</MobileHeader>
         )}
 
         <Search

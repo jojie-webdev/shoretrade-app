@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Alert from 'components/base/Alert';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
+import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
@@ -240,15 +241,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             style={{ marginBottom: 16 }}
           />
         )}
-        {isMobile && (
-          <Typography
-            variant="title5"
-            color="noshade"
-            className="title-step-text "
-          >
-            Add a Product
-          </Typography>
-        )}
+        {isMobile && <MobileHeader>Add a Product</MobileHeader>}
 
         {currentPage > 1 && (
           <Typography variant="overline" color="shade6">
