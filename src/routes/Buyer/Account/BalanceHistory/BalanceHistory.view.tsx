@@ -17,6 +17,11 @@ import {
 } from './BalanceHistory.style';
 
 const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
+  // const getSubtitle = (description: string) => {
+  //   switch (description.includes('Credit Adjustment')){
+  //     case:
+  //   }
+  // }
   const getTransactionLabel = (
     desc: string
   ): {
@@ -24,8 +29,11 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
     subtitle: string;
   } => {
     const isCreditAdjustment = desc.includes('Credit Adjustment - ');
+    const isCashDeposit = desc.includes('Cash Deposit - ');
+    const isChequeDeposit = desc.includes('Cheque Deposit - ');
+    const isBankTransfer = desc.includes('Bank Transfer - ');
+    const includesOrderNumber = desc.includes('- Order #');
     if (isCreditAdjustment) {
-      const includesOrderNumber = desc.includes('- Order #');
       if (includesOrderNumber) {
         const orderNumber = desc.split('- Order #')[1].split(' ')[0];
         return {
@@ -34,12 +42,63 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
             .replace('Credit Adjustment - ', '')
             .replace(` - Order #${orderNumber}`, ''),
         };
+      } else {
+        return {
+          title: 'Credit Adjustment',
+          subtitle: desc.replace('Credit Adjustment - ', ''),
+        };
       }
+    }
 
-      return {
-        title: 'Credit Adjustment',
-        subtitle: desc.replace('Credit Adjustment - ', ''),
-      };
+    if (isCashDeposit) {
+      if (includesOrderNumber) {
+        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
+        return {
+          title: `Cash Deposit - #${orderNumber}`,
+          subtitle: desc
+            .replace('Cash Deposit - ', '')
+            .replace(` - Order #${orderNumber}`, ''),
+        };
+      } else {
+        return {
+          title: 'Cash Deposit',
+          subtitle: desc.replace('Cash Deposit - ', ''),
+        };
+      }
+    }
+
+    if (isChequeDeposit) {
+      if (includesOrderNumber) {
+        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
+        return {
+          title: `Cheque Deposit - #${orderNumber}`,
+          subtitle: desc
+            .replace('Cheque Deposit - ', '')
+            .replace(` - Order #${orderNumber}`, ''),
+        };
+      } else {
+        return {
+          title: 'Cheque Deposit',
+          subtitle: desc.replace('Cheque Deposit - ', ''),
+        };
+      }
+    }
+
+    if (isBankTransfer) {
+      if (includesOrderNumber) {
+        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
+        return {
+          title: `Bank Transfer - #${orderNumber}`,
+          subtitle: desc
+            .replace('Bank Transfer - ', '')
+            .replace(` - Order #${orderNumber}`, ''),
+        };
+      } else {
+        return {
+          title: 'Bank Transfer',
+          subtitle: desc.replace('Bank Transfer - ', ''),
+        };
+      }
     }
 
     return {
