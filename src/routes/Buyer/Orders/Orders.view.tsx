@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -124,63 +123,59 @@ const OrdersView = (props: OrdersGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <BoxContainer>
-      <Container>
-        <Row className="controls-row">
-          <Col>
-            <SegmentedControls
-              options={['Pending', 'In Transit', 'Complete']}
-              selectedOption={currentTab}
-              onClickControl={(value) =>
-                onChangeCurrentTab(value as TabOptions)
-              }
-            />
-          </Col>
-        </Row>
-        <SearchFilterRow>
-          <SearchContainer>
-            <Search
-              onKeyUp={onKeyUp}
-              value={searchValue}
-              onChange={(val) => {
-                setSearchValue(val.currentTarget.value);
-                updateSearchValueTable({
-                  [currentTab]: val.currentTarget.value,
-                });
-              }}
-              resetValue={() => {
-                clearSearchValue();
-                updateSearchValueTable({
-                  [currentTab]: '',
-                });
-              }}
-              placeholder={
-                isMobile
-                  ? 'Order#, product type or seller...'
-                  : 'Search by order#, product type or seller...'
-              }
-              rounded
-            />
-          </SearchContainer>
-          <DateRangeContainer>
-            <DateRangePicker
-              startDate={currentFilter.dateFrom}
-              endDate={currentFilter.dateTo}
-              onDatesChange={(val) => fromOnDatesChange(val)}
-              format="D MMM YYYY"
-              onClear={() => {
-                updateFilter({
-                  ...currentFilter,
-                  dateFrom: null,
-                  dateTo: null,
-                });
-              }}
-            />
-          </DateRangeContainer>
-        </SearchFilterRow>
-        {content}
-      </Container>
-    </BoxContainer>
+    <Container>
+      <Row className="controls-row">
+        <Col>
+          <SegmentedControls
+            options={['Pending', 'In Transit', 'Complete']}
+            selectedOption={currentTab}
+            onClickControl={(value) => onChangeCurrentTab(value as TabOptions)}
+          />
+        </Col>
+      </Row>
+      <SearchFilterRow>
+        <SearchContainer>
+          <Search
+            onKeyUp={onKeyUp}
+            value={searchValue}
+            onChange={(val) => {
+              setSearchValue(val.currentTarget.value);
+              updateSearchValueTable({
+                [currentTab]: val.currentTarget.value,
+              });
+            }}
+            resetValue={() => {
+              clearSearchValue();
+              updateSearchValueTable({
+                [currentTab]: '',
+              });
+            }}
+            placeholder={
+              isMobile
+                ? 'Order#, product type or seller...'
+                : 'Search by order#, product type or seller...'
+            }
+            rounded
+          />
+        </SearchContainer>
+        <DateRangeContainer>
+          <DateRangePicker
+            startDate={currentFilter.dateFrom}
+            endDate={currentFilter.dateTo}
+            onDatesChange={(val) => fromOnDatesChange(val)}
+            format="D MMM YYYY"
+            onClear={() => {
+              updateFilter({
+                ...currentFilter,
+                dateFrom: null,
+                dateTo: null,
+              });
+            }}
+          />
+        </DateRangeContainer>
+      </SearchFilterRow>
+      {content}
+    </Container>
   );
 };
 

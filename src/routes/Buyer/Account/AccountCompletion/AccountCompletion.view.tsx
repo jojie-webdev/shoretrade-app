@@ -4,7 +4,6 @@ import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import { CheckFilled, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading/Loading.view';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -28,65 +27,63 @@ const AccountCompletionView = ({
 
   return (
     <Container>
-      <BoxContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumbs
-            sections={[
-              { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-              { label: 'Account Completion' },
-            ]}
+      <div className="breadcrumb-container">
+        <Breadcrumbs
+          sections={[
+            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Account Completion' },
+          ]}
+        />
+      </div>
+
+      <InfoContainer>
+        <div className="gradient-container">
+          <GradientProgressCircle
+            percentage={parseInt(
+              accountCompletion.progressPercentage.replace('%', '')
+            )}
+            hidePercentageText
           />
+          <div className="profile-image">
+            {props.profileImage ? (
+              <img src={props.profileImage} alt="Profile" />
+            ) : (
+              <PlaceholderProfile width={34} height={34} />
+            )}
+          </div>
         </div>
 
-        <InfoContainer>
-          <div className="gradient-container">
-            <GradientProgressCircle
-              percentage={parseInt(
-                accountCompletion.progressPercentage.replace('%', '')
-              )}
-              hidePercentageText
+        <div className="owner-container">
+          <Typography variant="overlineSmall" color="shade6">
+            OWNER
+          </Typography>
+          <Typography variant="title6">{props.name}</Typography>
+        </div>
+
+        <Badge badgeColor={theme.grey.shade3} className="percent-badge">
+          <Typography variant="overlineSmall">
+            {accountCompletion.progressPercentage}
+          </Typography>
+        </Badge>
+      </InfoContainer>
+
+      <Typography variant="overline" color="shade6">
+        SUMMARY
+      </Typography>
+      <Row className="summary-row">
+        {accountCompletion.checklist.map((c) => (
+          <Col lg={12} xl={4} key={c.label} className="summary-item">
+            <CheckFilled
+              width={24}
+              height={24}
+              fill={!c.isChecked ? theme.grey.shade7 : ''}
             />
-            <div className="profile-image">
-              {props.profileImage ? (
-                <img src={props.profileImage} alt="Profile" />
-              ) : (
-                <PlaceholderProfile width={34} height={34} />
-              )}
-            </div>
-          </div>
-
-          <div className="owner-container">
-            <Typography variant="overlineSmall" color="shade6">
-              OWNER
+            <Typography variant="label" className="summary-item-text">
+              {c.label}
             </Typography>
-            <Typography variant="title6">{props.name}</Typography>
-          </div>
-
-          <Badge badgeColor={theme.grey.shade3} className="percent-badge">
-            <Typography variant="overlineSmall">
-              {accountCompletion.progressPercentage}
-            </Typography>
-          </Badge>
-        </InfoContainer>
-
-        <Typography variant="overline" color="shade6">
-          SUMMARY
-        </Typography>
-        <Row className="summary-row">
-          {accountCompletion.checklist.map((c) => (
-            <Col lg={12} xl={4} key={c.label} className="summary-item">
-              <CheckFilled
-                width={24}
-                height={24}
-                fill={!c.isChecked ? theme.grey.shade7 : ''}
-              />
-              <Typography variant="label" className="summary-item-text">
-                {c.label}
-              </Typography>
-            </Col>
-          ))}
-        </Row>
-      </BoxContainer>
+          </Col>
+        ))}
+      </Row>
     </Container>
   );
 };

@@ -2,8 +2,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  padding: 48px;
-
   .re-upload-container {
     background-color: ${({ theme }) => theme.grey.shade9};
     border-radius: 8px;

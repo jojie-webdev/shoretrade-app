@@ -4,7 +4,6 @@ import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter';
 import FormikTextField from 'components/module/FormikTextField';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -87,93 +86,91 @@ const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
 
   return (
     <Wrapper>
-      <BoxContainer>
-        <>
-          <div className="breadcrumb-container">
-            <Breadcrumbs
-              sections={[
-                {
-                  label: 'Account',
-                  link: BUYER_ACCOUNT_ROUTES.LANDING,
-                },
-                { label: 'Change Password' },
-              ]}
-            />
-          </div>
-
-          <Alerts {...props} />
-
-          {!isMobile && (
-            <Row style={{ marginBottom: 24 }}>
-              <Col md={12} xl={8}>
-                <InfoAlert />
-              </Col>
-            </Row>
-          )}
-
-          {/*
-            // @ts-ignore*/}
-          <Formik innerRef={formRef} {...formikProps}>
-            <Form>
-              <TextFieldRow>
-                <Col md={12} xl={8} className="textfield-col">
-                  <FormikTextField
-                    label="Current Password"
-                    name="oldPassword"
-                    secured
-                  />
-                </Col>
-                <Col xl={4} />
-                <Col md={12} xl={4} className="textfield-col">
-                  <FormikTextField
-                    label="New Password"
-                    name="newPassword"
-                    secured
-                  />
-                </Col>
-                <Col md={12} xl={4} className="textfield-col">
-                  <FormikTextField
-                    label="Confirm New Password"
-                    name="confirmNewPassword"
-                    secured
-                  />
-                </Col>
-              </TextFieldRow>
-
-              {!isMobile && (
-                <Row>
-                  <Col>
-                    <Button
-                      text="Save new password"
-                      type="submit"
-                      loading={pending}
-                    />
-                  </Col>
-                </Row>
-              )}
-            </Form>
-          </Formik>
-
-          {isMobile && (
-            <div style={{ marginTop: 24 }}>
-              <InfoAlert />
-            </div>
-          )}
-        </>
-        <MobileFooter>
-          <Button
-            text="Save new password"
-            takeFullWidth
-            onClick={() => {
-              if (formRef.current) {
-                // @ts-ignore
-                formRef.current.handleSubmit();
-              }
-            }}
-            loading={pending}
+      <>
+        <div className="breadcrumb-container">
+          <Breadcrumbs
+            sections={[
+              {
+                label: 'Account',
+                link: BUYER_ACCOUNT_ROUTES.LANDING,
+              },
+              { label: 'Change Password' },
+            ]}
           />
-        </MobileFooter>
-      </BoxContainer>
+        </div>
+
+        <Alerts {...props} />
+
+        {!isMobile && (
+          <Row style={{ marginBottom: 24 }}>
+            <Col md={12} xl={8}>
+              <InfoAlert />
+            </Col>
+          </Row>
+        )}
+
+        {/*
+            // @ts-ignore*/}
+        <Formik innerRef={formRef} {...formikProps}>
+          <Form>
+            <TextFieldRow>
+              <Col md={12} xl={8} className="textfield-col">
+                <FormikTextField
+                  label="Current Password"
+                  name="oldPassword"
+                  secured
+                />
+              </Col>
+              <Col xl={4} />
+              <Col md={12} xl={4} className="textfield-col">
+                <FormikTextField
+                  label="New Password"
+                  name="newPassword"
+                  secured
+                />
+              </Col>
+              <Col md={12} xl={4} className="textfield-col">
+                <FormikTextField
+                  label="Confirm New Password"
+                  name="confirmNewPassword"
+                  secured
+                />
+              </Col>
+            </TextFieldRow>
+
+            {!isMobile && (
+              <Row>
+                <Col>
+                  <Button
+                    text="Save new password"
+                    type="submit"
+                    loading={pending}
+                  />
+                </Col>
+              </Row>
+            )}
+          </Form>
+        </Formik>
+
+        {isMobile && (
+          <div style={{ marginTop: 24 }}>
+            <InfoAlert />
+          </div>
+        )}
+      </>
+      <MobileFooter>
+        <Button
+          text="Save new password"
+          takeFullWidth
+          onClick={() => {
+            if (formRef.current) {
+              // @ts-ignore
+              formRef.current.handleSubmit();
+            }
+          }}
+          loading={pending}
+        />
+      </MobileFooter>
     </Wrapper>
   );
 };

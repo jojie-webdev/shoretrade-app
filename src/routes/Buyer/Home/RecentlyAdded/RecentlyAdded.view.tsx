@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography/Typography.view';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import Loading from 'components/module/Loading';
@@ -29,70 +28,39 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
-    <BoxContainer>
-      <PreviewContainer>
-        <div className="header">
-          {isSmallScreen && (
-            <Typography variant="title4" weight="500" className="header-title">
-              Recently Added
-            </Typography>
-          )}
+    <PreviewContainer>
+      <div className="header">
+        {isSmallScreen && (
+          <Typography variant="title4" weight="500" className="header-title">
+            Recently Added
+          </Typography>
+        )}
 
-          <div className="right-header">
-            <Search
-              className="search"
-              placeholder={`Search for a product or seller`}
-              value={searchValue}
-              onChange={onChangeSearchValue}
-              resetValue={onResetSearchValue}
-              rounded
-            />
-          </div>
+        <div className="right-header">
+          <Search
+            className="search"
+            placeholder={`Search for a product or seller`}
+            value={searchValue}
+            onChange={onChangeSearchValue}
+            resetValue={onResetSearchValue}
+            rounded
+          />
         </div>
+      </div>
 
-        {isLoadingResults && <Loading />}
+      {isLoadingResults && <Loading />}
 
-        {results.length > 0 ? (
-          <>
-            <Row nogutter>
-              {results.map((rec) => {
-                return (
-                  <Col
-                    key={rec.id}
-                    xxl={3}
-                    xl={4}
-                    lg={6}
-                    md={12}
-                    sm={6}
-                    xs={12}
-                  >
-                    <Link to={BUYER_ROUTES.PRODUCT_DETAIL(rec.id)}>
-                      {isSmallScreen ? (
-                        <StyledInteraction>
-                          <PreviewDetailAlt
-                            alternate
-                            id={rec.id}
-                            images={rec.images}
-                            type={rec.type}
-                            price={toPrice(rec.price)}
-                            remaining={rec.remaining.toFixed(2)}
-                            coop={rec.coop}
-                            minimumOrder={rec.minimumOrder}
-                            origin={rec.origin}
-                            weight={sizeToString(
-                              rec.size.unit,
-                              rec.size.from,
-                              rec.size.to
-                            )}
-                            isAquafuture={rec.isAquafuture}
-                            unit={rec.measurementUnit}
-                            state={rec.state}
-                            hiddenPrice={isPendingAccount}
-                            hiddenVendor={isPendingAccount}
-                          />
-                        </StyledInteraction>
-                      ) : (
-                        <PreviewCard
+      {results.length > 0 ? (
+        <>
+          <Row nogutter>
+            {results.map((rec) => {
+              return (
+                <Col key={rec.id} xxl={3} xl={4} lg={6} md={12} sm={6} xs={12}>
+                  <Link to={BUYER_ROUTES.PRODUCT_DETAIL(rec.id)}>
+                    {isSmallScreen ? (
+                      <StyledInteraction>
+                        <PreviewDetailAlt
+                          alternate
                           id={rec.id}
                           images={rec.images}
                           type={rec.type}
@@ -112,16 +80,37 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           hiddenPrice={isPendingAccount}
                           hiddenVendor={isPendingAccount}
                         />
-                      )}
-                    </Link>
-                  </Col>
-                );
-              })}
-            </Row>
-          </>
-        ) : null}
-      </PreviewContainer>
-    </BoxContainer>
+                      </StyledInteraction>
+                    ) : (
+                      <PreviewCard
+                        id={rec.id}
+                        images={rec.images}
+                        type={rec.type}
+                        price={toPrice(rec.price)}
+                        remaining={rec.remaining.toFixed(2)}
+                        coop={rec.coop}
+                        minimumOrder={rec.minimumOrder}
+                        origin={rec.origin}
+                        weight={sizeToString(
+                          rec.size.unit,
+                          rec.size.from,
+                          rec.size.to
+                        )}
+                        isAquafuture={rec.isAquafuture}
+                        unit={rec.measurementUnit}
+                        state={rec.state}
+                        hiddenPrice={isPendingAccount}
+                        hiddenVendor={isPendingAccount}
+                      />
+                    )}
+                  </Link>
+                </Col>
+              );
+            })}
+          </Row>
+        </>
+      ) : null}
+    </PreviewContainer>
   );
 };
 

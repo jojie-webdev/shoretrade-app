@@ -8,7 +8,6 @@ import FavoriteButtonView from 'components/base/FavoriteButton';
 import { Expand, Location, Cart } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import BoxRadio from 'components/module/BoxRadio';
 import Carousel from 'components/module/Carousel';
 import Loading from 'components/module/Loading';
@@ -95,7 +94,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   }, [groupedBox]);
 
   return (
-    <BoxContainer>
+    <>
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
@@ -314,7 +313,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ) : (
         <Loading />
       )}
-    </BoxContainer>
+    </>
   );
 };
 

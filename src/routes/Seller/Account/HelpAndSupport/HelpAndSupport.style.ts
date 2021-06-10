@@ -23,6 +23,6 @@ export const Container = styled.div`
   }
 
   .accordion-container {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 `;

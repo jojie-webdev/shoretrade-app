@@ -104,13 +104,11 @@ const SellerRoutes = (): JSX.Element => {
   const creatingListingStatus = useSelector(
     (state: Store) => state.createListing
   );
-  const isCreatListingSuccess =
-    creatingListingStatus.data?.status === 200 ? true : false;
+  const isCreatListingSuccess = creatingListingStatus.data?.status === 200;
 
   const getThemeOverride = (): {
     background?: string;
     screenBackground?: string;
-    color?: string;
     headerTextColor?: keyof Theme['grey'];
     shouldIncludePadding?: boolean;
     onBack?: () => void;
@@ -118,7 +116,6 @@ const SellerRoutes = (): JSX.Element => {
   } => {
     if (pathname.includes('/seller/selling/details')) {
       return {
-        color: theme.grey.shade9,
         background: theme.grey.shade1,
         screenBackground: theme.grey.shade1,
         headerTextColor: 'shade9',
@@ -130,7 +127,6 @@ const SellerRoutes = (): JSX.Element => {
 
     if (pathname.includes('/seller/add-product/preview')) {
       return {
-        color: theme.grey.shade9,
         background: isCreatListingSuccess
           ? theme.grey.shade9
           : theme.grey.shade1,
@@ -148,7 +144,6 @@ const SellerRoutes = (): JSX.Element => {
       if (pathname.includes('/bulk-upload-preview')) {
         return {
           pageTitle: 'Bulk Spreadsheet Upload',
-          shouldIncludePadding: false,
         };
       }
 

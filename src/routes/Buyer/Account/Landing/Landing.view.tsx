@@ -94,118 +94,113 @@ const LandingView = (props: LandingGeneratedProps) => {
 
   return (
     <Container>
-      <BoxContainer>
-        <Header>
-          <div className="left-content">
-            <input
-              ref={imagePicker}
-              type="file"
-              hidden
-              name="profileImage"
-              onChange={handleFileChange}
-            />
-            {updatingImage ? (
-              <div className="loading-indicator">
-                <Spinner />
-              </div>
-            ) : (
-              <div className="img-container">
-                <>
-                  {profilePicture !== '' ? (
-                    <>
-                      <img
-                        src={
-                          hideBrokenProfileImage
-                            ? DefaultProfileImage
-                            : parseImageUrl(profilePicture) ||
-                              DefaultProfileImage
-                        }
-                        alt="profile picture"
-                        onError={() => {
-                          setHideBrokenProfileImage(true);
-                        }}
-                        onClick={() => {
-                          handleOnClick();
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <NoProfilePic
+      <Header>
+        <div className="left-content">
+          <input
+            ref={imagePicker}
+            type="file"
+            hidden
+            name="profileImage"
+            onChange={handleFileChange}
+          />
+          {updatingImage ? (
+            <div className="loading-indicator">
+              <Spinner />
+            </div>
+          ) : (
+            <div className="img-container">
+              <>
+                {profilePicture !== '' ? (
+                  <>
+                    <img
+                      src={
+                        hideBrokenProfileImage
+                          ? DefaultProfileImage
+                          : parseImageUrl(profilePicture) || DefaultProfileImage
+                      }
+                      alt="profile picture"
+                      onError={() => {
+                        setHideBrokenProfileImage(true);
+                      }}
                       onClick={() => {
                         handleOnClick();
                       }}
-                    >
-                      <PlaceholderProfile width={96} height={96} />
-                    </NoProfilePic>
-                  )}
-                </>
-                <div
-                  className="pen"
-                  onClick={() => {
-                    handleOnClick();
-                  }}
-                >
-                  <Pen fill={theme.grey.shade6} />
-                </div>
+                    />
+                  </>
+                ) : (
+                  <NoProfilePic
+                    onClick={() => {
+                      handleOnClick();
+                    }}
+                  >
+                    <PlaceholderProfile width={96} height={96} />
+                  </NoProfilePic>
+                )}
+              </>
+              <div
+                className="pen"
+                onClick={() => {
+                  handleOnClick();
+                }}
+              >
+                <Pen fill={theme.grey.shade6} />
               </div>
-            )}
-
-            <div>
-              <Typography variant="overline" color="shade6">
-                {companyRelationship === 'ADMIN'
-                  ? 'Owner'
-                  : companyRelationship}
-              </Typography>
-              <Typography variant="title5" color="shade8">
-                {profileName}
-              </Typography>
-              {isMobile && (
-                <div style={{ width: 167, marginTop: 8 }}>
-                  <Select
-                    label=""
-                    options={companyOptions}
-                    value={currentCompany?.id}
-                    size="small"
-                    grey
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          {!isMobile && (
-            <div>
-              <Select
-                label=""
-                options={companyOptions}
-                value={currentCompany?.id}
-                size="small"
-                grey
-              />
             </div>
           )}
-        </Header>
 
-        {INTERACTIONS.map((link) => (
-          <NavInteraction
-            key={link.path}
-            value={link.value}
-            onClick={() => {
-              history.push(link.path);
-            }}
-          />
-        ))}
+          <div>
+            <Typography variant="overline" color="shade6">
+              {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
+            </Typography>
+            <Typography variant="title5" color="shade8">
+              {profileName}
+            </Typography>
+            {isMobile && (
+              <div style={{ width: 167, marginTop: 8 }}>
+                <Select
+                  label=""
+                  options={companyOptions}
+                  value={currentCompany?.id}
+                  size="small"
+                  grey
+                />
+              </div>
+            )}
+          </div>
+        </div>
 
-        {isMobile && (
-          <Button
-            variant="outline"
-            text="logout"
-            takeFullWidth
-            onClick={props.logout}
-            style={{ marginTop: 24 }}
-          />
+        {!isMobile && (
+          <div>
+            <Select
+              label=""
+              options={companyOptions}
+              value={currentCompany?.id}
+              size="small"
+              grey
+            />
+          </div>
         )}
-      </BoxContainer>
+      </Header>
+
+      {INTERACTIONS.map((link) => (
+        <NavInteraction
+          key={link.path}
+          value={link.value}
+          onClick={() => {
+            history.push(link.path);
+          }}
+        />
+      ))}
+
+      {isMobile && (
+        <Button
+          variant="outline"
+          text="logout"
+          takeFullWidth
+          onClick={props.logout}
+          style={{ marginTop: 24 }}
+        />
+      )}
     </Container>
   );
 };

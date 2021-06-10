@@ -12,6 +12,7 @@ import {
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
@@ -251,7 +252,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     onBack,
     background,
     screenBackground,
-    color,
     headerTextColor,
     cartItems,
     onClickAccount,
@@ -393,7 +393,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         shouldIncludePadding={shouldIncludePadding}
         background={background}
         screenBackground={screenBackground}
-        color={color}
         isHomeOld={isHomeOld}
       >
         <>

@@ -64,14 +64,6 @@ export const MarketRequestItemContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 8px;
-  height: 100%;
-`;
-
 export const BadgeText = styled(TypographyView)`
   font-size: ${pxToRem(12)};
   text-align: center;
