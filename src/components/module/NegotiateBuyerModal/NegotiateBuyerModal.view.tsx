@@ -85,7 +85,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         <Inputs>
           <StyledTextField
             type="number"
-            inputType="numeric"
+            inputType="decimal"
             label={'Counter Offer'}
             value={negotiationPrice}
             onChangeText={(v) => {

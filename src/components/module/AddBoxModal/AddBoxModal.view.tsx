@@ -59,7 +59,7 @@ const Content = (props: AddBoxModalProps) => {
       <Inputs>
         <StyledTextField
           type="number"
-          inputType="numeric"
+          inputType="decimal"
           label={`${unit} per box`}
           value={values.weight}
           onChangeText={(v) => {
