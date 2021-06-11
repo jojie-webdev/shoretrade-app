@@ -7,17 +7,9 @@ export const Container = styled.div`
 
     .textfield-col {
       margin-bottom: 36px;
-      > div > div {
-        border-radius: 8px;
-      }
-      > div > div > div {
-        border-radius: 8px;
-      }
     }
+
     .text-area {
-      > div > textarea {
-        border-radius: 8px;
-      }
       > div {
         width: 50%;
         padding-right: 16px;

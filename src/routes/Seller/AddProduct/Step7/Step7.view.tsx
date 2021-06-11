@@ -23,6 +23,7 @@ import {
 
 function Step8({
   isCustomType,
+  pendingSave,
   editableListing,
   listingFormData,
   saveListing,
@@ -206,11 +207,13 @@ function Step8({
         <Button
           text="Preview"
           variant="outline"
+          disabled={pendingSave}
           onClick={() => preview()}
           className="button"
         />
         <Button
           text={isExisting ? 'Update Listing' : 'Add Listing'}
+          loading={pendingSave}
           onClick={() => saveListing()}
           className="button"
         />

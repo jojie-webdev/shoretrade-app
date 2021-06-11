@@ -64,9 +64,7 @@ export const Container = styled.div`
   .next-btn {
     max-width: 67px;
   }
-  .text-field > div {
-    border-radius: 8px;
-  }
+
   .tooltip {
     margin-left: 8px;
   }

@@ -16,12 +16,15 @@ export const FieldContainer = styled.div<{
   height: 48px;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px solid ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
-  background-color: ${({ readOnly, theme }) => (readOnly ? theme.grey.shade3 : theme.grey.noshade)};
+  border: 1px solid
+    ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
+  background-color: ${({ readOnly, theme }) =>
+    readOnly ? theme.grey.shade3 : theme.grey.noshade};
 `;
 
 export const Field = styled.input<{ disabled?: boolean; readOnly?: boolean }>`
-  background-color: ${({ readOnly, theme, disabled }) => (readOnly || disabled ? theme.grey.shade3 : theme.grey.noshade)};
+  background-color: ${({ readOnly, theme, disabled }) =>
+    readOnly || disabled ? theme.grey.shade3 : theme.grey.noshade};
   display: flex;
   flex: 1;
   border-radius: 4px;

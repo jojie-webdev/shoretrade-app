@@ -53,6 +53,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     onAddBoxes,
     onUpdateDetails,
     saveListing,
+    pendingSave,
     isExisting,
     discardChanges,
     preview,
@@ -185,6 +186,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             saveListing={saveListing}
             navBack={navBack}
             preview={preview}
+            pendingSave={pendingSave}
           />
         );
     }

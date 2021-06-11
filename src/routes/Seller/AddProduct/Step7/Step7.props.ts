@@ -5,6 +5,7 @@ export type Step7PublicProps = {
   preview: () => void;
   boxesDetails: Box[];
   measurementUnit: string;
+  pendingSave: boolean;
 };
 
 export interface BoxItemProps {
