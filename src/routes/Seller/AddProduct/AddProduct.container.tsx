@@ -392,7 +392,7 @@ const AddProduct = (): JSX.Element => {
     isPendingCreateListing ||
     isPendingCreateCustomListing ||
     isPendingUpdateListing;
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const saveListing = () => {
     if (!isPending) {
       if (isExisting) {
@@ -401,7 +401,6 @@ const AddProduct = (): JSX.Element => {
         dispatch(createCustomListingActions.request());
       } else {
         dispatch(createListingActions.request());
-        history.push(ADD_PRODUCT_ROUTES.PREVIEW);
       }
     }
   };
@@ -484,6 +483,7 @@ const AddProduct = (): JSX.Element => {
     onAddBoxes,
     onUpdateDetails,
     saveListing,
+    pendingSave: isPending,
     isExisting,
     discardChanges,
     preview,
