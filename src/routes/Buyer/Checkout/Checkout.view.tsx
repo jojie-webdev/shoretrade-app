@@ -181,7 +181,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
                     <Button
                       text="Place Order"
-                      // disabled={disablePlaceOrder}
+                      disabled={disablePlaceOrder}
                       onClick={() => {
                         setShowPaymentMethod(true);
                       }}
@@ -262,7 +262,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
                     <Button
                       text="Place Order"
-                      // disabled={disablePlaceOrder}
+                      disabled={disablePlaceOrder}
                       onClick={() => {
                         setShowPaymentMethod(true);
                       }}
