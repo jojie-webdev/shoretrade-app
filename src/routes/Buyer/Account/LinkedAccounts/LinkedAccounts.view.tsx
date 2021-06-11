@@ -57,7 +57,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
             {`If you want to give others access to you account, you can add a “linked account”.`}
           </Typography>
           <Typography variant="label" className="text-people" color="shade9">
-            {`People with linked accounts…`}
+            {`People with linked accounts`}
           </Typography>
           <TextContainer>
             <CheckFilled fill={theme.brand.success} />
