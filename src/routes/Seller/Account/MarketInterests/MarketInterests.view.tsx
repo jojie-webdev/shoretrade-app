@@ -4,6 +4,7 @@ import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
+import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import CategoryImage from 'components/module/CategoryImage';
@@ -85,7 +86,10 @@ const MarketInterestsView = ({
           </div>
         </Col>
         <Col xs={12} sm="content">
-          <div style={{ width: isMobile ? '100%' : 300 }}>
+          <div
+            style={{ width: isMobile ? '100%' : 330 }}
+            className="search-info"
+          >
             <Search
               className="search"
               value={searchTerm}
@@ -96,6 +100,18 @@ const MarketInterestsView = ({
               }`}
               rounded
             />
+            <div className="tooltip">
+              <InfoFilled
+                width={20}
+                height={20}
+                fill={isMobile ? theme.brand.info : theme.grey.noshade}
+              />
+              <span className="tooltip-text">
+                Optimise your experience with custom notifications and increased
+                automation based on seafood products you commonly sell. Simply
+                select products here and your account will be more personalised.
+              </span>
+            </div>
           </div>
         </Col>
       </Row>
