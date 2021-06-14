@@ -10,6 +10,7 @@ import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
+import { isEmpty } from 'ramda';
 import remove from 'ramda/es/remove';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -212,6 +213,7 @@ const BoxSummary = ({
 const ConfirmView = (props: ConfirmProps) => {
   const theme = useTheme();
   const {
+    pending,
     details,
     boxes,
     measurementUnit,
@@ -406,6 +408,8 @@ const ConfirmView = (props: ConfirmProps) => {
           />
 
           <Button
+            disabled={isEmpty(boxes)}
+            loading={pending}
             style={{ width: 200 }}
             text="CONFIRM"
             onClick={() => onConfirm()}
