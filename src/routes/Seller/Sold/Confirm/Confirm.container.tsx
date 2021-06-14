@@ -50,6 +50,9 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     ? order.orderLineItem.find((lineItem) => lineItem.id === lineItemId)
     : undefined;
 
+  const pending =
+    useSelector((state: Store) => state.confirmWeight.pending) || false;
+
   // useEffect(() => {
   //   // make sure seller orders is not empty
   //   if (!selectedLineItem) {
@@ -113,6 +116,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
 
   const generatedProps: ConfirmGeneratedProps = {
     // generated props here
+    pending,
     details,
     boxes,
     setBoxes,
