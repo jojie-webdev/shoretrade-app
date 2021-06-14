@@ -87,7 +87,7 @@ const MarketInterestsView = ({
         </Col>
         <Col xs={12} sm="content">
           <div
-            style={{ width: isMobile ? '100%' : 300 }}
+            style={{ width: isMobile ? '100%' : 330 }}
             className="search-info"
           >
             <Search
