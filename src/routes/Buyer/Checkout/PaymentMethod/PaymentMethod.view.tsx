@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
-import { Amex, Cart, Mastercard, Visa } from 'components/base/SVG';
+import { Amex, Cart, InfoFilled, Mastercard, Visa } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
@@ -214,6 +214,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           />
         </div>
       )}
+      <Typography style={{ marginBottom: 12 }}>
+        Please select a payment method
+      </Typography>
 
       {isMobile && (paymentMethod === 'card' || paymentMethod === 'account') && (
         <MobileTopRow>
@@ -238,7 +241,12 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
       )}
 
       {(paymentMethod === '' || (paymentMethod === 'account' && !isMobile)) && (
-        <Row className="payment-methods" align="center" justify="between">
+        <Row
+          className="payment-methods"
+          align="center"
+          justify="between"
+          style={{ zIndex: 0 }}
+        >
           {PAYMENT_METHODS.map(({ disabled, ...p }) => (
             <Col
               key={p.label}
@@ -279,6 +287,10 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   </Typography>
                 </div>
               </Method>
+              <div className="tooltip">
+                <InfoFilled width={20} height={20} fill={theme.brand.info} />
+                <span className="tooltip-text">{p.verbiage}</span>
+              </div>
             </Col>
           ))}
         </Row>

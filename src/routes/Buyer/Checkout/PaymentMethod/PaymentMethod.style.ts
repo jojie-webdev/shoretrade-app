@@ -22,6 +22,31 @@ export const Container = styled.div`
       @media ${BREAKPOINTS['sm']} {
         padding: 0 8px !important;
       }
+
+      .tooltip {
+        position: absolute;
+        right: 12%;
+        bottom: 12%;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 150px;
+        background-color: black;
+        color: ${(props) => props.theme.grey.noshade};
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        right: 30%;
+        top: 150%;
+        @media ${BREAKPOINTS['sm']} {
+          color: ${(props) => props.theme.brand.info};
+        }
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+      }
     }
   }
 

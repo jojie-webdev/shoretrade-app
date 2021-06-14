@@ -9,6 +9,38 @@ export const Container = styled.div`
   .search {
     margin-bottom: 0;
   }
+  .search-info {
+    display: flex;
+    align-items: center;
+  }
+  .tooltip {
+    margin-left: 6px;
+  }
+
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 320px;
+    background-color: black;
+    color: ${(props) => props.theme.grey.noshade};
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    right: 10%;
+    top: 20%;
+
+    @media ${BREAKPOINTS['sm']} {
+      color: ${(props) => props.theme.brand.info};
+      width: 230px;
+    }
+    @media ${BREAKPOINTS['md']} {
+      width: 280px;
+    }
+  }
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }
 
   .interactions {
     margin-top: 12px;
