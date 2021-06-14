@@ -10,6 +10,8 @@ export const PAYMENT_METHODS = [
     img: accountCredit,
     mWidth: 36,
     mTopWidth: 22,
+    verbiage:
+      'Use your available account balance to purchase your products. Multiple top up options are available in your Account section.',
   },
   {
     label: 'Credit Card',
@@ -17,6 +19,8 @@ export const PAYMENT_METHODS = [
     img: credit,
     mWidth: 56,
     mTopWidth: 34,
+    verbiage:
+      'We accept Visa, MasterCard and American Express. Credit card processing fees apply.',
   },
   {
     label: 'Buy Now, Pay Later',
@@ -25,14 +29,18 @@ export const PAYMENT_METHODS = [
     mWidth: 65,
     mTopWidth: 39,
     disabled: true,
+    verbiage:
+      'Choose from your preferred Buy Now, Pay Later provider e.g. Zip, AfterPay etc.',
   },
   {
-    label: 'Finance & Invoice',
+    label: 'ShorePay',
     value: '',
     img: finance,
     mWidth: 45,
     mTopWidth: 30,
     disabled: true,
+    verbiage:
+      'An industry leading financing option, built and tailored for the seafood industry.',
   },
 ];
 
