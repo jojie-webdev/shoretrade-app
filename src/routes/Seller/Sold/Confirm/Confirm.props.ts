@@ -32,6 +32,7 @@ export interface ConfirmPublicProps {
 }
 
 export interface ConfirmGeneratedProps {
+  pending: boolean;
   details: Details;
   boxes: Box[];
   setBoxes: Dispatch<Box[]>;
