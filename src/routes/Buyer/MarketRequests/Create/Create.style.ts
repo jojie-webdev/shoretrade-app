@@ -12,8 +12,8 @@ export const ProgressBar = styled.div<{
   left: -48px;
 
   @media ${BREAKPOINTS['iPad']} {
-    top: -36px;
-    left: -36px;
+    top: -24px;
+    left: -24px;
   }
 
   @media ${BREAKPOINTS['sm']} {
