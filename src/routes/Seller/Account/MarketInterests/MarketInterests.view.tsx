@@ -117,7 +117,7 @@ const MarketInterestsView = ({
       </Row>
 
       {!isEmpty(innerCategories) && !isMobile && (
-        <Row style={{ marginBottom: 16 }}>
+        <Row nogutter style={{ margin: '16px 0' }}>
           <Col />
           <Col xs="content">
             <Button

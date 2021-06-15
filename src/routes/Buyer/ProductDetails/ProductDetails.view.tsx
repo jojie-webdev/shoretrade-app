@@ -101,7 +101,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             <Col xs={12} sm={12} md={12} lg={12} className="title">
               <TopBarContainer>
                 <div>
-                  <Typography variant="title4">
+                  <Typography variant="title4" weight="500">
                     {productDetailsCard1Props.title}
                   </Typography>
                   {!isMobile ? (
@@ -110,25 +110,25 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         <div style={{ marginRight: 6 }}>
                           <Location
                             fill={theme.grey.shade5}
-                            width={14}
+                            width={16}
                             height={16}
                           />
                         </div>
                         <Typography
-                          color="shade6"
+                          color="shade9"
                           variant="label"
-                          style={{ fontWeight: 500, marginRight: 10 }}
+                          style={{ marginRight: 10 }}
                         >
                           {productDetailsCard1Props.location}
                         </Typography>
                         <div style={{ marginLeft: 6 }}>
-                          <Expand fill={theme.grey.shade5} />
+                          <Expand
+                            width={18}
+                            height={18}
+                            fill={theme.grey.shade5}
+                          />
                         </div>
-                        <Typography
-                          color="shade6"
-                          variant="label"
-                          style={{ fontWeight: 500 }}
-                        >
+                        <Typography color="shade9" variant="label">
                           {productDetailsCard1Props.size}
                         </Typography>
                       </EstimationsContainer>

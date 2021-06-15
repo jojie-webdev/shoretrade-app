@@ -61,7 +61,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>
-          <Typography variant="body" weight="500" color="shade9">
+          <Typography variant="body" weight="bold" color="shade9">
             {name}
           </Typography>
           <RatingRow>

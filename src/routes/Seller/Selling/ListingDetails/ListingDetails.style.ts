@@ -78,13 +78,6 @@ export const DetailsCard = styled.div`
   }
 `;
 
-export const Tag = styled.div`
-  padding: 2px 8px;
-  background-color: ${({ theme }) => theme.grey.shade3};
-  border-radius: 2px;
-  width: fit-content;
-`;
-
 export const SellerPreview = styled.img`
   width: 96px;
   height: 96px;
@@ -112,19 +105,18 @@ export const SalesCard = styled.div<{ isCreatListingSuccess?: boolean }>`
       display: flex;
       flex-direction: column;
       margin-top: 3%;
-      margin-left: 26px;
     }
   }
 
   .price-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin-top: 33px;
     margin-bottom: 37px;
 
     .per-label {
-      margin-left: 12.5px;
-      margin-top: 10px;
+      margin-left: 6.5px;
     }
   }
 `;
@@ -240,10 +232,11 @@ export const TopDetailsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+
   .size-location-container {
     display: flex;
     flex-direction: row;
-    margin-top: 16px;
+    margin-top: 8px;
   }
 
   .size-container {
@@ -266,11 +259,8 @@ export const TopDetailsContainer = styled.div`
   .tags-container {
     display: flex;
     flex-direction: row;
-    margin-top: 8px;
-    & div:not(:last-child) {
-      margin-right: 4px;
-    }
-    margin-bottom: 24px;
+    margin-top: 10px;
+    margin-bottom: 1rem;
   }
 
   .success-listing-creation-container {
@@ -320,11 +310,8 @@ export const MobileWrapper = styled.div`
     .tags-container {
       display: flex;
       flex-direction: row;
-      margin-top: 8px;
-      & div:not(:last-child) {
-        margin-right: 4px;
-      }
-      margin-bottom: 16px;
+      margin-top: 10px;
+      margin-bottom: 1rem;
     }
   }
   .size-location-container {
@@ -375,13 +362,11 @@ export const MobileWrapper = styled.div`
 export const ProductLabelMobileContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-bottom: 8px;
 
   .product-value {
-    margin-left: 4px;
-    .product-title-desc {
-      line-height: 35px;
-    }
+    margin-left: 6.5px;
   }
 `;
 

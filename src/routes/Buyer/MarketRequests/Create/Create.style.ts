@@ -8,8 +8,13 @@ export const ProgressBar = styled.div<{
   border: ${({ theme }) => `2px solid ${theme.brand.success}`};
   width: ${(props) => (props.progress ? `${props.progress}%` : '0px')};
   position: absolute;
-  top: 2px;
-  left: 0;
+  top: -48px;
+  left: -48px;
+
+  @media (min-width: 577px) and (max-width: 1200px) {
+    top: -24px;
+    left: -24px;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     position: fixed;
