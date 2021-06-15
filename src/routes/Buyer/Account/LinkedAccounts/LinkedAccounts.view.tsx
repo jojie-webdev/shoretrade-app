@@ -70,7 +70,7 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
           <TextContainer>
             <CloseFilled fill={theme.brand.error} />
             <Typography variant="label" color="shade9">
-              Cannot add other linked accounts or use your stored credit card.
+              Cannot add other linked accounts.
             </Typography>
           </TextContainer>
         </InfoContainer>
