@@ -139,10 +139,10 @@ export const MainAgreementContainer = styled.div`
 
   .terms-and-conditions {
     cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
+    // &:hover {
+    //   text-decoration: underline;
+    // }
   }
 `;
 
