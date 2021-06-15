@@ -172,7 +172,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
-            { label: 'Orders', onClick: props.onBack },
+            { label: 'Order', onClick: props.onBack },
             {
               label: 'Payment Method',
               ...(paymentMethod === 'card' || paymentMethod === 'account'
