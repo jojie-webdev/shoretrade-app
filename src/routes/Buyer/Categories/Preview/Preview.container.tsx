@@ -14,6 +14,7 @@ import {
   getSize,
   getSpecifications,
   getCatchmentArea,
+  isUngraded,
 } from './Preview.transform';
 import CategoriesPreviewView from './Preview.view';
 
@@ -86,11 +87,12 @@ const CategoriesPreview = (): JSX.Element => {
 
   const getBuyerSearchFilterData =
     useSelector((state: Store) => state.getBuyerSearchFilterData) || {};
-  const filterData = getBuyerSearchFilterData.data?.data;
+  // const filterData = getBuyerSearchFilterData.data?.data;
   const modalFilters = getFilters(getBuyerSearchFilterData);
-  const checkboxFilters = [
-    { label: 'Show Only Ungraded', value: 'showUngraded' },
-  ];
+  const ungraded = isUngraded(getBuyerSearchFilterData);
+  const checkboxFilters = !ungraded
+    ? [{ label: 'Show Only Ungraded', value: 'showUngraded' }]
+    : [];
 
   const onReset = () => {
     setSelectedFilters([]);
