@@ -11,7 +11,7 @@ export const ProgressBar = styled.div<{
   top: -48px;
   left: -48px;
 
-  @media ${BREAKPOINTS['iPad']} {
+  @media (min-width: 577px) and (max-width: 1200px) {
     top: -24px;
     left: -24px;
   }
