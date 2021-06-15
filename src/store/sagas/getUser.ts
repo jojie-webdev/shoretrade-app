@@ -9,7 +9,12 @@ import {
 } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 
-import { getUserActions, authActions, getAddressesActions } from '../actions';
+import {
+  getUserActions,
+  authActions,
+  getAddressesActions,
+  getPaymentModeActions,
+} from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
@@ -26,11 +31,14 @@ function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
 }
 
 function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
-  // TODO: if buyer set to true
   const state: Store = yield select();
+
   if (state.auth.type === 'buyer') {
     const { companies } = action.payload.data.user;
     const companyId: string = pathOr('', ['0', 'id'], companies);
+
+    yield put(getPaymentModeActions.request({}));
+
     if (companyId) {
       if (
         (state.getAddresses.data?.data.addresses || []).length === 0 ||
