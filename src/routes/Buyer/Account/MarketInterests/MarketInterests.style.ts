@@ -9,10 +9,12 @@ export const Container = styled.div`
   .search {
     margin-bottom: 0;
   }
+
   .search-info {
     display: flex;
     align-items: center;
   }
+
   .tooltip {
     margin-left: 6px;
   }
