@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Alert from 'components/base/Alert';
+import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import {
@@ -24,7 +25,9 @@ import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { BadgeText } from 'routes/Buyer/ProductDetails/ProductDetails.style';
 import { base64ToFile } from 'utils/File';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { useTheme } from 'utils/Theme';
 
@@ -32,7 +35,6 @@ import { ListingDetailsProps } from './ListingDetails.props';
 import {
   Wrapper,
   DetailsCard,
-  Tag,
   SellerPreview,
   SalesCard,
   ActionContainer,
@@ -188,20 +190,20 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </Typography>
                 <div className="tags-container">
                   {productDetails.tags.map(({ label }) => (
-                    <Tag key={label}>
-                      <Typography
-                        variant="caption"
-                        color={'shade9'}
-                        weight="bold"
-                      >
+                    <Badge
+                      key={label}
+                      fontColor={theme.grey.shade9}
+                      badgeColor={theme.grey.shade3}
+                    >
+                      <BadgeText variant="caption" weight="bold">
                         {label}
-                      </Typography>
-                    </Tag>
+                      </BadgeText>
+                    </Badge>
                   ))}
                 </div>
                 <div className="size-location-container">
                   <div className="size-container">
-                    <Expand width={16} height={16} fill={theme.grey.shade5} />
+                    <Expand width={18} height={18} fill={theme.grey.shade5} />
                     <Typography
                       variant="label"
                       color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
@@ -226,18 +228,13 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     <Typography
                       variant="title5"
                       color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                      weight="bold"
+                      weight="900"
                     >
                       ${orderDetails.price}
                     </Typography>
                     <div className="product-value">
-                      <Typography
-                        variant="caption"
-                        color="shade6"
-                        weight="bold"
-                        className="product-title-desc"
-                      >
-                        per {orderDetails.unit}
+                      <Typography variant="caption" color="shade6">
+                        per {formatUnitToPricePerUnit(sales.unit)}
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
@@ -405,7 +402,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 </Typography>
               </div>
               <div className="size-container">
-                <Expand width={16} height={16} fill={theme.grey.shade5} />
+                <Expand width={18} height={18} fill={theme.grey.shade5} />
                 <Typography
                   variant="label"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
@@ -416,11 +413,15 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
             <div className="tags-container">
               {productDetails.tags.map(({ label }) => (
-                <Tag key={label}>
-                  <Typography variant="caption" color={'shade9'} weight="bold">
+                <Badge
+                  key={label}
+                  fontColor={theme.grey.shade9}
+                  badgeColor={theme.grey.shade3}
+                >
+                  <BadgeText variant="caption" weight="bold">
                     {label}
-                  </Typography>
-                </Tag>
+                  </BadgeText>
+                </Badge>
               ))}
             </div>
           </div>
@@ -480,7 +481,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 <Typography
                   variant="title5"
                   color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                  weight="bold"
+                  weight="900"
                 >
                   ${orderDetails.price}
                 </Typography>
@@ -488,10 +489,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 <Typography
                   variant="caption"
                   color="shade6"
-                  weight="regular"
                   className="per-label"
                 >
-                  per {sales.unit}
+                  per {formatUnitToPricePerUnit(sales.unit)}
                 </Typography>
               </div>
 

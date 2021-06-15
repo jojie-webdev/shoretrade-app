@@ -38,7 +38,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             color="shade6"
             style={{ marginLeft: 6.5, marginTop: 8 }}
           >
-            per {formatUnitToPricePerUnit(formatMeasurementUnit(unit))}
+            per {formatUnitToPricePerUnit(unit)}
           </Label>
         </div>
       )}

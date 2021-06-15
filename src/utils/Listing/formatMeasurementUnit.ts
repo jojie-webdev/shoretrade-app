@@ -12,7 +12,7 @@ export const formatUnitToPricePerUnit = (unit = '') => {
   if (unit.toUpperCase() === 'PORTIONS') {
     return 'portion';
   }
-  if (unit.toUpperCase() === 'DOZ') {
+  if (unit.toUpperCase() === 'DOZEN' || unit.toUpperCase() === 'DOZ') {
     return 'doz';
   }
   return 'kg';
