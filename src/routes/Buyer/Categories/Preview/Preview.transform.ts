@@ -49,7 +49,7 @@ export const getFilters = (data: any) => {
 
   const initialFilters = [
     { label: 'Catchment Area', type: 'choice', values: getCatchmentArea() },
-    !isUngraded
+    !isUngraded(filterData)
       ? {
           ...(isGrams
             ? {
