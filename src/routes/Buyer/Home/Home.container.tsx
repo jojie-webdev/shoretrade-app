@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { getPaymentModeActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -14,7 +13,6 @@ import HomeView from './Home.view';
 import HomeViewOld from './Home.view.old';
 
 const Home = (): JSX.Element => {
-  const dispatch = useDispatch();
   const isOld = useHomeOld();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -76,10 +74,6 @@ const Home = (): JSX.Element => {
       setCurrentCompany(company);
     }
   }, [company]);
-
-  useEffect(() => {
-    dispatch(getPaymentModeActions.request({}));
-  }, []);
 
   // MARK:- Bottom Variables
   const creditBalance = currentCompany?.credit || '0';
