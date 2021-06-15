@@ -19,6 +19,7 @@ import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { isNil } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
@@ -175,6 +176,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       ) : (
         <>
           {props.currentTab === 'Buyer Requests' &&
+            !isNil(props.buyerRequests) &&
             props.buyerRequests.map((b) => (
               <Interactions
                 key={b.id}
@@ -192,7 +194,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                         {getExpiry(b.createdAt)}
                       </Typography>
                       <div className="badges-container">
-                        {b.specifications &&
+                        {!isNil(b.specifications) &&
                           b.specifications.map((s) => (
                             <Badge
                               key={s.stateId}
@@ -277,6 +279,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             ))}
 
           {props.currentTab === 'My Active Offers' &&
+            !isNil(props.activeOffers) &&
             props.activeOffers.map((v, i) => {
               const status = getStatus(v.status);
 
