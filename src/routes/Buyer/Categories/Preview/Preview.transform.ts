@@ -1,5 +1,16 @@
 import { isEmpty } from 'ramda';
 
+export const isUngraded = (data: any) => {
+  const filterData = data.data?.data;
+  if (!filterData) return true;
+
+  const { sizeFrom, sizeTo } = filterData;
+
+  return (
+    sizeFrom === null || sizeTo === null || isEmpty(sizeFrom) || isEmpty(sizeTo)
+  );
+};
+
 // check GetBuyerSearchFilterDataPayload for type
 export const getFilters = (data: any) => {
   const filterData = data.data?.data;
@@ -38,20 +49,22 @@ export const getFilters = (data: any) => {
 
   const initialFilters = [
     { label: 'Catchment Area', type: 'choice', values: getCatchmentArea() },
-    {
-      ...(isGrams
-        ? {
-            label: 'Size',
-            type: 'size_input',
-            values: getSizeMinMax(),
-            unit: 'kg',
-          }
-        : {
-            label: 'Size',
-            type: 'size_dropdown',
-            sizeDropdownValues: getSizeDropdownValues(),
-          }),
-    },
+    !isUngraded
+      ? {
+          ...(isGrams
+            ? {
+                label: 'Size',
+                type: 'size_input',
+                values: getSizeMinMax(),
+                unit: 'kg',
+              }
+            : {
+                label: 'Size',
+                type: 'size_dropdown',
+                sizeDropdownValues: getSizeDropdownValues(),
+              }),
+        }
+      : {},
     { label: 'State One', type: 'choice', values: getStates(1) },
     { label: 'State Two', type: 'choice', values: getStates(2) },
     { label: 'State Three', type: 'choice', values: getStates(3) },

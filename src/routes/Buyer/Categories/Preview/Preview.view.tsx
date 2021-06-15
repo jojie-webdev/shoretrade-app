@@ -40,7 +40,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     isLoadingResults,
     isPendingAccount,
 
-    //filterData
+    //filterData,
     //onChangeFilter,
   } = props;
 

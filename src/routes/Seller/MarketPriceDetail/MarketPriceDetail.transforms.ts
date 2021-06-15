@@ -67,6 +67,11 @@ export const getFilters = (data: any) => {
   } = filters;
 
   const isGrams = metric === 'Grams';
+  const isUngraded =
+    sizeFrom === null ||
+    sizeTo === null ||
+    isEmpty(sizeFrom) ||
+    isEmpty(sizeTo);
 
   const getRegion = () => region.map((r) => r.region);
   const getStates = (state: { id: string; value: string }[]) =>
@@ -93,20 +98,22 @@ export const getFilters = (data: any) => {
 
   const initialFilters = [
     { label: 'Catchment Area', type: 'choice', values: getRegion() },
-    {
-      ...(isGrams
-        ? {
-            label: 'Size',
-            type: 'size_input',
-            values: getSizeMinMax(),
-            unit: 'kg',
-          }
-        : {
-            label: 'Size',
-            type: 'size_dropdown',
-            sizeDropdownValues: getSizeDropdownValues(),
-          }),
-    },
+    !isUngraded
+      ? {
+          ...(isGrams
+            ? {
+                label: 'Size',
+                type: 'size_input',
+                values: getSizeMinMax(),
+                unit: 'kg',
+              }
+            : {
+                label: 'Size',
+                type: 'size_dropdown',
+                sizeDropdownValues: getSizeDropdownValues(),
+              }),
+        }
+      : {},
     { label: 'State One', type: 'choice', values: getStates(stateOne) },
     { label: 'State Two', type: 'choice', values: getStates(stateTwo) },
     { label: 'State Three', type: 'choice', values: getStates(stateThree) },
