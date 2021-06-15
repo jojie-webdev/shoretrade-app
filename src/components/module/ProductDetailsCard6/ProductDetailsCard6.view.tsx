@@ -29,7 +29,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     <Container {...props}>
       {SellerCard ? SellerCard : <></>}
       {!hiddenPrice && (
-        <Row>
+        <div style={{ display: 'flex' }}>
           <Price variant="title5" weight="900">
             {toPrice(price)}
           </Price>
@@ -40,7 +40,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           >
             per {formatUnitToPricePerUnit(formatMeasurementUnit(unit))}
           </Label>
-        </Row>
+        </div>
       )}
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
