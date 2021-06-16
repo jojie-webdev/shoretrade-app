@@ -221,7 +221,9 @@ const SelectSizeView = (props: SelectSizeProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <Typography variant="title5">Select Size</Typography>
+            <Typography variant="title5" weight="500">
+              Select Size
+            </Typography>
           </div>
         </div>
       </CreateRequestHeaderContainer>

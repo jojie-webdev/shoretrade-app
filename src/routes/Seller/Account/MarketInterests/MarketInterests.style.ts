@@ -33,7 +33,6 @@ export const Container = styled.div`
     top: 20%;
 
     @media ${BREAKPOINTS['sm']} {
-      color: ${(props) => props.theme.brand.info};
       width: 230px;
     }
     @media ${BREAKPOINTS['md']} {

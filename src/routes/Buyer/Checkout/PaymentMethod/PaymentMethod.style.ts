@@ -40,10 +40,8 @@ export const Container = styled.div`
         z-index: 1;
         right: 30%;
         top: 150%;
-        @media ${BREAKPOINTS['sm']} {
-          color: ${(props) => props.theme.brand.info};
-        }
       }
+
       .tooltip:hover .tooltip-text {
         visibility: visible;
       }
