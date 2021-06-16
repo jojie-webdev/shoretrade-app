@@ -111,7 +111,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               <Col>
                 <HeaderContainer>
                   <TypographyView variant="title5">
-                    Can't find your product?
+                    Can&apos;t find your product?
                   </TypographyView>
                   <TypographyView weight="700" variant="title5">
                     Create a new Market Request
