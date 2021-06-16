@@ -19,7 +19,7 @@ export const ProgressBar = styled.div<{
   @media ${BREAKPOINTS['sm']} {
     position: fixed;
     top: 0;
-    z-index: 999999;
+    z-index: 999;
   }
 `;
 
