@@ -53,6 +53,12 @@ export const Container = styled.div`
       opacity: 0.5;
     }
 
+    @media (hover: none) and (pointer: coarse) {
+      :hover {
+        opacity: 1;
+      }
+    }
+
     @media ${BREAKPOINTS['sm']} {
       padding: 18px;
     }
