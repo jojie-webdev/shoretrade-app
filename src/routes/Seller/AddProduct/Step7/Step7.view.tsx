@@ -74,11 +74,10 @@ function Step8({
     'ddd DD MMM yyyy'
   );
 
-  const listingEndDate = moment(editableListing?.ends || null).format(
-    'ddd DD MMM yyyy'
-  );
+  const listingEndDate = moment(editableListing?.ends || null)
+    .tz('Australia/Brisbane')
+    .format('ddd DD MMM yyyy');
 
-  // Note: only time should be treated as AEST
   const listingEndTime = moment(editableListing?.ends || null)
     .tz('Australia/Brisbane')
     .format('HH:mm');
@@ -180,7 +179,7 @@ function Step8({
         </Col>
         <Col md={12} className="interaction-col">
           <Interactions
-            label="Listing valid until"
+            label="Listing valid until (AEST)"
             value={listingEnds}
             type="edit"
             onClick={() => onChangeCurrentPage(7)}
