@@ -11,7 +11,7 @@ export const Container = styled.div`
   }
   cursor: pointer;
 
-  @media ${BREAKPOINTS['sm']} {
+  @media (hover: none) and (pointer: coarse) {
     &:hover {
       opacity: 1;
     }

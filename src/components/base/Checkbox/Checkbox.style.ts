@@ -10,7 +10,7 @@ export const Container = styled.div`
     opacity: 0.5;
   }
 
-  @media ${BREAKPOINTS['sm']} {
+  @media (hover: none) and (pointer: coarse) {
     &:hover {
       opacity: 1;
     }
