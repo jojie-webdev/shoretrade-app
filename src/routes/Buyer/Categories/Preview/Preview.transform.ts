@@ -4,11 +4,9 @@ export const isUngraded = (data: any) => {
   const filterData = data.data?.data;
   if (!filterData) return true;
 
-  const { sizeFrom, sizeTo } = filterData;
+  const { sizeFrom } = filterData;
 
-  return (
-    sizeFrom === null || sizeTo === null || isEmpty(sizeFrom) || isEmpty(sizeTo)
-  );
+  return sizeFrom === null || isEmpty(sizeFrom);
 };
 
 // check GetBuyerSearchFilterDataPayload for type
