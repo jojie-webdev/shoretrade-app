@@ -67,11 +67,7 @@ export const getFilters = (data: any) => {
   } = filters;
 
   const isGrams = metric === 'Grams';
-  const isUngraded =
-    sizeFrom === null ||
-    sizeTo === null ||
-    isEmpty(sizeFrom) ||
-    isEmpty(sizeTo);
+  const isUngraded = sizeFrom === null || isEmpty(sizeFrom);
 
   const getRegion = () => region.map((r) => r.region);
   const getStates = (state: { id: string; value: string }[]) =>
