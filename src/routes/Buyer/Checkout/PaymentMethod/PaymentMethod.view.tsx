@@ -10,6 +10,7 @@ import { Amex, Cart, InfoFilled, Mastercard, Visa } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form, Formik, connect, FormikProps } from 'formik';
 import { Col, Row } from 'react-grid-system';
@@ -147,13 +148,7 @@ const CardFields = (props: { formik?: any }) => {
 const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const {
-    cards,
-    cardDetails,
-    setCardDetails,
-    processingOrder,
-    isLoading,
-  } = props;
+  const { cards, cardDetails, setCardDetails, isLoading } = props;
   const theme = useTheme();
 
   const formRef = useRef<FormikProps<CardDetails>>(null);
@@ -415,8 +410,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   ? 'Pay using credit card'
                   : 'Pay using this method'
               }
-              disabled={processingOrder || isLoading || paymentMethod === ''}
-              loading={processingOrder || isLoading}
+              disabled={isLoading || paymentMethod === ''}
               onClick={() => setShowConfirmationModal(true)}
             />
           </div>
@@ -494,12 +488,10 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   : 'Pay using this method'
               }
               disabled={
-                processingOrder ||
                 isLoading ||
                 paymentMethod === '' ||
                 (currentTab === TABS[1] && !props.selectedCard)
               }
-              loading={processingOrder || isLoading}
               onClick={() => setShowConfirmationModal(true)}
               takeFullWidth
             />
@@ -535,6 +527,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         actionText="Proceed"
         cancelText="Keep Shopping"
       />
+
+      {isLoading && <LoadingOverlay />}
     </Container>
   );
 };
