@@ -130,7 +130,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
         totalValue={totalValue}
         orderError={orderError}
         selectedShipping={selectedShipping}
-        processingOrder={processingOrder}
         placeOrder={placeOrder}
         onBack={() => setShowPaymentMethod(false)}
       />

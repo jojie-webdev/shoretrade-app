@@ -39,8 +39,9 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
 
   const pendingAddCard =
     useSelector((state: Store) => state.addCardAndPay.pending) || false;
-  const isLoadingAccountCredit =
-    useSelector((state: Store) => state.order.pending) || false;
+  const processingOrder =
+    useSelector((store: Store) => store.order.pending) || false;
+
   const addCardAndPayError =
     useSelector((store: Store) => store.addCardAndPay.error) || '';
 
@@ -158,7 +159,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     setCardDetails,
     selectedCard,
     setSelectedCard,
-    isLoading: pendingAddCard || isLoadingAccountCredit,
+    isLoading: pendingAddCard || processingOrder,
     onAddCard,
     onExistingCard,
     addCardAndPayError,
