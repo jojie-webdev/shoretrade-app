@@ -17,7 +17,7 @@ const LoadingOverlay = (props: LoadingOverlayProps): JSX.Element => {
         style={!isSmallScreen ? { width: '200px' } : { width: '100px' }}
         {...spinnerLogoProps}
       />
-      <Label variant={isSmallScreen ? 'label' : 'title6'} color="noshade">
+      <Label variant={isSmallScreen ? 'label' : 'title6'} color="shade6">
         {label}
       </Label>
     </Container>

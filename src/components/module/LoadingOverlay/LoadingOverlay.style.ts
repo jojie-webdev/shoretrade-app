@@ -7,7 +7,7 @@ export const Container = styled.div`
   position: fixed;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(9, 19, 29, 0.9);
+  background-color: rgba(244, 246, 255, 0.9); //shade2
   justify-content: center;
   align-items: center;
   top: 0;
