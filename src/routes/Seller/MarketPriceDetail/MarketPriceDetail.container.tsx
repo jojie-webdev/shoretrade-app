@@ -88,7 +88,6 @@ const MarketPriceDetail = (): JSX.Element => {
   const onReset = () => {
     setSelectedFilters([]);
     setSelectedSize(null);
-    closeFilterModal();
   };
 
   const generatedProps: MarketPriceDetailGeneratedProps = {
