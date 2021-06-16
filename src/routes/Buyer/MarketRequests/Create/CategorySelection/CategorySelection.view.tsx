@@ -39,7 +39,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
         <div>
           {stepCountComponent}
           <div className="title-container">
-            <TypographyView variant="title5">
+            <TypographyView variant="title5" weight="500">
               Choose Product Type
             </TypographyView>
           </div>
