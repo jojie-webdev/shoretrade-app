@@ -53,9 +53,9 @@ const SummaryView = (props: SummaryProps) => {
       <Badge
         key={index}
         className="offers-state-badge"
-        badgeColor={theme.grey.shade3}
+        badgeColor={theme.grey.shade9}
       >
-        <BadgeText color="shade8" weight="bold" variant="overline">
+        <BadgeText color="noshade" weight="900" variant="overline">
           {item}
         </BadgeText>
       </Badge>
@@ -120,7 +120,9 @@ const SummaryView = (props: SummaryProps) => {
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>
-            <TypographyView variant="title5">Summary</TypographyView>
+            <TypographyView variant="title5" weight="500">
+              Summary
+            </TypographyView>
           </div>
         </div>
       </CreateRequestHeaderContainer>
