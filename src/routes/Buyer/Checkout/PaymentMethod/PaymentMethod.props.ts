@@ -12,7 +12,6 @@ export interface CardDetails {
 
 export interface PaymentMethodPublicProps {
   totalValue: number;
-  processingOrder: boolean;
   selectedShipping: Record<string, any>;
   orderError: string;
   placeOrder: () => void;
