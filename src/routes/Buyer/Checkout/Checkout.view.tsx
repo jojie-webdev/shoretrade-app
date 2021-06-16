@@ -274,8 +274,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
           )}
         </>
       )}
-
-      <LoadingOverlay />
     </Container>
   );
 };
