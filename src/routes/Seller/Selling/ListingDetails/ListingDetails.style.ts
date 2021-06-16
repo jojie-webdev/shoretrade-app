@@ -14,7 +14,6 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
     .card-container {
       @media ${BREAKPOINTS['xl']} {
         padding-left: 0px !important;
-        margin-top: 23px !important;
       }
     }
   }
@@ -43,39 +42,9 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   }
 `;
 
-export const DetailsCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .carousel-container {
-    width: 100%;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .details-container {
-    padding: 24px;
-    background-color: ${({ theme }) => theme.grey.noshade};
-    width: 100%;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-    border-radius: 4px;
-
-    @media (max-width: 991px) {
-      width: 100%;
-    }
-  }
-
-  .ratings-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 5px;
-    & svg:not(:last-child) {
-      margin-right: 6px;
-    }
-  }
+export const CarouselContainer = styled.div`
+  width: 100%;
+  margin-bottom: 24px;
 `;
 
 export const SellerPreview = styled.img`
@@ -85,17 +54,45 @@ export const SellerPreview = styled.img`
   margin-bottom: 16px;
 `;
 
-export const SalesCard = styled.div<{ isCreatListingSuccess?: boolean }>`
+export const SalesCard = styled.div`
+  padding: 16px;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  width: 100%;
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  border-radius: 4px;
+  margin-bottom: 32px;
+
+  .sales-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    .per-label {
+      margin-left: 4px;
+    }
+  }
+
+  .sold-container {
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: ${({ theme }) => theme.grey.shade3};
+    border-radius: 1px;
+    position: relative;
+  }
+`;
+
+export const SalesDetailsCard = styled.div<{ isCreatListingSuccess?: boolean }>`
   padding: 16px;
   background-color: ${({ theme, isCreatListingSuccess }) =>
     !isCreatListingSuccess ? theme.grey.noshade : theme.grey.shade9};
   width: 100%;
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
-
-  @media (max-width: 991px) {
-    margin-top: 32px;
-  }
 
   .seller-details-container {
     display: flex;
@@ -281,28 +278,6 @@ export const MobileWrapper = styled.div`
     padding-bottom: 125px;
   }
 
-  .sales-container {
-    display: flex;
-    flex-direction: row;
-
-    .per-label {
-      margin-left: 4px;
-    }
-  }
-
-  .sold-container {
-    margin-top: 4px;
-    margin-bottom: 12px;
-  }
-
-  .progress-container {
-    width: 100%;
-    height: 4px;
-    background-color: ${({ theme }) => theme.grey.shade3};
-    border-radius: 1px;
-    position: relative;
-  }
-
   .product-details {
     margin-top: 24px;
     width: 100%;
@@ -314,6 +289,7 @@ export const MobileWrapper = styled.div`
       margin-bottom: 1rem;
     }
   }
+
   .size-location-container {
     display: flex;
     flex-direction: row;
@@ -331,6 +307,7 @@ export const MobileWrapper = styled.div`
     @media ${BREAKPOINTS['sm']} {
     }
   }
+
   .location-container {
     display: flex;
     flex-direction: row;
@@ -346,16 +323,6 @@ export const MobileWrapper = styled.div`
     margin-top: 12px;
     display: flex;
     flex-direction: column;
-  }
-
-  .test {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-  .row-test {
-    margin-top: 242px;
   }
 `;
 
@@ -390,26 +357,25 @@ export const ListingCard = styled.div<{ isCreatListingSuccess?: boolean }>`
 export const MobileSalesCard = styled(ListingCard)`
   margin-top: 24px;
 
-  .seller-details-container {
+  .sales-container {
     display: flex;
     flex-direction: row;
 
-    .seller-container {
-      display: flex;
-      flex-direction: column;
-      margin-top: 3%;
+    .per-label {
+      margin-left: 4px;
     }
   }
 
-  .price-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 33px;
-    margin-bottom: 37px;
+  .sold-container {
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
 
-    .per-label {
-      margin-left: 12.5px;
-      margin-top: 10px;
-    }
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: ${({ theme }) => theme.grey.shade3};
+    border-radius: 1px;
+    position: relative;
   }
 `;
