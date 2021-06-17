@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
@@ -41,6 +41,10 @@ const MarketInterestsView = ({
 }: MarketInterestsGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isInner]);
 
   if (!categories || loadingInnerCategories) {
     return <Loading />;
@@ -101,11 +105,7 @@ const MarketInterestsView = ({
               rounded
             />
             <div className="tooltip">
-              <InfoFilled
-                width={20}
-                height={20}
-                fill={isMobile ? theme.brand.info : theme.grey.noshade}
-              />
+              <InfoFilled width={20} height={20} fill={theme.brand.info} />
               <span className="tooltip-text">
                 Optimise your experience with custom notifications and increased
                 automation based on seafood products you commonly sell. Simply
