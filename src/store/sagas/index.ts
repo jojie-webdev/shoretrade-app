@@ -80,6 +80,7 @@ import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
+import websocketSaga from './websocket';
 
 const sagas = [
   addAddress,
@@ -162,6 +163,7 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
+  websocketSaga,
 ];
 
 export default function* root() {

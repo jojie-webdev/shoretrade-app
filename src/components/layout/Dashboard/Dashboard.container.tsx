@@ -10,6 +10,7 @@ import {
   cartActions,
   editableListingActions,
   logoutActions,
+  webSocketActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
@@ -123,6 +124,15 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       document.getElementsByTagName('body')[0].classList.remove('no-scroll');
     };
   }, []);
+
+  useEffect(() => {
+    if (defaultCompany !== null) {
+      dispatch(
+        webSocketActions.request({ companyId: defaultCompany?.id || '' })
+      );
+    }
+    console.log(defaultCompany);
+  }, [defaultCompany]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

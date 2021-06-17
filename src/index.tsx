@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { ConnectedRouter } from 'connected-react-router';
-import { SELLER_ROUTES } from 'consts';
+import { API, SELLER_ROUTES } from 'consts';
 import { ThemeProvider } from 'emotion-theming';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Routes from 'routes/index.routes';
+import io from 'socket.io-client';
 import { store, persistor, sagaMiddleware, history } from 'store';
 import sagas from 'store/sagas';
 import { Store } from 'types/store/Store';
@@ -33,6 +34,20 @@ window.addEventListener('resize', () => {
 
 // create the saga middleware
 sagaMiddleware.run(sagas);
+
+// const SOCKET_HOST = 'https://api-staging.shoretrade.com';
+// const socket = io(SOCKET_HOST, {
+//   transports:
+//     process.env.NODE_ENV === 'development'
+//       ? ['websocket', 'polling', 'flashsocket']
+//       : undefined,
+// });
+// socket.on('connect', () => {
+//   socket.on('NEW_ORDER', (msg) => {
+//     console.log('message: ' + msg);
+//   });
+//   console.log(socket.connected); // true
+// });
 
 // Update theme appType based on path
 const Theme = ({ children }: { children: React.ReactNode }) => {
