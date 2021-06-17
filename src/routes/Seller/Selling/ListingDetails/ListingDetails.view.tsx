@@ -71,19 +71,21 @@ const Actions = (props: ListingDetailsProps) => {
           </div>
         </div>
 
-        <div className="end-left-content">
-          <div className="pen-container">
-            <StyledTouchable onPress={() => onRemove && onEdit && onEdit()}>
-              <Pen fill={theme.brand.primary} height={20} width={20} />
-            </StyledTouchable>
-          </div>
+        {onEdit && onRemove && (
+          <div className="end-left-content">
+            <div className="pen-container">
+              <StyledTouchable onPress={() => onEdit()}>
+                <Pen fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
 
-          <div className="trash-container">
-            <StyledTouchable onPress={() => onRemove && onRemove()}>
-              <TrashCan fill={theme.brand.primary} height={20} width={20} />
-            </StyledTouchable>
+            <div className="trash-container">
+              <StyledTouchable onPress={() => onRemove()}>
+                <TrashCan fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </TopContainer>
   );
@@ -318,20 +320,34 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
           </Row>
         </MobileWrapper>
-        <MobileFooter>
-          <Button
-            variant="outline"
-            takeFullWidth
-            text="Edit"
-            onClick={() => onRemove && onEdit && onEdit()}
-          />
 
-          <Button
-            takeFullWidth
-            style={{ marginLeft: 8 }}
-            text="Remove"
-            onClick={() => onRemove && onRemove()}
-          />
+        <MobileFooter>
+          {onRemove && onEdit && (
+            <>
+              <Button
+                variant="outline"
+                takeFullWidth
+                text="Edit"
+                onClick={() => onEdit()}
+              />
+
+              <Button
+                takeFullWidth
+                style={{ marginLeft: 8 }}
+                text="Remove"
+                onClick={() => onRemove()}
+              />
+            </>
+          )}
+
+          {onCreate && !isCreatListingSuccess && (
+            <Button
+              takeFullWidth
+              text={isExisting ? 'Update' : 'Create Listing'}
+              onClick={onCreate}
+              loading={isPending}
+            />
+          )}
         </MobileFooter>
       </>
     );
