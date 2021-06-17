@@ -181,6 +181,7 @@ export const PendingItem = (props: {
 
               {allowPartialShipment && allowFullShipment && (
                 <Button
+                  className="ship-order"
                   text={'Ship Order'}
                   style={{ width: 169, height: 32 }}
                   size="sm"
