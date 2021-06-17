@@ -101,11 +101,7 @@ const MarketInterestsView = ({
               rounded
             />
             <div className="tooltip">
-              <InfoFilled
-                width={20}
-                height={20}
-                fill={isMobile ? theme.brand.info : theme.grey.noshade}
-              />
+              <InfoFilled width={20} height={20} fill={theme.brand.info} />
               <span className="tooltip-text">
                 Optimise your experience with custom notifications and increased
                 automation based on seafood products you commonly sell. Simply
