@@ -2,10 +2,8 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Spinner from 'components/base/Spinner';
-import Loading from 'components/module/Loading';
 import { Theme } from 'types/Theme';
 
-import SpinnerLogo from '../SpinnerLogo';
 import Typography from '../Typography';
 import { TypographyProps } from '../Typography/Typography.props';
 import { ButtonProps } from './Button.props';
