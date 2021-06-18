@@ -136,9 +136,11 @@ const CategoriesPreview = (): JSX.Element => {
           filterData: {
             ...(sizeRangeFrom ? { sizeRangeFrom } : {}),
             ...(sizeRangeTo ? { sizeRangeTo } : {}),
-            ...(filterState ? { catchmentArea } : {}),
+            ...(catchmentArea ? { catchmentArea } : {}),
             ...(specifications ? { specifications } : {}),
-            ...(selectedCheckboxFilters[0] ? { showUngraded: true } : {}),
+            ...(showUngraded
+              ? { showUngraded: true }
+              : { showUngraded: false }),
           },
         })
       );
