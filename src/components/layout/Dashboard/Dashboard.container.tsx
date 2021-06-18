@@ -10,7 +10,7 @@ import {
   cartActions,
   editableListingActions,
   logoutActions,
-  webSocketActions,
+  socketCreditActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
@@ -66,6 +66,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     location.pathname.search(path.split('/')[2]) > 0;
 
   const userType = useSelector((state: Store) => state.auth.type) || '';
+
+  const socket =
+    useSelector((state: Store) => state.socketCredit.socket) || null;
 
   const userData = getUser.data?.data.user;
   const cartItems = Object.keys(cart).length;
@@ -127,12 +130,13 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   useEffect(() => {
     if (defaultCompany !== null) {
-      dispatch(
-        webSocketActions.request({ companyId: defaultCompany?.id || '' })
-      );
+      if (socket === null) {
+        dispatch(
+          socketCreditActions.connect({ companyId: defaultCompany?.id || '' })
+        );
+      }
     }
-    console.log(defaultCompany);
-  }, [defaultCompany]);
+  }, [defaultCompany, socket]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

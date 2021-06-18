@@ -36,6 +36,7 @@ const persistConfig = {
     'history',
     'uploadBulk',
     'modifyBulkUpload',
+    'websocket',
   ],
 };
 

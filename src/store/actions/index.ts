@@ -89,4 +89,4 @@ export { default as addCardAndPayActions } from './addCardAndPay';
 export { default as modifyBulkUploadActions } from './modifyBulkUpload';
 export { default as getPaymentModeActions } from './getPaymentMode';
 export { default as sendDisputeActions } from './sendDispute';
-export { default as webSocketActions } from './webSocket';
+export { default as socketCreditActions } from './socketCredit';

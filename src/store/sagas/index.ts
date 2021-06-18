@@ -69,6 +69,7 @@ import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
+import socketCredit from './socketCredit';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -80,7 +81,6 @@ import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
-import websocketSaga from './websocket';
 
 const sagas = [
   addAddress,
@@ -163,7 +163,7 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
-  websocketSaga,
+  socketCredit,
 ];
 
 export default function* root() {

@@ -89,6 +89,7 @@ import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
+import socketCredit from './socketCredit';
 
 export default (routeHistory: History) =>
   combineReducers(
@@ -182,6 +183,7 @@ export default (routeHistory: History) =>
         verify,
         getPaymentMode,
         sendDispute,
+        socketCredit,
       }).sort()
     )
   );

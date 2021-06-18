@@ -1,7 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
-export type WebSocketMeta = {
+export type SocketCreditMeta = {
   companyId: string;
 };
 
-export type WebSocketPayload = GenericResponse;
+export type SocketCreditPayload = any;
