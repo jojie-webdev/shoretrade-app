@@ -9,6 +9,7 @@ import {
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
+import { FilterData } from './Preview.props';
 import {
   getFilters,
   getSize,
@@ -60,7 +61,7 @@ const CategoriesPreview = (): JSX.Element => {
 
   const onLoad = (typeId: string) => {
     dispatch(getBuyerSearchFilterDataActions.request({ typeId: typeId }));
-    dispatch(getListingsByTypeActions.request({ typeId: typeId }));
+    // dispatch(getListingsByTypeActions.request({ typeId: typeId }));
   };
 
   const onChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,12 +71,6 @@ const CategoriesPreview = (): JSX.Element => {
   const onResetSearchValue = () => {
     setSearchValue('');
   };
-
-  useEffect(() => {
-    if (typeIdParsed && previousId !== typeIdParsed) {
-      onLoad(typeIdParsed);
-    }
-  }, [typeIdParsed]);
 
   //Filters
   const [isOpen, setVisible] = useState(false);
@@ -103,24 +98,72 @@ const CategoriesPreview = (): JSX.Element => {
   const onClickClose = () => {
     setVisible(!isOpen);
   };
-
   // used by FilterModal
+  const [filterState, setFilterState] = useState<FilterData>({
+    catchmentArea: null,
+    sizeRangeFrom: null,
+    sizeRangeTo: null,
+    specifications: null,
+    showUngraded: false,
+  });
+
+  const { sizeRangeFrom, sizeRangeTo } = getSize(
+    getBuyerSearchFilterData,
+    selectedSize
+  );
+  const catchmentArea = getCatchmentArea(
+    getBuyerSearchFilterData,
+    selectedFilters
+  );
+  const specifications = getSpecifications(
+    getBuyerSearchFilterData,
+    selectedFilters
+  );
+
+  useEffect(() => {
+    if (typeIdParsed && previousId !== typeIdParsed) {
+      onLoad(typeIdParsed);
+      const {
+        catchmentArea,
+        showUngraded,
+        sizeRangeFrom,
+        sizeRangeTo,
+        specifications,
+      } = filterState;
+      dispatch(
+        getListingsByTypeActions.request({
+          typeId: typeIdParsed,
+          filterData: {
+            ...(sizeRangeFrom ? { sizeRangeFrom } : {}),
+            ...(sizeRangeTo ? { sizeRangeTo } : {}),
+            ...(filterState ? { catchmentArea } : {}),
+            ...(specifications ? { specifications } : {}),
+            ...(selectedCheckboxFilters[0] ? { showUngraded: true } : {}),
+          },
+        })
+      );
+    }
+  }, [typeIdParsed, filterState]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('local');
+    if (data) {
+      setFilterState(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('local', JSON.stringify(filterState));
+  });
   const onApply = () => {
     setVisible(false);
-
-    const { sizeRangeFrom, sizeRangeTo } = getSize(
-      getBuyerSearchFilterData,
-      selectedSize
-    );
-    const catchmentArea = getCatchmentArea(
-      getBuyerSearchFilterData,
-      selectedFilters
-    );
-    const specifications = getSpecifications(
-      getBuyerSearchFilterData,
-      selectedFilters
-    );
-
+    setFilterState({
+      catchmentArea,
+      sizeRangeFrom,
+      sizeRangeTo,
+      specifications,
+      showUngraded: selectedCheckboxFilters[0] ? true : false,
+    });
     dispatch(
       getListingsByTypeActions.request({
         typeId: typeIdParsed,
