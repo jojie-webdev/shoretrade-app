@@ -26,7 +26,6 @@ const Button = (props: ButtonProps): JSX.Element => {
     takeFullWidth = false,
     size = 'md',
     textColor,
-    shoreTradeLoadingIcon,
     ...buttonProps
   } = props;
 
@@ -90,11 +89,7 @@ const Button = (props: ButtonProps): JSX.Element => {
 
       {loading && (
         <LoadingContainer>
-          {shoreTradeLoadingIcon ? (
-            <SpinnerLogo style={{ width: '60px' }} />
-          ) : (
-            <Spinner width={24} height={24} />
-          )}
+          <Spinner width={24} height={24} />
         </LoadingContainer>
       )}
 
