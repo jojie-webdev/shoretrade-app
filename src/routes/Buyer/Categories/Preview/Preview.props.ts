@@ -25,11 +25,3 @@ export interface CategoriesPreviewGeneratedProps {
   //   showUngraded?: boolean;
   // }) => void;
 }
-
-export type FilterData = {
-  catchmentArea?: any;
-  sizeRangeFrom?: number | string;
-  sizeRangeTo?: number | string;
-  specifications?: any;
-  showUngraded?: boolean;
-};
