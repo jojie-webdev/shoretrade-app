@@ -121,6 +121,7 @@ const MarketInterestsView = ({
           <Col />
           <Col xs="content">
             <Button
+              shoreTradeLoadingIcon
               loading={props.isSaving}
               onClick={props.onSave}
               text="Save"
@@ -202,6 +203,7 @@ const MarketInterestsView = ({
           onClick={props.onSave}
           text="Save"
           takeFullWidth
+          shoreTradeLoadingIcon
         />
       </MobileFooter>
     </Container>

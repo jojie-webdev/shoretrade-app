@@ -2,8 +2,10 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Spinner from 'components/base/Spinner';
+import Loading from 'components/module/Loading';
 import { Theme } from 'types/Theme';
 
+import SpinnerLogo from '../SpinnerLogo';
 import Typography from '../Typography';
 import { TypographyProps } from '../Typography/Typography.props';
 import { ButtonProps } from './Button.props';
@@ -24,6 +26,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     takeFullWidth = false,
     size = 'md',
     textColor,
+    shoreTradeLoadingIcon,
     ...buttonProps
   } = props;
 
@@ -87,7 +90,11 @@ const Button = (props: ButtonProps): JSX.Element => {
 
       {loading && (
         <LoadingContainer>
-          <Spinner width={24} height={24} />
+          {shoreTradeLoadingIcon ? (
+            <SpinnerLogo style={{ width: '60px' }} />
+          ) : (
+            <Spinner width={24} height={24} />
+          )}
         </LoadingContainer>
       )}
 

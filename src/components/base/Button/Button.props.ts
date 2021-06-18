@@ -27,6 +27,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSizes; // defaults to md
   textColor?: keyof Theme['brand'] | keyof Theme['grey'];
   circular?: boolean;
+
+  shoreTradeLoadingIcon?: boolean;
 }
 
 // Styles
