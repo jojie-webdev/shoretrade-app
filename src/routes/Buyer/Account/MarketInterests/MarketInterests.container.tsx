@@ -182,7 +182,6 @@ const MarketInterests = (): JSX.Element => {
     onPressInnerCategory,
     onSave,
 
-    // isSaving: updateMarketInterests?.pending || false,
     isSaving: updateMarketInterests?.pending || false,
   };
   return <MarketInterestsView {...generatedProps} />;
