@@ -13,6 +13,7 @@ import {
   Weight,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
@@ -197,6 +198,16 @@ const SellerOfferInteractionContent = (props: {
             <DollarSign fill={theme.grey.shade5} />
             <TypographyView variant="label">{price}</TypographyView>
           </div>
+          <div className="weight-price">
+            <Typography
+              color="shade5"
+              variant="caption"
+              style={{ marginRight: 4 }}
+            >
+              Estimated Delivery:
+            </Typography>
+            <TypographyView variant="label">Blocked</TypographyView>
+          </div>
         </div>
         <div className="tags">
           {(tags || []).length > 0 ? (
@@ -250,7 +261,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const handleStartNegotiate = () => {
     setNegotiating(true);
   };
-
   return (
     <RequestDetailsContainer>
       <NegotiateBuyerModal
