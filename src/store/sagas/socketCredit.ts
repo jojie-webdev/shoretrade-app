@@ -59,8 +59,8 @@ function* watchSocketChannel(
     try {
       const payload = yield take(socketChannel);
       console.log(payload);
-      yield put({ type: socketCreditActions.HANDLE_EVENT, payload }); // for tracking/testing
-      yield put(getUserActions.request()); // refresh credit
+      yield put(socketCreditActions.handleEvent(payload)); // for tracking/testing
+      // yield put(getUserActions.request()); // refresh credit
     } catch (err) {
       console.log('socket error: ', err);
     }

@@ -69,6 +69,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const socket =
     useSelector((state: Store) => state.socketCredit.socket) || null;
+  const socketCreditData =
+    useSelector((state: Store) => state.socketCredit.data) || null;
 
   const userData = getUser.data?.data.user;
   const cartItems = Object.keys(cart).length;
@@ -146,7 +148,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     shouldIncludePadding,
     userData,
     logout,
-    credit: defaultCompany?.credit || '',
+    credit: socketCreditData ? socketCreditData : defaultCompany?.credit || '',
     openSidebar,
     onClickOpenSideBar,
     cartItems,

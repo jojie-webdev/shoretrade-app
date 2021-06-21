@@ -189,8 +189,9 @@ export const createSocketAction = <Meta = any, Payload = any>(
     //   type: watchType,
     //   payload,
     // }),
-    handleEvent: () => ({
+    handleEvent: (payload: Payload) => ({
       type: handleEventType,
+      payload,
     }),
     disconnect: () => ({
       type: disconnectType,
