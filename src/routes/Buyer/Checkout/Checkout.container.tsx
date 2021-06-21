@@ -310,7 +310,7 @@ const Checkout = (): JSX.Element => {
     totalValue,
     keepShopping,
     placeOrder,
-    loadingShippingQuotes: true,
+    loadingShippingQuotes,
     selectedShipping,
     selectedShippingId,
     setSelectedShippingId,
