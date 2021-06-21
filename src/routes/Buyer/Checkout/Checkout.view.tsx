@@ -146,7 +146,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
           {isEmpty(groupedOrders) ? (
             <EmptyContainer>
               <Row nogutter className="row">
-                <Typography variant="title4">No orders yet</Typography>
+                <Typography variant="title4">No Products Yet</Typography>
               </Row>
               <Row nogutter className="row">
                 <Col className="svg-col-spacer" />
