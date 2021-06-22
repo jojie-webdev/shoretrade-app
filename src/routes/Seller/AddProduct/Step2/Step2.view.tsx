@@ -98,7 +98,6 @@ function Step3({
     }
     return [];
   };
-
   return (
     <Container>
       {stateOptions.slice(0, specifications.length + 1).map((group) => (
@@ -123,26 +122,28 @@ function Step3({
         </div>
       ))}
 
-      <div className="btn-container">
-        <Button
-          text="Back"
-          className="back-btn"
-          variant={'outline'}
-          onClick={() => {
-            navBack();
-          }}
-        />
-        <Button
-          text="Next"
-          className="next-btn"
-          variant={isComplete ? 'primary' : 'disabled'}
-          onClick={() => {
-            if (isComplete) {
-              onSelectSpecifications(specificationIds, specificationLabels);
-            }
-          }}
-        />
-      </div>
+      {stateOptions.length > 0 && (
+        <div className="btn-container">
+          <Button
+            text="Back"
+            className="back-btn"
+            variant={'outline'}
+            onClick={() => {
+              navBack();
+            }}
+          />
+          <Button
+            text="Next"
+            className="next-btn"
+            variant={isComplete ? 'primary' : 'disabled'}
+            onClick={() => {
+              if (isComplete) {
+                onSelectSpecifications(specificationIds, specificationLabels);
+              }
+            }}
+          />
+        </div>
+      )}
     </Container>
   );
 }

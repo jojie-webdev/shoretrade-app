@@ -62,11 +62,11 @@ const Actions = (props: ListingDetailsProps) => {
         <div className="left-container">
           <div className="left-text-container">
             <Typography variant="body" color="shade9" weight="bold">
-              This is a preview of your listed product
+              This is the Buyers' view of your product listing
             </Typography>
             <Typography variant="label" color="shade6" weight="regular">
-              Buyers will check this page and eventually buy the product from
-              their buyer account.
+              Any changes made to your listing will be instantly reflected to
+              Buyers
             </Typography>
           </div>
         </div>
@@ -280,10 +280,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                         weight="bold"
                       >
-                        {orderDetails.validUntil &&
-                          formatRunningDateDifference(
-                            orderDetails.validUntil.toUTCString()
-                          )}
+                        {moment().to(orderDetails.validUntil)}
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
@@ -553,10 +550,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       weight="bold"
                       className="product-desc"
                     >
-                      {orderDetails.validUntil &&
-                        formatRunningDateDifference(
-                          orderDetails.validUntil.toUTCString()
-                        )}
+                      {moment().to(orderDetails.validUntil)}
                     </Typography>
                   </div>
                 </ProductLabelContainer>
