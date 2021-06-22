@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import Search from 'components/module/Search';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -121,7 +122,7 @@ const MarketInterestsView = ({
           <Col />
           <Col xs="content">
             <Button
-              loading={props.isSaving}
+              disabled={props.isSaving}
               onClick={props.onSave}
               text="Save"
             />
@@ -202,13 +203,14 @@ const MarketInterestsView = ({
       ))}
       <MobileFooter>
         <Button
-          disabled={isEmpty(innerCategories)}
-          loading={props.isSaving}
+          disabled={isEmpty(innerCategories) || props.isSaving}
           onClick={props.onSave}
           text="Save"
           takeFullWidth
         />
       </MobileFooter>
+
+      {props.isSaving && <LoadingOverlay />}
     </Container>
   );
 };
