@@ -17,6 +17,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import createRootReducer from 'store/reducers';
+import createSocketMiddleware from 'utils/WebSocket';
 
 export const history = createBrowserHistory();
 
@@ -43,7 +44,11 @@ const persistConfig = {
 const reducer = persistReducer(persistConfig, createRootReducer(history));
 export const sagaMiddleware = createSagaMiddleware();
 
-const enhancer = applyMiddleware(sagaMiddleware, routerMiddleware(history));
+const enhancer = applyMiddleware(
+  sagaMiddleware,
+  createSocketMiddleware(),
+  routerMiddleware(history)
+);
 
 export const store: Store<any, any> = createStore(
   reducer,

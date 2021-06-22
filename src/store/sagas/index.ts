@@ -163,7 +163,7 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
-  socketCredit,
+  // socketCredit,
 ];
 
 export default function* root() {
