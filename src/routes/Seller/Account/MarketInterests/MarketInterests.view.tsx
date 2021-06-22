@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import Search from 'components/module/Search';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -209,6 +210,7 @@ const MarketInterestsView = ({
           takeFullWidth
         />
       </MobileFooter>
+      {props.isSaving && <LoadingOverlay />}
     </Container>
   );
 };

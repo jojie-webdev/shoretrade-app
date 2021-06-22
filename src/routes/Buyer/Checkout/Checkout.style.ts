@@ -3,6 +3,15 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  .loading-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+  }
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 150px;
   }
