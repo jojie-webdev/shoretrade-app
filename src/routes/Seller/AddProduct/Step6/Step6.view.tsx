@@ -28,6 +28,7 @@ import { Container } from './Step6.style';
 import { combineDateTime } from './Step6.transform';
 import { isValid, isDateRangeValid } from './Step6.validation';
 
+// Note: even this is AEST, keep calculations on local time
 const timeOptions = [...Array(48)].map((v, i) => {
   const value = `${
     (i / 2 < 10 ? '0' : '') +
@@ -68,7 +69,14 @@ function Step7({
   );
 
   const [listingEndTime, setListingEndTime] = useState<Date | null>(
-    editableListing?.ends ? moment(editableListing?.ends).toDate() : null
+    editableListing?.ends
+      ? moment(
+          moment(editableListing?.ends)
+            .tz('Australia/Brisbane')
+            .format('YYYY-MM-DD'),
+          'YYYY-MM-DD'
+        ).toDate()
+      : null
   );
 
   const [listingEndTimeString, setListingEndTimeString] = useState(
@@ -96,10 +104,7 @@ function Step7({
 
   useEffect(() => {
     if (listingEndTimeString) {
-      // moment tz uses Australia/Brisbane for AEST
-      setListingEndTime(
-        moment.tz(listingEndTimeString, 'HH:mm', 'Australia/Brisbane').toDate()
-      );
+      setListingEndTime(moment(listingEndTimeString, 'HH:mm').toDate());
     } else {
       setListingEndTime(null);
     }
@@ -189,7 +194,6 @@ function Step7({
       listingEndTime &&
       shippingAddress
     ) {
-      // do something
       onUpdateDetails({
         pricePerKilo: Number(price),
         catchDate,
@@ -290,7 +294,7 @@ function Step7({
             placeholder=""
             label="Listing valid until"
             date={listingEndDate ? moment(listingEndDate) : null}
-            onDateChange={(d) => setListingEndDate(d?.toDate() || null)}
+            onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
             error={
               pathOr('', ['listingEndDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)

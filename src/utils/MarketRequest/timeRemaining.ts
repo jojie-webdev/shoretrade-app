@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const formatRunningDateDifference = (date = '') => {
-  const targetDate = moment(date).add(7, 'd');
+  const targetDate = moment(date);
   const today = moment();
   const difference = moment.duration(
     targetDate.diff(today, 'seconds'),

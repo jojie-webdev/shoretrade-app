@@ -10,6 +10,8 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
     ...item,
     expiry: moment(item.createdAt).add(7, 'd').isBefore()
       ? 'Expired'
-      : formatRunningDateDifference(item.createdAt),
+      : formatRunningDateDifference(
+          moment(item.createdAt).add(7, 'd').format()
+        ),
   }));
 };
