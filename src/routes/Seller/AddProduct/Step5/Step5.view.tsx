@@ -351,12 +351,14 @@ function Step6({
       </Row>
 
       <div className="box-error-container">
-        <Alert
-          fullWidth
-          alignText="center"
-          variant="error"
-          content="Please include at least 1 box and set minimum order"
-        />
+        {boxes.length === 0 && (
+          <Alert
+            fullWidth
+            alignText="center"
+            variant="error"
+            content="Please include at least 1 box and set minimum order"
+          />
+        )}
       </div>
 
       <FooterPadding />
