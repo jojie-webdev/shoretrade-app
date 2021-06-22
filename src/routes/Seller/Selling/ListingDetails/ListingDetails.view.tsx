@@ -280,10 +280,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                         weight="bold"
                       >
-                        {orderDetails.validUntil &&
-                          formatRunningDateDifference(
-                            orderDetails.validUntil.toUTCString()
-                          )}
+                        {moment().to(orderDetails.validUntil)}
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
@@ -553,10 +550,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       weight="bold"
                       className="product-desc"
                     >
-                      {orderDetails.validUntil &&
-                        formatRunningDateDifference(
-                          orderDetails.validUntil.toUTCString()
-                        )}
+                      {moment().to(orderDetails.validUntil)}
                     </Typography>
                   </div>
                 </ProductLabelContainer>
