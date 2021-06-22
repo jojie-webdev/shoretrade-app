@@ -351,7 +351,7 @@ function Step6({
       </Row>
 
       <div className="box-error-container">
-        {boxes.length === 0 && (
+        {(boxes.length === 0 || !minimumOrder) && (
           <Alert
             fullWidth
             alignText="center"
