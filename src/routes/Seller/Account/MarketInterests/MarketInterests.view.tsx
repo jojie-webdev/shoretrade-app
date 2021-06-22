@@ -122,7 +122,7 @@ const MarketInterestsView = ({
           <Col />
           <Col xs="content">
             <Button
-              loading={props.isSaving}
+              disabled={props.isSaving}
               onClick={props.onSave}
               text="Save"
             />
@@ -203,13 +203,13 @@ const MarketInterestsView = ({
       ))}
       <MobileFooter>
         <Button
-          disabled={isEmpty(innerCategories)}
-          loading={props.isSaving}
+          disabled={isEmpty(innerCategories) || props.isSaving}
           onClick={props.onSave}
           text="Save"
           takeFullWidth
         />
       </MobileFooter>
+
       {props.isSaving && <LoadingOverlay />}
     </Container>
   );
