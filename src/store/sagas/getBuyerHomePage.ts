@@ -1,13 +1,18 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getBuyerHomepage } from 'services/company';
-import { AsyncAction } from 'types/Action';
+import { AsyncAction, SocketAction } from 'types/Action';
 import {
   GetBuyerHomepageMeta,
   GetBuyerHomepagePayload,
 } from 'types/store/GetBuyerHomepageState';
+import {
+  SocketHomePageMeta,
+  SocketHomePagePayload,
+} from 'types/store/socketHomePageState';
 import { Store } from 'types/store/Store';
+import { findProduct } from 'utils/Listing';
 
-import { getBuyerHomepageActions } from '../actions';
+import { getBuyerHomepageActions, socketHomePageActions } from '../actions';
 
 function* getBuyerHomepageRequest(
   action: AsyncAction<GetBuyerHomepageMeta, GetBuyerHomepagePayload>
@@ -29,8 +34,51 @@ function* getBuyerHomepageRequest(
   }
 }
 
+function* handleSocketEvent(
+  action: SocketAction<SocketHomePageMeta, SocketHomePagePayload>
+) {
+  const state: Store = yield select();
+  const homeState = state.getBuyerHomepage.data;
+  const homeData = state.getBuyerHomepage.data?.data.data;
+  // findindex of id
+  const { id, remaining } = action.payload;
+  let idx = -1;
+  try {
+    console.log(idx);
+    if (homeData?.recentListing && idx == -1) {
+      idx = homeData.recentListing.findIndex((i) => findProduct(i, id));
+      console.log(idx);
+      if (idx !== -1) {
+        homeData.recentListing[idx].remaining = remaining;
+        console.log(homeData);
+        if (homeState) {
+          homeState.data.data = homeData;
+          console.log(homeState);
+          yield put(getBuyerHomepageActions.success(homeState));
+        }
+      }
+    }
+
+    if (homeData?.favouriteListing && idx == -1) {
+      idx = homeData.favouriteListing.findIndex((i) => findProduct(i, id));
+      console.log(idx);
+      if (idx !== -1) {
+        homeData.favouriteListing[idx].remaining = remaining;
+        if (homeState) {
+          homeState.data.data = homeData;
+          yield put(getBuyerHomepageActions.success(homeState));
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  // check each array in buyer homepage
+}
+
 function* getBuyerHomepageWatcher() {
   yield takeLatest(getBuyerHomepageActions.REQUEST, getBuyerHomepageRequest);
+  yield takeLatest(socketHomePageActions.HANDLE_EVENT, handleSocketEvent);
 }
 
 export default getBuyerHomepageWatcher;
