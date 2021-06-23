@@ -301,7 +301,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   expiry={
                     moment(data.createdAt).add(7, 'd').isBefore()
                       ? 'Expired'
-                      : formatRunningDateDifference(data.createdAt)
+                      : formatRunningDateDifference(
+                          moment(data.createdAt).add(7, 'd').format()
+                        )
                   }
                   offers={totalOffers}
                   image={data.image}

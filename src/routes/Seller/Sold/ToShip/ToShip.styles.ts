@@ -102,7 +102,14 @@ export const StyledInteraction = styled(Interaction)`
       flex: 1;
       margin-right: 16px;
 
+      .ship-order {
+        @media ${BREAKPOINTS['iPad']} {
+          margin-right: -8px;
+        }
+      }
+
       @media ${BREAKPOINTS['xl']} {
+        margin-right: 8px;
         justify-content: center;
         > button {
           margin-left: 190px;

@@ -57,7 +57,7 @@ export const ButtonContainer = styled.button<
     opacity: 0.5;
   }
 
-  @media ${BREAKPOINTS['sm']} {
+  @media (hover: none) and (pointer: coarse) {
     padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
     :hover {
       opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};

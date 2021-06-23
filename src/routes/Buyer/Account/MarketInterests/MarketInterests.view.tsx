@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
@@ -9,6 +9,7 @@ import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImage from 'components/module/CategoryImage';
 import Loading from 'components/module/Loading/Loading.view';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import Search from 'components/module/Search';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -41,6 +42,10 @@ const MarketInterestsView = ({
 }: MarketInterestsGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isInner]);
 
   if (!categories || loadingInnerCategories) {
     return <Loading />;
@@ -117,7 +122,7 @@ const MarketInterestsView = ({
           <Col />
           <Col xs="content">
             <Button
-              loading={props.isSaving}
+              disabled={props.isSaving}
               onClick={props.onSave}
               text="Save"
             />
@@ -193,13 +198,14 @@ const MarketInterestsView = ({
 
       <MobileFooter>
         <Button
-          disabled={isEmpty(innerCategories)}
-          loading={props.isSaving}
+          disabled={isEmpty(innerCategories) || props.isSaving}
           onClick={props.onSave}
           text="Save"
           takeFullWidth
         />
       </MobileFooter>
+
+      {props.isSaving && <LoadingOverlay />}
     </Container>
   );
 };

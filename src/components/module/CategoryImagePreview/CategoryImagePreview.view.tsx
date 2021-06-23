@@ -32,15 +32,11 @@ const CategoryImagePreview = (
       )}
       <div className="imgContainer">
         <div className="img" />
-        {marketBoard ? (
-          ''
-        ) : (
-          <BadgeContainer>
+        <BadgeContainer>
             <Badge badgeColor={theme.grey.shade3}>
               <TypographyView variant="overline">{categoryName}</TypographyView>
             </Badge>
           </BadgeContainer>
-        )}
       </div>
       <TypographyView
         className="label"

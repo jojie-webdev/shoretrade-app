@@ -107,8 +107,7 @@ export const ControlButton = styled.button<{
     visibility: hidden;
     width: 320px;
     background-color: black;
-    color: ${(props) =>
-      props.isMobile ? theme.brand.info : theme.grey.noshade};
+    color: ${() => theme.grey.noshade};
     text-align: center;
     border-radius: 6px;
     padding: 8px;

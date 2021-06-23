@@ -6,6 +6,7 @@ import { Cart, Crab } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -130,7 +131,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
         totalValue={totalValue}
         orderError={orderError}
         selectedShipping={selectedShipping}
-        processingOrder={processingOrder}
         placeOrder={placeOrder}
         onBack={() => setShowPaymentMethod(false)}
       />
@@ -140,13 +140,15 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
   return (
     <Container>
       {loadingShippingQuotes ? (
-        <Loading label="Loading Shipping Quotes" />
+        <div className="loading-container">
+          <Loading label="Loading Shipping Quotes" />
+        </div>
       ) : (
         <>
           {isEmpty(groupedOrders) ? (
             <EmptyContainer>
               <Row nogutter className="row">
-                <Typography variant="title4">No orders yet</Typography>
+                <Typography variant="title4">No Products Yet</Typography>
               </Row>
               <Row nogutter className="row">
                 <Col className="svg-col-spacer" />

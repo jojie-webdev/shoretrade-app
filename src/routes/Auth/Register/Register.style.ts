@@ -12,6 +12,10 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   height: 100%;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 100px;
+  }
 `;
 
 export const BackIcon = styled(ArrowLeft)``;
@@ -126,7 +130,6 @@ export const FormikContainer = styled(Form)`
 
   @media ${BREAKPOINTS['sm']} {
     padding-left: 0px;
-    margin-bottom: 100px;
   }
 `;
 

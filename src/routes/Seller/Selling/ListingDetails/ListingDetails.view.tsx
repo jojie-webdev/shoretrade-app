@@ -34,9 +34,10 @@ import { useTheme } from 'utils/Theme';
 import { ListingDetailsProps } from './ListingDetails.props';
 import {
   Wrapper,
-  DetailsCard,
+  CarouselContainer,
   SellerPreview,
   SalesCard,
+  SalesDetailsCard,
   ActionContainer,
   NoProfilePic,
   TopContainer,
@@ -61,28 +62,30 @@ const Actions = (props: ListingDetailsProps) => {
         <div className="left-container">
           <div className="left-text-container">
             <Typography variant="body" color="shade9" weight="bold">
-              This is a preview of your listed product
+              This is the Buyers' view of your product listing
             </Typography>
             <Typography variant="label" color="shade6" weight="regular">
-              Buyers will check this page and eventually buy the product from
-              their buyer account.
+              Any changes made to your listing will be instantly reflected to
+              Buyers
             </Typography>
           </div>
         </div>
 
-        <div className="end-left-content">
-          <div className="pen-container">
-            <StyledTouchable onPress={() => onRemove && onEdit && onEdit()}>
-              <Pen fill={theme.brand.primary} height={20} width={20} />
-            </StyledTouchable>
-          </div>
+        {onEdit && onRemove && (
+          <div className="end-left-content">
+            <div className="pen-container">
+              <StyledTouchable onPress={() => onEdit()}>
+                <Pen fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
 
-          <div className="trash-container">
-            <StyledTouchable onPress={() => onRemove && onRemove()}>
-              <TrashCan fill={theme.brand.primary} height={20} width={20} />
-            </StyledTouchable>
+            <div className="trash-container">
+              <StyledTouchable onPress={() => onRemove()}>
+                <TrashCan fill={theme.brand.primary} height={20} width={20} />
+              </StyledTouchable>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </TopContainer>
   );
@@ -90,6 +93,12 @@ const Actions = (props: ListingDetailsProps) => {
 
 const ListingDetailsView = (props: ListingDetailsProps) => {
   const theme = useTheme();
+  const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const addSeparatorSpacing = useMediaQuery({
+    query: '(min-width: 992px)',
+  });
+
   const {
     listing,
     onRemove,
@@ -102,12 +111,14 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     clearListing,
   } = props;
 
+  const [images, setImages] = useState<string[]>([]);
+
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
   const formattedCatchDate = () =>
     moment(orderDetails.catchDate).format('DD MMMM YYYY');
-  const [images, setImages] = useState<string[]>([]);
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const history = useHistory();
+
+  let percent = (Number(sales.soldWeight) / Number(sales.totalWeight)) * 100;
+  if (percent >= 100) percent = 100;
 
   useEffect(() => {
     if (carousel.items) {
@@ -129,14 +140,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
     }
   }, [carousel.items]);
 
-  const addSeparatorSpacing = useMediaQuery({
-    query: '(min-width: 992px)',
-  });
-
   if (isMobile) {
-    let percent = (Number(sales.soldWeight) / Number(sales.totalWeight)) * 100;
-    if (percent >= 100) percent = 100;
-
     return (
       <>
         <Carousel
@@ -276,10 +280,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                         weight="bold"
                       >
-                        {orderDetails.validUntil &&
-                          formatRunningDateDifference(
-                            orderDetails.validUntil.toUTCString()
-                          )}
+                        {moment().to(orderDetails.validUntil)}
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
@@ -316,20 +317,34 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             </div>
           </Row>
         </MobileWrapper>
-        <MobileFooter>
-          <Button
-            variant="outline"
-            takeFullWidth
-            text="Edit"
-            onClick={() => onRemove && onEdit && onEdit()}
-          />
 
-          <Button
-            takeFullWidth
-            style={{ marginLeft: 8 }}
-            text="Remove"
-            onClick={() => onRemove && onRemove()}
-          />
+        <MobileFooter>
+          {onRemove && onEdit && (
+            <>
+              <Button
+                variant="outline"
+                takeFullWidth
+                text="Edit"
+                onClick={() => onEdit()}
+              />
+
+              <Button
+                takeFullWidth
+                style={{ marginLeft: 8 }}
+                text="Remove"
+                onClick={() => onRemove()}
+              />
+            </>
+          )}
+
+          {onCreate && !isCreatListingSuccess && (
+            <Button
+              takeFullWidth
+              text={isExisting ? 'Update' : 'Create Listing'}
+              onClick={onCreate}
+              loading={isPending}
+            />
+          )}
         </MobileFooter>
       </>
     );
@@ -428,19 +443,17 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
         </TopDetailsContainer>
         <Row nogutter className="wrapper">
           <Col xs={12} sm={12} md={12} lg={10} xl={5}>
-            <DetailsCard>
-              <div style={{ width: '100%' }}>
-                <Carousel
-                  id="product-carousel"
-                  images={images}
-                  loop
-                  arrowInside
-                  variant={isMobile ? 'bullet' : 'thumbnail'}
-                  aspectRatio="9:4"
-                  showActionButton={isMobile}
-                />
-              </div>
-            </DetailsCard>
+            <CarouselContainer>
+              <Carousel
+                id="product-carousel"
+                images={images}
+                loop
+                arrowInside
+                variant={isMobile ? 'bullet' : 'thumbnail'}
+                aspectRatio="9:4"
+                showActionButton={isMobile}
+              />
+            </CarouselContainer>
           </Col>
           <Col
             sm={12}
@@ -450,7 +463,35 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
             style={{ paddingLeft: addSeparatorSpacing ? 32 : 0 }}
             className="card-container"
           >
-            <SalesCard isCreatListingSuccess={isCreatListingSuccess}>
+            {!isCreatListingSuccess && (
+              <SalesCard>
+                <div className="sales-container">
+                  <Typography variant="title5" color="shade6" weight="regular">
+                    Sales:
+                  </Typography>
+
+                  <Typography
+                    variant="title5"
+                    color="shade9"
+                    weight="900"
+                    className="per-label"
+                  >
+                    {sales.sales}
+                  </Typography>
+                </div>
+                <div className="sold-container">
+                  <Typography variant="label" color="shade9" weight="bold">
+                    {`${sales.soldWeight} / ${sales.totalWeight} ${sales.unit} Sold`}
+                  </Typography>
+                </div>
+
+                <div className="progress-container">
+                  <Progress percent={percent} />
+                </div>
+              </SalesCard>
+            )}
+
+            <SalesDetailsCard isCreatListingSuccess={isCreatListingSuccess}>
               <div className="seller-details-container">
                 {productDetails.vendor.uri ? (
                   <SellerPreview src={productDetails.vendor.uri} />
@@ -509,10 +550,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       weight="bold"
                       className="product-desc"
                     >
-                      {orderDetails.validUntil &&
-                        formatRunningDateDifference(
-                          orderDetails.validUntil.toUTCString()
-                        )}
+                      {moment().to(orderDetails.validUntil)}
                     </Typography>
                   </div>
                 </ProductLabelContainer>
@@ -565,7 +603,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </div>
                 </ProductLabelContainer>
               </ProductDetailsContainer>
-            </SalesCard>
+            </SalesDetailsCard>
 
             {onCreate && !isCreatListingSuccess && (
               <ActionContainer>

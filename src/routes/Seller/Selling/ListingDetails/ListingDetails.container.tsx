@@ -27,6 +27,7 @@ const ListingDetailsContainer = (
 
   const currentListing = GetListingSelector(listingId);
   const listing = listingToListingProps(currentListing);
+
   const onEdit = () => {
     dispatch(
       editSelectedListingActions.update({
