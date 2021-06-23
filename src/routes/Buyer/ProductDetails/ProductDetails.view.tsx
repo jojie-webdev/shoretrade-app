@@ -64,8 +64,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isPendingAccount,
     isAquafuture,
   } = props;
-  const boxWeightsRef = useRef<HTMLDivElement>(null);
-  const [didScroll, setDidScroll] = useState(false);
+
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
     GetListingResponseItem
@@ -87,24 +86,18 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   }, [newCurrentListing, newCurrentListing?.images]);
 
   useEffect(() => {
-    if (!isEmpty(groupedBox) && !didScroll) {
-      setDidScroll(true);
-      boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    if(!isEmpty(groupedBox)) {
-      const isMobileScreen = window.innerWidth <= 864;
-      if(isMobileScreen) {
+    if (!isEmpty(groupedBox)) {
+      if (isMobile) {
         window.scrollTo({
           top: document.documentElement.scrollHeight,
-          behavior: "smooth"
+          behavior: 'smooth',
         });
       } else {
         const containerEl = document.querySelector('.screen');
-        if(containerEl) {
+        if (containerEl) {
           containerEl.scrollTo({
             top: containerEl.scrollHeight,
-            behavior: "smooth"
+            behavior: 'smooth',
           });
         }
       }
