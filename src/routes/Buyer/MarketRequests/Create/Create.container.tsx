@@ -8,7 +8,6 @@ import {
   searchProductTypeActions,
 } from 'store/actions';
 import { GetDefaultCompany, GetAddressOptions } from 'store/selectors/buyer';
-import { GetAddressOptions as transformAddress } from 'store/selectors/seller/addresses';
 import { Store } from 'types/store/Store';
 
 import { CreateRequestGeneratedProps } from './Create.props';
@@ -58,7 +57,9 @@ const CreateRequest = (): JSX.Element => {
   const currentDefaultAddress = addresses.find((i) => i.default) || {
     id: '',
   };
-  const test = addressOptions.find((a) => a.value === currentDefaultAddress.id);
+  const currentFoundAddress = addressOptions.find(
+    (a) => a.value === currentDefaultAddress.id
+  );
   const [selectedAddress, setSelectedAddress] = useState<{
     label: string;
     value: string;
@@ -68,8 +69,8 @@ const CreateRequest = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (test?.label != undefined) {
-      setSelectedAddress(test);
+    if (currentFoundAddress?.label != undefined) {
+      setSelectedAddress(currentFoundAddress);
     }
   }, [currentDefaultAddress]);
 
