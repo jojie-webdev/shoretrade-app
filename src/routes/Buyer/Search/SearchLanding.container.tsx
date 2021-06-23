@@ -14,6 +14,7 @@ import { Store } from 'types/store/Store';
 const SearchLanding = (): JSX.Element => {
   const dispatch = useDispatch();
 
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
@@ -35,6 +36,11 @@ const SearchLanding = (): JSX.Element => {
     setSearchTerm('');
   };
 
+  const handleSearchTerm = (term: string) => {
+    setSearchTerm(term);
+    setIsTyping(true);
+  }
+
   const saveSearchHistory = (id: string, label: string, count: string) => {
     const historyLimit = 20;
     const isExisting = recent.findIndex((r) => r.value === id) !== -1;
@@ -53,6 +59,14 @@ const SearchLanding = (): JSX.Element => {
       );
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if(isTyping) setIsTyping(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [isTyping, searchTerm]);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
@@ -78,9 +92,10 @@ const SearchLanding = (): JSX.Element => {
     data,
     isSearching,
     searchTerm,
-    setSearchTerm,
+    setSearchTerm: handleSearchTerm,
     onReset,
     saveSearchHistory,
+    isTyping
   };
 
   return <SearchLandingView {...generatedProps} />;

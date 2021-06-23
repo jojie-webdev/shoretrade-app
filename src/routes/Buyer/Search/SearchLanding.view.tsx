@@ -37,6 +37,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
     setSearchTerm,
     onReset,
     saveSearchHistory,
+    isTyping
   } = props;
 
   return (
@@ -75,13 +76,13 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
         )}
       </Row>
 
-      {isSearching && (
+      {isSearching && !isTyping && (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>
       )}
 
-      {searchTerm.length > 2 && !isSearching && data.length === 0 && (
+      {searchTerm.length > 2 && !isSearching && data.length === 0 && !isTyping && (
         <>
           <Row justify="between" nogutter className="no-search-results">
             <div>
