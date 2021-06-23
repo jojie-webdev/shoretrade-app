@@ -1,6 +1,10 @@
 import { Action, Store } from 'redux';
 import createSocketConnection from 'services/websocket';
-import { getUserActions, socketCreditActions } from 'store/actions';
+import {
+  getBuyerHomepageActions,
+  getUserActions,
+  socketCreditActions,
+} from 'store/actions';
 import socketHomePageActions from 'store/actions/socketHomePage';
 
 const createSocketMiddleware = () => {
@@ -28,6 +32,9 @@ const createSocketMiddleware = () => {
           });
         });
 
+        break;
+      }
+      case getBuyerHomepageActions.REQUEST: {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?

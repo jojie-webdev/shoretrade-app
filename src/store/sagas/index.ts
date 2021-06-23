@@ -69,7 +69,6 @@ import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
-import socketCredit from './socketCredit';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -163,7 +162,6 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
-  // socketCredit,
 ];
 
 export default function* root() {
