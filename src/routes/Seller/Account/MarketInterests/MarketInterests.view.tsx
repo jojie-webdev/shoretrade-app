@@ -119,7 +119,7 @@ const MarketInterestsView = ({
 
       <Row nogutter style={{ margin: '16px 0' }}>
         <Col />
-        {!isEmpty(innerCategories) && !isMobile && isInner && (
+        {!isEmpty(innerCategories) && !isMobile && (isInner || searchTerm) && (
           <Col xs="content">
             <Button
               disabled={props.isSaving}
