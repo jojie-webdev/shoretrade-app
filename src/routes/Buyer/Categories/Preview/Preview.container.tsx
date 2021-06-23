@@ -99,6 +99,7 @@ const CategoriesPreview = (): JSX.Element => {
   const onClickClose = () => {
     setVisible(!isOpen);
   };
+
   // used by FilterModal
   const { sizeRangeFrom, sizeRangeTo } = getSize(
     getBuyerSearchFilterData,
@@ -127,8 +128,8 @@ const CategoriesPreview = (): JSX.Element => {
   useEffect(() => {
     setPrevTypeId(typeIdParsed);
   }, [typeIdParsed]);
+
   useEffect(() => {
-    onLoad(typeIdParsed);
     const {
       catchmentArea,
       showUngraded,
@@ -136,6 +137,8 @@ const CategoriesPreview = (): JSX.Element => {
       sizeRangeTo,
       specifications,
     } = filterState;
+
+    onLoad(typeIdParsed);
 
     if (prevTypeId == typeIdParsed) {
       dispatch(
@@ -186,6 +189,22 @@ const CategoriesPreview = (): JSX.Element => {
       })
     );
   };
+
+  // used by FilterArea
+  // const onChangeFilter = (f: {
+  //   catchmentArea?: string;
+  //   sizeRangeFrom?: number | string;
+  //   sizeRangeTo?: number | string;
+  //   specifications?: string;
+  //   showUngraded?: boolean;
+  // }) => {
+  //   dispatch(
+  //     getListingsByTypeActions.request({
+  //       typeId: typeIdParsed,
+  //       filterData: f,
+  //     })
+  //   );
+  // };
 
   const generatedProps = {
     searchValue,
