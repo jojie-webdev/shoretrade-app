@@ -51,6 +51,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     onSubmitRequest,
     search,
     pendingSearch,
+    addressOptions,
+    selectedAddress,
+    setSelectedAddress,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -276,6 +279,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            addressOptions={addressOptions}
+            selectedAddress={selectedAddress}
+            onChangeAddress={(a) => setSelectedAddress(a)}
           />
         );
 

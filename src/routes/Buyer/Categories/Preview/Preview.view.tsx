@@ -54,7 +54,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
 
   useEffect(() => {
     selectAddress(typeId);
-    onLoad(typeId);
+    // onLoad(typeId);
   }, []);
 
   return (

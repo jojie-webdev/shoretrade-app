@@ -7,7 +7,7 @@ import {
   createMarketRequestActions,
   searchProductTypeActions,
 } from 'store/actions';
-import { GetDefaultCompany } from 'store/selectors/buyer';
+import { GetDefaultCompany, GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
 import { CreateRequestGeneratedProps } from './Create.props';
@@ -50,6 +50,33 @@ const CreateRequest = (): JSX.Element => {
     [];
 
   const companyId = currentCompany?.id || '';
+  const addressOptions = GetAddressOptions();
+  const addresses =
+    useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
+    [];
+  const currentDefaultAddress = addresses.find((i) => i.default) || {
+    id: '',
+  };
+  const currentFoundAddress = addressOptions.find(
+    (a) => a.value === currentDefaultAddress.id
+  );
+  const [selectedAddress, setSelectedAddress] = useState<{
+    label: string;
+    value: string;
+  }>({
+    label: '',
+    value: currentDefaultAddress.id,
+  });
+
+  useEffect(() => {
+    if (currentFoundAddress?.label != undefined) {
+      setSelectedAddress(currentFoundAddress);
+    }
+  }, [currentDefaultAddress]);
+
+  const onChangeAddress = (e: { label: string; value: string }) => {
+    setSelectedAddress(e);
+  };
 
   const listingFormData =
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
@@ -86,7 +113,7 @@ const CreateRequest = (): JSX.Element => {
         typeId: listingFormData?.type.id,
         companyId: companyId,
         buyerId: user?.id,
-        addressId: currentCompany?.addresses[0].id,
+        addressId: selectedAddress.value,
         stateOptions: selectedSpecifications.items.map((item) => item.value),
         weight: {
           from: Number(selectedQuantity.from),
@@ -186,6 +213,10 @@ const CreateRequest = (): JSX.Element => {
     setSearchTerm: setSearchTerm,
     selectedCategory,
     setSelectedCategory,
+    addressOptions,
+    selectedAddress,
+    setSelectedAddress,
+    onChangeAddress,
   };
 
   return <CreateRequestLandingView {...generatedProps} />;
