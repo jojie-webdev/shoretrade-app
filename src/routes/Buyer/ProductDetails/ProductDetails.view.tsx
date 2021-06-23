@@ -93,12 +93,20 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     }
 
     if(!isEmpty(groupedBox)) {
-      const containerEl = document.querySelector('.screen');
-      if(containerEl) {
-        containerEl.scrollTo({
-          top: containerEl.scrollHeight,
+      const isMobileScreen = window.innerWidth <= 864;
+      if(isMobileScreen) {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
           behavior: "smooth"
         });
+      } else {
+        const containerEl = document.querySelector('.screen');
+        if(containerEl) {
+          containerEl.scrollTo({
+            top: containerEl.scrollHeight,
+            behavior: "smooth"
+          });
+        }
       }
     }
   }, [groupedBox]);
