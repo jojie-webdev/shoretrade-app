@@ -4,11 +4,15 @@ import React, { useEffect } from 'react';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import Select from 'components/base/Select';
 import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import LocationSearch from 'components/module/LocationSearch';
+import { pathOr } from 'ramda';
 import { Row, Col, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -164,7 +168,14 @@ const SummaryView = (props: SummaryProps) => {
                 </TypographyView>
               }
             />
-            <TypographyView variant="caption">
+            <Select
+              value={props.selectedAddress}
+              onChange={props.onChangeAddress}
+              options={props.addressOptions}
+              label="Shipping To"
+            />
+
+            <TypographyView variant="caption" style={{ marginTop: 8 }}>
               This request will automatically close once maximum quantity
               requested is reached
             </TypographyView>
