@@ -91,6 +91,16 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       setDidScroll(true);
       boxWeightsRef?.current?.scrollIntoView({ behavior: 'smooth' });
     }
+
+    if(!isEmpty(groupedBox)) {
+      const containerEl = document.querySelector('.screen');
+      if(containerEl) {
+        containerEl.scrollTo({
+          top: containerEl.scrollHeight,
+          behavior: "smooth"
+        });
+      }
+    }
   }, [groupedBox]);
 
   return (
