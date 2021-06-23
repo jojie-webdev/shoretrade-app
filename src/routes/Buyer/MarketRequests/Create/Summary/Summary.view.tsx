@@ -175,7 +175,7 @@ const SummaryView = (props: SummaryProps) => {
               label="Shipping To"
             />
 
-            <TypographyView variant="caption">
+            <TypographyView variant="caption" style={{ marginTop: 8 }}>
               This request will automatically close once maximum quantity
               requested is reached
             </TypographyView>
