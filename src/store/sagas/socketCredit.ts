@@ -17,7 +17,7 @@ import {
   SocketCreditPayload,
 } from 'types/store/SocketCreditState';
 
-import { getUserActions, socketCreditActions } from '../actions';
+import { socketCreditActions } from '../actions';
 
 function createSocketChannel(socket: any, companyId: string) {
   return eventChannel((emit) => {
@@ -40,15 +40,10 @@ function createSocketChannel(socket: any, companyId: string) {
   });
 }
 
-function* emitResponse(socket: Socket) {
-  yield apply(socket, socket.emit, ['message received']);
-}
-
 function* watchSocketChannel(
   action: AsyncAction<SocketCreditMeta, SocketCreditPayload>
 ): any {
   const socket: Socket = yield call(createWebSocketConnection);
-  yield put(socketCreditActions.success(socket));
   const socketChannel = yield call(
     createSocketChannel,
     socket,
@@ -59,7 +54,7 @@ function* watchSocketChannel(
     try {
       const payload = yield take(socketChannel);
       console.log(payload);
-      yield put(socketCreditActions.handleEvent(payload)); // for tracking/testing
+      yield put(socketCreditActions.handleEvent()); // for tracking/testing
       // yield put(getUserActions.request()); // refresh credit
     } catch (err) {
       console.log('socket error: ', err);
@@ -68,7 +63,7 @@ function* watchSocketChannel(
 }
 
 function* joinChannelWatcher() {
-  yield takeLatest(socketCreditActions.CONNECT, watchSocketChannel);
+  // yield takeLatest(socketCreditActions.CONNECT, watchSocketChannel);
 }
 
 export default joinChannelWatcher;

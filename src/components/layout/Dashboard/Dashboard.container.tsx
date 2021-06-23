@@ -67,8 +67,6 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const userType = useSelector((state: Store) => state.auth.type) || '';
 
-  const socket =
-    useSelector((state: Store) => state.socketCredit.socket) || null;
   const socketCreditData =
     useSelector((state: Store) => state.socketCredit.data) || null;
 
@@ -129,16 +127,6 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       document.getElementsByTagName('body')[0].classList.remove('no-scroll');
     };
   }, []);
-
-  useEffect(() => {
-    if (defaultCompany !== null) {
-      if (socket === null) {
-        dispatch(
-          socketCreditActions.connect({ companyId: defaultCompany?.id || '' })
-        );
-      }
-    }
-  }, [defaultCompany, socket]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

@@ -198,6 +198,10 @@ import {
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import { SocketCreditMeta, SocketCreditPayload } from './SocketCreditState';
+import {
+  SocketHomePageMeta,
+  SocketHomePagePayload,
+} from './socketHomePageState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -223,7 +227,7 @@ export interface Store {
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;
-  logout: AsyncState<String, LoginPayload>;
+  logout: AsyncState<string, LoginPayload>;
   verify: AsyncState<VerifyMeta, VerifyPayload>;
   register: AsyncState<RegisterMeta, RegisterPayload>;
   forgotPassword: AsyncState<ForgotPasswordMeta, ForgotPasswordPayload>;
@@ -415,4 +419,5 @@ export interface Store {
     };
   };
   socketCredit: SocketState<SocketCreditMeta, SocketCreditPayload>;
+  socketHomePage: SocketState<SocketHomePageMeta, SocketHomePagePayload>;
 }

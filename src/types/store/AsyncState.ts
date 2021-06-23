@@ -8,7 +8,6 @@ export type AsyncState<Meta = any, Payload = any> = {
 };
 
 export type SocketState<Meta = any, Payload = any, SocketInstance = any> = {
-  socket: SocketInstance | null;
   data: Payload | null;
   error: string;
 };

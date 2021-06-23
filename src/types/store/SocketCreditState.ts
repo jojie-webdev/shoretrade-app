@@ -1,7 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
 
-export type SocketCreditMeta = {
-  companyId: string;
-};
+export type SocketCreditMeta = any;
 
 export type SocketCreditPayload = any;

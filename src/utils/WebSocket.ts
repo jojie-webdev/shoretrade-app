@@ -1,6 +1,7 @@
 import { Action, Store } from 'redux';
 import createSocketConnection from 'services/websocket';
-import { getUserActions } from 'store/actions';
+import { getUserActions, socketCreditActions } from 'store/actions';
+import socketHomePageActions from 'store/actions/socketHomePage';
 
 const createSocketMiddleware = () => {
   let socket: any;
@@ -17,18 +18,25 @@ const createSocketMiddleware = () => {
           ? action.payload.data.user.companies[0].id
           : '';
         socket.emit('join', companyId);
+
+        // NEW_CREDIT
         socket.on('NEW_CREDIT', (message: any) => {
-           // dispatch action watched by sagas ?
+          // dispatch action watched by sagas ?
           storeAPI.dispatch({
-            type: 'SOCKET_MESSAGE_RECEIVED',
+            type: socketCreditActions.HANDLE_EVENT,
+            payload: message,
+          });
+        });
+
+        // UPDATE_REMAINING_BOXES
+        socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
+          // dispatch action watched by sagas ?
+          storeAPI.dispatch({
+            type: socketHomePageActions.HANDLE_EVENT,
             payload: message,
           });
         });
         break;
-      }
-      case 'SEND_WEBSOCKET_MESSAGE': {
-        socket.send(action.payload);
-        return;
       }
     }
 

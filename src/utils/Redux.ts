@@ -114,14 +114,7 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
 // ==== REDUCER ====
 
 export const createSocketReducer = <Meta = any, Payload = any>(
-  {
-    CONNECT,
-    SUCCESS,
-    JOIN,
-    // WATCH,
-    HANDLE_EVENT,
-    DISCONNECT,
-  }: SocketActionTypes,
+  { HANDLE_EVENT, DISCONNECT }: SocketActionTypes,
   customEventsHandler?: (
     state: SocketState<Meta, Payload>,
     action: SocketAction<Meta, Payload>,
@@ -129,26 +122,14 @@ export const createSocketReducer = <Meta = any, Payload = any>(
   ) => Record<string, SocketState<Meta, Payload>>
 ) => {
   const DEFAULT_STATE: SocketState<Meta, Payload> = {
-    error: '',
-    socket: null,
     data: null,
+    error: '',
   };
   return (
     state: SocketState<Meta, Payload> = DEFAULT_STATE,
     action: AsyncAction<Meta, Payload>
   ): SocketState<Meta, Payload> => {
     return pathOr(state, [action.type], {
-      [CONNECT]: {
-        data: null,
-        socket: null,
-        pending: true,
-        error: '',
-      },
-      [SUCCESS]: {
-        ...state,
-        pending: false,
-        socket: action.payload,
-      },
       [HANDLE_EVENT]: {
         ...state,
         pending: false,
@@ -166,49 +147,21 @@ export const createSocketReducer = <Meta = any, Payload = any>(
 export const createSocketAction = <Meta = any, Payload = any>(
   namespace: string
 ) => {
-  const connectType = `${namespace}/CONNECT`;
-  const successType = `${namespace}/SUCCESS`;
-  const joinType = `${namespace}/JOIN`;
-  const watchType = `${namespace}/WATCH`;
   const handleEventType = `${namespace}/HANDLE_EVENT`;
   const disconnectType = `${namespace}/DISCONNECT`;
   return {
-    connect: (meta: Meta) => ({
-      type: connectType,
-      meta,
-    }),
-    success: (payload: Payload) => ({
-      type: successType,
-      payload,
-    }),
-    join: (payload: Payload) => ({
-      type: joinType,
-      payload,
-    }),
-    // watch: (payload: Payload) => ({
-    //   type: watchType,
-    //   payload,
-    // }),
-    handleEvent: (payload: Payload) => ({
+    handleEvent: () => ({
       type: handleEventType,
-      payload,
     }),
     disconnect: () => ({
       type: disconnectType,
     }),
-    CONNECT: connectType,
-    JOIN: joinType,
-    SUCCESS: successType,
     HANDLE_EVENT: handleEventType,
     DISCONNECT: disconnectType,
   };
 };
 
 type SocketActionTypes = {
-  CONNECT: string;
-  SUCCESS: string;
-  JOIN: string;
-  // WATCH: string;
   HANDLE_EVENT: string;
   DISCONNECT: string;
 };

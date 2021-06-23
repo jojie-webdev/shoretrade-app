@@ -78,6 +78,8 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
+import socketCredit from './socketCredit';
+import socketHomePage from './socketHomePage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -89,7 +91,6 @@ import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
-import socketCredit from './socketCredit';
 
 export default (routeHistory: History) =>
   combineReducers(
@@ -184,6 +185,7 @@ export default (routeHistory: History) =>
         getPaymentMode,
         sendDispute,
         socketCredit,
+        socketHomePage,
       }).sort()
     )
   );
