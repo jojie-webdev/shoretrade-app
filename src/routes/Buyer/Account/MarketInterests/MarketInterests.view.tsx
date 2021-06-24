@@ -115,6 +115,7 @@ const MarketInterestsView = ({
           </div>
         </Col>
       </Row>
+
       <Row nogutter style={{ margin: '16px 0' }}>
         <Col />
         {!isEmpty(innerCategories) && !isMobile && (isInner || searchTerm) && (
@@ -127,6 +128,7 @@ const MarketInterestsView = ({
           </Col>
         )}
       </Row>
+
       {!isInner &&
         !props.isSaving &&
         categories.map((c) => {
@@ -203,7 +205,7 @@ const MarketInterestsView = ({
         />
       </MobileFooter>
 
-      {props.isSaving && <Loading />}
+      {props.isSaving && <LoadingOverlay />}
     </Container>
   );
 };

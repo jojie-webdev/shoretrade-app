@@ -211,7 +211,7 @@ const MarketInterestsView = ({
         />
       </MobileFooter>
 
-      {props.isSaving && <Loading />}
+      {props.isSaving && <LoadingOverlay />}
     </Container>
   );
 };

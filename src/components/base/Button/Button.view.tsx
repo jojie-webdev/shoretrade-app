@@ -16,6 +16,7 @@ const Button = (props: ButtonProps): JSX.Element => {
   // const theme = useTheme();
   const {
     loading,
+    disabled,
     icon,
     text,
     color,
@@ -67,6 +68,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       hasText={hasText}
       iconPosition={iconPosition}
       takeFullWidth={takeFullWidth}
+      disabled={disabled || loading}
       {...buttonProps}
     >
       {icon && iconPosition === 'before' && (
