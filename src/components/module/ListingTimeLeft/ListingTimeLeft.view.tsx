@@ -34,9 +34,6 @@ const ListingTimeLeft = (props: ListingTimeLeftProps): JSX.Element => {
       );
     }
   };
-  {
-    console.log(timeLeft.diff(now, 'minutes'));
-  }
   if (timeLeft.diff(now, 'minutes') <= 60) {
     return (
       <Container>

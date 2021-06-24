@@ -12,11 +12,11 @@ const createSocketMiddleware = () => {
 
   return (storeAPI: any) => (next: any) => (action: any) => {
     switch (action.type) {
-      case getUserActions.SUCCESS: {
-        //authenticated
+      case '@@router/LOCATION_CHANGE': {
         socket = createSocketConnection();
-        console.log(action);
-
+        break;
+      }
+      case getUserActions.SUCCESS: {
         // get company id to join
         const companyId = action.payload.data.user.companies.length
           ? action.payload.data.user.companies[0].id
