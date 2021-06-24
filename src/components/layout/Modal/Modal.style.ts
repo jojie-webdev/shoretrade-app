@@ -11,7 +11,7 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   align-items: center;
   top: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 3333;
 `;
 
 export const ModalContainer = styled.div<{ backgroundColor?: string }>`
