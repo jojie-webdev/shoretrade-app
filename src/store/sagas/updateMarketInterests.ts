@@ -1,4 +1,4 @@
-import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, call, takeLatest, select, delay } from 'redux-saga/effects';
 import { updateMarketInterests } from 'services/company';
 import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
@@ -22,6 +22,7 @@ function* updateMarketInterestsRequest(
         state.auth.token
       );
 
+      yield delay(1200);
       yield put(updateMarketInterestsActions.success(data));
     } catch (e) {
       yield put(updateMarketInterestsActions.failed(e.message));

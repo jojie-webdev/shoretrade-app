@@ -7,7 +7,10 @@ export const Container = styled.div`
   position: fixed;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(244, 246, 255, 0.9); //shade2
+  background-color: ${({ theme }) => {
+    if (theme.appType === 'buyer') return 'rgba(244, 246, 255, 0.9)'; //shade2
+    return 'rgba(9, 19, 29, 0.9)'; //shade8
+  }};
   justify-content: center;
   align-items: center;
   top: 0;
