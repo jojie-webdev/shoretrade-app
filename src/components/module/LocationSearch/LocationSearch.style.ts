@@ -24,7 +24,7 @@ export const Results = styled.div`
   position: absolute;
   top: 100%;
   width: 100%;
-  z-index: 1000;
+  z-index: 999;
 
   .item:last-child {
     border-bottom-right-radius: 2px;

@@ -15,7 +15,7 @@ export const Container = styled.div`
   align-items: center;
   top: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 4444;
 `;
 
 export const Label = styled(Typography)`

@@ -8,7 +8,7 @@ export const Container = styled.div<{ isOpen: boolean }>`
   width: 100vw;
   bottom: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 3333;
   background-color: rgba(9, 19, 29, 0.9);
 `;
 

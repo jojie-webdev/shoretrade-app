@@ -171,7 +171,7 @@ export const MobileFooter = styled.div`
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   width: 100%;
-  z-index: 999;
+  z-index: 2222;
   position: fixed;
   bottom: 0;
 `;
