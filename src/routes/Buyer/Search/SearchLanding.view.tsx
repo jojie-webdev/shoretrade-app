@@ -37,7 +37,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
     setSearchTerm,
     onReset,
     saveSearchHistory,
-    isTyping
+    isTyping,
   } = props;
 
   return (

@@ -39,7 +39,7 @@ const SearchLanding = (): JSX.Element => {
   const handleSearchTerm = (term: string) => {
     setSearchTerm(term);
     setIsTyping(true);
-  }
+  };
 
   const saveSearchHistory = (id: string, label: string, count: string) => {
     const historyLimit = 20;
@@ -62,8 +62,8 @@ const SearchLanding = (): JSX.Element => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if(isTyping) setIsTyping(false);
-    }, 1500);
+      if (isTyping) setIsTyping(false);
+    }, 750);
 
     return () => clearTimeout(timer);
   }, [isTyping, searchTerm]);
@@ -95,7 +95,7 @@ const SearchLanding = (): JSX.Element => {
     setSearchTerm: handleSearchTerm,
     onReset,
     saveSearchHistory,
-    isTyping
+    isTyping,
   };
 
   return <SearchLandingView {...generatedProps} />;
