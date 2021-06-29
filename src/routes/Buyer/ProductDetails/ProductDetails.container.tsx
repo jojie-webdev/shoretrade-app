@@ -176,6 +176,7 @@ const ProductDetails = (): JSX.Element => {
           isFavourite: currentListing.isFavourite,
           address: currentListing.address,
           measurementUnit: currentListing.measurementUnit,
+          packagingId: currentListing.packaging?.id || null,
         },
         orderBoxes: currentBox.boxes.map((b) => ({
           id: b.id,

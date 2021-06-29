@@ -64,7 +64,7 @@ import {
   GetStartedButton,
   StepCount,
   Title,
-  TextField,
+  StyledFormikTextField,
   FormikContainer,
   GetStartedWrapper,
   InputContainer,
@@ -709,7 +709,7 @@ const StepForm = ({
             <Content>
               {fields.map(({ key, type, secured, label, alert, prefix }) => (
                 <Fragment key={key}>
-                  <TextField
+                  <StyledFormikTextField
                     name={key}
                     type={type}
                     label={label}

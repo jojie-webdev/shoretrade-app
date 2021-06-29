@@ -27,4 +27,21 @@ export const editableListingToCreateListing = (
   ends: data?.ends ? moment(data.ends).toISOString() : null,
   isAquafuture: data?.isAquafuture || false,
   addressId: data?.addressId || '',
+  packaging: {
+    ...(data?.packaging?.id
+      ? {
+          id: data.packaging.id,
+        }
+      : {}),
+    ...(data?.packaging?.custom
+      ? {
+          custom: {
+            width: data.packaging.custom.width,
+            height: data.packaging.custom.height,
+            length: data.packaging.custom.length,
+            airlineApproved: data.packaging.custom.airlineApproved || false,
+          },
+        }
+      : {}),
+  },
 });

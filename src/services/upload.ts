@@ -73,9 +73,6 @@ export const uploadImageData = async ({
       0,
       uploadMobileUrl.indexOf('?')
     );
-
-    console.log(uploadMobileStatus);
-    console.log(downloadMobileUrl);
   }
 
   return {

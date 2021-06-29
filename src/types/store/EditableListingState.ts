@@ -1,4 +1,5 @@
 export type EditableListingState = Partial<{
+  isAlreadyCreated?: boolean; //from listing details edit
   currentStep: number;
   currentListingId?: string; // passed with type to control form data flow
   company: string; // company name, to get shipping address later on
@@ -50,6 +51,15 @@ export type EditableListingState = Partial<{
     };
   };
   isBulkUpload?: boolean;
+  packaging?: {
+    id?: string;
+    custom?: {
+      width: number;
+      height: number;
+      length: number;
+      airlineApproved?: boolean;
+    };
+  };
 }>;
 
 export type EditableListingPayload = EditableListingState;

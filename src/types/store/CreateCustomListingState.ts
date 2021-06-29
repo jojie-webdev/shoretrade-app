@@ -32,6 +32,15 @@ export type CreateCustomListingRequestData = {
   ends: string | null; // date iso string
   isAquafuture: boolean;
   addressId: string;
+  packaging?: {
+    id?: string;
+    custom?: {
+      width: number;
+      height: number;
+      length: number;
+      airlineApproved?: boolean;
+    };
+  };
 };
 
 export type CreateCustomListingPayload = GenericResponse;

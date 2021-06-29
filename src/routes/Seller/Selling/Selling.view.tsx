@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 
@@ -287,6 +287,31 @@ const ItemMobile = (props: ItemProp) => {
   );
 };
 
+interface DeleteAlertProps {
+  timeout: number
+}
+
+const DeleteAlert = (props: DeleteAlertProps) => {
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setIsVisible(false);
+    }, props.timeout);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if(!isVisible) return null;
+  
+  return (
+    <StyledAlert
+      variant="success"
+      content="Your listing has successfully been removed"
+    />
+  )
+}
+
 const NoSelling = () => {
   const history = useHistory();
   const theme = useTheme();
@@ -372,12 +397,7 @@ const SellingView = (props: SellingGeneratedProps) => {
   return (
     <>
       <Container>
-        {showDeletedSuccess && (
-          <StyledAlert
-            variant="success"
-            content="Your listing has successfully been removed"
-          />
-        )}
+        {showDeletedSuccess && <DeleteAlert timeout={3000} />}
 
         {isSmallScreen && <MobileHeader>Selling</MobileHeader>}
 

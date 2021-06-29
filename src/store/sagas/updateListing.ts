@@ -5,48 +5,19 @@ import { all, put, call, takeLatest, select } from 'redux-saga/effects';
 import { updateListing } from 'services/listing';
 import { uploadImageData } from 'services/upload';
 import { AsyncAction } from 'types/Action';
-import { EditableListingState } from 'types/store/EditableListingState';
 import { Store } from 'types/store/Store';
 import {
   UpdateListingMeta,
   UpdateListingPayload,
-  UpdateListingRequestData,
 } from 'types/store/UpdateListingState';
 import { base64ToFile } from 'utils/File';
+import { editableListingToUpdateListing } from 'utils/Listing/editableListingToUpdateListing';
 
 import {
   updateListingActions,
   getAllListingsActions,
   editableListingActions,
 } from '../actions';
-
-export const transform = (
-  data: EditableListingState,
-  images: Record<string, string>,
-  companyId: string
-): UpdateListingRequestData => ({
-  companyId,
-  listingId: data.currentListingId || '',
-  images: Object.keys(images).map((id) => ({
-    requirementId: id,
-    url: images[id],
-  })),
-  price: data?.pricePerKilo || 0,
-  catchDate: data?.catchDate ? moment(data.catchDate).toISOString() : null,
-  description: data?.description || '',
-  origin: data?.origin || {
-    suburb: '',
-    state: '',
-    countryCode: '',
-  },
-  boxes: (data?.boxes || []).map((b) => ({
-    ...b,
-    id: b.fixed ? b.id : `new-${b.id}`,
-  })),
-  ends: data?.ends ? moment(data.ends).toISOString() : null,
-  addressId: data?.addressId || '',
-  minOrder: data.minOrder || 0,
-});
 
 function* updateListingRequest(
   action: AsyncAction<UpdateListingMeta, UpdateListingPayload>
@@ -104,7 +75,7 @@ function* updateListingRequest(
 
     const companyId = state.getUser.data?.data.user.companies[0].id || '';
 
-    const payload = transform(
+    const payload = editableListingToUpdateListing(
       state.editableListing,
       mergedImagesData,
       companyId

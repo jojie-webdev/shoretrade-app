@@ -116,3 +116,4 @@ export { default as CtgMussels } from './CtgMussels';
 export { default as CtgScallopMeat } from './CtgScallopMeat';
 export { default as CtgScallopsShell } from './CtgScallopsShell';
 export { default as CarouselChevronLeft } from './CarouselChevronLeft';
+export { default as Crates } from './Crates';

@@ -176,7 +176,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 7, d);
+                        onEdit(index, 8, d);
                       }}
                     />
                   )}
@@ -199,7 +199,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 6, d);
+                        onEdit(index, 7, d);
                       }}
                     />
                   )}
@@ -216,7 +216,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 6, d);
+                        onEdit(index, 7, d);
                       }}
                     />
                   )}
@@ -232,7 +232,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 7, d);
+                        onEdit(index, 8, d);
                       }}
                     />
                   )}
@@ -248,7 +248,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 7, d);
+                        onEdit(index, 8, d);
                       }}
                     />
                   )}
@@ -264,7 +264,7 @@ const BulkUploadPreviewView = ({
                   ) : (
                     <Error
                       onClick={() => {
-                        onEdit(index, 7, d);
+                        onEdit(index, 8, d);
                       }}
                     />
                   )}

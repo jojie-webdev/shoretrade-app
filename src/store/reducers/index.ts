@@ -30,6 +30,7 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
@@ -37,6 +38,7 @@ import getBuyerOrdersPlaced from './getBuyerOrdersPlaced';
 import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getCoopUsers from './getCoopUsers';
+import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -129,6 +131,8 @@ export default (routeHistory: History) =>
         getBuyerOrdersTransit,
         getBuyerSearchFilterData,
         getCoopUsers,
+        getCrates,
+        getAvailableCrates,
         getCustomFormData,
         getLinkedAccounts,
         getListing,
