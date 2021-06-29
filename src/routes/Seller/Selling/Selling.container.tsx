@@ -120,7 +120,7 @@ const Selling = (): JSX.Element => {
     showModal,
     clearListingData,
     onRemove,
-    showDeletedSuccess: pressed && isDeleted,
+    showDeletedSuccess: isDeleted,
     search,
     onChangeSearch,
     resetSearch,
