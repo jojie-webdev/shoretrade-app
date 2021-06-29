@@ -152,14 +152,22 @@ const AddPackaging = ({
                   onChange={({ value }) => setSelectedId(value)}
                   placeholder="Select type (pre-approved box sizes)"
                 />
-                <Alert
-                  content="This product is airline approved!"
-                  variant="success"
-                  fullWidth
-                  style={{
-                    margin: '12px 0',
-                  }}
-                />
+                {selectedId ? (
+                  <Alert
+                    content="This product is airline approved!"
+                    variant="success"
+                    fullWidth
+                    style={{
+                      margin: '12px 0',
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      margin: '12px 0',
+                    }}
+                  />
+                )}
               </div>
             )}
 
