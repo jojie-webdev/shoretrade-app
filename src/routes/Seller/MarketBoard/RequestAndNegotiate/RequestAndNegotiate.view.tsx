@@ -143,25 +143,39 @@ const Step1 = ({
       );
     }
 
-    const negoCopy = [...activeOffer.negotiations];
     const sortByDate = sortBy(
       (data: { created_at: string }) => data.created_at
     );
-    const negotiations = sortByDate(negoCopy);
+    const negotiations = sortByDate(activeOffer.negotiations);
     const acceptedOffer = negotiations.find((a) => a.is_accepted);
     const sellerNegos = negotiations.filter((n) => n.type === 'NEW_OFFER');
     const buyerNegos = negotiations.filter((n) => n.type === 'COUNTER_OFFER');
 
     const latestSellerNego = sellerNegos.slice(-1)[0];
     const latestBuyerNego = buyerNegos.slice(-1)[0];
+
     const currentOfferPrice =
       acceptedOffer?.price || latestSellerNego?.price || activeOffer.price;
 
-    const discountValue = currentOfferPrice - (latestBuyerNego?.price || 0);
-    const discountPercentage = (
-      (discountValue / currentOfferPrice) *
-      100
-    ).toFixed(2);
+    // buyerNegos is always greater or equal sellerNegos
+    // if buyerNegos is greater than sellerNegos, updatedPrice is latestBuyerNego
+    const updatedPrice =
+      buyerNegos.length > sellerNegos.length
+        ? latestBuyerNego?.price || 0 // 0 should never happen
+        : currentOfferPrice;
+
+    // if buyerNegos is greater than sellerNegos, initialPrice is currentOfferPrice
+    // initially buyerNegos is 0 so we fallback to currentOfferPrice
+    const initialPrice =
+      buyerNegos.length > sellerNegos.length
+        ? currentOfferPrice
+        : latestBuyerNego?.price || currentOfferPrice;
+
+    // standard change in price formula
+    const discountValue = updatedPrice - initialPrice;
+    const discountPercentage = ((discountValue / initialPrice) * 100).toFixed(
+      2
+    );
 
     const actualPrice =
       activeOffer.status === 'ACCEPTED'
@@ -290,15 +304,17 @@ const Step1 = ({
           <div className="computation-item-container">
             <Typography variant="label" color="noshade">
               Change in Price{' '}
-              <span className="indicator">{discountPercentage}%</span>
+              <span className="indicator">{`${
+                discountValue > 0 ? '+' : ''
+              }${discountPercentage}%`}</span>
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue >= 0 ? 'error' : 'success'}
+                color={discountValue >= 0 ? 'success' : 'error'}
                 variant="label"
                 weight="bold"
               >
-                {toPrice(discountValue)}/{unit}
+                {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color="noshade">

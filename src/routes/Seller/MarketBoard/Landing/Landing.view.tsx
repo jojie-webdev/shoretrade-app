@@ -195,6 +195,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       </Typography>
                       <div className="badges-container">
                         {!isNil(b.specifications) &&
+                          Array.isArray(b.specifications) &&
                           b.specifications.map((s) => (
                             <Badge
                               key={s.stateId}
