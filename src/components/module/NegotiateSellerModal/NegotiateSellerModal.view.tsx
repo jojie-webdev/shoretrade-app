@@ -41,15 +41,17 @@ const Content = (props: NegotiateSellerModalProps) => {
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
   const sortedNegotiations = sortByDate(negotiations);
-  const newOffers = sortedNegotiations.filter((a) => a.type === 'NEW_OFFER');
+  // const newOffers = sortedNegotiations.filter((a) => a.type === 'NEW_OFFER');
   const counterOffers = sortedNegotiations.filter(
     (a) => a.type === 'COUNTER_OFFER'
   );
-  const latestNewOffer = newOffers.slice(-1)[0];
+  // const latestNewOffer = newOffers.slice(-1)[0];
   const latestCounterOffer = counterOffers.slice(-1)[0];
   const currentOfferPrice = latestCounterOffer?.price || price;
 
   const currentNewOffer = negotiationPrice || currentOfferPrice;
+
+  // input field vs latest buyer's counter offer
   const discountValue = currentNewOffer - currentOfferPrice;
   const discountPercentage = (
     (discountValue / currentOfferPrice) *
@@ -67,14 +69,6 @@ const Content = (props: NegotiateSellerModalProps) => {
         <Typography variant="title5" color="shade1">
           Negotiate
         </Typography>
-
-        <CloseBadge
-          onClick={() => {
-            modalProps.onClickClose();
-          }}
-        >
-          <Close fill={theme.grey.shade8} />
-        </CloseBadge>
       </TopContainer>
 
       <Inputs>
@@ -120,7 +114,9 @@ const Content = (props: NegotiateSellerModalProps) => {
         <div className="computation-item-container">
           <Typography variant="label" color={textColor}>
             Change in Price{' '}
-            <span className="indicator">{discountPercentage}%</span>
+            <span className="indicator">{`${
+              discountValue > 0 ? '+' : ''
+            }${discountPercentage}%`}</span>
           </Typography>
           {discountValue !== 0 ? (
             <Typography

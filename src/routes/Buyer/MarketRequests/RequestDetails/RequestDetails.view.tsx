@@ -21,6 +21,7 @@ import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
+import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
@@ -45,6 +46,8 @@ import {
   SellerOfferInteractionContentContainer,
   FilterButton,
 } from './RequestDetails.style';
+
+const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
 export const OffersSellerAccordionContent = (props: {
   sellerId: string;
@@ -401,29 +404,42 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         }
                         iconColor={theme.brand.primary}
                       >
-                        {seller.offers.map((item) => (
-                          <RequestOfferItemInteraction
-                            key={item.id}
-                            onClick={() => onClickItem(item, seller.company)}
-                            leftComponent={
-                              <SellerOfferInteractionContent
-                                averagePrice={seller.marketRequest.averagePrice}
-                                price={item.price}
-                                isUnderNegotiations={
-                                  !item.negotiations?.find(
-                                    (i) => i.is_accepted === true
-                                  )
-                                }
-                                status={item.status}
-                                weight={item.weight}
-                                tags={item.specifications}
-                                weightUnit={formatMeasurementUnit(
-                                  item.measurementUnit
-                                )}
-                              />
-                            }
-                          />
-                        ))}
+                        {seller.offers.map((item) => {
+                          const negotiations = sortByDate(item.negotiations);
+                          const newOfferArr = negotiations.filter(
+                            (i: any) => i.type === 'NEW_OFFER'
+                          );
+
+                          const latestOffer = newOfferArr.slice(-1)[0];
+                          const standingPrice =
+                            latestOffer?.price || item.price;
+
+                          return (
+                            <RequestOfferItemInteraction
+                              key={item.id}
+                              onClick={() => onClickItem(item, seller.company)}
+                              leftComponent={
+                                <SellerOfferInteractionContent
+                                  averagePrice={
+                                    seller.marketRequest.averagePrice
+                                  }
+                                  price={standingPrice}
+                                  isUnderNegotiations={
+                                    !item.negotiations?.find(
+                                      (i) => i.is_accepted === true
+                                    )
+                                  }
+                                  status={item.status}
+                                  weight={item.weight}
+                                  tags={item.specifications}
+                                  weightUnit={formatMeasurementUnit(
+                                    item.measurementUnit
+                                  )}
+                                />
+                              }
+                            />
+                          );
+                        })}
                       </RequestOffersAccordion>
                     ))
                   )}
