@@ -249,7 +249,7 @@ const AddPackaging = ({
         ))}
       </Choices>
 
-      {!isAlreadyCreated && (
+      {!isAlreadyCreated ? (
         <Aquafuture>
           <div className="checkbox-view">
             <Checkbox
@@ -272,6 +272,8 @@ const AddPackaging = ({
             </Typography>
           </div>
         </Aquafuture>
+      ) : (
+        <div style={{ margin: '24px 0 40px 0' }} />
       )}
 
       {!isMobile && (
