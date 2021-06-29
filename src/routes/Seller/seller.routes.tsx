@@ -8,6 +8,7 @@ import {
   Cart,
   CheckBorder,
   Bolt,
+  Crates,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ROUTES } from 'consts';
@@ -27,6 +28,7 @@ import { useTheme } from 'utils/Theme';
 
 import SellerAccountRoutes from './Account/account.routes';
 import AddProduct from './AddProduct/addProduct.routes';
+import CratesManagement from './CratesManagement';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
@@ -77,6 +79,13 @@ const ROUTES: Routes = {
     title: 'Sold',
     children: <Sold />,
     icon: CheckBorder,
+    nested: true,
+  },
+  CREATES_MANAGEMENT: {
+    path: SELLER_ROUTES.CREATES_MANAGEMENT,
+    title: 'Crates Management',
+    children: <CratesManagement />,
+    icon: Crates,
     nested: true,
   },
   ACCOUNT: {
@@ -152,6 +161,11 @@ const SellerRoutes = (): JSX.Element => {
       };
     }
 
+    if (pathname === SELLER_ROUTES.CREATES_MANAGEMENT) {
+      return {
+        pageTitle: 'Crates Management',
+      };
+    }
     return {};
   };
 

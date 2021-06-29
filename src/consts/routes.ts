@@ -27,6 +27,7 @@ export const SELLER_ROUTES = {
   SOLD: `${SELLER_ROOT}/sold`,
   BULK_UPLOAD: `${SELLER_ROOT}/bulk-upload`,
   MARKET_BOARD: `${SELLER_ROOT}/market-board`,
+  CREATES_MANAGEMENT: `${SELLER_ROOT}/creates-management`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {

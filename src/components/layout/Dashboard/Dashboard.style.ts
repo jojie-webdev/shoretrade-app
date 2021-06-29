@@ -83,7 +83,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
   background: #050e16;
-  width: 235px;
+  width: 270px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

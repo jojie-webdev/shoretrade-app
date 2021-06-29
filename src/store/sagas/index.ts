@@ -27,11 +27,13 @@ import getAddresses from './getAddresses';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getCoopUsers from './getCoopUsers';
+import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -114,6 +116,8 @@ const sagas = [
   getBuyerOrders,
   getBuyerSearchFilterData,
   getCoopUsers,
+  getCrates,
+  getAvailableCrates,
   getCustomFormData,
   getLinkedAccounts,
   getListing,

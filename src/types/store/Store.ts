@@ -35,6 +35,11 @@ import {
   GetAllMarketRequestPayload,
 } from 'types/store/GetAllMarketRequestState';
 import {
+  GetAvailableCratesMeta,
+  GetAvailableCratesPayload,
+} from 'types/store/GetAvailableCrates';
+import { GetCratesMeta, GetCratesPayload } from 'types/store/GetCrates';
+import {
   GetMarketInterestsMeta,
   GetMarketInterestsPayload,
 } from 'types/store/GetMarketInterestsState';
@@ -221,7 +226,7 @@ export interface Store {
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;
-  logout: AsyncState<String, LoginPayload>;
+  logout: AsyncState<string, LoginPayload>;
   verify: AsyncState<VerifyMeta, VerifyPayload>;
   register: AsyncState<RegisterMeta, RegisterPayload>;
   forgotPassword: AsyncState<ForgotPasswordMeta, ForgotPasswordPayload>;
@@ -412,4 +417,9 @@ export interface Store {
       currentStep?: number;
     };
   };
+  getCrates: AsyncState<GetCratesMeta, GetCratesPayload>;
+  getAvailableCrates: AsyncState<
+    GetAvailableCratesMeta,
+    GetAvailableCratesPayload
+  >;
 }

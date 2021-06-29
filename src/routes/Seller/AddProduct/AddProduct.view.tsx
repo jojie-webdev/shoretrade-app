@@ -10,6 +10,10 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 
+import AddBoxes from './AddBoxes/AddBoxes.view';
+import AddDetails from './AddDetails/AddDetails.view';
+import AddPackaging from './AddPackaging/AddPackaging.view';
+import AddPhotos from './AddPhotos/AddPhotos.view';
 import { AddProductGeneratedProps } from './AddProduct.props';
 import {
   Container,
@@ -17,14 +21,11 @@ import {
   SearchContainerDesktop,
   InnerHeaderContainer,
 } from './AddProduct.style';
-import Step0 from './Step0/Step0.view';
-import Step1 from './Step1/Step1.view';
-import Step2 from './Step2/Step2.view';
-import Step3 from './Step3/Step3.view';
-import Step4 from './Step4/Step4.view';
-import Step5 from './Step5/Step5.view';
-import Step6 from './Step6/Step6.view';
-import Step7 from './Step7/Step7.view';
+import ChooseAccount from './ChooseAccount/ChooseAccount.view';
+import ChooseSize from './ChooseSize/ChooseSize.view';
+import ChooseSpecifications from './ChooseSpecifications/ChooseSpecifications.view';
+import ChooseType from './ChooseType/ChooseType.view';
+import Review from './Review/Review.view';
 
 const AddProductView = (props: AddProductGeneratedProps) => {
   // const theme = useTheme();
@@ -50,6 +51,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     isCustomType,
     onSelectSizes,
     onUpdateImage,
+    onAddPackaging,
     onAddBoxes,
     onUpdateDetails,
     saveListing,
@@ -97,7 +99,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       default:
       case 1:
         return (
-          <Step0
+          <ChooseAccount
             accountOptions={accountOptions}
             onSelectAccount={onSelectAccount}
             onUploadCSV={onUploadCSV}
@@ -107,7 +109,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 2:
         return (
-          <Step1
+          <ChooseType
             editableListing={editableListing}
             showCustomTypeSettings={showCustomTypeSettings}
             setShowCustomTypeSettings={setShowCustomTypeSettings}
@@ -124,7 +126,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 3:
         return (
-          <Step2
+          <ChooseSpecifications
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -134,7 +136,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 4:
         return (
-          <Step3
+          <ChooseSize
             editableListing={editableListing}
             listingFormData={listingFormData}
             isCustomType={isCustomType}
@@ -144,7 +146,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 5:
         return (
-          <Step4
+          <AddPhotos
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -154,7 +156,17 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         );
       case 6:
         return (
-          <Step5
+          <AddPackaging
+            editableListing={editableListing}
+            listingFormData={listingFormData}
+            onAddPackaging={onAddPackaging}
+            navBack={navBack}
+          />
+        );
+      case 7:
+        return (
+          <AddBoxes
+            isBulkUpload={isBulkUpload}
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -163,9 +175,9 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             isExisting={isExisting}
           />
         );
-      case 7:
+      case 8:
         return (
-          <Step6
+          <AddDetails
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
@@ -174,9 +186,9 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             marketEstimate={marketEstimate}
           />
         );
-      case 8:
+      case 9:
         return (
-          <Step7
+          <Review
             measurementUnit={measurementUnit}
             boxesDetails={boxesDetails}
             onChangeCurrentPage={onChangeCurrentPage}
@@ -187,6 +199,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             navBack={navBack}
             preview={preview}
             pendingSave={pendingSave}
+            isBulkUpload={isBulkUpload}
           />
         );
     }
@@ -195,9 +208,6 @@ const AddProductView = (props: AddProductGeneratedProps) => {
   const [title, setTitle] = useState('Summary');
   const pageTitle = () => {
     switch (currentPage) {
-      case 1:
-        return 'Product Type';
-
       case 2:
         return showCustomTypeSettings
           ? 'Custom Type'
@@ -211,10 +221,12 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       case 5:
         return 'Upload Photos';
       case 6:
-        return 'Upload Boxes';
+        return 'Select Packaging';
       case 7:
-        return 'Details';
+        return 'Add Boxes';
       case 8:
+        return 'Details';
+      case 9:
         return 'Summary';
       default:
         return 'Summary';
@@ -230,7 +242,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     <Container>
       {currentPage > 1 && (
         <ProgressIndicator
-          style={{ width: `${(actualCurrentPage / 7) * 100}%` }}
+          style={{ width: `${(actualCurrentPage / 8) * 100}%` }}
         />
       )}
       <div>
@@ -247,7 +259,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
         {currentPage > 1 && (
           <Typography variant="overline" color="shade6">
-            Step {currentPage - 1} / 7
+            Step {currentPage - 1} - 8
           </Typography>
         )}
 
@@ -256,10 +268,10 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             title={currentPage > 1 && !isMobile ? title : ''}
             onClickBack={() => {
               if (isExisting) {
-                if (currentPage === 8) {
+                if (currentPage === 9) {
                   discardChanges();
                 } else {
-                  onChangeCurrentPage(8);
+                  onChangeCurrentPage(9);
                 }
               } else if (isBulkUpload) {
                 discardBulkUploadChanges();

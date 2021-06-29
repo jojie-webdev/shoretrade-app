@@ -147,7 +147,7 @@ export const Title = styled(Typography)`
   margin-top: 4px;
 `;
 
-export const TextField = styled(FormikTextField)`
+export const StyledFormikTextField = styled(FormikTextField)`
   margin-top: 24px;
 `;
 
