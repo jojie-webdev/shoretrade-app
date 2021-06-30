@@ -201,7 +201,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
 
         <Col md={12} lg={6} xl={4} className="textfield-col">
           <TextField
-            label="Price per kg including delivery"
+            label={`Price per ${formatMeasurementUnit(
+              props.buyerRequest.measurementUnit
+            )} including delivery`}
             LeftComponent={
               <Typography variant="label" weight="bold" color="shade6">
                 $
