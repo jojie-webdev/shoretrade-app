@@ -405,7 +405,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         iconColor={theme.brand.primary}
                       >
                         {seller.offers.map((item) => {
-                          const negotiations = sortByDate(item.negotiations);
+                          const negotiations = sortByDate(
+                            item.negotiations || []
+                          );
+
                           const newOfferArr = negotiations.filter(
                             (i: any) => i.type === 'NEW_OFFER'
                           );
