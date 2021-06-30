@@ -59,7 +59,7 @@ export const BoxDetails = ({
         </div>
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            Per box
+            Count per box
           </Typography>
           <Typography color="noshade" variant="copy">
             {count}
@@ -110,7 +110,7 @@ const BoxSummary = ({
     </div>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Per box
+        Count per box
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.counts.toFixed(2)}
@@ -159,11 +159,11 @@ const AddBoxInputs = ({
           placeholder="25"
         />
       </div>
-      <div className="add-box-col">
+      <div className="add-box-col qty-col">
         <TextField
           type="number"
           inputType="numeric"
-          label="Quantity"
+          label="Qty"
           value={values.quantity}
           onChangeText={(v) => {
             setValues({ ...values, quantity: v });
@@ -178,7 +178,7 @@ const AddBoxInputs = ({
           type="number"
           inputType="numeric"
           readOnly={unit === 'portions'}
-          label="Per Box"
+          label="Count per box"
           value={values.count}
           onChangeText={(v) => {
             setValues({ ...values, count: v });
@@ -264,6 +264,8 @@ const AddBoxes = ({
     editableListing?.sellInMultiplesOfMinOrder || false
   );
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const summary = boxes.reduce(
     (computed, current) => {
       const currentTotal = current.weight * current.quantity + computed.total;
@@ -282,6 +284,12 @@ const AddBoxes = ({
     }
   );
 
+  useEffect(() => {
+    if (showAlert && boxes.length > 0 && minimumOrder) {
+      setShowAlert(false);
+    }
+  }, [boxes, minimumOrder, showAlert]);
+
   return (
     <Container>
       <BoxSummary summary={summary} unit={measurementUnit} />
@@ -299,6 +307,17 @@ const AddBoxes = ({
           </Col>
         ))}
       </Row>
+
+      {showAlert && (
+        <div className="box-error-container">
+          <Alert
+            fullWidth
+            alignText="center"
+            variant="error"
+            content="Please include at least 1 box and set minimum order"
+          />
+        </div>
+      )}
 
       <Row className="minimum-row" align="center">
         <Col xs={12} sm={6} xl={4}>
@@ -364,17 +383,6 @@ const AddBoxes = ({
         </Aquafuture>
       )}
 
-      <div className="box-error-container">
-        {(boxes.length === 0 || !minimumOrder) && (
-          <Alert
-            fullWidth
-            alignText="center"
-            variant="error"
-            content="Please include at least 1 box and set minimum order"
-          />
-        )}
-      </div>
-
       {!isMobile && (
         <Row justify="start" style={{ padding: '0 15px' }}>
           <Button
@@ -396,6 +404,8 @@ const AddBoxes = ({
                   minimumOrder,
                   isAquafuture,
                 });
+              } else {
+                setShowAlert(true);
               }
             }}
           />
@@ -446,6 +456,8 @@ const AddBoxes = ({
                   minimumOrder,
                   isAquafuture,
                 });
+              } else {
+                setShowAlert(true);
               }
             }}
           />
