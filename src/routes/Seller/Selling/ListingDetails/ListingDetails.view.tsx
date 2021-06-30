@@ -62,7 +62,7 @@ const Actions = (props: ListingDetailsProps) => {
         <div className="left-container">
           <div className="left-text-container">
             <Typography variant="body" color="shade9" weight="bold">
-              This is the Buyers' view of your product listing
+              This is the view that Buyers will have of your product listing
             </Typography>
             <Typography variant="label" color="shade6" weight="regular">
               Any changes made to your listing will be instantly reflected to
