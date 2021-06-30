@@ -464,7 +464,7 @@ const Step1 = ({
                   }
                   LeftComponent={
                     <Typography variant="label" weight="bold" color="shade6">
-                      {unit}
+                      {metric === 'Grams' ? 'g' : unit}
                     </Typography>
                   }
                   disabled
@@ -479,7 +479,7 @@ const Step1 = ({
                     disabled
                     LeftComponent={
                       <Typography variant="label" weight="bold" color="shade6">
-                        {unit}
+                        {metric === 'Grams' ? 'g' : unit}
                       </Typography>
                     }
                   />
