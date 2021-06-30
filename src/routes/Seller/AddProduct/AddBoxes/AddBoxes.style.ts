@@ -1,8 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-import TextField from '../../../../components/base/TextField';
-
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 200px;
@@ -20,7 +18,7 @@ export const Container = styled.div`
 
   .box-error-container {
     width: 100%;
-    margin-bottom: 24px;
+    margin-top: 24px;
   }
 
   .back-btn {
@@ -78,6 +76,12 @@ export const AddBoxRow = styled.div`
 
     &:not(:last-child) {
       margin-right: 8px;
+    }
+  }
+
+  .qty-col {
+    @media ${BREAKPOINTS['sm']} {
+      flex: 0.5;
     }
   }
 
