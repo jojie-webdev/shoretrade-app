@@ -603,7 +603,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         <Breadcrumbs
           sections={[
             {
-              label: 'Market Board',
+              label: 'Buyer Requests',
               onClick: () => {
                 if (!isEmpty(props.offer)) {
                   setIsOpen(true);
