@@ -88,12 +88,12 @@ export const MobileFilterRow = styled(Row)`
 `;
 
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) =>
-    props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`
   margin-bottom: 32px;
+  overflow: auto;
 `;
 
 export const MonthlyRow = styled(Row)`
@@ -105,13 +105,13 @@ export const MonthlyRow = styled(Row)`
   }
 `;
 export const SalesRow = styled(Row)`
-  width: 100%;
-  padding-left: 24px;
+  margin-left: 0px !important;
+  padding: 0px !important;
 
   @media ${BREAKPOINTS['sm']} {
     .figma-width {
-      width: 156px !important;
-      min-width: 156px;
+      width: 170px !important;
+      min-width: 170px;
     }
 
     .pending-card {
@@ -210,7 +210,7 @@ export const TotalSalesCard = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.grey.shade9};
   border-radius: 4px;
-  margin-right: 24px;
+  margin-left: 16px;
   width: 308px;
   min-width: 202px;
   height: 100%;
@@ -224,9 +224,14 @@ export const TotalSalesCard = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    width: 156px !important;
-    min-width: 156px;
+    width: 170px !important;
+    min-width: 170px;
     margin-right: 16px;
     padding: 16px;
+  }
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    width: 190px !important;
+    min-width: 190px;
   }
 `;
