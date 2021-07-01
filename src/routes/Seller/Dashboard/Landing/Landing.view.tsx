@@ -279,7 +279,7 @@ const TotalSales = (props: any) => {
   };
 
   return (
-    <TotalSalesRow justify="between">
+    <TotalSalesRow >
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
@@ -311,6 +311,7 @@ const TotalSales = (props: any) => {
             </Typography>
           </div>
         </TotalSalesCard>
+        
       </SalesRow>
     </TotalSalesRow>
   );
