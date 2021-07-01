@@ -13,7 +13,16 @@ const createSocketMiddleware = () => {
   return (storeAPI: any) => (next: any) => (action: any) => {
     switch (action.type) {
       case '@@router/LOCATION_CHANGE': {
-        socket = createSocketConnection();
+        if (!socket) {
+          socket = createSocketConnection();
+          const userData = storeAPI.getState().getUser.data;
+          if (storeAPI.getState().getUser.data) {
+            const companyId = userData.data.user.companies.length
+              ? userData.data.user.companies[0].id
+              : '';
+            socket.emit('join', companyId);
+          }
+        }
         break;
       }
       case getUserActions.SUCCESS: {
