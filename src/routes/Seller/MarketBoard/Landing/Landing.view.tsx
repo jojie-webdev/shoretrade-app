@@ -82,7 +82,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Market Board</MobileHeader>}
+      {isMobile && <MobileHeader>Buyer Requests</MobileHeader>}
 
       <SegmentedControlsV2
         options={['Buyer Requests', 'My Active Offers']}
