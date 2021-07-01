@@ -401,6 +401,15 @@ const ToShip = (props: SoldGeneratedProps) => {
       setDidPressConfirmWeight(false);
     }
   }, [confirmWeightPending]);
+
+  const pendingToShipTotal = pendingToShip.reduce((a, c) => {
+    return a + c.orderCount;
+  }, 0);
+
+  const toShipTotal = toShip.reduce((a, c) => {
+    return a + c.orderTotal;
+  }, 0);
+
   return (
     <>
       <ConfirmModal
@@ -430,7 +439,7 @@ const ToShip = (props: SoldGeneratedProps) => {
             <InfoFilled fill={theme.brand.alert} height={18} width={18} />
           </div>
           <Typography color="alert">
-            Pending Confirmation - {pendingToShip.length}
+            Pending Confirmation - {pendingToShipTotal}
           </Typography>
         </Col>
       </TitleRow>
@@ -536,7 +545,7 @@ const ToShip = (props: SoldGeneratedProps) => {
       <TitleRow style={{ marginTop: 24 }}>
         <Col md={12} className="title-col">
           <Typography variant="overline" color="shade6">
-            TO SHIP - {toShip.length}
+            TO SHIP - {toShipTotal}
           </Typography>
         </Col>
       </TitleRow>
