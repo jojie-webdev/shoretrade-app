@@ -46,7 +46,7 @@ export const BoxDetails = ({
             Weight
           </Typography>
           <Typography color="noshade" variant="copy">
-            {weight} {unit}
+            {weight.toFixed(2)} {unit}
           </Typography>
         </div>
         <div className="text-container">
@@ -88,16 +88,16 @@ const BoxSummary = ({
   summary,
   unit,
 }: {
-  summary: { total: number; quantities: number; counts: number };
+  summary: { weights: number; quantities: number; counts: number };
   unit: string;
 }) => (
   <BoxSummaryContainer>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Weight
+        weights
       </Typography>
       <Typography color="noshade" variant="copy">
-        {summary.total.toFixed(2)} {unit}
+        {summary.weights.toFixed(2)} {unit}
       </Typography>
     </div>
     <div className="text-container">
@@ -113,7 +113,7 @@ const BoxSummary = ({
         Count per box
       </Typography>
       <Typography color="noshade" variant="copy">
-        {summary.counts.toFixed(2)}
+        {summary.counts}
       </Typography>
     </div>
   </BoxSummaryContainer>
@@ -268,17 +268,17 @@ const AddBoxes = ({
 
   const summary = boxes.reduce(
     (computed, current) => {
-      const currentTotal = current.weight * current.quantity + computed.total;
+      const currentWeight = current.weight + computed.weights;
       const currentQuantities = computed.quantities + current.quantity;
       const currentCounts = computed.counts + (current.count || 0);
       return {
-        total: currentTotal,
+        weights: currentWeight,
         quantities: currentQuantities,
         counts: currentCounts,
       };
     },
     {
-      total: 0,
+      weights: 0,
       quantities: 0,
       counts: 0,
     }
