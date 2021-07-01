@@ -1,7 +1,7 @@
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -158,7 +158,7 @@ export const SidebarLogoContainer = styled.div`
   }
 `;
 
-export const SidebarItem = styled(Link)<{ isActive: boolean }>`
+export const SidebarItem = styled(NavLink)`
   height: 48px;
   width: 100%;
   margin-bottom: 2px;
@@ -167,11 +167,6 @@ export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   border-bottom: none;
   text-decoration: none;
   padding-left: 14px;
-  ${(props) =>
-    props.isActive &&
-    `background: ${props.theme.grey.shade8};
-      border-radius: 8px;`}
-
   .icon-container {
     margin-right: 12px;
   }
