@@ -430,6 +430,7 @@ const AddBoxes = ({
             }}
           />
           <Button
+            takeFullWidth
             variant="outline"
             text="ADD BOX"
             onClick={() => {
