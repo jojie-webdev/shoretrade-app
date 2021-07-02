@@ -114,6 +114,11 @@ export const BoxSummaryContainer = styled.div`
     flex: 1;
     margin-right: 8px;
 
+    @media ${BREAKPOINTS['sm']} {
+      min-height: 65px;
+      justify-content: space-between;
+    }
+
     .overline {
       margin-bottom: 4px;
     }
@@ -136,6 +141,11 @@ export const BoxDetailsContainer = styled.div`
       flex-direction: column;
       flex: 1;
       margin-right: 8px;
+
+      @media ${BREAKPOINTS['sm']} {
+        min-height: 65px;
+        justify-content: space-between;
+      }
 
       .overline {
         margin-bottom: 4px;
