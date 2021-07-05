@@ -406,6 +406,10 @@ const ToShip = (props: SoldGeneratedProps) => {
     return a + c.orderCount;
   }, 0);
 
+  const toShipTotal = toShip.reduce((a, c) => {
+    return a + c.orderTotal;
+  }, 0);
+
   return (
     <>
       <ConfirmModal
@@ -541,7 +545,7 @@ const ToShip = (props: SoldGeneratedProps) => {
       <TitleRow style={{ marginTop: 24 }}>
         <Col md={12} className="title-col">
           <Typography variant="overline" color="shade6">
-            TO SHIP - {toShipCount}
+            TO SHIP - {toShipTotal}
           </Typography>
         </Col>
       </TitleRow>
