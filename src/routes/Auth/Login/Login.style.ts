@@ -4,8 +4,7 @@ import FormikTextField from 'components/module/FormikTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const ContentWrapper = styled.div`
-  width: 100%;
+export const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -16,12 +15,6 @@ export const ContentWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
   }
-`;
-
-export const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
 
   @media ${BREAKPOINTS['sm']} {
     .touchable {
