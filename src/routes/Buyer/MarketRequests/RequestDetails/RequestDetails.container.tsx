@@ -100,9 +100,6 @@ const MarketRequestDetail = (): JSX.Element => {
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
   );
-
-  console.log(acceptOffer);
-
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);

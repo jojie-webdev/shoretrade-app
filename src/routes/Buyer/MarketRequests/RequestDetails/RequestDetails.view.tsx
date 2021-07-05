@@ -22,9 +22,11 @@ import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOf
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -48,8 +50,6 @@ import {
   SellerOfferInteractionContentContainer,
   FilterButton,
 } from './RequestDetails.style';
-import { useMediaQuery } from 'react-responsive';
-import { BREAKPOINTS } from 'consts/breakpoints';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
