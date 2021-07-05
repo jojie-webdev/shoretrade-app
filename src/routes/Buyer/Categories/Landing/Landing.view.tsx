@@ -38,33 +38,44 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           </Row>
         </>
       )}
-
       {categories.length <= 0 ? (
         <>{!isSmallScreen && <Loading />}</>
       ) : (
         <>
           {!isSmallScreen ? (
-            <div className="cards">
-              {categories.length > 0 &&
-                categories.map((category) => {
-                  return (
-                    <Link
-                      key={category.id}
-                      to={{
-                        pathname: `${currentPath}/${category.id}`,
-                        state: { title: category.name },
-                      }}
-                    >
-                      <Card
-                        sortIndex={category.sortIndex}
-                        id={category.id}
-                        image={category.thumbnail}
-                        label={category.name}
-                      />
-                    </Link>
-                  );
-                })}
-            </div>
+            <>
+              <Row nogutter>
+                <Col xs={12}>
+                  <Search
+                    placeholder="Search for a category"
+                    value={search}
+                    onChange={onChangeSearchValue}
+                    rounded
+                  />
+                </Col>
+              </Row>
+              <div className="cards">
+                {categories.length > 0 &&
+                  categories.map((category) => {
+                    return (
+                      <Link
+                        key={category.id}
+                        to={{
+                          pathname: `${currentPath}/${category.id}`,
+                          state: { title: category.name },
+                        }}
+                      >
+                        <Card
+                          sortIndex={category.sortIndex}
+                          id={category.id}
+                          image={category.thumbnail}
+                          label={category.name}
+                        />
+                      </Link>
+                    );
+                  })}
+              </div>
+            </>
           ) : (
             <>
               {categories.length > 0 &&
