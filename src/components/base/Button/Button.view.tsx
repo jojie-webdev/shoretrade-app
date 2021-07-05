@@ -60,6 +60,8 @@ const Button = (props: ButtonProps): JSX.Element => {
 
   const hasText = !!(text && text?.length > 0);
 
+  console.log(color);
+
   return (
     <ButtonContainer
       size={size}
