@@ -108,6 +108,7 @@ const SellerOfferInteractionContent = (props: {
   tags: string[];
   averagePrice: number;
   isUnderNegotiations: boolean;
+  deliveryDate: string;
 }) => {
   const {
     weight,
@@ -117,7 +118,9 @@ const SellerOfferInteractionContent = (props: {
     averagePrice,
     status,
     isUnderNegotiations = false,
+    deliveryDate,
   } = props;
+
   const OfferTags = (props: { tags: string[] }) => {
     const { tags } = props;
     const tagsMarkup = tags.map((tag) => (
@@ -206,7 +209,9 @@ const SellerOfferInteractionContent = (props: {
             >
               Estimated Delivery:
             </Typography>
-            <TypographyView variant="label">Blocked</TypographyView>
+            <TypographyView variant="label">
+              {moment(deliveryDate).format('MMMM DD, YY')}
+            </TypographyView>
           </div>
         </div>
         <div className="tags">
@@ -430,6 +435,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                                 weightUnit={formatMeasurementUnit(
                                   item.measurementUnit
                                 )}
+                                deliveryDate={item.deliveryDate}
                               />
                             }
                           />

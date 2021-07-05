@@ -48,6 +48,7 @@ export interface Offer {
   measurementUnit: string;
   specifications: string[];
   negotiations: any[];
+  deliveryDate: string;
 }
 
 export interface Negotiations {
