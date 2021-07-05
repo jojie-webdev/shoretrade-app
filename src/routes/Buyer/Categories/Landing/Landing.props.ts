@@ -13,4 +13,5 @@ export interface CategoriesLandingGeneratedProps {
 
   search: string;
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  onResetSearchValue: () => void;
 }

@@ -18,7 +18,13 @@ import { CategoriesContainer, Image } from './Landing.style';
 
 const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   const history = useHistory();
-  const { categories, currentPath, search, onChangeSearchValue } = props;
+  const {
+    categories,
+    currentPath,
+    search,
+    onChangeSearchValue,
+    onResetSearchValue,
+  } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -32,6 +38,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
                 placeholder="Search for a category"
                 value={search}
                 onChange={onChangeSearchValue}
+                resetValue={onResetSearchValue}
                 rounded
               />
             </Col>
@@ -45,12 +52,15 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
           {!isSmallScreen ? (
             <>
               <Row nogutter>
-                <Col xs={12}>
+                <Col />
+                <Col xs="content">
                   <Search
                     placeholder="Search for a category"
                     value={search}
                     onChange={onChangeSearchValue}
+                    resetValue={onResetSearchValue}
                     rounded
+                    className="search"
                   />
                 </Col>
               </Row>
