@@ -8,7 +8,7 @@ import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import { isEmpty, uniq } from 'ramda';
+import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
 import { Hidden } from 'react-grid-system';
 import theme from 'utils/Theme';
 
@@ -70,10 +70,33 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     }
   };
 
-  const selectedGroups = selectedState.selectedStates.map(
-    (ss) => ss.groupOrder
-  );
-  const isDisabled = !groupOrders.every((go) => selectedGroups.includes(go));
+  const filteredSpecifications = () => {
+    const currentSelectionByGroup = groupBy((a) => {
+      return `group${a.groupOrder}`;
+    }, selectedState.selectedStates);
+
+    const firstSelection = prop('group1', currentSelectionByGroup);
+
+    const isLiveOnly =
+      firstSelection &&
+      firstSelection.find((a) => a.label === 'Live') &&
+      firstSelection.length === 1;
+    const stepCount = Object.keys(currentSelectionByGroup);
+    const specSelectionOffset = isLiveOnly
+      ? stateOptions.length > 1
+        ? 1
+        : 0
+      : stateOptions.length - (stepCount.length + 1);
+    const filteredSpecList = dropLast(specSelectionOffset, stateOptions);
+    return filteredSpecList;
+  };
+
+  const selectedGroups =
+    uniq(selectedState.selectedStates.map((ss) => ss.groupOrder)) || [];
+
+  const isDisabled =
+    filteredSpecifications().length !== selectedGroups.length &&
+    filteredSpecifications().length >= selectedGroups.length;
 
   return (
     <>
@@ -113,7 +136,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           )}
 
-          {stateOptions.map((group) => (
+          {filteredSpecifications().map((group) => (
             <div key={group[0].groupOrder} className="interaction-group">
               <div className="spec-row">
                 {group.map((item) => (
