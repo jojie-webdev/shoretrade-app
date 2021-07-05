@@ -24,6 +24,8 @@ export interface CreateRequestGeneratedProps
   sendConfModalisOpen: boolean;
   setTermsAgreement: Dispatch<SetStateAction<boolean>>;
   onSubmitRequest: () => void;
+  selectedAddress: { label: string; value: string };
+  setSelectedAddress: Dispatch<{ label: string; value: string }>;
 }
 
 export interface CreateStepProps {

@@ -138,7 +138,6 @@ const Carousel = (props: CarouselProps): JSX.Element => {
               setSwiperRef(swiper);
             }}
             onSlideChange={(swiper) => {
-              console.log(swiper.activeIndex);
               swiper.update();
             }}
           >

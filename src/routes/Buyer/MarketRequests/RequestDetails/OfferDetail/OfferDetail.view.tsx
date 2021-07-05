@@ -182,15 +182,17 @@ const OfferDetailView = (props: any) => {
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
                   Change in Price{' '}
-                  <span className="indicator">{discountPercentage}%</span>
+                  <span className="indicator">{`${
+                    discountValue > 0 ? '+' : ''
+                  }${discountPercentage}%`}</span>
                 </TypographyView>
                 {discountValue !== 0 ? (
                   <TypographyView
-                    color={discountValue < 0 ? 'error' : 'success'}
+                    color={discountValue >= 0 ? 'error' : 'success'}
                     variant="label"
                     weight="bold"
                   >
-                    {toPrice(discountValue)}/{unit}
+                    {toPrice(Math.abs(discountValue))}/{unit}
                   </TypographyView>
                 ) : (
                   <TypographyView variant="label" weight="bold" color="shade9">

@@ -60,8 +60,13 @@ const NavLink = ({
   onClick,
   isActive,
 }: NavLinkProps) => {
+  const theme = useTheme();
   return (
-    <SidebarItem to={to} onClick={onClick} isActive={isActive}>
+    <SidebarItem
+      activeStyle={{ background: theme.grey.shade8, borderRadius: '8px' }}
+      to={to}
+      onClick={onClick}
+    >
       <div className="icon-container">
         {Icon && <Icon fill={iconColor} height={20} width={20} />}
       </div>

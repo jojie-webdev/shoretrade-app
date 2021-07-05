@@ -93,7 +93,7 @@ const OrdersContainer = (): JSX.Element => {
   const toShipOrders = GetBuyerOrdersToShip().map(transformOrder);
   const inTransitOrders = GetBuyerOrdersInTransit().map(transformOrder);
   const completedOrders = GetBuyerOrdersDelivered().map(transformOrder);
-  // console.log(GetBuyerOrdersDelivered());
+
   const currentTab: TabOptions = tab ? tab : 'Pending';
   const onChangeCurrentTab = (newTab: TabOptions) => {
     history.push(

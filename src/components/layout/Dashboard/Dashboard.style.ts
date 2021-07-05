@@ -1,7 +1,7 @@
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled, { css } from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -24,7 +24,7 @@ export const DashboardContainer = styled.div<{
     openSidebar && ` height: calc(var(--vh, 1vh) * 100); margin-top: 0px;`}
   flex-direction: row;
   position: relative;
-  z-index: 9999;
+  z-index: 2222;
 `;
 
 export const MenuIcon = styled.div`
@@ -70,12 +70,12 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
   overflow: hidden;
 
   @media ${BREAKPOINTS['genericTablet']} {
-    z-index: 999;
+    z-index: 2222;
     display: ${(props) => (props.openSidebar ? 'block' : 'none')};
   }
 
   @media ${BREAKPOINTS['sm']} {
-    z-index: 999;
+    z-index: 2222;
     display: ${(props) => (props.openSidebar ? 'block' : 'none')};
   }
 `;
@@ -83,13 +83,13 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
   background: #050e16;
-  width: 235px;
+  width: 270px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
-  z-index: 999;
+  z-index: 2222;
 
   .wrapper {
     display: flex;
@@ -115,7 +115,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     position: absolute;
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-50%')};
-    z-index: 9999;
+    z-index: 2222;
     min-height: 100vh;
   }
 
@@ -125,7 +125,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     position: fixed;
     top: 0;
     left: ${(props) => (props.openSidebar ? '0px' : '-100%')};
-    z-index: 9999;
+    z-index: 2222;
     min-height: 100vh;
   }
 `;
@@ -158,7 +158,7 @@ export const SidebarLogoContainer = styled.div`
   }
 `;
 
-export const SidebarItem = styled(Link)<{ isActive: boolean }>`
+export const SidebarItem = styled(NavLink)`
   height: 48px;
   width: 100%;
   margin-bottom: 2px;
@@ -167,11 +167,6 @@ export const SidebarItem = styled(Link)<{ isActive: boolean }>`
   border-bottom: none;
   text-decoration: none;
   padding-left: 14px;
-  ${(props) =>
-    props.isActive &&
-    `background: ${props.theme.grey.shade8};
-      border-radius: 8px;`}
-
   .icon-container {
     margin-right: 12px;
   }

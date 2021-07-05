@@ -93,7 +93,6 @@ const Content = (props: AddBoxModalProps) => {
           onChangeText={(v) => {
             setValues({ ...values, count: v });
           }}
-          noMargin
           min={0}
           onKeyDown={(v) => inputFilters.includes(v.key) && v.preventDefault()}
         />

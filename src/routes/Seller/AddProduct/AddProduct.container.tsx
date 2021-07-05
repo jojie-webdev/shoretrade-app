@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ADD_PRODUCT_ROUTES } from 'consts';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import pathOr from 'ramda/src/pathOr';
 import pick from 'ramda/src/pick';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import {
+  getAvailableCratesActions,
   uploadBulkActions,
   editableListingActions,
   searchProductTypeActions,
@@ -18,6 +16,7 @@ import {
   getCustomFormDataActions,
   modifyBulkUploadActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
 import { Store } from 'types/store/Store';
@@ -48,6 +47,8 @@ const AddProduct = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const currentCompany = GetDefaultCompany();
+  const companyId = currentCompany?.id || '';
   const userPending =
     user !== undefined &&
     !(user.companies || []).some((a) =>
@@ -59,15 +60,15 @@ const AddProduct = (): JSX.Element => {
 
   const uploadBulk = useSelector((store: Store) => store.uploadBulk);
 
-  function onChangeCurrentPage(newPage: number) {
-    if (newPage >= 1 && newPage <= 8) {
+  const onChangeCurrentPage = (newPage: number) => {
+    if (newPage >= 1 && newPage <= 9) {
       dispatch(
         editableListingActions.update({
           currentStep: newPage,
         })
       );
     }
-  }
+  };
 
   const getUser = useSelector((state: Store) => state.getUser);
   const accounts =
@@ -280,9 +281,13 @@ const AddProduct = (): JSX.Element => {
       );
 
       if (isExisting) {
-        onChangeCurrentPage(8); // should redirect to review
+        onChangeCurrentPage(9); // should redirect to review
       } else {
-        onChangeCurrentPage(6);
+        if (isBulkUpload) {
+          onChangeCurrentPage(7);
+        } else {
+          onChangeCurrentPage(6);
+        }
       }
     } catch (error) {
       if (callback) {
@@ -291,13 +296,56 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
-  const onAddBoxes = ({
+  useEffect(() => {
+    if (companyId) {
+      dispatch(
+        getAvailableCratesActions.request({
+          companyId,
+        })
+      );
+    }
+  }, [companyId]);
+
+  const onAddPackaging = ({
     isAquafuture,
+    id,
+    custom,
+  }: {
+    isAquafuture: boolean;
+    id?: string;
+    custom?: {
+      width: number;
+      height: number;
+      length: number;
+      airlineApproved?: boolean;
+    };
+  }) => {
+    dispatch(
+      editableListingActions.update({
+        isAquafuture: isAquafuture,
+        ...(id || custom
+          ? {
+              packaging: {
+                ...(id ? { id: id } : {}),
+                ...(custom
+                  ? {
+                      custom: custom,
+                    }
+                  : {}),
+              },
+            }
+          : {}),
+      })
+    );
+    onChangeCurrentPage(7);
+  };
+
+  const onAddBoxes = ({
     sellInMultiples,
     boxes,
     minimumOrder,
+    isAquafuture,
   }: {
-    isAquafuture: boolean;
     sellInMultiples: boolean;
     boxes: {
       id: string;
@@ -306,11 +354,12 @@ const AddProduct = (): JSX.Element => {
       count?: number;
     }[];
     minimumOrder: string;
+    isAquafuture: boolean;
   }) => {
     if (isBulkUpload) {
       dispatch(
         modifyBulkUploadActions.update({
-          isAquafuture,
+          isAquafuture: isAquafuture,
           sellInMultiplesOfMinOrder: sellInMultiples,
           boxes,
           minOrder: Number(minimumOrder),
@@ -319,13 +368,12 @@ const AddProduct = (): JSX.Element => {
     } else {
       dispatch(
         editableListingActions.update({
-          isAquafuture,
           sellInMultiplesOfMinOrder: sellInMultiples,
           boxes,
           minOrder: Number(minimumOrder),
         })
       );
-      onChangeCurrentPage(7);
+      onChangeCurrentPage(8);
     }
   };
 
@@ -378,7 +426,7 @@ const AddProduct = (): JSX.Element => {
           addressId,
         })
       );
-      onChangeCurrentPage(8);
+      onChangeCurrentPage(9);
     }
   };
 
@@ -436,9 +484,9 @@ const AddProduct = (): JSX.Element => {
     })()
   );
 
-  const onUploadCSV = (csv: File, account: string) => {
-    const companies = getUser.data?.data.user.companies || [];
-    const companyId = companies.find((c) => c.employeeId === account)?.id || '';
+  const onUploadCSV = (csv: File) => {
+    const companies = getUser.data?.data.user.companies || [{ id: '' }];
+    const companyId = companies[0].id || '';
 
     if (companyId) {
       const reader = new FileReader();
@@ -456,7 +504,11 @@ const AddProduct = (): JSX.Element => {
   };
 
   const navBack = () => {
-    onChangeCurrentPage(currentPage - 1);
+    if (isBulkUpload && currentPage === 7) {
+      onChangeCurrentPage(5);
+    } else {
+      onChangeCurrentPage(currentPage - 1);
+    }
   };
 
   const generatedProps: AddProductGeneratedProps = {
@@ -480,6 +532,7 @@ const AddProduct = (): JSX.Element => {
     onSelectSpecifications,
     onSelectSizes,
     onUpdateImage,
+    onAddPackaging,
     onAddBoxes,
     onUpdateDetails,
     saveListing,

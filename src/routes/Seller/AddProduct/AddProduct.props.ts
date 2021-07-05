@@ -1,24 +1,26 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
-import { Step0PublicProps } from './Step0/Step0.props';
-import { Step1PublicProps } from './Step1/Step1.props';
-import { Step2PublicProps } from './Step2/Step2.props';
-import { Step3PublicProps } from './Step3/Step3.props';
-import { Step4PublicProps } from './Step4/Step4.props';
-import { Step5PublicProps } from './Step5/Step5.props';
-import { Step6PublicProps } from './Step6/Step6.props';
-import { Step7PublicProps } from './Step7/Step7.props';
+import { AddBoxesPublicProps } from './AddBoxes/AddBoxes.props';
+import { AddDetailsPublicProps } from './AddDetails/AddDetails.props';
+import { AddPackagingPublicProps } from './AddPackaging/AddPackaging.props';
+import { AddPhotosPublicProps } from './AddPhotos/AddPhotos.props';
+import { ChooseAccountPublicProps } from './ChooseAccount/ChooseAccount.props';
+import { ChooseSizePublicProps } from './ChooseSize/ChooseSize.props';
+import { ChooseSpecificationsPublicProps } from './ChooseSpecifications/ChooseSpecifications.props';
+import { ChooseTypePublicProps } from './ChooseType/ChooseType.props';
+import { ReviewPublicProps } from './Review/Review.props';
 
 export interface AddProductGeneratedProps
-  extends Step0PublicProps,
-    Step1PublicProps,
-    Step2PublicProps,
-    Step3PublicProps,
-    Step4PublicProps,
-    Step5PublicProps,
-    Step6PublicProps,
-    Step7PublicProps {
+  extends ChooseAccountPublicProps,
+    ChooseTypePublicProps,
+    ChooseSpecificationsPublicProps,
+    ChooseSizePublicProps,
+    AddPhotosPublicProps,
+    AddPackagingPublicProps,
+    AddBoxesPublicProps,
+    AddDetailsPublicProps,
+    ReviewPublicProps {
   currentPage: number;
   onChangeCurrentPage: (newPage: number) => void;
   typeName: string;

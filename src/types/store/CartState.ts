@@ -32,6 +32,7 @@ export type CartItem = {
       countryCode: string;
     };
     measurementUnit: string;
+    packagingId: string | null;
   };
   orderBoxes: {
     id: string;

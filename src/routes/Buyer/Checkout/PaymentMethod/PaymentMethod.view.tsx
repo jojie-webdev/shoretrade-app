@@ -205,7 +205,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
             fullWidth
             alignText="center"
             variant="error"
-            content={props.addCardAndPayError}
+            content={`Payment unsuccessful: ${props.addCardAndPayError}`}
           />
         </div>
       )}

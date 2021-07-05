@@ -3,7 +3,7 @@ import React from 'react';
 import Accordion from 'components/base/Accordion';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Typography from 'components/base/Typography';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES, SHORETRADE_EMAIL } from 'consts';
 import { useTheme } from 'utils/Theme';
 
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
@@ -71,7 +71,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
       <p className="help-text">
         You’ll find answers to common questions below. <br />
         For everything else contact us on <span>1300 095 746</span> or{' '}
-        <span>sellers@shoretrade.com</span>
+        <span>{SHORETRADE_EMAIL}</span>
       </p>
 
       {HELP_AND_SUPPORT.map((help, ndx) => (

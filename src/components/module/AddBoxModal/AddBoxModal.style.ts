@@ -3,16 +3,11 @@ import TouchableView from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
+export const StyledTextField = styled(TextField)`
   flex: 1;
-  margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
   width: 100%;
   margin-bottom: 16px;
   min-width: 426px;
-
-  > div {
-    border-radius: 8px;
-  }
 
   @media ${BREAKPOINTS.sm} {
     margin-right: 0;

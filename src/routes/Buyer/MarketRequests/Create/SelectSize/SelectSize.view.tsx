@@ -8,9 +8,9 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
+import { SIZE_METRICS } from 'consts/sizeMetrics';
 import { pathOr } from 'ramda';
 import { Row, Col, Hidden } from 'react-grid-system';
-import { SIZE_METRICS } from 'routes/Seller/AddProduct/Step3/Step3.constants';
 import theme from 'utils/Theme';
 
 import {

@@ -45,6 +45,16 @@ export type GetListingResponseItem = {
     countryCode: string;
   };
   measurementUnit: string;
+  packaging: {
+    id: string;
+    label: string;
+    type: string;
+    airline_approved: boolean;
+    length: number;
+    width: number;
+    height: number;
+    company_id: string | null;
+  } | null;
 };
 
 export type GetListingPayload = GenericResponse<{
