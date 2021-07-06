@@ -12,7 +12,7 @@ export const CHOICES = [
   },
   {
     title: 'SFM Crates',
-    subtitle: 'Only road freight',
+    subtitle: 'Road freight only',
     value: PACKAGING.sfm,
   },
   {
