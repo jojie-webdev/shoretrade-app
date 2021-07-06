@@ -44,13 +44,10 @@ function* handleSocketEvent(
   const { id, remaining } = action.payload;
   let idx = -1;
   try {
-    console.log(idx);
     if (homeData?.recentListing && idx == -1) {
       idx = homeData.recentListing.findIndex((i) => findProduct(i, id));
-      console.log(idx);
       if (idx !== -1) {
         homeData.recentListing[idx].remaining = remaining;
-        console.log(homeData);
         if (homeState) {
           homeState.data.data = homeData;
           console.log(homeState);
@@ -61,7 +58,6 @@ function* handleSocketEvent(
 
     if (homeData?.favouriteListing && idx == -1) {
       idx = homeData.favouriteListing.findIndex((i) => findProduct(i, id));
-      console.log(idx);
       if (idx !== -1) {
         homeData.favouriteListing[idx].remaining = remaining;
         if (homeState) {

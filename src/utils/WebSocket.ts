@@ -1,9 +1,11 @@
 import { Action, Store } from 'redux';
 import createSocketConnection from 'services/websocket';
 import {
+  getAllListingsActions,
   getBuyerHomepageActions,
   getUserActions,
   socketCreditActions,
+  socketGetAllListingsActions,
 } from 'store/actions';
 import socketHomePageActions from 'store/actions/socketHomePage';
 
@@ -49,6 +51,18 @@ const createSocketMiddleware = () => {
           // dispatch action watched by sagas ?
           storeAPI.dispatch({
             type: socketHomePageActions.HANDLE_EVENT,
+            payload: message,
+          });
+        });
+        break;
+      }
+      case getAllListingsActions.REQUEST: {
+        // UPDATE_REMAINING_BOXES
+        console.log('get all listing sub');
+        socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
+          // dispatch action watched by sagas ?
+          storeAPI.dispatch({
+            type: socketGetAllListingsActions.HANDLE_EVENT,
             payload: message,
           });
         });

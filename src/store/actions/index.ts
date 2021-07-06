@@ -91,3 +91,4 @@ export { default as getPaymentModeActions } from './getPaymentMode';
 export { default as sendDisputeActions } from './sendDispute';
 export { default as socketCreditActions } from './socketCredit';
 export { default as socketHomePageActions } from './socketHomePage';
+export { default as socketGetAllListingsActions } from './socketGetAllListings';

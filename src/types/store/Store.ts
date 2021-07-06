@@ -199,6 +199,10 @@ import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import { SocketCreditMeta, SocketCreditPayload } from './SocketCreditState';
 import {
+  SocketGetAllListingsMeta,
+  SocketGetAllListingsPayload,
+} from './socketGetAllListingsState';
+import {
   SocketHomePageMeta,
   SocketHomePagePayload,
 } from './socketHomePageState';
@@ -420,4 +424,8 @@ export interface Store {
   };
   socketCredit: SocketState<SocketCreditMeta, SocketCreditPayload>;
   socketHomePage: SocketState<SocketHomePageMeta, SocketHomePagePayload>;
+  socketGetAllListings: SocketState<
+    SocketGetAllListingsMeta,
+    SocketGetAllListingsPayload
+  >;
 }

@@ -79,6 +79,7 @@ import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import socketCredit from './socketCredit';
+import socketGetAllListings from './socketGetAllListings';
 import socketHomePage from './socketHomePage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -186,6 +187,7 @@ export default (routeHistory: History) =>
         sendDispute,
         socketCredit,
         socketHomePage,
+        socketGetAllListings,
       }).sort()
     )
   );
