@@ -44,7 +44,11 @@ function* handleSocketEvent(
     if (allListingData && idx == -1) {
       idx = allListingData.findIndex((i) => findProduct(i, id));
       if (idx !== -1) {
-        allListingData[idx].remaining = remaining;
+        if (remaining === 0) {
+          allListingData.splice(idx, 1);
+        } else {
+          allListingData[idx].remaining = remaining;
+        }
         if (allListingState) {
           allListingState.data.orders = allListingData;
           yield put(getAllListingsActions.success(allListingState));
