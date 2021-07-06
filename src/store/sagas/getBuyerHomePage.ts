@@ -54,7 +54,6 @@ function* handleSocketEvent(
         }
         if (homeState) {
           homeState.data.data = homeData;
-          console.log(homeState);
           yield put(getBuyerHomepageActions.success(homeState));
         }
       }

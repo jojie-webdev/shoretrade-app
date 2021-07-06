@@ -35,20 +35,6 @@ window.addEventListener('resize', () => {
 // create the saga middleware
 sagaMiddleware.run(sagas);
 
-// const SOCKET_HOST = 'https://api-staging.shoretrade.com';
-// const socket = io(SOCKET_HOST, {
-//   transports:
-//     process.env.NODE_ENV === 'development'
-//       ? ['websocket', 'polling', 'flashsocket']
-//       : undefined,
-// });
-// socket.on('connect', () => {
-//   socket.on('NEW_ORDER', (msg) => {
-//     console.log('message: ' + msg);
-//   });
-//   console.log(socket.connected); // true
-// });
-
 // Update theme appType based on path
 const Theme = ({ children }: { children: React.ReactNode }) => {
   const pathname = useSelector(

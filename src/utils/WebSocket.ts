@@ -58,7 +58,6 @@ const createSocketMiddleware = () => {
       }
       case getAllListingsActions.REQUEST: {
         // UPDATE_REMAINING_BOXES
-        console.log('get all listing sub');
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
           storeAPI.dispatch({

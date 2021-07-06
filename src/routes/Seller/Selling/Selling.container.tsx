@@ -31,8 +31,6 @@ const Selling = (): JSX.Element => {
   const getAllListings =
     useSelector((state: Store) => state.getAllListings) || [];
 
-  console.log(listings);
-
   const isDeleted =
     useSelector((state: Store) => state.endListing.data?.status) === 200;
 
@@ -47,8 +45,6 @@ const Selling = (): JSX.Element => {
 
   // MARK: Variables
   const filteredListings = useMemo(() => {
-    console.log(listings);
-    console.log(getAllListings);
     const res = !search
       ? listings
       : listings.filter((listing) =>
