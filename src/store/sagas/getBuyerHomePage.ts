@@ -47,7 +47,11 @@ function* handleSocketEvent(
     if (homeData?.recentListing && idx == -1) {
       idx = homeData.recentListing.findIndex((i) => findProduct(i, id));
       if (idx !== -1) {
-        homeData.recentListing[idx].remaining = remaining;
+        if (remaining === 0) {
+          homeData.recentListing.splice(idx, 1);
+        } else {
+          homeData.recentListing[idx].remaining = remaining;
+        }
         if (homeState) {
           homeState.data.data = homeData;
           console.log(homeState);
@@ -59,7 +63,11 @@ function* handleSocketEvent(
     if (homeData?.favouriteListing && idx == -1) {
       idx = homeData.favouriteListing.findIndex((i) => findProduct(i, id));
       if (idx !== -1) {
-        homeData.favouriteListing[idx].remaining = remaining;
+        if (remaining === 0) {
+          homeData.favouriteListing.splice(idx, 1);
+        } else {
+          homeData.favouriteListing[idx].remaining = remaining;
+        }
         if (homeState) {
           homeState.data.data = homeData;
           yield put(getBuyerHomepageActions.success(homeState));
