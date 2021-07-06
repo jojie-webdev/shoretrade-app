@@ -15,15 +15,18 @@ import {
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import DialogModal from 'components/module/DialogModal';
 import EmptyStateView from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -264,11 +267,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     totalOffers,
     measurementUnit,
     isLoading,
+    showNotEnoughCreditAlert,
+    setShowNotEnoughCreditAlert,
   } = props;
 
   const handleStartNegotiate = () => {
     setNegotiating(true);
   };
+
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <RequestDetailsContainer>
       <NegotiateBuyerModal
@@ -300,6 +307,21 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         actionText="DELETE"
         onClickClose={() => setShowDelete(false)}
       />
+      <DialogModal
+        title="Not Enough Credit."
+        // overline="Please top up your Account Credit to accept this order."
+        isOpen={showNotEnoughCreditAlert}
+        onClickClose={() => setShowNotEnoughCreditAlert(false)}
+        backgroundColor={theme.grey.shade8}
+      >
+        <Typography
+          color="alert"
+          weight="400"
+          align={isMobile ? 'center' : 'left'}
+        >
+          Please top up your Account Credit to accept this order.
+        </Typography>
+      </DialogModal>
 
       <HeaderContainer>
         <div>

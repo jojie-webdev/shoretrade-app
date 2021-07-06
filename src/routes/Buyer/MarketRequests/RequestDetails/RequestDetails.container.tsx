@@ -89,11 +89,17 @@ const MarketRequestDetail = (): JSX.Element => {
   const [selectedCompany, setSelectedCompany] = useState('');
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
+    false
+  );
 
   //filters
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
 
+  const acceptOffer = useSelector(
+    (store: Store) => store.marketRequestAcceptOffer
+  );
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
@@ -217,6 +223,12 @@ const MarketRequestDetail = (): JSX.Element => {
       })
     );
   }, [user]);
+
+  useEffect(() => {
+    if (acceptOffer.error) {
+      setShowNotEnoughCreditAlert(true);
+    }
+  }, [acceptOffer]);
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -382,6 +394,8 @@ const MarketRequestDetail = (): JSX.Element => {
       onClickClose: () => setIsFilterModalOpen(false),
     },
     onClickFilterButton,
+    showNotEnoughCreditAlert,
+    setShowNotEnoughCreditAlert,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;
