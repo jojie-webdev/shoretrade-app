@@ -23,6 +23,15 @@ export type UpdateListingRequestData = {
   ends: string | null; // date iso string
   addressId: string;
   minOrder: number;
+  packaging?: {
+    id?: string;
+    custom?: {
+      width: number;
+      height: number;
+      length: number;
+      airlineApproved?: boolean;
+    };
+  };
 };
 
 export type UpdateListingPayload = GenericResponse;

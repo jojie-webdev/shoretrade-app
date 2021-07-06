@@ -23,7 +23,6 @@ export const Container = styled(Row)`
 export const BackgroundContainer = styled(Col)`
   padding-left: 0px !important;
   padding-right: 0px !important;
-  max-height: 100vh;
   background-color: ${({ theme }) => theme.grey.shade8};
 `;
 
@@ -47,7 +46,6 @@ export const Background = styled.div`
 `;
 
 export const Wrapper = styled(Col)`
-  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -57,8 +55,6 @@ export const Wrapper = styled(Col)`
   padding-right: 0px !important;
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};
-  max-height: 100vh;
-  overflow: hidden;
 `;
 
 export const CloseButtonContainer = styled.div`
@@ -171,7 +167,7 @@ export const MobileFooter = styled.div`
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade2};
   width: 100%;
-  z-index: 999;
+  z-index: 2222;
   position: fixed;
   bottom: 0;
 `;

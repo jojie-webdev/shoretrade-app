@@ -12,7 +12,6 @@ import { useTheme } from 'utils/Theme';
 
 import { LoginGeneratedProps } from './Login.props';
 import {
-  ContentWrapper,
   Content,
   Footer,
   RegisterLinkContainer,
@@ -111,82 +110,80 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
         </SignupContainer>
       }
     >
-      <ContentWrapper>
-        <Content>
-          {!isSmallScreen && (
-            <>
-              <Typography
-                variant="title3"
-                weight="bold"
-                color={isSeller ? 'noshade' : 'shade8'}
-              >
-                {isSeller ? 'Seller' : 'Buyer'} Log in
-              </Typography>
-              <RegisterLinkContainer>
-                <RegisterLinkPrefix variant="label" weight="400" color="shade6">
-                  New user?
-                </RegisterLinkPrefix>
-                <RegisterLinkAction onClick={() => goToRegister()}>
-                  <RegisterLink color="primary" variant="label" weight="700">
-                    Create an Account
-                  </RegisterLink>
-                </RegisterLinkAction>
-              </RegisterLinkContainer>
-            </>
-          )}
-
-          <Formik {...formikProps}>
-            <Form>
-              <Email name="email" type="email" label="EMAIL" />
-              <Password secured name="password" label="PASSWORD" />
-              <LoginButtonContainer>
-                <Button
-                  type="submit"
-                  text="LOG IN"
-                  loading={pending}
-                  takeFullWidth={isSmallScreen}
-                />
-              </LoginButtonContainer>
-            </Form>
-          </Formik>
-
-          {isSmallScreen && (
-            <div className="row">
-              <ForgotPasswordView />
-            </div>
-          )}
-
-          {isError && (
-            <Alert
-              content={
-                errorMessage ||
-                'Verification Failed! Your email or password were incorrect.'
-              }
-              variant="error"
-              fullWidth
-              style={{
-                marginTop: 16,
-              }}
-            />
-          )}
-
-          {isLoggedOut && (
-            <Alert
-              content="Successfully logged out."
-              variant="info"
-              fullWidth
-              style={{
-                marginTop: 16,
-              }}
-            />
-          )}
-        </Content>
+      <Content>
         {!isSmallScreen && (
-          <Footer>
-            <ForgotPasswordView />
-          </Footer>
+          <>
+            <Typography
+              variant="title3"
+              weight="bold"
+              color={isSeller ? 'noshade' : 'shade8'}
+            >
+              {isSeller ? 'Seller' : 'Buyer'} Log in
+            </Typography>
+            <RegisterLinkContainer>
+              <RegisterLinkPrefix variant="label" weight="400" color="shade6">
+                New user?
+              </RegisterLinkPrefix>
+              <RegisterLinkAction onClick={() => goToRegister()}>
+                <RegisterLink color="primary" variant="label" weight="700">
+                  Create an Account
+                </RegisterLink>
+              </RegisterLinkAction>
+            </RegisterLinkContainer>
+          </>
         )}
-      </ContentWrapper>
+
+        <Formik {...formikProps}>
+          <Form>
+            <Email name="email" type="email" label="EMAIL" />
+            <Password secured name="password" label="PASSWORD" />
+            <LoginButtonContainer>
+              <Button
+                type="submit"
+                text="LOG IN"
+                loading={pending}
+                takeFullWidth={isSmallScreen}
+              />
+            </LoginButtonContainer>
+          </Form>
+        </Formik>
+
+        {isSmallScreen && (
+          <div className="row">
+            <ForgotPasswordView />
+          </div>
+        )}
+
+        {isError && (
+          <Alert
+            content={
+              errorMessage ||
+              'Verification Failed! Your email or password were incorrect.'
+            }
+            variant="error"
+            fullWidth
+            style={{
+              marginTop: 16,
+            }}
+          />
+        )}
+
+        {isLoggedOut && (
+          <Alert
+            content="Successfully logged out."
+            variant="info"
+            fullWidth
+            style={{
+              marginTop: 16,
+            }}
+          />
+        )}
+      </Content>
+      {!isSmallScreen && (
+        <Footer>
+          <ForgotPasswordView />
+        </Footer>
+      )}
     </AuthContainer>
   );
 };

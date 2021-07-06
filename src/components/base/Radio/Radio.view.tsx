@@ -17,7 +17,7 @@ const Radio = ({
   ...props
 }: RadioProps): JSX.Element => {
   return (
-    <Container onClick={props.onClick}>
+    <Container className="radio" onClick={props.onClick}>
       <HiddenRadio
         onChange={(event) => event.stopPropagation()}
         checked={checked}

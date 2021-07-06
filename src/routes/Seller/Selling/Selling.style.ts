@@ -100,7 +100,7 @@ export const ItemCard = styled.div`
     align-items: center;
     justify-content: flex-end;
     flex: 0.3;
-    z-index: 1000;
+    z-index: 999;
   }
 
   @media (max-width: 1383px) {

@@ -33,7 +33,7 @@ export const showListingCount = (listings: UploadBulkState[]): number[] => {
         !isNaN(stock);
 
       if (!isSuccess) {
-        console.log(`Row ${index}: FAIL`);
+        // console.log(`Row ${index}: FAIL`);
       }
 
       return [acc[0] + Number(!isSuccess), acc[1] + Number(isSuccess)];

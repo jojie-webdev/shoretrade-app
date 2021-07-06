@@ -174,6 +174,21 @@ const MarketRequestsLandingView = (
                   type={mr.type}
                 />
               }
+              rightComponent={
+                mr.offers > 0 ? (
+                  ''
+                ) : (
+                  <Button
+                    iconPosition="before"
+                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                    onClick={() => setItemToDelete({ value: mr.id })}
+                    text="Delete"
+                    variant="primary"
+                    size="sm"
+                    color="error"
+                  />
+                )
+              }
             />
           ))
         ) : (

@@ -89,11 +89,17 @@ const MarketRequestDetail = (): JSX.Element => {
   const [selectedCompany, setSelectedCompany] = useState('');
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
+    false
+  );
 
   //filters
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
 
+  const acceptOffer = useSelector(
+    (store: Store) => store.marketRequestAcceptOffer
+  );
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
@@ -218,6 +224,12 @@ const MarketRequestDetail = (): JSX.Element => {
     );
   }, [user]);
 
+  useEffect(() => {
+    if (acceptOffer.error) {
+      setShowNotEnoughCreditAlert(true);
+    }
+  }, [acceptOffer]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -237,25 +249,29 @@ const MarketRequestDetail = (): JSX.Element => {
   if (selectedOffer) {
     if (selectedOffer.negotiations !== null) {
       sortedNegotiations = sortByDate(selectedOffer.negotiations);
-
-      const counterOfferArr = sortedNegotiations.filter(
-        (i: any) => i.type === 'COUNTER_OFFER'
-      );
       const newOfferArr = sortedNegotiations.filter(
         (i: any) => i.type === 'NEW_OFFER'
       );
+      const counterOfferArr = sortedNegotiations.filter(
+        (i: any) => i.type === 'COUNTER_OFFER'
+      );
 
-      if (counterOfferArr.length > 0 && counterOfferArr) {
-        counterOfferLatest = counterOfferArr.reduce((a: any, b: any) =>
-          a.updated_at > b.updated_at ? a : b
-        );
-      }
+      newOfferLatest = newOfferArr.slice(-1)[0];
+      counterOfferLatest = counterOfferArr.slice(-1)[0];
 
-      if (newOfferArr.length > 0 && newOfferArr) {
-        newOfferLatest = newOfferArr.reduce((a: any, b: any) =>
-          a.updated_at > b.updated_at ? a : b
-        );
-      }
+      const acceptedOffer = sortedNegotiations.find((a) => a.is_accepted);
+
+      // if (counterOfferArr.length > 0 && counterOfferArr) {
+      //   counterOfferLatest = counterOfferArr.reduce((a: any, b: any) =>
+      //     a.updated_at > b.updated_at ? a : b
+      //   );
+      // }
+
+      // if (newOfferArr.length > 0 && newOfferArr) {
+      //   newOfferLatest = newOfferArr.reduce((a: any, b: any) =>
+      //     a.updated_at > b.updated_at ? a : b
+      //   );
+      // }
 
       lastNegotiationsOffers = sortedNegotiations.slice(
         Math.max(
@@ -264,37 +280,52 @@ const MarketRequestDetail = (): JSX.Element => {
         )
       );
 
-      counterOfferArr.forEach((off, index) => {
-        const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
-        if (find !== undefined) {
-          find.ordinal = index + 1;
-        }
-      });
+      // counterOfferArr.forEach((off, index) => {
+      //   const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
+      //   if (find !== undefined) {
+      //     find.ordinal = index + 1;
+      //   }
+      // });
 
-      newOfferArr.forEach((off, index) => {
-        const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
-        if (find !== undefined) {
-          if (index === 0) {
-            find.ordinal = index + 2;
-          } else {
-            find.ordinal = index + 1;
-          }
-        }
-      });
+      // newOfferArr.forEach((off, index) => {
+      //   const find = lastNegotiationsOffers.find((ltn) => off.id === ltn.id);
+      //   if (find !== undefined) {
+      //     if (index === 0) {
+      //       find.ordinal = index + 2;
+      //     } else {
+      //       find.ordinal = index + 1;
+      //     }
+      //   }
+      // });
+
+      const currentOfferPrice =
+        acceptedOffer?.price || newOfferLatest?.price || selectedOffer.price;
+
+      // counterOfferArr is always greater or equal newOfferArr
+      // if counterOfferArr is greater than newOfferArr, updatedPrice is latestBuyerNego
+      const updatedPrice =
+        counterOfferArr.length > newOfferArr.length
+          ? counterOfferLatest?.price || 0 // 0 should never happen
+          : currentOfferPrice;
+
+      // if counterOfferArr is greater than newOfferArr, initialPrice is currentOfferPrice
+      // initially counterOfferArr is 0 so we fallback to currentOfferPrice
+      const initialPrice =
+        counterOfferArr.length > newOfferArr.length
+          ? currentOfferPrice
+          : counterOfferLatest?.price || currentOfferPrice;
+
+      discountValue = updatedPrice - initialPrice;
+
+      // standard change in price formula
+      discountValue = updatedPrice - initialPrice;
+      discountPercentage = ((discountValue / initialPrice) * 100).toFixed(2);
     }
 
     newOffer = newOfferLatest ? newOfferLatest.price.toString() : '';
     counterOffer = counterOfferLatest
       ? counterOfferLatest.price.toString()
       : '';
-
-    const actualPrice = newOffer ? parseFloat(newOffer) : selectedOffer.price;
-    discountValue = actualPrice - parseFloat(counterOffer);
-
-    discountPercentage = (discountValue
-      ? (discountValue / actualPrice) * 100
-      : 0
-    ).toFixed(2);
 
     deliveryTotal = newOfferLatest
       ? newOfferLatest.price * selectedOffer.weight
@@ -363,6 +394,8 @@ const MarketRequestDetail = (): JSX.Element => {
       onClickClose: () => setIsFilterModalOpen(false),
     },
     onClickFilterButton,
+    showNotEnoughCreditAlert,
+    setShowNotEnoughCreditAlert,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

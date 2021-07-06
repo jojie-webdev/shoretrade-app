@@ -10,6 +10,10 @@ export const CategoriesContainer = styled.div`
   .interactions {
     margin-bottom: 8px;
   }
+
+  .search {
+    width: 308px;
+  }
 `;
 
 export const Image = styled.div`

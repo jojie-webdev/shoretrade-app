@@ -24,11 +24,16 @@ const CategoriesLanding = (): JSX.Element => {
     setSearch(event.target.value);
   };
 
+  const onResetSearchValue = () => {
+    setSearch('');
+  };
+
   const generatedProps: CategoriesLandingGeneratedProps = {
     currentPath: location.pathname,
     categories,
     search,
     onChangeSearchValue,
+    onResetSearchValue,
   };
 
   return <CategoriesLandingView {...generatedProps} />;

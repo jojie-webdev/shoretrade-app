@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getListingTypesByCategoryActions } from 'store/actions';
 import { Store } from 'types/store/Store';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 import { CategoriesSearchGeneratedProps } from './Search.props';
 import CategoriesSearchView from './Search.view';
@@ -20,6 +21,8 @@ const CategoriesSearch = (): JSX.Element => {
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const addressCount = (addresses || []).length;
+
+  const [prevTypeId, setPrevTypeId] = useLocalStorage('prev-type-id', '');
 
   const previousId =
     useSelector(
@@ -57,6 +60,10 @@ const CategoriesSearch = (): JSX.Element => {
       onLoad(id);
     }
   }, [id, addressCount]);
+
+  useEffect(() => {
+    setPrevTypeId(''); // reset item id
+  }, []);
 
   const generatedProps: CategoriesSearchGeneratedProps = {
     loading,

@@ -13,15 +13,20 @@ import {
   Weight,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import DialogModal from 'components/module/DialogModal';
 import EmptyStateView from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import Search from 'components/module/Search';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -45,6 +50,8 @@ import {
   SellerOfferInteractionContentContainer,
   FilterButton,
 } from './RequestDetails.style';
+
+const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
 export const OffersSellerAccordionContent = (props: {
   sellerId: string;
@@ -107,6 +114,7 @@ const SellerOfferInteractionContent = (props: {
   tags: string[];
   averagePrice: number;
   isUnderNegotiations: boolean;
+  deliveryDate: string;
 }) => {
   const {
     weight,
@@ -116,7 +124,9 @@ const SellerOfferInteractionContent = (props: {
     averagePrice,
     status,
     isUnderNegotiations = false,
+    deliveryDate,
   } = props;
+
   const OfferTags = (props: { tags: string[] }) => {
     const { tags } = props;
     const tagsMarkup = tags.map((tag) => (
@@ -197,6 +207,18 @@ const SellerOfferInteractionContent = (props: {
             <DollarSign fill={theme.grey.shade5} />
             <TypographyView variant="label">{price}</TypographyView>
           </div>
+          <div className="weight-price">
+            <Typography
+              color="shade5"
+              variant="caption"
+              style={{ marginRight: 4 }}
+            >
+              Estimated Delivery:
+            </Typography>
+            <TypographyView variant="label">
+              {moment(deliveryDate).format('MMMM DD, YY')}
+            </TypographyView>
+          </div>
         </div>
         <div className="tags">
           {(tags || []).length > 0 ? (
@@ -245,12 +267,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     totalOffers,
     measurementUnit,
     isLoading,
+    showNotEnoughCreditAlert,
+    setShowNotEnoughCreditAlert,
   } = props;
 
   const handleStartNegotiate = () => {
     setNegotiating(true);
   };
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <RequestDetailsContainer>
       <NegotiateBuyerModal
@@ -282,6 +307,21 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         actionText="DELETE"
         onClickClose={() => setShowDelete(false)}
       />
+      <DialogModal
+        title="Not Enough Credit."
+        // overline="Please top up your Account Credit to accept this order."
+        isOpen={showNotEnoughCreditAlert}
+        onClickClose={() => setShowNotEnoughCreditAlert(false)}
+        backgroundColor={theme.grey.shade8}
+      >
+        <Typography
+          color="alert"
+          weight="400"
+          align={isMobile ? 'center' : 'left'}
+        >
+          Please top up your Account Credit to accept this order.
+        </Typography>
+      </DialogModal>
 
       <HeaderContainer>
         <div>
@@ -401,29 +441,46 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         }
                         iconColor={theme.brand.primary}
                       >
-                        {seller.offers.map((item) => (
-                          <RequestOfferItemInteraction
-                            key={item.id}
-                            onClick={() => onClickItem(item, seller.company)}
-                            leftComponent={
-                              <SellerOfferInteractionContent
-                                averagePrice={seller.marketRequest.averagePrice}
-                                price={item.price}
-                                isUnderNegotiations={
-                                  !item.negotiations?.find(
-                                    (i) => i.is_accepted === true
-                                  )
-                                }
-                                status={item.status}
-                                weight={item.weight}
-                                tags={item.specifications}
-                                weightUnit={formatMeasurementUnit(
-                                  item.measurementUnit
-                                )}
-                              />
-                            }
-                          />
-                        ))}
+                        {seller.offers.map((item) => {
+                          const negotiations = sortByDate(
+                            item.negotiations || []
+                          );
+
+                          const newOfferArr = negotiations.filter(
+                            (i: any) => i.type === 'NEW_OFFER'
+                          );
+
+                          const latestOffer = newOfferArr.slice(-1)[0];
+                          const standingPrice =
+                            latestOffer?.price || item.price;
+
+                          return (
+                            <RequestOfferItemInteraction
+                              key={item.id}
+                              onClick={() => onClickItem(item, seller.company)}
+                              leftComponent={
+                                <SellerOfferInteractionContent
+                                  averagePrice={
+                                    seller.marketRequest.averagePrice
+                                  }
+                                  price={standingPrice}
+                                  isUnderNegotiations={
+                                    !item.negotiations?.find(
+                                      (i) => i.is_accepted === true
+                                    )
+                                  }
+                                  status={item.status}
+                                  weight={item.weight}
+                                  tags={item.specifications}
+                                  weightUnit={formatMeasurementUnit(
+                                    item.measurementUnit
+                                  )}
+                                  deliveryDate={item.deliveryDate}
+                                />
+                              }
+                            />
+                          );
+                        })}
                       </RequestOffersAccordion>
                     ))
                   )}

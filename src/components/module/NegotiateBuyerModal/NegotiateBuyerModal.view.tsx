@@ -51,19 +51,25 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     }
   };
 
-  const actualPrice = newOffer ? parseFloat(newOffer) : originalOffer;
-  const discountValue =
-    actualPrice - (negotiationPrice || parseFloat(counterOffer));
-  const discountPercentage = (discountValue
-    ? (discountValue / actualPrice) * 100
-    : 0
-  ).toFixed(2);
+  const initialPrice = newOffer ? parseFloat(newOffer) : originalOffer;
+  const updatedPrice = negotiationPrice || initialPrice;
+
+  // standard change in price formula
+  const discountValue = updatedPrice - initialPrice;
+  const discountPercentage = ((discountValue / initialPrice) * 100).toFixed(2);
+
+  // const discountValue =
+  //   actualPrice - (negotiationPrice || parseFloat(counterOffer));
+  // const discountPercentage = (discountValue
+  //   ? (discountValue / actualPrice) * 100
+  //   : 0
+  // ).toFixed(2);
 
   const deliveryTotal =
     (negotiationPrice ? negotiationPrice : parseFloat(newOffer)) * weightValue;
 
-  const lastOffer =
-    sortedNegotiations.filter((i) => i.type === 'COUNTER_OFFER').length + 1;
+  // const lastOffer =
+  //   sortedNegotiations.filter((i) => i.type === 'COUNTER_OFFER').length + 1;
 
   const unit = formatMeasurementUnit(measurementUnit);
   const latestSellerNego =
@@ -136,15 +142,17 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
           <div className="computation-item-container">
             <Typography variant="label" color={textColor}>
               Change in Price{' '}
-              <span className="indicator">{discountPercentage}%</span>
+              <span className="indicator">{`${
+                discountValue > 0 ? '+' : ''
+              }${discountPercentage}%`}</span>
             </Typography>
             {discountValue !== 0 ? (
               <Typography
-                color={discountValue < 0 ? 'error' : 'success'}
+                color={discountValue > 0 ? 'error' : 'success'}
                 variant="label"
                 weight="bold"
               >
-                {toPrice(discountValue)}/{unit}
+                {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
             ) : (
               <Typography variant="label" weight="bold" color={textColor}>

@@ -82,7 +82,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Market Board</MobileHeader>}
+      {isMobile && <MobileHeader>Buyer Requests</MobileHeader>}
 
       <SegmentedControlsV2
         options={['Buyer Requests', 'My Active Offers']}
@@ -195,6 +195,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       </Typography>
                       <div className="badges-container">
                         {!isNil(b.specifications) &&
+                          Array.isArray(b.specifications) &&
                           b.specifications.map((s) => (
                             <Badge
                               key={s.stateId}
