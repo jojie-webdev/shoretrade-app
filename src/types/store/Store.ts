@@ -179,6 +179,7 @@ import { GetUserMeta, GetUserPayload } from './GetUserState';
 import { HistoryState } from './HistoryState';
 import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
+import { AcceptOffer, NegotiationPayload } from './MarketOfferState';
 import { NotifyState } from './NotifyState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
@@ -409,6 +410,7 @@ export interface Store {
   >;
   getPaymentMode: AsyncState<GetPaymentModeMeta, GetPaymentModePayload>;
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
+  marketRequestAcceptOffer: AsyncState<AcceptOffer, NegotiationPayload>;
   notify: NotifyState;
   modifyBulkUpload: {
     modifiedData: Record<number, Partial<UploadBulkState>>;
