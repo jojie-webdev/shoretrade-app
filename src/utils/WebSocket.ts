@@ -3,9 +3,11 @@ import createSocketConnection from 'services/websocket';
 import {
   getAllListingsActions,
   getBuyerHomepageActions,
+  getListingActions,
   getUserActions,
   socketCreditActions,
   socketGetAllListingsActions,
+  socketGetListingActions,
 } from 'store/actions';
 import socketHomePageActions from 'store/actions/socketHomePage';
 
@@ -62,6 +64,17 @@ const createSocketMiddleware = () => {
           // dispatch action watched by sagas ?
           storeAPI.dispatch({
             type: socketGetAllListingsActions.HANDLE_EVENT,
+            payload: message,
+          });
+        });
+        break;
+      }
+      case getListingActions.REQUEST: {
+        // UPDATE_REMAINING_BOXES
+        socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
+          // dispatch action watched by sagas ?
+          storeAPI.dispatch({
+            type: socketGetListingActions.HANDLE_EVENT,
             payload: message,
           });
         });

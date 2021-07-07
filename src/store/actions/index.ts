@@ -92,5 +92,6 @@ export { default as sendDisputeActions } from './sendDispute';
 export { default as socketCreditActions } from './socketCredit';
 export { default as socketHomePageActions } from './socketHomePage';
 export { default as socketGetAllListingsActions } from './socketGetAllListings';
+export { default as socketGetListingActions } from './socketGetListing';
 export { default as getCratesActions } from './getCrates';
 export { default as getAvailableCratesActions } from './getAvailableCrates';

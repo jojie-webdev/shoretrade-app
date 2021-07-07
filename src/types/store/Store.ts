@@ -209,6 +209,10 @@ import {
   SocketGetAllListingsPayload,
 } from './socketGetAllListingsState';
 import {
+  SocketGetListingMeta,
+  SocketGetListingPayload,
+} from './socketGetListingState';
+import {
   SocketHomePageMeta,
   SocketHomePagePayload,
 } from './socketHomePageState';
@@ -435,6 +439,7 @@ export interface Store {
     SocketGetAllListingsMeta,
     SocketGetAllListingsPayload
   >;
+  socketGetListing: SocketState<SocketGetListingMeta, SocketGetListingPayload>;
   getCrates: AsyncState<GetCratesMeta, GetCratesPayload>;
   getAvailableCrates: AsyncState<
     GetAvailableCratesMeta,
