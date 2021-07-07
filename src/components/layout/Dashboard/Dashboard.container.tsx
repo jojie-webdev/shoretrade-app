@@ -136,7 +136,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     shouldIncludePadding,
     userData,
     logout,
-    credit: socketCreditData ? socketCreditData : defaultCompany?.credit || '',
+    credit: defaultCompany?.credit || '',
     openSidebar,
     onClickOpenSideBar,
     cartItems,
