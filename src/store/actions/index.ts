@@ -6,6 +6,7 @@ export { default as resendVerificationActions } from './resendVerification';
 export { default as forgotPasswordActions } from './forgotPassword';
 export { default as getUserActions } from './getUser';
 export { default as getAllListingsActions } from './getAllListings';
+export { default as getAllBuyerListingsActions } from './getAllBuyerListings';
 export { default as registerActions } from './register';
 export { default as updateUserActions } from './updateUser';
 export { default as getAddressesActions } from './getAddresses';
