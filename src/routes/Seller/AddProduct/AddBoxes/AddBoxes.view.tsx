@@ -3,7 +3,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Subtract } from 'components/base/SVG';
+import { Subtract, InfoFilled } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -16,7 +16,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Aquafuture } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.style';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { useTheme } from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
 
 import { AddBoxesProps, BoxType } from './AddBoxes.props';
 import {
@@ -25,6 +25,12 @@ import {
   AddBoxRow,
   BoxSummaryContainer,
 } from './AddBoxes.style';
+
+const INITIAL_BOX_VALUES = {
+  weight: '',
+  quantity: '',
+  count: '',
+};
 
 export const BoxDetails = ({
   weight,
@@ -94,7 +100,7 @@ const BoxSummary = ({
   <BoxSummaryContainer>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        weights
+        Total Weight
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.weights.toFixed(2)} {unit}
@@ -102,7 +108,7 @@ const BoxSummary = ({
     </div>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Qty
+        Total Quantity
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.quantities}
@@ -110,7 +116,7 @@ const BoxSummary = ({
     </div>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Count per box
+        Total count per box
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.counts}
@@ -156,7 +162,7 @@ const AddBoxInputs = ({
           }}
           onKeyDown={(v) => inputFilters.includes(v.key) && v.preventDefault()}
           min={0}
-          placeholder="25"
+          placeholder={`25 ${unit}`}
         />
       </div>
       <div className="add-box-col qty-col">
@@ -203,6 +209,7 @@ const AddBoxInputs = ({
                 id: new Date().getTime().toString(),
               };
               setBoxes([...boxes, box]);
+              setValues(INITIAL_BOX_VALUES);
             }
           }}
         />
@@ -247,11 +254,7 @@ const AddBoxes = ({
   );
 
   const [boxes, setBoxes] = useState<BoxType[]>(initialBoxes);
-  const [values, setValues] = useState<BoxValues>({
-    weight: '',
-    quantity: '',
-    count: '',
-  });
+  const [values, setValues] = useState<BoxValues>(INITIAL_BOX_VALUES);
 
   const [isAquafuture, setIsAquafuture] = useState<boolean>(
     editableListing?.isAquafuture || false
@@ -345,6 +348,12 @@ const AddBoxes = ({
             onClick={() => setSellInMultiples((s) => !s)}
             label="Sell in multiples of the minimum"
           />
+          <div className="tooltip">
+            <InfoFilled width={20} height={20} fill={theme.grey.shade5} />
+            <span className="tooltip-text">
+              This is the minimum quantity that you will ship out to a buyer.
+            </span>
+          </div>
         </Col>
       </Row>
 
@@ -442,6 +451,7 @@ const AddBoxes = ({
                   id: new Date().getTime().toString(),
                 };
                 setBoxes([...boxes, box]);
+                setValues(INITIAL_BOX_VALUES);
               }
             }}
             style={{ margin: '0 8px' }}
