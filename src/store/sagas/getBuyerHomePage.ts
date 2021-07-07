@@ -1,9 +1,11 @@
+import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getBuyerHomepage } from 'services/company';
 import { AsyncAction, SocketAction } from 'types/Action';
 import {
   GetBuyerHomepageMeta,
   GetBuyerHomepagePayload,
+  GetBuyerHomepageResponseListingItem,
 } from 'types/store/GetBuyerHomepageState';
 import {
   SocketHomePageMeta,
@@ -39,40 +41,67 @@ function* handleSocketEvent(
 ) {
   const state: Store = yield select();
   const homeState = state.getBuyerHomepage.data;
-  const homeData = state.getBuyerHomepage.data?.data.data;
   // findindex of id
-  const { id, remaining } = action.payload;
+  const realtimeRemaining: {
+    id: string;
+
+    remaining: number;
+  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
+
   let idx = -1;
   try {
-    if (homeData?.recentListing && idx == -1) {
-      idx = homeData.recentListing.findIndex((i) => findProduct(i, id));
+    if (homeState && homeState.data.data.recentListing) {
+      const recentListingLens = lensPath(['data', 'data', 'recentListing']);
+      const recentListings: GetBuyerHomepageResponseListingItem[] = view(
+        recentListingLens,
+        homeState
+      );
+      let modifiedRecentListings: GetBuyerHomepageResponseListingItem[] = [];
+      idx = recentListings.findIndex((i) =>
+        findProduct(i, realtimeRemaining.id)
+      );
       if (idx !== -1) {
-        if (remaining === 0) {
-          homeData.recentListing.splice(idx, 1);
-        } else {
-          homeData.recentListing[idx].remaining = remaining;
-        }
-        if (homeState) {
-          homeState.data.data = homeData;
-          yield put(getBuyerHomepageActions.success(homeState));
+        if (realtimeRemaining.remaining !== 0) {
+          modifiedRecentListings = recentListings.map((i) => {
+            if (i.id === realtimeRemaining.id) {
+              return {
+                ...i,
+                remaining: realtimeRemaining.remaining,
+              };
+            }
+            return i;
+          });
+        } else if (realtimeRemaining.remaining === 0) {
+          modifiedRecentListings = recentListings.filter(
+            (i) => i.id !== realtimeRemaining.id
+          );
         }
       }
+      const modifiedHomePageData: GetBuyerHomepagePayload = set(
+        recentListingLens,
+        modifiedRecentListings,
+        homeState
+      );
+
+      yield put(getBuyerHomepageActions.success(modifiedHomePageData));
     }
 
-    if (homeData?.favouriteListing && idx == -1) {
-      idx = homeData.favouriteListing.findIndex((i) => findProduct(i, id));
-      if (idx !== -1) {
-        if (remaining === 0) {
-          homeData.favouriteListing.splice(idx, 1);
-        } else {
-          homeData.favouriteListing[idx].remaining = remaining;
-        }
-        if (homeState) {
-          homeState.data.data = homeData;
-          yield put(getBuyerHomepageActions.success(homeState));
-        }
-      }
-    }
+    // if (homeData?.favouriteListing) {
+    //   idx = homeData.favouriteListing.findIndex((i) =>
+    //     findProduct(i, realtimeRemaining.id)
+    //   );
+    //   if (idx !== -1) {
+    //     if (realtimeRemaining.remaining === 0) {
+    //       homeData.favouriteListing.splice(idx, 1);
+    //     } else {
+    //       // homeData.favouriteListing[idx].remaining = remaining;
+    //     }
+    //   }
+    // }
+    // if (homeData && homeState) {
+    //   homeState.data.data = homeData;
+    //   yield put(getBuyerHomepageActions.success(homeState));
+    // }
   } catch (err) {
     console.log(err);
   }
