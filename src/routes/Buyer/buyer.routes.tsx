@@ -7,6 +7,7 @@ import {
   Category as CategoryIcon,
   Notepad as OrderIcon,
   Bolt as BoltIcon,
+  Listing as ListingIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -33,6 +34,7 @@ import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
+import Listings from './Listings';
 import Market from './MarketRequests/market-requests.routes';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
@@ -96,6 +98,12 @@ const ROUTES: Routes = {
     title: 'Orders',
     icon: OrderIcon,
   },
+  LISTING: {
+    path: BUYER_ROUTES.ALL_LISTING,
+    children: <Listings />,
+    title: 'All Listing',
+    icon: ListingIcon,
+  },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,
     children: <Account />,
@@ -135,10 +143,12 @@ const BuyerRoutes = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
-  const locationState: {
+  interface ILocationState {
     ref?: string;
     title?: string;
-  } = location.state || {};
+  }
+
+  const locationState: ILocationState | any = location?.state || {};
 
   const firstName =
     useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
@@ -165,7 +175,7 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname === '/buyer/categories' && locationState.ref === 'home') {
+    if (pathname === '/buyer/categories' && locationState?.ref === 'home') {
       return {
         onBack: history.goBack,
       };

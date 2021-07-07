@@ -6,6 +6,7 @@ import { CreateBulkListingRequestData } from 'types/store/CreateBulkListingState
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
 import { CreateListingRequestData } from 'types/store/CreateListingState';
 import { EndListingMeta } from 'types/store/EndListingState';
+import { GetAllBuyerListingRequestOption } from 'types/store/GetAllBuyerListingsState';
 import { GetBuyerSearchFilterDataMeta } from 'types/store/GetBuyerSearchFilterDataState';
 import { GetListingBoxesMeta } from 'types/store/GetListingBoxesState';
 import { GetListingFormDataMeta } from 'types/store/GetListingFormDataState';
@@ -18,12 +19,34 @@ import { UpdateListingRequestData } from 'types/store/UpdateListingState';
 import { UploadBulkMeta } from 'types/store/UploadBulkState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
+const ENDPOINT = 'listing';
 const LISTING_URL = `${BASE_URL}/listing`;
 
 export const getAllListings = (token: string) => {
   return axios({
     method: 'get',
     url: `${LISTING_URL}/get-all-listings`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getAllBuyerListings = (
+  token: string,
+  requestOptions?: Partial<GetAllBuyerListingRequestOption>
+) => {
+  const page = requestOptions?.page || 1;
+  const limit = requestOptions?.limit || 10;
+  const csvEnpoint = requestOptions?.csv ? 'csv/' : '';
+
+  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?page=${page}&limit=${limit}&sortOrder=ASC`;
+  if (requestOptions?.sortBy) url += `&sortBy=${requestOptions.sortBy}`;
+  if (requestOptions?.term) url += `&term=${requestOptions.term}`;
+
+  return axios({
+    method: 'get',
+    url,
     headers: {
       Authorization: `Bearer ${token}`,
     },

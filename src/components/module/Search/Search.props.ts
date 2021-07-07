@@ -5,4 +5,5 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
   resetValue?: () => void;
   value: string;
   rounded?: boolean;
+  style?: any;
 }

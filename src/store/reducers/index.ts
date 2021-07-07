@@ -27,6 +27,7 @@ import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
+import getAllBuyerListings from './getAllBuyerListings';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
@@ -121,6 +122,7 @@ export default (routeHistory: History) =>
         getAccountCompletion,
         getActiveOffers,
         getAddresses,
+        getAllBuyerListings,
         getAllListings,
         getAllMarketRequest,
         getAllMarketRequestFilters,

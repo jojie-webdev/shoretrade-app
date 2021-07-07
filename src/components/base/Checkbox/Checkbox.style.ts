@@ -46,21 +46,26 @@ export const InnerCheck = styled.span<{
 export const CustomCheckbox = styled.span<{
   size: number;
   checked: boolean;
+  borderColor?: string;
+  customCheckBox?: any;
 }>`
   border-radius: 4px;
   position: relative;
   height: ${({ size }) => `${size}px`};
   width: ${({ size }) => `${size}px`};
-  border: ${({ checked, theme }) => {
+  border: ${({ checked, theme, borderColor }) => {
     if (checked) return `1px solid transparent`;
 
-    return `1px solid ${theme.brand.primary}`;
+    return `1px solid ${borderColor || theme.brand.primary}`;
   }};
   background-color: ${({ checked, theme }) => {
     if (checked) return theme.brand.primary;
 
     return 'transparent';
   }};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Label = styled(Typography)`

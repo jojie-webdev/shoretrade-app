@@ -7,10 +7,10 @@ import { SearchProps } from './Search.props';
 import { InputContainer } from './Search.style';
 const Search = (props: SearchProps): JSX.Element => {
   const theme = useTheme();
-  const { value, resetValue, rounded, className, ...inputProps } = props;
+  const { value, resetValue, rounded, className, style, ...inputProps } = props;
 
   return (
-    <InputContainer className={className} rounded={rounded}>
+    <InputContainer style={style} className={className} rounded={rounded}>
       <SearchSVG height={16} width={16} />
       <input type="text" {...inputProps} value={value} />
       {resetValue && (

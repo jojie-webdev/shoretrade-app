@@ -100,6 +100,10 @@ import {
 } from './ForgotPasswordState';
 import { GetAddressesMeta, GetAddressesPayload } from './GetAddressesState';
 import {
+  GetAllBuyerListingsMeta,
+  GetAllBuyerListingsPayload,
+} from './GetAllBuyerListingsState';
+import {
   GetAllListingsMeta,
   GetAllListingsPayload,
 } from './GetAllListingsState';
@@ -234,6 +238,10 @@ export interface Store {
   resendVerification: AsyncState<
     ResendVerificationMeta,
     ResendVerificationPayload
+  >;
+  getAllBuyerListings: AsyncState<
+    GetAllBuyerListingsMeta,
+    GetAllBuyerListingsPayload
   >;
   getAllListings: AsyncState<GetAllListingsMeta, GetAllListingsPayload>;
   endListing: AsyncState<EndListingMeta, EndListingPayload>;
