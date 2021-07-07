@@ -115,7 +115,7 @@ export const BoxSummaryContainer = styled.div`
     margin-right: 8px;
 
     @media ${BREAKPOINTS['sm']} {
-      min-height: 65px;
+      min-height: 80px;
       justify-content: space-between;
     }
 
