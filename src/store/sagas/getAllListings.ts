@@ -38,8 +38,6 @@ function* handleSocketEvent(
 ) {
   const state: Store = yield select();
   const allListingState = state.getAllListings.data;
-  const allListingData = state.getAllListings.data?.data.orders;
-  // findindex of id
   const realtimeRemaining: {
     id: string;
 

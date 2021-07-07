@@ -61,7 +61,7 @@ const Item = (props: ItemProp) => {
 
   const renderSize = (size: any) => {
     size = flatMap(size.split('-'), function (part: any) {
-      return [part, <ArrowRight fill={theme.grey.shade7} />];
+      return [part, <ArrowRight key={part} fill={theme.grey.shade7} />];
     });
     size.pop();
     return size;
