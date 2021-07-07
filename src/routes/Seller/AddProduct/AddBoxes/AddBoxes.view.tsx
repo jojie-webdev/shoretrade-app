@@ -26,6 +26,12 @@ import {
   BoxSummaryContainer,
 } from './AddBoxes.style';
 
+const INITIAL_BOX_VALUES = {
+  weight: '',
+  quantity: '',
+  count: '',
+};
+
 export const BoxDetails = ({
   weight,
   quantity,
@@ -203,6 +209,7 @@ const AddBoxInputs = ({
                 id: new Date().getTime().toString(),
               };
               setBoxes([...boxes, box]);
+              setValues(INITIAL_BOX_VALUES);
             }
           }}
         />
@@ -247,11 +254,7 @@ const AddBoxes = ({
   );
 
   const [boxes, setBoxes] = useState<BoxType[]>(initialBoxes);
-  const [values, setValues] = useState<BoxValues>({
-    weight: '',
-    quantity: '',
-    count: '',
-  });
+  const [values, setValues] = useState<BoxValues>(INITIAL_BOX_VALUES);
 
   const [isAquafuture, setIsAquafuture] = useState<boolean>(
     editableListing?.isAquafuture || false
@@ -448,6 +451,7 @@ const AddBoxes = ({
                   id: new Date().getTime().toString(),
                 };
                 setBoxes([...boxes, box]);
+                setValues(INITIAL_BOX_VALUES);
               }
             }}
             style={{ margin: '0 8px' }}
