@@ -12,10 +12,8 @@ import { BoxValues } from 'components/module/AddBoxModal/AddBoxModal.props';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import remove from 'ramda/es/remove';
 import { Row, Col } from 'react-grid-system';
-import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { Aquafuture } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.style';
-import { editableListingActions } from 'store/actions';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme, { useTheme } from 'utils/Theme';
@@ -222,7 +220,6 @@ const AddBoxes = ({
   isExisting,
   navBack,
 }: AddBoxesProps) => {
-  const dispatch = useDispatch();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const categoryData = GetCategoryData(
@@ -292,14 +289,6 @@ const AddBoxes = ({
       setShowAlert(false);
     }
   }, [boxes, minimumOrder, showAlert]);
-
-  useEffect(() => {
-    dispatch(
-      editableListingActions.update({
-        boxes,
-      })
-    );
-  }, [boxes]);
 
   return (
     <Container>
