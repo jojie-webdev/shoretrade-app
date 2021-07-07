@@ -1,3 +1,4 @@
+import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllListings } from 'services/listing';
 import socketGetAllListingsAction from 'store/actions/socketGetAllListings';
@@ -5,6 +6,7 @@ import { AsyncAction, SocketAction } from 'types/Action';
 import {
   GetAllListingsMeta,
   GetAllListingsPayload,
+  GetAllListingsResponseItem,
 } from 'types/store/GetAllListingsState';
 import {
   SocketGetAllListingsMeta,
@@ -38,27 +40,51 @@ function* handleSocketEvent(
   const allListingState = state.getAllListings.data;
   const allListingData = state.getAllListings.data?.data.orders;
   // findindex of id
-  const { id, remaining } = action.payload;
+  const realtimeRemaining: {
+    id: string;
+
+    remaining: number;
+  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
   let idx = -1;
   try {
-    if (allListingData && idx == -1) {
-      idx = allListingData.findIndex((i) => findProduct(i, id));
+    if (allListingState && allListingState.data) {
+      const ordersLens = lensPath(['data', 'orders']);
+      const ordersData: GetAllListingsResponseItem[] = view(
+        ordersLens,
+        allListingState
+      );
+      let modifiedOrders: GetAllListingsResponseItem[] = [];
+      idx = ordersData.findIndex((i) => findProduct(i, realtimeRemaining.id));
       if (idx !== -1) {
-        if (remaining === 0) {
-          allListingData.splice(idx, 1);
-        } else {
-          allListingData[idx].remaining = remaining;
+        if (realtimeRemaining.remaining !== 0) {
+          modifiedOrders = ordersData.map((i) => {
+            if (i.id === realtimeRemaining.id) {
+              return {
+                ...i,
+                remaining: realtimeRemaining.remaining,
+              };
+            }
+            return i;
+          });
+        } else if (realtimeRemaining.remaining === 0) {
+          modifiedOrders = ordersData.filter(
+            (i) => i.id !== realtimeRemaining.id
+          );
         }
+
+        const modifiedAllListing: GetAllListingsPayload = set(
+          ordersLens,
+          modifiedOrders,
+          allListingState
+        );
         if (allListingState) {
-          allListingState.data.orders = allListingData;
-          yield put(getAllListingsActions.success(allListingState));
+          yield put(getAllListingsActions.success(modifiedAllListing));
         }
       }
     }
   } catch (err) {
     console.log(err);
   }
-  // check each array in buyer homepage
 }
 
 function* getAllListingsWatcher() {
