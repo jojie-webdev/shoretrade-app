@@ -51,18 +51,21 @@ function* handleSocketEvent(
   let idx = -1;
   try {
     if (homeState && homeState.data.data.recentListing) {
-      const recentListingLens = lensPath(['data', 'data', 'recentListing']);
-      const recentListings: GetBuyerHomepageResponseListingItem[] = view(
-        recentListingLens,
-        homeState
-      );
+      const homePageDataLens = lensPath(['data', 'data']);
+      const homePageData: {
+        recentListing: GetBuyerHomepageResponseListingItem[];
+        favouriteListing: GetBuyerHomepageResponseListingItem[];
+      } = view(homePageDataLens, homeState);
       let modifiedRecentListings: GetBuyerHomepageResponseListingItem[] = [];
-      idx = recentListings.findIndex((i) =>
+      let modifiedFavouriteListings: GetBuyerHomepageResponseListingItem[] = [];
+
+      idx = homePageData.recentListing.findIndex((i) =>
         findProduct(i, realtimeRemaining.id)
       );
+
       if (idx !== -1) {
         if (realtimeRemaining.remaining !== 0) {
-          modifiedRecentListings = recentListings.map((i) => {
+          modifiedRecentListings = homePageData.recentListing.map((i) => {
             if (i.id === realtimeRemaining.id) {
               return {
                 ...i,
@@ -72,36 +75,48 @@ function* handleSocketEvent(
             return i;
           });
         } else if (realtimeRemaining.remaining === 0) {
-          modifiedRecentListings = recentListings.filter(
+          modifiedRecentListings = homePageData.recentListing.filter(
             (i) => i.id !== realtimeRemaining.id
           );
         }
       }
+
+      idx = homePageData.favouriteListing.findIndex((i) =>
+        findProduct(i, realtimeRemaining.id)
+      );
+
+      if (idx !== -1) {
+        if (realtimeRemaining.remaining !== 0) {
+          modifiedFavouriteListings = homePageData.favouriteListing.map((i) => {
+            if (i.id === realtimeRemaining.id) {
+              return {
+                ...i,
+                remaining: realtimeRemaining.remaining,
+              };
+            }
+            return i;
+          });
+        } else if (realtimeRemaining.remaining === 0) {
+          modifiedFavouriteListings = homePageData.favouriteListing.filter(
+            (i) => i.id !== realtimeRemaining.id
+          );
+        }
+      }
+
+      const modifiedListings = {
+        ...homePageData,
+        recentListing: modifiedRecentListings,
+        favouriteListing: modifiedFavouriteListings,
+      };
+
       const modifiedHomePageData: GetBuyerHomepagePayload = set(
-        recentListingLens,
-        modifiedRecentListings,
+        homePageDataLens,
+        modifiedListings,
         homeState
       );
 
       yield put(getBuyerHomepageActions.success(modifiedHomePageData));
     }
-
-    // if (homeData?.favouriteListing) {
-    //   idx = homeData.favouriteListing.findIndex((i) =>
-    //     findProduct(i, realtimeRemaining.id)
-    //   );
-    //   if (idx !== -1) {
-    //     if (realtimeRemaining.remaining === 0) {
-    //       homeData.favouriteListing.splice(idx, 1);
-    //     } else {
-    //       // homeData.favouriteListing[idx].remaining = remaining;
-    //     }
-    //   }
-    // }
-    // if (homeData && homeState) {
-    //   homeState.data.data = homeData;
-    //   yield put(getBuyerHomepageActions.success(homeState));
-    // }
   } catch (err) {
     console.log(err);
   }
