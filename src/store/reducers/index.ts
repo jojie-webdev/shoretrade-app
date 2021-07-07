@@ -83,6 +83,7 @@ import sendMessage from './sendMessage';
 import socketCredit from './socketCredit';
 import socketGetAllListings from './socketGetAllListings';
 import socketGetListing from './socketGetListing';
+import socketGetListingsByType from './socketGetListingsByType';
 import socketHomePage from './socketHomePage';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -194,6 +195,7 @@ export default (routeHistory: History) =>
         socketHomePage,
         socketGetAllListings,
         socketGetListing,
+        socketGetListingsByType,
       }).sort()
     )
   );

@@ -47,8 +47,6 @@ const ProductDetails = (): JSX.Element => {
   const getListingData =
     useSelector((state: Store) => state.getListing.data) || '';
 
-  console.log(getListingData);
-
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
 
