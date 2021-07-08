@@ -36,6 +36,10 @@ const Search = (props: { onChange: (value: string) => void }) => {
       value={value}
       placeholder="Search for a listing"
       rounded
+      resetValue={() => {
+        setValue('');
+        props?.onChange?.('');
+      }}
     />
   );
 };
