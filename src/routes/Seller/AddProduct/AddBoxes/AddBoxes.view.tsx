@@ -348,12 +348,12 @@ const AddBoxes = ({
             onClick={() => setSellInMultiples((s) => !s)}
             label="Sell in multiples of the minimum"
           />
-          <div className="tooltip">
-            <InfoFilled width={20} height={20} fill={theme.grey.shade5} />
-            <span className="tooltip-text">
-              This is the minimum quantity that you will ship out to a buyer.
-            </span>
-          </div>
+          {/*<div className="tooltip">*/}
+          {/*  <InfoFilled width={20} height={20} fill={theme.grey.shade5} />*/}
+          {/*  <span className="tooltip-text">*/}
+          {/*    This is the minimum quantity that you will ship out to a buyer.*/}
+          {/*  </span>*/}
+          {/*</div>*/}
         </Col>
       </Row>
 
