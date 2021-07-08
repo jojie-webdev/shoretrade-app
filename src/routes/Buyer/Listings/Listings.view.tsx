@@ -56,6 +56,7 @@ export default function ListingView(props: ListingViewProps) {
     setPage,
     maxPage,
     isMobile,
+    setSortOrder,
   } = props;
 
   let columns = DIRECT_SALE_COLUMNS;
@@ -105,6 +106,7 @@ export default function ListingView(props: ListingViewProps) {
         data={listings}
         isLoading={Boolean(isLoading)}
         searchTerm={searchTerm}
+        setSortOrder={setSortOrder}
       />
 
       {maxPage > 1 && (

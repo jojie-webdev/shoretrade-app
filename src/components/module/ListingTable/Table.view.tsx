@@ -23,6 +23,7 @@ export const TableComponent = (props: TableComponentProps) => {
     sortField,
     setSortField,
     searchTerm,
+    setSortOrder,
   } = props;
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
@@ -59,6 +60,7 @@ export const TableComponent = (props: TableComponentProps) => {
           selectAll={isAllSelected}
           onSelectAll={handleOnSelectAll}
           columns={columns}
+          setSortOrder={setSortOrder}
         />
         {!isLoading && (
           <>

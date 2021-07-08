@@ -17,6 +17,9 @@ function* getAllBuyerListingsRequest(action: any) {
       const { data } = yield call(getAllBuyerListings, state.auth.token, {
         sortBy: action.payload?.sortField,
         term: action.payload?.searchTerm,
+        page: action.payload?.page,
+        limit: action.payload?.limit,
+        sortOrder: action.payload?.sortOrder,
       });
       yield put(getAllBuyerListingsActions.success(data));
     } catch (e) {
@@ -35,6 +38,9 @@ function* getAllBuyerListingsCSV(action: any) {
         sortBy: action.payload?.sortField,
         term: action.payload?.searchTerm,
         csv: action.payload?.csv,
+        page: action.payload?.page,
+        limit: action.payload?.limit,
+        sortOrder: action.payload?.sortOrder,
       });
       downloadCsv(data, `All listing.csv`);
       yield put(getAllBuyerListingsActions.requestCsvSuccess());

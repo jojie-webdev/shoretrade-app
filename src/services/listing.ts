@@ -38,9 +38,10 @@ export const getAllBuyerListings = (
 ) => {
   const page = requestOptions?.page || 1;
   const limit = requestOptions?.limit || 10;
+  const sortOrder = requestOptions?.sortOrder || 'ASC';
   const csvEnpoint = requestOptions?.csv ? 'csv/' : '';
 
-  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?page=${page}&limit=${limit}&sortOrder=ASC`;
+  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?page=${page}&limit=${limit}&sortOrder=${sortOrder}`;
   if (requestOptions?.sortBy) url += `&sortBy=${requestOptions.sortBy}`;
   if (requestOptions?.term) url += `&term=${requestOptions.term}`;
 

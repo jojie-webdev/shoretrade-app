@@ -4,6 +4,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { getAllBuyerListingsActions } from 'store/actions';
+import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 import { Store } from 'types/store/Store';
 
 import { DIRECT_SALE, DEFAULT_PAGE_LIMIT } from './Listings.constants';
@@ -17,6 +18,7 @@ export default function ListingContainer() {
   const [sortField, setSortField] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('ASC');
 
   const isLoading = useSelector(
     (state: Store) => state.getAllBuyerListings?.pending
@@ -43,6 +45,9 @@ export default function ListingContainer() {
         sortField,
         searchTerm,
         csv: true,
+        page,
+        limit: DEFAULT_PAGE_LIMIT,
+        sortOrder,
       })
     );
   };
@@ -54,9 +59,10 @@ export default function ListingContainer() {
         searchTerm,
         page,
         limit: DEFAULT_PAGE_LIMIT,
+        sortOrder,
       })
     );
-  }, [sortField, searchTerm, page]);
+  }, [sortField, searchTerm, page, sortOrder]);
 
   const ListingViewProps = {
     activeTab,
@@ -73,6 +79,7 @@ export default function ListingContainer() {
     setPage,
     maxPage,
     isMobile,
+    setSortOrder,
   };
 
   return <ListingView {...ListingViewProps} />;
