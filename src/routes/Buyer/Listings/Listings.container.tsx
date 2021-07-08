@@ -19,6 +19,10 @@ export default function ListingContainer() {
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<SortOrder>('ASC');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
+  const [isCsvPending, setIsCsvPending] = useState(false); // local state
 
   const isLoading = useSelector(
     (state: Store) => state.getAllBuyerListings?.pending
@@ -40,16 +44,13 @@ export default function ListingContainer() {
   };
 
   const handleDownloadCSV = () => {
-    dispatch(
-      getAllBuyerListingsActions.requestCsv({
-        sortField,
-        searchTerm,
-        csv: true,
-        page,
-        limit: DEFAULT_PAGE_LIMIT,
-        sortOrder,
-      })
-    );
+    if (showModal) {
+      setIsCsvPending(true);
+      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder }));
+    } else {
+      if (!selectedIds.length) setShowModal(true);
+      else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder, ids: selectedIds }))
+    }
   };
 
   useEffect(() => {
@@ -63,6 +64,13 @@ export default function ListingContainer() {
       })
     );
   }, [sortField, searchTerm, page, sortOrder]);
+
+  useEffect(() => {
+    if (showModal && !isDownloadingCsv && isCsvPending) {
+      setShowModal(false);
+      setIsCsvPending(false);
+    }
+  }, [isDownloadingCsv, showModal, isCsvPending]);
 
   const ListingViewProps = {
     activeTab,
@@ -80,6 +88,12 @@ export default function ListingContainer() {
     maxPage,
     isMobile,
     setSortOrder,
+    showModal,
+    setShowModal,
+    selectedIds,
+    setSelectedIds,
+    isAllSelected,
+    setIsAllSelected,
   };
 
   return <ListingView {...ListingViewProps} />;

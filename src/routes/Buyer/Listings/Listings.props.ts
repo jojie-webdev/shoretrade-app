@@ -16,4 +16,10 @@ export interface ListingViewProps {
   maxPage: number;
   isMobile: boolean;
   setSortOrder: (sortOrder: SortOrder) => void;
+  showModal: boolean;
+  setShowModal: (state: boolean) => void;
+  selectedIds: string[];
+  setSelectedIds: (params: string[]) => void;
+  isAllSelected: boolean;
+  setIsAllSelected: (state: boolean) => void;
 }

@@ -33,6 +33,7 @@ export interface GetAllBuyerListingRequestOption {
   limit: number | string;
   page: number | string;
   csv?: boolean;
+  ids?: string[];
 }
 
 export type GetAllBuyerListingsPayload = GenericResponse<{

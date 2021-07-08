@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Modal from 'components/layout/Modal';
 import TableComponent from 'components/module/ListingTable';
 import Pagination from 'components/module/Pagination';
 import SearchComponent from 'components/module/Search';
@@ -22,6 +23,7 @@ import {
   SearchContainer,
   TabContainer,
   PaginationContainer,
+  ModalContentContainer,
 } from './Listings.styles';
 
 const Search = (props: { onChange: (value: string) => void }) => {
@@ -61,6 +63,12 @@ export default function ListingView(props: ListingViewProps) {
     maxPage,
     isMobile,
     setSortOrder,
+    showModal,
+    setShowModal,
+    selectedIds,
+    setSelectedIds,
+    isAllSelected,
+    setIsAllSelected,
   } = props;
 
   let columns = DIRECT_SALE_COLUMNS;
@@ -72,6 +80,19 @@ export default function ListingView(props: ListingViewProps) {
 
   return (
     <div>
+      <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
+        <ModalContentContainer>
+          No data is selected. Do you want to proceed downloding all items in
+          the lisiting?
+        </ModalContentContainer>
+        <Button
+          takeFullWidth={isMobile}
+          disabled={isDownloadingCsv}
+          loading={isDownloadingCsv}
+          onClick={handleDownloadCSV}
+          text="Proceed"
+        />
+      </Modal>
       <Header>
         <TabContainer>
           <Tab
@@ -111,6 +132,10 @@ export default function ListingView(props: ListingViewProps) {
         isLoading={Boolean(isLoading)}
         searchTerm={searchTerm}
         setSortOrder={setSortOrder}
+        selectedIds={selectedIds}
+        setSelectedIds={setSelectedIds}
+        isAllSelected={isAllSelected}
+        setIsAllSelected={setIsAllSelected}
       />
 
       {maxPage > 1 && (

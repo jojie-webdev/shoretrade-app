@@ -22,4 +22,8 @@ export interface TableComponentProps {
   isLoading?: boolean;
   searchTerm?: string;
   setSortOrder?: (sortOrder: SortOrder) => void;
+  selectedIds: string[];
+  setSelectedIds: (params: string[]) => void;
+  isAllSelected: boolean;
+  setIsAllSelected: (state: boolean) => void;
 }
