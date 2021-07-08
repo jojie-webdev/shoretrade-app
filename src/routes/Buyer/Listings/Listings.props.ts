@@ -1,3 +1,5 @@
+import { SortOrder } from 'types/store/GetAllBuyerListingsState';
+
 export interface ListingViewProps {
   activeTab: number;
   handleSelectTab: (tabId: number) => void;
@@ -13,4 +15,11 @@ export interface ListingViewProps {
   setPage: (page: number) => void;
   maxPage: number;
   isMobile: boolean;
+  setSortOrder: (sortOrder: SortOrder) => void;
+  showModal: boolean;
+  setShowModal: (state: boolean) => void;
+  selectedIds: string[];
+  setSelectedIds: (params: string[]) => void;
+  isAllSelected: boolean;
+  setIsAllSelected: (state: boolean) => void;
 }

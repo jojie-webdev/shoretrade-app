@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Modal from 'components/layout/Modal';
 import TableComponent from 'components/module/ListingTable';
 import Pagination from 'components/module/Pagination';
 import SearchComponent from 'components/module/Search';
@@ -22,6 +23,7 @@ import {
   SearchContainer,
   TabContainer,
   PaginationContainer,
+  ModalContentContainer,
 } from './Listings.styles';
 
 const Search = (props: { onChange: (value: string) => void }) => {
@@ -36,6 +38,10 @@ const Search = (props: { onChange: (value: string) => void }) => {
       value={value}
       placeholder="Search for a listing"
       rounded
+      resetValue={() => {
+        setValue('');
+        props?.onChange?.('');
+      }}
     />
   );
 };
@@ -56,6 +62,13 @@ export default function ListingView(props: ListingViewProps) {
     setPage,
     maxPage,
     isMobile,
+    setSortOrder,
+    showModal,
+    setShowModal,
+    selectedIds,
+    setSelectedIds,
+    isAllSelected,
+    setIsAllSelected,
   } = props;
 
   let columns = DIRECT_SALE_COLUMNS;
@@ -67,6 +80,19 @@ export default function ListingView(props: ListingViewProps) {
 
   return (
     <div>
+      <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
+        <ModalContentContainer>
+          Do you want to proceed? If not, select the individual listings you
+          want.
+        </ModalContentContainer>
+        <Button
+          takeFullWidth={isMobile}
+          disabled={isDownloadingCsv}
+          loading={isDownloadingCsv}
+          onClick={handleDownloadCSV}
+          text="Proceed"
+        />
+      </Modal>
       <Header>
         <TabContainer>
           <Tab
@@ -105,6 +131,11 @@ export default function ListingView(props: ListingViewProps) {
         data={listings}
         isLoading={Boolean(isLoading)}
         searchTerm={searchTerm}
+        setSortOrder={setSortOrder}
+        selectedIds={selectedIds}
+        setSelectedIds={setSelectedIds}
+        isAllSelected={isAllSelected}
+        setIsAllSelected={setIsAllSelected}
       />
 
       {maxPage > 1 && (

@@ -4,6 +4,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { getAllBuyerListingsActions } from 'store/actions';
+import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 import { Store } from 'types/store/Store';
 
 import { DIRECT_SALE, DEFAULT_PAGE_LIMIT } from './Listings.constants';
@@ -17,6 +18,11 @@ export default function ListingContainer() {
   const [sortField, setSortField] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('ASC');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
+  const [isCsvPending, setIsCsvPending] = useState(false); // local state
 
   const isLoading = useSelector(
     (state: Store) => state.getAllBuyerListings?.pending
@@ -38,13 +44,13 @@ export default function ListingContainer() {
   };
 
   const handleDownloadCSV = () => {
-    dispatch(
-      getAllBuyerListingsActions.requestCsv({
-        sortField,
-        searchTerm,
-        csv: true,
-      })
-    );
+    if (showModal) {
+      setIsCsvPending(true);
+      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder }));
+    } else {
+      if (!selectedIds.length) setShowModal(true);
+      else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder, ids: selectedIds }))
+    }
   };
 
   useEffect(() => {
@@ -54,9 +60,17 @@ export default function ListingContainer() {
         searchTerm,
         page,
         limit: DEFAULT_PAGE_LIMIT,
+        sortOrder,
       })
     );
-  }, [sortField, searchTerm, page]);
+  }, [sortField, searchTerm, page, sortOrder]);
+
+  useEffect(() => {
+    if (showModal && !isDownloadingCsv && isCsvPending) {
+      setShowModal(false);
+      setIsCsvPending(false);
+    }
+  }, [isDownloadingCsv, showModal, isCsvPending]);
 
   const ListingViewProps = {
     activeTab,
@@ -73,6 +87,13 @@ export default function ListingContainer() {
     setPage,
     maxPage,
     isMobile,
+    setSortOrder,
+    showModal,
+    setShowModal,
+    selectedIds,
+    setSelectedIds,
+    isAllSelected,
+    setIsAllSelected,
   };
 
   return <ListingView {...ListingViewProps} />;

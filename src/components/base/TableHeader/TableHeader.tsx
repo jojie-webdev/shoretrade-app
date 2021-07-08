@@ -6,7 +6,14 @@ import { ColumnType } from 'components/module/ListingTable/Table.props';
 import { TableHeaderProps } from './TableHeader.props';
 
 export default function TableHeader(props: TableHeaderProps) {
-  const { columns, selectAll, onSelectAll, setSortField, sortField } = props;
+  const {
+    columns,
+    selectAll,
+    onSelectAll,
+    setSortField,
+    sortField,
+    setSortOrder,
+  } = props;
 
   return (
     <>
@@ -21,7 +28,10 @@ export default function TableHeader(props: TableHeaderProps) {
             key={`${column.selector}-${index}`}
             rowType="header"
             columnType={columnType!}
-            onClick={() => setSortField?.(column.selector)}
+            onClick={() => {
+              setSortField?.(column.selector);
+              setSortOrder?.(sortField === column.selector ? 'DESC' : 'ASC');
+            }}
             sorted={sortField === column.selector}
             sticky={column?.sticky}
             handleOnSelect={(state: boolean) => {
