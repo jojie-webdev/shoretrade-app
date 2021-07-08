@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +28,9 @@ const Selling = (): JSX.Element => {
   const listings =
     useSelector((state: Store) => state.getAllListings.data?.data.orders) || [];
 
+  const getAllListings =
+    useSelector((state: Store) => state.getAllListings) || [];
+
   const isDeleted =
     useSelector((state: Store) => state.endListing.data?.status) === 200;
 
@@ -41,11 +44,14 @@ const Selling = (): JSX.Element => {
   });
 
   // MARK: Variables
-  const filteredListings = !search
-    ? listings
-    : listings.filter((listing) =>
-        listing.type.toLowerCase().includes(search.toLowerCase())
-      );
+  const filteredListings = useMemo(() => {
+    const res = !search
+      ? listings
+      : listings.filter((listing) =>
+          listing.type.toLowerCase().includes(search.toLowerCase())
+        );
+    return res;
+  }, [listings, getAllListings]);
 
   // MARK:- Method
   const onClickRemoveListing = (listingId: string, companyId: string) => {
