@@ -44,6 +44,9 @@ const ProductDetails = (): JSX.Element => {
   const previousId =
     useSelector((state: Store) => state.getListing.request?.listingId) || '';
 
+  const getListingData =
+    useSelector((state: Store) => state.getListing.data) || '';
+
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
 
@@ -255,7 +258,7 @@ const ProductDetails = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    if (listingId && previousId !== listingId) {
+    if (listingId) {
       onLoad(listingId);
     }
   }, [listingId]);

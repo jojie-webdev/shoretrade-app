@@ -9,6 +9,7 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
+import ListingTimeLeftView from '../ListingTimeLeft';
 
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {
@@ -47,7 +48,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           Time Left:
         </Label>
         <Label variant="label" weight="bold">
-          {timeLeft && formattedTimeLeft()}
+          <ListingTimeLeftView timeLeft={moment(timeLeft)} />
         </Label>
       </Row>
       <Row>

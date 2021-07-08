@@ -67,7 +67,7 @@ import {
   AddLinkedAccountMeta,
   AddLinkedAccountPayload,
 } from './AddLinkedAccountState';
-import { AsyncState } from './AsyncState';
+import { AsyncState, SocketState } from './AsyncState';
 import { AuthState } from './AuthState';
 import { CartState } from './CartState';
 import {
@@ -207,6 +207,23 @@ import {
 } from './SearchProductTypeState';
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
+import { SocketCreditMeta, SocketCreditPayload } from './SocketCreditState';
+import {
+  SocketGetAllListingsMeta,
+  SocketGetAllListingsPayload,
+} from './socketGetAllListingsState';
+import {
+  SocketGetListingsByTypeMeta,
+  SocketGetListingsByTypePayload,
+} from './socketGetListingsByTypeState';
+import {
+  SocketGetListingMeta,
+  SocketGetListingPayload,
+} from './socketGetListingState';
+import {
+  SocketHomePageMeta,
+  SocketHomePagePayload,
+} from './socketHomePageState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -227,6 +244,7 @@ import {
 import { UpdateListingMeta, UpdateListingPayload } from './UpdateListingState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
+
 export interface Store {
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
@@ -427,6 +445,17 @@ export interface Store {
       currentStep?: number;
     };
   };
+  socketCredit: SocketState<SocketCreditMeta, SocketCreditPayload>;
+  socketHomePage: SocketState<SocketHomePageMeta, SocketHomePagePayload>;
+  socketGetAllListings: SocketState<
+    SocketGetAllListingsMeta,
+    SocketGetAllListingsPayload
+  >;
+  socketGetListing: SocketState<SocketGetListingMeta, SocketGetListingPayload>;
+  socketGetListingsByType: SocketState<
+    SocketGetListingsByTypeMeta,
+    SocketGetListingsByTypePayload
+  >;
   getCrates: AsyncState<GetCratesMeta, GetCratesPayload>;
   getAvailableCrates: AsyncState<
     GetAvailableCratesMeta,
