@@ -70,3 +70,7 @@ export const PaginationContainer = styled.div`
   justify-content: center;
   margin-top: 24px;
 `;
+
+export const ModalContentContainer = styled.div`
+  margin-bottom: 12px;
+`;

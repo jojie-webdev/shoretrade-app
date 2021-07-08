@@ -3,6 +3,8 @@ import { GenericResponse } from 'types/GenericResponse';
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type GetAllBuyerListingsMeta = {};
 
+export type SortOrder = 'ASC' | 'DESC';
+
 export type GetAllBuyerListingResponseItem = {
   id: string;
   name: string;
@@ -26,11 +28,12 @@ export type GetAllBuyerListingResponseItem = {
 
 export interface GetAllBuyerListingRequestOption {
   sortBy: string;
-  sortOrder: 'ASC' | 'DESC';
+  sortOrder: SortOrder;
   term: string;
   limit: number | string;
   page: number | string;
   csv?: boolean;
+  ids?: string[];
 }
 
 export type GetAllBuyerListingsPayload = GenericResponse<{
