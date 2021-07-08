@@ -82,8 +82,8 @@ export default function ListingView(props: ListingViewProps) {
     <div>
       <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
         <ModalContentContainer>
-          No data is selected. Do you want to proceed downloding all items in
-          the lisiting?
+          Do you want to proceed? If not, select the individual listings you
+          want.
         </ModalContentContainer>
         <Button
           takeFullWidth={isMobile}
