@@ -213,10 +213,10 @@ const SellerOfferInteractionContent = (props: {
               variant="caption"
               style={{ marginRight: 4 }}
             >
-              Estimated Delivery:
+              Est. Delivery:
             </Typography>
             <TypographyView variant="label">
-              {moment(deliveryDate).format('MMMM DD, YY')}
+              {moment(deliveryDate).format('MMM DD, YY')}
             </TypographyView>
           </div>
         </div>
