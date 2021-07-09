@@ -73,7 +73,7 @@ export const TableComponent = (props: TableComponentProps) => {
                   data={item}
                   key={item?.id}
                   columns={columns}
-                  selected={isAllSelected}
+                  selected={selectedIds?.includes(item?.id)}
                   handleOnSelectRow={handleSelectRow}
                 />
               );

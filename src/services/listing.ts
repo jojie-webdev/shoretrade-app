@@ -36,13 +36,18 @@ export const getAllBuyerListings = (
   token: string,
   requestOptions?: Partial<GetAllBuyerListingRequestOption>
 ) => {
-  const page = requestOptions?.page || 1;
-  const limit = requestOptions?.limit || 10;
+  let page = `&page=${requestOptions?.page || 1}`;
+  let limit = `&limit=${requestOptions?.limit || 10}`;
   const sortOrder = requestOptions?.sortOrder || 'ASC';
   const csvEnpoint = requestOptions?.csv ? 'csv/' : '';
   const ids = requestOptions?.ids?.map((id) => `&id=${id}`)?.join('') || '';
 
-  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?page=${page}&limit=${limit}&sortOrder=${sortOrder}${ids}`;
+  if (requestOptions?.all) {
+    page = '';
+    limit = '';
+  }
+
+  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?sortOrder=${sortOrder}${page}${limit}${ids}`;
   if (requestOptions?.sortBy) url += `&sortBy=${requestOptions.sortBy}`;
   if (requestOptions?.term) url += `&term=${requestOptions.term}`;
 

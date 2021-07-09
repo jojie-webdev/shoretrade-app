@@ -46,10 +46,10 @@ export default function ListingContainer() {
   const handleDownloadCSV = () => {
     if (showModal) {
       setIsCsvPending(true);
-      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder }));
+      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, sortOrder, all: true }));
     } else {
       if (!selectedIds.length) setShowModal(true);
-      else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, page, limit: DEFAULT_PAGE_LIMIT, sortOrder, ids: selectedIds }))
+      else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, sortOrder, ids: selectedIds, all: true }));
     }
   };
 
