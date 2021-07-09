@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
-import { Pen, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
@@ -12,17 +11,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import DefaultProfileImage from 'res/images/seller-profile-default.png';
-import { parseImageUrl } from 'utils/parseImageURL';
-import theme from 'utils/Theme';
 
 import { AccountLandingGeneratedProps } from './Landing.props';
-import {
-  Container,
-  NavInteraction,
-  Header,
-  NoProfilePic,
-} from './Landing.style';
+import { Container, NavInteraction, Header } from './Landing.style';
 
 const AccountLandingView = (props: AccountLandingGeneratedProps) => {
   const history = useHistory();
@@ -93,32 +84,9 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
 
-  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
-  const imagePicker = useRef<HTMLInputElement | null>(null);
-
   if (loadingUser) {
     return <Loading />;
   }
-
-  const handleOnClick = () => {
-    // handle image
-    if (imagePicker && imagePicker.current) {
-      imagePicker.current.click();
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-
-    // accept ony jpg and png
-    const imageFiles = files.filter(
-      ({ type }) => type === 'image/jpeg' || type === 'image/png'
-    );
-
-    if (imageFiles.length > 0) {
-      updateImage(imageFiles[0]);
-    }
-  };
 
   const companyOptions = companies.map((company) => {
     return {
@@ -136,7 +104,6 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
             updateImage={updateImage}
             updatingImage={updatingImage}
           />
-
           <div>
             <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
