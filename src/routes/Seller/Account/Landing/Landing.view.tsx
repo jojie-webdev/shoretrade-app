@@ -5,6 +5,7 @@ import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner';
 import { Pen, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -130,57 +131,11 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
     <Container>
       <Header>
         <div className="left-content">
-          <input
-            ref={imagePicker}
-            type="file"
-            hidden
-            name="profileImage"
-            onChange={handleFileChange}
+          <AccountPicture
+            profilePicture={profilePicture}
+            updateImage={updateImage}
+            updatingImage={updatingImage}
           />
-          {updatingImage ? (
-            <div className="loading-indicator">
-              <Spinner />
-            </div>
-          ) : (
-            <div className="img-container">
-              <>
-                {profilePicture !== '' ? (
-                  <>
-                    <img
-                      src={
-                        hideBrokenProfileImage
-                          ? DefaultProfileImage
-                          : parseImageUrl(profilePicture) || DefaultProfileImage
-                      }
-                      alt="profile picture"
-                      onError={() => {
-                        setHideBrokenProfileImage(true);
-                      }}
-                      onClick={() => {
-                        handleOnClick();
-                      }}
-                    />
-                  </>
-                ) : (
-                  <NoProfilePic
-                    onClick={() => {
-                      handleOnClick();
-                    }}
-                  >
-                    <PlaceholderProfile width={96} height={96} />
-                  </NoProfilePic>
-                )}
-              </>
-              <div
-                className="pen"
-                onClick={() => {
-                  handleOnClick();
-                }}
-              >
-                <Pen fill={theme.brand.primary} />
-              </div>
-            </div>
-          )}
 
           <div>
             <Typography variant="overline" color="shade6">
