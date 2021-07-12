@@ -46,7 +46,7 @@ export default function ListingContainer() {
   const handleDownloadCSV = () => {
     if (showModal) {
       setIsCsvPending(true);
-      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, sortOrder, all: true }));
+      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, sortOrder, all: true, csv: true }));
     } else {
       if (!selectedIds.length) setShowModal(true);
       else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, sortOrder, ids: selectedIds, all: true }));
