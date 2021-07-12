@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Camera } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -9,8 +9,22 @@ import { Container } from './Add.style';
 
 const Add = (props: AddProps): JSX.Element => {
   const theme = useTheme();
+  const [invalid, setInvalid] = useState(false);
 
-  const { title, onClick, Svg, onClickImage, onClickFile } = props;
+  const {
+    title,
+    onClick,
+    Svg,
+    onClickImage,
+    onClickFile,
+    imageTypeWhiteList = ['image/jpeg', 'image/png'],
+    documentTypeWhiteList = [
+      'image/jpeg',
+      'image/png',
+      'application/pdf',
+      'application/msword',
+    ],
+  } = props;
 
   const enableImagePicker = onClickImage !== undefined;
   const enableFilePicker = onClickFile !== undefined;
@@ -33,35 +47,60 @@ const Add = (props: AddProps): JSX.Element => {
     }
   };
 
+  const invalidText = () => {
+    if (enableImagePicker) {
+      return 'Please enter a valid image file format';
+    } else if (enableFilePicker) {
+      return 'Please enter a valid image or document file format';
+    }
+    return 'Please enter a valid file format';
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
 
-    // accept ony jpg and png
-    const imageFiles = files.filter(
-      ({ type }) => type === 'image/jpeg' || type === 'image/png'
-    );
+    let invalid = false;
+
+    files.forEach((f) => {
+      if (!imageTypeWhiteList.includes(f.type)) {
+        invalid = true;
+        return;
+      }
+    });
+
+    setInvalid(invalid);
+
+    // do not proceed
+    if (invalid) {
+      return;
+    }
 
     // only return first index
     if (onClickImage !== undefined) {
-      onClickImage(imageFiles.length > 0 ? imageFiles[0] : null);
+      onClickImage(files.length > 0 ? files[0] : null);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+    let invalid = false;
+    files.forEach((f) => {
+      if (!documentTypeWhiteList.includes(f.type)) {
+        invalid = true;
+        return;
+      }
+    });
 
-    // accept ony images/docs/pdf
-    const documentFiles = files.filter(
-      ({ type }) =>
-        type === 'image/jpeg' ||
-        type === 'image/png' ||
-        type === 'application/pdf' ||
-        type === 'application/msword'
-    );
+    setInvalid(invalid);
+
+    // do not proceed
+    if (invalid) {
+      return;
+    }
 
     // only return first index
     if (onClickFile !== undefined) {
-      onClickFile(documentFiles.length > 0 ? documentFiles[0] : null);
+      onClickFile(files.length > 0 ? files[0] : null);
     }
   };
 
@@ -85,7 +124,11 @@ const Add = (props: AddProps): JSX.Element => {
           onChange={handleFileChange}
         />
       )}
-      <Container onClick={handleOnClick} className="add-container">
+      <Container
+        error={invalid}
+        onClick={handleOnClick}
+        className="add-container"
+      >
         <div className="content">
           <div className="svg-container">
             <Svg fill={theme.brand.primary} />
@@ -96,6 +139,11 @@ const Add = (props: AddProps): JSX.Element => {
           </Typography>
         </div>
       </Container>
+      {invalid && (
+        <Typography color="error" variant="label">
+          {invalidText()}
+        </Typography>
+      )}
     </>
   );
 };

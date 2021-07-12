@@ -51,7 +51,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
         <>
           {!isSmallScreen ? (
             <>
-              <Row nogutter>
+              {/* <Row nogutter>
                 <Col />
                 <Col xs="content">
                   <Search
@@ -63,7 +63,7 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
                     className="search"
                   />
                 </Col>
-              </Row>
+              </Row> */}
               <div className="cards">
                 {categories.length > 0 &&
                   categories.map((category) => {
