@@ -38,39 +38,21 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     }))
   );
 
-  const groupOrders = uniq(stateOptions.flat().map((so) => so.groupOrder));
-
   const [selectedState, setSelectedState] = useState<{
     selectedStates: any[];
   }>({ selectedStates: [...selectedSpecifications.items] });
+
+  const groupOrders = uniq(stateOptions.flat().map((so) => so.groupOrder));
+
+  const selectedGroups =
+    uniq(selectedState.selectedStates.map((ss) => ss.groupOrder)) || [];
 
   const handleSelectSpecs = () => {
     setSelectedSpecifications({ items: selectedState.selectedStates });
     setStep(3);
   };
 
-  const handleStateCheck = (v: any) => {
-    if (
-      selectedState.selectedStates.filter((state) => state.value === v.value)
-        .length > 0
-    ) {
-      setSelectedState(({ selectedStates }) => {
-        return {
-          selectedStates: selectedStates.filter(
-            (state) => state.value !== v.value
-          ),
-        };
-      });
-    } else {
-      setSelectedState(({ selectedStates }) => {
-        return {
-          selectedStates: selectedStates.concat(v),
-        };
-      });
-    }
-  };
-
-  const filteredSpecifications = () => {
+  const getFilteredSpecifications = () => {
     const currentSelectionByGroup = groupBy((a) => {
       return `group${a.groupOrder}`;
     }, selectedState.selectedStates);
@@ -91,12 +73,57 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     return filteredSpecList;
   };
 
-  const selectedGroups =
-    uniq(selectedState.selectedStates.map((ss) => ss.groupOrder)) || [];
+  const handleStateCheck = (v: any) => {
+    if (selectedState.selectedStates.some((state) => state.value === v.value)) {
+      setSelectedState(({ selectedStates }) => {
+        if (v.label === 'Live') {
+          return {
+            selectedStates: selectedStates.filter(
+              (state) => state.value !== v.value && v.label !== 'Whole'
+            ),
+          };
+        } else {
+          return {
+            selectedStates: selectedStates.filter(
+              (state) => state.value !== v.value
+            ),
+          };
+        }
+      });
+    } else {
+      if (v.label === 'Live') {
+        let wholeFinder: any;
+
+        stateOptions.map((option) => {
+          return option.find((i) => {
+            if (i.label === 'Whole') {
+              wholeFinder = i;
+            }
+
+            return wholeFinder;
+          });
+        });
+
+        setSelectedState(({ selectedStates }) => {
+          const initial = selectedStates.concat(v);
+
+          return {
+            selectedStates: wholeFinder ? initial.concat(wholeFinder) : initial,
+          };
+        });
+      } else {
+        setSelectedState(({ selectedStates }) => {
+          return {
+            selectedStates: selectedStates.concat(v),
+          };
+        });
+      }
+    }
+  };
 
   const isDisabled =
-    filteredSpecifications().length !== selectedGroups.length &&
-    filteredSpecifications().length >= selectedGroups.length;
+    getFilteredSpecifications().length !== selectedGroups.length &&
+    getFilteredSpecifications().length >= selectedGroups.length;
 
   return (
     <>
@@ -136,7 +163,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           )}
 
-          {filteredSpecifications().map((group) => (
+          {getFilteredSpecifications().map((group) => (
             <div key={group[0].groupOrder} className="interaction-group">
               <div className="spec-row">
                 {group.map((item) => (
