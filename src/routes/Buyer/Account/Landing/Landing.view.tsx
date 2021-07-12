@@ -3,25 +3,18 @@ import React, { useRef, useState } from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import Spinner from 'components/base/Spinner/Spinner.view';
-import { Pen, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
+import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import DefaultProfileImage from 'res/images/seller-profile-default.png';
-import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
-import {
-  Container,
-  Header,
-  NavInteraction,
-  NoProfilePic,
-} from './Landing.style';
+import { Container, Header, NavInteraction } from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const history = useHistory();
@@ -58,32 +51,11 @@ const LandingView = (props: LandingGeneratedProps) => {
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
   ];
 
-  const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
   const imagePicker = useRef<HTMLInputElement | null>(null);
 
   if (loadingUser) {
     return <Loading />;
   }
-
-  const handleOnClick = () => {
-    // handle image
-    if (imagePicker && imagePicker.current) {
-      imagePicker.current.click();
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-
-    // accept ony jpg and png
-    const imageFiles = files.filter(
-      ({ type }) => type === 'image/jpeg' || type === 'image/png'
-    );
-
-    if (imageFiles.length > 0) {
-      updateImage(imageFiles[0]);
-    }
-  };
 
   const companyOptions = companies.map((company) => {
     return {
@@ -96,58 +68,11 @@ const LandingView = (props: LandingGeneratedProps) => {
     <Container>
       <Header>
         <div className="left-content">
-          <input
-            ref={imagePicker}
-            type="file"
-            hidden
-            name="profileImage"
-            onChange={handleFileChange}
+          <AccountPicture
+            profilePicture={profilePicture}
+            updateImage={updateImage}
+            updatingImage={updatingImage}
           />
-          {updatingImage ? (
-            <div className="loading-indicator">
-              <Spinner />
-            </div>
-          ) : (
-            <div className="img-container">
-              <>
-                {profilePicture !== '' ? (
-                  <>
-                    <img
-                      src={
-                        hideBrokenProfileImage
-                          ? DefaultProfileImage
-                          : parseImageUrl(profilePicture) || DefaultProfileImage
-                      }
-                      alt="profile picture"
-                      onError={() => {
-                        setHideBrokenProfileImage(true);
-                      }}
-                      onClick={() => {
-                        handleOnClick();
-                      }}
-                    />
-                  </>
-                ) : (
-                  <NoProfilePic
-                    onClick={() => {
-                      handleOnClick();
-                    }}
-                  >
-                    <PlaceholderProfile width={96} height={96} />
-                  </NoProfilePic>
-                )}
-              </>
-              <div
-                className="pen"
-                onClick={() => {
-                  handleOnClick();
-                }}
-              >
-                <Pen fill={theme.grey.shade6} />
-              </div>
-            </div>
-          )}
-
           <div>
             <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}

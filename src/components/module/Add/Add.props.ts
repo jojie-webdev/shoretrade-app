@@ -6,4 +6,6 @@ export interface AddProps {
   Svg: React.FC<SVGProps>;
   onClickImage?: (image: File | null) => void;
   onClickFile?: (file: File | null) => void;
+  imageTypeWhiteList?: string[];
+  documentTypeWhiteList?: string[];
 }
