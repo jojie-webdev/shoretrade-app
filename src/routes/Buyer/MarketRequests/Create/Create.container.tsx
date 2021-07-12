@@ -102,7 +102,12 @@ const CreateRequest = (): JSX.Element => {
 
   const onBack = () => {
     if (currentStep === 2) {
+      //reset
       setSelectedCategory({ id: '', name: '' });
+      setSelectedSize({ from: '', to: '', items: [] });
+      setSelectedSpecifications({ items: [] });
+      setSelectedQuantity({ from: '', to: '' });
+      getFormData(selectedCategory.id);
     }
     setCurrentStep(currentStep - 1);
   };
@@ -174,16 +179,6 @@ const CreateRequest = (): JSX.Element => {
   useEffect(() => {
     window.scrollTo(0, 0); //reset scroll to top
   }, [currentStep]);
-
-  useEffect(() => {
-    if (selectedCategory?.id != '') {
-      //reset
-      setSelectedSize({ from: '', to: '', items: [] });
-      setSelectedSpecifications({ items: [] });
-      setSelectedQuantity({ from: '', to: '' });
-      getFormData(selectedCategory.id);
-    }
-  }, [selectedCategory]);
 
   const generatedProps: CreateRequestGeneratedProps = {
     buying,
