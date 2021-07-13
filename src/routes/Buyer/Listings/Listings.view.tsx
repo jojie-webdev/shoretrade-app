@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from 'components/base/Button';
 import Modal from 'components/layout/Modal';
 import TableComponent from 'components/module/ListingTable';
-import Pagination from 'components/module/Pagination';
+import PaginationBar from 'components/module/PaginationBar';
 import SearchComponent from 'components/module/Search';
 import debounce from 'lodash.debounce';
 
@@ -69,6 +69,9 @@ export default function ListingView(props: ListingViewProps) {
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
+    totalCount,
+    limit,
+    setLimit,
   } = props;
 
   let columns = DIRECT_SALE_COLUMNS;
@@ -82,8 +85,9 @@ export default function ListingView(props: ListingViewProps) {
     <div>
       <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
         <ModalContentContainer>
-          Do you want to proceed? If not, select the individual listings you
-          want.
+          You are about to download {totalCount} listings. <br />
+          Press {'"'}Proceed {'"'} to continue or exit this window and adjust
+          your selections using the check box in the table.
         </ModalContentContainer>
         <Button
           takeFullWidth={isMobile}
@@ -138,16 +142,16 @@ export default function ListingView(props: ListingViewProps) {
         setIsAllSelected={setIsAllSelected}
       />
 
-      {maxPage > 1 && (
-        <PaginationContainer>
-          <Pagination
-            numPages={maxPage}
-            currentValue={page}
-            variant="number"
-            onClickButton={(page: number) => setPage(page)}
-          />
-        </PaginationContainer>
-      )}
+      <PaginationContainer>
+        <PaginationBar
+          page={page}
+          limit={limit}
+          totalCount={totalCount}
+          setLimit={setLimit}
+          setPage={setPage}
+          maxPage={maxPage}
+        />
+      </PaginationContainer>
     </div>
   );
 }
