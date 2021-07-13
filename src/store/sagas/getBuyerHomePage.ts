@@ -79,6 +79,8 @@ function* handleSocketEvent(
             (i) => i.id !== realtimeRemaining.id
           );
         }
+      } else {
+        modifiedRecentListings = homePageData.recentListing;
       }
 
       idx = homePageData.favouriteListing.findIndex((i) =>
@@ -101,6 +103,8 @@ function* handleSocketEvent(
             (i) => i.id !== realtimeRemaining.id
           );
         }
+      } else {
+        modifiedFavouriteListings = homePageData.favouriteListing;
       }
 
       const modifiedListings = {
