@@ -85,8 +85,9 @@ export default function ListingView(props: ListingViewProps) {
     <div>
       <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
         <ModalContentContainer>
-          Do you want to proceed? If not, select the individual listings you
-          want.
+          You are about to download {totalCount} listings. <br />
+          Press {'"'}Proceed {'"'} to continue or exit this window and adjust
+          your selections using the check box in the table.
         </ModalContentContainer>
         <Button
           takeFullWidth={isMobile}
