@@ -22,4 +22,7 @@ export interface ListingViewProps {
   setSelectedIds: (params: string[]) => void;
   isAllSelected: boolean;
   setIsAllSelected: (state: boolean) => void;
+  totalCount: number;
+  limit: number;
+  setLimit: (limit: number) => void;
 }
