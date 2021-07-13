@@ -332,6 +332,29 @@ const StepForm = ({
                 </>
               );
             })}
+            {searchCategoryType.map((result) => {
+              return (
+                <InteractionsContainer key={result.id}>
+                  <Interactions
+                    type="checkbox"
+                    pressed={selectedCategoryTypes.some(
+                      (i: CategoryPayload) => i.id === result.id
+                    )}
+                    onClick={() => {
+                      const value = {
+                        id: result.id,
+                        name: result.name,
+                        categoryId: currentCategory.id,
+                      };
+                      addSelected(value);
+                    }}
+                    padding="8px 20px 8px 16px"
+                  >
+                    <CategoryItemsChildren {...result} />
+                  </Interactions>
+                </InteractionsContainer>
+              );
+            })}
           </>
         )}
         {isGotoDetails && categoryItems && (
