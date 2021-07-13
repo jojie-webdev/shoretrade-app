@@ -7,6 +7,7 @@ function createSocketConnection() {
   return io(API.URL, {
     transports:
       process.env.NODE_ENV === 'development' ? ['websocket'] : undefined,
+    reconnectionAttempts: 10,
   });
 }
 

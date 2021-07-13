@@ -66,13 +66,17 @@ const Register = (): JSX.Element => {
             i.name.toLowerCase().includes(searchTerm.toLowerCase())
           );
           setSearchCategory(value);
+          value = categoryItems.filter((i) =>
+            i.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          setSearchCategoryType(value);
         }
       }, 200);
 
       setTimer(timerId);
     } else {
       setSearchCategory(categories);
-      setSearchCategoryType(categoryItems);
+      setSearchCategoryType([]);
     }
   }, [searchTerm]);
 
