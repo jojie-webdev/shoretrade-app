@@ -60,11 +60,16 @@ export const RightInsideArrowArea = styled(LeftInsideArrowArea)`
 export const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   position: absolute;
   bottom: 64px;
   left: 16px;
   width: 100%;
   z-index: 999;
+
+  .badge {
+    margin-top: 4px;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     bottom: 12px;

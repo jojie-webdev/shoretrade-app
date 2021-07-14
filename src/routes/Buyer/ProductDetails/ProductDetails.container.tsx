@@ -84,6 +84,7 @@ const ProductDetails = (): JSX.Element => {
 
   const price = Number(currentListing?.price || '0');
   const isAquafuture = currentListing?.isAquafuture || false;
+  const catchRecurrence = currentListing?.catchRecurrence || '';
   const imageTags = [
     ...(currentListing?.isAquafuture ? [{ label: 'Aquafuture' }] : []),
     ...(pathOr('', ['images', '0'], currentListing).includes('type-default')
@@ -344,6 +345,7 @@ const ProductDetails = (): JSX.Element => {
     setPressedBoxRadio,
     remainingWeight,
     isAquafuture,
+    catchRecurrence,
     weight,
     setWeight,
     getBoxes,

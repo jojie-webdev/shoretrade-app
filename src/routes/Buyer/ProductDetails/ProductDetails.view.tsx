@@ -63,6 +63,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     groupedBox,
     isPendingAccount,
     isAquafuture,
+    catchRecurrence,
   } = props;
 
   const [images, setImages] = useState<string[]>([]);
@@ -197,6 +198,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   aspectRatio="9:4"
                   showAlmostGone={Number(remainingWeight) <= 50}
                   showAquafuture={isAquafuture}
+                  showAlwaysAvailable={!!catchRecurrence}
                   showActionButton={isMobile}
                   actionButton={
                     <FavoriteButtonView
