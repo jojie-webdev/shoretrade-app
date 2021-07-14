@@ -66,9 +66,7 @@ export const TabContainer = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
+  margin-top: 16px;
 `;
 
 export const ModalContentContainer = styled.div`

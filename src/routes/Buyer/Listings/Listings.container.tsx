@@ -23,6 +23,7 @@ export default function ListingContainer() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   const [isCsvPending, setIsCsvPending] = useState(false); // local state
+  const [limit, setLimit] = useState(DEFAULT_PAGE_LIMIT);
 
   const isLoading = useSelector(
     (state: Store) => state.getAllBuyerListings?.pending
@@ -37,7 +38,7 @@ export default function ListingContainer() {
   const listingRequestData: any = listingRequest?.data?.data || {};
   const listingRequestDataCount = listingRequestData?.count;
   const listings = listingRequestData?.listings || [];
-  const maxPage = Math.ceil(listingRequestDataCount / DEFAULT_PAGE_LIMIT);
+  const maxPage = Math.ceil(listingRequestDataCount / limit);
 
   const handleSelectTab = (id: number) => {
     setActiveTab(id);
@@ -59,11 +60,11 @@ export default function ListingContainer() {
         sortField,
         searchTerm,
         page,
-        limit: DEFAULT_PAGE_LIMIT,
+        limit,
         sortOrder,
       })
     );
-  }, [sortField, searchTerm, page, sortOrder]);
+  }, [sortField, searchTerm, page, sortOrder, limit]);
 
   useEffect(() => {
     if (showModal && !isDownloadingCsv && isCsvPending) {
@@ -94,6 +95,9 @@ export default function ListingContainer() {
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
+    totalCount: listingRequestDataCount,
+    limit,
+    setLimit,
   };
 
   return <ListingView {...ListingViewProps} />;
