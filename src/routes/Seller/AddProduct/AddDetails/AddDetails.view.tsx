@@ -2,8 +2,9 @@ import React, { useState, useEffect, useReducer } from 'react';
 
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
+import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Select from 'components/base/Select';
-import { DollarSign, Clock } from 'components/base/SVG';
+import { DollarSign } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -24,12 +25,11 @@ import {
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
-import theme from 'utils/Theme';
 
 import { AddDetailsProps } from './AddDetails.props';
 import { Container } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
-import { isValid, isDateRangeValid } from './AddDetails.validation';
+import { isValid, isDateRangeValid, isValidAlt } from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
 const timeOptions = [...Array(48)].map((v, i) => {
@@ -44,7 +44,17 @@ const timeOptions = [...Array(48)].map((v, i) => {
   };
 });
 
+const catchRecurrenceOptions = [
+  {
+    label: 'Daily',
+    value: 'DAILY',
+  },
+  { label: 'Weekly', value: 'WEEKLY' },
+  { label: 'Fortnightly', value: 'FORTNIGHTLY' },
+];
+
 const AddDetails = ({
+  isBulkUpload,
   editableListing,
   onUpdateDetails,
   marketEstimate,
@@ -58,6 +68,12 @@ const AddDetails = ({
     {}
   );
 
+  const [alwaysAvailable, setAlwaysAvailable] = useState(
+    editableListing?.catchRecurrence
+      ? editableListing?.catchRecurrence.length > 0
+      : false
+  );
+
   const [price, setPrice] = useState(
     editableListing?.pricePerKilo ? editableListing.pricePerKilo.toString() : ''
   );
@@ -65,6 +81,9 @@ const AddDetails = ({
     editableListing?.catchDate
       ? moment(editableListing?.catchDate).toDate()
       : null
+  );
+  const [catchRecurrence, setCatchRecurrence] = useState(
+    editableListing?.catchRecurrence || ''
   );
   const [origin, setOrigin] = useState<PlaceData | null>(
     editableListing?.origin ? originToPlaceData(editableListing.origin) : null
@@ -117,10 +136,16 @@ const AddDetails = ({
 
   // For dropdown validation checks (same behavior as TextField's onblur)
   useEffect(() => {
-    if (catchDate) {
+    if (catchDate && !alwaysAvailable) {
       setErrors(
         isValid({
           catchDate,
+        })
+      );
+    } else if (catchRecurrence && alwaysAvailable) {
+      setErrors(
+        isValid({
+          catchRecurrence,
         })
       );
     }
@@ -155,7 +180,7 @@ const AddDetails = ({
       );
     }
 
-    if (catchDate && listingEndDate && listingEndTime) {
+    if (catchDate && listingEndDate && listingEndTime && !alwaysAvailable) {
       setErrors(
         isValid({
           catchDate,
@@ -171,42 +196,69 @@ const AddDetails = ({
   }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
 
   const onNext = () => {
-    const detailsError = isValid({
-      price,
-      catchDate,
-      origin,
-      listingEndDate,
-      listingEndTime,
-      shippingAddress,
-      isDateRangeValid:
-        catchDate && listingEndDate && listingEndTime
-          ? isDateRangeValid(
-              combineDateTime(listingEndDate, listingEndTime),
-              catchDate
-            )
-          : false,
-    });
+    const detailsError = alwaysAvailable
+      ? isValidAlt({ price, catchRecurrence, origin, shippingAddress })
+      : isValid({
+          price,
+          catchDate,
+          origin,
+          listingEndDate,
+          listingEndTime,
+          shippingAddress,
+          isDateRangeValid:
+            catchDate && listingEndDate && listingEndTime
+              ? isDateRangeValid(
+                  combineDateTime(listingEndDate, listingEndTime),
+                  catchDate
+                )
+              : false,
+        });
+
     const isEmptyError = Object.keys(detailsError).every(
       (k) => detailsError[k].length === 0
     );
     setErrors(detailsError);
-    if (
-      isEmptyError &&
-      price.length > 0 &&
-      catchDate &&
-      origin &&
-      listingEndDate &&
-      listingEndTime &&
-      shippingAddress
-    ) {
-      onUpdateDetails({
-        pricePerKilo: Number(price),
-        catchDate,
-        ends: combineDateTime(listingEndDate, listingEndTime),
-        origin: placeDataToOrigin(origin),
-        description,
-        addressId: shippingAddress,
-      });
+
+    if (!alwaysAvailable) {
+      if (
+        isEmptyError &&
+        price.length > 0 &&
+        catchDate &&
+        origin &&
+        listingEndDate &&
+        listingEndTime &&
+        shippingAddress
+      ) {
+        onUpdateDetails({
+          pricePerKilo: Number(price),
+          catchDate,
+          catchRecurrence: null,
+          ends: combineDateTime(listingEndDate, listingEndTime),
+          origin: placeDataToOrigin(origin),
+          description,
+          addressId: shippingAddress,
+          alwaysAvailable: false,
+        });
+      }
+    } else {
+      if (
+        isEmptyError &&
+        price.length > 0 &&
+        catchRecurrence &&
+        origin &&
+        shippingAddress
+      ) {
+        onUpdateDetails({
+          pricePerKilo: Number(price),
+          catchDate: null,
+          catchRecurrence,
+          ends: null,
+          origin: placeDataToOrigin(origin),
+          description,
+          addressId: shippingAddress,
+          alwaysAvailable: true,
+        });
+      }
     }
   };
 
@@ -231,6 +283,17 @@ const AddDetails = ({
           />
         </Col>
       </Row>
+      {!isBulkUpload && (
+        <Row className="textfield-row">
+          <Col>
+            <Checkbox
+              onClick={() => setAlwaysAvailable((prevState) => !prevState)}
+              checked={alwaysAvailable}
+              label="This item is always available"
+            />
+          </Col>
+        </Row>
+      )}
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
@@ -256,16 +319,28 @@ const AddDetails = ({
           />
         </Col>
         <Col md={6} className="textfield-col">
-          <DatePickerDropdown
-            placeholder=""
-            label="Catch Date"
-            date={catchDate ? moment(catchDate) : null}
-            onDateChange={(d) => setCatchDate(d?.toDate() || null)}
-            error={
-              pathOr('', ['catchDate', '0'], errors) ||
-              pathOr('', ['isDateRangeValid', '0'], errors)
-            }
-          />
+          {!alwaysAvailable ? (
+            <DatePickerDropdown
+              placeholder=""
+              label="Catch Date"
+              date={catchDate ? moment(catchDate) : null}
+              onDateChange={(d) => setCatchDate(d?.toDate() || null)}
+              error={
+                pathOr('', ['catchDate', '0'], errors) ||
+                pathOr('', ['isDateRangeValid', '0'], errors)
+              }
+            />
+          ) : (
+            <Select
+              value={catchRecurrence}
+              onChange={(option) => {
+                setCatchRecurrence(option.value);
+              }}
+              options={catchRecurrenceOptions}
+              label="Catch Date"
+              error={pathOr('', ['catchRecurrence', '0'], errors)}
+            />
+          )}
         </Col>
         <Col md={6} className="textfield-col">
           <LocationSearch
@@ -293,34 +368,40 @@ const AddDetails = ({
             error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
-        <Col md={6} className="textfield-col">
-          <DatePickerDropdown
-            className="date-picker"
-            placeholder=""
-            label="Listing valid until"
-            date={listingEndDate ? moment(listingEndDate) : null}
-            onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
-            error={
-              pathOr('', ['listingEndDate', '0'], errors) ||
-              pathOr('', ['isDateRangeValid', '0'], errors)
-            }
-            isOutsideRange={(date) => date < new Date().setHours(0, 0, 0, 0)}
-          />
-        </Col>
-        <Col md={6} className="textfield-col">
-          <Select
-            value={listingEndTimeString}
-            onChange={(option) => {
-              setListingEndTimeString(option.value);
-            }}
-            options={timeOptions}
-            label="LISTING VALID UNTIL"
-            error={
-              pathOr('', ['listingEndTime', '0'], errors) ||
-              pathOr('', ['isDateRangeValid', '0'], errors)
-            }
-          />
-        </Col>
+        {!alwaysAvailable && (
+          <>
+            <Col md={6} className="textfield-col">
+              <DatePickerDropdown
+                className="date-picker"
+                placeholder=""
+                label="Listing valid until"
+                date={listingEndDate ? moment(listingEndDate) : null}
+                onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
+                error={
+                  pathOr('', ['listingEndDate', '0'], errors) ||
+                  pathOr('', ['isDateRangeValid', '0'], errors)
+                }
+                isOutsideRange={(date) =>
+                  date < new Date().setHours(0, 0, 0, 0)
+                }
+              />
+            </Col>
+            <Col md={6} className="textfield-col">
+              <Select
+                value={listingEndTimeString}
+                onChange={(option) => {
+                  setListingEndTimeString(option.value);
+                }}
+                options={timeOptions}
+                label="LISTING VALID UNTIL"
+                error={
+                  pathOr('', ['listingEndTime', '0'], errors) ||
+                  pathOr('', ['isDateRangeValid', '0'], errors)
+                }
+              />
+            </Col>
+          </>
+        )}
 
         <Col md={12} className="textfield-col text-area">
           <TextArea

@@ -178,6 +178,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       case 8:
         return (
           <AddDetails
+            isBulkUpload={isBulkUpload}
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}

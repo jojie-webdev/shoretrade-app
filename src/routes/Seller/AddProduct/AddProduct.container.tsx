@@ -389,14 +389,17 @@ const AddProduct = (): JSX.Element => {
   const onUpdateDetails = ({
     pricePerKilo,
     catchDate,
+    catchRecurrence,
     ends,
     origin,
     description,
     addressId,
+    alwaysAvailable,
   }: {
     pricePerKilo: number;
-    catchDate: Date;
-    ends: Date;
+    catchDate: Date | null;
+    catchRecurrence: string | null;
+    ends: Date | null;
     origin: {
       suburb: string;
       state: string;
@@ -404,12 +407,15 @@ const AddProduct = (): JSX.Element => {
     };
     description: string;
     addressId: string;
+    alwaysAvailable: boolean;
   }) => {
     if (isBulkUpload) {
       dispatch(
         modifyBulkUploadActions.update({
           pricePerKilo,
+          //@ts-ignore
           catchDate,
+          //@ts-ignore
           ends,
           origin,
           description,
@@ -417,14 +423,27 @@ const AddProduct = (): JSX.Element => {
       );
     } else {
       dispatch(
-        editableListingActions.update({
-          pricePerKilo,
-          catchDate,
-          ends,
-          origin,
-          description,
-          addressId,
-        })
+        editableListingActions.update(
+          alwaysAvailable
+            ? {
+                pricePerKilo,
+                catchDate: null,
+                catchRecurrence,
+                ends: null,
+                origin,
+                description,
+                addressId,
+              }
+            : {
+                pricePerKilo,
+                catchDate,
+                catchRecurrence: null,
+                ends,
+                origin,
+                description,
+                addressId,
+              }
+        )
       );
       onChangeCurrentPage(9);
     }

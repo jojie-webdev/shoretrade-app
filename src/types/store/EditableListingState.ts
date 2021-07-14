@@ -31,14 +31,15 @@ export type EditableListingState = Partial<{
   }[];
   minOrder: number;
   sellInMultiplesOfMinOrder?: boolean;
-  catchDate: Date | string;
+  catchDate: Date | null;
+  catchRecurrence: string | null;
   description: string;
   origin: {
     suburb: string;
     state: string;
     countryCode: string;
   };
-  ends: Date | string;
+  ends: Date | null;
   isAquafuture: boolean;
   addressId: string;
   isCustomType?: boolean;

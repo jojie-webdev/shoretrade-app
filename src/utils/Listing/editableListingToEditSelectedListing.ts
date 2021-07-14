@@ -34,6 +34,7 @@ export const editableListingToEditSelectedListing = (
     catchDate: data?.catchDate
       ? moment(data?.catchDate, 'YYYY-MM-DD').toDate()
       : undefined,
+    catchRecurrence: data?.catchRecurrence || undefined,
     description: data?.description || '',
     origin: data?.origin || {
       countryCode: '',
