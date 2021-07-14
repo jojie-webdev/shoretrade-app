@@ -92,7 +92,13 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       search('');
     }
   }, [searchKey]);
-  //#endregion
+  //#endregion1
+
+  useEffect(() => {
+    if (currentPage === 1) {
+      setSearchKey('');
+    }
+  }, [currentPage]);
 
   const currentStep = () => {
     switch (currentPage) {
