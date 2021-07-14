@@ -78,6 +78,7 @@ export interface RegisterGeneratedProps {
   handleSelectShorePay: (shorePay: boolean) => void;
   handleDownloadApplicationForm: () => void;
   goToLogIn: () => void;
+  onRemoveSelectedCategory: (name: string) => void;
 }
 
 export interface StepFormProps extends RegisterGeneratedProps {
