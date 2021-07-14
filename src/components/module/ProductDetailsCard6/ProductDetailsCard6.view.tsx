@@ -7,9 +7,9 @@ import {
 } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 
+import ListingTimeLeftView from '../ListingTimeLeft';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
-import ListingTimeLeftView from '../ListingTimeLeft';
 
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {
@@ -17,6 +17,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     timeLeft,
     avgBoxSize,
     catchDate,
+    catchRecurrence,
     minOrder,
     unit = 'kg',
     hiddenPrice,
@@ -65,7 +66,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           Catch Date:
         </Label>
         <Label variant="label" weight="bold">
-          {catchDate && formattedCatchDate()}
+          {catchRecurrence ? catchRecurrence : formattedCatchDate()}
         </Label>
       </Row>
 

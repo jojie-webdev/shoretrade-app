@@ -168,6 +168,7 @@ const ProductDetails = (): JSX.Element => {
           description: currentListing.description,
           caught: currentListing.caught,
           ends: currentListing.ends,
+          catchRecurrence: currentListing.catchRecurrence,
           specifications: currentListing.state,
           image: currentListing.images[0] || '',
           minimumOrder: currentListing.minimumOrder,
@@ -305,11 +306,13 @@ const ProductDetails = (): JSX.Element => {
     price: price.toFixed(2),
     minOrder: currentListing?.minimumOrder || '0',
     avgBoxSize: (currentListing?.average || 0).toFixed(2),
-    timeLeft: moment(currentListing?.ends || undefined).toDate(),
-    catchDate: moment(
-      currentListing?.caught || undefined,
-      currentListing?.caught ? 'YYYY-MM-DD' : undefined
-    ).toDate(),
+    timeLeft: currentListing?.ends
+      ? moment(currentListing.ends).toDate()
+      : undefined,
+    catchDate: currentListing?.caught
+      ? moment(currentListing.caught, 'YYYY-MM-DD').toDate()
+      : undefined,
+    catchRecurrence: currentListing?.catchRecurrence || undefined,
     unit: currentListing?.measurementUnit || undefined,
     hiddenPrice: isPendingAccount,
   };

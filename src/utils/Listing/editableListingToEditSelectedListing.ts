@@ -41,7 +41,7 @@ export const editableListingToEditSelectedListing = (
       state: '',
       suburb: '',
     },
-    ends: data?.catchDate ? moment(data?.ends).toDate() : undefined,
+    ends: data?.ends ? moment(data?.ends).toDate() : undefined,
     isAquafuture: data?.isAquafuture || false,
     addressId: data?.addressId || '',
     ...(data?.packaging
