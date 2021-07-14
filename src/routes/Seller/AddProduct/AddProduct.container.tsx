@@ -386,6 +386,7 @@ const AddProduct = (): JSX.Element => {
     max: number | null;
   } = pick(['min', 'max'], marketEstimateData);
 
+  //TODO: bulk upload catch recurrence
   const onUpdateDetails = ({
     pricePerKilo,
     catchDate,

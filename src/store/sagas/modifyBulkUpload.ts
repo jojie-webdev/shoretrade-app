@@ -1,29 +1,15 @@
 import { push } from 'connected-react-router';
-import { ADD_PRODUCT_ROUTES, SELLER_ROUTES } from 'consts';
-import moment from 'moment';
+import { ADD_PRODUCT_ROUTES } from 'consts';
 import unnest from 'ramda/src/unnest';
 import { select, put, takeLatest } from 'redux-saga/effects';
 import { toEmployeeOptions } from 'routes/Seller/AddProduct/AddProduct.container';
-import { Action, AsyncAction } from 'types/Action';
-import { EditableListingState } from 'types/store/EditableListingState';
-import { EditSelectedListingPayload } from 'types/store/EditSelectedListingState';
-import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
-import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
-import {
-  GetListingFormDataMeta,
-  GetListingFormDataPayload,
-  GetListingFormDataResponse,
-} from 'types/store/GetListingFormDataState';
+import { Action } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { UploadBulkState } from 'types/store/UploadBulkState';
 
-import {
-  editSelectedListingActions,
-  editableListingActions,
-  getListingFormDataActions,
-  modifyBulkUploadActions,
-} from '../actions';
+import { editableListingActions, modifyBulkUploadActions } from '../actions';
 
+//TODO: bulk upload catch recurrence
 function* modifyBulkUploadEdit(
   action: Action<
     Partial<UploadBulkState> & { index: number; currentStep: number }
@@ -55,9 +41,11 @@ function* modifyBulkUploadEdit(
           sellInMultiplesOfMinOrder: action.payload.sellInMultiplesOfMinOrder,
           minOrder: action.payload.minOrder,
           pricePerKilo: action.payload.pricePerKilo,
+          //@ts-ignore
           catchDate: action.payload.catchDate,
           origin: action.payload.origin,
           addressId: action.payload.addressId,
+          //@ts-ignore
           ends: action.payload.ends,
           description: action.payload.description,
         })
