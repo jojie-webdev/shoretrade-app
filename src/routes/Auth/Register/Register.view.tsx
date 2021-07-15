@@ -101,6 +101,8 @@ import {
   SignUpHeader,
   AppTypeTitle,
   MobileFooter,
+  StyledBadge,
+  StyledTouchable,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -140,6 +142,7 @@ const StepForm = ({
   interestedInShorePay,
   handleSelectShorePay,
   handleDownloadApplicationForm,
+  onRemoveSelectedCategory,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -311,7 +314,6 @@ const StepForm = ({
                       <CategoryChildren {...result} />
                     </Interactions>
                   </InteractionsContainer>
-
                   {!isEmpty(selected) && (
                     <BadgeContainer
                       style={{
@@ -319,40 +321,53 @@ const StepForm = ({
                       }}
                     >
                       {selected.map((selection) => (
-                        <BadgeItemContainer key={selection.id}>
-                          <Badge badgeColor={theme.grey.shade3}>
-                            <Typography variant="overline" color="shade9">
-                              {selection.name}
-                            </Typography>
-                          </Badge>
-                        </BadgeItemContainer>
+                        <StyledTouchable
+                          dark
+                          key={selection.id}
+                          onPress={() =>
+                            onRemoveSelectedCategory(selection.name)
+                          }
+                        >
+                          <BadgeItemContainer>
+                            <StyledBadge badgeColor={theme.grey.shade3}>
+                              <Typography variant="overline" color="shade9">
+                                {selection.name}
+                              </Typography>
+                              <CloseFilled
+                                fill={theme.grey.shade9}
+                                height={10}
+                                width={10}
+                              />
+                            </StyledBadge>
+                          </BadgeItemContainer>
+                        </StyledTouchable>
                       ))}
                     </BadgeContainer>
                   )}
+                  {searchCategoryType
+                    .filter((i) => i.categoryId === result.id)
+                    .map((innerResult) => (
+                      <InteractionsContainer key={innerResult.id}>
+                        <Interactions
+                          type="checkbox"
+                          pressed={selectedCategoryTypes.some(
+                            (i: CategoryPayload) => i.id === innerResult.id
+                          )}
+                          onClick={() => {
+                            const value = {
+                              id: innerResult.id,
+                              name: innerResult.name,
+                              categoryId: result.id,
+                            };
+                            addSelected(value);
+                          }}
+                          padding="8px 20px 8px 16px"
+                        >
+                          <CategoryItemsChildren {...innerResult} />
+                        </Interactions>
+                      </InteractionsContainer>
+                    ))}
                 </>
-              );
-            })}
-            {searchCategoryType.map((result) => {
-              return (
-                <InteractionsContainer key={result.id}>
-                  <Interactions
-                    type="checkbox"
-                    pressed={selectedCategoryTypes.some(
-                      (i: CategoryPayload) => i.id === result.id
-                    )}
-                    onClick={() => {
-                      const value = {
-                        id: result.id,
-                        name: result.name,
-                        categoryId: currentCategory.id,
-                      };
-                      addSelected(value);
-                    }}
-                    padding="8px 20px 8px 16px"
-                  >
-                    <CategoryItemsChildren {...result} />
-                  </Interactions>
-                </InteractionsContainer>
               );
             })}
           </>

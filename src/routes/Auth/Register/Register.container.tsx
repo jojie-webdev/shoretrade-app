@@ -55,22 +55,27 @@ const Register = (): JSX.Element => {
       }
 
       const timerId = setTimeout(() => {
-        let value;
-        if (isGotoDetails) {
-          value = categoryItems.filter((i) =>
-            i.name.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          setSearchCategoryType(value);
-        } else {
-          value = categories.filter((i) =>
-            i.name.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          setSearchCategory(value);
-          value = categoryItems.filter((i) =>
-            i.name.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          setSearchCategoryType(value);
-        }
+        getAvailableCategories(searchTerm.toLowerCase().toString())
+          .then(({ data }) => {
+            const cata: any[] = data.data.categories;
+            setSearchCategory(data.data.categories);
+            setSearchCategoryType(
+              cata
+                .map((c: { id: string; types: CategoryType[] }) => {
+                  if (c.types) {
+                    return c.types.map((t) => ({
+                      ...t,
+                      categoryId: c.id,
+                    }));
+                  }
+                  return [];
+                })
+                .reduce((acc, val) => acc.concat(val), [])
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }, 200);
 
       setTimer(timerId);
@@ -131,6 +136,12 @@ const Register = (): JSX.Element => {
 
     setCategoryItems(result);
     setSearchCategoryType(result);
+  };
+
+  const onRemoveSelectedCategory = (name: string) => {
+    setSelectedCategoryTypes(
+      selectedCategoryTypes.filter((c) => c.name !== name)
+    );
   };
 
   const [interestedInShorePay, setInterestedInShorePay] = useState(false);
@@ -293,6 +304,7 @@ const Register = (): JSX.Element => {
     handleSelectShorePay,
     handleDownloadApplicationForm,
     setSearchTerm,
+    onRemoveSelectedCategory,
     goToLogIn,
   };
   return <RegisterView {...generatedProps} />;

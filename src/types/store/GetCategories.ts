@@ -17,6 +17,7 @@ export interface CategoryType {
   thumbnail: string;
   price: Price;
   measurementUnit: string;
+  categoryId?: string;
 }
 
 export interface CategoryPayload {

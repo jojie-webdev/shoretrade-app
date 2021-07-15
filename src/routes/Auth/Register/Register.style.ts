@@ -1,5 +1,7 @@
+import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { Download, ArrowLeft } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
 import PhoneTextField from 'components/module/PhoneTextField';
@@ -41,6 +43,7 @@ export const RenderContainer = styled.div<{ step?: number }>`
   height: 100vh;
   max-height: 100vh;
   overflow: auto;
+  padding-right: 2em;
 
   @media ${BREAKPOINTS['sm']} {
     margin-top: 0px;
@@ -364,4 +367,12 @@ export const ButtonContainer = styled.div`
 
 export const MobileFooter = styled.div`
   ${footerStyle};
+`;
+
+export const StyledBadge = styled(Badge)`
+  display: flex;
+`;
+
+export const StyledTouchable = styled(Touchable)`
+  padding: 0;
 `;
