@@ -121,8 +121,18 @@ const AddProduct = (): JSX.Element => {
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
 
   useEffect(() => {
-    if (currentPage === 1 && showCustomTypeSettings) {
-      setShowCustomTypeSettings(false);
+    return () => {
+      dispatch(searchProductTypeActions.clear());
+      dispatch(editableListingActions.clear());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (currentPage === 1) {
+      if (showCustomTypeSettings) {
+        setShowCustomTypeSettings(false);
+      }
+      dispatch(searchProductTypeActions.clear());
     }
   }, [currentPage]);
 
