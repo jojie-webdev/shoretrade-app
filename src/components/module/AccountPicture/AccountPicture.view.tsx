@@ -113,7 +113,7 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
       <div className="error-container">
         {imageError && (
           <Typography color="error" variant="label">
-            Please enter a valid image file format
+            Please enter a valid image file (ie. jpg, png)
           </Typography>
         )}
       </div>
