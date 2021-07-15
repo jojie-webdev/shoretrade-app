@@ -1,15 +1,16 @@
 import React from 'react';
 
 import moment from 'moment';
-
-import { Chips, ChipsWrapper } from './Listings.styles';
 import { sizeToString } from 'utils/Listing';
+
+import { Chips, ChipsWrapper, EmptyValue } from './Listings.styles';
 
 export const columnTemplate = [
   '150px',
   '150px',
   '250px',
   '130px',
+  '120px',
   '120px',
   '120px',
   '250px',
@@ -52,6 +53,14 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: (data: any, _state: any) => {
       return <>{sizeToString(data?.metric, data?.size_from, data?.size_to)}</>;
+    },
+  },
+  {
+    name: 'Remaining',
+    selector: 'remaining',
+    sortable: true,
+    component: (data: any, _state: any) => {
+      return <>{data?.remaining || <EmptyValue>Not specified</EmptyValue>}</>;
     },
   },
   {

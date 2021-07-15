@@ -72,3 +72,7 @@ export const PaginationContainer = styled.div`
 export const ModalContentContainer = styled.div`
   margin-bottom: 12px;
 `;
+
+export const EmptyValue = styled.span`
+  color: ${theme.grey.shade5};
+`;
