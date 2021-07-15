@@ -51,7 +51,7 @@ const Selling = (): JSX.Element => {
           listing.type.toLowerCase().includes(search.toLowerCase())
         );
     return res;
-  }, [listings, getAllListings]);
+  }, [listings, getAllListings, search]);
 
   // MARK:- Method
   const onClickRemoveListing = (listingId: string, companyId: string) => {
