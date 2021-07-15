@@ -44,14 +44,16 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           </Label>
         </div>
       )}
-      <Row>
-        <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-          Time Left:
-        </Label>
-        <Label variant="label" weight="bold">
-          <ListingTimeLeftView timeLeft={moment(timeLeft)} />
-        </Label>
-      </Row>
+      {!props.catchRecurrence && (
+        <Row>
+          <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
+            Time Left:
+          </Label>
+          <Label variant="label" weight="bold">
+            <ListingTimeLeftView timeLeft={moment(timeLeft)} />
+          </Label>
+        </Row>
+      )}
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
           Average Box Size:

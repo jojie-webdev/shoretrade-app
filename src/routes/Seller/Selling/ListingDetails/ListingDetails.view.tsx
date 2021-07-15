@@ -520,7 +520,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   >
                     {productDetails.vendor.name}
                   </Typography>
-                  <div className="ratings-container">
+                  <div>
                     {[...Array(5).keys()].map((r) =>
                       Number(productDetails.vendor.rating || 0) > r ? (
                         <StarFilled fill={theme.brand.alert} />

@@ -141,16 +141,17 @@ const Item = (props: ItemProp) => {
                   {props.sales}
                 </ItemDetail>
               </div>
-              {props.expiresIn && (
-                <div className="label-container">
-                  <ItemDetail variant="overlineSmall" color="shade6">
-                    Time left:{' '}
-                  </ItemDetail>
-                  <ItemDetail variant="label" color="noshade">
-                    {formattedExpiresIn()}
-                  </ItemDetail>
-                </div>
-              )}
+              <div
+                className="label-container"
+                style={{ opacity: props.expiresIn ? 1 : 0 }}
+              >
+                <ItemDetail variant="overlineSmall" color="shade6">
+                  Time left:
+                </ItemDetail>
+                <ItemDetail variant="label" color="noshade">
+                  {props.expiresIn ? formattedExpiresIn() : '-'}
+                </ItemDetail>
+              </div>
             </div>
           </div>
         </div>
