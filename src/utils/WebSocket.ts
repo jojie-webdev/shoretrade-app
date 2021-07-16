@@ -1,6 +1,7 @@
 import { Action, Store } from 'redux';
 import createSocketConnection from 'services/websocket';
 import {
+  getAllBuyerListingsActions,
   getAllListingsActions,
   getBuyerHomepageActions,
   getListingActions,
@@ -12,6 +13,7 @@ import {
   sockgetGetListingsByTypeActions,
 } from 'store/actions';
 import socketHomePageActions from 'store/actions/socketHomePage';
+import getAllBuyerListings from 'store/reducers/getAllBuyerListings';
 
 const createSocketMiddleware = () => {
   let socket: any;
@@ -88,6 +90,17 @@ const createSocketMiddleware = () => {
           // dispatch action watched by sagas ?
           storeAPI.dispatch({
             type: sockgetGetListingsByTypeActions.HANDLE_EVENT,
+            payload: message,
+          });
+        });
+        break;
+      }
+      case getAllBuyerListingsActions.REQUEST: {
+        // UPDATE_REMAINING_BOXES
+        socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
+          // dispatch action watched by sagas ?
+          storeAPI.dispatch({
+            type: socketGetAllListingsActions.HANDLE_EVENT,
             payload: message,
           });
         });
