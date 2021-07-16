@@ -8,6 +8,7 @@ export type UpdateListingRequestData = {
   images: { url: string; requirementId: string }[];
   price: number;
   catchDate: string | null; // date iso string
+  catchRecurrence: string | null;
   description: string;
   origin: {
     suburb: string;

@@ -12,9 +12,10 @@ export type PlaceOrderMeta = {
     id: string;
     listing: {
       allowedWeightAdjustment: number;
-      catchDate: string; // yyyy-mm-dd
+      catchDate?: string; // yyyy-mm-dd
+      catchRecurrence?: string;
       description: string | null;
-      endDate: string; // date iso string
+      endDate?: string; // date iso string
       fishermanFirstName: string;
       fishermanLastName: string;
       images: string[];

@@ -141,12 +141,15 @@ const Item = (props: ItemProp) => {
                   {props.sales}
                 </ItemDetail>
               </div>
-              <div className="label-container">
+              <div
+                className="label-container"
+                style={{ opacity: props.expiresIn ? 1 : 0 }}
+              >
                 <ItemDetail variant="overlineSmall" color="shade6">
-                  Time left:{' '}
+                  Time left:
                 </ItemDetail>
                 <ItemDetail variant="label" color="noshade">
-                  {props.expiresIn && formattedExpiresIn()}
+                  {props.expiresIn ? formattedExpiresIn() : '-'}
                 </ItemDetail>
               </div>
             </div>
@@ -263,22 +266,24 @@ const ItemMobile = (props: ItemProp) => {
                   {formattedRemaining()}
                 </ItemDetailMobile>
               </div>
-              <div className="label-container">
-                <ItemDetailMobile
-                  variant="small"
-                  color="shade6"
-                  className="left-text"
-                >
-                  Expires in:
-                </ItemDetailMobile>
-                <ItemDetailMobile
-                  variant="small"
-                  color="noshade"
-                  className="right-text"
-                >
-                  {props.expiresIn && formattedExpiresIn()}
-                </ItemDetailMobile>
-              </div>
+              {props.expiresIn && (
+                <div className="label-container">
+                  <ItemDetailMobile
+                    variant="small"
+                    color="shade6"
+                    className="left-text"
+                  >
+                    Expires in:
+                  </ItemDetailMobile>
+                  <ItemDetailMobile
+                    variant="small"
+                    color="noshade"
+                    className="right-text"
+                  >
+                    {props.expiresIn && formattedExpiresIn()}
+                  </ItemDetailMobile>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -288,29 +293,29 @@ const ItemMobile = (props: ItemProp) => {
 };
 
 interface DeleteAlertProps {
-  timeout: number
+  timeout: number;
 }
 
 const DeleteAlert = (props: DeleteAlertProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsVisible(false);
     }, props.timeout);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if(!isVisible) return null;
-  
+  if (!isVisible) return null;
+
   return (
     <StyledAlert
       variant="success"
       content="Your listing has successfully been removed"
     />
-  )
-}
+  );
+};
 
 const NoSelling = () => {
   const history = useHistory();

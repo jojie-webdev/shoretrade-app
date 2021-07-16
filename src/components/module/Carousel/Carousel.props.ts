@@ -13,6 +13,7 @@ export interface CarouselProps {
   arrowInside?: boolean;
   showAquafuture?: boolean;
   showAlmostGone?: boolean;
+  showAlwaysAvailable?: boolean;
   showActionButton?: boolean;
   actionButton?: React.ReactNode;
   variant?: 'thumbnail' | 'bullet';

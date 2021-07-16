@@ -107,8 +107,13 @@ export const editableListingToListingProps = (
       minOrder: editableListing?.minOrder?.toFixed(2) || '',
       remaining: totalWeight.toFixed(2),
       unit: measurementUnit,
-      validUntil: moment(editableListing?.ends).toDate(),
-      catchDate: moment(editableListing?.catchDate).toDate(),
+      validUntil: editableListing?.ends
+        ? moment(editableListing?.ends).toDate()
+        : undefined,
+      catchDate: editableListing?.catchDate
+        ? moment(editableListing?.catchDate).toDate()
+        : undefined,
+      catchRecurrence: editableListing?.catchRecurrence || undefined,
     },
     boxDetails: {
       boxes: editableListing?.boxes || [],

@@ -8,6 +8,7 @@ import SwiperContainer from 'components/layout/SwiperContainer';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
 import { CarouselProps } from './Carousel.props';
 import {
@@ -39,7 +40,10 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowInside,
     showAquafuture,
     showAlmostGone,
+    showAlwaysAvailable,
   } = props;
+
+  const theme = useTheme();
   const [swiperRef, setSwiperRef] = useState<any>(null);
 
   const swiperItems = images.map((image) => {
@@ -152,16 +156,23 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         )}
         <BadgeContainer>
           {showAquafuture && (
-            <Badge badgeColor="#111E2B">
+            <Badge className="badge" badgeColor={theme.grey.shade8}>
               <Typography color="shade4" variant="overline">
                 Aquafuture
               </Typography>
             </Badge>
           )}
           {showAlmostGone && (
-            <Badge badgeColor="#FFA26B">
-              <Typography style={{ color: '#FFF1E9' }} variant="overline">
+            <Badge className="badge" badgeColor={theme.brand.warning}>
+              <Typography color="noshade" variant="overline">
                 Almost Gone!
+              </Typography>
+            </Badge>
+          )}
+          {showAlwaysAvailable && (
+            <Badge className="badge" badgeColor={theme.brand.success}>
+              <Typography color="noshade" variant="overline">
+                Always Available
               </Typography>
             </Badge>
           )}

@@ -89,7 +89,8 @@ export type GetSellerOrdersResponseItem = {
           countryCode: string;
         };
         pricePerKilo: number;
-        catchDate: string; // yyyy-mm-dd string
+        catchDate?: string; // yyyy-mm-dd string
+        catchRecurrence?: string;
         description: string | null;
         fishermanFirstName: string;
         fishermanLastName: string;

@@ -17,11 +17,12 @@ export type GetListingsByTypeRequestData = {
 };
 
 export type GetListingsByTypeResponseListingItem = {
-  caught: string;
+  caught?: string; // yyyy-mm-dd
+  ends?: string;
+  catchRecurrence?: string;
   coop: { name: string };
   createdAt: string;
   description: string;
-  ends: string;
   fisherman: { name: string };
   id: string;
   images: string[];

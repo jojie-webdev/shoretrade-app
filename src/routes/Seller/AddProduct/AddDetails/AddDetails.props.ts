@@ -9,10 +9,12 @@ export type AddDetailsPublicProps = {
     origin,
     description,
     addressId,
+    alwaysAvailable,
   }: {
     pricePerKilo: number;
-    catchDate: Date;
-    ends: Date;
+    catchDate: Date | null;
+    catchRecurrence: string | null;
+    ends: Date | null;
     origin: {
       suburb: string;
       state: string;
@@ -20,6 +22,7 @@ export type AddDetailsPublicProps = {
     };
     description: string;
     addressId: string;
+    alwaysAvailable: boolean;
   }) => void;
   marketEstimate: {
     min: number | null;
@@ -29,6 +32,7 @@ export type AddDetailsPublicProps = {
 };
 
 export type AddDetailsProps = AddDetailsPublicProps & {
+  isBulkUpload: boolean;
   isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
