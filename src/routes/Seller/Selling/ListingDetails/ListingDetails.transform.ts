@@ -46,8 +46,9 @@ export const listingToListingProps = (
       minOrder: data?.minimumOrder || '',
       remaining: (data?.remaining || 0).toFixed(2),
       unit: formatMeasurementUnit(data?.measurementUnit),
-      validUntil: moment(data?.ends).toDate(),
-      catchDate: moment(data?.catchDate).toDate(),
+      validUntil: data?.ends ? moment(data.ends).toDate() : undefined,
+      catchDate: data?.catchDate ? moment(data.catchDate).toDate() : undefined,
+      catchRecurrence: data?.catchRecurrence || undefined,
     },
     boxDetails: {
       boxes: data?.boxes,

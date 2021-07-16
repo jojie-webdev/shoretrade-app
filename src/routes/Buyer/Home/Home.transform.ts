@@ -64,6 +64,7 @@ export function recentlyAddedToPreviewProps(
     state: data.state,
     hiddenPrice: isPendingAccount,
     hiddenVendor: isPendingAccount,
+    catchRecurrence: data.catchRecurrence,
   };
 }
 
@@ -92,6 +93,7 @@ export function favouritesToPreviewProps(
     isAquafuture: data.isAquafuture,
     unit: data.measurementUnit,
     state: data.state,
+    catchRecurrence: data.catchRecurrence,
   };
 }
 

@@ -34,13 +34,14 @@ export const editableListingToEditSelectedListing = (
     catchDate: data?.catchDate
       ? moment(data?.catchDate, 'YYYY-MM-DD').toDate()
       : undefined,
+    catchRecurrence: data?.catchRecurrence || undefined,
     description: data?.description || '',
     origin: data?.origin || {
       countryCode: '',
       state: '',
       suburb: '',
     },
-    ends: data?.catchDate ? moment(data?.ends).toDate() : undefined,
+    ends: data?.ends ? moment(data?.ends).toDate() : undefined,
     isAquafuture: data?.isAquafuture || false,
     addressId: data?.addressId || '',
     ...(data?.packaging
