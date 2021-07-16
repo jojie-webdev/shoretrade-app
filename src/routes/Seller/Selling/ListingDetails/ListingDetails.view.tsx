@@ -114,8 +114,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   const [images, setImages] = useState<string[]>([]);
 
   const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
+
   const formattedCatchDate = () =>
-    moment(orderDetails.catchDate).format('DD MMMM YYYY');
+    orderDetails.catchDate
+      ? moment(orderDetails.catchDate).format('DD MMMM YYYY')
+      : '';
 
   let percent = (Number(sales.soldWeight) / Number(sales.totalWeight)) * 100;
   if (percent >= 100) percent = 100;
@@ -270,20 +273,28 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
-                  <ProductLabelMobileContainer>
-                    <Typography variant="label" color="shade6" weight="regular">
-                      Listing Valid Until:
-                    </Typography>
-                    <div className="product-value">
+
+                  {orderDetails.validUntil && (
+                    <ProductLabelMobileContainer>
                       <Typography
                         variant="label"
-                        color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                        weight="bold"
+                        color="shade6"
+                        weight="regular"
                       >
-                        {moment().to(orderDetails.validUntil)}
+                        Listing Valid Until:
                       </Typography>
-                    </div>
-                  </ProductLabelMobileContainer>
+                      <div className="product-value">
+                        <Typography
+                          variant="label"
+                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                          weight="bold"
+                        >
+                          {moment().to(orderDetails.validUntil)}
+                        </Typography>
+                      </div>
+                    </ProductLabelMobileContainer>
+                  )}
+
                   <ProductLabelMobileContainer>
                     <Typography variant="label" color="shade6" weight="regular">
                       Remaining:
@@ -308,7 +319,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                         weight="bold"
                       >
-                        {orderDetails.catchDate && formattedCatchDate()}
+                        {orderDetails.catchRecurrence
+                          ? orderDetails.catchRecurrence
+                          : formattedCatchDate()}
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
@@ -507,7 +520,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   >
                     {productDetails.vendor.name}
                   </Typography>
-                  <div className="ratings-container">
+                  <div>
                     {[...Array(5).keys()].map((r) =>
                       Number(productDetails.vendor.rating || 0) > r ? (
                         <StarFilled fill={theme.brand.alert} />
@@ -539,22 +552,31 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               <ProductDetailsContainer
                 isCreatListingSuccess={isCreatListingSuccess}
               >
-                <ProductLabelContainer>
-                  <Typography variant="overline" color="shade6" weight="bold">
-                    Time Left
-                  </Typography>
-                  <div className="product-value">
-                    <Typography
-                      variant="label"
-                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                      weight="bold"
-                      className="product-desc"
-                    >
-                      {moment().to(orderDetails.validUntil)}
-                    </Typography>
-                  </div>
-                </ProductLabelContainer>
-                <div className="separator" />
+                {orderDetails.validUntil && (
+                  <>
+                    <ProductLabelContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade6"
+                        weight="bold"
+                      >
+                        Time Left
+                      </Typography>
+                      <div className="product-value">
+                        <Typography
+                          variant="label"
+                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                          weight="bold"
+                          className="product-desc"
+                        >
+                          {moment().to(orderDetails.validUntil)}
+                        </Typography>
+                      </div>
+                    </ProductLabelContainer>
+                    <div className="separator" />
+                  </>
+                )}
+
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
                     Average Box Size:
@@ -582,7 +604,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       weight="bold"
                       className="product-desc"
                     >
-                      {orderDetails.catchDate && formattedCatchDate()}
+                      {orderDetails.catchRecurrence
+                        ? orderDetails.catchRecurrence
+                        : formattedCatchDate()}
                     </Typography>
                   </div>
                 </ProductLabelContainer>

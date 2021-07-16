@@ -6,6 +6,7 @@ export interface PreviewProps {
   createdAt?: string;
   description?: string;
   ends?: string;
+  catchRecurrence?: string;
   fisherman?: { name: string };
   id: string;
   images: string[];

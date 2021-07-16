@@ -23,8 +23,9 @@ export type GetListingResponseItem = {
   price: string;
   origin: { state: string; suburb: string; countryCode: string };
   description: string;
-  caught: string; // yyyy-mm-dd
-  ends: string;
+  caught?: string; // yyyy-mm-dd
+  ends?: string;
+  catchRecurrence?: string;
   createdAt: string;
   state: string[]; // ['Live', 'Wild', 'Whole'];
   images: string[];

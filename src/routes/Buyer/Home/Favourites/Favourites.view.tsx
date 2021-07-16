@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Typography from 'components/base/Typography/Typography.view';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import Loading from 'components/module/Loading';
@@ -72,6 +71,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                             fav.size.to
                           )}
                           isAquafuture={fav.isAquafuture}
+                          catchRecurrence={fav.catchRecurrence}
                           unit={fav.measurementUnit}
                           state={fav.state}
                           hiddenPrice={isPendingAccount}
@@ -94,6 +94,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           fav.size.to
                         )}
                         isAquafuture={fav.isAquafuture}
+                        catchRecurrence={fav.catchRecurrence}
                         unit={fav.measurementUnit}
                         state={fav.state}
                         hiddenPrice={isPendingAccount}

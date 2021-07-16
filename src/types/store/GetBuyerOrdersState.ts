@@ -37,7 +37,8 @@ export type GetBuyerOrdersResponseItem = {
     id: string;
     listing: {
       allowedWeightAdjustment: number;
-      catchDate: string; // yyyy-mm-dd
+      catchDate?: string; // yyyy-mm-dd
+      catchRecurrence?: string;
       description: string;
       endDate: string; // iso date string
       fishermanFirstName: string;

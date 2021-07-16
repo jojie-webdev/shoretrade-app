@@ -23,6 +23,7 @@ export type CreateCustomListingRequestData = {
   minOrder: number;
   sellInMultiplesOfMinOrder?: boolean;
   catchDate: string | null; // date iso string
+  catchRecurrence: string | null;
   description: string;
   origin: {
     suburb: string;

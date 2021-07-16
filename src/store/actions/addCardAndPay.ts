@@ -9,8 +9,8 @@ const asyncAction = createAsyncAction<AddCardAndPayMeta, AddCardAndPayPayload>(
   ns
 );
 
-const placeOrderActions = {
+const addCardAndPayActions = {
   ...asyncAction,
 };
 
-export default placeOrderActions;
+export default addCardAndPayActions;
