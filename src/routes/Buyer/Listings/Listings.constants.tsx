@@ -85,7 +85,9 @@ export const DIRECT_SALE_COLUMNS = [
     selector: 'ends',
     sortable: true,
     component: function ValidUntil(data: any, _state: any) {
-      return <>{moment(data?.end_date).format('LL')}</>;
+      return (
+        <>{data?.catch_recurrence || moment(data?.end_date).format('LL')}</>
+      );
     },
   },
   {

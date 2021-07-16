@@ -179,6 +179,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
     hiddenVendor,
   } = props;
   const theme = useTheme();
+
   return (
     <CardContainer
       className="category-preview-card"
@@ -207,20 +208,27 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </LocationContainer>
 
           <BadgeContainer>
-            {props.isAquafuture ? (
-              <Badge badgeColor="#111E2B">
+            {props.isAquafuture && (
+              <Badge className="badge" badgeColor={theme.grey.shade8}>
                 <Typography color="shade4" variant="overline">
                   Aquafuture
                 </Typography>
               </Badge>
-            ) : null}
-            {parseInt(props.remaining || '0') <= 50 ? (
-              <Badge badgeColor="#FFA26B">
-                <Typography style={{ color: '#FFF1E9' }} variant="overline">
+            )}
+            {parseInt(props.remaining || '0') <= 50 && (
+              <Badge className="badge" badgeColor={theme.brand.warning}>
+                <Typography color="noshade" variant="overline">
                   Almost Gone!
                 </Typography>
               </Badge>
-            ) : null}
+            )}
+            {props.catchRecurrence && (
+              <Badge className="badge" badgeColor={theme.brand.success}>
+                <Typography color="noshade" variant="overline">
+                  Always Available
+                </Typography>
+              </Badge>
+            )}
           </BadgeContainer>
         </div>
         <DetailsContainer>

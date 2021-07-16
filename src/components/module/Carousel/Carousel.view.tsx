@@ -44,6 +44,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     arrowInside,
     showAquafuture,
     showAlmostGone,
+    showAlwaysAvailable,
     showActionButton,
     actionButton,
     variant = 'bullet',
@@ -110,16 +111,23 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         <SwiperArea>
           <BadgeContainer>
             {showAquafuture && (
-              <Badge badgeColor={theme.grey.shade8}>
+              <Badge className="badge" badgeColor={theme.grey.shade8}>
                 <Typography color="shade4" variant="overline">
                   Aquafuture
                 </Typography>
               </Badge>
             )}
             {showAlmostGone && (
-              <Badge badgeColor={theme.brand.warning}>
-                <Typography style={{ color: '#FFF1E9' }} variant="overline">
+              <Badge className="badge" badgeColor={theme.brand.warning}>
+                <Typography color="noshade" variant="overline">
                   Almost Gone!
+                </Typography>
+              </Badge>
+            )}
+            {showAlwaysAvailable && (
+              <Badge className="badge" badgeColor={theme.brand.success}>
+                <Typography color="noshade" variant="overline">
+                  Always Available
                 </Typography>
               </Badge>
             )}
@@ -179,16 +187,23 @@ const Carousel = (props: CarouselProps): JSX.Element => {
 
         <BadgeContainer>
           {showAquafuture && (
-            <Badge badgeColor={theme.grey.shade8}>
+            <Badge className="badge" badgeColor={theme.grey.shade8}>
               <Typography color="shade4" variant="overline">
                 Aquafuture
               </Typography>
             </Badge>
           )}
           {showAlmostGone && (
-            <Badge badgeColor={theme.brand.warning}>
-              <Typography style={{ color: '#FFF1E9' }} variant="overline">
+            <Badge className="badge" badgeColor={theme.brand.warning}>
+              <Typography color="noshade" variant="overline">
                 Almost Gone!
+              </Typography>
+            </Badge>
+          )}
+          {showAlwaysAvailable && (
+            <Badge className="badge" badgeColor={theme.brand.success}>
+              <Typography color="noshade" variant="overline">
+                Always Available
               </Typography>
             </Badge>
           )}

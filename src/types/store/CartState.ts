@@ -11,8 +11,9 @@ export type CartItem = {
     price: string;
     origin: { state: string; suburb: string; countryCode: string };
     description: string;
-    caught: string; // yyyy-mm-dd
-    ends: string;
+    caught?: string; // yyyy-mm-dd
+    ends?: string;
+    catchRecurrence?: string;
     specifications: string[]; // ['Live', 'Wild', 'Whole'];
     image: string;
     minimumOrder: string; // '1.0'

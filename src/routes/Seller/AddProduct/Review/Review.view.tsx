@@ -84,19 +84,27 @@ const Review = ({
     (editableListing?.images || []).length +
     (editableListing?.existingImages || []).length
   ).toString();
-  const catchDate = moment(editableListing?.catchDate || null).format(
-    'ddd DD MMM yyyy'
-  );
 
-  const listingEndDate = moment(editableListing?.ends || null)
-    .tz('Australia/Brisbane')
-    .format('ddd DD MMM yyyy');
+  const catchDate = editableListing?.catchDate
+    ? moment(editableListing.catchDate).format('ddd DD MMM yyyy')
+    : '';
 
-  const listingEndTime = moment(editableListing?.ends || null)
-    .tz('Australia/Brisbane')
-    .format('HH:mm');
+  const catchRecurrence = editableListing?.catchRecurrence || '';
 
-  const listingEnds = `${listingEndTime} ${listingEndDate}`;
+  const listingEndDate = editableListing?.ends
+    ? moment(editableListing.ends)
+        .tz('Australia/Brisbane')
+        .format('ddd DD MMM yyyy')
+    : '';
+
+  const listingEndTime = editableListing?.ends
+    ? moment(editableListing.ends).tz('Australia/Brisbane').format('HH:mm')
+    : '';
+
+  const listingEnds =
+    listingEndDate && listingEndTime
+      ? `${listingEndTime} ${listingEndDate}`
+      : '';
 
   const price = editableListing?.pricePerKilo || 0;
 
@@ -217,22 +225,36 @@ const Review = ({
             onClick={() => onChangeCurrentPage(5)}
           />
         </Col>
-        <Col md={12} className="interaction-col">
-          <Interactions
-            label="Catch Date"
-            value={catchDate}
-            type="edit"
-            onClick={() => onChangeCurrentPage(8)}
-          />
-        </Col>
-        <Col md={12} className="interaction-col">
-          <Interactions
-            label="Listing valid until (AEST)"
-            value={listingEnds}
-            type="edit"
-            onClick={() => onChangeCurrentPage(8)}
-          />
-        </Col>
+        {!catchRecurrence ? (
+          <>
+            <Col md={12} className="interaction-col">
+              <Interactions
+                label="Catch Date"
+                value={catchDate}
+                type="edit"
+                onClick={() => onChangeCurrentPage(8)}
+              />
+            </Col>
+            <Col md={12} className="interaction-col">
+              <Interactions
+                label="Listing valid until (AEST)"
+                value={listingEnds}
+                type="edit"
+                onClick={() => onChangeCurrentPage(8)}
+              />
+            </Col>
+          </>
+        ) : (
+          <Col md={12} className="interaction-col">
+            <Interactions
+              label="Catch Date"
+              value={catchRecurrence}
+              type="edit"
+              onClick={() => onChangeCurrentPage(8)}
+            />
+          </Col>
+        )}
+
         <Col md={12} className="interaction-col ">
           <div className="text-area">
             <Interactions

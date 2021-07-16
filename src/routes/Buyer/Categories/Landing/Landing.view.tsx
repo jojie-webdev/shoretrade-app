@@ -29,22 +29,6 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
 
   return (
     <CategoriesContainer>
-      {isSmallScreen && (
-        <>
-          <MobileHeader>Buyer - Categories</MobileHeader>
-          <Row nogutter>
-            <Col xs={12}>
-              <Search
-                placeholder="Search for a category"
-                value={search}
-                onChange={onChangeSearchValue}
-                resetValue={onResetSearchValue}
-                rounded
-              />
-            </Col>
-          </Row>
-        </>
-      )}
       {categories.length <= 0 ? (
         <>{!isSmallScreen && <Loading />}</>
       ) : (
