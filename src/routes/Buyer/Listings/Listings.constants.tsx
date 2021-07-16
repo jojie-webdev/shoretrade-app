@@ -1,17 +1,19 @@
 import React from 'react';
 
 import moment from 'moment';
+import { sizeToString } from 'utils/Listing';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { Chips, ChipsWrapper } from './Listings.styles';
-import { sizeToString } from 'utils/Listing';
 
 export const columnTemplate = [
   '150px',
   '150px',
   '250px',
   '130px',
+  '150px',
   '120px',
-  '120px',
+  '150px',
   '250px',
 ];
 export const DEFAULT_PAGE_LIMIT = 10;
@@ -36,11 +38,11 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Specs',
     selector: 'specifications',
     sortable: true,
-    component: (data: any, _state?: any) => {
+    component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>
           {(data?.['specifications']?.split(',') || []).map((specs: string) => {
-            return <Chips>{specs}</Chips>;
+            return <Chips key={`direct-spec-${data?.id}`}>{specs}</Chips>;
           })}
         </ChipsWrapper>
       );
@@ -50,15 +52,28 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Size',
     selector: 'size',
     sortable: true,
-    component: (data: any, _state: any) => {
+    component: function Size(data: any, _state: any) {
       return <>{sizeToString(data?.metric, data?.size_from, data?.size_to)}</>;
+    },
+  },
+  {
+    name: 'Remaining',
+    selector: 'remaining_weight',
+    sortable: true,
+    component: function RemainingWeight(data: any, _state: any) {
+      return (
+        <>
+          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)} /{' '}
+          {data?.total_weight} {formatMeasurementUnit(data?.unit)}
+        </>
+      );
     },
   },
   {
     name: 'Price',
     selector: 'price',
     sortable: true,
-    component: (data: any, _state: any) => {
+    component: function Price(data: any, _state: any) {
       return (
         <>{`${DEFAULT_CURRENCY}${data?.price}${
           String(data?.price).split('.').length === 1 ? '.00' : ''
@@ -70,15 +85,17 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Valid Until',
     selector: 'ends',
     sortable: true,
-    component: (data: any, _state: any) => {
-      return <>{moment(data?.end_date).format('LL')}</>;
+    component: function ValidUntil(data: any, _state: any) {
+      return (
+        <>{data?.catch_recurrence || moment(data?.end_date).format('LL')}</>
+      );
     },
   },
   {
     name: 'Catchment Origin',
     selector: 'origin',
     sortable: true,
-    component: (data: any, _state: any) => {
+    component: function CatchmentOrigin(data: any, _state: any) {
       return (
         <>
           {data?.origin?.state}, {data?.origin?.suburb},{' '}
@@ -104,11 +121,11 @@ export const AUCTION_PRODUCT_COLUMNS = [
     name: 'Specs',
     selector: 'specifications',
     sortable: true,
-    component: (data: any, _state?: any) => {
+    component: function Specs(data: any, _state?: any) {
       return (
         <ChipsWrapper>
           {(data?.['specifications']?.split(',') || []).map((specs: string) => {
-            return <Chips>{specs}</Chips>;
+            return <Chips key={`auction-spec-${data?.id}`}>{specs}</Chips>;
           })}
         </ChipsWrapper>
       );
@@ -118,7 +135,7 @@ export const AUCTION_PRODUCT_COLUMNS = [
     name: 'Size',
     selector: 'size',
     sortable: true,
-    component: (data: any, _state: any) => {
+    component: function Size(data: any, _state: any) {
       return (
         <>
           {data?.size_from}-{data?.size_to}
@@ -140,7 +157,7 @@ export const AUCTION_PRODUCT_COLUMNS = [
     name: 'Catchment Origin',
     selector: 'origin',
     sortable: true,
-    component: (data: any, _state: any) => {
+    component: function CatchmentOrigin(data: any, _state: any) {
       return (
         <>
           {data?.origin?.state}, {data?.origin?.suburb},{' '}
