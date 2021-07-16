@@ -2,6 +2,7 @@ import React from 'react';
 
 import moment from 'moment';
 import { sizeToString } from 'utils/Listing';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { Chips, ChipsWrapper } from './Listings.styles';
 
@@ -60,7 +61,11 @@ export const DIRECT_SALE_COLUMNS = [
     selector: 'remaining_weight',
     sortable: true,
     component: function RemainingWeight(data: any, _state: any) {
-      return <>{sizeToString(data?.metric, data?.remaining_weight)}</>;
+      return (
+        <>
+          {data?.remaining_weight}${formatMeasurementUnit(data?.unit)}
+        </>
+      );
     },
   },
   {
