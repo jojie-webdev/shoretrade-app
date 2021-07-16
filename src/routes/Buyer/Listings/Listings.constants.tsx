@@ -63,7 +63,7 @@ export const DIRECT_SALE_COLUMNS = [
     component: function RemainingWeight(data: any, _state: any) {
       return (
         <>
-          {data?.remaining_weight}${formatMeasurementUnit(data?.unit)}
+          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)}
         </>
       );
     },
