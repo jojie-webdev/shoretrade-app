@@ -80,9 +80,14 @@ export const BadgeText = styled(TypographyView)`
 export const BadgeContainer = styled.div`
   flex-direction: row;
   display: flex;
+  flex-wrap: wrap;
   position: absolute;
   bottom: 12px;
   left: 16px;
+
+  .badge {
+    margin-top: 4px;
+  }
 `;
 
 export const StatusContainer = styled.div`

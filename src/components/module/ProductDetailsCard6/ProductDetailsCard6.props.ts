@@ -5,6 +5,7 @@ export interface ProductDetailsCard6Props {
   timeLeft?: Date;
   avgBoxSize?: string;
   catchDate?: Date;
+  catchRecurrence?: string;
   minOrder?: string;
   unit?: string;
   hiddenPrice?: boolean;

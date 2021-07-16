@@ -2,6 +2,13 @@ import Touchable from 'components/base/Touchable';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled, { css } from 'utils/styled';
 
+const imgStyle = css`
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  margin-right: 16px;
+`;
+
 export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   width: 100%;
   display: flex;
@@ -48,10 +55,7 @@ export const CarouselContainer = styled.div`
 `;
 
 export const SellerPreview = styled.img`
-  width: 96px;
-  height: 96px;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  ${imgStyle}
 `;
 
 export const SalesCard = styled.div`
@@ -154,14 +158,6 @@ export const ActionContainer = styled.div`
   & button {
     width: 100%;
   }
-`;
-
-const imgStyle = css`
-  width: 96px;
-  height: 96px;
-  border-radius: 4px;
-  margin-right: 16px;
-  cursor: pointer;
 `;
 
 export const NoProfilePic = styled.div`

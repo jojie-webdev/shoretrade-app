@@ -1,10 +1,12 @@
+import React from 'react';
+
 import { ChevronLeft, ChevronRight } from 'components/base/SVG';
 import ChevronLeftMax from 'components/base/SVG/ChevronLeftMax';
 import ChevronRightMax from 'components/base/SVG/ChevronRightMax';
-import React from 'react';
 import theme from 'utils/Theme';
-import { Container } from './Pagination.style';
+
 import { PaginationProps } from './Pagination.props';
+import { Container } from './Pagination.style';
 
 const Pagination = (props: PaginationProps) => {
   const {

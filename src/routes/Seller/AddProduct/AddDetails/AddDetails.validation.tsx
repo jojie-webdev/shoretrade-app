@@ -1,4 +1,4 @@
-import { createFormikValidator, createValidator } from 'utils/Validation';
+import { createValidator } from 'utils/Validation';
 
 const constraints = {
   price: {
@@ -43,16 +43,39 @@ const constraints = {
   },
 };
 
+const constraintsAlt = {
+  catchRecurrence: {
+    presence: {
+      message: '^Please set catch date',
+      allowEmpty: false,
+    },
+  },
+  price: {
+    presence: {
+      message: '^Please enter a price',
+      allowEmpty: false,
+    },
+    isValidPrice: '^Please enter a valid price',
+  },
+  origin: {
+    presence: {
+      message: '^Please enter origin',
+      allowEmpty: false,
+    },
+  },
+  shippingAddress: {
+    presence: {
+      message: '^Please select shipping address',
+      allowEmpty: false,
+    },
+  },
+};
+
 export const isValid = createValidator(constraints);
+export const isValidAlt = createValidator(constraintsAlt);
 
 export const isDateRangeValid = (endListing: Date, catchDate: Date) => {
-  if (
-    endListing &&
-    catchDate &&
-    endListing > catchDate &&
-    endListing > new Date()
-  ) {
-    return true;
-  }
-  return false;
+  return (
+    endListing && catchDate && endListing > catchDate && endListing > new Date()
+  );
 };

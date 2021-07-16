@@ -9,7 +9,7 @@ export type GetAllListingsResponseItem = {
   type: string;
   typeId: string;
   typeMetric: string; // ex. "Grams"
-  ends: string; // ex. "yyyy-mm-ddThh:mm:ss.000Z"
+  ends?: string; // ex. "yyyy-mm-ddThh:mm:ss.000Z"
   origin: {
     state: string;
     suburb: string;
@@ -20,7 +20,8 @@ export type GetAllListingsResponseItem = {
   sizeFrom?: string;
   sizeTo?: string;
   categoryName: string;
-  catchDate: string; // ex. yyyy-mm-dd
+  catchDate?: string; // ex. yyyy-mm-dd
+  catchRecurrence?: string;
   description: string; // note
   fishermanId: string;
   fishermanFirstName: string;

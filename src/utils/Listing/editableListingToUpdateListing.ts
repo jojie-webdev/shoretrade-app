@@ -15,6 +15,7 @@ export const editableListingToUpdateListing = (
   })),
   price: data?.pricePerKilo || 0,
   catchDate: data?.catchDate ? moment(data.catchDate).toISOString() : null,
+  catchRecurrence: data?.catchRecurrence || null,
   description: data?.description || '',
   origin: data?.origin || {
     suburb: '',

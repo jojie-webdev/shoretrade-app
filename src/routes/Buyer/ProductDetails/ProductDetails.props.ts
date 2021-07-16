@@ -43,6 +43,7 @@ export interface ProductDetailsGeneratedProps {
   pressedBoxRadio: string;
   setPressedBoxRadio: Dispatch<SetStateAction<string>>;
   isAquafuture?: boolean;
+  catchRecurrence?: string;
   onAddToCart: () => void;
   weight: string;
   setWeight: Dispatch<string>;
