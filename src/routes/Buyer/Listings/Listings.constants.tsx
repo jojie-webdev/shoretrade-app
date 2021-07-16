@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { sizeToString } from 'utils/Listing';
 
-import { Chips, ChipsWrapper, EmptyValue } from './Listings.styles';
+import { Chips, ChipsWrapper } from './Listings.styles';
 
 export const columnTemplate = [
   '150px',
@@ -57,10 +57,10 @@ export const DIRECT_SALE_COLUMNS = [
   },
   {
     name: 'Remaining',
-    selector: 'remaining',
+    selector: 'remaining_weight',
     sortable: true,
     component: (data: any, _state: any) => {
-      return <>{data?.remaining || <EmptyValue>Not specified</EmptyValue>}</>;
+      return <>{sizeToString(data?.metric, data?.remaining_weight)}</>;
     },
   },
   {
