@@ -196,3 +196,39 @@ export const GetStartedButton = styled(Button)`
   max-width: 310.67px;
   border-radius: 12px;
 `;
+
+export const TopAbsoContainer = styled.div`
+  position: absolute;
+  top: -10%;
+  right: 0;
+`;
+
+export const TopGroupContainer = styled.div`
+  position: absolute;
+  top: -2%;
+  right: 10%;
+`;
+
+export const BottomAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+`;
+
+export const BottomGroupContainer = styled.div`
+  position: absolute;
+  bottom: -2%;
+  right: 10%;
+`;
+
+export const LeftAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  left: -6%;
+`;
+
+export const LeftGroupContainer = styled.div`
+  position: absolute;
+  bottom: -5%;
+  left: 21%;
+`;

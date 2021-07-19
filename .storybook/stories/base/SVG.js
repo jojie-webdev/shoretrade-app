@@ -4,6 +4,12 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Group194,
+  Group195,
+  Group196,
+  Wave51,
+  Wave31,
+  Wave41,
   TexturedCrab,
   TexturedSwordFish,
   TexturedOctopus,
@@ -170,6 +176,24 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Group194">
+          <Group194 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group195">
+          <Group195 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group196">
+          <Group196 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave51">
+          <Wave51 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave31">
+          <Wave31 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave41">
+          <Wave41 width={30} height={30} />
+        </Wrapper>
         <Wrapper label="TexturedCrab">
           <TexturedCrab width={30} height={30} />
         </Wrapper>

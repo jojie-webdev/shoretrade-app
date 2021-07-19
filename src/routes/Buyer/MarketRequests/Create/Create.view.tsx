@@ -10,6 +10,12 @@ import {
   TexturedCrab,
   TexturedOctopus,
   TexturedSwordFish,
+  Wave41,
+  Group196,
+  Wave31,
+  Group195,
+  Wave51,
+  Group194,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
@@ -28,6 +34,12 @@ import {
   ProgressBar,
   HeaderContainer,
   GetStartedButton,
+  TopAbsoContainer,
+  TopGroupContainer,
+  BottomAbsoContainer,
+  BottomGroupContainer,
+  LeftAbsoContainer,
+  LeftGroupContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -140,6 +152,24 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           </Visible>
           {/* END MOBILE */}
           <Hidden xs>
+            <TopAbsoContainer>
+              <Wave41 />
+            </TopAbsoContainer>
+            <TopGroupContainer>
+              <Group196 />
+            </TopGroupContainer>
+            <BottomAbsoContainer>
+              <Wave31 />
+            </BottomAbsoContainer>
+            <BottomGroupContainer>
+              <Group195 />
+            </BottomGroupContainer>
+            <LeftAbsoContainer>
+              <Wave51 />
+            </LeftAbsoContainer>
+            <LeftGroupContainer>
+              <Group194 />
+            </LeftGroupContainer>
             <Row gutterWidth={40}>
               <Col>
                 <HeaderContainer>
