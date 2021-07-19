@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -189,4 +190,9 @@ export const CheckBoxContainer = styled.div`
 
 export const HeaderContainer = styled.div`
   margin-bottom: 40px;
+`;
+
+export const GetStartedButton = styled(Button)`
+  max-width: 310.67px;
+  border-radius: 12px;
 `;

@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Crab, AnchorHero, CaviarHero, OctopusHero } from 'components/base/SVG';
+import {
+  Crab,
+  AnchorHero,
+  CaviarHero,
+  OctopusHero,
+  TexturedCrab,
+  TexturedOctopus,
+  TexturedSwordFish,
+} from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -19,6 +27,7 @@ import {
   HeroContainer,
   ProgressBar,
   HeaderContainer,
+  GetStartedButton,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -70,6 +79,27 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     onSubmitRequest();
   };
 
+  const agreementGuides = [
+    {
+      number: 1,
+      title:
+        'Search in our Database and choose between more than 50+  Categories ',
+      heroImage: <TexturedOctopus />,
+    },
+    {
+      number: 2,
+      title:
+        'Select specifications, size, quantity and send your request to the market',
+      heroImage: <TexturedSwordFish />,
+    },
+    {
+      number: 3,
+      title:
+        'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade ',
+      heroImage: <TexturedCrab />,
+    },
+  ];
+
   if (!termsAgreement) {
     return (
       <MainAgreementContainer>
@@ -113,10 +143,14 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             <Row gutterWidth={40}>
               <Col>
                 <HeaderContainer>
-                  <TypographyView variant="title5">
+                  <TypographyView variant="label" color="shade7">
                     Can&apos;t find your product?
                   </TypographyView>
-                  <TypographyView weight="700" variant="title5">
+                  <TypographyView
+                    weight="700"
+                    variant="title5"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
                     Create a new Market Request
                   </TypographyView>
                 </HeaderContainer>
@@ -124,27 +158,18 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Row>
             <div>
               <Row gutterWidth={24}>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={1}
-                    title="Search in our Database and choose between more than 50+  Categories "
-                    heroImage={<AnchorHero />}
-                  />
-                </Col>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={2}
-                    title="Select specifications, size, quantity and send your request to the market"
-                    heroImage={<CaviarHero />}
-                  />
-                </Col>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={3}
-                    title="Check and negotiate offers from more than 10.000+ sellers from ShoreTrade"
-                    heroImage={<OctopusHero />}
-                  />
-                </Col>
+                {agreementGuides.map((item) => {
+                  return (
+                    <Col sm={12} md={12} lg={12} xl={4}>
+                      <NumberedHeroView
+                        key={item.number}
+                        number={item.number}
+                        title={item.title}
+                        heroImage={item.heroImage}
+                      />
+                    </Col>
+                  );
+                })}
               </Row>
             </div>
           </Hidden>
@@ -173,8 +198,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               </span>
             </Typography>
           </div>
-          <Button
-            takeFullWidth
+          <GetStartedButton
             className="btn-get-started"
             disabled={!checkAgree}
             variant="primary"

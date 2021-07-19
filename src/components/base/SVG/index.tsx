@@ -1,4 +1,7 @@
 /* PLOP_INJECT_IMPORT */
+export { default as TexturedCrab } from './TexturedCrab';
+export { default as TexturedSwordFish } from './TexturedSwordFish';
+export { default as TexturedOctopus } from './TexturedOctopus';
 export { default as Sync } from './Sync';
 export { default as CaviarHero } from './CaviarHero';
 export { default as OctopusHero } from './OctopusHero';
