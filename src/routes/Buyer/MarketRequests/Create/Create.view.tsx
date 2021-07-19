@@ -160,9 +160,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               <Row gutterWidth={24}>
                 {agreementGuides.map((item) => {
                   return (
-                    <Col sm={12} md={12} lg={12} xl={4}>
+                    <Col key={item.number} sm={12} md={12} lg={12} xl={4}>
                       <NumberedHeroView
-                        key={item.number}
                         number={item.number}
                         title={item.title}
                         heroImage={item.heroImage}
