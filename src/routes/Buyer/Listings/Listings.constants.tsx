@@ -11,7 +11,7 @@ export const columnTemplate = [
   '150px',
   '250px',
   '130px',
-  '150px',
+  '120px',
   '120px',
   '150px',
   '250px',
@@ -63,8 +63,7 @@ export const DIRECT_SALE_COLUMNS = [
     component: function RemainingWeight(data: any, _state: any) {
       return (
         <>
-          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)} /{' '}
-          {data?.total_weight} {formatMeasurementUnit(data?.unit)}
+          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)}
         </>
       );
     },
