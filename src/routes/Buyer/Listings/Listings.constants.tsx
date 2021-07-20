@@ -97,7 +97,7 @@ export const DIRECT_SALE_COLUMNS = [
     component: function CatchmentOrigin(data: any, _state: any) {
       return (
         <>
-          {data?.origin?.state}, {data?.origin?.suburb},{' '}
+          {data?.origin?.suburb}, {data?.origin?.state},{' '}
           {data?.origin?.countryCode}
         </>
       );
