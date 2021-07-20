@@ -13,7 +13,7 @@ export const columnTemplate = [
   '130px',
   '120px',
   '120px',
-  '150px',
+  '120px',
   '250px',
 ];
 export const DEFAULT_PAGE_LIMIT = 10;
@@ -86,7 +86,7 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: function ValidUntil(data: any, _state: any) {
       return (
-        <>{data?.catch_recurrence || moment(data?.end_date).format('LL')}</>
+        <>{data?.catch_recurrence || moment(data?.end_date).format('ll')}</>
       );
     },
   },
