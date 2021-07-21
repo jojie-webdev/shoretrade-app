@@ -42,10 +42,12 @@ export const CreateRequestHeaderContainer = styled.div`
     flex-direction: row;
     margin-bottom: 1rem;
     align-items: center;
+    margin-top: 32px;
   }
 
   .search-container {
-    width: 308px;
+    width: 100%;
+    margin-bottom: 24px;
   }
 
   @media ${BREAKPOINTS['md']} {

@@ -1,8 +1,19 @@
 import React from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs';
+import {
+  Group194,
+  Group195,
+  Group196,
+  Wave31,
+  Wave41,
+  Wave51,
+} from 'components/base/SVG';
+import Group204 from 'components/base/SVG/Group204';
 import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -12,6 +23,13 @@ import {
 import {
   CategoryInterAction,
   CategoryInteractionsContainer,
+  EmptyContainer,
+  BottomAbsoContainer,
+  BottomGroupContainer,
+  LeftAbsoContainer,
+  LeftGroupContainer,
+  TopAbsoContainer,
+  TopGroupContainer,
 } from './CategorySelection.style';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
@@ -28,6 +46,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     typeSearchResults,
     setStep,
   } = props;
+
   const handleCategoryClick = (v: CategoryItem) => {
     setSelectedCategory(v);
     setStep(2);
@@ -37,24 +56,49 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     <>
       <CreateRequestHeaderContainer>
         <div>
-          {stepCountComponent}
+          <Breadcrumbs
+            color="shade5"
+            sections={[
+              { label: 'Category' },
+              {
+                label: 'Specifications',
+                onClick: () => {},
+              },
+              {
+                label: 'Size',
+                onClick: () => {},
+              },
+              {
+                label: 'Quantity',
+                onClick: () => {},
+              },
+              {
+                label: 'Summary',
+                onClick: () => {},
+              },
+            ]}
+          />
           <div className="title-container">
-            <TypographyView variant="title5" weight="500">
-              Choose Product Type
+            <TypographyView
+              variant="title5"
+              weight="500"
+              style={{ fontFamily: 'Media Sans' }}
+            >
+              Request a Product
             </TypographyView>
           </div>
         </div>
+      </CreateRequestHeaderContainer>
+      <CategoryInteractionsContainer>
         <div className="search-container">
           <Search
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
             placeholder="Search a category"
-            rounded
+            style={{ borderRadius: 12, width: '100%' }}
           />
         </div>
-      </CreateRequestHeaderContainer>
-      <CategoryInteractionsContainer>
         {pendingSearch ? (
           <Loading label="Searching" />
         ) : !hideSearchResult && typeSearchResults.length > 0 ? (
@@ -71,16 +115,29 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             />
           ))
         ) : (
-          buying.map((item: any) => (
-            <CategoryInterAction
-              onClick={() => handleCategoryClick(item)}
-              key={item.id}
-              type="next"
-              leftComponent={
-                <TypographyView variant="body">{item.name}</TypographyView>
-              }
-            />
-          ))
+          <>
+            <TopAbsoContainer>
+              <Wave41 />
+            </TopAbsoContainer>
+            <TopGroupContainer>
+              <Group196 />
+            </TopGroupContainer>
+            <BottomAbsoContainer>
+              <Wave31 />
+            </BottomAbsoContainer>
+            <BottomGroupContainer>
+              <Group195 />
+            </BottomGroupContainer>
+            <LeftAbsoContainer>
+              <Wave51 />
+            </LeftAbsoContainer>
+            <LeftGroupContainer>
+              <Group194 />
+            </LeftGroupContainer>
+            <EmptyContainer>
+              <Group204 />
+            </EmptyContainer>
+          </>
         )}
       </CategoryInteractionsContainer>
     </>
