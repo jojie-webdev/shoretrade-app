@@ -30,8 +30,10 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
               <Link key={i} to={section.link}>
                 <Typography
                   color={
-                    color ||
-                    (isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9')
+                    section.isDone
+                      ? 'shade9'
+                      : color ||
+                        (isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9')
                   }
                 >
                   {section.label}
@@ -43,8 +45,10 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
               <Typography
                 className="alt-link"
                 color={
-                  color ||
-                  (isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9')
+                  section.isDone
+                    ? 'shade9'
+                    : color ||
+                      (isSeller ? (isLight ? 'shade9' : 'noshade') : 'shade9')
                 }
                 onClick={section.onClick}
               >

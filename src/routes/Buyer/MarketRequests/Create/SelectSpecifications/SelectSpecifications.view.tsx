@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import AlertView from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
@@ -16,7 +17,13 @@ import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
 } from '../Create.style';
-import { SpecificationFormContainer } from './SelectSpecification.style';
+import {
+  SpecificationFormContainer,
+  TitleContainer,
+  ProceedButton,
+  PreviousButton,
+  ButtonContainer,
+} from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
 const SelectSpecificationsView = (props: SelectSpecificationProps) => {
@@ -129,8 +136,48 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     <>
       <CreateRequestHeaderContainer>
         <div>
-          {stepCountComponent}
-          <div className="title-container">
+          <Breadcrumbs
+            color="shade5"
+            sections={[
+              {
+                label: 'Category',
+                isDone: true,
+                onClick: () => {
+                  onBack();
+                },
+              },
+              {
+                label: 'Specifications',
+              },
+              {
+                label: 'Size',
+                onClick: () => {},
+              },
+              {
+                label: 'Quantity',
+                onClick: () => {},
+              },
+              {
+                label: 'Summary',
+                onClick: () => {},
+              },
+            ]}
+          />
+          <TitleContainer>
+            <TypographyView
+              variant="title5"
+              weight="500"
+              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
+            >
+              {listingFormData?.type.name}
+            </TypographyView>
+            <TypographyView variant="label" weight="400" color="shade7">
+              Below are the different ways you can purchase your product. You
+              can select more than one from each section to let Sellers know
+              that you would be satisfied with either specification.
+            </TypographyView>
+          </TitleContainer>
+          {/* <div className="title-container">
             <Touchable
               className="back-button-container"
               onPress={() => onBack()}
@@ -140,19 +187,12 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             <TypographyView variant="title5" weight="500">
               Select Specifications
             </TypographyView>
-          </div>
+          </div> */}
         </div>
       </CreateRequestHeaderContainer>
       <ContainerWithCategoryImagePreview>
-        <CategoryImagePreviewView
-          categoryName={selectedCategory.name}
-          imgSrc={listingFormData?.defaultPhoto}
-          caption="Select your product specifications for this request."
-          marketBoard
-        />
-
         <SpecificationFormContainer>
-          {isDisabled && (
+          {/* {isDisabled && (
             <AlertView
               content="Select at least 1 specification from each section"
               variant="error"
@@ -161,10 +201,17 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 marginBottom: 24,
               }}
             />
-          )}
+          )} */}
 
-          {getFilteredSpecifications().map((group) => (
+          {getFilteredSpecifications().map((group, index) => (
             <div key={group[0].groupOrder} className="interaction-group">
+              <TypographyView
+                variant="overline"
+                color="shade6"
+                style={{ marginBottom: 12 }}
+              >
+                {`Specs ${index + 1}`}
+              </TypographyView>
               <div className="spec-row">
                 {group.map((item) => (
                   <Checkbox
@@ -183,18 +230,21 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             </div>
           ))}
           <Hidden xs>
-            <Button
-              onClick={() => handleSelectSpecs()}
-              disabled={isEmpty(groupOrders) || isDisabled}
-              text="Select Specification"
-              variant="primary"
-            />
+            <ButtonContainer>
+              <PreviousButton text="<" variant="outline" onClick={onBack} />
+              <ProceedButton
+                onClick={() => handleSelectSpecs()}
+                disabled={isEmpty(groupOrders) || isDisabled}
+                text="Proceed >"
+                variant="primary"
+              />
+            </ButtonContainer>
           </Hidden>
           <MobileFooter>
             <Button
               onClick={() => handleSelectSpecs()}
               disabled={isEmpty(groupOrders) || isDisabled}
-              text="Select Specification"
+              text="Proceed"
               variant="primary"
               takeFullWidth
             />

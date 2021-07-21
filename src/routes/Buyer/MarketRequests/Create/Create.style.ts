@@ -64,12 +64,17 @@ export const CreateRequestHeaderContainer = styled.div`
 `;
 
 export const ContainerWithCategoryImagePreview = styled.div`
-  margin-top: 40px;
+  margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
   max-width: 1201px;
   justify-content: space-between;
-
+  background-color: ${({ theme }) => theme.grey.noshade};
+  width: 65%;
+  padding: 48px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
   }

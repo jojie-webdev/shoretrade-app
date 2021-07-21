@@ -45,9 +45,11 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     pendingSearch,
     typeSearchResults,
     setStep,
+    updateCategory,
   } = props;
 
   const handleCategoryClick = (v: CategoryItem) => {
+    updateCategory(v);
     setSelectedCategory(v);
     setStep(2);
   };

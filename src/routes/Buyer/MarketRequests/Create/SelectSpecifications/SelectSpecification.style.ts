@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import styled from 'utils/styled';
 
 import { ContainerWithCategoryImageContent } from '../Create.style';
@@ -20,4 +21,26 @@ export const SpecificationFormContainer = styled(
       align-items: flex-start;
     }
   }
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ProceedButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 124px;
+  margin-left: 8px;
+`;
+
+export const PreviousButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 64px;
 `;

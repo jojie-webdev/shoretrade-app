@@ -6,6 +6,7 @@ import {
   getMarketInterestsActions,
   createMarketRequestActions,
   searchProductTypeActions,
+  editableMarketRequestActions,
 } from 'store/actions';
 import { GetDefaultCompany, GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -17,10 +18,14 @@ import { SizeOptions } from './SelectSize/SelectSize.props';
 const CreateRequest = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
+  const editableMarketRequest = useSelector(
+    (state: Store) => state.editableMarketRequest
+  );
+
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [hideSearchResult, setHideSearchResult] = useState(false);
-  const [termsAgreement, setTermsAgreement] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [termsAgreement, setTermsAgreement] = useState(true);
+  const [currentStep, setCurrentStep] = useState(2);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
     items: any[];
@@ -37,6 +42,7 @@ const CreateRequest = (): JSX.Element => {
     items: [''],
   });
   const [sendConfModalisOpen, setSendConfModalisOpen] = useState(false);
+
   const [selectedCategory, setSelectedCategory] = useState({
     id: '',
     name: '',
@@ -68,6 +74,15 @@ const CreateRequest = (): JSX.Element => {
     value: currentDefaultAddress.id,
   });
 
+  const updateCategory = (v: any) => {
+    dispatch(
+      editableMarketRequestActions.update({
+        typeId: v.id,
+        typeName: v.name,
+      })
+    );
+  };
+
   useEffect(() => {
     if (currentFoundAddress?.label != undefined) {
       setSelectedAddress(currentFoundAddress);
@@ -77,7 +92,6 @@ const CreateRequest = (): JSX.Element => {
   const onChangeAddress = (e: { label: string; value: string }) => {
     setSelectedAddress(e);
   };
-
   const listingFormData =
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
 
@@ -212,6 +226,7 @@ const CreateRequest = (): JSX.Element => {
     selectedAddress,
     setSelectedAddress,
     onChangeAddress,
+    updateCategory,
   };
 
   return <CreateRequestLandingView {...generatedProps} />;

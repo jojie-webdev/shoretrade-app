@@ -75,6 +75,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     addressOptions,
     selectedAddress,
     setSelectedAddress,
+    updateCategory,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -272,6 +273,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             setSearchTerm={setSearchTerm}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            updateCategory={updateCategory}
           />
         );
 
