@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Desktop } from './Desktop';
 export { default as Sync } from './Sync';
 export { default as CaviarHero } from './CaviarHero';
 export { default as OctopusHero } from './OctopusHero';
