@@ -37,7 +37,7 @@ export const DIRECT_SALE_COLUMNS = [
   {
     name: 'Specs',
     selector: 'specifications',
-    sortable: true,
+    sortable: false,
     component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Select from 'components/base/Select';
 import Modal from 'components/layout/Modal';
 import TableComponent from 'components/module/ListingTable';
 import PaginationBar from 'components/module/PaginationBar';
@@ -72,14 +73,79 @@ export default function ListingView(props: ListingViewProps) {
     totalCount,
     limit,
     setLimit,
+    isTablet,
   } = props;
 
   let columns = DIRECT_SALE_COLUMNS;
   if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
+  const options = columns
+    .filter((column) => column?.sortable)
+    .map((column) => ({
+      value: column.selector,
+      label: column.name,
+    }));
+
   const debouncedSearch = debounce(function (v: string) {
     setSearchTerm(v);
   }, 400);
+
+  const DesktopHeader = (
+    <Header>
+      <TabContainer>
+        <Tab
+          className={activeTab === DIRECT_SALE ? 'active' : ''}
+          onClick={() => handleSelectTab(DIRECT_SALE)}
+        >
+          Direct Sale
+        </Tab>
+        {/* <Tab
+            className={activeTab === AUCTION_PRODUCT ? 'active' : ''}
+            onClick={() => handleSelectTab(AUCTION_PRODUCT)}
+          >
+            Auction Product
+          </Tab> */}
+      </TabContainer>
+      <FlexContainer>
+        <ActionContainer>
+          <Button
+            disabled={Boolean(isLoading) || isDownloadingCsv}
+            onClick={handleDownloadCSV}
+            text="Download"
+            loading={Boolean(isLoading) || isDownloadingCsv}
+            takeFullWidth={isMobile}
+          />
+        </ActionContainer>
+        <SearchContainer>
+          <Search onChange={debouncedSearch} />
+        </SearchContainer>
+      </FlexContainer>
+    </Header>
+  );
+
+  const TabletHeader = (
+    <Header style={{ gap: 8 }}>
+      <div>
+        <SearchContainer>
+          <Search onChange={debouncedSearch} />
+        </SearchContainer>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ marginRight: 8 }}>{totalCount} Results</div>
+        <div style={{ width: 150 }}>
+          <Select
+            label=""
+            options={options}
+            size="small"
+            placeholder="Sort By"
+            grey
+            onChange={(e) => setSortField(e?.value)}
+          />
+        </div>
+      </div>
+    </Header>
+  );
 
   return (
     <div>
@@ -97,36 +163,8 @@ export default function ListingView(props: ListingViewProps) {
           text="Proceed"
         />
       </Modal>
-      <Header>
-        <TabContainer>
-          <Tab
-            className={activeTab === DIRECT_SALE ? 'active' : ''}
-            onClick={() => handleSelectTab(DIRECT_SALE)}
-          >
-            Direct Sale
-          </Tab>
-          {/* <Tab
-            className={activeTab === AUCTION_PRODUCT ? 'active' : ''}
-            onClick={() => handleSelectTab(AUCTION_PRODUCT)}
-          >
-            Auction Product
-          </Tab> */}
-        </TabContainer>
-        <FlexContainer>
-          <ActionContainer>
-            <Button
-              disabled={Boolean(isLoading) || isDownloadingCsv}
-              onClick={handleDownloadCSV}
-              text="Download"
-              loading={Boolean(isLoading) || isDownloadingCsv}
-              takeFullWidth={isMobile}
-            />
-          </ActionContainer>
-          <SearchContainer>
-            <Search onChange={debouncedSearch} />
-          </SearchContainer>
-        </FlexContainer>
-      </Header>
+      {!isMobile && !isTablet && DesktopHeader}
+      {isTablet && TabletHeader}
       <TableComponent
         setSortField={setSortField}
         sortField={sortField}

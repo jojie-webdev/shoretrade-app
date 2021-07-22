@@ -31,7 +31,7 @@ export const FlexContainer = styled.section`
 `;
 
 export const SearchContainer = styled.div`
-  min-width: 300px;
+  // min-width: 300px;
   flex-grow: 1;
   @media ${BREAKPOINTS['sm']} {
     order: 1;
