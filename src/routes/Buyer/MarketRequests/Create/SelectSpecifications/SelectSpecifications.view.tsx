@@ -23,6 +23,7 @@ import {
   ProceedButton,
   PreviousButton,
   ButtonContainer,
+  Row,RequestDetailsContainer
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -190,9 +191,10 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           </div> */}
         </div>
       </CreateRequestHeaderContainer>
-      <ContainerWithCategoryImagePreview>
-        <SpecificationFormContainer>
-          {/* {isDisabled && (
+      <Row>
+        <ContainerWithCategoryImagePreview>
+          <SpecificationFormContainer>
+            {/* {isDisabled && (
             <AlertView
               content="Select at least 1 specification from each section"
               variant="error"
@@ -203,54 +205,59 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           )} */}
 
-          {getFilteredSpecifications().map((group, index) => (
-            <div key={group[0].groupOrder} className="interaction-group">
-              <TypographyView
-                variant="overline"
-                color="shade6"
-                style={{ marginBottom: 12 }}
-              >
-                {`Specs ${index + 1}`}
-              </TypographyView>
-              <div className="spec-row">
-                {group.map((item) => (
-                  <Checkbox
-                    checked={
-                      selectedState.selectedStates.filter(
-                        (state) => state.value === item.value
-                      )[0]
-                    }
-                    value={item.value}
-                    onClick={() => handleStateCheck(item)}
-                    key={item.value}
-                    label={item.label}
-                  />
-                ))}
+            {getFilteredSpecifications().map((group, index) => (
+              <div key={group[0].groupOrder} className="interaction-group">
+                <TypographyView
+                  variant="overline"
+                  color="shade6"
+                  style={{ marginBottom: 12 }}
+                >
+                  {`Specs ${index + 1}`}
+                </TypographyView>
+                <div className="spec-row">
+                  {group.map((item) => (
+                    <Checkbox
+                      checked={
+                        selectedState.selectedStates.filter(
+                          (state) => state.value === item.value
+                        )[0]
+                      }
+                      value={item.value}
+                      onClick={() => handleStateCheck(item)}
+                      key={item.value}
+                      label={item.label}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-          <Hidden xs>
-            <ButtonContainer>
-              <PreviousButton text="<" variant="outline" onClick={onBack} />
-              <ProceedButton
+            ))}
+            <Hidden xs>
+              <ButtonContainer>
+                <PreviousButton text="<" variant="outline" onClick={onBack} />
+                <ProceedButton
+                  onClick={() => handleSelectSpecs()}
+                  disabled={isEmpty(groupOrders) || isDisabled}
+                  text="Proceed >"
+                  variant="primary"
+                />
+              </ButtonContainer>
+            </Hidden>
+            <MobileFooter>
+              <Button
                 onClick={() => handleSelectSpecs()}
                 disabled={isEmpty(groupOrders) || isDisabled}
-                text="Proceed >"
+                text="Proceed"
                 variant="primary"
+                takeFullWidth
               />
-            </ButtonContainer>
-          </Hidden>
-          <MobileFooter>
-            <Button
-              onClick={() => handleSelectSpecs()}
-              disabled={isEmpty(groupOrders) || isDisabled}
-              text="Proceed"
-              variant="primary"
-              takeFullWidth
-            />
-          </MobileFooter>
-        </SpecificationFormContainer>
-      </ContainerWithCategoryImagePreview>
+            </MobileFooter>
+          </SpecificationFormContainer>
+        </ContainerWithCategoryImagePreview>
+        <RequestDetailsContainer>
+          
+    </RequestDetailsContainer>
+    
+      </Row>
     </>
   );
 };

@@ -70,7 +70,7 @@ export const ContainerWithCategoryImagePreview = styled.div`
   max-width: 1201px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.grey.noshade};
-  width: 65%;
+  width: 63%;
   padding: 48px;
   border: 1px solid #dadff2;
   border-radius: 12px;
