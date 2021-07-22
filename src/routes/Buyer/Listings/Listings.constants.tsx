@@ -74,9 +74,12 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: function Price(data: any, _state: any) {
       return (
-        <>{`${DEFAULT_CURRENCY}${data?.price}${
-          String(data?.price).split('.').length === 1 ? '.00' : ''
-        }`}</>
+        <>
+          {`${DEFAULT_CURRENCY}${data?.price || 0}${
+            String(data?.price).split('.').length === 1 ? '.00' : ''
+          }`}
+          /{data?.unit?.toLowerCase()}
+        </>
       );
     },
   },
