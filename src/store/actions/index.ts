@@ -97,3 +97,4 @@ export { default as socketGetListingActions } from './socketGetListing';
 export { default as sockgetGetListingsByTypeActions } from './socketGetListingsByType';
 export { default as getCratesActions } from './getCrates';
 export { default as getAvailableCratesActions } from './getAvailableCrates';
+export { default as getNotificationsSettingsActions } from './getNotificationsSettings';

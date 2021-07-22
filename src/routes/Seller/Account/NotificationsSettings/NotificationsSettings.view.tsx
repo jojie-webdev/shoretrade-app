@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import { Desktop } from 'components/base/SVG';
+import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
-import { Container } from './NotificationsSettings.style';
+import {
+  Container,
+  GlobalNotificationsContainer,
+} from './NotificationsSettings.style';
 
 const NotificationsSettingsView = ({
-  ...props
+  globalSettings,
 }: NotificationsSettingsProps) => {
+  console.log(globalSettings);
   return (
     <Container>
       <Row
@@ -33,6 +39,35 @@ const NotificationsSettingsView = ({
           </div>
         </Col>
       </Row>
+      <GlobalNotificationsContainer>
+        <div className="item">
+          <GlobalNotificationToggle
+            title="Browser"
+            icon={<Desktop />}
+            description="Push Notifications"
+            onClick={() => console.log('clicked')}
+            checked={globalSettings.browser}
+          />
+        </div>
+        <div className="item">
+          <GlobalNotificationToggle
+            title="Email"
+            icon={<Desktop />}
+            description="peter@shoretrade.com"
+            onClick={() => console.log('clicked')}
+            checked={globalSettings.email}
+          />
+        </div>
+        <div className="item">
+          <GlobalNotificationToggle
+            title="SMS"
+            icon={<Desktop />}
+            description="+61 123 456 789"
+            onClick={() => console.log('clicked')}
+            checked={globalSettings.sms}
+          />
+        </div>
+      </GlobalNotificationsContainer>
     </Container>
   );
 };

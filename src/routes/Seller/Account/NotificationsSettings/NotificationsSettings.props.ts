@@ -1,1 +1,5 @@
-export interface NotificationsSettingsProps {}
+import { GetNotificationsSettingsResponse } from 'types/store/GetNotificationSettingsState';
+
+export interface NotificationsSettingsProps {
+  globalSettings?: any;
+}
