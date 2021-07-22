@@ -215,7 +215,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 </Typography>
               </Badge>
             )}
-            {parseInt(props.remaining || '0') <= 50 && (
+            {parseInt(props.remaining || '0') <= 50 && !props.catchRecurrence && (
               <Badge className="badge" badgeColor={theme.brand.warning}>
                 <Typography color="noshade" variant="overline">
                   Almost Gone!
