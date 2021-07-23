@@ -211,6 +211,10 @@ import {
 } from './SearchProductTypeState';
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
+import {
+  SocketAllBuyerListingsMeta,
+  SocketAllBuyerListingsPayload,
+} from './socketAllBuyerListingsState';
 import { SocketCreditMeta, SocketCreditPayload } from './SocketCreditState';
 import {
   SocketGetAllListingsMeta,
@@ -459,6 +463,10 @@ export interface Store {
   socketGetListingsByType: SocketState<
     SocketGetListingsByTypeMeta,
     SocketGetListingsByTypePayload
+  >;
+  socketAllBuyerListings: SocketState<
+    SocketAllBuyerListingsMeta,
+    SocketAllBuyerListingsPayload
   >;
   getCrates: AsyncState<GetCratesMeta, GetCratesPayload>;
   getAvailableCrates: AsyncState<

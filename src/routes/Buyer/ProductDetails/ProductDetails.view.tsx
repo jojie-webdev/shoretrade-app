@@ -196,7 +196,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   // autoplay
                   variant={isMobile ? 'bullet' : 'thumbnail'}
                   aspectRatio="9:4"
-                  showAlmostGone={Number(remainingWeight) <= 50}
+                  showAlmostGone={
+                    Number(remainingWeight) <= 50 && !catchRecurrence
+                  }
                   showAquafuture={isAquafuture}
                   showAlwaysAvailable={!!catchRecurrence}
                   showActionButton={isMobile}

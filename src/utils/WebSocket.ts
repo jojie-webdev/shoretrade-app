@@ -7,6 +7,7 @@ import {
   getListingActions,
   getListingsByTypeActions,
   getUserActions,
+  socketAllBuyerListingsActions,
   socketCreditActions,
   socketGetAllListingsActions,
   socketGetListingActions,
@@ -100,7 +101,7 @@ const createSocketMiddleware = () => {
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
           storeAPI.dispatch({
-            type: socketGetAllListingsActions.HANDLE_EVENT,
+            type: socketAllBuyerListingsActions.HANDLE_EVENT,
             payload: message,
           });
         });

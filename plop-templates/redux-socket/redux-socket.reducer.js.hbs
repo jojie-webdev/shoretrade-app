@@ -1,0 +1,11 @@
+import {
+  Socket{{pascalCase name}}Meta,
+  Socket{{pascalCase name}}Payload,
+} from 'types/store/Socket{{pascalCase name}}State';
+import { createSocketReducer } from 'utils/Redux';
+
+import { socket{{pascalCase name}}Actions } from '../actions';
+
+export default createSocketReducer<Socket{{pascalCase name}}Meta, Socket{{pascalCase name}}Payload>(
+  socket{{pascalCase name}}Actions
+);
