@@ -5,7 +5,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
-import { toPrice, ucFirst } from 'utils/String';
+import { toPrice, capitalize } from 'utils/String';
 
 import ListingTimeLeftView from '../ListingTimeLeft';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
@@ -68,7 +68,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           {catchRecurrence ? 'Catch Frequency:' : 'Catch Date:'}
         </Label>
         <Label variant="label" weight="bold">
-          {catchRecurrence ? ucFirst(catchRecurrence) : formattedCatchDate()}
+          {catchRecurrence ? capitalize(catchRecurrence) : formattedCatchDate()}
         </Label>
       </Row>
 

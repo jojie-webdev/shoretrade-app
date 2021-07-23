@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { ucFirst } from 'utils/String'
+import { capitalize } from 'utils/String'
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -41,7 +41,7 @@ export default function ListingContainer() {
   const baseListings = listingRequestData?.listings || [];
   const listings = baseListings.map((a: any) => ({
     ...a,
-    catchRecurrence: a.catchRecurrence && ucFirst(a.catchRecurrence)
+    catchRecurrence: a.catchRecurrence && capitalize(a.catchRecurrence)
   }))
   const maxPage = Math.ceil(listingRequestDataCount / limit);
 

@@ -29,7 +29,7 @@ import { BadgeText } from 'routes/Buyer/ProductDetails/ProductDetails.style';
 import { base64ToFile } from 'utils/File';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
-import { ucFirst } from 'utils/String';
+import { capitalize } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
 import { ListingDetailsProps } from './ListingDetails.props';
@@ -323,7 +323,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         weight="bold"
                       >
                         {orderDetails.catchRecurrence
-                          ? ucFirst(orderDetails.catchRecurrence)
+                          ? capitalize(orderDetails.catchRecurrence)
                           : formattedCatchDate()}
                       </Typography>
                     </div>
@@ -610,7 +610,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       className="product-desc"
                     >
                       {orderDetails.catchRecurrence
-                        ? ucFirst(orderDetails.catchRecurrence)
+                        ? capitalize(orderDetails.catchRecurrence)
                         : formattedCatchDate()}
                     </Typography>
                   </div>
