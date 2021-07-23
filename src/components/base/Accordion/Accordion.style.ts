@@ -1,5 +1,7 @@
 import styled from 'utils/styled';
 
+import Interactions from '../Interactions';
+
 export const Container = styled.div<{
   isOpen?: boolean;
   withBackground?: boolean;
@@ -22,10 +24,16 @@ export const Content = styled.div<{
   isOpen?: boolean;
   padding?: string;
   withBackground?: boolean;
+  sameWidth?: boolean;
 }>`
   width: 100%;
   overflow: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  padding: ${(props) => (props.isOpen ? '16px' : '0px')};
+  padding: ${({ sameWidth, isOpen }) => {
+    if (!isOpen) {
+      return '0';
+    }
+    return sameWidth ? '0' : '16px';
+  }};
   padding-top: ${({ withBackground, isOpen }) => {
     if (!isOpen) {
       return '0';
@@ -36,9 +44,22 @@ export const Content = styled.div<{
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
   transform-origin: top;
   transition: all 0.25s ease-in-out;
-    .border {
-      border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
-      margin: 0px 24px;
-    }
+    // .border {
+    //   border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
+    //   margin: 0px 24px;
+    // }
   }
+`;
+
+export const StyledInteractions = styled(Interactions)<{
+  sameWidth?: boolean;
+  isOpen?: boolean;
+}>`
+  transition: all 0.25s ease-in-out;
+  border-radius: ${({ sameWidth, isOpen }) => {
+    if (!isOpen) {
+      return '8px';
+    }
+    return sameWidth ? '8px 8px 0px 0px' : '8px';
+  }};
 `;

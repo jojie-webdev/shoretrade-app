@@ -21,7 +21,11 @@ const NotificationsSettings = (): JSX.Element => {
   const [companyId, setCompanyId] = useState('');
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
-  >({ browser: false, sms: false, email: false });
+  >({
+    browser: { enabled: false, supported: false },
+    sms: { enabled: false, supported: false },
+    email: { enabled: false, supported: false },
+  });
   const getNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.data
   );

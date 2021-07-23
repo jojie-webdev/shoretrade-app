@@ -4,10 +4,15 @@ export type GetNotificationsSettingsMeta = {
   companyId: string;
 };
 
+export interface CategoryStatus {
+  enabled: boolean;
+  supported: boolean;
+}
+
 export type GlobalNotificationsSettingsResponse = {
-  sms: boolean; // Ex. 'Visa'
-  browser: boolean;
-  email: boolean;
+  sms: CategoryStatus; // Ex. 'Visa'
+  browser: CategoryStatus;
+  email: CategoryStatus;
 };
 
 export type GetNotificationsSettingsResponse = {

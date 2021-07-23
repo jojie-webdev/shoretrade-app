@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
+import { CommentsAlt, Desktop, EnvelopeAlt, Sold } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
+import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
@@ -51,7 +52,7 @@ const NotificationsSettingsView = ({
               icon={<Desktop />}
               description="Push Notifications"
               onClick={() => console.log('clicked')}
-              checked={globalSettings.browser}
+              checked={globalSettings?.browser.enabled || false}
             />
           </div>
           <div className="item">
@@ -60,7 +61,7 @@ const NotificationsSettingsView = ({
               icon={<EnvelopeAlt />}
               description="peter@shoretrade.com"
               onClick={() => console.log('clicked')}
-              checked={globalSettings.email}
+              checked={globalSettings?.email.enabled || false}
             />
           </div>
           <div className="item">
@@ -69,11 +70,20 @@ const NotificationsSettingsView = ({
               icon={<CommentsAlt />}
               description="+61 123 456 789"
               onClick={() => console.log('clicked')}
-              checked={globalSettings.sms}
+              checked={globalSettings?.sms.enabled || false}
             />
           </div>
         </div>
       </GlobalNotificationsContainer>
+      <div>
+        <NotificationSettingsCategoryItem
+          sms={{ enabled: false, supported: true }}
+          browser={{ enabled: true, supported: true }}
+          email={{ enabled: false, supported: true }}
+          icon={<Sold />}
+          title="Test"
+        ></NotificationSettingsCategoryItem>
+      </div>
     </Container>
   );
 };

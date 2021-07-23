@@ -4,6 +4,9 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Sold,
+  CommentsAlt,
+  EnvolopeAlt,
   Desktop,
   Sync,
   CaviarHero,
@@ -168,6 +171,15 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Sold">
+          <Sold width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CommentsAlt">
+          <CommentsAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="EnvolopeAlt">
+          <EnvolopeAlt width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Desktop">
           <Desktop width={30} height={30} />
         </Wrapper>
