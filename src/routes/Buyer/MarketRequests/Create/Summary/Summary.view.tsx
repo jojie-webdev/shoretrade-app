@@ -120,7 +120,7 @@ const SummaryView = (props: SummaryProps) => {
           <div className="title-container">
             <Touchable
               className="back-button-container"
-              onPress={() => onBack()}
+              onPress={() => onBack(4)}
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>

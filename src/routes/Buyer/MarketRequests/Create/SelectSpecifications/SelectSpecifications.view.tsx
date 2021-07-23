@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft, ShoretradeAnchor } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
@@ -16,17 +16,19 @@ import theme from 'utils/Theme';
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
+  TitleContainer,
+  RequestRow,
+  RequestDetailsContainer,
+  DetailsContainer,
+  DetailsHeaderContainer,
+  MainContainer,
 } from '../Create.style';
 import {
   SpecificationFormContainer,
-  TitleContainer,
   ProceedButton,
   PreviousButton,
   ButtonContainer,
-  Row,
-  RequestDetailsContainer,
   AnchorContainer,
-  DetailsContainer,
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -139,7 +141,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   return (
     <>
       <CreateRequestHeaderContainer>
-        <div>
+        <MainContainer>
           <Breadcrumbs
             color="shade5"
             sections={[
@@ -147,7 +149,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 label: 'Category',
                 isDone: true,
                 onClick: () => {
-                  onBack();
+                  onBack(1);
                 },
               },
               {
@@ -168,55 +170,33 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             ]}
           />
           <TitleContainer>
-            <TypographyView
+            <Typography
               variant="title5"
               weight="500"
               style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
             >
               {listingFormData?.type.name}
-            </TypographyView>
-            <TypographyView variant="label" weight="400" color="shade7">
+            </Typography>
+            <Typography variant="label" weight="400" color="shade7">
               Below are the different ways you can purchase your product. You
               can select more than one from each section to let Sellers know
               that you would be satisfied with either specification.
-            </TypographyView>
+            </Typography>
           </TitleContainer>
-          {/* <div className="title-container">
-            <Touchable
-              className="back-button-container"
-              onPress={() => onBack()}
-            >
-              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
-            </Touchable>
-            <TypographyView variant="title5" weight="500">
-              Select Specifications
-            </TypographyView>
-          </div> */}
-        </div>
+        </MainContainer>
       </CreateRequestHeaderContainer>
-      <Row>
+      <RequestRow>
         <ContainerWithCategoryImagePreview>
           <SpecificationFormContainer>
-            {/* {isDisabled && (
-            <AlertView
-              content="Select at least 1 specification from each section"
-              variant="error"
-              fullWidth
-              style={{
-                marginBottom: 24,
-              }}
-            />
-          )} */}
-
             {getFilteredSpecifications().map((group, index) => (
               <div key={group[0].groupOrder} className="interaction-group">
-                <TypographyView
+                <Typography
                   variant="overline"
                   color="shade6"
                   style={{ marginBottom: 12 }}
                 >
                   {`Specs ${index + 1}`}
-                </TypographyView>
+                </Typography>
                 <div className="spec-row">
                   {group.map((item) => (
                     <Checkbox
@@ -236,7 +216,11 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             ))}
             <Hidden xs>
               <ButtonContainer>
-                <PreviousButton text="<" variant="outline" onClick={onBack} />
+                <PreviousButton
+                  text="<"
+                  variant="outline"
+                  onClick={() => onBack(1)}
+                />
                 <ProceedButton
                   onClick={() => handleSelectSpecs()}
                   disabled={isEmpty(groupOrders) || isDisabled}
@@ -257,14 +241,14 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           </SpecificationFormContainer>
         </ContainerWithCategoryImagePreview>
         <RequestDetailsContainer>
-          <DetailsContainer>
-            <TypographyView style={{ marginBottom: 8 }}>Summary</TypographyView>
-          </DetailsContainer>
+          <DetailsHeaderContainer>
+            <Typography style={{ marginBottom: 8 }}>Summary</Typography>
+          </DetailsHeaderContainer>
           <AnchorContainer>
             <ShoretradeAnchor />
           </AnchorContainer>
         </RequestDetailsContainer>
-      </Row>
+      </RequestRow>
     </>
   );
 };

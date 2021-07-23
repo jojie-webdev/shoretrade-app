@@ -33,6 +33,6 @@ export interface CreateStepProps {
   step: CreateRequestStep;
   selectedSize: SizeOptions;
   setStep: Dispatch<SetStateAction<number>>;
-  onBack: () => void;
+  onBack: (step: number) => void;
   listingFormData: GetListingFormDataResponse | null;
 }

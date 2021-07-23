@@ -44,7 +44,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
           <div className="title-container">
             <Touchable
               className="back-button-container"
-              onPress={() => onBack()}
+              onPress={() => onBack(3)}
             >
               <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
             </Touchable>

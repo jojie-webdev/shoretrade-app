@@ -25,7 +25,7 @@ const CreateRequest = (): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [hideSearchResult, setHideSearchResult] = useState(false);
   const [termsAgreement, setTermsAgreement] = useState(true);
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(3);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
     items: any[];
@@ -114,7 +114,7 @@ const CreateRequest = (): JSX.Element => {
     );
   };
 
-  const onBack = () => {
+  const onBack = (step: number) => {
     if (currentStep === 2) {
       //reset
       setSelectedCategory({ id: '', name: '' });
@@ -123,7 +123,7 @@ const CreateRequest = (): JSX.Element => {
       setSelectedQuantity({ from: '', to: '' });
       getFormData(selectedCategory.id);
     }
-    setCurrentStep(currentStep - 1);
+    setCurrentStep(step);
   };
 
   const onSubmitRequest = () => {
