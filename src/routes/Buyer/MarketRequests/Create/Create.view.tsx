@@ -16,6 +16,7 @@ import {
   Group195,
   Wave51,
   Group194,
+  Cross7,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
@@ -40,6 +41,9 @@ import {
   BottomGroupContainer,
   LeftAbsoContainer,
   LeftGroupContainer,
+  DetailsContentContainer,
+  DetailsHeaderContainer,
+  DetailsDataContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -254,6 +258,56 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     );
   };
 
+  const DetailsComponent = () => {
+    return (
+      <>
+        <DetailsHeaderContainer>
+          <Typography
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 42,
+            }}
+          >
+            Summary
+          </Typography>
+        </DetailsHeaderContainer>
+        <DetailsContentContainer>
+          <Typography
+            color="shade6"
+            variant="label"
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 36,
+            }}
+          >
+            Specs:
+          </Typography>
+          <DetailsDataContainer>
+            <Cross7 />
+            <Typography
+              color="shade9"
+              variant="label"
+              style={{
+                fontFamily: 'Wilderness',
+                fontSize: 42,
+                marginLeft: 8.5,
+                marginTop: -8,
+              }}
+            >
+              {selectedSpecifications.items.map((i, index) => {
+                return index === selectedSpecifications.items.length - 1
+                  ? `${i.label} `
+                  : `${i.label}, `;
+              })}
+            </Typography>
+          </DetailsDataContainer>
+        </DetailsContentContainer>
+      </>
+    );
+  };
+
   const StepView = (props: { step: CreateRequestStep }) => {
     switch (step.current) {
       case 1:
@@ -289,6 +343,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedQuantity={selectedQuantity}
           />
         );
 
@@ -303,6 +358,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedSpecifications={selectedSpecifications}
+            selectedQuantity={selectedQuantity}
+            detailsListComponent={<DetailsComponent />}
           />
         );
 
@@ -318,6 +376,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedSpecifications={selectedSpecifications}
+            detailsListComponent={<DetailsComponent />}
           />
         );
 
@@ -337,6 +397,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             addressOptions={addressOptions}
             selectedAddress={selectedAddress}
             onChangeAddress={(a) => setSelectedAddress(a)}
+            detailsListComponent={<DetailsComponent />}
           />
         );
 

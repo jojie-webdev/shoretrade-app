@@ -242,7 +242,15 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
         </ContainerWithCategoryImagePreview>
         <RequestDetailsContainer>
           <DetailsHeaderContainer>
-            <Typography style={{ marginBottom: 8 }}>Summary</Typography>
+            <Typography
+              style={{
+                marginBottom: 8,
+                fontFamily: 'Wilderness',
+                fontSize: 48,
+              }}
+            >
+              Summary
+            </Typography>
           </DetailsHeaderContainer>
           <AnchorContainer>
             <ShoretradeAnchor />

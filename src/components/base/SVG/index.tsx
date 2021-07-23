@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Cross7 } from './Cross7';
 export { default as ShoretradeAnchor } from './ShoretradeAnchor';
 export { default as Group204 } from './Group204';
 export { default as Group194 } from './Group194';

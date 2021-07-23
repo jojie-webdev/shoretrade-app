@@ -281,7 +281,18 @@ export const DetailsContainer = styled.div`
   margin-bottom: 16px;
 `;
 
+export const DetailsContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: -8px;
+`;
+
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const DetailsDataContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { CategoryItem } from '../CategorySelection/CategorySelection.props';
 import { CreateStepProps } from '../Create.props';
+import { Quantity } from '../SelectQuantity/SelectQuantity.props';
 
 export interface SizeOptions {
   to: string;
@@ -12,6 +13,8 @@ export interface SizeOptions {
 export interface SelectSizeProps extends CreateStepProps {
   setSelectedSize: Dispatch<SetStateAction<SizeOptions>>;
   selectedCategory: CategoryItem;
+  selectedSpecifications: { items: any[] };
+  selectedQuantity: Quantity;
 }
 
 export type SizeInputProps = {

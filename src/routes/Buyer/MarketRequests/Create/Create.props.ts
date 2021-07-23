@@ -30,6 +30,7 @@ export interface CreateRequestGeneratedProps
 
 export interface CreateStepProps {
   stepCountComponent?: ReactNode;
+  detailsListComponent?: ReactNode;
   step: CreateRequestStep;
   selectedSize: SizeOptions;
   setStep: Dispatch<SetStateAction<number>>;

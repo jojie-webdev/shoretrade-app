@@ -23,6 +23,7 @@ import {
   DetailsContainer,
   DetailsHeaderContainer,
   MainContainer,
+  DetailsContentContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
 import {
@@ -168,6 +169,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
     selectedSize,
     listingFormData,
     setStep,
+    detailsListComponent,
   } = props;
 
   const [ungraded, setUngraded] = useState(false);
@@ -307,9 +309,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
           </SizeFormContainer>
         </ContainerWithCategoryImagePreview>
         <RequestDetailsContainer>
-          <DetailsHeaderContainer>
-            <Typography style={{ marginBottom: 8 }}>Summary</Typography>
-          </DetailsHeaderContainer>
+          <DetailsContainer>{detailsListComponent}</DetailsContainer>
         </RequestDetailsContainer>
       </RequestRow>
     </>
