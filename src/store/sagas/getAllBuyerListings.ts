@@ -1,7 +1,6 @@
 import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllBuyerListings } from 'services/listing';
-import socketGetAllListingsAction from 'store/actions/socketGetAllListings';
 import { SocketAction } from 'types/Action';
 import {
   GetAllBuyerListingResponseItem,
@@ -20,7 +19,10 @@ import { Store } from 'types/store/Store';
 import { downloadCsv } from 'utils/downloadCsv';
 import { findProduct } from 'utils/Listing';
 
-import { getAllBuyerListingsActions } from '../actions';
+import {
+  getAllBuyerListingsActions,
+  socketAllBuyerListingsActions,
+} from '../actions';
 
 function* getAllBuyerListingsRequest(action: any) {
   const state: Store = yield select();
@@ -129,7 +131,10 @@ function* getAllBuyerListingsWatcher() {
     `${getAllBuyerListingsActions.REQUEST}/CSV`,
     getAllBuyerListingsCSV
   );
-  yield takeLatest(socketGetAllListingsAction.HANDLE_EVENT, handleSocketEvent);
+  yield takeLatest(
+    socketAllBuyerListingsActions.HANDLE_EVENT,
+    handleSocketEvent
+  );
 }
 
 export default getAllBuyerListingsWatcher;

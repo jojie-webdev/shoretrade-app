@@ -125,6 +125,33 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('redux socket', {
+    description: 'Create a websocket redux state',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your new redux state name?',
+      }
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/store/reducers/socket{{pascalCase name}}.ts',
+        templateFile: 'plop-templates/redux-socket/redux-socket.reducer.js.hbs'
+      },
+      {
+        type: 'add',
+        path: 'src/store/actions/socket{{pascalCase name}}.ts',
+        templateFile: 'plop-templates/redux-socket/redux-socket.action.js.hbs'
+      },
+      {
+        type: 'add',
+        path: 'src/types/store/socket{{pascalCase name}}State.ts',
+        templateFile: 'plop-templates/redux-socket/redux-socket.state.js.hbs'
+      }
+    ]
+  });
   plop.setGenerator('layout', {
     description: 'Create a layout component',
     prompts: [

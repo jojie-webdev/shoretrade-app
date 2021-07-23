@@ -1,0 +1,17 @@
+import {
+  Socket{{pascalCase name}}Meta,
+  Socket{{pascalCase name}}Payload,
+} from 'types/store/Socket{{pascalCase name}}State';
+import { createSocketAction } from 'utils/Redux';
+
+const ns = 'WEB_SOCKET/{{pascalCase name}}';
+
+const Socket{{pascalCase name}}Action = createSocketAction<Socket{{pascalCase name}}Meta, Socket{{pascalCase name}}Payload>(
+  ns
+);
+
+const Socket{{pascalCase name}}Actions = {
+  ...Socket{{pascalCase name}}Action,
+};
+
+export default Socket{{pascalCase name}}Actions;
