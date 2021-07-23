@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import { Desktop } from 'components/base/SVG';
+import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
@@ -29,7 +30,7 @@ const NotificationsSettingsView = ({
         // }}
       >
         <Col>
-          <div style={{ marginRight: 20, marginBottom: isMobile ? 40 : 0 }}>
+          <div style={{ marginRight: 20, marginBottom: 40 }}>
             <Breadcrumbs
               sections={[
                 { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
@@ -40,32 +41,37 @@ const NotificationsSettingsView = ({
         </Col>
       </Row>
       <GlobalNotificationsContainer>
-        <div className="item">
-          <GlobalNotificationToggle
-            title="Browser"
-            icon={<Desktop />}
-            description="Push Notifications"
-            onClick={() => console.log('clicked')}
-            checked={globalSettings.browser}
-          />
-        </div>
-        <div className="item">
-          <GlobalNotificationToggle
-            title="Email"
-            icon={<Desktop />}
-            description="peter@shoretrade.com"
-            onClick={() => console.log('clicked')}
-            checked={globalSettings.email}
-          />
-        </div>
-        <div className="item">
-          <GlobalNotificationToggle
-            title="SMS"
-            icon={<Desktop />}
-            description="+61 123 456 789"
-            onClick={() => console.log('clicked')}
-            checked={globalSettings.sms}
-          />
+        <Typography className="section-title" variant="body">
+          Global Notification Settings
+        </Typography>
+        <div className="items-container">
+          <div className="item">
+            <GlobalNotificationToggle
+              title="Browser"
+              icon={<Desktop />}
+              description="Push Notifications"
+              onClick={() => console.log('clicked')}
+              checked={globalSettings.browser}
+            />
+          </div>
+          <div className="item">
+            <GlobalNotificationToggle
+              title="Email"
+              icon={<EnvelopeAlt />}
+              description="peter@shoretrade.com"
+              onClick={() => console.log('clicked')}
+              checked={globalSettings.email}
+            />
+          </div>
+          <div className="item">
+            <GlobalNotificationToggle
+              title="SMS"
+              icon={<CommentsAlt />}
+              description="+61 123 456 789"
+              onClick={() => console.log('clicked')}
+              checked={globalSettings.sms}
+            />
+          </div>
         </div>
       </GlobalNotificationsContainer>
     </Container>
