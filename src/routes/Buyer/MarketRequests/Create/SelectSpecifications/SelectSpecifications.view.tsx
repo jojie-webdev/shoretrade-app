@@ -4,7 +4,7 @@ import AlertView from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft, ShoretradeAnchor } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -23,7 +23,10 @@ import {
   ProceedButton,
   PreviousButton,
   ButtonContainer,
-  Row,RequestDetailsContainer
+  Row,
+  RequestDetailsContainer,
+  AnchorContainer,
+  DetailsContainer,
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -254,9 +257,13 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           </SpecificationFormContainer>
         </ContainerWithCategoryImagePreview>
         <RequestDetailsContainer>
-          
-    </RequestDetailsContainer>
-    
+          <DetailsContainer>
+            <TypographyView style={{ marginBottom: 8 }}>Summary</TypographyView>
+          </DetailsContainer>
+          <AnchorContainer>
+            <ShoretradeAnchor />
+          </AnchorContainer>
+        </RequestDetailsContainer>
       </Row>
     </>
   );

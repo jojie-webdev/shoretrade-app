@@ -61,3 +61,19 @@ export const RequestDetailsContainer = styled.div`
   margin-top: 16px;
   min-height: 312px;
 `;
+
+export const AnchorContainer = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+`;
+
+export const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dadff2;
+  margin-top: -16px;
+  margin-left: -8px;
+  margin-bottom: 16px;
+  min-width: 263px;
+`;
