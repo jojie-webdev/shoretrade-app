@@ -1,4 +1,5 @@
 import camelToSnake from './camelToSnake/camelToSnake';
-import ucFirst from './ucFirst/ucFirst';
+import capitalize from './capitalize/capitalize';
+import toPrice from './toPrice'
 
-export { camelToSnake, ucFirst };
+export { camelToSnake, capitalize, toPrice };

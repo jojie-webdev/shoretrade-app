@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import { capitalize } from 'utils/String'
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -37,7 +38,11 @@ export default function ListingContainer() {
 
   const listingRequestData: any = listingRequest?.data?.data || {};
   const listingRequestDataCount = listingRequestData?.count;
-  const listings = listingRequestData?.listings || [];
+  const baseListings = listingRequestData?.listings || [];
+  const listings = baseListings.map((a: any) => ({
+    ...a,
+    catchRecurrence: a.catchRecurrence && capitalize(a.catchRecurrence)
+  }))
   const maxPage = Math.ceil(listingRequestDataCount / limit);
 
   const handleSelectTab = (id: number) => {

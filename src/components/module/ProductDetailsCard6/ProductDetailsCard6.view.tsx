@@ -5,7 +5,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
-import { toPrice } from 'utils/String/toPrice';
+import { toPrice, capitalize } from 'utils/String';
 
 import ListingTimeLeftView from '../ListingTimeLeft';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
@@ -65,10 +65,10 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
 
       <Row>
         <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-          Catch Date:
+          {catchRecurrence ? 'Catch Frequency:' : 'Catch Date:'}
         </Label>
         <Label variant="label" weight="bold">
-          {catchRecurrence ? catchRecurrence : formattedCatchDate()}
+          {catchRecurrence ? capitalize(catchRecurrence) : formattedCatchDate()}
         </Label>
       </Row>
 
