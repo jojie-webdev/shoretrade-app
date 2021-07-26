@@ -4,13 +4,26 @@ import AlertView from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ArrowLeft, ShoretradeAnchor } from 'components/base/SVG';
+import {
+  ArrowLeft,
+  Group194,
+  Group195,
+  Group196,
+  Group204,
+  ShoretradeAnchor,
+  Wave31,
+  Wave41,
+  Wave51,
+  WaveNew31,
+  NewWave51,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
 import { Hidden } from 'react-grid-system';
+import { EmptyContainer } from 'routes/Buyer/Checkout/Checkout.style';
 import theme from 'utils/Theme';
 
 import {
@@ -22,6 +35,12 @@ import {
   DetailsContainer,
   DetailsHeaderContainer,
   MainContainer,
+  MultipleTopAbsoContainer,
+  MultipleTopGroupContainer,
+  MultipleBottomAbsoContainer,
+  MultipleBottomGroupContainer,
+  MultipleLeftAbsoContainer,
+  MultipleLeftGroupContainer,
 } from '../Create.style';
 import {
   SpecificationFormContainer,
@@ -240,7 +259,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             </MobileFooter>
           </SpecificationFormContainer>
         </ContainerWithCategoryImagePreview>
-        <RequestDetailsContainer>
+        <RequestDetailsContainer currentStep={1}>
           <DetailsHeaderContainer>
             <Typography
               style={{

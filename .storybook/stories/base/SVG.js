@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  NewWave51,
+  WaveNew31,
   Cross7,
   ShoretradeAnchor,
   Group204,
@@ -179,6 +181,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="NewWave51">
+          <NewWave51 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="WaveNew31">
+          <WaveNew31 width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Cross7">
           <Cross7 width={30} height={30} />
         </Wrapper>

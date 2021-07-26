@@ -17,6 +17,8 @@ import {
   Wave51,
   Group194,
   Cross7,
+  NewWave51,
+  WaveNew31,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
@@ -44,6 +46,11 @@ import {
   DetailsContentContainer,
   DetailsHeaderContainer,
   DetailsDataContainer,
+  MultipleBottomGroupContainer,
+  MultipleLeftAbsoContainer,
+  MultipleLeftGroupContainer,
+  MultipleTopAbsoContainer,
+  MultipleTopGroupContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -420,6 +427,25 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         onClickClose={() => setSendConfModalisOpen(false)}
       />
       <ProgressBar progress={(step.current / step.total) * 100} />
+      {step.current > 1 && (
+        <>
+          <MultipleTopAbsoContainer>
+            <WaveNew31 />
+          </MultipleTopAbsoContainer>
+          <MultipleTopGroupContainer>
+            <Group194 />
+          </MultipleTopGroupContainer>
+          <MultipleBottomGroupContainer>
+            <Group195 />
+          </MultipleBottomGroupContainer>
+          <MultipleLeftAbsoContainer>
+            <NewWave51 />
+          </MultipleLeftAbsoContainer>
+          <MultipleLeftGroupContainer>
+            <Group196 />
+          </MultipleLeftGroupContainer>
+        </>
+      )}
       {StepView({ step })}
     </>
   );

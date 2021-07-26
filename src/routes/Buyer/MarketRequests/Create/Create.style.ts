@@ -253,7 +253,7 @@ export const RequestRow = styled.div`
   align-content: space-around;
 `;
 
-export const RequestDetailsContainer = styled.div`
+export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
   width: 35%;
   background-color: ${({ theme }) => theme.grey.noshade};
   padding: 48px;
@@ -262,6 +262,7 @@ export const RequestDetailsContainer = styled.div`
   margin-top: 16px;
   min-height: 312px;
   margin-left: 16px;
+  ${({ currentStep }) => currentStep === 1 && `max-height: 312px;`};
 `;
 
 export const DetailsHeaderContainer = styled.div`
@@ -295,4 +296,40 @@ export const MainContainer = styled.div`
 export const DetailsDataContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+export const MultipleTopAbsoContainer = styled.div`
+  position: absolute;
+  top: 0%;
+  right: 0;
+`;
+
+export const MultipleTopGroupContainer = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 5%;
+`;
+
+export const MultipleBottomAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+`;
+
+export const MultipleBottomGroupContainer = styled.div`
+  position: absolute;
+  bottom: 0%;
+  right: 2%;
+`;
+
+export const MultipleLeftAbsoContainer = styled.div`
+  position: absolute;
+  bottom: 15%;
+  left: -10%;
+`;
+
+export const MultipleLeftGroupContainer = styled.div`
+  position: absolute;
+  bottom: 5%;
+  left: -2%;
 `;

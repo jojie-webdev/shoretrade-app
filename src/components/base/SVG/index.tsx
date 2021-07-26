@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as NewWave51 } from './NewWave51';
+export { default as WaveNew31 } from './WaveNew31';
 export { default as Cross7 } from './Cross7';
 export { default as ShoretradeAnchor } from './ShoretradeAnchor';
 export { default as Group204 } from './Group204';
