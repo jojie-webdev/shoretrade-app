@@ -14,6 +14,9 @@ import ListingView from './Listings.view';
 export default function ListingContainer() {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isTablet = useMediaQuery({
+    query: BREAKPOINTS.genericTablet,
+  });
 
   const [activeTab, setActiveTab] = useState<number>(DIRECT_SALE);
   const [sortField, setSortField] = useState('');
@@ -52,10 +55,28 @@ export default function ListingContainer() {
   const handleDownloadCSV = () => {
     if (showModal) {
       setIsCsvPending(true);
-      dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, sortOrder, all: true, csv: true }));
+      dispatch(
+        getAllBuyerListingsActions.requestCsv({
+          sortField,
+          searchTerm,
+          sortOrder,
+          all: true,
+          csv: true,
+        })
+      );
     } else {
       if (!selectedIds.length) setShowModal(true);
-      else dispatch(getAllBuyerListingsActions.requestCsv({ sortField, searchTerm, csv: true, sortOrder, ids: selectedIds, all: true }));
+      else
+        dispatch(
+          getAllBuyerListingsActions.requestCsv({
+            sortField,
+            searchTerm,
+            csv: true,
+            sortOrder,
+            ids: selectedIds,
+            all: true,
+          })
+        );
     }
   };
 
@@ -93,6 +114,7 @@ export default function ListingContainer() {
     setPage,
     maxPage,
     isMobile,
+    isTablet,
     setSortOrder,
     showModal,
     setShowModal,

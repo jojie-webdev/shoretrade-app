@@ -15,6 +15,7 @@ export interface ListingViewProps {
   setPage: (page: number) => void;
   maxPage: number;
   isMobile: boolean;
+  isTablet: boolean;
   setSortOrder: (sortOrder: SortOrder) => void;
   showModal: boolean;
   setShowModal: (state: boolean) => void;
