@@ -21,6 +21,7 @@ export const DEFAULT_PAGE_LIMIT = 10;
 export const DIRECT_SALE = 0;
 export const AUCTION_PRODUCT = 1;
 export const DEFAULT_CURRENCY = '$';
+export const DAILY = 'DAILY';
 
 export const DIRECT_SALE_COLUMNS = [
   {
@@ -89,7 +90,11 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: function ValidUntil(data: any, _state: any) {
       return (
-        <>{data?.catch_recurrence || moment(data?.end_date).format('ll')}</>
+        <>
+          {data?.catch_recurrence === DAILY
+            ? 'ALWAYS AVAILABLE'
+            : data?.catch_recurrence || moment(data?.end_date).format('ll')}
+        </>
       );
     },
   },
