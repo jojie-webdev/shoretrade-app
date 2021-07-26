@@ -9,4 +9,6 @@ export interface NotificationsSettingsProps {
     browser: CategoryStatus;
     email: CategoryStatus;
   };
+
+  handleGlobalToggle: (obj: any) => void;
 }

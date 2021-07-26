@@ -17,6 +17,7 @@ import {
 
 const NotificationsSettingsView = ({
   globalSettings,
+  handleGlobalToggle
 }: NotificationsSettingsProps) => {
   console.log(globalSettings);
   return (
@@ -69,7 +70,7 @@ const NotificationsSettingsView = ({
               title="SMS"
               icon={<CommentsAlt />}
               description="+61 123 456 789"
-              onClick={() => console.log('clicked')}
+              onClick={() => handleGlobalToggle('sms')}
               checked={globalSettings?.sms.enabled || false}
             />
           </div>

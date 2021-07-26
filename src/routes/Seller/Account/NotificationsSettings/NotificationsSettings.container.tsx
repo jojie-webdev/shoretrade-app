@@ -54,6 +54,16 @@ const NotificationsSettings = (): JSX.Element => {
     }
   }, [companyId]);
 
+  const handleGlobalToggle = (obj: any) => {
+    console.log(obj);
+    if (obj === 'sms') {
+      setGlobalSettings({
+        ...globalSettings,
+        sms: { ...globalSettings.sms, enabled: !globalSettings.sms.enabled },
+      });
+    }
+  };
+
   useEffect(() => {
     console.log(getNotificationsSettings?.data);
     if (getNotificationsSettings && getNotificationsSettings.data) {
@@ -68,6 +78,7 @@ const NotificationsSettings = (): JSX.Element => {
 
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,
+    handleGlobalToggle,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;
