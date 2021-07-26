@@ -32,6 +32,15 @@ import {
   PaginationContainer,
   ModalContentContainer,
   ModalTitle,
+  TableSettingsCheckbox,
+  SettingsCheckboxContainer,
+  MobileSearchContainer,
+  MobileDownloadButton,
+  TableSettingsContainer,
+  MobileTable,
+  Preloader,
+  EmptyScreen,
+  TabletHeaderSortContainer,
 } from './Listings.styles';
 
 const Search = (props: { onChange: (value: string) => void }) => {
@@ -181,9 +190,9 @@ export default function ListingView(props: ListingViewProps) {
         </SearchContainer>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ marginRight: 8 }}>{totalCount} Results</div>
-        <div style={{ width: 150 }}>
+      <TabletHeaderSortContainer>
+        <div className="results">{totalCount} Results</div>
+        <div className="dropdown">
           <Select
             label=""
             options={options}
@@ -193,7 +202,7 @@ export default function ListingView(props: ListingViewProps) {
             onChange={(e) => setSortField(e?.value)}
           />
         </div>
-      </div>
+      </TabletHeaderSortContainer>
     </Header>
   );
 
@@ -227,21 +236,11 @@ export default function ListingView(props: ListingViewProps) {
         <ModalTitle variant="title5">View Settings</ModalTitle>
         Hide data from the table by unchecking fields
       </ModalContentContainer>
-      <div
-        style={{
-          gap: 12,
-          display: 'flex',
-          flexDirection: 'column',
-          marginBottom: 16,
-        }}
-      >
+      <TableSettingsCheckbox>
         {columns.map((column) => {
           const isSelected = settings.includes(column?.selector);
           return (
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
-              key={`settings-${column.selector}`}
-            >
+            <SettingsCheckboxContainer key={`settings-${column.selector}`}>
               <Checkbox
                 checked={isSelected}
                 size={20}
@@ -258,10 +257,10 @@ export default function ListingView(props: ListingViewProps) {
                 }}
               />
               {column?.name}
-            </div>
+            </SettingsCheckboxContainer>
           );
         })}
-      </div>
+      </TableSettingsCheckbox>
       <Button
         takeFullWidth
         // disabled={isDownloadingCsv}
@@ -278,67 +277,25 @@ export default function ListingView(props: ListingViewProps) {
         {DownloadConfirmationModal}
         {TabComponent}
         {TableSettingsModal}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            marginBottom: 12,
-          }}
-        >
+        <MobileSearchContainer>
           <Search onChange={debouncedSearch} />
-          <button
+          <MobileDownloadButton
             disabled={Boolean(isLoading) || isDownloadingCsv}
             onClick={handleDownloadCSV}
-            style={{
-              padding: '6px 12px',
-              borderRadius: 12,
-              border: '1.5px solid #E35D32',
-              background: 'transparent',
-            }}
           >
-            <div
-              style={{
-                transform: 'rotate(90deg)',
-              }}
-            >
+            <div>
               <Exit width={13.33} height={13.33} fill="#E35D32" />
             </div>
-          </button>
-        </div>
-        <button
-          onClick={() => setShowTableSettings(true)}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 16,
-            background: '#fff',
-            marginBottom: 16,
-            borderRadius: 12,
-            boxShadow: '0px 4px 12px 0px #292B320A',
-            border: '0',
-            width: '100%',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              gap: 16,
-            }}
-          >
+          </MobileDownloadButton>
+        </MobileSearchContainer>
+        <TableSettingsContainer onClick={() => setShowTableSettings(true)}>
+          <div>
             <Cog /> <span>Table Settings</span>
           </div>
           <ChevronRight width={12} height={16} />
-        </button>
+        </TableSettingsContainer>
         {!isEmpty && (
-          <div
-            style={{
-              borderRadius: 12,
-              background: 'white',
-              border: '1px solid #E5E8F5',
-            }}
-          >
+          <MobileTable>
             {[...prevListingData, ...listings].map((listing: any) => (
               <ListingCard
                 key={`listing-card-${listing?.id}`}
@@ -354,28 +311,20 @@ export default function ListingView(props: ListingViewProps) {
               />
             ))}
             {isLoading && (
-              <div style={{ padding: '12px 0' }}>
+              <Preloader>
                 <Loading />
-              </div>
+              </Preloader>
             )}
-          </div>
+          </MobileTable>
         )}
         {isEmpty && (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 12,
-              padding: '12px 0',
-            }}
-          >
+          <EmptyScreen>
             <Crab height={268} width={268} fill={theme.grey.shade7} />
             <div>
               Unable to find result{' '}
               {searchTerm ? `for keyword: '${searchTerm}'` : ''}
             </div>
-          </div>
+          </EmptyScreen>
         )}
       </div>
     );

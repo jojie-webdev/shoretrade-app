@@ -84,3 +84,83 @@ export const ModalTitle = styled(Typography)`
 export const EmptyValue = styled.span`
   color: ${theme.grey.shade5};
 `;
+
+export const TableSettingsCheckbox = styled.div`
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+`;
+
+export const SettingsCheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const MobileSearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+`;
+
+export const MobileDownloadButton = styled.button`
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #e35d32;
+  background: transparent;
+
+  div {
+    transform: rotate(90deg);
+  }
+`;
+
+export const TableSettingsContainer = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px 0px #292b320a;
+  border: 0;
+  width: 100%;
+
+  div {
+    display: flex;
+    gap: 16px;
+  }
+`;
+
+export const MobileTable = styled.div`
+  border-radius: 12px;
+  background: white;
+  border: 1px solid #e5e8f5;
+`;
+
+export const Preloader = styled.div`
+  padding: 12px 0;
+`;
+
+export const EmptyScreen = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+`;
+
+export const TabletHeaderSortContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  .results {
+    margin-right: 8px;
+  }
+
+  .dropdown {
+    width: 150px;
+  }
+`;
