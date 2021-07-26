@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
+import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import TableComponent from 'components/module/ListingTable';
 import PaginationBar from 'components/module/PaginationBar';
@@ -25,6 +26,7 @@ import {
   TabContainer,
   PaginationContainer,
   ModalContentContainer,
+  ModalTitle,
 } from './Listings.styles';
 
 const Search = (props: { onChange: (value: string) => void }) => {
@@ -151,9 +153,13 @@ export default function ListingView(props: ListingViewProps) {
     <div>
       <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
         <ModalContentContainer>
+          <ModalTitle variant="title5" className="title">
+            Confirm Download
+          </ModalTitle>
           You are about to download {totalCount} listings. <br />
-          Press {'"'}Proceed {'"'} to continue or exit this window and adjust
-          your selections using the check box in the table.
+          If this is not correct, adjust your selections using the check box in
+          the table.
+          <div>Otherwise, press Proceed to continue.</div>
         </ModalContentContainer>
         <Button
           takeFullWidth={isMobile}

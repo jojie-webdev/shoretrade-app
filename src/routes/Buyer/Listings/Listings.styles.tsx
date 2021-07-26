@@ -1,6 +1,7 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import Typography from 'components/base/Typography';
 
 export const Tab = styled.button`
   border: 0;
@@ -70,7 +71,12 @@ export const PaginationContainer = styled.div`
 `;
 
 export const ModalContentContainer = styled.div`
+  margin-bottom: 20px;
+`;
+
+export const ModalTitle = styled(Typography)`
   margin-bottom: 12px;
+  font-weight: 500;
 `;
 
 export const EmptyValue = styled.span`
