@@ -426,6 +426,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
       />
+      {StepView({ step })}
       <ProgressBar progress={(step.current / step.total) * 100} />
       {step.current > 1 && (
         <>
@@ -446,7 +447,6 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           </MultipleLeftGroupContainer>
         </>
       )}
-      {StepView({ step })}
     </>
   );
 };

@@ -74,6 +74,7 @@ export const ContainerWithCategoryImagePreview = styled.div`
   padding: 48px;
   border: 1px solid #dadff2;
   border-radius: 12px;
+  z-index: 2;
 
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
@@ -255,6 +256,7 @@ export const RequestRow = styled.div`
 
 export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
   width: 35%;
+  z-index: 2;
   background-color: ${({ theme }) => theme.grey.noshade};
   padding: 48px;
   border: 1px solid #dadff2;
