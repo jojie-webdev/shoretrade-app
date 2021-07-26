@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
+import { Cog, ChevronRight, Exit } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
 import PaginationBar from 'components/module/PaginationBar';
 import SearchComponent from 'components/module/Search';
@@ -148,6 +150,87 @@ export default function ListingView(props: ListingViewProps) {
       </div>
     </Header>
   );
+
+  if (isMobile) {
+    return (
+      <div>
+        <TabContainer>
+          <Tab
+            className={activeTab === DIRECT_SALE ? 'active' : ''}
+            onClick={() => handleSelectTab(DIRECT_SALE)}
+          >
+            Direct Sale
+          </Tab>
+        </TabContainer>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            marginBottom: 12,
+          }}
+        >
+          <Search onChange={debouncedSearch} />
+          <button
+            disabled={Boolean(isLoading) || isDownloadingCsv}
+            onClick={handleDownloadCSV}
+            style={{
+              padding: '6px 12px',
+              borderRadius: 12,
+              border: '1.5px solid #E35D32',
+              background: 'transparent',
+            }}
+          >
+            <div
+              style={{
+                transform: 'rotate(90deg)',
+              }}
+            >
+              <Exit width={13.33} height={13.33} fill="#E35D32" />
+            </div>
+          </button>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 16,
+            background: '#fff',
+            marginBottom: 16,
+            borderRadius: 12,
+            boxShadow: '0px 4px 12px 0px #292B320A',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: 16,
+            }}
+          >
+            <Cog /> <span>Table Settings</span>
+          </div>
+          <ChevronRight width={12} height={16} />
+        </div>
+        <div
+          style={{
+            borderRadius: 12,
+            background: 'white',
+            border: '1px solid #E5E8F5',
+          }}
+        >
+          {listings.map((listing: any) => (
+            <ListingCard
+              data={listing}
+              columns={columns}
+              key={`listing-card-${listing?.id}`}
+              tableSettings={columns.map((column) => column?.selector)}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

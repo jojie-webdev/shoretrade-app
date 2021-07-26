@@ -1,7 +1,7 @@
+import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import Typography from 'components/base/Typography';
 
 export const Tab = styled.button`
   border: 0;
@@ -57,8 +57,10 @@ export const Chips = styled.div`
   border-radius: 12px;
   background: #e5e8f5;
   padding: 4px 8px;
-  font-weight: 700;
-  font-size: 0.85em;
+  font-weight: 900;
+  color: ${theme.grey.shade9};
+  font-size: 9px !important;
+  letter-spacing: 2px;
 `;
 
 export const TabContainer = styled.div`
