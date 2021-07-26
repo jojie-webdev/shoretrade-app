@@ -11,9 +11,9 @@ export const columnTemplate = [
   '150px',
   '250px',
   '130px',
-  '150px',
   '120px',
-  '150px',
+  '120px',
+  '120px',
   '250px',
 ];
 export const DEFAULT_PAGE_LIMIT = 10;
@@ -63,8 +63,7 @@ export const DIRECT_SALE_COLUMNS = [
     component: function RemainingWeight(data: any, _state: any) {
       return (
         <>
-          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)} /{' '}
-          {data?.total_weight} {formatMeasurementUnit(data?.unit)}
+          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)}
         </>
       );
     },
@@ -75,9 +74,12 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: function Price(data: any, _state: any) {
       return (
-        <>{`${DEFAULT_CURRENCY}${data?.price}${
-          String(data?.price).split('.').length === 1 ? '.00' : ''
-        }`}</>
+        <>
+          {`${DEFAULT_CURRENCY}${data?.price || 0}${
+            String(data?.price).split('.').length === 1 ? '.00' : ''
+          }`}
+          /{data?.unit?.toLowerCase()}
+        </>
       );
     },
   },
@@ -87,7 +89,7 @@ export const DIRECT_SALE_COLUMNS = [
     sortable: true,
     component: function ValidUntil(data: any, _state: any) {
       return (
-        <>{data?.catch_recurrence || moment(data?.end_date).format('LL')}</>
+        <>{data?.catch_recurrence || moment(data?.end_date).format('ll')}</>
       );
     },
   },
@@ -98,7 +100,7 @@ export const DIRECT_SALE_COLUMNS = [
     component: function CatchmentOrigin(data: any, _state: any) {
       return (
         <>
-          {data?.origin?.state}, {data?.origin?.suburb},{' '}
+          {data?.origin?.suburb}, {data?.origin?.state},{' '}
           {data?.origin?.countryCode}
         </>
       );
