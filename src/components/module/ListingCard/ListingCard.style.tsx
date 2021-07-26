@@ -8,7 +8,7 @@ export const Container = styled.div`
 
   header {
     color: ${theme.grey.shade6};
-    font-weight: bold;
+    font-weight: 900;
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 2px;

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
 import { Cog, ChevronRight, Exit } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
 import PaginationBar from 'components/module/PaginationBar';
 import SearchComponent from 'components/module/Search';
 import debounce from 'lodash.debounce';
+import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
+import theme from 'utils/Theme';
 
 import {
   AUCTION_PRODUCT,
@@ -78,9 +80,21 @@ export default function ListingView(props: ListingViewProps) {
     limit,
     setLimit,
     isTablet,
+    tableSettings,
+    setTableSettings,
+    showTableSettings,
+    setShowTableSettings,
   } = props;
 
+  const [settings, setSettings] = useState(tableSettings);
+
   let columns = DIRECT_SALE_COLUMNS;
+
+  // sync tableSettingProps
+  useComponentShouldUpdate(() => {
+    setSettings(tableSettings);
+  }, [tableSettings]);
+
   if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
   const options = columns
@@ -94,22 +108,37 @@ export default function ListingView(props: ListingViewProps) {
     setSearchTerm(v);
   }, 400);
 
+  const handleOnCloseTableSettingsModal = () => {
+    setShowTableSettings(false);
+    // reset the setting
+    setSettings(tableSettings);
+  };
+
+  const handleSaveSettings = () => {
+    setShowTableSettings(false);
+    setTableSettings(settings);
+  };
+
+  const TabComponent = (
+    <TabContainer>
+      <Tab
+        className={activeTab === DIRECT_SALE ? 'active' : ''}
+        onClick={() => handleSelectTab(DIRECT_SALE)}
+      >
+        Direct Sale
+      </Tab>
+      {/* <Tab
+      className={activeTab === AUCTION_PRODUCT ? 'active' : ''}
+      onClick={() => handleSelectTab(AUCTION_PRODUCT)}
+    >
+      Auction Product
+    </Tab> */}
+    </TabContainer>
+  );
+
   const DesktopHeader = (
     <Header>
-      <TabContainer>
-        <Tab
-          className={activeTab === DIRECT_SALE ? 'active' : ''}
-          onClick={() => handleSelectTab(DIRECT_SALE)}
-        >
-          Direct Sale
-        </Tab>
-        {/* <Tab
-            className={activeTab === AUCTION_PRODUCT ? 'active' : ''}
-            onClick={() => handleSelectTab(AUCTION_PRODUCT)}
-          >
-            Auction Product
-          </Tab> */}
-      </TabContainer>
+      {TabComponent}
       <FlexContainer>
         <ActionContainer>
           <Button
@@ -151,17 +180,87 @@ export default function ListingView(props: ListingViewProps) {
     </Header>
   );
 
+  const DownloadConfirmationModal = (
+    <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
+      <ModalContentContainer>
+        <ModalTitle variant="title5" className="title">
+          Confirm Download
+        </ModalTitle>
+        You are about to download {totalCount} listings. <br />
+        If this is not correct, adjust your selections using the check box in
+        the table.
+        <div>Otherwise, press Proceed to continue.</div>
+      </ModalContentContainer>
+      <Button
+        takeFullWidth={isMobile}
+        disabled={isDownloadingCsv}
+        loading={isDownloadingCsv}
+        onClick={handleDownloadCSV}
+        text="Proceed"
+      />
+    </Modal>
+  );
+
+  const TableSettingsModal = (
+    <Modal
+      isOpen={showTableSettings}
+      onClickClose={handleOnCloseTableSettingsModal}
+    >
+      <ModalContentContainer>
+        <ModalTitle variant="title5">View Settings</ModalTitle>
+        Hide data from the table by unchecking fields
+      </ModalContentContainer>
+      <div
+        style={{
+          gap: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          marginBottom: 16,
+        }}
+      >
+        {columns.map((column) => {
+          const isSelected = settings.includes(column?.selector);
+          return (
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: 16 }}
+              key={`settings-${column.selector}`}
+            >
+              <Checkbox
+                checked={isSelected}
+                size={20}
+                borderColor={theme.grey.shade7}
+                onClick={(e) => {
+                  if (settings.length === 1 && isSelected) return; // prevents empty setting
+                  isSelected
+                    ? setSettings((settings) =>
+                        settings.filter(
+                          (setting) => setting !== column?.selector
+                        )
+                      ) // removes from the setting list
+                    : setSettings((prev) => [...prev, column?.selector]); // append to the settings
+                }}
+              />
+              {column?.name}
+            </div>
+          );
+        })}
+      </div>
+      <Button
+        takeFullWidth
+        // disabled={isDownloadingCsv}
+        // loading={isDownloadingCsv}
+        onClick={handleSaveSettings}
+        text="Save Settings"
+      />
+    </Modal>
+  );
+
   if (isMobile) {
     return (
       <div>
-        <TabContainer>
-          <Tab
-            className={activeTab === DIRECT_SALE ? 'active' : ''}
-            onClick={() => handleSelectTab(DIRECT_SALE)}
-          >
-            Direct Sale
-          </Tab>
-        </TabContainer>
+        {DownloadConfirmationModal}
+        {TabComponent}
+        {TableSettingsModal}
         <div
           style={{
             display: 'flex',
@@ -190,7 +289,8 @@ export default function ListingView(props: ListingViewProps) {
             </div>
           </button>
         </div>
-        <div
+        <button
+          onClick={() => setShowTableSettings(true)}
           style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -200,6 +300,8 @@ export default function ListingView(props: ListingViewProps) {
             marginBottom: 16,
             borderRadius: 12,
             boxShadow: '0px 4px 12px 0px #292B320A',
+            border: '0',
+            width: '100%',
           }}
         >
           <div
@@ -211,7 +313,7 @@ export default function ListingView(props: ListingViewProps) {
             <Cog /> <span>Table Settings</span>
           </div>
           <ChevronRight width={12} height={16} />
-        </div>
+        </button>
         <div
           style={{
             borderRadius: 12,
@@ -224,7 +326,7 @@ export default function ListingView(props: ListingViewProps) {
               data={listing}
               columns={columns}
               key={`listing-card-${listing?.id}`}
-              tableSettings={columns.map((column) => column?.selector)}
+              tableSettings={tableSettings}
             />
           ))}
         </div>
@@ -234,24 +336,7 @@ export default function ListingView(props: ListingViewProps) {
 
   return (
     <div>
-      <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
-        <ModalContentContainer>
-          <ModalTitle variant="title5" className="title">
-            Confirm Download
-          </ModalTitle>
-          You are about to download {totalCount} listings. <br />
-          If this is not correct, adjust your selections using the check box in
-          the table.
-          <div>Otherwise, press Proceed to continue.</div>
-        </ModalContentContainer>
-        <Button
-          takeFullWidth={isMobile}
-          disabled={isDownloadingCsv}
-          loading={isDownloadingCsv}
-          onClick={handleDownloadCSV}
-          text="Proceed"
-        />
-      </Modal>
+      {DownloadConfirmationModal}
       {!isMobile && !isTablet && DesktopHeader}
       {isTablet && TabletHeader}
       <TableComponent

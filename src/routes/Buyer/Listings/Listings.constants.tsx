@@ -22,6 +22,13 @@ export const DIRECT_SALE = 0;
 export const AUCTION_PRODUCT = 1;
 export const DEFAULT_CURRENCY = '$';
 export const DAILY = 'DAILY';
+export const DEFAULT_TABLE_SETTINGS = [
+  'category',
+  'name',
+  'specifications',
+  'end_date',
+  'origin',
+];
 
 export const DIRECT_SALE_COLUMNS = [
   {
@@ -86,7 +93,7 @@ export const DIRECT_SALE_COLUMNS = [
   },
   {
     name: 'Valid Until',
-    selector: 'ends',
+    selector: 'end_date',
     sortable: true,
     component: function ValidUntil(data: any, _state: any) {
       return (

@@ -26,4 +26,8 @@ export interface ListingViewProps {
   totalCount: number;
   limit: number;
   setLimit: (limit: number) => void;
+  tableSettings: string[];
+  setTableSettings: (settings: string[]) => void;
+  showTableSettings: boolean;
+  setShowTableSettings: (state: boolean) => void;
 }
