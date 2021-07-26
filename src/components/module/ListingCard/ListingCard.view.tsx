@@ -7,7 +7,7 @@ import { ListingCardProps } from './ListingCard.props';
 import { Container } from './ListingCard.style';
 
 export const ListingCard = (props: Partial<ListingCardProps>) => {
-  const { onClickCheckbox, checked, columns, data, tableSettings } = props;
+  const { columns, data, tableSettings, isSelected, onSelect } = props;
 
   return (
     <Container>
@@ -29,10 +29,10 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
       </div>
       <div>
         <Checkbox
-          onClick={(event) => onClickCheckbox?.(event)}
+          onClick={() => onSelect?.(!!isSelected)}
           borderColor={theme.grey.shade7}
           size={20}
-          checked={checked}
+          checked={isSelected}
         />
       </div>
     </Container>

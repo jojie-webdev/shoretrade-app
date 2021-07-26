@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
-import { Cog, ChevronRight, Exit } from 'components/base/SVG';
+import { Cog, ChevronRight, Exit, Crab } from 'components/base/SVG';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
+import Loading from 'components/module/Loading';
 import PaginationBar from 'components/module/PaginationBar';
 import SearchComponent from 'components/module/Search';
 import debounce from 'lodash.debounce';
@@ -84,9 +85,12 @@ export default function ListingView(props: ListingViewProps) {
     setTableSettings,
     showTableSettings,
     setShowTableSettings,
+    prevListingData,
   } = props;
 
   const [settings, setSettings] = useState(tableSettings);
+
+  const isEmpty = !isLoading && !listings.length;
 
   let columns = DIRECT_SALE_COLUMNS;
 
@@ -94,6 +98,13 @@ export default function ListingView(props: ListingViewProps) {
   useComponentShouldUpdate(() => {
     setSettings(tableSettings);
   }, [tableSettings]);
+
+  // focus on preloading screen
+  useComponentShouldUpdate(() => {
+    if (isLoading && prevListingData && isMobile) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [isLoading, prevListingData, isMobile]);
 
   if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
@@ -117,6 +128,12 @@ export default function ListingView(props: ListingViewProps) {
   const handleSaveSettings = () => {
     setShowTableSettings(false);
     setTableSettings(settings);
+  };
+
+  const handleRemoveFromSelectedIds = (id: string) => {
+    setSelectedIds((ids) => {
+      return ids.filter((selectedId) => selectedId !== id);
+    });
   };
 
   const TabComponent = (
@@ -314,22 +331,52 @@ export default function ListingView(props: ListingViewProps) {
           </div>
           <ChevronRight width={12} height={16} />
         </button>
-        <div
-          style={{
-            borderRadius: 12,
-            background: 'white',
-            border: '1px solid #E5E8F5',
-          }}
-        >
-          {listings.map((listing: any) => (
-            <ListingCard
-              data={listing}
-              columns={columns}
-              key={`listing-card-${listing?.id}`}
-              tableSettings={tableSettings}
-            />
-          ))}
-        </div>
+        {!isEmpty && (
+          <div
+            style={{
+              borderRadius: 12,
+              background: 'white',
+              border: '1px solid #E5E8F5',
+            }}
+          >
+            {[...prevListingData, ...listings].map((listing: any) => (
+              <ListingCard
+                key={`listing-card-${listing?.id}`}
+                data={listing}
+                columns={columns}
+                tableSettings={tableSettings}
+                isSelected={selectedIds.includes(listing?.id)}
+                onSelect={(selected) =>
+                  selected
+                    ? handleRemoveFromSelectedIds(listing?.id)
+                    : setSelectedIds((prev) => [...prev, listing?.id])
+                }
+              />
+            ))}
+            {isLoading && (
+              <div style={{ padding: '12px 0' }}>
+                <Loading />
+              </div>
+            )}
+          </div>
+        )}
+        {isEmpty && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+              padding: '12px 0',
+            }}
+          >
+            <Crab height={268} width={268} fill={theme.grey.shade7} />
+            <div>
+              Unable to find result{' '}
+              {searchTerm ? `for keyword: '${searchTerm}'` : ''}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

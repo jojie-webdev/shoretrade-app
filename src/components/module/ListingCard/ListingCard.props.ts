@@ -5,9 +5,9 @@ interface Column {
 }
 
 export interface ListingCardProps {
-  onClickCheckbox: (event: any) => void;
-  checked: boolean;
   columns: any[];
   data: any;
   tableSettings: string[];
+  isSelected: boolean;
+  onSelect: (isSelected: boolean) => void;
 }

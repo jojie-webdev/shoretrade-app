@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
+import debounce from 'lodash.debounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { getAllBuyerListingsActions } from 'store/actions';
 import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 import { Store } from 'types/store/Store';
+import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import { capitalize } from 'utils/String';
 
 import {
@@ -36,6 +38,13 @@ export default function ListingContainer() {
   const [tableSettings, setTableSettings] = useState<string[]>(
     DEFAULT_TABLE_SETTINGS
   );
+
+  // mobile pagination
+  const [prevScrollTop, setPrevScrollTop] = useState(0);
+  const [isReadypaginateViaScroll, setIsReadypaginateViaScroll] = useState(
+    true
+  );
+  const [prevListingData, setPrevListingData] = useState<any[]>([]);
 
   const isLoading = useSelector(
     (state: Store) => state.getAllBuyerListings?.pending
@@ -89,6 +98,38 @@ export default function ListingContainer() {
   };
 
   useEffect(() => {
+    const handleMobilePagination = debounce((event: any) => {
+      // reached the bottom of page
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        if (searchTerm) return;
+        if (!isReadypaginateViaScroll) return;
+
+        if (page < maxPage) {
+          setPage((prev) => prev + 1);
+          setPrevScrollTop(window.innerHeight + window.scrollY);
+          setIsReadypaginateViaScroll(false);
+          setPrevListingData((prevState) => [...prevState, ...baseListings]);
+        }
+      }
+    }, 300);
+
+    if (isMobile) {
+      document.addEventListener('scroll', handleMobilePagination);
+    }
+
+    return () => {
+      document.removeEventListener('scroll', handleMobilePagination);
+    };
+  }, [isMobile, listingRequest, isReadypaginateViaScroll, searchTerm]);
+
+  useComponentShouldUpdate(() => {
+    if (!isLoading && !isReadypaginateViaScroll) {
+      window.scrollTo(0, prevScrollTop);
+      setIsReadypaginateViaScroll(true);
+    }
+  }, [isLoading, isReadypaginateViaScroll, prevScrollTop]);
+
+  useEffect(() => {
     dispatch(
       getAllBuyerListingsActions.request({
         sortField,
@@ -137,6 +178,7 @@ export default function ListingContainer() {
     setTableSettings,
     showTableSettings,
     setShowTableSettings,
+    prevListingData,
   };
 
   return <ListingView {...ListingViewProps} />;

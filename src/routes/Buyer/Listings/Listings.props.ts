@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 
 export interface ListingViewProps {
@@ -20,7 +22,7 @@ export interface ListingViewProps {
   showModal: boolean;
   setShowModal: (state: boolean) => void;
   selectedIds: string[];
-  setSelectedIds: (params: string[]) => void;
+  setSelectedIds: Dispatch<SetStateAction<string[]>>;
   isAllSelected: boolean;
   setIsAllSelected: (state: boolean) => void;
   totalCount: number;
@@ -30,4 +32,5 @@ export interface ListingViewProps {
   setTableSettings: (settings: string[]) => void;
   showTableSettings: boolean;
   setShowTableSettings: (state: boolean) => void;
+  prevListingData: any[];
 }
