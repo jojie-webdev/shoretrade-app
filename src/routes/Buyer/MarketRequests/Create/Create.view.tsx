@@ -56,6 +56,7 @@ import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {
@@ -268,6 +269,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   };
 
   const DetailsComponent = () => {
+    const measurement = formatMeasurementUnit(listingFormData?.measurementUnit);
     return (
       <>
         <DetailsHeaderContainer>
@@ -313,6 +315,73 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Typography>
           </DetailsDataContainer>
         </DetailsContentContainer>
+        {((selectedSize.items[0] !== '' && selectedSize.items.length > 0) ||
+          selectedSize.from !== null) && (
+          <DetailsContentContainer>
+            <Typography
+              color="shade6"
+              variant="label"
+              style={{
+                marginBottom: 16,
+                fontFamily: 'Wilderness',
+                fontSize: 36,
+              }}
+            >
+              Size:
+            </Typography>
+            <DetailsDataContainer>
+              <Cross7 />
+              <Typography
+                color="shade9"
+                variant="label"
+                style={{
+                  fontFamily: 'Wilderness',
+                  fontSize: 42,
+                  marginLeft: 8.5,
+                  marginTop: -8,
+                }}
+              >
+                {selectedSize.items.length > 0 && selectedSize.items[0] !== ''
+                  ? selectedSize.items.map((i, index) => {
+                      return index === selectedSpecifications.items.length - 1
+                        ? `${i} `
+                        : `${i}, `;
+                    })
+                  : `${selectedSize.from}${measurement} - ${selectedSize.to}${measurement}`}
+              </Typography>
+            </DetailsDataContainer>
+          </DetailsContentContainer>
+        )}
+        {selectedQuantity.from && (
+          <DetailsContentContainer>
+            <Typography
+              color="shade6"
+              variant="label"
+              style={{
+                marginBottom: 16,
+                fontFamily: 'Wilderness',
+                fontSize: 36,
+              }}
+            >
+              Quantity:
+            </Typography>
+            <DetailsDataContainer>
+              <Cross7 />
+              <Typography
+                color="shade9"
+                variant="label"
+                style={{
+                  fontFamily: 'Wilderness',
+                  fontSize: 42,
+                  marginLeft: 8.5,
+                  marginTop: -8,
+                }}
+              >
+                {`${selectedQuantity.from}${measurement} - ${selectedQuantity.to}${measurement}`}
+              </Typography>
+            </DetailsDataContainer>
+          </DetailsContentContainer>
+        )}
       </>
     );
   };
