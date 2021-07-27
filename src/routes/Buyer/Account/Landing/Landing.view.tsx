@@ -9,6 +9,7 @@ import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import qs from 'qs';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import theme from 'utils/Theme';
@@ -48,6 +49,13 @@ const LandingView = (props: LandingGeneratedProps) => {
     },
     { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
+    {
+      value: 'Notifications Settings',
+      path: `${BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
   ];
 

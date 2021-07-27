@@ -51,6 +51,7 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNotificationsSettings from './getNotificationsSettings'
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -198,6 +199,7 @@ export default (routeHistory: History) =>
         socketGetAllListings,
         socketGetListing,
         socketGetListingsByType,
+        getNotificationsSettings,
       }).sort()
     )
   );

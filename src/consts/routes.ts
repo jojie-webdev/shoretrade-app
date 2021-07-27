@@ -78,6 +78,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
   LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
   MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
+  NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications-settings`,
 };
 
 export const BUYER_ROUTES = {
@@ -132,4 +133,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
   MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
+  NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications-settings`,
 };

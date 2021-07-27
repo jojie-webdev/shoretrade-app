@@ -20,6 +20,7 @@ import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
 import YourDetails from './YourDetails';
+import NotificationsSettings from './NotificationsSettings';
 
 const ROUTES: Routes = {
   LANDING: {
@@ -89,6 +90,10 @@ const ROUTES: Routes = {
   MARKET_INTERESTS: {
     path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
     children: <MarketInterests />,
+  },
+  NOTIFICATIONS_SETTINGS: {
+    path: BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS,
+    children: <NotificationsSettings />,
   },
 };
 

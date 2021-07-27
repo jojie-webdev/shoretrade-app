@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Sold } from './Sold';
+export { default as CommentsAlt } from './CommentsAlt';
+export { default as EnvelopeAlt } from './EnvelopeAlt';
+export { default as Desktop } from './Desktop';
 export { default as Sync } from './Sync';
 export { default as CaviarHero } from './CaviarHero';
 export { default as OctopusHero } from './OctopusHero';
