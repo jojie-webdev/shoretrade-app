@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // this behaves line componentShouldUpdate method in class component
-// callback is not onMount. only when dependencies changes.
+// callback is not invoke on component mount. only when dependencies changes.
 export const useComponentShouldUpdate = (
   callback: () => any | (() => void),
   dependencies: any[] = []
