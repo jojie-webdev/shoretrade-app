@@ -53,6 +53,6 @@ export const ExitButton = styled.button`
   }
 
   @media ${BREAKPOINTS.sm} {
-    right: calc(50vw - 35px);
+    right: calc(50% - 20px);
   }
 `;

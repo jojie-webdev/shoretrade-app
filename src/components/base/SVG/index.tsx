@@ -119,3 +119,4 @@ export { default as CarouselChevronLeft } from './CarouselChevronLeft';
 export { default as Crates } from './Crates';
 export { default as SortIcon } from './SortIcon';
 export { default as Listing } from './Listing';
+export { default as Cog } from './Cog';
