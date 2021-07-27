@@ -46,12 +46,16 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     typeSearchResults,
     setStep,
     updateCategory,
+    didFinishStep,
+    setDidFinishStep,
+    onBack,
   } = props;
 
   const handleCategoryClick = (v: CategoryItem) => {
     updateCategory(v);
     setSelectedCategory(v);
     setStep(2);
+    setDidFinishStep(1);
   };
 
   return (
@@ -64,19 +68,39 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
               { label: 'Category' },
               {
                 label: 'Specifications',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 2) {
+                    onBack(2);
+                  }
+                },
+                isDone: didFinishStep >= 2,
               },
               {
                 label: 'Size',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 3) {
+                    onBack(3);
+                  }
+                },
+                isDone: didFinishStep >= 3,
               },
               {
                 label: 'Quantity',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
               },
               {
                 label: 'Summary',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 5) {
+                    onBack(5);
+                  }
+                },
+                isDone: didFinishStep >= 5,
               },
             ]}
           />

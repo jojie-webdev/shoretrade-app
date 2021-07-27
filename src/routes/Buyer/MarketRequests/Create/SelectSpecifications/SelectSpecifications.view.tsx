@@ -60,6 +60,8 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     listingFormData,
     selectedSpecifications,
     setStep,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
 
   const stateOptions = (listingFormData?.stateOptions || []).map((group) =>
@@ -82,6 +84,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   const handleSelectSpecs = () => {
     setSelectedSpecifications({ items: selectedState.selectedStates });
     setStep(3);
+    setDidFinishStep(2);
   };
 
   const getFilteredSpecifications = () => {
@@ -166,25 +169,42 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             sections={[
               {
                 label: 'Category',
-                isDone: true,
                 onClick: () => {
-                  onBack(1);
+                  if (didFinishStep >= 1) {
+                    onBack(1);
+                  }
                 },
+                isDone: didFinishStep >= 1,
               },
               {
                 label: 'Specifications',
               },
               {
                 label: 'Size',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 3) {
+                    onBack(3);
+                  }
+                },
+                isDone: didFinishStep >= 3,
               },
               {
                 label: 'Quantity',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
               },
               {
                 label: 'Summary',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 5) {
+                    onBack(5);
+                  }
+                },
+                isDone: didFinishStep >= 5,
               },
             ]}
           />

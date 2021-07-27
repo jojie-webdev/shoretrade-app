@@ -262,9 +262,10 @@ export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
   border: 1px solid #dadff2;
   border-radius: 12px;
   margin-top: 16px;
-  min-height: 312px;
+
   margin-left: 16px;
-  ${({ currentStep }) => currentStep === 1 && `max-height: 312px;`};
+  min-height: 312px;
+  max-height: 312px;
 `;
 
 export const DetailsHeaderContainer = styled.div`

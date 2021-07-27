@@ -87,6 +87,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     selectedAddress,
     setSelectedAddress,
     updateCategory,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -335,6 +337,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
             updateCategory={updateCategory}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -351,6 +355,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
             selectedQuantity={selectedQuantity}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -368,6 +374,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             selectedSpecifications={selectedSpecifications}
             selectedQuantity={selectedQuantity}
             detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -385,6 +393,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             stepCountComponent={<StepCountComponent step={step} />}
             selectedSpecifications={selectedSpecifications}
             detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -405,6 +415,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             selectedAddress={selectedAddress}
             onChangeAddress={(a) => setSelectedAddress(a)}
             detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 

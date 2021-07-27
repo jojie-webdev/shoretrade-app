@@ -170,6 +170,8 @@ const SelectSizeView = (props: SelectSizeProps) => {
     listingFormData,
     setStep,
     detailsListComponent,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
 
   const [ungraded, setUngraded] = useState(false);
@@ -191,6 +193,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
       ungraded: sizeToFrom.from === '' && sizeItemChecked.items.length < 1,
     });
     setStep(4);
+    setDidFinishStep(3);
   };
 
   const handleSetFromSize = (value: string) => {
@@ -227,28 +230,42 @@ const SelectSizeView = (props: SelectSizeProps) => {
             sections={[
               {
                 label: 'Category',
-                isDone: true,
                 onClick: () => {
-                  onBack(1);
+                  if (didFinishStep >= 1) {
+                    onBack(1);
+                  }
                 },
+                isDone: didFinishStep >= 1,
               },
               {
                 label: 'Specifications',
-                isDone: true,
                 onClick: () => {
-                  onBack(2);
+                  if (didFinishStep >= 2) {
+                    onBack(2);
+                  }
                 },
+                isDone: didFinishStep >= 2,
               },
               {
                 label: 'Size',
               },
               {
                 label: 'Quantity',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
               },
               {
                 label: 'Summary',
-                onClick: () => {},
+                onClick: () => {
+                  if (didFinishStep >= 5) {
+                    onBack(5);
+                  }
+                },
+                isDone: didFinishStep >= 5,
               },
             ]}
           />

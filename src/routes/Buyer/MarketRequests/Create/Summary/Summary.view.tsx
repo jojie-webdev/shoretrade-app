@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
@@ -21,6 +22,11 @@ import theme from 'utils/Theme';
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
+  DetailsContainer,
+  MainContainer,
+  RequestDetailsContainer,
+  RequestRow,
+  TitleContainer,
 } from '../Create.style';
 import { SummaryProps } from './Summary.props';
 import {
@@ -41,6 +47,8 @@ const SummaryView = (props: SummaryProps) => {
     setSendConfModalisOpen,
     onBack,
     listingFormData,
+    detailsListComponent,
+    didFinishStep,
   } = props;
   const history = useHistory();
 
@@ -115,90 +123,135 @@ const SummaryView = (props: SummaryProps) => {
   return (
     <>
       <CreateRequestHeaderContainer>
-        <div>
-          {stepCountComponent}
-          <div className="title-container">
-            <Touchable
-              className="back-button-container"
-              onPress={() => onBack(4)}
-            >
-              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
-            </Touchable>
-            <TypographyView variant="title5" weight="500">
-              Summary
-            </TypographyView>
-          </div>
-        </div>
-      </CreateRequestHeaderContainer>
-      <ContainerWithCategoryImagePreview>
-        <CategoryImagePreviewView
-          categoryName={selectedCategory.name}
-          imgSrc={listingFormData?.defaultPhoto}
-          caption="Review product specifications for this request."
-          marketBoard
-        />
-        <SummaryContentContainer>
-          <SummaryBadges
-            label="Specs"
-            items={selectedSpecifications.items.map((spec) => spec.label)}
+        <MainContainer>
+          <Breadcrumbs
+            color="shade5"
+            sections={[
+              {
+                label: 'Category',
+                onClick: () => {
+                  if (didFinishStep >= 1) {
+                    onBack(1);
+                  }
+                },
+                isDone: didFinishStep >= 1,
+              },
+              {
+                label: 'Specifications',
+                onClick: () => {
+                  if (didFinishStep >= 2) {
+                    onBack(2);
+                  }
+                },
+                isDone: didFinishStep >= 2,
+              },
+              {
+                label: 'Size',
+                onClick: () => {
+                  if (didFinishStep >= 3) {
+                    onBack(3);
+                  }
+                },
+                isDone: didFinishStep >= 3,
+              },
+              {
+                label: 'Quantity',
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
+              },
+              {
+                label: 'Summary',
+              },
+            ]}
           />
-          <div className="size-container">{sizeSummary()}</div>
-          <div className="quantity-container">
-            <StyledTextField
-              className="text-field"
-              type="number"
-              label="From"
-              value={selectedQuantity.from}
-              disabled
-              LeftComponent={
-                <TypographyView variant="label" color="shade6">
-                  {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                </TypographyView>
-              }
+          <TitleContainer>
+            <Typography
+              variant="title5"
+              weight="500"
+              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
+            >
+              {listingFormData?.type.name}
+            </Typography>
+            <Typography variant="label" weight="400" color="shade7">
+              Here you can detail the size you want for this product. Simply
+              enter your desired size in the boxes and press Proceed to
+              continue.
+            </Typography>
+          </TitleContainer>
+        </MainContainer>
+      </CreateRequestHeaderContainer>
+      <RequestRow>
+        <ContainerWithCategoryImagePreview>
+          <SummaryContentContainer>
+            <SummaryBadges
+              label="Specs"
+              items={selectedSpecifications.items.map((spec) => spec.label)}
             />
-            <StyledTextField
-              className="text-field"
-              type="number"
-              label="To"
-              value={selectedQuantity.to}
-              disabled
-              LeftComponent={
-                <TypographyView variant="label" color="shade6">
-                  {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                </TypographyView>
-              }
-            />
-            <Select
-              value={props.selectedAddress}
-              onChange={props.onChangeAddress}
-              options={props.addressOptions}
-              label="Shipping To"
-            />
+            <div className="size-container">{sizeSummary()}</div>
+            <div className="quantity-container">
+              <StyledTextField
+                className="text-field"
+                type="number"
+                label="From"
+                value={selectedQuantity.from}
+                disabled
+                LeftComponent={
+                  <TypographyView variant="label" color="shade6">
+                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                  </TypographyView>
+                }
+              />
+              <StyledTextField
+                className="text-field"
+                type="number"
+                label="To"
+                value={selectedQuantity.to}
+                disabled
+                LeftComponent={
+                  <TypographyView variant="label" color="shade6">
+                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                  </TypographyView>
+                }
+              />
+              <Select
+                value={props.selectedAddress}
+                onChange={props.onChangeAddress}
+                options={props.addressOptions}
+                label="Shipping To"
+              />
 
-            <TypographyView variant="caption" style={{ marginTop: 8 }}>
-              This request will automatically close once maximum quantity
-              requested is reached
-            </TypographyView>
-          </div>
-          <Hidden xs>
-            <Button
-              onClick={() => handleSubmit()}
-              className="submit-btn"
-              text="Send Request to the Market"
-              variant="primary"
-            />
-          </Hidden>
-          <MobileFooter>
-            <Button
-              takeFullWidth
-              onClick={() => handleSubmit()}
-              className="submit-btn"
-              text="Send Request to the Market"
-              variant="primary"
-            />
-          </MobileFooter>
-        </SummaryContentContainer>
-      </ContainerWithCategoryImagePreview>
+              <TypographyView variant="caption" style={{ marginTop: 8 }}>
+                This request will automatically close once maximum quantity
+                requested is reached
+              </TypographyView>
+            </div>
+            <Hidden xs>
+              <Button
+                onClick={() => handleSubmit()}
+                className="submit-btn"
+                text="Send Request to the Market"
+                variant="primary"
+              />
+            </Hidden>
+            <MobileFooter>
+              <Button
+                takeFullWidth
+                onClick={() => handleSubmit()}
+                className="submit-btn"
+                text="Send Request to the Market"
+                variant="primary"
+              />
+            </MobileFooter>
+          </SummaryContentContainer>
+        </ContainerWithCategoryImagePreview>
+        <RequestDetailsContainer>
+          <DetailsContainer>{detailsListComponent}</DetailsContainer>
+        </RequestDetailsContainer>
+      </RequestRow>
     </>
   );
 };

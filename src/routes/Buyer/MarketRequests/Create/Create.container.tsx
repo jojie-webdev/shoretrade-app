@@ -25,7 +25,8 @@ const CreateRequest = (): JSX.Element => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [hideSearchResult, setHideSearchResult] = useState(false);
   const [termsAgreement, setTermsAgreement] = useState(true);
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [didFinishStep, setDidFinishStep] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
     items: any[];
@@ -195,6 +196,8 @@ const CreateRequest = (): JSX.Element => {
   }, [currentStep]);
 
   const generatedProps: CreateRequestGeneratedProps = {
+    didFinishStep,
+    setDidFinishStep,
     buying,
     pendingSearch,
     hideSearchResult,
