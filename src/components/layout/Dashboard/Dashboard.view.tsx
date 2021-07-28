@@ -9,6 +9,7 @@ import {
   ArrowLeftAlt,
   ShoretradeLogo,
   Close,
+  Bell,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -104,7 +105,7 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
   return (
     <div className="cart-container">
       <div
-        className="cart-wrapper"
+        className="icon-wrapper"
         onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
       >
         <CartIcon fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
@@ -112,6 +113,33 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
           <CheckoutCount>
             <Typography color="noshade" variant="small" weight="900">
               {cartItems}
+            </Typography>
+          </CheckoutCount>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const Notifs = ({ notifs }: { notifs: number }) => {
+  const theme = useTheme();
+  const history = useHistory();
+
+  const isMobile = useMediaQuery({
+    query: BREAKPOINTS.sm,
+  });
+
+  return (
+    <div className="notif-container">
+      <div
+        className="icon-wrapper"
+        onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
+      >
+        <Bell fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
+        {notifs > 0 && (
+          <CheckoutCount>
+            <Typography color="noshade" variant="small" weight="900">
+              {notifs}
             </Typography>
           </CheckoutCount>
         )}
@@ -168,6 +196,7 @@ const Header = ({
           {!onBack && theme.appType === 'buyer' && (
             <Cart cartItems={cartItems} />
           )}
+          <Notifs notifs={1} />
         </HeaderRightContent>
       }
     />
@@ -207,8 +236,6 @@ const Header = ({
       </div>
 
       <HeaderRightContent>
-        {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
-
         <Touchable
           className="dashboard-account-container"
           onPress={onClickAccount}
@@ -233,6 +260,8 @@ const Header = ({
             <PlaceholderProfile />
           )}
         </Touchable>
+        {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
+        <Notifs notifs={1} />
       </HeaderRightContent>
     </HeaderContainer>
   );
