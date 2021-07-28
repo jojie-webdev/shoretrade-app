@@ -9,10 +9,13 @@ import {
   CustomCheckbox,
   InnerCheck,
   Label,
+  Error,
 } from './Checkbox.style';
 
 const Checkbox = ({
   checked = false,
+  disabled = false,
+  error = '',
   label,
   size = 24,
   scale = 1,
@@ -27,12 +30,14 @@ const Checkbox = ({
         onChange={(event) => event.stopPropagation()}
         checked={checked}
         type="checkbox"
+        disabled={disabled}
         {...props}
       />
       <CustomCheckbox
         borderColor={props?.borderColor}
         checked={checked}
         size={size}
+        disabled={disabled}
       >
         {(() => {
           if (checked) {
@@ -42,9 +47,14 @@ const Checkbox = ({
         })()}
       </CustomCheckbox>
       {label && (
-        <Label {...typographyProps} variant="label">
+        <Label {...typographyProps} disabled={disabled} variant="label">
           {label}
         </Label>
+      )}
+      {(error || '').length > 0 && (
+        <Error variant="caption" color="error">
+          {error}
+        </Error>
       )}
     </Container>
   );

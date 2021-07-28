@@ -46,6 +46,7 @@ export const InnerCheck = styled.span<{
 export const CustomCheckbox = styled.span<{
   size: number;
   checked: boolean;
+  disabled?: boolean;
   borderColor?: string;
   customCheckBox?: any;
 }>`
@@ -53,14 +54,14 @@ export const CustomCheckbox = styled.span<{
   position: relative;
   height: ${({ size }) => `${size}px`};
   width: ${({ size }) => `${size}px`};
-  border: ${({ checked, theme, borderColor }) => {
+  border: ${({ checked, disabled, theme, borderColor }) => {
     if (checked) return `1px solid transparent`;
-
+    if (disabled) return `1px solid rgba(0, 0, 0, 0.26)`;
     return `1px solid ${borderColor || theme.brand.primary}`;
   }};
-  background-color: ${({ checked, theme }) => {
+  background-color: ${({ checked, disabled, theme }) => {
     if (checked) return theme.brand.primary;
-
+    if (disabled) return `rgba(0, 0, 0, 0.26)`;
     return 'transparent';
   }};
   display: flex;
@@ -70,8 +71,13 @@ export const CustomCheckbox = styled.span<{
 
 export const Label = styled(Typography)`
   margin-left: 8px;
-  color: ${({ theme }) => {
+  color: ${({ disabled, theme }) => {
+    if (disabled) return theme.grey.shade7;
     const isSeller = theme.appType !== 'buyer';
     return isSeller ? '#ffffff' : theme.grey.shade9;
   }};
+`;
+
+export const Error = styled(Typography)`
+  margin-top: 4px;
 `;

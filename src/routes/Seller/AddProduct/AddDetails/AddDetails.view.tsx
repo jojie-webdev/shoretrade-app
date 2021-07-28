@@ -195,6 +195,14 @@ const AddDetails = ({
     }
   }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
 
+  const toggleAlwaysAvailable = () => {
+    if (!editableListing?.isAquafuture) {
+      setAlwaysAvailable((prevState) => !prevState);
+    } else {
+      setErrors(isValid({ alwaysAvailable }));
+    }
+  };
+
   const onNext = () => {
     const detailsError = alwaysAvailable
       ? isValidAlt({ price, catchRecurrence, origin, shippingAddress })
@@ -287,9 +295,12 @@ const AddDetails = ({
         <Row className="textfield-row">
           <Col>
             <Checkbox
-              onClick={() => setAlwaysAvailable((prevState) => !prevState)}
+              onClick={toggleAlwaysAvailable}
               checked={alwaysAvailable}
               label="This item is always available"
+              disabled={editableListing?.isAquafuture}
+              error={pathOr('', ['alwaysAvailable', '0'], errors)}
+              style={{ flexWrap: 'wrap' }}
             />
           </Col>
         </Row>
