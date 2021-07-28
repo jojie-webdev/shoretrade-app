@@ -43,18 +43,7 @@ const CreateRequest = (): JSX.Element => {
     items: [''],
   });
   const [sendConfModalisOpen, setSendConfModalisOpen] = useState(false);
-  console.log({
-    weight: {
-      from: Number(selectedQuantity.from),
-      to: Number(selectedQuantity.to),
-    },
-    size: {
-      ungraded: false,
-      from: selectedSize.from ? selectedSize.from : null,
-      to: selectedSize.to ? selectedSize.to : null,
-      options: selectedSize.items,
-    },
-  });
+
   const [selectedCategory, setSelectedCategory] = useState({
     id: '',
     name: '',
@@ -127,7 +116,7 @@ const CreateRequest = (): JSX.Element => {
   };
 
   const onBack = (step: number) => {
-    if (currentStep === 2) {
+    if (step === 1) {
       //reset
       setSelectedCategory({ id: '', name: '' });
       setSelectedSize({ from: '', to: '', items: [] });

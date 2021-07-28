@@ -267,7 +267,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       </TypographyView>
     );
   };
-
+  console.log(selectedSize);
   const DetailsComponent = () => {
     const measurement = formatMeasurementUnit(listingFormData?.measurementUnit);
     return (
@@ -315,8 +315,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Typography>
           </DetailsDataContainer>
         </DetailsContentContainer>
-        {((selectedSize.items[0] !== '' && selectedSize.items.length > 0) ||
-          selectedSize.from !== null) && (
+        {(selectedSize.items[0] !== '' || selectedSize.from) && (
           <DetailsContentContainer>
             <Typography
               color="shade6"
@@ -341,13 +340,15 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {selectedSize.items.length > 0 && selectedSize.items[0] !== ''
+                {selectedSize.items[0] !== '' && !selectedSize.from
                   ? selectedSize.items.map((i, index) => {
                       return index === selectedSpecifications.items.length - 1
                         ? `${i} `
                         : `${i}, `;
                     })
-                  : `${selectedSize.from}${measurement} - ${selectedSize.to}${measurement}`}
+                  : `${selectedSize.from}${measurement} ${
+                      selectedSize.to && `- ${selectedSize.to}${measurement}`
+                    }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
@@ -377,7 +378,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {`${selectedQuantity.from}${measurement} - ${selectedQuantity.to}${measurement}`}
+                {`${selectedQuantity.from}${measurement} ${
+                  selectedQuantity.to &&
+                  `- ${selectedQuantity.to}${measurement}`
+                }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
@@ -498,7 +502,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     <>
       <ConfirmationModal
         isOpen={sendConfModalisOpen}
-        title="Your request is ready to be sent to the market"
+        title="Let us confrim your Market Request"
         description="Are you sure you want to send this request to the market?"
         action={() => {
           onSubmit();
@@ -506,6 +510,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         actionText="YES"
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
+        style={{ width: 686, borderRadius: 12 }}
       />
       {StepView({ step })}
       <ProgressBar progress={(step.current / step.total) * 100} />

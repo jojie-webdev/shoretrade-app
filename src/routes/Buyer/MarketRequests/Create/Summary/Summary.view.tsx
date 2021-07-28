@@ -6,7 +6,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
-import { ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft, ArrowRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -24,6 +24,7 @@ import {
   CreateRequestHeaderContainer,
   DetailsContainer,
   MainContainer,
+  ProceedButton,
   RequestDetailsContainer,
   RequestRow,
   TitleContainer,
@@ -34,6 +35,9 @@ import {
   BadgesContainer,
   BadgeText,
   StyledTextField,
+  SubmitButton,
+  CheckboxContainer,
+  CheckboxMain,
 } from './Summary.style';
 
 const SummaryView = (props: SummaryProps) => {
@@ -65,9 +69,9 @@ const SummaryView = (props: SummaryProps) => {
       <Badge
         key={index}
         className="offers-state-badge"
-        badgeColor={theme.grey.shade9}
+        badgeColor={theme.grey.shade3}
       >
-        <BadgeText color="noshade" weight="900" variant="overline">
+        <BadgeText color="shade9" weight="900" variant="overline">
           {item}
         </BadgeText>
       </Badge>
@@ -75,14 +79,18 @@ const SummaryView = (props: SummaryProps) => {
 
     return (
       <div>
-        <TypographyView
-          style={{ marginBottom: '8px' }}
-          color="shade6"
-          variant="overline"
-        >
-          {label}
-        </TypographyView>
-        <BadgesContainer>{tagsMarkup}</BadgesContainer>
+        {items[0] !== '' && (
+          <>
+            <TypographyView
+              style={{ marginBottom: '8px' }}
+              color="shade6"
+              variant="overline"
+            >
+              {label}
+            </TypographyView>
+            <BadgesContainer>{tagsMarkup}</BadgesContainer>
+          </>
+        )}
       </div>
     );
   };
@@ -94,25 +102,36 @@ const SummaryView = (props: SummaryProps) => {
 
     if (selectedSize.from !== '') {
       return (
-        <Row>
-          <Col sm={12} md={12}>
-            <StyledTextField
-              className="text-field"
-              type="number"
-              label="Size From"
-              value={selectedSize.from}
-              disabled
-            />
-          </Col>
-          <Col sm={12} md={12}>
-            <StyledTextField
-              className="text-field"
-              type="number"
-              label="Size To"
-              value={selectedSize.to}
-              disabled
-            />
-          </Col>
+        <Row style={{ marginLeft: 0 }}>
+          <div>
+            <Badge
+              className="offers-state-badge"
+              badgeColor={theme.grey.shade3}
+            >
+              <BadgeText color="shade9" weight="900" variant="overline">
+                {selectedSize.from}
+                {formatMeasurementUnit(listingFormData?.measurementUnit)}
+              </BadgeText>
+            </Badge>
+          </div>
+          {selectedSize.to && (
+            <>
+              <div style={{ marginTop: -4, marginLeft: 4, marginRight: 4 }}>
+                <ArrowRight width={8} height={8} fill={theme.grey.shade6} />
+              </div>
+              <div>
+                <Badge
+                  className="offers-state-badge"
+                  badgeColor={theme.grey.shade3}
+                >
+                  <BadgeText color="shade9" weight="900" variant="overline">
+                    {selectedSize.to}
+                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                  </BadgeText>
+                </Badge>
+              </div>
+            </>
+          )}
         </Row>
       );
     } else {
@@ -191,32 +210,67 @@ const SummaryView = (props: SummaryProps) => {
               label="Specs"
               items={selectedSpecifications.items.map((spec) => spec.label)}
             />
+            {selectedSize.items[0] === '' && (
+              <TypographyView
+                style={{ marginBottom: '8px' }}
+                color="shade6"
+                variant="overline"
+              >
+                Size
+              </TypographyView>
+            )}
             <div className="size-container">{sizeSummary()}</div>
+            <TypographyView
+              style={{ marginBottom: '8px' }}
+              color="shade6"
+              variant="overline"
+            >
+              Quantity
+            </TypographyView>
             <div className="quantity-container">
-              <StyledTextField
-                className="text-field"
-                type="number"
-                label="From"
-                value={selectedQuantity.from}
-                disabled
-                LeftComponent={
-                  <TypographyView variant="label" color="shade6">
-                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                  </TypographyView>
-                }
-              />
-              <StyledTextField
-                className="text-field"
-                type="number"
-                label="To"
-                value={selectedQuantity.to}
-                disabled
-                LeftComponent={
-                  <TypographyView variant="label" color="shade6">
-                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                  </TypographyView>
-                }
-              />
+              <Row style={{ marginLeft: 0, marginBottom: 24 }}>
+                <div>
+                  <Badge
+                    className="offers-state-badge"
+                    badgeColor={theme.grey.shade3}
+                  >
+                    <BadgeText color="shade9" weight="900" variant="overline">
+                      {selectedQuantity.from}
+                      {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                    </BadgeText>
+                  </Badge>
+                </div>
+                {selectedQuantity.to && (
+                  <>
+                    <div
+                      style={{ marginTop: -4, marginLeft: 4, marginRight: 4 }}
+                    >
+                      <ArrowRight
+                        width={8}
+                        height={8}
+                        fill={theme.grey.shade6}
+                      />
+                    </div>
+                    <div>
+                      <Badge
+                        className="offers-state-badge"
+                        badgeColor={theme.grey.shade3}
+                      >
+                        <BadgeText
+                          color="shade9"
+                          weight="900"
+                          variant="overline"
+                        >
+                          {selectedQuantity.to}
+                          {formatMeasurementUnit(
+                            listingFormData?.measurementUnit
+                          )}
+                        </BadgeText>
+                      </Badge>
+                    </div>
+                  </>
+                )}
+              </Row>
               <Select
                 value={props.selectedAddress}
                 onChange={props.onChangeAddress}
@@ -224,16 +278,31 @@ const SummaryView = (props: SummaryProps) => {
                 label="Shipping To"
               />
 
-              <TypographyView variant="caption" style={{ marginTop: 8 }}>
-                This request will automatically close once maximum quantity
-                requested is reached
-              </TypographyView>
+              <CheckboxMain>
+                <TypographyView
+                  style={{ marginBottom: 4 }}
+                  color="shade6"
+                  variant="overline"
+                >
+                  Notes
+                </TypographyView>
+                <CheckboxContainer>
+                  <Checkbox checked />
+                  <TypographyView
+                    variant="caption"
+                    style={{ marginLeft: 8, marginTop: 8 }}
+                  >
+                    This request will automatically close once maximum quantity
+                    requested is reached
+                  </TypographyView>
+                </CheckboxContainer>
+              </CheckboxMain>
             </div>
             <Hidden xs>
-              <Button
+              <SubmitButton
                 onClick={() => handleSubmit()}
                 className="submit-btn"
-                text="Send Request to the Market"
+                text="Send Market Request ✓"
                 variant="primary"
               />
             </Hidden>

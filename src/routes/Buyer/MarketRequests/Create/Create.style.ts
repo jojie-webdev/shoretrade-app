@@ -336,3 +336,20 @@ export const MultipleLeftGroupContainer = styled.div`
   bottom: 5%;
   left: -2%;
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const PreviousButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 64px;
+  margin-top: auto;
+`;
+
+export const ProceedButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 124px;
+  margin-left: 8px;
+`;

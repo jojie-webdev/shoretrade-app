@@ -24,6 +24,9 @@ import {
   DetailsHeaderContainer,
   MainContainer,
   DetailsContentContainer,
+  ButtonContainer,
+  ProceedButton,
+  PreviousButton,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
 import {
@@ -189,7 +192,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
     setSelectedSize({
       from: sizeToFrom.from,
       to: sizeToFrom.to,
-      items: sizeItemChecked.items,
+      items: sizeItemChecked.items.filter((i) => i !== ''),
       ungraded: sizeToFrom.from === '' && sizeItemChecked.items.length < 1,
     });
     setStep(4);
@@ -301,13 +304,20 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   setSizeItemChecked={setSizeItemChecked}
                 />
                 <Hidden xs>
-                  <Button
-                    onClick={() => handleSubmit()}
-                    className="submit-btn"
-                    text="Select Size"
-                    disabled={disabledNext()}
-                    variant="primary"
-                  />
+                  <ButtonContainer>
+                    <PreviousButton
+                      text="<"
+                      variant="outline"
+                      onClick={() => onBack(2)}
+                    />
+                    <ProceedButton
+                      onClick={() => handleSubmit()}
+                      className="submit-btn"
+                      text="Proceed"
+                      disabled={disabledNext()}
+                      variant="primary"
+                    />
+                  </ButtonContainer>
                 </Hidden>
                 <MobileFooter>
                   <Button

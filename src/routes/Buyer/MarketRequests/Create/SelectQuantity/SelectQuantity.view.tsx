@@ -13,10 +13,13 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import {
+  ButtonContainer,
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
   DetailsContainer,
   MainContainer,
+  PreviousButton,
+  ProceedButton,
   RequestDetailsContainer,
   RequestRow,
   TitleContainer,
@@ -159,13 +162,20 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               }
             />
             <Hidden xs>
-              <Button
-                onClick={() => handleSubmit()}
-                className="submit-btn"
-                disabled={from === '' || to === ''}
-                text="Select This Quantity"
-                variant="primary"
-              />
+              <ButtonContainer>
+                <PreviousButton
+                  text="<"
+                  variant="outline"
+                  onClick={() => onBack(3)}
+                />
+                <ProceedButton
+                  onClick={() => handleSubmit()}
+                  className="submit-btn"
+                  disabled={from === '' || to === ''}
+                  text="Proceed"
+                  variant="primary"
+                />
+              </ButtonContainer>
             </Hidden>
           </QuantityFormContainer>
           <MobileFooter>
