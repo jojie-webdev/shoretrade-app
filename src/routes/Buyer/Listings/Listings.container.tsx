@@ -148,6 +148,16 @@ export default function ListingContainer() {
     }
   }, [isDownloadingCsv, showModal, isCsvPending]);
 
+  // handle search in mobile
+  useComponentShouldUpdate(() => {
+    if (isMobile) {
+      if (!!searchTerm.length) {
+        setPage(1);
+        setLimit(100); // displays the first 100 search result
+      } else setLimit(10);
+    }
+  }, [searchTerm, isMobile]);
+
   const ListingViewProps = {
     activeTab,
     handleSelectTab,

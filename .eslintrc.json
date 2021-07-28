@@ -23,6 +23,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "import/no-unresolved": "off",
+    "no-extra-boolean-cast": "warn",
     "import/order": [
       "error",
       {
