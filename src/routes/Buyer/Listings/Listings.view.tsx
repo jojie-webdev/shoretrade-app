@@ -110,10 +110,10 @@ export default function ListingView(props: ListingViewProps) {
 
   // focus on preloading screen
   useComponentShouldUpdate(() => {
-    if (isLoading && prevListingData && isMobile) {
+    if (isLoading && prevListingData && isMobile && !searchTerm) {
       window.scrollTo(0, document.body.scrollHeight);
     }
-  }, [isLoading, prevListingData, isMobile]);
+  }, [isLoading, prevListingData, isMobile, searchTerm]);
 
   if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
@@ -271,6 +271,10 @@ export default function ListingView(props: ListingViewProps) {
     </Modal>
   );
 
+  const mobileListing = !!searchTerm
+    ? listings
+    : [...prevListingData, ...listings];
+
   if (isMobile) {
     return (
       <div>
@@ -296,7 +300,7 @@ export default function ListingView(props: ListingViewProps) {
         </TableSettingsContainer>
         {!isEmpty && (
           <MobileTable>
-            {[...prevListingData, ...listings].map((listing: any) => (
+            {mobileListing.map((listing: any) => (
               <ListingCard
                 key={`listing-card-${listing?.id}`}
                 data={listing}

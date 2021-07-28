@@ -40,7 +40,9 @@ export const getAllBuyerListings = (
   let limit = `&limit=${requestOptions?.limit || 10}`;
   const sortOrder = requestOptions?.sortOrder || 'ASC';
   const csvEnpoint = requestOptions?.csv ? 'csv/' : '';
-  const ids = requestOptions?.ids?.map((id) => `&id=${id}`)?.join('') || '';
+  let ids = requestOptions?.ids?.map((id) => `&id=${id}`)?.join('') || '';
+
+  if (requestOptions?.ids?.length === 1) ids += '&id=';
 
   if (requestOptions?.all) {
     page = '';
