@@ -162,6 +162,10 @@ import {
   GetMarketRequestBuyerFiltersPayload,
 } from './GetMarketRequestBuyerFiltersState';
 import {
+  GetNotificationsSettingsMeta,
+  GetNotificationsSettingsPayload,
+} from './GetNotificationSettingsState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -468,5 +472,9 @@ export interface Store {
   getAvailableCrates: AsyncState<
     GetAvailableCratesMeta,
     GetAvailableCratesPayload
+  >;
+  getNotificationsSettings: AsyncState<
+    GetNotificationsSettingsMeta,
+    GetNotificationsSettingsPayload
   >;
 }

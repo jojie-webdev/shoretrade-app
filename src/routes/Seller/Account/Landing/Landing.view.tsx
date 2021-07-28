@@ -81,6 +81,13 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         { addQueryPrefix: true }
       )}`,
     },
+    {
+      value: 'Notifications Settings',
+      path: `${SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
+    },
     { value: 'Help & Support', path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT },
   ];
 
