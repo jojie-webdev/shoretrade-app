@@ -4,6 +4,9 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  FolderDownload,
+  CheckCircle,
+  More,
   Bell,
   Sold,
   CommentsAlt,
@@ -172,6 +175,15 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="FolderDownload">
+          <FolderDownload width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CheckCircle">
+          <CheckCircle width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="More">
+          <More width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Bell">
           <Bell width={30} height={30} />
         </Wrapper>
