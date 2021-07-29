@@ -1,4 +1,18 @@
 /* PLOP_INJECT_IMPORT */
+export { default as NewWave51 } from './NewWave51';
+export { default as WaveNew31 } from './WaveNew31';
+export { default as Cross7 } from './Cross7';
+export { default as ShoretradeAnchor } from './ShoretradeAnchor';
+export { default as Group204 } from './Group204';
+export { default as Group194 } from './Group194';
+export { default as Group195 } from './Group195';
+export { default as Group196 } from './Group196';
+export { default as Wave51 } from './Wave51';
+export { default as Wave31 } from './Wave31';
+export { default as Wave41 } from './Wave41';
+export { default as TexturedCrab } from './TexturedCrab';
+export { default as TexturedSwordFish } from './TexturedSwordFish';
+export { default as TexturedOctopus } from './TexturedOctopus';
 export { default as Sync } from './Sync';
 export { default as CaviarHero } from './CaviarHero';
 export { default as OctopusHero } from './OctopusHero';

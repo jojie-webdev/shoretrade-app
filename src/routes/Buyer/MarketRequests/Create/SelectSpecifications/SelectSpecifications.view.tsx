@@ -1,22 +1,54 @@
 import React, { useState } from 'react';
 
 import AlertView from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ArrowLeft } from 'components/base/SVG';
+import {
+  ArrowLeft,
+  Group194,
+  Group195,
+  Group196,
+  Group204,
+  ShoretradeAnchor,
+  Wave31,
+  Wave41,
+  Wave51,
+  WaveNew31,
+  NewWave51,
+} from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
 import { Hidden } from 'react-grid-system';
+import { EmptyContainer } from 'routes/Buyer/Checkout/Checkout.style';
 import theme from 'utils/Theme';
 
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
+  TitleContainer,
+  RequestRow,
+  RequestDetailsContainer,
+  DetailsContainer,
+  DetailsHeaderContainer,
+  MainContainer,
+  MultipleTopAbsoContainer,
+  MultipleTopGroupContainer,
+  MultipleBottomAbsoContainer,
+  MultipleBottomGroupContainer,
+  MultipleLeftAbsoContainer,
+  MultipleLeftGroupContainer,
 } from '../Create.style';
-import { SpecificationFormContainer } from './SelectSpecification.style';
+import {
+  SpecificationFormContainer,
+  ProceedButton,
+  PreviousButton,
+  ButtonContainer,
+  AnchorContainer,
+} from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
 const SelectSpecificationsView = (props: SelectSpecificationProps) => {
@@ -28,6 +60,8 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     listingFormData,
     selectedSpecifications,
     setStep,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
 
   const stateOptions = (listingFormData?.stateOptions || []).map((group) =>
@@ -50,6 +84,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   const handleSelectSpecs = () => {
     setSelectedSpecifications({ items: selectedState.selectedStates });
     setStep(3);
+    setDidFinishStep(2);
   };
 
   const getFilteredSpecifications = () => {
@@ -128,79 +163,139 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   return (
     <>
       <CreateRequestHeaderContainer>
-        <div>
-          {stepCountComponent}
-          <div className="title-container">
-            <Touchable
-              className="back-button-container"
-              onPress={() => onBack()}
+        <MainContainer>
+          <Breadcrumbs
+            color="shade5"
+            sections={[
+              {
+                label: 'Category',
+                onClick: () => {
+                  if (didFinishStep >= 1) {
+                    onBack(1);
+                  }
+                },
+                isDone: didFinishStep >= 1,
+              },
+              {
+                label: 'Specifications',
+              },
+              {
+                label: 'Size',
+                onClick: () => {
+                  if (didFinishStep >= 3) {
+                    onBack(3);
+                  }
+                },
+                isDone: didFinishStep >= 3,
+              },
+              {
+                label: 'Quantity',
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
+              },
+              {
+                label: 'Summary',
+                onClick: () => {
+                  if (didFinishStep >= 5) {
+                    onBack(5);
+                  }
+                },
+                isDone: didFinishStep >= 5,
+              },
+            ]}
+          />
+          <TitleContainer>
+            <Typography
+              variant="title5"
+              weight="500"
+              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
             >
-              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
-            </Touchable>
-            <TypographyView variant="title5" weight="500">
-              Select Specifications
-            </TypographyView>
-          </div>
-        </div>
+              {listingFormData?.type.name}
+            </Typography>
+            <Typography variant="label" weight="400" color="shade7">
+              Below are the different ways you can purchase your product. You
+              can select more than one from each section to let Sellers know
+              that you would be satisfied with either specification.
+            </Typography>
+          </TitleContainer>
+        </MainContainer>
       </CreateRequestHeaderContainer>
-      <ContainerWithCategoryImagePreview>
-        <CategoryImagePreviewView
-          categoryName={selectedCategory.name}
-          imgSrc={listingFormData?.defaultPhoto}
-          caption="Select your product specifications for this request."
-          marketBoard
-        />
-
-        <SpecificationFormContainer>
-          {isDisabled && (
-            <AlertView
-              content="Select at least 1 specification from each section"
-              variant="error"
-              fullWidth
-              style={{
-                marginBottom: 24,
-              }}
-            />
-          )}
-
-          {getFilteredSpecifications().map((group) => (
-            <div key={group[0].groupOrder} className="interaction-group">
-              <div className="spec-row">
-                {group.map((item) => (
-                  <Checkbox
-                    checked={
-                      selectedState.selectedStates.filter(
-                        (state) => state.value === item.value
-                      )[0]
-                    }
-                    value={item.value}
-                    onClick={() => handleStateCheck(item)}
-                    key={item.value}
-                    label={item.label}
-                  />
-                ))}
+      <RequestRow>
+        <ContainerWithCategoryImagePreview>
+          <SpecificationFormContainer>
+            {getFilteredSpecifications().map((group, index) => (
+              <div key={group[0].groupOrder} className="interaction-group">
+                <Typography
+                  variant="overline"
+                  color="shade6"
+                  style={{ marginBottom: 12 }}
+                >
+                  {`Specs ${index + 1}`}
+                </Typography>
+                <div className="spec-row">
+                  {group.map((item) => (
+                    <Checkbox
+                      checked={
+                        selectedState.selectedStates.filter(
+                          (state) => state.value === item.value
+                        )[0]
+                      }
+                      value={item.value}
+                      onClick={() => handleStateCheck(item)}
+                      key={item.value}
+                      label={item.label}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-          <Hidden xs>
-            <Button
-              onClick={() => handleSelectSpecs()}
-              disabled={isEmpty(groupOrders) || isDisabled}
-              text="Select Specification"
-              variant="primary"
-            />
-          </Hidden>
-          <MobileFooter>
-            <Button
-              onClick={() => handleSelectSpecs()}
-              disabled={isEmpty(groupOrders) || isDisabled}
-              text="Select Specification"
-              variant="primary"
-              takeFullWidth
-            />
-          </MobileFooter>
-        </SpecificationFormContainer>
-      </ContainerWithCategoryImagePreview>
+            ))}
+            <Hidden xs>
+              <ButtonContainer>
+                <PreviousButton
+                  text="<"
+                  variant="outline"
+                  onClick={() => onBack(1)}
+                />
+                <ProceedButton
+                  onClick={() => handleSelectSpecs()}
+                  disabled={isEmpty(groupOrders) || isDisabled}
+                  text="Proceed >"
+                  variant="primary"
+                />
+              </ButtonContainer>
+            </Hidden>
+            <MobileFooter>
+              <Button
+                onClick={() => handleSelectSpecs()}
+                disabled={isEmpty(groupOrders) || isDisabled}
+                text="Proceed"
+                variant="primary"
+                takeFullWidth
+              />
+            </MobileFooter>
+          </SpecificationFormContainer>
+        </ContainerWithCategoryImagePreview>
+        <RequestDetailsContainer currentStep={1}>
+          <DetailsHeaderContainer>
+            <Typography
+              style={{
+                marginBottom: 8,
+                fontFamily: 'Wilderness',
+                fontSize: 48,
+              }}
+            >
+              Summary
+            </Typography>
+          </DetailsHeaderContainer>
+          <AnchorContainer>
+            <ShoretradeAnchor />
+          </AnchorContainer>
+        </RequestDetailsContainer>
+      </RequestRow>
     </>
   );
 };

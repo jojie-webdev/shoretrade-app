@@ -1,3 +1,4 @@
+import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -41,10 +42,12 @@ export const CreateRequestHeaderContainer = styled.div`
     flex-direction: row;
     margin-bottom: 1rem;
     align-items: center;
+    margin-top: 32px;
   }
 
   .search-container {
-    width: 308px;
+    width: 100%;
+    margin-bottom: 24px;
   }
 
   @media ${BREAKPOINTS['md']} {
@@ -61,11 +64,17 @@ export const CreateRequestHeaderContainer = styled.div`
 `;
 
 export const ContainerWithCategoryImagePreview = styled.div`
-  margin-top: 40px;
+  margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
   max-width: 1201px;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  width: 65%;
+  padding: 48px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  z-index: 2;
 
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
@@ -189,4 +198,158 @@ export const CheckBoxContainer = styled.div`
 
 export const HeaderContainer = styled.div`
   margin-bottom: 40px;
+`;
+
+export const GetStartedButton = styled(Button)`
+  max-width: 310.67px;
+  border-radius: 12px;
+`;
+
+export const TopAbsoContainer = styled.div`
+  position: absolute;
+  top: -10%;
+  right: 0;
+`;
+
+export const TopGroupContainer = styled.div`
+  position: absolute;
+  top: -2%;
+  right: 10%;
+`;
+
+export const BottomAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+`;
+
+export const BottomGroupContainer = styled.div`
+  position: absolute;
+  bottom: -2%;
+  right: 10%;
+`;
+
+export const LeftAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  left: -6%;
+`;
+
+export const LeftGroupContainer = styled.div`
+  position: absolute;
+  bottom: -5%;
+  left: 21%;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+`;
+
+export const RequestRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+`;
+
+export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
+  width: 35%;
+  z-index: 2;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  padding: 48px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  margin-top: 16px;
+
+  margin-left: 16px;
+  min-height: 312px;
+  max-height: 312px;
+`;
+
+export const DetailsHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dadff2;
+  margin-top: -16px;
+  margin-left: -8px;
+  margin-bottom: 16px;
+`;
+
+export const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: -16px;
+  margin-left: -8px;
+  margin-bottom: 16px;
+`;
+
+export const DetailsContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: -8px;
+`;
+
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const DetailsDataContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const MultipleTopAbsoContainer = styled.div`
+  position: absolute;
+  top: 0%;
+  right: 0;
+`;
+
+export const MultipleTopGroupContainer = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 5%;
+`;
+
+export const MultipleBottomAbsoContainer = styled.div`
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+`;
+
+export const MultipleBottomGroupContainer = styled.div`
+  position: absolute;
+  bottom: 0%;
+  right: 2%;
+`;
+
+export const MultipleLeftAbsoContainer = styled.div`
+  position: absolute;
+  bottom: 15%;
+  left: -10%;
+`;
+
+export const MultipleLeftGroupContainer = styled.div`
+  position: absolute;
+  bottom: 5%;
+  left: -2%;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const PreviousButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 64px;
+  margin-top: auto;
+`;
+
+export const ProceedButton = styled(Button)`
+  border-radius: 12px;
+  max-width: 124px;
+  margin-left: 8px;
 `;

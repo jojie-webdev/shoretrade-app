@@ -19,15 +19,23 @@ const NumberedHero = (props: NumberedHeroProps): JSX.Element => {
   const { number, title, heroImage } = props;
   return (
     <Container>
-      <Row style={{ alignItems: 'center' }} gutterWidth={16}>
+      <Col style={{ alignItems: 'center' }}>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
           <NumberContainer>
-            <div className="wrapper">{number}</div>
+            <TypographyView
+              color="shade6"
+              style={{ fontFamily: 'Media Sans', marginTop: 4 }}
+            >
+              /
+            </TypographyView>
+            <TypographyView variant="title3" weight="400" color="shade9">
+              0{number}
+            </TypographyView>
           </NumberContainer>
         </Col>
-        <Col sm={6} md={6} lg={6} xl={10} xxl={10}>
+        <Col sm={6} md={6} lg={6} xl={10} xxl={10} style={{ marginBlock: 24 }}>
           <TitleContainer>
-            <TypographyView variant="body" weight="400" color="shade9">
+            <TypographyView variant="label" color="shade7">
               {title}
             </TypographyView>
           </TitleContainer>
@@ -35,7 +43,7 @@ const NumberedHero = (props: NumberedHeroProps): JSX.Element => {
         <Col sm={4} md={4} lg={4} xl={12} xxl={12}>
           <HeroContainer>{heroImage}</HeroContainer>
         </Col>
-      </Row>
+      </Col>
     </Container>
   );
 };

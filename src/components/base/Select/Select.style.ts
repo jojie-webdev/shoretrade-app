@@ -93,6 +93,11 @@ export const StyledDropdown = styled(Dropdown)<{
     }
   }
 
+  .Dropdown-control {
+    border: 1px solid ${({ theme }) => theme.grey.shade9};
+    border-radius:12px;
+  }
+
   .Dropdown-option.is-selected {
     color: ${({ theme }) => theme.grey.noshade};
     background-color: ${({ theme }) => theme.brand.primary};

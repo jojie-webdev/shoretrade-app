@@ -1,5 +1,5 @@
 export interface CategoryImagePreviewProps {
-  categoryName: string;
+  categoryName?: string;
   caption?: string;
   imgSrc?: string;
   marketBoard?: boolean;

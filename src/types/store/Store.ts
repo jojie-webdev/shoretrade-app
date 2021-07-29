@@ -92,7 +92,7 @@ import {
   DeleteMarketRequestPayload,
 } from './DeleteMarketRequestState';
 import { EditableListingState } from './EditableListingState';
-import { EditableMarketRequestPayload } from './EditableMarketRequest';
+import { EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -274,7 +274,7 @@ export interface Store {
     SearchProductTypePayload
   >;
   editableListing: EditableListingState;
-  editableMarketRequest: EditableMarketRequestPayload;
+  editableMarketRequest: EditableMarketRequestState;
   getListingFormData: AsyncState<
     GetListingFormDataMeta,
     GetListingFormDataPayload
