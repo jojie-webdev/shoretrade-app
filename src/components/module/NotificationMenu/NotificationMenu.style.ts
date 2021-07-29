@@ -74,7 +74,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
             }
           }
           .menu-body{
-            max-height: 292px;
+            max-height: 400px;
             min-height: 72px;
             background: ${({ theme }) => theme.grey.shade10};
             overflow-y: auto;
@@ -90,6 +90,16 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
                   ? theme.grey.noshade
                   : theme.grey.shade10};
             }
+          .menu-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            background: ${({ theme }) =>
+              theme.appType === 'seller'
+                ? theme.grey.shade10
+                : theme.grey.noshade};
+          }
   }
 
   

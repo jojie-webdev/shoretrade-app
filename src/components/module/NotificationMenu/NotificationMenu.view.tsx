@@ -17,6 +17,7 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
+import Button from 'components/base/Button';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
@@ -80,6 +81,9 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     isRead={true}
                   />
                 </DropdownItemContainer>
+              </div>
+              <div className="menu-footer">
+                <Button size="sm" variant="outline" text="See All" />
               </div>
             </div>
           </div>
