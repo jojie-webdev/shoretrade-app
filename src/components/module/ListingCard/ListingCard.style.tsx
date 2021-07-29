@@ -1,10 +1,14 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
-export const Container = styled.div`
+export const Container = styled.div<{ last?: boolean }>`
   display: flex;
   justify-content: space-between;
   padding: 12px;
+  border-bottom: 1px solid
+    ${({ last }) => {
+      return !last ? theme.grey.shade3 : 'transparent';
+    }};
 
   header {
     color: ${theme.grey.shade6};
