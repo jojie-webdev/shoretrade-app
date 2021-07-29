@@ -41,6 +41,10 @@ const constraints = {
   isDateRangeValid: {
     isTrue: '^Please set a valid date range',
   },
+  alwaysAvailable: {
+    isTrue:
+      '^You cannot have an Aquafuture listing that is Always Available. If you would like this listing to be Always Available, deselect the Aquafuture tick box on Step 5',
+  },
 };
 
 const constraintsAlt = {
