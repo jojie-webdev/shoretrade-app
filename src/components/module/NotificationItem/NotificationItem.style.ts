@@ -74,10 +74,12 @@ export const MoreMenuContainer = styled.div<{ isOpen: boolean }>`
   .dropdown-container{
     display: block;
     position: relative;
+    z-index: 3;
+    filter: drop-shadow(0px 12px 24px rgba(41, 43, 50, 0.25));
     .dropdown{
       position: relative;
       cursor: pointer;
-      z-index: 2;
+      z-index: 3;
     }
     .dropdown-menu{
       position: absolute;
@@ -89,13 +91,13 @@ export const MoreMenuContainer = styled.div<{ isOpen: boolean }>`
       // width: 230px;
       width: 280px;
       .dropdown-header{
-        background: ${({ theme }) => theme.grey.shade10};
+        background: ${({ theme }) =>
+          theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade10};
         position: relative;
         text-align: center;
         color: gray;
         font-weight: bold;
         border-radius: 10px 10px 0 0;
-        @include notification-border(1px);
         .triangle{
           position: absolute;
           top: -8px;
@@ -104,7 +106,10 @@ export const MoreMenuContainer = styled.div<{ isOpen: boolean }>`
           width: 15px;
           border-radius: 6px 0px 0px 0px;
           transform: rotate(45deg);
-          background: ${({ theme }) => theme.grey.shade10};
+          background: ${({ theme }) =>
+            theme.appType === 'buyer'
+              ? theme.grey.noshade
+              : theme.grey.shade10};
         }
         .count{
           position: static;
@@ -120,7 +125,8 @@ export const MoreMenuContainer = styled.div<{ isOpen: boolean }>`
       .dropdown-body{
         max-height: 292px;
         min-height: 72px;
-        background: ${({ theme }) => theme.grey.shade10};
+        background: ${({ theme }) =>
+          theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade10};
         overflow-y: auto;
         overflow-x: hidden;
         border-radius: 6px;
@@ -134,11 +140,19 @@ export const MoreMenuContainer = styled.div<{ isOpen: boolean }>`
 `;
 
 export const DropdownItemContainer = styled.div`
-   display: flex;
-   flex-direction: row;
-   align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-   .text {
-       margin-left: 10px;
-   }
+  .text {
+    margin-left: 10px;
+  }
+`;
+
+export const RightComponentContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  flex: 1 0 auto;
+  align-items: center;
 `;

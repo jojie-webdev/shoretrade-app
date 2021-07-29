@@ -25,6 +25,7 @@ import {
   NewIndicatorContainer,
   MoreMenuContainer,
   DropdownItemContainer,
+  RightComponentContainer,
 } from './NotificationItem.style';
 
 const MoreMenu = () => {
@@ -32,6 +33,9 @@ const MoreMenu = () => {
   const handlePress = () => {
     setIsOpen(!isOpen);
   };
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
+  const defaultColor = isSeller ? 'noshade' : 'shade9';
 
   return (
     <MoreMenuContainer isOpen={isOpen}>
@@ -40,7 +44,7 @@ const MoreMenu = () => {
           <More />
         </Touchable>
         <div className="dropdown-container">
-          <div className="dropdown-menu animated" id="notification-dropdown">
+          <div className="dropdown-menu">
             <div className="dropdown-header">
               <span className="triangle"></span>
             </div>
@@ -49,7 +53,7 @@ const MoreMenu = () => {
                 <DropdownItemContainer>
                   <Touchable onPress={() => console.log('mark as read')}>
                     <CheckCircle />
-                    <Typography className="text" color="noshade">
+                    <Typography className="text" color={defaultColor}>
                       Mark as Read
                     </Typography>
                   </Touchable>
@@ -57,7 +61,7 @@ const MoreMenu = () => {
                 <DropdownItemContainer>
                   <Touchable onPress={() => console.log('Delete')}>
                     <FolderDownload />
-                    <Typography className="text" color="noshade">
+                    <Typography className="text" color={defaultColor}>
                       Delete Notification
                     </Typography>
                   </Touchable>
@@ -119,9 +123,11 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
           {date?.format('ddd, hA') || '--'}
         </Typography>
       </div>
+      <RightComponentContainer>
+        {!isRead && <NewIndicator />}
+        <MoreMenu />
+      </RightComponentContainer>
 
-      {!isRead && <NewIndicator />}
-      <MoreMenu />
     </Container>
   );
 };

@@ -15,6 +15,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
+import NotificationMenu from 'components/module/NotificationMenu';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Container } from 'react-grid-system';
@@ -121,33 +122,6 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
   );
 };
 
-const Notifs = ({ notifs }: { notifs: number }) => {
-  const theme = useTheme();
-  const history = useHistory();
-
-  const isMobile = useMediaQuery({
-    query: BREAKPOINTS.sm,
-  });
-
-  return (
-    <div className="notif-container">
-      <div
-        className="icon-wrapper"
-        onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
-      >
-        <Bell fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
-        {notifs > 0 && (
-          <CheckoutCount>
-            <Typography color="noshade" variant="small" weight="900">
-              {notifs}
-            </Typography>
-          </CheckoutCount>
-        )}
-      </div>
-    </div>
-  );
-};
-
 const Header = ({
   pageTitle,
   userData,
@@ -196,7 +170,7 @@ const Header = ({
           {!onBack && theme.appType === 'buyer' && (
             <Cart cartItems={cartItems} />
           )}
-          <Notifs notifs={1} />
+          {/* <Notifs notifs={1} /> */}
         </HeaderRightContent>
       }
     />
@@ -261,7 +235,7 @@ const Header = ({
           )}
         </Touchable>
         {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
-        <Notifs notifs={1} />
+        <NotificationMenu notifTotal={3} />
       </HeaderRightContent>
     </HeaderContainer>
   );

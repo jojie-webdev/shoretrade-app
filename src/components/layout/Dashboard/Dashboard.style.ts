@@ -336,6 +336,7 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   flex-direction: row;
   margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '45px')};
   margin-bottom: 24px;
+  z-index: 10;
   align-items: center;
   justify-content: space-between;
   width: ${(props) =>
