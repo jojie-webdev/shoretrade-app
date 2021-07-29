@@ -113,6 +113,7 @@ export const BUYER_ROUTES = {
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
   ALL_LISTING: `${BUYER_ROOT}/all-listing`,
+  NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

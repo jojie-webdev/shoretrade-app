@@ -5,10 +5,11 @@ export const Container = styled.div<{ isRead: boolean }>`
   height: 100%;
   max-height: 200px;
   min-height: 72px;
+  width: 100%;
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   width: 100%;
-  max-width: 375px;
+  // max-width: 375px;
   box-shadow: 0 4px 12px rgba(41, 43, 50, 0.04);
   border-radius: 8px;
   dispaly: flex;
