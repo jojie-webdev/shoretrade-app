@@ -1,11 +1,12 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ isRead: boolean }>`
+export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
   display: flex;
   height: 100%;
   max-height: 200px;
   min-height: 72px;
   width: 100%;
+  margin-bottom: ${({ fullView }) => (fullView ? '10px' : '0')};
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   width: 100%;

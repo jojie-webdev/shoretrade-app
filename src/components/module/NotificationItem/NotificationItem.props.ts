@@ -3,6 +3,7 @@ export interface NotificationItemProps {
   isRead: boolean;
   content: string;
   date: moment.Moment | null;
+  fullView?: boolean;
 }
 
 export type NotificationType =

@@ -12,6 +12,8 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { Content } from 'components/layout/AuthContainer/AuthContainer.style';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -28,10 +30,19 @@ import {
   RightComponentContainer,
 } from './NotificationItem.style';
 
-const MoreMenu = () => {
+const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const history = useHistory();
+  const { fullView, notifsRoute } = props;
+
   const handlePress = () => {
-    setIsOpen(!isOpen);
+    if (!fullView) {
+      // go to notifcations page
+      history.push(notifsRoute);
+    } else {
+      setIsOpen(!isOpen);
+    }
   };
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -88,10 +99,14 @@ const NewIndicator = () => {
 
 const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
-  const { type, isRead, content, date } = props;
+  const { type, isRead, content, date, fullView } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
+  const notifsRoute =
+    theme.appType === 'buyer'
+      ? BUYER_ROUTES.NOTIFICATIONS
+      : BUYER_ROUTES.NOTIFICATIONS;
 
   const NotifAvatar = (props: NotifAvatarProps) => {
     let icon: JSX.Element;
@@ -106,7 +121,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   };
 
   return (
-    <Container isRead={isRead}>
+    <Container isRead={isRead} fullView={fullView}>
       <div className="horizontal-style-container" />
       <NotifAvatar type="account" />
       <div className="content-container">
@@ -126,7 +141,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       </div>
       <RightComponentContainer>
         {!isRead && <NewIndicator />}
-        <MoreMenu />
+        <MoreMenu notifsRoute={notifsRoute} fullView={fullView} />
       </RightComponentContainer>
     </Container>
   );

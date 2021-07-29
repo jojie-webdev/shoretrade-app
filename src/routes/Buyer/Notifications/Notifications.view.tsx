@@ -19,6 +19,21 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         handleSelect={(i) => setActiveTab(i)}
       ></Tab>
       <NotificationItemView
+        fullView
+        type="account"
+        content="Test"
+        date={moment()}
+        isRead={false}
+      />
+      <NotificationItemView
+        fullView
+        type="account"
+        content="Test"
+        date={moment()}
+        isRead={false}
+      />
+      <NotificationItemView
+        fullView
         type="account"
         content="Test"
         date={moment()}

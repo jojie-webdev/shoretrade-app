@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+import Button from 'components/base/Button';
 import { Bell } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
@@ -17,12 +19,15 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
-import Button from 'components/base/Button';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
   const isSeller = theme.appType === 'seller';
+  const notifsRoute =
+    theme.appType === 'buyer'
+      ? BUYER_ROUTES.NOTIFICATIONS
+      : BUYER_ROUTES.NOTIFICATIONS;
 
   const { notifTotal } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -83,7 +88,12 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                 </DropdownItemContainer>
               </div>
               <div className="menu-footer">
-                <Button size="sm" variant="outline" text="See All" />
+                <Button
+                  onClick={() => history.push(notifsRoute)}
+                  size="sm"
+                  variant="outline"
+                  text="See All"
+                />
               </div>
             </div>
           </div>

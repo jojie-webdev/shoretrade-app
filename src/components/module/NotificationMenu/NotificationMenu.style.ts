@@ -94,7 +94,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8px;
+            padding: 24px;
             background: ${({ theme }) =>
               theme.appType === 'seller'
                 ? theme.grey.shade10
