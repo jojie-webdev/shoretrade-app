@@ -3,11 +3,16 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   &:hover {
     opacity: 0.5;
+  }
+
+  .box-group {
+    display: inline-flex;
+    flex-direction:row;
+
   }
 
   @media (hover: none) and (pointer: coarse) {

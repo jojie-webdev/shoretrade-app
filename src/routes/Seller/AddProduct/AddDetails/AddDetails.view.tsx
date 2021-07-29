@@ -300,7 +300,6 @@ const AddDetails = ({
               label="This item is always available"
               disabled={editableListing?.isAquafuture}
               error={pathOr('', ['alwaysAvailable', '0'], errors)}
-              style={{ flexWrap: 'wrap' }}
             />
           </Col>
         </Row>
