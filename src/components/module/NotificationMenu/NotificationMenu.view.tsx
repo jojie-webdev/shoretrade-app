@@ -4,7 +4,7 @@ import Button from 'components/base/Button';
 import { Bell } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import { BUYER_ROUTES } from 'consts';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
@@ -27,7 +27,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const notifsRoute =
     theme.appType === 'buyer'
       ? BUYER_ROUTES.NOTIFICATIONS
-      : BUYER_ROUTES.NOTIFICATIONS;
+      : SELLER_ROUTES.NOTIFICATIONS;
 
   const { notifTotal } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);

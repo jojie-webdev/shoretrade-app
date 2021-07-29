@@ -106,7 +106,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const notifsRoute =
     theme.appType === 'buyer'
       ? BUYER_ROUTES.NOTIFICATIONS
-      : BUYER_ROUTES.NOTIFICATIONS;
+      : SELLER_ROUTES.NOTIFICATIONS;
 
   const NotifAvatar = (props: NotifAvatarProps) => {
     let icon: JSX.Element;
