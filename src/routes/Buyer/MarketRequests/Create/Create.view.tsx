@@ -267,7 +267,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       </TypographyView>
     );
   };
-  console.log(selectedSize);
+
   const DetailsComponent = () => {
     const measurement = formatMeasurementUnit(listingFormData?.measurementUnit);
     return (
