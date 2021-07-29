@@ -15,7 +15,8 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 0;
+    border: 1px solid ${({ theme }) =>
+      theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade10}; ;
     background: ${({ theme }) =>
       theme.appType === 'buyer' ? theme.grey.shade2 : theme.grey.shade8};
     border-radius: 12px;

@@ -1,6 +1,6 @@
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isRead: boolean }>`
   display: flex;
   height: 100%;
   max-height: 200px;
@@ -17,7 +17,8 @@ export const Container = styled.div`
   position: relative;
 
   .horizontal-style-container {
-    background-color: ${({ theme }) => theme.brand.primary};
+    background-color: ${({ theme, isRead }) =>
+      isRead ? '' : theme.brand.primary};
     height: inherit;
     width: 4px;
     left: 0;

@@ -106,7 +106,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container isRead={isRead}>
       <div className="horizontal-style-container" />
       <NotifAvatar type="account" />
       <div className="content-container">
@@ -128,7 +128,6 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
         {!isRead && <NewIndicator />}
         <MoreMenu />
       </RightComponentContainer>
-
     </Container>
   );
 };

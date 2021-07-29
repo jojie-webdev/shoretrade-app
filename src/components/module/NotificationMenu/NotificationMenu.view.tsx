@@ -77,7 +77,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     type="account"
                     content="Test"
                     date={moment()}
-                    isRead={false}
+                    isRead={true}
                   />
                 </DropdownItemContainer>
               </div>
