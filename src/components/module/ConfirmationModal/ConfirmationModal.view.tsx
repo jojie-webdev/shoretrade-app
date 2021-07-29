@@ -30,6 +30,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           variant="title4"
           color={isSeller ? 'noshade' : 'shade8'}
           className="title"
+          style={{ fontFamily: 'Media Sans' }}
         >
           {title}
         </Typography>
@@ -45,13 +46,13 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
         </div>
         <div className="actions-container">
           <Button
-            style={{ flex: 1, marginRight: 8 }}
+            style={{ flex: 1, marginRight: 4, maxWidth: 88, borderRadius: 12 }}
             variant="outline"
             text={cancelText || 'Cancel'}
             onClick={cancel || modalProps.onClickClose}
           />
           <Button
-            style={{ flex: 1, marginLeft: 8 }}
+            style={{ flex: 1, marginLeft: 8, maxWidth: 88, borderRadius: 12 }}
             variant="primary"
             text={actionText || 'OK'}
             onClick={() => {

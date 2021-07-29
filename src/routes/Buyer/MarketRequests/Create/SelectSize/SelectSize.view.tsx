@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { ArrowLeft } from 'components/base/SVG';
@@ -16,6 +17,16 @@ import theme from 'utils/Theme';
 import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
+  TitleContainer,
+  RequestRow,
+  RequestDetailsContainer,
+  DetailsContainer,
+  DetailsHeaderContainer,
+  MainContainer,
+  DetailsContentContainer,
+  ButtonContainer,
+  ProceedButton,
+  PreviousButton,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
 import {
@@ -161,6 +172,9 @@ const SelectSizeView = (props: SelectSizeProps) => {
     selectedSize,
     listingFormData,
     setStep,
+    detailsListComponent,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
 
   const [ungraded, setUngraded] = useState(false);
@@ -178,10 +192,11 @@ const SelectSizeView = (props: SelectSizeProps) => {
     setSelectedSize({
       from: sizeToFrom.from,
       to: sizeToFrom.to,
-      items: sizeItemChecked.items,
+      items: sizeItemChecked.items.filter((i) => i !== ''),
       ungraded: sizeToFrom.from === '' && sizeItemChecked.items.length < 1,
     });
     setStep(4);
+    setDidFinishStep(3);
   };
 
   const handleSetFromSize = (value: string) => {
@@ -212,66 +227,118 @@ const SelectSizeView = (props: SelectSizeProps) => {
   return (
     <>
       <CreateRequestHeaderContainer>
-        <div>
-          {stepCountComponent}
-          <div className="title-container">
-            <Touchable
-              className="back-button-container"
-              onPress={() => onBack()}
+        <MainContainer>
+          <Breadcrumbs
+            color="shade5"
+            sections={[
+              {
+                label: 'Category',
+                onClick: () => {
+                  if (didFinishStep >= 1) {
+                    onBack(1);
+                  }
+                },
+                isDone: didFinishStep >= 1,
+              },
+              {
+                label: 'Specifications',
+                onClick: () => {
+                  if (didFinishStep >= 2) {
+                    onBack(2);
+                  }
+                },
+                isDone: didFinishStep >= 2,
+              },
+              {
+                label: 'Size',
+              },
+              {
+                label: 'Quantity',
+                onClick: () => {
+                  if (didFinishStep >= 4) {
+                    onBack(4);
+                  }
+                },
+                isDone: didFinishStep >= 4,
+              },
+              {
+                label: 'Summary',
+                onClick: () => {
+                  if (didFinishStep >= 5) {
+                    onBack(5);
+                  }
+                },
+                isDone: didFinishStep >= 5,
+              },
+            ]}
+          />
+          <TitleContainer>
+            <Typography
+              variant="title5"
+              weight="500"
+              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
             >
-              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
-            </Touchable>
-            <Typography variant="title5" weight="500">
-              Select Size
+              {listingFormData?.type.name}
             </Typography>
-          </div>
-        </div>
+            <Typography variant="label" weight="400" color="shade7">
+              Here you can detail the size you want for this product. Simply
+              enter your desired size in the boxes and press Proceed to
+              continue.
+            </Typography>
+          </TitleContainer>
+        </MainContainer>
       </CreateRequestHeaderContainer>
-      <ContainerWithCategoryImagePreview>
-        <CategoryImagePreviewView
-          categoryName={selectedCategory.name}
-          imgSrc={listingFormData?.defaultPhoto}
-          caption="Select your product size for this request."
-          marketBoard
-        />
-        <SizeFormContainer>
-          {listingFormData ? (
-            <>
-              <SizeInput
-                metric={listingFormData.metric.name}
-                fromSize={sizeToFrom.from}
-                toSize={sizeToFrom.to}
-                disabled={false}
-                setToSize={(v: any) => handleSetToSize(v)}
-                setFromSize={(v: any) => handleSetFromSize(v)}
-                sizeItemChecked={sizeItemChecked}
-                setSizeItemChecked={setSizeItemChecked}
-              />
-              <Hidden xs>
-                <Button
-                  onClick={() => handleSubmit()}
-                  className="submit-btn"
-                  text="Select Size"
-                  disabled={disabledNext()}
-                  variant="primary"
+      <RequestRow>
+        <ContainerWithCategoryImagePreview>
+          <SizeFormContainer>
+            {listingFormData ? (
+              <>
+                <SizeInput
+                  metric={listingFormData.metric.name}
+                  fromSize={sizeToFrom.from}
+                  toSize={sizeToFrom.to}
+                  disabled={false}
+                  setToSize={(v: any) => handleSetToSize(v)}
+                  setFromSize={(v: any) => handleSetFromSize(v)}
+                  sizeItemChecked={sizeItemChecked}
+                  setSizeItemChecked={setSizeItemChecked}
                 />
-              </Hidden>
-              <MobileFooter>
-                <Button
-                  onClick={() => handleSubmit()}
-                  className="submit-btn"
-                  text="Select Size"
-                  disabled={disabledNext()}
-                  variant="primary"
-                  takeFullWidth
-                />
-              </MobileFooter>
-            </>
-          ) : (
-            ''
-          )}
-        </SizeFormContainer>
-      </ContainerWithCategoryImagePreview>
+                <Hidden xs>
+                  <ButtonContainer>
+                    <PreviousButton
+                      text="<"
+                      variant="outline"
+                      onClick={() => onBack(2)}
+                    />
+                    <ProceedButton
+                      onClick={() => handleSubmit()}
+                      className="submit-btn"
+                      text="Proceed"
+                      disabled={disabledNext()}
+                      variant="primary"
+                    />
+                  </ButtonContainer>
+                </Hidden>
+                <MobileFooter>
+                  <Button
+                    onClick={() => handleSubmit()}
+                    className="submit-btn"
+                    text="Select Size"
+                    disabled={disabledNext()}
+                    variant="primary"
+                    takeFullWidth
+                  />
+                </MobileFooter>
+              </>
+            ) : (
+              ''
+            )}
+          </SizeFormContainer>
+        </ContainerWithCategoryImagePreview>
+        <RequestDetailsContainer>
+          <DetailsContainer>{detailsListComponent}</DetailsContainer>
+        </RequestDetailsContainer>
+      </RequestRow>
     </>
   );
 };

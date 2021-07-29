@@ -9,6 +9,20 @@ import {
   CommentsAlt,
   EnvolopeAlt,
   Desktop,
+  NewWave51,
+  WaveNew31,
+  Cross7,
+  ShoretradeAnchor,
+  Group204,
+  Group194,
+  Group195,
+  Group196,
+  Wave51,
+  Wave31,
+  Wave41,
+  TexturedCrab,
+  TexturedSwordFish,
+  TexturedOctopus,
   Sync,
   CaviarHero,
   OctopusHero,
@@ -186,6 +200,48 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Desktop">
           <Desktop width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="NewWave51">
+          <NewWave51 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="WaveNew31">
+          <WaveNew31 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Cross7">
+          <Cross7 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ShoretradeAnchor">
+          <ShoretradeAnchor width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group204">
+          <Group204 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group194">
+          <Group194 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group195">
+          <Group195 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Group196">
+          <Group196 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave51">
+          <Wave51 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave31">
+          <Wave31 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Wave41">
+          <Wave41 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="TexturedCrab">
+          <TexturedCrab width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="TexturedSwordFish">
+          <TexturedSwordFish width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="TexturedOctopus">
+          <TexturedOctopus width={30} height={30} />
         </Wrapper>
         <Wrapper label="Sync">
           <Sync width={30} height={30} />

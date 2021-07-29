@@ -98,6 +98,7 @@ import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
+import editableMarketRequest from './editableMarketRequest';
 
 export default (routeHistory: History) =>
   combineReducers(
@@ -200,6 +201,7 @@ export default (routeHistory: History) =>
         socketGetListing,
         socketGetListingsByType,
         getNotificationsSettings,
+        editableMarketRequest,
       }).sort()
     )
   );

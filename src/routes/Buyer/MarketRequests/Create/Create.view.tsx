@@ -2,7 +2,24 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Crab, AnchorHero, CaviarHero, OctopusHero } from 'components/base/SVG';
+import {
+  Crab,
+  AnchorHero,
+  CaviarHero,
+  OctopusHero,
+  TexturedCrab,
+  TexturedOctopus,
+  TexturedSwordFish,
+  Wave41,
+  Group196,
+  Wave31,
+  Group195,
+  Wave51,
+  Group194,
+  Cross7,
+  NewWave51,
+  WaveNew31,
+} from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -19,11 +36,27 @@ import {
   HeroContainer,
   ProgressBar,
   HeaderContainer,
+  GetStartedButton,
+  TopAbsoContainer,
+  TopGroupContainer,
+  BottomAbsoContainer,
+  BottomGroupContainer,
+  LeftAbsoContainer,
+  LeftGroupContainer,
+  DetailsContentContainer,
+  DetailsHeaderContainer,
+  DetailsDataContainer,
+  MultipleBottomGroupContainer,
+  MultipleLeftAbsoContainer,
+  MultipleLeftGroupContainer,
+  MultipleTopAbsoContainer,
+  MultipleTopGroupContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {
@@ -54,6 +87,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     addressOptions,
     selectedAddress,
     setSelectedAddress,
+    updateCategory,
+    didFinishStep,
+    setDidFinishStep,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -69,6 +105,27 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const onSubmit = () => {
     onSubmitRequest();
   };
+
+  const agreementGuides = [
+    {
+      number: 1,
+      title:
+        'Search in our Database and choose between more than 50+  Categories ',
+      heroImage: <TexturedOctopus />,
+    },
+    {
+      number: 2,
+      title:
+        'Select specifications, size, quantity and send your request to the market',
+      heroImage: <TexturedSwordFish />,
+    },
+    {
+      number: 3,
+      title:
+        'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade ',
+      heroImage: <TexturedCrab />,
+    },
+  ];
 
   if (!termsAgreement) {
     return (
@@ -110,13 +167,35 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           </Visible>
           {/* END MOBILE */}
           <Hidden xs>
+            <TopAbsoContainer>
+              <Wave41 />
+            </TopAbsoContainer>
+            <TopGroupContainer>
+              <Group196 />
+            </TopGroupContainer>
+            <BottomAbsoContainer>
+              <Wave31 />
+            </BottomAbsoContainer>
+            <BottomGroupContainer>
+              <Group195 />
+            </BottomGroupContainer>
+            <LeftAbsoContainer>
+              <Wave51 />
+            </LeftAbsoContainer>
+            <LeftGroupContainer>
+              <Group194 />
+            </LeftGroupContainer>
             <Row gutterWidth={40}>
               <Col>
                 <HeaderContainer>
-                  <TypographyView variant="title5">
+                  <TypographyView variant="label" color="shade7">
                     Can&apos;t find your product?
                   </TypographyView>
-                  <TypographyView weight="700" variant="title5">
+                  <TypographyView
+                    weight="700"
+                    variant="title5"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
                     Create a new Market Request
                   </TypographyView>
                 </HeaderContainer>
@@ -124,27 +203,17 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Row>
             <div>
               <Row gutterWidth={24}>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={1}
-                    title="Search in our Database and choose between more than 50+  Categories "
-                    heroImage={<AnchorHero />}
-                  />
-                </Col>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={2}
-                    title="Select specifications, size, quantity and send your request to the market"
-                    heroImage={<CaviarHero />}
-                  />
-                </Col>
-                <Col sm={12} md={12} lg={12} xl={4}>
-                  <NumberedHeroView
-                    number={3}
-                    title="Check and negotiate offers from more than 10.000+ sellers from ShoreTrade"
-                    heroImage={<OctopusHero />}
-                  />
-                </Col>
+                {agreementGuides.map((item) => {
+                  return (
+                    <Col key={item.number} sm={12} md={12} lg={12} xl={4}>
+                      <NumberedHeroView
+                        number={item.number}
+                        title={item.title}
+                        heroImage={item.heroImage}
+                      />
+                    </Col>
+                  );
+                })}
               </Row>
             </div>
           </Hidden>
@@ -173,8 +242,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               </span>
             </Typography>
           </div>
-          <Button
-            takeFullWidth
+          <GetStartedButton
             className="btn-get-started"
             disabled={!checkAgree}
             variant="primary"
@@ -200,6 +268,128 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     );
   };
 
+  const DetailsComponent = () => {
+    const measurement = formatMeasurementUnit(listingFormData?.measurementUnit);
+    return (
+      <>
+        <DetailsHeaderContainer>
+          <Typography
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 42,
+            }}
+          >
+            Summary
+          </Typography>
+        </DetailsHeaderContainer>
+        <DetailsContentContainer>
+          <Typography
+            color="shade6"
+            variant="label"
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 36,
+            }}
+          >
+            Specs:
+          </Typography>
+          <DetailsDataContainer>
+            <Cross7 />
+            <Typography
+              color="shade9"
+              variant="label"
+              style={{
+                fontFamily: 'Wilderness',
+                fontSize: 42,
+                marginLeft: 8.5,
+                marginTop: -8,
+              }}
+            >
+              {selectedSpecifications.items.map((i, index) => {
+                return index === selectedSpecifications.items.length - 1
+                  ? `${i.label} `
+                  : `${i.label}, `;
+              })}
+            </Typography>
+          </DetailsDataContainer>
+        </DetailsContentContainer>
+        {(selectedSize.items[0] !== '' || selectedSize.from) && (
+          <DetailsContentContainer>
+            <Typography
+              color="shade6"
+              variant="label"
+              style={{
+                marginBottom: 16,
+                fontFamily: 'Wilderness',
+                fontSize: 36,
+              }}
+            >
+              Size:
+            </Typography>
+            <DetailsDataContainer>
+              <Cross7 />
+              <Typography
+                color="shade9"
+                variant="label"
+                style={{
+                  fontFamily: 'Wilderness',
+                  fontSize: 42,
+                  marginLeft: 8.5,
+                  marginTop: -8,
+                }}
+              >
+                {selectedSize.items[0] !== '' && !selectedSize.from
+                  ? selectedSize.items.map((i, index) => {
+                      return index === selectedSpecifications.items.length - 1
+                        ? `${i} `
+                        : `${i}, `;
+                    })
+                  : `${selectedSize.from}${measurement} ${
+                      selectedSize.to && `- ${selectedSize.to}${measurement}`
+                    }`}
+              </Typography>
+            </DetailsDataContainer>
+          </DetailsContentContainer>
+        )}
+        {selectedQuantity.from && (
+          <DetailsContentContainer>
+            <Typography
+              color="shade6"
+              variant="label"
+              style={{
+                marginBottom: 16,
+                fontFamily: 'Wilderness',
+                fontSize: 36,
+              }}
+            >
+              Quantity:
+            </Typography>
+            <DetailsDataContainer>
+              <Cross7 />
+              <Typography
+                color="shade9"
+                variant="label"
+                style={{
+                  fontFamily: 'Wilderness',
+                  fontSize: 42,
+                  marginLeft: 8.5,
+                  marginTop: -8,
+                }}
+              >
+                {`${selectedQuantity.from}${measurement} ${
+                  selectedQuantity.to &&
+                  `- ${selectedQuantity.to}${measurement}`
+                }`}
+              </Typography>
+            </DetailsDataContainer>
+          </DetailsContentContainer>
+        )}
+      </>
+    );
+  };
+
   const StepView = (props: { step: CreateRequestStep }) => {
     switch (step.current) {
       case 1:
@@ -219,6 +409,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             setSearchTerm={setSearchTerm}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            updateCategory={updateCategory}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -234,6 +427,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedQuantity={selectedQuantity}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -248,6 +444,11 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedSpecifications={selectedSpecifications}
+            selectedQuantity={selectedQuantity}
+            detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -263,6 +464,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             onBack={onBack}
             step={step}
             stepCountComponent={<StepCountComponent step={step} />}
+            selectedSpecifications={selectedSpecifications}
+            detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -282,6 +487,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             addressOptions={addressOptions}
             selectedAddress={selectedAddress}
             onChangeAddress={(a) => setSelectedAddress(a)}
+            detailsListComponent={<DetailsComponent />}
+            didFinishStep={didFinishStep}
+            setDidFinishStep={setDidFinishStep}
           />
         );
 
@@ -294,7 +502,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     <>
       <ConfirmationModal
         isOpen={sendConfModalisOpen}
-        title="Your request is ready to be sent to the market"
+        title="Let us confrim your Market Request"
         description="Are you sure you want to send this request to the market?"
         action={() => {
           onSubmit();
@@ -302,9 +510,29 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         actionText="YES"
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
+        style={{ width: 686, borderRadius: 12 }}
       />
-      <ProgressBar progress={(step.current / step.total) * 100} />
       {StepView({ step })}
+      <ProgressBar progress={(step.current / step.total) * 100} />
+      {step.current > 1 && (
+        <>
+          <MultipleTopAbsoContainer>
+            <WaveNew31 />
+          </MultipleTopAbsoContainer>
+          <MultipleTopGroupContainer>
+            <Group194 />
+          </MultipleTopGroupContainer>
+          <MultipleBottomGroupContainer>
+            <Group195 />
+          </MultipleBottomGroupContainer>
+          <MultipleLeftAbsoContainer>
+            <NewWave51 />
+          </MultipleLeftAbsoContainer>
+          <MultipleLeftGroupContainer>
+            <Group196 />
+          </MultipleLeftGroupContainer>
+        </>
+      )}
     </>
   );
 };

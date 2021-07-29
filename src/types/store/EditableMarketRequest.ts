@@ -1,5 +1,6 @@
 export type EditableMarketRequestState = Partial<{
   typeId: string;
+  typeName?: string;
   buyerId: string;
   companyId: string;
   addressId: string;

@@ -98,9 +98,9 @@ export const DIRECT_SALE_COLUMNS = [
     component: function ValidUntil(data: any, _state: any) {
       return (
         <>
-          {data?.catch_recurrence === DAILY
-            ? 'ALWAYS AVAILABLE'
-            : data?.catch_recurrence || moment(data?.end_date).format('ll')}
+          {data?.end_date
+            ? moment(data?.end_date).format('ll')
+            : 'Always Available'}
         </>
       );
     },

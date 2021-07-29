@@ -39,6 +39,7 @@ const persistConfig = {
     'uploadBulk',
     'modifyBulkUpload',
     'websocket',
+    'editableMarketRequest'
   ],
 };
 
