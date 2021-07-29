@@ -18,4 +18,5 @@ export interface CategorySelectionProps extends CreateStepProps {
   searchTerm: string;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   setSelectedCategory: Dispatch<SetStateAction<CategoryItem>>;
+  updateCategory: (v: any) => void;
 }

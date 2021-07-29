@@ -24,7 +24,7 @@ const CategoryImagePreview = (
 
   return (
     <Container img={imgSrc ? parseImageUrl(imgSrc) : undefined}>
-      {marketBoard && !isMobile && (
+      {marketBoard && !isMobile && categoryName && (
         <MarketBoardBadge>
           <Badge badgeColor={theme.grey.shade3}>
             <TypographyView variant="overline">{categoryName}</TypographyView>

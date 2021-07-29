@@ -30,9 +30,12 @@ export interface CreateRequestGeneratedProps
 
 export interface CreateStepProps {
   stepCountComponent?: ReactNode;
+  detailsListComponent?: ReactNode;
+  didFinishStep: number;
   step: CreateRequestStep;
   selectedSize: SizeOptions;
+  setDidFinishStep: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
-  onBack: () => void;
+  onBack: (step: number) => void;
   listingFormData: GetListingFormDataResponse | null;
 }
