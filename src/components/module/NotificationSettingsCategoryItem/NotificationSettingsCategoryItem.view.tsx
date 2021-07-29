@@ -31,6 +31,7 @@ const NotificationSettingsCategoryItem = (
   const { title, icon, sms, email, browser } = props;
 
   const defaultColor = isSeller ? 'noshade' : 'shade9';
+  const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
 
   const textIndicatorColor = (enabled: boolean) => {
     if (!enabled) {
@@ -91,7 +92,7 @@ const NotificationSettingsCategoryItem = (
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={browser.enabled}
             />
-            <Desktop width={48} height={48} />
+            <Desktop fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
               Push
             </Typography>
@@ -101,7 +102,7 @@ const NotificationSettingsCategoryItem = (
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={email.enabled}
             />
-            <EnvelopeAlt width={48} height={48} />
+            <EnvelopeAlt fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
               Email
             </Typography>
@@ -111,7 +112,7 @@ const NotificationSettingsCategoryItem = (
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={sms.enabled}
             />
-            <CommentsAlt width={48} height={48} />
+            <CommentsAlt fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
               SMS
             </Typography>

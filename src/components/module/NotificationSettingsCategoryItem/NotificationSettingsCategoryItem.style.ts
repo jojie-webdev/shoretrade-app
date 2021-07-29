@@ -15,12 +15,12 @@ export const CustomCheckBoxContainer = styled.div`
   justify-content: center;
 
   background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.noshade};
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
 `;
 
 export const OptionsContainer = styled.div`
   background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade1};
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   padding: 16px;
   display: flex;
   align-items: center;

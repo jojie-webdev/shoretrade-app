@@ -32,7 +32,8 @@ export const Container = styled.div`
 `;
 
 export const NotifAvatarContainer = styled.div`
-  background-color: ${({ theme }) => theme.grey.shade8};
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade2};
   height: 52px;
   width: 52px;
   min-width: 52px;

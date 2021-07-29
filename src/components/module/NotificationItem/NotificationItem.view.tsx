@@ -86,24 +86,25 @@ const NewIndicator = () => {
   );
 };
 
-const NotifAvatar = (props: NotifAvatarProps) => {
-  let icon: JSX.Element;
-  switch (props.type) {
-    case 'account':
-      icon = <Account />;
-      break;
-    default:
-      icon = <Account />;
-  }
-
-  return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
-};
-
 const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
   const { type, isRead, content, date } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
+  const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
+
+  const NotifAvatar = (props: NotifAvatarProps) => {
+    let icon: JSX.Element;
+    switch (props.type) {
+      case 'account':
+        icon = <Account fill={iconColor} />;
+        break;
+      default:
+        icon = <Account fill={iconColor} />;
+    }
+    return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
+  };
+
   return (
     <Container>
       <div className="horizontal-style-container" />

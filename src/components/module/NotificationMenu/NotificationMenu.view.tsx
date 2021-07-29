@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Bell } from 'components/base/SVG';
+import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -16,11 +17,11 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
-import Touchable from 'components/base/Touchable';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
+  const isSeller = theme.appType === 'seller';
 
   const { notifTotal } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -32,11 +33,21 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const isMobile = useMediaQuery({
     query: BREAKPOINTS.sm,
   });
+
+  const bellColor = () => {
+    if (isMobile) {
+      return theme.grey.noshade;
+    } else if (isSeller) {
+      return theme.grey.noshade;
+    }
+    return theme.grey.shade9;
+  };
+
   return (
     <Container isOpenMenu={isOpenMenu}>
       <div className="icon-wrapper">
         <Touchable onPress={() => handleBellClick()}>
-          <Bell fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
+          <Bell fill={bellColor()} />
           {notifTotal > 0 && (
             <NotifCount>
               <Typography color="noshade" variant="small" weight="900">

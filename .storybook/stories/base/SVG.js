@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  DashboardOutlined,
   FolderDownload,
   CheckCircle,
   More,
@@ -175,6 +176,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="DashboardOutlined">
+          <DashboardOutlined width={30} height={30} />
+        </Wrapper>
         <Wrapper label="FolderDownload">
           <FolderDownload width={30} height={30} />
         </Wrapper>
