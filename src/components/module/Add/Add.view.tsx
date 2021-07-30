@@ -49,9 +49,9 @@ const Add = (props: AddProps): JSX.Element => {
 
   const invalidText = () => {
     if (enableImagePicker) {
-      return 'Please enter a valid image file (ie. jpg, png)';
+      return 'Please enter a valid image file (i.e. jpg, png)';
     } else if (enableFilePicker) {
-      return 'Please enter a valid image or document file (ie. jpg, png, pdf)';
+      return 'Please enter a valid image or document file (i.e. jpg, png, pdf)';
     }
     return 'Please enter a valid file format';
   };
