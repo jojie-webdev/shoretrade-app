@@ -4,6 +4,9 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: node:12.22.1
+options:
+  docker: true
+  size: 2x
 
 pipelines:
   branches:
@@ -13,6 +16,8 @@ pipelines:
           deployment: Staging
           caches:
             - node
+          services:
+            - docker
           script:
             - npm install --silent
             - CI=false npm run build:staging
@@ -55,3 +60,8 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: 'ap-southeast-2'
                 DISTRIBUTION_ID: $CLOUDFRONT_DISTRIBUTION_ID
+
+definitions:
+  services:
+    docker:
+      memory: 4096
