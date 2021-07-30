@@ -164,3 +164,13 @@ export const TabletHeaderSortContainer = styled.div`
     width: 150px;
   }
 `;
+
+export const MobileResults = styled.div`
+  margin-bottom: 12px;
+  color: ${theme.grey.shade6};
+  font-size: 14px;
+
+  .total-count {
+    color: ${theme.grey.shade9};
+  }
+`;
