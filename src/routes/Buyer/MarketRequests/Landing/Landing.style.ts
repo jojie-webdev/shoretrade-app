@@ -28,58 +28,96 @@ export const MarketRequestsContainer = styled.div`
 `;
 
 export const MarketRequestItemInteraction = styled(Interactions)`
+  justify-content: initial;
   margin-bottom: 16px;
   border-radius: 8px;
-  padding: 16px 32px 16px 16px;
+  padding: 8px;
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px;
+  }
+  padding-right: 12px;
   align-items: center;
+
+  .left-content {
+    flex-grow: 2;
+  }
 `;
 
 export const MarketRequestItemContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 
   .thumbnail-container {
     margin-right: 1rem;
 
     img {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
+      @media ${BREAKPOINTS['sm']} {
+        width: 40px;
+        height: 40px;
+      }
     }
+  }
+
+  .sub-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .info-container {
     display: flex;
-    flex-direction: column;
-    flex: 0 1 auto;
+    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
 
     .time {
       font-size: ${pxToRem(12)};
       margin: 4px 0px;
       line-height: 1rem;
     }
-    .offers-badge {
+
+    .offers-badge,
+    .offers-status {
       margin: 0;
       width: fit-content;
+      border-radius: 8px;
+    }
+
+    .offers-status {
+    }
+
+    .delete-button {
+      background-color: ${({ theme }) => theme.grey.shade3};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+
+      path {
+        fill: ${({ theme }) => theme.grey.shade7};
+      }
     }
   }
 `;
 
-export const BadgeText = styled(TypographyView)`
-  font-size: ${pxToRem(12)};
+export const SubText = styled(TypographyView)`
+  font-family: 'Basis Grotesque Pro';
+  font-weight: 400;
+  color: ${(props) => `${props.theme.grey.shade7}`};
+`;
+
+export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
+  font-size: ${pxToRem(9)};
   text-align: center;
+  color: ${({ theme, empty }) =>
+    empty ? theme.grey.shade5 : theme.grey.shade9};
 `;
 
 export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
-`;
-
-export const SizeTextContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  .over-divider {
-    margin-left: 2px;
-    margin-right: 2px;
-  }
 `;

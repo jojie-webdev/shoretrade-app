@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
@@ -12,20 +12,23 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { Theme } from 'types/Theme';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import { MarketRequestsLandingGeneratedProps } from './Landing.props';
+import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import {
   MarketRequestsContainer,
   MarketRequestItemContainer,
   MarketRequestItemInteraction,
-  SizeTextContainer,
   StyledAlert,
   BadgeText,
+  SubText,
 } from './Landing.style';
 
 export const MarketRequestItem = (props: {
@@ -36,24 +39,67 @@ export const MarketRequestItem = (props: {
   inDetail: boolean;
   weight?: { from: number; to: number };
   measurementUnit?: string;
+  sizeFrom?: number;
+  sizeTo?: number;
+  sizeUngraded?: boolean;
+  sizeOptions?: [];
+  specifications?: [];
+  setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
+  id?: string;
+  offerStatus?: string;
 }) => {
   const {
+    id,
     inDetail,
     expiry,
     offers,
+    offerStatus,
     type,
     image,
     measurementUnit,
     weight,
+    sizeOptions,
+    specifications,
+    setItemToDelete,
   } = props;
-  const offersText = `${offers} Offers`;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const offersMarkup = () => {
+  const offerNumberBadge = () => {
+    return (
+      <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
+        <BadgeText
+          weight="bold"
+          variant="overline"
+          empty={!offers || offers === 0}
+        >
+          {`${offers > 0 ? offers : 'No'} Offers`}
+        </BadgeText>
+      </Badge>
+    );
+  };
+
+  const offerStatusBadge = () => {
+    let badgeColor = '';
+    let textColor;
+    switch (offerStatus) {
+      case 'NEW OFFER':
+        badgeColor = '#EAFFF9';
+        textColor = theme.brand.success;
+        break;
+      case 'NEGOTIATION':
+        badgeColor = '#FFFBF2';
+        textColor = theme.brand.alert;
+        break;
+    }
     if (inDetail || offers < 1) return '';
     return (
-      <Badge className="offers-badge" badgeColor={theme.brand.success}>
-        <BadgeText color="shade1" weight="bold" variant="overline">
-          {offersText}
+      <Badge className="offers-badge" badgeColor={badgeColor}>
+        <BadgeText
+          weight="bold"
+          variant="overline"
+          style={{ color: textColor }}
+        >
+          {offerStatus}
         </BadgeText>
       </Badge>
     );
@@ -65,17 +111,59 @@ export const MarketRequestItem = (props: {
         <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
-        <TypographyView variant="body">{type}</TypographyView>
-        {weight && measurementUnit ? (
-          <SizeTextContainer>
-            <TypographyView variant="body">{weight?.from}</TypographyView>
-            <TypographyView variant="body" color="shade6">
-              <span className="over-divider">/</span>
-              {weight?.to} {formatMeasurementUnit(measurementUnit)}
-            </TypographyView>
-          </SizeTextContainer>
+        <div className="sub-group">
+          <TypographyView variant="body">{type}</TypographyView>
+          <SubText variant="small">
+            {specifications && specifications.join(', ')}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">
+            {sizeOptions && `Size: ${sizeOptions.join(', ')}`}
+          </SubText>
+          <SubText variant="small">
+            {weight && `Qty: ${weight.from} - ${weight.to}`}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <SubText
+            variant="small"
+            color={expiry === 'Expired' ? 'error' : 'primary'}
+          >
+            {expiry === 'Expired' ? expiry : `${expiry} left`}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">{offerNumberBadge()}</SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">{offerStatusBadge()}</SubText>
+        </div>
+        <div className="sub-group">
+          <Button
+            iconPosition="before"
+            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+            onClick={
+              setItemToDelete &&
+              ((e) => {
+                e.stopPropagation();
+                setItemToDelete({ value: id || '' });
+              })
+            }
+            variant="primary"
+            size="sm"
+            className="delete-button"
+          />
+        </div>
+
+        {/* {weight && measurementUnit ? (
+          <TypographyView variant="body">{weight?.from}</TypographyView>
+          <TypographyView variant="body" color="shade6">
+            <span className="over-divider">/</span>
+            {weight?.to} {formatMeasurementUnit(measurementUnit)}
+          </TypographyView>
         ) : (
-          ''
+          <>{weight}</>
         )}
         {expiry === 'Expired' ? (
           <TypographyView
@@ -90,7 +178,7 @@ export const MarketRequestItem = (props: {
             {expiry}
           </TypographyView>
         )}
-        {offersMarkup()}
+        {offersMarkup()} */}
       </div>
     </MarketRequestItemContainer>
   );
@@ -158,44 +246,28 @@ const MarketRequestsLandingView = (
           </Visible>
         </Col>
       </Row>
-      <Hidden xs>
-        {marketRequests.length > 0 ? (
-          marketRequests.map((mr) => (
-            <MarketRequestItemInteraction
-              key={mr.id}
-              type={mr.offers > 0 ? 'next' : 'none'}
-              onClick={() => onClickItem(mr)}
-              leftComponent={
-                <MarketRequestItem
-                  inDetail={false}
-                  image={mr.image}
-                  offers={mr.offers}
-                  expiry={mr.expiry}
-                  type={mr.type}
-                />
-              }
-              rightComponent={
-                mr.offers > 0 ? (
-                  ''
-                ) : (
-                  <Button
-                    iconPosition="before"
-                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                    onClick={() => setItemToDelete({ value: mr.id })}
-                    text="Delete"
-                    variant="primary"
-                    size="sm"
-                    color="error"
-                  />
-                )
-              }
-            />
-          ))
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )}
-      </Hidden>
-      <Visible xs>
+      {/* <Hidden xs> */}
+      {marketRequests.length > 0 ? (
+        marketRequests.map((mr) => (
+          <MarketRequestItemInteraction
+            key={mr.id}
+            type={'next'}
+            onClick={() => onClickItem(mr)}
+            leftComponent={
+              <MarketRequestItem
+                inDetail={false}
+                setItemToDelete={setItemToDelete}
+                {...mr}
+              />
+            }
+            keepIcon
+          />
+        ))
+      ) : (
+        <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+      )}
+      {/* </Hidden> */}
+      {/* <Visible xs>
         {marketRequests.length > 0 ? (
           <SwipeableInteractionsView
             swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
@@ -204,7 +276,7 @@ const MarketRequestsLandingView = (
             data={marketRequests.map((mr) => {
               return {
                 id: mr.id,
-                type: mr.offers > 0 ? 'next' : 'none',
+                type: 'next',
                 onClick: () => onClickItem(mr),
                 leftComponent: (
                   <MarketRequestItem
@@ -221,7 +293,7 @@ const MarketRequestsLandingView = (
         ) : (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )}
-      </Visible>
+      </Visible> */}
       <MobileFooter>
         <Button
           onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
