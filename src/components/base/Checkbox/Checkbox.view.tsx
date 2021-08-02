@@ -43,7 +43,7 @@ const Checkbox = ({
           {(() => {
             if (checked) {
               if (CustomIcon) return <CustomIcon fill="#fff" />;
-              return <InnerCheck scale={scale} />;
+              return <InnerCheck disabled={disabled} scale={scale} />;
             }
           })()}
         </CustomCheckbox>
