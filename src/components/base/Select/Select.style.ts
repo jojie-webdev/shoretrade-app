@@ -19,6 +19,7 @@ export const StyledDropdown = styled(Dropdown)<{
   dark?: boolean;
   grey?: boolean;
   disabled?: boolean;
+  unbordered?: boolean;
 }>`
   .${PREFIX}Container {
     height: 48px;
@@ -93,8 +94,11 @@ export const StyledDropdown = styled(Dropdown)<{
     }
   }
 
+  
+
   .Dropdown-control {
-    border: 1px solid ${({ theme }) => theme.grey.shade9};
+    border:  ${({ theme, unbordered }) =>
+      unbordered ? '0' : `1px solid ${theme.grey.shade9}`};
     border-radius:12px;
   }
 

@@ -73,6 +73,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           className="search-address-select"
           options={addressOptions}
           label="Buying For"
+          unbordered={true}
           size="small"
           onChange={(e) => {
             if (e.value !== currentDefaultAddressId) {
