@@ -14,7 +14,11 @@ export const Container = styled.div`
 
   .error-container {
     position: absolute;
-    bottom: -30px;
+    top: 120px;
+
+    .text {
+      white-space: nowrap;
+    }
   }
 `;
 
