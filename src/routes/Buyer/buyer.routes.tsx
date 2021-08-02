@@ -36,6 +36,7 @@ import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.
 import SellerLanding from './Home/SellerLanding';
 import Listings from './Listings';
 import Market from './MarketRequests/market-requests.routes';
+import Notifications from './Notifications';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import Search from './Search';
@@ -110,6 +111,12 @@ const ROUTES: Routes = {
     title: 'Account',
     icon: AccountIcon,
     nested: true,
+  },
+  NOTIFICATIONS: {
+    path: BUYER_ROUTES.NOTIFICATIONS,
+    children: <Notifications />,
+    title: 'Notifications',
+    hideFromSidebar: true,
   },
   CHECKOUT: {
     path: BUYER_ROUTES.CHECKOUT,

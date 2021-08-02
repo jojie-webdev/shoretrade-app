@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+export { default as DashboardOutlined } from './DashboardOutlined';
+export { default as FolderDownload } from './FolderDownload';
+export { default as CheckCircle } from './CheckCircle';
+export { default as More } from './More';
 export { default as Bell } from './Bell';
 export { default as Sold } from './Sold';
 export { default as CommentsAlt } from './CommentsAlt';

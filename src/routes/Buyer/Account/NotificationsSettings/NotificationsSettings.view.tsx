@@ -26,6 +26,7 @@ const NotificationsSettingsView = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
+  const iconColor = theme.grey.shade7;
 
   return (
     <Container>
@@ -57,7 +58,7 @@ const NotificationsSettingsView = ({
           <div className="item">
             <GlobalNotificationToggle
               title="Browser"
-              icon={<Desktop />}
+              icon={<Desktop fill={iconColor} />}
               description="Push Notifications"
               onClick={() => handleGlobalToggle('browser')}
               checked={globalSettings?.browser.enabled || false}
@@ -66,7 +67,7 @@ const NotificationsSettingsView = ({
           <div className="item">
             <GlobalNotificationToggle
               title="Email"
-              icon={<EnvelopeAlt />}
+              icon={<EnvelopeAlt fill={iconColor} />}
               description="peter@shoretrade.com"
               onClick={() => handleGlobalToggle('email')}
               checked={globalSettings?.email.enabled || false}
@@ -75,7 +76,7 @@ const NotificationsSettingsView = ({
           <div className="item">
             <GlobalNotificationToggle
               title="SMS"
-              icon={<CommentsAlt />}
+              icon={<CommentsAlt fill={iconColor} />}
               description="+61 123 456 789"
               onClick={() => handleGlobalToggle('sms')}
               checked={globalSettings?.sms.enabled || false}
@@ -94,21 +95,21 @@ const NotificationsSettingsView = ({
           sms={{ enabled: false, supported: true }}
           browser={{ enabled: true, supported: true }}
           email={{ enabled: false, supported: true }}
-          icon={<Sold />}
+          icon={<Sold fill={iconColor} />}
           title="Test"
         ></NotificationSettingsCategoryItem>
         <NotificationSettingsCategoryItem
           sms={{ enabled: false, supported: true }}
           browser={{ enabled: true, supported: true }}
           email={{ enabled: false, supported: true }}
-          icon={<Sold />}
+          icon={<Sold fill={iconColor} />}
           title="Test"
         ></NotificationSettingsCategoryItem>
         <NotificationSettingsCategoryItem
           sms={{ enabled: false, supported: true }}
           browser={{ enabled: true, supported: true }}
           email={{ enabled: false, supported: true }}
-          icon={<Sold />}
+          icon={<Sold fill={iconColor} />}
           title="Test"
         ></NotificationSettingsCategoryItem>
       </CategoryItemContainer>

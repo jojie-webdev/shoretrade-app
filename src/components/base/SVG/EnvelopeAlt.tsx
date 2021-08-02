@@ -15,7 +15,7 @@ const EnvelopeAlt = (props: SVGProps): JSX.Element => {
       width={width || 25}
       height={height || 24}
       viewBox="0 0 25 24"
-      fill="none"
+      fill={fill || '#565A6A'}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

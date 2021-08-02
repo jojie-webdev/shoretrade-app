@@ -33,6 +33,7 @@ import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketPrices from './MarketPrices';
+import Notifications from './Notifications';
 import Selling from './Selling/selling.routes';
 import Sold from './Sold/sold.routes';
 
@@ -94,6 +95,12 @@ const ROUTES: Routes = {
     children: <SellerAccountRoutes />,
     icon: AccountSVG,
     nested: true,
+  },
+  NOTIFICATIONS: {
+    path: SELLER_ROUTES.NOTIFICATIONS,
+    children: <Notifications />,
+    title: 'Notifications',
+    hideFromSidebar: true,
   },
   MARKET_PRICE_DETAIL: {
     path: SELLER_ROUTES.MARKET_PRICE_DETAIL(),

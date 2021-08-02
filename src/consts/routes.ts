@@ -28,6 +28,7 @@ export const SELLER_ROUTES = {
   BULK_UPLOAD: `${SELLER_ROOT}/bulk-upload`,
   MARKET_BOARD: `${SELLER_ROOT}/market-board`,
   CREATES_MANAGEMENT: `${SELLER_ROOT}/creates-management`,
+  NOTIFICATIONS: `${SELLER_ROOT}/notifications`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -113,6 +114,7 @@ export const BUYER_ROUTES = {
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
   ALL_LISTING: `${BUYER_ROOT}/all-listing`,
+  NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {
