@@ -41,6 +41,7 @@ import {
   Preloader,
   EmptyScreen,
   TabletHeaderSortContainer,
+  MobileResults,
 } from './Listings.styles';
 
 const Search = (props: { onChange: (value: string) => void }) => {
@@ -298,10 +299,14 @@ export default function ListingView(props: ListingViewProps) {
           </div>
           <ChevronRight width={12} height={16} />
         </TableSettingsContainer>
+        <MobileResults>
+          <span className="total-count">{totalCount}</span> Results
+        </MobileResults>
         {!isEmpty && (
           <MobileTable>
-            {mobileListing.map((listing: any) => (
+            {mobileListing.map((listing: any, index) => (
               <ListingCard
+                last={index === mobileListing.length - 1}
                 key={`listing-card-${listing?.id}`}
                 data={listing}
                 columns={columns}
