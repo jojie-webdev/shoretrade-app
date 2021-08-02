@@ -3,12 +3,13 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:8.15.0
+image: node:12.22.1
 
 pipelines:
   branches:
     "staging":
       - step:
+          size: 2x
           name: FE - Build and deploy
           deployment: Staging
           caches:
@@ -55,3 +56,5 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: 'ap-southeast-2'
                 DISTRIBUTION_ID: $CLOUDFRONT_DISTRIBUTION_ID
+
+
