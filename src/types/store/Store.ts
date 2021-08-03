@@ -166,6 +166,10 @@ import {
   GetNotificationsSettingsPayload,
 } from './GetNotificationSettingsState';
 import {
+  GetNotificationsMeta,
+  GetNotificationsPayload,
+} from './GetNotificationsState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -477,4 +481,5 @@ export interface Store {
     GetNotificationsSettingsMeta,
     GetNotificationsSettingsPayload
   >;
+  getNotifications: AsyncState<GetNotificationsMeta, GetNotificationsPayload>;
 }

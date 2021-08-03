@@ -46,7 +46,8 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
-import getNotificationsSettings from './getNotificationsSettings'
+import getNotifications from './getNotifications';
+import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -169,6 +170,7 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
+  getNotifications,
   getNotificationsSettings,
 ];
 

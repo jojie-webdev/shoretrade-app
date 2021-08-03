@@ -22,7 +22,6 @@ import { useTheme } from 'utils/Theme';
 
 import {
   NotificationItemProps,
-  NotificationType,
   NotifAvatarProps,
 } from './NotificationItem.props';
 import {
