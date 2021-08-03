@@ -8,10 +8,13 @@ export interface NotificationItemProps {
 
 export type NotificationType =
   | 'account'
+  | 'inactivity'
   | 'orders'
-  | 'marketRequests'
+  | 'market-requests'
   | 'listings'
-  | 'cart';
+  | 'cart'
+  | 'rating-favourite'
+  | 'aquafutures';
 
 export interface NotifAvatarProps {
   type: NotificationType;

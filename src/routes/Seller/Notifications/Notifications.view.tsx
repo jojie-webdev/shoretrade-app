@@ -31,17 +31,45 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
       />
       <NotificationItemView
         fullView
-        type="account"
+        type="orders"
         content="Test"
         date={moment()}
         isRead={false}
       />
       <NotificationItemView
         fullView
-        type="account"
+        type="rating-favourite"
         content="Test"
         date={moment()}
         isRead={false}
+      />
+      <NotificationItemView
+        fullView
+        type="aquafutures"
+        content="Test"
+        date={moment()}
+        isRead={false}
+      />
+      <NotificationItemView
+        fullView
+        type="listings"
+        content="Test"
+        date={moment()}
+        isRead={false}
+      />
+      <NotificationItemView
+        fullView
+        type="market-requests"
+        content="Test"
+        date={moment()}
+        isRead={false}
+      />
+      <NotificationItemView
+        fullView
+        type="inactivity"
+        content="Test"
+        date={moment()}
+        isRead={true}
       />
     </Container>
   );
