@@ -37,12 +37,7 @@ const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
   const { fullView, notifsRoute } = props;
 
   const handlePress = () => {
-    if (!fullView) {
-      // go to notifcations page
-      history.push(notifsRoute);
-    } else {
-      setIsOpen(!isOpen);
-    }
+    setIsOpen(!isOpen);
   };
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
