@@ -47,8 +47,6 @@ const NotificationsSettingsView = ({
     []
   );
 
-  console.log(notifSettings);
-
   return (
     <Container>
       <Row
@@ -110,12 +108,15 @@ const NotificationsSettingsView = ({
         <CategoryItemContainer key={ns.id}>
           <div>
             <Typography color={defaultColor} variant="body">
-              {ns.id}
+              {ns.specificNotifSettingItems[0].resource
+                .split(' ')
+                .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
+                .join(' ')}
             </Typography>
           </div>
-          {ns.specificNotifSettingItems.map((i) => (
+          {ns.specificNotifSettingItems.map((i, index) => (
             <NotificationSettingsCategoryItem
-              key={i.id}
+              key={i.id + index}
               sms={i.settings.sms}
               browser={i.settings.push}
               email={i.settings.email}

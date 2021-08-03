@@ -34,8 +34,6 @@ const NotificationsSettings = (): JSX.Element => {
     (state: Store) => state.getNotificationsSettings.data
   );
 
-  console.log(getNotificationsSettings?.data.data);
-
   useEffect(() => {
     const { companyId } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
@@ -71,9 +69,7 @@ const NotificationsSettings = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(getNotificationsSettings?.data);
     if (getNotificationsSettings && getNotificationsSettings.data) {
-      console.log(getNotificationsSettings.data);
       setGlobalSettings(getNotificationsSettings.data.data.globalSettings);
     }
   }, [
