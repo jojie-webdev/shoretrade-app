@@ -9,6 +9,7 @@ import NotificationSettingsCategoryItem from 'components/module/NotificationSett
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
+import { SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -22,11 +23,31 @@ import {
 const NotificationsSettingsView = ({
   globalSettings,
   handleGlobalToggle,
+  groupedNotifSettings,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = theme.grey.shade7;
+
+  const notifSettings = Object.keys(groupedNotifSettings).reduce(
+    (
+      data: {
+        id: string;
+        specificNotifSettingItems: SpecificNotificationSettingItem[];
+      }[],
+      id
+    ) => [
+      ...data,
+      {
+        id: id,
+        specificNotifSettingItems: groupedNotifSettings[id],
+      },
+    ],
+    []
+  );
+
+  console.log(notifSettings);
 
   return (
     <Container>
@@ -84,35 +105,27 @@ const NotificationsSettingsView = ({
           </div>
         </div>
       </GlobalNotificationsContainer>
-      <CategoryItemContainer>
-        {/* TODO Map possible category seettings */}
-        <div>
-          <Typography color={defaultColor} variant="body">
-            Account
-          </Typography>
-        </div>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<Sold fill={iconColor} />}
-          title="Test"
-        ></NotificationSettingsCategoryItem>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<Sold fill={iconColor} />}
-          title="Test"
-        ></NotificationSettingsCategoryItem>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<Sold fill={iconColor} />}
-          title="Test"
-        ></NotificationSettingsCategoryItem>
-      </CategoryItemContainer>
+
+      {notifSettings.map((ns) => (
+        <CategoryItemContainer key={ns.id}>
+          <div>
+            <Typography color={defaultColor} variant="body">
+              {ns.id}
+            </Typography>
+          </div>
+          {ns.specificNotifSettingItems.map((i) => (
+            <NotificationSettingsCategoryItem
+              key={i.id}
+              sms={i.settings.sms}
+              browser={i.settings.push}
+              email={i.settings.email}
+              icon={<Sold fill={iconColor} />}
+              title={i.name}
+            ></NotificationSettingsCategoryItem>
+          ))}
+        </CategoryItemContainer>
+      ))}
+
       <FooterContainer>
         <Button text="Save" variant="primary" />
       </FooterContainer>

@@ -1,6 +1,7 @@
 import {
   CategoryStatus,
   GetNotificationsSettingsResponse,
+  SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
 
 export interface NotificationsSettingsProps {
@@ -9,6 +10,7 @@ export interface NotificationsSettingsProps {
     browser: CategoryStatus;
     email: CategoryStatus;
   };
+  groupedNotifSettings: Record<string, SpecificNotificationSettingItem[]>;
 
   handleGlobalToggle: (key: string) => void;
 }

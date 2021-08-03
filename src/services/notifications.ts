@@ -23,6 +23,77 @@ export const getNotifSettings = (
             browser: true,
             email: false,
           },
+          specificNotifications: [
+            {
+              id: '71ca8e17-8b44-4d5c-ae35-90145e396b01',
+              resource: 'ACCOUNT', // -> Account
+              name: 'New Order',
+              settings: {
+                push: {
+                  enabled: true,
+                  supported: true,
+                }, //
+                email: {
+                  enabled: false,
+                  supported: true,
+                },
+                sms: {
+                  enabled: false,
+                  supported: true,
+                },
+                inapp: {
+                  enabled: false,
+                  supported: true,
+                },
+              },
+            },
+            {
+              id: '71ca8e17-8b44-4d5c-ae35-90145e396b01',
+              resource: 'ACCOUNT', // -> Account
+              name: 'Price Alerts',
+              settings: {
+                push: {
+                  enabled: true,
+                  supported: true,
+                }, //
+                email: {
+                  enabled: false,
+                  supported: true,
+                },
+                sms: {
+                  enabled: false,
+                  supported: true,
+                },
+                inapp: {
+                  enabled: false,
+                  supported: true,
+                },
+              },
+            },
+            {
+              id: '71ca8e17-8b44-4d5c-ae35-90145e396b03',
+              resource: 'ORDERING', // -> Account
+              name: 'New Orders',
+              settings: {
+                push: {
+                  enabled: true,
+                  supported: true,
+                }, //
+                email: {
+                  enabled: false,
+                  supported: true,
+                },
+                sms: {
+                  enabled: false,
+                  supported: true,
+                },
+                inapp: {
+                  enabled: false,
+                  supported: true,
+                },
+              },
+            },
+          ],
         },
       },
     },
