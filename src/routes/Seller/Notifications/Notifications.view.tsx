@@ -5,12 +5,16 @@ import NotificationItemView from 'components/module/NotificationItem';
 import moment from 'moment';
 
 // import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
+
 import { NotificationsGeneratedProps } from './Notifications.props';
 import { Container } from './Notifications.style';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
-  // const theme = useTheme();
+  const theme = useTheme();
   const { tabItems, setActiveTab, activeTab } = props;
+  const isSeller = theme.appType === 'seller';
+  const defaultColor = isSeller ? 'shade2' : 'shade6';
   return (
     <Container>
       <Tab

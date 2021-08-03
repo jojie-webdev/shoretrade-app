@@ -7,7 +7,9 @@ export const Container = styled.div`
 
 export const TabButton = styled.button`
   border: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.grey.shade3};
+  border-bottom: 1px solid
+    ${({ theme }) =>
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.shade3};
   background: transparent;
   padding: 10px 16px 10px 16px;
   font-size: 14px;
