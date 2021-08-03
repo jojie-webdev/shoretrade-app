@@ -7,10 +7,10 @@ import { ListingCardProps } from './ListingCard.props';
 import { Container } from './ListingCard.style';
 
 export const ListingCard = (props: Partial<ListingCardProps>) => {
-  const { columns, data, tableSettings, isSelected, onSelect } = props;
+  const { columns, data, tableSettings, isSelected, onSelect, last } = props;
 
   return (
-    <Container>
+    <Container last={last}>
       <div>
         {columns
           ?.filter((column) => tableSettings?.includes(column?.selector))

@@ -9,7 +9,7 @@ export const Inputs = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 24px 0 0 0;
+  padding: 8px 0 0 0;
 `;
 
 export const ButtonContainer = styled.div`
@@ -19,7 +19,7 @@ export const ButtonContainer = styled.div`
 
 export const CheckBoxContainer = styled.div`
   display: flex;
-  padding: 1rem 0;
+  padding: 12px 0;
   align-items: flex-start;
 
   .label {
@@ -31,19 +31,21 @@ export const ComputationContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 0.6rem;
-  border-top: 1px solid;
   margin-bottom: 24px;
-  border-color: ${({ theme }) => theme.grey.shade3};
 
   .computation-item-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    margin-top: 8px;
     p {
       .indicator {
         font-weight: bold;
       }
     }
+  }
+
+  .total-delivery {
+    margin-top: 34px;
   }
 `;

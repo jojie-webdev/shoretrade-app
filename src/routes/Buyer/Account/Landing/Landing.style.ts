@@ -18,6 +18,7 @@ export const Header = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    height: 120px;
   }
 `;
 

@@ -27,6 +27,7 @@ const Select = ({ label, error, ...props }: SelectProps): JSX.Element => {
       ) : null}
       <StyledDropdown
         {...props}
+        unbordered={props.unbordered}
         controlClassName={
           props.size === 'small'
             ? `${PREFIX}ContainerThin`

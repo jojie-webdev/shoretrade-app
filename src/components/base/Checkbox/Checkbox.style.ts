@@ -11,8 +11,7 @@ export const Container = styled.div`
 
   .box-group {
     display: inline-flex;
-    flex-direction:row;
-
+    flex-direction: row;
   }
 
   @media (hover: none) and (pointer: coarse) {
@@ -35,12 +34,15 @@ export const HiddenCheckbox = styled.input`
 
 export const InnerCheck = styled.span<{
   scale: number;
+  disabled?: boolean;
 }>`
   width: 6px;
   height: 10px;
-  border: solid #fff;
+  border: solid
+    ${({ disabled, theme }) =>
+      disabled ? theme.grey.shade6 : theme.grey.noshade};
   border-radius: 2px;
-  border-width: 0 2px 2px 0;
+  border-width: 0 3px 3px 0;
   position: absolute;
   left: 50%;
   top: 40%;
@@ -60,13 +62,13 @@ export const CustomCheckbox = styled.span<{
   height: ${({ size }) => `${size}px`};
   width: ${({ size }) => `${size}px`};
   border: ${({ checked, disabled, theme, borderColor }) => {
+    if (disabled) return `1px solid ${theme.grey.shade6}`;
     if (checked) return `1px solid transparent`;
-    if (disabled) return `1px solid rgba(0, 0, 0, 0.26)`;
     return `1px solid ${borderColor || theme.brand.primary}`;
   }};
   background-color: ${({ checked, disabled, theme }) => {
+    if (disabled) return theme.grey.shade7;
     if (checked) return theme.brand.primary;
-    if (disabled) return `rgba(0, 0, 0, 0.26)`;
     return 'transparent';
   }};
   display: flex;

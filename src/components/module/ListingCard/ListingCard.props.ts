@@ -10,4 +10,5 @@ export interface ListingCardProps {
   tableSettings: string[];
   isSelected: boolean;
   onSelect: (isSelected: boolean) => void;
+  last: boolean;
 }
