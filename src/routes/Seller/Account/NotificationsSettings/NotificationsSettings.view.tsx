@@ -2,13 +2,20 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { CommentsAlt, DashboardOutlined, Desktop, EnvelopeAlt, Sold } from 'components/base/SVG';
+import {
+  CommentsAlt,
+  DashboardOutlined,
+  Desktop,
+  EnvelopeAlt,
+  Sold,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
+import { SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -22,11 +29,29 @@ import {
 const NotificationsSettingsView = ({
   globalSettings,
   handleGlobalToggle,
+  groupedNotifSettings,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = theme.grey.shade6;
+
+  const notifSettings = Object.keys(groupedNotifSettings).reduce(
+    (
+      data: {
+        id: string;
+        specificNotifSettingItems: SpecificNotificationSettingItem[];
+      }[],
+      id
+    ) => [
+      ...data,
+      {
+        id: id,
+        specificNotifSettingItems: groupedNotifSettings[id],
+      },
+    ],
+    []
+  );
   return (
     <Container>
       <Row
@@ -83,35 +108,28 @@ const NotificationsSettingsView = ({
           </div>
         </div>
       </GlobalNotificationsContainer>
-      <CategoryItemContainer>
-        {/* TODO Map possible category seettings */}
-        <div>
-          <Typography color={defaultColor} variant="body">
-            Account
-          </Typography>
-        </div>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<Sold fill={iconColor} />}
-          title="New Order"
-        ></NotificationSettingsCategoryItem>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<DashboardOutlined fill={iconColor} />}
-          title="Price Alerts"
-        ></NotificationSettingsCategoryItem>
-        <NotificationSettingsCategoryItem
-          sms={{ enabled: false, supported: true }}
-          browser={{ enabled: true, supported: true }}
-          email={{ enabled: false, supported: true }}
-          icon={<Sold fill={iconColor} />}
-          title="Test"
-        ></NotificationSettingsCategoryItem>
-      </CategoryItemContainer>
+      {notifSettings.map((ns) => (
+        <CategoryItemContainer key={ns.id}>
+          <div>
+            <Typography color={defaultColor} variant="body">
+              {ns.specificNotifSettingItems[0].resource
+                .split(' ')
+                .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
+                .join(' ')}
+            </Typography>
+          </div>
+          {ns.specificNotifSettingItems.map((i, index) => (
+            <NotificationSettingsCategoryItem
+              key={i.id + index}
+              sms={i.settings.sms}
+              browser={i.settings.push}
+              email={i.settings.email}
+              icon={<Sold fill={iconColor} />}
+              title={i.name}
+            ></NotificationSettingsCategoryItem>
+          ))}
+        </CategoryItemContainer>
+      ))}
       <FooterContainer>
         <Button text="Save" variant="primary" />
       </FooterContainer>

@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
+import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getNotificationsSettingsActions } from 'store/actions';
-import { GlobalNotificationsSettingsResponse } from 'types/store/GetNotificationSettingsState';
+import {
+  GlobalNotificationsSettingsResponse,
+  SpecificNotificationSettingItem,
+} from 'types/store/GetNotificationSettingsState';
 import { Store } from 'types/store/Store';
 
 import { QueryParams } from '../EditAddress/EditAddress.props';
@@ -78,9 +82,17 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
   ]);
 
+  const groupNotifsById = groupBy(
+    (specificNotifItem: SpecificNotificationSettingItem) => specificNotifItem.id
+  );
+  const groupedNotifSettings = groupNotifsById(
+    getNotificationsSettings?.data.data.specificNotifications || []
+  );
+
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,
     handleGlobalToggle,
+    groupedNotifSettings,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;
