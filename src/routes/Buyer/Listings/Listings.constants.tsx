@@ -26,8 +26,8 @@ export const DEFAULT_TABLE_SETTINGS = [
   'category',
   'name',
   'specifications',
+  'price',
   'end_date',
-  'origin',
 ];
 
 export const DIRECT_SALE_COLUMNS = [
