@@ -106,6 +106,10 @@ export default function ListingView(props: ListingViewProps) {
 
   let columns = DIRECT_SALE_COLUMNS;
 
+  const downloadListingCount = isAllSelected
+    ? totalCount - unselectedIds.length
+    : selectedIds.length;
+
   // sync tableSettingProps
   useComponentShouldUpdate(() => {
     setSettings(tableSettings);
@@ -172,7 +176,7 @@ export default function ListingView(props: ListingViewProps) {
         <ActionContainer>
           <Button
             disabled={Boolean(isLoading) || isDownloadingCsv}
-            onClick={handleDownloadCSV}
+            onClick={() => setShowModal(true)}
             text="Download"
             loading={Boolean(isLoading) || isDownloadingCsv}
             takeFullWidth={isMobile}
@@ -215,7 +219,7 @@ export default function ListingView(props: ListingViewProps) {
         <ModalTitle variant="title5" className="title">
           Confirm Download
         </ModalTitle>
-        You are about to download {totalCount} listings. <br />
+        You are about to download {downloadListingCount} listings. <br />
         If this is not correct, adjust your selections using the check box in
         the table.
         <div>Otherwise, press Proceed to continue.</div>
