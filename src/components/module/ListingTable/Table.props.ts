@@ -26,4 +26,6 @@ export interface TableComponentProps {
   setSelectedIds: (params: string[]) => void;
   isAllSelected: boolean;
   setIsAllSelected: (state: boolean) => void;
+  onSelect: (id: string, state: boolean) => void;
+  unselectedIds: string[];
 }

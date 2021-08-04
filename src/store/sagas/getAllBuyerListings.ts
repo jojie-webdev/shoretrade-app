@@ -57,6 +57,7 @@ function* getAllBuyerListingsCSV(action: any) {
         sortOrder: action.payload?.sortOrder,
         ids: action.payload?.ids,
         all: action.payload?.all,
+        exceptId: action?.payload?.exceptId,
       });
       downloadCsv(data, `All listing.csv`);
       yield put(getAllBuyerListingsActions.requestCsvSuccess());

@@ -96,6 +96,8 @@ export default function ListingView(props: ListingViewProps) {
     showTableSettings,
     setShowTableSettings,
     prevListingData,
+    unselectedIds,
+    handleSelectRow,
   } = props;
 
   const [settings, setSettings] = useState(tableSettings);
@@ -361,6 +363,8 @@ export default function ListingView(props: ListingViewProps) {
         setSelectedIds={setSelectedIds}
         isAllSelected={isAllSelected}
         setIsAllSelected={setIsAllSelected}
+        onSelect={handleSelectRow}
+        unselectedIds={unselectedIds}
       />
 
       <PaginationContainer>

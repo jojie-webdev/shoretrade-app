@@ -28,24 +28,17 @@ export const TableComponent = (props: TableComponentProps) => {
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
+    onSelect,
+    unselectedIds,
   } = props;
 
   const handleOnSelectAll = (state: boolean) => {
     setIsAllSelected(state);
-
-    if (state) setSelectedIds(data.map((i) => i?.id));
-    else setSelectedIds([]);
   };
 
   const handleSelectRow = (isSelected: boolean, data: any) => {
-    if (isSelected) setSelectedIds([...selectedIds, data?.id]);
-    else setSelectedIds(selectedIds?.filter((id) => id !== data?.id));
+    onSelect(data?.id, isSelected);
   };
-
-  // inactive the header checkbox when no active row selected
-  useEffect(() => {
-    if (selectedIds.length === 0) setIsAllSelected(false);
-  }, [selectedIds, isAllSelected]);
 
   return (
     <Container>
@@ -73,7 +66,11 @@ export const TableComponent = (props: TableComponentProps) => {
                   data={item}
                   key={item?.id}
                   columns={columns}
-                  selected={selectedIds?.includes(item?.id)}
+                  selected={
+                    unselectedIds?.includes(item?.id) === true
+                      ? false
+                      : isAllSelected || selectedIds?.includes(item?.id)
+                  }
                   handleOnSelectRow={handleSelectRow}
                 />
               );
