@@ -310,6 +310,10 @@ export default function ListingView(props: ListingViewProps) {
                 key={`listing-card-${listing?.id}`}
                 data={listing}
                 columns={columns}
+                groups={[
+                  ['price', 'size'],
+                  ['remaining_weight', 'end_date'],
+                ]}
                 tableSettings={tableSettings}
                 isSelected={selectedIds.includes(listing?.id)}
                 onSelect={(selected) =>

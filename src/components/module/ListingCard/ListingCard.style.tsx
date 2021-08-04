@@ -28,3 +28,17 @@ export const Container = styled.div<{ last?: boolean }>`
     }
   }
 `;
+
+export const DetailsContainer = styled.div`
+  flex-grow: 1;
+`;
+
+export const ColumnGroupContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Column = styled.section`
+  width: 50%;
+`;
