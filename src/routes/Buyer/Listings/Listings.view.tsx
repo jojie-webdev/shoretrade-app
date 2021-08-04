@@ -189,29 +189,29 @@ export default function ListingView(props: ListingViewProps) {
     </Header>
   );
 
-  const TabletHeader = (
-    <Header style={{ gap: 8 }}>
-      <div>
-        <SearchContainer>
-          <Search onChange={debouncedSearch} />
-        </SearchContainer>
-      </div>
+  // const TabletHeader = (
+  //   <Header style={{ gap: 8 }}>
+  //     <div>
+  //       <SearchContainer>
+  //         <Search onChange={debouncedSearch} />
+  //       </SearchContainer>
+  //     </div>
 
-      <TabletHeaderSortContainer>
-        <div className="results">{totalCount} Results</div>
-        <div className="dropdown">
-          <Select
-            label=""
-            options={options}
-            size="small"
-            placeholder="Sort By"
-            grey
-            onChange={(e) => setSortField(e?.value)}
-          />
-        </div>
-      </TabletHeaderSortContainer>
-    </Header>
-  );
+  //     <TabletHeaderSortContainer>
+  //       <div className="results">{totalCount} Results</div>
+  //       <div className="dropdown">
+  //         <Select
+  //           label=""
+  //           options={options}
+  //           size="small"
+  //           placeholder="Sort By"
+  //           grey
+  //           onChange={(e) => setSortField(e?.value)}
+  //         />
+  //       </div>
+  //     </TabletHeaderSortContainer>
+  //   </Header>
+  // );
 
   const DownloadConfirmationModal = (
     <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
@@ -352,8 +352,7 @@ export default function ListingView(props: ListingViewProps) {
   return (
     <div>
       {DownloadConfirmationModal}
-      {!isMobile && !isTablet && DesktopHeader}
-      {isTablet && TabletHeader}
+      {!isMobile && DesktopHeader}
       <TableComponent
         setSortField={setSortField}
         sortField={sortField}
