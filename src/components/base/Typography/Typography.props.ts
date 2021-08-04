@@ -1,4 +1,4 @@
-import { CSSProperties, ReactHTMLElement, HTMLAttributes } from 'react';
+import { CSSProperties, HTMLAttributes } from 'react';
 
 import { Theme } from 'types/Theme';
 

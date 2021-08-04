@@ -7,7 +7,12 @@ import { Result } from './Landing.props';
 
 export const getMarketRequestLandingData = (data: any): Result[] => {
   if (!data) return [];
-  const getOfferStatus = (offers: any[]) => {
+
+  const getOfferStatus = (offers: any) => {
+    if (!Array.isArray(offers)) {
+      return ''
+    }
+
     const arr = sortWith([descend(prop('createdAt'))])(offers);
     const first: any = arr[0];
     if (!first) {
@@ -20,17 +25,16 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
         return 'NEGOTIATION';
       }
     }
-    return '';
   };
   return data.map((item: GetMarketRequestResponseItem) => ({
     ...item,
     expiry: moment(item.createdAt).add(7, 'd').isBefore()
       ? 'Expired'
       : formatRunningDateDifference(
-          moment(item.createdAt).add(7, 'd').format(),
-          'day'
-        ),
-    offers: item.offers.length,
+        moment(item.createdAt).add(7, 'd').format(),
+        'day'
+      ),
+    offers: item?.offers?.length || 0,
     offerStatus: getOfferStatus(item.offers),
   }));
 };

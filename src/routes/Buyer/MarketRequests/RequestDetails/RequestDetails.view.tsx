@@ -34,7 +34,7 @@ import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import { MarketRequestItem } from '../Landing/Landing.view';
+import { MarketRequestItemNonMobile } from '../Landing/Landing.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
 import {
   RequestDetailsCardContainer,
@@ -84,20 +84,20 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {sellerRating
               ? [...Array(5).keys()].map((r) =>
-                  Number(sellerRating || 0) > r ? (
-                    <StarFilled
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  ) : (
-                    <Star
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  )
+                Number(sellerRating || 0) > r ? (
+                  <StarFilled
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
+                ) : (
+                  <Star
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
                 )
+              )
               : ''}
           </div>
         </div>
@@ -335,15 +335,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <Col md={12} sm={12} xl={4}>
             <RequestDetailsCardContainer type={'none'}>
               {data && data.name ? (
-                <MarketRequestItem
+                <MarketRequestItemNonMobile
                   inDetail={true}
                   type={data.name}
                   expiry={
                     moment(data.createdAt).add(7, 'd').isBefore()
                       ? 'Expired'
                       : formatRunningDateDifference(
-                          moment(data.createdAt).add(7, 'd').format()
-                        )
+                        moment(data.createdAt).add(7, 'd').format()
+                      )
                   }
                   offers={totalOffers}
                   image={data.image}

@@ -11,12 +11,9 @@ export type Result = {
     from: number;
     to: number;
   };
-  sizeFrom?: number;
-  sizeTo?: number;
-  sizeUngraded?: boolean;
-  sizeOptions?: [];
   measurementUnit?: string;
-  specifications?: [];
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean }
 };
 
 export interface MarketRequestsLandingGeneratedProps {

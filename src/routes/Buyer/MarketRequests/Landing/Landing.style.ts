@@ -106,12 +106,13 @@ export const MarketRequestItemContainer = styled.div`
 `;
 
 export const SubText = styled(TypographyView)`
+  background-color: #EAFFF9;
   font-family: 'Basis Grotesque Pro';
   font-weight: 400;
   color: ${(props) => `${props.theme.grey.shade7}`};
 `;
 
-export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
+export const BadgeText = styled(TypographyView) <{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
   color: ${({ theme, empty }) =>
@@ -120,4 +121,46 @@ export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
 
 export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
+`;
+
+export const SizeTextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .over-divider {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const MajorInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+export const MinorInfo = styled.div`
+  margin-top: 8px;
+`
+
+export const SubMinorInfo = styled.div`
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between ;
+`
+
+export const SubMinorDetail = styled.div`
+  display: flex;
+  margin-right: 20px
+`
+
+export const MarketRequestItemMobileContainer = styled.div`
+  .thumbnail-container {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin-right: 8px
+    }
+  }
 `;
