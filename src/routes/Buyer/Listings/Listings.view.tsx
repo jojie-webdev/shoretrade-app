@@ -306,7 +306,18 @@ export default function ListingView(props: ListingViewProps) {
           <ChevronRight width={12} height={16} />
         </TableSettingsContainer>
         <MobileResults>
-          <span className="total-count">{totalCount}</span> Results
+          <div>
+            <span className="total-count">{totalCount}</span> Results
+          </div>
+          <div className="checkbox-container">
+            <span>Select All</span>
+            <Checkbox
+              size={20}
+              borderColor={theme.grey.shade7}
+              checked={isAllSelected}
+              onClick={() => setIsAllSelected(!isAllSelected)}
+            />
+          </div>
         </MobileResults>
         {!isEmpty && (
           <MobileTable>
@@ -321,12 +332,12 @@ export default function ListingView(props: ListingViewProps) {
                   ['remaining_weight', 'end_date'],
                 ]}
                 tableSettings={tableSettings}
-                isSelected={selectedIds.includes(listing?.id)}
-                onSelect={(selected) =>
-                  selected
-                    ? handleRemoveFromSelectedIds(listing?.id)
-                    : setSelectedIds((prev) => [...prev, listing?.id])
+                isSelected={
+                  unselectedIds.includes(listing?.id)
+                    ? false
+                    : isAllSelected || selectedIds.includes(listing?.id)
                 }
+                onSelect={(selected) => handleSelectRow(listing?.id, !selected)}
               />
             ))}
             {isLoading && (
