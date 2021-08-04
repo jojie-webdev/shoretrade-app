@@ -7,9 +7,10 @@ export const Container = styled.div`
   // margin-top: 16px;
 `;
 
-export const Table = styled.div`
+export const Table = styled.div<{ count?: number }>`
   display: grid;
   position: relative;
+  grid-template-columns: repeat(${({ count }) => count}, 1fr);
 `;
 
 export const PreloaderWrapper = styled.div`

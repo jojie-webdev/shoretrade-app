@@ -30,6 +30,11 @@ export const DEFAULT_TABLE_SETTINGS = [
   'end_date',
 ];
 
+export const COLUMN_GROUPS = [
+  ['price', 'size'],
+  ['remaining_weight', 'end_date'],
+];
+
 export const DIRECT_SALE_COLUMNS = [
   {
     name: 'Category',

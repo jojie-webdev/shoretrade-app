@@ -20,6 +20,7 @@ import {
   AUCTION_PRODUCT_COLUMNS,
   DIRECT_SALE_COLUMNS,
   columnTemplate,
+  COLUMN_GROUPS,
 } from './Listings.constants';
 import { ListingViewProps } from './Listings.props';
 import {
@@ -327,10 +328,7 @@ export default function ListingView(props: ListingViewProps) {
                 key={`listing-card-${listing?.id}`}
                 data={listing}
                 columns={columns}
-                groups={[
-                  ['price', 'size'],
-                  ['remaining_weight', 'end_date'],
-                ]}
+                groups={COLUMN_GROUPS}
                 tableSettings={tableSettings}
                 isSelected={
                   unselectedIds.includes(listing?.id)

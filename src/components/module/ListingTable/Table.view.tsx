@@ -42,13 +42,7 @@ export const TableComponent = (props: TableComponentProps) => {
 
   return (
     <Container>
-      <Table
-        style={{
-          gridTemplateColumns: columnTemplate
-            .map((unit) => `minmax(${unit}, 1fr)`)
-            .join(' '),
-        }}
-      >
+      <Table count={columns?.length}>
         <TableHeader
           sortField={sortField}
           setSortField={setSortField}
