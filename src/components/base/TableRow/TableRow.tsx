@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
+import ReactTooltip from 'react-tooltip';
 
 import { TableRowProps } from './TableRow.props';
 
@@ -27,11 +28,15 @@ export default function TableRow(props: TableRowProps) {
               handleOnSelectRow?.(state, data);
             }}
           >
-            <span className="table-value">
+            <span
+              data-tip={column?.tooltip?.(data) || data?.[column.selector]}
+              className="table-value"
+            >
               {column?.component
                 ? column?.component(data)
                 : data?.[column.selector]}
             </span>
+            {column?.tooltip && <ReactTooltip />}
           </TableData>
         );
       })}

@@ -123,7 +123,7 @@ export default function ListingView(props: ListingViewProps) {
     }
   }, [isLoading, prevListingData, isMobile, searchTerm]);
 
-  if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
+  // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
   const options = columns
     .filter((column) => column?.sortable)
