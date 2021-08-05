@@ -18,6 +18,7 @@ import {
   getActiveOffersActions,
   getAllMarketRequestActions,
   getAllMarketRequestFiltersActions,
+  getMarketInterestsActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -54,9 +55,19 @@ const MarketBoardLanding = (): JSX.Element => {
   const buyerRequestsFilters = useSelector(
     (store: Store) => store.getAllMarketRequestFilters.data?.data
   );
+  const marketRequests = buyerRequests.data?.data.marketRequests || [];
+
+  const selling =
+    useSelector(
+      (store: Store) => store.getMarketInterests.data?.data.selling
+    ) || [];
+  const sellingNames = selling.map((s) => s.name);
+  const sellingRequests = marketRequests.filter((m) =>
+    sellingNames.includes(m.type)
+  );
 
   const filteredSpecs =
-    (buyerRequests.data?.data.marketRequests || [])
+    marketRequests
       .filter((d) => !isEmpty(d.specifications))
       .filter((d) => moment().diff(moment(d.createdAt), 'days') < 7) || [];
 
@@ -96,6 +107,11 @@ const MarketBoardLanding = (): JSX.Element => {
   useEffect(() => {
     if (companyId) {
       dispatch(getAllMarketRequestFiltersActions.request({ companyId }));
+      dispatch(
+        getMarketInterestsActions.request({
+          companyId,
+        })
+      );
     }
   }, [companyId]);
 
@@ -184,6 +200,7 @@ const MarketBoardLanding = (): JSX.Element => {
   };
 
   const generatedProps = {
+    sellingRequests,
     buyerRequests: filteredSpecs,
     activeOffers: activeOffersData,
     isLoading: buyerRequests.pending || activeOffers.pending || false,

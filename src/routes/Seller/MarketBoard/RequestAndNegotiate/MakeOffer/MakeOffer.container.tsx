@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 
 import { groupBy, isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
+import { getGroupName } from 'routes/Seller/MarketBoard/RequestAndNegotiate/MakeOffer/MakeOffer.transforms';
 import { getAddressesActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/seller/addresses';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
@@ -27,6 +28,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
           label: group.stateName,
           value: group.stateId,
           groupOrder: group.stateGroup,
+          groupName: getGroupName(group.stateName),
         };
       })
     : [];

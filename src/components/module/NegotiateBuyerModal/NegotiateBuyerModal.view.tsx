@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
@@ -20,7 +21,6 @@ import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
-import { InfoFilled } from 'components/base/SVG';
 
 const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const {
@@ -131,10 +131,10 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         </CheckBoxContainer>
         <ComputationContainer>
           <div className="computation-item-container">
-            <Typography variant="body" weight="medium" color="shade7">
+            <Typography variant="body" color="shade7">
               Seller&apos;s Current Offer
             </Typography>
-            <Typography variant="body" weight="medium" color="shade7">
+            <Typography variant="body" color="shade7">
               {sortedNegotiations.length === 0
                 ? toPrice(originalOffer)
                 : toPrice(latestSellerNego.price)}
@@ -144,17 +144,17 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
 
           {sortedNegotiations.length >= 2 && (
             <div className="computation-item-container">
-              <Typography variant="body" weight="medium" color="shade7">
+              <Typography variant="body" color="shade7">
                 Your New Offer
               </Typography>
-              <Typography variant="body" weight="medium" color="shade7">
+              <Typography variant="body" color="shade7">
                 {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
           )}
 
           <div className="computation-item-container">
-            <Typography variant="body" weight="medium" color="shade7">
+            <Typography variant="body" color="shade7">
               Change in Price{' '}
               <span className="indicator">{`${
                 discountValue > 0 ? '+' : ''
@@ -163,13 +163,12 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             {discountValue !== 0 ? (
               <Typography
                 color={discountValue > 0 ? 'error' : 'success'}
-                variant="label"
-                weight="bold"
+                variant="body"
               >
                 {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
             ) : (
-              <Typography variant="body" weight="medium" color="shade7">
+              <Typography variant="body" color="shade7">
                 0
               </Typography>
             )}
