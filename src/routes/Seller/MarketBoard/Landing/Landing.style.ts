@@ -6,87 +6,66 @@ import { pxToRem } from 'utils/Theme';
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 24px;
+  }
 
-    .search-row {
-      display: flex;
-      flex-direction: row;
-      .filter-search {
-        width: 70%;
-        margin-right: 16px;
+  .tabs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+
+    @media ${BREAKPOINTS['sm']} {
+      margin-bottom: 16px;
+    }
+
+    .tabs {
+      width: 310px;
+
+      @media ${BREAKPOINTS['sm']} {
+        width: 100%;
+        margin-bottom: 16px;
       }
-      .mobile-filter {
-        width: 25%;
+    }
+
+    .search {
+      width: 240px;
+
+      @media ${BREAKPOINTS['sm']} {
+        width: 100%;
       }
     }
   }
 
   .interactions {
-    margin-bottom: 12px;
-    padding: 16px 12px;
+    margin-bottom: 8px;
 
-    .left-component {
+    .left-content {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
+      width: 100%;
+
+      .section {
+        flex: 1;
+      }
 
       img {
-        width: 66px;
-        height: 66px;
+        width: 48px;
+        height: 48px;
         border-radius: 8px;
-        margin-right: 16px;
+        margin-right: 12px;
       }
 
-      .badges-container {
+      .badge {
         display: flex;
-        flex-wrap: wrap;
-        max-width: 350px;
-        margin: 4px 0;
+        width: fit-content;
 
-        @media ${BREAKPOINTS['sm']} {
-          width: 100%;
-          flex-direction: row;
-        }
-
-        .badge {
-          margin: 0 4px 4px 0;
-          display: flex;
-          flex-direction: row;
-          @media ${BREAKPOINTS['sm']} {
-            width: fit-content;
-          }
-          .svg-container {
-            margin-left: 5px;
-            margin-top: -2px;
-          }
-        }
-      }
-
-      .expiry {
-        font-style: italic;
-      }
-
-      .weights {
-        display: flex;
-        align-items: center;
-      }
-
-      .shipping-to {
-        margin-top: 8px;
-        display: flex;
-        align-items: center;
-
-        p:first-child {
-          margin-right: 4px;
+        .svg-container {
+          margin-left: 5px;
+          margin-top: -2px;
         }
       }
     }
-  }
-
-  .filter-ipad-container {
-    display: flex;
-    margin-top: -24px;
-    width: 100%;
-    align-content: flex-end;
-    justify-content: flex-end;
   }
 `;
 
