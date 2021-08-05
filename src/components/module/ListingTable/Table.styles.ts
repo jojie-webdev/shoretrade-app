@@ -7,10 +7,24 @@ export const Container = styled.div`
   // margin-top: 16px;
 `;
 
-export const Table = styled.div<{ count?: number }>`
+export const Table = styled.div<{ count: number }>`
   display: grid;
   position: relative;
-  grid-template-columns: repeat(${({ count }) => count}, 1fr);
+  grid-template-columns: repeat(${({ count }) => `${count}, ${100 / count}%`});
+
+  .table-value-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const PreloaderWrapper = styled.div`

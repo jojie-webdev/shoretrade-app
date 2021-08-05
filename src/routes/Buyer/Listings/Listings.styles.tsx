@@ -61,6 +61,9 @@ export const Chips = styled.div`
   color: ${theme.grey.shade9};
   font-size: 9px !important;
   letter-spacing: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TabContainer = styled.div`

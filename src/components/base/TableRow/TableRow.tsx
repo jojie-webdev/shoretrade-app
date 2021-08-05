@@ -27,9 +27,11 @@ export default function TableRow(props: TableRowProps) {
               handleOnSelectRow?.(state, data);
             }}
           >
-            {column?.component
-              ? column?.component(data)
-              : data?.[column.selector]}
+            <span className="table-value">
+              {column?.component
+                ? column?.component(data)
+                : data?.[column.selector]}
+            </span>
           </TableData>
         );
       })}

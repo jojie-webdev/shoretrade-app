@@ -42,7 +42,7 @@ export default function TableData(props: TableDataProps) {
         if (rowType === 'header' || columnType === 'column-first')
           return (
             <>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="table-value-container">
                 {columnType === 'column-first' && (
                   <Checkbox
                     checked={checked}
