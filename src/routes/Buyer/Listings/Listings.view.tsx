@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import Select from 'components/base/Select';
+// import Select from 'components/base/Select';
 import { Cog, ChevronRight, Exit, Crab } from 'components/base/SVG';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
@@ -15,9 +15,9 @@ import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import theme from 'utils/Theme';
 
 import {
-  AUCTION_PRODUCT,
+  // AUCTION_PRODUCT,
   DIRECT_SALE,
-  AUCTION_PRODUCT_COLUMNS,
+  // AUCTION_PRODUCT_COLUMNS,
   DIRECT_SALE_COLUMNS,
   columnTemplate,
   COLUMN_GROUPS,
@@ -41,12 +41,20 @@ import {
   MobileTable,
   Preloader,
   EmptyScreen,
-  TabletHeaderSortContainer,
+  // TabletHeaderSortContainer,
   MobileResults,
 } from './Listings.styles';
 
-const Search = (props: { onChange: (value: string) => void }) => {
+const Search = (props: {
+  onChange: (value: string) => void;
+  defaultValue?: string;
+}) => {
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    if (props.defaultValue) setValue(props.defaultValue);
+  }, []);
+
   return (
     <SearchComponent
       style={{ marginBottom: 0 }}
@@ -105,7 +113,7 @@ export default function ListingView(props: ListingViewProps) {
 
   const isEmpty = !isLoading && !listings.length;
 
-  let columns = DIRECT_SALE_COLUMNS;
+  const columns = DIRECT_SALE_COLUMNS;
 
   const downloadListingCount = isAllSelected
     ? totalCount - unselectedIds.length
@@ -184,7 +192,7 @@ export default function ListingView(props: ListingViewProps) {
           />
         </ActionContainer>
         <SearchContainer>
-          <Search onChange={debouncedSearch} />
+          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
         </SearchContainer>
       </FlexContainer>
     </Header>
@@ -290,7 +298,7 @@ export default function ListingView(props: ListingViewProps) {
         {TabComponent}
         {TableSettingsModal}
         <MobileSearchContainer>
-          <Search onChange={debouncedSearch} />
+          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
           <MobileDownloadButton
             disabled={Boolean(isLoading) || isDownloadingCsv}
             onClick={handleDownloadCSV}

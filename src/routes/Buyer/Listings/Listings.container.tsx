@@ -121,10 +121,11 @@ export default function ListingContainer() {
   useComponentShouldUpdate(() => {
     if (isMobile) {
       if (!!searchTerm.length) {
-        setPage(1);
         setLimit(100); // displays the first 100 search result
       } else setLimit(10);
     }
+
+    setPage(1);
   }, [searchTerm, isMobile]);
 
   useComponentShouldUpdate(() => {
