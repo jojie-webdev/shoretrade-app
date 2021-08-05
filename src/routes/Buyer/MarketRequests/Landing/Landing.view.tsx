@@ -1,39 +1,32 @@
 import React, { Dispatch, SetStateAction } from 'react';
-
-// import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Filter, Crab, TrashCan } from 'components/base/SVG';
+import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
-import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import Case from 'case'
 import { useHistory } from 'react-router-dom';
-import { Theme } from 'types/Theme';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
-
 import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import {
   MarketRequestsContainer,
   MarketRequestItemContainer,
   MarketRequestItemInteraction,
   MarketRequestItemMobileContainer,
-  StyledAlert,
   BadgeText,
-  SizeTextContainer,
   MajorInfo,
   MinorInfo,
   SubMinorInfo,
+  Badges,
   SubMinorDetail,
   SubText
 } from './Landing.style';
@@ -82,34 +75,6 @@ export const MarketRequestItemNonMobile = (props: {
     );
   };
 
-  const offerStatusBadge = () => {
-    let badgeColor = '';
-    let textColor;
-    switch (offerStatus) {
-      case 'NEW OFFER':
-        badgeColor = '#EAFFF9';
-        textColor = theme.brand.success;
-        break;
-      case 'NEGOTIATION':
-        badgeColor = '#FFFBF2';
-        textColor = theme.brand.alert;
-        break;
-    }
-    if (inDetail || offers < 1) return '';
-
-    return (
-      <Badge className="offers-badge" badgeColor={badgeColor}>
-        <BadgeText
-          weight="bold"
-          variant="overline"
-          style={{ color: textColor }}
-        >
-          {offerStatus}
-        </BadgeText>
-      </Badge>
-    );
-  };
-
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
@@ -142,7 +107,7 @@ export const MarketRequestItemNonMobile = (props: {
           <SubText variant="small">{offerNumberBadge()}</SubText>
         </div>
         <div className="sub-group">
-          <SubText variant="small">{offerStatusBadge()}</SubText>
+          <SubText variant="small">{offerStatusBadge(inDetail, offers, offerStatus)}</SubText>
         </div>
         <div className="sub-group">
           <Button
@@ -190,76 +155,15 @@ export const MarketRequestItemMobile = (props: {
     offerStatus
   } = props;
 
-  const offersText = offers > 1 ? `${offers} Offers` : `1 Offer`;
-
-  const getRightExpiryToDisplay = () => {
-    const splits = expiry.split(" ")
-    let rightExpiryToDisplay = splits.slice(0, 2)
-
-    if (rightExpiryToDisplay.join(' ') === '0 Day') {
-      rightExpiryToDisplay = splits.slice(2, 4)
-    }
-
-    if (rightExpiryToDisplay.join(' ') === '0 Hours') {
-      rightExpiryToDisplay = splits.slice(4, 6)
-    }
-
-    if (rightExpiryToDisplay.join(' ') === '0 Minutes') {
-      rightExpiryToDisplay = ["0"]
-    }
-
-    return rightExpiryToDisplay.join(' ')
-  }
-
-  const offerStatusBadge = () => {
-    let badgeColor = '';
-    let textColor;
-    switch (offerStatus) {
-      case 'NEW OFFER':
-        badgeColor = '#EAFFF9';
-        textColor = theme.brand.success;
-        break;
-      case 'NEGOTIATION':
-        badgeColor = '#FFFBF2';
-        textColor = theme.brand.alert;
-        break;
-    }
-    if (inDetail || offers < 1) return '';
-
-    return (
-      <Badge className="offers-badge" badgeColor={badgeColor}>
-        <BadgeText
-          weight="bold"
-          variant="overline"
-          style={{ color: textColor }}
-        >
-          {offerStatus}
-        </BadgeText>
-      </Badge>
-    );
-  };
+  const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
 
   const offersMarkup = () => {
-    if (inDetail || offers < 1) return '';
+    if (inDetail) return '';
 
     return (
       <div>
         <Badge className="offers-badge" badgeColor={theme.grey.shade3} padding="8px 8px" borderRadius="8px">
-          <BadgeText color="success" weight="bold" variant="overline">
-            {offersText}
-          </BadgeText>
-        </Badge>
-      </div>
-    );
-  };
-
-  const newOfferMarkup = () => {
-    if (inDetail || offers < 1) return '';
-
-    return (
-      <div>
-        <Badge className="offers-badge" badgeColor={theme.grey.shade3} padding="8px 8px" borderRadius="8px">
-          <BadgeText color="shade10" weight="bold" variant="overline">
+          <BadgeText color="success" weight="bold" variant="overline" empty={!offers || offers === 0}>
             {offersText}
           </BadgeText>
         </Badge>
@@ -277,6 +181,13 @@ export const MarketRequestItemMobile = (props: {
       </Typography>
     </>
   )
+
+  const displayBadges = () => {
+    return <Badges>
+      {offersMarkup()}
+      {offerStatusBadge(inDetail, offers, offerStatus)}
+    </Badges>
+  }
 
   return (
     <MarketRequestItemMobileContainer>
@@ -304,20 +215,51 @@ export const MarketRequestItemMobile = (props: {
           </SubMinorDetail>
 
           <SubMinorDetail>
-            {subMinorDetail('Time Left', getRightExpiryToDisplay())}
+            {subMinorDetail('Time Left', expiry)}
           </SubMinorDetail>
 
           <SubMinorDetail>
-            {subMinorDetail('Size', '')}
+            {subMinorDetail('Size', (Array.isArray(size?.options) && size?.options?.join(', ')) || 'None')}
           </SubMinorDetail>
         </SubMinorInfo>
 
-        <div style={{ display: "flex", marginTop: "10px" }}>
-          {offersMarkup()}
-          {offerStatusBadge()}
-        </div>
+        {displayBadges()}
       </MinorInfo>
     </MarketRequestItemMobileContainer>
+  );
+};
+
+const offerStatusBadge = (inDetail: boolean, offers: number, offerStatus: any) => {
+  let badgeColor = '';
+  let textColor;
+
+  if (!offerStatus) {
+    return null
+  }
+
+  switch (offerStatus) {
+    case 'NEW OFFER':
+      badgeColor = '#EAFFF9';
+      textColor = theme.brand.success;
+      break;
+    case 'NEGOTIATION':
+      badgeColor = '#FFFBF2';
+      textColor = theme.brand.alert;
+      break;
+  }
+
+  if (inDetail || offers < 1) return null;
+
+  return (
+    <Badge className="offers-badge" badgeColor={badgeColor}>
+      <BadgeText
+        weight="bold"
+        variant="overline"
+        style={{ color: textColor }}
+      >
+        {offerStatus}
+      </BadgeText>
+    </Badge>
   );
 };
 
@@ -342,36 +284,29 @@ const MarketRequestsLandingView = (
   const renderMobile = () => (
     <Visible xs>
       {marketRequests.length > 0 ? (
-        <SwipeableInteractionsView
-          swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-          swipeActionLabel="Delete"
-          onSwipeTrigger={(id) => setItemToDelete({ value: id })}
-          data={marketRequests.map((mr) => {
-            return {
-              id: mr.id,
-              type: mr.offers > 0 ? 'next' : 'none',
-              onClick: () => onClickItem(mr),
-              leftComponent: (
-                <MarketRequestItemMobile
-                  inDetail={false}
-                  image={mr.image}
-                  offers={mr.offers}
-                  expiry={mr.expiry}
-                  type={mr.type}
-                  weight={mr.weight}
-                  measurementUnit={mr.measurementUnit}
-                  specs={mr.specs}
-                  size={mr.size}
-                />
-              ),
-              rightComponent: (
-                <div style={{ width: '100px' }}>
-                  <div style={{ paddingLeft: "0px 0px 0px auto" }}>test</div>
+        marketRequests.map((mr) => (
+          <MarketRequestItemInteraction
+            key={mr.id}
+            type={mr.offers > 0 ? 'next' : 'none'}
+            onClick={() => onClickItem(mr)}
+            leftComponent={
+              <MarketRequestItemMobile
+                inDetail={false}
+                {...mr}
+              />
+            }
+            rightComponent={
+              <div style={{ display: "flex", height: "100%", textAlign: "center", alignContent: "space-between" }}>
+                <div>
+                  <ChevronRight width={8} height={12} />
                 </div>
-              )
-            };
-          })}
-        />
+                <div onClick={() => setItemToDelete({ value: mr.id })} style={{ padding: "0px 6px", border: "1px solid #DADFF2", borderRadius: "8px", backgroundColor: "#F4F6FF" }}>
+                  <TrashCan width={13.33} height={12} fill={theme.grey.shade7} />
+                </div>
+              </div>
+            }
+          />
+        ))
       ) : (
         <EmptyStateView Svg={Crab} height={240} width={249} fluid />
       )}
@@ -384,7 +319,7 @@ const MarketRequestsLandingView = (
         marketRequests.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
-            type={mr.offers > 0 ? 'next' : 'none'}
+            type={'next'}
             onClick={() => onClickItem(mr)}
             leftComponent={
               <MarketRequestItemNonMobile
@@ -402,30 +337,6 @@ const MarketRequestsLandingView = (
     </Hidden>
   )
 
-  // const renderSDF = () => {
-  //   {
-  //     marketRequests.length > 0 ? (
-  //       marketRequests.map((mr) => (
-  //         <MarketRequestItemInteraction
-  //           key={mr.id}
-  //           type={'next'}
-  //           onClick={() => onClickItem(mr)}
-  //           leftComponent={
-  //             <MarketRequestItemNonMobile
-  //               inDetail={false}
-  //               setItemToDelete={setItemToDelete}
-  //               {...mr}
-  //             />
-  //           }
-  //           keepIcon
-  //         />
-  //       ))
-  //     ) : (
-  //     <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-  //   )
-  //   }
-  // }
-
   return (
     <MarketRequestsContainer>
       <ConfirmationModal
@@ -439,30 +350,22 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      <Row nogutter>
-        <StyledAlert
-          content={'All offers below include shipping costs'}
-          variant="info"
-          alignText="center"
-          fullWidth
-        />
-      </Row>
       <Row nogutter justify="around" align="center" className="header">
         <Col>
-          <Typography variant="overline" color="shade6">
-            My Requests
+          <Typography
+            variant="title5"
+            weight="700"
+            color="shade9"
+            style={{ fontFamily: 'Media Sans' }}
+          >
+            My Market Requests
           </Typography>
-          <Visible xs>
-            <TypographyView variant="label" color="shade9">
-              Swipe right to delete a request
-            </TypographyView>
-          </Visible>
         </Col>
         <Col xs="content">
           <Visible sm md lg xl xxl>
             <Button
               onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-              text="CREATE MARKET REQUEST"
+              text="CREATE REQUEST"
               variant={props.isPendingAccount ? 'disabled' : 'primary'}
               size="md"
               disabled={props.isPendingAccount}
@@ -470,16 +373,16 @@ const MarketRequestsLandingView = (
           </Visible>
         </Col>
       </Row>
-      {/* {renderSDF()} */}
       {renderMobile()}
       {renderNonMobile()}
       <MobileFooter>
         <Button
           onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-          text="CREATE MARKET REQUEST"
+          text="CREATE REQUEST"
           variant={props.isPendingAccount ? 'disabled' : 'primary'}
           takeFullWidth
           disabled={props.isPendingAccount}
+          icon={<ChevronRight width={15} height={12} fill="white" style={{ paddingBottom: "2px" }} />}
         />
       </MobileFooter>
     </MarketRequestsContainer>

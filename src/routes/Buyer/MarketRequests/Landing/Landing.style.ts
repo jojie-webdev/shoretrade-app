@@ -106,7 +106,6 @@ export const MarketRequestItemContainer = styled.div`
 `;
 
 export const SubText = styled(TypographyView)`
-  background-color: #EAFFF9;
   font-family: 'Basis Grotesque Pro';
   font-weight: 400;
   color: ${(props) => `${props.theme.grey.shade7}`};
@@ -151,7 +150,12 @@ export const SubMinorInfo = styled.div`
 
 export const SubMinorDetail = styled.div`
   display: flex;
-  margin-right: 20px
+  margin-right: 20px;
+`
+
+export const Badges = styled.div`
+  display: flex;
+  margin-top: 10px;
 `
 
 export const MarketRequestItemMobileContainer = styled.div`
