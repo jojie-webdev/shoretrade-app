@@ -61,6 +61,9 @@ export const Chips = styled.div`
   color: ${theme.grey.shade9};
   font-size: 9px !important;
   letter-spacing: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TabContainer = styled.div`
@@ -169,6 +172,18 @@ export const MobileResults = styled.div`
   margin-bottom: 12px;
   color: ${theme.grey.shade6};
   font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+
+  .checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 12px;
+    gap: 12px;
+  }
 
   .total-count {
     color: ${theme.grey.shade9};

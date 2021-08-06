@@ -39,7 +39,7 @@ export default function TableHeader(props: TableHeaderProps) {
             }}
             selected={selectAll}
           >
-            {column.name}
+            <span data-tip={column.name}>{column.name}</span>
           </TableData>
         );
       })}
