@@ -20,7 +20,7 @@ export const Container = styled.div`
     }
 
     .tabs {
-      width: 310px;
+      width: 330px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 100%;
@@ -29,7 +29,7 @@ export const Container = styled.div`
     }
 
     .search {
-      width: 240px;
+      width: 280px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 100%;
