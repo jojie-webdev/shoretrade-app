@@ -11,6 +11,7 @@ export interface TableColumn {
   sortable?: boolean;
   component?: (data: any, state?: any) => ReactElement;
   sticky?: boolean;
+  tooltip?: (data: any, state?: any) => string;
 }
 
 export interface TableComponentProps {
@@ -26,4 +27,6 @@ export interface TableComponentProps {
   setSelectedIds: (params: string[]) => void;
   isAllSelected: boolean;
   setIsAllSelected: (state: boolean) => void;
+  onSelect: (id: string, state: boolean) => void;
+  unselectedIds: string[];
 }

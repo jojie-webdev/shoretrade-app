@@ -26,8 +26,13 @@ export const DEFAULT_TABLE_SETTINGS = [
   'category',
   'name',
   'specifications',
+  'price',
   'end_date',
-  'origin',
+];
+
+export const COLUMN_GROUPS = [
+  ['price', 'size'],
+  ['remaining_weight', 'end_date'],
 ];
 
 export const DIRECT_SALE_COLUMNS = [
@@ -46,6 +51,8 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Specs',
     selector: 'specifications',
     sortable: false,
+    tooltip: (data: any) =>
+      (data?.['specifications']?.split(',') || []).join(', '),
     component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>
@@ -60,6 +67,8 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Size',
     selector: 'size',
     sortable: true,
+    tooltip: (data: any) =>
+      sizeToString(data?.metric, data?.size_from, data?.size_to),
     component: function Size(data: any, _state: any) {
       return <>{sizeToString(data?.metric, data?.size_from, data?.size_to)}</>;
     },
@@ -68,6 +77,8 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Remaining',
     selector: 'remaining_weight',
     sortable: true,
+    tooltip: (data: any) =>
+      `${data?.remaining_weight} ${formatMeasurementUnit(data?.unit)}`,
     component: function RemainingWeight(data: any, _state: any) {
       return (
         <>
@@ -80,6 +91,10 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Price',
     selector: 'price',
     sortable: true,
+    tooltip: (data: any) =>
+      `${DEFAULT_CURRENCY}${data?.price || 0}${
+        String(data?.price).split('.').length === 1 ? '.00' : ''
+      }/${data?.unit?.toLowerCase()}`,
     component: function Price(data: any, _state: any) {
       return (
         <>
@@ -95,6 +110,8 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Valid Until',
     selector: 'end_date',
     sortable: true,
+    tooltip: (data: any) =>
+      data?.end_date ? moment(data?.end_date).format('ll') : 'Always Available',
     component: function ValidUntil(data: any, _state: any) {
       return (
         <>
@@ -109,6 +126,9 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Catchment Origin',
     selector: 'origin',
     sortable: true,
+    tooltip: (data: any) => {
+      return `${data?.origin?.suburb}, ${data?.origin?.state}, ${data?.origin?.countryCode}`;
+    },
     component: function CatchmentOrigin(data: any, _state: any) {
       return (
         <>

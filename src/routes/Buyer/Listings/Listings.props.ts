@@ -33,4 +33,7 @@ export interface ListingViewProps {
   showTableSettings: boolean;
   setShowTableSettings: (state: boolean) => void;
   prevListingData: any[];
+  unselectedIds: string[];
+  setUnselectedIds: Dispatch<SetStateAction<string[]>>;
+  handleSelectRow: (id: string, state: boolean) => any;
 }
