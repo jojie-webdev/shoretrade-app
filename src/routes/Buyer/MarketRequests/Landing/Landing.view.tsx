@@ -300,9 +300,20 @@ const MarketRequestsLandingView = (
                 <div>
                   <ChevronRight width={8} height={12} />
                 </div>
-                <div onClick={() => setItemToDelete({ value: mr.id })} style={{ padding: "0px 6px", border: "1px solid #DADFF2", borderRadius: "8px", backgroundColor: "#F4F6FF" }}>
-                  <TrashCan width={13.33} height={12} fill={theme.grey.shade7} />
-                </div>
+                <Button
+                  iconPosition="before"
+                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                  onClick={
+                    setItemToDelete &&
+                    ((e) => {
+                      e.stopPropagation();
+                      setItemToDelete({ value: mr.id || '' });
+                    })
+                  }
+                  variant="primary"
+                  size="sm"
+                  className="delete-button"
+                />
               </div>
             }
           />

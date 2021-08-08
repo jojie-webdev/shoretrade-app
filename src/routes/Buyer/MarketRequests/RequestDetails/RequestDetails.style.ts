@@ -25,6 +25,26 @@ export const RequestDetailsContainer = styled.div`
 
 export const RequestDetailsCardContainer = styled(Interactions)`
   margin-bottom: 1rem;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+    margin-top: 16px;
+    height: 88px;
+    padding: 8px;
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
+
+    .delete-button {
+      background-color: ${({ theme }) => theme.grey.shade3};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+  
+      path {
+        fill: ${({ theme }) => theme.grey.shade7};
+      }
+    }
+  }
 `;
 
 export const RequestOffersAccordion = styled(Accordion)`
@@ -46,6 +66,10 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 16px !important;
+  }
 `;
 
 export const OffersSellerAccordionContentContainer = styled.div`
@@ -176,7 +200,7 @@ export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
 `;
 
-export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
+export const StyledTextField = styled(TextField) <{ noMargin?: boolean }>`
   flex: 1;
   margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
 `;
@@ -215,6 +239,12 @@ export const OfferContainer = styled.div`
 export const OffersContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media ${BREAKPOINTS['sm']} {
+    background: #FFFFFF;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    border-radius: 12px;
+  }
 
   .search-row {
     align-items: center;
@@ -296,3 +326,28 @@ export const FilterButton = styled.button`
     margin-right: 4px;
   }
 `;
+
+export const RequestDetailsMobileContainer = styled.div`
+  display: flex;
+
+  .thumbnail-container {
+    img {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      margin-right: 8px
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+  }
+`;
+
+export const ProgressContainer = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: ${({ theme }) => theme.grey.shade3};
+  border-radius: 1px;
+  position: relative;
+`

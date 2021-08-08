@@ -32,14 +32,28 @@ export const MarketRequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
   padding: 8px;
+  
   @media ${BREAKPOINTS['sm']} {
     padding: 12px;
   }
+
   padding-right: 12px;
   align-items: center;
 
   .left-content {
     flex-grow: 2;
+  }
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade3};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
   }
 `;
 

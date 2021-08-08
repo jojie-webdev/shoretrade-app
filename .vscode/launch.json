@@ -9,7 +9,11 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3030",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "env": {
+                "NODE_ENV": "development",
+                "REACT_APP_API_URL": "https://api-staging.shoretrade.com"
+            }
         }
     ]
 }
