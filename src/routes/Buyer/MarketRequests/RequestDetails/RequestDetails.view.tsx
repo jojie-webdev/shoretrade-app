@@ -423,7 +423,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Product Name"
-          style={{ borderRadius: "12px", height: "40px", padding: "13px 11px" }}
+          style={{ borderRadius: "12px" }}
         />
       }
 

@@ -14,7 +14,6 @@ import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { useMediaQuery } from 'react-responsive'
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
@@ -33,6 +32,8 @@ import {
   TopAbsoContainer,
   TopGroupContainer,
 } from './CategorySelection.style';
+import Typography from 'components/base/Typography';
+import Select from 'components/base/Select';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
   const {
@@ -134,6 +135,32 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             style={{ borderRadius: 12, width: '100%' }}
           />
         </div>
+
+        <div style={{ display: "flex", marginTop: "2px", marginBottom: "20px", alignItems: "center" }}>
+          <Typography
+            color="shade6"
+            variant="label"
+          >
+            <span style={{ color: "#09131D" }}>{typeSearchResults.length}</span>
+            <span>{' '}Results</span>
+          </Typography>
+
+          <div style={{ marginLeft: "16px", width: "94px" }}>
+            <Select
+              border="none"
+              borderRadius="8px"
+              background="#E5E8F5"
+              label=""
+              options={[]}
+              size="small"
+              placeholder="Sort by"
+              disabled
+            // onChange={(e) => setSortField(e?.value)}
+            />
+          </div>
+
+        </div>
+
         {pendingSearch ? (
           <Loading label="Searching" />
         ) : !hideSearchResult && typeSearchResults.length > 0 ? (

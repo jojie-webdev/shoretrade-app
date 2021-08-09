@@ -16,7 +16,7 @@ import Case from 'case'
 import { useHistory } from 'react-router-dom';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
-import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
+import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
   MarketRequestItemContainer,
