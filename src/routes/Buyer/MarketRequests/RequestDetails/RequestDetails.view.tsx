@@ -36,7 +36,7 @@ import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 import { MarketRequestItemNonMobile } from '../Landing/Landing.view';
-import { RequestDetailsMobileContainer, ProgressContainer } from '../RequestDetails/RequestDetails.style';
+import { RequestDetailsMobileContainer, ProgressContainer, OfferDetailsButtonContainer } from '../RequestDetails/RequestDetails.style';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
 import {
   RequestDetailsCardContainer,
@@ -373,6 +373,16 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         actionText="DELETE"
         onClickClose={() => setItemToDelete({ value: null })}
       />
+      <ConfirmationModal
+        isOpen={itemToDelete.value !== null}
+        title="Delete Market Request"
+        description="Are you sure you want to delete this market request?"
+        action={() => {
+          onClickDelete && onClickDelete();
+        }}
+        actionText="DELETE"
+        onClickClose={() => setItemToDelete({ value: null })}
+      />
       <DialogModal
         title="Not Enough Credit."
         // overline="Please top up your Account Credit to accept this order."
@@ -563,7 +573,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                             {
                               sellerOffer?.offers?.map(offer =>
                                 <div style={{ padding: "12px" }}>
-                                  <div style={{ display: "flex" }}>
+                                  <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     <div>
                                       <div style={{ display: "flex" }}>
                                         <AvatarContainer borderRadius="20px">
@@ -584,7 +594,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                                           <RatingRow>
                                             {[...Array(5).keys()].map((r) => (
                                               <StarContainer key={r} >
-                                                {Number('') > r ? (
+                                                {Number(sellerOffer?.company?.rating || 0) > r ? (
                                                   <StarFilled fill={theme.brand.alert} />
                                                 ) : (
                                                   <Star />
@@ -625,11 +635,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                                         />
                                       </div>
                                     </div>
-                                    <div style={{ display: "flex", flexFlow: "wrap", alignContent: "space-between" }}>
+                                    <div style={{ display: "flex", flexFlow: "wrap", alignContent: "space-between", justifyContent: "center", width: "30px" }}>
                                       <div>
                                         <ChevronRight width={8} height={12} />
                                       </div>
-                                      <div>
+                                      <OfferDetailsButtonContainer>
                                         <Button
                                           iconPosition="before"
                                           icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
@@ -646,7 +656,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                                           size="sm"
                                           className="delete-button"
                                         />
-                                      </div>
+                                      </OfferDetailsButtonContainer>
                                     </div>
                                   </div>
                                 </div>

@@ -351,3 +351,19 @@ export const ProgressContainer = styled.div`
   border-radius: 1px;
   position: relative;
 `
+
+export const OfferDetailsButtonContainer = styled.div`
+  width: 30px;
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade3};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
+  }
+`
