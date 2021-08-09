@@ -1,16 +1,16 @@
 import {
   CategoryStatus,
-  GetNotificationsSettingsResponse,
   SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
 
 export interface NotificationsSettingsProps {
   globalSettings?: {
-    sms: CategoryStatus;
-    browser: CategoryStatus;
+    mobile: CategoryStatus;
+    push: CategoryStatus;
     email: CategoryStatus;
   };
   groupedNotifSettings: Record<string, SpecificNotificationSettingItem[]>;
+  loading: boolean;
 
   handleGlobalToggle: (key: string) => void;
 }

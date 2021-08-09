@@ -5,6 +5,7 @@ import Button from 'components/base/Button';
 import { CommentsAlt, Desktop, EnvelopeAlt, Sold } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
+import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
@@ -24,6 +25,7 @@ const NotificationsSettingsView = ({
   globalSettings,
   handleGlobalToggle,
   groupedNotifSettings,
+  loading,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -46,6 +48,10 @@ const NotificationsSettingsView = ({
     ],
     []
   );
+
+  if (!globalSettings || loading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -79,8 +85,8 @@ const NotificationsSettingsView = ({
               title="Browser"
               icon={<Desktop fill={iconColor} />}
               description="Push Notifications"
-              onClick={() => handleGlobalToggle('browser')}
-              checked={globalSettings?.browser.enabled || false}
+              onClick={() => handleGlobalToggle('push')}
+              checked={globalSettings?.push.enabled || false}
             />
           </div>
           <div className="item">
@@ -97,8 +103,8 @@ const NotificationsSettingsView = ({
               title="SMS"
               icon={<CommentsAlt fill={iconColor} />}
               description="+61 123 456 789"
-              onClick={() => handleGlobalToggle('sms')}
-              checked={globalSettings?.sms.enabled || false}
+              onClick={() => handleGlobalToggle('mobile')}
+              checked={globalSettings?.mobile.enabled || false}
             />
           </div>
         </div>
@@ -117,8 +123,8 @@ const NotificationsSettingsView = ({
           {ns.specificNotifSettingItems.map((i, index) => (
             <NotificationSettingsCategoryItem
               key={i.id + index}
-              sms={i.settings.sms}
-              browser={i.settings.push}
+              mobile={i.settings.mobile}
+              push={i.settings.push}
               email={i.settings.email}
               icon={<Sold fill={iconColor} />}
               title={i.name}

@@ -10,8 +10,8 @@ export interface CategoryStatus {
 }
 
 export type GlobalNotificationsSettingsResponse = {
-  sms: CategoryStatus; // Ex. 'Visa'
-  browser: CategoryStatus;
+  mobile: CategoryStatus; // Ex. 'Visa'
+  push: CategoryStatus;
   email: CategoryStatus;
 };
 
@@ -24,7 +24,7 @@ export type SettingsToggleItem = {
     supported: boolean;
     enabled: boolean;
   };
-  sms: {
+  mobile: {
     supported: boolean;
     enabled: boolean;
   };
@@ -53,14 +53,9 @@ export type SpecificNotificationSettingItem = {
   settings: SettingsToggleItem;
 };
 
-export type GetNotificationsSettingsResponse = {
-  globalSettings: GlobalNotificationsSettingsResponse;
-};
-
 export type GetNotificationsSettingsPayload = GenericResponse<{
   token: string;
-  data: {
-    globalSettings: GlobalNotificationsSettingsResponse;
-    specificNotifications: SpecificNotificationSettingItem[];
-  };
+
+  global: GlobalNotificationsSettingsResponse;
+  specificNotifications: SpecificNotificationSettingItem[];
 }>;

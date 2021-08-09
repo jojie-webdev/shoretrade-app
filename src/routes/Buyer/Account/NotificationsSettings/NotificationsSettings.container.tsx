@@ -26,12 +26,16 @@ const NotificationsSettings = (): JSX.Element => {
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
   >({
-    browser: { enabled: false, supported: false },
-    sms: { enabled: false, supported: false },
+    push: { enabled: false, supported: false },
+    mobile: { enabled: false, supported: false },
     email: { enabled: false, supported: false },
   });
   const getNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.data
+  );
+
+  const getPendingNotificationsSettings = useSelector(
+    (state: Store) => state.getNotificationsSettings.pending || false
   );
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const NotificationsSettings = (): JSX.Element => {
   }, [companyId]);
 
   const handleGlobalToggle = (key: string) => {
-    if (key === 'sms' || key === 'email' || key === 'browser') {
+    if (key === 'mobile' || key === 'email' || key === 'push') {
       setGlobalSettings({
         ...globalSettings,
         [key]: {
@@ -70,7 +74,7 @@ const NotificationsSettings = (): JSX.Element => {
 
   useEffect(() => {
     if (getNotificationsSettings && getNotificationsSettings.data) {
-      setGlobalSettings(getNotificationsSettings.data.data.globalSettings);
+      setGlobalSettings(getNotificationsSettings.data.global);
     }
   }, [
     getNotificationsSettings,
@@ -82,13 +86,14 @@ const NotificationsSettings = (): JSX.Element => {
     (specificNotifItem: SpecificNotificationSettingItem) => specificNotifItem.id
   );
   const groupedNotifSettings = groupNotifsById(
-    getNotificationsSettings?.data.data.specificNotifications || []
+    getNotificationsSettings?.data.specificNotifications || []
   );
 
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,
     handleGlobalToggle,
     groupedNotifSettings,
+    loading: getPendingNotificationsSettings,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;

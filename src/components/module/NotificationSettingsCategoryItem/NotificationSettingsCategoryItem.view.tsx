@@ -28,7 +28,7 @@ const NotificationSettingsCategoryItem = (
 ): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { title, icon, sms, email, browser } = props;
+  const { title, icon, mobile, email, push } = props;
 
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -53,11 +53,11 @@ const NotificationSettingsCategoryItem = (
         }
         rightComponent={
           <RightComponentContainer>
-            {browser.supported && (
+            {push.supported && (
               <Typography
                 className="text-indicator"
                 variant="caption"
-                color={textIndicatorColor(browser.enabled)}
+                color={textIndicatorColor(push.enabled)}
               >
                 Push
               </Typography>
@@ -71,11 +71,11 @@ const NotificationSettingsCategoryItem = (
                 Email
               </Typography>
             )}
-            {sms.supported && (
+            {mobile.supported && (
               <Typography
                 className="text-indicator"
                 variant="caption"
-                color={textIndicatorColor(sms.enabled)}
+                color={textIndicatorColor(mobile.enabled)}
               >
                 SMS
               </Typography>
@@ -90,7 +90,7 @@ const NotificationSettingsCategoryItem = (
           <CustomCheckBoxContainer>
             <StyledCheckbox
               style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={browser.enabled}
+              checked={push.enabled}
             />
             <Desktop fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
@@ -110,7 +110,7 @@ const NotificationSettingsCategoryItem = (
           <CustomCheckBoxContainer>
             <StyledCheckbox
               style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={sms.enabled}
+              checked={mobile.enabled}
             />
             <CommentsAlt fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
