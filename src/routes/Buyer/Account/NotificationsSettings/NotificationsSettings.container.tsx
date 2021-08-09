@@ -6,7 +6,10 @@ import qs from 'qs';
 import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { getNotificationsSettingsActions } from 'store/actions';
+import {
+  getNotificationsSettingsActions,
+  updateNotificationSettingsActions,
+} from 'store/actions';
 import {
   GlobalNotificationsSettingsResponse,
   SpecificNotificationSettingItem,
@@ -60,6 +63,15 @@ const NotificationsSettings = (): JSX.Element => {
     }
   }, [companyId]);
 
+  const handleOnSave = () => {
+    dispatch(
+      updateNotificationSettingsActions.request({
+        global: globalSettings,
+        custom: [],
+      })
+    );
+  };
+
   const handleGlobalToggle = (key: string) => {
     if (key === 'mobile' || key === 'email' || key === 'push') {
       setGlobalSettings({
@@ -94,6 +106,7 @@ const NotificationsSettings = (): JSX.Element => {
     handleGlobalToggle,
     groupedNotifSettings,
     loading: getPendingNotificationsSettings,
+    handleOnSave,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;

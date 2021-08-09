@@ -23,6 +23,7 @@ import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
 import editableListing from './editableListing';
+import editableMarketRequest from './editableMarketRequest';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getActiveOffers from './getActiveOffers';
@@ -51,7 +52,7 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
-import getNotificationsSettings from './getNotificationsSettings'
+import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -94,11 +95,11 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateNotificationSettings from './updateNotificationSettings';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
-import editableMarketRequest from './editableMarketRequest';
 
 export default (routeHistory: History) =>
   combineReducers(
@@ -202,6 +203,7 @@ export default (routeHistory: History) =>
         socketGetListingsByType,
         getNotificationsSettings,
         editableMarketRequest,
+        updateNotificationSettings,
       }).sort()
     )
   );

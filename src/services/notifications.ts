@@ -10,6 +10,7 @@ import {
   GetNotificationsMeta,
   GetNotificationsPayload,
 } from 'types/store/GetNotificationsState';
+import { UpdateNotificationSettingsMetaData } from 'types/store/UpdateNotificationSettingsState';
 
 const BASE_URL = `${API.URL}/${API.VERSION_NEXT}/notification`;
 
@@ -202,4 +203,18 @@ export const getNotificationsData = (
     },
   };
   return Promise.resolve(mock);
+};
+
+export const updateNotifSettings = (
+  data: UpdateNotificationSettingsMetaData,
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${BASE_URL}/preferences`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data,
+  });
 };

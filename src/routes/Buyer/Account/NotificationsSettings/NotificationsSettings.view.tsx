@@ -26,6 +26,7 @@ const NotificationsSettingsView = ({
   handleGlobalToggle,
   groupedNotifSettings,
   loading,
+  handleOnSave,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -134,7 +135,7 @@ const NotificationsSettingsView = ({
       ))}
 
       <FooterContainer>
-        <Button text="Save" variant="primary" />
+        <Button text="Save" onClick={() => handleOnSave()} variant="primary" />
       </FooterContainer>
     </Container>
   );

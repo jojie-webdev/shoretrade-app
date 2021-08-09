@@ -11,6 +11,6 @@ export interface NotificationsSettingsProps {
   };
   groupedNotifSettings: Record<string, SpecificNotificationSettingItem[]>;
   loading: boolean;
-
+  handleOnSave: () => void;
   handleGlobalToggle: (key: string) => void;
 }

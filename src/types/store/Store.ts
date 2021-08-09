@@ -254,6 +254,10 @@ import {
   UpdateFavouriteProductPayload,
 } from './UpdateFavouriteProductState';
 import { UpdateListingMeta, UpdateListingPayload } from './UpdateListingState';
+import {
+  UpdateNotificationSettingsPayload,
+  UpdateNotificationSettingsMetaData,
+} from './UpdateNotificationSettingsState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
@@ -482,4 +486,8 @@ export interface Store {
     GetNotificationsSettingsPayload
   >;
   getNotifications: AsyncState<GetNotificationsMeta, GetNotificationsPayload>;
+  updateNotificationSettings: AsyncState<
+    UpdateNotificationSettingsMetaData,
+    UpdateNotificationSettingsPayload
+  >;
 }

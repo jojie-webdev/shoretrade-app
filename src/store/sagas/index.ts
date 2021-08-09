@@ -81,6 +81,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateNotificationSettings from './updateNotificationSettings';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
@@ -161,6 +162,7 @@ const sagas = [
   updateBankDetails,
   updateDefaultCard,
   updateFavoriteSeller,
+  updateNotificationSettings,
   updateFavouriteProduct,
   updateListing,
   updateMarketInterests,
