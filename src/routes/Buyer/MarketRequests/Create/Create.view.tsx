@@ -26,6 +26,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import NumberedHeroView from 'components/module/NumberedHero';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { getTermsAndConditions } from 'utils/Links';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import CategorySelectionView from './CategorySelection/CategorySelection.view';
 import { CreateRequestGeneratedProps, CreateRequestStep } from './Create.props';
@@ -56,7 +57,6 @@ import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {

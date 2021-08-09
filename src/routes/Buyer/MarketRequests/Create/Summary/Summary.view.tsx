@@ -16,6 +16,7 @@ import LocationSearch from 'components/module/LocationSearch';
 import { pathOr } from 'ramda';
 import { Row, Col, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -109,8 +110,11 @@ const SummaryView = (props: SummaryProps) => {
               badgeColor={theme.grey.shade3}
             >
               <BadgeText color="shade9" weight="900" variant="overline">
-                {selectedSize.from}
-                {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                {sizeToString(
+                  listingFormData?.metric.name || '',
+                  selectedSize.from,
+                  selectedSize.from
+                )}
               </BadgeText>
             </Badge>
           </div>
@@ -125,8 +129,11 @@ const SummaryView = (props: SummaryProps) => {
                   badgeColor={theme.grey.shade3}
                 >
                   <BadgeText color="shade9" weight="900" variant="overline">
-                    {selectedSize.to}
-                    {formatMeasurementUnit(listingFormData?.measurementUnit)}
+                    {sizeToString(
+                      listingFormData?.metric.name || '',
+                      selectedSize.to,
+                      selectedSize.to
+                    )}
                   </BadgeText>
                 </Badge>
               </div>
@@ -196,9 +203,7 @@ const SummaryView = (props: SummaryProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Here you can detail the size you want for this product. Simply
-              enter your desired size in the boxes and press Proceed to
-              continue.
+              Make a final review before sending your market request.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -287,7 +292,6 @@ const SummaryView = (props: SummaryProps) => {
                   Notes
                 </TypographyView>
                 <CheckboxContainer>
-                  <Checkbox checked />
                   <TypographyView
                     variant="caption"
                     style={{ marginLeft: 8, marginTop: 8 }}
