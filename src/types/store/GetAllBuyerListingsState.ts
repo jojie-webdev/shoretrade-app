@@ -35,6 +35,7 @@ export interface GetAllBuyerListingRequestOption {
   csv?: boolean;
   ids?: string[];
   all?: boolean;
+  exceptId?: string[];
 }
 
 export type GetAllBuyerListingsPayload = GenericResponse<{

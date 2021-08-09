@@ -9,4 +9,5 @@ export interface SelectProps extends ReactDropdownProps {
   border?: string
   borderRadius?: string
   background?: string
+  unbordered?: boolean;
 }

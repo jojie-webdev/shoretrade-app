@@ -3,28 +3,20 @@ import React from 'react';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
-import SegmentedControlsV2 from 'components/base/SegmentedControlsV2';
-import {
-  ArrowRight,
-  DollarSign,
-  Filter,
-  Weight,
-  Sync,
-  CheckFilled,
-  CloseFilled,
-} from 'components/base/SVG';
+import { Sync, CheckFilled, CloseFilled } from 'components/base/SVG';
+import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { isNil } from 'ramda';
-import { Col, Row } from 'react-grid-system';
+import { isEmpty, isNil } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
 import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -33,16 +25,74 @@ import { useTheme } from 'utils/Theme';
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import { Container, FilterButton, BadgeText } from './Landing.style';
 
-const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
+const BuyerRequestsInteractions = (props: {
+  onClick: () => void;
+  data: GetAllMarketRequestResponseItem;
+}) => {
+  const { onClick, data } = props;
+  const unit = formatMeasurementUnit(data.measurementUnit);
+
+  return (
+    <Interactions
+      onClick={() => onClick()}
+      leftComponent={
+        <>
+          <img src={parseImageUrl(data.image)} />
+          <div className="section">
+            <Typography variant="caption" color="noshade">
+              {data.type}
+            </Typography>
+            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+              {!isNil(data.specifications) &&
+                Array.isArray(data.specifications) &&
+                data.specifications.map((s) => s.stateName).join(', ')}
+            </Typography>
+          </div>
+          <div className="section">
+            <Typography variant="small" color="shade6">
+              Size:{' '}
+              {data.sizeOptions && Object.keys(data.sizeOptions).length != 0
+                ? data.sizeOptions.join(', ')
+                : sizeToString(
+                    data.metric,
+                    (data.sizeFrom || '').toString(),
+                    (data.sizeTo || '').toString()
+                  )}
+            </Typography>
+            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+              Qty:{' '}
+              {`${data.weight?.from || ''}${unit} - ${
+                data.weight?.to || ''
+              }${unit}`}
+            </Typography>
+          </div>
+          <div className="section">
+            <Typography variant="small" color="shade6">
+              Shipping to: {data.shippingTo.suburb}, {data.shippingTo.state}{' '}
+              {data.shippingTo.postcode}
+            </Typography>
+          </div>
+        </>
+      }
+      padding="8px 20px 8px 8px"
+    />
+  );
+};
+
+const MyActiveOffersInteractions = (props: {
+  onClick: () => void;
+  data: GetActiveOffersRequestResponseItem;
+}) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const { onClick, data } = props;
 
-  const isIpadPro = useMediaQuery({ query: BREAKPOINTS['xl'] });
-  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
+  const getStatus = (status: GetActiveOffersRequestResponseItem['status']) => {
+    if (status === 'OPEN') return 'NEGOTIATION';
+    if (status === 'ACCEPTED') return 'ACCEPTED';
+    if (status === 'DECLINED') return 'LOST';
 
-  const customScreenSmall = useMediaQuery({
-    query: `(min-width: 1230px) `,
-  });
+    return '';
+  };
 
   const getStatusBadgeColor = (
     status: GetActiveOffersRequestResponseItem['status']
@@ -50,14 +100,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     if (status === 'OPEN') return theme.brand.warning;
     if (status === 'ACCEPTED') return theme.brand.success;
     if (status === 'DECLINED') return theme.brand.error;
-
-    return '';
-  };
-
-  const getStatus = (status: GetActiveOffersRequestResponseItem['status']) => {
-    if (status === 'OPEN') return 'NEGOTIATION';
-    if (status === 'ACCEPTED') return 'ACCEPTED';
-    if (status === 'DECLINED') return 'LOST';
 
     return '';
   };
@@ -70,6 +112,68 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     if (status === 'DECLINED')
       return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
   };
+
+  const status = getStatus(data.status);
+  const sizeUnit =
+    formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
+
+  return (
+    <Interactions
+      onClick={() => onClick()}
+      leftComponent={
+        <>
+          <img src={parseImageUrl(data.image)} />
+          <div className="section">
+            <Typography variant="caption" color="noshade">
+              {data.name}
+            </Typography>
+            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+              {!isNil(data.specifications) &&
+                Array.isArray(data.specifications) &&
+                data.specifications.join(', ')}
+            </Typography>
+          </div>
+          <div className="section">
+            <Typography variant="small" color="shade6">
+              Size:{' '}
+              {!data.size.from ? 'Ungraded' : `${data.size.from}${sizeUnit}`}
+              {data.size.to && ` - ${data.size.to}${sizeUnit}`}
+            </Typography>
+            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+              Price: {data.price}/{formatMeasurementUnit(data.measurementUnit)}
+            </Typography>
+          </div>
+          <div className="section">
+            <Typography variant="small" color="shade6">
+              {getExpiry(data.marketRequest.createdAt)}
+            </Typography>
+          </div>
+          <div className="section">
+            {status && (
+              <Badge
+                className="badge"
+                badgeColor={getStatusBadgeColor(data.status)}
+              >
+                <BadgeText
+                  variant="overlineSmall"
+                  color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
+                >
+                  {status}
+                </BadgeText>
+                <div className="svg-container">{setIcon(data.status)}</div>
+              </Badge>
+            )}
+          </div>
+        </>
+      }
+      padding="8px 20px 8px 8px"
+    />
+  );
+};
+
+const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <Container>
       {props.userPending && (
@@ -82,280 +186,89 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Buyer Requests</MobileHeader>}
+      {isMobile && <MobileHeader>Market Board</MobileHeader>}
 
-      <SegmentedControlsV2
-        options={['Buyer Requests', 'My Active Offers']}
-        selectedOption={props.currentTab}
-        onClickControl={(value) =>
-          props.onChangeCurrentTab(value as TabOptions)
-        }
-        tooltips={[{ option: 'Buyer Requests', value: BuyerRequestsTooltip }]}
-      >
-        {!isMobile && props.currentTab === 'Buyer Requests' && (
-          <>
-            <Search
-              className="search"
-              value={props.searchTerm}
-              onChange={(event: any) =>
-                props.setSearchTerm(event.currentTarget.value)
-              }
-              resetValue={() => props.setSearchTerm('')}
-              placeholder="Search for a product"
-              rounded
-            />
-            {customScreenSmall && (
-              <FilterButton onClick={props.onClickFilterButton}>
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  weight="500"
-                  className="btn-text"
-                >
-                  Filters
-                </Typography>
-
-                <Filter />
-              </FilterButton>
-            )}
-          </>
-        )}
-      </SegmentedControlsV2>
-      {(isIpadPro || isIpad) && (
-        <div className="filter-ipad-container">
-          <FilterButton onClick={props.onClickFilterButton}>
-            <Typography
-              variant="label"
-              color="noshade"
-              weight="500"
-              className="btn-text"
-            >
-              Filters
-            </Typography>
-
-            <Filter />
-          </FilterButton>
+      <div className="tabs-row">
+        <div className="tabs">
+          <Tabs
+            tabs={['Buyer Requests', 'My Active Offers']}
+            selectedTab={props.currentTab}
+            onClickTab={(tab) => props.onChangeCurrentTab(tab as TabOptions)}
+          />
         </div>
-      )}
-      {isMobile && (
-        <Row nogutter className="search-row">
-          {props.currentTab === 'Buyer Requests' && (
-            <>
-              <Search
-                className="filter-search"
-                value={props.searchTerm}
-                onChange={(event: any) =>
-                  props.setSearchTerm(event.currentTarget.value)
-                }
-                resetValue={() => props.setSearchTerm('')}
-                placeholder="Search for a product"
-                rounded
-              />
-              <FilterButton
-                className="mobile-filter"
-                onClick={props.onClickFilterButton}
-              >
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  weight="500"
-                  className="btn-text"
-                >
-                  Filters
-                </Typography>
 
-                <Filter />
-              </FilterButton>
-            </>
-          )}
-        </Row>
-      )}
+        <Search
+          className="search"
+          value={props.searchTerm}
+          onChange={(event: any) =>
+            props.setSearchTerm(event.currentTarget.value)
+          }
+          resetValue={() => props.setSearchTerm('')}
+          placeholder="Search for a product"
+          rounded
+        />
+      </div>
 
       {props.isLoading ? (
         <Loading />
       ) : (
         <>
           {props.currentTab === 'Buyer Requests' &&
+            !isEmpty(props.sellingRequests) && (
+              <>
+                <Typography
+                  variant="overlineSmall"
+                  color="shade7"
+                  style={{ marginBottom: 12 }}
+                >
+                  Products I Sell
+                </Typography>
+
+                {props.sellingRequests.map((data) => (
+                  <BuyerRequestsInteractions
+                    key={data.id}
+                    onClick={() => props.onClickOffer(data)}
+                    data={data}
+                  />
+                ))}
+
+                <div style={{ marginBottom: 32 }} />
+              </>
+            )}
+
+          {props.currentTab === 'Buyer Requests' && (
+            <Typography
+              variant="overlineSmall"
+              color="shade7"
+              style={{ marginBottom: 12 }}
+            >
+              All Products
+            </Typography>
+          )}
+
+          {props.currentTab === 'Buyer Requests' &&
             !isNil(props.buyerRequests) &&
-            props.buyerRequests.map((b) => (
-              <Interactions
-                key={b.id}
-                onClick={() => props.onClickOffer(b)}
-                leftComponent={
-                  <div className="left-component">
-                    <img src={parseImageUrl(b.image)} />
-                    <div>
-                      <Typography color="noshade">{b.type}</Typography>
-                      <Typography
-                        className="expiry"
-                        color="error"
-                        variant="caption"
-                      >
-                        {getExpiry(b.createdAt)}
-                      </Typography>
-                      <div className="badges-container">
-                        {!isNil(b.specifications) &&
-                          Array.isArray(b.specifications) &&
-                          b.specifications.map((s) => (
-                            <Badge
-                              key={s.stateId}
-                              className="badge"
-                              badgeColor={theme.grey.shade8}
-                            >
-                              <BadgeText
-                                variant={isMobile ? 'small' : 'overlineSmall'}
-                                color="noshade"
-                              >
-                                {s.stateName}
-                              </BadgeText>
-                            </Badge>
-                          ))}
-                      </div>
-
-                      {Object.keys(b.sizeOptions).length != 0 ? (
-                        <div className="badges-container">
-                          {b.sizeOptions.map((opt: any, idx: number) => (
-                            <Badge
-                              key={idx}
-                              className="badge"
-                              badgeColor={theme.grey.shade8}
-                            >
-                              <BadgeText
-                                variant={isMobile ? 'small' : 'overlineSmall'}
-                                color="noshade"
-                              >
-                                {opt}
-                              </BadgeText>
-                            </Badge>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="weights">
-                          <Typography color="noshade" variant="small">
-                            {sizeToString(
-                              b.metric,
-                              (b.sizeFrom || '').toString(),
-                              (b.sizeTo || '').toString()
-                            )}
-                          </Typography>
-                        </div>
-                      )}
-
-                      <div className="weights">
-                        <Typography color="noshade" variant="small">
-                          {b.weight?.from || ''}
-                          {formatMeasurementUnit(b.measurementUnit)}
-                        </Typography>
-                        <div style={{ margin: '0 6px' }}>
-                          <ArrowRight
-                            width={10}
-                            height={10}
-                            fill={theme.grey.shade7}
-                          />
-                        </div>
-
-                        <Typography color="noshade" variant="small">
-                          {b.weight?.to || ''}
-                          {formatMeasurementUnit(b.measurementUnit)}
-                        </Typography>
-                      </div>
-
-                      <div className="shipping-to">
-                        <Typography variant="small" color="shade6">
-                          Shipping to
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="noshade"
-                          weight="bold"
-                        >
-                          {`${b.shippingTo.suburb}, ${b.shippingTo.state} ${b.shippingTo.postcode}`}
-                        </Typography>
-                      </div>
-                    </div>
-                  </div>
-                }
-                padding="16px 24px 16px 16px"
+            props.buyerRequests.map((data) => (
+              <BuyerRequestsInteractions
+                key={data.id}
+                onClick={() => props.onClickOffer(data)}
+                data={data}
               />
             ))}
 
           {props.currentTab === 'My Active Offers' &&
             !isNil(props.activeOffers) &&
-            props.activeOffers.map((v, i) => {
-              const status = getStatus(v.status);
-
-              return (
-                <Interactions
-                  key={i}
-                  onClick={() => props.onClickActiveOffer(v)}
-                  leftComponent={
-                    <div className="left-component">
-                      <img src={parseImageUrl(v.image)} />
-                      <div>
-                        <Typography color="noshade">{v.name}</Typography>
-                        <Typography
-                          className="expiry"
-                          color="error"
-                          variant="caption"
-                        >
-                          {getExpiry(v.marketRequest.createdAt)}
-                        </Typography>
-
-                        {status && (
-                          <div className="badges-container">
-                            <Badge
-                              className="badge"
-                              badgeColor={getStatusBadgeColor(v.status)}
-                            >
-                              <BadgeText
-                                variant="overlineSmall"
-                                color={
-                                  v.status === 'OPEN' ? 'shade9' : 'noshade'
-                                }
-                              >
-                                {status}
-                              </BadgeText>
-                              <div className="svg-container">
-                                {setIcon(v.status)}
-                              </div>
-                            </Badge>
-                          </div>
-                        )}
-
-                        <div className="weights">
-                          <div style={{ margin: '0 4px 4px 0' }}>
-                            <Weight
-                              fill={theme.grey.shade7}
-                              width={13.33}
-                              height={13.33}
-                            />
-                          </div>
-                          <Typography color="noshade" variant="small">
-                            {v.weight}
-                            {formatMeasurementUnit(v.measurementUnit)}
-                          </Typography>
-                          <div style={{ margin: '0 2px 4px 8px' }}>
-                            <DollarSign
-                              fill={theme.grey.shade7}
-                              width={13.33}
-                              height={13.33}
-                            />
-                          </div>
-                          <Typography color="noshade" variant="small">
-                            {v.price}/{formatMeasurementUnit(v.measurementUnit)}
-                          </Typography>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                  padding="16px 24px 16px 16px"
-                />
-              );
-            })}
+            props.activeOffers.map((data, i) => (
+              <MyActiveOffersInteractions
+                key={data.id}
+                onClick={() => props.onClickActiveOffer(data)}
+                data={data}
+              />
+            ))}
         </>
       )}
 
-      <FilterModal {...props.filterModalProps} isBuyerRequestFilters />
+      {/*<FilterModal {...props.filterModalProps} isBuyerRequestFilters />*/}
     </Container>
   );
 };

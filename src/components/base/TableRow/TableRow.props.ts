@@ -8,6 +8,7 @@ interface TableColumn {
   sortable?: boolean;
   component?: (data: any, state?: any) => ReactElement;
   sticky?: boolean;
+  tooltip?: (data: any, state?: any) => string;
 }
 
 export interface TableRowProps {

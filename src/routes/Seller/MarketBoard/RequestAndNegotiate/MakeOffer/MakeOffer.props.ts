@@ -4,7 +4,12 @@ import { OfferProps, StepProps } from '../RequestAndNegotiate.props';
 
 export interface MakeOfferProps extends StepProps, OfferProps {}
 
-export type Option = { label: string; value: string; groupOrder: number };
+export type Option = {
+  label: string;
+  value: string;
+  groupOrder: number;
+  groupName: string;
+};
 
 export interface MakeOfferGeneratedProps extends MakeOfferProps {
   shippingTo: string;

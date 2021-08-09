@@ -29,6 +29,7 @@ const Select = ({ label, error, border, borderRadius, background, ...props }: Se
         border={border}
         background={background}
         {...props}
+        unbordered={props.unbordered}
         controlClassName={
           props.size === 'small'
             ? `${PREFIX}ContainerThin`

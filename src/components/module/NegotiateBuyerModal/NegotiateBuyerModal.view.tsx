@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
@@ -80,12 +81,19 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
       backgroundColor={theme.grey.noshade}
       style={{
         width: '',
-        padding: '48px',
+        maxWidth: 430,
+        borderRadius: 12,
+        padding: 48,
       }}
       {...modalProps}
     >
       <>
-        <Typography weight="bold" variant="title4" color={textColor}>
+        <Typography
+          weight="bold"
+          variant="title4"
+          color={textColor}
+          style={{ fontFamily: 'Media Sans' }}
+        >
           Negotiate
         </Typography>
         <Inputs>
@@ -111,16 +119,22 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             className="checkbox"
             checked={closeOnAccept}
           />
-          <Typography className="label" variant="label" color="shade7">
+          <Typography
+            className="label"
+            variant="label"
+            color="shade7"
+            style={{ marginRight: 4 }}
+          >
             Close this buyer request if accepted.
           </Typography>
+          <InfoFilled fill={theme.grey.shade7} width={20} height={20} />
         </CheckBoxContainer>
         <ComputationContainer>
           <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
+            <Typography variant="body" color="shade7">
               Seller&apos;s Current Offer
             </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
+            <Typography variant="body" color="shade7">
               {sortedNegotiations.length === 0
                 ? toPrice(originalOffer)
                 : toPrice(latestSellerNego.price)}
@@ -130,17 +144,17 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
 
           {sortedNegotiations.length >= 2 && (
             <div className="computation-item-container">
-              <Typography variant="label" color={textColor}>
+              <Typography variant="body" color="shade7">
                 Your New Offer
               </Typography>
-              <Typography variant="label" weight="bold" color={textColor}>
+              <Typography variant="body" color="shade7">
                 {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
           )}
 
           <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
+            <Typography variant="body" color="shade7">
               Change in Price{' '}
               <span className="indicator">{`${
                 discountValue > 0 ? '+' : ''
@@ -149,22 +163,21 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             {discountValue !== 0 ? (
               <Typography
                 color={discountValue > 0 ? 'error' : 'success'}
-                variant="label"
-                weight="bold"
+                variant="body"
               >
                 {toPrice(Math.abs(discountValue))}/{unit}
               </Typography>
             ) : (
-              <Typography variant="label" weight="bold" color={textColor}>
+              <Typography variant="body" color="shade7">
                 0
               </Typography>
             )}
           </div>
-          <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
-              Total Value
+          <div className="computation-item-container total-delivery">
+            <Typography variant="body" weight="bold" color={textColor}>
+              Total Value inc. Delivery
             </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
+            <Typography variant="body" weight="bold" color={textColor}>
               {toPrice(deliveryTotal)}
             </Typography>
           </div>
@@ -181,6 +194,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               }}
               takeFullWidth={isSmallScreen}
               loading={isNegotiating}
+              style={{ borderRadius: 12, maxWidth: 128 }}
             />
           </ButtonContainer>
         </Hidden>

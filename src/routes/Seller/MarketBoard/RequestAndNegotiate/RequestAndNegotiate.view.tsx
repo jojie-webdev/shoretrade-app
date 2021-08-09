@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import Badge from 'components/base/Badge/Badge.view';
+import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
-import { ArrowLeft } from 'components/base/SVG';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreview from 'components/module/CategoryImagePreview';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
@@ -34,7 +32,7 @@ import {
   BadgesContainer,
   BadgeText,
   MetricContainer,
-  StyledTouchable,
+  StyledBadge,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
@@ -80,12 +78,8 @@ const Step1 = ({
     if (isEmpty(items)) return <></>;
 
     const tagsMarkup = items.map((item) => (
-      <Badge
-        key={item}
-        className="offers-state-badge"
-        badgeColor={theme.grey.shade9}
-      >
-        <BadgeText color="noshade" weight="bold" variant="overline">
+      <Badge key={item} className="badge" badgeColor={theme.grey.shade3}>
+        <BadgeText color="shade9" variant="overline">
           {item}
         </BadgeText>
       </Badge>
@@ -94,7 +88,7 @@ const Step1 = ({
     return (
       <div>
         <Typography
-          style={{ marginBottom: '8px' }}
+          style={{ marginBottom: 12 }}
           color="shade6"
           variant="overline"
         >
@@ -123,7 +117,7 @@ const Step1 = ({
             </Typography>
           </div>
 
-          <div className="computation-item-container border-bottom">
+          <div className="computation-item-container">
             <Typography variant="label" color="noshade">
               Total Value
             </Typography>
@@ -133,7 +127,7 @@ const Step1 = ({
           </div>
 
           {isNegoOpen && (
-            <div className="computation-item-container border-bottom">
+            <div className="computation-item-container">
               <Typography variant="label" color="noshade">
                 The buyer is reviewing your offer.
               </Typography>
@@ -322,7 +316,7 @@ const Step1 = ({
               </Typography>
             )}
           </div>
-          <div className="computation-item-container border-bottom">
+          <div className="computation-item-container">
             <Typography variant="label" color="noshade">
               Total Value
             </Typography>
@@ -405,169 +399,154 @@ const Step1 = ({
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
-    <>
-      <div className="step-1-container">
-        <CategoryImagePreview
-          categoryName={isReview ? buyerRequest.type : activeOffer.name}
-          imgSrc={isReview ? buyerRequest.image : activeOffer.image}
-          marketBoard
-        />
-
-        <div className="spacer" />
-
-        <SummaryContentContainer>
-          <SummaryBadges
-            label="Specs"
-            items={
-              isReview
-                ? buyerRequest.specifications
-                  ? buyerRequest.specifications.map((v) => v.stateName)
-                  : []
-                : activeOffer.specifications
-            }
-          />
-          {!isEmpty(getSizeBadge()) ? (
-            <SummaryBadges label="Sizes" items={getSizeBadge()} />
-          ) : (
-            <>
-              <Typography
-                style={{ marginBottom: '16px' }}
-                color="shade6"
-                variant="overline"
-              >
-                Size
-              </Typography>
-              {metric !== '' && (
-                <MetricContainer>
-                  <Typography color="shade6" variant="overline">
-                    Metric:
-                  </Typography>
-                  <Typography
-                    style={{ marginLeft: '8px' }}
-                    color="shade2"
-                    variant="overline"
-                  >
-                    {metric}
-                  </Typography>
-                </MetricContainer>
-              )}
-
-              <div className="quantity-container">
-                <TextField
-                  className="text-field"
-                  type="number"
-                  label="From"
-                  value={
-                    isReview
-                      ? buyerRequest.sizeFrom || 0
-                      : activeOffer.size.from || 0
-                  }
-                  LeftComponent={
-                    <Typography variant="label" weight="bold" color="shade6">
-                      {metric === 'Grams' ? 'g' : unit}
-                    </Typography>
-                  }
-                  disabled
-                />
-
-                {isReview && (
-                  <TextField
-                    className="text-field"
-                    type="number"
-                    label="To"
-                    value={buyerRequest.sizeTo || 0}
-                    disabled
-                    LeftComponent={
-                      <Typography variant="label" weight="bold" color="shade6">
-                        {metric === 'Grams' ? 'g' : unit}
-                      </Typography>
-                    }
-                  />
-                )}
-
-                {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
-                  <TextField
-                    className="text-field"
-                    type="number"
-                    label="To"
-                    value={activeOffer.size.to}
-                    disabled
-                    LeftComponent={
-                      <Typography variant="label" weight="bold" color="shade6">
-                        {unit}
-                      </Typography>
-                    }
-                  />
-                )}
-              </div>
-            </>
-          )}
+    <SummaryContentContainer>
+      <SummaryBadges
+        label="Specifications"
+        items={
+          isReview
+            ? buyerRequest.specifications
+              ? buyerRequest.specifications.map((v) => v.stateName)
+              : []
+            : activeOffer.specifications
+        }
+      />
+      {!isEmpty(getSizeBadge()) ? (
+        <SummaryBadges label="Sizes" items={getSizeBadge()} />
+      ) : (
+        <>
           <Typography
-            style={{ margin: isMobile ? '8px 0' : '16px 0' }}
+            style={{ marginBottom: 12 }}
             color="shade6"
             variant="overline"
           >
-            Weight
+            Size
           </Typography>
+          {metric !== '' && (
+            <MetricContainer>
+              <Typography color="shade6" variant="overline">
+                Metric:
+              </Typography>
+              <Typography
+                style={{ marginLeft: '8px' }}
+                color="shade2"
+                variant="overline"
+              >
+                {metric}
+              </Typography>
+            </MetricContainer>
+          )}
+
           <div className="quantity-container">
-            <TextField
-              className="text-field"
-              type="number"
-              label={isReview ? 'From' : ''}
-              value={
-                isReview
-                  ? buyerRequest.weight?.from || 0
-                  : activeOffer.weight || 0
-              }
-              disabled
-              LeftComponent={
-                <Typography variant="label" weight="bold" color="shade6">
-                  {unit}
-                </Typography>
-              }
-            />
+            <StyledBadge badgeColor={theme.grey.shade3}>
+              <BadgeText color="shade9" variant="overline">
+                {isReview
+                  ? buyerRequest.sizeFrom || 0
+                  : activeOffer.size.from || 0}
+                {metric === 'Grams' ? 'g' : unit}
+              </BadgeText>
+            </StyledBadge>
 
             {isReview && (
-              <TextField
-                className="text-field"
-                type="number"
-                label="To"
-                value={buyerRequest.weight?.to || 0}
-                disabled
-                LeftComponent={
-                  <Typography variant="label" weight="bold" color="shade6">
-                    {unit}
-                  </Typography>
-                }
-              />
+              <>
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  weight="bold"
+                  className="dash"
+                >
+                  -
+                </Typography>
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {buyerRequest.sizeTo || 0}
+                    {metric === 'Grams' ? 'g' : unit}
+                  </BadgeText>
+                </StyledBadge>
+              </>
+            )}
+
+            {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
+              <>
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  weight="bold"
+                  className="dash"
+                >
+                  -
+                </Typography>
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {activeOffer.size.to}
+                    {metric === 'Grams' ? 'g' : unit}
+                  </BadgeText>
+                </StyledBadge>
+              </>
             )}
           </div>
+        </>
+      )}
 
-          {isReview && (
-            <div className="shipping-to">
-              <Typography variant="label" color="shade6">
-                Shipping to
-              </Typography>
-              <Typography variant="label" color="noshade" weight="bold">
-                {`${buyerRequest.shippingTo.suburb}, ${buyerRequest.shippingTo.state} ${buyerRequest.shippingTo.postcode}`}
-              </Typography>
-            </div>
-          )}
+      <Typography
+        style={{ margin: '24px 0 12px 0' }}
+        color="shade6"
+        variant="overline"
+      >
+        Quantity
+      </Typography>
+      <div className="quantity-container">
+        <StyledBadge badgeColor={theme.grey.shade3}>
+          <BadgeText color="shade9" variant="overline">
+            {isReview
+              ? buyerRequest.weight?.from || 0
+              : activeOffer.weight || 0}
+            {unit}
+          </BadgeText>
+        </StyledBadge>
 
-          <Negotiations activeOffer={activeOffer} />
-
-          {isReview && !isMobile && (
-            <Button
-              onClick={() => props.setStep && props.setStep(2)}
-              className="submit-btn"
-              disabled={userPending}
-              text="Make an offer"
-              variant={userPending ? 'disabled' : 'primary'}
-            />
-          )}
-        </SummaryContentContainer>
+        {isReview && (
+          <>
+            <Typography
+              variant="label"
+              color="noshade"
+              weight="bold"
+              className="dash"
+            >
+              -
+            </Typography>
+            <StyledBadge badgeColor={theme.grey.shade3}>
+              <BadgeText color="shade9" variant="overline">
+                {buyerRequest.weight?.to || 0}
+                {unit}
+              </BadgeText>
+            </StyledBadge>
+          </>
+        )}
       </div>
-    </>
+
+      {isReview && (
+        <div className="shipping-to">
+          <Typography variant="label" color="shade6">
+            Shipping to
+          </Typography>
+          <Typography variant="label" color="noshade" weight="bold">
+            {`${buyerRequest.shippingTo.suburb}, ${buyerRequest.shippingTo.state} ${buyerRequest.shippingTo.postcode}`}
+          </Typography>
+        </div>
+      )}
+
+      <Negotiations activeOffer={activeOffer} />
+
+      {isReview && !isMobile && (
+        <Button
+          onClick={() => props.setStep && props.setStep(2)}
+          className="submit-btn"
+          disabled={userPending}
+          text="Make an offer"
+          variant={userPending ? 'disabled' : 'primary'}
+        />
+      )}
+    </SummaryContentContainer>
   );
 };
 
@@ -586,17 +565,6 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const handleNavigation = () => {
-    if (step === 1) {
-      history.goBack();
-    }
-    if (step === 2) {
-      setStep(1);
-    }
-    if (step === 3) {
-      setStep(2);
-    }
-  };
   return (
     <Container>
       <div className="breadcrumb-container">
@@ -631,12 +599,10 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         />
       </div>
 
-      {isMobile && (
-        <div className="mobile-header">
-          <Typography variant="title5" color="noshade" className="product-name">
-            {props.buyerRequest?.type || props.activeOffer?.name || ''}
-          </Typography>
-        </div>
+      {step !== 3 && (
+        <MobileHeader>
+          {props.buyerRequest?.type || props.activeOffer?.name || ''}
+        </MobileHeader>
       )}
 
       {step === 1 && (

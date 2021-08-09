@@ -49,7 +49,7 @@ export const BoxDetails = ({
       <div className="texts">
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            Weight
+            {`${unit} per Box`}
           </Typography>
           <Typography color="noshade" variant="copy">
             {weight.toFixed(2)} {unit}
@@ -100,7 +100,7 @@ const BoxSummary = ({
   <BoxSummaryContainer>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Total Weight
+        Total {unit}
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.weights.toFixed(2)} {unit}
@@ -155,7 +155,7 @@ const AddBoxInputs = ({
         <TextField
           type="number"
           inputType="decimal"
-          label={'Weight'}
+          label={`${unit} per box`}
           value={values.weight}
           onChangeText={(v) => {
             setValues({ ...values, weight: v });
