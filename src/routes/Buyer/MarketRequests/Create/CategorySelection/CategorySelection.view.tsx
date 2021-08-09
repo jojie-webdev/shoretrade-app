@@ -13,7 +13,9 @@ import Group204 from 'components/base/SVG/Group204';
 import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
+import { useMediaQuery } from 'react-responsive'
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -51,6 +53,8 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     onBack,
   } = props;
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const handleCategoryClick = (v: CategoryItem) => {
     updateCategory(v);
     setSelectedCategory(v);
@@ -62,48 +66,52 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     <>
       <CreateRequestHeaderContainer>
         <div>
-          <Breadcrumbs
-            color="shade5"
-            sections={[
-              { label: 'Category' },
-              {
-                label: 'Specifications',
-                onClick: () => {
-                  if (didFinishStep >= 2) {
-                    onBack(2);
-                  }
-                },
-                isDone: didFinishStep >= 2,
-              },
-              {
-                label: 'Size',
-                onClick: () => {
-                  if (didFinishStep >= 3) {
-                    onBack(3);
-                  }
-                },
-                isDone: didFinishStep >= 3,
-              },
-              {
-                label: 'Quantity',
-                onClick: () => {
-                  if (didFinishStep >= 4) {
-                    onBack(4);
-                  }
-                },
-                isDone: didFinishStep >= 4,
-              },
-              {
-                label: 'Summary',
-                onClick: () => {
-                  if (didFinishStep >= 5) {
-                    onBack(5);
-                  }
-                },
-                isDone: didFinishStep >= 5,
-              },
-            ]}
-          />
+          {
+            isMobile ?
+              null :
+              <Breadcrumbs
+                color="shade5"
+                sections={[
+                  { label: 'Category' },
+                  {
+                    label: 'Specifications',
+                    onClick: () => {
+                      if (didFinishStep >= 2) {
+                        onBack(2);
+                      }
+                    },
+                    isDone: didFinishStep >= 2,
+                  },
+                  {
+                    label: 'Size',
+                    onClick: () => {
+                      if (didFinishStep >= 3) {
+                        onBack(3);
+                      }
+                    },
+                    isDone: didFinishStep >= 3,
+                  },
+                  {
+                    label: 'Quantity',
+                    onClick: () => {
+                      if (didFinishStep >= 4) {
+                        onBack(4);
+                      }
+                    },
+                    isDone: didFinishStep >= 4,
+                  },
+                  {
+                    label: 'Summary',
+                    onClick: () => {
+                      if (didFinishStep >= 5) {
+                        onBack(5);
+                      }
+                    },
+                    isDone: didFinishStep >= 5,
+                  },
+                ]}
+              />
+          }
           <div className="title-container">
             <TypographyView
               variant="title5"
@@ -114,6 +122,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             </TypographyView>
           </div>
         </div>
+
       </CreateRequestHeaderContainer>
       <CategoryInteractionsContainer>
         <div className="search-container">
