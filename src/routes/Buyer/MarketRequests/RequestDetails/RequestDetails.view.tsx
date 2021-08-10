@@ -474,6 +474,77 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     </DetailsContentContainer>
   )
 
+  const renderSize = () => {
+    const sizeOptions = buyerRequests.data?.data?.marketRequests[0]?.sizeOptions
+
+    if (sizeOptions && Array.isArray(sizeOptions) && sizeOptions.length > 0) {
+      return <DetailsContentContainer>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{
+            marginBottom: 16,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+        >
+          Size:
+        </Typography>
+        <DetailsDataContainer>
+          <Cross7 />
+          <Typography
+            color="shade9"
+            variant="label"
+            style={{
+              fontFamily: 'Wilderness',
+              fontSize: 38,
+              marginLeft: 8.5,
+              marginTop: -8,
+            }}
+          >
+            {Array.isArray(sizeOptions) ? sizeOptions?.join(', ') : ''}
+          </Typography>
+        </DetailsDataContainer>
+      </DetailsContentContainer>
+    }
+
+    return null
+  }
+
+  const renderQuantity = () => {
+    const marketRequest = buyerRequests.data?.data?.marketRequests[0]
+    const unit = measurementUnit.toLowerCase()
+
+    return <DetailsContentContainer>
+      <Typography
+        color="shade6"
+        variant="label"
+        style={{
+          marginBottom: 16,
+          fontFamily: 'Wilderness',
+          fontSize: 24,
+        }}
+      >
+        Quantity:
+      </Typography>
+      <DetailsDataContainer>
+        <Cross7 />
+        <Typography
+          color="shade9"
+          variant="label"
+          style={{
+            fontFamily: 'Wilderness',
+            fontSize: 38,
+            marginLeft: 8.5,
+            marginTop: -8,
+          }}
+        >
+          {marketRequest?.weight?.from}{unit} - {marketRequest?.weight?.to}{unit}
+        </Typography>
+      </DetailsDataContainer>
+    </DetailsContentContainer>
+  }
+
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
       <Switch>
@@ -544,72 +615,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             </DetailsHeaderContainer>
 
             {renderSpecs()}
-
             <div style={{ marginTop: "25px" }}></div>
-
-            <DetailsContentContainer>
-              <Typography
-                color="shade6"
-                variant="label"
-                style={{
-                  marginBottom: 16,
-                  fontFamily: 'Wilderness',
-                  fontSize: 24,
-                }}
-              >
-                Size:
-              </Typography>
-              <DetailsDataContainer>
-                <Cross7 />
-                <Typography
-                  color="shade9"
-                  variant="label"
-                  style={{
-                    fontFamily: 'Wilderness',
-                    fontSize: 38,
-                    marginLeft: 8.5,
-                    marginTop: -8,
-                  }}
-                >
-                  {console.log(buyerRequests.data?.data?.marketRequests[0])}
-
-                </Typography>
-              </DetailsDataContainer>
-            </DetailsContentContainer>
-
+            {renderSize()}
             <div style={{ marginTop: "25px" }}></div>
-
-            <DetailsContentContainer>
-              <Typography
-                color="shade6"
-                variant="label"
-                style={{
-                  marginBottom: 16,
-                  fontFamily: 'Wilderness',
-                  fontSize: 24,
-                }}
-              >
-                Quantity:
-              </Typography>
-              <DetailsDataContainer>
-                <Cross7 />
-                <Typography
-                  color="shade9"
-                  variant="label"
-                  style={{
-                    fontFamily: 'Wilderness',
-                    fontSize: 38,
-                    marginLeft: 8.5,
-                    marginTop: -8,
-                  }}
-                >
-                  test
-                  {/* {`${selectedQuantity.from}${measurement} ${selectedQuantity.to &&
-                  `- ${selectedQuantity.to}${measurement}`
-                  }`} */}
-                </Typography>
-              </DetailsDataContainer>
-            </DetailsContentContainer>
+            {renderQuantity()}
+            {console.log(buyerRequests.data?.data?.marketRequests[0])}
             {/* <AnchorContainer>
 
             </AnchorContainer> */}
