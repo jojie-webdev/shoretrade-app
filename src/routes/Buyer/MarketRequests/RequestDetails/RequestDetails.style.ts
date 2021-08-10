@@ -347,3 +347,15 @@ export const ProgressContainer = styled.div`
   border-radius: 1px;
   position: relative;
 `
+
+export const SummaryContainer = styled.div<{ margin?: string }>`
+  width: 100%;
+  z-index: 2;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  padding: 40px 30px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  min-height: 312px;
+  max-height: 312px;
+  margin: ${({ margin }) => margin || '0px'}
+`;

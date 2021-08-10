@@ -49,11 +49,15 @@ import {
   FilterButton,
   RequestDetailsMobileContainer,
   RequestDetailsParentContainer,
+  SummaryContainer
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
 import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
 import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
+import { DetailsHeaderContainer } from '../Create/Create.style';
+import { AnchorContainer } from './../Create/SelectSpecifications/SelectSpecification.style';
+import ShoretradeAnchor from './../../../../components/base/SVG/ShoretradeAnchor';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -401,6 +405,24 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               </div>
             </RequestDetailsMobileContainer>
           </RequestDetailsParentContainer>
+
+          <SummaryContainer margin="16px 0px">
+            <DetailsHeaderContainer>
+              <Typography
+                style={{
+                  marginBottom: 8,
+                  fontFamily: 'Wilderness',
+                  fontSize: 24,
+                }}
+              >
+                Summary
+              </Typography>
+            </DetailsHeaderContainer>
+            <AnchorContainer>
+
+            </AnchorContainer>
+          </SummaryContainer>
+
           {/* <OffersContainer>
             {totalOffers < 1 || sellerOffers === undefined ? (
               <EmptyStateView
