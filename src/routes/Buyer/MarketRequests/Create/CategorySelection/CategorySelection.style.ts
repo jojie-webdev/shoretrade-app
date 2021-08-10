@@ -1,5 +1,6 @@
 import Interactions from 'components/base/Interactions';
 import styled from 'utils/styled';
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const CategoryInteractionsContainer = styled.div`
   display: flex;
@@ -8,6 +9,10 @@ export const CategoryInteractionsContainer = styled.div`
 
 export const CategoryInterAction = styled(Interactions)`
   margin-bottom: 12px;
+
+  @media ${BREAKPOINTS['sm']} {
+      border-radius: 12px;
+    }
 `;
 
 export const EmptyContainer = styled.div`

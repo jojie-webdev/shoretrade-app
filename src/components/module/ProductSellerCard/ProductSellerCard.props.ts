@@ -4,9 +4,10 @@ export interface ProductSellerProps {
   location?: string;
   rating: string;
   isFavorite?: boolean;
-  onFavorite: () => Promise<void>;
+  onFavorite?: () => Promise<void>;
   onClickSeller?: () => void;
   withBackground: boolean;
   fullWidth?: boolean;
   showFavoriteButton: boolean;
+  bottomComponent?: React.ReactNode;
 }

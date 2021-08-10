@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const formatRunningDateDifference = (date = '') => {
+export const formatRunningDateDifference = (date = '', pick = '') => {
   const targetDate = moment(date);
   const today = moment();
   const difference = moment.duration(
@@ -25,5 +25,13 @@ export const formatRunningDateDifference = (date = '') => {
     remainingMinutes > 1
       ? `${remainingMinutes} Mins`
       : `${remainingMinutes <= 0 ? 0 : remainingMinutes} Min`;
+  const dates: any = {
+    day,
+    hours,
+    minutes,
+  };
+  if (pick) {
+    return dates[pick];
+  }
   return `${day} ${hours} ${minutes}`;
 };

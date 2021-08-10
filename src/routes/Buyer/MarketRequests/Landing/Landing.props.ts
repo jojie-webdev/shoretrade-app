@@ -4,8 +4,16 @@ export type Result = {
   id: string;
   type: string;
   offers: number;
+  offerStatus: any;
   image: string;
   expiry: string;
+  weight?: {
+    from: number;
+    to: number;
+  };
+  measurementUnit?: string;
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean }
 };
 
 export interface MarketRequestsLandingGeneratedProps {

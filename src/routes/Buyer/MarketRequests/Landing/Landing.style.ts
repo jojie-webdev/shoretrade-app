@@ -25,49 +25,97 @@ export const MarketRequestsContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
   }
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade2};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
+  }
 `;
 
 export const MarketRequestItemInteraction = styled(Interactions)`
+  justify-content: initial;
   margin-bottom: 16px;
   border-radius: 8px;
-  padding: 16px 32px 16px 16px;
+  padding: 8px;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px;
+  }
+
+  padding-right: 12px;
   align-items: center;
+
+  .left-content {
+    flex-grow: 2;
+  }
 `;
 
 export const MarketRequestItemContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 
   .thumbnail-container {
     margin-right: 1rem;
 
     img {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
+      @media ${BREAKPOINTS['sm']} {
+        width: 40px;
+        height: 40px;
+      }
     }
+  }
+
+  .sub-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .info-container {
     display: flex;
-    flex-direction: column;
-    flex: 0 1 auto;
+    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
 
     .time {
       font-size: ${pxToRem(12)};
       margin: 4px 0px;
       line-height: 1rem;
     }
-    .offers-badge {
+
+    .offers-badge,
+    .offers-status {
       margin: 0;
       width: fit-content;
+      border-radius: 8px;
     }
   }
 `;
 
-export const BadgeText = styled(TypographyView)`
-  font-size: ${pxToRem(12)};
+export const SubText = styled(TypographyView)`
+  font-family: 'Basis Grotesque Pro';
+  font-weight: 400;
+  color: ${(props) => `${props.theme.grey.shade7}`};
+`;
+
+export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
+  font-size: ${pxToRem(9)};
   text-align: center;
+  color: ${({ theme, empty }) =>
+    empty ? theme.grey.shade5 : theme.grey.shade9};
 `;
 
 export const StyledAlert = styled(Alert)`
@@ -81,5 +129,42 @@ export const SizeTextContainer = styled.div`
   .over-divider {
     margin-left: 2px;
     margin-right: 2px;
+  }
+`;
+
+export const MajorInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const MinorInfo = styled.div`
+  margin-top: 8px;
+`;
+
+export const SubMinorInfo = styled.div`
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const SubMinorDetail = styled.div`
+  display: flex;
+  margin-right: 20px;
+`;
+
+export const Badges = styled.div`
+  display: flex;
+  margin-top: 10px;
+`;
+
+export const MarketRequestItemMobileContainer = styled.div`
+  .thumbnail-container {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin-right: 8px;
+    }
   }
 `;
