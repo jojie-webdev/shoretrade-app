@@ -305,8 +305,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           </div>
         </Col>
 
-        <Col>
-          <div style={{ display: "flex", alignItems: "center" }}>
+        <Col style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
             <Typography
               color="shade6"
               variant="label"
