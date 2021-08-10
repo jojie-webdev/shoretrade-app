@@ -1,4 +1,4 @@
-import { CSSProperties, ReactHTMLElement, HTMLAttributes } from 'react';
+import { CSSProperties, HTMLAttributes } from 'react';
 
 import { Theme } from 'types/Theme';
 
@@ -27,4 +27,5 @@ export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   style?: CSSProperties;
   className?: string;
   disabled?: boolean;
+  margin?: string;
 }

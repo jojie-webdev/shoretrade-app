@@ -1,4 +1,4 @@
-import { CSSProperties, ReactHTMLElement, HTMLAttributes } from 'react';
+import { CSSProperties, HTMLAttributes } from 'react';
 
 export interface BadgeProps extends HTMLAttributes<HTMLParagraphElement> {
   children: any;
@@ -7,4 +7,6 @@ export interface BadgeProps extends HTMLAttributes<HTMLParagraphElement> {
   className?: string;
   badgeColor?: string;
   fontColor?: string;
+  padding?: string;
+  borderRadius?: string
 }

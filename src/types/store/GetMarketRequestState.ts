@@ -11,7 +11,7 @@ export type GetMarketRequestResponseItem = {
   image: string;
   status: string;
   createdAt: string;
-  offers: number | any[];
+  offers: any[];
 };
 
 export type GetPaymentMethodsPayload = GenericResponse<{
