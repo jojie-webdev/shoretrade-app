@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import ReactTooltip from 'react-tooltip';
 
 import { TableRowProps, TableDataListProps } from './TableRow.props';
@@ -19,6 +21,8 @@ const TableDataList = (props: TableDataListProps) => {
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isTablet = useMediaQuery({ query: BREAKPOINTS.genericTablet });
 
   useEffect(() => {
     const containerEl = document.getElementById(`container-${identifier}`);
@@ -32,7 +36,7 @@ const TableDataList = (props: TableDataListProps) => {
     ) {
       setShowTooltip(true);
     }
-  }, []);
+  }, [isMobile, isTablet]);
 
   let columnType: ColumnType;
 
