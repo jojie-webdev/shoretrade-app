@@ -50,12 +50,39 @@ export type SpecificNotificationSettingItem = {
   id: string;
   resource: string;
   name: string;
+  subgroup: any;
   settings: SettingsToggleItem;
 };
+
+
+// {
+//   "id": "7913f9c4-9f45-4fff-8f87-bb7290a7aeba",
+//   "resource": "ACCOUNT",
+//   "name": "Password Reset",
+//   "subgroup": null,
+//   "settings": {
+//     "push": {
+//       "supported": true,
+//       "enabled": true
+//     },
+//     "email": {
+//       "supported": true,
+//       "enabled": true
+//     },
+//     "mobile": {
+//       "supported": true,
+//       "enabled": true
+//     },
+//     "inapp": {
+//       "supported": true,
+//       "enabled": true
+//     }
+//   }
+// }
 
 export type GetNotificationsSettingsPayload = GenericResponse<{
   token: string;
 
   global: GlobalNotificationsSettingsResponse;
-  specificNotifications: SpecificNotificationSettingItem[];
+  custom: SpecificNotificationSettingItem[];
 }>;

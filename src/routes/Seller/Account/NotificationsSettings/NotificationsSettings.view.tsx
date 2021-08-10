@@ -120,14 +120,16 @@ const NotificationsSettingsView = ({
           <div>
             <Typography color={defaultColor} variant="body">
               {ns.specificNotifSettingItems[0].resource
-                .split(' ')
+                .split('_')
                 .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
                 .join(' ')}
             </Typography>
           </div>
           {ns.specificNotifSettingItems.map((i, index) => (
             <NotificationSettingsCategoryItem
+              onChange={() => console.log('changed')}
               key={i.id + index}
+              inapp={i.settings.inapp}
               mobile={i.settings.mobile}
               push={i.settings.push}
               email={i.settings.email}

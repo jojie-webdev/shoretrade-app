@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { all, put, call, takeLatest, select } from 'redux-saga/effects';
 import { updateNotifSettings } from 'services/notifications';
 import { uploadImageData } from 'services/upload';
@@ -52,7 +52,11 @@ function* updateNotifSettingsSuccess(
     //   yield put(editableListingActions.clear());
     const companyId = state.getUser.data?.data.user.companies[0].id || '';
     yield put(getNotificationsSettingsActions.request({ companyId }));
-    yield put(push(SELLER_ROUTES.SELLING));
+    if (state.auth.type === 'buyer') {
+      yield put(push(BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
+    } else {
+      yield put(push(SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
+    }
   }
 }
 

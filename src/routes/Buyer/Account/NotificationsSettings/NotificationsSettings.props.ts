@@ -13,4 +13,5 @@ export interface NotificationsSettingsProps {
   loading: boolean;
   handleOnSave: () => void;
   handleGlobalToggle: (key: string) => void;
+  handleCustomSettingUpdate: (item: SpecificNotificationSettingItem) => void;
 }

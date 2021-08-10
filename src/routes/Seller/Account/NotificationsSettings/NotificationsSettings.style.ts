@@ -23,6 +23,7 @@ export const GlobalNotificationsContainer = styled.div`
 `;
 
 export const CategoryItemContainer = styled.div`
+  margin-top: 24px;
   > div {
     margin-bottom: 8px;
   }

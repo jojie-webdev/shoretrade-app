@@ -1,4 +1,8 @@
-import { CategoryStatus } from 'types/store/GetNotificationSettingsState';
+import {
+  CategoryStatus,
+  SettingsToggleItem,
+  SpecificNotificationSettingItem,
+} from 'types/store/GetNotificationSettingsState';
 
 export interface NotificationSettingsCategoryItemProps {
   title: string;
@@ -6,4 +10,6 @@ export interface NotificationSettingsCategoryItemProps {
   mobile: CategoryStatus;
   push: CategoryStatus;
   email: CategoryStatus;
+  inapp: CategoryStatus;
+  onChange: (val: SettingsToggleItem) => void;
 }

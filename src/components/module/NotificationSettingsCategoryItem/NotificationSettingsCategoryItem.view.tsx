@@ -28,7 +28,7 @@ const NotificationSettingsCategoryItem = (
 ): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { title, icon, mobile, email, push } = props;
+  const { title, icon, mobile, email, push, inapp, onChange } = props;
 
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -89,6 +89,14 @@ const NotificationSettingsCategoryItem = (
         <OptionsContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
+              onClick={() =>
+                onChange({
+                  push: { ...push, enabled: !push.enabled },
+                  email,
+                  mobile,
+                  inapp,
+                })
+              }
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={push.enabled}
             />

@@ -10,7 +10,10 @@ import NotificationSettingsCategoryItem from 'components/module/NotificationSett
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
-import { SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
+import {
+  SpecificNotificationSettingItem,
+  SettingsToggleItem,
+} from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -27,6 +30,7 @@ const NotificationsSettingsView = ({
   groupedNotifSettings,
   loading,
   handleOnSave,
+  handleCustomSettingUpdate,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -49,6 +53,17 @@ const NotificationsSettingsView = ({
     ],
     []
   );
+
+  const handleCustomSettingsChange = (
+    item: SpecificNotificationSettingItem,
+    val: SettingsToggleItem
+  ) => {
+    console.log(val);
+    handleCustomSettingUpdate({
+      ...item,
+      settings: { ...val },
+    });
+  };
 
   if (!globalSettings || loading) {
     return <Loading />;
@@ -116,13 +131,15 @@ const NotificationsSettingsView = ({
           <div>
             <Typography color={defaultColor} variant="body">
               {ns.specificNotifSettingItems[0].resource
-                .split(' ')
+                .split('_')
                 .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
                 .join(' ')}
             </Typography>
           </div>
           {ns.specificNotifSettingItems.map((i, index) => (
             <NotificationSettingsCategoryItem
+              onChange={(val) => handleCustomSettingsChange(i, val)}
+              inapp={i.settings.inapp}
               key={i.id + index}
               mobile={i.settings.mobile}
               push={i.settings.push}

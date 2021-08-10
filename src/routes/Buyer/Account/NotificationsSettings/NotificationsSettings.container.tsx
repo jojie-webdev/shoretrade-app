@@ -33,6 +33,9 @@ const NotificationsSettings = (): JSX.Element => {
     mobile: { enabled: false, supported: false },
     email: { enabled: false, supported: false },
   });
+  const [customSettings, setCustomSettings] = useState<
+    SpecificNotificationSettingItem[]
+  >([]);
   const getNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.data
   );
@@ -67,7 +70,7 @@ const NotificationsSettings = (): JSX.Element => {
     dispatch(
       updateNotificationSettingsActions.request({
         global: globalSettings,
-        custom: [],
+        custom: customSettings,
       })
     );
   };
@@ -84,9 +87,27 @@ const NotificationsSettings = (): JSX.Element => {
     }
   };
 
+  const handleCustomSettingUpdate = (item: SpecificNotificationSettingItem) => {
+    // find idx
+    console.log(item);
+    setCustomSettings(
+      customSettings.map((c) => {
+        if (c.id === item.id) {
+          return item;
+        }
+        return c;
+      })
+    );
+  };
+
   useEffect(() => {
     if (getNotificationsSettings && getNotificationsSettings.data) {
-      setGlobalSettings(getNotificationsSettings.data.global);
+      if (getNotificationsSettings.data.global) {
+        setGlobalSettings(getNotificationsSettings.data.global);
+      }
+      if (getNotificationsSettings.data.custom) {
+        setCustomSettings(getNotificationsSettings.data.custom);
+      }
     }
   }, [
     getNotificationsSettings,
@@ -94,12 +115,11 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
   ]);
 
-  const groupNotifsById = groupBy(
-    (specificNotifItem: SpecificNotificationSettingItem) => specificNotifItem.id
+  const groupNotifsByResource = groupBy(
+    (specificNotifItem: SpecificNotificationSettingItem) =>
+      specificNotifItem.resource
   );
-  const groupedNotifSettings = groupNotifsById(
-    getNotificationsSettings?.data.specificNotifications || []
-  );
+  const groupedNotifSettings = groupNotifsByResource(customSettings || []);
 
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,
@@ -107,6 +127,7 @@ const NotificationsSettings = (): JSX.Element => {
     groupedNotifSettings,
     loading: getPendingNotificationsSettings,
     handleOnSave,
+    handleCustomSettingUpdate,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;
