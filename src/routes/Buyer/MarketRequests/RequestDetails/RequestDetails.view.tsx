@@ -48,6 +48,7 @@ import {
   SellerOfferInteractionContentContainer,
   FilterButton,
   RequestDetailsMobileContainer,
+  RequestDetailsParentContainer,
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
@@ -370,34 +371,36 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             data.id
           )}`}
         >
-          <RequestDetailsMobileContainer>
-            <div className="thumbnail-container">
-              <img src={parseImageUrl(data.image || '')} />
-            </div>
-            <div style={{ width: "100%" }}>
-              <Typography
-                variant="body"
-                weight="400"
-                color="shade9"
-                style={{ fontFamily: "Basis Grotesque Pro" }}
-              >
-                {sellerOffers[0]?.marketRequest?.weight.from}
-                <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
-              </Typography>
+          <RequestDetailsParentContainer>
+            <RequestDetailsMobileContainer>
+              <div className="thumbnail-container">
+                <img src={parseImageUrl(data.image || '')} />
+              </div>
+              <div style={{ width: "100%" }}>
+                <Typography
+                  variant="body"
+                  weight="400"
+                  color="shade9"
+                  style={{ fontFamily: "Basis Grotesque Pro" }}
+                >
+                  {sellerOffers[0]?.marketRequest?.weight.from}
+                  <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
+                </Typography>
 
-              {/* TODO: storybook */}
-              <ProgressContainer>
-                <Progress percent={70} />
-              </ProgressContainer>
-              <Typography
-                margin="8px 0px 0px 0px"
-                color="shade6"
-                variant="caption"
-              >
-                1 Day, 16 Hours, 5 Min
-              </Typography>
-            </div>
-          </RequestDetailsMobileContainer>
+                {/* TODO: storybook */}
+                <ProgressContainer>
+                  <Progress percent={70} />
+                </ProgressContainer>
+                <Typography
+                  margin="8px 0px 0px 0px"
+                  color="shade6"
+                  variant="caption"
+                >
+                  1 Day, 16 Hours, 5 Min
+                </Typography>
+              </div>
+            </RequestDetailsMobileContainer>
+          </RequestDetailsParentContainer>
           {/* <OffersContainer>
             {totalOffers < 1 || sellerOffers === undefined ? (
               <EmptyStateView

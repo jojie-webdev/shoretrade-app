@@ -317,6 +317,12 @@ export const FilterButton = styled.button`
   }
 `;
 
+export const RequestDetailsParentContainer = styled.div`
+  border-radius: 8px;
+  background-color: #FFF;
+  padding: 8px;
+`
+
 export const RequestDetailsMobileContainer = styled.div`
   display: flex;
 
