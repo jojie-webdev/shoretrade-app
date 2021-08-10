@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import {
@@ -47,7 +46,6 @@ import {
   BadgeText,
   StatusBadgeText,
   SellerOfferInteractionContentContainer,
-  FilterButton,
   RequestDetailsMobileContainer,
   RequestDetailsParentContainer,
   SummaryContainer,
@@ -58,7 +56,6 @@ import Select from 'components/base/Select/Select.view';
 import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
 import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
 import { DetailsContentContainer, DetailsDataContainer, DetailsHeaderContainer } from '../Create/Create.style';
-import { AnchorContainer } from './../Create/SelectSpecifications/SelectSpecification.style';
 import Button from './../../../../components/base/Button/Button.view';
 import TrashCan from './../../../../components/base/SVG/TrashCan';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -67,6 +64,7 @@ import { Store } from './../../../../types/store/Store';
 import { getAllMarketRequestActions } from 'store/actions';
 import Cross7 from './../../../../components/base/SVG/Cross7';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import FullOfferDetails from './OfferFullDetails/FullOfferDetails.view';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -307,6 +305,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
+  const [selectedItem, setSelectedItem] = useState({})
 
   useEffect(() => {
     if (!searchTerm) {
@@ -382,67 +381,44 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         }
       </Row>
 
-      {
-        sellerOffersCopy.length > 0 ?
-          sellerOffersCopy.map(sellerOffer =>
-            <Offer sellerOffer={sellerOffer} />
-          ) :
-          <>
-            <EmptyStateView
-              title=""
-              Svg={Octopus}
-              height={240}
-              width={249}
-              fluid
-            />
+      <Switch>
+        <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}>
+          {
+            sellerOffersCopy.length > 0 ?
+              sellerOffersCopy.map(sellerOffer =>
+                <Offer sellerOffer={sellerOffer} />
+              ) :
+              <>
+                <EmptyStateView
+                  title=""
+                  Svg={Octopus}
+                  height={240}
+                  width={249}
+                  fluid
+                />
 
-            <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
-              <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
-                The are no offers yet
-              </Typography>
-              <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
-                Enable your push notifications
-              </Typography>
-            </div>
-          </>
-      }
+                <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
+                  <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
+                    The are no offers yet
+                  </Typography>
+                  <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
+                    Enable your push notifications
+                  </Typography>
+                </div>
+              </>
+          }
+        </Route>
 
-      {/* <RequestDetailsCardContainer type={'none'}>
-        {data && data.name ? (
-          <MarketRequestItem
-            inDetail={true}
-            type={data.name}
-            expiry={
-              moment(data.createdAt).add(7, 'd').isBefore()
-                ? 'Expired'
-                : formatRunningDateDifference(
-                  moment(data.createdAt).add(7, 'd').format()
-                )
-            }
-            offers={totalOffers}
-            image={data.image}
-            measurementUnit={measurementUnit}
-            weight={data.weight}
-          />
-        ) : (
-          <></>
-        )}
-      </RequestDetailsCardContainer> */}
-      {/* <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
-        <Col xs={12}>
-          <Hidden xs>
-            {data.status !== 'DELETED' && (
-              <Button
-                text="Delete"
-                size="sm"
-                onClick={() => setShowDelete(true)}
-                variant="primary"
-              />
-            )}
-          </Hidden>
-        </Col>
-      </Row> */}
-    </Col>
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+            marketRequestId,
+            currentOfferId
+          )}
+        >
+          <FullOfferDetails />
+        </Route>
+      </Switch>
+    </Col >
   )
 
   const countAcceptedWeight = () => {
@@ -603,10 +579,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   <span style={{ color: theme.grey.shade5 }}>/{filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}</span>
                 </Typography>
 
-                {/* TODO: storybook */}
                 <ProgressContainer>
                   <Progress height="2px" percent={70} />
                 </ProgressContainer>
+
                 <Typography
                   margin="12px 0px 0px 0px"
                   color="shade6"
@@ -654,82 +630,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             <div style={{ marginTop: "25px" }}></div>
             {renderQuantity()}
           </SummaryContainer>
-
-          {/* <OffersContainer>
-            {totalOffers < 1 || sellerOffers === undefined ? (
-              <EmptyStateView
-                title="There are currently no offers for this request."
-                Svg={Crab}
-                height={240}
-                width={249}
-                fluid
-              />
-            ) : (
-              sellerOffers.map((seller) => (
-                <RequestOffersAccordion
-                  key={seller.company.name}
-                  title=""
-                  noBg={true}
-                  padding={'16px'}
-                  withBackground={false}
-                  border={`1px solid ${theme.grey.shade3}`}
-                  background={theme.grey.shade1}
-                  marginBottom={'12px'}
-                  leftComponent={
-                    <OffersSellerAccordionContent
-                      image={seller.company.image}
-                      sellerLocation={seller.company.address.countryCode}
-                      sellerName={seller.company.name}
-                      sellerRating={seller.company.rating}
-                      sellerId={seller.company.id}
-                    />
-                  }
-                  iconColor={theme.brand.primary}
-                >
-                  {seller.offers.map((item) => {
-                    const negotiations = sortByDate(
-                      item.negotiations || []
-                    );
-
-                    const newOfferArr = negotiations.filter(
-                      (i: any) => i.type === 'NEW_OFFER'
-                    );
-
-                    const latestOffer = newOfferArr.slice(-1)[0];
-                    const standingPrice =
-                      latestOffer?.price || item.price;
-
-                    return (
-                      <RequestOfferItemInteraction
-                        key={item.id}
-                        onClick={() => onClickItem(item, seller.company)}
-                        leftComponent={
-                          <SellerOfferInteractionContent
-                            averagePrice={
-                              seller.marketRequest.averagePrice
-                            }
-                            price={standingPrice}
-                            isUnderNegotiations={
-                              !item.negotiations?.find(
-                                (i) => i.is_accepted === true
-                              )
-                            }
-                            status={item.status}
-                            weight={item.weight}
-                            tags={item.specifications}
-                            weightUnit={formatMeasurementUnit(
-                              item.measurementUnit
-                            )}
-                            deliveryDate={item.deliveryDate}
-                          />
-                        }
-                      />
-                    );
-                  })}
-                </RequestOffersAccordion>
-              ))
-            )}
-          </OffersContainer> */}
         </Route>
         <Route
           path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(

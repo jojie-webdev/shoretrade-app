@@ -7,7 +7,6 @@ import { OfferProps } from './Offer.props';
 import { OfferContainer } from './Offer.style';
 import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
 import { Col, Row } from 'react-grid-system';
-import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 import { sizeToString } from './../../../../../utils/Listing/sizeToString';
@@ -19,10 +18,9 @@ const Offer = (props: OfferProps) => {
 
     const history = useHistory()
 
-    const onClickItem = (id: string) => {
-        console.log(id)
+    const onClickItem = (offer: any) => {
         if (sellerOffer.offers.length > 0) {
-            history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id));
+            history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(sellerOffer.marketRequest.id, offer.id));
         }
     };
 
@@ -30,7 +28,7 @@ const Offer = (props: OfferProps) => {
         <>
             {
                 sellerOffer.offers.map(offer =>
-                    <OfferContainer onClick={() => onClickItem(offer.id)}>
+                    <OfferContainer>
                         <Row style={{ display: "flex", justifyContent: "space-between" }}>
                             <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
                                 {
@@ -155,7 +153,10 @@ const Offer = (props: OfferProps) => {
                                     className="delete-button"
                                     style={{ marginRight: "20px" }}
                                 />
-                                <div>
+                                <div
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => onClickItem(offer)}
+                                >
                                     <ChevronRight width={10} height={10} />
                                 </div>
                             </Col>

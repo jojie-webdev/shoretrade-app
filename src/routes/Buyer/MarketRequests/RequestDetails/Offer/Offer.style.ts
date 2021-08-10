@@ -1,6 +1,5 @@
 import styled from './../../../../../utils/styled';
 import theme from './../../../../../utils/Theme';
-import { BREAKPOINTS } from './../../../../../consts/breakpoints';
 
 export const OfferContainer = styled.div` 
     background: #FFFFFF;

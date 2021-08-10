@@ -319,6 +319,7 @@ export const FilterButton = styled.button`
 `;
 
 export const RequestDetailsParentContainer = styled.div`
+  border: 1px solid ${({ theme }) => theme.grey.shade4};
   border-radius: 8px;
   background-color: #FFF;
   padding: 8px;
