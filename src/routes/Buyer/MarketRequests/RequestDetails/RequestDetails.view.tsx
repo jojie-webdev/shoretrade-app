@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
-import Button from 'components/base/Button';
 import {
   Crab,
   DollarSign,
@@ -33,8 +32,7 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
-
-import { MarketRequestItem } from '../Landing/Landing.view';
+import MarketRequestItem from '../Landing/Landing.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
 import {
   RequestDetailsCardContainer,
@@ -50,6 +48,8 @@ import {
   SellerOfferInteractionContentContainer,
   FilterButton,
 } from './RequestDetails.style';
+import Offer from './Offer/Offer.view';
+import Select from 'components/base/Select/Select.view';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -63,6 +63,7 @@ export const OffersSellerAccordionContent = (props: {
   const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
+
   return (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
@@ -84,20 +85,20 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {sellerRating
               ? [...Array(5).keys()].map((r) =>
-                  Number(sellerRating || 0) > r ? (
-                    <StarFilled
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  ) : (
-                    <Star
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  )
+                Number(sellerRating || 0) > r ? (
+                  <StarFilled
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
+                ) : (
+                  <Star
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
                 )
+              )
               : ''}
           </div>
         </div>
@@ -275,7 +276,215 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setNegotiating(true);
   };
 
+  const [searchTerm, setSearchTerm] = useState("")
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const renderLeftComponent = () => (
+    <Col md={12} sm={12} xl={8}>
+      <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Col xl={6}>
+          <div style={{ marginTop: "16px" }}>
+            <Search
+              className="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.currentTarget.value)}
+              resetValue={() => setSearchTerm('')}
+              placeholder="Search"
+              style={{ borderRadius: "12px", height: "40px" }}
+            />
+          </div>
+        </Col>
+
+        <Col>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              color="shade6"
+              variant="label"
+              style={{ marginRight: "16px" }}
+            >
+              <span style={{ color: "#09131D" }}>16</span>
+              <span>{' '}Results</span>
+            </Typography>
+
+            <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
+              <Select
+                label=""
+                options={[]}
+                size="small"
+                placeholder="Sort by"
+                disabled
+              // onChange={(e) => setSortField(e?.value)}
+              />
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Offer />
+      {/* <RequestDetailsCardContainer type={'none'}>
+        {data && data.name ? (
+          <MarketRequestItem
+            inDetail={true}
+            type={data.name}
+            expiry={
+              moment(data.createdAt).add(7, 'd').isBefore()
+                ? 'Expired'
+                : formatRunningDateDifference(
+                  moment(data.createdAt).add(7, 'd').format()
+                )
+            }
+            offers={totalOffers}
+            image={data.image}
+            measurementUnit={measurementUnit}
+            weight={data.weight}
+          />
+        ) : (
+          <></>
+        )}
+      </RequestDetailsCardContainer> */}
+      {/* <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
+        <Col xs={12}>
+          <Hidden xs>
+            {data.status !== 'DELETED' && (
+              <Button
+                text="Delete"
+                size="sm"
+                onClick={() => setShowDelete(true)}
+                variant="primary"
+              />
+            )}
+          </Hidden>
+        </Col>
+      </Row> */}
+    </Col>
+  )
+
+  const renderRightComponent = () => (
+    <Col md={12} sm={12} xl={4}>
+      <Switch>
+        <Route
+          path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
+            data.id
+          )}`}
+        >
+          <OffersContainer>
+            {/* NUMBERS CONTAINER END */}
+            {totalOffers < 1 || sellerOffers === undefined ? (
+              <EmptyStateView
+                title="There are currently no offers for this request."
+                Svg={Crab}
+                height={240}
+                width={249}
+                fluid
+              />
+            ) : (
+              sellerOffers.map((seller) => (
+                <RequestOffersAccordion
+                  key={seller.company.name}
+                  title=""
+                  noBg={true}
+                  padding={'16px'}
+                  withBackground={false}
+                  border={`1px solid ${theme.grey.shade3}`}
+                  background={theme.grey.shade1}
+                  marginBottom={'12px'}
+                  leftComponent={
+                    <OffersSellerAccordionContent
+                      image={seller.company.image}
+                      sellerLocation={seller.company.address.countryCode}
+                      sellerName={seller.company.name}
+                      sellerRating={seller.company.rating}
+                      sellerId={seller.company.id}
+                    />
+                  }
+                  iconColor={theme.brand.primary}
+                >
+                  {seller.offers.map((item) => {
+                    const negotiations = sortByDate(
+                      item.negotiations || []
+                    );
+
+                    const newOfferArr = negotiations.filter(
+                      (i: any) => i.type === 'NEW_OFFER'
+                    );
+
+                    const latestOffer = newOfferArr.slice(-1)[0];
+                    const standingPrice =
+                      latestOffer?.price || item.price;
+
+                    return (
+                      <RequestOfferItemInteraction
+                        key={item.id}
+                        onClick={() => onClickItem(item, seller.company)}
+                        leftComponent={
+                          <SellerOfferInteractionContent
+                            averagePrice={
+                              seller.marketRequest.averagePrice
+                            }
+                            price={standingPrice}
+                            isUnderNegotiations={
+                              !item.negotiations?.find(
+                                (i) => i.is_accepted === true
+                              )
+                            }
+                            status={item.status}
+                            weight={item.weight}
+                            tags={item.specifications}
+                            weightUnit={formatMeasurementUnit(
+                              item.measurementUnit
+                            )}
+                            deliveryDate={item.deliveryDate}
+                          />
+                        }
+                      />
+                    );
+                  })}
+                </RequestOffersAccordion>
+              ))
+            )}
+          </OffersContainer>
+        </Route>
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+            marketRequestId,
+            currentOfferId
+          )}
+        >
+          <OfferDetailView
+            handleAcceptOffer={handleAcceptOffer}
+            company={selectedCompany}
+            selectedOffer={selectedOffer}
+            deliveryTotal={deliveryTotal}
+            handleStartNegotiate={handleStartNegotiate}
+            hideNegotiate={hideNegotiate}
+            counterOffer={counterOffer}
+            discountPercentage={discountPercentage}
+            discountValue={discountValue}
+            newOffer={newOffer}
+            thereIsNewOffer={thereIsNewOffer}
+            disableAccept={disableAccept}
+            isAccepted={isAccepted}
+            sortedNegotiations={sortedNegotiations}
+            lastNegotiationsOffers={lastNegotiationsOffers}
+          />
+        </Route>
+      </Switch>
+    </Col>
+  )
+
+  const renderItemName = () => (
+    <Col>
+      <Typography
+        color="shade9"
+        font-weight="700"
+        style={{ fontFamily: "Media Sans" }}
+        variant="title6"
+      >
+        {data.name}
+      </Typography>
+    </Col>
+  )
+
   return (
     <RequestDetailsContainer>
       <NegotiateBuyerModal
@@ -331,188 +540,16 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Row gutterWidth={30}>
-          <Col md={12} sm={12} xl={4}>
-            <RequestDetailsCardContainer type={'none'}>
-              {data && data.name ? (
-                <MarketRequestItem
-                  inDetail={true}
-                  type={data.name}
-                  expiry={
-                    moment(data.createdAt).add(7, 'd').isBefore()
-                      ? 'Expired'
-                      : formatRunningDateDifference(
-                          moment(data.createdAt).add(7, 'd').format()
-                        )
-                  }
-                  offers={totalOffers}
-                  image={data.image}
-                  measurementUnit={measurementUnit}
-                  weight={data.weight}
-                />
-              ) : (
-                <></>
-              )}
-            </RequestDetailsCardContainer>
-            <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
-              <Col xs={12}>
-                <Hidden xs>
-                  {data.status !== 'DELETED' && (
-                    <Button
-                      text="Delete"
-                      size="sm"
-                      onClick={() => setShowDelete(true)}
-                      variant="primary"
-                    />
-                  )}
-                </Hidden>
-              </Col>
-            </Row>
-          </Col>
-          <Col md={12} sm={12} xl={8}>
-            <Switch>
-              <Route
-                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
-                  data.id
-                )}`}
-              >
-                <OffersContainer>
-                  {/* NUMBERS CONTAINER START */}
-                  <div className="numbers-container">
-                    <div className="item">
-                      <span className="value">{totalOffers} &nbsp;</span>
-                      <span className="label">Offers</span>
-                    </div>
-                    <span className="divider">,</span>
-                    <div className="item">
-                      <span className="value">
-                        {sellerOffers.length} &nbsp;
-                      </span>
-                      <span className="label">Sellers</span>
-                    </div>
-                  </div>
-                  <Row
-                    nogutter
-                    className="search-row"
-                    align="center"
-                    justify="between"
-                  >
-                    <FilterButton onClick={props.onClickFilterButton}>
-                      <TypographyView
-                        variant="label"
-                        color="shade9"
-                        weight="500"
-                        className="btn-text"
-                      >
-                        Sort
-                      </TypographyView>
+        <>
+          <Row>
+            {renderItemName()}
+          </Row>
 
-                      <Filter />
-                    </FilterButton>
-                  </Row>
-                  {/* NUMBERS CONTAINER END */}
-                  {totalOffers < 1 || sellerOffers === undefined ? (
-                    <EmptyStateView
-                      title="There are currently no offers for this request."
-                      Svg={Crab}
-                      height={240}
-                      width={249}
-                      fluid
-                    />
-                  ) : (
-                    sellerOffers.map((seller) => (
-                      <RequestOffersAccordion
-                        key={seller.company.name}
-                        title=""
-                        noBg={true}
-                        padding={'16px'}
-                        withBackground={false}
-                        border={`1px solid ${theme.grey.shade3}`}
-                        background={theme.grey.shade1}
-                        marginBottom={'12px'}
-                        leftComponent={
-                          <OffersSellerAccordionContent
-                            image={seller.company.image}
-                            sellerLocation={seller.company.address.countryCode}
-                            sellerName={seller.company.name}
-                            sellerRating={seller.company.rating}
-                            sellerId={seller.company.id}
-                          />
-                        }
-                        iconColor={theme.brand.primary}
-                      >
-                        {seller.offers.map((item) => {
-                          const negotiations = sortByDate(
-                            item.negotiations || []
-                          );
-
-                          const newOfferArr = negotiations.filter(
-                            (i: any) => i.type === 'NEW_OFFER'
-                          );
-
-                          const latestOffer = newOfferArr.slice(-1)[0];
-                          const standingPrice =
-                            latestOffer?.price || item.price;
-
-                          return (
-                            <RequestOfferItemInteraction
-                              key={item.id}
-                              onClick={() => onClickItem(item, seller.company)}
-                              leftComponent={
-                                <SellerOfferInteractionContent
-                                  averagePrice={
-                                    seller.marketRequest.averagePrice
-                                  }
-                                  price={standingPrice}
-                                  isUnderNegotiations={
-                                    !item.negotiations?.find(
-                                      (i) => i.is_accepted === true
-                                    )
-                                  }
-                                  status={item.status}
-                                  weight={item.weight}
-                                  tags={item.specifications}
-                                  weightUnit={formatMeasurementUnit(
-                                    item.measurementUnit
-                                  )}
-                                  deliveryDate={item.deliveryDate}
-                                />
-                              }
-                            />
-                          );
-                        })}
-                      </RequestOffersAccordion>
-                    ))
-                  )}
-                </OffersContainer>
-              </Route>
-              <Route
-                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-                  marketRequestId,
-                  currentOfferId
-                )}
-              >
-                <OfferDetailView
-                  handleAcceptOffer={handleAcceptOffer}
-                  company={selectedCompany}
-                  selectedOffer={selectedOffer}
-                  deliveryTotal={deliveryTotal}
-                  handleStartNegotiate={handleStartNegotiate}
-                  hideNegotiate={hideNegotiate}
-                  counterOffer={counterOffer}
-                  discountPercentage={discountPercentage}
-                  discountValue={discountValue}
-                  newOffer={newOffer}
-                  thereIsNewOffer={thereIsNewOffer}
-                  disableAccept={disableAccept}
-                  isAccepted={isAccepted}
-                  sortedNegotiations={sortedNegotiations}
-                  lastNegotiationsOffers={lastNegotiationsOffers}
-                />
-              </Route>
-            </Switch>
-          </Col>
-        </Row>
+          <Row gutterWidth={30}>
+            {renderLeftComponent()}
+            {renderRightComponent()}
+          </Row>
+        </>
       )}
     </RequestDetailsContainer>
   );
