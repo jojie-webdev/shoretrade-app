@@ -4,7 +4,7 @@ import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import TypographyView from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import { Col, Hidden, Row, Visible } from 'react-grid-system';
+import { Hidden } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';

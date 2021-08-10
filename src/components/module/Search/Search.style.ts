@@ -61,7 +61,12 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     }
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
+<<<<<<< HEAD
       padding: 24px 0px;
+=======
+      height:40px;
+      padding:24px 0px;
+>>>>>>> dev
     }
   }
 `;

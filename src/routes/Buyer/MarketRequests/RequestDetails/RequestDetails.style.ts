@@ -30,7 +30,7 @@ export const RequestDetailsCardContainer = styled(Interactions)`
   @media ${BREAKPOINTS['sm']} {
     width: 100%;
     margin-top: 16px;
-    height: 88px;
+    /* height: 88px; */
     padding: 8px;
     border: 1px solid ${({ theme }) => theme.grey.shade4};
 
@@ -237,6 +237,12 @@ export const OffersContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media ${BREAKPOINTS['sm']} {
+    background: #FFFFFF;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    border-radius: 12px;
+  }
+
   .search-row {
     align-items: center;
     margin-bottom: 16px;
@@ -341,6 +347,12 @@ export const RequestDetailsMobileContainer = styled.div`
   @media ${BREAKPOINTS['sm']} {
     width: 100%;
   }
+
+  @media(max-width: 380px){
+    .typo{
+      font-size: 15px;
+    }
+  }
 `;
 
 export const ProgressContainer = styled.div`
@@ -378,4 +390,4 @@ export const DeleteButtonContainer = styled.div`
       fill: ${({ theme }) => theme.grey.shade7};
     }
   }
-`;
+`

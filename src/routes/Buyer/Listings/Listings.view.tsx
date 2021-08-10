@@ -228,7 +228,8 @@ export default function ListingView(props: ListingViewProps) {
         <ModalTitle variant="title5" className="title">
           Confirm Download
         </ModalTitle>
-        You are about to download {downloadListingCount} listings. <br />
+        You are about to download <strong>{downloadListingCount}</strong>{' '}
+        listings. <br />
         If this is not correct, adjust your selections using the check box in
         the table.
         <div>Otherwise, press Proceed to continue.</div>
@@ -301,7 +302,7 @@ export default function ListingView(props: ListingViewProps) {
           <Search defaultValue={searchTerm} onChange={debouncedSearch} />
           <MobileDownloadButton
             disabled={Boolean(isLoading) || isDownloadingCsv}
-            onClick={handleDownloadCSV}
+            onClick={() => setShowModal(true)}
           >
             <div>
               <Exit width={13.33} height={13.33} fill="#E35D32" />

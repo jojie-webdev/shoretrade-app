@@ -75,11 +75,13 @@ export const OffersSellerAccordionContent = (props: {
   sellerRating: number;
   image: string;
 }) => {
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
 
-  return (
+  const displayForNonMobile = () => (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
         {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
@@ -119,6 +121,18 @@ export const OffersSellerAccordionContent = (props: {
         </div>
       </div>
     </OffersSellerAccordionContentContainer>
+  )
+
+  const displayForMobile = () => (
+    <TypographyView variant="copy" color="shade8">
+      {sellerName}
+    </TypographyView>
+  )
+
+  return (
+    isMobile ?
+      displayForMobile() :
+      displayForNonMobile()
   );
 };
 
