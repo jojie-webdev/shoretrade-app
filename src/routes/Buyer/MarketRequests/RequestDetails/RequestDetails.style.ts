@@ -25,6 +25,26 @@ export const RequestDetailsContainer = styled.div`
 
 export const RequestDetailsCardContainer = styled(Interactions)`
   margin-bottom: 1rem;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+    margin-top: 16px;
+    height: 88px;
+    padding: 8px;
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
+
+    .delete-button {
+      background-color: ${({ theme }) => theme.grey.shade3};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+  
+      path {
+        fill: ${({ theme }) => theme.grey.shade7};
+      }
+    }
+  }
 `;
 
 export const RequestOffersAccordion = styled(Accordion)`
@@ -176,7 +196,7 @@ export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
 `;
 
-export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
+export const StyledTextField = styled(TextField) <{ noMargin?: boolean }>`
   flex: 1;
   margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
 `;
@@ -296,3 +316,28 @@ export const FilterButton = styled.button`
     margin-right: 4px;
   }
 `;
+
+export const RequestDetailsMobileContainer = styled.div`
+  display: flex;
+
+  .thumbnail-container {
+    img {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      margin-right: 8px
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+  }
+`;
+
+export const ProgressContainer = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: ${({ theme }) => theme.grey.shade3};
+  border-radius: 1px;
+  position: relative;
+`

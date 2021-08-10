@@ -47,9 +47,12 @@ import {
   StatusBadgeText,
   SellerOfferInteractionContentContainer,
   FilterButton,
+  RequestDetailsMobileContainer,
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
+import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
+import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -367,8 +370,32 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             data.id
           )}`}
         >
-          <OffersContainer>
-            {/* NUMBERS CONTAINER END */}
+          <RequestDetailsMobileContainer>
+            <div className="thumbnail-container">
+              <img src={parseImageUrl(data.image || '')} />
+            </div>
+            <div style={{ width: "100%" }}>
+              <Typography
+                variant="title4"
+                weight="400"
+                color="shade9"
+                style={{ fontFamily: "Basis Grotesque Pro" }}
+              >
+                {sellerOffers[0]?.marketRequest?.weight.from}
+                <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
+              </Typography>
+
+              {/* TODO: storybook */}
+              <ProgressContainer>
+                <Progress percent={70} />
+              </ProgressContainer>
+
+              <Typography margin="8px 0px 0px 0px" color="shade6">
+                1 Day, 16 Hours, 5 Min
+              </Typography>
+            </div>
+          </RequestDetailsMobileContainer>
+          {/* <OffersContainer>
             {totalOffers < 1 || sellerOffers === undefined ? (
               <EmptyStateView
                 title="There are currently no offers for this request."
@@ -442,7 +469,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 </RequestOffersAccordion>
               ))
             )}
-          </OffersContainer>
+          </OffersContainer> */}
         </Route>
         <Route
           path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
