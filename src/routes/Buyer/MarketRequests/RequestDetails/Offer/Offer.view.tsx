@@ -109,7 +109,7 @@ const Offer = (props: OfferProps) => {
                                     }}
                                     color="shade7"
                                 >
-                                    Size: {sizeToString("metric", offer.size.from, offer.size.to)}
+                                    Size: {sizeToString(offer.metric, offer.size.from, offer.size.to)}
                                 </Typography>
                             </Col>
 
