@@ -6,6 +6,7 @@ import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
+import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -357,7 +358,8 @@ export const SummaryContainer = styled.div<{ margin?: string }>`
   border-radius: 12px;
   min-height: 312px;
   max-height: 312px;
-  margin: ${({ margin }) => margin || '0px'}
+  margin: ${({ margin }) => margin || '0px'};
+  background-image: url(${marketRequestSummary});
 `;
 
 export const DeleteButtonContainer = styled.div`

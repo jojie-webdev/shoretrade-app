@@ -10,6 +10,8 @@ import {
   Star,
   StarFilled,
   Weight,
+  Octopus,
+  CtgOctopus
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -65,6 +67,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Store } from './../../../../types/store/Store';
 import { getAllMarketRequestActions } from 'store/actions';
 import Cross7 from './../../../../components/base/SVG/Cross7';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -337,48 +340,72 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const renderLeftComponent = () => (
     <Col md={12} sm={12} xl={8}>
       <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Col xl={6}>
-          <div style={{ marginTop: "16px" }}>
-            <Search
-              className="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.currentTarget.value)}
-              resetValue={() => setSearchTerm('')}
-              placeholder="Search"
-              style={{ borderRadius: "12px", height: "40px" }}
-            />
-          </div>
-        </Col>
-
-        <Col style={{ display: "flex" }}>
-          <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
-            <Typography
-              color="shade6"
-              variant="label"
-              style={{ marginRight: "16px" }}
-            >
-              <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
-              <span>{' '}Results</span>
-            </Typography>
-
-            <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
-              <Select
-                label=""
-                options={[]}
-                size="small"
-                placeholder="Sort by"
-                disabled
-              // onChange={(e) => setSortField(e?.value)}
+        {
+          sellerOffers.length > 0 &&
+          <Col xl={6}>
+            <div style={{ marginTop: "16px" }}>
+              <Search
+                className="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.currentTarget.value)}
+                resetValue={() => setSearchTerm('')}
+                placeholder="Search"
+                style={{ borderRadius: "12px", height: "40px" }}
               />
             </div>
-          </div>
-        </Col>
+          </Col>
+        }
+
+        {
+          sellerOffers.length > 0 &&
+          <Col style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
+              <Typography
+                color="shade6"
+                variant="label"
+                style={{ marginRight: "16px" }}
+              >
+                <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
+                <span>{' '}Results</span>
+              </Typography>
+
+              <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
+                <Select
+                  label=""
+                  options={[]}
+                  size="small"
+                  placeholder="Sort by"
+                  disabled
+                />
+              </div>
+            </div>
+          </Col>
+        }
       </Row>
 
       {
-        sellerOffersCopy.map(sellerOffer =>
-          <Offer sellerOffer={sellerOffer} />
-        )
+        sellerOffersCopy.length > 0 ?
+          sellerOffersCopy.map(sellerOffer =>
+            <Offer sellerOffer={sellerOffer} />
+          ) :
+          <>
+            <EmptyStateView
+              title=""
+              Svg={CtgOctopus}
+              height={240}
+              width={249}
+              fluid
+            />
+
+            <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
+              <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
+                The are no offers yet
+              </Typography>
+              <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
+                Enable your push notifications
+              </Typography>
+            </div>
+          </>
       }
 
       {/* <RequestDetailsCardContainer type={'none'}>
@@ -421,6 +448,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   const countAcceptedWeight = () => {
     let acceptedWeights = 0
+
     sellerOffers.forEach(sellerOffer => {
       sellerOffer.offers.forEach(offer => {
         if (offer.status === "ACCEPTED") {
@@ -430,6 +458,16 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     })
 
     return acceptedWeights
+  }
+
+  const filteredMarketRequest = (): GetAllMarketRequestResponseItem => {
+    const _marketRequests = buyerRequests.data?.data.marketRequests.filter(marketRequest => marketRequest.id === marketRequestId)
+
+    if (_marketRequests && _marketRequests.length > 0) {
+      return _marketRequests[0]
+    }
+
+    return null as any
   }
 
   const convertCreatedToExpiryDate = (createdAt?: string) => {
@@ -512,9 +550,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   }
 
   const renderQuantity = () => {
-    const marketRequest = buyerRequests.data?.data?.marketRequests[0]
-    const unit = measurementUnit.toLowerCase()
-
     return <DetailsContentContainer>
       <Typography
         color="shade6"
@@ -539,7 +574,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             marginTop: -8,
           }}
         >
-          {marketRequest?.weight?.from}{unit} - {marketRequest?.weight?.to}{unit}
+          {filteredMarketRequest()?.weight?.from}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()} - {filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}
         </Typography>
       </DetailsDataContainer>
     </DetailsContentContainer>
@@ -566,7 +601,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
                 >
                   {countAcceptedWeight()}
-                  <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
+                  <span style={{ color: theme.grey.shade5 }}>/{filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}</span>
                 </Typography>
 
                 {/* TODO: storybook */}
@@ -619,10 +654,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             {renderSize()}
             <div style={{ marginTop: "25px" }}></div>
             {renderQuantity()}
-            {console.log(buyerRequests.data?.data?.marketRequests[0])}
-            {/* <AnchorContainer>
-
-            </AnchorContainer> */}
           </SummaryContainer>
 
           {/* <OffersContainer>
