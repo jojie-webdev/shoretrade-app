@@ -1,4 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
+
+import Case from 'case';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
@@ -12,10 +14,10 @@ import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import Case from 'case'
 import { useHistory } from 'react-router-dom';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
+
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
@@ -28,7 +30,7 @@ import {
   SubMinorInfo,
   Badges,
   SubMinorDetail,
-  SubText
+  SubText,
 } from './Landing.style';
 
 export const MarketRequestItemNonMobile = (props: {
@@ -42,8 +44,8 @@ export const MarketRequestItemNonMobile = (props: {
   setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
   id?: string;
   offerStatus?: string;
-  specs?: string,
-  size?: { from: number; to: number; options: any; ungraded: boolean }
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean };
 }) => {
   const {
     id,
@@ -57,18 +59,14 @@ export const MarketRequestItemNonMobile = (props: {
     weight,
     specs,
     size,
-    setItemToDelete
+    setItemToDelete,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const offerNumberBadge = () => {
     return (
       <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-        <BadgeText
-          weight="bold"
-          variant="overline"
-          empty={!offers || offers === 0}
-        >
+        <BadgeText variant="overline" empty={!offers || offers === 0}>
           {`${offers > 0 ? offers : 'No'} Offers`}
         </BadgeText>
       </Badge>
@@ -83,9 +81,7 @@ export const MarketRequestItemNonMobile = (props: {
       <div className="info-container">
         <div className="sub-group">
           <TypographyView variant="body">{type}</TypographyView>
-          <SubText variant="small">
-            {specs}
-          </SubText>
+          <SubText variant="small">{specs}</SubText>
         </div>
         <div className="sub-group">
           <SubText variant="small">
@@ -107,7 +103,9 @@ export const MarketRequestItemNonMobile = (props: {
           <SubText variant="small">{offerNumberBadge()}</SubText>
         </div>
         <div className="sub-group">
-          <SubText variant="small">{offerStatusBadge(inDetail, offers, offerStatus)}</SubText>
+          <SubText variant="small">
+            {offerStatusBadge(inDetail, offers, offerStatus)}
+          </SubText>
         </div>
         <div className="sub-group">
           <Button
@@ -152,7 +150,7 @@ export const MarketRequestItemMobile = (props: {
     weight,
     specs,
     size,
-    offerStatus
+    offerStatus,
   } = props;
 
   const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
@@ -162,8 +160,17 @@ export const MarketRequestItemMobile = (props: {
 
     return (
       <div>
-        <Badge className="offers-badge" badgeColor={theme.grey.shade3} padding="8px 8px" borderRadius="8px">
-          <BadgeText color="success" weight="bold" variant="overline" empty={!offers || offers === 0}>
+        <Badge
+          className="offers-badge"
+          badgeColor={theme.grey.shade3}
+          padding="8px 8px"
+          borderRadius="8px"
+        >
+          <BadgeText
+            color="success"
+            variant="overline"
+            empty={!offers || offers === 0}
+          >
             {offersText}
           </BadgeText>
         </Badge>
@@ -173,21 +180,28 @@ export const MarketRequestItemMobile = (props: {
 
   const subMinorDetail = (label: string, value: string) => (
     <>
-      <Typography variant="caption" weight="400" color="shade6" style={{ marginRight: "5px" }}>
-        {label} {' '}
+      <Typography
+        variant="caption"
+        weight="400"
+        color="shade6"
+        style={{ marginRight: '5px' }}
+      >
+        {label}{' '}
       </Typography>
       <Typography variant="caption" weight="700" color="shade9">
         {value}
       </Typography>
     </>
-  )
+  );
 
   const displayBadges = () => {
-    return <Badges>
-      {offersMarkup()}
-      {offerStatusBadge(inDetail, offers, offerStatus)}
-    </Badges>
-  }
+    return (
+      <Badges>
+        {offersMarkup()}
+        {offerStatusBadge(inDetail, offers, offerStatus)}
+      </Badges>
+    );
+  };
 
   return (
     <MarketRequestItemMobileContainer>
@@ -196,10 +210,7 @@ export const MarketRequestItemMobile = (props: {
           <img src={parseImageUrl(image)} />
         </div>
 
-        <TypographyView
-          variant="label"
-          style={{ lineHeight: '20px' }}
-        >
+        <TypographyView variant="label" style={{ lineHeight: '20px' }}>
           {type}
         </TypographyView>
       </MajorInfo>
@@ -211,15 +222,24 @@ export const MarketRequestItemMobile = (props: {
 
         <SubMinorInfo>
           <SubMinorDetail>
-            {subMinorDetail('Quantity', weight?.from + "-" + weight?.to + " " + Case.pascal(measurementUnit || ''))}
+            {subMinorDetail(
+              'Quantity',
+              weight?.from +
+                '-' +
+                weight?.to +
+                ' ' +
+                Case.pascal(measurementUnit || '')
+            )}
           </SubMinorDetail>
 
-          <SubMinorDetail>
-            {subMinorDetail('Time Left', expiry)}
-          </SubMinorDetail>
+          <SubMinorDetail>{subMinorDetail('Time Left', expiry)}</SubMinorDetail>
 
           <SubMinorDetail>
-            {subMinorDetail('Size', (Array.isArray(size?.options) && size?.options?.join(', ')) || 'None')}
+            {subMinorDetail(
+              'Size',
+              (Array.isArray(size?.options) && size?.options?.join(', ')) ||
+                'None'
+            )}
           </SubMinorDetail>
         </SubMinorInfo>
 
@@ -229,12 +249,16 @@ export const MarketRequestItemMobile = (props: {
   );
 };
 
-const offerStatusBadge = (inDetail: boolean, offers: number, offerStatus: any) => {
+const offerStatusBadge = (
+  inDetail: boolean,
+  offers: number,
+  offerStatus: any
+) => {
   let badgeColor = '';
   let textColor;
 
   if (!offerStatus) {
-    return null
+    return null;
   }
 
   switch (offerStatus) {
@@ -252,11 +276,7 @@ const offerStatusBadge = (inDetail: boolean, offers: number, offerStatus: any) =
 
   return (
     <Badge className="offers-badge" badgeColor={badgeColor}>
-      <BadgeText
-        weight="bold"
-        variant="overline"
-        style={{ color: textColor }}
-      >
+      <BadgeText variant="overline" style={{ color: textColor }}>
         {offerStatus}
       </BadgeText>
     </Badge>
@@ -289,14 +309,16 @@ const MarketRequestsLandingView = (
             key={mr.id}
             type={mr.offers > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
-            leftComponent={
-              <MarketRequestItemMobile
-                inDetail={false}
-                {...mr}
-              />
-            }
+            leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
-              <div style={{ display: "flex", height: "100%", textAlign: "center", alignContent: "space-between" }}>
+              <div
+                style={{
+                  display: 'flex',
+                  height: '100%',
+                  textAlign: 'center',
+                  alignContent: 'space-between',
+                }}
+              >
                 <div>
                   <ChevronRight width={8} height={12} />
                 </div>
@@ -322,7 +344,7 @@ const MarketRequestsLandingView = (
         <EmptyStateView Svg={Crab} height={240} width={249} fluid />
       )}
     </Visible>
-  )
+  );
 
   const renderNonMobile = () => (
     <Hidden xs>
@@ -346,7 +368,7 @@ const MarketRequestsLandingView = (
         <EmptyStateView Svg={Crab} height={240} width={249} fluid />
       )}
     </Hidden>
-  )
+  );
 
   return (
     <MarketRequestsContainer>
@@ -393,7 +415,14 @@ const MarketRequestsLandingView = (
           variant={props.isPendingAccount ? 'disabled' : 'primary'}
           takeFullWidth
           disabled={props.isPendingAccount}
-          icon={<ChevronRight width={15} height={12} fill="white" style={{ paddingBottom: "2px" }} />}
+          icon={
+            <ChevronRight
+              width={15}
+              height={12}
+              fill="white"
+              style={{ paddingBottom: '2px' }}
+            />
+          }
         />
       </MobileFooter>
     </MarketRequestsContainer>

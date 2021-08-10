@@ -25,6 +25,19 @@ export const MarketRequestsContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
   }
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade2};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
+  }
 `;
 
 export const MarketRequestItemInteraction = styled(Interactions)`
@@ -32,7 +45,7 @@ export const MarketRequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
   padding: 8px;
-  
+
   @media ${BREAKPOINTS['sm']} {
     padding: 12px;
   }
@@ -42,18 +55,6 @@ export const MarketRequestItemInteraction = styled(Interactions)`
 
   .left-content {
     flex-grow: 2;
-  }
-
-  .delete-button {
-    background-color: ${({ theme }) => theme.grey.shade3};
-    height: 32px;
-    width: 32px;
-    border-radius: 12px;
-    align-self: center;
-
-    path {
-      fill: ${({ theme }) => theme.grey.shade7};
-    }
   }
 `;
 
@@ -101,21 +102,6 @@ export const MarketRequestItemContainer = styled.div`
       width: fit-content;
       border-radius: 8px;
     }
-
-    .offers-status {
-    }
-
-    .delete-button {
-      background-color: ${({ theme }) => theme.grey.shade3};
-      height: 32px;
-      width: 32px;
-      border-radius: 12px;
-      align-self: center;
-
-      path {
-        fill: ${({ theme }) => theme.grey.shade7};
-      }
-    }
   }
 `;
 
@@ -125,7 +111,7 @@ export const SubText = styled(TypographyView)`
   color: ${(props) => `${props.theme.grey.shade7}`};
 `;
 
-export const BadgeText = styled(TypographyView) <{ empty?: boolean }>`
+export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
   color: ${({ theme, empty }) =>
@@ -149,28 +135,28 @@ export const SizeTextContainer = styled.div`
 export const MajorInfo = styled.div`
   display: flex;
   flex-direction: row;
-`
+`;
 
 export const MinorInfo = styled.div`
   margin-top: 8px;
-`
+`;
 
 export const SubMinorInfo = styled.div`
   margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between ;
-`
+  justify-content: space-between;
+`;
 
 export const SubMinorDetail = styled.div`
   display: flex;
   margin-right: 20px;
-`
+`;
 
 export const Badges = styled.div`
   display: flex;
   margin-top: 10px;
-`
+`;
 
 export const MarketRequestItemMobileContainer = styled.div`
   .thumbnail-container {
@@ -178,7 +164,7 @@ export const MarketRequestItemMobileContainer = styled.div`
       width: 40px;
       height: 40px;
       border-radius: 8px;
-      margin-right: 8px
+      margin-right: 8px;
     }
   }
 `;
