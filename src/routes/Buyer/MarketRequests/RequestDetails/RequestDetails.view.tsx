@@ -287,6 +287,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setShowNotEnoughCreditAlert,
   } = props;
 
+  const location = useLocation()
+
+  const splits = location.pathname.split("/")
+  const offerId = splits[splits.length - 1]
+
   const handleStartNegotiate = () => {
     setNegotiating(true);
   };
@@ -298,7 +303,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     (store: Store) => store.getAllMarketRequest
   );
   const dispatch = useDispatch()
-  const location = useLocation()
 
   const [searchTerm, setSearchTerm] = useState("")
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -306,7 +310,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
-  const [selectedItem, setSelectedItem] = useState({})
+  const [selectedItem, setSelectedItem] = useState<any>({})
 
   useEffect(() => {
     if (!searchTerm) {
@@ -326,6 +330,17 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       dispatch(getAllMarketRequestActions.request({}));
     }
   }, [deleteMarketRequest]);
+
+  useEffect(() => {
+    sellerOffers.forEach(marketOffer =>
+      marketOffer.offers.forEach(offer => {
+        if (offer.id === offerId) {
+          setSelectedItem(offer)
+          return
+        }
+      })
+    )
+  }, [offerId, sellerOffers])
 
   const countAllOffers = () => {
     let offersCount = 0
@@ -417,7 +432,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           )}
         >
           <div style={{ marginTop: "16px" }}>
-            <FullOfferDetails />
+            <FullOfferDetails handleStartNegotiate={handleStartNegotiate} />
           </div>
         </Route>
       </Switch>
@@ -560,7 +575,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
-
       <RequestDetailsParentContainer>
         <RequestDetailsMobileContainer>
           <div className="thumbnail-container">
@@ -608,7 +622,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           </DeleteButtonContainer>
         </RequestDetailsMobileContainer>
       </RequestDetailsParentContainer>
-
 
       <SummaryContainer margin="16px 0px">
         <DetailsHeaderContainer>
@@ -677,13 +690,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       <NegotiateBuyerModal
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
-        onSubmit={(v: number) => submitNegotiation(v)}
-        originalOffer={selectedOffer?.price}
+        onSubmit={submitNegotiation}
+        originalOffer={selectedOffer?.price || selectedItem?.price}
         counterOffer={counterOffer}
         newOffer={newOffer}
         weight={{
-          unit: selectedOffer?.measurementUnit,
-          value: selectedOffer?.weight,
+          unit: selectedOffer?.measurementUnit || selectedItem?.measurementUnit,
+          value: selectedOffer?.weight || selectedItem?.weight,
         }}
         isOpen={negotiating}
         onClickClose={() => {

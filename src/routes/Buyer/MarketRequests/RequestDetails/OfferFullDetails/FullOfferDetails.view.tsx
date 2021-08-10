@@ -15,7 +15,9 @@ import { Store } from '../../../../../types/store/Store';
 import { useLocation } from 'react-router-dom';
 
 
-const OfferFullDetails = () => {
+const FullOfferDetails = (props: any) => {
+    const { handleStartNegotiate } = props
+
     const location = useLocation()
     const splits = location.pathname.split("/")
     const offerId = splits[splits.length - 1]
@@ -38,7 +40,6 @@ const OfferFullDetails = () => {
             marketOffer.offers.forEach(offer => {
                 if (offer.id === offerId) {
                     setSeller(marketOffer.company)
-                    console.log(marketOffer.company)
                     return
                 }
             })
@@ -149,6 +150,7 @@ const OfferFullDetails = () => {
                     <Col style={{ marginTop: "24px" }}>
                         <div style={{ display: "flex" }}>
                             <Button
+                                onClick={() => handleStartNegotiate()}
                                 variant="outline"
                                 text="NEGOTIATE"
                                 style={{ borderRadius: "12px" }}
@@ -167,4 +169,4 @@ const OfferFullDetails = () => {
     );
 }
 
-export default OfferFullDetails;
+export default FullOfferDetails;
