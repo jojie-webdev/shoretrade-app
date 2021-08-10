@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from 'components/base/Typography';
-import { Star, StarFilled, TrashCan } from 'components/base/SVG';
+import { Star, StarFilled, TrashCan, PlaceholderProfile } from 'components/base/SVG';
 import theme from '../../../../../utils/Theme';
 import Button from './../../../../../components/base/Button/Button.view';
 import { OfferProps } from './Offer.props';
@@ -9,6 +9,7 @@ import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
 import { Col, Row } from 'react-grid-system';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { AvatarContainer, AvatarPreview, AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 
 const Offer = (props: OfferProps) => {
     const { offer } = props
@@ -17,10 +18,16 @@ const Offer = (props: OfferProps) => {
         <OfferContainer>
             <Row style={{ display: "flex", justifyContent: "space-between" }}>
                 <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
-                    <img
-                        style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
-                        src={parseImageUrl(offer.company.image || '')}
-                    />
+                    {
+                        offer.company.image ?
+                            <img
+                                style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
+                                src={parseImageUrl(offer.company.image || '')}
+                            /> :
+                            <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
+                                <PlaceholderProfile width={48} height={48} />
+                            </AvatarPlaceholder>
+                    }
 
                     <div style={{
                         marginLeft: "12px",
