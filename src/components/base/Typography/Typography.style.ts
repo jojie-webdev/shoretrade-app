@@ -91,5 +91,5 @@ export const P = styled.p<TypographyProps>`
   color: ${({ theme, color = 'shade9' }) =>
     ({ ...theme.grey, ...theme.brand }[color])};
   text-align: ${({ align }) => align || 'left'};
-  margin: 0;
+  margin: ${({ margin }) => margin || '0'};
 `;

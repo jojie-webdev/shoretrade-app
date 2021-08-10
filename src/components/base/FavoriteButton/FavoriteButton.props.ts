@@ -1,5 +1,5 @@
 export interface FavoriteButtonProps {
   isFavorite: boolean | undefined;
-  onClick: () => void;
+  onClick?: () => void;
   iconOnly?: boolean;
 }

@@ -45,6 +45,12 @@ export const CreateRequestHeaderContainer = styled.div`
     margin-top: 32px;
   }
 
+  @media ${BREAKPOINTS['sm']} {
+    .title-container {
+      margin-top: 0px;
+    }
+  }
+
   .search-container {
     width: 100%;
     margin-bottom: 24px;

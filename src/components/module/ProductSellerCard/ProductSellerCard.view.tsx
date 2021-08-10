@@ -4,7 +4,8 @@ import FavoriteButton from 'components/base/FavoriteButton';
 import { Star, StarFilled, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
-
+import { BREAKPOINTS } from './../../../consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { ProductSellerProps } from './ProductSellerCard.props';
 import {
   SellerCardContainer,
@@ -29,9 +30,12 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
     showFavoriteButton,
     onFavorite,
     onClickSeller,
+    bottomComponent
   } = props;
 
   const [defaultImage, setDefaultImage] = useState(uri);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   return (
     <SellerCardContainer
       withBackground={props.withBackground}
@@ -71,7 +75,11 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
               weight="normal"
               color="shade9"
             >
-              {rating || 0}
+              {
+                isMobile ?
+                  '' :
+                  rating || 0
+              }
             </Typography>
             {[...Array(5).keys()].map((r) => (
               <StarContainer key={r} location={location}>
@@ -90,6 +98,11 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           )}
         </EndRow>
       </Row>
+      {
+        bottomComponent ?
+          bottomComponent :
+          ''
+      }
     </SellerCardContainer>
   );
 };
