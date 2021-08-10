@@ -396,6 +396,29 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     </Col>
   )
 
+  const countAcceptedWeight = () => {
+    let acceptedWeights = 0
+    sellerOffers.forEach(sellerOffer => {
+      sellerOffer.offers.forEach(offer => {
+        if (offer.status === "ACCEPTED") {
+          acceptedWeights += offer.weight
+        }
+      })
+    })
+
+    return acceptedWeights
+  }
+
+  const convertCreatedToExpiryDate = (createdAt?: string) => {
+    const expiry = moment(createdAt).add(7, 'd').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(
+        moment(createdAt).add(7, 'd').format()
+      )
+
+    return expiry;
+  }
+
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
       <Switch>
@@ -416,7 +439,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   color="shade9"
                   style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
                 >
-                  {sellerOffers[0]?.marketRequest?.weight.from}
+                  {countAcceptedWeight()}
                   <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
                 </Typography>
 
@@ -429,7 +452,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   color="shade6"
                   variant="caption"
                 >
-                  1 Day, 16 Hours, 5 Min
+                  {convertCreatedToExpiryDate(sellerOffers[0]?.marketRequest?.createdAt)}
                 </Typography>
               </div>
               <DeleteButtonContainer>
