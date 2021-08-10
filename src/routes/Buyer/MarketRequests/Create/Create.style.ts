@@ -91,7 +91,6 @@ export const ContainerWithCategoryImageContent = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 280px;
-  padding-top: 2rem;
 `;
 
 export const HeroImageContainer = styled.div`
@@ -295,6 +294,7 @@ export const DetailsContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: -8px;
+  margin-bottom: 16px;
 `;
 
 export const MainContainer = styled.div`
@@ -346,6 +346,7 @@ export const MultipleLeftGroupContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 16px;
 `;
 
 export const PreviousButton = styled(Button)`

@@ -118,10 +118,10 @@ const CreateRequest = (): JSX.Element => {
   const onBack = (step: number) => {
     if (step === 1) {
       //reset
-      setSelectedCategory({ id: '', name: '' });
-      setSelectedSize({ from: '', to: '', items: [] });
-      setSelectedSpecifications({ items: [] });
-      setSelectedQuantity({ from: '', to: '' });
+      // setSelectedCategory({ id: '', name: '' });
+      // setSelectedSize({ from: '', to: '', items: [] });
+      // setSelectedSpecifications({ items: [] });
+      // setSelectedQuantity({ from: '', to: '' });
       getFormData(selectedCategory.id);
     }
     setCurrentStep(step);
@@ -194,6 +194,12 @@ const CreateRequest = (): JSX.Element => {
   useEffect(() => {
     window.scrollTo(0, 0); //reset scroll to top
   }, [currentStep]);
+
+  useEffect(() => {
+    if (selectedCategory.id) {
+      getFormData(selectedCategory.id);
+    }
+  }, [selectedCategory.id]);
 
   const generatedProps: CreateRequestGeneratedProps = {
     didFinishStep,
