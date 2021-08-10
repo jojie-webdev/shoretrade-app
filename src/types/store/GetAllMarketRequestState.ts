@@ -19,6 +19,7 @@ export type GetAllMarketRequestResponseItem = {
   sizeOptions: [];
   createdAt: string;
   specifications?: Specification[];
+  specs?: string[];
   weight?: Weight;
   metric: string;
   measurementUnit: string;

@@ -34,11 +34,15 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     align-items: center;
   }
 
+  svg{
+    margin-left: -10px;
+  }
+
   input {
     flex: 1;
     border: 0;
     margin: 0 10px;
-    height: 100%;
+    height: 40px;
 
     :focus {
       outline: none;
@@ -57,8 +61,12 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     }
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
+<<<<<<< HEAD
+      padding: 24px 0px;
+=======
       height:40px;
       padding:24px 0px;
+>>>>>>> dev
     }
   }
 `;

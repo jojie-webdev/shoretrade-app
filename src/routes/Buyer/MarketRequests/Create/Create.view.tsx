@@ -342,13 +342,12 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               >
                 {selectedSize.items[0] !== '' && !selectedSize.from
                   ? selectedSize.items.map((i, index) => {
-                      return index === selectedSpecifications.items.length - 1
-                        ? `${i} `
-                        : `${i}, `;
-                    })
-                  : `${selectedSize.from}${measurement} ${
-                      selectedSize.to && `- ${selectedSize.to}${measurement}`
-                    }`}
+                    return index === selectedSpecifications.items.length - 1
+                      ? `${i} `
+                      : `${i}, `;
+                  })
+                  : `${selectedSize.from}${measurement} ${selectedSize.to && `- ${selectedSize.to}${measurement}`
+                  }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
@@ -378,10 +377,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {`${selectedQuantity.from}${measurement} ${
-                  selectedQuantity.to &&
+                {`${selectedQuantity.from}${measurement} ${selectedQuantity.to &&
                   `- ${selectedQuantity.to}${measurement}`
-                }`}
+                  }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>

@@ -1,5 +1,4 @@
 import styled from 'utils/styled';
-import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const SellerCardContainer = styled.div<{
   fishermanNotes?: string;
@@ -15,13 +14,6 @@ export const SellerCardContainer = styled.div<{
     withBackground ? '2px solid #edeffa' : 0};
   border-radius: 8px;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
-
-  @media ${BREAKPOINTS['sm']} {
-    border: none !important;
-    background: #FFFFFF;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-    border-radius: 12px;
-  }
 `;
 
 export const Row = styled.div`
@@ -53,22 +45,22 @@ export const AvatarContainer = styled.div<{ borderRadius?: string }>`
   border-radius: ${({ borderRadius }) => borderRadius};
 `;
 
-export const AvatarPreview = styled.img`
-  width: 56px;
-  height: 56px;
+export const AvatarPreview = styled.img<{ width?: string, height?: string }>`
+  width: ${({ width }) => width || '56px'};
+  height:${({ height }) => height || '56px'} ;
   border-radius: 5px;
   object-fit: contain;
 `;
 
-export const AvatarPlaceholder = styled.div<{ borderRadius?: string }>`
+export const AvatarPlaceholder = styled.div<{ borderRadius?: string, width?: string, height?: string }>`
   border-radius: 5px;
-  width: 56px;
-  height: 56px;
+  width: ${({ width }) => width || '56px'};
+  height: ${({ height }) => height || '56px'};
   background-color: ${({ theme }) => theme.grey.shade2};
   display: flex;
   justify-content: center;
   align-items: center;
-  borderRadius: ${({ borderRadius }) => borderRadius};
+  border-radius: ${({ borderRadius }) => borderRadius};
 `;
 
 export const FlexShrinked = styled.div<{ showCursor?: boolean }>`
