@@ -4,14 +4,7 @@ import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
 import ReactTooltip from 'react-tooltip';
 
-import { TableRowProps } from './TableRow.props';
-
-interface TableDataListProps extends TableRowProps {
-  column: any;
-  index: number;
-  length: number;
-  identifier: string;
-}
+import { TableRowProps, TableDataListProps } from './TableRow.props';
 
 const TableDataList = (props: TableDataListProps) => {
   const {
@@ -32,11 +25,6 @@ const TableDataList = (props: TableDataListProps) => {
     const textEl = document.getElementById(`text-${identifier}`);
 
     const padding = 16 * 2;
-
-    console.log(
-      textEl?.innerText,
-      Number(containerEl?.offsetWidth) - padding <= Number(textEl?.offsetWidth)
-    );
 
     if (
       Number(containerEl?.offsetWidth) - padding <=
@@ -97,31 +85,6 @@ export default function TableRow(props: TableRowProps) {
             identifier={identifier}
           />
         );
-
-        // return (
-        //   <TableData
-        //     id={`container-${identifier}`}
-        //     rowType={rowType}
-        //     columnType={columnType!}
-        //     key={`container-${identifier}`}
-        //     sticky={column?.sticky}
-        //     selected={selected}
-        //     handleOnSelect={(state) => {
-        //       handleOnSelectRow?.(state, data);
-        //     }}
-        //   >
-        //     <span
-        //       id={`text-${identifier}`}
-        //       data-tip={column?.tooltip?.(data) || data?.[column.selector]}
-        //       className="table-value"
-        //     >
-        //       {column?.component
-        //         ? column?.component(data)
-        //         : data?.[column.selector]}
-        //     </span>
-        //     {column?.tooltip && <ReactTooltip />}
-        //   </TableData>
-        // );
       })}
     </>
   );

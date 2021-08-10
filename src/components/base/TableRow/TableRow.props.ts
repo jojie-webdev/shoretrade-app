@@ -19,3 +19,10 @@ export interface TableRowProps {
   selected?: boolean;
   handleOnSelectRow?: (state: boolean, data?: any) => void;
 }
+
+export interface TableDataListProps extends TableRowProps {
+  column: any;
+  index: number;
+  length: number;
+  identifier: string;
+}
