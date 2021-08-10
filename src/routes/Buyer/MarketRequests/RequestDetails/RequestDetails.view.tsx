@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
@@ -60,6 +60,7 @@ import { DetailsHeaderContainer } from '../Create/Create.style';
 import { AnchorContainer } from './../Create/SelectSpecifications/SelectSpecification.style';
 import Button from './../../../../components/base/Button/Button.view';
 import TrashCan from './../../../../components/base/SVG/TrashCan';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -288,6 +289,18 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   const [searchTerm, setSearchTerm] = useState("")
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const [sellerOffersCopy, setSellerOffersCopy] = useState<GetActiveOffersRequestResponseItem[]>([])
+
+  useEffect(() => {
+    if (!searchTerm) {
+      setSellerOffersCopy(sellerOffers)
+
+      return
+    }
+
+    const _sellerOffers = sellerOffers.filter(sellerOffer => sellerOffer.company.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    setSellerOffersCopy(_sellerOffers)
+  }, [searchTerm, sellerOffers])
 
   const renderLeftComponent = () => (
     <Col md={12} sm={12} xl={8}>
@@ -331,8 +344,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       </Row>
 
       {
-        sellerOffers.map(sellerOffer =>
-          <Offer offer={sellerOffer} />
+        sellerOffersCopy.map(sellerOffer =>
+          <Offer sellerOffer={sellerOffer} />
         )
       }
 
