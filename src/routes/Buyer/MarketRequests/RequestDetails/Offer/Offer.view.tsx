@@ -9,17 +9,28 @@ import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
 import { Col, Row } from 'react-grid-system';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import { parseImageUrl } from 'utils/parseImageURL';
-import { AvatarContainer, AvatarPreview, AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
+import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 import { sizeToString } from './../../../../../utils/Listing/sizeToString';
+import { useHistory } from 'react-router';
+import { BUYER_ROUTES } from 'consts';
 
 const Offer = (props: OfferProps) => {
     const { sellerOffer } = props
+
+    const history = useHistory()
+
+    const onClickItem = (id: string) => {
+        console.log(id)
+        if (sellerOffer.offers.length > 0) {
+            history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(id));
+        }
+    };
 
     return (
         <>
             {
                 sellerOffer.offers.map(offer =>
-                    <OfferContainer>
+                    <OfferContainer onClick={() => onClickItem(offer.id)}>
                         <Row style={{ display: "flex", justifyContent: "space-between" }}>
                             <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
                                 {

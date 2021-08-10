@@ -10,8 +10,7 @@ import {
   Star,
   StarFilled,
   Weight,
-  Octopus,
-  CtgOctopus
+  Octopus
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -391,7 +390,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <>
             <EmptyStateView
               title=""
-              Svg={CtgOctopus}
+              Svg={Octopus}
               height={240}
               width={249}
               fluid
