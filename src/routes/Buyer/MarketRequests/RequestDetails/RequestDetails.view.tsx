@@ -49,7 +49,8 @@ import {
   FilterButton,
   RequestDetailsMobileContainer,
   RequestDetailsParentContainer,
-  SummaryContainer
+  SummaryContainer,
+  DeleteButtonContainer
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
@@ -57,7 +58,8 @@ import { ProgressContainer } from './../../../../components/layout/AuthContainer
 import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
 import { DetailsHeaderContainer } from '../Create/Create.style';
 import { AnchorContainer } from './../Create/SelectSpecifications/SelectSpecification.style';
-import ShoretradeAnchor from './../../../../components/base/SVG/ShoretradeAnchor';
+import Button from './../../../../components/base/Button/Button.view';
+import TrashCan from './../../../../components/base/SVG/TrashCan';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -380,12 +382,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               <div className="thumbnail-container">
                 <img src={parseImageUrl(data.image || '')} />
               </div>
-              <div style={{ width: "100%" }}>
+              <div style={{ width: "100%", margin: "auto" }}>
                 <Typography
                   variant="body"
                   weight="400"
                   color="shade9"
-                  style={{ fontFamily: "Basis Grotesque Pro" }}
+                  style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
                 >
                   {sellerOffers[0]?.marketRequest?.weight.from}
                   <span style={{ color: theme.grey.shade5 }}>/{sellerOffers[0]?.marketRequest?.weight.to} kg</span>
@@ -393,16 +395,32 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
                 {/* TODO: storybook */}
                 <ProgressContainer>
-                  <Progress percent={70} />
+                  <Progress height="2px" percent={70} />
                 </ProgressContainer>
                 <Typography
-                  margin="8px 0px 0px 0px"
+                  margin="12px 0px 0px 0px"
                   color="shade6"
                   variant="caption"
                 >
                   1 Day, 16 Hours, 5 Min
                 </Typography>
               </div>
+              <DeleteButtonContainer>
+                <Button
+                  iconPosition="before"
+                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                  // onClick={
+                  //   setItemToDelete &&
+                  //   ((e) => {
+                  //     e.stopPropagation();
+                  //     setItemToDelete({ value: mr.id || '' });
+                  //   })
+                  // }
+                  variant="primary"
+                  size="sm"
+                  className="delete-button"
+                />
+              </DeleteButtonContainer>
             </RequestDetailsMobileContainer>
           </RequestDetailsParentContainer>
 

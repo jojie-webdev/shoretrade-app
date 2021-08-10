@@ -359,3 +359,19 @@ export const SummaryContainer = styled.div<{ margin?: string }>`
   max-height: 312px;
   margin: ${({ margin }) => margin || '0px'}
 `;
+
+export const DeleteButtonContainer = styled.div`
+  margin: auto;
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade3};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
+  }
+`;
