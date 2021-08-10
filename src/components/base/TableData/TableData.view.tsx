@@ -12,6 +12,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     onMouseLeave,
     onClick,
     sticky,
+    id,
   } = props;
 
   const tableDataContainerProps = {
@@ -29,7 +30,7 @@ export default function TableDataContent(props: TableDataContentProps) {
         Object.entries(tableDataContainerProps).filter(([_, value]) => !!value) // this removes undefine and null values
       )}
     >
-      <DataWrapper>{children}</DataWrapper>
+      <DataWrapper id={id}>{children}</DataWrapper>
     </TableDataContainer>
   );
 }
