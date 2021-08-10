@@ -469,6 +469,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                         </div>
                         <div style={{ width: "100%" }}>
                           <Typography
+                            className="typo"
                             variant="title4"
                             weight="400"
                             color="shade9"
@@ -483,7 +484,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                             <Progress percent={70} />
                           </ProgressContainer>
 
-                          <Typography margin="8px 0px 0px 0px" color="shade6">
+                          <Typography
+                            className="typo"
+                            margin="8px 0px 0px 0px"
+                            color="shade6"
+                          >
                             1 Day, 16 Hours, 5 Min
                           </Typography>
                         </div>

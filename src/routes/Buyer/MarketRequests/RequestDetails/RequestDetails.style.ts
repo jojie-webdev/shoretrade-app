@@ -29,7 +29,7 @@ export const RequestDetailsCardContainer = styled(Interactions)`
   @media ${BREAKPOINTS['sm']} {
     width: 100%;
     margin-top: 16px;
-    height: 88px;
+    /* height: 88px; */
     padding: 8px;
     border: 1px solid ${({ theme }) => theme.grey.shade4};
 
@@ -341,6 +341,12 @@ export const RequestDetailsMobileContainer = styled.div`
 
   @media ${BREAKPOINTS['sm']} {
     width: 100%;
+  }
+
+  @media(max-width: 380px){
+    .typo{
+      font-size: 15px;
+    }
   }
 `;
 
