@@ -16,7 +16,7 @@ import { useLocation } from 'react-router-dom';
 
 
 const FullOfferDetails = (props: any) => {
-    const { handleStartNegotiate } = props
+    const { handleStartNegotiate, handleAcceptOffer } = props
 
     const location = useLocation()
     const splits = location.pathname.split("/")
@@ -160,6 +160,7 @@ const FullOfferDetails = (props: any) => {
                                 text="ACCEPT"
                                 style={{ borderRadius: "12px", marginLeft: "8px" }}
                                 icon={<Check />}
+                                onClick={() => handleAcceptOffer()}
                             />
                         </div>
                     </Col>
