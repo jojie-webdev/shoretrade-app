@@ -26,7 +26,7 @@ import moment from 'moment';
 import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useParams, useRouteMatch, useLocation } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
@@ -298,6 +298,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     (store: Store) => store.getAllMarketRequest
   );
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const [searchTerm, setSearchTerm] = useState("")
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -339,7 +340,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     <Col md={12} sm={12} xl={8}>
       <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {
-          sellerOffers.length > 0 &&
+          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
           <Col xl={6}>
             <div style={{ marginTop: "16px" }}>
               <Search
@@ -355,7 +356,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         }
 
         {
-          sellerOffers.length > 0 &&
+          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
           <Col style={{ display: "flex" }}>
             <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
               <Typography
@@ -415,7 +416,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             currentOfferId
           )}
         >
-          <FullOfferDetails />
+          <div style={{ marginTop: "16px" }}>
+            <FullOfferDetails />
+          </div>
         </Route>
       </Switch>
     </Col >
@@ -557,80 +560,77 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
+
+      <RequestDetailsParentContainer>
+        <RequestDetailsMobileContainer>
+          <div className="thumbnail-container">
+            <img src={parseImageUrl(data.image || '')} />
+          </div>
+          <div style={{ width: "100%", margin: "auto" }}>
+            <Typography
+              variant="body"
+              weight="400"
+              color="shade9"
+              style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
+            >
+              {countAcceptedWeight()}
+              <span style={{ color: theme.grey.shade5 }}>/{filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}</span>
+            </Typography>
+
+            <ProgressContainer>
+              <Progress height="2px" percent={70} />
+            </ProgressContainer>
+
+            <Typography
+              margin="12px 0px 0px 0px"
+              color="shade6"
+              variant="caption"
+            >
+              {convertCreatedToExpiryDate(sellerOffers[0]?.marketRequest?.createdAt)}
+            </Typography>
+          </div>
+          <DeleteButtonContainer>
+            <Button
+              iconPosition="before"
+              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+              onClick={
+                setItemToDelete &&
+                ((e) => {
+                  e.stopPropagation();
+                  setItemToDelete({ value: sellerOffers[0].marketRequest.id || '' });
+                  setShowDelete(true)
+                })
+              }
+              variant="primary"
+              size="sm"
+              className="delete-button"
+            />
+          </DeleteButtonContainer>
+        </RequestDetailsMobileContainer>
+      </RequestDetailsParentContainer>
+
+
+      <SummaryContainer margin="16px 0px">
+        <DetailsHeaderContainer>
+          <Typography
+            style={{
+              marginBottom: 8,
+              fontFamily: 'Wilderness',
+              fontSize: 24,
+            }}
+          >
+            Summary
+          </Typography>
+        </DetailsHeaderContainer>
+
+        {renderSpecs()}
+        <div style={{ marginTop: "25px" }}></div>
+        {renderSize()}
+        <div style={{ marginTop: "25px" }}></div>
+        {renderQuantity()}
+      </SummaryContainer>
+
       <Switch>
-        <Route
-          path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
-            data.id
-          )}`}
-        >
-          <RequestDetailsParentContainer>
-            <RequestDetailsMobileContainer>
-              <div className="thumbnail-container">
-                <img src={parseImageUrl(data.image || '')} />
-              </div>
-              <div style={{ width: "100%", margin: "auto" }}>
-                <Typography
-                  variant="body"
-                  weight="400"
-                  color="shade9"
-                  style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
-                >
-                  {countAcceptedWeight()}
-                  <span style={{ color: theme.grey.shade5 }}>/{filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}</span>
-                </Typography>
-
-                <ProgressContainer>
-                  <Progress height="2px" percent={70} />
-                </ProgressContainer>
-
-                <Typography
-                  margin="12px 0px 0px 0px"
-                  color="shade6"
-                  variant="caption"
-                >
-                  {convertCreatedToExpiryDate(sellerOffers[0]?.marketRequest?.createdAt)}
-                </Typography>
-              </div>
-              <DeleteButtonContainer>
-                <Button
-                  iconPosition="before"
-                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                  onClick={
-                    setItemToDelete &&
-                    ((e) => {
-                      e.stopPropagation();
-                      setItemToDelete({ value: sellerOffers[0].marketRequest.id || '' });
-                      setShowDelete(true)
-                    })
-                  }
-                  variant="primary"
-                  size="sm"
-                  className="delete-button"
-                />
-              </DeleteButtonContainer>
-            </RequestDetailsMobileContainer>
-          </RequestDetailsParentContainer>
-
-          <SummaryContainer margin="16px 0px">
-            <DetailsHeaderContainer>
-              <Typography
-                style={{
-                  marginBottom: 8,
-                  fontFamily: 'Wilderness',
-                  fontSize: 24,
-                }}
-              >
-                Summary
-              </Typography>
-            </DetailsHeaderContainer>
-
-            {renderSpecs()}
-            <div style={{ marginTop: "25px" }}></div>
-            {renderSize()}
-            <div style={{ marginTop: "25px" }}></div>
-            {renderQuantity()}
-          </SummaryContainer>
-        </Route>
         <Route
           path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
             marketRequestId,

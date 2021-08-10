@@ -323,6 +323,7 @@ export const RequestDetailsParentContainer = styled.div`
   border-radius: 8px;
   background-color: #FFF;
   padding: 8px;
+  margin-top: 16px;
 `
 
 export const RequestDetailsMobileContainer = styled.div`
