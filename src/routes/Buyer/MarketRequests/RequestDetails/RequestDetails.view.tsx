@@ -56,11 +56,15 @@ import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
 import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
 import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
-import { DetailsHeaderContainer } from '../Create/Create.style';
+import { DetailsContentContainer, DetailsDataContainer, DetailsHeaderContainer } from '../Create/Create.style';
 import { AnchorContainer } from './../Create/SelectSpecifications/SelectSpecification.style';
 import Button from './../../../../components/base/Button/Button.view';
 import TrashCan from './../../../../components/base/SVG/TrashCan';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { useSelector, useDispatch } from 'react-redux';
+import { Store } from './../../../../types/store/Store';
+import { getAllMarketRequestActions } from 'store/actions';
+import Cross7 from './../../../../components/base/SVG/Cross7';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -287,9 +291,17 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setNegotiating(true);
   };
 
+  const deleteMarketRequest = useSelector(
+    (store: Store) => store.deleteMarketRequest
+  );
+  const dispatch = useDispatch()
+
   const [searchTerm, setSearchTerm] = useState("")
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const [sellerOffersCopy, setSellerOffersCopy] = useState<GetActiveOffersRequestResponseItem[]>([])
+  const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
+    value: null,
+  });
 
   useEffect(() => {
     if (!searchTerm) {
@@ -301,6 +313,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     const _sellerOffers = sellerOffers.filter(sellerOffer => sellerOffer.company.name.toLowerCase().includes(searchTerm.toLowerCase()))
     setSellerOffersCopy(_sellerOffers)
   }, [searchTerm, sellerOffers])
+
+  useEffect(() => {
+    if (deleteMarketRequest.pending) {
+      setItemToDelete({ value: null });
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+  }, [deleteMarketRequest]);
 
   const countAllOffers = () => {
     let offersCount = 0
@@ -459,13 +479,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 <Button
                   iconPosition="before"
                   icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                  // onClick={
-                  //   setItemToDelete &&
-                  //   ((e) => {
-                  //     e.stopPropagation();
-                  //     setItemToDelete({ value: mr.id || '' });
-                  //   })
-                  // }
+                  onClick={
+                    setItemToDelete &&
+                    ((e) => {
+                      e.stopPropagation();
+                      setItemToDelete({ value: sellerOffers[0].marketRequest.id || '' });
+                      setShowDelete(true)
+                    })
+                  }
                   variant="primary"
                   size="sm"
                   className="delete-button"
@@ -475,6 +496,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           </RequestDetailsParentContainer>
 
           <SummaryContainer margin="16px 0px">
+            {
+
+
+              // sellerOffers[0].marketRequest..map((i, index) => {
+              //   return index === selectedSpecifications.items.length - 1
+              //     ? `${i.label} `
+              //     : `${i.label}, `;
+              // })
+            }
             <DetailsHeaderContainer>
               <Typography
                 style={{
@@ -486,9 +516,115 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 Summary
               </Typography>
             </DetailsHeaderContainer>
-            <AnchorContainer>
+            <DetailsContentContainer>
+              <Typography
+                color="shade6"
+                variant="label"
+                style={{
+                  marginBottom: 16,
+                  fontFamily: 'Wilderness',
+                  fontSize: 24,
+                }}
+              >
+                Specs:
+              </Typography>
+              <DetailsDataContainer>
+                <Cross7 />
+                <Typography
+                  color="shade9"
+                  variant="label"
+                  style={{
+                    fontFamily: 'Wilderness',
+                    fontSize: 38,
+                    marginLeft: 8.5,
+                    marginTop: -8,
+                  }}
+                >
+                  Test
+                  {/* {selectedSpecifications.items.map((i, index) => {
+                    return index === selectedSpecifications.items.length - 1
+                      ? `${i.label} `
+                      : `${i.label}, `;
+                  })} */}
+                </Typography>
+              </DetailsDataContainer>
+            </DetailsContentContainer>
 
-            </AnchorContainer>
+            <div style={{ marginTop: "25px" }}></div>
+
+            <DetailsContentContainer>
+              <Typography
+                color="shade6"
+                variant="label"
+                style={{
+                  marginBottom: 16,
+                  fontFamily: 'Wilderness',
+                  fontSize: 24,
+                }}
+              >
+                Size:
+              </Typography>
+              <DetailsDataContainer>
+                <Cross7 />
+                <Typography
+                  color="shade9"
+                  variant="label"
+                  style={{
+                    fontFamily: 'Wilderness',
+                    fontSize: 38,
+                    marginLeft: 8.5,
+                    marginTop: -8,
+                  }}
+                >
+                  Test
+                  {/* {selectedSize.items[0] !== '' && !selectedSize.from
+                  ? selectedSize.items.map((i, index) => {
+                    return index === selectedSpecifications.items.length - 1
+                      ? `${i} `
+                      : `${i}, `;
+                  })
+                  : `${selectedSize.from}${measurement} ${selectedSize.to && `- ${selectedSize.to}${measurement}`
+                  }`} */}
+                </Typography>
+              </DetailsDataContainer>
+            </DetailsContentContainer>
+
+            <div style={{ marginTop: "25px" }}></div>
+
+            <DetailsContentContainer>
+              <Typography
+                color="shade6"
+                variant="label"
+                style={{
+                  marginBottom: 16,
+                  fontFamily: 'Wilderness',
+                  fontSize: 24,
+                }}
+              >
+                Quantity:
+              </Typography>
+              <DetailsDataContainer>
+                <Cross7 />
+                <Typography
+                  color="shade9"
+                  variant="label"
+                  style={{
+                    fontFamily: 'Wilderness',
+                    fontSize: 38,
+                    marginLeft: 8.5,
+                    marginTop: -8,
+                  }}
+                >
+                  test
+                  {/* {`${selectedQuantity.from}${measurement} ${selectedQuantity.to &&
+                  `- ${selectedQuantity.to}${measurement}`
+                  }`} */}
+                </Typography>
+              </DetailsDataContainer>
+            </DetailsContentContainer>
+            {/* <AnchorContainer>
+
+            </AnchorContainer> */}
           </SummaryContainer>
 
           {/* <OffersContainer>
