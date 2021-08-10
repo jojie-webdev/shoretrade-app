@@ -294,6 +294,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
   );
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -439,6 +442,38 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     return expiry;
   }
 
+  const renderSpecs = () => (
+    buyerRequests.data?.data?.marketRequests[0]?.specs &&
+    <DetailsContentContainer>
+      <Typography
+        color="shade6"
+        variant="label"
+        style={{
+          marginBottom: 16,
+          fontFamily: 'Wilderness',
+          fontSize: 24,
+        }}
+      >
+        Specs:
+      </Typography>
+      <DetailsDataContainer>
+        <Cross7 />
+        <Typography
+          color="shade9"
+          variant="label"
+          style={{
+            fontFamily: 'Wilderness',
+            fontSize: 38,
+            marginLeft: 8.5,
+            marginTop: -8,
+          }}
+        >
+          {buyerRequests.data?.data.marketRequests[0].specs?.toString().split(",").join(", ")}
+        </Typography>
+      </DetailsDataContainer>
+    </DetailsContentContainer>
+  )
+
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
       <Switch>
@@ -496,15 +531,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           </RequestDetailsParentContainer>
 
           <SummaryContainer margin="16px 0px">
-            {
-
-
-              // sellerOffers[0].marketRequest..map((i, index) => {
-              //   return index === selectedSpecifications.items.length - 1
-              //     ? `${i.label} `
-              //     : `${i.label}, `;
-              // })
-            }
             <DetailsHeaderContainer>
               <Typography
                 style={{
@@ -516,39 +542,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 Summary
               </Typography>
             </DetailsHeaderContainer>
-            <DetailsContentContainer>
-              <Typography
-                color="shade6"
-                variant="label"
-                style={{
-                  marginBottom: 16,
-                  fontFamily: 'Wilderness',
-                  fontSize: 24,
-                }}
-              >
-                Specs:
-              </Typography>
-              <DetailsDataContainer>
-                <Cross7 />
-                <Typography
-                  color="shade9"
-                  variant="label"
-                  style={{
-                    fontFamily: 'Wilderness',
-                    fontSize: 38,
-                    marginLeft: 8.5,
-                    marginTop: -8,
-                  }}
-                >
-                  Test
-                  {/* {selectedSpecifications.items.map((i, index) => {
-                    return index === selectedSpecifications.items.length - 1
-                      ? `${i.label} `
-                      : `${i.label}, `;
-                  })} */}
-                </Typography>
-              </DetailsDataContainer>
-            </DetailsContentContainer>
+
+            {renderSpecs()}
 
             <div style={{ marginTop: "25px" }}></div>
 
@@ -576,15 +571,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                     marginTop: -8,
                   }}
                 >
-                  Test
-                  {/* {selectedSize.items[0] !== '' && !selectedSize.from
-                  ? selectedSize.items.map((i, index) => {
-                    return index === selectedSpecifications.items.length - 1
-                      ? `${i} `
-                      : `${i}, `;
-                  })
-                  : `${selectedSize.from}${measurement} ${selectedSize.to && `- ${selectedSize.to}${measurement}`
-                  }`} */}
+                  {console.log(buyerRequests.data?.data?.marketRequests[0])}
+
                 </Typography>
               </DetailsDataContainer>
             </DetailsContentContainer>
