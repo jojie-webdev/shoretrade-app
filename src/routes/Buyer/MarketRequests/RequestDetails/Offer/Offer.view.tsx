@@ -28,7 +28,7 @@ const Offer = (props: OfferProps) => {
         <>
             {
                 sellerOffer.offers.map(offer =>
-                    <OfferContainer>
+                    <OfferContainer onClick={() => onClickItem(offer)}>
                         <Row style={{ display: "flex", justifyContent: "space-between" }}>
                             <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
                                 {
@@ -153,10 +153,7 @@ const Offer = (props: OfferProps) => {
                                     className="delete-button"
                                     style={{ marginRight: "20px" }}
                                 />
-                                <div
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => onClickItem(offer)}
-                                >
+                                <div>
                                     <ChevronRight width={10} height={10} />
                                 </div>
                             </Col>

@@ -643,7 +643,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         {renderQuantity()}
       </SummaryContainer>
 
-      <Switch>
+      {/* <Switch>
         <Route
           path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
             marketRequestId,
@@ -668,7 +668,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             lastNegotiationsOffers={lastNegotiationsOffers}
           />
         </Route>
-      </Switch>
+      </Switch> */}
     </Col>
   )
 

@@ -7,6 +7,7 @@ export const OfferContainer = styled.div`
     border-radius: 8px;
     padding: 8px 24px 8px 8px;
     margin-top: 12px;
+    cursor: pointer;
 
     @media (max-width: 833px) {
         .sub-details{
