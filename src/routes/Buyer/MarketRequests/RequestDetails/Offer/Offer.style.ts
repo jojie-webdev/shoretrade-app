@@ -7,6 +7,7 @@ export const OfferContainer = styled.div`
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 8px;
     padding: 8px 24px 8px 8px;
+    margin-top: 12px;
 
     @media (max-width: 833px) {
         .sub-details{

@@ -8,13 +8,20 @@ import { OfferContainer } from './Offer.style';
 import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
 import { Col, Row } from 'react-grid-system';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 const Offer = (props: OfferProps) => {
+    const { offer } = props
+
     return (
         <OfferContainer>
             <Row style={{ display: "flex", justifyContent: "space-between" }}>
                 <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
-                    <div style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}>image</div>
+                    <img
+                        style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
+                        src={parseImageUrl(offer.company.image || '')}
+                    />
+
                     <div style={{
                         marginLeft: "12px",
                         display: "flex",
@@ -32,7 +39,7 @@ const Offer = (props: OfferProps) => {
                             }}
                             color="shade9"
                         >
-                            Seller Name
+                            {offer.company.name}
                         </Typography>
 
                         <div style={{ display: "flex", alignItems: "center", height: "12px" }}>

@@ -330,7 +330,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </Col>
       </Row>
 
-      <Offer />
+      {
+        sellerOffers.map(sellerOffer =>
+          <Offer offer={sellerOffer} />
+        )
+      }
+
       {/* <RequestDetailsCardContainer type={'none'}>
         {data && data.name ? (
           <MarketRequestItem
