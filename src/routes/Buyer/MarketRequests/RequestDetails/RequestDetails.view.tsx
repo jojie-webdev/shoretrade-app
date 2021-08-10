@@ -302,6 +302,15 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setSellerOffersCopy(_sellerOffers)
   }, [searchTerm, sellerOffers])
 
+  const countAllOffers = () => {
+    let offersCount = 0
+    sellerOffersCopy.forEach(sellerOffer => {
+      offersCount += sellerOffer.offers.length
+    })
+
+    return offersCount;
+  }
+
   const renderLeftComponent = () => (
     <Col md={12} sm={12} xl={8}>
       <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -325,7 +334,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               variant="label"
               style={{ marginRight: "16px" }}
             >
-              <span style={{ color: "#09131D" }}>16</span>
+              <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
               <span>{' '}Results</span>
             </Typography>
 
