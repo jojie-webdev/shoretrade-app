@@ -124,7 +124,7 @@ const MarketRequestDetail = (): JSX.Element => {
   const handleAcceptOffer = () => {
     dispatch(
       marketRequestAcceptOfferActions.request({
-        marketOfferId: currentOfferId,
+        marketOfferId: currentOfferId || offerId,
         marketRequestId: id,
         marketNegotiationId:
           selectedOffer?.negotiations?.reduce((a, b) =>
