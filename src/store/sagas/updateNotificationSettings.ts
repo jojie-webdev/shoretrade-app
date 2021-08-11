@@ -51,12 +51,12 @@ function* updateNotifSettingsSuccess(
   if (state.auth.token) {
     //   yield put(editableListingActions.clear());
     const companyId = state.getUser.data?.data.user.companies[0].id || '';
-    yield put(getNotificationsSettingsActions.request({ companyId }));
-    if (state.auth.type === 'buyer') {
-      yield put(push(BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
-    } else {
-      yield put(push(SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
-    }
+    // yield put(getNotificationsSettingsActions.request({ companyId }));
+    // if (state.auth.type === 'buyer') {
+    //   yield put(push(BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
+    // } else {
+    //   yield put(push(SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS));
+    // }
   }
 }
 

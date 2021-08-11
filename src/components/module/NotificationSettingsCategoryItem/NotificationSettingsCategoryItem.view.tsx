@@ -1,15 +1,7 @@
 import React from 'react';
 
 import Accordion from 'components/base/Accordion';
-import Checkbox from 'components/base/Checkbox';
-import {
-  CommentsAlt,
-  Desktop,
-  DollarSign,
-  EnvelopeAlt,
-} from 'components/base/SVG';
-
-// import { useTheme } from 'utils/Theme';
+import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 
@@ -107,6 +99,14 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
+              onClick={() =>
+                onChange({
+                  push,
+                  email: { ...email, enabled: !email.enabled },
+                  mobile,
+                  inapp,
+                })
+              }
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={email.enabled}
             />
@@ -117,6 +117,14 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
+              onClick={() =>
+                onChange({
+                  push,
+                  email,
+                  mobile: { ...mobile, enabled: !mobile.enabled },
+                  inapp,
+                })
+              }
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={mobile.enabled}
             />

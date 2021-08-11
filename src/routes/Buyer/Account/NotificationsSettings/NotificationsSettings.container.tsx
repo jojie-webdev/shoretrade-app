@@ -18,6 +18,10 @@ import { Store } from 'types/store/Store';
 
 import { QueryParams } from '../EditAddress/EditAddress.props';
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
+import {
+  toUpdateNotification,
+  toUpdateSettingItem,
+} from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
 
 const NotificationsSettings = (): JSX.Element => {
@@ -26,6 +30,7 @@ const NotificationsSettings = (): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [companyId, setCompanyId] = useState('');
+  const [updateTriggered, setUpdateTriggered] = useState(false);
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
   >({
@@ -42,6 +47,10 @@ const NotificationsSettings = (): JSX.Element => {
 
   const getPendingNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.pending || false
+  );
+
+  const pendingUpdate = useSelector(
+    (state: Store) => state.updateNotificationSettings.pending || false
   );
 
   useEffect(() => {
@@ -70,7 +79,7 @@ const NotificationsSettings = (): JSX.Element => {
     dispatch(
       updateNotificationSettingsActions.request({
         global: globalSettings,
-        custom: customSettings,
+        custom: toUpdateNotification(customSettings),
       })
     );
   };
@@ -98,7 +107,15 @@ const NotificationsSettings = (): JSX.Element => {
         return c;
       })
     );
+    setUpdateTriggered(true);
   };
+
+  useEffect(() => {
+    if (updateTriggered && customSettings) {
+      handleOnSave();
+      setUpdateTriggered(false);
+    }
+  }, [customSettings, updateTriggered]);
 
   useEffect(() => {
     if (getNotificationsSettings && getNotificationsSettings.data) {

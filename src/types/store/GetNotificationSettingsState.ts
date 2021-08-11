@@ -34,6 +34,28 @@ export type SettingsToggleItem = {
   };
 };
 
+// export type SettingsUpdateItem = {
+//   push: {
+//     enabled: boolean;
+//   };
+//   email: {
+//     enabled: boolean;
+//   };
+//   mobile: {
+//     enabled: boolean;
+//   };
+//   inapp: {
+//     enabled: boolean;
+//   };
+// };
+
+export type SettingsUpdateItem = {
+  push: boolean;
+  email: boolean;
+  mobile: boolean;
+  inapp: boolean;
+};
+
 // {
 //   id: '71ca8e17-8b44-4d5c-ae35-90145e396b03',
 //   resource: 'ORDERING', // -> Account
@@ -53,7 +75,6 @@ export type SpecificNotificationSettingItem = {
   subgroup: any;
   settings: SettingsToggleItem;
 };
-
 
 // {
 //   "id": "7913f9c4-9f45-4fff-8f87-bb7290a7aeba",
