@@ -316,6 +316,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
+  const buyerRequestsFilters = useSelector(
+    (store: Store) => store.getMarketRequestBuyerFilters.data?.data
+  );
+  console.log(props.filterModalProps.selectedFilters)
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -365,49 +369,68 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     return offersCount;
   }
 
+  const isFiltered = () => {
+    const _isFilterd = (Array.isArray(props.filterModalProps.selectedFilters) &&
+      props.filterModalProps.selectedFilters.length > 0)
+
+    return _isFilterd
+  }
+
+  const renderCounter = () => (
+    <Col style={{ display: "flex" }}>
+      <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{ marginRight: "16px" }}
+        >
+          <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
+          <span>{' '}Results</span>
+        </Typography>
+
+        <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
+          <Select
+            label=""
+            options={[]}
+            size="small"
+            placeholder="Sort by"
+            disabled
+          />
+        </div>
+      </div>
+    </Col>
+  )
+
+  const renderSearch = () => (
+    <Col xl={6}>
+      <div style={{ marginTop: "16px" }}>
+        <Search
+          className="search"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
+          resetValue={() => setSearchTerm('')}
+          placeholder="Search"
+          style={{ borderRadius: "12px", height: "40px" }}
+        />
+      </div>
+    </Col>
+  )
+
   const renderLeftComponent = () => (
     <Col md={12} sm={12} xl={8}>
       <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {
-          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-          <Col xl={6}>
-            <div style={{ marginTop: "16px" }}>
-              <Search
-                className="search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.currentTarget.value)}
-                resetValue={() => setSearchTerm('')}
-                placeholder="Search"
-                style={{ borderRadius: "12px", height: "40px" }}
-              />
-            </div>
-          </Col>
+          isFiltered() ?
+            renderSearch() :
+            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
+            renderSearch()
         }
 
         {
-          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-          <Col style={{ display: "flex" }}>
-            <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
-              <Typography
-                color="shade6"
-                variant="label"
-                style={{ marginRight: "16px" }}
-              >
-                <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
-                <span>{' '}Results</span>
-              </Typography>
-
-              <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
-                <Select
-                  label=""
-                  options={[]}
-                  size="small"
-                  placeholder="Sort by"
-                  disabled
-                />
-              </div>
-            </div>
-          </Col>
+          isFiltered() ?
+            renderCounter() :
+            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
+            renderCounter()
         }
       </Row>
 
@@ -419,22 +442,27 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 <Offer sellerOffer={sellerOffer} />
               ) :
               <>
-                <EmptyStateView
-                  title=""
-                  Svg={Octopus}
-                  height={240}
-                  width={249}
-                  fluid
-                />
-
-                <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
-                  <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
-                    The are no offers yet
-                  </Typography>
-                  <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
-                    Enable your push notifications
-                  </Typography>
-                </div>
+                {
+                  isFiltered() ?
+                    null :
+                    <>
+                      <EmptyStateView
+                        title=""
+                        Svg={Octopus}
+                        height={240}
+                        width={249}
+                        fluid
+                      />
+                      <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
+                        <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
+                          The are no offers yet
+                        </Typography>
+                        <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
+                          Enable your push notifications
+                        </Typography>
+                      </div>
+                    </>
+                }
               </>
           }
         </Route>
