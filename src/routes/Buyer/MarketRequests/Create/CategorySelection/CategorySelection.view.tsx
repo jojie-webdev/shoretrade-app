@@ -136,31 +136,6 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
           />
         </div>
 
-        <div style={{ display: "flex", marginTop: "2px", marginBottom: "20px", alignItems: "center" }}>
-          <Typography
-            color="shade6"
-            variant="label"
-          >
-            <span style={{ color: "#09131D" }}>{typeSearchResults.length}</span>
-            <span>{' '}Results</span>
-          </Typography>
-
-          <div style={{ marginLeft: "16px", width: "94px" }}>
-            <Select
-              border="none"
-              borderRadius="8px"
-              background="#E5E8F5"
-              label=""
-              options={[]}
-              size="small"
-              placeholder="Sort by"
-              disabled
-            // onChange={(e) => setSortField(e?.value)}
-            />
-          </div>
-
-        </div>
-
         {pendingSearch ? (
           <Loading label="Searching" />
         ) : !hideSearchResult && typeSearchResults.length > 0 ? (
