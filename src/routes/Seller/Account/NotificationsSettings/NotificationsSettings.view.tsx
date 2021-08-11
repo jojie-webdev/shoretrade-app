@@ -16,7 +16,7 @@ import NotificationSettingsCategoryItem from 'components/module/NotificationSett
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
-import { SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
+import { SettingsToggleItem, SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -32,6 +32,7 @@ const NotificationsSettingsView = ({
   handleGlobalToggle,
   groupedNotifSettings,
   loading,
+  handleCustomSettingUpdate,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -54,6 +55,17 @@ const NotificationsSettingsView = ({
     ],
     []
   );
+
+  const handleCustomSettingsChange = (
+    item: SpecificNotificationSettingItem,
+    val: SettingsToggleItem
+  ) => {
+    console.log(val);
+    handleCustomSettingUpdate({
+      ...item,
+      settings: { ...val },
+    });
+  };
 
   if (!globalSettings || loading) {
     return <Loading />;
@@ -127,7 +139,7 @@ const NotificationsSettingsView = ({
           </div>
           {ns.specificNotifSettingItems.map((i, index) => (
             <NotificationSettingsCategoryItem
-              onChange={() => console.log('changed')}
+              onChange={(val) => handleCustomSettingsChange(i, val)}
               key={i.id + index}
               inapp={i.settings.inapp}
               mobile={i.settings.mobile}
@@ -139,9 +151,6 @@ const NotificationsSettingsView = ({
           ))}
         </CategoryItemContainer>
       ))}
-      <FooterContainer>
-        <Button text="Save" variant="primary" />
-      </FooterContainer>
     </Container>
   );
 };

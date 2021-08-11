@@ -150,10 +150,6 @@ const NotificationsSettingsView = ({
           ))}
         </CategoryItemContainer>
       ))}
-
-      <FooterContainer>
-        <Button text="Save" onClick={() => handleOnSave()} variant="primary" />
-      </FooterContainer>
     </Container>
   );
 };
