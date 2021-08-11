@@ -474,7 +474,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           )}
         >
           <div style={{ marginTop: "16px" }}>
-            <FullOfferDetails handleStartNegotiate={handleStartNegotiate} handleAcceptOffer={handleAcceptOffer} />
+            <FullOfferDetails
+              handleStartNegotiate={handleStartNegotiate}
+              handleAcceptOffer={handleAcceptOffer}
+              isAccepted={isAccepted}
+              thereIsNewOffer={thereIsNewOffer}
+              counterOffer={counterOffer}
+              newOffer={newOffer}
+            />
           </div>
         </Route>
       </Switch>

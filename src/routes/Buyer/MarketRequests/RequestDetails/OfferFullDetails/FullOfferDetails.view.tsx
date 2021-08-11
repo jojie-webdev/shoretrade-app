@@ -14,9 +14,8 @@ import { useSelector } from 'react-redux';
 import { Store } from '../../../../../types/store/Store';
 import { useLocation } from 'react-router-dom';
 
-
 const FullOfferDetails = (props: any) => {
-    const { handleStartNegotiate, handleAcceptOffer } = props
+    const { handleStartNegotiate, handleAcceptOffer, isAccepted, thereIsNewOffer, counterOffer, newOffer } = props
 
     const location = useLocation()
     const splits = location.pathname.split("/")
@@ -147,6 +146,41 @@ const FullOfferDetails = (props: any) => {
                     </Col>
                 </Row>
                 <Row>
+                    <Col>
+                        <div style={{ marginTop: "16px" }}>
+                            {!isAccepted && (
+                                <>
+                                    {!thereIsNewOffer && counterOffer === '' && (
+                                        <div className="computation-item-container">
+                                            <Typography variant="label" color="shade9">
+                                                You have received an offer by the Seller. Either click
+                                                accept or negotiate to proceed.
+                                            </Typography>
+                                        </div>
+                                    )}
+
+                                    {thereIsNewOffer && counterOffer === newOffer && (
+                                        <div className="computation-item-container">
+                                            <Typography variant="label" color="shade9">
+                                                You have received an offer by the Seller. Either click
+                                                accept or negotiate to proceed.
+                                            </Typography>
+                                        </div>
+                                    )}
+
+                                    {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
+                                        <div className="computation-item-container">
+                                            <Typography variant="label" color="shade9">
+                                                The seller is reviewing your offer.
+                                            </Typography>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
                     <Col style={{ marginTop: "24px" }}>
                         <div style={{ display: "flex" }}>
                             <Button
@@ -155,12 +189,14 @@ const FullOfferDetails = (props: any) => {
                                 text="NEGOTIATE"
                                 style={{ borderRadius: "12px" }}
                                 icon={<Refresh />}
+                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                             />
                             <Button
                                 text="ACCEPT"
                                 style={{ borderRadius: "12px", marginLeft: "8px" }}
                                 icon={<Check />}
                                 onClick={() => handleAcceptOffer()}
+                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                             />
                         </div>
                     </Col>
