@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import Select from 'components/base/Select/Select.view';
 import {
   Crab,
   DollarSign,
@@ -9,7 +11,7 @@ import {
   Star,
   StarFilled,
   Weight,
-  Octopus
+  Octopus,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -25,15 +27,39 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { Route, Switch, useParams, useRouteMatch, useLocation } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+  useLocation,
+} from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
+import { getAllMarketRequestActions } from 'store/actions';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
+
+import {
+  DetailsContentContainer,
+  DetailsDataContainer,
+  DetailsHeaderContainer,
+} from '../Create/Create.style';
 import MarketRequestItem from '../Landing/Landing.view';
+import Button from './../../../../components/base/Button/Button.view';
+import Cross7 from './../../../../components/base/SVG/Cross7';
+import TrashCan from './../../../../components/base/SVG/TrashCan';
+import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
+import { Store } from './../../../../types/store/Store';
+import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
+import Offer from './Offer/Offer.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
+import FullOfferDetails from './OfferFullDetails/FullOfferDetails.view';
 import {
   RequestDetailsCardContainer,
   RequestDetailsContainer,
@@ -49,22 +75,8 @@ import {
   RequestDetailsMobileContainer,
   RequestDetailsParentContainer,
   SummaryContainer,
-  DeleteButtonContainer
+  DeleteButtonContainer,
 } from './RequestDetails.style';
-import Offer from './Offer/Offer.view';
-import Select from 'components/base/Select/Select.view';
-import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
-import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
-import { DetailsContentContainer, DetailsDataContainer, DetailsHeaderContainer } from '../Create/Create.style';
-import Button from './../../../../components/base/Button/Button.view';
-import TrashCan from './../../../../components/base/SVG/TrashCan';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
-import { useSelector, useDispatch } from 'react-redux';
-import { Store } from './../../../../types/store/Store';
-import { getAllMarketRequestActions } from 'store/actions';
-import Cross7 from './../../../../components/base/SVG/Cross7';
-import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-import FullOfferDetails from './OfferFullDetails/FullOfferDetails.view';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -102,38 +114,34 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {sellerRating
               ? [...Array(5).keys()].map((r) =>
-                Number(sellerRating || 0) > r ? (
-                  <StarFilled
-                    fill={theme.brand.alert}
-                    width={starWidth}
-                    height={starHeight}
-                  />
-                ) : (
-                  <Star
-                    fill={theme.brand.alert}
-                    width={starWidth}
-                    height={starHeight}
-                  />
+                  Number(sellerRating || 0) > r ? (
+                    <StarFilled
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  ) : (
+                    <Star
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  )
                 )
-              )
               : ''}
           </div>
         </div>
       </div>
     </OffersSellerAccordionContentContainer>
-  )
+  );
 
   const displayForMobile = () => (
     <TypographyView variant="copy" color="shade8">
       {sellerName}
     </TypographyView>
-  )
-
-  return (
-    isMobile ?
-      displayForMobile() :
-      displayForNonMobile()
   );
+
+  return isMobile ? displayForMobile() : displayForNonMobile();
 };
 
 const SellerOfferInteractionContent = (props: {
@@ -301,10 +309,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setShowNotEnoughCreditAlert,
   } = props;
 
-  const location = useLocation()
+  const location = useLocation();
 
-  const splits = location.pathname.split("/")
-  const offerId = splits[splits.length - 1]
+  const splits = location.pathname.split('/');
+  const offerId = splits[splits.length - 1];
 
   const handleStartNegotiate = () => {
     setNegotiating(true);
@@ -316,26 +324,30 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const [sellerOffersCopy, setSellerOffersCopy] = useState<GetActiveOffersRequestResponseItem[]>([])
+  const [sellerOffersCopy, setSellerOffersCopy] = useState<
+    GetActiveOffersRequestResponseItem[]
+  >([]);
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
-  const [selectedItem, setSelectedItem] = useState<any>({})
+  const [selectedItem, setSelectedItem] = useState<any>({});
 
   useEffect(() => {
     if (!searchTerm) {
-      setSellerOffersCopy(sellerOffers)
+      setSellerOffersCopy(sellerOffers);
 
-      return
+      return;
     }
 
-    const _sellerOffers = sellerOffers.filter(sellerOffer => sellerOffer.company.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    setSellerOffersCopy(_sellerOffers)
-  }, [searchTerm, sellerOffers])
+    const _sellerOffers = sellerOffers.filter((sellerOffer) =>
+      sellerOffer.company.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSellerOffersCopy(_sellerOffers);
+  }, [searchTerm, sellerOffers]);
 
   useEffect(() => {
     if (deleteMarketRequest.pending) {
@@ -346,58 +358,71 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   }, [deleteMarketRequest]);
 
   useEffect(() => {
-    sellerOffers.forEach(marketOffer =>
-      marketOffer.offers.forEach(offer => {
+    sellerOffers.forEach((marketOffer) =>
+      marketOffer.offers.forEach((offer) => {
         if (offer.id === offerId) {
-          setSelectedItem(offer)
-          return
+          setSelectedItem(offer);
+          return;
         }
       })
-    )
-  }, [offerId, sellerOffers])
+    );
+  }, [offerId, sellerOffers]);
 
   const countAllOffers = () => {
-    let offersCount = 0
-    sellerOffersCopy.forEach(sellerOffer => {
-      offersCount += sellerOffer.offers.length
-    })
+    let offersCount = 0;
+    sellerOffersCopy.forEach((sellerOffer) => {
+      offersCount += sellerOffer.offers.length;
+    });
 
     return offersCount;
-  }
+  };
 
   const renderLeftComponent = () => (
     <Col md={12} sm={12} xl={8}>
-      <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        {
-          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
+      <Row
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
           <Col xl={6}>
-            <div style={{ marginTop: "16px" }}>
+            <div style={{ marginTop: '16px' }}>
               <Search
                 className="search"
+                rounded={true}
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.currentTarget.value)}
                 resetValue={() => setSearchTerm('')}
                 placeholder="Search"
-                style={{ borderRadius: "12px", height: "40px" }}
               />
             </div>
           </Col>
-        }
+        )}
 
-        {
-          (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-          <Col style={{ display: "flex" }}>
-            <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
+        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
+          <Col style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: 'auto',
+              }}
+            >
               <Typography
                 color="shade6"
                 variant="label"
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: '16px' }}
               >
-                <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
-                <span>{' '}Results</span>
+                <span style={{ color: '#09131D' }}>{countAllOffers()}</span>
+                <span> Results</span>
               </Typography>
 
-              <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
+              <div
+                style={{ marginLeft: '16px', width: '94px', cursor: 'pointer' }}
+                onClick={props.onClickFilterButton}
+              >
                 <Select
                   label=""
                   options={[]}
@@ -408,35 +433,56 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               </div>
             </div>
           </Col>
-        }
+        )}
       </Row>
 
       <Switch>
-        <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}>
-          {
-            sellerOffersCopy.length > 0 ?
-              sellerOffersCopy.map(sellerOffer =>
-                <Offer sellerOffer={sellerOffer} />
-              ) :
-              <>
-                <EmptyStateView
-                  title=""
-                  Svg={Octopus}
-                  height={240}
-                  width={249}
-                  fluid
-                />
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}
+        >
+          {sellerOffersCopy.length > 0 ? (
+            sellerOffersCopy.map((sellerOffer) => (
+              <Offer sellerOffer={sellerOffer} />
+            ))
+          ) : (
+            <>
+              <EmptyStateView
+                title=""
+                Svg={Octopus}
+                height={240}
+                width={249}
+                fluid
+              />
 
-                <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
-                  <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
-                    The are no offers yet
-                  </Typography>
-                  <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
-                    Enable your push notifications
-                  </Typography>
-                </div>
-              </>
-          }
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexFlow: 'column',
+                }}
+              >
+                <Typography
+                  weight="700"
+                  color="shade8"
+                  variant="title6"
+                  style={{ fontFamily: 'Media Sans' }}
+                >
+                  The are no offers yet
+                </Typography>
+                <Typography
+                  weight="400"
+                  color="shade6"
+                  variant="caption"
+                  style={{
+                    marginTop: '4px',
+                    fontFamily: 'Basis Grotesque Pro',
+                  }}
+                >
+                  Enable your push notifications
+                </Typography>
+              </div>
+            </>
+          )}
         </Route>
 
         <Route
@@ -445,85 +491,54 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             currentOfferId
           )}
         >
-          <div style={{ marginTop: "16px" }}>
-            <FullOfferDetails handleStartNegotiate={handleStartNegotiate} handleAcceptOffer={handleAcceptOffer} />
+          <div style={{ marginTop: '16px' }}>
+            <FullOfferDetails
+              handleStartNegotiate={handleStartNegotiate}
+              handleAcceptOffer={handleAcceptOffer}
+            />
           </div>
         </Route>
       </Switch>
-    </Col >
-  )
+    </Col>
+  );
 
   const countAcceptedWeight = () => {
-    let acceptedWeights = 0
+    let acceptedWeights = 0;
 
-    sellerOffers.forEach(sellerOffer => {
-      sellerOffer.offers.forEach(offer => {
-        if (offer.status === "ACCEPTED") {
-          acceptedWeights += offer.weight
+    sellerOffers.forEach((sellerOffer) => {
+      sellerOffer.offers.forEach((offer) => {
+        if (offer.status === 'ACCEPTED') {
+          acceptedWeights += offer.weight;
         }
-      })
-    })
+      });
+    });
 
-    return acceptedWeights
-  }
+    return acceptedWeights;
+  };
 
   const filteredMarketRequest = (): GetAllMarketRequestResponseItem => {
-    const _marketRequests = buyerRequests.data?.data.marketRequests.filter(marketRequest => marketRequest.id === marketRequestId)
+    const _marketRequests = buyerRequests.data?.data.marketRequests.filter(
+      (marketRequest) => marketRequest.id === marketRequestId
+    );
 
     if (_marketRequests && _marketRequests.length > 0) {
-      return _marketRequests[0]
+      return _marketRequests[0];
     }
 
-    return null as any
-  }
+    return null as any;
+  };
 
   const convertCreatedToExpiryDate = (createdAt?: string) => {
     const expiry = moment(createdAt).add(7, 'd').isBefore()
       ? 'Expired'
-      : formatRunningDateDifference(
-        moment(createdAt).add(7, 'd').format()
-      )
+      : formatRunningDateDifference(moment(createdAt).add(7, 'd').format());
 
     return expiry;
-  }
+  };
 
-  const renderSpecs = () => (
-    buyerRequests.data?.data?.marketRequests[0]?.specs &&
-    <DetailsContentContainer>
-      <Typography
-        color="shade6"
-        variant="label"
-        style={{
-          marginBottom: 16,
-          fontFamily: 'Wilderness',
-          fontSize: 24,
-        }}
-      >
-        Specs:
-      </Typography>
-      <DetailsDataContainer>
-        <Cross7 />
-        <Typography
-          color="shade9"
-          variant="label"
-          style={{
-            fontFamily: 'Wilderness',
-            fontSize: 38,
-            marginLeft: 8.5,
-            marginTop: -8,
-          }}
-        >
-          {buyerRequests.data?.data.marketRequests[0].specs?.toString().split(",").join(", ")}
-        </Typography>
-      </DetailsDataContainer>
-    </DetailsContentContainer>
-  )
-
-  const renderSize = () => {
-    const sizeOptions = buyerRequests.data?.data?.marketRequests[0]?.sizeOptions
-
-    if (sizeOptions && Array.isArray(sizeOptions) && sizeOptions.length > 0) {
-      return <DetailsContentContainer>
+  const renderSpecs = () =>
+    buyerRequests.data?.data?.marketRequests[0]?.specs && (
+      <DetailsContentContainer>
         <Typography
           color="shade6"
           variant="label"
@@ -533,7 +548,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             fontSize: 24,
           }}
         >
-          Size:
+          Specs:
         </Typography>
         <DetailsDataContainer>
           <Cross7 />
@@ -547,45 +562,90 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               marginTop: -8,
             }}
           >
-            {Array.isArray(sizeOptions) ? sizeOptions?.join(', ') : ''}
+            {buyerRequests.data?.data.marketRequests[0].specs
+              ?.toString()
+              .split(',')
+              .join(', ')}
           </Typography>
         </DetailsDataContainer>
       </DetailsContentContainer>
+    );
+
+  const renderSize = () => {
+    const sizeOptions =
+      buyerRequests.data?.data?.marketRequests[0]?.sizeOptions;
+
+    if (sizeOptions && Array.isArray(sizeOptions) && sizeOptions.length > 0) {
+      return (
+        <DetailsContentContainer>
+          <Typography
+            color="shade6"
+            variant="label"
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 24,
+            }}
+          >
+            Size:
+          </Typography>
+          <DetailsDataContainer>
+            <Cross7 />
+            <Typography
+              color="shade9"
+              variant="label"
+              style={{
+                fontFamily: 'Wilderness',
+                fontSize: 38,
+                marginLeft: 8.5,
+                marginTop: -8,
+              }}
+            >
+              {Array.isArray(sizeOptions) ? sizeOptions?.join(', ') : ''}
+            </Typography>
+          </DetailsDataContainer>
+        </DetailsContentContainer>
+      );
     }
 
-    return null
-  }
+    return null;
+  };
 
   const renderQuantity = () => {
-    return <DetailsContentContainer>
-      <Typography
-        color="shade6"
-        variant="label"
-        style={{
-          marginBottom: 16,
-          fontFamily: 'Wilderness',
-          fontSize: 24,
-        }}
-      >
-        Quantity:
-      </Typography>
-      <DetailsDataContainer>
-        <Cross7 />
+    return (
+      <DetailsContentContainer>
         <Typography
-          color="shade9"
+          color="shade6"
           variant="label"
           style={{
+            marginBottom: 16,
             fontFamily: 'Wilderness',
-            fontSize: 38,
-            marginLeft: 8.5,
-            marginTop: -8,
+            fontSize: 24,
           }}
         >
-          {filteredMarketRequest()?.weight?.from}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()} - {filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}
+          Quantity:
         </Typography>
-      </DetailsDataContainer>
-    </DetailsContentContainer>
-  }
+        <DetailsDataContainer>
+          <Cross7 />
+          <Typography
+            color="shade9"
+            variant="label"
+            style={{
+              fontFamily: 'Wilderness',
+              fontSize: 38,
+              marginLeft: 8.5,
+              marginTop: -8,
+            }}
+          >
+            {filteredMarketRequest()?.weight?.from}{' '}
+            {filteredMarketRequest()?.measurementUnit.toLowerCase()} -{' '}
+            {filteredMarketRequest()?.weight?.to}{' '}
+            {filteredMarketRequest()?.measurementUnit.toLowerCase()}
+          </Typography>
+        </DetailsDataContainer>
+      </DetailsContentContainer>
+    );
+  };
 
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
@@ -594,15 +654,18 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <div className="thumbnail-container">
             <img src={parseImageUrl(data.image || '')} />
           </div>
-          <div style={{ width: "100%", margin: "auto" }}>
+          <div style={{ width: '100%', margin: 'auto' }}>
             <Typography
               variant="body"
               weight="400"
               color="shade9"
-              style={{ fontFamily: "Basis Grotesque Pro", marginBottom: "3px" }}
+              style={{ fontFamily: 'Basis Grotesque Pro', marginBottom: '3px' }}
             >
               {countAcceptedWeight()}
-              <span style={{ color: theme.grey.shade5 }}>/{filteredMarketRequest()?.weight?.to}{" "}{filteredMarketRequest()?.measurementUnit.toLowerCase()}</span>
+              <span style={{ color: theme.grey.shade5 }}>
+                /{filteredMarketRequest()?.weight?.to}{' '}
+                {filteredMarketRequest()?.measurementUnit.toLowerCase()}
+              </span>
             </Typography>
 
             <ProgressContainer>
@@ -614,7 +677,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               color="shade6"
               variant="caption"
             >
-              {convertCreatedToExpiryDate(sellerOffers[0]?.marketRequest?.createdAt)}
+              {convertCreatedToExpiryDate(
+                sellerOffers[0]?.marketRequest?.createdAt
+              )}
             </Typography>
           </div>
           <DeleteButtonContainer>
@@ -625,8 +690,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 setItemToDelete &&
                 ((e) => {
                   e.stopPropagation();
-                  setItemToDelete({ value: sellerOffers[0].marketRequest.id || '' });
-                  setShowDelete(true)
+                  setItemToDelete({
+                    value: sellerOffers[0].marketRequest.id || '',
+                  });
+                  setShowDelete(true);
                 })
               }
               variant="primary"
@@ -651,9 +718,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </DetailsHeaderContainer>
 
         {renderSpecs()}
-        <div style={{ marginTop: "25px" }}></div>
+        <div style={{ marginTop: '25px' }}></div>
         {renderSize()}
-        <div style={{ marginTop: "25px" }}></div>
+        <div style={{ marginTop: '25px' }}></div>
         {renderQuantity()}
       </SummaryContainer>
 
@@ -684,20 +751,20 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </Route>
       </Switch> */}
     </Col>
-  )
+  );
 
   const renderItemName = () => (
     <Col>
       <Typography
         color="shade9"
         font-weight="700"
-        style={{ fontFamily: "Media Sans" }}
+        style={{ fontFamily: 'Media Sans' }}
         variant="title6"
       >
         {data.name}
       </Typography>
     </Col>
-  )
+  );
 
   return (
     <RequestDetailsContainer>
@@ -755,9 +822,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         <Loading />
       ) : (
         <>
-          <Row>
-            {renderItemName()}
-          </Row>
+          <Row>{renderItemName()}</Row>
 
           <Row gutterWidth={30}>
             {renderLeftComponent()}
