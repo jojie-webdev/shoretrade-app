@@ -51,6 +51,7 @@ export interface Offer {
   specifications: string[];
   negotiations: any[];
   deliveryDate: string;
+  metric: string;
 }
 
 export interface Negotiations {

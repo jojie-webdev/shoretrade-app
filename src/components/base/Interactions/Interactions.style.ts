@@ -49,7 +49,7 @@ export const Container = styled.div<InteractionsProps>`
   }
 `;
 
-export const Value = styled(Typography)<{ fontColor?: string }>`
+export const Value = styled(Typography) <{ fontColor?: string }>`
   color: ${({ theme, fontColor }) => {
     const isSeller = theme.appType !== 'buyer';
     return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);
