@@ -68,8 +68,8 @@ const BuyerRequestsInteractions = (props: {
           </div>
           <div className="section">
             <Typography variant="small" color="shade6">
-              Shipping to: {data.shippingTo.suburb}, {data.shippingTo.state}{' '}
-              {data.shippingTo.postcode}
+              Shipping to: {data?.shippingTo?.suburb}, {data?.shippingTo?.state}{' '}
+              {data?.shippingTo?.postcode}
             </Typography>
           </div>
         </>
