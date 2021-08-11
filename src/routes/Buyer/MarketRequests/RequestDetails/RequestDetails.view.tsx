@@ -622,6 +622,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     </DetailsContentContainer>
   }
 
+  const calculatePercentage = () => {
+    const percentage = ((100 * countAcceptedWeight()) / (filteredMarketRequest()?.weight?.to || 0)) || 0
+
+    return percentage
+  }
+
   const renderRightComponent = () => (
     <Col md={12} sm={12} xl={4}>
       <RequestDetailsParentContainer>
@@ -641,7 +647,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             </Typography>
 
             <ProgressContainer>
-              <Progress height="2px" percent={70} />
+              <Progress height="2px" percent={calculatePercentage()} />
             </ProgressContainer>
 
             <Typography
