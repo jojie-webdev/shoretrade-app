@@ -1,17 +1,22 @@
 import React from 'react';
 import Typography from 'components/base/Typography';
-import { Star, StarFilled, TrashCan, PlaceholderProfile } from 'components/base/SVG';
+import { Star, StarFilled, TrashCan, PlaceholderProfile, Crab } from 'components/base/SVG';
 import theme from '../../../../../utils/Theme';
 import Button from './../../../../../components/base/Button/Button.view';
 import { OfferProps } from './Offer.props';
 import { OfferContainer } from './Offer.style';
 import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
-import { Col, Row } from 'react-grid-system';
+import { Col, Row, Visible, Hidden } from 'react-grid-system';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 import { sizeToString } from './../../../../../utils/Listing/sizeToString';
 import { useHistory } from 'react-router';
 import { BUYER_ROUTES } from 'consts';
+import { MajorInfo, MarketRequestItemInteraction, MarketRequestItemMobileContainer, MinorInfo, SubMinorDetail, SubMinorInfo } from '../../Landing/Landing.style';
+import { MarketRequestItemMobile } from '../../Landing/Landing.view';
+import EmptyStateView from 'components/module/EmptyState';
+import Badge from 'components/base/Badge/Badge.view';
+import { BadgeText, Badges } from "./../../Landing/Landing.style"
 
 const Offer = (props: OfferProps) => {
     const { sellerOffer } = props
@@ -24,143 +29,262 @@ const Offer = (props: OfferProps) => {
         }
     };
 
-    return (
+    const offersMarkup = () => {
+        return (
+            <div>
+                <Badge
+                    className="offers-badge"
+                    badgeColor={theme.grey.shade3}
+                    padding="8px 8px"
+                    borderRadius="8px"
+                >
+                    <BadgeText
+                        color="success"
+                        variant="overline"
+                        empty={!sellerOffer.offers || sellerOffer.offers.length === 0}
+                    >
+                        test
+                    </BadgeText>
+                </Badge>
+            </div>
+        );
+    };
+
+
+    const renderSubDetails = (offer: any) => (
         <>
+            <Typography
+                weight="700"
+                variant="caption"
+                style={{
+                    fontFamily: "Basis Grotesque Pro",
+                }}
+                color="shade10"
+            >
+                {offer.weight}{offer.measurementUnit} – ${offer.price}/{offer.measurementUnit}
+            </Typography>
+            <Typography
+                weight="400"
+                variant="caption"
+                style={{
+                    fontFamily: "Basis Grotesque Pro",
+                }}
+                color="shade7"
+            >
+                Specs: {offer.specifications.join(", ")}
+            </Typography>
+            <div></div>
+            <Typography
+                weight="400"
+                variant="caption"
+                style={{
+                    fontFamily: "Basis Grotesque Pro",
+                }}
+                color="shade7"
+            >
+                Size: {sizeToString(offer.metric, offer.size.from, offer.size.to)}
+            </Typography>
+        </>
+    )
+
+    const renderStars = () => (
+        <div style={{ display: "flex", alignItems: "center", height: "12px" }}>
             {
-                sellerOffer.offers.map(offer =>
-                    <OfferContainer onClick={() => onClickItem(offer)}>
-                        <Row style={{ display: "flex", justifyContent: "space-between" }}>
-                            <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
-                                {
-                                    sellerOffer.company.image ?
-                                        <img
-                                            style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
-                                            src={parseImageUrl(sellerOffer.company.image || '')}
-                                        /> :
-                                        <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
-                                            <PlaceholderProfile width={48} height={48} />
-                                        </AvatarPlaceholder>
-                                }
-
-                                <div style={{
-                                    marginLeft: "12px",
-                                    display: "flex",
-                                    flexFlow: "column",
-                                    alignItems: "baseline",
-                                    justifyContent: "space-evenly",
-                                    height: "100%"
-                                }}>
-                                    <Typography
-                                        weight="700"
-                                        variant="label"
-                                        style={{
-                                            fontFamily: "Basis Grotesque Pro",
-                                            marginTop: "3px"
-                                        }}
-                                        color="shade9"
-                                    >
-                                        {sellerOffer.company.name}
-                                    </Typography>
-
-                                    <div style={{ display: "flex", alignItems: "center", height: "12px" }}>
-                                        {
-                                            [...Array(5).keys()].map((r) =>
-                                                Number(sellerOffer.company.rating || 0) > r ? (
-                                                    <div style={{ marginRight: "3px" }}>
-                                                        <StarFilled
-                                                            fill={theme.brand.alert}
-                                                            width={12}
-                                                            height={12}
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <div style={{ marginRight: "3px" }}>
-                                                        <Star
-                                                            fill={theme.brand.alert}
-                                                            width={12}
-                                                            height={12}
-                                                        />
-                                                    </div>
-                                                )
-                                            )
-                                        }
-                                    </div>
-                                </div>
-                            </Col>
-
-                            <Col className="sub-details" sm={12} md={6} xl={4} >
-                                <Typography
-                                    weight="700"
-                                    variant="caption"
-                                    style={{
-                                        fontFamily: "Basis Grotesque Pro",
-                                    }}
-                                    color="shade10"
-                                >
-                                    {offer.weight}{offer.measurementUnit} – ${offer.price}/{offer.measurementUnit}
-                                </Typography>
-                                <Typography
-                                    weight="400"
-                                    variant="caption"
-                                    style={{
-                                        fontFamily: "Basis Grotesque Pro",
-                                    }}
-                                    color="shade7"
-                                >
-                                    Specs: {offer.specifications.join(", ")}
-                                </Typography>
-                                <div></div>
-                                <Typography
-                                    weight="400"
-                                    variant="caption"
-                                    style={{
-                                        fontFamily: "Basis Grotesque Pro",
-                                    }}
-                                    color="shade7"
-                                >
-                                    Size: {sizeToString(offer.metric, offer.size.from, offer.size.to)}
-                                </Typography>
-                            </Col>
-
-                            <Col className="cta" sm={12} md={6} xl={4} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                                <Button
-                                    text="View Offer"
-                                    iconPosition="before"
-                                    textColor="success"
-                                    // onClick={
-                                    //   setItemToDelete &&
-                                    //   ((e) => {
-                                    //     e.stopPropagation();
-                                    //     setItemToDelete({ value: mr.id || '' });
-                                    //   })
-                                    // }
-                                    variant="unselected"
-                                    size="sm"
-                                    style={{ marginRight: "20px", backgroundColor: "#EAFFF9", borderRadius: "8px" }}
-                                />
-                                <Button
-                                    iconPosition="before"
-                                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                                    // onClick={
-                                    //     setItemToDelete &&
-                                    //     ((e) => {
-                                    //         e.stopPropagation();
-                                    //         setItemToDelete({ value: mr.id || '' });
-                                    //     })
-                                    // }
-                                    variant="primary"
-                                    size="sm"
-                                    className="delete-button"
-                                    style={{ marginRight: "20px" }}
-                                />
-                                <div>
-                                    <ChevronRight width={10} height={10} />
-                                </div>
-                            </Col>
-                        </Row>
-                    </OfferContainer>
+                [...Array(5).keys()].map((r) =>
+                    Number(sellerOffer.company.rating || 0) > r ? (
+                        <div style={{ marginRight: "3px" }}>
+                            <StarFilled
+                                fill={theme.brand.alert}
+                                width={12}
+                                height={12}
+                            />
+                        </div>
+                    ) : (
+                        <div style={{ marginRight: "3px" }}>
+                            <Star
+                                fill={theme.brand.alert}
+                                width={12}
+                                height={12}
+                            />
+                        </div>
+                    )
                 )
             }
+        </div>
+    )
+
+    const renderOffersForMobile = (offer: any) => {
+        return (
+            <MarketRequestItemMobileContainer>
+                <MajorInfo>
+                    <div className="thumbnail-container">
+                        {
+                            sellerOffer.company.image ?
+                                <img src={parseImageUrl(sellerOffer.company.image || '')} alt={Math.random().toString()} /> :
+                                <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
+                                    <PlaceholderProfile width={48} height={48} />
+                                </AvatarPlaceholder>
+                        }
+                    </div>
+
+                    <div style={{
+                        marginLeft: "12px",
+                        display: "flex",
+                        flexFlow: "column",
+                        alignItems: "baseline",
+                        justifyContent: "space-evenly",
+                        height: "100%"
+                    }}>
+                        <Typography variant="label" style={{ lineHeight: '20px' }}>
+                            {sellerOffer.company.name}
+                        </Typography>
+
+                        {renderStars()}
+                    </div>
+                </MajorInfo>
+                <div style={{ marginTop: "8px" }}>
+                    {renderSubDetails(offer)}
+                </div>
+            </MarketRequestItemMobileContainer>
+        );
+    };
+
+    const renderMobile = () => (
+        sellerOffer.offers.length > 0 ? (
+            sellerOffer.offers.map((offer) => (
+                <MarketRequestItemInteraction
+                    key={offer.id}
+                    type={'next'}
+                    //'none'
+                    onClick={() => { }}
+                    leftComponent={renderOffersForMobile(offer)}
+                    rightComponent={
+                        <div
+                            style={{
+                                display: 'flex',
+                                height: '100%',
+                                textAlign: 'center',
+                                alignContent: 'space-between',
+                            }}
+                        >
+                            <div>
+                                <ChevronRight width={8} height={12} />
+                            </div>
+                            <Button
+                                iconPosition="before"
+                                icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                                //   onClick={
+                                //     setItemToDelete &&
+                                //     ((e) => {
+                                //       e.stopPropagation();
+                                //       setItemToDelete({ value: offer.id || '' });
+                                //     })
+                                //   }
+                                variant="primary"
+                                size="sm"
+                                className="delete-button"
+                            />
+                        </div>
+                    }
+                />
+            ))
+        ) : (
+            <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+        )
+    );
+
+    const renderNonMobile = () => {
+        return sellerOffer.offers.map(offer =>
+            <OfferContainer onClick={() => onClickItem(offer)}>
+                <Row style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
+                        {
+                            sellerOffer.company.image ?
+                                <img
+                                    style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
+                                    src={parseImageUrl(sellerOffer.company.image || '')}
+                                /> :
+                                <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
+                                    <PlaceholderProfile width={48} height={48} />
+                                </AvatarPlaceholder>
+                        }
+
+                        <div style={{
+                            marginLeft: "12px",
+                            display: "flex",
+                            flexFlow: "column",
+                            alignItems: "baseline",
+                            justifyContent: "space-evenly",
+                            height: "100%"
+                        }}>
+                            <Typography
+                                weight="700"
+                                variant="label"
+                                style={{
+                                    fontFamily: "Basis Grotesque Pro",
+                                    marginTop: "3px"
+                                }}
+                                color="shade9"
+                            >
+                                {sellerOffer.company.name}
+                            </Typography>
+
+                            {renderStars()}
+                        </div>
+                    </Col>
+
+                    <Col className="sub-details" sm={12} md={6} xl={4} >
+                        {renderSubDetails(offer)}
+                    </Col>
+
+                    <Col className="cta" sm={12} md={6} xl={4} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                        <Button
+                            text="View Offer"
+                            iconPosition="before"
+                            textColor="success"
+                            // onClick={
+                            //   setItemToDelete &&
+                            //   ((e) => {
+                            //     e.stopPropagation();
+                            //     setItemToDelete({ value: mr.id || '' });
+                            //   })
+                            // }
+                            variant="unselected"
+                            size="sm"
+                            style={{ marginRight: "20px", backgroundColor: "#EAFFF9", borderRadius: "8px" }}
+                        />
+                        <Button
+                            iconPosition="before"
+                            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                            // onClick={
+                            //     setItemToDelete &&
+                            //     ((e) => {
+                            //         e.stopPropagation();
+                            //         setItemToDelete({ value: mr.id || '' });
+                            //     })
+                            // }
+                            variant="primary"
+                            size="sm"
+                            className="delete-button"
+                            style={{ marginRight: "20px" }}
+                        />
+                        <div>
+                            <ChevronRight width={10} height={10} />
+                        </div>
+                    </Col>
+                </Row>
+            </OfferContainer>
+        )
+    }
+
+    return (
+        <>
+            <Hidden xs sm>
+                {renderNonMobile()}
+            </Hidden>
+            <Visible xs sm>
+                {renderMobile()}
+            </Visible>
         </>
     );
 }

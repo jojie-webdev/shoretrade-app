@@ -225,10 +225,10 @@ export const MarketRequestItemMobile = (props: {
             {subMinorDetail(
               'Quantity',
               weight?.from +
-                '-' +
-                weight?.to +
-                ' ' +
-                Case.pascal(measurementUnit || '')
+              '-' +
+              weight?.to +
+              ' ' +
+              Case.pascal(measurementUnit || '')
             )}
           </SubMinorDetail>
 
@@ -238,7 +238,7 @@ export const MarketRequestItemMobile = (props: {
             {subMinorDetail(
               'Size',
               (Array.isArray(size?.options) && size?.options?.join(', ')) ||
-                'None'
+              'None'
             )}
           </SubMinorDetail>
         </SubMinorInfo>

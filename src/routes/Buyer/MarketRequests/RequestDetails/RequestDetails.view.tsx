@@ -49,7 +49,9 @@ import {
   RequestDetailsMobileContainer,
   RequestDetailsParentContainer,
   SummaryContainer,
-  DeleteButtonContainer
+  DeleteButtonContainer,
+  CounterContainer,
+  CounterCol
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
@@ -377,8 +379,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   }
 
   const renderCounter = () => (
-    <Col style={{ display: "flex" }}>
-      <div style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
+    <CounterCol>
+      <CounterContainer>
         <Typography
           color="shade6"
           variant="label"
@@ -397,8 +399,8 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             disabled
           />
         </div>
-      </div>
-    </Col>
+      </CounterContainer>
+    </CounterCol>
   )
 
   const renderSearch = () => (
@@ -417,20 +419,30 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   )
 
   const renderLeftComponent = () => (
-    <Col md={12} sm={12} xl={8}>
+    <Col sm={12} md={12} xl={8}  >
       <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {
           isFiltered() ?
-            renderSearch() :
+            <Hidden xs sm md lg>
+              {renderSearch()}
+            </Hidden>
+            :
             (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-            renderSearch()
+            <Hidden xs sm md lg>
+              {renderSearch()}
+            </Hidden>
         }
 
         {
           isFiltered() ?
-            renderCounter() :
+            <Hidden xs sm md lg>
+              {renderCounter()}
+            </Hidden>
+            :
             (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-            renderCounter()
+            <Hidden xs sm md lg>
+              {renderCounter()}
+            </Hidden>
         }
       </Row>
 
@@ -628,13 +640,36 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     return percentage
   }
 
+  const renderSummary = () => (
+    <SummaryContainer margin="16px 0px">
+      <DetailsHeaderContainer>
+        <Typography
+          style={{
+            marginBottom: 8,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+        >
+          Summary
+        </Typography>
+      </DetailsHeaderContainer>
+
+      {renderSpecs()}
+      <div style={{ marginTop: "25px" }}></div>
+      {renderSize()}
+      <div style={{ marginTop: "25px" }}></div>
+      {renderQuantity()}
+    </SummaryContainer>
+  )
+
   const renderRightComponent = () => (
-    <Col md={12} sm={12} xl={4}>
+    <Col sm={12} md={12} xl={4}  >
       <RequestDetailsParentContainer>
         <RequestDetailsMobileContainer>
           <div className="thumbnail-container">
             <img src={parseImageUrl(data.image || '')} />
           </div>
+
           <div style={{ width: "100%", margin: "auto" }}>
             <Typography
               variant="body"
@@ -658,6 +693,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               {convertCreatedToExpiryDate(sellerOffers[0]?.marketRequest?.createdAt)}
             </Typography>
           </div>
+
           <DeleteButtonContainer>
             <Button
               iconPosition="before"
@@ -678,52 +714,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </RequestDetailsMobileContainer>
       </RequestDetailsParentContainer>
 
-      <SummaryContainer margin="16px 0px">
-        <DetailsHeaderContainer>
-          <Typography
-            style={{
-              marginBottom: 8,
-              fontFamily: 'Wilderness',
-              fontSize: 24,
-            }}
-          >
-            Summary
-          </Typography>
-        </DetailsHeaderContainer>
-
-        {renderSpecs()}
-        <div style={{ marginTop: "25px" }}></div>
-        {renderSize()}
-        <div style={{ marginTop: "25px" }}></div>
-        {renderQuantity()}
-      </SummaryContainer>
-
-      {/* <Switch>
-        <Route
-          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-            marketRequestId,
-            currentOfferId
-          )}
-        >
-          <OfferDetailView
-            handleAcceptOffer={handleAcceptOffer}
-            company={selectedCompany}
-            selectedOffer={selectedOffer}
-            deliveryTotal={deliveryTotal}
-            handleStartNegotiate={handleStartNegotiate}
-            hideNegotiate={hideNegotiate}
-            counterOffer={counterOffer}
-            discountPercentage={discountPercentage}
-            discountValue={discountValue}
-            newOffer={newOffer}
-            thereIsNewOffer={thereIsNewOffer}
-            disableAccept={disableAccept}
-            isAccepted={isAccepted}
-            sortedNegotiations={sortedNegotiations}
-            lastNegotiationsOffers={lastNegotiationsOffers}
-          />
-        </Route>
-      </Switch> */}
+      <Hidden xs sm md lg>
+        {renderSummary()}
+      </Hidden>
     </Col>
   )
 
@@ -787,11 +780,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </Typography>
       </DialogModal>
 
-      <HeaderContainer>
-        <div>
-          <Breadcrumbs sections={breadCrumbSections} />
-        </div>
-      </HeaderContainer>
+      <Hidden xs sm>
+        <HeaderContainer>
+          <div >
+            <Breadcrumbs sections={breadCrumbSections} />
+          </div>
+        </HeaderContainer>
+      </Hidden>
+
       {isLoading ? (
         <Loading />
       ) : (
@@ -800,9 +796,24 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             {renderItemName()}
           </Row>
 
-          <Row gutterWidth={30}>
-            {renderLeftComponent()}
-            {renderRightComponent()}
+          <Row gutterWidth={30} >
+            <Visible xs sm md lg>
+              {renderSearch()}
+              {renderCounter()}
+            </Visible>
+            <Hidden xs sm md lg>
+              {renderLeftComponent()}
+              {renderRightComponent()}
+            </Hidden>
+            <Visible xs sm md lg>
+              {renderRightComponent()}
+              {renderLeftComponent()}
+            </Visible>
+            <Visible lg>
+              <Col>
+                {renderSummary()}
+              </Col>
+            </Visible>
           </Row>
         </>
       )}

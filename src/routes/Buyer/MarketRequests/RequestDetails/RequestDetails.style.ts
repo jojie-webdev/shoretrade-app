@@ -7,6 +7,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
+import { Col } from 'react-grid-system';
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -372,7 +373,7 @@ export const SummaryContainer = styled.div<{ margin?: string }>`
   border-radius: 12px;
   min-height: 312px;
   max-height: 312px;
-  margin: ${({ margin }) => margin || '0px'};
+  margin: ${({ margin }) => margin};
   background-image: url(${marketRequestSummary});
 `;
 
@@ -389,5 +390,19 @@ export const DeleteButtonContainer = styled.div`
     path {
       fill: ${({ theme }) => theme.grey.shade7};
     }
+  }
+`
+
+export const CounterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`
+
+export const CounterCol = styled(Col)`
+ display: flex;
+
+ @media ${BREAKPOINTS['sm']} {
+  display: block;
   }
 `
