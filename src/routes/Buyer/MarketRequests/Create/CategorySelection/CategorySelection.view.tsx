@@ -31,6 +31,7 @@ import {
   LeftGroupContainer,
   TopAbsoContainer,
   TopGroupContainer,
+  NoResultMessage
 } from './CategorySelection.style';
 import Typography from 'components/base/Typography';
 import Select from 'components/base/Select';
@@ -174,6 +175,12 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             <EmptyContainer>
               <Group204 />
             </EmptyContainer>
+            {
+              searchTerm &&
+              <NoResultMessage>
+                <Typography weight="700" variant="title5" color="shade9">No search result</Typography>
+              </NoResultMessage>
+            }
           </>
         )}
       </CategoryInteractionsContainer>
