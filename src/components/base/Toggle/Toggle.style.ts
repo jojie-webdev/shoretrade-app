@@ -43,7 +43,7 @@ export const InnerCircle = styled.span<{
   top: 42%;
   position: absolute;
   display: inline-block;
-  transition: transform 800ms;
+  transition: transform 200ms;
   transform: ${({ checked }) =>
       checked ? `translate(-50%, -40%)` : `translate(-124%, -40%)`}
     rotate(45deg) ${({ scale }) => `scale(${scale}, ${scale})`};
