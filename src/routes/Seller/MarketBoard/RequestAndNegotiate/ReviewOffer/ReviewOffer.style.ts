@@ -120,3 +120,16 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
 export const BadgeText = styled(Typography)`
   font-size: ${pxToRem(12)};
 `;
+
+export const ThirdSpecsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+export const ThirdItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+`;

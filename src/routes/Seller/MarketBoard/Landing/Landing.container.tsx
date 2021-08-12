@@ -199,9 +199,17 @@ const MarketBoardLanding = (): JSX.Element => {
     setBuyerRequestFilter([]);
   };
 
+  const filteredSpecsSellerRequest =
+    filteredSpecs.filter((i) => {
+      for (let index = 0; index < sellingRequests.length; index++) {
+        const element = sellingRequests[index];
+        return i.typeId !== element.typeId;
+      }
+    }) || [];
+
   const generatedProps = {
     sellingRequests,
-    buyerRequests: filteredSpecs,
+    buyerRequests: filteredSpecsSellerRequest,
     activeOffers: activeOffersData,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
