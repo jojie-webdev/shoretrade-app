@@ -3,6 +3,8 @@ import React from 'react';
 import Accordion from 'components/base/Accordion';
 import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationSettingsCategoryItemProps } from './NotificationSettingsCategoryItem.props';
@@ -12,7 +14,7 @@ import {
   OptionsContainer,
   StyledCheckbox,
   LeftComponentContainer,
-  RightComponentContainer,
+  TextIndicatorsContainer,
 } from './NotificationSettingsCategoryItem.style';
 
 const NotificationSettingsCategoryItem = (
@@ -21,7 +23,7 @@ const NotificationSettingsCategoryItem = (
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const { title, icon, mobile, email, push, inapp, onChange } = props;
-
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
 
@@ -32,48 +34,55 @@ const NotificationSettingsCategoryItem = (
     return defaultColor;
   };
 
+  const TextIndicators = () => {
+    return (
+      <TextIndicatorsContainer>
+        {push.supported && (
+          <Typography
+            className="text-indicator"
+            variant="caption"
+            color={textIndicatorColor(push.enabled)}
+          >
+            Push
+          </Typography>
+        )}
+        {email.supported && (
+          <Typography
+            className="text-indicator"
+            variant="caption"
+            color={textIndicatorColor(email.enabled)}
+          >
+            Email
+          </Typography>
+        )}
+        {mobile.supported && (
+          <Typography
+            className="text-indicator"
+            variant="caption"
+            color={textIndicatorColor(mobile.enabled)}
+          >
+            SMS
+          </Typography>
+        )}
+      </TextIndicatorsContainer>
+    );
+  };
+
   return (
     <Container>
       <Accordion
+        iconColor={theme.brand.primary}
+        keepIcon={true}
         leftComponent={
           <LeftComponentContainer>
             <div className="icon-container">{icon}</div>
             <div>
               <Typography color={defaultColor}>{title}</Typography>
+              <div>{isMobile && <TextIndicators />}</div>
             </div>
           </LeftComponentContainer>
         }
-        rightComponent={
-          <RightComponentContainer>
-            {push.supported && (
-              <Typography
-                className="text-indicator"
-                variant="caption"
-                color={textIndicatorColor(push.enabled)}
-              >
-                Push
-              </Typography>
-            )}
-            {email.supported && (
-              <Typography
-                className="text-indicator"
-                variant="caption"
-                color={textIndicatorColor(email.enabled)}
-              >
-                Email
-              </Typography>
-            )}
-            {mobile.supported && (
-              <Typography
-                className="text-indicator"
-                variant="caption"
-                color={textIndicatorColor(mobile.enabled)}
-              >
-                SMS
-              </Typography>
-            )}
-          </RightComponentContainer>
-        }
+        rightComponent={!isMobile && <TextIndicators />}
         sameWidth={true}
         withBackground
         title="Test"
