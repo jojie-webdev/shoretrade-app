@@ -6,6 +6,7 @@ import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
+import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -66,10 +67,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
-
-  @media ${BREAKPOINTS['sm']} {
-    margin-bottom: 16px !important;
-  }
 `;
 
 export const OffersSellerAccordionContentContainer = styled.div`
@@ -327,6 +324,14 @@ export const FilterButton = styled.button`
   }
 `;
 
+export const RequestDetailsParentContainer = styled.div`
+  border: 1px solid ${({ theme }) => theme.grey.shade4};
+  border-radius: 8px;
+  background-color: #FFF;
+  padding: 8px;
+  margin-top: 16px;
+`
+
 export const RequestDetailsMobileContainer = styled.div`
   display: flex;
 
@@ -358,8 +363,21 @@ export const ProgressContainer = styled.div`
   position: relative;
 `
 
-export const OfferDetailsButtonContainer = styled.div`
-  width: 30px;
+export const SummaryContainer = styled.div<{ margin?: string }>`
+  width: 100%;
+  z-index: 2;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  padding: 40px 30px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  min-height: 312px;
+  max-height: 312px;
+  margin: ${({ margin }) => margin || '0px'};
+  background-image: url(${marketRequestSummary});
+`;
+
+export const DeleteButtonContainer = styled.div`
+  margin: auto;
 
   .delete-button {
     background-color: ${({ theme }) => theme.grey.shade3};

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { sortBy } from 'ramda';
@@ -31,6 +30,16 @@ const MarketRequestDetail = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = params;
+
+  const [offerId, setOfferId] = useState<string>('')
+
+  useEffect(() => {
+    if (location.pathname.includes("/offer")) {
+      const splits = location.pathname.split("/")
+      const offerId = splits[splits.length - 1]
+      setOfferId(offerId)
+    }
+  }, [location.pathname])
 
   const goTolist = () => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
@@ -100,6 +109,7 @@ const MarketRequestDetail = (): JSX.Element => {
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
   );
+
   const onClickItem = (row: any, company: any) => {
     setCurrentOfferId(row.id);
     setSelectedOffer(row);
@@ -134,13 +144,13 @@ const MarketRequestDetail = (): JSX.Element => {
     }
   };
 
-  const submitNegotiation = (v: number) => {
+  const submitNegotiation = (counterOffer: number) => {
     if (selectedOffer) {
       dispatch(
         marketRequestNegotiateOfferActions.request({
           marketRequestId: id,
           marketOfferId: selectedOffer.id,
-          price: v,
+          price: counterOffer,
           closeOnAccept: closeOnAccept,
         })
       );
@@ -229,6 +239,17 @@ const MarketRequestDetail = (): JSX.Element => {
       setShowNotEnoughCreditAlert(true);
     }
   }, [acceptOffer]);
+
+  useEffect(() => {
+    activeOffers.data?.data.marketOffers.forEach(marketOffer =>
+      marketOffer.offers.forEach(offer => {
+        if (offer.id === offerId) {
+          setSelectedOffer(offer)
+          return
+        }
+      })
+    )
+  }, [offerId, activeOffers])
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 

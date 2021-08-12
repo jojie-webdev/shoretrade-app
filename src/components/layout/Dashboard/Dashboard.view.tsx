@@ -193,15 +193,6 @@ const Header = ({
         )}
 
         <div className="title-container">
-          {!isMenuVisible && onBack && (
-            <Touchable
-              className="back-button-container"
-              onPress={() => onBack()}
-            >
-              <ArrowLeft fill={theme.grey.shade7} height={24} width={24} />
-            </Touchable>
-          )}
-
           <PageTitle color={textColor}>{pageTitle}</PageTitle>
         </div>
       </div>

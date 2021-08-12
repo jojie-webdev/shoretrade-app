@@ -18,6 +18,7 @@ const TableDataList = (props: TableDataListProps) => {
     selected,
     handleOnSelectRow,
     data,
+    onResize,
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -54,6 +55,8 @@ const TableDataList = (props: TableDataListProps) => {
       handleOnSelect={(state) => {
         handleOnSelectRow?.(state, data);
       }}
+      onResize={onResize}
+      column={{ ...column, index }}
     >
       <span
         id={`text-${identifier}`}
@@ -72,7 +75,14 @@ const TableDataList = (props: TableDataListProps) => {
 };
 
 export default function TableRow(props: TableRowProps) {
-  const { data, columns } = props;
+  const {
+    data,
+    columns,
+    rowType,
+    selected,
+    handleOnSelectRow,
+    onResize,
+  } = props;
 
   return (
     <>

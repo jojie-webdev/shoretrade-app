@@ -5,6 +5,11 @@ import {
   RowType,
 } from 'components/module/ListingTable/Table.props';
 
+type onResize = (
+  position: Partial<{ x: number; y: number }>,
+  columnDetails: any
+) => any;
+
 export interface TableDataContentProps {
   children?: any;
   rowType?: RowType;
@@ -14,6 +19,8 @@ export interface TableDataContentProps {
   onClick?: (event: MouseEvent<HTMLElement>) => void;
   sticky?: boolean;
   id?: string;
+  onResize?: onResize;
+  column?: any;
 }
 
 export interface TableDataProps {
@@ -26,4 +33,9 @@ export interface TableDataProps {
   sticky?: boolean;
   selected?: boolean;
   handleOnSelect?: (state: boolean, data?: any) => void;
+  onResize?: onResize;
+  column?: any;
+}
+export interface ResizerComponentProps extends Partial<TableDataContentProps> {
+  defaultSize: any;
 }

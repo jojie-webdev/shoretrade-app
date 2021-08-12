@@ -18,6 +18,8 @@ export default function TableData(props: TableDataProps) {
     selected,
     handleOnSelect,
     id,
+    onResize,
+    column,
   } = props;
   const [showSortIcon, setShowSortIcon] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -39,6 +41,8 @@ export default function TableData(props: TableDataProps) {
       rowType={rowType}
       sticky={sticky}
       id={columnType !== 'column-first' ? id : ''}
+      onResize={onResize}
+      column={column}
     >
       {(() => {
         if (rowType === 'header' || columnType === 'column-first')
