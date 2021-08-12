@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import { Close } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { NegotiateSellerModalProps } from 'components/module/NegotiateSellerModal/NegotiateSellerModal.props';
@@ -11,11 +11,10 @@ import {
   Inputs,
   ButtonContainer,
   ComputationContainer,
-  CloseBadge,
-  TopContainer,
 } from 'components/module/NegotiateSellerModal/NegotiateSellerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { sortBy } from 'ramda';
+import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
@@ -65,11 +64,14 @@ const Content = (props: NegotiateSellerModalProps) => {
 
   return (
     <>
-      <TopContainer>
-        <Typography variant="title5" color="shade1">
-          Negotiate
-        </Typography>
-      </TopContainer>
+      <Typography
+        weight="bold"
+        variant="title4"
+        color={textColor}
+        style={{ fontFamily: 'Media Sans' }}
+      >
+        Negotiate
+      </Typography>
 
       <Inputs>
         <StyledTextField
@@ -91,10 +93,10 @@ const Content = (props: NegotiateSellerModalProps) => {
       <ComputationContainer>
         {sortedNegotiations.length >= 1 && (
           <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
+            <Typography variant="body" color={textColor}>
               Buyer&apos;s Counter Offer
             </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
+            <Typography variant="body" color={textColor}>
               {toPrice(latestCounterOffer.price)}/{unit}
             </Typography>
           </div>
@@ -102,17 +104,17 @@ const Content = (props: NegotiateSellerModalProps) => {
 
         {latestCounterOffer && sortedNegotiations.length <= 3 && (
           <div className="computation-item-container">
-            <Typography variant="label" color={textColor}>
+            <Typography variant="body" color={textColor}>
               Your New Offer
             </Typography>
-            <Typography variant="label" weight="bold" color={textColor}>
+            <Typography variant="body" color={textColor}>
               {toPrice(negotiationPrice || 0)}/{unit}
             </Typography>
           </div>
         )}
 
         <div className="computation-item-container">
-          <Typography variant="label" color={textColor}>
+          <Typography variant="body" color={textColor}>
             Change in Price{' '}
             <span className="indicator">{`${
               discountValue > 0 ? '+' : ''
@@ -121,29 +123,43 @@ const Content = (props: NegotiateSellerModalProps) => {
           {discountValue !== 0 ? (
             <Typography
               color={discountValue >= 0 ? 'success' : 'error'}
-              variant="label"
-              weight="bold"
+              variant="body"
             >
               {toPrice(discountValue)}/{formatMeasurementUnit(unit)}
             </Typography>
           ) : (
-            <Typography variant="label" weight="bold" color={textColor}>
+            <Typography variant="body" color={textColor}>
               0
             </Typography>
           )}
         </div>
-        <div className="computation-item-container">
-          <Typography variant="label" color={textColor}>
-            Total Value
+        <div className="computation-item-container total-delivery">
+          <Typography variant="body" weight="bold" color={textColor}>
+            Total Value inc. Delivery
           </Typography>
-          <Typography variant="label" weight="bold" color={textColor}>
+          <Typography variant="body" weight="bold" color={textColor}>
             {toPrice(totalValue)}
           </Typography>
         </div>
       </ComputationContainer>
-      <ButtonContainer>
+
+      <Hidden xs>
+        <ButtonContainer>
+          <Button
+            variant="primary"
+            text="Negotiate"
+            onClick={() => {
+              if (negotiationPrice && negotiationPrice >= 1) {
+                onSubmit(negotiationPrice);
+              }
+            }}
+            loading={isNegotiating}
+            style={{ borderRadius: 12, maxWidth: 128 }}
+          />
+        </ButtonContainer>
+      </Hidden>
+      <MobileFooter>
         <Button
-          className="negotiate-btn"
           variant="primary"
           text="Negotiate"
           onClick={() => {
@@ -151,9 +167,10 @@ const Content = (props: NegotiateSellerModalProps) => {
               onSubmit(negotiationPrice);
             }
           }}
+          takeFullWidth
           loading={isNegotiating}
         />
-      </ButtonContainer>
+      </MobileFooter>
     </>
   );
 };
@@ -170,36 +187,22 @@ const NegotiateSellerModal = (
   } = props;
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const ModalLayout = isMobile ? MobileModal : Modal;
 
   return (
     <>
-      {isMobile ? (
-        <MobileModal
-          backgroundColor={theme.grey.shade9}
-          backdropStyle={{
-            backgroundColor: theme.grey.shade8,
-            borderRadiusBottom: 8,
-          }}
-          style={{
-            width: 'unset',
-            padding: isMobile ? '48px 16px' : '48px',
-          }}
-          {...modalProps}
-        >
-          <Content {...props} {...modalProps} />
-        </MobileModal>
-      ) : (
-        <Modal
-          backgroundColor={theme.grey.shade8}
-          style={{
-            width: '',
-            padding: `${isMobile ? '12px' : '48px'}`,
-          }}
-          {...modalProps}
-        >
-          <Content {...props} {...modalProps} />
-        </Modal>
-      )}
+      <ModalLayout
+        backgroundColor={theme.grey.shade8}
+        style={{
+          width: '',
+          maxWidth: 430,
+          borderRadius: 12,
+          padding: 48,
+        }}
+        {...modalProps}
+      >
+        <Content {...props} {...modalProps} />
+      </ModalLayout>
     </>
   );
 };

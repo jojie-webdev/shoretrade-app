@@ -107,9 +107,8 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Here you can detail the size you want for this product. Simply
-              enter your desired size in the boxes and press Proceed to
-              continue.
+              Within this step, you can enter an exact quantity or a range that
+              you would like to purchase.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -120,7 +119,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             <StyledTextField
               type="number"
               inputType="decimal"
-              label="From"
+              label="Quantity From"
               value={from}
               onChangeText={(v) => {
                 if (!Number.isNaN(Number(v))) {
@@ -142,7 +141,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             <StyledTextField
               type="number"
               inputType="decimal"
-              label="To"
+              label="Quantity  To"
               value={to}
               onChangeText={(v) => {
                 if (!Number.isNaN(Number(v))) {

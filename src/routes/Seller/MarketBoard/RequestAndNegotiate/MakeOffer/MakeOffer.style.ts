@@ -1,6 +1,8 @@
 import Typography from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import summaryImage from 'res/images/seller-market-board-card.png';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
   padding-bottom: 180px;
@@ -45,12 +47,11 @@ export const Container = styled.div`
   }
 
   .total-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 10px;
-    margin-top: 16px;
-    border-top: 1px solid ${({ theme }) => theme.grey.shade7};
+    height: 96px;
+    width: 100%;
+    background-color: ${({ theme }) => theme.grey.shade9};
+    border-radius: 12px;
+    padding: 16px;
   }
 
   .submit-btns-step2 {
@@ -73,4 +74,43 @@ export const MetricContainer = styled.div`
   flex-direction: row;
 
   margin-bottom: 16px;
+`;
+
+export const SummaryCard = styled.div`
+  padding: 24px;
+  width: 100%;
+  min-height: 320px;
+  background-image: url(${summaryImage});
+  background-size: cover;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.grey.shade9};
+
+  .summary {
+    font-family: 'Wilderness', serif;
+    font-size: ${pxToRem(32)};
+  }
+
+  .summary-border {
+    margin-top: 12px;
+    border-bottom: 1px solid ${({ theme }) => theme.grey.noshade};
+    mix-blend-mode: soft-light;
+    border-radius: 2px;
+  }
+
+  .header {
+    font-family: 'Wilderness', serif;
+    margin-top: 12px;
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    margin-left: 2px;
+  }
+
+  .values {
+    font-family: 'Wilderness', serif;
+    font-size: ${pxToRem(38)};
+    margin-left: 6px;
+  }
 `;

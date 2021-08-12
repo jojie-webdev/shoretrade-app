@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
-import Button from 'components/base/Button';
+import Select from 'components/base/Select/Select.view';
 import {
   Crab,
   DollarSign,
@@ -11,6 +11,7 @@ import {
   Star,
   StarFilled,
   Weight,
+  Octopus,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -26,16 +27,39 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sortBy from 'ramda/es/sortBy';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+  useLocation,
+} from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
+import { getAllMarketRequestActions } from 'store/actions';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import { MarketRequestItem } from '../Landing/Landing.view';
+import {
+  DetailsContentContainer,
+  DetailsDataContainer,
+  DetailsHeaderContainer,
+} from '../Create/Create.style';
+import MarketRequestItem from '../Landing/Landing.view';
+import Button from './../../../../components/base/Button/Button.view';
+import Cross7 from './../../../../components/base/SVG/Cross7';
+import TrashCan from './../../../../components/base/SVG/TrashCan';
+import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
+import { Store } from './../../../../types/store/Store';
+import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
+import Offer from './Offer/Offer.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
+import FullOfferDetails from './OfferFullDetails/FullOfferDetails.view';
 import {
   RequestDetailsCardContainer,
   RequestDetailsContainer,
@@ -48,7 +72,10 @@ import {
   BadgeText,
   StatusBadgeText,
   SellerOfferInteractionContentContainer,
-  FilterButton,
+  RequestDetailsMobileContainer,
+  RequestDetailsParentContainer,
+  SummaryContainer,
+  DeleteButtonContainer,
 } from './RequestDetails.style';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
@@ -60,10 +87,13 @@ export const OffersSellerAccordionContent = (props: {
   sellerRating: number;
   image: string;
 }) => {
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const { sellerName, sellerLocation, sellerRating, image } = props;
   const starHeight = 16;
   const starWidth = 16;
-  return (
+
+  const displayForNonMobile = () => (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
         {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
@@ -104,6 +134,14 @@ export const OffersSellerAccordionContent = (props: {
       </div>
     </OffersSellerAccordionContentContainer>
   );
+
+  const displayForMobile = () => (
+    <TypographyView variant="copy" color="shade8">
+      {sellerName}
+    </TypographyView>
+  );
+
+  return isMobile ? displayForMobile() : displayForNonMobile();
 };
 
 const SellerOfferInteractionContent = (props: {
@@ -271,23 +309,475 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     setShowNotEnoughCreditAlert,
   } = props;
 
+  const location = useLocation();
+
+  const splits = location.pathname.split('/');
+  const offerId = splits[splits.length - 1];
+
   const handleStartNegotiate = () => {
     setNegotiating(true);
   };
 
+  const deleteMarketRequest = useSelector(
+    (store: Store) => store.deleteMarketRequest
+  );
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
+  const dispatch = useDispatch();
+
+  const [searchTerm, setSearchTerm] = useState('');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const [sellerOffersCopy, setSellerOffersCopy] = useState<
+    GetActiveOffersRequestResponseItem[]
+  >([]);
+  const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
+    value: null,
+  });
+  const [selectedItem, setSelectedItem] = useState<any>({});
+
+  useEffect(() => {
+    if (!searchTerm) {
+      setSellerOffersCopy(sellerOffers);
+
+      return;
+    }
+
+    const _sellerOffers = sellerOffers.filter((sellerOffer) =>
+      sellerOffer.company.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSellerOffersCopy(_sellerOffers);
+  }, [searchTerm, sellerOffers]);
+
+  useEffect(() => {
+    if (deleteMarketRequest.pending) {
+      setItemToDelete({ value: null });
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+  }, [deleteMarketRequest]);
+
+  useEffect(() => {
+    sellerOffers.forEach((marketOffer) =>
+      marketOffer.offers.forEach((offer) => {
+        if (offer.id === offerId) {
+          setSelectedItem(offer);
+          return;
+        }
+      })
+    );
+  }, [offerId, sellerOffers]);
+
+  const countAllOffers = () => {
+    let offersCount = 0;
+    sellerOffersCopy.forEach((sellerOffer) => {
+      offersCount += sellerOffer.offers.length;
+    });
+
+    return offersCount;
+  };
+
+  const renderLeftComponent = () => (
+    <Col md={12} sm={12} xl={8}>
+      <Row
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
+          <Col xl={6}>
+            <div style={{ marginTop: '16px' }}>
+              <Search
+                className="search"
+                rounded={true}
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.currentTarget.value)}
+                resetValue={() => setSearchTerm('')}
+                placeholder="Search"
+              />
+            </div>
+          </Col>
+        )}
+
+        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
+          <Col style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: 'auto',
+              }}
+            >
+              <Typography
+                color="shade6"
+                variant="label"
+                style={{ marginRight: '16px' }}
+              >
+                <span style={{ color: '#09131D' }}>{countAllOffers()}</span>
+                <span> Results</span>
+              </Typography>
+
+              <div
+                style={{ marginLeft: '16px', width: '94px', cursor: 'pointer' }}
+                onClick={props.onClickFilterButton}
+              >
+                <Select
+                  label=""
+                  options={[]}
+                  size="small"
+                  placeholder="Sort by"
+                  disabled
+                />
+              </div>
+            </div>
+          </Col>
+        )}
+      </Row>
+
+      <Switch>
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}
+        >
+          {sellerOffersCopy.length > 0 ? (
+            sellerOffersCopy.map((sellerOffer) => (
+              <Offer sellerOffer={sellerOffer} />
+            ))
+          ) : (
+            <>
+              <EmptyStateView
+                title=""
+                Svg={Octopus}
+                height={240}
+                width={249}
+                fluid
+              />
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexFlow: 'column',
+                }}
+              >
+                <Typography
+                  weight="700"
+                  color="shade8"
+                  variant="title6"
+                  style={{ fontFamily: 'Media Sans' }}
+                >
+                  The are no offers yet
+                </Typography>
+                <Typography
+                  weight="400"
+                  color="shade6"
+                  variant="caption"
+                  style={{
+                    marginTop: '4px',
+                    fontFamily: 'Basis Grotesque Pro',
+                  }}
+                >
+                  Enable your push notifications
+                </Typography>
+              </div>
+            </>
+          )}
+        </Route>
+
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+            marketRequestId,
+            currentOfferId
+          )}
+        >
+          <div style={{ marginTop: '16px' }}>
+            <FullOfferDetails
+              handleStartNegotiate={handleStartNegotiate}
+              handleAcceptOffer={handleAcceptOffer}
+            />
+          </div>
+        </Route>
+      </Switch>
+    </Col>
+  );
+
+  const countAcceptedWeight = () => {
+    let acceptedWeights = 0;
+
+    sellerOffers.forEach((sellerOffer) => {
+      sellerOffer.offers.forEach((offer) => {
+        if (offer.status === 'ACCEPTED') {
+          acceptedWeights += offer.weight;
+        }
+      });
+    });
+
+    return acceptedWeights;
+  };
+
+  const filteredMarketRequest = (): GetAllMarketRequestResponseItem => {
+    const _marketRequests = buyerRequests.data?.data.marketRequests.filter(
+      (marketRequest) => marketRequest.id === marketRequestId
+    );
+
+    if (_marketRequests && _marketRequests.length > 0) {
+      return _marketRequests[0];
+    }
+
+    return null as any;
+  };
+
+  const convertCreatedToExpiryDate = (createdAt?: string) => {
+    const expiry = moment(createdAt).add(7, 'd').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(moment(createdAt).add(7, 'd').format());
+
+    return expiry;
+  };
+
+  const renderSpecs = () =>
+    buyerRequests.data?.data?.marketRequests[0]?.specs && (
+      <DetailsContentContainer>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{
+            marginBottom: 16,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+        >
+          Specs:
+        </Typography>
+        <DetailsDataContainer>
+          <Cross7 />
+          <Typography
+            color="shade9"
+            variant="label"
+            style={{
+              fontFamily: 'Wilderness',
+              fontSize: 38,
+              marginLeft: 8.5,
+              marginTop: -8,
+            }}
+          >
+            {buyerRequests.data?.data.marketRequests[0].specs
+              ?.toString()
+              .split(',')
+              .join(', ')}
+          </Typography>
+        </DetailsDataContainer>
+      </DetailsContentContainer>
+    );
+
+  const renderSize = () => {
+    const sizeOptions =
+      buyerRequests.data?.data?.marketRequests[0]?.sizeOptions;
+
+    if (sizeOptions && Array.isArray(sizeOptions) && sizeOptions.length > 0) {
+      return (
+        <DetailsContentContainer>
+          <Typography
+            color="shade6"
+            variant="label"
+            style={{
+              marginBottom: 16,
+              fontFamily: 'Wilderness',
+              fontSize: 24,
+            }}
+          >
+            Size:
+          </Typography>
+          <DetailsDataContainer>
+            <Cross7 />
+            <Typography
+              color="shade9"
+              variant="label"
+              style={{
+                fontFamily: 'Wilderness',
+                fontSize: 38,
+                marginLeft: 8.5,
+                marginTop: -8,
+              }}
+            >
+              {Array.isArray(sizeOptions) ? sizeOptions?.join(', ') : ''}
+            </Typography>
+          </DetailsDataContainer>
+        </DetailsContentContainer>
+      );
+    }
+
+    return null;
+  };
+
+  const renderQuantity = () => {
+    return (
+      <DetailsContentContainer>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{
+            marginBottom: 16,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+        >
+          Quantity:
+        </Typography>
+        <DetailsDataContainer>
+          <Cross7 />
+          <Typography
+            color="shade9"
+            variant="label"
+            style={{
+              fontFamily: 'Wilderness',
+              fontSize: 38,
+              marginLeft: 8.5,
+              marginTop: -8,
+            }}
+          >
+            {filteredMarketRequest()?.weight?.from}{' '}
+            {filteredMarketRequest()?.measurementUnit.toLowerCase()} -{' '}
+            {filteredMarketRequest()?.weight?.to}{' '}
+            {filteredMarketRequest()?.measurementUnit.toLowerCase()}
+          </Typography>
+        </DetailsDataContainer>
+      </DetailsContentContainer>
+    );
+  };
+
+  const renderRightComponent = () => (
+    <Col md={12} sm={12} xl={4}>
+      <RequestDetailsParentContainer>
+        <RequestDetailsMobileContainer>
+          <div className="thumbnail-container">
+            <img src={parseImageUrl(data.image || '')} />
+          </div>
+          <div style={{ width: '100%', margin: 'auto' }}>
+            <Typography
+              variant="body"
+              weight="400"
+              color="shade9"
+              style={{ fontFamily: 'Basis Grotesque Pro', marginBottom: '3px' }}
+            >
+              {countAcceptedWeight()}
+              <span style={{ color: theme.grey.shade5 }}>
+                /{filteredMarketRequest()?.weight?.to}{' '}
+                {filteredMarketRequest()?.measurementUnit.toLowerCase()}
+              </span>
+            </Typography>
+
+            <ProgressContainer>
+              <Progress height="2px" percent={70} />
+            </ProgressContainer>
+
+            <Typography
+              margin="12px 0px 0px 0px"
+              color="shade6"
+              variant="caption"
+            >
+              {convertCreatedToExpiryDate(
+                sellerOffers[0]?.marketRequest?.createdAt
+              )}
+            </Typography>
+          </div>
+          <DeleteButtonContainer>
+            <Button
+              iconPosition="before"
+              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+              onClick={
+                setItemToDelete &&
+                ((e) => {
+                  e.stopPropagation();
+                  setItemToDelete({
+                    value: sellerOffers[0].marketRequest.id || '',
+                  });
+                  setShowDelete(true);
+                })
+              }
+              variant="primary"
+              size="sm"
+              className="delete-button"
+            />
+          </DeleteButtonContainer>
+        </RequestDetailsMobileContainer>
+      </RequestDetailsParentContainer>
+
+      <SummaryContainer margin="16px 0px">
+        <DetailsHeaderContainer>
+          <Typography
+            style={{
+              marginBottom: 8,
+              fontFamily: 'Wilderness',
+              fontSize: 24,
+            }}
+          >
+            Summary
+          </Typography>
+        </DetailsHeaderContainer>
+
+        {renderSpecs()}
+        <div style={{ marginTop: '25px' }}></div>
+        {renderSize()}
+        <div style={{ marginTop: '25px' }}></div>
+        {renderQuantity()}
+      </SummaryContainer>
+
+      {/* <Switch>
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+            marketRequestId,
+            currentOfferId
+          )}
+        >
+          <OfferDetailView
+            handleAcceptOffer={handleAcceptOffer}
+            company={selectedCompany}
+            selectedOffer={selectedOffer}
+            deliveryTotal={deliveryTotal}
+            handleStartNegotiate={handleStartNegotiate}
+            hideNegotiate={hideNegotiate}
+            counterOffer={counterOffer}
+            discountPercentage={discountPercentage}
+            discountValue={discountValue}
+            newOffer={newOffer}
+            thereIsNewOffer={thereIsNewOffer}
+            disableAccept={disableAccept}
+            isAccepted={isAccepted}
+            sortedNegotiations={sortedNegotiations}
+            lastNegotiationsOffers={lastNegotiationsOffers}
+          />
+        </Route>
+      </Switch> */}
+    </Col>
+  );
+
+  const renderItemName = () => (
+    <Col>
+      <Typography
+        color="shade9"
+        font-weight="700"
+        style={{ fontFamily: 'Media Sans' }}
+        variant="title6"
+      >
+        {data.name}
+      </Typography>
+    </Col>
+  );
+
   return (
     <RequestDetailsContainer>
       <NegotiateBuyerModal
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
-        onSubmit={(v: number) => submitNegotiation(v)}
-        originalOffer={selectedOffer?.price}
+        onSubmit={submitNegotiation}
+        originalOffer={selectedOffer?.price || selectedItem?.price}
         counterOffer={counterOffer}
         newOffer={newOffer}
         weight={{
-          unit: selectedOffer?.measurementUnit,
-          value: selectedOffer?.weight,
+          unit: selectedOffer?.measurementUnit || selectedItem?.measurementUnit,
+          value: selectedOffer?.weight || selectedItem?.weight,
         }}
         isOpen={negotiating}
         onClickClose={() => {
@@ -331,188 +821,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Row gutterWidth={30}>
-          <Col md={12} sm={12} xl={4}>
-            <RequestDetailsCardContainer type={'none'}>
-              {data && data.name ? (
-                <MarketRequestItem
-                  inDetail={true}
-                  type={data.name}
-                  expiry={
-                    moment(data.createdAt).add(7, 'd').isBefore()
-                      ? 'Expired'
-                      : formatRunningDateDifference(
-                          moment(data.createdAt).add(7, 'd').format()
-                        )
-                  }
-                  offers={totalOffers}
-                  image={data.image}
-                  measurementUnit={measurementUnit}
-                  weight={data.weight}
-                />
-              ) : (
-                <></>
-              )}
-            </RequestDetailsCardContainer>
-            <Row style={{ marginBottom: '1rem' }} gutterWidth={15}>
-              <Col xs={12}>
-                <Hidden xs>
-                  {data.status !== 'DELETED' && (
-                    <Button
-                      text="Delete"
-                      size="sm"
-                      onClick={() => setShowDelete(true)}
-                      variant="primary"
-                    />
-                  )}
-                </Hidden>
-              </Col>
-            </Row>
-          </Col>
-          <Col md={12} sm={12} xl={8}>
-            <Switch>
-              <Route
-                path={`${BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(
-                  data.id
-                )}`}
-              >
-                <OffersContainer>
-                  {/* NUMBERS CONTAINER START */}
-                  <div className="numbers-container">
-                    <div className="item">
-                      <span className="value">{totalOffers} &nbsp;</span>
-                      <span className="label">Offers</span>
-                    </div>
-                    <span className="divider">,</span>
-                    <div className="item">
-                      <span className="value">
-                        {sellerOffers.length} &nbsp;
-                      </span>
-                      <span className="label">Sellers</span>
-                    </div>
-                  </div>
-                  <Row
-                    nogutter
-                    className="search-row"
-                    align="center"
-                    justify="between"
-                  >
-                    <FilterButton onClick={props.onClickFilterButton}>
-                      <TypographyView
-                        variant="label"
-                        color="shade9"
-                        weight="500"
-                        className="btn-text"
-                      >
-                        Sort
-                      </TypographyView>
+        <>
+          <Row>{renderItemName()}</Row>
 
-                      <Filter />
-                    </FilterButton>
-                  </Row>
-                  {/* NUMBERS CONTAINER END */}
-                  {totalOffers < 1 || sellerOffers === undefined ? (
-                    <EmptyStateView
-                      title="There are currently no offers for this request."
-                      Svg={Crab}
-                      height={240}
-                      width={249}
-                      fluid
-                    />
-                  ) : (
-                    sellerOffers.map((seller) => (
-                      <RequestOffersAccordion
-                        key={seller.company.name}
-                        title=""
-                        noBg={true}
-                        padding={'16px'}
-                        withBackground={false}
-                        border={`1px solid ${theme.grey.shade3}`}
-                        background={theme.grey.shade1}
-                        marginBottom={'12px'}
-                        leftComponent={
-                          <OffersSellerAccordionContent
-                            image={seller.company.image}
-                            sellerLocation={seller.company.address.countryCode}
-                            sellerName={seller.company.name}
-                            sellerRating={seller.company.rating}
-                            sellerId={seller.company.id}
-                          />
-                        }
-                        iconColor={theme.brand.primary}
-                      >
-                        {seller.offers.map((item) => {
-                          const negotiations = sortByDate(
-                            item.negotiations || []
-                          );
-
-                          const newOfferArr = negotiations.filter(
-                            (i: any) => i.type === 'NEW_OFFER'
-                          );
-
-                          const latestOffer = newOfferArr.slice(-1)[0];
-                          const standingPrice =
-                            latestOffer?.price || item.price;
-
-                          return (
-                            <RequestOfferItemInteraction
-                              key={item.id}
-                              onClick={() => onClickItem(item, seller.company)}
-                              leftComponent={
-                                <SellerOfferInteractionContent
-                                  averagePrice={
-                                    seller.marketRequest.averagePrice
-                                  }
-                                  price={standingPrice}
-                                  isUnderNegotiations={
-                                    !item.negotiations?.find(
-                                      (i) => i.is_accepted === true
-                                    )
-                                  }
-                                  status={item.status}
-                                  weight={item.weight}
-                                  tags={item.specifications}
-                                  weightUnit={formatMeasurementUnit(
-                                    item.measurementUnit
-                                  )}
-                                  deliveryDate={item.deliveryDate}
-                                />
-                              }
-                            />
-                          );
-                        })}
-                      </RequestOffersAccordion>
-                    ))
-                  )}
-                </OffersContainer>
-              </Route>
-              <Route
-                path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-                  marketRequestId,
-                  currentOfferId
-                )}
-              >
-                <OfferDetailView
-                  handleAcceptOffer={handleAcceptOffer}
-                  company={selectedCompany}
-                  selectedOffer={selectedOffer}
-                  deliveryTotal={deliveryTotal}
-                  handleStartNegotiate={handleStartNegotiate}
-                  hideNegotiate={hideNegotiate}
-                  counterOffer={counterOffer}
-                  discountPercentage={discountPercentage}
-                  discountValue={discountValue}
-                  newOffer={newOffer}
-                  thereIsNewOffer={thereIsNewOffer}
-                  disableAccept={disableAccept}
-                  isAccepted={isAccepted}
-                  sortedNegotiations={sortedNegotiations}
-                  lastNegotiationsOffers={lastNegotiationsOffers}
-                />
-              </Route>
-            </Switch>
-          </Col>
-        </Row>
+          <Row gutterWidth={30}>
+            {renderLeftComponent()}
+            {renderRightComponent()}
+          </Row>
+        </>
       )}
     </RequestDetailsContainer>
   );

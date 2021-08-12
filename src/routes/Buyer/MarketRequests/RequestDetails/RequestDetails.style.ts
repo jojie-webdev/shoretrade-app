@@ -6,6 +6,7 @@ import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
+import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -25,6 +26,26 @@ export const RequestDetailsContainer = styled.div`
 
 export const RequestDetailsCardContainer = styled(Interactions)`
   margin-bottom: 1rem;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+    margin-top: 16px;
+    /* height: 88px; */
+    padding: 8px;
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
+
+    .delete-button {
+      background-color: ${({ theme }) => theme.grey.shade3};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+  
+      path {
+        fill: ${({ theme }) => theme.grey.shade7};
+      }
+    }
+  }
 `;
 
 export const RequestOffersAccordion = styled(Accordion)`
@@ -176,7 +197,7 @@ export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
 `;
 
-export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
+export const StyledTextField = styled(TextField) <{ noMargin?: boolean }>`
   flex: 1;
   margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
 `;
@@ -215,6 +236,12 @@ export const OfferContainer = styled.div`
 export const OffersContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media ${BREAKPOINTS['sm']} {
+    background: #FFFFFF;
+    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+    border-radius: 12px;
+  }
 
   .search-row {
     align-items: center;
@@ -296,3 +323,71 @@ export const FilterButton = styled.button`
     margin-right: 4px;
   }
 `;
+
+export const RequestDetailsParentContainer = styled.div`
+  border: 1px solid ${({ theme }) => theme.grey.shade4};
+  border-radius: 8px;
+  background-color: #FFF;
+  padding: 8px;
+  margin-top: 16px;
+`
+
+export const RequestDetailsMobileContainer = styled.div`
+  display: flex;
+
+  .thumbnail-container {
+    img {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      margin-right: 8px
+    }
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+  }
+
+  @media(max-width: 380px){
+    .typo{
+      font-size: 15px;
+    }
+  }
+`;
+
+export const ProgressContainer = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: ${({ theme }) => theme.grey.shade3};
+  border-radius: 1px;
+  position: relative;
+`
+
+export const SummaryContainer = styled.div<{ margin?: string }>`
+  width: 100%;
+  z-index: 2;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  padding: 40px 30px;
+  border: 1px solid #dadff2;
+  border-radius: 12px;
+  min-height: 312px;
+  max-height: 312px;
+  margin: ${({ margin }) => margin || '0px'};
+  background-image: url(${marketRequestSummary});
+`;
+
+export const DeleteButtonContainer = styled.div`
+  margin: auto;
+
+  .delete-button {
+    background-color: ${({ theme }) => theme.grey.shade3};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+
+    path {
+      fill: ${({ theme }) => theme.grey.shade7};
+    }
+  }
+`

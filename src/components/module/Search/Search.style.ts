@@ -6,7 +6,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
   border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
   border-radius: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
-      ? '100px'
+      ? '12px'
       : props.theme.appType === 'buyer'
       ? '4px'
       : '100px'};

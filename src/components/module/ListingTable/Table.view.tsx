@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Crab } from 'components/base/SVG';
 import { TableHeader } from 'components/base/TableHeader';
@@ -28,34 +28,80 @@ export const TableComponent = (props: TableComponentProps) => {
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
+    onSelect,
+    unselectedIds,
   } = props;
+
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [overwriteLayout, setOverwriteLayout] = useState(false);
+  const [layout, setLayout] = useState<number[]>([]);
+  const [baseLayout, setBaseLayout] = useState<number[]>([]);
 
   const handleOnSelectAll = (state: boolean) => {
     setIsAllSelected(state);
-
-    if (state) setSelectedIds(data.map((i) => i?.id));
-    else setSelectedIds([]);
   };
 
   const handleSelectRow = (isSelected: boolean, data: any) => {
-    if (isSelected) setSelectedIds([...selectedIds, data?.id]);
-    else setSelectedIds(selectedIds?.filter((id) => id !== data?.id));
+    onSelect(data?.id, isSelected);
   };
 
-  // inactive the header checkbox when no active row selected
+  const handleUpdateLayout = (value: number, gridColumnIndex: number) => {
+    setLayout((layout) => {
+      const mutableLayout = [...layout];
+      const minWidth = baseLayout[gridColumnIndex];
+      const newWidth = mutableLayout[gridColumnIndex] + value;
+
+      if (newWidth < minWidth) mutableLayout[gridColumnIndex] = minWidth;
+      else mutableLayout[gridColumnIndex] = newWidth;
+      return mutableLayout;
+    });
+  };
+
+  const handleRowResize = (position: any, columnInfo: any) => {
+    setOverwriteLayout(true);
+    const direction = position?.x ? 'left' : 'right';
+    const columnIndex =
+      direction === 'left' ? Number(columnInfo?.index) - 1 : columnInfo.index;
+    handleUpdateLayout(position?.x || position?.width, columnIndex);
+  };
+
+  const handleEvaluateLayout = () => {
+    const tableEl = tableRef.current;
+    const currentLayout: number[] = [];
+
+    if (tableEl) {
+      for (let i = 0; i < columnTemplate.length; i++) {
+        if (tableEl.children[i]) {
+          const el = tableEl.children?.[i] as HTMLDivElement;
+          currentLayout.push(el?.offsetWidth);
+        }
+      }
+
+      setLayout(currentLayout);
+    }
+
+    return currentLayout;
+  };
+
+  // evaluate initial grid layout here
   useEffect(() => {
-    if (selectedIds.length === 0) setIsAllSelected(false);
-  }, [selectedIds, isAllSelected]);
+    const computedLayout = handleEvaluateLayout();
+    if (computedLayout) setBaseLayout(computedLayout);
+    window.addEventListener('resize', handleEvaluateLayout);
+    return () => {
+      window.removeEventListener('resize', handleEvaluateLayout);
+    };
+  }, [tableRef]);
+
+  const conditionalStyles: any = {};
+  if (overwriteLayout)
+    conditionalStyles.gridTemplateColumns = layout
+      .map((unit) => `${unit}px`)
+      .join(' ');
 
   return (
     <Container>
-      <Table
-        style={{
-          gridTemplateColumns: columnTemplate
-            .map((unit) => `minmax(${unit}, 1fr)`)
-            .join(' '),
-        }}
-      >
+      <Table style={conditionalStyles} ref={tableRef} count={columns?.length}>
         <TableHeader
           sortField={sortField}
           setSortField={setSortField}
@@ -69,11 +115,16 @@ export const TableComponent = (props: TableComponentProps) => {
             {data.map((item, index) => {
               return (
                 <TableRow
+                  onResize={handleRowResize}
                   rowType={data.length - 1 === index ? 'last-row' : undefined}
                   data={item}
-                  key={item?.id}
+                  key={`table-row-${item?.id}`}
                   columns={columns}
-                  selected={selectedIds?.includes(item?.id)}
+                  selected={
+                    unselectedIds?.includes(item?.id) === true
+                      ? false
+                      : isAllSelected || selectedIds?.includes(item?.id)
+                  }
                   handleOnSelectRow={handleSelectRow}
                 />
               );

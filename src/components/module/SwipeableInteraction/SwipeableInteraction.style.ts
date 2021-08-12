@@ -16,7 +16,7 @@ export const TouchContainer = styled.div`
 
 export const SwipeableContainer = styled(animated.div)`
   width: 100%;
-  height: 96px;
+  height: 164px;
   overflow: hidden;
   display: flex;
   position: relative;

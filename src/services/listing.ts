@@ -41,15 +41,18 @@ export const getAllBuyerListings = (
   const sortOrder = requestOptions?.sortOrder || 'ASC';
   const csvEnpoint = requestOptions?.csv ? 'csv/' : '';
   let ids = requestOptions?.ids?.map((id) => `&id=${id}`)?.join('') || '';
+  let exceptId =
+    requestOptions?.exceptId?.map((id) => `&exceptId=${id}`)?.join('') || '';
 
   if (requestOptions?.ids?.length === 1) ids += '&id=';
+  if (requestOptions?.exceptId?.length === 1) exceptId += '&exceptId=';
 
   if (requestOptions?.all) {
     page = '';
     limit = '';
   }
 
-  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?sortOrder=${sortOrder}${page}${limit}${ids}`;
+  let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?sortOrder=${sortOrder}${page}${limit}${ids}${exceptId}`;
   if (requestOptions?.sortBy) url += `&sortBy=${requestOptions.sortBy}`;
   if (requestOptions?.term) url += `&term=${requestOptions.term}`;
 

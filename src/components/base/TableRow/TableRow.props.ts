@@ -8,6 +8,7 @@ interface TableColumn {
   sortable?: boolean;
   component?: (data: any, state?: any) => ReactElement;
   sticky?: boolean;
+  tooltip?: (data: any, state?: any) => string;
 }
 
 export interface TableRowProps {
@@ -17,4 +18,8 @@ export interface TableRowProps {
   onSelect?: (id: number | string) => void;
   selected?: boolean;
   handleOnSelectRow?: (state: boolean, data?: any) => void;
+  onResize?: (
+    position: Partial<{ x: number; y: number }>,
+    columnDetails: any
+  ) => any;
 }

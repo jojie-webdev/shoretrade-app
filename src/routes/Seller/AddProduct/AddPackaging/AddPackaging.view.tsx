@@ -114,6 +114,7 @@ const AddPackaging = ({
   const isAlreadyCreated = editableListing.isAlreadyCreated;
 
   const isNextDisabled =
+    (choice === '') ||
     (choice !== '' && choice !== PACKAGING.custom && !selectedId) ||
     (choice === PACKAGING.custom &&
       Object.values(customSize).some((val) => val === ''));
@@ -131,6 +132,9 @@ const AddPackaging = ({
                 if (p.value !== PACKAGING.custom) {
                   setIsAirlineApproved(undefined);
                   setCustomSize({ width: '', height: '', length: '' });
+                }
+                if (p.value === PACKAGING.custom) {
+                  setIsAirlineApproved(false)
                 }
 
                 if (p.value !== PACKAGING.sfm) setSelectedId('');

@@ -72,5 +72,6 @@ export const DataWrapper = styled.div`
     right: 0;
     height: 24px;
     border-right: 1px solid ${theme.grey.shade5};
+    top: 0;
   }
 `;
