@@ -40,3 +40,29 @@ export const OfferContainer = styled.div`
         }
     }
 `
+
+export const MarketRequestItemInteractionContainer = styled.div`
+    margin-top: 12px;
+
+    .delete-button {
+        background-color:  ${theme.grey.shade2};
+        height: 32px;
+        width: 32px;
+        border-radius: 12px;
+        align-self: center;
+        border: 1px solid ${theme.grey.shade4};
+
+        path {
+            fill: ${theme.grey.shade7};
+        }
+    }
+
+    .cta{
+        display: flex;
+        align-items: center;
+        height: 100px;
+        align-content: space-between;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+`

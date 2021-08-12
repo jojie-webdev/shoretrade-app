@@ -80,20 +80,17 @@ export const MarketRequestItemNonMobile = (props: {
       </div>
       <div className="info-container">
         <div className="sub-group">
-          <TypographyView variant="body">{type}</TypographyView>
-          <SubText variant="small">{specs}</SubText>
+          <TypographyView variant="label">{type}</TypographyView>
+          <SubText variant="caption">{specs?.split(",").join(", ")}</SubText>
         </div>
         <div className="sub-group">
-          <SubText variant="small">
-            {Array.isArray(size?.options) ? size?.options?.join(', ') : ''}
-          </SubText>
-          <SubText variant="small">
+          <SubText variant="caption">
             {weight && `Qty: ${weight.from} - ${weight.to}`}
           </SubText>
         </div>
         <div className="sub-group">
           <SubText
-            variant="small"
+            variant="caption"
             color={expiry === 'Expired' ? 'error' : 'primary'}
           >
             {expiry === 'Expired' ? expiry : `${expiry} left`}
@@ -217,7 +214,7 @@ export const MarketRequestItemMobile = (props: {
 
       <MinorInfo>
         <Typography variant="caption" weight="400" color="shade6">
-          {specs}
+          {specs?.split(",").join(", ")}
         </Typography>
 
         <SubMinorInfo>
@@ -275,7 +272,7 @@ const offerStatusBadge = (
   if (inDetail || offers < 1) return null;
 
   return (
-    <Badge className="offers-badge" badgeColor={badgeColor}>
+    <Badge className="offers-badge" badgeColor={badgeColor} padding="8px 8px">
       <BadgeText variant="overline" style={{ color: textColor }}>
         {offerStatus}
       </BadgeText>
@@ -311,14 +308,7 @@ const MarketRequestsLandingView = (
             onClick={() => onClickItem(mr)}
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
-              <div
-                style={{
-                  display: 'flex',
-                  height: '100%',
-                  textAlign: 'center',
-                  alignContent: 'space-between',
-                }}
-              >
+              <div className="cta">
                 <div>
                   <ChevronRight width={8} height={12} />
                 </div>

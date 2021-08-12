@@ -51,7 +51,8 @@ import {
   SummaryContainer,
   DeleteButtonContainer,
   CounterContainer,
-  CounterCol
+  CounterCol,
+  SelectContainer
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
@@ -321,7 +322,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const buyerRequestsFilters = useSelector(
     (store: Store) => store.getMarketRequestBuyerFilters.data?.data
   );
-  console.log(props.filterModalProps.selectedFilters)
+
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -390,7 +391,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <span>{' '}Results</span>
         </Typography>
 
-        <div style={{ marginLeft: "16px", width: "94px", cursor: "pointer" }} onClick={props.onClickFilterButton}>
+        <SelectContainer onClick={props.onClickFilterButton}>
           <Select
             label=""
             options={[]}
@@ -398,7 +399,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             placeholder="Sort by"
             disabled
           />
-        </div>
+        </SelectContainer>
       </CounterContainer>
     </CounterCol>
   )
@@ -467,7 +468,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                       />
                       <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
                         <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
-                          The are no offers yet
+                          There are no offers yet
                         </Typography>
                         <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
                           Enable your push notifications

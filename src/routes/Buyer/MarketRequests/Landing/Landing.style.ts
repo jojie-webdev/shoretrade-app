@@ -56,6 +56,15 @@ export const MarketRequestItemInteraction = styled(Interactions)`
   .left-content {
     flex-grow: 2;
   }
+
+  .cta{
+    display: flex;
+    align-items: center;
+    height: 140px;
+    align-content: space-between;
+    flex-direction: column;
+    justify-content: space-between; 
+  }
 `;
 
 export const MarketRequestItemContainer = styled.div`
@@ -111,7 +120,7 @@ export const SubText = styled(TypographyView)`
   color: ${(props) => `${props.theme.grey.shade7}`};
 `;
 
-export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
+export const BadgeText = styled(TypographyView) <{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
   color: ${({ theme, empty }) =>

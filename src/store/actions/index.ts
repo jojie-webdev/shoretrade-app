@@ -98,3 +98,4 @@ export { default as sockgetGetListingsByTypeActions } from './socketGetListingsB
 export { default as socketAllBuyerListingsActions } from './socketAllBuyerListings';
 export { default as getCratesActions } from './getCrates';
 export { default as getAvailableCratesActions } from './getAvailableCrates';
+export { default as deleteMarketRequestOfferActions } from './deleteMarketRequestOffer';

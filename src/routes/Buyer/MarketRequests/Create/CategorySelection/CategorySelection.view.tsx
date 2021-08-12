@@ -132,7 +132,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
-            placeholder="Search a category"
+            placeholder="Search a product"
             style={{ borderRadius: 12, width: '100%' }}
           />
         </div>

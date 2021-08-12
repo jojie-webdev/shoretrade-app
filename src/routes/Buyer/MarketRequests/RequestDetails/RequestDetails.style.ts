@@ -5,7 +5,7 @@ import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
+import { pxToRem, theme } from 'utils/Theme';
 import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
 import { Col } from 'react-grid-system';
 
@@ -381,15 +381,16 @@ export const DeleteButtonContainer = styled.div`
   margin: auto;
 
   .delete-button {
-    background-color: ${({ theme }) => theme.grey.shade3};
-    height: 32px;
-    width: 32px;
-    border-radius: 12px;
-    align-self: center;
+      background-color:  ${theme.grey.shade2};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+      border: 1px solid ${theme.grey.shade4};
 
-    path {
-      fill: ${({ theme }) => theme.grey.shade7};
-    }
+      path {
+          fill: ${theme.grey.shade7};
+      }
   }
 `
 
@@ -405,4 +406,10 @@ export const CounterCol = styled(Col)`
  @media ${BREAKPOINTS['sm']} {
   display: block;
   }
+`
+
+export const SelectContainer = styled.div`
+  margin-left: 16px;
+  width: 94px;
+  cursor: pointer;
 `

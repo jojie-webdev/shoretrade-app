@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from 'components/base/Typography';
 import { Star, StarFilled, TrashCan, PlaceholderProfile, Crab } from 'components/base/SVG';
 import theme from '../../../../../utils/Theme';
 import Button from './../../../../../components/base/Button/Button.view';
 import { OfferProps } from './Offer.props';
-import { OfferContainer } from './Offer.style';
+import { OfferContainer, MarketRequestItemInteractionContainer } from './Offer.style';
 import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
 import { Col, Row, Visible, Hidden } from 'react-grid-system';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -17,39 +17,30 @@ import { MarketRequestItemMobile } from '../../Landing/Landing.view';
 import EmptyStateView from 'components/module/EmptyState';
 import Badge from 'components/base/Badge/Badge.view';
 import { BadgeText, Badges } from "./../../Landing/Landing.style"
+import { useDispatch } from 'react-redux';
+import { getAllMarketRequestActions, deleteMarketRequestOfferActions } from 'store/actions';
 
 const Offer = (props: OfferProps) => {
     const { sellerOffer } = props
 
+    const [offerIdToDelete, setOfferIdToDelete] = useState<string>('')
+
     const history = useHistory()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (offerIdToDelete) {
+            dispatch(deleteMarketRequestOfferActions.request({ id: offerIdToDelete }));
+            history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(sellerOffer.marketRequest.id))
+            setOfferIdToDelete('')
+        }
+    }, [offerIdToDelete])
 
     const onClickItem = (offer: any) => {
         if (sellerOffer.offers.length > 0) {
             history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(sellerOffer.marketRequest.id, offer.id));
         }
     };
-
-    const offersMarkup = () => {
-        return (
-            <div>
-                <Badge
-                    className="offers-badge"
-                    badgeColor={theme.grey.shade3}
-                    padding="8px 8px"
-                    borderRadius="8px"
-                >
-                    <BadgeText
-                        color="success"
-                        variant="overline"
-                        empty={!sellerOffer.offers || sellerOffer.offers.length === 0}
-                    >
-                        test
-                    </BadgeText>
-                </Badge>
-            </div>
-        );
-    };
-
 
     const renderSubDetails = (offer: any) => (
         <>
@@ -142,6 +133,7 @@ const Offer = (props: OfferProps) => {
                         {renderStars()}
                     </div>
                 </MajorInfo>
+
                 <div style={{ marginTop: "8px" }}>
                     {renderSubDetails(offer)}
                 </div>
@@ -152,41 +144,31 @@ const Offer = (props: OfferProps) => {
     const renderMobile = () => (
         sellerOffer.offers.length > 0 ? (
             sellerOffer.offers.map((offer) => (
-                <MarketRequestItemInteraction
-                    key={offer.id}
-                    type={'next'}
-                    //'none'
-                    onClick={() => { }}
-                    leftComponent={renderOffersForMobile(offer)}
-                    rightComponent={
-                        <div
-                            style={{
-                                display: 'flex',
-                                height: '100%',
-                                textAlign: 'center',
-                                alignContent: 'space-between',
-                            }}
-                        >
-                            <div>
-                                <ChevronRight width={8} height={12} />
+                <MarketRequestItemInteractionContainer>
+                    <MarketRequestItemInteraction
+                        key={offer.id}
+                        type={'next'}
+                        onClick={() => onClickItem(offer)}
+                        leftComponent={renderOffersForMobile(offer)}
+                        rightComponent={
+                            <div className="cta">
+                                <div>
+                                    <ChevronRight width={8} height={12} />
+                                </div>
+
+                                <Button
+                                    iconPosition="before"
+                                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                                    // onClick={() => setOfferIdToDelete(offer.id)}
+                                    variant="primary"
+                                    size="sm"
+                                    className="delete-button"
+                                />
+
                             </div>
-                            <Button
-                                iconPosition="before"
-                                icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                                //   onClick={
-                                //     setItemToDelete &&
-                                //     ((e) => {
-                                //       e.stopPropagation();
-                                //       setItemToDelete({ value: offer.id || '' });
-                                //     })
-                                //   }
-                                variant="primary"
-                                size="sm"
-                                className="delete-button"
-                            />
-                        </div>
-                    }
-                />
+                        }
+                    />
+                </MarketRequestItemInteractionContainer>
             ))
         ) : (
             <EmptyStateView Svg={Crab} height={240} width={249} fluid />
@@ -242,13 +224,6 @@ const Offer = (props: OfferProps) => {
                             text="View Offer"
                             iconPosition="before"
                             textColor="success"
-                            // onClick={
-                            //   setItemToDelete &&
-                            //   ((e) => {
-                            //     e.stopPropagation();
-                            //     setItemToDelete({ value: mr.id || '' });
-                            //   })
-                            // }
                             variant="unselected"
                             size="sm"
                             style={{ marginRight: "20px", backgroundColor: "#EAFFF9", borderRadius: "8px" }}
@@ -256,13 +231,7 @@ const Offer = (props: OfferProps) => {
                         <Button
                             iconPosition="before"
                             icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                            // onClick={
-                            //     setItemToDelete &&
-                            //     ((e) => {
-                            //         e.stopPropagation();
-                            //         setItemToDelete({ value: mr.id || '' });
-                            //     })
-                            // }
+                            // onClick={() => setOfferIdToDelete(offer.id)}
                             variant="primary"
                             size="sm"
                             className="delete-button"
