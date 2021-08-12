@@ -5,9 +5,9 @@ import {
 
 export interface NotificationsSettingsProps {
   globalSettings?: {
-    mobile: CategoryStatus;
-    push: CategoryStatus;
-    email: CategoryStatus;
+    mobile: boolean;
+    push: boolean;
+    email: boolean;
   };
   groupedNotifSettings: Record<string, SpecificNotificationSettingItem[]>;
   loading: boolean;

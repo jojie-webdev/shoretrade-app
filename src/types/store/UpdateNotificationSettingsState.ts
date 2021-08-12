@@ -4,9 +4,9 @@ import { CategoryStatus } from './GetNotificationSettingsState';
 
 export type UpdateNotificationSettingsMetaData = {
   global: {
-    mobile: CategoryStatus;
-    email: CategoryStatus;
-    push: CategoryStatus;
+    mobile: boolean;
+    email: boolean;
+    push: boolean;
   };
   custom: any;
 };

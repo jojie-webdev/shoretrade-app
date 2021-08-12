@@ -34,9 +34,9 @@ const NotificationsSettings = (): JSX.Element => {
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
   >({
-    push: { enabled: false, supported: false },
-    mobile: { enabled: false, supported: false },
-    email: { enabled: false, supported: false },
+    push: false,
+    mobile: false,
+    email: false,
   });
   const [customSettings, setCustomSettings] = useState<
     SpecificNotificationSettingItem[]
@@ -88,17 +88,14 @@ const NotificationsSettings = (): JSX.Element => {
     if (key === 'mobile' || key === 'email' || key === 'push') {
       setGlobalSettings({
         ...globalSettings,
-        [key]: {
-          ...globalSettings[key],
-          enabled: !globalSettings[key].enabled,
-        },
+        [key]: !globalSettings[key],
       });
+      setUpdateTriggered(true);
     }
   };
 
   const handleCustomSettingUpdate = (item: SpecificNotificationSettingItem) => {
     // find idx
-    console.log(item);
     setCustomSettings(
       customSettings.map((c) => {
         if (c.id === item.id) {

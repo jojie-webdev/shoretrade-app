@@ -16,7 +16,10 @@ import NotificationSettingsCategoryItem from 'components/module/NotificationSett
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
-import { SettingsToggleItem, SpecificNotificationSettingItem } from 'types/store/GetNotificationSettingsState';
+import {
+  SettingsToggleItem,
+  SpecificNotificationSettingItem,
+} from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -104,7 +107,7 @@ const NotificationsSettingsView = ({
               icon={<Desktop fill={iconColor} />}
               description="Push Notifications"
               onClick={() => handleGlobalToggle('push')}
-              checked={globalSettings?.push.enabled || false}
+              checked={globalSettings?.push || false}
             />
           </div>
           <div className="item">
@@ -113,7 +116,7 @@ const NotificationsSettingsView = ({
               icon={<EnvelopeAlt fill={iconColor} />}
               description="peter@shoretrade.com"
               onClick={() => handleGlobalToggle('email')}
-              checked={globalSettings?.email.enabled || false}
+              checked={globalSettings?.email || false}
             />
           </div>
           <div className="item">
@@ -122,7 +125,7 @@ const NotificationsSettingsView = ({
               icon={<CommentsAlt fill={iconColor} />}
               description="+61 123 456 789"
               onClick={() => handleGlobalToggle('mobile')}
-              checked={globalSettings?.mobile.enabled || false}
+              checked={globalSettings?.mobile || false}
             />
           </div>
         </div>

@@ -10,9 +10,9 @@ export interface CategoryStatus {
 }
 
 export type GlobalNotificationsSettingsResponse = {
-  mobile: CategoryStatus; // Ex. 'Visa'
-  push: CategoryStatus;
-  email: CategoryStatus;
+  mobile: boolean; // Ex. 'Visa'
+  push: boolean;
+  email: boolean;
 };
 
 export type SettingsToggleItem = {
