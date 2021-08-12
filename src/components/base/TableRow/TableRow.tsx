@@ -7,7 +7,14 @@ import ReactTooltip from 'react-tooltip';
 import { TableRowProps } from './TableRow.props';
 
 export default function TableRow(props: TableRowProps) {
-  const { data, columns, rowType, selected, handleOnSelectRow } = props;
+  const {
+    data,
+    columns,
+    rowType,
+    selected,
+    handleOnSelectRow,
+    onResize,
+  } = props;
 
   return (
     <>
@@ -27,6 +34,8 @@ export default function TableRow(props: TableRowProps) {
             handleOnSelect={(state) => {
               handleOnSelectRow?.(state, data);
             }}
+            onResize={onResize}
+            column={{ ...column, index }}
           >
             <span
               data-tip={column?.tooltip?.(data) || data?.[column.selector]}
