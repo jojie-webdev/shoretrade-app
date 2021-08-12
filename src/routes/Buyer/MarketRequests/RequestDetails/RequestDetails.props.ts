@@ -61,7 +61,7 @@ export interface MarketRequestDetailProps {
   counterOffer: string;
   newOffer: string;
   deliveryTotal: number | undefined;
-  submitNegotiation: (v: number) => void;
+  submitNegotiation: (counterOffer: number) => void;
   hideNegotiate: boolean;
   closeOnAccept: boolean;
   setCloseOnAccept: Dispatch<SetStateAction<boolean>>;

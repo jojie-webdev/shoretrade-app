@@ -109,7 +109,7 @@ export const getExpiry = (date: string) => {
     return 'Expires Soon';
   }
 
-  return '';
+  return 'Plenty of time';
 };
 
 interface request {

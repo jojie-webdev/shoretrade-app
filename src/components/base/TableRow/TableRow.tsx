@@ -2,11 +2,19 @@ import React from 'react';
 
 import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
+import ReactTooltip from 'react-tooltip';
 
 import { TableRowProps } from './TableRow.props';
 
 export default function TableRow(props: TableRowProps) {
-  const { data, columns, rowType, selected, handleOnSelectRow } = props;
+  const {
+    data,
+    columns,
+    rowType,
+    selected,
+    handleOnSelectRow,
+    onResize,
+  } = props;
 
   return (
     <>
@@ -26,10 +34,18 @@ export default function TableRow(props: TableRowProps) {
             handleOnSelect={(state) => {
               handleOnSelectRow?.(state, data);
             }}
+            onResize={onResize}
+            column={{ ...column, index }}
           >
-            {column?.component
-              ? column?.component(data)
-              : data?.[column.selector]}
+            <span
+              data-tip={column?.tooltip?.(data) || data?.[column.selector]}
+              className="table-value"
+            >
+              {column?.component
+                ? column?.component(data)
+                : data?.[column.selector]}
+            </span>
+            {column?.tooltip && <ReactTooltip />}
           </TableData>
         );
       })}

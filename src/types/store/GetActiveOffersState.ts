@@ -18,6 +18,8 @@ export type GetActiveOffersRequestResponseItem = {
     status: 'OPEN' | 'CLOSED';
     createdAt: string;
     averagePrice: number;
+    image: string;
+    weight: { from: number, to: number };
   };
   size: {
     from?: string;
@@ -49,6 +51,7 @@ export interface Offer {
   specifications: string[];
   negotiations: any[];
   deliveryDate: string;
+  metric: string;
 }
 
 export interface Negotiations {

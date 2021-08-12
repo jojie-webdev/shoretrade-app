@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-// import { useTheme } from 'utils/Theme';
+import Case from 'case';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Filter, Crab, TrashCan } from 'components/base/SVG';
+import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
-import SwipeableInteractionsView from 'components/module/SwipeableInteraction';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -23,12 +23,17 @@ import {
   MarketRequestsContainer,
   MarketRequestItemContainer,
   MarketRequestItemInteraction,
-  SizeTextContainer,
-  StyledAlert,
+  MarketRequestItemMobileContainer,
   BadgeText,
+  MajorInfo,
+  MinorInfo,
+  SubMinorInfo,
+  Badges,
+  SubMinorDetail,
+  SubText,
 } from './Landing.style';
 
-export const MarketRequestItem = (props: {
+export const MarketRequestItemNonMobile = (props: {
   expiry: string;
   offers: number;
   type: string;
@@ -36,24 +41,33 @@ export const MarketRequestItem = (props: {
   inDetail: boolean;
   weight?: { from: number; to: number };
   measurementUnit?: string;
+  setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
+  id?: string;
+  offerStatus?: string;
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean };
 }) => {
   const {
+    id,
     inDetail,
     expiry,
     offers,
+    offerStatus,
     type,
     image,
     measurementUnit,
     weight,
+    specs,
+    size,
+    setItemToDelete,
   } = props;
-  const offersText = `${offers} Offers`;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const offersMarkup = () => {
-    if (inDetail || offers < 1) return '';
+  const offerNumberBadge = () => {
     return (
-      <Badge className="offers-badge" badgeColor={theme.brand.success}>
-        <BadgeText color="shade1" weight="bold" variant="overline">
-          {offersText}
+      <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
+        <BadgeText variant="overline" empty={!offers || offers === 0}>
+          {`${offers > 0 ? offers : 'No'} Offers`}
         </BadgeText>
       </Badge>
     );
@@ -65,34 +79,207 @@ export const MarketRequestItem = (props: {
         <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
-        <TypographyView variant="body">{type}</TypographyView>
-        {weight && measurementUnit ? (
-          <SizeTextContainer>
-            <TypographyView variant="body">{weight?.from}</TypographyView>
-            <TypographyView variant="body" color="shade6">
-              <span className="over-divider">/</span>
-              {weight?.to} {formatMeasurementUnit(measurementUnit)}
-            </TypographyView>
-          </SizeTextContainer>
-        ) : (
-          ''
-        )}
-        {expiry === 'Expired' ? (
-          <TypographyView
-            style={{ fontStyle: 'italic' }}
-            color="error"
-            className="time"
+        <div className="sub-group">
+          <TypographyView variant="body">{type}</TypographyView>
+          <SubText variant="small">{specs}</SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">
+            {Array.isArray(size?.options) ? size?.options?.join(', ') : ''}
+          </SubText>
+          <SubText variant="small">
+            {weight && `Qty: ${weight.from} - ${weight.to}`}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <SubText
+            variant="small"
+            color={expiry === 'Expired' ? 'error' : 'primary'}
           >
-            {expiry}
-          </TypographyView>
-        ) : (
-          <TypographyView color="shade6" className="time">
-            {expiry}
-          </TypographyView>
-        )}
-        {offersMarkup()}
+            {expiry === 'Expired' ? expiry : `${expiry} left`}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">{offerNumberBadge()}</SubText>
+        </div>
+        <div className="sub-group">
+          <SubText variant="small">
+            {offerStatusBadge(inDetail, offers, offerStatus)}
+          </SubText>
+        </div>
+        <div className="sub-group">
+          <Button
+            iconPosition="before"
+            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+            onClick={
+              setItemToDelete &&
+              ((e) => {
+                e.stopPropagation();
+                setItemToDelete({ value: id || '' });
+              })
+            }
+            variant="primary"
+            size="sm"
+            className="delete-button"
+          />
+        </div>
       </div>
     </MarketRequestItemContainer>
+  );
+};
+
+export const MarketRequestItemMobile = (props: {
+  expiry: string;
+  offers: number;
+  type: string;
+  image: string;
+  inDetail: boolean;
+  weight?: { from: number; to: number };
+  measurementUnit?: string;
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean };
+  offerStatus?: string;
+}) => {
+  const {
+    inDetail,
+    expiry,
+    offers,
+    type,
+    image,
+    measurementUnit,
+    weight,
+    specs,
+    size,
+    offerStatus,
+  } = props;
+
+  const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
+
+  const offersMarkup = () => {
+    if (inDetail) return '';
+
+    return (
+      <div>
+        <Badge
+          className="offers-badge"
+          badgeColor={theme.grey.shade3}
+          padding="8px 8px"
+          borderRadius="8px"
+        >
+          <BadgeText
+            color="success"
+            variant="overline"
+            empty={!offers || offers === 0}
+          >
+            {offersText}
+          </BadgeText>
+        </Badge>
+      </div>
+    );
+  };
+
+  const subMinorDetail = (label: string, value: string) => (
+    <>
+      <Typography
+        variant="caption"
+        weight="400"
+        color="shade6"
+        style={{ marginRight: '5px' }}
+      >
+        {label}{' '}
+      </Typography>
+      <Typography variant="caption" weight="700" color="shade9">
+        {value}
+      </Typography>
+    </>
+  );
+
+  const displayBadges = () => {
+    return (
+      <Badges>
+        {offersMarkup()}
+        {offerStatusBadge(inDetail, offers, offerStatus)}
+      </Badges>
+    );
+  };
+
+  return (
+    <MarketRequestItemMobileContainer>
+      <MajorInfo>
+        <div className="thumbnail-container">
+          <img src={parseImageUrl(image)} />
+        </div>
+
+        <TypographyView variant="label" style={{ lineHeight: '20px' }}>
+          {type}
+        </TypographyView>
+      </MajorInfo>
+
+      <MinorInfo>
+        <Typography variant="caption" weight="400" color="shade6">
+          {specs}
+        </Typography>
+
+        <SubMinorInfo>
+          <SubMinorDetail>
+            {subMinorDetail(
+              'Quantity',
+              weight?.from +
+                '-' +
+                weight?.to +
+                ' ' +
+                Case.pascal(measurementUnit || '')
+            )}
+          </SubMinorDetail>
+
+          <SubMinorDetail>{subMinorDetail('Time Left', expiry)}</SubMinorDetail>
+
+          <SubMinorDetail>
+            {subMinorDetail(
+              'Size',
+              (Array.isArray(size?.options) && size?.options?.join(', ')) ||
+                'None'
+            )}
+          </SubMinorDetail>
+        </SubMinorInfo>
+
+        {displayBadges()}
+      </MinorInfo>
+    </MarketRequestItemMobileContainer>
+  );
+};
+
+const offerStatusBadge = (
+  inDetail: boolean,
+  offers: number,
+  offerStatus: any
+) => {
+  let badgeColor = '';
+  let textColor;
+
+  if (!offerStatus) {
+    return null;
+  }
+
+  switch (offerStatus) {
+    case 'NEW OFFER':
+      badgeColor = '#EAFFF9';
+      textColor = theme.brand.success;
+      break;
+    case 'NEGOTIATION':
+      badgeColor = '#FFFBF2';
+      textColor = theme.brand.alert;
+      break;
+  }
+
+  if (inDetail || offers < 1) return null;
+
+  return (
+    <Badge className="offers-badge" badgeColor={badgeColor}>
+      <BadgeText variant="overline" style={{ color: textColor }}>
+        {offerStatus}
+      </BadgeText>
+    </Badge>
   );
 };
 
@@ -114,6 +301,75 @@ const MarketRequestsLandingView = (
     return <LoadingView />;
   }
 
+  const renderMobile = () => (
+    <Visible xs>
+      {marketRequests.length > 0 ? (
+        marketRequests.map((mr) => (
+          <MarketRequestItemInteraction
+            key={mr.id}
+            type={mr.offers > 0 ? 'next' : 'none'}
+            onClick={() => onClickItem(mr)}
+            leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
+            rightComponent={
+              <div
+                style={{
+                  display: 'flex',
+                  height: '100%',
+                  textAlign: 'center',
+                  alignContent: 'space-between',
+                }}
+              >
+                <div>
+                  <ChevronRight width={8} height={12} />
+                </div>
+                <Button
+                  iconPosition="before"
+                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                  onClick={
+                    setItemToDelete &&
+                    ((e) => {
+                      e.stopPropagation();
+                      setItemToDelete({ value: mr.id || '' });
+                    })
+                  }
+                  variant="primary"
+                  size="sm"
+                  className="delete-button"
+                />
+              </div>
+            }
+          />
+        ))
+      ) : (
+        <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+      )}
+    </Visible>
+  );
+
+  const renderNonMobile = () => (
+    <Hidden xs>
+      {marketRequests.length > 0 ? (
+        marketRequests.map((mr) => (
+          <MarketRequestItemInteraction
+            key={mr.id}
+            type={'next'}
+            onClick={() => onClickItem(mr)}
+            leftComponent={
+              <MarketRequestItemNonMobile
+                inDetail={false}
+                setItemToDelete={setItemToDelete}
+                {...mr}
+              />
+            }
+            keepIcon
+          />
+        ))
+      ) : (
+        <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+      )}
+    </Hidden>
+  );
+
   return (
     <MarketRequestsContainer>
       <ConfirmationModal
@@ -127,30 +383,22 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      <Row nogutter>
-        <StyledAlert
-          content={'All offers below include shipping costs'}
-          variant="info"
-          alignText="center"
-          fullWidth
-        />
-      </Row>
       <Row nogutter justify="around" align="center" className="header">
         <Col>
-          <Typography variant="overline" color="shade6">
-            My Requests
+          <Typography
+            variant="title5"
+            weight="700"
+            color="shade9"
+            style={{ fontFamily: 'Media Sans' }}
+          >
+            My Market Requests
           </Typography>
-          <Visible xs>
-            <TypographyView variant="label" color="shade9">
-              Swipe right to delete a request
-            </TypographyView>
-          </Visible>
         </Col>
         <Col xs="content">
           <Visible sm md lg xl xxl>
             <Button
               onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-              text="CREATE MARKET REQUEST"
+              text="CREATE REQUEST"
               variant={props.isPendingAccount ? 'disabled' : 'primary'}
               size="md"
               disabled={props.isPendingAccount}
@@ -158,77 +406,23 @@ const MarketRequestsLandingView = (
           </Visible>
         </Col>
       </Row>
-      <Hidden xs>
-        {marketRequests.length > 0 ? (
-          marketRequests.map((mr) => (
-            <MarketRequestItemInteraction
-              key={mr.id}
-              type={mr.offers > 0 ? 'next' : 'none'}
-              onClick={() => onClickItem(mr)}
-              leftComponent={
-                <MarketRequestItem
-                  inDetail={false}
-                  image={mr.image}
-                  offers={mr.offers}
-                  expiry={mr.expiry}
-                  type={mr.type}
-                />
-              }
-              rightComponent={
-                mr.offers > 0 ? (
-                  ''
-                ) : (
-                  <Button
-                    iconPosition="before"
-                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                    onClick={() => setItemToDelete({ value: mr.id })}
-                    text="Delete"
-                    variant="primary"
-                    size="sm"
-                    color="error"
-                  />
-                )
-              }
-            />
-          ))
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )}
-      </Hidden>
-      <Visible xs>
-        {marketRequests.length > 0 ? (
-          <SwipeableInteractionsView
-            swipeActionIcon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-            swipeActionLabel="Delete"
-            onSwipeTrigger={(id) => setItemToDelete({ value: id })}
-            data={marketRequests.map((mr) => {
-              return {
-                id: mr.id,
-                type: mr.offers > 0 ? 'next' : 'none',
-                onClick: () => onClickItem(mr),
-                leftComponent: (
-                  <MarketRequestItem
-                    inDetail={false}
-                    image={mr.image}
-                    offers={mr.offers}
-                    expiry={mr.expiry}
-                    type={mr.type}
-                  />
-                ),
-              };
-            })}
-          />
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )}
-      </Visible>
+      {renderMobile()}
+      {renderNonMobile()}
       <MobileFooter>
         <Button
           onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-          text="CREATE MARKET REQUEST"
+          text="CREATE REQUEST"
           variant={props.isPendingAccount ? 'disabled' : 'primary'}
           takeFullWidth
           disabled={props.isPendingAccount}
+          icon={
+            <ChevronRight
+              width={15}
+              height={12}
+              fill="white"
+              style={{ paddingBottom: '2px' }}
+            />
+          }
         />
       </MobileFooter>
     </MarketRequestsContainer>

@@ -26,6 +26,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import NumberedHeroView from 'components/module/NumberedHero';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { getTermsAndConditions } from 'utils/Links';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import CategorySelectionView from './CategorySelection/CategorySelection.view';
 import { CreateRequestGeneratedProps, CreateRequestStep } from './Create.props';
@@ -56,7 +57,6 @@ import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {
@@ -342,13 +342,12 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               >
                 {selectedSize.items[0] !== '' && !selectedSize.from
                   ? selectedSize.items.map((i, index) => {
-                      return index === selectedSpecifications.items.length - 1
-                        ? `${i} `
-                        : `${i}, `;
-                    })
-                  : `${selectedSize.from}${measurement} ${
-                      selectedSize.to && `- ${selectedSize.to}${measurement}`
-                    }`}
+                    return index === selectedSpecifications.items.length - 1
+                      ? `${i} `
+                      : `${i}, `;
+                  })
+                  : `${selectedSize.from}${measurement} ${selectedSize.to && `- ${selectedSize.to}${measurement}`
+                  }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
@@ -378,10 +377,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {`${selectedQuantity.from}${measurement} ${
-                  selectedQuantity.to &&
+                {`${selectedQuantity.from}${measurement} ${selectedQuantity.to &&
                   `- ${selectedQuantity.to}${measurement}`
-                }`}
+                  }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>

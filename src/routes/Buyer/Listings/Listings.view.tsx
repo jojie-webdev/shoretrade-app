@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import Select from 'components/base/Select';
+// import Select from 'components/base/Select';
 import { Cog, ChevronRight, Exit, Crab } from 'components/base/SVG';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
@@ -15,11 +15,12 @@ import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import theme from 'utils/Theme';
 
 import {
-  AUCTION_PRODUCT,
+  // AUCTION_PRODUCT,
   DIRECT_SALE,
-  AUCTION_PRODUCT_COLUMNS,
+  // AUCTION_PRODUCT_COLUMNS,
   DIRECT_SALE_COLUMNS,
   columnTemplate,
+  COLUMN_GROUPS,
 } from './Listings.constants';
 import { ListingViewProps } from './Listings.props';
 import {
@@ -40,12 +41,20 @@ import {
   MobileTable,
   Preloader,
   EmptyScreen,
-  TabletHeaderSortContainer,
+  // TabletHeaderSortContainer,
   MobileResults,
 } from './Listings.styles';
 
-const Search = (props: { onChange: (value: string) => void }) => {
+const Search = (props: {
+  onChange: (value: string) => void;
+  defaultValue?: string;
+}) => {
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    if (props.defaultValue) setValue(props.defaultValue);
+  }, []);
+
   return (
     <SearchComponent
       style={{ marginBottom: 0 }}
@@ -96,13 +105,19 @@ export default function ListingView(props: ListingViewProps) {
     showTableSettings,
     setShowTableSettings,
     prevListingData,
+    unselectedIds,
+    handleSelectRow,
   } = props;
 
   const [settings, setSettings] = useState(tableSettings);
 
   const isEmpty = !isLoading && !listings.length;
 
-  let columns = DIRECT_SALE_COLUMNS;
+  const columns = DIRECT_SALE_COLUMNS;
+
+  const downloadListingCount = isAllSelected
+    ? totalCount - unselectedIds.length
+    : selectedIds.length;
 
   // sync tableSettingProps
   useComponentShouldUpdate(() => {
@@ -116,7 +131,7 @@ export default function ListingView(props: ListingViewProps) {
     }
   }, [isLoading, prevListingData, isMobile, searchTerm]);
 
-  if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
+  // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
   const options = columns
     .filter((column) => column?.sortable)
@@ -170,42 +185,42 @@ export default function ListingView(props: ListingViewProps) {
         <ActionContainer>
           <Button
             disabled={Boolean(isLoading) || isDownloadingCsv}
-            onClick={handleDownloadCSV}
+            onClick={() => setShowModal(true)}
             text="Download"
             loading={Boolean(isLoading) || isDownloadingCsv}
             takeFullWidth={isMobile}
           />
         </ActionContainer>
         <SearchContainer>
-          <Search onChange={debouncedSearch} />
+          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
         </SearchContainer>
       </FlexContainer>
     </Header>
   );
 
-  const TabletHeader = (
-    <Header style={{ gap: 8 }}>
-      <div>
-        <SearchContainer>
-          <Search onChange={debouncedSearch} />
-        </SearchContainer>
-      </div>
+  // const TabletHeader = (
+  //   <Header style={{ gap: 8 }}>
+  //     <div>
+  //       <SearchContainer>
+  //         <Search onChange={debouncedSearch} />
+  //       </SearchContainer>
+  //     </div>
 
-      <TabletHeaderSortContainer>
-        <div className="results">{totalCount} Results</div>
-        <div className="dropdown">
-          <Select
-            label=""
-            options={options}
-            size="small"
-            placeholder="Sort By"
-            grey
-            onChange={(e) => setSortField(e?.value)}
-          />
-        </div>
-      </TabletHeaderSortContainer>
-    </Header>
-  );
+  //     <TabletHeaderSortContainer>
+  //       <div className="results">{totalCount} Results</div>
+  //       <div className="dropdown">
+  //         <Select
+  //           label=""
+  //           options={options}
+  //           size="small"
+  //           placeholder="Sort By"
+  //           grey
+  //           onChange={(e) => setSortField(e?.value)}
+  //         />
+  //       </div>
+  //     </TabletHeaderSortContainer>
+  //   </Header>
+  // );
 
   const DownloadConfirmationModal = (
     <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
@@ -213,7 +228,8 @@ export default function ListingView(props: ListingViewProps) {
         <ModalTitle variant="title5" className="title">
           Confirm Download
         </ModalTitle>
-        You are about to download {totalCount} listings. <br />
+        You are about to download <strong>{downloadListingCount}</strong>{' '}
+        listings. <br />
         If this is not correct, adjust your selections using the check box in
         the table.
         <div>Otherwise, press Proceed to continue.</div>
@@ -283,10 +299,10 @@ export default function ListingView(props: ListingViewProps) {
         {TabComponent}
         {TableSettingsModal}
         <MobileSearchContainer>
-          <Search onChange={debouncedSearch} />
+          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
           <MobileDownloadButton
             disabled={Boolean(isLoading) || isDownloadingCsv}
-            onClick={handleDownloadCSV}
+            onClick={() => setShowModal(true)}
           >
             <div>
               <Exit width={13.33} height={13.33} fill="#E35D32" />
@@ -300,7 +316,18 @@ export default function ListingView(props: ListingViewProps) {
           <ChevronRight width={12} height={16} />
         </TableSettingsContainer>
         <MobileResults>
-          <span className="total-count">{totalCount}</span> Results
+          <div>
+            <span className="total-count">{totalCount}</span> Results
+          </div>
+          <div className="checkbox-container">
+            <span>Select All</span>
+            <Checkbox
+              size={20}
+              borderColor={theme.grey.shade7}
+              checked={isAllSelected}
+              onClick={() => setIsAllSelected(!isAllSelected)}
+            />
+          </div>
         </MobileResults>
         {!isEmpty && (
           <MobileTable>
@@ -310,13 +337,14 @@ export default function ListingView(props: ListingViewProps) {
                 key={`listing-card-${listing?.id}`}
                 data={listing}
                 columns={columns}
+                groups={COLUMN_GROUPS}
                 tableSettings={tableSettings}
-                isSelected={selectedIds.includes(listing?.id)}
-                onSelect={(selected) =>
-                  selected
-                    ? handleRemoveFromSelectedIds(listing?.id)
-                    : setSelectedIds((prev) => [...prev, listing?.id])
+                isSelected={
+                  unselectedIds.includes(listing?.id)
+                    ? false
+                    : isAllSelected || selectedIds.includes(listing?.id)
                 }
+                onSelect={(selected) => handleSelectRow(listing?.id, !selected)}
               />
             ))}
             {isLoading && (
@@ -342,8 +370,7 @@ export default function ListingView(props: ListingViewProps) {
   return (
     <div>
       {DownloadConfirmationModal}
-      {!isMobile && !isTablet && DesktopHeader}
-      {isTablet && TabletHeader}
+      {!isMobile && DesktopHeader}
       <TableComponent
         setSortField={setSortField}
         sortField={sortField}
@@ -357,6 +384,8 @@ export default function ListingView(props: ListingViewProps) {
         setSelectedIds={setSelectedIds}
         isAllSelected={isAllSelected}
         setIsAllSelected={setIsAllSelected}
+        onSelect={handleSelectRow}
+        unselectedIds={unselectedIds}
       />
 
       <PaginationContainer>

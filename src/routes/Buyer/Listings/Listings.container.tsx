@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
 import debounce from 'lodash.debounce';
@@ -31,6 +31,7 @@ export default function ListingContainer() {
   const [sortOrder, setSortOrder] = useState<SortOrder>('ASC');
   const [showModal, setShowModal] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [unselectedIds, setUnselectedIds] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   const [isCsvPending, setIsCsvPending] = useState(false); // local state
   const [limit, setLimit] = useState(DEFAULT_PAGE_LIMIT);
@@ -64,38 +65,6 @@ export default function ListingContainer() {
     catchRecurrence: a.catchRecurrence && capitalize(a.catchRecurrence),
   }));
   const maxPage = Math.ceil(listingRequestDataCount / limit);
-
-  const handleSelectTab = (id: number) => {
-    setActiveTab(id);
-  };
-
-  const handleDownloadCSV = () => {
-    if (showModal) {
-      setIsCsvPending(true);
-      dispatch(
-        getAllBuyerListingsActions.requestCsv({
-          sortField,
-          searchTerm,
-          sortOrder,
-          all: true,
-          csv: true,
-        })
-      );
-    } else {
-      if (!selectedIds.length) setShowModal(true);
-      else
-        dispatch(
-          getAllBuyerListingsActions.requestCsv({
-            sortField,
-            searchTerm,
-            csv: true,
-            sortOrder,
-            ids: selectedIds,
-            all: true,
-          })
-        );
-    }
-  };
 
   useEffect(() => {
     const handleMobilePagination = debounce((event: any) => {
@@ -152,11 +121,62 @@ export default function ListingContainer() {
   useComponentShouldUpdate(() => {
     if (isMobile) {
       if (!!searchTerm.length) {
-        setPage(1);
         setLimit(100); // displays the first 100 search result
       } else setLimit(10);
     }
+
+    setPage(1);
   }, [searchTerm, isMobile]);
+
+  useComponentShouldUpdate(() => {
+    setSelectedIds([]);
+    setUnselectedIds([]);
+  }, [isAllSelected]);
+
+  const handleSelectTab = (id: number) => {
+    setActiveTab(id);
+  };
+
+  const handleDownloadCSV = () => {
+    dispatch(
+      getAllBuyerListingsActions.requestCsv({
+        sortField,
+        searchTerm,
+        csv: true,
+        sortOrder,
+        ids: selectedIds,
+        exceptId: unselectedIds,
+        all: true,
+      })
+    );
+  };
+
+  const handleRemoveIdFromState = (
+    id: string,
+    setState: Dispatch<SetStateAction<string[]>>
+  ) => setState((prevIds) => prevIds.filter((prevId) => prevId !== id));
+
+  const handleAddIdToState = (
+    id: string,
+    setState: Dispatch<SetStateAction<string[]>>
+  ) => setState((prev) => (prev.includes(id) ? prev : [...prev, id]));
+
+  const handleSelectRow = (id: string, state: boolean) => {
+    // take effect on unselectedIds state
+    if (isAllSelected) {
+      // add
+      if (!state) handleAddIdToState(id, setUnselectedIds);
+      // remove
+      else handleRemoveIdFromState(id, setUnselectedIds);
+    }
+    // take effect on selectedIds state
+    else {
+      // remove
+      if (state) handleAddIdToState(id, setSelectedIds);
+      // add
+      else handleRemoveIdFromState(id, setSelectedIds);
+    }
+  };
 
   const ListingViewProps = {
     activeTab,
@@ -189,6 +209,9 @@ export default function ListingContainer() {
     showTableSettings,
     setShowTableSettings,
     prevListingData,
+    unselectedIds,
+    setUnselectedIds,
+    handleSelectRow,
   };
 
   return <ListingView {...ListingViewProps} />;
