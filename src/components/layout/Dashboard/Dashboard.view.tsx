@@ -167,10 +167,10 @@ const Header = ({
       }
       rightContent={
         <HeaderRightContent>
+          <NotificationMenu notifTotal={3} />
           {!onBack && theme.appType === 'buyer' && (
             <Cart cartItems={cartItems} />
           )}
-          {/* <Notifs notifs={1} /> */}
         </HeaderRightContent>
       }
     />

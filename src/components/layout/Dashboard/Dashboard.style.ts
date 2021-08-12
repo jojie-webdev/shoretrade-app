@@ -419,6 +419,13 @@ export const HeaderRightContent = styled.div`
 
     border: 1px solid ${({ theme }) => theme.grey.shade3};
     border-radius: 12px;
+
+    @media ${BREAKPOINTS.sm} {
+      width: 32px;
+      height: 32px;
+      border: 1px solid ${({ theme }) => theme.grey.shade10};
+      background: ${({ theme }) => theme.grey.shade8};
+    }
   }
 
   .dashboard-account-container {
