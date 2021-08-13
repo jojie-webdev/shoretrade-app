@@ -11,6 +11,7 @@ import {
   getAllMarketRequestActions,
   getMarketRequestBuyerFiltersActions,
   marketRequestAcceptOfferActions,
+  deleteMarketRequestOfferActions
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
@@ -143,6 +144,12 @@ const MarketRequestDetail = (): JSX.Element => {
       );
     }
   };
+
+  const onOfferDelete = (offerIdToDelete: string) => {
+    if (offerIdToDelete) {
+      dispatch(deleteMarketRequestOfferActions.request({ id: offerIdToDelete, marketRequestId: id }));
+    }
+  }
 
   const submitNegotiation = (counterOffer: number) => {
     if (selectedOffer) {
@@ -417,6 +424,7 @@ const MarketRequestDetail = (): JSX.Element => {
     onClickFilterButton,
     showNotEnoughCreditAlert,
     setShowNotEnoughCreditAlert,
+    onOfferDelete
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

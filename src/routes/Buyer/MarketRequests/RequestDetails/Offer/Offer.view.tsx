@@ -11,30 +11,14 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 import { sizeToString } from './../../../../../utils/Listing/sizeToString';
 import { useHistory } from 'react-router';
-import { BUYER_ROUTES } from 'consts';
-import { MajorInfo, MarketRequestItemInteraction, MarketRequestItemMobileContainer, MinorInfo, SubMinorDetail, SubMinorInfo } from '../../Landing/Landing.style';
-import { MarketRequestItemMobile } from '../../Landing/Landing.view';
+import { MajorInfo, MarketRequestItemInteraction, MarketRequestItemMobileContainer } from '../../Landing/Landing.style';
 import EmptyStateView from 'components/module/EmptyState';
-import Badge from 'components/base/Badge/Badge.view';
-import { BadgeText, Badges } from "./../../Landing/Landing.style"
-import { useDispatch } from 'react-redux';
-import { getAllMarketRequestActions, deleteMarketRequestOfferActions } from 'store/actions';
+import { BUYER_ROUTES } from 'consts';
 
 const Offer = (props: OfferProps) => {
-    const { sellerOffer } = props
-
-    const [offerIdToDelete, setOfferIdToDelete] = useState<string>('')
+    const { sellerOffer, onOfferDelete } = props
 
     const history = useHistory()
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (offerIdToDelete) {
-            dispatch(deleteMarketRequestOfferActions.request({ id: offerIdToDelete }));
-            history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(sellerOffer.marketRequest.id))
-            setOfferIdToDelete('')
-        }
-    }, [offerIdToDelete])
 
     const onClickItem = (offer: any) => {
         if (sellerOffer.offers.length > 0) {
@@ -159,7 +143,7 @@ const Offer = (props: OfferProps) => {
                                 <Button
                                     iconPosition="before"
                                     icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                                    // onClick={() => setOfferIdToDelete(offer.id)}
+                                    onClick={(e) => handleTrashIconClick(e, offer.id)}
                                     variant="primary"
                                     size="sm"
                                     className="delete-button"
@@ -174,6 +158,11 @@ const Offer = (props: OfferProps) => {
             <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )
     );
+
+    const handleTrashIconClick = (e: any, offerId: string) => {
+        e.stopPropagation();
+        onOfferDelete(offerId)
+    }
 
     const renderNonMobile = () => {
         return sellerOffer.offers.map(offer =>
@@ -231,7 +220,7 @@ const Offer = (props: OfferProps) => {
                         <Button
                             iconPosition="before"
                             icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                            // onClick={() => setOfferIdToDelete(offer.id)}
+                            onClick={(e) => handleTrashIconClick(e, offer.id)}
                             variant="primary"
                             size="sm"
                             className="delete-button"

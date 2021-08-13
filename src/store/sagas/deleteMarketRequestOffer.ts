@@ -2,6 +2,7 @@ import { replace } from 'connected-react-router';
 import { BUYER_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteOffer } from 'services/marketRequest';
+
 import { AsyncAction } from 'types/Action';
 import {
   DeleteMarketRequestOfferMeta,
@@ -9,6 +10,7 @@ import {
 } from 'types/store/DeleteMarketRequestOfferState';
 import { Store } from 'types/store/Store';
 import { deleteMarketRequestOfferActions } from '../actions';
+import { getAllMarketRequestActions, getActiveOffersActions } from 'store/actions';
 
 function* deleteMarketRequestOfferRequest(
   action: AsyncAction<DeleteMarketRequestOfferMeta, DeleteMarketRequestOfferPayload>
@@ -30,7 +32,14 @@ function* deleteMarketRequestOfferRequest(
 function* deleteMarketRequestOfferSuccess(
   action: AsyncAction<DeleteMarketRequestOfferMeta, DeleteMarketRequestOfferPayload>
 ) {
-  // yield put(replace(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST()));
+  const state: Store = yield select();
+  const marketRequestId = state.deleteMarketRequestOffer.request?.marketRequestId
+
+  yield put(getActiveOffersActions.request({
+    queryParams: {
+      marketRequestId,
+    }
+  }));
 }
 
 function* deleteMarketRequestOfferWatcher() {

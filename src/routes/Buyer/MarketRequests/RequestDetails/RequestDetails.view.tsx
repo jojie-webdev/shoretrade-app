@@ -302,6 +302,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     isLoading,
     showNotEnoughCreditAlert,
     setShowNotEnoughCreditAlert,
+    onOfferDelete
   } = props;
 
   const location = useLocation()
@@ -452,7 +453,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           {
             sellerOffersCopy.length > 0 ?
               sellerOffersCopy.map(sellerOffer =>
-                <Offer sellerOffer={sellerOffer} />
+                <Offer sellerOffer={sellerOffer} onOfferDelete={onOfferDelete} />
               ) :
               <>
                 {

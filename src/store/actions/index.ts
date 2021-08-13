@@ -32,6 +32,7 @@ export { default as addLinkedAccountActions } from './addLinkedAccount';
 export { default as addAddressActions } from './addAddress';
 export { default as deleteLinkedAccountActions } from './deleteLinkedAccount';
 export { default as deleteMarketRequestActions } from './deleteMarketRequest';
+export { default as deleteMarketRequestOfferActions } from './deleteMarketRequestOffer';
 export { default as updateFavoriteSellerActions } from './updateFavoriteSeller';
 export { default as getSellerByIdActions } from './getSellerById';
 export { default as createListingActions } from './createListing';
@@ -98,4 +99,3 @@ export { default as sockgetGetListingsByTypeActions } from './socketGetListingsB
 export { default as socketAllBuyerListingsActions } from './socketAllBuyerListings';
 export { default as getCratesActions } from './getCrates';
 export { default as getAvailableCratesActions } from './getAvailableCrates';
-export { default as deleteMarketRequestOfferActions } from './deleteMarketRequestOffer';
