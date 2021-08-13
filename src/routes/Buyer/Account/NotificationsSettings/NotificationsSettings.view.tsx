@@ -29,7 +29,6 @@ const NotificationsSettingsView = ({
   handleGlobalToggle,
   groupedNotifSettings,
   loading,
-  handleOnSave,
   handleCustomSettingUpdate,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();

@@ -31,6 +31,9 @@ const NotificationsSettings = (): JSX.Element => {
   const location = useLocation();
   const [companyId, setCompanyId] = useState('');
   const [updateTriggered, setUpdateTriggered] = useState(false);
+  const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
+    null | 'mobile' | 'push' | 'email'
+  >(null);
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
   >({
@@ -75,11 +78,18 @@ const NotificationsSettings = (): JSX.Element => {
     }
   }, [companyId]);
 
-  const handleOnSave = () => {
+  const handleOnSaveCustom = () => {
     dispatch(
       updateNotificationSettingsActions.request({
-        global: globalSettings,
         custom: toUpdateNotification(customSettings),
+      })
+    );
+  };
+
+  const handleOnSaveGlobal = (key: 'email' | 'mobile' | 'push') => {
+    dispatch(
+      updateNotificationSettingsActions.request({
+        global: { [key]: globalSettings[key] },
       })
     );
   };
@@ -90,7 +100,7 @@ const NotificationsSettings = (): JSX.Element => {
         ...globalSettings,
         [key]: !globalSettings[key],
       });
-      setUpdateTriggered(true);
+      setGlobalUpdateTriggered(key);
     }
   };
 
@@ -109,10 +119,17 @@ const NotificationsSettings = (): JSX.Element => {
 
   useEffect(() => {
     if (updateTriggered && customSettings) {
-      handleOnSave();
+      handleOnSaveCustom();
       setUpdateTriggered(false);
     }
   }, [customSettings, updateTriggered]);
+
+  useEffect(() => {
+    if (globalUpdateTriggered && globalUpdateTriggered) {
+      handleOnSaveGlobal(globalUpdateTriggered);
+      setGlobalUpdateTriggered(null);
+    }
+  }, [globalSettings, globalUpdateTriggered]);
 
   useEffect(() => {
     if (getNotificationsSettings && getNotificationsSettings.data) {
@@ -140,7 +157,6 @@ const NotificationsSettings = (): JSX.Element => {
     handleGlobalToggle,
     groupedNotifSettings,
     loading: getPendingNotificationsSettings,
-    handleOnSave,
     handleCustomSettingUpdate,
   };
 
