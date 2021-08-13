@@ -39,17 +39,25 @@ const BuyerRequestsInteractions = (props: {
         <>
           <img src={parseImageUrl(data.image)} />
           <div className="section">
-            <Typography variant="caption" color="noshade">
+            <Typography
+              variant="caption"
+              color="noshade"
+              style={{ fontSize: 15 }}
+            >
               {data.type}
             </Typography>
-            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
               {!isNil(data.specifications) &&
                 Array.isArray(data.specifications) &&
                 data.specifications.map((s) => s.stateName).join(', ')}
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="small" color="shade6">
+            <Typography variant="caption" color="shade6">
               Size:{' '}
               {data.sizeOptions && Object.keys(data.sizeOptions).length != 0
                 ? data.sizeOptions.join(', ')
@@ -59,7 +67,11 @@ const BuyerRequestsInteractions = (props: {
                     (data.sizeTo || '').toString()
                   )}
             </Typography>
-            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
               Qty:{' '}
               {`${data.weight?.from || ''}${unit} - ${
                 data.weight?.to || ''
@@ -67,7 +79,7 @@ const BuyerRequestsInteractions = (props: {
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="small" color="shade6">
+            <Typography variant="caption" color="shade6">
               Shipping to: {data?.shippingTo?.suburb}, {data?.shippingTo?.state}{' '}
               {data?.shippingTo?.postcode}
             </Typography>
@@ -90,7 +102,7 @@ const MyActiveOffersInteractions = (props: {
     if (status === 'OPEN') return 'NEGOTIATION';
     if (status === 'ACCEPTED') return 'ACCEPTED';
     if (status === 'DECLINED') return 'LOST';
-
+    if (status === 'CLOSED') return 'CLOSED';
     return '';
   };
 
@@ -100,7 +112,7 @@ const MyActiveOffersInteractions = (props: {
     if (status === 'OPEN') return theme.brand.warning;
     if (status === 'ACCEPTED') return theme.brand.success;
     if (status === 'DECLINED') return theme.brand.error;
-
+    if (status === 'CLOSED') return theme.brand.error;
     return '';
   };
 
@@ -111,6 +123,8 @@ const MyActiveOffersInteractions = (props: {
       return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
     if (status === 'DECLINED')
       return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
+    if (status === 'CLOSED')
+      return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
   };
 
   const status = getStatus(data.status);
@@ -124,27 +138,39 @@ const MyActiveOffersInteractions = (props: {
         <>
           <img src={parseImageUrl(data.image)} />
           <div className="section">
-            <Typography variant="caption" color="noshade">
+            <Typography
+              variant="caption"
+              color="noshade"
+              style={{ fontSize: 14 }}
+            >
               {data.name}
             </Typography>
-            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
               {!isNil(data.specifications) &&
                 Array.isArray(data.specifications) &&
                 data.specifications.join(', ')}
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="small" color="shade6">
+            <Typography variant="caption" color="shade6">
               Size:{' '}
               {!data.size.from ? 'Ungraded' : `${data.size.from}${sizeUnit}`}
               {data.size.to && ` - ${data.size.to}${sizeUnit}`}
             </Typography>
-            <Typography variant="small" color="shade6" style={{ marginTop: 4 }}>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
               Price: {data.price}/{formatMeasurementUnit(data.measurementUnit)}
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="small" color="shade6">
+            <Typography variant="caption" color="shade6">
               {getExpiry(data.marketRequest.createdAt)}
             </Typography>
           </div>
