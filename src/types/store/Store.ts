@@ -166,6 +166,10 @@ import {
   GetNotificationsSettingsPayload,
 } from './GetNotificationSettingsState';
 import {
+  GetNotificationsMeta,
+  GetNotificationsPayload,
+} from './GetNotificationsState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -250,6 +254,10 @@ import {
   UpdateFavouriteProductPayload,
 } from './UpdateFavouriteProductState';
 import { UpdateListingMeta, UpdateListingPayload } from './UpdateListingState';
+import {
+  UpdateNotificationSettingsPayload,
+  UpdateNotificationSettingsMetaData,
+} from './UpdateNotificationSettingsState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
@@ -476,5 +484,10 @@ export interface Store {
   getNotificationsSettings: AsyncState<
     GetNotificationsSettingsMeta,
     GetNotificationsSettingsPayload
+  >;
+  getNotifications: AsyncState<GetNotificationsMeta, GetNotificationsPayload>;
+  updateNotificationSettings: AsyncState<
+    UpdateNotificationSettingsMetaData,
+    UpdateNotificationSettingsPayload
   >;
 }

@@ -80,7 +80,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                 </DropdownItemContainer>
                 <DropdownItemContainer>
                   <NotificationItem
-                    type="account"
+                    type="orders"
                     content="Test"
                     date={moment()}
                     isRead={true}

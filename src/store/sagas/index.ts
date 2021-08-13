@@ -46,7 +46,8 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
-import getNotificationsSettings from './getNotificationsSettings'
+import getNotifications from './getNotifications';
+import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -80,6 +81,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateNotificationSettings from './updateNotificationSettings';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
@@ -160,6 +162,7 @@ const sagas = [
   updateBankDetails,
   updateDefaultCard,
   updateFavoriteSeller,
+  updateNotificationSettings,
   updateFavouriteProduct,
   updateListing,
   updateMarketInterests,
@@ -169,6 +172,7 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
+  getNotifications,
   getNotificationsSettings,
 ];
 

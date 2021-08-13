@@ -99,3 +99,5 @@ export { default as socketAllBuyerListingsActions } from './socketAllBuyerListin
 export { default as getCratesActions } from './getCrates';
 export { default as getAvailableCratesActions } from './getAvailableCrates';
 export { default as getNotificationsSettingsActions } from './getNotificationsSettings';
+export { default as getNotificationsActions } from './getNotifications';
+export { default as updateNotificationSettingsActions } from './updateNotificationSettings';

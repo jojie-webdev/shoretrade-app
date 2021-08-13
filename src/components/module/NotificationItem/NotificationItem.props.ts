@@ -1,3 +1,5 @@
+import { NotificationType } from 'types/store/GetNotificationsState';
+
 export interface NotificationItemProps {
   type: NotificationType;
   isRead: boolean;
@@ -5,13 +7,6 @@ export interface NotificationItemProps {
   date: moment.Moment | null;
   fullView?: boolean;
 }
-
-export type NotificationType =
-  | 'account'
-  | 'orders'
-  | 'marketRequests'
-  | 'listings'
-  | 'cart';
 
 export interface NotifAvatarProps {
   type: NotificationType;

@@ -3,22 +3,25 @@ import React, { useState } from 'react';
 // eslint-disable-next-line import/order
 import {
   Account,
+  Anchor,
   CheckCircle,
+  DashboardAlt as ListingsIcon,
   FolderDownload,
+  MarketRequests,
   More,
+  Orders,
+  Star,
 } from 'components/base/SVG';
 
 // import { useTheme } from 'utils/Theme';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import { Content } from 'components/layout/AuthContainer/AuthContainer.style';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import {
   NotificationItemProps,
-  NotificationType,
   NotifAvatarProps,
 } from './NotificationItem.props';
 import {
@@ -37,12 +40,7 @@ const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
   const { fullView, notifsRoute } = props;
 
   const handlePress = () => {
-    if (!fullView) {
-      // go to notifcations page
-      history.push(notifsRoute);
-    } else {
-      setIsOpen(!isOpen);
-    }
+    setIsOpen(!isOpen);
   };
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -110,12 +108,35 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
 
   const NotifAvatar = (props: NotifAvatarProps) => {
     let icon: JSX.Element;
+    const defaulAvatarProps = {
+      width: 24,
+      height: 24,
+      fill: iconColor,
+    };
     switch (props.type) {
       case 'account':
-        icon = <Account fill={iconColor} />;
+        icon = <Account {...defaulAvatarProps} />;
+        break;
+      case 'inactivity':
+        icon = <Account {...defaulAvatarProps} />;
+        break;
+      case 'market-requests':
+        icon = <MarketRequests {...defaulAvatarProps} />;
+        break;
+      case 'orders':
+        icon = <Orders {...defaulAvatarProps} />;
+        break;
+      case 'rating-favourite':
+        icon = <Star {...defaulAvatarProps} />;
+        break;
+      case 'aquafutures':
+        icon = <Anchor {...defaulAvatarProps} />;
+        break;
+      case 'listings':
+        icon = <ListingsIcon {...defaulAvatarProps} />;
         break;
       default:
-        icon = <Account fill={iconColor} />;
+        icon = <Account {...defaulAvatarProps} />;
     }
     return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
   };
@@ -123,7 +144,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   return (
     <Container isRead={isRead} fullView={fullView}>
       <div className="horizontal-style-container" />
-      <NotifAvatar type="account" />
+      <NotifAvatar type={props.type} />
       <div className="content-container">
         <Typography
           weight="900"
