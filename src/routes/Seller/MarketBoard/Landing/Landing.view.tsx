@@ -97,7 +97,7 @@ const MyActiveOffersInteractions = (props: {
 }) => {
   const theme = useTheme();
   const { onClick, data } = props;
-  console.log({ data });
+
   const getStatus = (status: GetActiveOffersRequestResponseItem['status']) => {
     if (status === 'OPEN') return 'NEGOTIATION';
     if (status === 'ACCEPTED') return 'ACCEPTED';

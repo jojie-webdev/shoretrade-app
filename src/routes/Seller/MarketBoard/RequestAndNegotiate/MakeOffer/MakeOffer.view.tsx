@@ -31,7 +31,7 @@ import {
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
-  console.log(props.buyerRequest?.specifications);
+
   return (
     <Container>
       <Row>

@@ -95,7 +95,6 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   };
 
   const properOffer = props.offer[0];
-  console.log({ properOffer });
   return (
     <Container>
       <SummaryContentContainer>
