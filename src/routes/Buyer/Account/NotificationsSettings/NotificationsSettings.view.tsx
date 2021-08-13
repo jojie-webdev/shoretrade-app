@@ -31,6 +31,8 @@ const NotificationsSettingsView = ({
   handleGlobalToggle,
   groupedNotifSettings,
   loading,
+  contactNo,
+  email,
   handleCustomSettingUpdate,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
@@ -60,8 +62,6 @@ const NotificationsSettingsView = ({
     option: CustomSettingKey,
     val: boolean
   ) => {
-    console.log(option);
-    console.log(CustomSettingKey);
     handleCustomSettingUpdate(item, option, val);
   };
 
@@ -109,7 +109,7 @@ const NotificationsSettingsView = ({
             <GlobalNotificationToggle
               title="Email"
               icon={<EnvelopeAlt fill={iconColor} />}
-              description="peter@shoretrade.com"
+              description={email}
               onClick={() => handleGlobalToggle('email')}
               checked={globalSettings?.email || false}
             />
@@ -118,7 +118,7 @@ const NotificationsSettingsView = ({
             <GlobalNotificationToggle
               title="SMS"
               icon={<CommentsAlt fill={iconColor} />}
-              description="+61 123 456 789"
+              description={contactNo}
               onClick={() => handleGlobalToggle('mobile')}
               checked={globalSettings?.mobile || false}
             />

@@ -12,6 +12,8 @@ export interface NotificationsSettingsProps {
     push: boolean;
     email: boolean;
   };
+  email: string;
+  contactNo: string;
   groupedNotifSettings: NotificationResourceGroup[];
   loading: boolean;
   handleGlobalToggle: (key: string) => void;

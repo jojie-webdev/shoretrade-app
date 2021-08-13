@@ -26,6 +26,7 @@ import {
   toUpdateSettingItem,
 } from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
+import { userInfo } from 'os';
 
 const NotificationsSettings = (): JSX.Element => {
   // TODO Setup redux for container
@@ -54,6 +55,8 @@ const NotificationsSettings = (): JSX.Element => {
   const getPendingNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.pending || false
   );
+
+  const getUser = useSelector((state: Store) => state.getUser.data);
 
   const pendingUpdate = useSelector(
     (state: Store) => state.updateNotificationSettings.pending || false
@@ -182,6 +185,8 @@ const NotificationsSettings = (): JSX.Element => {
     globalSettings,
     handleGlobalToggle,
     groupedNotifSettings,
+    email: getUser?.data?.user.email || '',
+    contactNo: getUser?.data?.user.mobile || '',
     loading: getPendingNotificationsSettings,
     handleCustomSettingUpdate,
   };
