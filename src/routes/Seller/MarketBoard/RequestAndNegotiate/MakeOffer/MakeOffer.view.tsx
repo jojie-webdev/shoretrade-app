@@ -287,7 +287,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 Summary
               </Typography>
               <div className="summary-border" />
-              {!isEmpty(props.specifications) && (
+              {!isEmpty(props.buyerRequest.specifications) && (
                 <>
                   <Typography
                     className="header"
@@ -303,12 +303,44 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       color="noshade"
                       variant="title5"
                     >
-                      {props.specifications.map((v) => v.label).join(', ')}
+                      {props.buyerRequest.specifications &&
+                        props.buyerRequest.specifications
+                          .map((v) => v.stateName)
+                          .join(', ')}
                     </Typography>
                   </div>
                 </>
               )}
-              {props.size.from !== '' && (
+              {props.buyerRequest?.sizeFrom &&
+                props.buyerRequest?.sizeFrom?.toString().length > 0 && (
+                  <>
+                    <Typography
+                      className="header"
+                      color="shade6"
+                      variant="title5"
+                    >
+                      Size:
+                    </Typography>
+                    <div className="value">
+                      <Cross7 />
+                      <Typography
+                        className="values"
+                        color="noshade"
+                        variant="title5"
+                      >
+                        {capitalize(
+                          (props.buyerRequest?.sizeFrom &&
+                            props.buyerRequest?.sizeFrom?.toString()) ||
+                            ''
+                        )}
+                        {props.buyerRequest.sizeTo
+                          ? `- ${props.buyerRequest.sizeTo.toString()}`
+                          : ''}
+                      </Typography>
+                    </div>
+                  </>
+                )}
+              {!isEmpty(props.buyerRequest.sizeOptions) && (
                 <>
                   <Typography
                     className="header"
@@ -324,14 +356,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       color="noshade"
                       variant="title5"
                     >
-                      {capitalize(props.size.from)}
-                      {props.size.to ? `- ${props.size.to}` : ''}
+                      {props.buyerRequest.sizeOptions &&
+                        props.buyerRequest.sizeOptions.map((v) => v).join(', ')}
                     </Typography>
                   </div>
                 </>
               )}
-
-              {props.weight && (
+              {props.buyerRequest.weight?.from && (
                 <>
                   <Typography
                     className="header"
@@ -347,7 +378,11 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       color="noshade"
                       variant="title5"
                     >
-                      {props.weight}
+                      {props.buyerRequest.weight.from}
+                      {formatMeasurementUnit(
+                        props.buyerRequest.measurementUnit
+                      )}
+                      -{props.buyerRequest.weight.to}
                       {formatMeasurementUnit(
                         props.buyerRequest.measurementUnit
                       )}

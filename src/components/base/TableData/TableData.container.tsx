@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Checkbox from 'components/base/Checkbox';
 import { SortIcon, Minus } from 'components/base/SVG';
@@ -17,6 +17,7 @@ export default function TableData(props: TableDataProps) {
     sticky,
     selected,
     handleOnSelect,
+    id,
     onResize,
     column,
   } = props;
@@ -39,6 +40,7 @@ export default function TableData(props: TableDataProps) {
       columnType={columnType}
       rowType={rowType}
       sticky={sticky}
+      id={columnType !== 'column-first' ? id : ''}
       onResize={onResize}
       column={column}
     >
@@ -46,7 +48,7 @@ export default function TableData(props: TableDataProps) {
         if (rowType === 'header' || columnType === 'column-first')
           return (
             <>
-              <div className="table-value-container">
+              <div id={id} className="table-value-container">
                 {columnType === 'column-first' && (
                   <Checkbox
                     checked={checked}
