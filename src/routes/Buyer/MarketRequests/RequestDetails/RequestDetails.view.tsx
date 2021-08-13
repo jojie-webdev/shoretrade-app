@@ -9,7 +9,8 @@ import {
   Star,
   StarFilled,
   Weight,
-  Octopus
+  Octopus,
+  DropdownArrow
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -52,7 +53,7 @@ import {
   DeleteButtonContainer,
   CounterContainer,
   CounterCol,
-  SelectContainer
+  Sorter
 } from './RequestDetails.style';
 import Offer from './Offer/Offer.view';
 import Select from 'components/base/Select/Select.view';
@@ -392,15 +393,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <span>{' '}Results</span>
         </Typography>
 
-        <SelectContainer onClick={props.onClickFilterButton}>
-          <Select
-            label=""
-            options={[]}
-            size="small"
-            placeholder="Sort by"
-            disabled
-          />
-        </SelectContainer>
+        <Sorter onClick={() => props.onClickFilterButton()}>
+          <Typography color="shade9" variant="label" style={{ marginRight: "15px" }}>Sort by</Typography>
+          <DropdownArrow fill={theme.grey.shade6} />
+        </Sorter>
+
       </CounterContainer>
     </CounterCol>
   )

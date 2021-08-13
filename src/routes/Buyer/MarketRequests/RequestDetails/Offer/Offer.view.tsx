@@ -39,7 +39,7 @@ const Offer = (props: OfferProps) => {
     };
 
     const renderSubDetails = (offer: any) => (
-        <>
+        <div className="sub-details" >
             <Typography
                 weight="700"
                 variant="caption"
@@ -71,7 +71,7 @@ const Offer = (props: OfferProps) => {
             >
                 Size: {sizeToString(offer.metric, offer.size.from, offer.size.to)}
             </Typography>
-        </>
+        </div>
     )
 
     const renderStars = () => (
@@ -126,6 +126,10 @@ const Offer = (props: OfferProps) => {
                 <div style={{ marginTop: "8px" }}>
                     {renderSubDetails(offer)}
                 </div>
+
+                <div style={{ marginTop: "8px" }}>
+                    {renderTags(offer)}
+                </div>
             </MarketRequestItemMobileContainer>
         );
     };
@@ -169,7 +173,7 @@ const Offer = (props: OfferProps) => {
         onOfferDelete(offerId)
     }
 
-    const renderTags = (offer: any, sellerOffer: GetActiveOffersRequestResponseItem) => (
+    const renderTags = (offer: any) => (
         <TagsContainer>
             {
                 offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ?
@@ -217,8 +221,8 @@ const Offer = (props: OfferProps) => {
                         }
                         {
                             offer.negotiations && (
-                                <Badge className="offers-badge" badgeColor={theme.brand.alert}>
-                                    <StatusBadgeText weight="bold" variant="overline">
+                                <Badge className="offers-badge" badgeColor="#FFF7F2" padding="5px 8px">
+                                    <StatusBadgeText weight="bold" variant="overline" color="warning">
                                         Negotiation
                                     </StatusBadgeText>
                                 </Badge>
@@ -262,12 +266,12 @@ const Offer = (props: OfferProps) => {
                         </MajorInfoNonMobileContainer>
                     </Col>
 
-                    <Col className="sub-details" sm={12} md={6} lg={3} >
+                    <Col sm={12} md={6} lg={3} >
                         {renderSubDetails(offer)}
                     </Col>
 
                     <Col className="badges-col" sm={12} md={6} lg={3}>
-                        {renderTags(offer, sellerOffer)}
+                        {renderTags(offer)}
                     </Col>
 
                     <Col className="cta" sm={12} md={6} lg={2} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>

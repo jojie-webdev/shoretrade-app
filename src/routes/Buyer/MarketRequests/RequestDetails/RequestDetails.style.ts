@@ -413,3 +413,12 @@ export const SelectContainer = styled.div`
   width: 94px;
   cursor: pointer;
 `
+
+export const Sorter = styled.div`
+  padding: 6px 12px;
+  background-color: #E5E8F5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`

@@ -11,21 +11,29 @@ export const OfferContainer = styled.div`
     margin-top: 12px;
     cursor: pointer;
 
-    @media (max-width: 833px) {
-        .sub-details{
+    .sub-details{
+        @media (max-width: 833px) {
+            background-color: red !important;
             margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
+    }
 
-        .cta{
+    .cta{
+        @media (max-width: 833px) {
             margin-top: 15px;
             justify-content: flex-start !important;
         }
-
     }
 
-    @media (max-width: 1199px) {
-        .sub-details{
+    .sub-details{
+        @media (max-width: 1199px) {
             margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
     }
 
@@ -132,10 +140,4 @@ export const MajorInfoNonMobileContainer = styled.div`
     align-items: baseline;
     justify-content: space-evenly;
     height: 100%;
-`
-
-export const RightCTAContainer = styled(Col)`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
 `
