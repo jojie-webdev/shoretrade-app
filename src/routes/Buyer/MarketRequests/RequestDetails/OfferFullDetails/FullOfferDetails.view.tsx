@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FullOfferDetailsContainer } from './FullOfferDetails.style';
-import { Row, Col } from 'react-grid-system';
+import { FullOfferDetailsContainer, CompanyInfoCol, TotalPriceContainer } from './FullOfferDetails.style';
+import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import Typography from 'components/base/Typography';
 import theme from 'utils/Theme';
 import Button from '../../../../../components/base/Button/Button.view';
@@ -45,6 +45,71 @@ const FullOfferDetails = (props: any) => {
         })
     }, [offerId])
 
+    const renderTotalPriceContainer = () => (
+        <TotalPriceContainer>
+            <Typography variant="caption" color="shade7">
+                TOTAL VALUE
+            </Typography>
+            <Typography variant="title1" color="shade8" style={{ marginTop: "8px" }}>
+                ${(offer?.weight * offer?.price).toFixed(2)}
+            </Typography>
+        </TotalPriceContainer>
+    )
+
+    const renderOfferSeenTextContainer = () => (
+        <div style={{ marginTop: "16px" }}>
+            {!isAccepted && (
+                <>
+                    {!thereIsNewOffer && counterOffer === '' && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                You have received an offer by the Seller. Either click
+                                accept or negotiate to proceed.
+                            </Typography>
+                        </div>
+                    )}
+
+                    {thereIsNewOffer && counterOffer === newOffer && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                You have received an offer by the Seller. Either click
+                                accept or negotiate to proceed.
+                            </Typography>
+                        </div>
+                    )}
+
+                    {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                The seller is reviewing your offer.
+                            </Typography>
+                        </div>
+                    )}
+                </>
+            )}
+        </div>
+    )
+
+    const renderCTA = () => (
+        <div style={{ display: "flex" }}>
+            <Button
+                onClick={() => handleStartNegotiate()}
+                variant="outline"
+                text="NEGOTIATE"
+                style={{ borderRadius: "12px" }}
+                icon={<Refresh />}
+                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
+            />
+            <Button
+                text="ACCEPT"
+                style={{ borderRadius: "12px", marginLeft: "8px" }}
+                icon={<Check />}
+                onClick={() => handleAcceptOffer()}
+                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
+            />
+        </div>
+    )
+
     return (
         <>
             <FullOfferDetailsContainer>
@@ -77,7 +142,7 @@ const FullOfferDetails = (props: any) => {
                             </Typography>
                         </div>
                     </Col>
-                    <Col xl={3}>
+                    <CompanyInfoCol xl={3}>
                         <div style={{ display: "flex" }}>
                             {
                                 seller?.image ?
@@ -125,83 +190,46 @@ const FullOfferDetails = (props: any) => {
                         </div>
 
                         <Typography variant="label" color="shade7">{Object.values(seller?.address || {}).join(", ")}</Typography>
-                    </Col>
+                    </CompanyInfoCol>
                 </Row>
+                <Hidden xs sm>
+                    <Row>
+                        <Col>
+                            {renderTotalPriceContainer()}
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            {renderOfferSeenTextContainer()}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{ marginTop: "24px" }}>
+                            {renderCTA()}
+                        </Col>
+                    </Row>
+                </Hidden>
+            </FullOfferDetailsContainer>
+
+            <Visible xs sm>
                 <Row>
                     <Col>
-                        <div style={{
-                            background: theme.grey.shade1,
-                            border: `1px solid ${theme.grey.shade4}`,
-                            borderRadius: "12px",
-                            padding: "16px",
-                            marginTop: "28px"
-                        }}>
-                            <Typography variant="caption" color="shade7">
-                                TOTAL VALUE
-                            </Typography>
-                            <Typography variant="title1" color="shade8" style={{ marginTop: "8px" }}>
-                                ${(offer?.weight * offer?.price).toFixed(2)}
-                            </Typography>
-                        </div>
+                        {renderTotalPriceContainer()}
                     </Col>
                 </Row>
+
                 <Row>
                     <Col>
-                        <div style={{ marginTop: "16px" }}>
-                            {!isAccepted && (
-                                <>
-                                    {!thereIsNewOffer && counterOffer === '' && (
-                                        <div className="computation-item-container">
-                                            <Typography variant="label" color="shade9">
-                                                You have received an offer by the Seller. Either click
-                                                accept or negotiate to proceed.
-                                            </Typography>
-                                        </div>
-                                    )}
-
-                                    {thereIsNewOffer && counterOffer === newOffer && (
-                                        <div className="computation-item-container">
-                                            <Typography variant="label" color="shade9">
-                                                You have received an offer by the Seller. Either click
-                                                accept or negotiate to proceed.
-                                            </Typography>
-                                        </div>
-                                    )}
-
-                                    {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
-                                        <div className="computation-item-container">
-                                            <Typography variant="label" color="shade9">
-                                                The seller is reviewing your offer.
-                                            </Typography>
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                        </div>
+                        {renderOfferSeenTextContainer()}
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: "24px" }}>
-                        <div style={{ display: "flex" }}>
-                            <Button
-                                onClick={() => handleStartNegotiate()}
-                                variant="outline"
-                                text="NEGOTIATE"
-                                style={{ borderRadius: "12px" }}
-                                icon={<Refresh />}
-                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
-                            />
-                            <Button
-                                text="ACCEPT"
-                                style={{ borderRadius: "12px", marginLeft: "8px" }}
-                                icon={<Check />}
-                                onClick={() => handleAcceptOffer()}
-                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
-                            />
-                        </div>
+                        {renderCTA()}
                     </Col>
                 </Row>
-            </FullOfferDetailsContainer>
+            </Visible>
         </>
     );
 }

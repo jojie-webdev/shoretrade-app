@@ -178,7 +178,7 @@ const Offer = (props: OfferProps) => {
             {
                 offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ?
                     <Badge
-                        id="decline-lost-badge"
+                        id="status-badge"
                         className="offers-badge"
                         badgeColor={
                             offer.status === 'ACCEPTED' ? theme.brand.success : theme.brand.error

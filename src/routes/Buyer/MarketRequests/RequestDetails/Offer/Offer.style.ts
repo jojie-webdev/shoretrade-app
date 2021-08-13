@@ -80,7 +80,7 @@ export const MarketRequestItemInteractionContainer = styled.div`
     .cta{
         display: flex;
         align-items: center;
-        height: 100px;
+        height: 115px;
         align-content: space-between;
         flex-direction: column;
         justify-content: space-between;
@@ -93,8 +93,12 @@ export const TagsContainer = styled.div`
     align-items: flex-start !important;
     display: flex;
 
-    #decline-lost-badge{
-        margin:auto;
+    #status-badge{
+        margin: 0px;
+
+        @media (min-width: 993px){
+            margin:auto;
+        }
     }
 `
 
