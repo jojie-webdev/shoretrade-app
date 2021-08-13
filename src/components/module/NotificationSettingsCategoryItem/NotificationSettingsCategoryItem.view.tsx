@@ -5,6 +5,7 @@ import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
+import { CustomSettingKey } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationSettingsCategoryItemProps } from './NotificationSettingsCategoryItem.props';
@@ -90,14 +91,7 @@ const NotificationSettingsCategoryItem = (
         <OptionsContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
-              onClick={() =>
-                onChange({
-                  push: { ...push, enabled: !push.enabled },
-                  email,
-                  mobile,
-                  inapp,
-                })
-              }
+              onClick={() => onChange(!push.enabled, CustomSettingKey.PUSH)}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={push.enabled}
             />
@@ -108,14 +102,7 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
-              onClick={() =>
-                onChange({
-                  push,
-                  email: { ...email, enabled: !email.enabled },
-                  mobile,
-                  inapp,
-                })
-              }
+              onClick={() => onChange(!email.enabled, CustomSettingKey.EMAIL)}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={email.enabled}
             />
@@ -126,14 +113,7 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
-              onClick={() =>
-                onChange({
-                  push,
-                  email,
-                  mobile: { ...mobile, enabled: !mobile.enabled },
-                  inapp,
-                })
-              }
+              onClick={() => onChange(!mobile.enabled, CustomSettingKey.MOBILE)}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={mobile.enabled}
             />

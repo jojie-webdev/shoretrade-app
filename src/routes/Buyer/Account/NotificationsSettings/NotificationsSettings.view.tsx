@@ -13,6 +13,8 @@ import { Col, Row } from 'react-grid-system';
 import {
   SpecificNotificationSettingItem,
   SettingsToggleItem,
+  NotificationSettingItem,
+  CustomSettingKey,
 } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
@@ -36,31 +38,31 @@ const NotificationsSettingsView = ({
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = theme.grey.shade7;
 
-  const notifSettings = Object.keys(groupedNotifSettings).reduce(
-    (
-      data: {
-        id: string;
-        specificNotifSettingItems: SpecificNotificationSettingItem[];
-      }[],
-      id
-    ) => [
-      ...data,
-      {
-        id: id,
-        specificNotifSettingItems: groupedNotifSettings[id],
-      },
-    ],
-    []
-  );
+  // const notifSettings = Object.keys(groupedNotifSettings).reduce(
+  //   (
+  //     data: {
+  //       id: string;
+  //       specificNotifSettingItems: SpecificNotificationSettingItem[];
+  //     }[],
+  //     id
+  //   ) => [
+  //     ...data,
+  //     {
+  //       id: id,
+  //       specificNotifSettingItems: groupedNotifSettings[id],
+  //     },
+  //   ],
+  //   []
+  // );
 
   const handleCustomSettingsChange = (
-    item: SpecificNotificationSettingItem,
-    val: SettingsToggleItem
+    item: NotificationSettingItem,
+    option: CustomSettingKey,
+    val: boolean
   ) => {
-    handleCustomSettingUpdate({
-      ...item,
-      settings: { ...val },
-    });
+    console.log(option);
+    console.log(CustomSettingKey);
+    handleCustomSettingUpdate(item, option, val);
   };
 
   if (!globalSettings || loading) {
@@ -124,26 +126,28 @@ const NotificationsSettingsView = ({
         </div>
       </GlobalNotificationsContainer>
 
-      {notifSettings.map((ns) => (
-        <CategoryItemContainer key={ns.id}>
+      {groupedNotifSettings.map((ns) => (
+        <CategoryItemContainer key={ns.resource}>
           <div>
             <Typography color={defaultColor} variant="body">
-              {ns.specificNotifSettingItems[0].resource
+              {ns.resource
                 .split('_')
                 .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
                 .join(' ')}
             </Typography>
           </div>
-          {ns.specificNotifSettingItems.map((i, index) => (
+          {ns.items.map((i, index) => (
             <NotificationSettingsCategoryItem
-              onChange={(val) => handleCustomSettingsChange(i, val)}
+              onChange={(val, option) =>
+                handleCustomSettingsChange(i, option, val)
+              }
               inapp={i.settings.inapp}
-              key={i.id + index}
+              key={index}
               mobile={i.settings.mobile}
               push={i.settings.push}
               email={i.settings.email}
               icon={<Sold fill={iconColor} />}
-              title={i.name}
+              title={i.title}
             ></NotificationSettingsCategoryItem>
           ))}
         </CategoryItemContainer>

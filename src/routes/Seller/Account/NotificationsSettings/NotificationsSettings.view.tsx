@@ -2,13 +2,7 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import {
-  CommentsAlt,
-  DashboardOutlined,
-  Desktop,
-  EnvelopeAlt,
-  Sold,
-} from 'components/base/SVG';
+import { CommentsAlt, Desktop, EnvelopeAlt, Sold } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import Loading from 'components/module/Loading';
@@ -17,8 +11,10 @@ import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
 import {
-  SettingsToggleItem,
   SpecificNotificationSettingItem,
+  SettingsToggleItem,
+  NotificationSettingItem,
+  CustomSettingKey,
 } from 'types/store/GetNotificationSettingsState';
 import { useTheme } from 'utils/Theme';
 
@@ -40,34 +36,33 @@ const NotificationsSettingsView = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
-  const iconColor = theme.grey.shade6;
+  const iconColor = theme.grey.shade7;
 
-  const notifSettings = Object.keys(groupedNotifSettings).reduce(
-    (
-      data: {
-        id: string;
-        specificNotifSettingItems: SpecificNotificationSettingItem[];
-      }[],
-      id
-    ) => [
-      ...data,
-      {
-        id: id,
-        specificNotifSettingItems: groupedNotifSettings[id],
-      },
-    ],
-    []
-  );
+  // const notifSettings = Object.keys(groupedNotifSettings).reduce(
+  //   (
+  //     data: {
+  //       id: string;
+  //       specificNotifSettingItems: SpecificNotificationSettingItem[];
+  //     }[],
+  //     id
+  //   ) => [
+  //     ...data,
+  //     {
+  //       id: id,
+  //       specificNotifSettingItems: groupedNotifSettings[id],
+  //     },
+  //   ],
+  //   []
+  // );
 
   const handleCustomSettingsChange = (
-    item: SpecificNotificationSettingItem,
-    val: SettingsToggleItem
+    item: NotificationSettingItem,
+    option: CustomSettingKey,
+    val: boolean
   ) => {
-    console.log(val);
-    handleCustomSettingUpdate({
-      ...item,
-      settings: { ...val },
-    });
+    console.log(option);
+    console.log(CustomSettingKey);
+    handleCustomSettingUpdate(item, option, val);
   };
 
   if (!globalSettings || loading) {
@@ -130,26 +125,29 @@ const NotificationsSettingsView = ({
           </div>
         </div>
       </GlobalNotificationsContainer>
-      {notifSettings.map((ns) => (
-        <CategoryItemContainer key={ns.id}>
+
+      {groupedNotifSettings.map((ns) => (
+        <CategoryItemContainer key={ns.resource}>
           <div>
             <Typography color={defaultColor} variant="body">
-              {ns.specificNotifSettingItems[0].resource
+              {ns.resource
                 .split('_')
                 .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
                 .join(' ')}
             </Typography>
           </div>
-          {ns.specificNotifSettingItems.map((i, index) => (
+          {ns.items.map((i, index) => (
             <NotificationSettingsCategoryItem
-              onChange={(val) => handleCustomSettingsChange(i, val)}
-              key={i.id + index}
+              onChange={(val, option) =>
+                handleCustomSettingsChange(i, option, val)
+              }
               inapp={i.settings.inapp}
+              key={index}
               mobile={i.settings.mobile}
               push={i.settings.push}
               email={i.settings.email}
               icon={<Sold fill={iconColor} />}
-              title={i.name}
+              title={i.title}
             ></NotificationSettingsCategoryItem>
           ))}
         </CategoryItemContainer>

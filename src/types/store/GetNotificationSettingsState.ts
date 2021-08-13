@@ -68,13 +68,48 @@ export type SettingsUpdateItem = {
 //   },
 // },
 
+export type NotificationResourceGroup = {
+  resource: string;
+  items: NotificationSettingItem[];
+};
+
+export type NotificationSettingItem = {
+  title: string; // subgroup or name
+  notificationIds: string[];
+  settings: {
+    inapp: {
+      supported: boolean;
+      enabled: boolean;
+    };
+    mobile: {
+      supported: boolean;
+      enabled: boolean;
+    };
+    email: {
+      supported: boolean;
+      enabled: boolean;
+    };
+    push: {
+      supported: boolean;
+      enabled: boolean;
+    };
+  };
+};
+
 export type SpecificNotificationSettingItem = {
   id: string;
   resource: string;
   name: string;
-  subgroup: any;
+  subgroup: string;
   settings: SettingsToggleItem;
 };
+
+export enum CustomSettingKey {
+  MOBILE = 'mobile',
+  PUSH = 'push',
+  EMAIL = 'email',
+  INAPP = 'inapp',
+}
 
 // {
 //   "id": "7913f9c4-9f45-4fff-8f87-bb7290a7aeba",

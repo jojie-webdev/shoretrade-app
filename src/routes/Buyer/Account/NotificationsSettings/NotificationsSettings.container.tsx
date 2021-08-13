@@ -11,7 +11,9 @@ import {
   updateNotificationSettingsActions,
 } from 'store/actions';
 import {
+  CustomSettingKey,
   GlobalNotificationsSettingsResponse,
+  NotificationSettingItem,
   SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
 import { Store } from 'types/store/Store';
@@ -19,6 +21,7 @@ import { Store } from 'types/store/Store';
 import { QueryParams } from '../EditAddress/EditAddress.props';
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
 import {
+  toNotificationResourceGroup,
   toUpdateNotification,
   toUpdateSettingItem,
 } from './NotificationsSettings.transform';
@@ -30,7 +33,7 @@ const NotificationsSettings = (): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [companyId, setCompanyId] = useState('');
-  const [updateTriggered, setUpdateTriggered] = useState(false);
+  const [updateTriggered, setUpdateTriggered] = useState<null | any>(null);
   const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
     null | 'mobile' | 'push' | 'email'
   >(null);
@@ -78,12 +81,8 @@ const NotificationsSettings = (): JSX.Element => {
     }
   }, [companyId]);
 
-  const handleOnSaveCustom = () => {
-    dispatch(
-      updateNotificationSettingsActions.request({
-        custom: toUpdateNotification(customSettings),
-      })
-    );
+  const handleOnSaveCustom = (val: any) => {
+    dispatch(updateNotificationSettingsActions.request(val));
   };
 
   const handleOnSaveGlobal = (key: 'email' | 'mobile' | 'push') => {
@@ -104,23 +103,46 @@ const NotificationsSettings = (): JSX.Element => {
     }
   };
 
-  const handleCustomSettingUpdate = (item: SpecificNotificationSettingItem) => {
+  const handleCustomSettingUpdate = (
+    item: NotificationSettingItem,
+    option: CustomSettingKey,
+    val: boolean
+  ) => {
     // find idx
     setCustomSettings(
       customSettings.map((c) => {
-        if (c.id === item.id) {
-          return item;
+        const idx = item.notificationIds.indexOf(c.id);
+        if (idx > -1) {
+          console.log(idx);
+          return {
+            ...c,
+            settings: {
+              ...c.settings,
+              [option]: {
+                supported: c.settings[option].supported,
+                enabled: val,
+              },
+            },
+          };
         }
         return c;
       })
     );
-    setUpdateTriggered(true);
+    setUpdateTriggered({
+      custom: item.notificationIds.reduce(
+        (acc: { [key: string]: any }, curr) => (
+          (acc[curr] = { [option]: val }), acc
+        ),
+        {}
+      ), //or use acc:any
+    });
   };
 
   useEffect(() => {
     if (updateTriggered && customSettings) {
-      handleOnSaveCustom();
-      setUpdateTriggered(false);
+      console.log(updateTriggered);
+      handleOnSaveCustom(updateTriggered);
+      setUpdateTriggered(null);
     }
   }, [customSettings, updateTriggered]);
 
@@ -146,11 +168,15 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
   ]);
 
-  const groupNotifsByResource = groupBy(
-    (specificNotifItem: SpecificNotificationSettingItem) =>
-      specificNotifItem.resource
+  // const groupNotifsByResource = groupBy(
+  //   (specificNotifItem: SpecificNotificationSettingItem) =>
+  //     specificNotifItem.resource
+  // );
+  // const groupedNotifSettings = groupNotifsByResource(customSettings || []);
+
+  const groupedNotifSettings = toNotificationResourceGroup(
+    customSettings || []
   );
-  const groupedNotifSettings = groupNotifsByResource(customSettings || []);
 
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,

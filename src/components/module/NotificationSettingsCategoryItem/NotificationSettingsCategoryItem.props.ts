@@ -1,5 +1,6 @@
 import {
   CategoryStatus,
+  CustomSettingKey,
   SettingsToggleItem,
   SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
@@ -11,5 +12,5 @@ export interface NotificationSettingsCategoryItemProps {
   push: CategoryStatus;
   email: CategoryStatus;
   inapp: CategoryStatus;
-  onChange: (val: SettingsToggleItem) => void;
+  onChange: (val: boolean, option: CustomSettingKey) => void;
 }

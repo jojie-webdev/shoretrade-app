@@ -1,5 +1,8 @@
 import {
   CategoryStatus,
+  CustomSettingKey,
+  NotificationResourceGroup,
+  NotificationSettingItem,
   SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
 
@@ -9,8 +12,12 @@ export interface NotificationsSettingsProps {
     push: boolean;
     email: boolean;
   };
-  groupedNotifSettings: Record<string, SpecificNotificationSettingItem[]>;
+  groupedNotifSettings: NotificationResourceGroup[];
   loading: boolean;
   handleGlobalToggle: (key: string) => void;
-  handleCustomSettingUpdate: (item: SpecificNotificationSettingItem) => void;
+  handleCustomSettingUpdate: (
+    item: NotificationSettingItem,
+    option: CustomSettingKey,
+    val: boolean
+  ) => void;
 }
