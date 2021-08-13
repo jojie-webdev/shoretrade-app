@@ -1,5 +1,7 @@
 import styled from './../../../../../utils/styled';
 import theme from './../../../../../utils/Theme';
+import { BREAKPOINTS } from './../../../../../consts/breakpoints';
+import { Row, Col } from 'react-grid-system';
 
 export const OfferContainer = styled.div` 
     background: #FFFFFF;
@@ -39,6 +41,16 @@ export const OfferContainer = styled.div`
             fill: ${theme.grey.shade7};
         }
     }
+
+    .badges-col{
+        display: flex;
+        align-items: center;
+        justify-content: center !important;
+
+        @media ${BREAKPOINTS['lg']} {
+            margin-bottom: 5px !important;
+        }
+    }
 `
 
 export const MarketRequestItemInteractionContainer = styled.div`
@@ -65,4 +77,65 @@ export const MarketRequestItemInteractionContainer = styled.div`
         flex-direction: column;
         justify-content: space-between;
     }
+`
+
+export const TagsContainer = styled.div`
+    height: 100%; 
+    width: 100%;
+    align-items: flex-start !important;
+    display: flex;
+
+    #decline-lost-badge{
+        margin:auto;
+    }
+`
+
+export const NoActionsYetBadgesContainer = styled.div`
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+
+    @media (max-width: 1480px) {
+        flex-flow: column !important;
+    }
+
+    @media (max-width: 991px) {
+        display: -webkit-inline-box !important;
+    }
+`
+
+export const StarsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    height: 12px;
+`
+
+export const MajorInfoContainer = styled.div`
+    margin-left: 12px;
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    justify-content: space-evenly;
+    height: 100%;
+`
+
+export const OfferRowContainer = styled(Row)`
+    display: flex;
+    justify-content: space-between;
+`
+
+export const MajorInfoNonMobileContainer = styled.div`
+    margin-left: 12px;
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    justify-content: space-evenly;
+    height: 100%;
+`
+
+export const RightCTAContainer = styled(Col)`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 `

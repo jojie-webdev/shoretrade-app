@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Typography from 'components/base/Typography';
 import { Star, StarFilled, TrashCan, PlaceholderProfile, Crab } from 'components/base/SVG';
 import theme from '../../../../../utils/Theme';
 import Button from './../../../../../components/base/Button/Button.view';
 import { OfferProps } from './Offer.props';
-import { OfferContainer, MarketRequestItemInteractionContainer } from './Offer.style';
+import {
+    OfferContainer,
+    MarketRequestItemInteractionContainer,
+    TagsContainer,
+    NoActionsYetBadgesContainer,
+    StarsContainer,
+    MajorInfoContainer,
+    OfferRowContainer,
+    MajorInfoNonMobileContainer
+} from './Offer.style';
 import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
-import { Col, Row, Visible, Hidden } from 'react-grid-system';
+import { Col, Visible, Hidden } from 'react-grid-system';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
 import { sizeToString } from './../../../../../utils/Listing/sizeToString';
@@ -14,6 +23,9 @@ import { useHistory } from 'react-router';
 import { MajorInfo, MarketRequestItemInteraction, MarketRequestItemMobileContainer } from '../../Landing/Landing.style';
 import EmptyStateView from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
+import Badge from 'components/base/Badge/Badge.view';
+import { StatusBadgeText } from '../RequestDetails.style';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 
 const Offer = (props: OfferProps) => {
     const { sellerOffer, onOfferDelete } = props
@@ -63,7 +75,7 @@ const Offer = (props: OfferProps) => {
     )
 
     const renderStars = () => (
-        <div style={{ display: "flex", alignItems: "center", height: "12px" }}>
+        <StarsContainer>
             {
                 [...Array(5).keys()].map((r) =>
                     Number(sellerOffer.company.rating || 0) > r ? (
@@ -85,7 +97,7 @@ const Offer = (props: OfferProps) => {
                     )
                 )
             }
-        </div>
+        </StarsContainer>
     )
 
     const renderOffersForMobile = (offer: any) => {
@@ -102,20 +114,13 @@ const Offer = (props: OfferProps) => {
                         }
                     </div>
 
-                    <div style={{
-                        marginLeft: "12px",
-                        display: "flex",
-                        flexFlow: "column",
-                        alignItems: "baseline",
-                        justifyContent: "space-evenly",
-                        height: "100%"
-                    }}>
+                    <MajorInfoContainer>
                         <Typography variant="label" style={{ lineHeight: '20px' }}>
                             {sellerOffer.company.name}
                         </Typography>
 
                         {renderStars()}
-                    </div>
+                    </MajorInfoContainer>
                 </MajorInfo>
 
                 <div style={{ marginTop: "8px" }}>
@@ -164,11 +169,71 @@ const Offer = (props: OfferProps) => {
         onOfferDelete(offerId)
     }
 
+    const renderTags = (offer: any, sellerOffer: GetActiveOffersRequestResponseItem) => (
+        <TagsContainer>
+            {
+                offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ?
+                    <Badge
+                        id="decline-lost-badge"
+                        className="offers-badge"
+                        badgeColor={
+                            offer.status === 'ACCEPTED' ? theme.brand.success : theme.brand.error
+                        }
+                    >
+                        <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                            {offer.status === 'DECLINED' ? 'LOST' : offer.status}
+                        </StatusBadgeText>
+                    </Badge>
+                    :
+                    <NoActionsYetBadgesContainer>
+                        {
+                            offer.price < sellerOffer.marketRequest.averagePrice && (
+                                <Badge
+                                    className="offers-badge"
+                                    badgeColor={theme.brand.success}
+                                >
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Great Value
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.price > sellerOffer.marketRequest.averagePrice && (
+                                <Badge className="offers-badge" badgeColor={theme.brand.error}>
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Above Market
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.negotiations && (
+                                <Badge className="offers-badge" badgeColor={theme.brand.alert}>
+                                    <StatusBadgeText weight="bold" variant="overline">
+                                        Negotiation
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                    </NoActionsYetBadgesContainer>
+            }
+        </TagsContainer>
+    )
+
     const renderNonMobile = () => {
         return sellerOffer.offers.map(offer =>
             <OfferContainer onClick={() => onClickItem(offer)}>
-                <Row style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Col sm={12} md={12} xl={4} style={{ display: "flex", alignItems: "center" }}>
+                <OfferRowContainer>
+                    <Col sm={12} md={6} lg={4} style={{ display: "flex", alignItems: "center" }}>
                         {
                             sellerOffer.company.image ?
                                 <img
@@ -180,14 +245,7 @@ const Offer = (props: OfferProps) => {
                                 </AvatarPlaceholder>
                         }
 
-                        <div style={{
-                            marginLeft: "12px",
-                            display: "flex",
-                            flexFlow: "column",
-                            alignItems: "baseline",
-                            justifyContent: "space-evenly",
-                            height: "100%"
-                        }}>
+                        <MajorInfoNonMobileContainer>
                             <Typography
                                 weight="700"
                                 variant="label"
@@ -201,22 +259,18 @@ const Offer = (props: OfferProps) => {
                             </Typography>
 
                             {renderStars()}
-                        </div>
+                        </MajorInfoNonMobileContainer>
                     </Col>
 
-                    <Col className="sub-details" sm={12} md={6} xl={4} >
+                    <Col className="sub-details" sm={12} md={6} lg={3} >
                         {renderSubDetails(offer)}
                     </Col>
 
-                    <Col className="cta" sm={12} md={6} xl={4} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                        <Button
-                            text="View Offer"
-                            iconPosition="before"
-                            textColor="success"
-                            variant="unselected"
-                            size="sm"
-                            style={{ marginRight: "20px", backgroundColor: "#EAFFF9", borderRadius: "8px" }}
-                        />
+                    <Col className="badges-col" sm={12} md={6} lg={3}>
+                        {renderTags(offer, sellerOffer)}
+                    </Col>
+
+                    <Col className="cta" sm={12} md={6} lg={2} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                         <Button
                             iconPosition="before"
                             icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
@@ -230,7 +284,7 @@ const Offer = (props: OfferProps) => {
                             <ChevronRight width={10} height={10} />
                         </div>
                     </Col>
-                </Row>
+                </OfferRowContainer>
             </OfferContainer>
         )
     }
