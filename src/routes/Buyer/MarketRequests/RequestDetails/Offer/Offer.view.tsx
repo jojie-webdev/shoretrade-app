@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from 'components/base/Typography';
 import { Star, StarFilled, TrashCan, PlaceholderProfile, Crab } from 'components/base/SVG';
 import theme from '../../../../../utils/Theme';
@@ -26,11 +26,14 @@ import { BUYER_ROUTES } from 'consts';
 import Badge from 'components/base/Badge/Badge.view';
 import { StatusBadgeText } from '../RequestDetails.style';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 
 const Offer = (props: OfferProps) => {
     const { sellerOffer, onOfferDelete } = props
 
     const history = useHistory()
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [offerIdToDelete, setOfferIdToDelete] = useState<string>('')
 
     const onClickItem = (offer: any) => {
         if (sellerOffer.offers.length > 0) {
@@ -169,8 +172,9 @@ const Offer = (props: OfferProps) => {
     );
 
     const handleTrashIconClick = (e: any, offerId: string) => {
+        setIsModalOpen(true)
+        setOfferIdToDelete(offerId)
         e.stopPropagation();
-        onOfferDelete(offerId)
     }
 
     const renderTags = (offer: any) => (
@@ -295,6 +299,15 @@ const Offer = (props: OfferProps) => {
 
     return (
         <>
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                title="Delete Offer"
+                description="Are you sure you want to delete this offer?"
+                action={() => onOfferDelete(offerIdToDelete)}
+                actionText="DELETE"
+                onClickClose={() => setIsModalOpen(false)}
+            />
+
             <Hidden xs sm>
                 {renderNonMobile()}
             </Hidden>
