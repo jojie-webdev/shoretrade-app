@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
 
-import AlertView from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import {
-  ArrowLeft,
-  Group194,
-  Group195,
-  Group196,
-  Group204,
   ShoretradeAnchor,
-  Wave31,
-  Wave41,
-  Wave51,
-  WaveNew31,
-  NewWave51,
+  ChevronRight
 } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
-import { Hidden, Visible, Row, Col } from 'react-grid-system';
-import { EmptyContainer } from 'routes/Buyer/Checkout/Checkout.style';
+import { Hidden, Visible } from 'react-grid-system';
 import theme from 'utils/Theme';
 
 import {
@@ -317,6 +304,12 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 text="Proceed"
                 variant="primary"
                 takeFullWidth
+                icon={<ChevronRight
+                  width={14}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />}
               />
             </MobileFooter>
           </SpecificationFormContainer>

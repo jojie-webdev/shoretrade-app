@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft, ChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -54,50 +54,52 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
     <>
       <CreateRequestHeaderContainer>
         <MainContainer>
-          <Breadcrumbs
-            color="shade5"
-            sections={[
-              {
-                label: 'Category',
-                onClick: () => {
-                  if (didFinishStep >= 1) {
-                    onBack(1);
-                  }
+          <Hidden xs sm>
+            <Breadcrumbs
+              color="shade5"
+              sections={[
+                {
+                  label: 'Category',
+                  onClick: () => {
+                    if (didFinishStep >= 1) {
+                      onBack(1);
+                    }
+                  },
+                  isDone: didFinishStep >= 1,
                 },
-                isDone: didFinishStep >= 1,
-              },
-              {
-                label: 'Specifications',
-                onClick: () => {
-                  if (didFinishStep >= 2) {
-                    onBack(2);
-                  }
+                {
+                  label: 'Specifications',
+                  onClick: () => {
+                    if (didFinishStep >= 2) {
+                      onBack(2);
+                    }
+                  },
+                  isDone: didFinishStep >= 2,
                 },
-                isDone: didFinishStep >= 2,
-              },
-              {
-                label: 'Size',
-                onClick: () => {
-                  if (didFinishStep >= 3) {
-                    onBack(3);
-                  }
+                {
+                  label: 'Size',
+                  onClick: () => {
+                    if (didFinishStep >= 3) {
+                      onBack(3);
+                    }
+                  },
+                  isDone: didFinishStep >= 3,
                 },
-                isDone: didFinishStep >= 3,
-              },
-              {
-                label: 'Quantity',
-              },
-              {
-                label: 'Summary',
-                onClick: () => {
-                  if (didFinishStep >= 5) {
-                    onBack(5);
-                  }
+                {
+                  label: 'Quantity',
                 },
-                isDone: didFinishStep >= 5,
-              },
-            ]}
-          />
+                {
+                  label: 'Summary',
+                  onClick: () => {
+                    if (didFinishStep >= 5) {
+                      onBack(5);
+                    }
+                  },
+                  isDone: didFinishStep >= 5,
+                },
+              ]}
+            />
+          </Hidden>
           <TitleContainer>
             <Typography
               variant="title5"
@@ -139,6 +141,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               }
             />
             <StyledTextField
+              className="quantity-to"
               type="number"
               inputType="decimal"
               label="Quantity  To"
@@ -183,14 +186,22 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               onClick={() => handleSubmit()}
               className="submit-btn"
               disabled={from === '' || to === ''}
-              text="Select This Quantity"
+              text="Proceed"
               variant="primary"
+              icon={<ChevronRight
+                width={14}
+                height={12}
+                fill="white"
+                style={{ paddingBottom: '2px' }}
+              />}
             />
           </MobileFooter>
         </ContainerWithCategoryImagePreview>
-        <RequestDetailsContainer>
-          <DetailsContainer>{detailsListComponent}</DetailsContainer>
-        </RequestDetailsContainer>
+        <Hidden xs sm>
+          <RequestDetailsContainer>
+            <DetailsContainer>{detailsListComponent}</DetailsContainer>
+          </RequestDetailsContainer>
+        </Hidden>
       </RequestRow>
     </>
   );

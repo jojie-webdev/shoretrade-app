@@ -46,7 +46,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
         </div>
         <div className="actions-container">
           <Button
-            style={{ flex: 1, marginRight: 4, maxWidth: 160, borderRadius: 12 }}
+            style={{ flex: 1, marginRight: 4, maxWidth: 88, borderRadius: 12 }}
             variant="outline"
             text={cancelText || 'Cancel'}
             onClick={cancel || modalProps.onClickClose}
