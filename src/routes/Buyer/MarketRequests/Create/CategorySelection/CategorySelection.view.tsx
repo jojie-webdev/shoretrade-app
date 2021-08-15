@@ -35,6 +35,7 @@ import {
 } from './CategorySelection.style';
 import Typography from 'components/base/Typography';
 import Select from 'components/base/Select';
+import { Hidden } from 'react-grid-system';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
   const {
@@ -154,24 +155,26 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
           ))
         ) : (
           <>
-            <TopAbsoContainer>
-              <Wave41 />
-            </TopAbsoContainer>
-            <TopGroupContainer>
-              <Group196 />
-            </TopGroupContainer>
-            <BottomAbsoContainer>
-              <Wave31 />
-            </BottomAbsoContainer>
-            <BottomGroupContainer>
-              <Group195 />
-            </BottomGroupContainer>
-            <LeftAbsoContainer>
-              <Wave51 />
-            </LeftAbsoContainer>
-            <LeftGroupContainer>
-              <Group194 />
-            </LeftGroupContainer>
+            <Hidden xs sm>
+              <TopAbsoContainer>
+                <Wave41 />
+              </TopAbsoContainer>
+              <TopGroupContainer>
+                <Group196 />
+              </TopGroupContainer>
+              <BottomAbsoContainer>
+                <Wave31 />
+              </BottomAbsoContainer>
+              <BottomGroupContainer>
+                <Group195 />
+              </BottomGroupContainer>
+              <LeftAbsoContainer>
+                <Wave51 />
+              </LeftAbsoContainer>
+              <LeftGroupContainer>
+                <Group194 />
+              </LeftGroupContainer>
+            </Hidden>
             <EmptyContainer>
               <Group204 />
             </EmptyContainer>

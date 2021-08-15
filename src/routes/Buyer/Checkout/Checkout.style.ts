@@ -97,7 +97,7 @@ export const SVGContainer = styled.div`
   :before {
     position: absolute;
     content: '';
-    width: 280px;
+    width: 100%;
     height: 280px;
     border-radius: 50%;
     z-index: 1;
