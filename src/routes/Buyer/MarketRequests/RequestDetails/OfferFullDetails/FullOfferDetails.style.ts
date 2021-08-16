@@ -2,6 +2,8 @@ import styled from 'utils/styled';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import { theme } from 'utils/Theme';
+import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
 
 export const FullOfferDetailsContainer = styled.div`
     background: #FFFFFF;
@@ -40,4 +42,45 @@ export const TotalPriceContainer = styled.div`
     @media ${BREAKPOINTS['md']}{
         margin-top: 16px;
     }
+`
+
+export const DetailsValueContainer = styled.div`
+    margin-top: 12px;
+    padding: 6px 6px;
+    background-color: #E5E8F5;
+    border-radius: 8px;
+    width: fit-content;
+`
+
+export const StarContainer = styled.div`
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+`
+
+export const StyledAcceptButton = styled(Button)`
+    border-radius: 12px;
+    margin-left: 8px;
+`
+
+export const TagsContainer = styled.div`
+    display: flex;
+    margin-top: 24px;
+`
+
+export const StyledTypography = styled(Typography)`
+    font-family: "Basis Grotesque Pro";
+    clear: both;
+`
+
+export const StyledTypography2 = styled(Typography)`
+margin-left: 16px;
+font-family: Basis Grotesque Pro;
+`
+
+export const StyledImage = styled.img`
+    width: 48px;
+    height: 48px;
+    background-color: grey;
+    border-radius: 8px;
 `

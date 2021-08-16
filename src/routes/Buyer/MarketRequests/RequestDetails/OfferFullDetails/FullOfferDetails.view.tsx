@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { FullOfferDetailsContainer, CompanyInfoCol, TotalPriceContainer } from './FullOfferDetails.style';
+import {
+    FullOfferDetailsContainer,
+    CompanyInfoCol,
+    TotalPriceContainer,
+    DetailsValueContainer,
+    StarContainer,
+    StyledAcceptButton,
+    TagsContainer,
+    StyledTypography,
+    StyledTypography2,
+    StyledImage
+} from './FullOfferDetails.style';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import Typography from 'components/base/Typography';
 import theme from 'utils/Theme';
@@ -13,6 +24,9 @@ import { sizeToString } from 'utils/Listing';
 import { useSelector } from 'react-redux';
 import { Store } from '../../../../../types/store/Store';
 import { useLocation } from 'react-router-dom';
+import Badge from 'components/base/Badge/Badge.view';
+import { StatusBadgeText } from '../RequestDetails.style';
+import { NoActionsYetBadgesContainer } from '../Offer/Offer.style';
 
 const FullOfferDetails = (props: any) => {
     const { handleStartNegotiate, handleAcceptOffer, isAccepted, thereIsNewOffer, counterOffer, newOffer } = props
@@ -100,14 +114,73 @@ const FullOfferDetails = (props: any) => {
                 icon={<Refresh />}
                 disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
             />
-            <Button
+            <StyledAcceptButton
                 text="ACCEPT"
-                style={{ borderRadius: "12px", marginLeft: "8px" }}
                 icon={<Check />}
                 onClick={() => handleAcceptOffer()}
                 disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
             />
         </div>
+    )
+
+    const renderTags = () => (
+        <TagsContainer>
+            {
+                offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ?
+                    <Badge
+                        id="status-badge"
+                        className="offers-badge"
+                        badgeColor={
+                            theme.brand.error
+                        }
+                    >
+                        <StatusBadgeText color="success" weight="bold" variant="overline">
+                            DECLINED
+                        </StatusBadgeText>
+                    </Badge>
+                    :
+                    <NoActionsYetBadgesContainer>
+                        {
+                            offer.price < seller.averagePrice && (
+                                <Badge
+                                    className="offers-badge"
+                                    badgeColor={theme.brand.success}
+                                >
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Great Value
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.price > seller.averagePrice && (
+                                <Badge className="offers-badge" badgeColor={theme.brand.error}>
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Above Market
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.negotiations && (
+                                <Badge className="offers-badge" badgeColor="#FFF7F2" padding="5px 8px">
+                                    <StatusBadgeText weight="bold" variant="overline" color="warning">
+                                        Negotiation
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                    </NoActionsYetBadgesContainer>
+            }
+        </TagsContainer>
     )
 
     return (
@@ -118,53 +191,49 @@ const FullOfferDetails = (props: any) => {
                         <Typography variant="caption" color="shade6">
                             SPECIFICATION
                         </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
+                        <DetailsValueContainer>
+                            <StyledTypography weight="900" variant="caption">
                                 {offer?.specifications?.map((spec: string) => spec?.toUpperCase())?.join(", ")}
-                            </Typography>
-                        </div>
+                            </StyledTypography>
+                        </DetailsValueContainer>
 
                         <Typography variant="caption" color="shade6" style={{ marginTop: "24px" }}>
                             SIZE
                         </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
+                        <DetailsValueContainer>
+                            <StyledTypography weight="900" variant="caption">
                                 {sizeToString(offer?.metric, offer?.size?.from, offer?.size?.to).toUpperCase()}
-                            </Typography>
-                        </div>
+                            </StyledTypography>
+                        </DetailsValueContainer>
 
                         <Typography variant="caption" color="shade6" style={{ marginTop: "24px" }}>
                             QUANTITY
                         </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
+                        <DetailsValueContainer>
+                            <StyledTypography weight="900" variant="caption">
                                 {offer?.weight}{" "}{offer?.measurementUnit}
-                            </Typography>
-                        </div>
+                            </StyledTypography>
+                        </DetailsValueContainer>
                     </Col>
                     <CompanyInfoCol xl={3}>
                         <div style={{ display: "flex" }}>
                             {
                                 seller?.image ?
-                                    <img
-                                        style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
-                                        src={parseImageUrl(seller?.image || "")}
-                                    /> :
+                                    <StyledImage src={parseImageUrl(seller?.image || "")} /> :
                                     <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
                                         <PlaceholderProfile width={48} height={48} />
                                     </AvatarPlaceholder>
                             }
 
-                            <Typography
+                            <StyledTypography2
                                 weight="400"
-                                style={{ marginLeft: "16px", fontFamily: "Basis Grotesque Pro" }}
                                 variant="body"
                             >
                                 {seller?.name || ""}
-                            </Typography>
+                            </StyledTypography2>
                         </div>
 
-                        <div style={{ display: "flex", marginTop: "8px", alignItems: "center" }}>
+                        <StarContainer>
                             <Typography variant="label" style={{ marginRight: "5px" }}>{seller?.rating || 0}</Typography>
                             {
                                 [...Array(5).keys()].map((r) =>
@@ -187,7 +256,7 @@ const FullOfferDetails = (props: any) => {
                                     )
                                 )
                             }
-                        </div>
+                        </StarContainer>
 
                         <Typography variant="label" color="shade7">{Object.values(seller?.address || {}).join(", ")}</Typography>
                     </CompanyInfoCol>
@@ -196,6 +265,12 @@ const FullOfferDetails = (props: any) => {
                     <Row>
                         <Col>
                             {renderTotalPriceContainer()}
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            {renderTags()}
                         </Col>
                     </Row>
 
