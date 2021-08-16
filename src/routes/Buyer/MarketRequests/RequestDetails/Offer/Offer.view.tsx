@@ -80,9 +80,9 @@ const Offer = (props: OfferProps) => {
     const renderStars = () => (
         <StarsContainer>
             {
-                [...Array(5).keys()].map((r) =>
+                [...Array(5).keys()].map((r, index) =>
                     Number(sellerOffer.company.rating || 0) > r ? (
-                        <div style={{ marginRight: "3px" }}>
+                        <div id={index.toString()} style={{ marginRight: "3px" }}>
                             <StarFilled
                                 fill={theme.brand.alert}
                                 width={12}
@@ -90,7 +90,7 @@ const Offer = (props: OfferProps) => {
                             />
                         </div>
                     ) : (
-                        <div style={{ marginRight: "3px" }}>
+                        <div id={index.toString()} style={{ marginRight: "3px" }}>
                             <Star
                                 fill={theme.brand.alert}
                                 width={12}
@@ -240,8 +240,8 @@ const Offer = (props: OfferProps) => {
     )
 
     const renderNonMobile = () => {
-        return sellerOffer.offers.map(offer =>
-            <OfferContainer onClick={() => onClickItem(offer)}>
+        return sellerOffer.offers.map((offer, index) =>
+            <OfferContainer key={index} onClick={() => onClickItem(offer)}>
                 <OfferRowContainer>
                     <Col sm={12} md={6} lg={4} style={{ display: "flex", alignItems: "center" }}>
                         {

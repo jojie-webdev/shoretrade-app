@@ -4,6 +4,7 @@ import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export const MarketRequestsContainer = styled.div`
   display: flex;
@@ -177,3 +178,35 @@ export const MarketRequestItemMobileContainer = styled.div`
     }
   }
 `;
+
+export const Card = styled.div`
+  padding: 24px 40px 48px 40px;
+  max-width: 310.67px;
+  height: 388px;
+  background: #FFFFFF;
+  border: 1px solid #DADFF2;
+  box-sizing: border-box;
+  border-radius: 12px;
+
+  @media (max-width: 1426px){
+    padding: 24px;
+  }
+`
+
+export const StyledSwiper = styled(Swiper)`
+  width: 100%;
+  height: 100%;
+
+  .swiper-pagination-bullet-active{
+    background-color: ${({ theme }) => theme.brand.primary};
+  }
+
+  .swiper-pagination-bullet{
+    margin: 0 2px;
+  }
+`
+
+export const StyledSwiperSlide = styled(SwiperSlide)`
+  display: flex;
+  justify-content: center;
+`

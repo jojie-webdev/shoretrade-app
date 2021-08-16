@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import Case from 'case';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
+import { Crab, TrashCan, ChevronRight, TexturedSwordFish, TexturedCrab, TexturedOctopus } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -30,8 +30,12 @@ import {
   Badges,
   SubMinorDetail,
   SubText,
+  Card,
+  StyledSwiper
 } from './Landing.style';
 import { HeaderContainer } from './../Create/Create.style';
+import Checkbox from 'components/base/Checkbox';
+import { SwiperSlide } from 'swiper/react';
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
@@ -61,6 +65,7 @@ export const MarketRequestItemNonMobile = (props: {
     size,
     setItemToDelete,
   } = props;
+
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const offerNumberBadge = () => {
@@ -149,8 +154,6 @@ export const MarketRequestItemMobile = (props: {
     size,
     offerStatus,
   } = props;
-
-  console.log(props)
 
   const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
 
@@ -296,6 +299,8 @@ const MarketRequestsLandingView = (
     loading,
   } = props;
 
+  const [checkAccept, setCheckAccept] = useState<boolean>(false)
+
   if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
   }
@@ -362,92 +367,300 @@ const MarketRequestsLandingView = (
     </Hidden>
   );
 
-  return (
-    // <div>
-    //   <Typography
-    //     variant="title5"
-    //     weight="700"
-    //     color="shade9"
-    //     style={{ fontFamily: 'Media Sans' }}
-    //   >
-    //     Market Requests
-    //   </Typography>
-
-    //   <div style={{ marginTop: "16px" }} />
-
-    //   <Typography
-    //     variant="label"
-    //     weight="400"
-    //     color="shade7"
-    //     style={{ fontFamily: "Basis Grotesque Pro" }}
-    //   >
-    //     Can&apos;t find your product?
-    //   </Typography>
-    //   <Typography
-    //     variant="body"
-    //     weight="700"
-    //     color="shade9"
-    //     style={{ fontFamily: "Basis Grotesque Pro" }}
-    //   >
-    //     Create a new Market Request
-    //   </Typography>
-    // </div>
-
-    <MarketRequestsContainer>
-      <ConfirmationModal
-        isOpen={itemToDelete.value !== null}
-        title="Delete Market Request"
-        description="Are you sure you want to delete this market request?"
-        action={() => {
-          onDelete && itemToDelete.value && onDelete(itemToDelete.value);
-        }}
-        actionText="DELETE"
-        onClickClose={() => setItemToDelete({ value: null })}
-      />
-
-      <Row nogutter justify="around" align="center" className="header">
+  const renderCard = (carNumber: string, description: string, image: any) => (
+    <Card>
+      <Row>
         <Col>
-          <Typography
-            variant="title5"
-            weight="700"
-            color="shade9"
-            style={{ fontFamily: 'Media Sans' }}
-          >
-            My Market Requests
-          </Typography>
-        </Col>
-        <Col xs="content">
-          <Visible sm md lg xl xxl>
-            <Button
-              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-              text="CREATE REQUEST"
-              variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              size="md"
-              disabled={props.isPendingAccount}
-            />
-          </Visible>
+          <div style={{ display: "flex" }}>
+            <Typography
+              variant="title6"
+              weight="700"
+              color="shade5"
+              style={{ fontFamily: "Media Sans" }}
+            >
+              /
+            </Typography>
+            <Typography
+              color="shade9"
+              weight="400"
+              variant="title3"
+            >
+              {carNumber}
+            </Typography>
+          </div>
         </Col>
       </Row>
-      {renderMobile()}
-      {renderNonMobile()}
-      <MobileFooter>
-        <Button
-          onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-          text="CREATE REQUEST"
-          variant={props.isPendingAccount ? 'disabled' : 'primary'}
-          takeFullWidth
-          disabled={props.isPendingAccount}
-          icon={
-            <ChevronRight
-              width={15}
-              height={12}
-              fill="white"
-              style={{ paddingBottom: '2px' }}
-            />
-          }
-        />
-      </MobileFooter>
-    </MarketRequestsContainer>
+
+      <Row style={{ marginTop: "16px" }}>
+        <Col>
+          <div style={{ width: "95%" }}>
+            <Typography
+              variant="label"
+              color="shade7"
+              weight="400"
+            >
+              {description}
+            </Typography>
+          </div>
+        </Col>
+      </Row>
+
+      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        <div style={{ position: "absolute", inset: "0", margin: "auto", width: "fit-content" }}>
+          {image}
+        </div>
+      </div>
+
+
+      {/* <Row>
+        <Col>
+          <div style={{ display: "flex" }}>
+            <Typography
+              variant="title6"
+              weight="700"
+              color="shade5"
+              style={{ fontFamily: "Media Sans" }}
+            >
+              /
+            </Typography>
+            <Typography
+              color="shade9"
+              weight="400"
+              variant="title3"
+            >
+              {carNumber}
+            </Typography>
+          </div>
+        </Col>
+      </Row>
+      <Row style={{ marginTop: "16px" }}>
+        <Col>
+          <div style={{ width: "95%" }}>
+            <Typography
+              variant="label"
+              color="shade7"
+              weight="400"
+            >
+              {description}
+            </Typography>
+          </div>
+        </Col>
+      </Row>
+      <div style={{ position: "absolute", inset: "0", margin: "auto" }}>
+        <EmptyStateView Svg={TexturedOctopus} fluid />
+      </div> */}
+      {/* <ComponentFocusedCarousel /> */}
+    </Card>
+  )
+
+  const renderTermsConditions = () => (
+    <div style={{ display: "flex" }}>
+      <Checkbox
+        onClick={() => setCheckAccept(!checkAccept)}
+        className="checkbox"
+        checked={checkAccept}
+      />
+      <Typography
+        weight="700"
+        variant="label"
+        color="shade9"
+        style={{ marginLeft: "8px", fontFamily: "Basis Grotesque Pro" }}
+      >
+        Accept Terms &#38; Conditions
+      </Typography>
+    </div>
+  )
+
+  const renderButton = () => (
+    <Button style={{
+      borderRadius: "12px",
+      marginTop: "16px"
+    }}
+      disabled={!checkAccept}
+      variant="primary"
+      text="Get Started"
+      textVariant="overline"
+      textWeight="900"
+      icon={<ChevronRight
+        width={14}
+        height={12}
+        fill="white"
+        style={{ paddingBottom: '2px' }}
+      />}
+    // onClick={() => {
+    //   handleGetStarted();
+    // }}
+    />
+  )
+
+  const renderTermsAndCondition = () => (
+    <div>
+      <Hidden xs sm>
+        <Typography
+          variant="label"
+          weight="400"
+          color="shade7"
+          style={{ fontFamily: "Basis Grotesque Pro" }}
+        >
+          Can&apos;t find your product?
+
+        </Typography>
+        <Typography
+          variant="title5"
+          weight="700"
+          color="shade9"
+          style={{ fontFamily: 'Media Sans' }}
+        >
+          Create a new Market Request
+        </Typography>
+      </Hidden>
+      <Visible xs sm>
+        <Typography
+          variant="title5"
+          weight="700"
+          color="shade9"
+          style={{ fontFamily: 'Media Sans' }}
+        >
+          Market Request
+        </Typography>
+
+        <div style={{ marginTop: "16px" }} />
+
+        <Typography
+          variant="label"
+          weight="400"
+          color="shade7"
+        >
+          Can&apos;t find your product?
+        </Typography>
+        <Typography
+          variant="body"
+          weight="700"
+          color="shade9"
+        >
+          Create a new market request
+        </Typography>
+      </Visible>
+
+      <div style={{ marginTop: "24px" }} />
+
+      <Row>
+        <Hidden xs sm>
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
+            {renderCard("01", "Search in our Database and choose between more than 50+  Categories", <TexturedOctopus />)}
+          </Col>
+
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
+            {renderCard("02", "Select specifications, size, quantity and send your request to the market", <TexturedSwordFish />)}
+          </Col>
+
+          <Col xl={4} style={{ marginBottom: "16px" }}>
+            {renderCard("03", "Check and negotiate offers from more than 10.000+ sellers from ShoreTrade", <TexturedCrab />)}
+          </Col>
+        </Hidden>
+
+        <Visible xs sm >
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
+            <StyledSwiper spaceBetween={30} pagination={{ clickable: true }} >
+              <SwiperSlide>
+                {renderCard("01", "Search in our Database and choose between more than 50+  Categories", <TexturedOctopus />)}
+              </SwiperSlide>
+              <SwiperSlide>
+                {renderCard("02", "Select specifications, size, quantity and send your request to the market", <TexturedSwordFish />)}
+              </SwiperSlide>
+              <SwiperSlide>
+                {renderCard("03", "Check and negotiate offers from more than 10.000+ sellers from ShoreTrade", <TexturedCrab />)}
+              </SwiperSlide>
+            </StyledSwiper>
+          </Col>
+        </Visible>
+      </Row>
+
+      <Hidden xs sm>
+        {renderTermsConditions()}
+        {renderButton()}
+      </Hidden>
+
+      <Visible xs sm>
+        <div style={{ marginTop: "82px" }}>
+          {renderTermsConditions()}
+          <Button style={{
+            borderRadius: "12px",
+            marginTop: "16px"
+          }}
+            disabled={!checkAccept}
+            variant="primary"
+            text="Get Started"
+            textVariant="overline"
+            textWeight="900"
+            takeFullWidth={true}
+          // onClick={() => {
+          //   handleGetStarted();
+          // }}
+          />
+        </div>
+      </Visible>
+    </div>
+  )
+
+  return (
+    renderTermsAndCondition()
+
+    // <MarketRequestsContainer>
+    //   <ConfirmationModal
+    //     isOpen={itemToDelete.value !== null}
+    //     title="Delete Market Request"
+    //     description="Are you sure you want to delete this market request?"
+    //     action={() => {
+    //       onDelete && itemToDelete.value && onDelete(itemToDelete.value);
+    //     }}
+    //     actionText="DELETE"
+    //     onClickClose={() => setItemToDelete({ value: null })}
+    //   />
+
+    //   <Row nogutter justify="around" align="center" className="header">
+    //     <Col>
+    //       <Typography
+    //         variant="title5"
+    //         weight="700"
+    //         color="shade9"
+    //         style={{ fontFamily: 'Media Sans' }}
+    //       >
+    //         My Market Requests
+    //       </Typography>
+    //     </Col>
+    //     <Col xs="content">
+    //       <Visible sm md lg xl xxl>
+    //         <Button
+    //           onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+    //           text="CREATE REQUEST"
+    //           variant={props.isPendingAccount ? 'disabled' : 'primary'}
+    //           size="md"
+    //           disabled={props.isPendingAccount}
+    //         />
+    //       </Visible>
+    //     </Col>
+    //   </Row>
+    //   {renderMobile()}
+    //   {renderNonMobile()}
+    //   <MobileFooter>
+    //     <Button
+    //       onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+    //       text="CREATE REQUEST"
+    //       variant={props.isPendingAccount ? 'disabled' : 'primary'}
+    //       takeFullWidth
+    //       disabled={props.isPendingAccount}
+    //       icon={
+    //         <ChevronRight
+    //           width={15}
+    //           height={12}
+    //           fill="white"
+    //           style={{ paddingBottom: '2px' }}
+    //         />
+    //       }
+    //     />
+    //   </MobileFooter>
+    // </MarketRequestsContainer>
   );
 };
 
