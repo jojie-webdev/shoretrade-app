@@ -150,6 +150,8 @@ export const MarketRequestItemMobile = (props: {
     offerStatus,
   } = props;
 
+  console.log(props)
+
   const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
 
   const offersMarkup = () => {

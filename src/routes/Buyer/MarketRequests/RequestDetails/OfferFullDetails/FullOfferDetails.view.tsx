@@ -204,11 +204,15 @@ const FullOfferDetails = (props: any) => {
                             {renderOfferSeenTextContainer()}
                         </Col>
                     </Row>
-                    <Row>
-                        <Col style={{ marginTop: "24px" }}>
-                            {renderCTA()}
-                        </Col>
-                    </Row>
+                    {
+                        offer.status !== "ACCEPTED" &&
+                        <Row>
+                            <Col style={{ marginTop: "24px" }}>
+                                {renderCTA()}
+                            </Col>
+                        </Row>
+                    }
+
                 </Hidden>
             </FullOfferDetailsContainer>
 
@@ -224,11 +228,14 @@ const FullOfferDetails = (props: any) => {
                         {renderOfferSeenTextContainer()}
                     </Col>
                 </Row>
-                <Row>
-                    <Col style={{ marginTop: "24px" }}>
-                        {renderCTA()}
-                    </Col>
-                </Row>
+                {
+                    offer.status !== "ACCEPTED" &&
+                    <Row>
+                        <Col style={{ marginTop: "24px" }}>
+                            {renderCTA()}
+                        </Col>
+                    </Row>
+                }
             </Visible>
         </>
     );

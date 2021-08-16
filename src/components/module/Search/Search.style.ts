@@ -2,11 +2,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const InputContainer = styled.div<{ rounded?: boolean }>`
-  @media ${BREAKPOINTS['sm']} {
-    height:40px;
-    padding:24px
-  }
-
   background: ${(props) => props.theme.grey.noshade};
   border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
   border-radius: ${(props) =>
@@ -55,8 +50,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
         : '16px'};
     }
     @media ${BREAKPOINTS['sm']} {
-      height:40px;
-      padding:24px 0px;
+      width: 100%;
     }
   }
 `;

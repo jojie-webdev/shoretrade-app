@@ -152,15 +152,17 @@ const Offer = (props: OfferProps) => {
                                     <ChevronRight width={8} height={12} />
                                 </div>
 
-                                <Button
-                                    iconPosition="before"
-                                    icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                                    onClick={(e) => handleTrashIconClick(e, offer.id)}
-                                    variant="primary"
-                                    size="sm"
-                                    className="delete-button"
-                                />
-
+                                {
+                                    offer.status !== 'ACCEPTED' &&
+                                    <Button
+                                        iconPosition="before"
+                                        icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                                        onClick={(e) => handleTrashIconClick(e, offer.id)}
+                                        variant="primary"
+                                        size="sm"
+                                        className="delete-button"
+                                    />
+                                }
                             </div>
                         }
                     />
@@ -185,10 +187,10 @@ const Offer = (props: OfferProps) => {
                         id="status-badge"
                         className="offers-badge"
                         badgeColor={
-                            offer.status === 'ACCEPTED' ? theme.brand.success : theme.brand.error
+                            offer.status === 'ACCEPTED' ? "#EAFFF9" : theme.brand.error
                         }
                     >
-                        <StatusBadgeText color="shade1" weight="bold" variant="overline">
+                        <StatusBadgeText color="success" weight="bold" variant="overline">
                             {offer.status === 'DECLINED' ? 'LOST' : offer.status}
                         </StatusBadgeText>
                     </Badge>
@@ -279,15 +281,18 @@ const Offer = (props: OfferProps) => {
                     </Col>
 
                     <Col className="cta" sm={12} md={6} lg={2} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                        <Button
-                            iconPosition="before"
-                            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                            onClick={(e) => handleTrashIconClick(e, offer.id)}
-                            variant="primary"
-                            size="sm"
-                            className="delete-button"
-                            style={{ marginRight: "20px" }}
-                        />
+                        {
+                            offer.status !== 'ACCEPTED' &&
+                            <Button
+                                iconPosition="before"
+                                icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                                onClick={(e) => handleTrashIconClick(e, offer.id)}
+                                variant="primary"
+                                size="sm"
+                                className="delete-button"
+                                style={{ marginRight: "20px" }}
+                            />
+                        }
                         <div>
                             <ChevronRight width={10} height={10} />
                         </div>
