@@ -17,7 +17,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
-
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
@@ -32,6 +31,7 @@ import {
   SubMinorDetail,
   SubText,
 } from './Landing.style';
+import { HeaderContainer } from './../Create/Create.style';
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
@@ -361,6 +361,36 @@ const MarketRequestsLandingView = (
   );
 
   return (
+    // <div>
+    //   <Typography
+    //     variant="title5"
+    //     weight="700"
+    //     color="shade9"
+    //     style={{ fontFamily: 'Media Sans' }}
+    //   >
+    //     Market Requests
+    //   </Typography>
+
+    //   <div style={{ marginTop: "16px" }} />
+
+    //   <Typography
+    //     variant="label"
+    //     weight="400"
+    //     color="shade7"
+    //     style={{ fontFamily: "Basis Grotesque Pro" }}
+    //   >
+    //     Can&apos;t find your product?
+    //   </Typography>
+    //   <Typography
+    //     variant="body"
+    //     weight="700"
+    //     color="shade9"
+    //     style={{ fontFamily: "Basis Grotesque Pro" }}
+    //   >
+    //     Create a new Market Request
+    //   </Typography>
+    // </div>
+
     <MarketRequestsContainer>
       <ConfirmationModal
         isOpen={itemToDelete.value !== null}

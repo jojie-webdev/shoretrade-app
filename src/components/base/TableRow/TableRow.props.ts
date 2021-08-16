@@ -18,4 +18,15 @@ export interface TableRowProps {
   onSelect?: (id: number | string) => void;
   selected?: boolean;
   handleOnSelectRow?: (state: boolean, data?: any) => void;
+  onResize?: (
+    position: Partial<{ x: number; y: number }>,
+    columnDetails: any
+  ) => any;
+}
+
+export interface TableDataListProps extends TableRowProps {
+  column: any;
+  index: number;
+  length: number;
+  identifier: string;
 }

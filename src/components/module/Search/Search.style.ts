@@ -11,7 +11,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
   border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
   border-radius: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
-      ? '100px'
+      ? '12px'
       : props.theme.appType === 'buyer'
         ? '4px'
         : '100px'};
@@ -34,15 +34,11 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     align-items: center;
   }
 
-  svg{
-    margin-left: -10px;
-  }
-
   input {
     flex: 1;
     border: 0;
     margin: 0 10px;
-    height: 40px;
+    height: 100%;
 
     :focus {
       outline: none;
@@ -57,16 +53,10 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
       : props.rounded
         ? '14px'
         : '16px'};
-
     }
     @media ${BREAKPOINTS['sm']} {
-      width: 100%;
-<<<<<<< HEAD
-      padding: 24px 0px;
-=======
       height:40px;
       padding:24px 0px;
->>>>>>> dev
     }
   }
 `;
