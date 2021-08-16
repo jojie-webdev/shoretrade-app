@@ -66,6 +66,7 @@ import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
+import readNotification from './readNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -150,6 +151,7 @@ const sagas = [
   modifyBulkUpload,
   order,
   placeOrder,
+  readNotification,
   readMarketNotification,
   register,
   resendVerification,

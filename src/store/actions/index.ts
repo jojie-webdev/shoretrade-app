@@ -101,3 +101,4 @@ export { default as getAvailableCratesActions } from './getAvailableCrates';
 export { default as getNotificationsSettingsActions } from './getNotificationsSettings';
 export { default as getNotificationsActions } from './getNotifications';
 export { default as updateNotificationSettingsActions } from './updateNotificationSettings';
+export { default as readNotificationActions } from './readNotification';

@@ -17,6 +17,7 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
+import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
@@ -32,13 +33,16 @@ import {
   DropdownItemContainer,
   RightComponentContainer,
 } from './NotificationItem.style';
-import moment from 'moment';
 
-const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
+const MoreMenu = (props: {
+  fullView?: boolean;
+  notifsRoute: string;
+  onMarkasRead: () => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const history = useHistory();
-  const { fullView, notifsRoute } = props;
+  const { fullView, notifsRoute, onMarkasRead } = props;
 
   const handlePress = () => {
     setIsOpen(!isOpen);
@@ -61,7 +65,7 @@ const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
             <div className="dropdown-body">
               <div className="dropdown-content">
                 <DropdownItemContainer>
-                  <Touchable onPress={() => console.log('mark as read')}>
+                  <Touchable onPress={() => onMarkasRead()}>
                     <CheckCircle />
                     <Typography className="text" color={defaultColor}>
                       Mark as Read
@@ -98,7 +102,7 @@ const NewIndicator = () => {
 
 const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
-  const { type, isRead, content, date, fullView } = props;
+  const { type, isRead, content, date, fullView, onMarkasRead } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -163,7 +167,11 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       </div>
       <RightComponentContainer>
         {!isRead && <NewIndicator />}
-        <MoreMenu notifsRoute={notifsRoute} fullView={fullView} />
+        <MoreMenu
+          onMarkasRead={onMarkasRead}
+          notifsRoute={notifsRoute}
+          fullView={fullView}
+        />
       </RightComponentContainer>
     </Container>
   );

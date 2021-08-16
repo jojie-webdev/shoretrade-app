@@ -29,7 +29,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       ? BUYER_ROUTES.NOTIFICATIONS
       : SELLER_ROUTES.NOTIFICATIONS;
 
-  const { notifTotal, unreadTotal, notifsData } = props;
+  const { notifTotal, unreadTotal, notifsData, handleMarkasRead } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleBellClick = () => {
@@ -73,10 +73,11 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                 {notifsData.map((nd) => (
                   <DropdownItemContainer key={nd.id}>
                     <NotificationItem
+                      onMarkasRead={() => handleMarkasRead(nd.id)}
                       type="account"
                       content={nd.description}
                       date={nd.created_at}
-                      isRead={nd.isRead}
+                      isRead={nd.read_at !== null}
                     />
                   </DropdownItemContainer>
                 ))}

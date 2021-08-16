@@ -76,6 +76,7 @@ import notify from './notify';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
+import readNotification from './readNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -177,6 +178,7 @@ export default (routeHistory: History) =>
         order,
         placeOrder,
         readMarketNotification,
+        readNotification,
         register,
         resendVerification,
         resetPassword,

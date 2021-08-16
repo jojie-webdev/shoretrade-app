@@ -10,4 +10,5 @@ export interface NotificationsGeneratedProps {
   notifsData: NotificationItemResponse[];
   totalNotifs: number;
   totalUnreadNotifs: number;
+  handleMarkasRead: (notificationId: string) => void;
 }

@@ -11,6 +11,7 @@ import {
   editableListingActions,
   getNotificationsActions,
   logoutActions,
+  readNotificationActions,
   socketCreditActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
@@ -107,6 +108,11 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     }
   };
 
+  const handleMarkasRead = (notificationId: string) => {
+    console.log(notificationId);
+    dispatch(readNotificationActions.request({ id: notificationId }));
+  };
+
   // MARK:- Effects
   useEffect(() => {
     // This is a hacky way for an edge case in add product
@@ -156,6 +162,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     notifsData,
     totalNotifs,
     totalUnreadNotifs,
+    handleMarkasRead,
   };
 
   return <DashboardView {...generatedProps} />;

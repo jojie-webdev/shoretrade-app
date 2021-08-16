@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { readNotificationActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import NotificationsView from './Notifications.view';
 
 const Notifications = (): JSX.Element => {
+  const dispatch = useDispatch();
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -29,6 +31,11 @@ const Notifications = (): JSX.Element => {
   const notifsData = getNotifications.data?.data?.notifications || [];
   const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
   const totalNotifs = getNotifications.data?.data?.total || 0;
+
+  const handleMarkasRead = (notificationId: string) => {
+    dispatch(readNotificationActions.request({ id: notificationId }));
+  };
+
   const generatedProps = {
     tabItems,
     activeTab,
@@ -36,6 +43,7 @@ const Notifications = (): JSX.Element => {
     notifsData,
     totalUnreadNotifs,
     totalNotifs,
+    handleMarkasRead,
   };
 
   return <NotificationsView {...generatedProps} />;

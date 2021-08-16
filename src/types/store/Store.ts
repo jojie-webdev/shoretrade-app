@@ -199,6 +199,10 @@ import {
   ReadMarketNotificationMeta,
   ReadMarketNotificationPayload,
 } from './ReadMarketNotificationState';
+import {
+  ReadNotificationMetaData,
+  ReadNotificationPayload,
+} from './ReadNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
 import {
   ResendVerificationMeta,
@@ -489,5 +493,9 @@ export interface Store {
   updateNotificationSettings: AsyncState<
     UpdateNotificationSettingsMetaData,
     UpdateNotificationSettingsPayload
+  >;
+  readNotification: AsyncState<
+    ReadNotificationMetaData,
+    ReadMarketNotificationPayload
   >;
 }

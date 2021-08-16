@@ -16,6 +16,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
     notifsData,
     totalNotifs,
     totalUnreadNotifs,
+    handleMarkasRead,
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'shade2' : 'shade6';
@@ -26,16 +27,28 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         items={tabItems}
         handleSelect={(i) => setActiveTab(i)}
       ></Tab>
-      {notifsData.map((nd) => (
-        <NotificationItemView
-          key={nd.id}
-          fullView
-          type="account"
-          content={nd.description}
-          date={nd.created_at}
-          isRead={nd.isRead}
-        />
-      ))}
+      {notifsData
+        .filter((nd) => {
+          if (activeTab === 1) {
+            if (nd.read_at === null) {
+              return nd;
+            } else {
+              return null;
+            }
+          }
+          return nd;
+        })
+        .map((nd) => (
+          <NotificationItemView
+            key={nd.id}
+            fullView
+            onMarkasRead={() => handleMarkasRead(nd.id)}
+            type="account"
+            content={nd.description}
+            date={nd.created_at}
+            isRead={nd.read_at != null}
+          />
+        ))}
     </Container>
   );
 };

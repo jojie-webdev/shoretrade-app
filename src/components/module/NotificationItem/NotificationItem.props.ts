@@ -6,6 +6,7 @@ export interface NotificationItemProps {
   content: string;
   date: Date | null;
   fullView?: boolean;
+  onMarkasRead: () => void;
 }
 
 export interface NotifAvatarProps {
