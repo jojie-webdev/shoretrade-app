@@ -32,6 +32,7 @@ import {
   DropdownItemContainer,
   RightComponentContainer,
 } from './NotificationItem.style';
+import moment from 'moment';
 
 const MoreMenu = (props: { fullView?: boolean; notifsRoute: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -157,7 +158,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
           {content}
         </Typography>
         <Typography color="shade6" variant="caption">
-          {date?.format('ddd, hA') || '--'}
+          {moment(date).format('YYYY-MM-DD')}
         </Typography>
       </div>
       <RightComponentContainer>

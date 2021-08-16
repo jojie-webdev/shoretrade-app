@@ -15,11 +15,7 @@ function* getNotifications(
   const state: Store = yield select();
   if (state.auth.token) {
     try {
-      const { data } = yield call(
-        getNotificationsData,
-        action.meta,
-        state.auth.token
-      );
+      const { data } = yield call(getNotificationsData, state.auth.token);
       yield put(getNotificationsActions.success(data));
     } catch (e) {
       yield put(getNotificationsActions.failed(e.message));

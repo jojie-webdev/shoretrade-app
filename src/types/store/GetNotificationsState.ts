@@ -1,8 +1,6 @@
 import { GenericResponse } from 'types/GenericResponse';
 
-export type GetNotificationsMeta = {
-  accountId: string;
-};
+export type GetNotificationsMeta = any;
 
 export type NotificationType =
   | 'account'
@@ -15,19 +13,20 @@ export type NotificationType =
   | 'aquafutures';
 
 export type NotificationItemResponse = {
-  type: NotificationType;
-  archived: boolean;
+  resource: NotificationType;
+  id: string;
+  name: string;
+  description: string;
   isRead: boolean;
   content: string;
-  date: Date | null;
+  read_at: Date | null;
+  created_at: Date | null;
 };
 
 export type GetNotificationsPayload = GenericResponse<{
   token: string;
-  data: {
-    totalAll: number;
-    totalArchived: number;
-    totalUnread: number;
-    item: NotificationItemResponse[];
-  };
+
+  total: number;
+  unread: number;
+  notifications: NotificationItemResponse[];
 }>;

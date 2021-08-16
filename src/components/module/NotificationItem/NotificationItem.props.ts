@@ -4,7 +4,7 @@ export interface NotificationItemProps {
   type: NotificationType;
   isRead: boolean;
   content: string;
-  date: moment.Moment | null;
+  date: Date | null;
   fullView?: boolean;
 }
 

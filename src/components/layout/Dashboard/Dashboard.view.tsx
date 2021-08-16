@@ -131,6 +131,9 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
+  totalUnreadNotifs,
+  totalNotifs,
+  notifsData,
 }: HeaderProps) => {
   const theme = useTheme();
 
@@ -167,7 +170,11 @@ const Header = ({
       }
       rightContent={
         <HeaderRightContent>
-          <NotificationMenu notifTotal={3} />
+          <NotificationMenu
+            notifsData={notifsData}
+            notifTotal={totalNotifs}
+            unreadTotal={totalUnreadNotifs}
+          />
           {!onBack && theme.appType === 'buyer' && (
             <Cart cartItems={cartItems} />
           )}
@@ -226,7 +233,11 @@ const Header = ({
           )}
         </Touchable>
         {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
-        <NotificationMenu notifTotal={3} />
+        <NotificationMenu
+          notifsData={notifsData}
+          notifTotal={totalNotifs}
+          unreadTotal={totalUnreadNotifs}
+        />
       </HeaderRightContent>
     </HeaderContainer>
   );
@@ -252,6 +263,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
+    totalUnreadNotifs,
+    totalNotifs,
+    notifsData,
   } = props;
 
   const history = useHistory();
@@ -408,6 +422,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 <Header
                   pageTitle={pageTitle}
                   userData={userData}
+                  totalNotifs={totalNotifs}
+                  totalUnreadNotifs={totalUnreadNotifs}
+                  notifsData={notifsData}
                   textColor={
                     headerTextColor || (isSeller ? 'noshade' : 'shade9')
                   }
@@ -425,6 +442,9 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               <Header
                 pageTitle={pageTitle}
                 userData={userData}
+                totalNotifs={totalNotifs}
+                totalUnreadNotifs={totalUnreadNotifs}
+                notifsData={notifsData}
                 textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
                 onClick={() => onClickOpenSideBar(!openSidebar)}
                 openSidebar={openSidebar}

@@ -12,6 +12,10 @@ const asyncAction = createAsyncAction<
 
 const getNotificationsActions = {
   ...asyncAction,
+  request: () => ({
+    type: asyncAction.REQUEST,
+    meta: {},
+  }),
 };
 
 export default getNotificationsActions;

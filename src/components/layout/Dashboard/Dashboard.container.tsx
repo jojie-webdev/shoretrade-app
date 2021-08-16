@@ -9,6 +9,7 @@ import {
   authActions,
   cartActions,
   editableListingActions,
+  getNotificationsActions,
   logoutActions,
   socketCreditActions,
 } from 'store/actions';
@@ -51,6 +52,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const getNotifications = useSelector(
+    (state: Store) => state.getNotifications
+  );
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
 
@@ -71,6 +75,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     useSelector((state: Store) => state.socketCredit.data) || null;
 
   const userData = getUser.data?.data.user;
+  console.log(getNotifications);
+  const notifsData = getNotifications.data?.data?.notifications || [];
+  const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
+  const totalNotifs = getNotifications.data?.data?.total || 0;
   const cartItems = Object.keys(cart).length;
 
   // MARK:- Methods
@@ -128,6 +136,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {
+    dispatch(getNotificationsActions.request());
+  }, []);
+
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {
     ...props,
@@ -141,6 +153,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     onClickOpenSideBar,
     cartItems,
     onClickAccount,
+    notifsData,
+    totalNotifs,
+    totalUnreadNotifs,
   };
 
   return <DashboardView {...generatedProps} />;

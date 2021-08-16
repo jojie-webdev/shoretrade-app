@@ -52,6 +52,7 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
@@ -162,6 +163,7 @@ export default (routeHistory: History) =>
         getSellerOrdersTransit,
         getShippingQuote,
         getTransactionHistory,
+        getNotifications,
         getUser,
         history,
         logRequest,

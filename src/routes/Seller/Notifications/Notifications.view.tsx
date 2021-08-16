@@ -2,9 +2,6 @@ import React from 'react';
 
 import Tab from 'components/base/Tab';
 import NotificationItemView from 'components/module/NotificationItem';
-import moment from 'moment';
-
-// import { useTheme } from 'utils/Theme';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsGeneratedProps } from './Notifications.props';
@@ -12,7 +9,14 @@ import { Container } from './Notifications.style';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
-  const { tabItems, setActiveTab, activeTab } = props;
+  const {
+    tabItems,
+    setActiveTab,
+    activeTab,
+    notifsData,
+    totalNotifs,
+    totalUnreadNotifs,
+  } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'shade2' : 'shade6';
   return (
@@ -22,55 +26,16 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         items={tabItems}
         handleSelect={(i) => setActiveTab(i)}
       ></Tab>
-      <NotificationItemView
-        fullView
-        type="account"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="orders"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="rating-favourite"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="aquafutures"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="listings"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="market-requests"
-        content="Test"
-        date={moment()}
-        isRead={false}
-      />
-      <NotificationItemView
-        fullView
-        type="inactivity"
-        content="Test"
-        date={moment()}
-        isRead={true}
-      />
+      {notifsData.map((nd) => (
+        <NotificationItemView
+          key={nd.id}
+          fullView
+          type="account"
+          content={nd.description}
+          date={nd.created_at}
+          isRead={nd.isRead}
+        />
+      ))}
     </Container>
   );
 };

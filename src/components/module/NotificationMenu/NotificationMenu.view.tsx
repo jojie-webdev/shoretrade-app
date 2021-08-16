@@ -29,7 +29,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       ? BUYER_ROUTES.NOTIFICATIONS
       : SELLER_ROUTES.NOTIFICATIONS;
 
-  const { notifTotal } = props;
+  const { notifTotal, unreadTotal, notifsData } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleBellClick = () => {
@@ -54,10 +54,10 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       <div className="icon-wrapper">
         <Touchable onPress={() => handleBellClick()}>
           <Bell fill={bellColor()} />
-          {notifTotal > 0 && (
+          {unreadTotal > 0 && (
             <NotifCount>
               <Typography color="noshade" variant="small" weight="900">
-                {notifTotal}
+                {unreadTotal}
               </Typography>
             </NotifCount>
           )}
@@ -70,22 +70,16 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
             </div>
             <div className="menu-body">
               <div className="menu-content">
-                <DropdownItemContainer>
-                  <NotificationItem
-                    type="account"
-                    content="Test"
-                    date={moment()}
-                    isRead={false}
-                  />
-                </DropdownItemContainer>
-                <DropdownItemContainer>
-                  <NotificationItem
-                    type="orders"
-                    content="Test"
-                    date={moment()}
-                    isRead={true}
-                  />
-                </DropdownItemContainer>
+                {notifsData.map((nd) => (
+                  <DropdownItemContainer key={nd.id}>
+                    <NotificationItem
+                      type="account"
+                      content={nd.description}
+                      date={nd.created_at}
+                      isRead={nd.isRead}
+                    />
+                  </DropdownItemContainer>
+                ))}
               </div>
               <div className="menu-footer">
                 <Button
