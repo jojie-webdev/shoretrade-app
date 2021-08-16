@@ -131,11 +131,11 @@ const FullOfferDetails = (props: any) => {
                         id="status-badge"
                         className="offers-badge"
                         badgeColor={
-                            theme.brand.error
+                            offer.status === 'ACCEPTED' ? "#EAFFF9" : theme.brand.error
                         }
                     >
                         <StatusBadgeText color="success" weight="bold" variant="overline">
-                            DECLINED
+                            {offer.status === 'DECLINED' ? 'LOST' : offer.status}
                         </StatusBadgeText>
                     </Badge>
                     :
