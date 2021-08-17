@@ -68,7 +68,7 @@ export const StyledAcceptButton = styled(Button)`
 export const StyledNegotiateButton = styled(Button)`
     border-radius: 12px;
     padding: 15px 28px;
-    width: 100%
+    width: 100%;
 `
 
 export const TagsContainer = styled.div`
@@ -91,4 +91,20 @@ export const StyledImage = styled.img`
     height: 48px;
     background-color: grey;
     border-radius: 8px;
+`
+
+export const StyledNumberRating = styled(Typography)`
+    margin-right: 5px;
+    margin-top: 3px;
+`
+
+export const CTAContainer = styled.div`
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+`
+
+export const StyledNegotiateButtonContainer = styled.div`
+    width: 148px;
+    margin-right: 10px;
 `

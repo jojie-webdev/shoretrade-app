@@ -10,7 +10,10 @@ import {
     TagsContainer,
     StyledTypography,
     StyledTypography2,
-    StyledImage
+    StyledImage,
+    StyledNumberRating,
+    CTAContainer,
+    StyledNegotiateButtonContainer
 } from './FullOfferDetails.style';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import Typography from 'components/base/Typography';
@@ -217,13 +220,12 @@ const FullOfferDetails = (props: any) => {
                         </div>
 
                         <StarContainer>
-                            <Typography
+                            <StyledNumberRating
                                 variant="caption"
                                 color="shade7"
-                                style={{ marginRight: "5px", marginTop: "3px" }}
                             >
                                 {seller?.rating || 0}
-                            </Typography>
+                            </StyledNumberRating>
                             {
                                 [...Array(5).keys()].map((r) =>
                                     Number(seller?.rating || 0) > r ? (
@@ -270,8 +272,8 @@ const FullOfferDetails = (props: any) => {
                     </Row>
                     {
                         offer.status !== "ACCEPTED" &&
-                        <div style={{ display: "flex", width: "100%", marginTop: "24px" }}>
-                            <div style={{ width: "148px", marginRight: "10px" }}>
+                        <CTAContainer>
+                            <StyledNegotiateButtonContainer>
                                 <StyledNegotiateButton
                                     onClick={() => handleStartNegotiate()}
                                     variant="outline"
@@ -279,7 +281,7 @@ const FullOfferDetails = (props: any) => {
                                     icon={<Refresh />}
                                     disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                                 />
-                            </div>
+                            </StyledNegotiateButtonContainer>
                             <div style={{ width: "124px" }}>
                                 <StyledAcceptButton
                                     text="ACCEPT"
@@ -288,7 +290,7 @@ const FullOfferDetails = (props: any) => {
                                     disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                                 />
                             </div>
-                        </div>
+                        </CTAContainer>
                     }
 
                 </Hidden>
