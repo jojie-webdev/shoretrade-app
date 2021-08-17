@@ -55,7 +55,7 @@ const Offer = (props: OfferProps) => {
             </Typography>
             <Typography
                 weight="400"
-                variant="caption"
+                variant="small"
                 style={{
                     fontFamily: "Basis Grotesque Pro",
                 }}
@@ -66,7 +66,7 @@ const Offer = (props: OfferProps) => {
             <div></div>
             <Typography
                 weight="400"
-                variant="caption"
+                variant="small"
                 style={{
                     fontFamily: "Basis Grotesque Pro",
                 }}
@@ -106,7 +106,7 @@ const Offer = (props: OfferProps) => {
     const renderOffersForMobile = (offer: any) => {
         return (
             <MarketRequestItemMobileContainer>
-                <MajorInfo>
+                <MajorInfo id="major info">
                     <div className="thumbnail-container">
                         {
                             sellerOffer.company.image ?
@@ -122,7 +122,7 @@ const Offer = (props: OfferProps) => {
                             {sellerOffer.company.name}
                         </Typography>
 
-                        {renderStars()}
+
                     </MajorInfoContainer>
                 </MajorInfo>
 

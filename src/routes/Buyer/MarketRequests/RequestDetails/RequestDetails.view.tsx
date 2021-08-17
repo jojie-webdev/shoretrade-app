@@ -103,7 +103,7 @@ export const OffersSellerAccordionContent = (props: {
         {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
       </div>
       <div className="info-container">
-        <TypographyView variant="copy" color="shade8">
+        <TypographyView variant="caption" color="shade8">
           {sellerName}
         </TypographyView>
         <div className="location-container">
@@ -424,7 +424,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           color="shade6"
           variant="label"
           style={{
-            marginBottom: 16,
+            marginBottom: 10,
             fontFamily: 'Wilderness',
             fontSize: 24,
           }}
@@ -463,7 +463,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             color="shade6"
             variant="label"
             style={{
-              marginBottom: 16,
+              marginBottom: 10,
               fontFamily: 'Wilderness',
               fontSize: 24,
             }}
@@ -499,7 +499,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           color="shade6"
           variant="label"
           style={{
-            marginBottom: 16,
+            marginBottom: 10,
             fontFamily: 'Wilderness',
             fontSize: 24,
           }}
@@ -543,15 +543,17 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             fontFamily: 'Wilderness',
             fontSize: 24,
           }}
+          weight="400"
+          color="shade9"
         >
           Summary
         </Typography>
       </DetailsHeaderContainer>
 
       {renderSpecs()}
-      <div style={{ marginTop: "25px" }}></div>
+      <div style={{ marginTop: "20px" }}></div>
       {renderSize()}
-      <div style={{ marginTop: "25px" }}></div>
+      <div style={{ marginTop: "20px" }}></div>
       {renderQuantity()}
     </SummaryContainer>
   )
@@ -566,7 +568,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
           <div style={{ width: "100%", margin: "auto" }}>
             <Typography
-              variant="body"
+              variant="copy"
               weight="400"
               color="shade9"
               style={{ fontFamily: 'Basis Grotesque Pro', marginBottom: '3px' }}
@@ -586,6 +588,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               margin="12px 0px 0px 0px"
               color="shade6"
               variant="caption"
+              weight="400"
             >
               {convertCreatedToExpiryDate(
                 sellerOffers[0]?.marketRequest?.createdAt
@@ -627,7 +630,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         color="shade9"
         font-weight="700"
         style={{ fontFamily: 'Media Sans' }}
-        variant="title6"
+        variant="title5"
       >
         {data.name}
       </Typography>

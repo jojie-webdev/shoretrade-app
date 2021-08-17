@@ -12,6 +12,8 @@ export const OfferContainer = styled.div`
     cursor: pointer;
 
     .sub-details{
+        padding-top: 5px;
+
         @media (max-width: 833px) {
             background-color: red !important;
             margin-top: 15px;
@@ -144,4 +146,5 @@ export const MajorInfoNonMobileContainer = styled.div`
     align-items: baseline;
     justify-content: space-evenly;
     height: 100%;
+    padding-bottom: 10px;
 `

@@ -64,7 +64,7 @@ const FullOfferDetails = (props: any) => {
             <Typography variant="caption" color="shade7">
                 TOTAL VALUE
             </Typography>
-            <Typography variant="title1" color="shade8" style={{ marginTop: "8px" }}>
+            <Typography variant="title3" color="shade8" style={{ marginTop: "8px" }}>
                 ${(offer?.weight * offer?.price).toFixed(2)}
             </Typography>
         </TotalPriceContainer>
