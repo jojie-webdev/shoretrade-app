@@ -83,7 +83,10 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
         .menu-body {
           max-height: 400px;
           min-height: 72px;
-          background: ${({ theme }) => theme.grey.shade10};
+          background: ${({ theme }) =>
+            theme.appType === 'buyer'
+              ? theme.grey.noshade
+              : theme.grey.shade10};
           overflow-y: auto;
           overflow-x: hidden;
           border-radius: 6px;
@@ -102,6 +105,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
             justify-content: center;
             align-items: center;
             padding: 24px;
+            padding-top: 0px;
             background: ${({ theme }) =>
               theme.appType === 'seller'
                 ? theme.grey.shade10

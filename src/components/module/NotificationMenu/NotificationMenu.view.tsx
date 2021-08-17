@@ -44,14 +44,17 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     handleOnDelete,
   } = props;
 
-  const handleBellClick = () => {
-    setIsComponentVisible(!isComponentVisible);
-  };
-
   const isMobile = useMediaQuery({
     query: BREAKPOINTS.sm,
   });
 
+  const handleBellClick = () => {
+    if (isMobile) {
+      history.push(notifsRoute);
+    } else {
+      setIsComponentVisible(!isComponentVisible);
+    }
+  };
   const bellColor = () => {
     if (isMobile) {
       return theme.grey.noshade;
@@ -87,18 +90,25 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
             </div>
             <div className="menu-body">
               <div className="menu-content">
-                {notifsData.map((nd) => (
-                  <DropdownItemContainer key={nd.id}>
-                    <NotificationItem
-                      onDelete={() => handleOnDelete(nd.id)}
-                      onMarkasRead={() => handleMarkasRead(nd.id)}
-                      type="account"
-                      content={nd.description}
-                      date={nd.created_at}
-                      isRead={nd.read_at !== null}
-                    />
-                  </DropdownItemContainer>
-                ))}
+                {notifsData
+                  .filter((nd) => {
+                    if (nd.read_at === null) {
+                      return nd;
+                    }
+                    return null;
+                  })
+                  .map((nd) => (
+                    <DropdownItemContainer key={nd.id}>
+                      <NotificationItem
+                        onDelete={() => handleOnDelete(nd.id)}
+                        onMarkasRead={() => handleMarkasRead(nd.id)}
+                        type="account"
+                        content={nd.description}
+                        date={nd.created_at}
+                        isRead={nd.read_at !== null}
+                      />
+                    </DropdownItemContainer>
+                  ))}
                 {notifsData.length < 1 && (
                   <EmptyStateView
                     Svg={Octopus}
