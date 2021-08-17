@@ -24,7 +24,6 @@ const ResizerComponent = (props: ResizerComponentProps) => {
       }}
       default={defaultSize}
       onResize={(e, direction, ref, delta, position) => {
-        console.log({ e, direction, ref, delta, position });
         e?.stopPropagation();
         onResize?.({ ...position, ...delta }, column);
       }}
