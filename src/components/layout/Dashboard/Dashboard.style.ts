@@ -503,4 +503,5 @@ export const HeaderWrapper = styled.div`
   width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   margin: auto;
   position: relative;
+  z-index: 10;
 `;

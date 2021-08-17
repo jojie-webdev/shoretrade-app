@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
-import { Bell } from 'components/base/SVG';
+import { Bell, Crab, Octopus } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
@@ -9,9 +9,11 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { useTheme } from 'utils/Theme';
 
 // import { useTheme } from 'utils/Theme';
+import EmptyStateView from '../EmptyState';
 import NotificationItem from '../NotificationItem';
 import { NotificationMenuProps } from './NotificationMenu.props';
 import {
@@ -23,6 +25,11 @@ import {
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
+  const {
+    ref,
+    isComponentVisible,
+    setIsComponentVisible,
+  } = useComponentVisible(false);
   const isSeller = theme.appType === 'seller';
   const notifsRoute =
     theme.appType === 'buyer'
@@ -36,10 +43,9 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     handleMarkasRead,
     handleOnDelete,
   } = props;
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleBellClick = () => {
-    setIsOpenMenu(!isOpenMenu);
+    setIsComponentVisible(!isComponentVisible);
   };
 
   const isMobile = useMediaQuery({
@@ -55,8 +61,13 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     return theme.grey.shade9;
   };
 
+  const handleOnClickSeeAll = () => {
+    setIsComponentVisible(false);
+    history.push(notifsRoute);
+  };
+
   return (
-    <Container isOpenMenu={isOpenMenu}>
+    <Container ref={ref} isOpenMenu={isComponentVisible}>
       <div className="icon-wrapper">
         <Touchable onPress={() => handleBellClick()}>
           <Bell fill={bellColor()} />
@@ -88,14 +99,24 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     />
                   </DropdownItemContainer>
                 ))}
+                {notifsData.length < 1 && (
+                  <EmptyStateView
+                    Svg={Octopus}
+                    fluid
+                    height={90}
+                    title="No notifications at the moment."
+                  />
+                )}
               </div>
               <div className="menu-footer">
-                <Button
-                  onClick={() => history.push(notifsRoute)}
-                  size="sm"
-                  variant="outline"
-                  text="See All"
-                />
+                {notifsData.length > 0 && (
+                  <Button
+                    onClick={() => handleOnClickSeeAll()}
+                    size="sm"
+                    variant="outline"
+                    text="See All"
+                  />
+                )}
               </div>
             </div>
           </div>

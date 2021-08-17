@@ -19,6 +19,7 @@ import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
+import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -40,20 +41,24 @@ const MoreMenu = (props: {
   onMarkasRead: () => void;
   onDelete: () => void;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const {
+    ref,
+    isComponentVisible,
+    setIsComponentVisible,
+  } = useComponentVisible(false);
 
   const history = useHistory();
   const { fullView, notifsRoute, onMarkasRead, onDelete } = props;
 
   const handlePress = () => {
-    setIsOpen(!isOpen);
+    setIsComponentVisible(!isComponentVisible);
   };
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
 
   return (
-    <MoreMenuContainer isOpen={isOpen}>
+    <MoreMenuContainer ref={ref} isOpen={isComponentVisible}>
       <div className="more-container">
         <Touchable onPress={() => handlePress()}>
           <More />
