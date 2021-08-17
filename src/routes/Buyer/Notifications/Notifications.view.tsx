@@ -1,11 +1,13 @@
 import React from 'react';
 
 import Tab from 'components/base/Tab';
+import EmptyStateView from 'components/module/EmptyState';
 import NotificationItemView from 'components/module/NotificationItem';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsGeneratedProps } from './Notifications.props';
 import { Container } from './Notifications.style';
+import { Crab } from 'components/base/SVG';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
@@ -17,6 +19,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
     totalNotifs,
     totalUnreadNotifs,
     handleMarkasRead,
+    handleOnDelete,
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'shade2' : 'shade6';
@@ -43,12 +46,16 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
             key={nd.id}
             fullView
             onMarkasRead={() => handleMarkasRead(nd.id)}
+            onDelete={() => handleOnDelete(nd.id)}
             type="account"
             content={nd.description}
             date={nd.created_at}
             isRead={nd.read_at != null}
           />
         ))}
+      {notifsData.length < 1 && (
+        <EmptyStateView Svg={Crab} title="No notifications at the moment." />
+      )}
     </Container>
   );
 };

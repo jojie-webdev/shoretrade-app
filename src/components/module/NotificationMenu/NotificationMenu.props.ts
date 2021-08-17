@@ -5,4 +5,5 @@ export interface NotificationMenuProps {
   unreadTotal: number;
   notifsData: NotificationItemResponse[];
   handleMarkasRead: (notificationId: string) => void;
+  handleOnDelete: (notificationId: string) => void;
 }

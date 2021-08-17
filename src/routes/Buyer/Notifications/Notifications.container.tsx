@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
 import { useDispatch, useSelector } from 'react-redux';
-import { readNotificationActions } from 'store/actions';
+import {
+  deleteNotificationActions,
+  readNotificationActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import NotificationsView from './Notifications.view';
@@ -36,6 +39,11 @@ const Notifications = (): JSX.Element => {
     dispatch(readNotificationActions.request({ id: notificationId }));
   };
 
+  const handleOnDelete = (notificationId: string) => {
+    console.log(notificationId);
+    dispatch(deleteNotificationActions.request({ id: notificationId }));
+  };
+
   const generatedProps = {
     tabItems,
     activeTab,
@@ -44,6 +52,7 @@ const Notifications = (): JSX.Element => {
     totalUnreadNotifs,
     totalNotifs,
     handleMarkasRead,
+    handleOnDelete,
   };
 
   return <NotificationsView {...generatedProps} />;

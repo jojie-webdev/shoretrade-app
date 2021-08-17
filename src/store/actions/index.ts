@@ -102,3 +102,4 @@ export { default as getNotificationsSettingsActions } from './getNotificationsSe
 export { default as getNotificationsActions } from './getNotifications';
 export { default as updateNotificationSettingsActions } from './updateNotificationSettings';
 export { default as readNotificationActions } from './readNotification';
+export { default as deleteNotificationActions } from './deleteNotification';

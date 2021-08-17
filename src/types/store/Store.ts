@@ -91,6 +91,7 @@ import {
   DeleteMarketRequestMeta,
   DeleteMarketRequestPayload,
 } from './DeleteMarketRequestState';
+import { DeleteNotificationMetaData, DeleteNotificationPayload } from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
 import { EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
@@ -497,5 +498,9 @@ export interface Store {
   readNotification: AsyncState<
     ReadNotificationMetaData,
     ReadMarketNotificationPayload
+  >;
+  deleteNotification: AsyncState<
+    DeleteNotificationMetaData,
+    DeleteNotificationPayload
   >;
 }

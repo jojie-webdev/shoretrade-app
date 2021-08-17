@@ -7,6 +7,7 @@ export interface NotificationItemProps {
   date: Date | null;
   fullView?: boolean;
   onMarkasRead: () => void;
+  onDelete: () => void;
 }
 
 export interface NotifAvatarProps {

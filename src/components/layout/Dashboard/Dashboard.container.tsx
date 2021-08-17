@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import {
   authActions,
   cartActions,
+  deleteNotificationActions,
   editableListingActions,
   getNotificationsActions,
   logoutActions,
@@ -113,6 +114,11 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     dispatch(readNotificationActions.request({ id: notificationId }));
   };
 
+  const handleOnDelete = (notificationId: string) => {
+    console.log(notificationId);
+    dispatch(deleteNotificationActions.request({ id: notificationId }));
+  };
+
   // MARK:- Effects
   useEffect(() => {
     // This is a hacky way for an edge case in add product
@@ -163,6 +169,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     totalNotifs,
     totalUnreadNotifs,
     handleMarkasRead,
+    handleOnDelete,
   };
 
   return <DashboardView {...generatedProps} />;

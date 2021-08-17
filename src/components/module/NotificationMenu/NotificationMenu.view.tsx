@@ -29,7 +29,13 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       ? BUYER_ROUTES.NOTIFICATIONS
       : SELLER_ROUTES.NOTIFICATIONS;
 
-  const { notifTotal, unreadTotal, notifsData, handleMarkasRead } = props;
+  const {
+    notifTotal,
+    unreadTotal,
+    notifsData,
+    handleMarkasRead,
+    handleOnDelete,
+  } = props;
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleBellClick = () => {
@@ -73,6 +79,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                 {notifsData.map((nd) => (
                   <DropdownItemContainer key={nd.id}>
                     <NotificationItem
+                      onDelete={() => handleOnDelete(nd.id)}
                       onMarkasRead={() => handleMarkasRead(nd.id)}
                       type="account"
                       content={nd.description}

@@ -38,11 +38,12 @@ const MoreMenu = (props: {
   fullView?: boolean;
   notifsRoute: string;
   onMarkasRead: () => void;
+  onDelete: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const history = useHistory();
-  const { fullView, notifsRoute, onMarkasRead } = props;
+  const { fullView, notifsRoute, onMarkasRead, onDelete } = props;
 
   const handlePress = () => {
     setIsOpen(!isOpen);
@@ -73,7 +74,7 @@ const MoreMenu = (props: {
                   </Touchable>
                 </DropdownItemContainer>
                 <DropdownItemContainer>
-                  <Touchable onPress={() => console.log('Delete')}>
+                  <Touchable onPress={() => onDelete()}>
                     <FolderDownload />
                     <Typography className="text" color={defaultColor}>
                       Delete Notification
@@ -102,7 +103,15 @@ const NewIndicator = () => {
 
 const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
-  const { type, isRead, content, date, fullView, onMarkasRead } = props;
+  const {
+    type,
+    isRead,
+    content,
+    date,
+    fullView,
+    onMarkasRead,
+    onDelete,
+  } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -168,6 +177,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       <RightComponentContainer>
         {!isRead && <NewIndicator />}
         <MoreMenu
+          onDelete={onDelete}
           onMarkasRead={onMarkasRead}
           notifsRoute={notifsRoute}
           fullView={fullView}

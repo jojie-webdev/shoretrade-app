@@ -11,4 +11,5 @@ export interface NotificationsGeneratedProps {
   totalNotifs: number;
   totalUnreadNotifs: number;
   handleMarkasRead: (notificationId: string) => void;
+  handleOnDelete: (notificationId: string) => void;
 }

@@ -135,6 +135,7 @@ const Header = ({
   totalNotifs,
   notifsData,
   handleMarkasRead,
+  handleOnDelete,
 }: HeaderProps) => {
   const theme = useTheme();
 
@@ -172,6 +173,7 @@ const Header = ({
       rightContent={
         <HeaderRightContent>
           <NotificationMenu
+            handleOnDelete={handleOnDelete}
             handleMarkasRead={handleMarkasRead}
             notifsData={notifsData}
             notifTotal={totalNotifs}
@@ -237,6 +239,7 @@ const Header = ({
         {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
         <NotificationMenu
           handleMarkasRead={handleMarkasRead}
+          handleOnDelete={handleOnDelete}
           notifsData={notifsData}
           notifTotal={totalNotifs}
           unreadTotal={totalUnreadNotifs}
@@ -270,6 +273,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     totalNotifs,
     notifsData,
     handleMarkasRead,
+    handleOnDelete,
   } = props;
 
   const history = useHistory();
@@ -424,6 +428,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             >
               <HeaderWrapper>
                 <Header
+                  handleOnDelete={handleOnDelete}
                   handleMarkasRead={handleMarkasRead}
                   pageTitle={pageTitle}
                   userData={userData}
@@ -445,6 +450,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           ) : (
             <>
               <Header
+                handleOnDelete={handleOnDelete}
                 pageTitle={pageTitle}
                 handleMarkasRead={handleMarkasRead}
                 userData={userData}
