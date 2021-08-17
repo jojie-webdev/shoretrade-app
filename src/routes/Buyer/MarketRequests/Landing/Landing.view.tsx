@@ -300,6 +300,7 @@ const MarketRequestsLandingView = (
   } = props;
 
   const [checkAccept, setCheckAccept] = useState<boolean>(false)
+  const [renderTermsAndCon, setRenderTermsAndCon] = useState<boolean>(false)
 
   if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
@@ -487,9 +488,7 @@ const MarketRequestsLandingView = (
         fill="white"
         style={{ paddingBottom: '2px' }}
       />}
-    // onClick={() => {
-    //   handleGetStarted();
-    // }}
+      onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
     />
   )
 
@@ -604,63 +603,63 @@ const MarketRequestsLandingView = (
   )
 
   return (
-    // renderTermsAndCondition()
-
-    <MarketRequestsContainer>
-      <ConfirmationModal
-        isOpen={itemToDelete.value !== null}
-        title="Delete Market Request"
-        description="Are you sure you want to delete this market request?"
-        action={() => {
-          onDelete && itemToDelete.value && onDelete(itemToDelete.value);
-        }}
-        actionText="DELETE"
-        onClickClose={() => setItemToDelete({ value: null })}
-      />
-
-      <Row nogutter justify="around" align="center" className="header">
-        <Col>
-          <Typography
-            variant="title5"
-            weight="700"
-            color="shade9"
-            style={{ fontFamily: 'Media Sans' }}
-          >
-            My Market Requests
-          </Typography>
-        </Col>
-        <Col xs="content">
-          <Visible sm md lg xl xxl>
-            <Button
-              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-              text="CREATE REQUEST"
-              variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              size="md"
-              disabled={props.isPendingAccount}
-            />
-          </Visible>
-        </Col>
-      </Row>
-      {renderMobile()}
-      {renderNonMobile()}
-      <MobileFooter>
-        <Button
-          onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
-          text="CREATE REQUEST"
-          variant={props.isPendingAccount ? 'disabled' : 'primary'}
-          takeFullWidth
-          disabled={props.isPendingAccount}
-          icon={
-            <ChevronRight
-              width={15}
-              height={12}
-              fill="white"
-              style={{ paddingBottom: '2px' }}
-            />
-          }
+    renderTermsAndCon ?
+      renderTermsAndCondition() :
+      <MarketRequestsContainer>
+        <ConfirmationModal
+          isOpen={itemToDelete.value !== null}
+          title="Delete Market Request"
+          description="Are you sure you want to delete this market request?"
+          action={() => {
+            onDelete && itemToDelete.value && onDelete(itemToDelete.value);
+          }}
+          actionText="DELETE"
+          onClickClose={() => setItemToDelete({ value: null })}
         />
-      </MobileFooter>
-    </MarketRequestsContainer>
+
+        <Row nogutter justify="around" align="center" className="header">
+          <Col>
+            <Typography
+              variant="title5"
+              weight="700"
+              color="shade9"
+              style={{ fontFamily: 'Media Sans' }}
+            >
+              My Market Requests
+            </Typography>
+          </Col>
+          <Col xs="content">
+            <Visible sm md lg xl xxl>
+              <Button
+                onClick={() => setRenderTermsAndCon(true)}
+                text="CREATE REQUEST"
+                variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                size="md"
+                disabled={props.isPendingAccount}
+              />
+            </Visible>
+          </Col>
+        </Row>
+        {renderMobile()}
+        {renderNonMobile()}
+        <MobileFooter>
+          <Button
+            onClick={() => setRenderTermsAndCon(true)}
+            text="CREATE REQUEST"
+            variant={props.isPendingAccount ? 'disabled' : 'primary'}
+            takeFullWidth
+            disabled={props.isPendingAccount}
+            icon={
+              <ChevronRight
+                width={15}
+                height={12}
+                fill="white"
+                style={{ paddingBottom: '2px' }}
+              />
+            }
+          />
+        </MobileFooter>
+      </MarketRequestsContainer>
   );
 };
 
