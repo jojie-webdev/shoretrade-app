@@ -33,7 +33,7 @@ export const TotalPriceContainer = styled.div`
     border: 1px solid ${({ theme }) => theme.grey.shade1};
     border-radius: 12px;
     padding: 16px;
-    margin-top: 28px;
+    margin-top: 16px;
 
     @media ${BREAKPOINTS['sm']}{
         border: 1px solid ${({ theme }) => theme.grey.shade4};
@@ -60,7 +60,15 @@ export const StarContainer = styled.div`
 
 export const StyledAcceptButton = styled(Button)`
     border-radius: 12px;
-    margin-left: 8px;
+    padding: 15px 28px;
+    width: 100%;
+    height: 100%;
+`
+
+export const StyledNegotiateButton = styled(Button)`
+    border-radius: 12px;
+    padding: 15px 28px;
+    width: 100%
 `
 
 export const TagsContainer = styled.div`
@@ -74,8 +82,8 @@ export const StyledTypography = styled(Typography)`
 `
 
 export const StyledTypography2 = styled(Typography)`
-margin-left: 16px;
-font-family: Basis Grotesque Pro;
+    margin-left: 16px;
+    font-family: Basis Grotesque Pro;
 `
 
 export const StyledImage = styled.img`

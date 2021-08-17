@@ -122,7 +122,7 @@ const Offer = (props: OfferProps) => {
                             {sellerOffer.company.name}
                         </Typography>
 
-
+                        {renderStars()}
                     </MajorInfoContainer>
                 </MajorInfo>
 
