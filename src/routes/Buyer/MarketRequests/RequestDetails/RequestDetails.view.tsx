@@ -699,10 +699,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <Row>{renderItemName()}</Row>
 
           <Row gutterWidth={30} >
-            <Visible xs sm md lg>
-              {renderSearch()}
-              {renderCounter()}
-            </Visible>
+            {
+              !location.pathname.includes("/offer/") ?
+                <Visible xs sm md lg>
+                  {renderSearch()}
+                  {renderCounter()}
+                </Visible> :
+                null
+            }
             <Hidden xs sm md lg>
               {renderLeftComponent()}
               {renderRightComponent()}
