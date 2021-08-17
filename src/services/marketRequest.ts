@@ -126,3 +126,16 @@ export const deleteRequest = (data: DeleteMarketRequestMeta, token: string) => {
     },
   });
 };
+
+export const deleteOffer = (data: DeleteMarketRequestMeta, token: string) => {
+  const BASE_URL = `${API.URL}/${API.VERSION_NEXT}`;
+  const _MARKET_REQUEST_URL = `${BASE_URL}/market-request`;
+
+  return axios({
+    method: 'delete',
+    url: `${_MARKET_REQUEST_URL}/offer/${data.id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

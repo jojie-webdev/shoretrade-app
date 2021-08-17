@@ -26,4 +26,6 @@ export const SelectRowContainer = styled.div`
   > div :first-child {
     margin-top: 0;
   }
+
+  margin-top: 0px;
 `;

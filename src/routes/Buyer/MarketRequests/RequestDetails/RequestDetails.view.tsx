@@ -12,6 +12,7 @@ import {
   StarFilled,
   Weight,
   Octopus,
+  DropdownArrow
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -76,6 +77,9 @@ import {
   RequestDetailsParentContainer,
   SummaryContainer,
   DeleteButtonContainer,
+  CounterContainer,
+  CounterCol,
+  Sorter
 } from './RequestDetails.style';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
@@ -99,7 +103,7 @@ export const OffersSellerAccordionContent = (props: {
         {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
       </div>
       <div className="info-container">
-        <TypographyView variant="copy" color="shade8">
+        <TypographyView variant="caption" color="shade8">
           {sellerName}
         </TypographyView>
         <div className="location-container">
@@ -114,20 +118,20 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {sellerRating
               ? [...Array(5).keys()].map((r) =>
-                  Number(sellerRating || 0) > r ? (
-                    <StarFilled
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  ) : (
-                    <Star
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  )
+                Number(sellerRating || 0) > r ? (
+                  <StarFilled
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
+                ) : (
+                  <Star
+                    fill={theme.brand.alert}
+                    width={starWidth}
+                    height={starHeight}
+                  />
                 )
+              )
               : ''}
           </div>
         </div>
@@ -142,134 +146,6 @@ export const OffersSellerAccordionContent = (props: {
   );
 
   return isMobile ? displayForMobile() : displayForNonMobile();
-};
-
-const SellerOfferInteractionContent = (props: {
-  status: string;
-  weight: number;
-  weightUnit: string;
-  price: number;
-  tags: string[];
-  averagePrice: number;
-  isUnderNegotiations: boolean;
-  deliveryDate: string;
-}) => {
-  const {
-    weight,
-    price,
-    tags,
-    weightUnit,
-    averagePrice,
-    status,
-    isUnderNegotiations = false,
-    deliveryDate,
-  } = props;
-
-  const OfferTags = (props: { tags: string[] }) => {
-    const { tags } = props;
-    const tagsMarkup = tags.map((tag) => (
-      <Badge
-        key={tag}
-        className="offers-state-badge"
-        badgeColor={theme.grey.shade3}
-      >
-        <BadgeText color="shade8" weight="bold" variant="overline">
-          {tag}
-        </BadgeText>
-      </Badge>
-    ));
-
-    return <TagsContainer>{tagsMarkup}</TagsContainer>;
-  };
-
-  return (
-    <SellerOfferInteractionContentContainer>
-      <div className="info-container">
-        <div className="status">
-          {status === 'DECLINED' || status === 'ACCEPTED' ? (
-            <Badge
-              className="offers-badge"
-              badgeColor={
-                status === 'ACCEPTED' ? theme.brand.success : theme.brand.error
-              }
-            >
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                {status === 'DECLINED' ? 'LOST' : status}
-              </StatusBadgeText>
-            </Badge>
-          ) : (
-            <>
-              {price < averagePrice && (
-                <Badge
-                  className="offers-badge"
-                  badgeColor={theme.brand.success}
-                >
-                  <StatusBadgeText
-                    color="shade1"
-                    weight="bold"
-                    variant="overline"
-                  >
-                    Great Value
-                  </StatusBadgeText>
-                </Badge>
-              )}
-              {price > averagePrice && (
-                <Badge className="offers-badge" badgeColor={theme.brand.error}>
-                  <StatusBadgeText
-                    color="shade1"
-                    weight="bold"
-                    variant="overline"
-                  >
-                    Above Market
-                  </StatusBadgeText>
-                </Badge>
-              )}
-              {isUnderNegotiations && (
-                <Badge className="offers-badge" badgeColor={theme.brand.alert}>
-                  <StatusBadgeText weight="bold" variant="overline">
-                    Negotiation
-                  </StatusBadgeText>
-                </Badge>
-              )}
-            </>
-          )}
-        </div>
-        <div className="weight-price-container">
-          <div className="weight-price">
-            <Weight fill={theme.grey.shade5} />
-            <TypographyView variant="label">
-              {weight} {weightUnit}
-            </TypographyView>
-          </div>
-          <div className="weight-price">
-            <DollarSign fill={theme.grey.shade5} />
-            <TypographyView variant="label">{price}</TypographyView>
-          </div>
-          <div className="weight-price">
-            <Typography
-              color="shade5"
-              variant="caption"
-              style={{ marginRight: 4 }}
-            >
-              Est. Delivery:
-            </Typography>
-            <TypographyView variant="label">
-              {moment(deliveryDate).format('MMM DD, YY')}
-            </TypographyView>
-          </div>
-        </div>
-        <div className="tags">
-          {(tags || []).length > 0 ? (
-            <>
-              <OfferTags tags={tags} />
-            </>
-          ) : (
-            ''
-          )}
-        </div>
-      </div>
-    </SellerOfferInteractionContentContainer>
-  );
 };
 
 const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
@@ -307,6 +183,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     isLoading,
     showNotEnoughCreditAlert,
     setShowNotEnoughCreditAlert,
+    onOfferDelete
   } = props;
 
   const location = useLocation();
@@ -324,7 +201,11 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
-  const dispatch = useDispatch();
+  const buyerRequestsFilters = useSelector(
+    (store: Store) => store.getMarketRequestBuyerFilters.data?.data
+  );
+
+  const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState('');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -377,112 +258,108 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     return offersCount;
   };
 
+  const isFiltered = () => {
+    const _isFilterd = (Array.isArray(props.filterModalProps.selectedFilters) &&
+      props.filterModalProps.selectedFilters.length > 0)
+
+    return _isFilterd
+  }
+
+  const renderCounter = () => (
+    <CounterCol>
+      <CounterContainer>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{ marginRight: "16px" }}
+        >
+          <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
+          <span>{' '}Results</span>
+        </Typography>
+
+        <Sorter onClick={() => props.onClickFilterButton()}>
+          <Typography color="shade9" variant="label" style={{ marginRight: "15px" }}>Sort by</Typography>
+          <DropdownArrow fill={theme.grey.shade6} />
+        </Sorter>
+
+      </CounterContainer>
+    </CounterCol>
+  )
+
+  const renderSearch = () => (
+    <Col xl={6}>
+      <div style={{ marginTop: "16px" }}>
+        <Search
+          className="search"
+          rounded={true}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
+          resetValue={() => setSearchTerm('')}
+          placeholder="Search"
+        />
+      </div>
+    </Col>
+  )
+
   const renderLeftComponent = () => (
-    <Col md={12} sm={12} xl={8}>
-      <Row
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
-          <Col xl={6}>
-            <div style={{ marginTop: '16px' }}>
-              <Search
-                className="search"
-                rounded={true}
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.currentTarget.value)}
-                resetValue={() => setSearchTerm('')}
-                placeholder="Search"
-              />
-            </div>
-          </Col>
-        )}
+    <Col sm={12} md={12} xl={8}  >
+      <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        {
+          isFiltered() ?
+            <Hidden xs sm md lg>
+              {renderSearch()}
+            </Hidden>
+            :
+            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
+            <Hidden xs sm md lg>
+              {renderSearch()}
+            </Hidden>
+        }
 
-        {sellerOffers.length > 0 && !location.pathname.includes('/offer/') && (
-          <Col style={{ display: 'flex' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginLeft: 'auto',
-              }}
-            >
-              <Typography
-                color="shade6"
-                variant="label"
-                style={{ marginRight: '16px' }}
-              >
-                <span style={{ color: '#09131D' }}>{countAllOffers()}</span>
-                <span> Results</span>
-              </Typography>
-
-              <div
-                style={{ marginLeft: '16px', width: '94px', cursor: 'pointer' }}
-                onClick={props.onClickFilterButton}
-              >
-                <Select
-                  label=""
-                  options={[]}
-                  size="small"
-                  placeholder="Sort by"
-                  disabled
-                />
-              </div>
-            </div>
-          </Col>
-        )}
+        {
+          isFiltered() ?
+            <Hidden xs sm md lg>
+              {renderCounter()}
+            </Hidden>
+            :
+            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
+            <Hidden xs sm md lg>
+              {renderCounter()}
+            </Hidden>
+        }
       </Row>
 
       <Switch>
-        <Route
-          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}
-        >
-          {sellerOffersCopy.length > 0 ? (
-            sellerOffersCopy.map((sellerOffer) => (
-              <Offer sellerOffer={sellerOffer} />
-            ))
-          ) : (
-            <>
-              <EmptyStateView
-                title=""
-                Svg={Octopus}
-                height={240}
-                width={249}
-                fluid
-              />
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexFlow: 'column',
-                }}
-              >
-                <Typography
-                  weight="700"
-                  color="shade8"
-                  variant="title6"
-                  style={{ fontFamily: 'Media Sans' }}
-                >
-                  The are no offers yet
-                </Typography>
-                <Typography
-                  weight="400"
-                  color="shade6"
-                  variant="caption"
-                  style={{
-                    marginTop: '4px',
-                    fontFamily: 'Basis Grotesque Pro',
-                  }}
-                >
-                  Enable your push notifications
-                </Typography>
-              </div>
-            </>
-          )}
+        <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}>
+          {
+            sellerOffersCopy.length > 0 ?
+              sellerOffersCopy.map(sellerOffer =>
+                <Offer sellerOffer={sellerOffer} onOfferDelete={onOfferDelete} />
+              ) :
+              <>
+                {
+                  isFiltered() ?
+                    null :
+                    <>
+                      <EmptyStateView
+                        title=""
+                        Svg={Octopus}
+                        height={240}
+                        width={249}
+                        fluid
+                      />
+                      <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
+                        <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
+                          There are no offers yet
+                        </Typography>
+                        <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
+                          Enable your push notifications
+                        </Typography>
+                      </div>
+                    </>
+                }
+              </>
+          }
         </Route>
 
         <Route
@@ -491,10 +368,14 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             currentOfferId
           )}
         >
-          <div style={{ marginTop: '16px' }}>
+          <div style={{ marginTop: "16px" }}>
             <FullOfferDetails
               handleStartNegotiate={handleStartNegotiate}
               handleAcceptOffer={handleAcceptOffer}
+              isAccepted={isAccepted}
+              thereIsNewOffer={thereIsNewOffer}
+              counterOffer={counterOffer}
+              newOffer={newOffer}
             />
           </div>
         </Route>
@@ -543,7 +424,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           color="shade6"
           variant="label"
           style={{
-            marginBottom: 16,
+            marginBottom: 10,
             fontFamily: 'Wilderness',
             fontSize: 24,
           }}
@@ -582,7 +463,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             color="shade6"
             variant="label"
             style={{
-              marginBottom: 16,
+              marginBottom: 10,
               fontFamily: 'Wilderness',
               fontSize: 24,
             }}
@@ -618,7 +499,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           color="shade6"
           variant="label"
           style={{
-            marginBottom: 16,
+            marginBottom: 10,
             fontFamily: 'Wilderness',
             fontSize: 24,
           }}
@@ -647,16 +528,47 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     );
   };
 
+  const calculatePercentage = () => {
+    const percentage = ((100 * countAcceptedWeight()) / (filteredMarketRequest()?.weight?.to || 0)) || 0
+
+    return percentage
+  }
+
+  const renderSummary = () => (
+    <SummaryContainer margin="16px 0px">
+      <DetailsHeaderContainer>
+        <Typography
+          style={{
+            marginBottom: 8,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+          weight="400"
+          color="shade9"
+        >
+          Summary
+        </Typography>
+      </DetailsHeaderContainer>
+
+      {renderSpecs()}
+      <div style={{ marginTop: "20px" }}></div>
+      {renderSize()}
+      <div style={{ marginTop: "20px" }}></div>
+      {renderQuantity()}
+    </SummaryContainer>
+  )
+
   const renderRightComponent = () => (
-    <Col md={12} sm={12} xl={4}>
+    <Col sm={12} md={12} xl={4}  >
       <RequestDetailsParentContainer>
         <RequestDetailsMobileContainer>
           <div className="thumbnail-container">
             <img src={parseImageUrl(data.image || '')} />
           </div>
-          <div style={{ width: '100%', margin: 'auto' }}>
+
+          <div style={{ width: "100%", margin: "auto" }}>
             <Typography
-              variant="body"
+              variant="copy"
               weight="400"
               color="shade9"
               style={{ fontFamily: 'Basis Grotesque Pro', marginBottom: '3px' }}
@@ -669,19 +581,21 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             </Typography>
 
             <ProgressContainer>
-              <Progress height="2px" percent={70} />
+              <Progress height="2px" percent={calculatePercentage()} />
             </ProgressContainer>
 
             <Typography
               margin="12px 0px 0px 0px"
               color="shade6"
               variant="caption"
+              weight="400"
             >
               {convertCreatedToExpiryDate(
                 sellerOffers[0]?.marketRequest?.createdAt
               )}
             </Typography>
           </div>
+
           <DeleteButtonContainer>
             <Button
               iconPosition="before"
@@ -704,52 +618,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </RequestDetailsMobileContainer>
       </RequestDetailsParentContainer>
 
-      <SummaryContainer margin="16px 0px">
-        <DetailsHeaderContainer>
-          <Typography
-            style={{
-              marginBottom: 8,
-              fontFamily: 'Wilderness',
-              fontSize: 24,
-            }}
-          >
-            Summary
-          </Typography>
-        </DetailsHeaderContainer>
-
-        {renderSpecs()}
-        <div style={{ marginTop: '25px' }}></div>
-        {renderSize()}
-        <div style={{ marginTop: '25px' }}></div>
-        {renderQuantity()}
-      </SummaryContainer>
-
-      {/* <Switch>
-        <Route
-          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-            marketRequestId,
-            currentOfferId
-          )}
-        >
-          <OfferDetailView
-            handleAcceptOffer={handleAcceptOffer}
-            company={selectedCompany}
-            selectedOffer={selectedOffer}
-            deliveryTotal={deliveryTotal}
-            handleStartNegotiate={handleStartNegotiate}
-            hideNegotiate={hideNegotiate}
-            counterOffer={counterOffer}
-            discountPercentage={discountPercentage}
-            discountValue={discountValue}
-            newOffer={newOffer}
-            thereIsNewOffer={thereIsNewOffer}
-            disableAccept={disableAccept}
-            isAccepted={isAccepted}
-            sortedNegotiations={sortedNegotiations}
-            lastNegotiationsOffers={lastNegotiationsOffers}
-          />
-        </Route>
-      </Switch> */}
+      <Hidden xs sm md lg>
+        {renderSummary()}
+      </Hidden>
     </Col>
   );
 
@@ -759,7 +630,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         color="shade9"
         font-weight="700"
         style={{ fontFamily: 'Media Sans' }}
-        variant="title6"
+        variant="title5"
       >
         {data.name}
       </Typography>
@@ -813,20 +684,38 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         </Typography>
       </DialogModal>
 
-      <HeaderContainer>
-        <div>
-          <Breadcrumbs sections={breadCrumbSections} />
-        </div>
-      </HeaderContainer>
+      <Hidden xs sm>
+        <HeaderContainer>
+          <div >
+            <Breadcrumbs sections={breadCrumbSections} />
+          </div>
+        </HeaderContainer>
+      </Hidden>
+
       {isLoading ? (
         <Loading />
       ) : (
         <>
           <Row>{renderItemName()}</Row>
 
-          <Row gutterWidth={30}>
-            {renderLeftComponent()}
-            {renderRightComponent()}
+          <Row gutterWidth={30} >
+            <Visible xs sm md lg>
+              {renderSearch()}
+              {renderCounter()}
+            </Visible>
+            <Hidden xs sm md lg>
+              {renderLeftComponent()}
+              {renderRightComponent()}
+            </Hidden>
+            <Visible xs sm md lg>
+              {renderRightComponent()}
+              {renderLeftComponent()}
+            </Visible>
+            <Visible lg>
+              <Col>
+                {renderSummary()}
+              </Col>
+            </Visible>
           </Row>
         </>
       )}

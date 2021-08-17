@@ -29,4 +29,5 @@ export const Container = styled.div<{
     padding: 16px;
     background: none;
     border: 0;
+  }
 `;

@@ -425,7 +425,7 @@ const SellingView = (props: SellingGeneratedProps) => {
               isSmallScreen ? (
                 <EmptyState
                   textAlign="center"
-                  title="The are no listings here at the moment"
+                  title="There are no listings here at the moment"
                   buttonText="Add a product"
                   Svg={Crab}
                   onButtonClicked={() =>

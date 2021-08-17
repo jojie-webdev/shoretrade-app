@@ -1,4 +1,5 @@
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 export interface OfferProps {
-    sellerOffer: GetActiveOffersRequestResponseItem
+    sellerOffer: GetActiveOffersRequestResponseItem,
+    onOfferDelete: (offerIdToDelete: string) => void
 }
