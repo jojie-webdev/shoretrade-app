@@ -20,7 +20,7 @@ const Touchable = (props: TouchableProps): JSX.Element => {
     <TouchableBase
       type="button"
       onClick={(e) => {
-        e.preventDefault();
+        e.stopPropagation();
         if (onPress) {
           onPress();
         }

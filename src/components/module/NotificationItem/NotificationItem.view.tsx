@@ -167,7 +167,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   return (
     <Container
       onClick={(e) => {
-        e.preventDefault();
+        e.stopPropagation();
         handleNotifOnClick();
       }}
       isRead={isRead}
