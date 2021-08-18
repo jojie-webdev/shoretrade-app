@@ -55,6 +55,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     sticky,
     onResize,
     column,
+    handleMaximizeColum,
   } = props;
 
   const TableDataContainerRef = useRef<HTMLDivElement>(null);
@@ -87,6 +88,7 @@ export default function TableDataContent(props: TableDataContentProps) {
   return (
     <TableDataContainer
       ref={TableDataContainerRef}
+      onDoubleClick={() => handleMaximizeColum?.(column?.selector)}
       {...Object.fromEntries(
         Object.entries(tableDataContainerProps).filter(([_, value]) => !!value) // this removes undefine and null values
       )}

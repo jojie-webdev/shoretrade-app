@@ -14,6 +14,7 @@ export default function TableRow(props: TableRowProps) {
     selected,
     handleOnSelectRow,
     onResize,
+    handleMaximizeColum,
   } = props;
 
   return (
@@ -21,7 +22,9 @@ export default function TableRow(props: TableRowProps) {
       {columns.map((column, index) => {
         let columnType: ColumnType;
 
-        if (!index) columnType = 'column-first';
+        if (!index) {
+          columnType = 'column-first';
+        }
         if (index === columns.length - 1) columnType = 'column-last';
 
         return (

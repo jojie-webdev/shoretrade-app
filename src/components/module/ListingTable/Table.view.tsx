@@ -37,6 +37,23 @@ export const TableComponent = (props: TableComponentProps) => {
   const [layout, setLayout] = useState<number[]>([]);
   const [baseLayout, setBaseLayout] = useState<number[]>([]);
 
+  const handleMaximizeColum = (columnName: string) => {
+    const columnIndex = columns.findIndex((col) => columnName === col.selector);
+    if (columnIndex === -1) return;
+
+    setLayout((prevLayout) =>
+      prevLayout.map((width, index) => {
+        if (index === columnIndex) {
+          const padding = 16 * 2;
+          const columnWidth = localStorage.getItem(`col:${columnName}`);
+          return Number(columnWidth) + padding;
+        }
+        return width;
+      })
+    );
+    setOverwriteLayout(true);
+  };
+
   const handleOnSelectAll = (state: boolean) => {
     setIsAllSelected(state);
   };
@@ -116,6 +133,7 @@ export const TableComponent = (props: TableComponentProps) => {
               return (
                 <TableRow
                   onResize={handleRowResize}
+                  handleMaximizeColum={handleMaximizeColum}
                   rowType={data.length - 1 === index ? 'last-row' : undefined}
                   data={item}
                   key={`table-row-${item?.id}`}

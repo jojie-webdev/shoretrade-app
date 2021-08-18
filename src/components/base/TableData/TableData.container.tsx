@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import Checkbox from 'components/base/Checkbox';
 import { SortIcon, Minus } from 'components/base/SVG';
@@ -6,6 +6,17 @@ import theme from 'utils/Theme';
 
 import { TableDataProps } from './TableData.props';
 import TableDataContent from './TableData.view';
+import { WidthComputer } from './TableData.styles';
+
+function findAndSaveLongestWidth(columnName: string, width: number) {
+  if (!columnName || columnName === 'undefined') return;
+  const longestWidth = localStorage.getItem(`col:${columnName}`);
+
+  // initialize value;
+  if (!longestWidth) localStorage.setItem(`col:${columnName}`, `${width}`);
+  if (Number(longestWidth) < width)
+    localStorage.setItem(`col:${columnName}`, `${width}`);
+}
 
 export default function TableData(props: TableDataProps) {
   const {
@@ -19,17 +30,74 @@ export default function TableData(props: TableDataProps) {
     handleOnSelect,
     onResize,
     column,
+    handleMaximizeColum,
   } = props;
   const [showSortIcon, setShowSortIcon] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [overwriteSelectedProp, setOverWriteSelectedProp] = useState(false);
+  const [isWidthComptued, setIsWidthComputed] = useState(false);
+  const computerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!selected) setIsChecked(false);
     setOverWriteSelectedProp(false);
   }, [selected]);
 
+  useEffect(() => {
+    if (computerRef.current) {
+      // compute its width
+      findAndSaveLongestWidth(
+        String(column?.selector),
+        computerRef.current.offsetWidth
+      );
+      setIsWidthComputed(true);
+    }
+  }, [computerRef]);
+
   const checked = overwriteSelectedProp ? isChecked : selected;
+
+  const Children = (() => {
+    if (rowType === 'header' || columnType === 'column-first')
+      return (
+        <>
+          <div className="table-value-container">
+            {columnType === 'column-first' && (
+              <Checkbox
+                checked={checked}
+                onClick={(event) => {
+                  event?.stopPropagation();
+                  setIsChecked((prev) => {
+                    handleOnSelect?.(overwriteSelectedProp ? !prev : !selected);
+                    setOverWriteSelectedProp(true);
+
+                    if (selected) {
+                      if (overwriteSelectedProp) return !prev;
+                      return !selected;
+                    }
+                    return !prev;
+                  });
+                }}
+                borderColor={theme.grey.shade7}
+                style={{ marginRight: 8 }}
+                size={16}
+                CustomIcon={rowType === 'header' ? Minus : undefined}
+              />
+            )}
+            {children}
+          </div>
+          {(() => {
+            if (rowType === 'header') {
+              if (sorted || showSortIcon)
+                return (
+                  <SortIcon fill={sorted ? theme.grey.shade7 : undefined} />
+                );
+            }
+          })()}
+        </>
+      );
+
+    return children;
+  })();
 
   return (
     <TableDataContent
@@ -41,51 +109,12 @@ export default function TableData(props: TableDataProps) {
       sticky={sticky}
       onResize={onResize}
       column={column}
+      handleMaximizeColum={handleMaximizeColum}
     >
-      {(() => {
-        if (rowType === 'header' || columnType === 'column-first')
-          return (
-            <>
-              <div className="table-value-container">
-                {columnType === 'column-first' && (
-                  <Checkbox
-                    checked={checked}
-                    onClick={(event) => {
-                      event?.stopPropagation();
-                      setIsChecked((prev) => {
-                        handleOnSelect?.(
-                          overwriteSelectedProp ? !prev : !selected
-                        );
-                        setOverWriteSelectedProp(true);
-
-                        if (selected) {
-                          if (overwriteSelectedProp) return !prev;
-                          return !selected;
-                        }
-                        return !prev;
-                      });
-                    }}
-                    borderColor={theme.grey.shade7}
-                    style={{ marginRight: 8 }}
-                    size={16}
-                    CustomIcon={rowType === 'header' ? Minus : undefined}
-                  />
-                )}
-                {children}
-              </div>
-              {(() => {
-                if (rowType === 'header') {
-                  if (sorted || showSortIcon)
-                    return (
-                      <SortIcon fill={sorted ? theme.grey.shade7 : undefined} />
-                    );
-                }
-              })()}
-            </>
-          );
-
-        return children;
-      })()}
+      {Children}
+      {!isWidthComptued && (
+        <WidthComputer ref={computerRef}>{Children}</WidthComputer>
+      )}
     </TableDataContent>
   );
 }

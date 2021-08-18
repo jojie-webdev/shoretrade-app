@@ -20,6 +20,7 @@ export interface TableDataContentProps {
   sticky?: boolean;
   onResize?: onResize;
   column?: any;
+  handleMaximizeColum?: (name: string) => any;
 }
 
 export interface TableDataProps {
@@ -33,6 +34,7 @@ export interface TableDataProps {
   handleOnSelect?: (state: boolean, data?: any) => void;
   onResize?: onResize;
   column?: any;
+  handleMaximizeColum?: (selector: any) => any;
 }
 export interface ResizerComponentProps extends Partial<TableDataContentProps> {
   defaultSize: any;
