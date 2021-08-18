@@ -22,6 +22,7 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
+import deleteMarketRequestOffer from './deleteMarketRequestOffer'
 import editableListing from './editableListing';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
@@ -122,6 +123,7 @@ export default (routeHistory: History) =>
         deleteCard,
         deleteLinkedAccount,
         deleteMarketRequest,
+        deleteMarketRequestOffer,
         editableListing,
         endListing,
         forgotPassword,

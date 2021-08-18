@@ -51,8 +51,8 @@ export const DIRECT_SALE_COLUMNS = [
     name: 'Specs',
     selector: 'specifications',
     sortable: false,
-    tooltip: (data: any) =>
-      (data?.['specifications']?.split(',') || []).join(', '),
+    // tooltip: (data: any) =>
+    //   (data?.['specifications']?.split(',') || []).join(', '),
     component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>

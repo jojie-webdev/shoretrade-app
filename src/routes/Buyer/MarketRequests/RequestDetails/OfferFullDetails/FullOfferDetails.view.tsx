@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { FullOfferDetailsContainer } from './FullOfferDetails.style';
-import { Row, Col } from 'react-grid-system';
+import {
+    FullOfferDetailsContainer,
+    CompanyInfoCol,
+    TotalPriceContainer,
+    DetailsValueContainer,
+    StarContainer,
+    StyledAcceptButton,
+    StyledNegotiateButton,
+    TagsContainer,
+    StyledTypography,
+    StyledTypography2,
+    StyledImage,
+    StyledNumberRating,
+    CTAContainer,
+    StyledNegotiateButtonContainer
+} from './FullOfferDetails.style';
+import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import Typography from 'components/base/Typography';
 import theme from 'utils/Theme';
 import Button from '../../../../../components/base/Button/Button.view';
@@ -13,10 +28,12 @@ import { sizeToString } from 'utils/Listing';
 import { useSelector } from 'react-redux';
 import { Store } from '../../../../../types/store/Store';
 import { useLocation } from 'react-router-dom';
-
+import Badge from 'components/base/Badge/Badge.view';
+import { StatusBadgeText } from '../RequestDetails.style';
+import { NoActionsYetBadgesContainer } from '../Offer/Offer.style';
 
 const FullOfferDetails = (props: any) => {
-    const { handleStartNegotiate, handleAcceptOffer } = props
+    const { handleStartNegotiate, handleAcceptOffer, isAccepted, thereIsNewOffer, counterOffer, newOffer } = props
 
     const location = useLocation()
     const splits = location.pathname.split("/")
@@ -46,62 +63,169 @@ const FullOfferDetails = (props: any) => {
         })
     }, [offerId])
 
+    const renderTotalPriceContainer = () => (
+        <TotalPriceContainer>
+            <Typography variant="overline" color="shade7" weight="900">
+                TOTAL VALUE
+            </Typography>
+            <Typography variant="title3" weight="400" color="shade9" style={{ marginTop: "8px" }}>
+                ${(offer?.weight * offer?.price).toFixed(2)}
+            </Typography>
+        </TotalPriceContainer>
+    )
+
+    const renderOfferSeenTextContainer = () => (
+        <div style={{ marginTop: "16px" }}>
+            {!isAccepted && (
+                <>
+                    {!thereIsNewOffer && counterOffer === '' && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                You have received an offer by the Seller. Either click
+                                accept or negotiate to proceed.
+                            </Typography>
+                        </div>
+                    )}
+
+                    {thereIsNewOffer && counterOffer === newOffer && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                You have received an offer by the Seller. Either click
+                                accept or negotiate to proceed.
+                            </Typography>
+                        </div>
+                    )}
+
+                    {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
+                        <div className="computation-item-container">
+                            <Typography variant="label" color="shade9">
+                                The seller is reviewing your offer.
+                            </Typography>
+                        </div>
+                    )}
+                </>
+            )}
+        </div>
+    )
+
+    const renderTags = () => (
+        <TagsContainer>
+            {
+                offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ?
+                    <Badge
+                        id="status-badge"
+                        className="offers-badge"
+                        badgeColor={
+                            offer.status === 'ACCEPTED' ? "#EAFFF9" : theme.brand.error
+                        }
+                    >
+                        <StatusBadgeText color="success" weight="bold" variant="overline">
+                            {offer.status === 'DECLINED' ? 'LOST' : offer.status}
+                        </StatusBadgeText>
+                    </Badge>
+                    :
+                    <NoActionsYetBadgesContainer>
+                        {
+                            offer.price < seller.averagePrice && (
+                                <Badge
+                                    className="offers-badge"
+                                    badgeColor={theme.brand.success}
+                                >
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Great Value
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.price > seller.averagePrice && (
+                                <Badge className="offers-badge" badgeColor={theme.brand.error}>
+                                    <StatusBadgeText
+                                        color="shade1"
+                                        weight="bold"
+                                        variant="overline"
+                                    >
+                                        Above Market
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                        {
+                            offer.negotiations && (
+                                <Badge className="offers-badge" badgeColor="#FFF7F2" padding="5px 8px">
+                                    <StatusBadgeText weight="bold" variant="overline" color="warning">
+                                        Negotiation
+                                    </StatusBadgeText>
+                                </Badge>
+                            )
+                        }
+                    </NoActionsYetBadgesContainer>
+            }
+        </TagsContainer>
+    )
+
+    const renderLabel = (label: string, style?: {}) => (
+        <Typography variant="overline" color="shade6" weight="900" style={style}>
+            {label}
+        </Typography>
+    )
+
+    const renderLabelValue = (value: string) => (
+        <DetailsValueContainer>
+            <StyledTypography weight="900" variant="overline">
+                {value}
+            </StyledTypography>
+        </DetailsValueContainer>
+    )
+
+    const specsValue = offer?.specifications?.map((spec: string) => spec?.toUpperCase())?.join(", ")
+    const sizeValue = sizeToString(offer?.metric, offer?.size?.from, offer?.size?.to).toUpperCase()
+    const quantityValue = offer?.weight + " " + offer?.measurementUnit
+
     return (
         <>
             <FullOfferDetailsContainer>
                 <Row>
                     <Col>
-                        <Typography variant="caption" color="shade6">
-                            SPECIFICATION
-                        </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
-                                {offer?.specifications?.map((spec: string) => spec?.toUpperCase())?.join(", ")}
-                            </Typography>
-                        </div>
+                        {renderLabel('SPECIFICATION')}
+                        {renderLabelValue(specsValue)}
 
-                        <Typography variant="caption" color="shade6" style={{ marginTop: "24px" }}>
-                            SIZE
-                        </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
-                                {sizeToString(offer?.metric, offer?.size?.from, offer?.size?.to).toUpperCase()}
-                            </Typography>
-                        </div>
+                        {renderLabel('SIZE', { marginTop: "24px" })}
+                        {renderLabelValue(sizeValue)}
 
-                        <Typography variant="caption" color="shade6" style={{ marginTop: "24px" }}>
-                            QUANTITY
-                        </Typography>
-                        <div style={{ marginTop: "12px", padding: "6px 6px", backgroundColor: "#E5E8F5", borderRadius: "8px", width: "fit-content" }}>
-                            <Typography weight="900" variant="caption" style={{ fontFamily: "Basis Grotesque Pro", clear: "both" }}>
-                                {offer?.weight}{" "}{offer?.measurementUnit}
-                            </Typography>
-                        </div>
+                        {renderLabel('QUANTITY', { marginTop: "24px" })}
+                        {renderLabelValue(quantityValue)}
                     </Col>
-                    <Col xl={3}>
+                    <CompanyInfoCol xl={3}>
                         <div style={{ display: "flex" }}>
                             {
                                 seller?.image ?
-                                    <img
-                                        style={{ width: "48px", height: "48px", backgroundColor: "grey", borderRadius: "8px" }}
-                                        src={parseImageUrl(seller?.image || "")}
-                                    /> :
+                                    <StyledImage src={parseImageUrl(seller?.image || "")} /> :
                                     <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
                                         <PlaceholderProfile width={48} height={48} />
                                     </AvatarPlaceholder>
                             }
 
-                            <Typography
+                            <StyledTypography2
                                 weight="400"
-                                style={{ marginLeft: "16px", fontFamily: "Basis Grotesque Pro" }}
-                                variant="body"
+                                variant="label"
+                                color="shade9"
                             >
                                 {seller?.name || ""}
-                            </Typography>
+                            </StyledTypography2>
                         </div>
 
-                        <div style={{ display: "flex", marginTop: "8px", alignItems: "center" }}>
-                            <Typography variant="label" style={{ marginRight: "5px" }}>{seller?.rating || 0}</Typography>
+                        <StarContainer>
+                            <StyledNumberRating
+                                variant="caption"
+                                color="shade7"
+                            >
+                                {seller?.rating || 0}
+                            </StyledNumberRating>
                             {
                                 [...Array(5).keys()].map((r) =>
                                     Number(seller?.rating || 0) > r ? (
@@ -123,49 +247,90 @@ const FullOfferDetails = (props: any) => {
                                     )
                                 )
                             }
-                        </div>
+                        </StarContainer>
 
-                        <Typography variant="label" color="shade7">{Object.values(seller?.address || {}).join(", ")}</Typography>
-                    </Col>
+                        <Typography variant="caption" color="shade7" style={{ marginTop: "4px" }}>{Object.values(seller?.address || {}).join(", ")}</Typography>
+                    </CompanyInfoCol>
                 </Row>
+                <Hidden xs sm>
+                    <Row>
+                        <Col>
+                            {renderTotalPriceContainer()}
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            {renderTags()}
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            {renderOfferSeenTextContainer()}
+                        </Col>
+                    </Row>
+                    {
+                        offer.status !== "ACCEPTED" &&
+                        <CTAContainer>
+                            <StyledNegotiateButtonContainer>
+                                <StyledNegotiateButton
+                                    onClick={() => handleStartNegotiate()}
+                                    variant="outline"
+                                    text="NEGOTIATE"
+                                    icon={<Refresh />}
+                                    disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
+                                />
+                            </StyledNegotiateButtonContainer>
+                            <div style={{ width: "124px" }}>
+                                <StyledAcceptButton
+                                    text="ACCEPT"
+                                    icon={<Check width={10} height={9} />}
+                                    onClick={() => handleAcceptOffer()}
+                                    disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
+                                />
+                            </div>
+                        </CTAContainer>
+                    }
+
+                </Hidden>
+            </FullOfferDetailsContainer>
+
+            <Visible xs sm>
                 <Row>
                     <Col>
-                        <div style={{
-                            background: theme.grey.shade1,
-                            border: `1px solid ${theme.grey.shade4}`,
-                            borderRadius: "12px",
-                            padding: "16px",
-                            marginTop: "28px"
-                        }}>
-                            <Typography variant="caption" color="shade7">
-                                TOTAL VALUE
-                            </Typography>
-                            <Typography variant="title1" color="shade8" style={{ marginTop: "8px" }}>
-                                ${(offer?.weight * offer?.price).toFixed(2)}
-                            </Typography>
-                        </div>
+                        {renderTotalPriceContainer()}
                     </Col>
                 </Row>
+
                 <Row>
-                    <Col style={{ marginTop: "24px" }}>
-                        <div style={{ display: "flex" }}>
-                            <Button
+                    <Col>
+                        {renderOfferSeenTextContainer()}
+                    </Col>
+                </Row>
+                {
+                    offer.status !== "ACCEPTED" &&
+                    <Row style={{ marginTop: "40px" }}>
+                        <Col style={{ paddingRight: "5px" }}>
+                            <StyledNegotiateButton
                                 onClick={() => handleStartNegotiate()}
                                 variant="outline"
                                 text="NEGOTIATE"
-                                style={{ borderRadius: "12px" }}
                                 icon={<Refresh />}
+                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                             />
-                            <Button
+                        </Col>
+                        <Col style={{ paddingLeft: "5px" }}>
+                            <StyledAcceptButton
                                 text="ACCEPT"
-                                style={{ borderRadius: "12px", marginLeft: "8px" }}
-                                icon={<Check />}
+                                icon={<Check width={10} height={9} />}
                                 onClick={() => handleAcceptOffer()}
+                                disabled={(!thereIsNewOffer && parseFloat(counterOffer) > 0)}
                             />
-                        </div>
-                    </Col>
-                </Row>
-            </FullOfferDetailsContainer>
+                        </Col>
+                    </Row>
+                }
+            </Visible>
         </>
     );
 }

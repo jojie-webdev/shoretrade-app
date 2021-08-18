@@ -53,7 +53,7 @@ export default function TableHeader(props: TableHeaderProps) {
             onResize={onResize}
             sorted={sortField === column.selector}
           >
-            <span data-tip={column.name}>{column.name}</span>
+            <span>{column.name}</span>
           </TableData>
         );
       })}

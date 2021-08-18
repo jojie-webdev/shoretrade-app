@@ -57,3 +57,10 @@ export const LeftGroupContainer = styled.div`
   bottom: 10%;
   left: 0;
 `;
+
+export const NoResultMessage = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 10px;
+`

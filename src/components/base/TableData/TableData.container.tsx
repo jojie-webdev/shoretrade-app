@@ -28,6 +28,7 @@ export default function TableData(props: TableDataProps) {
     sticky,
     selected,
     handleOnSelect,
+    id,
     onResize,
     column,
     handleMaximizeColum,
@@ -109,6 +110,7 @@ export default function TableData(props: TableDataProps) {
       columnType={columnType}
       rowType={rowType}
       sticky={sticky}
+      id={columnType !== 'column-first' ? id : ''}
       onResize={onResize}
       column={column}
       handleMaximizeColum={handleMaximizeColum}

@@ -24,3 +24,10 @@ export interface TableRowProps {
   ) => any;
   handleMaximizeColum?: (selector: string) => any;
 }
+
+export interface TableDataListProps extends TableRowProps {
+  column: any;
+  index: number;
+  length: number;
+  identifier: string;
+}
