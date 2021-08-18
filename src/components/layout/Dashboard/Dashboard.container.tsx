@@ -77,7 +77,6 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     useSelector((state: Store) => state.socketCredit.data) || null;
 
   const userData = getUser.data?.data.user;
-  console.log(getNotifications);
   const notifsData = getNotifications.data?.data?.notifications || [];
   const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
   const totalNotifs = getNotifications.data?.data?.total || 0;
@@ -110,12 +109,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   };
 
   const handleMarkasRead = (notificationId: string) => {
-    console.log(notificationId);
     dispatch(readNotificationActions.request({ id: notificationId }));
   };
 
   const handleOnDelete = (notificationId: string) => {
-    console.log(notificationId);
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 

@@ -116,7 +116,6 @@ const NotificationsSettings = (): JSX.Element => {
       customSettings.map((c) => {
         const idx = item.notificationIds.indexOf(c.id);
         if (idx > -1) {
-          console.log(idx);
           return {
             ...c,
             settings: {
@@ -143,7 +142,6 @@ const NotificationsSettings = (): JSX.Element => {
 
   useEffect(() => {
     if (updateTriggered && customSettings) {
-      console.log(updateTriggered);
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
     }
@@ -170,12 +168,6 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
     getNotificationsSettings?.data,
   ]);
-
-  // const groupNotifsByResource = groupBy(
-  //   (specificNotifItem: SpecificNotificationSettingItem) =>
-  //     specificNotifItem.resource
-  // );
-  // const groupedNotifSettings = groupNotifsByResource(customSettings || []);
 
   const groupedNotifSettings = toNotificationResourceGroup(
     customSettings || []

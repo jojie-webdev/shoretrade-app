@@ -16,7 +16,6 @@ function* readNotifRequest(
   const state: Store = yield select();
   if (state.auth.token) {
     const meta = action.meta;
-    console.log(meta);
     try {
       const { data } = yield call(
         readNotificationApi,

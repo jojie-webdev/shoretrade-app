@@ -36,7 +36,6 @@ const Notifications = (): JSX.Element => {
   };
 
   const handleOnDelete = (notificationId: string) => {
-    console.log(notificationId);
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 

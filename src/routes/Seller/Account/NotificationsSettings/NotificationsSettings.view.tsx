@@ -62,8 +62,6 @@ const NotificationsSettingsView = ({
     option: CustomSettingKey,
     val: boolean
   ) => {
-    console.log(option);
-    console.log(CustomSettingKey);
     handleCustomSettingUpdate(item, option, val);
   };
 
