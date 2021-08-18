@@ -53,6 +53,9 @@ const ListingDetailsContainer = (
     if (!currentListing) {
       dispatch(getAllListingsActions.request());
     }
+
+    // scrolls to top when displaying the screen
+    document.querySelector('.screen')?.scrollTo(0, 0);
   }, []);
 
   const sellingDetailsBreadCrumbs = [

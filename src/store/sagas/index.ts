@@ -17,6 +17,7 @@ import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
+import deleteMarketRequestOffer from './deleteMarketRequestOffer'
 import deleteNotification from './deleteNotification';
 import editableListing from './editableListing';
 import editSelectedListing from './editSelectedListing';
@@ -108,6 +109,7 @@ const sagas = [
   deleteLinkedAccount,
   deleteMarketRequest,
   deleteNotification,
+  deleteMarketRequestOffer,
   editSelectedListing,
   editableListing,
   endListing,

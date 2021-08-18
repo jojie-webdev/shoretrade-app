@@ -31,9 +31,11 @@ import {
   LeftGroupContainer,
   TopAbsoContainer,
   TopGroupContainer,
+  NoResultMessage
 } from './CategorySelection.style';
 import Typography from 'components/base/Typography';
 import Select from 'components/base/Select';
+import { Hidden } from 'react-grid-system';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
   const {
@@ -131,34 +133,9 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
-            placeholder="Search a category"
+            placeholder="Search a product"
             style={{ borderRadius: 12, width: '100%' }}
           />
-        </div>
-
-        <div style={{ display: "flex", marginTop: "2px", marginBottom: "20px", alignItems: "center" }}>
-          <Typography
-            color="shade6"
-            variant="label"
-          >
-            <span style={{ color: "#09131D" }}>{typeSearchResults.length}</span>
-            <span>{' '}Results</span>
-          </Typography>
-
-          <div style={{ marginLeft: "16px", width: "94px" }}>
-            <Select
-              border="none"
-              borderRadius="8px"
-              background="#E5E8F5"
-              label=""
-              options={[]}
-              size="small"
-              placeholder="Sort by"
-              disabled
-            // onChange={(e) => setSortField(e?.value)}
-            />
-          </div>
-
         </div>
 
         {pendingSearch ? (
@@ -178,27 +155,35 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
           ))
         ) : (
           <>
-            <TopAbsoContainer>
-              <Wave41 />
-            </TopAbsoContainer>
-            <TopGroupContainer>
-              <Group196 />
-            </TopGroupContainer>
-            <BottomAbsoContainer>
-              <Wave31 />
-            </BottomAbsoContainer>
-            <BottomGroupContainer>
-              <Group195 />
-            </BottomGroupContainer>
-            <LeftAbsoContainer>
-              <Wave51 />
-            </LeftAbsoContainer>
-            <LeftGroupContainer>
-              <Group194 />
-            </LeftGroupContainer>
+            <Hidden xs sm>
+              <TopAbsoContainer>
+                <Wave41 />
+              </TopAbsoContainer>
+              <TopGroupContainer>
+                <Group196 />
+              </TopGroupContainer>
+              <BottomAbsoContainer>
+                <Wave31 />
+              </BottomAbsoContainer>
+              <BottomGroupContainer>
+                <Group195 />
+              </BottomGroupContainer>
+              <LeftAbsoContainer>
+                <Wave51 />
+              </LeftAbsoContainer>
+              <LeftGroupContainer>
+                <Group194 />
+              </LeftGroupContainer>
+            </Hidden>
             <EmptyContainer>
               <Group204 />
             </EmptyContainer>
+            {
+              searchTerm &&
+              <NoResultMessage>
+                <Typography weight="700" variant="title5" color="shade9">No search result</Typography>
+              </NoResultMessage>
+            }
           </>
         )}
       </CategoryInteractionsContainer>

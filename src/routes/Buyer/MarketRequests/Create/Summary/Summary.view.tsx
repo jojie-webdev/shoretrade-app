@@ -1,20 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
-import { ArrowLeft, ArrowRight } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
+import { ArrowRight, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import LocationSearch from 'components/module/LocationSearch';
-import { pathOr } from 'ramda';
-import { Row, Col, Hidden } from 'react-grid-system';
+import { Row, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -25,7 +20,6 @@ import {
   CreateRequestHeaderContainer,
   DetailsContainer,
   MainContainer,
-  ProceedButton,
   RequestDetailsContainer,
   RequestRow,
   TitleContainer,
@@ -35,7 +29,6 @@ import {
   SummaryContentContainer,
   BadgesContainer,
   BadgeText,
-  StyledTextField,
   SubmitButton,
   CheckboxContainer,
   CheckboxMain,
@@ -150,50 +143,52 @@ const SummaryView = (props: SummaryProps) => {
     <>
       <CreateRequestHeaderContainer>
         <MainContainer>
-          <Breadcrumbs
-            color="shade5"
-            sections={[
-              {
-                label: 'Category',
-                onClick: () => {
-                  if (didFinishStep >= 1) {
-                    onBack(1);
-                  }
+          <Hidden xs sm>
+            <Breadcrumbs
+              color="shade5"
+              sections={[
+                {
+                  label: 'Category',
+                  onClick: () => {
+                    if (didFinishStep >= 1) {
+                      onBack(1);
+                    }
+                  },
+                  isDone: didFinishStep >= 1,
                 },
-                isDone: didFinishStep >= 1,
-              },
-              {
-                label: 'Specifications',
-                onClick: () => {
-                  if (didFinishStep >= 2) {
-                    onBack(2);
-                  }
+                {
+                  label: 'Specifications',
+                  onClick: () => {
+                    if (didFinishStep >= 2) {
+                      onBack(2);
+                    }
+                  },
+                  isDone: didFinishStep >= 2,
                 },
-                isDone: didFinishStep >= 2,
-              },
-              {
-                label: 'Size',
-                onClick: () => {
-                  if (didFinishStep >= 3) {
-                    onBack(3);
-                  }
+                {
+                  label: 'Size',
+                  onClick: () => {
+                    if (didFinishStep >= 3) {
+                      onBack(3);
+                    }
+                  },
+                  isDone: didFinishStep >= 3,
                 },
-                isDone: didFinishStep >= 3,
-              },
-              {
-                label: 'Quantity',
-                onClick: () => {
-                  if (didFinishStep >= 4) {
-                    onBack(4);
-                  }
+                {
+                  label: 'Quantity',
+                  onClick: () => {
+                    if (didFinishStep >= 4) {
+                      onBack(4);
+                    }
+                  },
+                  isDone: didFinishStep >= 4,
                 },
-                isDone: didFinishStep >= 4,
-              },
-              {
-                label: 'Summary',
-              },
-            ]}
-          />
+                {
+                  label: 'Summary',
+                },
+              ]}
+            />
+          </Hidden>
           <TitleContainer>
             <Typography
               variant="title5"
@@ -315,15 +310,23 @@ const SummaryView = (props: SummaryProps) => {
                 takeFullWidth
                 onClick={() => handleSubmit()}
                 className="submit-btn"
-                text="Send Request to the Market"
+                text="send market request"
                 variant="primary"
+                icon={<ChevronRight
+                  width={14}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />}
               />
             </MobileFooter>
           </SummaryContentContainer>
         </ContainerWithCategoryImagePreview>
-        <RequestDetailsContainer>
-          <DetailsContainer>{detailsListComponent}</DetailsContainer>
-        </RequestDetailsContainer>
+        <Hidden xs sm>
+          <RequestDetailsContainer>
+            <DetailsContainer>{detailsListComponent}</DetailsContainer>
+          </RequestDetailsContainer>
+        </Hidden>
       </RequestRow>
     </>
   );

@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
 
-import AlertView from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import {
-  ArrowLeft,
-  Group194,
-  Group195,
-  Group196,
-  Group204,
   ShoretradeAnchor,
-  Wave31,
-  Wave41,
-  Wave51,
-  WaveNew31,
-  NewWave51,
+  ChevronRight
 } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
-import { Hidden } from 'react-grid-system';
-import { EmptyContainer } from 'routes/Buyer/Checkout/Checkout.style';
+import { Hidden, Visible } from 'react-grid-system';
 import theme from 'utils/Theme';
 
 import {
@@ -48,6 +35,9 @@ import {
   PreviousButton,
   ButtonContainer,
   AnchorContainer,
+  CheckboxContainer,
+  CheckboxGroupContainer,
+  SpecsContainer
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -164,50 +154,52 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     <>
       <CreateRequestHeaderContainer>
         <MainContainer>
-          <Breadcrumbs
-            color="shade5"
-            sections={[
-              {
-                label: 'Category',
-                onClick: () => {
-                  if (didFinishStep >= 1) {
-                    onBack(1);
-                  }
+          <Hidden xs sm>
+            <Breadcrumbs
+              color="shade5"
+              sections={[
+                {
+                  label: 'Category',
+                  onClick: () => {
+                    if (didFinishStep >= 1) {
+                      onBack(1);
+                    }
+                  },
+                  isDone: didFinishStep >= 1,
                 },
-                isDone: didFinishStep >= 1,
-              },
-              {
-                label: 'Specifications',
-              },
-              {
-                label: 'Size',
-                onClick: () => {
-                  if (didFinishStep >= 3) {
-                    onBack(3);
-                  }
+                {
+                  label: 'Specifications',
                 },
-                isDone: didFinishStep >= 3,
-              },
-              {
-                label: 'Quantity',
-                onClick: () => {
-                  if (didFinishStep >= 4) {
-                    onBack(4);
-                  }
+                {
+                  label: 'Size',
+                  onClick: () => {
+                    if (didFinishStep >= 3) {
+                      onBack(3);
+                    }
+                  },
+                  isDone: didFinishStep >= 3,
                 },
-                isDone: didFinishStep >= 4,
-              },
-              {
-                label: 'Summary',
-                onClick: () => {
-                  if (didFinishStep >= 5) {
-                    onBack(5);
-                  }
+                {
+                  label: 'Quantity',
+                  onClick: () => {
+                    if (didFinishStep >= 4) {
+                      onBack(4);
+                    }
+                  },
+                  isDone: didFinishStep >= 4,
                 },
-                isDone: didFinishStep >= 5,
-              },
-            ]}
-          />
+                {
+                  label: 'Summary',
+                  onClick: () => {
+                    if (didFinishStep >= 5) {
+                      onBack(5);
+                    }
+                  },
+                  isDone: didFinishStep >= 5,
+                },
+              ]}
+            />
+          </Hidden>
           <TitleContainer>
             <Typography
               variant="title5"
@@ -227,32 +219,69 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
       <RequestRow>
         <ContainerWithCategoryImagePreview>
           <SpecificationFormContainer>
-            {getFilteredSpecifications().map((group, index) => (
-              <div key={group[0].groupOrder} className="interaction-group">
-                <Typography
-                  variant="overline"
-                  color="shade6"
-                  style={{ marginBottom: 12 }}
-                >
-                  {`Specs ${index + 1}`}
-                </Typography>
-                <div className="spec-row">
-                  {group.map((item) => (
-                    <Checkbox
-                      checked={
-                        selectedState.selectedStates.filter(
-                          (state) => state.value === item.value
-                        )[0]
-                      }
-                      value={item.value}
-                      onClick={() => handleStateCheck(item)}
-                      key={item.value}
-                      label={item.label}
-                    />
-                  ))}
+            <Hidden xs sm>
+              {getFilteredSpecifications().map((group, index) => (
+                <div key={group[0].groupOrder} className="interaction-group">
+                  <Typography
+                    variant="overline"
+                    color="shade6"
+                    style={{ marginBottom: 12 }}
+                  >
+                    {`Specs ${index + 1}`}
+                  </Typography>
+                  <div className="spec-row">
+                    {group.map((item) => (
+                      <Checkbox
+                        checked={
+                          selectedState.selectedStates.filter(
+                            (state) => state.value === item.value
+                          )[0]
+                        }
+                        value={item.value}
+                        onClick={() => handleStateCheck(item)}
+                        key={item.value}
+                        label={item.label}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </Hidden>
+            <Visible xs sm >
+              <SpecsContainer>
+                {getFilteredSpecifications().map((group, index) => (
+                  <div style={{ marginBottom: "32px" }}>
+                    <Typography
+                      variant="overline"
+                      color="shade6"
+                      style={{ marginBottom: 12 }}
+                    >
+                      {`Specs ${index + 1}`}
+                    </Typography>
+
+                    <CheckboxGroupContainer>
+                      {group.map((item) => (
+                        <CheckboxContainer>
+                          <Checkbox
+                            checked={
+                              selectedState.selectedStates.filter(
+                                (state) => state.value === item.value
+                              )[0]
+                            }
+                            value={item.value}
+                            onClick={() => handleStateCheck(item)}
+                            key={item.value}
+                            label={item.label}
+                            style={{ margin: "0px 16px 0px 0px" }}
+                            borderColor={theme.grey.shade6}
+                          />
+                        </CheckboxContainer>
+                      ))}
+                    </CheckboxGroupContainer>
+                  </div>
+                ))}
+              </SpecsContainer>
+            </Visible>
             <Hidden xs>
               <ButtonContainer>
                 <PreviousButton
@@ -275,26 +304,35 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 text="Proceed"
                 variant="primary"
                 takeFullWidth
+                icon={<ChevronRight
+                  width={14}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />}
               />
             </MobileFooter>
           </SpecificationFormContainer>
         </ContainerWithCategoryImagePreview>
-        <RequestDetailsContainer currentStep={1}>
-          <DetailsHeaderContainer>
-            <Typography
-              style={{
-                marginBottom: 8,
-                fontFamily: 'Wilderness',
-                fontSize: 48,
-              }}
-            >
-              Summary
-            </Typography>
-          </DetailsHeaderContainer>
-          <AnchorContainer>
-            <ShoretradeAnchor />
-          </AnchorContainer>
-        </RequestDetailsContainer>
+
+        <Hidden xs sm>
+          <RequestDetailsContainer currentStep={1}>
+            <DetailsHeaderContainer>
+              <Typography
+                style={{
+                  marginBottom: 8,
+                  fontFamily: 'Wilderness',
+                  fontSize: 48,
+                }}
+              >
+                Summary
+              </Typography>
+            </DetailsHeaderContainer>
+            <AnchorContainer>
+              <ShoretradeAnchor />
+            </AnchorContainer>
+          </RequestDetailsContainer>
+        </Hidden>
       </RequestRow>
     </>
   );

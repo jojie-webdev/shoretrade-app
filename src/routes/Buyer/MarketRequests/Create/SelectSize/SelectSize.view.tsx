@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft, ChevronRight } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -210,9 +210,9 @@ const SelectSizeView = (props: SelectSizeProps) => {
   const disabledNext = () => {
     if (
       listingFormData?.metric.name.toUpperCase().replace(/\s/g, '_') ===
-        'GRAMS' ||
+      'GRAMS' ||
       listingFormData?.metric.name.toUpperCase().replace(/\s/g, '_') ===
-        'UNITS_PER_POUND'
+      'UNITS_PER_POUND'
     ) {
       return sizeToFrom.from === '';
     }
@@ -228,50 +228,52 @@ const SelectSizeView = (props: SelectSizeProps) => {
     <>
       <CreateRequestHeaderContainer>
         <MainContainer>
-          <Breadcrumbs
-            color="shade5"
-            sections={[
-              {
-                label: 'Category',
-                onClick: () => {
-                  if (didFinishStep >= 1) {
-                    onBack(1);
-                  }
+          <Hidden xs sm>
+            <Breadcrumbs
+              color="shade5"
+              sections={[
+                {
+                  label: 'Category',
+                  onClick: () => {
+                    if (didFinishStep >= 1) {
+                      onBack(1);
+                    }
+                  },
+                  isDone: didFinishStep >= 1,
                 },
-                isDone: didFinishStep >= 1,
-              },
-              {
-                label: 'Specifications',
-                onClick: () => {
-                  if (didFinishStep >= 2) {
-                    onBack(2);
-                  }
+                {
+                  label: 'Specifications',
+                  onClick: () => {
+                    if (didFinishStep >= 2) {
+                      onBack(2);
+                    }
+                  },
+                  isDone: didFinishStep >= 2,
                 },
-                isDone: didFinishStep >= 2,
-              },
-              {
-                label: 'Size',
-              },
-              {
-                label: 'Quantity',
-                onClick: () => {
-                  if (didFinishStep >= 4) {
-                    onBack(4);
-                  }
+                {
+                  label: 'Size',
                 },
-                isDone: didFinishStep >= 4,
-              },
-              {
-                label: 'Summary',
-                onClick: () => {
-                  if (didFinishStep >= 5) {
-                    onBack(5);
-                  }
+                {
+                  label: 'Quantity',
+                  onClick: () => {
+                    if (didFinishStep >= 4) {
+                      onBack(4);
+                    }
+                  },
+                  isDone: didFinishStep >= 4,
                 },
-                isDone: didFinishStep >= 5,
-              },
-            ]}
-          />
+                {
+                  label: 'Summary',
+                  onClick: () => {
+                    if (didFinishStep >= 5) {
+                      onBack(5);
+                    }
+                  },
+                  isDone: didFinishStep >= 5,
+                },
+              ]}
+            />
+          </Hidden>
           <TitleContainer>
             <Typography
               variant="title5"
@@ -323,10 +325,16 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   <Button
                     onClick={() => handleSubmit()}
                     className="submit-btn"
-                    text="Select Size"
+                    text="Proceed"
                     disabled={disabledNext()}
                     variant="primary"
                     takeFullWidth
+                    icon={<ChevronRight
+                      width={14}
+                      height={12}
+                      fill="white"
+                      style={{ paddingBottom: '2px' }}
+                    />}
                   />
                 </MobileFooter>
               </>
@@ -335,9 +343,11 @@ const SelectSizeView = (props: SelectSizeProps) => {
             )}
           </SizeFormContainer>
         </ContainerWithCategoryImagePreview>
-        <RequestDetailsContainer>
-          <DetailsContainer>{detailsListComponent}</DetailsContainer>
-        </RequestDetailsContainer>
+        <Hidden xs sm>
+          <RequestDetailsContainer>
+            <DetailsContainer>{detailsListComponent}</DetailsContainer>
+          </RequestDetailsContainer>
+        </Hidden>
       </RequestRow>
     </>
   );

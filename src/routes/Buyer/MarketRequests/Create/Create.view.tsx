@@ -513,7 +513,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
       {StepView({ step })}
       <ProgressBar progress={(step.current / step.total) * 100} />
       {step.current > 1 && (
-        <>
+        <Hidden xs sm>
           <MultipleTopAbsoContainer>
             <WaveNew31 />
           </MultipleTopAbsoContainer>
@@ -529,7 +529,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           <MultipleLeftGroupContainer>
             <Group196 />
           </MultipleLeftGroupContainer>
-        </>
+        </Hidden>
       )}
     </>
   );
