@@ -26,7 +26,6 @@ import {
   toUpdateSettingItem,
 } from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
-import { userInfo } from 'os';
 
 const NotificationsSettings = (): JSX.Element => {
   // TODO Setup redux for container
@@ -116,7 +115,6 @@ const NotificationsSettings = (): JSX.Element => {
       customSettings.map((c) => {
         const idx = item.notificationIds.indexOf(c.id);
         if (idx > -1) {
-          console.log(idx);
           return {
             ...c,
             settings: {
@@ -143,7 +141,6 @@ const NotificationsSettings = (): JSX.Element => {
 
   useEffect(() => {
     if (updateTriggered && customSettings) {
-      console.log(updateTriggered);
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
     }
