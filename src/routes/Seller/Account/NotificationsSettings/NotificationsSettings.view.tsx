@@ -74,7 +74,7 @@ const NotificationsSettingsView = ({
         <div className="items-container">
           <div className="item">
             <GlobalNotificationToggle
-              title="Browser"
+              title="Push"
               icon={<Desktop fill={iconColor} />}
               description="Push Notifications"
               onClick={() => handleGlobalToggle('push')}
