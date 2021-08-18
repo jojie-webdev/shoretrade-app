@@ -25,10 +25,6 @@ const Notifications = (): JSX.Element => {
       key: 1,
       title: 'Unread',
     },
-    {
-      key: 3,
-      title: 'Archive',
-    },
   ];
   const [activeTab, setActiveTab] = useState(tabItems[0].key);
   const notifsData = getNotifications.data?.data?.notifications || [];

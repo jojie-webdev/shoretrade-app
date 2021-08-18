@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Crab } from 'components/base/SVG';
 import Tab from 'components/base/Tab';
 import EmptyStateView from 'components/module/EmptyState';
 import NotificationItemView from 'components/module/NotificationItem';
@@ -7,7 +8,6 @@ import { useTheme } from 'utils/Theme';
 
 import { NotificationsGeneratedProps } from './Notifications.props';
 import { Container } from './Notifications.style';
-import { Crab } from 'components/base/SVG';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
