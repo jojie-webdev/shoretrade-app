@@ -54,6 +54,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     onMouseLeave,
     onClick,
     sticky,
+    id,
     onResize,
     column,
   } = props;

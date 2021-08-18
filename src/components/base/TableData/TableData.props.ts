@@ -18,11 +18,13 @@ export interface TableDataContentProps {
   onMouseLeave?: (event: MouseEvent<HTMLElement>) => void;
   onClick?: (event: MouseEvent<HTMLElement>) => void;
   sticky?: boolean;
+  id?: string;
   onResize?: onResize;
   column?: any;
 }
 
 export interface TableDataProps {
+  id?: string;
   columnType?: ColumnType;
   rowType?: RowType;
   children?: any;

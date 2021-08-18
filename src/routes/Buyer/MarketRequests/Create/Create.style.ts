@@ -84,6 +84,8 @@ export const ContainerWithCategoryImagePreview = styled.div`
 
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
+    width: 100%;
+    padding: 16px;
   }
 `;
 
@@ -250,6 +252,10 @@ export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 32px;
+
+  @media ${BREAKPOINTS['sm']}{
+    margin-top: 0px;
+  }
 `;
 
 export const RequestRow = styled.div`

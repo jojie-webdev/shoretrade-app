@@ -2,6 +2,7 @@ import Button from 'components/base/Button';
 import styled from 'utils/styled';
 
 import { ContainerWithCategoryImageContent } from '../Create.style';
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const SpecificationFormContainer = styled(
   ContainerWithCategoryImageContent
@@ -46,3 +47,19 @@ export const AnchorContainer = styled.div`
   justify-content: center;
   align-content: center;
 `;
+
+export const CheckboxContainer = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 10px;
+  }
+`
+
+export const CheckboxGroupContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
+export const SpecsContainer = styled.div`
+  display: flex;
+  flex-direction: column
+`

@@ -23,3 +23,10 @@ export interface TableRowProps {
     columnDetails: any
   ) => any;
 }
+
+export interface TableDataListProps extends TableRowProps {
+  column: any;
+  index: number;
+  length: number;
+  identifier: string;
+}

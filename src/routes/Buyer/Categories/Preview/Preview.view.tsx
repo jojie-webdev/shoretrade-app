@@ -65,13 +65,13 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
             sections={
               isSearch
                 ? [
-                    { label: 'Search', link: BUYER_ROUTES.SEARCH },
-                    { label: title },
-                  ]
+                  { label: 'Search', link: BUYER_ROUTES.SEARCH },
+                  { label: title },
+                ]
                 : [
-                    { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
-                    { label: title },
-                  ]
+                  { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+                  { label: title },
+                ]
             }
           />
         ) : (

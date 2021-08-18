@@ -80,4 +80,5 @@ export interface MarketRequestDetailProps {
   isLoading: boolean;
   showNotEnoughCreditAlert: boolean;
   setShowNotEnoughCreditAlert: Dispatch<SetStateAction<boolean>>;
+  onOfferDelete: (offerIdToDelete: string) => void
 }

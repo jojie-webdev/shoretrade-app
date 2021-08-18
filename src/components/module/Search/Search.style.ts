@@ -8,15 +8,15 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     props.rounded && props.theme.appType === 'buyer'
       ? '12px'
       : props.theme.appType === 'buyer'
-      ? '4px'
-      : '100px'};
+        ? '4px'
+        : '100px'};
   width: 100%;
   padding: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
       ? '10px 10px 10px 15px'
       : props.theme.appType === 'buyer'
-      ? '24px'
-      : '10px 15px'};
+        ? '24px'
+        : '10px 15px'};
   margin-bottom: 16px;
 
   display: flex;
@@ -43,11 +43,11 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     ::placeholder {
       color: ${(props) => props.theme.grey.shade5};
       font-size: ${(props) =>
-        props.rounded && props.theme.appType === 'buyer'
-          ? '14px'
-          : props.rounded
-          ? '14px'
-          : '16px'};
+    props.rounded && props.theme.appType === 'buyer'
+      ? '14px'
+      : props.rounded
+        ? '14px'
+        : '16px'};
     }
     @media ${BREAKPOINTS['sm']} {
       width: 100%;

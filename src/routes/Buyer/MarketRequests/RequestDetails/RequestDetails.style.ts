@@ -5,8 +5,9 @@ import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
+import { pxToRem, theme } from 'utils/Theme';
 import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
+import { Col } from 'react-grid-system';
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -372,7 +373,7 @@ export const SummaryContainer = styled.div<{ margin?: string }>`
   border-radius: 12px;
   min-height: 312px;
   max-height: 312px;
-  margin: ${({ margin }) => margin || '0px'};
+  margin: ${({ margin }) => margin};
   background-image: url(${marketRequestSummary});
 `;
 
@@ -380,14 +381,44 @@ export const DeleteButtonContainer = styled.div`
   margin: auto;
 
   .delete-button {
-    background-color: ${({ theme }) => theme.grey.shade3};
-    height: 32px;
-    width: 32px;
-    border-radius: 12px;
-    align-self: center;
+      background-color:  ${theme.grey.shade2};
+      height: 32px;
+      width: 32px;
+      border-radius: 12px;
+      align-self: center;
+      border: 1px solid ${theme.grey.shade4};
 
-    path {
-      fill: ${({ theme }) => theme.grey.shade7};
-    }
+      path {
+          fill: ${theme.grey.shade7};
+      }
   }
+`
+
+export const CounterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`
+
+export const CounterCol = styled(Col)`
+ display: flex;
+
+ @media ${BREAKPOINTS['sm']} {
+  display: block;
+  }
+`
+
+export const SelectContainer = styled.div`
+  margin-left: 16px;
+  width: 94px;
+  cursor: pointer;
+`
+
+export const Sorter = styled.div`
+  padding: 6px 12px;
+  background-color: #E5E8F5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `
