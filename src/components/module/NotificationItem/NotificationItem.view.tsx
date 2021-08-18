@@ -21,6 +21,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { notifResourceToURLMapper } from 'utils/Notification';
+import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -163,10 +164,12 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
   };
 
-
   return (
     <Container
-      onClick={() => handleNotifOnClick()}
+      onClick={(e) => {
+        e.preventDefault();
+        handleNotifOnClick();
+      }}
       isRead={isRead}
       fullView={fullView}
     >
@@ -181,7 +184,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
           {type}
         </Typography>
         <Typography color={defaultColor} variant="body">
-          {content}
+          {!fullView ? ellipsisOnOverflow(content, 70) : content}
         </Typography>
         <Typography color="shade6" variant="caption">
           {moment(date).format('YYYY-MM-DD')}

@@ -4,6 +4,7 @@ export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
   display: flex;
   height: 100%;
   max-height: 200px;
+  cursor: pointer;
   min-height: 72px;
   width: 100%;
   margin-bottom: ${({ fullView }) => (fullView ? '10px' : '0')};
