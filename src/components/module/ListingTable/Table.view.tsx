@@ -44,7 +44,7 @@ export const TableComponent = (props: TableComponentProps) => {
     setLayout((prevLayout) =>
       prevLayout.map((width, index) => {
         if (index === columnIndex) {
-          const padding = 16 * 2;
+          const padding = 24 * 2;
           const columnWidth = localStorage.getItem(`col:${columnName}`);
           return Number(columnWidth) + padding;
         }
@@ -78,7 +78,7 @@ export const TableComponent = (props: TableComponentProps) => {
     setOverwriteLayout(true);
     const direction = position?.x ? 'left' : 'right';
     const columnIndex =
-      direction === 'left' ? Number(columnInfo?.index) - 1 : columnInfo.index;
+      direction === 'left' ? Number(columnInfo?.index) - 1 : columnInfo?.index;
     handleUpdateLayout(position?.x || position?.width, columnIndex);
   };
 
@@ -120,6 +120,8 @@ export const TableComponent = (props: TableComponentProps) => {
     <Container>
       <Table style={conditionalStyles} ref={tableRef} count={columns?.length}>
         <TableHeader
+          onResize={handleRowResize}
+          handleMaximizeColum={handleMaximizeColum}
           sortField={sortField}
           setSortField={setSortField}
           selectAll={isAllSelected}

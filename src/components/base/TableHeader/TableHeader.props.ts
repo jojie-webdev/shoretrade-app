@@ -8,4 +8,9 @@ export interface TableHeaderProps {
   setSortField?: (field: string) => void;
   sortField?: string;
   setSortOrder?: (sortOrder: SortOrder) => void;
+  handleMaximizeColum?: (columnSelector: string) => any;
+  onResize?: (
+    position: Partial<{ x: number; y: number }>,
+    columnDetails: any
+  ) => any;
 }

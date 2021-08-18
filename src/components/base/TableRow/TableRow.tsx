@@ -29,9 +29,10 @@ export default function TableRow(props: TableRowProps) {
 
         return (
           <TableData
-            rowType={rowType}
-            columnType={columnType!}
             key={`${column?.selector}-${data?.id || index}`}
+            rowType={rowType}
+            columns={columns}
+            columnType={columnType!}
             sticky={column?.sticky}
             selected={selected}
             handleOnSelect={(state) => {
@@ -39,6 +40,7 @@ export default function TableRow(props: TableRowProps) {
             }}
             onResize={onResize}
             column={{ ...column, index }}
+            handleMaximizeColum={handleMaximizeColum}
           >
             <span
               data-tip={column?.tooltip?.(data) || data?.[column.selector]}

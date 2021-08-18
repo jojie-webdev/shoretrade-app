@@ -31,6 +31,7 @@ export default function TableData(props: TableDataProps) {
     onResize,
     column,
     handleMaximizeColum,
+    columns,
   } = props;
   const [showSortIcon, setShowSortIcon] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -101,6 +102,7 @@ export default function TableData(props: TableDataProps) {
 
   return (
     <TableDataContent
+      columns={columns}
       onMouseEnter={() => setShowSortIcon(true)}
       onMouseLeave={() => setShowSortIcon(false)}
       onClick={(event) => onClick?.(event)}

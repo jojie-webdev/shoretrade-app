@@ -394,7 +394,6 @@ export default function ListingView(props: ListingViewProps) {
         onSelect={handleSelectRow}
         unselectedIds={unselectedIds}
       />
-
       <PaginationContainer>
         <PaginationBar
           page={page}
