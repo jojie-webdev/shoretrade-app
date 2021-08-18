@@ -15,7 +15,8 @@ export function notifResourceToURLMapper(
   appType?: 'seller' | 'buyer'
 ): string {
   let url = '';
-  switch (resource) {
+  const resource_ = resource.toLocaleLowerCase();
+  switch (resource_) {
     case 'account':
       if (appType === 'seller') url = SELLER_ACCOUNT_ROUTES.LANDING;
       url = BUYER_ACCOUNT_ROUTES.LANDING;
@@ -31,7 +32,7 @@ export function notifResourceToURLMapper(
       if (appType === 'seller') url = SELLER_ROUTES.MARKET_BOARD;
       url = BUYER_ROUTES.MARKET_REQUESTS;
       break;
-    case 'orders':
+    case 'ordering':
       if (appType === 'seller') url = SELLER_ROUTES.SOLD;
       url = BUYER_ROUTES.ORDERS;
       break;

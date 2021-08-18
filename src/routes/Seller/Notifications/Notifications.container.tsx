@@ -9,9 +9,13 @@ import {
 import { Store } from 'types/store/Store';
 
 import NotificationsView from './Notifications.view';
+import { NotificationType } from 'types/store/GetNotificationsState';
+import { notifResourceToURLMapper } from 'utils/Notification';
+import { useHistory } from 'react-router-dom';
 
 const Notifications = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -39,6 +43,16 @@ const Notifications = (): JSX.Element => {
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 
+  const handleNotifOnClick = (
+    resource: NotificationType,
+    appType: 'seller' | 'buyer'
+  ) => {
+    const url = notifResourceToURLMapper(resource, appType);
+    if (url != '') {
+      history.push(url);
+    }
+  };
+
   const generatedProps = {
     tabItems,
     activeTab,
@@ -48,6 +62,7 @@ const Notifications = (): JSX.Element => {
     totalNotifs,
     handleMarkasRead,
     handleOnDelete,
+    handleNotifOnClick,
   };
 
   return <NotificationsView {...generatedProps} />;

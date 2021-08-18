@@ -117,6 +117,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     fullView,
     onMarkasRead,
     onDelete,
+    handleNotifOnClick,
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
@@ -144,7 +145,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       case 'market-requests':
         icon = <MarketRequests {...defaulAvatarProps} />;
         break;
-      case 'orders':
+      case 'ordering':
         icon = <Orders {...defaulAvatarProps} />;
         break;
       case 'rating-favourite':
@@ -162,16 +163,10 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
   };
 
-  const handleOnClick = () => {
-    const url = notifResourceToURLMapper(type, theme.appType);
-    if (url != '') {
-      history.push(url);
-    }
-  };
 
   return (
     <Container
-      onClick={() => handleOnClick()}
+      onClick={() => handleNotifOnClick()}
       isRead={isRead}
       fullView={fullView}
     >

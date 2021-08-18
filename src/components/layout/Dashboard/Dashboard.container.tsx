@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   authActions,
   cartActions,
@@ -15,7 +15,9 @@ import {
   readNotificationActions,
   socketCreditActions,
 } from 'store/actions';
+import { NotificationType } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
+import { notifResourceToURLMapper } from 'utils/Notification';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -27,6 +29,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
   const location = useLocation();
 
   // MARK:- State
@@ -116,6 +119,16 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 
+  const handleNotifOnClick = (
+    resource: NotificationType,
+    appType: 'seller' | 'buyer'
+  ) => {
+    const url = notifResourceToURLMapper(resource, appType);
+    if (url != '') {
+      history.push(url);
+    }
+  };
+
   // MARK:- Effects
   useEffect(() => {
     // This is a hacky way for an edge case in add product
@@ -167,6 +180,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     totalUnreadNotifs,
     handleMarkasRead,
     handleOnDelete,
+    handleNotifOnClick,
   };
 
   return <DashboardView {...generatedProps} />;

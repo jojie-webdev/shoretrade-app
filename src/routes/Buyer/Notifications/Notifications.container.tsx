@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   deleteNotificationActions,
   readNotificationActions,
 } from 'store/actions';
+import { NotificationType } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
+import { notifResourceToURLMapper } from 'utils/Notification';
 
 import NotificationsView from './Notifications.view';
 
 const Notifications = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -39,6 +43,16 @@ const Notifications = (): JSX.Element => {
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 
+  const handleNotifOnClick = (
+    resource: NotificationType,
+    appType: 'seller' | 'buyer'
+  ) => {
+    const url = notifResourceToURLMapper(resource, appType);
+    if (url != '') {
+      history.push(url);
+    }
+  };
+
   const generatedProps = {
     tabItems,
     activeTab,
@@ -48,6 +62,7 @@ const Notifications = (): JSX.Element => {
     totalNotifs,
     handleMarkasRead,
     handleOnDelete,
+    handleNotifOnClick,
   };
 
   return <NotificationsView {...generatedProps} />;

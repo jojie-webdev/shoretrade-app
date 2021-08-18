@@ -8,6 +8,7 @@ export interface NotificationItemProps {
   fullView?: boolean;
   onMarkasRead: () => void;
   onDelete: () => void;
+  handleNotifOnClick: () => void;
 }
 
 export interface NotifAvatarProps {

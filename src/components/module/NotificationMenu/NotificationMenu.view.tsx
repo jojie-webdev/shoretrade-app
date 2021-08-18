@@ -21,6 +21,7 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
+import { NotificationType } from 'types/store/GetNotificationsState';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
@@ -42,6 +43,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     notifsData,
     handleMarkasRead,
     handleOnDelete,
+    handleNotifOnClick,
   } = props;
 
   const isMobile = useMediaQuery({
@@ -100,9 +102,14 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                   .map((nd) => (
                     <DropdownItemContainer key={nd.id}>
                       <NotificationItem
+                        handleNotifOnClick={() =>
+                          handleNotifOnClick(nd.resource, theme.appType)
+                        }
                         onDelete={() => handleOnDelete(nd.id)}
                         onMarkasRead={() => handleMarkasRead(nd.id)}
-                        type="account"
+                        type={
+                          nd.resource.toLocaleLowerCase() as NotificationType
+                        }
                         content={nd.description}
                         date={nd.created_at}
                         isRead={nd.read_at !== null}

@@ -1,7 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
-import { NotificationItemResponse } from 'types/store/GetNotificationsState';
+import {
+  NotificationItemResponse,
+  NotificationType,
+} from 'types/store/GetNotificationsState';
 
 export interface NotificationsGeneratedProps {
   tabItems: TabItem[];
@@ -12,4 +15,8 @@ export interface NotificationsGeneratedProps {
   totalUnreadNotifs: number;
   handleMarkasRead: (notificationId: string) => void;
   handleOnDelete: (notificationId: string) => void;
+  handleNotifOnClick: (
+    resource: NotificationType,
+    appType: 'buyer' | 'seller'
+  ) => void;
 }

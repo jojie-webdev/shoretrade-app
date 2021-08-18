@@ -8,6 +8,7 @@ import { useTheme } from 'utils/Theme';
 
 import { NotificationsGeneratedProps } from './Notifications.props';
 import { Container } from './Notifications.style';
+import { NotificationType } from 'types/store/GetNotificationsState';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
@@ -20,6 +21,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
     totalUnreadNotifs,
     handleMarkasRead,
     handleOnDelete,
+    handleNotifOnClick,
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'shade2' : 'shade6';
@@ -43,11 +45,14 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         })
         .map((nd) => (
           <NotificationItemView
+            handleNotifOnClick={() =>
+              handleNotifOnClick(nd.resource, theme.appType)
+            }
             key={nd.id}
             fullView
             onMarkasRead={() => handleMarkasRead(nd.id)}
             onDelete={() => handleOnDelete(nd.id)}
-            type="account"
+            type={nd.resource.toLocaleLowerCase() as NotificationType}
             content={nd.description}
             date={nd.created_at}
             isRead={nd.read_at != null}

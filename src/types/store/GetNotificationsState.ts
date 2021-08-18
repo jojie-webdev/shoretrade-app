@@ -5,7 +5,7 @@ export type GetNotificationsMeta = any;
 export type NotificationType =
   | 'account'
   | 'inactivity'
-  | 'orders'
+  | 'ordering'
   | 'market-requests'
   | 'listings'
   | 'cart'
