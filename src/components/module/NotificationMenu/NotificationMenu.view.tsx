@@ -57,6 +57,15 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       setIsComponentVisible(!isComponentVisible);
     }
   };
+
+  const onNotifClick = (
+    resource: NotificationType,
+    appType: 'buyer' | 'seller'
+  ) => {
+    handleNotifOnClick(resource, appType);
+    setIsComponentVisible(!isComponentVisible);
+  };
+
   const bellColor = () => {
     if (isMobile) {
       return theme.grey.noshade;
@@ -103,7 +112,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     <DropdownItemContainer key={nd.id}>
                       <NotificationItem
                         handleNotifOnClick={() =>
-                          handleNotifOnClick(nd.resource, theme.appType)
+                          onNotifClick(nd.resource, theme.appType)
                         }
                         onDelete={() => handleOnDelete(nd.id)}
                         onMarkasRead={() => handleMarkasRead(nd.id)}
