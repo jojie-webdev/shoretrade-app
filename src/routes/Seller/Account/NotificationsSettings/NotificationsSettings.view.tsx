@@ -40,23 +40,6 @@ const NotificationsSettingsView = ({
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = theme.grey.shade7;
 
-  // const notifSettings = Object.keys(groupedNotifSettings).reduce(
-  //   (
-  //     data: {
-  //       id: string;
-  //       specificNotifSettingItems: SpecificNotificationSettingItem[];
-  //     }[],
-  //     id
-  //   ) => [
-  //     ...data,
-  //     {
-  //       id: id,
-  //       specificNotifSettingItems: groupedNotifSettings[id],
-  //     },
-  //   ],
-  //   []
-  // );
-
   const handleCustomSettingsChange = (
     item: NotificationSettingItem,
     option: CustomSettingKey,
@@ -72,15 +55,7 @@ const NotificationsSettingsView = ({
 
   return (
     <Container>
-      <Row
-        nogutter
-        justify="between"
-        align="center"
-        // style={{
-        //   marginBottom:
-        //     !isInner && isEmpty(innerCategories) && !isMobile ? 40 : 0,
-        // }}
-      >
+      <Row nogutter justify="between" align="center">
         <Col>
           <div style={{ marginRight: 20, marginBottom: 40 }}>
             <Breadcrumbs
