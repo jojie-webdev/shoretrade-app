@@ -171,12 +171,6 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
   ]);
 
-  // const groupNotifsByResource = groupBy(
-  //   (specificNotifItem: SpecificNotificationSettingItem) =>
-  //     specificNotifItem.resource
-  // );
-  // const groupedNotifSettings = groupNotifsByResource(customSettings || []);
-
   const groupedNotifSettings = toNotificationResourceGroup(
     customSettings || []
   );

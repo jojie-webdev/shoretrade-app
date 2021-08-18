@@ -65,9 +65,10 @@ const NotificationsSettingsView = ({
     handleCustomSettingUpdate(item, option, val);
   };
 
-  if (!globalSettings || loading) {
-    return <Loading />;
-  }
+  // TODO: loading buttons or overlay loading
+  // if (!globalSettings || loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <Container>
