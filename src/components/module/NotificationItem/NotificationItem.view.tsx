@@ -20,6 +20,7 @@ import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
+import { notifResourceToURLMapper } from 'utils/Notification';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -119,6 +120,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
+  const history = useHistory();
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
   const notifsRoute =
     theme.appType === 'buyer'
@@ -160,8 +162,19 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
   };
 
+  const handleOnClick = () => {
+    const url = notifResourceToURLMapper(type, theme.appType);
+    if (url != '') {
+      history.push(url);
+    }
+  };
+
   return (
-    <Container isRead={isRead} fullView={fullView}>
+    <Container
+      onClick={() => handleOnClick()}
+      isRead={isRead}
+      fullView={fullView}
+    >
       <div className="horizontal-style-container" />
       <NotifAvatar type={props.type} />
       <div className="content-container">
