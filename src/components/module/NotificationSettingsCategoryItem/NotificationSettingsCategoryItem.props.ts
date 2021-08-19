@@ -4,6 +4,7 @@ import {
   SettingsToggleItem,
   SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
+import { NotificationType } from 'types/store/GetNotificationsState';
 
 export interface NotificationSettingsCategoryItemProps {
   title: string;
@@ -13,4 +14,5 @@ export interface NotificationSettingsCategoryItemProps {
   email: CategoryStatus;
   inapp: CategoryStatus;
   onChange: (val: boolean, option: CustomSettingKey) => void;
+  type: NotificationType | string;
 }

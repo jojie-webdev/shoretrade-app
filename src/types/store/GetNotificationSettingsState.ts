@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+import { NotificationType } from './GetNotificationsState';
 
 export type GetNotificationsSettingsMeta = {
   companyId: string;
@@ -69,7 +70,7 @@ export type SettingsUpdateItem = {
 // },
 
 export type NotificationResourceGroup = {
-  resource: string;
+  resource: NotificationType | string;
   items: NotificationSettingItem[];
 };
 

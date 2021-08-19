@@ -147,7 +147,7 @@ const NotificationsSettingsView = ({
               mobile={i.settings.mobile}
               push={i.settings.push}
               email={i.settings.email}
-              icon={<Sold fill={iconColor} />}
+              type={ns.resource}
               title={i.title}
             ></NotificationSettingsCategoryItem>
           ))}

@@ -1,7 +1,20 @@
 import React from 'react';
 
 import Accordion from 'components/base/Accordion';
-import { CommentsAlt, Desktop, EnvelopeAlt } from 'components/base/SVG';
+import {
+  CommentsAlt,
+  Desktop,
+  EnvelopeAlt,
+  Account,
+  Anchor,
+  CheckCircle,
+  DashboardAlt as ListingsIcon,
+  FolderDownload,
+  MarketRequests,
+  More,
+  Orders,
+  Star,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
@@ -23,10 +36,46 @@ const NotificationSettingsCategoryItem = (
 ): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { title, icon, mobile, email, push, inapp, onChange } = props;
+  const { title, mobile, email, push, inapp, onChange, type } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
+
+  const SettingsIcon = () => {
+    let icon: JSX.Element;
+    const defaulAvatarProps = {
+      width: 24,
+      height: 24,
+      fill: theme.grey.shade7,
+    };
+    const parsedType = type.toLocaleLowerCase();
+    switch (parsedType) {
+      case 'account':
+        icon = <Account {...defaulAvatarProps} />;
+        break;
+      case 'inactivity':
+        icon = <Account {...defaulAvatarProps} />;
+        break;
+      case 'market-requests':
+        icon = <MarketRequests {...defaulAvatarProps} />;
+        break;
+      case 'ordering':
+        icon = <Orders {...defaulAvatarProps} />;
+        break;
+      case 'rating-favourite':
+        icon = <Star {...defaulAvatarProps} />;
+        break;
+      case 'aquafutures':
+        icon = <Anchor {...defaulAvatarProps} />;
+        break;
+      case 'listings':
+        icon = <ListingsIcon {...defaulAvatarProps} />;
+        break;
+      default:
+        icon = <Account {...defaulAvatarProps} />;
+    }
+    return icon;
+  };
 
   const textIndicatorColor = (enabled: boolean) => {
     if (!enabled) {
@@ -76,7 +125,7 @@ const NotificationSettingsCategoryItem = (
         keepIcon={true}
         leftComponent={
           <LeftComponentContainer>
-            <div className="icon-container">{icon}</div>
+            <div className="icon-container">{SettingsIcon()}</div>
             <div>
               <Typography color={defaultColor}>{title}</Typography>
               <div>{isMobile && <TextIndicators />}</div>
