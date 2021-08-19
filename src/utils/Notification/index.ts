@@ -18,31 +18,55 @@ export function notifResourceToURLMapper(
   const resource_ = resource.toLocaleLowerCase();
   switch (resource_) {
     case 'account':
-      if (appType === 'seller') url = SELLER_ACCOUNT_ROUTES.LANDING;
+      if (appType === 'seller') {
+        url = SELLER_ACCOUNT_ROUTES.LANDING;
+        break;
+      }
       url = BUYER_ACCOUNT_ROUTES.LANDING;
       break;
     case 'cart':
       url = BUYER_ROUTES.CHECKOUT;
       break;
     case 'listings':
-      if (appType === 'seller') url = SELLER_ROUTES.SELLING;
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.SELLING;
+        break;
+      }
       url = BUYER_ROUTES.ALL_LISTING;
       break;
     case 'market-requests':
-      if (appType === 'seller') url = SELLER_ROUTES.MARKET_BOARD;
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.MARKET_BOARD;
+        break;
+      }
       url = BUYER_ROUTES.MARKET_REQUESTS;
       break;
     case 'ordering':
-      if (appType === 'seller') url = SELLER_ROUTES.SOLD;
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.SOLD;
+        break;
+      }
+      url = BUYER_ROUTES.ORDERS;
+      break;
+    case 'orders':
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.SOLD;
+        break;
+      }
       url = BUYER_ROUTES.ORDERS;
       break;
     case 'rating-favourite':
       url = BUYER_ROUTES.HOME;
       break;
     default:
-      if (appType === 'seller') url = SELLER_ROUTES.DASHBOARD;
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.DASHBOARD;
+        break;
+      }
       url = BUYER_ROUTES.HOME;
       break;
   }
+  console.log(appType);
+  console.log(url);
   return url;
 }

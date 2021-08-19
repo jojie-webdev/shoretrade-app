@@ -9,6 +9,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { NotificationType } from 'types/store/GetNotificationsState';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { useTheme } from 'utils/Theme';
 
@@ -21,7 +22,6 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
-import { NotificationType } from 'types/store/GetNotificationsState';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
@@ -62,6 +62,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     resource: NotificationType,
     appType: 'buyer' | 'seller'
   ) => {
+    console.log(appType);
     handleNotifOnClick(resource, appType);
     setIsComponentVisible(!isComponentVisible);
   };
