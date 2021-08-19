@@ -4,6 +4,19 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  MarketRequests,
+  DashboardAlt,
+  Anchor,
+  Orders,
+  DashboardOutlined,
+  FolderDownload,
+  CheckCircle,
+  More,
+  Bell,
+  Sold,
+  CommentsAlt,
+  EnvolopeAlt,
+  Desktop,
   NewWave51,
   WaveNew31,
   Cross7,
@@ -181,6 +194,45 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="MarketRequests">
+          <MarketRequests width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="DashboardAlt">
+          <DashboardAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Anchor">
+          <Anchor width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Orders">
+          <Orders width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="DashboardOutlined">
+          <DashboardOutlined width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="FolderDownload">
+          <FolderDownload width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CheckCircle">
+          <CheckCircle width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="More">
+          <More width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Bell">
+          <Bell width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Sold">
+          <Sold width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CommentsAlt">
+          <CommentsAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="EnvolopeAlt">
+          <EnvolopeAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Desktop">
+          <Desktop width={30} height={30} />
+        </Wrapper>
         <Wrapper label="NewWave51">
           <NewWave51 width={30} height={30} />
         </Wrapper>

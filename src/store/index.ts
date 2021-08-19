@@ -33,6 +33,7 @@ const persistConfig = {
     'getCustomFormData',
     'getListingFormData',
     'getMarketEstimate',
+    'editableMarketRequest',
     'cart',
     'history',
     'uploadBulk',
@@ -44,6 +45,7 @@ const persistConfig = {
 
 const reducer = persistReducer(persistConfig, createRootReducer(history));
 export const sagaMiddleware = createSagaMiddleware();
+// TODO TEST
 
 const enhancer = applyMiddleware(
   sagaMiddleware,

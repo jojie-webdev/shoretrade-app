@@ -96,6 +96,7 @@ import {
   DeleteMarketRequestMeta,
   DeleteMarketRequestPayload,
 } from './DeleteMarketRequestState';
+import { DeleteNotificationMetaData, DeleteNotificationPayload } from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
 import { EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
@@ -167,6 +168,14 @@ import {
   GetMarketRequestBuyerFiltersPayload,
 } from './GetMarketRequestBuyerFiltersState';
 import {
+  GetNotificationsSettingsMeta,
+  GetNotificationsSettingsPayload,
+} from './GetNotificationSettingsState';
+import {
+  GetNotificationsMeta,
+  GetNotificationsPayload,
+} from './GetNotificationsState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -196,6 +205,10 @@ import {
   ReadMarketNotificationMeta,
   ReadMarketNotificationPayload,
 } from './ReadMarketNotificationState';
+import {
+  ReadNotificationMetaData,
+  ReadNotificationPayload,
+} from './ReadNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
 import {
   ResendVerificationMeta,
@@ -251,6 +264,10 @@ import {
   UpdateFavouriteProductPayload,
 } from './UpdateFavouriteProductState';
 import { UpdateListingMeta, UpdateListingPayload } from './UpdateListingState';
+import {
+  UpdateNotificationSettingsPayload,
+  UpdateNotificationSettingsMetaData,
+} from './UpdateNotificationSettingsState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
@@ -477,5 +494,22 @@ export interface Store {
   getAvailableCrates: AsyncState<
     GetAvailableCratesMeta,
     GetAvailableCratesPayload
+  >;
+  getNotificationsSettings: AsyncState<
+    GetNotificationsSettingsMeta,
+    GetNotificationsSettingsPayload
+  >;
+  getNotifications: AsyncState<GetNotificationsMeta, GetNotificationsPayload>;
+  updateNotificationSettings: AsyncState<
+    UpdateNotificationSettingsMetaData,
+    UpdateNotificationSettingsPayload
+  >;
+  readNotification: AsyncState<
+    ReadNotificationMetaData,
+    ReadMarketNotificationPayload
+  >;
+  deleteNotification: AsyncState<
+    DeleteNotificationMetaData,
+    DeleteNotificationPayload
   >;
 }

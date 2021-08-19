@@ -4,15 +4,20 @@ import { push } from 'connected-react-router';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   authActions,
   cartActions,
+  deleteNotificationActions,
   editableListingActions,
+  getNotificationsActions,
   logoutActions,
+  readNotificationActions,
   socketCreditActions,
 } from 'store/actions';
+import { NotificationType } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
+import { notifResourceToURLMapper } from 'utils/Notification';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -24,6 +29,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
   const location = useLocation();
 
   // MARK:- State
@@ -51,6 +57,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const getNotifications = useSelector(
+    (state: Store) => state.getNotifications
+  );
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
 
@@ -71,6 +80,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     useSelector((state: Store) => state.socketCredit.data) || null;
 
   const userData = getUser.data?.data.user;
+  const notifsData = getNotifications.data?.data?.notifications || [];
+  const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
+  const totalNotifs = getNotifications.data?.data?.total || 0;
   const cartItems = Object.keys(cart).length;
 
   // MARK:- Methods
@@ -96,6 +108,24 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     if (userType === 'buyer') {
       dispatch(push(BUYER_ACCOUNT_ROUTES.LANDING));
       return;
+    }
+  };
+
+  const handleMarkasRead = (notificationId: string) => {
+    dispatch(readNotificationActions.request({ id: notificationId }));
+  };
+
+  const handleOnDelete = (notificationId: string) => {
+    dispatch(deleteNotificationActions.request({ id: notificationId }));
+  };
+
+  const handleNotifOnClick = (
+    resource: NotificationType,
+    appType: 'seller' | 'buyer'
+  ) => {
+    const url = notifResourceToURLMapper(resource, appType);
+    if (url != '') {
+      history.push(url);
     }
   };
 
@@ -128,6 +158,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {
+    dispatch(getNotificationsActions.request());
+  }, []);
+
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {
     ...props,
@@ -141,6 +175,12 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     onClickOpenSideBar,
     cartItems,
     onClickAccount,
+    notifsData,
+    totalNotifs,
+    totalUnreadNotifs,
+    handleMarkasRead,
+    handleOnDelete,
+    handleNotifOnClick,
   };
 
   return <DashboardView {...generatedProps} />;

@@ -336,6 +336,7 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
   flex-direction: row;
   margin-top: ${({ isHomeOld }) => (!isHomeOld ? '0' : '45px')};
   margin-bottom: 24px;
+  z-index: 10;
   align-items: center;
   justify-content: space-between;
   width: ${(props) =>
@@ -394,16 +395,37 @@ export const HeaderRightContent = styled.div`
   align-items: center;
 
   .cart-container {
-    margin-right: 45px;
-
+    margin-left: 8px;
     @media ${BREAKPOINTS.sm} {
       margin-right: 0px;
     }
   }
 
-  .cart-wrapper {
+  .notif-container {
+    margin-left: 8px;
+    @media ${BREAKPOINTS.sm} {
+      margin-right: 0px;
+    }
+  }
+
+  .icon-wrapper {
     cursor: pointer;
     position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid ${({ theme }) => theme.grey.shade3};
+    border-radius: 12px;
+
+    @media ${BREAKPOINTS.sm} {
+      width: 32px;
+      height: 32px;
+      border: 1px solid ${({ theme }) => theme.grey.shade10};
+      background: ${({ theme }) => theme.grey.shade8};
+    }
   }
 
   .dashboard-account-container {
@@ -464,9 +486,9 @@ export const CreditBalanceContainer = styled.div`
 
 export const CheckoutCount = styled.div`
   background: ${(props) => props.theme.brand.primary};
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   padding-top: 3px;
   padding-right: 1px;
   display: flex;
@@ -481,4 +503,5 @@ export const HeaderWrapper = styled.div`
   width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
   margin: auto;
   position: relative;
+  z-index: 10;
 `;

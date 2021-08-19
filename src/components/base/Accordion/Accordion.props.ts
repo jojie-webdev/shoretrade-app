@@ -15,4 +15,5 @@ export interface AccordionProps {
   rightComponent?: ReactNode;
   leftComponent?: ReactNode;
   keepIcon?: boolean;
+  sameWidth?: boolean;
 }

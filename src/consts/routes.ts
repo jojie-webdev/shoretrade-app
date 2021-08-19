@@ -28,6 +28,7 @@ export const SELLER_ROUTES = {
   BULK_UPLOAD: `${SELLER_ROOT}/bulk-upload`,
   MARKET_BOARD: `${SELLER_ROOT}/market-board`,
   CREATES_MANAGEMENT: `${SELLER_ROOT}/creates-management`,
+  NOTIFICATIONS: `${SELLER_ROOT}/notifications`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -78,6 +79,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
   LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
   MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
+  NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications-settings`,
 };
 
 export const BUYER_ROUTES = {
@@ -112,6 +114,7 @@ export const BUYER_ROUTES = {
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
   ALL_LISTING: `${BUYER_ROOT}/all-listing`,
+  NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {
@@ -132,4 +135,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
   MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
+  NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications-settings`,
 };

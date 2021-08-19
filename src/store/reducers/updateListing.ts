@@ -4,8 +4,8 @@ import {
 } from 'types/store/UpdateListingState';
 import { createAsyncReducer } from 'utils/Redux';
 
-import { updateListingActions } from '../actions';
+import { updateNotificationSettingsActions } from '../actions';
 
 export default createAsyncReducer<UpdateListingMeta, UpdateListingPayload>(
-  updateListingActions
+  updateNotificationSettingsActions
 );
