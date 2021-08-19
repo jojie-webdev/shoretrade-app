@@ -22,6 +22,7 @@ export interface TableRowProps {
     position: Partial<{ x: number; y: number }>,
     columnDetails: any
   ) => any;
+  handleMaximizeColum?: (selector: string) => any;
 }
 
 export interface TableDataListProps extends TableRowProps {

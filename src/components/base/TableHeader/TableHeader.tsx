@@ -4,6 +4,7 @@ import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
 
 import { TableHeaderProps } from './TableHeader.props';
+import debounce from 'lodash.debounce';
 
 export default function TableHeader(props: TableHeaderProps) {
   const {
@@ -13,6 +14,8 @@ export default function TableHeader(props: TableHeaderProps) {
     setSortField,
     sortField,
     setSortOrder,
+    handleMaximizeColum,
+    onResize,
   } = props;
 
   return (
@@ -23,21 +26,32 @@ export default function TableHeader(props: TableHeaderProps) {
         if (!index) columnType = 'column-first';
         if (index === columns.length - 1) columnType = 'column-last';
 
+        const handleOnClick = debounce((e) => {
+          if (e?.detail >= 2) {
+            handleMaximizeColum?.(columns?.[index - 1]?.selector);
+          } else {
+            setSortField?.(column.selector);
+            setSortOrder?.(sortField === column.selector ? 'DESC' : 'ASC');
+          }
+        }, 200);
+
         return (
           <TableData
             key={`${column.selector}-${index}`}
             rowType="header"
+            columns={columns}
             columnType={columnType!}
-            onClick={() => {
-              setSortField?.(column.selector);
-              setSortOrder?.(sortField === column.selector ? 'DESC' : 'ASC');
-            }}
-            sorted={sortField === column.selector}
             sticky={column?.sticky}
+            selected={selectAll}
             handleOnSelect={(state: boolean) => {
               if (index === 0) onSelectAll?.(state);
             }}
-            selected={selectAll}
+            onClick={(e) => {
+              e?.persist();
+              handleOnClick(e);
+            }}
+            onResize={onResize}
+            sorted={sortField === column.selector}
           >
             <span>{column.name}</span>
           </TableData>

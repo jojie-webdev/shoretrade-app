@@ -57,7 +57,9 @@ export const DIRECT_SALE_COLUMNS = [
       return (
         <ChipsWrapper>
           {(data?.['specifications']?.split(',') || []).map((specs: string) => {
-            return <Chips key={`direct-spec-${data?.id}`}>{specs}</Chips>;
+            return (
+              <Chips key={`direct-spec-${data?.id}-${specs}`}>{specs}</Chips>
+            );
           })}
         </ChipsWrapper>
       );

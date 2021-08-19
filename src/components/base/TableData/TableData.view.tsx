@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 
 import { Rnd } from 'react-rnd';
 
@@ -9,27 +9,60 @@ import {
 import { TableDataContainer, DataWrapper } from './TableData.styles';
 
 const ResizerComponent = (props: ResizerComponentProps) => {
-  const { defaultSize, column, onResize } = props;
-  const [artificialKey, setArtificialKey] = useState(
-    `${Date.now()}.${Math.random()}`
-  );
+  const { defaultSize, column, onResize, columns, handleMaximizeColum } = props;
+  const [resizeSwitch, setResizeSwitch] = useState(false);
+  const artKey = useMemo(() => `${Date.now()}.${Math.random()}`, [
+    resizeSwitch,
+  ]);
+
+  const resizerRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (resizerRef?.current?.resizableElement.current) {
+      const dragableEl = resizerRef?.current?.resizableElement
+        .current as HTMLDivElement;
+      const resizerEl = dragableEl.children?.[1] as HTMLDivElement;
+      const leftRightEl = resizerEl?.children?.[0] as HTMLDivElement;
+      const resizerRightEl = resizerEl?.children?.[1] as HTMLDivElement;
+      leftRightEl.style.zIndex = '99999';
+      leftRightEl.style.pointerEvents = 'inherit';
+
+      resizerRightEl.style.zIndex = '99999';
+      resizerRightEl.style.pointerEvents = 'inherit';
+
+      leftRightEl.ondblclick = (e) => {
+        e.stopImmediatePropagation();
+        const col = columns?.[Number(column?.index) - 1];
+        if (col) handleMaximizeColum?.(col.selector);
+      };
+
+      resizerRightEl.ondblclick = (e) => {
+        e.stopImmediatePropagation();
+        const col = columns?.[column?.index];
+        if (col) handleMaximizeColum?.(col.selector);
+      };
+    }
+  }, [resizerRef, artKey]);
 
   return (
     <Rnd
-      key={artificialKey} // force rerender.
+      ref={resizerRef}
+      key={artKey} // force rerender.
       disableDragging
       enableResizing={{
         left: true,
         right: true,
       }}
-      default={defaultSize}
+      default={{
+        ...defaultSize,
+        height: '100%',
+      }}
       onResize={(e, direction, ref, delta, position) => {
-        console.log({ e, direction, ref, delta, position });
         e?.stopPropagation();
         onResize?.({ ...position, ...delta }, column);
       }}
       onResizeStop={() => {
-        setArtificialKey(`${Date.now()}.${Math.random()}`);
+        setTimeout(() => setResizeSwitch((prev) => !prev), 500);
       }}
     >
       <div
@@ -57,6 +90,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     id,
     onResize,
     column,
+    handleMaximizeColum,
   } = props;
 
   const TableDataContainerRef = useRef<HTMLDivElement>(null);
@@ -94,7 +128,11 @@ export default function TableDataContent(props: TableDataContentProps) {
       )}
     >
       {!!defaultSize.width && !!defaultSize.height && (
-        <ResizerComponent {...props} defaultSize={defaultSize} />
+        <ResizerComponent
+          column={column}
+          {...props}
+          defaultSize={defaultSize}
+        />
       )}
       <DataWrapper>{children}</DataWrapper>
     </TableDataContainer>
