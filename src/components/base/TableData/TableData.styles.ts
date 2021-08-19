@@ -75,3 +75,12 @@ export const DataWrapper = styled.div`
     top: 0;
   }
 `;
+
+export const WidthComputer = styled.div`
+  visibility: hidden;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  user-select: none;
+  pointer-events: none;
+`;

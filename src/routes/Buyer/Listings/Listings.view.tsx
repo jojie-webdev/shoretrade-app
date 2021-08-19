@@ -131,6 +131,13 @@ export default function ListingView(props: ListingViewProps) {
     }
   }, [isLoading, prevListingData, isMobile, searchTerm]);
 
+  // cleanup
+  useEffect(() => {
+    columns.forEach((column) => {
+      localStorage.removeItem(`col:${column?.selector}`);
+    });
+  }, []);
+
   // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
   const options = columns
@@ -387,7 +394,6 @@ export default function ListingView(props: ListingViewProps) {
         onSelect={handleSelectRow}
         unselectedIds={unselectedIds}
       />
-
       <PaginationContainer>
         <PaginationBar
           page={page}

@@ -19,6 +19,8 @@ const TableDataList = (props: TableDataListProps) => {
     handleOnSelectRow,
     data,
     onResize,
+    handleMaximizeColum,
+    columns,
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -57,6 +59,8 @@ const TableDataList = (props: TableDataListProps) => {
       }}
       onResize={onResize}
       column={{ ...column, index }}
+      handleMaximizeColum={handleMaximizeColum}
+      columns={columns}
     >
       <span
         id={`text-${identifier}`}
@@ -75,14 +79,7 @@ const TableDataList = (props: TableDataListProps) => {
 };
 
 export default function TableRow(props: TableRowProps) {
-  const {
-    data,
-    columns,
-    rowType,
-    selected,
-    handleOnSelectRow,
-    onResize,
-  } = props;
+  const { data, columns } = props;
 
   return (
     <>

@@ -37,6 +37,23 @@ export const TableComponent = (props: TableComponentProps) => {
   const [layout, setLayout] = useState<number[]>([]);
   const [baseLayout, setBaseLayout] = useState<number[]>([]);
 
+  const handleMaximizeColum = (columnName: string) => {
+    const columnIndex = columns.findIndex((col) => columnName === col.selector);
+    if (columnIndex === -1) return;
+
+    setLayout((prevLayout) =>
+      prevLayout.map((width, index) => {
+        if (index === columnIndex) {
+          const padding = 24 * 2;
+          const columnWidth = localStorage.getItem(`col:${columnName}`);
+          return Number(columnWidth) + padding;
+        }
+        return width;
+      })
+    );
+    setOverwriteLayout(true);
+  };
+
   const handleOnSelectAll = (state: boolean) => {
     setIsAllSelected(state);
   };
@@ -61,7 +78,7 @@ export const TableComponent = (props: TableComponentProps) => {
     setOverwriteLayout(true);
     const direction = position?.x ? 'left' : 'right';
     const columnIndex =
-      direction === 'left' ? Number(columnInfo?.index) - 1 : columnInfo.index;
+      direction === 'left' ? Number(columnInfo?.index) - 1 : columnInfo?.index;
     handleUpdateLayout(position?.x || position?.width, columnIndex);
   };
 
@@ -103,6 +120,8 @@ export const TableComponent = (props: TableComponentProps) => {
     <Container>
       <Table style={conditionalStyles} ref={tableRef} count={columns?.length}>
         <TableHeader
+          onResize={handleRowResize}
+          handleMaximizeColum={handleMaximizeColum}
           sortField={sortField}
           setSortField={setSortField}
           selectAll={isAllSelected}
@@ -116,6 +135,7 @@ export const TableComponent = (props: TableComponentProps) => {
               return (
                 <TableRow
                   onResize={handleRowResize}
+                  handleMaximizeColum={handleMaximizeColum}
                   rowType={data.length - 1 === index ? 'last-row' : undefined}
                   data={item}
                   key={`table-row-${item?.id}`}

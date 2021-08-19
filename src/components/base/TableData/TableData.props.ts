@@ -3,6 +3,7 @@ import { MouseEvent } from 'react';
 import {
   ColumnType,
   RowType,
+  TableColumn,
 } from 'components/module/ListingTable/Table.props';
 
 type onResize = (
@@ -21,6 +22,8 @@ export interface TableDataContentProps {
   id?: string;
   onResize?: onResize;
   column?: any;
+  handleMaximizeColum?: (name: string) => any;
+  columns: TableColumn[];
 }
 
 export interface TableDataProps {
@@ -35,6 +38,8 @@ export interface TableDataProps {
   handleOnSelect?: (state: boolean, data?: any) => void;
   onResize?: onResize;
   column?: any;
+  handleMaximizeColum?: (selector: any) => any;
+  columns: TableColumn[];
 }
 export interface ResizerComponentProps extends Partial<TableDataContentProps> {
   defaultSize: any;
