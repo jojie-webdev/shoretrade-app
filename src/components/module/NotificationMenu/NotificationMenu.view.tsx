@@ -62,7 +62,6 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     resource: NotificationType,
     appType: 'buyer' | 'seller'
   ) => {
-    console.log(appType);
     handleNotifOnClick(resource, appType);
     setIsComponentVisible(!isComponentVisible);
   };

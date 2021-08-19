@@ -66,7 +66,5 @@ export function notifResourceToURLMapper(
       url = BUYER_ROUTES.HOME;
       break;
   }
-  console.log(appType);
-  console.log(url);
   return url;
 }
