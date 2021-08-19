@@ -141,6 +141,7 @@ const NotificationSettingsCategoryItem = (
           <CustomCheckBoxContainer>
             <StyledCheckbox
               onClick={() => onChange(!push.enabled, CustomSettingKey.PUSH)}
+              disabled={!push.supported}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={push.enabled}
             />
@@ -151,6 +152,7 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
+              disabled={!email.supported}
               onClick={() => onChange(!email.enabled, CustomSettingKey.EMAIL)}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={email.enabled}
@@ -162,6 +164,7 @@ const NotificationSettingsCategoryItem = (
           </CustomCheckBoxContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox
+              disabled={!mobile.supported}
               onClick={() => onChange(!mobile.enabled, CustomSettingKey.MOBILE)}
               style={{ position: 'absolute', top: '12px', right: '12px' }}
               checked={mobile.enabled}
