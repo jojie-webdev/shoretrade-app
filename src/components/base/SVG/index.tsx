@@ -1,4 +1,17 @@
 /* PLOP_INJECT_IMPORT */
+export { default as MarketRequests } from './MarketRequests';
+export { default as DashboardAlt } from './DashboardAlt';
+export { default as Anchor } from './Anchor';
+export { default as Orders } from './Orders';
+export { default as DashboardOutlined } from './DashboardOutlined';
+export { default as FolderDownload } from './FolderDownload';
+export { default as CheckCircle } from './CheckCircle';
+export { default as More } from './More';
+export { default as Bell } from './Bell';
+export { default as Sold } from './Sold';
+export { default as CommentsAlt } from './CommentsAlt';
+export { default as EnvelopeAlt } from './EnvelopeAlt';
+export { default as Desktop } from './Desktop';
 export { default as NewWave51 } from './NewWave51';
 export { default as WaveNew31 } from './WaveNew31';
 export { default as Cross7 } from './Cross7';

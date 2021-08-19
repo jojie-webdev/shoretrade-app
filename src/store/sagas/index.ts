@@ -18,6 +18,7 @@ import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
 import deleteMarketRequestOffer from './deleteMarketRequestOffer'
+import deleteNotification from './deleteNotification';
 import editableListing from './editableListing';
 import editSelectedListing from './editSelectedListing';
 import endListing from './endListing';
@@ -47,6 +48,8 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNotifications from './getNotifications';
+import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -65,6 +68,7 @@ import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
+import readNotification from './readNotification';
 import register from './register';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
@@ -80,6 +84,7 @@ import updateFavoriteSeller from './updateFavoriteSeller';
 import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
+import updateNotificationSettings from './updateNotificationSettings';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
@@ -103,6 +108,7 @@ const sagas = [
   deleteCard,
   deleteLinkedAccount,
   deleteMarketRequest,
+  deleteNotification,
   deleteMarketRequestOffer,
   editSelectedListing,
   editableListing,
@@ -149,6 +155,7 @@ const sagas = [
   modifyBulkUpload,
   order,
   placeOrder,
+  readNotification,
   readMarketNotification,
   register,
   resendVerification,
@@ -161,6 +168,7 @@ const sagas = [
   updateBankDetails,
   updateDefaultCard,
   updateFavoriteSeller,
+  updateNotificationSettings,
   updateFavouriteProduct,
   updateListing,
   updateMarketInterests,
@@ -170,6 +178,8 @@ const sagas = [
   verify,
   getPaymentMode,
   sendDispute,
+  getNotifications,
+  getNotificationsSettings,
 ];
 
 export default function* root() {

@@ -4,6 +4,7 @@ import { SVGProps } from 'components/base/SVG/SVG.props';
 import { Route } from 'types/Routes';
 import { GetUserPayload } from 'types/store/GetUserState';
 import { Theme } from 'types/Theme';
+import { GetNotificationsPayload, NotificationItemResponse, NotificationType } from 'types/store/GetNotificationsState';
 
 export interface DashboardPublicProps {
   ref?: any;
@@ -28,6 +29,15 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   onClickOpenSideBar: (value: boolean) => void;
   cartItems: number;
   onClickAccount: () => void;
+  notifsData: NotificationItemResponse[];
+  totalNotifs: number;
+  totalUnreadNotifs: number;
+  handleMarkasRead: (notificationId: string) => void;
+  handleOnDelete: (notificationId: string) => void;
+  handleNotifOnClick: (
+    resource: NotificationType,
+    appType: 'buyer' | 'seller'
+  ) => void;
 }
 
 // Inner component props
@@ -60,4 +70,13 @@ export type HeaderProps = {
   onBack?: () => void;
   onClickAccount: () => void;
   cartItems: number;
+  notifsData: NotificationItemResponse[];
+  totalNotifs: number;
+  totalUnreadNotifs: number;
+  handleMarkasRead: (notificationId: string) => void;
+  handleOnDelete: (notificationId: string) => void;
+  handleNotifOnClick: (
+    resource: NotificationType,
+    appType: 'buyer' | 'seller'
+  ) => void;
 };

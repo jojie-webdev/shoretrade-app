@@ -19,7 +19,12 @@ const Touchable = (props: TouchableProps): JSX.Element => {
   return (
     <TouchableBase
       type="button"
-      onClick={onPress}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (onPress) {
+          onPress();
+        }
+      }}
       width={width}
       height={height}
       circle={circle}

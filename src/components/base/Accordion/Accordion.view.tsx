@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Interactions from 'components/base/Interactions';
 
 import { AccordionProps } from './Accordion.props';
-import { Container, Content } from './Accordion.style';
+import { Container, Content, StyledInteractions } from './Accordion.style';
 
 const Accordion = ({
   title,
@@ -16,6 +16,7 @@ const Accordion = ({
   background,
   leftComponent,
   keepIcon,
+  sameWidth,
   border,
   ...props
 }: AccordionProps): JSX.Element => {
@@ -29,7 +30,7 @@ const Accordion = ({
       background={background}
       border={border}
     >
-      <Interactions
+      <StyledInteractions
         pressed={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         value={title}
@@ -40,12 +41,15 @@ const Accordion = ({
         leftComponent={leftComponent}
         rightComponent={rightComponent}
         keepIcon={keepIcon}
+        sameWidth={sameWidth}
+        isOpen={isOpen}
       />
       <Content
         className="accordion-content-wrapper"
         isOpen={isOpen}
         withBackground={props.withBackground}
         padding={padding}
+        sameWidth={sameWidth}
       >
         {props.withBackground && <div className="border" />}
         {props.children}

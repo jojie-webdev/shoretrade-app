@@ -9,11 +9,13 @@ import {
   ArrowLeftAlt,
   ShoretradeLogo,
   Close,
+  Bell,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileNav from 'components/layout/MobileNav';
 import Hamburger from 'components/module/Hamburger';
+import NotificationMenu from 'components/module/NotificationMenu';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Container } from 'react-grid-system';
@@ -104,7 +106,7 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
   return (
     <div className="cart-container">
       <div
-        className="cart-wrapper"
+        className="icon-wrapper"
         onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
       >
         <CartIcon fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
@@ -129,6 +131,12 @@ const Header = ({
   onBack,
   cartItems,
   onClickAccount,
+  totalUnreadNotifs,
+  totalNotifs,
+  notifsData,
+  handleMarkasRead,
+  handleOnDelete,
+  handleNotifOnClick,
 }: HeaderProps) => {
   const theme = useTheme();
 
@@ -165,6 +173,14 @@ const Header = ({
       }
       rightContent={
         <HeaderRightContent>
+          <NotificationMenu
+            handleNotifOnClick={handleNotifOnClick}
+            handleOnDelete={handleOnDelete}
+            handleMarkasRead={handleMarkasRead}
+            notifsData={notifsData}
+            notifTotal={totalNotifs}
+            unreadTotal={totalUnreadNotifs}
+          />
           {!onBack && theme.appType === 'buyer' && (
             <Cart cartItems={cartItems} />
           )}
@@ -198,8 +214,6 @@ const Header = ({
       </div>
 
       <HeaderRightContent>
-        {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
-
         <Touchable
           className="dashboard-account-container"
           onPress={onClickAccount}
@@ -224,6 +238,15 @@ const Header = ({
             <PlaceholderProfile />
           )}
         </Touchable>
+        {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
+        <NotificationMenu
+          handleNotifOnClick={handleNotifOnClick}
+          handleMarkasRead={handleMarkasRead}
+          handleOnDelete={handleOnDelete}
+          notifsData={notifsData}
+          notifTotal={totalNotifs}
+          unreadTotal={totalUnreadNotifs}
+        />
       </HeaderRightContent>
     </HeaderContainer>
   );
@@ -249,6 +272,12 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     headerTextColor,
     cartItems,
     onClickAccount,
+    totalUnreadNotifs,
+    totalNotifs,
+    notifsData,
+    handleMarkasRead,
+    handleOnDelete,
+    handleNotifOnClick,
   } = props;
 
   const history = useHistory();
@@ -403,8 +432,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             >
               <HeaderWrapper>
                 <Header
+                  handleOnDelete={handleOnDelete}
+                  handleMarkasRead={handleMarkasRead}
+                  handleNotifOnClick={handleNotifOnClick}
                   pageTitle={pageTitle}
                   userData={userData}
+                  totalNotifs={totalNotifs}
+                  totalUnreadNotifs={totalUnreadNotifs}
+                  notifsData={notifsData}
                   textColor={
                     headerTextColor || (isSeller ? 'noshade' : 'shade9')
                   }
@@ -420,8 +455,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
           ) : (
             <>
               <Header
+                handleOnDelete={handleOnDelete}
                 pageTitle={pageTitle}
+                handleNotifOnClick={handleNotifOnClick}
+                handleMarkasRead={handleMarkasRead}
                 userData={userData}
+                totalNotifs={totalNotifs}
+                totalUnreadNotifs={totalUnreadNotifs}
+                notifsData={notifsData}
                 textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
                 onClick={() => onClickOpenSideBar(!openSidebar)}
                 openSidebar={openSidebar}

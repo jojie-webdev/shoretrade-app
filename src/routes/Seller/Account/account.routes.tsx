@@ -17,6 +17,7 @@ import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Licenses from './Licenses';
 import MarketInterests from './MarketInterests';
+import NotificationsSettings from './NotificationsSettings';
 import ShippingAddresses from './ShippingAddresses';
 import YourDetails from './YourDetails';
 
@@ -76,6 +77,10 @@ const ROUTES: Routes = {
   LICENSES: {
     path: SELLER_ACCOUNT_ROUTES.LICENSES,
     children: <Licenses />,
+  },
+  NOTIFICATIONS_SETTINGS: {
+    path: SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS,
+    children: <NotificationsSettings />,
   },
 };
 
