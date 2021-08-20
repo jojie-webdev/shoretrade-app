@@ -13,6 +13,8 @@ import {
   Container,
   EmptyContainer,
 } from './MultipleCarousel.style.old';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
@@ -21,6 +23,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const theme = useTheme();
   const [currentNdx, setCurrentNdx] = useState(0);
   const containerWidthRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
+  const isTabled = useMediaQuery({ query: BREAKPOINTS.genericTablet });
 
   const {
     id,
@@ -75,6 +79,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
 
       <Swiper
         id={id}
+        allowTouchMove={isTabled || isMobile ? true : false}
         onSwiper={(swiper) => {
           setRef(swiper);
         }}
