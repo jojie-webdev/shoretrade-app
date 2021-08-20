@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Player } from '@lottiefiles/react-lottie-player';
 
-import { GetStartedCarouselProps } from './GetStartedCarousel.props';
-import { Container } from './GetStartedCarousel.style';
+import { AnimationPlayerProps } from './AnimationPlayer.props';
+import { Container } from './AnimationPlayer.style';
 
-const GetStartedCarousel = (props: GetStartedCarouselProps): JSX.Element => {
+const AnimationPlayer = (props: AnimationPlayerProps): JSX.Element => {
   const { image, style, ...playerProps } = props;
 
   return (
@@ -15,4 +15,4 @@ const GetStartedCarousel = (props: GetStartedCarouselProps): JSX.Element => {
   );
 };
 
-export default React.memo(GetStartedCarousel);
+export default React.memo(AnimationPlayer);
