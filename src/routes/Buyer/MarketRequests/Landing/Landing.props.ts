@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+
 export type Result = {
   id: string;
   type: string;
@@ -28,4 +30,5 @@ export interface MarketRequestsLandingGeneratedProps {
   pendingDeleteMarketRequest: boolean;
   setItemToDelete: Dispatch<SetStateAction<{ value: null | string }>>;
   loading: boolean;
+  activeOffersData: GetActiveOffersRequestResponseItem[];
 }

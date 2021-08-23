@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { sortBy } from 'ramda';
@@ -11,7 +12,7 @@ import {
   getAllMarketRequestActions,
   getMarketRequestBuyerFiltersActions,
   marketRequestAcceptOfferActions,
-  deleteMarketRequestOfferActions
+  deleteMarketRequestOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
@@ -32,15 +33,15 @@ const MarketRequestDetail = (): JSX.Element => {
   const dispatch = useDispatch();
   const { id } = params;
 
-  const [offerId, setOfferId] = useState<string>('')
+  const [offerId, setOfferId] = useState<string>('');
 
   useEffect(() => {
-    if (location.pathname.includes("/offer")) {
-      const splits = location.pathname.split("/")
-      const offerId = splits[splits.length - 1]
-      setOfferId(offerId)
+    if (location.pathname.includes('/offer')) {
+      const splits = location.pathname.split('/');
+      const offerId = splits[splits.length - 1];
+      setOfferId(offerId);
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   const goTolist = () => {
     history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
@@ -147,9 +148,14 @@ const MarketRequestDetail = (): JSX.Element => {
 
   const onOfferDelete = (offerIdToDelete: string) => {
     if (offerIdToDelete) {
-      dispatch(deleteMarketRequestOfferActions.request({ id: offerIdToDelete, marketRequestId: id }));
+      dispatch(
+        deleteMarketRequestOfferActions.request({
+          id: offerIdToDelete,
+          marketRequestId: id,
+        })
+      );
     }
-  }
+  };
 
   const submitNegotiation = (counterOffer: number) => {
     if (selectedOffer) {
@@ -248,15 +254,15 @@ const MarketRequestDetail = (): JSX.Element => {
   }, [acceptOffer]);
 
   useEffect(() => {
-    activeOffers.data?.data.marketOffers.forEach(marketOffer =>
-      marketOffer.offers.forEach(offer => {
+    activeOffers.data?.data.marketOffers.forEach((marketOffer) =>
+      marketOffer.offers.forEach((offer) => {
         if (offer.id === offerId) {
-          setSelectedOffer(offer)
-          return
+          setSelectedOffer(offer);
+          return;
         }
       })
-    )
-  }, [offerId, activeOffers])
+    );
+  }, [offerId, activeOffers]);
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -424,7 +430,7 @@ const MarketRequestDetail = (): JSX.Element => {
     onClickFilterButton,
     showNotEnoughCreditAlert,
     setShowNotEnoughCreditAlert,
-    onOfferDelete
+    onOfferDelete,
   };
 
   return <MarketRequestDetailView {...generatedProps} />;

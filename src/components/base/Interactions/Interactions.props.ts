@@ -28,4 +28,5 @@ export interface InteractionsProps {
   keepIcon?: boolean;
   flat?: boolean;
   fontColor?: string;
+  offers?: number;
 }

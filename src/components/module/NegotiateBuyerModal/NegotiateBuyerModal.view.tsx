@@ -111,6 +111,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 {'$'}
               </Typography>
             }
+            placeholder={unit}
           />
         </Inputs>
         <CheckBoxContainer>
@@ -127,7 +128,6 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
           >
             Close this buyer request if accepted.
           </Typography>
-          <InfoFilled fill={theme.grey.shade7} width={20} height={20} />
         </CheckBoxContainer>
         <ComputationContainer>
           <div className="computation-item-container">

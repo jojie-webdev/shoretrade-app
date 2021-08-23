@@ -141,13 +141,21 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
         'listing'
       );
 
-      setPageTitle(innerRoute);
+      if (innerRoute === 'Market requests') {
+        setPageTitle('Market Requests');
+      } else {
+        setPageTitle(innerRoute);
+      }
     }
   }, [location]);
 
   useEffect(() => {
     if (props.pageTitle) {
-      setPageTitle(props.pageTitle);
+      if (props.pageTitle === 'Market requests') {
+        setPageTitle('Market Requests');
+      } else {
+        setPageTitle(props.pageTitle);
+      }
     }
   }, [props.pageTitle]);
 

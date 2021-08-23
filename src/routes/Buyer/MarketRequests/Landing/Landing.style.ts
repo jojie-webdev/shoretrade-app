@@ -2,9 +2,9 @@ import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 export const MarketRequestsContainer = styled.div`
   display: flex;
@@ -58,13 +58,13 @@ export const MarketRequestItemInteraction = styled(Interactions)`
     flex-grow: 2;
   }
 
-  .cta{
+  .cta {
     display: flex;
     align-items: center;
     height: 140px;
     align-content: space-between;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
   }
 `;
 
@@ -111,6 +111,7 @@ export const MarketRequestItemContainer = styled.div`
       margin: 0;
       width: fit-content;
       border-radius: 8px;
+      padding: 5px 10px;
     }
   }
 `;
@@ -121,7 +122,7 @@ export const SubText = styled(TypographyView)`
   color: ${(props) => `${props.theme.grey.shade7}`};
 `;
 
-export const BadgeText = styled(TypographyView) <{ empty?: boolean }>`
+export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
   color: ${({ theme, empty }) =>
@@ -183,30 +184,79 @@ export const Card = styled.div`
   padding: 24px 40px 48px 40px;
   max-width: 310.67px;
   height: 388px;
-  background: #FFFFFF;
-  border: 1px solid #DADFF2;
+  background: #ffffff;
+  border: 1px solid #dadff2;
   box-sizing: border-box;
   border-radius: 12px;
 
-  @media (max-width: 1426px){
+  @media (max-width: 1426px) {
     padding: 24px;
   }
-`
+`;
 
 export const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: 100%;
 
-  .swiper-pagination-bullet-active{
+  .swiper-pagination-bullet-active {
     background-color: ${({ theme }) => theme.brand.primary};
   }
 
-  .swiper-pagination-bullet{
+  .swiper-pagination-bullet {
     margin: 0 2px;
   }
-`
+`;
 
 export const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex;
   justify-content: center;
-`
+`;
+
+export const CircleBackground = styled.div`
+  width: 150px;
+  height: 150px;
+  background-color: ${({ theme }) => theme.grey.shade1};
+  border-radius: 50%;
+`;
+
+export const AnimatedComponentContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+`;
+
+export const BadgesContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 835px) {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .sub-group {
+      margin-bottom: 10px;
+    }
+  }
+`;
+
+export const StyledAcceptTermsAndConditionText = styled(TypographyView)`
+  margin-left: 8px;
+  font-family: 'Basis Grotesque Pro';
+`;
+
+export const AnimatedImageContainer = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+export const AnimatedImageSubContainer = styled.div`
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+`;
