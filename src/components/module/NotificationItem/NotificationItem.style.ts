@@ -3,7 +3,7 @@ import styled from 'utils/styled';
 export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
   display: flex;
   height: 100%;
-  max-height: 200px;
+  max-height: ${({ fullView }) => (fullView ? '400px' : '200px')};
   cursor: pointer;
   min-height: 72px;
   width: 100%;
