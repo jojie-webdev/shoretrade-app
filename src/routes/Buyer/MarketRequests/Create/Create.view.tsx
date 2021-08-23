@@ -307,15 +307,15 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 marginTop: -8,
               }}
             >
-              {selectedSpecifications.items.map((i, index) => {
-                return index === selectedSpecifications.items.length - 1
+              {selectedSpecifications?.items?.map((i, index) => {
+                return index === selectedSpecifications?.items?.length - 1
                   ? `${i.label} `
                   : `${i.label}, `;
               })}
             </Typography>
           </DetailsDataContainer>
         </DetailsContentContainer>
-        {(selectedSize.items[0] !== '' || selectedSize.from) && (
+        {(selectedSize?.items[0] !== '' || selectedSize?.from) && (
           <DetailsContentContainer>
             <Typography
               color="shade6"
@@ -340,19 +340,25 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {selectedSize.items[0] !== '' && !selectedSize.from
-                  ? selectedSize.items.map((i, index) => {
-                    return index === selectedSpecifications.items.length - 1
-                      ? `${i} `
-                      : `${i}, `;
-                  })
-                  : `${selectedSize.from}${measurement} ${selectedSize.to && `- ${selectedSize.to}${measurement}`
-                  }`}
+                {selectedSize?.items[0] !== '' && !selectedSize?.from
+                  ? selectedSize?.items?.map((i, index) => {
+                      return index === selectedSpecifications?.items.length - 1
+                        ? `${i} `
+                        : `${i}, `;
+                    })
+                  : `${
+                      selectedSize?.from
+                    }${listingFormData?.metric?.name?.toLowerCase()} ${
+                      selectedSize?.to &&
+                      `- ${
+                        selectedSize?.to
+                      }${listingFormData?.metric?.name?.toLowerCase()}`
+                    }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
         )}
-        {selectedQuantity.from && (
+        {selectedQuantity?.from && (
           <DetailsContentContainer>
             <Typography
               color="shade6"
@@ -377,9 +383,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   marginTop: -8,
                 }}
               >
-                {`${selectedQuantity.from}${measurement} ${selectedQuantity.to &&
-                  `- ${selectedQuantity.to}${measurement}`
-                  }`}
+                {`${selectedQuantity?.from}${measurement} ${
+                  selectedQuantity?.to &&
+                  `- ${selectedQuantity?.to}${measurement}`
+                }`}
               </Typography>
             </DetailsDataContainer>
           </DetailsContentContainer>
@@ -500,7 +507,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     <>
       <ConfirmationModal
         isOpen={sendConfModalisOpen}
-        title="Let us confrim your Market Request"
+        title="Let us confirm your Market Request"
         description="Are you sure you want to send this request to the market?"
         action={() => {
           onSubmit();

@@ -109,8 +109,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Within this step, you can enter an exact quantity or a range that
-              you would like to purchase.
+              Here you can set the quantity you want to purchase either as a range or a fixed amount.
             </Typography>
           </TitleContainer>
         </MainContainer>

@@ -198,7 +198,7 @@ const SummaryView = (props: SummaryProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Make a final review before sending your market request.
+              Review the details of your Market Request and select your shipping address. If you need to make any changes, click the relevant section above. Once you’re ready, press Send Market Request.
             </Typography>
           </TitleContainer>
         </MainContainer>

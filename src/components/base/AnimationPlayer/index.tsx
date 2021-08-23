@@ -1,1 +1,1 @@
-export { default } from './CarouselPlayer.view';
+export { default } from './AnimationPlayer.view';

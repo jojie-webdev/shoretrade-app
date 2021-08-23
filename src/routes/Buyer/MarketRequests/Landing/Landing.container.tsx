@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -41,6 +42,11 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   const loading = useSelector(
     (store: Store) => store.getAllMarketRequest.pending
+  );
+
+  const activeOffers = useSelector((store: Store) => store.getActiveOffers);
+  const activeOffersData = (activeOffers.data?.data.marketOffers || []).filter(
+    (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
   );
 
   const onClickItem = (row: Result) => {
@@ -85,6 +91,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     itemToDelete,
     setItemToDelete,
     loading: loading || false,
+    activeOffersData,
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;

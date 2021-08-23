@@ -159,7 +159,7 @@ const SizeInput = (props: SizeInputProps) => {
     return <>{sizeOptions}</>;
   }
 
-  return <Checkbox checked={true} disabled label="Ungraded" />;
+  return <Checkbox checked={true} label="Ungraded" />;
 };
 
 const SelectSizeView = (props: SelectSizeProps) => {
@@ -210,9 +210,9 @@ const SelectSizeView = (props: SelectSizeProps) => {
   const disabledNext = () => {
     if (
       listingFormData?.metric.name.toUpperCase().replace(/\s/g, '_') ===
-      'GRAMS' ||
+        'GRAMS' ||
       listingFormData?.metric.name.toUpperCase().replace(/\s/g, '_') ===
-      'UNITS_PER_POUND'
+        'UNITS_PER_POUND'
     ) {
       return sizeToFrom.from === '';
     }
@@ -283,9 +283,8 @@ const SelectSizeView = (props: SelectSizeProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Here you can detail the size you want for this product. Simply
-              enter your desired size in the boxes and press Proceed to
-              continue.
+              Do you have a specific size in mind? In this step, you can define
+              the size you want to purchase and press proceed to continue.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -329,12 +328,14 @@ const SelectSizeView = (props: SelectSizeProps) => {
                     disabled={disabledNext()}
                     variant="primary"
                     takeFullWidth
-                    icon={<ChevronRight
-                      width={14}
-                      height={12}
-                      fill="white"
-                      style={{ paddingBottom: '2px' }}
-                    />}
+                    icon={
+                      <ChevronRight
+                        width={14}
+                        height={12}
+                        fill="white"
+                        style={{ paddingBottom: '2px' }}
+                      />
+                    }
                   />
                 </MobileFooter>
               </>

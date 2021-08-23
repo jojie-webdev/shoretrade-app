@@ -3,6 +3,7 @@ import React from 'react';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
+import { Hidden, Visible } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
 import { ConfirmationModalProps } from './ConfirmationModal.props';
@@ -23,9 +24,9 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
 
   const isSeller = theme.appType === 'seller';
 
-  return (
-    <Modal {...modalProps}>
-      <Content>
+  const renderTitle = () => (
+    <>
+      <Hidden xs sm>
         <Typography
           variant="title4"
           color={isSeller ? 'noshade' : 'shade8'}
@@ -34,7 +35,25 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
         >
           {title}
         </Typography>
+      </Hidden>
 
+      <Visible xs sm>
+        <Typography
+          variant="title5"
+          color={isSeller ? 'noshade' : 'shade8'}
+          className="title"
+          style={{ fontFamily: 'Media Sans' }}
+        >
+          {title}
+        </Typography>
+      </Visible>
+    </>
+  );
+
+  return (
+    <Modal {...modalProps}>
+      <Content>
+        {renderTitle()}
         <div className="content-container">
           <Typography
             variant="body"

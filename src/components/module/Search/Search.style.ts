@@ -15,7 +15,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     props.rounded && props.theme.appType === 'buyer'
       ? '10px 10px 10px 15px'
       : props.theme.appType === 'buyer'
-        ? '24px'
+        ? '19px 13px'
         : '10px 15px'};
   margin-bottom: 16px;
 
@@ -49,8 +49,19 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
         ? '14px'
         : '16px'};
     }
+
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
+      height: 38px;
     }
+  }
+
+  .close-svg-container {
+    display: none;
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    height: 40px;
+    padding: 11px 13px;
   }
 `;

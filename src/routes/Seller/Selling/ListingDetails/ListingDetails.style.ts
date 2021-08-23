@@ -333,7 +333,7 @@ export const ProductLabelMobileContainer = styled.div`
   }
 `;
 
-export const Progress = styled.div<{ percent: number, height?: string }>`
+export const Progress = styled.div<{ percent: number; height?: string }>`
   width: ${({ percent }) => `${percent}%`};
   height: ${({ height }) => height || '4px'};
   background-color: ${({ theme }) => theme.brand.success};

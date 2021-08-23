@@ -13,6 +13,12 @@ export type GetAllMarketRequestResponseItem = {
   status: string;
   shippingTo: ShippingTo;
   offers: string;
+  size: {
+    from: string;
+    options: any;
+    to: string;
+    ungraded: boolean;
+  };
   sizeFrom?: number;
   sizeTo?: number;
   sizeUngraded: boolean;

@@ -32,6 +32,19 @@ const BuyerRequestsInteractions = (props: {
   const { onClick, data } = props;
   const unit = formatMeasurementUnit(data.measurementUnit);
 
+  const buildSizeValue = () => {
+    const sizeValue =
+      data.sizeOptions && Object.keys(data.sizeOptions).length != 0
+        ? data.sizeOptions.join(', ')
+        : sizeToString(
+            data.metric,
+            (data.sizeFrom || '').toString(),
+            (data.sizeTo || '').toString()
+          );
+
+    return sizeValue;
+  };
+
   return (
     <Interactions
       onClick={() => onClick()}
@@ -58,14 +71,7 @@ const BuyerRequestsInteractions = (props: {
           </div>
           <div className="section">
             <Typography variant="caption" color="shade6">
-              Size:{' '}
-              {data.sizeOptions && Object.keys(data.sizeOptions).length != 0
-                ? data.sizeOptions.join(', ')
-                : sizeToString(
-                    data.metric,
-                    (data.sizeFrom || '').toString(),
-                    (data.sizeTo || '').toString()
-                  )}
+              Size: {buildSizeValue()}
             </Typography>
             <Typography
               variant="caption"

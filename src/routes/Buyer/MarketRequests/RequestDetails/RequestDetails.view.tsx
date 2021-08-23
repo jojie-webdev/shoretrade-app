@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import ProgressBar from 'components/base/ProgressBar';
 import Select from 'components/base/Select/Select.view';
 import {
   Crab,
@@ -12,7 +13,7 @@ import {
   StarFilled,
   Weight,
   Octopus,
-  DropdownArrow
+  DropdownArrow,
 } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
@@ -41,6 +42,7 @@ import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDet
 import { getAllMarketRequestActions } from 'store/actions';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -55,9 +57,7 @@ import MarketRequestItem from '../Landing/Landing.view';
 import Button from './../../../../components/base/Button/Button.view';
 import Cross7 from './../../../../components/base/SVG/Cross7';
 import TrashCan from './../../../../components/base/SVG/TrashCan';
-import { ProgressContainer } from './../../../../components/layout/AuthContainer/AuthContainer.style';
 import { Store } from './../../../../types/store/Store';
-import { Progress } from './../../../Seller/Selling/ListingDetails/ListingDetails.style';
 import Offer from './Offer/Offer.view';
 import OfferDetailView from './OfferDetail/OfferDetail.view';
 import FullOfferDetails from './OfferFullDetails/FullOfferDetails.view';
@@ -79,7 +79,7 @@ import {
   DeleteButtonContainer,
   CounterContainer,
   CounterCol,
-  Sorter
+  Sorter,
 } from './RequestDetails.style';
 
 const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
@@ -118,20 +118,20 @@ export const OffersSellerAccordionContent = (props: {
           <div>
             {sellerRating
               ? [...Array(5).keys()].map((r) =>
-                Number(sellerRating || 0) > r ? (
-                  <StarFilled
-                    fill={theme.brand.alert}
-                    width={starWidth}
-                    height={starHeight}
-                  />
-                ) : (
-                  <Star
-                    fill={theme.brand.alert}
-                    width={starWidth}
-                    height={starHeight}
-                  />
+                  Number(sellerRating || 0) > r ? (
+                    <StarFilled
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  ) : (
+                    <Star
+                      fill={theme.brand.alert}
+                      width={starWidth}
+                      height={starHeight}
+                    />
+                  )
                 )
-              )
               : ''}
           </div>
         </div>
@@ -183,13 +183,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     isLoading,
     showNotEnoughCreditAlert,
     setShowNotEnoughCreditAlert,
-    onOfferDelete
+    onOfferDelete,
   } = props;
 
   const location = useLocation();
 
   const splits = location.pathname.split('/');
-  const offerId = splits[splits.length - 1];
+  const offerId = splits[splits?.length - 1];
 
   const handleStartNegotiate = () => {
     setNegotiating(true);
@@ -205,7 +205,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     (store: Store) => store.getMarketRequestBuyerFilters.data?.data
   );
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [searchTerm, setSearchTerm] = useState('');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -252,18 +252,19 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const countAllOffers = () => {
     let offersCount = 0;
     sellerOffersCopy.forEach((sellerOffer) => {
-      offersCount += sellerOffer.offers.length;
+      offersCount += sellerOffer.offers?.length;
     });
 
     return offersCount;
   };
 
   const isFiltered = () => {
-    const _isFilterd = (Array.isArray(props.filterModalProps.selectedFilters) &&
-      props.filterModalProps.selectedFilters.length > 0)
+    const _isFilterd =
+      Array.isArray(props.filterModalProps.selectedFilters) &&
+      props.filterModalProps.selectedFilters?.length > 0;
 
-    return _isFilterd
-  }
+    return _isFilterd;
+  };
 
   const renderCounter = () => (
     <CounterCol>
@@ -271,24 +272,29 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         <Typography
           color="shade6"
           variant="label"
-          style={{ marginRight: "16px" }}
+          style={{ marginRight: '16px' }}
         >
-          <span style={{ color: "#09131D" }}>{countAllOffers()}</span>
-          <span>{' '}Results</span>
+          <span style={{ color: '#09131D' }}>{countAllOffers()}</span>
+          <span> Results</span>
         </Typography>
 
-        <Sorter onClick={() => props.onClickFilterButton()}>
-          <Typography color="shade9" variant="label" style={{ marginRight: "15px" }}>Sort by</Typography>
+        <Sorter onClick={() => props?.onClickFilterButton()}>
+          <Typography
+            color="shade9"
+            variant="label"
+            style={{ marginRight: '15px' }}
+          >
+            Sort by
+          </Typography>
           <DropdownArrow fill={theme.grey.shade6} />
         </Sorter>
-
       </CounterContainer>
     </CounterCol>
-  )
+  );
 
   const renderSearch = () => (
     <Col xl={6}>
-      <div style={{ marginTop: "16px" }}>
+      <div style={{ marginTop: '16px' }}>
         <Search
           className="search"
           rounded={true}
@@ -299,67 +305,103 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         />
       </div>
     </Col>
-  )
+  );
 
   const renderLeftComponent = () => (
-    <Col sm={12} md={12} xl={8}  >
-      <Row style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        {
-          isFiltered() ?
+    <Col sm={12} md={12} xl={8}>
+      <Row
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        {isFiltered() ? (
+          <Hidden xs sm md lg>
+            {renderSearch()}
+          </Hidden>
+        ) : (
+          sellerOffers?.length > 0 &&
+          !location.pathname.includes('/offer/') && (
             <Hidden xs sm md lg>
               {renderSearch()}
             </Hidden>
-            :
-            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-            <Hidden xs sm md lg>
-              {renderSearch()}
-            </Hidden>
-        }
+          )
+        )}
 
-        {
-          isFiltered() ?
+        {isFiltered() ? (
+          <Hidden xs sm md lg>
+            {renderCounter()}
+          </Hidden>
+        ) : (
+          sellerOffers?.length > 0 &&
+          !location.pathname.includes('/offer/') && (
             <Hidden xs sm md lg>
               {renderCounter()}
             </Hidden>
-            :
-            (sellerOffers.length > 0 && !location.pathname.includes("/offer/")) &&
-            <Hidden xs sm md lg>
-              {renderCounter()}
-            </Hidden>
-        }
+          )
+        )}
       </Row>
 
       <Switch>
-        <Route path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}>
-          {
-            sellerOffersCopy.length > 0 ?
-              sellerOffersCopy.map(sellerOffer =>
-                <Offer sellerOffer={sellerOffer} onOfferDelete={onOfferDelete} />
-              ) :
-              <>
-                {
-                  isFiltered() ?
-                    null :
-                    <>
-                      <EmptyStateView
-                        title=""
-                        Svg={Octopus}
-                        height={240}
-                        width={249}
-                        fluid
-                      />
-                      <div style={{ display: "flex", alignItems: "center", flexFlow: "column" }}>
-                        <Typography weight="700" color="shade8" variant="title6" style={{ fontFamily: "Media Sans" }}>
-                          There are no offers yet
-                        </Typography>
-                        <Typography weight="400" color="shade6" variant="caption" style={{ marginTop: "4px", fontFamily: "Basis Grotesque Pro" }}>
-                          Enable your push notifications
-                        </Typography>
-                      </div>
-                    </>
-                }
-              </>
-          }
+        <Route
+          path={BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(marketRequestId)}
+        >
+          {sellerOffersCopy?.length > 0 ? (
+            sellerOffersCopy.map(
+              (
+                sellerOffer: GetActiveOffersRequestResponseItem,
+                index: number
+              ) => (
+                <Offer
+                  key={`offer-${index}`}
+                  sellerOffer={sellerOffer}
+                  onOfferDelete={onOfferDelete}
+                />
+              )
+            )
+          ) : (
+            <>
+              {isFiltered() ? null : (
+                <>
+                  <EmptyStateView
+                    title=""
+                    Svg={Octopus}
+                    height={240}
+                    width={249}
+                    fluid
+                  />
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexFlow: 'column',
+                    }}
+                  >
+                    <Typography
+                      weight="700"
+                      color="shade8"
+                      variant="title6"
+                      style={{ fontFamily: 'Media Sans' }}
+                    >
+                      There are no offers yet
+                    </Typography>
+                    <Typography
+                      weight="400"
+                      color="shade6"
+                      variant="caption"
+                      style={{
+                        marginTop: '4px',
+                        fontFamily: 'Basis Grotesque Pro',
+                      }}
+                    >
+                      Enable your push notifications
+                    </Typography>
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </Route>
 
         <Route
@@ -368,7 +410,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
             currentOfferId
           )}
         >
-          <div style={{ marginTop: "16px" }}>
+          <div style={{ marginTop: '16px' }}>
             <FullOfferDetails
               handleStartNegotiate={handleStartNegotiate}
               handleAcceptOffer={handleAcceptOffer}
@@ -402,7 +444,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       (marketRequest) => marketRequest.id === marketRequestId
     );
 
-    if (_marketRequests && _marketRequests.length > 0) {
+    if (_marketRequests && _marketRequests?.length > 0) {
       return _marketRequests[0];
     }
 
@@ -443,53 +485,65 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               marginTop: -8,
             }}
           >
-            {buyerRequests.data?.data.marketRequests[0].specs
-              ?.toString()
-              .split(',')
-              .join(', ')}
+            {filteredMarketRequest().specs?.toString().split(',').join(', ')}
           </Typography>
         </DetailsDataContainer>
       </DetailsContentContainer>
     );
 
   const renderSize = () => {
-    const sizeOptions =
-      buyerRequests.data?.data?.marketRequests[0]?.sizeOptions;
+    const _size = filteredMarketRequest();
 
-    if (sizeOptions && Array.isArray(sizeOptions) && sizeOptions.length > 0) {
-      return (
-        <DetailsContentContainer>
+    const _sizeFromSizeToString = sizeToString(
+      filteredMarketRequest()?.metric,
+      filteredMarketRequest()?.size.from?.toString(),
+      filteredMarketRequest()?.size.to?.toString()
+    );
+
+    const getSizeFromData = () => {
+      // if (
+      //   _size?.options &&
+      //   Array.isArray(_size?.options) &&
+      //   _size?.options?.length > 0
+      // ) {
+      //   return Array.isArray(_size?.options) ? _size?.options?.join(', ') : '';
+      // } else {
+      //   return _sizeFromSizeToString;
+      // }
+
+      return _sizeFromSizeToString;
+    };
+
+    return (
+      <DetailsContentContainer>
+        <Typography
+          color="shade6"
+          variant="label"
+          style={{
+            marginBottom: 10,
+            fontFamily: 'Wilderness',
+            fontSize: 24,
+          }}
+        >
+          Size:
+        </Typography>
+        <DetailsDataContainer>
+          <Cross7 />
           <Typography
-            color="shade6"
+            color="shade9"
             variant="label"
             style={{
-              marginBottom: 10,
               fontFamily: 'Wilderness',
-              fontSize: 24,
+              fontSize: 38,
+              marginLeft: 8.5,
+              marginTop: -8,
             }}
           >
-            Size:
+            {getSizeFromData()}
           </Typography>
-          <DetailsDataContainer>
-            <Cross7 />
-            <Typography
-              color="shade9"
-              variant="label"
-              style={{
-                fontFamily: 'Wilderness',
-                fontSize: 38,
-                marginLeft: 8.5,
-                marginTop: -8,
-              }}
-            >
-              {Array.isArray(sizeOptions) ? sizeOptions?.join(', ') : ''}
-            </Typography>
-          </DetailsDataContainer>
-        </DetailsContentContainer>
-      );
-    }
-
-    return null;
+        </DetailsDataContainer>
+      </DetailsContentContainer>
+    );
   };
 
   const renderQuantity = () => {
@@ -529,10 +583,12 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   };
 
   const calculatePercentage = () => {
-    const percentage = ((100 * countAcceptedWeight()) / (filteredMarketRequest()?.weight?.to || 0)) || 0
+    const percentage =
+      (100 * countAcceptedWeight()) /
+        (filteredMarketRequest()?.weight?.to || 0) || 0;
 
-    return percentage
-  }
+    return percentage;
+  };
 
   const renderSummary = () => (
     <SummaryContainer margin="16px 0px">
@@ -551,22 +607,22 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
       </DetailsHeaderContainer>
 
       {renderSpecs()}
-      <div style={{ marginTop: "20px" }}></div>
+      <div style={{ marginTop: '20px' }}></div>
       {renderSize()}
-      <div style={{ marginTop: "20px" }}></div>
+      <div style={{ marginTop: '20px' }}></div>
       {renderQuantity()}
     </SummaryContainer>
-  )
+  );
 
   const renderRightComponent = () => (
-    <Col sm={12} md={12} xl={4}  >
+    <Col sm={12} md={12} xl={4}>
       <RequestDetailsParentContainer>
         <RequestDetailsMobileContainer>
           <div className="thumbnail-container">
-            <img src={parseImageUrl(data.image || '')} />
+            <img src={parseImageUrl(data?.image || '')} />
           </div>
 
-          <div style={{ width: "100%", margin: "auto" }}>
+          <div style={{ width: '100%', margin: 'auto' }}>
             <Typography
               variant="copy"
               weight="400"
@@ -580,9 +636,9 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               </span>
             </Typography>
 
-            <ProgressContainer>
-              <Progress height="2px" percent={calculatePercentage()} />
-            </ProgressContainer>
+            <div style={{ paddingRight: '16px' }}>
+              <ProgressBar progress={calculatePercentage()} />
+            </div>
 
             <Typography
               margin="12px 0px 0px 0px"
@@ -605,7 +661,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 ((e) => {
                   e.stopPropagation();
                   setItemToDelete({
-                    value: sellerOffers[0].marketRequest.id || '',
+                    value: sellerOffers[0]?.marketRequest.id || '',
                   });
                   setShowDelete(true);
                 })
@@ -632,7 +688,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         style={{ fontFamily: 'Media Sans' }}
         variant="title5"
       >
-        {data.name}
+        {data?.name}
       </Typography>
     </Col>
   );
@@ -686,7 +742,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
       <Hidden xs sm>
         <HeaderContainer>
-          <div >
+          <div>
             <Breadcrumbs sections={breadCrumbSections} />
           </div>
         </HeaderContainer>
@@ -698,15 +754,13 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         <>
           <Row>{renderItemName()}</Row>
 
-          <Row gutterWidth={30} >
-            {
-              !location.pathname.includes("/offer/") ?
-                <Visible xs sm md lg>
-                  {renderSearch()}
-                  {renderCounter()}
-                </Visible> :
-                null
-            }
+          <Row gutterWidth={30}>
+            {!location.pathname.includes('/offer/') ? (
+              <Visible xs sm md lg>
+                {renderSearch()}
+                {renderCounter()}
+              </Visible>
+            ) : null}
             <Hidden xs sm md lg>
               {renderLeftComponent()}
               {renderRightComponent()}
@@ -716,9 +770,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               {renderLeftComponent()}
             </Visible>
             <Visible lg>
-              <Col>
-                {renderSummary()}
-              </Col>
+              <Col>{renderSummary()}</Col>
             </Visible>
           </Row>
         </>

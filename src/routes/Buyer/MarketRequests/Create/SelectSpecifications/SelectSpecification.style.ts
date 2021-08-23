@@ -1,8 +1,9 @@
 import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { ContainerWithCategoryImageContent } from '../Create.style';
-import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const SpecificationFormContainer = styled(
   ContainerWithCategoryImageContent
@@ -52,14 +53,19 @@ export const CheckboxContainer = styled.div`
   @media ${BREAKPOINTS['sm']} {
     margin-top: 10px;
   }
-`
+`;
 
 export const CheckboxGroupContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
 export const SpecsContainer = styled.div`
   display: flex;
-  flex-direction: column
-`
+  flex-direction: column;
+`;
+
+export const StyledTitle = styled(Typography)`
+  font-family: 'Media Sans';
+  margin-bottom: 12;
+`;

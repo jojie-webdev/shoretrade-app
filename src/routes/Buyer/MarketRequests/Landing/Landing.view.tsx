@@ -1,9 +1,18 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import Case from 'case';
+import AnimationPlayer from 'components/base/AnimationPlayer';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Crab, TrashCan, ChevronRight, TexturedSwordFish, TexturedCrab, TexturedOctopus } from 'components/base/SVG';
+import Checkbox from 'components/base/Checkbox';
+import {
+  Crab,
+  TrashCan,
+  ChevronRight,
+  TexturedSwordFish,
+  TexturedCrab,
+  TexturedOctopus,
+} from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -15,8 +24,19 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { AnimatedCrab } from 'res/images/animated/crab';
+import { AnimatedOctopus } from 'res/images/animated/octopus';
+import { AnimatedSwordfish } from 'res/images/animated/swordfish';
+import { SwiperSlide } from 'swiper/react';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
+import { getTermsAndConditions } from 'utils/Links';
+import { sizeToString } from 'utils/Listing';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
+
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
   MarketRequestsContainer,
@@ -31,11 +51,14 @@ import {
   SubMinorDetail,
   SubText,
   Card,
-  StyledSwiper
+  StyledSwiper,
+  CircleBackground,
+  AnimatedComponentContainer,
+  BadgesContainer,
+  StyledAcceptTermsAndConditionText,
+  AnimatedImageContainer,
+  AnimatedImageSubContainer,
 } from './Landing.style';
-import { HeaderContainer } from './../Create/Create.style';
-import Checkbox from 'components/base/Checkbox';
-import { SwiperSlide } from 'swiper/react';
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
@@ -43,6 +66,7 @@ export const MarketRequestItemNonMobile = (props: {
   type: string;
   image: string;
   inDetail: boolean;
+  activeOffersData: GetActiveOffersRequestResponseItem[];
   weight?: { from: number; to: number };
   measurementUnit?: string;
   setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
@@ -64,6 +88,7 @@ export const MarketRequestItemNonMobile = (props: {
     specs,
     size,
     setItemToDelete,
+    activeOffersData,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -72,10 +97,32 @@ export const MarketRequestItemNonMobile = (props: {
     return (
       <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
         <BadgeText variant="overline" empty={!offers || offers === 0}>
-          {`${offers > 0 ? offers : 'No'} Offers`}
+          {`${offers > 0 ? offers : 'No'} ${offers === 1 ? 'Offer' : 'Offers'}`}
         </BadgeText>
       </Badge>
     );
+  };
+
+  const getOfferById = (): Offer => {
+    activeOffersData.forEach((activeOffer) => {
+      activeOffer.offers.forEach((offer) => {
+        if (offer.id === id) {
+          return offer;
+        }
+      });
+    });
+
+    return {} as Offer;
+  };
+
+  const hasSize = () => {
+    const _hasSize = sizeToString(
+      getOfferById()?.metric,
+      size?.from?.toString(),
+      size?.to?.toString()
+    );
+
+    return _hasSize;
   };
 
   return (
@@ -86,11 +133,21 @@ export const MarketRequestItemNonMobile = (props: {
       <div className="info-container">
         <div className="sub-group">
           <TypographyView variant="label">{type}</TypographyView>
-          <SubText variant="caption">{specs?.split(",").join(", ")}</SubText>
+          <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
         </div>
         <div className="sub-group">
+          {hasSize() && (
+            <SubText variant="caption">{`Size: ${sizeToString(
+              getOfferById()?.metric,
+              size?.from?.toString(),
+              size?.to?.toString()
+            )}`}</SubText>
+          )}
           <SubText variant="caption">
-            {weight && `Qty: ${weight.from} - ${weight.to}`}
+            {weight &&
+              `Qty: ${weight.from}${measurementUnit?.toLocaleLowerCase()} ~ ${
+                weight.to
+              }${measurementUnit?.toLocaleLowerCase()}`}
           </SubText>
         </div>
         <div className="sub-group">
@@ -101,14 +158,16 @@ export const MarketRequestItemNonMobile = (props: {
             {expiry === 'Expired' ? expiry : `${expiry} left`}
           </SubText>
         </div>
-        <div className="sub-group">
-          <SubText variant="small">{offerNumberBadge()}</SubText>
-        </div>
-        <div className="sub-group">
-          <SubText variant="small">
-            {offerStatusBadge(inDetail, offers, offerStatus)}
-          </SubText>
-        </div>
+        <BadgesContainer>
+          <div className="sub-group">
+            <SubText variant="small">{offerNumberBadge()}</SubText>
+          </div>
+          <div className="sub-group">
+            <SubText variant="small">
+              {offerStatusBadge(inDetail, offers, offerStatus)}
+            </SubText>
+          </div>
+        </BadgesContainer>
         <div className="sub-group">
           <Button
             iconPosition="before"
@@ -219,7 +278,7 @@ export const MarketRequestItemMobile = (props: {
 
       <MinorInfo>
         <Typography variant="caption" weight="400" color="shade6">
-          {specs?.split(",").join(", ")}
+          {specs?.split(',').join(', ')}
         </Typography>
 
         <SubMinorInfo>
@@ -227,10 +286,10 @@ export const MarketRequestItemMobile = (props: {
             {subMinorDetail(
               'Quantity',
               weight?.from +
-              '-' +
-              weight?.to +
-              ' ' +
-              Case.pascal(measurementUnit || '')
+                '-' +
+                weight?.to +
+                ' ' +
+                Case.pascal(measurementUnit || '')
             )}
           </SubMinorDetail>
 
@@ -240,7 +299,7 @@ export const MarketRequestItemMobile = (props: {
             {subMinorDetail(
               'Size',
               (Array.isArray(size?.options) && size?.options?.join(', ')) ||
-              'None'
+                'None'
             )}
           </SubMinorDetail>
         </SubMinorInfo>
@@ -297,10 +356,11 @@ const MarketRequestsLandingView = (
     setItemToDelete,
     pendingDeleteMarketRequest,
     loading,
+    activeOffersData,
   } = props;
 
-  const [checkAccept, setCheckAccept] = useState<boolean>(false)
-  const [renderTermsAndCon, setRenderTermsAndCon] = useState<boolean>(false)
+  const [checkAccept, setCheckAccept] = useState<boolean>(false);
+  const [renderTermsAndCon, setRenderTermsAndCon] = useState<boolean>(false);
 
   if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
@@ -308,12 +368,13 @@ const MarketRequestsLandingView = (
 
   const renderMobile = () => (
     <Visible xs>
-      {marketRequests.length > 0 ? (
-        marketRequests.map((mr) => (
+      {marketRequests?.length > 0 ? (
+        marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
             type={mr.offers > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
+            offers={mr.offers}
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
               <div className="cta">
@@ -346,14 +407,16 @@ const MarketRequestsLandingView = (
 
   const renderNonMobile = () => (
     <Hidden xs>
-      {marketRequests.length > 0 ? (
-        marketRequests.map((mr) => (
+      {marketRequests?.length > 0 ? (
+        marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
             type={'next'}
             onClick={() => onClickItem(mr)}
+            offers={mr.offers}
             leftComponent={
               <MarketRequestItemNonMobile
+                activeOffersData={activeOffersData}
                 inDetail={false}
                 setItemToDelete={setItemToDelete}
                 {...mr}
@@ -372,125 +435,90 @@ const MarketRequestsLandingView = (
     <Card>
       <Row>
         <Col>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             <Typography
               variant="title6"
               weight="700"
               color="shade5"
-              style={{ fontFamily: "Media Sans" }}
+              style={{ fontFamily: 'Media Sans' }}
             >
               /
             </Typography>
-            <Typography
-              color="shade9"
-              weight="400"
-              variant="title3"
-            >
+            <Typography color="shade9" weight="400" variant="title3">
               {carNumber}
             </Typography>
           </div>
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "16px" }}>
+      <Row style={{ marginTop: '16px' }}>
         <Col>
-          <div style={{ width: "95%" }}>
-            <Typography
-              variant="label"
-              color="shade7"
-              weight="400"
-            >
+          <div style={{ width: '95%' }}>
+            <Typography variant="label" color="shade7" weight="400">
               {description}
             </Typography>
           </div>
         </Col>
       </Row>
 
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <div style={{ position: "absolute", inset: "0", margin: "auto", width: "fit-content" }}>
-          {image}
-        </div>
-      </div>
-
-
-      {/* <Row>
-        <Col>
-          <div style={{ display: "flex" }}>
-            <Typography
-              variant="title6"
-              weight="700"
-              color="shade5"
-              style={{ fontFamily: "Media Sans" }}
-            >
-              /
-            </Typography>
-            <Typography
-              color="shade9"
-              weight="400"
-              variant="title3"
-            >
-              {carNumber}
-            </Typography>
-          </div>
-        </Col>
-      </Row>
-      <Row style={{ marginTop: "16px" }}>
-        <Col>
-          <div style={{ width: "95%" }}>
-            <Typography
-              variant="label"
-              color="shade7"
-              weight="400"
-            >
-              {description}
-            </Typography>
-          </div>
-        </Col>
-      </Row>
-      <div style={{ position: "absolute", inset: "0", margin: "auto" }}>
-        <EmptyStateView Svg={TexturedOctopus} fluid />
-      </div> */}
-      {/* <ComponentFocusedCarousel /> */}
+      <AnimatedImageContainer>
+        <AnimatedImageSubContainer>{image}</AnimatedImageSubContainer>
+      </AnimatedImageContainer>
     </Card>
-  )
+  );
 
   const renderTermsConditions = () => (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: 'flex' }}>
       <Checkbox
         onClick={() => setCheckAccept(!checkAccept)}
         className="checkbox"
         checked={checkAccept}
       />
-      <Typography
+      <StyledAcceptTermsAndConditionText
         weight="700"
         variant="label"
         color="shade9"
-        style={{ marginLeft: "8px", fontFamily: "Basis Grotesque Pro" }}
       >
-        Accept Terms &#38; Conditions
-      </Typography>
+        Accept{' '}
+        <span
+          style={{ cursor: 'pointer', textDecoration: 'underline' }}
+          onClick={() => getTermsAndConditions()}
+        >
+          Terms &#38; Conditions
+        </span>
+      </StyledAcceptTermsAndConditionText>
     </div>
-  )
+  );
 
   const renderButton = () => (
-    <Button style={{
-      borderRadius: "12px",
-      marginTop: "16px"
-    }}
+    <Button
+      style={{
+        borderRadius: '12px',
+        marginTop: '16px',
+      }}
       disabled={!checkAccept}
       variant="primary"
       text="Get Started"
       textVariant="overline"
       textWeight="900"
-      icon={<ChevronRight
-        width={14}
-        height={12}
-        fill="white"
-        style={{ paddingBottom: '2px' }}
-      />}
+      icon={
+        <ChevronRight
+          width={14}
+          height={12}
+          fill="white"
+          style={{ paddingBottom: '2px' }}
+        />
+      }
       onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
     />
-  )
+  );
+
+  const renderAnimation = (animatedComponent: JSX.Element) => (
+    <AnimatedComponentContainer>
+      <CircleBackground />
+      <div style={{ position: 'absolute' }}>{animatedComponent}</div>
+    </AnimatedComponentContainer>
+  );
 
   const renderTermsAndCondition = () => (
     <div>
@@ -499,10 +527,9 @@ const MarketRequestsLandingView = (
           variant="label"
           weight="400"
           color="shade7"
-          style={{ fontFamily: "Basis Grotesque Pro" }}
+          style={{ fontFamily: 'Basis Grotesque Pro' }}
         >
           Can&apos;t find your product?
-
         </Typography>
         <Typography
           variant="title5"
@@ -523,52 +550,98 @@ const MarketRequestsLandingView = (
           Market Request
         </Typography>
 
-        <div style={{ marginTop: "16px" }} />
+        <div style={{ marginTop: '16px' }} />
 
-        <Typography
-          variant="label"
-          weight="400"
-          color="shade7"
-        >
+        <Typography variant="label" weight="400" color="shade7">
           Can&apos;t find your product?
         </Typography>
-        <Typography
-          variant="body"
-          weight="700"
-          color="shade9"
-        >
+        <Typography variant="body" weight="700" color="shade9">
           Create a new market request
         </Typography>
       </Visible>
 
-      <div style={{ marginTop: "24px" }} />
+      <div style={{ marginTop: '24px' }} />
 
       <Row>
         <Hidden xs sm>
-          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
-            {renderCard("01", "Search in our Database and choose between more than 50+  Categories", <TexturedOctopus />)}
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: '24px' }}>
+            {renderCard(
+              '01',
+              'Search in our Database and choose between more than 50+  Categories',
+              renderAnimation(
+                <AnimationPlayer
+                  src={AnimatedOctopus}
+                  style={{ width: '230px', height: '220px' }}
+                />
+              )
+            )}
           </Col>
 
-          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
-            {renderCard("02", "Select specifications, size, quantity and send your request to the market", <TexturedSwordFish />)}
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: '24px' }}>
+            {renderCard(
+              '02',
+              'Select specifications, size, quantity and send your request to the market',
+              renderAnimation(
+                <AnimationPlayer
+                  src={AnimatedSwordfish}
+                  style={{ width: '230px', height: '220px' }}
+                />
+              )
+            )}
           </Col>
 
-          <Col xl={4} style={{ marginBottom: "16px" }}>
-            {renderCard("03", "Check and negotiate offers from more than 10.000+ sellers from ShoreTrade", <TexturedCrab />)}
+          <Col xl={4} style={{ marginBottom: '24px' }}>
+            {renderCard(
+              '03',
+              'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade',
+              renderAnimation(
+                <AnimationPlayer
+                  src={AnimatedCrab}
+                  style={{ width: '230px', height: '220px' }}
+                />
+              )
+            )}
           </Col>
         </Hidden>
 
-        <Visible xs sm >
-          <Col md={6} lg={6} xl={4} style={{ marginBottom: "16px" }}>
-            <StyledSwiper spaceBetween={30} pagination={{ clickable: true }} >
+        <Visible xs sm>
+          <Col md={6} lg={6} xl={4} style={{ marginBottom: '16px' }}>
+            <StyledSwiper spaceBetween={30} pagination={{ clickable: true }}>
               <SwiperSlide>
-                {renderCard("01", "Search in our Database and choose between more than 50+  Categories", <TexturedOctopus />)}
+                {renderCard(
+                  '01',
+                  'Search in our Database and choose between more than 50+  Categories',
+                  renderAnimation(
+                    <AnimationPlayer
+                      src={AnimatedOctopus}
+                      style={{ width: '230px', height: '220px' }}
+                    />
+                  )
+                )}
               </SwiperSlide>
               <SwiperSlide>
-                {renderCard("02", "Select specifications, size, quantity and send your request to the market", <TexturedSwordFish />)}
+                {renderCard(
+                  '02',
+                  'Select specifications, size, quantity and send your request to the market',
+                  renderAnimation(
+                    <AnimationPlayer
+                      src={AnimatedSwordfish}
+                      style={{ width: '230px', height: '220px' }}
+                    />
+                  )
+                )}
               </SwiperSlide>
               <SwiperSlide>
-                {renderCard("03", "Check and negotiate offers from more than 10.000+ sellers from ShoreTrade", <TexturedCrab />)}
+                {renderCard(
+                  '03',
+                  'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade',
+                  renderAnimation(
+                    <AnimationPlayer
+                      src={AnimatedCrab}
+                      style={{ width: '230px', height: '220px' }}
+                    />
+                  )
+                )}
               </SwiperSlide>
             </StyledSwiper>
           </Col>
@@ -581,44 +654,44 @@ const MarketRequestsLandingView = (
       </Hidden>
 
       <Visible xs sm>
-        <div style={{ marginTop: "82px" }}>
+        <div style={{ marginTop: '82px' }}>
           {renderTermsConditions()}
-          <Button style={{
-            borderRadius: "12px",
-            marginTop: "16px"
-          }}
+          <Button
+            style={{
+              borderRadius: '12px',
+              marginTop: '16px',
+            }}
             disabled={!checkAccept}
             variant="primary"
             text="Get Started"
             textVariant="overline"
             textWeight="900"
             takeFullWidth={true}
-          // onClick={() => {
-          //   handleGetStarted();
-          // }}
+            onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
           />
         </div>
       </Visible>
     </div>
-  )
+  );
 
-  return (
-    renderTermsAndCon ?
-      renderTermsAndCondition() :
-      <MarketRequestsContainer>
-        <ConfirmationModal
-          isOpen={itemToDelete.value !== null}
-          title="Delete Market Request"
-          description="Are you sure you want to delete this market request?"
-          action={() => {
-            onDelete && itemToDelete.value && onDelete(itemToDelete.value);
-          }}
-          actionText="DELETE"
-          onClickClose={() => setItemToDelete({ value: null })}
-        />
+  return renderTermsAndCon ? (
+    renderTermsAndCondition()
+  ) : (
+    <MarketRequestsContainer>
+      <ConfirmationModal
+        isOpen={itemToDelete.value !== null}
+        title="Delete Market Request"
+        description="Are you sure you want to delete this market request?"
+        action={() => {
+          onDelete && itemToDelete.value && onDelete(itemToDelete.value);
+        }}
+        actionText="DELETE"
+        onClickClose={() => setItemToDelete({ value: null })}
+      />
 
-        <Row nogutter justify="around" align="center" className="header">
-          <Col>
+      <Row nogutter justify="around" align="center" className="header">
+        <Col>
+          <Hidden xs sm>
             <Typography
               variant="title5"
               weight="700"
@@ -627,39 +700,50 @@ const MarketRequestsLandingView = (
             >
               My Market Requests
             </Typography>
-          </Col>
-          <Col xs="content">
-            <Visible sm md lg xl xxl>
-              <Button
-                onClick={() => setRenderTermsAndCon(true)}
-                text="CREATE REQUEST"
-                variant={props.isPendingAccount ? 'disabled' : 'primary'}
-                size="md"
-                disabled={props.isPendingAccount}
-              />
-            </Visible>
-          </Col>
-        </Row>
-        {renderMobile()}
-        {renderNonMobile()}
-        <MobileFooter>
-          <Button
-            onClick={() => setRenderTermsAndCon(true)}
-            text="CREATE REQUEST"
-            variant={props.isPendingAccount ? 'disabled' : 'primary'}
-            takeFullWidth
-            disabled={props.isPendingAccount}
-            icon={
-              <ChevronRight
-                width={15}
-                height={12}
-                fill="white"
-                style={{ paddingBottom: '2px' }}
-              />
-            }
-          />
-        </MobileFooter>
-      </MarketRequestsContainer>
+          </Hidden>
+          <Visible xs sm>
+            <Typography
+              variant="title5"
+              weight="700"
+              color="shade9"
+              style={{ fontFamily: 'Media Sans' }}
+            >
+              Market Requests
+            </Typography>
+          </Visible>
+        </Col>
+        <Col xs="content">
+          <Visible sm md lg xl xxl>
+            <Button
+              onClick={() => setRenderTermsAndCon(true)}
+              text="CREATE REQUEST"
+              variant={props.isPendingAccount ? 'disabled' : 'primary'}
+              size="md"
+              disabled={props.isPendingAccount}
+            />
+          </Visible>
+        </Col>
+      </Row>
+      {renderMobile()}
+      {renderNonMobile()}
+      <MobileFooter>
+        <Button
+          onClick={() => setRenderTermsAndCon(true)}
+          text="CREATE REQUEST"
+          variant={props.isPendingAccount ? 'disabled' : 'primary'}
+          takeFullWidth
+          disabled={props.isPendingAccount}
+          icon={
+            <ChevronRight
+              width={15}
+              height={12}
+              fill="white"
+              style={{ paddingBottom: '2px' }}
+            />
+          }
+        />
+      </MobileFooter>
+    </MarketRequestsContainer>
   );
 };
 

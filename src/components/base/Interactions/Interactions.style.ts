@@ -34,13 +34,20 @@ export const Container = styled.div<InteractionsProps>`
       : 'none !important';
   }};
 
-  ${({ onClick, type }) =>
-    onClick && type !== 'none'
-      ? `cursor: pointer;
+  ${({ onClick, type, offers }) =>
+    offers !== undefined
+      ? offers > 0
+        ? `cursor: pointer;
           &:hover {
             opacity: 0.9;
           }`
-      : ''};
+        : ''
+      : onClick && type !== 'none'
+      ? `cursor: pointer;
+        &:hover {
+          opacity: 0.9;
+        }`
+      : ''}
 
   .left-content,
   .right-content {
@@ -49,7 +56,7 @@ export const Container = styled.div<InteractionsProps>`
   }
 `;
 
-export const Value = styled(Typography) <{ fontColor?: string }>`
+export const Value = styled(Typography)<{ fontColor?: string }>`
   color: ${({ theme, fontColor }) => {
     const isSeller = theme.appType !== 'buyer';
     return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);

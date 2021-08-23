@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import Select from 'components/base/Select';
 import {
   Group194,
   Group195,
@@ -10,11 +11,12 @@ import {
   Wave51,
 } from 'components/base/SVG';
 import Group204 from 'components/base/SVG/Group204';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
-import { useMediaQuery } from 'react-responsive'
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Hidden } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -31,11 +33,9 @@ import {
   LeftGroupContainer,
   TopAbsoContainer,
   TopGroupContainer,
-  NoResultMessage
+  NoResultMessage,
+  TitleContainer,
 } from './CategorySelection.style';
-import Typography from 'components/base/Typography';
-import Select from 'components/base/Select';
-import { Hidden } from 'react-grid-system';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
   const {
@@ -69,63 +69,64 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
     <>
       <CreateRequestHeaderContainer>
         <div>
-          {
-            isMobile ?
-              null :
-              <Breadcrumbs
-                color="shade5"
-                sections={[
-                  { label: 'Category' },
-                  {
-                    label: 'Specifications',
-                    onClick: () => {
-                      if (didFinishStep >= 2) {
-                        onBack(2);
-                      }
-                    },
-                    isDone: didFinishStep >= 2,
+          {isMobile ? null : (
+            <Breadcrumbs
+              color="shade5"
+              sections={[
+                { label: 'Product' },
+                {
+                  label: 'Specifications',
+                  onClick: () => {
+                    if (didFinishStep >= 2) {
+                      onBack(2);
+                    }
                   },
-                  {
-                    label: 'Size',
-                    onClick: () => {
-                      if (didFinishStep >= 3) {
-                        onBack(3);
-                      }
-                    },
-                    isDone: didFinishStep >= 3,
+                  isDone: didFinishStep >= 2,
+                },
+                {
+                  label: 'Size',
+                  onClick: () => {
+                    if (didFinishStep >= 3) {
+                      onBack(3);
+                    }
                   },
-                  {
-                    label: 'Quantity',
-                    onClick: () => {
-                      if (didFinishStep >= 4) {
-                        onBack(4);
-                      }
-                    },
-                    isDone: didFinishStep >= 4,
+                  isDone: didFinishStep >= 3,
+                },
+                {
+                  label: 'Quantity',
+                  onClick: () => {
+                    if (didFinishStep >= 4) {
+                      onBack(4);
+                    }
                   },
-                  {
-                    label: 'Summary',
-                    onClick: () => {
-                      if (didFinishStep >= 5) {
-                        onBack(5);
-                      }
-                    },
-                    isDone: didFinishStep >= 5,
+                  isDone: didFinishStep >= 4,
+                },
+                {
+                  label: 'Summary',
+                  onClick: () => {
+                    if (didFinishStep >= 5) {
+                      onBack(5);
+                    }
                   },
-                ]}
-              />
-          }
-          <div className="title-container">
-            <TypographyView
+                  isDone: didFinishStep >= 5,
+                },
+              ]}
+            />
+          )}
+          <TitleContainer>
+            <Typography
               variant="title5"
               weight="500"
-              style={{ fontFamily: 'Media Sans' }}
+              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
             >
               Request a Product
-            </TypographyView>
-          </div>
+            </Typography>
+            <Typography variant="label" weight="400" color="shade7">
+              Search from the hundreds of product types on ShoreTrade and select
+              the product you would like to request.
+            </Typography>
+          </TitleContainer>
         </div>
-
       </CreateRequestHeaderContainer>
       <CategoryInteractionsContainer>
         <div className="search-container">
@@ -149,12 +150,19 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
               key={result.value}
               type="next"
               leftComponent={
-                <TypographyView variant="body">{result.label}</TypographyView>
+                <Typography variant="body">{result.label}</Typography>
               }
             />
           ))
         ) : (
           <>
+            {searchTerm && (
+              <NoResultMessage>
+                <Typography weight="700" variant="title5" color="shade9">
+                  No search result
+                </Typography>
+              </NoResultMessage>
+            )}
             <Hidden xs sm>
               <TopAbsoContainer>
                 <Wave41 />
@@ -178,12 +186,6 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             <EmptyContainer>
               <Group204 />
             </EmptyContainer>
-            {
-              searchTerm &&
-              <NoResultMessage>
-                <Typography weight="700" variant="title5" color="shade9">No search result</Typography>
-              </NoResultMessage>
-            }
           </>
         )}
       </CategoryInteractionsContainer>

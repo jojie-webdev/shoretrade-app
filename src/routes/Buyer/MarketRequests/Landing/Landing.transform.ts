@@ -10,7 +10,7 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
 
   const getOfferStatus = (offers: any) => {
     if (!Array.isArray(offers)) {
-      return ''
+      return '';
     }
 
     const arr = sortWith([descend(prop('createdAt'))])(offers);
@@ -26,14 +26,35 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
       }
     }
   };
-  return data.map((item: GetMarketRequestResponseItem) => ({
-    ...item,
-    expiry: moment(item.createdAt).add(7, 'd').isBefore()
+
+  const buildExpiryData = (item: GetMarketRequestResponseItem) => {
+    const createdAtPlusDays = moment(item.createdAt).add(7, 'd').format();
+
+    const hoursLeft = moment
+      .duration(moment(createdAtPlusDays).diff(moment()))
+      .asHours();
+
+    if (hoursLeft <= 24 && hoursLeft > 0) {
+      return hoursLeft.toFixed() + ' Hours';
+    }
+
+    if (hoursLeft <= 0) {
+      return 'Expired';
+    }
+
+    const expiry = moment(item.createdAt).add(7, 'd').isBefore()
       ? 'Expired'
       : formatRunningDateDifference(
-        moment(item.createdAt).add(7, 'd').format(),
-        'day'
-      ),
+          moment(item.createdAt).add(7, 'd').format(),
+          'day'
+        );
+
+    return expiry;
+  };
+
+  return data.map((item: GetMarketRequestResponseItem) => ({
+    ...item,
+    expiry: buildExpiryData(item),
     offers: item?.offers?.length || 0,
     offerStatus: getOfferStatus(item.offers),
   }));

@@ -3,10 +3,7 @@ import React, { useState } from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import {
-  ShoretradeAnchor,
-  ChevronRight
-} from 'components/base/SVG';
+import { ShoretradeAnchor, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
@@ -37,7 +34,8 @@ import {
   AnchorContainer,
   CheckboxContainer,
   CheckboxGroupContainer,
-  SpecsContainer
+  SpecsContainer,
+  StyledTitle,
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -201,17 +199,12 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           </Hidden>
           <TitleContainer>
-            <Typography
-              variant="title5"
-              weight="500"
-              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
-            >
+            <StyledTitle variant="title5" weight="500">
               {listingFormData?.type.name}
-            </Typography>
+            </StyledTitle>
             <Typography variant="label" weight="400" color="shade7">
-              Below are the different ways you can purchase your product. You
-              can select more than one from each section to let Sellers know
-              that you would be satisfied with either specification.
+              Do you want your product a certain way? Set the specifications
+              here by selecting at least one from each section.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -247,10 +240,10 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 </div>
               ))}
             </Hidden>
-            <Visible xs sm >
+            <Visible xs sm>
               <SpecsContainer>
                 {getFilteredSpecifications().map((group, index) => (
-                  <div style={{ marginBottom: "32px" }}>
+                  <div key={`spec-${index}`} style={{ marginBottom: '32px' }}>
                     <Typography
                       variant="overline"
                       color="shade6"
@@ -260,7 +253,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                     </Typography>
 
                     <CheckboxGroupContainer>
-                      {group.map((item) => (
+                      {group?.map((item) => (
                         <CheckboxContainer>
                           <Checkbox
                             checked={
@@ -272,7 +265,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                             onClick={() => handleStateCheck(item)}
                             key={item.value}
                             label={item.label}
-                            style={{ margin: "0px 16px 0px 0px" }}
+                            style={{ margin: '0px 16px 0px 0px' }}
                             borderColor={theme.grey.shade6}
                           />
                         </CheckboxContainer>
@@ -304,12 +297,14 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 text="Proceed"
                 variant="primary"
                 takeFullWidth
-                icon={<ChevronRight
-                  width={14}
-                  height={12}
-                  fill="white"
-                  style={{ paddingBottom: '2px' }}
-                />}
+                icon={
+                  <ChevronRight
+                    width={14}
+                    height={12}
+                    fill="white"
+                    style={{ paddingBottom: '2px' }}
+                  />
+                }
               />
             </MobileFooter>
           </SpecificationFormContainer>

@@ -6,11 +6,18 @@ import { AnimationPlayerProps } from './AnimationPlayer.props';
 import { Container } from './AnimationPlayer.style';
 
 const AnimationPlayer = (props: AnimationPlayerProps): JSX.Element => {
-  const { image, style, ...playerProps } = props;
+  const { src, style, ...playerProps } = props;
 
   return (
-    <Container>
-      <Player autoplay loop src={image} style={style} {...playerProps} />
+    <Container id="---CONTAINER" style={style}>
+      <Player
+        id="---Player"
+        autoplay
+        loop
+        src={src}
+        style={style}
+        {...playerProps}
+      />
     </Container>
   );
 };

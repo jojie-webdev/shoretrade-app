@@ -1,18 +1,19 @@
 import Interactions from 'components/base/Interactions';
-import styled from 'utils/styled';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import styled from 'utils/styled';
 
 export const CategoryInteractionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
 `;
 
 export const CategoryInterAction = styled(Interactions)`
   margin-bottom: 12px;
 
   @media ${BREAKPOINTS['sm']} {
-      border-radius: 12px;
-    }
+    border-radius: 12px;
+  }
 `;
 
 export const EmptyContainer = styled.div`
@@ -63,4 +64,14 @@ export const NoResultMessage = styled.div`
   align-items: center;
   display: flex;
   margin-top: 10px;
-`
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-top: 0px;
+  }
+`;
