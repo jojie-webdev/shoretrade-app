@@ -17,7 +17,9 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { notifResourceToURLMapper } from 'utils/Notification';
@@ -112,6 +114,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
   const {
     type,
+    name,
     isRead,
     content,
     date,
@@ -128,6 +131,9 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     theme.appType === 'buyer'
       ? BUYER_ROUTES.NOTIFICATIONS
       : SELLER_ROUTES.NOTIFICATIONS;
+  const isMobile = useMediaQuery({
+    query: BREAKPOINTS.sm,
+  });
 
   const NotifAvatar = (props: NotifAvatarProps) => {
     let icon: JSX.Element;
@@ -164,6 +170,13 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     return <NotifAvatarContainer>{icon}</NotifAvatarContainer>;
   };
 
+  const measuredTextContent = () => {
+    // if (isMobile) {
+    //   return ellipsisOnOverflow(content, 50);
+    // }
+    return !fullView ? ellipsisOnOverflow(content, 70) : content;
+  };
+
   return (
     <Container
       onClick={(e) => {
@@ -181,13 +194,13 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
           color={isRead ? 'shade7' : 'primary'}
           variant="overlineSmall"
         >
-          {type}
+          {name}
         </Typography>
         <Typography color={defaultColor} variant="body">
-          {!fullView ? ellipsisOnOverflow(content, 70) : content}
+          {measuredTextContent()}
         </Typography>
         <Typography color="shade6" variant="caption">
-          {moment(date).format('YYYY-MM-DD')}
+          {moment(date).format('MM/DD/YYYY - HH:mm')}
         </Typography>
       </div>
       <RightComponentContainer>
