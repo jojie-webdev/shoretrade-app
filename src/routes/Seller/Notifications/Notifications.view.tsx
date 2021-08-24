@@ -56,6 +56,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
             content={nd.description}
             date={nd.created_at}
             isRead={nd.read_at != null}
+            name={nd.name}
           />
         ))}
       {notifsData.length < 1 && (
