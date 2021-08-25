@@ -59,7 +59,7 @@ function* getAllBuyerListingsCSV(action: any) {
         all: action.payload?.all,
         exceptId: action?.payload?.exceptId,
       });
-      downloadCsv(data, `All listing.csv`);
+      downloadCsv(data, `All listings.csv`);
       yield put(getAllBuyerListingsActions.requestCsvSuccess());
     } catch (e) {
       yield put(getAllBuyerListingsActions.failed(e.message));

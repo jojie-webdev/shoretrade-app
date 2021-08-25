@@ -102,7 +102,7 @@ const ROUTES: Routes = {
   LISTING: {
     path: BUYER_ROUTES.ALL_LISTING,
     children: <Listings />,
-    title: 'All Listing',
+    title: 'All Listings',
     icon: ListingIcon,
   },
   ACCOUNT: {
