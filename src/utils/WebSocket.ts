@@ -30,7 +30,26 @@ const createSocketMiddleware = () => {
               ? userData.data.user.companies[0].id
               : '';
             socket.emit('join', companyId);
+            console.log('SOCKET: EMIT JOIN');
           }
+        } else {
+          socket.removeAllListeners('UPDATE_REMAINING_BOXES');
+
+          socket.on('connect_error', () => {
+            setTimeout(() => {
+              console.log('SOCKET: CONNECT_ERROR');
+              socket.connect();
+            }, 1000);
+          });
+
+          socket.on('disconnect', (reason: any) => {
+            if (reason === 'io server disconnect') {
+              console.log('SOCKET: SERVER DISCONNECT');
+              // the disconnection was initiated by the server, you need to reconnect manually
+              socket.connect();
+            }
+            // else the socket will automatically try to reconnect
+          });
         }
         break;
       }
@@ -40,10 +59,12 @@ const createSocketMiddleware = () => {
           ? action.payload.data.user.companies[0].id
           : '';
         socket.emit('join', companyId);
+        console.log('SOCKET: EMIT JOIN');
 
         // NEW_CREDIT
         socket.on('NEW_CREDIT', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log('SOCKET: ON - NEW_CREDIT ' + message);
           storeAPI.dispatch({
             type: socketCreditActions.HANDLE_EVENT,
             payload: message,
@@ -56,6 +77,9 @@ const createSocketMiddleware = () => {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log(
+            'SOCKET: ON - UPDATE_REMAINING_BOXES ' + message.remaining
+          );
           storeAPI.dispatch({
             type: socketHomePageActions.HANDLE_EVENT,
             payload: message,
@@ -67,6 +91,9 @@ const createSocketMiddleware = () => {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log(
+            'SOCKET: ON - UPDATE_REMAINING_BOXES ' + message.remaining
+          );
           storeAPI.dispatch({
             type: socketGetAllListingsActions.HANDLE_EVENT,
             payload: message,
@@ -78,6 +105,9 @@ const createSocketMiddleware = () => {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log(
+            'SOCKET: ON - UPDATE_REMAINING_BOXES ' + message.remaining
+          );
           storeAPI.dispatch({
             type: socketGetListingActions.HANDLE_EVENT,
             payload: message,
@@ -85,10 +115,13 @@ const createSocketMiddleware = () => {
         });
         break;
       }
-      case getListingsByTypeActions.REQUEST: {
+      case getListingsByTypeActions.SUCCESS: {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log(
+            'SOCKET: ON - UPDATE_REMAINING_BOXES ' + message.remaining
+          );
           storeAPI.dispatch({
             type: sockgetGetListingsByTypeActions.HANDLE_EVENT,
             payload: message,
@@ -100,6 +133,9 @@ const createSocketMiddleware = () => {
         // UPDATE_REMAINING_BOXES
         socket.on('UPDATE_REMAINING_BOXES', (message: any) => {
           // dispatch action watched by sagas ?
+          console.log(
+            'SOCKET: ON - UPDATE_REMAINING_BOXES ' + message.remaining
+          );
           storeAPI.dispatch({
             type: socketAllBuyerListingsActions.HANDLE_EVENT,
             payload: message,

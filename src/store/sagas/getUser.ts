@@ -88,7 +88,7 @@ function* handleSocketEvent(
         getUser
       );
 
-      yield put(getUserActions.success(modifiedGetUser));
+      yield put(getUserActions.patch(modifiedGetUser));
     }
   } catch (err) {
     console.log(err);

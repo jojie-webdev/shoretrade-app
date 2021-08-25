@@ -119,7 +119,7 @@ function* handleSocketEvent(
         homeState
       );
 
-      yield put(getBuyerHomepageActions.success(modifiedHomePageData));
+      yield put(getBuyerHomepageActions.patch(modifiedHomePageData));
     }
   } catch (err) {
     console.log(err);

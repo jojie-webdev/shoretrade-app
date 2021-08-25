@@ -81,7 +81,6 @@ function* handleSocketEvent(
   } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
   let idx = -1;
 
-  console.log(allListingState);
   try {
     if (allListingState && allListingState.data) {
       const ordersLens = lensPath(['data', 'listings']);
@@ -114,7 +113,7 @@ function* handleSocketEvent(
           allListingState
         );
         if (allListingState) {
-          yield put(getAllBuyerListingsActions.success(modifiedAllListing));
+          yield put(getAllBuyerListingsActions.patch(modifiedAllListing));
         }
       }
     }
