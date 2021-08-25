@@ -69,7 +69,7 @@ function* handleSocketEvent(
           getListingData
         );
         if (getListingData) {
-          yield put(getListingActions.success(modifiedLstingData));
+          yield put(getListingActions.patch(modifiedLstingData));
         }
       }
     }

@@ -76,7 +76,7 @@ function* handleSocketEvent(
           allListingState
         );
         if (allListingState) {
-          yield put(getAllListingsActions.success(modifiedAllListing));
+          yield put(getAllListingsActions.patch(modifiedAllListing));
         }
       }
     }

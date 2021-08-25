@@ -35,6 +35,7 @@ export const createAsyncAction = <Meta = any, Payload = any>(
   namespace: string
 ) => {
   const requestType = `${namespace}/REQUEST`;
+  const patchType = `${namespace}/PATCH`;
   const successType = `${namespace}/SUCCESS`;
   const failedType = `${namespace}/FAILED`;
   const clearType = `${namespace}/CLEAR`;
@@ -47,6 +48,10 @@ export const createAsyncAction = <Meta = any, Payload = any>(
       type: successType,
       payload,
     }),
+    patch: (payload: Payload) => ({
+      type: patchType,
+      payload,
+    }),
     failed: (error: string) => ({
       type: failedType,
       error,
@@ -55,6 +60,7 @@ export const createAsyncAction = <Meta = any, Payload = any>(
       type: clearType,
     }),
     REQUEST: requestType,
+    PATCH: patchType,
     SUCCESS: successType,
     FAILED: failedType,
     CLEAR: clearType,
@@ -63,12 +69,13 @@ export const createAsyncAction = <Meta = any, Payload = any>(
 type AsyncActionTypes = {
   REQUEST: string;
   SUCCESS: string;
+  PATCH: string;
   FAILED: string;
   CLEAR: string;
 };
 
 export const createAsyncReducer = <Meta = any, Payload = any>(
-  { REQUEST, SUCCESS, FAILED, CLEAR }: AsyncActionTypes,
+  { REQUEST, SUCCESS, FAILED, CLEAR, PATCH }: AsyncActionTypes,
   customEventsHandler?: (
     state: AsyncState<Meta, Payload>,
     action: AsyncAction<Meta, Payload>,
@@ -93,6 +100,11 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
         request: pathOr(null, ['meta'], action),
       },
       [SUCCESS]: {
+        ...state,
+        pending: false,
+        data: pathOr(null, ['payload'], action),
+      },
+      [PATCH]: {
         ...state,
         pending: false,
         data: pathOr(null, ['payload'], action),

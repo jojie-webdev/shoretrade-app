@@ -86,7 +86,7 @@ function* handleSocketEvent(
           listingsByTypeData
         );
         if (listingsByTypeData) {
-          yield put(getListingsByTypeActions.success(modifiedAllListing));
+          yield put(getListingsByTypeActions.patch(modifiedAllListing));
         }
       }
     }
