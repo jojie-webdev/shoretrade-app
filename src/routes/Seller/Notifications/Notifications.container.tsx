@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
+import { SELLER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   deleteNotificationActions,
   readNotificationActions,
 } from 'store/actions';
+import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
+import { notifURLMapper } from 'utils/Notification';
 
 import NotificationsView from './Notifications.view';
-import { NotificationType } from 'types/store/GetNotificationsState';
-import { notifResourceToURLMapper } from 'utils/Notification';
-import { useHistory } from 'react-router-dom';
 
 const Notifications = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -43,11 +44,17 @@ const Notifications = (): JSX.Element => {
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
 
+  const handleSelectTab = (key: number) => {
+    history.push(`${SELLER_ROUTES.NOTIFICATIONS}?tab=${tabItems[key].title}`);
+    setActiveTab(key);
+  };
+
   const handleNotifOnClick = (
     resource: NotificationType,
-    appType: 'seller' | 'buyer'
+    appType: 'seller' | 'buyer',
+    name?: NotifName
   ) => {
-    const url = notifResourceToURLMapper(resource, appType);
+    const url = notifURLMapper(resource, appType, name);
     if (url != '') {
       history.push(url);
     }
@@ -56,7 +63,7 @@ const Notifications = (): JSX.Element => {
   const generatedProps = {
     tabItems,
     activeTab,
-    setActiveTab,
+    handleSelectTab,
     notifsData,
     totalUnreadNotifs,
     totalNotifs,

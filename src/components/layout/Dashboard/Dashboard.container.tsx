@@ -15,9 +15,9 @@ import {
   readNotificationActions,
   socketCreditActions,
 } from 'store/actions';
-import { NotificationType } from 'types/store/GetNotificationsState';
+import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
-import { notifResourceToURLMapper } from 'utils/Notification';
+import { notifURLMapper } from 'utils/Notification';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -121,9 +121,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const handleNotifOnClick = (
     resource: NotificationType,
-    appType: 'seller' | 'buyer'
+    appType: 'seller' | 'buyer',
+    name?: NotifName
   ) => {
-    const url = notifResourceToURLMapper(resource, appType);
+    const url = notifURLMapper(resource, appType, name);
     if (url != '') {
       history.push(url);
     }

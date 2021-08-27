@@ -6,16 +6,20 @@ export type NotificationType =
   | 'account'
   | 'inactivity'
   | 'ordering'
-  | 'market-requests'
   | 'listings'
+  | 'market_requests'
+  | 'market_board'
   | 'cart'
-  | 'rating-favourite'
+  | 'orders'
+  | 'rating_favourite'
   | 'aquafutures';
+
+export type NotifName = 'Credit Added' | 'Order Placed';
 
 export type NotificationItemResponse = {
   resource: NotificationType;
   id: string;
-  name: string;
+  name: NotifName;
   description: string;
   isRead: boolean;
   content: string;

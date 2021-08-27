@@ -4,11 +4,12 @@ import { TabItem } from 'components/base/Tab/Tab.props';
 import {
   NotificationItemResponse,
   NotificationType,
+  NotifName,
 } from 'types/store/GetNotificationsState';
 
 export interface NotificationsGeneratedProps {
   tabItems: TabItem[];
-  setActiveTab: Dispatch<SetStateAction<number>>;
+  handleSelectTab: (key: number) => void;
   activeTab: number;
   notifsData: NotificationItemResponse[];
   totalNotifs: number;
@@ -17,6 +18,7 @@ export interface NotificationsGeneratedProps {
   handleOnDelete: (notificationId: string) => void;
   handleNotifOnClick: (
     resource: NotificationType,
-    appType: 'buyer' | 'seller'
+    appType: 'buyer' | 'seller',
+    name?: NotifName
   ) => void;
 }

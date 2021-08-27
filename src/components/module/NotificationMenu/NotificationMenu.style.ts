@@ -81,7 +81,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
           }
         }
         .menu-body {
-          max-height: 400px;
+          max-height: 484px;
           min-height: 72px;
           background: ${({ theme }) =>
             theme.appType === 'buyer'
@@ -94,6 +94,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
           .menu-content {
             display: flex;
             padding: 24px;
+            padding-bottom: 48px;
             flex-direction: column;
             background: ${({ theme }) =>
               theme.appType === 'buyer'

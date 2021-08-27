@@ -9,7 +9,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import { NotificationType } from 'types/store/GetNotificationsState';
+import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { useTheme } from 'utils/Theme';
 
@@ -60,9 +60,10 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
 
   const onNotifClick = (
     resource: NotificationType,
-    appType: 'buyer' | 'seller'
+    appType: 'buyer' | 'seller',
+    name?: NotifName
   ) => {
-    handleNotifOnClick(resource, appType);
+    handleNotifOnClick(resource, appType, name);
     setIsComponentVisible(!isComponentVisible);
   };
 
@@ -77,7 +78,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
 
   const handleOnClickSeeAll = () => {
     setIsComponentVisible(false);
-    history.push(notifsRoute);
+    history.push(notifsRoute + '?tab=Unread');
   };
 
   return (
@@ -108,11 +109,12 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     }
                     return null;
                   })
+                  .slice(0, 3)
                   .map((nd) => (
                     <DropdownItemContainer key={nd.id}>
                       <NotificationItem
                         handleNotifOnClick={() =>
-                          onNotifClick(nd.resource, theme.appType)
+                          onNotifClick(nd.resource, theme.appType, nd.name)
                         }
                         onDelete={() => handleOnDelete(nd.id)}
                         onMarkasRead={() => handleMarkasRead(nd.id)}

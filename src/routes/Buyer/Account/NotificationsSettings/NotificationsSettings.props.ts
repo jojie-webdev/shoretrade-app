@@ -10,6 +10,7 @@ export interface NotificationsSettingsProps {
     mobile: boolean;
     push: boolean;
     email: boolean;
+    whatsapp: boolean;
   };
   email: string;
   contactNo: string;
