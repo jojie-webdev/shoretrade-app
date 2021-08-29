@@ -177,9 +177,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     dispatch(getNotificationsActions.request());
   }, []);
 
-  useEffect(() => {
-    dispatch(getUserActions.request());
-  }, [buyerRequests.data?.data.marketRequests]);
+  // useEffect(() => {
+  //   dispatch(getUserActions.request());
+  // }, [buyerRequests.data?.data.marketRequests]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

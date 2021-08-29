@@ -9,7 +9,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
       ? '12px'
       : props.theme.appType === 'buyer'
         ? '4px'
-        : '100px'};
+        : '12px'};
   width: 100%;
   padding: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
