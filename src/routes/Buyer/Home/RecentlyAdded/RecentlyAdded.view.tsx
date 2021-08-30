@@ -15,6 +15,8 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';
 import { PreviewContainer, StyledInteraction } from './RecentlyAdded.style';
+import EmptyState from 'components/module/EmptyState';
+import { Octopus } from 'components/base/SVG';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   const {
@@ -25,6 +27,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     searchValue,
     isLoadingResults,
   } = props;
+
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -108,6 +111,15 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
           </Row>
         </>
       ) : null}
+
+      {!isLoadingResults && !!searchValue.length && !results.length && (
+        <EmptyState
+          Svg={Octopus}
+          buttonText="Reset Search"
+          onButtonClicked={onResetSearchValue}
+          title="No search result"
+        />
+      )}
     </PreviewContainer>
   );
 };
