@@ -32,6 +32,19 @@ export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
 
   .content-container {
     margin-right: 10px;
+
+    .content {
+      display: inline;
+    }
+
+    .see-more-link-text {
+      font-style: italic;
+      display: inline;
+
+      :hover {
+        text-decoration: underline;
+      }
+    }
   }
 `;
 
