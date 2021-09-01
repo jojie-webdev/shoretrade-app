@@ -12,6 +12,7 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import EmptyState from 'components/module/EmptyState';
 
 import { SellerLandingGeneratedProps } from './SellerLanding.props';
 import {
@@ -85,6 +86,10 @@ const SellerLanding = (props: SellerLandingGeneratedProps) => {
           )}
         </SellerContainer>
       ) : null}
+
+      {!results.length && (
+        <EmptyState Svg={PlaceholderProfile} title="No results were found." />
+      )}
     </PreviewContainer>
   );
 };

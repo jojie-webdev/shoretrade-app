@@ -46,11 +46,11 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     undefined
   );
 
-  const handleCheck = () => {
-    if (setCloseOnAccept) {
-      setCloseOnAccept(!closeOnAccept);
-    }
-  };
+  // const handleCheck = () => {
+  //   if (setCloseOnAccept) {
+  //     setCloseOnAccept(!closeOnAccept);
+  //   }
+  // };
 
   const initialPrice = newOffer ? parseFloat(newOffer) : originalOffer;
   const updatedPrice = negotiationPrice || initialPrice;
@@ -114,7 +114,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             placeholder={unit}
           />
         </Inputs>
-        <CheckBoxContainer>
+        {/* <CheckBoxContainer>
           <Checkbox
             onClick={() => handleCheck()}
             className="checkbox"
@@ -128,7 +128,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
           >
             Close this buyer request if accepted.
           </Typography>
-        </CheckBoxContainer>
+        </CheckBoxContainer> */}
         <ComputationContainer>
           <div className="computation-item-container">
             <Typography variant="body" color="shade7">

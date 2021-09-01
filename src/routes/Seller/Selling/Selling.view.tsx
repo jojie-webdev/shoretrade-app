@@ -330,11 +330,11 @@ const NoSelling = () => {
           <div className="circle" />
           <div className="text-container">
             <Typography variant="copy" weight="bold" color="noshade">
-              Add your Product to the Market
+              Customise your products and list them
             </Typography>
             <Typography variant="copy" weight="regular" color="shade6">
-              Let your products be reached by 10.000+ ShoreTrade users. Start
-              adding a Product.
+              Follow the steps and sell your products to the thousands of Buyers
+              on ShoreTrade.
             </Typography>
           </div>
         </div>
@@ -342,11 +342,11 @@ const NoSelling = () => {
           <div className="circle" />
           <div className="text-container">
             <Typography variant="copy" weight="bold" color="noshade">
-              Customize your Selling
+              Make changes in real time
             </Typography>
             <Typography variant="copy" weight="regular" color="shade6">
-              Select Specifications, Size, Price and sell your Product to the
-              Market
+              Edit your listings easily, with changes instantly reflected to
+              Buyers.
             </Typography>
           </div>
         </div>
@@ -354,11 +354,11 @@ const NoSelling = () => {
           <div className="circle" />
           <div className="text-container">
             <Typography variant="copy" weight="bold" color="noshade">
-              Manage Buyer Requests
+              Get notified for new sales
             </Typography>
             <Typography variant="copy" weight="regular" color="shade6">
-              Check, Manage and Negotiate Requests from buyers, and prepare your
-              product to be delivered
+              Ensure your notifications for new orders are enabled to pack the
+              products sooner.
             </Typography>
           </div>
         </div>

@@ -22,7 +22,6 @@ export const CCImage = styled.div`
 
 export const CCNumRow = styled.div`
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 `;

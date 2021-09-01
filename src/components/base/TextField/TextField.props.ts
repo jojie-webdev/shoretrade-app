@@ -23,4 +23,6 @@ export interface TextFieldProps
     | 'numeric'
     | 'decimal'
     | 'search';
+  borderRadius?: string;
+  maxLength?: number;
 }

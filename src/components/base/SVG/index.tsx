@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as WhatsApp } from './WhatsApp';
 export { default as MarketRequests } from './MarketRequests';
 export { default as DashboardAlt } from './DashboardAlt';
 export { default as Anchor } from './Anchor';
@@ -64,6 +65,7 @@ export { default as MarketSectorHotel } from './MarketSectorHotel';
 export { default as Clock } from './Clock';
 export { default as Paypal } from './Paypal';
 export { default as Zippay } from './Zippay';
+export { default as ATMCard } from './ATMCard';
 export { default as Mastercard } from './Mastercard';
 export { default as Visa } from './Visa';
 export { default as RoundedTickInactive } from './RoundedTickInactive';

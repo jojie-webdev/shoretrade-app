@@ -67,6 +67,8 @@ export const MarketRequestItemNonMobile = (props: {
   image: string;
   inDetail: boolean;
   activeOffersData: GetActiveOffersRequestResponseItem[];
+  metric: string;
+  paymentRequired: boolean;
   weight?: { from: number; to: number };
   measurementUnit?: string;
   setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
@@ -89,6 +91,8 @@ export const MarketRequestItemNonMobile = (props: {
     size,
     setItemToDelete,
     activeOffersData,
+    metric,
+    paymentRequired,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -115,16 +119,6 @@ export const MarketRequestItemNonMobile = (props: {
     return {} as Offer;
   };
 
-  const hasSize = () => {
-    const _hasSize = sizeToString(
-      getOfferById()?.metric,
-      size?.from?.toString(),
-      size?.to?.toString()
-    );
-
-    return _hasSize;
-  };
-
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
@@ -136,11 +130,11 @@ export const MarketRequestItemNonMobile = (props: {
           <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
         </div>
         <div className="sub-group">
-          {hasSize() && (
-            <SubText variant="caption">{`Size: ${sizeToString(
-              getOfferById()?.metric,
-              size?.from?.toString(),
-              size?.to?.toString()
+          {buildSize(metric, size?.to?.toString(), size?.from?.toString()) && (
+            <SubText variant="caption">{`Size: ${buildSize(
+              metric,
+              size?.to?.toString(),
+              size?.from?.toString()
             )}`}</SubText>
           )}
           <SubText variant="caption">
@@ -164,7 +158,9 @@ export const MarketRequestItemNonMobile = (props: {
           </div>
           <div className="sub-group">
             <SubText variant="small">
-              {offerStatusBadge(inDetail, offers, offerStatus)}
+              {paymentRequired
+                ? renderPaymentRequiredBadge()
+                : offerStatusBadge(inDetail, offers, offerStatus)}
             </SubText>
           </div>
         </BadgesContainer>
@@ -195,6 +191,8 @@ export const MarketRequestItemMobile = (props: {
   type: string;
   image: string;
   inDetail: boolean;
+  metric: string;
+  paymentRequired: boolean;
   weight?: { from: number; to: number };
   measurementUnit?: string;
   specs?: string;
@@ -211,7 +209,9 @@ export const MarketRequestItemMobile = (props: {
     weight,
     specs,
     size,
+    metric,
     offerStatus,
+    paymentRequired,
   } = props;
 
   const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
@@ -259,7 +259,9 @@ export const MarketRequestItemMobile = (props: {
     return (
       <Badges>
         {offersMarkup()}
-        {offerStatusBadge(inDetail, offers, offerStatus)}
+        {paymentRequired
+          ? renderPaymentRequiredBadge()
+          : offerStatusBadge(inDetail, offers, offerStatus)}
       </Badges>
     );
   };
@@ -298,7 +300,7 @@ export const MarketRequestItemMobile = (props: {
           <SubMinorDetail>
             {subMinorDetail(
               'Size',
-              (Array.isArray(size?.options) && size?.options?.join(', ')) ||
+              buildSize(metric, size?.to?.toString(), size?.from?.toString()) ||
                 'None'
             )}
           </SubMinorDetail>
@@ -309,6 +311,14 @@ export const MarketRequestItemMobile = (props: {
     </MarketRequestItemMobileContainer>
   );
 };
+
+const renderPaymentRequiredBadge = () => (
+  <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
+    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
+      PAYMENT REQUIRED
+    </BadgeText>
+  </Badge>
+);
 
 const offerStatusBadge = (
   inDetail: boolean,
@@ -746,5 +756,19 @@ const MarketRequestsLandingView = (
     </MarketRequestsContainer>
   );
 };
+
+function buildSize(
+  metric: string,
+  sizeFrom: string | undefined,
+  sizeTo: string | undefined
+) {
+  const _buildSize = sizeToString(
+    metric,
+    sizeFrom?.toString(),
+    sizeTo?.toString()
+  );
+
+  return _buildSize;
+}
 
 export default MarketRequestsLandingView;

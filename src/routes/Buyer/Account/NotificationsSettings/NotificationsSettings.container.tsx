@@ -26,7 +26,6 @@ import {
   toUpdateSettingItem,
 } from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
-import { userInfo } from 'os';
 
 const NotificationsSettings = (): JSX.Element => {
   // TODO Setup redux for container
@@ -36,7 +35,7 @@ const NotificationsSettings = (): JSX.Element => {
   const [companyId, setCompanyId] = useState('');
   const [updateTriggered, setUpdateTriggered] = useState<null | any>(null);
   const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
-    null | 'mobile' | 'push' | 'email'
+    null | 'mobile' | 'push' | 'email' | 'whatsapp'
   >(null);
   const [globalSettings, setGlobalSettings] = useState<
     GlobalNotificationsSettingsResponse
@@ -44,6 +43,7 @@ const NotificationsSettings = (): JSX.Element => {
     push: false,
     mobile: false,
     email: false,
+    whatsapp: false,
   });
   const [customSettings, setCustomSettings] = useState<
     SpecificNotificationSettingItem[]
@@ -88,7 +88,9 @@ const NotificationsSettings = (): JSX.Element => {
     dispatch(updateNotificationSettingsActions.request(val));
   };
 
-  const handleOnSaveGlobal = (key: 'email' | 'mobile' | 'push') => {
+  const handleOnSaveGlobal = (
+    key: 'email' | 'mobile' | 'push' | 'whatsapp'
+  ) => {
     dispatch(
       updateNotificationSettingsActions.request({
         global: { [key]: globalSettings[key] },
@@ -97,7 +99,12 @@ const NotificationsSettings = (): JSX.Element => {
   };
 
   const handleGlobalToggle = (key: string) => {
-    if (key === 'mobile' || key === 'email' || key === 'push') {
+    if (
+      key === 'mobile' ||
+      key === 'email' ||
+      key === 'push' ||
+      key === 'whatsapp'
+    ) {
       setGlobalSettings({
         ...globalSettings,
         [key]: !globalSettings[key],

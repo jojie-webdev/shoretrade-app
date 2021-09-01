@@ -1,5 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
+import { Offer } from './GetActiveOffersState';
+
 export type GetAllMarketRequestMeta = {
   queryParams?: string;
 };
@@ -12,13 +14,14 @@ export type GetAllMarketRequestResponseItem = {
   image: string;
   status: string;
   shippingTo: ShippingTo;
-  offers: string;
+  offers: Offer[];
   size: {
     from: string;
     options: any;
     to: string;
     ungraded: boolean;
   };
+  paymentRequired: boolean;
   sizeFrom?: number;
   sizeTo?: number;
   sizeUngraded: boolean;

@@ -4,17 +4,19 @@ import { Crab } from 'components/base/SVG';
 import Tab from 'components/base/Tab';
 import EmptyStateView from 'components/module/EmptyState';
 import NotificationItemView from 'components/module/NotificationItem';
+import { useHistory } from 'react-router-dom';
+import { NotificationType } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsGeneratedProps } from './Notifications.props';
 import { Container } from './Notifications.style';
-import { NotificationType } from 'types/store/GetNotificationsState';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
   const {
     tabItems,
-    setActiveTab,
+    handleSelectTab,
     activeTab,
     notifsData,
     totalNotifs,
@@ -30,7 +32,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
       <Tab
         active={activeTab}
         items={tabItems}
-        handleSelect={(i) => setActiveTab(i)}
+        handleSelect={(i) => handleSelectTab(i)}
       ></Tab>
       {notifsData
         .filter((nd) => {
@@ -46,7 +48,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         .map((nd) => (
           <NotificationItemView
             handleNotifOnClick={() =>
-              handleNotifOnClick(nd.resource, theme.appType)
+              handleNotifOnClick(nd.resource, theme.appType, nd.name)
             }
             key={nd.id}
             fullView

@@ -46,6 +46,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     onKeyDown,
     disabled,
     inputType,
+    maxLength,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -68,6 +69,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
       <FieldContainer
         error={(error || '').length > 0}
         readOnly={props.readOnly}
+        borderRadius={props.borderRadius}
       >
         {LeftComponent && (
           <LeftComponentContainer disabled={disabled}>
@@ -90,6 +92,8 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           onKeyDown={onKeyDown}
           disabled={disabled}
           min={props.min}
+          borderRadius={props.borderRadius}
+          maxLength={maxLength}
         />
         {RightComponent && (
           <RightComponentContainer>{RightComponent}</RightComponentContainer>

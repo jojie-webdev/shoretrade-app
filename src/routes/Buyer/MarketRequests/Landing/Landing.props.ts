@@ -9,13 +9,15 @@ export type Result = {
   offerStatus: any;
   image: string;
   expiry: string;
+  metric: string;
+  paymentRequired: boolean;
   weight?: {
     from: number;
     to: number;
   };
   measurementUnit?: string;
   specs?: string;
-  size?: { from: number; to: number; options: any; ungraded: boolean }
+  size?: { from: number; to: number; options: any; ungraded: boolean };
 };
 
 export interface MarketRequestsLandingGeneratedProps {

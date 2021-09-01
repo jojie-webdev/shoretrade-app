@@ -22,7 +22,7 @@ import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
-import { notifResourceToURLMapper } from 'utils/Notification';
+import { notifURLMapper } from 'utils/Notification';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
@@ -149,13 +149,19 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       case 'inactivity':
         icon = <Account {...defaulAvatarProps} />;
         break;
-      case 'market-requests':
+      case 'market_requests':
+        icon = <MarketRequests {...defaulAvatarProps} />;
+        break;
+      case 'market_board':
         icon = <MarketRequests {...defaulAvatarProps} />;
         break;
       case 'ordering':
         icon = <Orders {...defaulAvatarProps} />;
         break;
-      case 'rating-favourite':
+      case 'orders':
+        icon = <Orders {...defaulAvatarProps} />;
+        break;
+      case 'rating_favourite':
         icon = <Star {...defaulAvatarProps} />;
         break;
       case 'aquafutures':
@@ -181,6 +187,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     <Container
       onClick={(e) => {
         e.stopPropagation();
+        onMarkasRead();
         handleNotifOnClick();
       }}
       isRead={isRead}

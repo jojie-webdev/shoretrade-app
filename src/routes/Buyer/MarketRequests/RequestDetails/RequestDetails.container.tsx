@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
-import { sortBy } from 'ramda';
+import { groupBy, sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import {
+  serviceNameToDeliveryOption,
+  shipmentModeToDeliveryMethod,
+} from 'routes/Buyer/Checkout/Checkout.transform';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import {
   deleteMarketRequestActions,
@@ -13,10 +17,18 @@ import {
   getMarketRequestBuyerFiltersActions,
   marketRequestAcceptOfferActions,
   deleteMarketRequestOfferActions,
+  cartActions,
+  orderActions,
+  marketOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
+import { OrderCartItem, OrderShipping } from 'types/store/AddCardAndPayState';
+import { CartItem } from 'types/store/CartState';
 import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
+import { AcceptOfferItem } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
+import { createUpdateReducer } from 'utils/Hooks';
+import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
 import {
   getFavouriteSellers,
@@ -25,6 +37,7 @@ import {
   requestToModalFilter,
 } from './RequestDetails.transform';
 import MarketRequestDetailView from './RequestDetails.view';
+import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 
 const MarketRequestDetail = (): JSX.Element => {
   const location = useLocation();
@@ -107,9 +120,22 @@ const MarketRequestDetail = (): JSX.Element => {
   //filters
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
+  const [showPaymentMethod, setShowPaymentMethod] = useState(false);
 
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
+  );
+
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
+
+  const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
+    (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
+  );
+
+  const filteredBuyerRequest = filteredBuyerRequests?.find(
+    (filteredBuyerRequest) => filteredBuyerRequest.id === id
   );
 
   const onClickItem = (row: any, company: any) => {
@@ -124,16 +150,24 @@ const MarketRequestDetail = (): JSX.Element => {
   };
 
   const handleAcceptOffer = () => {
-    dispatch(
-      marketRequestAcceptOfferActions.request({
-        marketOfferId: currentOfferId || offerId,
-        marketRequestId: id,
-        marketNegotiationId:
-          selectedOffer?.negotiations?.reduce((a, b) =>
-            a.updated_at > b.updated_at ? a : b
-          ).id || undefined,
-      })
-    );
+    // history.push(BUYER_ROUTES.CHECKOUT);
+    setShowPaymentMethod(true);
+
+    const getMarketNegotiationId = () => {
+      if (!selectedOffer?.negotiations) {
+        return '';
+      }
+
+      return selectedOffer?.negotiations[0]?.id || '';
+    };
+
+    const payload: AcceptOfferItem = {
+      marketOfferId: selectedOffer?.id || '',
+      marketNegotiationId: getMarketNegotiationId(),
+      marketRequestId: filteredBuyerRequest?.id || '',
+    };
+
+    dispatch(marketOfferActions.add(payload));
   };
 
   const onClickDelete = () => {
@@ -164,7 +198,7 @@ const MarketRequestDetail = (): JSX.Element => {
           marketRequestId: id,
           marketOfferId: selectedOffer.id,
           price: counterOffer,
-          closeOnAccept: closeOnAccept,
+          // closeOnAccept: closeOnAccept,
         })
       );
     }
@@ -432,6 +466,26 @@ const MarketRequestDetail = (): JSX.Element => {
     setShowNotEnoughCreditAlert,
     onOfferDelete,
   };
+
+  const getPrice = () => {
+    if (!selectedOffer?.negotiations) {
+      return selectedOffer?.price || 0;
+    }
+
+    return selectedOffer?.negotiations[0]?.price || 0;
+  };
+
+  if (showPaymentMethod) {
+    return (
+      <PaymentMethod
+        totalValue={getPrice() * (selectedOffer?.weight || 0) || 0}
+        orderError={''}
+        selectedShipping={{}}
+        placeOrder={() => {}}
+        onBack={() => setShowPaymentMethod(false)}
+      />
+    );
+  }
 
   return <MarketRequestDetailView {...generatedProps} />;
 };

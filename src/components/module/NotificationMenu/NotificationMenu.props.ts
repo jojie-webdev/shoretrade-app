@@ -1,6 +1,7 @@
 import {
   NotificationItemResponse,
   NotificationType,
+  NotifName,
 } from 'types/store/GetNotificationsState';
 
 export interface NotificationMenuProps {
@@ -11,6 +12,7 @@ export interface NotificationMenuProps {
   handleOnDelete: (notificationId: string) => void;
   handleNotifOnClick: (
     resource: NotificationType,
-    appType: 'buyer' | 'seller'
+    appType: 'buyer' | 'seller',
+    name?: NotifName
   ) => void;
 }

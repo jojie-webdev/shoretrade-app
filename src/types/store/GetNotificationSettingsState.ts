@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+
 import { NotificationType } from './GetNotificationsState';
 
 export type GetNotificationsSettingsMeta = {
@@ -14,6 +15,7 @@ export type GlobalNotificationsSettingsResponse = {
   mobile: boolean; // Ex. 'Visa'
   push: boolean;
   email: boolean;
+  whatsapp: boolean;
 };
 
 export type SettingsToggleItem = {
@@ -30,6 +32,10 @@ export type SettingsToggleItem = {
     enabled: boolean;
   };
   inapp: {
+    supported: boolean;
+    enabled: boolean;
+  };
+  whatsapp: {
     supported: boolean;
     enabled: boolean;
   };
@@ -94,6 +100,10 @@ export type NotificationSettingItem = {
       supported: boolean;
       enabled: boolean;
     };
+    whatsapp: {
+      supported: boolean;
+      enabled: boolean;
+    };
   };
 };
 
@@ -110,6 +120,7 @@ export enum CustomSettingKey {
   PUSH = 'push',
   EMAIL = 'email',
   INAPP = 'inapp',
+  WHATSAPP = 'whatsapp',
 }
 
 // {

@@ -23,7 +23,12 @@ const InteractionCreditCard = (
           <CardName variant="overline" color="shade6">
             Credit Cards
           </CardName>
-          <CreditCard lastFour={props.lastFour} brand={props.brand} />
+          <CreditCard
+            lastFour={props.lastFour}
+            brand={props.brand}
+            expMonth={props.expMonth.toString() || ''}
+            expYear={props.expYear.toString() || ''}
+          />
         </LeftComponent>
       }
       rightComponent={

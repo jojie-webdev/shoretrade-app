@@ -113,7 +113,7 @@ export const BUYER_ROUTES = {
   SELLERS: `${BUYER_ROOT}/sellers`,
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
-  ALL_LISTING: `${BUYER_ROOT}/all-listing`,
+  ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
 };
 

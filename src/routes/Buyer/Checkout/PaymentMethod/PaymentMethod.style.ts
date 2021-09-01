@@ -1,5 +1,6 @@
 import InteractionCreditCard from 'components/module/InteractionCreditCard/InteractionCreditCard.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -239,4 +240,10 @@ export const CCImage = styled.div`
 export const CreditCardInteraction = styled(InteractionCreditCard)`
   max-height: 74px;
   margin-top: 12px;
+`;
+
+export const StyledTotalCardColumn = styled(Col)`
+  @media (max-width: 992px) {
+    margin-bottom: 40px;
+  }
 `;

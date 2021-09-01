@@ -15,6 +15,8 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
 import { PreviewContainer, StyledInteraction } from './Favourites.style';
+import EmptyState from 'components/module/EmptyState';
+import { Octopus } from 'components/base/SVG';
 
 const FavouritesView = (props: FavouritesGeneratedProps) => {
   const {
@@ -108,6 +110,15 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
           </Row>
         </>
       ) : null}
+
+      {!isLoadingResults && !!searchValue.length && !results.length && (
+        <EmptyState
+          Svg={Octopus}
+          buttonText="Reset Search"
+          onButtonClicked={onResetSearchValue}
+          title="No search result"
+        />
+      )}
     </PreviewContainer>
   );
 };

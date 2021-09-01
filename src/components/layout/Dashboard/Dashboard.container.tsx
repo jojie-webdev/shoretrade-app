@@ -10,14 +10,16 @@ import {
   cartActions,
   deleteNotificationActions,
   editableListingActions,
+  getCoopUsersActions,
   getNotificationsActions,
   logoutActions,
   readNotificationActions,
   socketCreditActions,
+  getUserActions,
 } from 'store/actions';
-import { NotificationType } from 'types/store/GetNotificationsState';
+import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
-import { notifResourceToURLMapper } from 'utils/Notification';
+import { notifURLMapper } from 'utils/Notification';
 import { useTheme } from 'utils/Theme';
 
 import {
@@ -25,6 +27,7 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
+
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();
@@ -57,6 +60,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -121,9 +127,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const handleNotifOnClick = (
     resource: NotificationType,
-    appType: 'seller' | 'buyer'
+    appType: 'seller' | 'buyer',
+    name?: NotifName
   ) => {
-    const url = notifResourceToURLMapper(resource, appType);
+    const url = notifURLMapper(resource, appType, name);
     if (url != '') {
       history.push(url);
     }
@@ -169,6 +176,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   useEffect(() => {
     dispatch(getNotificationsActions.request());
   }, []);
+
+  useEffect(() => {
+    dispatch(getUserActions.request());
+  }, [buyerRequests.data?.data.marketRequests]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

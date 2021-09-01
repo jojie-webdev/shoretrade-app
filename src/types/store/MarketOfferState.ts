@@ -14,6 +14,15 @@ export type MarketOfferItem = {
   type?: string;
   image?: string;
   measurementUnit?: string;
+  marketOfferId?: string;
+  marketNegotiationId?: string;
+  id?: string;
+};
+
+export type AcceptOfferItem = {
+  marketOfferId: string;
+  marketNegotiationId: string;
+  marketRequestId: string;
 };
 interface Size {
   from: string | null;
@@ -29,6 +38,17 @@ export interface AcceptOffer {
   marketOfferId: string;
   marketNegotiationId: string;
   marketRequestId: string;
+  cardToken?: string;
+  existingCard?: string;
+  card?: {
+    number: number;
+    exp_month: string;
+    exp_year: string;
+    cvc: number;
+    name: string;
+  };
+  default?: boolean;
+  paymentMode?: string;
 }
 
 export interface DeclineOffer {
@@ -40,10 +60,11 @@ export interface NegotiateOffer {
   marketOfferId: string;
   marketRequestId: string;
   price: number;
-  closeOnAccept: boolean;
+  closeOnAccept?: boolean;
 }
 
 export type OffersPayload = { marketOffers: MarketOfferItem[] };
 export type MarketOfferPayload = MarketOfferItem | { id: string };
-export type MarketOfferState = Record<string, MarketOfferItem>;
+export type AcceptOfferPayload = AcceptOfferItem | { id: string };
+export type MarketOfferState = Record<string, AcceptOfferItem>;
 export type NegotiationPayload = GenericResponse;

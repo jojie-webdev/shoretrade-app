@@ -7,6 +7,7 @@ export const Container = styled.div``;
 export const FieldContainer = styled.div<{
   error: boolean;
   readOnly?: boolean;
+  borderRadius?: string;
 }>`
   display: flex;
   flex-direction: row;
@@ -15,19 +16,23 @@ export const FieldContainer = styled.div<{
   width: 100%;
   height: 48px;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: ${({ borderRadius }) => borderRadius || '4px'};
   border: 1px solid
     ${({ theme, error }) => (error ? theme.brand.error : theme.grey.shade5)};
   background-color: ${({ readOnly, theme }) =>
     readOnly ? theme.grey.shade3 : theme.grey.noshade};
 `;
 
-export const Field = styled.input<{ disabled?: boolean; readOnly?: boolean }>`
+export const Field = styled.input<{
+  disabled?: boolean;
+  readOnly?: boolean;
+  borderRadius?: string;
+}>`
   background-color: ${({ readOnly, theme, disabled }) =>
     readOnly || disabled ? theme.grey.shade3 : theme.grey.noshade};
   display: flex;
   flex: 1;
-  border-radius: 4px;
+  border-radius: ${({ borderRadius }) => borderRadius || '4px'};
   padding: 12px 16px;
   border: 0;
   width: 100%;

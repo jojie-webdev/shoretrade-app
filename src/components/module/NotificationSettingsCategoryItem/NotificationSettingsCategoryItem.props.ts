@@ -12,7 +12,8 @@ export interface NotificationSettingsCategoryItemProps {
   mobile: CategoryStatus;
   push: CategoryStatus;
   email: CategoryStatus;
+  whatsapp: CategoryStatus;
   inapp: CategoryStatus;
-  onChange: (val: boolean, option: CustomSettingKey) => void;
   type: NotificationType | string;
+  onChange: (val: boolean, option: CustomSettingKey) => void;
 }

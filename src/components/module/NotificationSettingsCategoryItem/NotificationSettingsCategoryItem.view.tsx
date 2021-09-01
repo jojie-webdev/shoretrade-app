@@ -14,6 +14,7 @@ import {
   More,
   Orders,
   Star,
+  WhatsApp,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -36,7 +37,7 @@ const NotificationSettingsCategoryItem = (
 ): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { title, mobile, email, push, inapp, onChange, type } = props;
+  const { title, mobile, email, push, whatsapp, onChange, type } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -48,7 +49,10 @@ const NotificationSettingsCategoryItem = (
       height: 24,
       fill: theme.grey.shade7,
     };
-    const parsedType = type.toLocaleLowerCase();
+    const parsedType = type
+      .split(' ')
+      .map((m) => m.toLocaleLowerCase())
+      .join('_');
     switch (parsedType) {
       case 'account':
         icon = <Account {...defaulAvatarProps} />;
@@ -56,13 +60,19 @@ const NotificationSettingsCategoryItem = (
       case 'inactivity':
         icon = <Account {...defaulAvatarProps} />;
         break;
-      case 'market-requests':
+      case 'market_requests':
+        icon = <MarketRequests {...defaulAvatarProps} />;
+        break;
+      case 'market_board':
         icon = <MarketRequests {...defaulAvatarProps} />;
         break;
       case 'ordering':
         icon = <Orders {...defaulAvatarProps} />;
         break;
-      case 'rating-favourite':
+      case 'orders':
+        icon = <Orders {...defaulAvatarProps} />;
+        break;
+      case 'rating_favourite':
         icon = <Star {...defaulAvatarProps} />;
         break;
       case 'aquafutures':
@@ -172,6 +182,20 @@ const NotificationSettingsCategoryItem = (
             <CommentsAlt fill={iconColor} width={48} height={48} />
             <Typography color={defaultColor} variant="label">
               SMS
+            </Typography>
+          </CustomCheckBoxContainer>
+          <CustomCheckBoxContainer>
+            <StyledCheckbox
+              disabled={!whatsapp.supported}
+              onClick={() =>
+                onChange(!whatsapp.enabled, CustomSettingKey.WHATSAPP)
+              }
+              style={{ position: 'absolute', top: '12px', right: '12px' }}
+              checked={whatsapp.enabled}
+            />
+            <WhatsApp fill={iconColor} width={48} height={48} />
+            <Typography color={defaultColor} variant="label">
+              WhatsApp
             </Typography>
           </CustomCheckBoxContainer>
         </OptionsContainer>

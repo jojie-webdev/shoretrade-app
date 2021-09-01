@@ -15,6 +15,7 @@ import {
 import {
   CreateMarketOfferMeta,
   CreateMarketOfferPayload,
+  MarketOfferItem,
 } from 'types/store/CreateMarketOfferState';
 import {
   GetAccountCompletionMeta,
@@ -47,6 +48,7 @@ import {
   GetSellerLicenseMeta,
   GetSellerLicensePayload,
 } from 'types/store/GetSellerLicenseState';
+import { MarketOfferPayload } from 'types/store/MarketOfferState';
 import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
@@ -197,7 +199,11 @@ import { GetUserMeta, GetUserPayload } from './GetUserState';
 import { HistoryState } from './HistoryState';
 import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
-import { AcceptOffer, NegotiationPayload } from './MarketOfferState';
+import {
+  AcceptOffer,
+  MarketOfferState,
+  NegotiationPayload,
+} from './MarketOfferState';
 import { NotifyState } from './NotifyState';
 import { OrderMeta, OrderPayload } from './OrderState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
@@ -466,6 +472,7 @@ export interface Store {
   >;
   getPaymentMode: AsyncState<GetPaymentModeMeta, GetPaymentModePayload>;
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
+  marketOffer: MarketOfferState;
   marketRequestAcceptOffer: AsyncState<AcceptOffer, NegotiationPayload>;
   notify: NotifyState;
   modifyBulkUpload: {

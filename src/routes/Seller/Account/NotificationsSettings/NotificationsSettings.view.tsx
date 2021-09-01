@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { CommentsAlt, Desktop, EnvelopeAlt, Sold } from 'components/base/SVG';
+import {
+  CommentsAlt,
+  Desktop,
+  EnvelopeAlt,
+  Sold,
+  WhatsApp,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import Loading from 'components/module/Loading';
@@ -99,6 +105,15 @@ const NotificationsSettingsView = ({
               checked={globalSettings?.mobile || false}
             />
           </div>
+          <div className="item">
+            <GlobalNotificationToggle
+              title="WhatsApp"
+              icon={<WhatsApp width={24} height={24} fill={iconColor} />}
+              description={contactNo}
+              onClick={() => handleGlobalToggle('whatsapp')}
+              checked={globalSettings?.whatsapp || false}
+            />
+          </div>
         </div>
       </GlobalNotificationsContainer>
 
@@ -120,6 +135,7 @@ const NotificationsSettingsView = ({
               inapp={i.settings.inapp}
               key={index}
               mobile={i.settings.mobile}
+              whatsapp={i.settings.whatsapp}
               push={i.settings.push}
               email={i.settings.email}
               type={ns.resource}
