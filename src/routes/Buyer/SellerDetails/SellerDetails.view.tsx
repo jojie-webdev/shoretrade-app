@@ -63,7 +63,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
           <ListingHeader>
             <Typography variant="overline" color="shade6">
               <ListingCounter>{results.length}</ListingCounter>
-              Active Listing
+              Active Listing{results.length > 2 ? 'S' : ''}
             </Typography>
             <div className="search-container">
               <Search

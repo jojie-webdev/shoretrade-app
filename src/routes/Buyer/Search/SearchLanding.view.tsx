@@ -47,7 +47,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           <>
             {searchTerm.length <= 2 && (
               <>
-                Discover 100.000+ products,
+                Discover 100,000+ products,
                 <br />
                 categories and sellers
               </>
