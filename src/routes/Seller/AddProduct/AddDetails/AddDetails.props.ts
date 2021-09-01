@@ -10,7 +10,9 @@ export type AddDetailsPublicProps = {
     description,
     addressId,
     alwaysAvailable,
+    isAquafuture,
   }: {
+    isAquafuture: boolean;
     pricePerKilo: number;
     catchDate: Date | null;
     catchRecurrence: string | null;

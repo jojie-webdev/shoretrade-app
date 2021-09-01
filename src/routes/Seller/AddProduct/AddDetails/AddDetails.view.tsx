@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
+import Typography from 'components/base/Typography';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
@@ -27,7 +28,7 @@ import {
 import { toPrice } from 'utils/String/toPrice';
 
 import { AddDetailsProps } from './AddDetails.props';
-import { Container } from './AddDetails.style';
+import { Container, CheckboxContainer } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import { isValid, isDateRangeValid, isValidAlt } from './AddDetails.validation';
 
@@ -72,6 +73,10 @@ const AddDetails = ({
     editableListing?.catchRecurrence
       ? editableListing?.catchRecurrence.length > 0
       : false
+  );
+
+  const [isAquafuture, setIsAquaFuture] = useState<boolean>(
+    !!editableListing?.isAquafuture
   );
 
   const [price, setPrice] = useState(
@@ -196,6 +201,8 @@ const AddDetails = ({
   }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
 
   const toggleAlwaysAvailable = () => {
+    if (isAquafuture) return;
+
     if (!editableListing?.isAquafuture) {
       setAlwaysAvailable((prevState) => !prevState);
     } else {
@@ -238,6 +245,7 @@ const AddDetails = ({
         shippingAddress
       ) {
         onUpdateDetails({
+          isAquafuture,
           pricePerKilo: Number(price),
           catchDate,
           catchRecurrence: null,
@@ -257,6 +265,7 @@ const AddDetails = ({
         shippingAddress
       ) {
         onUpdateDetails({
+          isAquafuture,
           pricePerKilo: Number(price),
           catchDate: null,
           catchRecurrence,
@@ -279,6 +288,12 @@ const AddDetails = ({
         )} in the past 14 days`
       : 'No Data Available';
 
+  const handleToggleAquaFuture = () => {
+    if (editableListing.isAlreadyCreated) return;
+    setIsAquaFuture((prevState) => !prevState);
+    setAlwaysAvailable(false);
+  };
+
   return (
     <Container>
       <Row>
@@ -292,18 +307,35 @@ const AddDetails = ({
         </Col>
       </Row>
       {!isBulkUpload && (
-        <Row className="textfield-row">
-          <Col>
-            <Checkbox
-              onClick={toggleAlwaysAvailable}
-              checked={alwaysAvailable}
-              label="This item is always available"
-              disabled={editableListing?.isAquafuture}
-              error={pathOr('', ['alwaysAvailable', '0'], errors)}
-            />
-          </Col>
-        </Row>
+        <CheckboxContainer>
+          <Typography variant={'overline'} color={'shade6'}>
+            Optional Listing Type
+          </Typography>
+          <Row className="textfield-row checkbox-row">
+            <Col>
+              <Checkbox
+                onClick={handleToggleAquaFuture}
+                checked={isAquafuture}
+                label="Aqua Future"
+                disabled={editableListing?.isAlreadyCreated}
+                error={pathOr('', ['isAquafuture', '0'], errors)}
+              />
+            </Col>
+          </Row>
+          <Row className="textfield-row">
+            <Col>
+              <Checkbox
+                onClick={toggleAlwaysAvailable}
+                checked={alwaysAvailable}
+                label="Always available"
+                disabled={isAquafuture}
+                error={pathOr('', ['alwaysAvailable', '0'], errors)}
+              />
+            </Col>
+          </Row>
+        </CheckboxContainer>
       )}
+
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <TextField
