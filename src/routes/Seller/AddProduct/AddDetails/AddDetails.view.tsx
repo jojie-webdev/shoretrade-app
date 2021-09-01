@@ -316,7 +316,7 @@ const AddDetails = ({
               <Checkbox
                 onClick={handleToggleAquaFuture}
                 checked={isAquafuture}
-                label="Aqua Future"
+                label="Aquafuture"
                 disabled={editableListing?.isAlreadyCreated}
                 error={pathOr('', ['isAquafuture', '0'], errors)}
               />
