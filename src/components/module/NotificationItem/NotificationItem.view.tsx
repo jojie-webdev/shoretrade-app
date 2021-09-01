@@ -20,7 +20,7 @@ import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { notifURLMapper } from 'utils/Notification';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
@@ -180,7 +180,23 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     // if (isMobile) {
     //   return ellipsisOnOverflow(content, 50);
     // }
-    return !fullView ? ellipsisOnOverflow(content, 70) : content;
+    if (!fullView) {
+      return (
+        <>
+          <Typography>{ellipsisOnOverflow(content, 70)}</Typography>
+          <Link
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNotifOnClick();
+            }}
+            to={notifsRoute + '?tab=Unread'}
+          >
+            <Typography color="info">See More</Typography>
+          </Link>
+        </>
+      );
+    }
+    return <Typography>{content}</Typography>;
   };
 
   return (
@@ -203,9 +219,9 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
         >
           {name}
         </Typography>
-        <Typography color={defaultColor} variant="body">
-          {measuredTextContent()}
-        </Typography>
+
+        {measuredTextContent()}
+
         <Typography color="shade6" variant="caption">
           {moment(date).format('MM/DD/YYYY - HH:mm')}
         </Typography>
