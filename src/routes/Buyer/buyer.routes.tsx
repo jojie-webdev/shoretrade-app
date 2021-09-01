@@ -224,6 +224,13 @@ const BuyerRoutes = (): JSX.Element => {
         onBack: history.goBack,
       };
     }
+
+    if (pathname.includes('/buyer/all-listings')) {
+      return {
+        pageTitle: 'All Listings',
+        onBack: history.goBack,
+      };
+    }
     return {};
   };
 
