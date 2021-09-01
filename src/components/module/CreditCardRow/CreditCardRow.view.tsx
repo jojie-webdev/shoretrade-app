@@ -12,7 +12,12 @@ const CreditCardRow = (props: CreditCardRowProps): JSX.Element => {
 
   return (
     <Container {...props}>
-      <CreditCard lastFour={props.lastFour} brand={props.brand} />
+      <CreditCard
+        lastFour={props.lastFour}
+        brand={props.brand}
+        expMonth={props.expMonth}
+        expYear={props.expYear}
+      />
 
       <CCStatus>
         {props.active ? <RoundedTickActive /> : <RoundedTickInactive />}

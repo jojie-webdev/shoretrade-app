@@ -19,7 +19,7 @@ export type GetActiveOffersRequestResponseItem = {
     createdAt: string;
     averagePrice: number;
     image: string;
-    weight: { from: number, to: number };
+    weight: { from: number; to: number };
   };
   size: {
     from?: string;
@@ -52,6 +52,7 @@ export interface Offer {
   negotiations: any[];
   deliveryDate: string;
   metric: string;
+  company_id: string;
 }
 
 export interface Negotiations {

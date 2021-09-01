@@ -10,10 +10,12 @@ import {
   cartActions,
   deleteNotificationActions,
   editableListingActions,
+  getCoopUsersActions,
   getNotificationsActions,
   logoutActions,
   readNotificationActions,
   socketCreditActions,
+  getUserActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
@@ -25,6 +27,7 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
+
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
   const theme = useTheme();
@@ -57,6 +60,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const buyerRequests = useSelector(
+    (store: Store) => store.getAllMarketRequest
+  );
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -170,6 +176,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   useEffect(() => {
     dispatch(getNotificationsActions.request());
   }, []);
+
+  useEffect(() => {
+    dispatch(getUserActions.request());
+  }, [buyerRequests.data?.data.marketRequests]);
 
   // MARK:- Render
   const generatedProps: DashboardGeneratedProps = {

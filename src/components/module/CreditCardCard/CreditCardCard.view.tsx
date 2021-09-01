@@ -4,30 +4,24 @@ import CreditCard from 'components/base/CreditCard';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
-import { InteractionCreditCardProps } from './InteractionCreditCard.props';
+import { CreditCardCardProps } from './CreditCardCard.props';
 import {
+  CustomInteractions,
   LeftComponent,
   RightComponent,
-  CustomInteractions,
-  CardName,
-} from './InteractionCreditCard.style';
+} from './CreditCardCard.style';
 
-const InteractionCreditCard = (
-  props: InteractionCreditCardProps
-): JSX.Element => {
+const CreditCardCard = (props: CreditCardCardProps): JSX.Element => {
   return (
     <CustomInteractions
       {...props}
       leftComponent={
         <LeftComponent>
-          <CardName variant="overline" color="shade6">
-            Credit Cards
-          </CardName>
           <CreditCard
             lastFour={props.lastFour}
             brand={props.brand}
-            expMonth={props.expMonth.toString() || ''}
-            expYear={props.expYear.toString() || ''}
+            expMonth={props.expMonth?.toString() || ''}
+            expYear={props.expYear?.toString() || ''}
           />
         </LeftComponent>
       }
@@ -45,4 +39,4 @@ const InteractionCreditCard = (
   );
 };
 
-export default React.memo(InteractionCreditCard);
+export default React.memo(CreditCardCard);

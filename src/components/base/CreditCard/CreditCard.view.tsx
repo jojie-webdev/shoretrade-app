@@ -1,40 +1,25 @@
 import React from 'react';
 
-import { Visa, Mastercard, Zippay, Paypal, Amex } from 'components/base/SVG';
+import { ATMCard } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 // import { useTheme } from 'utils/Theme';
 import { CreditCardProps } from './CreditCard.props';
-import { Container, CCImage, CCNumRow } from './CreditCard.style';
+import { Container, CCNumRow } from './CreditCard.style';
 
 const CreditCard = (props: CreditCardProps): JSX.Element => {
-  // const theme = useTheme();
-  function renderBrand(brand: string) {
-    brand = brand ? brand.toLowerCase() : '';
-
-    switch (brand) {
-      case 'visa':
-        return <Visa />;
-      case 'mastercard':
-        return <Mastercard />;
-      case 'zippay':
-        return <Zippay />;
-      case 'paypal':
-        return <Paypal />;
-      case 'american express':
-        return <Amex />;
-      default:
-        return null;
-    }
-  }
-
   return (
     <Container>
-      <CCImage>{renderBrand(props.brand)}</CCImage>
+      <div style={{ marginRight: '8px' }}>
+        <ATMCard />
+      </div>
 
       <CCNumRow>
         <Typography text-align="left" variant="label" color="shade9">
-          {`•••• •••• •••• ${props.lastFour}`}
+          {`**** **** **** ${props.lastFour} (${props.brand})`}
+        </Typography>
+        <Typography text-align="left" variant="small" color="shade6">
+          Exp. {props.expMonth}/{props.expYear}
         </Typography>
       </CCNumRow>
     </Container>

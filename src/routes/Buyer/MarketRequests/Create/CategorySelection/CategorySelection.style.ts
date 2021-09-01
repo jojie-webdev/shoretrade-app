@@ -20,7 +20,7 @@ export const EmptyContainer = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-  margin-top: 72px;
+  margin-top: 10px;
 `;
 
 export const TopAbsoContainer = styled.div`
@@ -63,7 +63,7 @@ export const NoResultMessage = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-  margin-top: 10px;
+  margin-top: 72px;
 `;
 
 export const TitleContainer = styled.div`

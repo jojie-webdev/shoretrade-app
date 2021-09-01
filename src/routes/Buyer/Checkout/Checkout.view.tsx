@@ -165,10 +165,8 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             </EmptyContainer>
           ) : (
             <>
-              {/*
-                  //  @ts-ignore*/}
+              {/*//  @ts-ignore*/}
               <Orders {...props} />
-
               {!isMobile ? (
                 <BottomRow>
                   <div className="btns-container">
@@ -251,7 +249,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                       </Typography>
                     </div>
                   </div>
-
                   <div className="btns-container">
                     <Button
                       text="Keep Shopping"
@@ -259,7 +256,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                       variant="outline"
                       style={{ marginRight: 16 }}
                     />
-
                     <Button
                       text="Place Order"
                       disabled={disablePlaceOrder}

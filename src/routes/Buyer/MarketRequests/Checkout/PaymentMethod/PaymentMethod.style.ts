@@ -1,3 +1,4 @@
+import CreditCard from 'components/module/CreditCardCard/CreditCardCard.view';
 import InteractionCreditCard from 'components/module/InteractionCreditCard/InteractionCreditCard.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
@@ -17,6 +18,7 @@ export const Container = styled.div`
   }
 
   .payment-methods {
+    margin-top: 20px;
     margin-bottom: 40px;
 
     .payment-method-col {
@@ -188,7 +190,7 @@ export const Method = styled.div<{ disabled?: boolean }>`
   justify-content: space-between;
   height: 221px;
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 19px 17px;
   margin-bottom: 24px;
   cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
@@ -240,6 +242,12 @@ export const CCImage = styled.div`
 export const CreditCardInteraction = styled(InteractionCreditCard)`
   max-height: 74px;
   margin-top: 12px;
+`;
+
+export const StyledCreditCard = styled(CreditCard)`
+  border-radius: 12px;
+  padding-right: 25px;
+  margin-top: 8px;
 `;
 
 export const StyledTotalCardColumn = styled(Col)`

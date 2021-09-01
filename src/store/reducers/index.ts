@@ -70,6 +70,7 @@ import history from './history';
 import login from './login';
 import logout from './logout';
 import logRequest from './logRequest';
+import marketOffer from './marketOffer';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
@@ -174,6 +175,7 @@ export default (routeHistory: History) =>
         logRequest,
         login,
         logout,
+        marketOffer,
         marketRequestAcceptOffer,
         marketOfferNegotiate,
         marketRequestNegotiation,
