@@ -113,7 +113,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
         <EmptyResults>
           <div>
             <Typography variant="title5" weight="700">
-              No search results for &quot;{searchValue}&quot;
+              No Search Results
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
               It seems we can’t find any results based on your search.

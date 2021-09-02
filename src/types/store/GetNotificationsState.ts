@@ -34,3 +34,6 @@ export type GetNotificationsPayload = GenericResponse<{
   unread: number;
   notifications: NotificationItemResponse[];
 }>;
+
+export const GLOBAL_DEACTIVATION_MESSAGE =
+  'Are you sure you want to turn off all external notifications?';

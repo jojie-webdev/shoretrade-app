@@ -726,8 +726,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
       )}
 
       <ConfirmationModal
-        title="Final Order Confirmation?"
-        description="Just confirming you want to place this order?"
+        title="Final Order Confirmation"
+        description="Press proceed to confirm you want to place this order."
         isOpen={showConfirmationModal}
         onClickClose={() => {
           setShowConfirmationModal(false);

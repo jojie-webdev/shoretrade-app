@@ -33,10 +33,10 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
   let buttonText = '';
 
   if (type === 'CREATE') {
-    routeHeader = 'Create Assistant';
+    routeHeader = 'Create Linked Account';
     buttonText = 'Create Linked Account';
   } else if (type === 'EDIT') {
-    routeHeader = 'Update Assistant';
+    routeHeader = 'Update Linked Account';
     buttonText = 'Delete Linked Account';
   }
 
