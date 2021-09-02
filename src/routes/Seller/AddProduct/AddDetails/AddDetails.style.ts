@@ -1,6 +1,15 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
+export const CheckboxContainer = styled.div`
+  margin-bottom: 24px;
+
+  .checkbox-row {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+`;
+
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 125px;

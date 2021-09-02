@@ -406,6 +406,7 @@ const AddProduct = (): JSX.Element => {
     description,
     addressId,
     alwaysAvailable,
+    isAquafuture,
   }: {
     pricePerKilo: number;
     catchDate: Date | null;
@@ -419,6 +420,7 @@ const AddProduct = (): JSX.Element => {
     description: string;
     addressId: string;
     alwaysAvailable: boolean;
+    isAquafuture: boolean;
   }) => {
     if (isBulkUpload) {
       dispatch(
@@ -446,6 +448,7 @@ const AddProduct = (): JSX.Element => {
                 addressId,
               }
             : {
+                isAquafuture,
                 pricePerKilo,
                 catchDate,
                 catchRecurrence: null,
