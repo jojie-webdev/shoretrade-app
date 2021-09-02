@@ -194,7 +194,6 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
     stateOptions: groupedStateOptions,
     marketSizes,
     errors,
-
     size,
     setSize,
     specifications,

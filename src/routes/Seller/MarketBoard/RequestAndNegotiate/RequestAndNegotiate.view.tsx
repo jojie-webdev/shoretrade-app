@@ -42,6 +42,7 @@ const Step1 = ({
   buyerRequest,
   activeOffer,
   userPending,
+  buyerRequestForActiveOfferTab,
   ...props
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -397,6 +398,22 @@ const Step1 = ({
     );
   };
 
+  const getAddressFromBuyerRequest = () => {
+    const { shippingTo } = buyerRequest;
+    const { suburb, state, postcode } = shippingTo;
+    const address = `${suburb}, ${state} ${postcode}`;
+
+    return address;
+  };
+
+  const getAddressFromActiveOffer = () => {
+    const { shippingTo } = buyerRequestForActiveOfferTab || {};
+    const { suburb, state, postcode } = shippingTo || {};
+    const address = `${suburb}, ${state} ${postcode}`;
+
+    return address;
+  };
+
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   return (
     <SummaryContentContainer>
@@ -524,16 +541,22 @@ const Step1 = ({
         )}
       </div>
 
-      {isReview && (
-        <div className="shipping-to">
-          <Typography variant="label" color="shade6">
-            Shipping to
-          </Typography>
-          <Typography variant="label" color="noshade" weight="bold">
-            {`${buyerRequest.shippingTo.suburb}, ${buyerRequest.shippingTo.state} ${buyerRequest.shippingTo.postcode}`}
-          </Typography>
-        </div>
-      )}
+      <Typography
+        style={{ margin: '24px 0 12px 0' }}
+        color="shade6"
+        variant="overline"
+      >
+        Shipping to
+      </Typography>
+      <div className="quantity-container">
+        <StyledBadge badgeColor={theme.grey.shade3}>
+          <BadgeText color="shade9" variant="overline">
+            {isReview
+              ? getAddressFromBuyerRequest()
+              : getAddressFromActiveOffer()}
+          </BadgeText>
+        </StyledBadge>
+      </div>
 
       <Negotiations activeOffer={activeOffer} />
 

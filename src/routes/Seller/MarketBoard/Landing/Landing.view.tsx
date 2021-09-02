@@ -11,16 +11,21 @@ import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import moment from 'moment';
 import { isEmpty, isNil } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
-import { BuyerRequestsTooltip } from 'routes/Seller/MarketBoard/Landing/Landing.constants';
-import { getExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
+import {
+  getExpiry,
+  getShippingAddress,
+  hasShippingAddress,
+  isRedLabel,
+} from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
-import { useTheme } from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import { Container, FilterButton, BadgeText } from './Landing.style';
@@ -28,8 +33,9 @@ import { Container, FilterButton, BadgeText } from './Landing.style';
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
   data: GetAllMarketRequestResponseItem;
+  activeOffers?: GetActiveOffersRequestResponseItem[];
 }) => {
-  const { onClick, data } = props;
+  const { onClick, data, activeOffers } = props;
   const unit = formatMeasurementUnit(data.measurementUnit);
 
   const buildSizeValue = () => {
@@ -43,6 +49,55 @@ const BuyerRequestsInteractions = (props: {
           );
 
     return sizeValue;
+  };
+
+  const getOfferByMarketRequest = () => {
+    const _offer = activeOffers?.find(
+      (offer) => offer.marketRequest.id === data.id
+    );
+
+    return _offer;
+  };
+
+  const isOfferMade = () => {
+    const { status } = getOfferByMarketRequest() || {};
+    const isOfferMade = status === 'OPEN';
+
+    return isOfferMade;
+  };
+
+  const isPaymentRequired = () => {
+    const { status, negotiations } = getOfferByMarketRequest() || {};
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const isPaymentRequired =
+      status === 'OPEN' && negotiations[0]?.price === negotiations[1]?.price;
+
+    return isPaymentRequired;
+  };
+
+  const isPaymentPending = () => {
+    const { negotiations } = getOfferByMarketRequest() || {};
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const hours = moment().diff(moment(negotiations[0]?.created_at), 'hours');
+    const isPending = 24 > hours;
+
+    return isPending;
   };
 
   return (
@@ -83,12 +138,51 @@ const BuyerRequestsInteractions = (props: {
                 data.weight?.to || ''
               }${unit}`}
             </Typography>
-          </div>
-          <div className="section">
-            <Typography variant="caption" color="shade6">
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
               Shipping to: {data?.shippingTo?.suburb}, {data?.shippingTo?.state}{' '}
               {data?.shippingTo?.postcode}
             </Typography>
+          </div>
+          <div className="section">
+            <Typography variant="caption" color="shade6">
+              {getExpiry(data.createdAt)}
+            </Typography>
+          </div>
+          <div className="section">
+            {isPaymentRequired() ? (
+              isPaymentPending() ? (
+                <Badge className="badge" badgeColor={theme.brand.error}>
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    PENDING PAYMENT
+                  </BadgeText>
+                </Badge>
+              ) : (
+                <Badge
+                  className="badge"
+                  badgeColor={getStatusBadgeColor('DECLINED')}
+                >
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    LOST
+                  </BadgeText>
+                  <div className="svg-container">{setIcon('DECLINED')}</div>
+                </Badge>
+              )
+            ) : (
+              isOfferMade() && (
+                <Badge className="badge" badgeColor={theme.brand.success}>
+                  <BadgeText
+                    variant="overlineSmall"
+                    color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
+                  >
+                    OFFER MADE
+                  </BadgeText>
+                </Badge>
+              )
+            )}
           </div>
         </>
       }
@@ -100,38 +194,9 @@ const BuyerRequestsInteractions = (props: {
 const MyActiveOffersInteractions = (props: {
   onClick: () => void;
   data: GetActiveOffersRequestResponseItem;
+  buyerRequests?: GetAllMarketRequestResponseItem[];
 }) => {
-  const theme = useTheme();
-  const { onClick, data } = props;
-
-  const getStatus = (status: GetActiveOffersRequestResponseItem['status']) => {
-    if (status === 'OPEN') return 'NEGOTIATION';
-    if (status === 'ACCEPTED') return 'ACCEPTED';
-    if (status === 'DECLINED') return 'LOST';
-    if (status === 'CLOSED') return 'CLOSED';
-    return '';
-  };
-
-  const getStatusBadgeColor = (
-    status: GetActiveOffersRequestResponseItem['status']
-  ) => {
-    if (status === 'OPEN') return theme.brand.warning;
-    if (status === 'ACCEPTED') return theme.brand.success;
-    if (status === 'DECLINED') return theme.brand.error;
-    if (status === 'CLOSED') return theme.brand.error;
-    return '';
-  };
-
-  const setIcon = (status: GetActiveOffersRequestResponseItem['status']) => {
-    if (status === 'OPEN')
-      return <Sync width={10} height={10} fill={theme.grey.shade9} />;
-    if (status === 'ACCEPTED')
-      return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
-    if (status === 'DECLINED')
-      return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
-    if (status === 'CLOSED')
-      return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
-  };
+  const { onClick, data, buyerRequests } = props;
 
   const status = getStatus(data.status);
   const sizeUnit =
@@ -172,11 +237,26 @@ const MyActiveOffersInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Price: {data.price}/{formatMeasurementUnit(data.measurementUnit)}
+              Price: ${data.price}/{formatMeasurementUnit(data.measurementUnit)}
+            </Typography>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
+              Shipping to:{' '}
+              {hasShippingAddress(data, buyerRequests)
+                ? getShippingAddress(data, buyerRequests)
+                : 'No address'}
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="caption" color="shade6">
+            <Typography
+              variant="caption"
+              color={
+                isRedLabel(data.marketRequest.createdAt) ? 'error' : 'shade6'
+              }
+            >
               {getExpiry(data.marketRequest.createdAt)}
             </Typography>
           </div>
@@ -261,6 +341,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                     key={data.id}
                     onClick={() => props.onClickOffer(data)}
                     data={data}
+                    activeOffers={props.activeOffers}
                   />
                 ))}
 
@@ -268,25 +349,27 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
               </>
             )}
 
-          {props.currentTab === 'Buyer Requests' && (
-            <Typography
-              variant="overlineSmall"
-              color="shade7"
-              style={{ marginBottom: 12 }}
-            >
-              All Products
-            </Typography>
-          )}
-
           {props.currentTab === 'Buyer Requests' &&
-            !isNil(props.buyerRequests) &&
-            props.buyerRequests.map((data) => (
-              <BuyerRequestsInteractions
-                key={data.id}
-                onClick={() => props.onClickOffer(data)}
-                data={data}
-              />
-            ))}
+            !isEmpty(props.buyerRequests) && (
+              <>
+                <Typography
+                  variant="overlineSmall"
+                  color="shade7"
+                  style={{ marginBottom: 12 }}
+                >
+                  All Products
+                </Typography>
+
+                {props.buyerRequests.map((data) => (
+                  <BuyerRequestsInteractions
+                    key={data.id}
+                    onClick={() => props.onClickOffer(data)}
+                    data={data}
+                    activeOffers={props.activeOffers}
+                  />
+                ))}
+              </>
+            )}
 
           {props.currentTab === 'My Active Offers' &&
             !isNil(props.activeOffers) &&
@@ -295,6 +378,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 key={data.id}
                 onClick={() => props.onClickActiveOffer(data)}
                 data={data}
+                buyerRequests={props.buyerRequests}
               />
             ))}
         </>
@@ -304,5 +388,34 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     </Container>
   );
 };
+
+function getStatus(status: GetActiveOffersRequestResponseItem['status']) {
+  if (status === 'OPEN') return 'NEGOTIATION';
+  if (status === 'ACCEPTED') return 'ACCEPTED';
+  if (status === 'DECLINED') return 'LOST';
+  if (status === 'CLOSED') return 'CLOSED';
+  return '';
+}
+
+function getStatusBadgeColor(
+  status: GetActiveOffersRequestResponseItem['status']
+) {
+  if (status === 'OPEN') return theme.brand.warning;
+  if (status === 'ACCEPTED') return theme.brand.success;
+  if (status === 'DECLINED') return theme.brand.error;
+  if (status === 'CLOSED') return theme.brand.error;
+  return '';
+}
+
+function setIcon(status: GetActiveOffersRequestResponseItem['status']) {
+  if (status === 'OPEN')
+    return <Sync width={10} height={10} fill={theme.grey.shade9} />;
+  if (status === 'ACCEPTED')
+    return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
+  if (status === 'DECLINED')
+    return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
+  if (status === 'CLOSED')
+    return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
+}
 
 export default MarketBoardLandingView;
