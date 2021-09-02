@@ -1,13 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import {
   CategoryStatus,
   CustomSettingKey,
   NotificationResourceGroup,
   NotificationSettingItem,
-  SpecificNotificationSettingItem,
 } from 'types/store/GetNotificationSettingsState';
 
 export interface NotificationsSettingsProps {
-  globalSettings?: {
+  globalSettings: {
     mobile: boolean;
     push: boolean;
     email: boolean;
@@ -18,9 +19,23 @@ export interface NotificationsSettingsProps {
   groupedNotifSettings: NotificationResourceGroup[];
   loading: boolean;
   handleGlobalToggle: (key: string) => void;
-  handleCustomSettingUpdate: (
-    item: NotificationSettingItem,
-    option: CustomSettingKey,
-    val: boolean
-  ) => void;
+  handleCustomSettingUpdate: () => void;
+  showDeactivationWarning: string;
+  setShowDeactivationWarning: Dispatch<SetStateAction<string>>;
+  currentCustomSetting: null | {
+    item: NotificationSettingItem;
+    option: CustomSettingKey;
+    val: boolean;
+    deactivationWarning: string | null;
+  };
+  setCurrentCustomSetting: Dispatch<
+    SetStateAction<null | {
+      item: NotificationSettingItem;
+      option: CustomSettingKey;
+      val: boolean;
+      deactivationWarning: string | null;
+    }>
+  >;
+  currentGlobalSetting: string;
+  setCurrentGlobalSetting: Dispatch<SetStateAction<string>>;
 }

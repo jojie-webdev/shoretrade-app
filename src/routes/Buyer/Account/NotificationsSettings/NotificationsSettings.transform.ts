@@ -88,6 +88,7 @@ export const toNotificationResourceGroup = (
               title: keyB,
               notificationIds: groupedItems[keyB].map((a) => a.id),
               settings: groupedItems[keyB][0].settings, // override other settings
+              deactivationWarning: groupedItems[keyB][0].deactivationWarning,
             },
           ];
         },

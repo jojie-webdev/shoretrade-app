@@ -83,6 +83,7 @@ export type NotificationResourceGroup = {
 export type NotificationSettingItem = {
   title: string; // subgroup or name
   notificationIds: string[];
+  deactivationWarning: string | null;
   settings: {
     inapp: {
       supported: boolean;
@@ -112,6 +113,7 @@ export type SpecificNotificationSettingItem = {
   resource: string;
   name: string;
   subgroup: string;
+  deactivationWarning: string | null;
   settings: SettingsToggleItem;
 };
 
@@ -122,6 +124,13 @@ export enum CustomSettingKey {
   INAPP = 'inapp',
   WHATSAPP = 'whatsapp',
 }
+
+export type CustomSettingKeyType =
+  | CustomSettingKey.EMAIL
+  | CustomSettingKey.PUSH
+  | CustomSettingKey.INAPP
+  | CustomSettingKey.MOBILE
+  | CustomSettingKey.WHATSAPP;
 
 // {
 //   "id": "7913f9c4-9f45-4fff-8f87-bb7290a7aeba",

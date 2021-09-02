@@ -12,6 +12,7 @@ import {
 } from 'store/actions';
 import {
   CustomSettingKey,
+  CustomSettingKeyType,
   GlobalNotificationsSettingsResponse,
   NotificationSettingItem,
   SpecificNotificationSettingItem,
@@ -34,6 +35,14 @@ const NotificationsSettings = (): JSX.Element => {
   const location = useLocation();
   const [companyId, setCompanyId] = useState('');
   const [updateTriggered, setUpdateTriggered] = useState<null | any>(null);
+  const [currentCustomSetting, setCurrentCustomSetting] = useState<null | {
+    item: NotificationSettingItem;
+    option: CustomSettingKey;
+    val: boolean;
+    deactivationWarning: string | null;
+  }>(null);
+  const [currentGlobalSetting, setCurrentGlobalSetting] = useState('');
+  const [showDeactivationWarning, setShowDeactivationWarning] = useState('');
   const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
     null | 'mobile' | 'push' | 'email' | 'whatsapp'
   >(null);
@@ -105,6 +114,7 @@ const NotificationsSettings = (): JSX.Element => {
       key === 'push' ||
       key === 'whatsapp'
     ) {
+      console.log(key);
       setGlobalSettings({
         ...globalSettings,
         [key]: !globalSettings[key],
@@ -113,39 +123,46 @@ const NotificationsSettings = (): JSX.Element => {
     }
   };
 
-  const handleCustomSettingUpdate = (
-    item: NotificationSettingItem,
-    option: CustomSettingKey,
-    val: boolean
-  ) => {
-    // find idx
-    setCustomSettings(
-      customSettings.map((c) => {
-        const idx = item.notificationIds.indexOf(c.id);
-        if (idx > -1) {
-          return {
-            ...c,
-            settings: {
-              ...c.settings,
-              [option]: {
-                supported: c.settings[option].supported,
-                enabled: val,
+  const handleCustomSettingUpdate = () => {
+    if (currentCustomSetting) {
+      setCustomSettings(
+        customSettings.map((c) => {
+          const idx = currentCustomSetting.item.notificationIds.indexOf(c.id);
+          if (idx > -1) {
+            return {
+              ...c,
+              settings: {
+                ...c.settings,
+                [currentCustomSetting.option]: {
+                  supported: c.settings[currentCustomSetting.option].supported,
+                  enabled: currentCustomSetting.val,
+                },
               },
-            },
-          };
-        }
-        return c;
-      })
-    );
-    setUpdateTriggered({
-      custom: item.notificationIds.reduce(
-        (acc: { [key: string]: any }, curr) => (
-          (acc[curr] = { [option]: val }), acc
-        ),
-        {}
-      ), //or use acc:any
-    });
+            };
+          }
+          return c;
+        })
+      );
+      setUpdateTriggered({
+        custom: currentCustomSetting.item.notificationIds.reduce(
+          (acc: { [key: string]: any }, curr) => (
+            (acc[curr] = {
+              [currentCustomSetting.option]: currentCustomSetting.val,
+            }),
+            acc
+          ),
+          {}
+        ), //or use acc:any
+      });
+    }
+    setCurrentCustomSetting(null);
+    setShowDeactivationWarning('');
+    // find idx
   };
+
+  const groupedNotifSettings = toNotificationResourceGroup(
+    customSettings || []
+  );
 
   useEffect(() => {
     if (updateTriggered && customSettings) {
@@ -155,9 +172,11 @@ const NotificationsSettings = (): JSX.Element => {
   }, [customSettings, updateTriggered]);
 
   useEffect(() => {
-    if (globalUpdateTriggered && globalUpdateTriggered) {
+    if (globalUpdateTriggered) {
       handleOnSaveGlobal(globalUpdateTriggered);
       setGlobalUpdateTriggered(null);
+      setCurrentGlobalSetting('');
+      setShowDeactivationWarning('');
     }
   }, [globalSettings, globalUpdateTriggered]);
 
@@ -176,9 +195,31 @@ const NotificationsSettings = (): JSX.Element => {
     getNotificationsSettings?.data,
   ]);
 
-  const groupedNotifSettings = toNotificationResourceGroup(
-    customSettings || []
-  );
+  useEffect(() => {
+    if (currentCustomSetting !== null) {
+      const totalEnabled = Object.keys(
+        currentCustomSetting.item.settings
+      ).reduce((accum: number, key: string) => {
+        if (
+          currentCustomSetting.item.settings[key as CustomSettingKeyType]
+            .enabled &&
+          key !== 'inapp'
+        ) {
+          return accum + 1;
+        }
+        return accum;
+      }, 0);
+      if (
+        currentCustomSetting.deactivationWarning !== null &&
+        currentCustomSetting.val === false &&
+        totalEnabled === 1
+      ) {
+        setShowDeactivationWarning(currentCustomSetting.deactivationWarning);
+      } else {
+        handleCustomSettingUpdate();
+      }
+    }
+  }, [currentCustomSetting, showDeactivationWarning]);
 
   const generatedProps: NotificationsSettingsProps = {
     globalSettings,
@@ -188,6 +229,12 @@ const NotificationsSettings = (): JSX.Element => {
     contactNo: getUser?.data?.user.mobile || '',
     loading: getPendingNotificationsSettings,
     handleCustomSettingUpdate,
+    setShowDeactivationWarning,
+    showDeactivationWarning,
+    currentCustomSetting,
+    setCurrentCustomSetting,
+    currentGlobalSetting,
+    setCurrentGlobalSetting,
   };
 
   return <NotificationsSettingsView {...generatedProps} />;

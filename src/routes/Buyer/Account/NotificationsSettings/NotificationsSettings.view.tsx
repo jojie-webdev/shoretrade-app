@@ -10,6 +10,7 @@ import {
   WhatsApp,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
 import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
@@ -22,6 +23,7 @@ import {
   NotificationSettingItem,
   CustomSettingKey,
 } from 'types/store/GetNotificationSettingsState';
+import { GLOBAL_DEACTIVATION_MESSAGE } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
@@ -40,18 +42,43 @@ const NotificationsSettingsView = ({
   contactNo,
   email,
   handleCustomSettingUpdate,
+  showDeactivationWarning,
+  setShowDeactivationWarning,
+  currentCustomSetting,
+  setCurrentCustomSetting,
+  setCurrentGlobalSetting,
+  currentGlobalSetting,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = theme.grey.shade7;
 
-  const handleCustomSettingsChange = (
-    item: NotificationSettingItem,
-    option: CustomSettingKey,
-    val: boolean
+  const totalEnabledGlobal = Object.keys(globalSettings).reduce(
+    (accum: number, key: string) => {
+      if (
+        // @ts-ignore
+
+        globalSettings[key] &&
+        key !== 'inapp'
+      ) {
+        return accum + 1;
+      }
+
+      return accum;
+    },
+
+    0
+  );
+  const handleOnGlobalToggle = (
+    key: 'email' | 'mobile' | 'push' | 'whatsapp'
   ) => {
-    handleCustomSettingUpdate(item, option, val);
+    setCurrentGlobalSetting(key);
+    if (totalEnabledGlobal === 1 && globalSettings[key] === true) {
+      setShowDeactivationWarning(GLOBAL_DEACTIVATION_MESSAGE);
+    } else {
+      handleGlobalToggle(key);
+    }
   };
 
   return (
@@ -78,7 +105,7 @@ const NotificationsSettingsView = ({
               title="Push"
               icon={<Desktop fill={iconColor} />}
               description="Push Notifications"
-              onClick={() => handleGlobalToggle('push')}
+              onClick={() => handleOnGlobalToggle('push')}
               checked={globalSettings?.push || false}
             />
           </div>
@@ -87,7 +114,7 @@ const NotificationsSettingsView = ({
               title="Email"
               icon={<EnvelopeAlt fill={iconColor} />}
               description={email}
-              onClick={() => handleGlobalToggle('email')}
+              onClick={() => handleOnGlobalToggle('email')}
               checked={globalSettings?.email || false}
             />
           </div>
@@ -96,7 +123,7 @@ const NotificationsSettingsView = ({
               title="SMS"
               icon={<CommentsAlt fill={iconColor} />}
               description={contactNo}
-              onClick={() => handleGlobalToggle('mobile')}
+              onClick={() => handleOnGlobalToggle('mobile')}
               checked={globalSettings?.mobile || false}
             />
           </div>
@@ -105,7 +132,7 @@ const NotificationsSettingsView = ({
               title="WhatsApp"
               icon={<WhatsApp width={24} height={24} fill={iconColor} />}
               description={contactNo}
-              onClick={() => handleGlobalToggle('whatsapp')}
+              onClick={() => handleOnGlobalToggle('whatsapp')}
               checked={globalSettings?.whatsapp || false}
             />
           </div>
@@ -122,7 +149,12 @@ const NotificationsSettingsView = ({
           {ns.items.map((i, index) => (
             <NotificationSettingsCategoryItem
               onChange={(val, option) =>
-                handleCustomSettingsChange(i, option, val)
+                setCurrentCustomSetting({
+                  item: i,
+                  option,
+                  val,
+                  deactivationWarning: i.deactivationWarning,
+                })
               }
               inapp={i.settings.inapp}
               key={index}
@@ -136,6 +168,23 @@ const NotificationsSettingsView = ({
           ))}
         </CategoryItemContainer>
       ))}
+      <ConfirmationModal
+        isOpen={showDeactivationWarning !== ''}
+        title="Deactivation Warning"
+        description={showDeactivationWarning}
+        action={() => {
+          if (currentCustomSetting !== null) {
+            handleCustomSettingUpdate && handleCustomSettingUpdate();
+          } else {
+            handleGlobalToggle(currentGlobalSetting);
+          }
+        }}
+        actionText="DEACTIVATE"
+        onClickClose={() => {
+          setShowDeactivationWarning('');
+          setCurrentCustomSetting(null);
+        }}
+      />
     </Container>
   );
 };
