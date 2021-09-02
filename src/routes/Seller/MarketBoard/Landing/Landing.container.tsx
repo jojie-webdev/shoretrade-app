@@ -64,14 +64,40 @@ const MarketBoardLanding = (): JSX.Element => {
       (store: Store) => store.getMarketInterests.data?.data.selling
     ) || [];
   const sellingNames = selling.map((s) => s.name);
-  const sellingRequests = marketRequests.filter((m) =>
-    sellingNames.includes(m.type)
-  );
 
-  const filteredSpecs =
-    marketRequests
-      .filter((d) => !isEmpty(d.specifications))
-      .filter((d) => moment().diff(moment(d.createdAt), 'days') < 7) || [];
+  const currentMoment = moment();
+  const marketRequestsData = marketRequests.reduce(
+    (
+      accum: {
+        interests: GetAllMarketRequestResponseItem[];
+        others: GetAllMarketRequestResponseItem[];
+      },
+      current: GetAllMarketRequestResponseItem
+    ) => {
+      if (
+        !isEmpty(current.specifications) &&
+        currentMoment.diff(moment(current.createdAt), 'days') < 7
+      ) {
+        if (sellingNames.includes(current.type)) {
+          return {
+            ...accum,
+            interests: [...accum.interests, current],
+          };
+        } else {
+          return {
+            ...accum,
+            others: [...accum.others, current],
+          };
+        }
+      }
+
+      return accum;
+    },
+    {
+      interests: [],
+      others: [],
+    }
+  );
 
   const { filters, checkboxFilters } = requestToModalFilter(
     buyerRequestsFilters
@@ -209,17 +235,9 @@ const MarketBoardLanding = (): JSX.Element => {
     setBuyerRequestFilter([]);
   };
 
-  const filteredSpecsSellerRequest =
-    filteredSpecs.filter((i) => {
-      for (let index = 0; index < sellingRequests.length; index++) {
-        const element = sellingRequests[index];
-        return i.typeId !== element.typeId;
-      }
-    }) || [];
-
   const generatedProps = {
-    sellingRequests,
-    buyerRequests: filteredSpecsSellerRequest,
+    sellingRequests: marketRequestsData.interests,
+    buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersData,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
