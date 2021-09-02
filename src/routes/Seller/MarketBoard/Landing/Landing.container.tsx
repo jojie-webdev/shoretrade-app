@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import TermsAndCondition from 'components/module/TermsAndCondition';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import qs from 'qs';
@@ -24,6 +25,7 @@ import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 import { TabOptions } from './Landing.props';
 import MarketBoardLandingView from './Landing.view';
@@ -62,14 +64,40 @@ const MarketBoardLanding = (): JSX.Element => {
       (store: Store) => store.getMarketInterests.data?.data.selling
     ) || [];
   const sellingNames = selling.map((s) => s.name);
-  const sellingRequests = marketRequests.filter((m) =>
-    sellingNames.includes(m.type)
-  );
 
-  const filteredSpecs =
-    marketRequests
-      .filter((d) => !isEmpty(d.specifications))
-      .filter((d) => moment().diff(moment(d.createdAt), 'days') < 7) || [];
+  const currentMoment = moment();
+  const marketRequestsData = marketRequests.reduce(
+    (
+      accum: {
+        interests: GetAllMarketRequestResponseItem[];
+        others: GetAllMarketRequestResponseItem[];
+      },
+      current: GetAllMarketRequestResponseItem
+    ) => {
+      if (
+        !isEmpty(current.specifications) &&
+        currentMoment.diff(moment(current.createdAt), 'days') < 7
+      ) {
+        if (sellingNames.includes(current.type)) {
+          return {
+            ...accum,
+            interests: [...accum.interests, current],
+          };
+        } else {
+          return {
+            ...accum,
+            others: [...accum.others, current],
+          };
+        }
+      }
+
+      return accum;
+    },
+    {
+      interests: [],
+      others: [],
+    }
+  );
 
   const { filters, checkboxFilters } = requestToModalFilter(
     buyerRequestsFilters
@@ -90,14 +118,22 @@ const MarketBoardLanding = (): JSX.Element => {
     { label: string; value: string }[]
   >([]);
 
+  const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
+    'isTermsAndConAccepted',
+    false
+  );
+
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   useEffect(() => {
-    if (currentTab === 'Buyer Requests') {
-      dispatch(getAllMarketRequestActions.request({}));
-    } else {
-      dispatch(getActiveOffersActions.request({}));
-    }
+    dispatch(getAllMarketRequestActions.request({}));
+    dispatch(getActiveOffersActions.request({}));
+
+    // if (currentTab === 'Buyer Requests') {
+    //   dispatch(getAllMarketRequestActions.request({}));
+    // } else {
+    //   dispatch(getActiveOffersActions.request({}));
+    // }
 
     setInitial(false);
     setSearchTerm('');
@@ -199,17 +235,9 @@ const MarketBoardLanding = (): JSX.Element => {
     setBuyerRequestFilter([]);
   };
 
-  const filteredSpecsSellerRequest =
-    filteredSpecs.filter((i) => {
-      for (let index = 0; index < sellingRequests.length; index++) {
-        const element = sellingRequests[index];
-        return i.typeId !== element.typeId;
-      }
-    }) || [];
-
   const generatedProps = {
-    sellingRequests,
-    buyerRequests: filteredSpecsSellerRequest,
+    sellingRequests: marketRequestsData.interests,
+    buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersData,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
@@ -236,6 +264,31 @@ const MarketBoardLanding = (): JSX.Element => {
     },
     userPending,
   };
+
+  if (!isAcceptClicked) {
+    return (
+      <TermsAndCondition
+        appType="seller"
+        textWeb1="Can’t find your product?"
+        textWeb2="Create a new Market Request"
+        textMobile1="Market Request"
+        textMobile2="Can’t find your product?"
+        textMobile3="Create a new Market Request"
+        cardText1={
+          'Search for the product you want to request and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
+        }
+        cardText2={
+          'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
+        }
+        cardText3={
+          'Process the payment for accepted offers and get real time delivery updates.'
+        }
+        isAcceptClicked={isAcceptClicked}
+        setIsAcceptClicked={setIsAcceptClicked}
+      />
+    );
+  }
+
   return <MarketBoardLandingView {...generatedProps} />;
 };
 

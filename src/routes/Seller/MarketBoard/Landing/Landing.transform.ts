@@ -3,7 +3,10 @@ import {
   Filters,
 } from 'components/module/FilterModal/FilterModal.props';
 import moment from 'moment';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import theme from 'utils/Theme';
 
 export const requestToModalFilter = (
   data?: GetAllMarketRequestFiltersResponseItem
@@ -162,4 +165,45 @@ export const getRespectiveValues = (
     return filterSpecs.reduce((accum: any, cur: any) => accum.concat(cur), []);
   }
   return [];
+};
+
+export const isRedLabel = (createdAt: string) => {
+  const expiry = getExpiry(createdAt);
+  const isRedLabel =
+    expiry === 'Expires Soon' || expiry === 'Less than 48 hours left';
+
+  return isRedLabel;
+};
+
+export const identifyBuyerRequest = (
+  data: GetActiveOffersRequestResponseItem,
+  buyerRequests?: GetAllMarketRequestResponseItem[]
+) => {
+  const buyerRequest = buyerRequests?.find(
+    (buyerRequest) => buyerRequest.id === data.marketRequest.id
+  );
+
+  return buyerRequest;
+};
+
+export const getShippingAddress = (
+  data: GetActiveOffersRequestResponseItem,
+  buyerRequests?: GetAllMarketRequestResponseItem[]
+) => {
+  const buyerRequest = identifyBuyerRequest(data, buyerRequests);
+  const { shippingTo } = buyerRequest || {};
+  const address = `${shippingTo?.suburb} ${shippingTo?.state} ${shippingTo?.postcode}`;
+
+  return address;
+};
+
+export const hasShippingAddress = (
+  data: GetActiveOffersRequestResponseItem,
+  buyerRequests?: GetAllMarketRequestResponseItem[]
+) => {
+  const { shippingTo } = identifyBuyerRequest(data, buyerRequests) || {};
+  const { suburb, state, postcode } = shippingTo || {};
+  const hasAddress = suburb || state || postcode;
+
+  return hasAddress;
 };

@@ -284,7 +284,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Col xl={4}>
             <SummaryCard>
               <Typography className="summary" color="noshade" weight="400">
-                Summary
+                Buyer Request
               </Typography>
               <div className="summary-border" />
               {!isEmpty(props.buyerRequest.specifications) && (
@@ -330,11 +330,17 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       >
                         {capitalize(
                           (props.buyerRequest?.sizeFrom &&
-                            props.buyerRequest?.sizeFrom?.toString()) ||
+                            props.buyerRequest?.sizeFrom?.toString()) +
+                            ' ' +
+                            props.buyerRequest.measurementUnit.toLowerCase() ||
                             ''
                         )}
                         {props.buyerRequest.sizeTo
-                          ? `- ${props.buyerRequest.sizeTo.toString()}`
+                          ? ` - ${
+                              props.buyerRequest.sizeTo.toString() +
+                              ' ' +
+                              props.buyerRequest.measurementUnit.toLowerCase()
+                            }`
                           : ''}
                       </Typography>
                     </div>

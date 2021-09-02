@@ -14,10 +14,20 @@ import {
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import moment from 'moment';
+import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
+import {
+  BadgesContainer,
+  MetricContainer,
+  StyledBadge,
+  SummaryContentContainer,
+} from '../RequestAndNegotiate.style';
 import { ReviewOfferGeneratedProps } from './ReviewOffer.props';
 import {
   Container,
@@ -26,16 +36,6 @@ import {
   ThirdSpecsContainer,
   ThirdItemContainer,
 } from './ReviewOffer.style';
-import {
-  BadgesContainer,
-  MetricContainer,
-  StyledBadge,
-  SummaryContentContainer,
-} from '../RequestAndNegotiate.style';
-import { isEmpty } from 'ramda';
-import { sizeToString } from 'utils/Listing';
-import moment from 'moment';
-import { toPrice } from 'utils/String';
 
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
@@ -183,6 +183,25 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               </StyledBadge>
             </div>
           </ThirdItemContainer>
+        </ThirdSpecsContainer>
+
+        <ThirdSpecsContainer>
+          <ThirdItemContainer>
+            <Typography
+              style={{ margin: '24px 0 12px 0' }}
+              color="shade6"
+              variant="overline"
+            >
+              Shipping to
+            </Typography>
+            <div className="quantity-container">
+              <StyledBadge badgeColor={theme.grey.shade3}>
+                <BadgeText color="shade9" variant="overline">
+                  {`${props.buyerRequest?.shippingTo.suburb}, ${props.buyerRequest?.shippingTo.state} ${props.buyerRequest?.shippingTo.postcode}`}
+                </BadgeText>
+              </StyledBadge>
+            </div>
+          </ThirdItemContainer>
 
           <ThirdItemContainer>
             <Typography
@@ -201,15 +220,6 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             </div>
           </ThirdItemContainer>
         </ThirdSpecsContainer>
-
-        <div className="shipping-to">
-          <Typography variant="label" color="shade6">
-            Shipping to
-          </Typography>
-          <Typography variant="label" color="noshade" weight="bold">
-            {`${props.buyerRequest?.shippingTo.suburb}, ${props.buyerRequest?.shippingTo.state} ${props.buyerRequest?.shippingTo.postcode}`}
-          </Typography>
-        </div>
 
         <ThirdItemContainer>
           <Typography

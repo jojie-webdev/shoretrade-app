@@ -21,6 +21,7 @@ export interface CommonProps {
 
 export interface Step1Props extends StepProps, CommonProps {
   userPending: boolean;
+  buyerRequestForActiveOfferTab?: GetAllMarketRequestResponseItem;
 }
 
 export interface OfferProps {
@@ -34,4 +35,5 @@ export interface RequestAndNegotiateGeneratedProps
   extends CommonProps,
     OfferProps {
   userPending: boolean;
+  buyerRequestForActiveOfferTab?: GetAllMarketRequestResponseItem;
 }

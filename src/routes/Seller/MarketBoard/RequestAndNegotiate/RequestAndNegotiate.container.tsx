@@ -25,15 +25,23 @@ const RequestAndNegotiate = (): JSX.Element => {
     };
   } = useLocation();
 
+  const buyerRequest = state.buyerRequest;
+  const activeOffer = state.activeOffer;
+
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const buyerRequests = useSelector(
+    (state: Store) => state.getAllMarketRequest.data?.data.marketRequests
+  );
+
+  const buyerRequestForActiveOfferTab = buyerRequests?.find(
+    (buyerRequest) => buyerRequest.id === activeOffer?.marketRequest?.id
+  );
+
   const userPending =
     user !== undefined &&
     !(user.companies || []).some((a) =>
       a.addresses.some((b) => b.approved === 'APPROVED')
     );
-
-  const buyerRequest = state.buyerRequest;
-  const activeOffer = state.activeOffer;
 
   const [offer, setOffer] = useState<MarketOfferItem[]>([]);
   const [currentOfferItem, setCurrentOfferItem] = useState('');
@@ -73,6 +81,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     onNegotiateOffer,
     isNegotiating,
     userPending,
+    buyerRequestForActiveOfferTab,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };
