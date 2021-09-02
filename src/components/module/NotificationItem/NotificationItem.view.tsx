@@ -183,7 +183,9 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     if (!fullView) {
       return (
         <>
-          <Typography className="content">{ellipsisOnOverflow(content, 70)}</Typography>
+          <Typography color={defaultColor} className="content">
+            {ellipsisOnOverflow(content, 70)}
+          </Typography>
           <Link
             onClick={(e) => {
               e.stopPropagation();
@@ -191,12 +193,22 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
             }}
             to={notifsRoute + '?tab=Unread'}
           >
-            <Typography weight="700"  className="see-more-link-text" color="primary">see more</Typography>
+            <Typography
+              weight="700"
+              className="see-more-link-text"
+              color="primary"
+            >
+              see more
+            </Typography>
           </Link>
         </>
       );
     }
-    return <Typography>{content}</Typography>;
+    return (
+      <Typography color={defaultColor} className="content">
+        {content}
+      </Typography>
+    );
   };
 
   return (
