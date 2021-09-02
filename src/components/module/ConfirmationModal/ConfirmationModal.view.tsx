@@ -65,13 +65,13 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
         </div>
         <div className="actions-container">
           <Button
-            style={{ flex: 1, marginRight: 4, maxWidth: 160, borderRadius: 12 }}
+            style={{ marginRight: 4, borderRadius: 12 }}
             variant="outline"
             text={cancelText || 'Cancel'}
             onClick={cancel || modalProps.onClickClose}
           />
           <Button
-            style={{ flex: 1, marginLeft: 8, maxWidth: 88, borderRadius: 12 }}
+            style={{ marginLeft: 8, borderRadius: 12 }}
             variant="primary"
             text={actionText || 'OK'}
             onClick={() => {
