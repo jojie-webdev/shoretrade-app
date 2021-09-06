@@ -40,10 +40,11 @@ import {
   SubText,
   BadgesContainer,
 } from './Landing.style';
+import { hasNewOffer } from './Landing.transform';
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
-  offers: number;
+  offers: Offer[];
   type: string;
   image: string;
   inDetail: boolean;
@@ -81,8 +82,10 @@ export const MarketRequestItemNonMobile = (props: {
   const offerNumberBadge = () => {
     return (
       <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-        <BadgeText variant="overline" empty={!offers || offers === 0}>
-          {`${offers > 0 ? offers : 'No'} ${offers === 1 ? 'Offer' : 'Offers'}`}
+        <BadgeText variant="overline" empty={offers?.length === 0}>
+          {`${offers?.length > 0 ? offers?.length : 'No'} ${
+            offers?.length === 1 ? 'Offer' : 'Offers'
+          }`}
         </BadgeText>
       </Badge>
     );
@@ -141,7 +144,8 @@ export const MarketRequestItemNonMobile = (props: {
             <SubText variant="small">
               {paymentRequired
                 ? renderPaymentRequiredBadge()
-                : offerStatusBadge(inDetail, offers, offerStatus)}
+                : hasNewOffer(offers) &&
+                  offerStatusBadge(inDetail, offers?.length, offerStatus)}
             </SubText>
           </div>
         </BadgesContainer>
@@ -168,7 +172,7 @@ export const MarketRequestItemNonMobile = (props: {
 
 export const MarketRequestItemMobile = (props: {
   expiry: string;
-  offers: number;
+  offers: Offer[];
   type: string;
   image: string;
   inDetail: boolean;
@@ -195,7 +199,8 @@ export const MarketRequestItemMobile = (props: {
     paymentRequired,
   } = props;
 
-  const offersText = offers === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
+  const offersText =
+    offers.length === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
 
   const offersMarkup = () => {
     if (inDetail) return '';
@@ -211,7 +216,7 @@ export const MarketRequestItemMobile = (props: {
           <BadgeText
             color="success"
             variant="overline"
-            empty={!offers || offers === 0}
+            empty={offers?.length === 0}
           >
             {offersText}
           </BadgeText>
@@ -242,7 +247,7 @@ export const MarketRequestItemMobile = (props: {
         {offersMarkup()}
         {paymentRequired
           ? renderPaymentRequiredBadge()
-          : offerStatusBadge(inDetail, offers, offerStatus)}
+          : offerStatusBadge(inDetail, offers?.length, offerStatus)}
       </Badges>
     );
   };
@@ -365,7 +370,7 @@ const MarketRequestsLandingView = (
         marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
-            type={mr.offers > 0 ? 'next' : 'none'}
+            type={mr.offers?.length > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
             offers={mr.offers}
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}

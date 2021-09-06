@@ -104,11 +104,15 @@ export const getExpiry = (date: string) => {
     return 'Expired';
   }
 
-  if (duration >= 5) {
-    return 'Less than 48 hours left';
-  }
+  // if (duration >= 5) {
+  //   return 'Less than 48 hours left';
+  // }
 
-  if (duration >= 2) {
+  // if (duration >= 2) {
+  //   return 'Expires Soon';
+  // }
+
+  if (duration >= 5) {
     return 'Expires Soon';
   }
 
@@ -169,8 +173,7 @@ export const getRespectiveValues = (
 
 export const isRedLabel = (createdAt: string) => {
   const expiry = getExpiry(createdAt);
-  const isRedLabel =
-    expiry === 'Expires Soon' || expiry === 'Less than 48 hours left';
+  const isRedLabel = expiry === 'Expires Soon';
 
   return isRedLabel;
 };

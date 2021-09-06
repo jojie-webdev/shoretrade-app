@@ -1,11 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 
 export type Result = {
   id: string;
   type: string;
-  offers: number;
+  offers: Offer[];
   offerStatus: any;
   image: string;
   expiry: string;

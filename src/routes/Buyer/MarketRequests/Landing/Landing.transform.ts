@@ -1,5 +1,9 @@
 import moment from 'moment';
-import { sortWith, descend, prop } from 'ramda';
+import { sortWith, descend, prop, sortBy, isEmpty } from 'ramda';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 
@@ -52,10 +56,70 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
     return expiry;
   };
 
-  return data.map((item: GetMarketRequestResponseItem) => ({
+  const marketRequest = data.map((item: GetMarketRequestResponseItem) => ({
     ...item,
     expiry: buildExpiryData(item),
-    offers: item?.offers?.length || 0,
+    offers: item?.offers,
     offerStatus: getOfferStatus(item.offers),
   }));
+
+  return marketRequest;
+};
+
+export const hasNewOffer = (offers: Offer[]) => {
+  if (!offers) {
+    return false;
+  }
+
+  const areAllOffersAccepted = () => {
+    const oneOfOfferNotAccepted = offers.find(
+      (offer) => offer.status !== 'ACCEPTED'
+    );
+
+    return !oneOfOfferNotAccepted;
+  };
+
+  const checkHasLastestOfferWithoutNego = () => {
+    const offerSorter = sortBy(prop('created_at'));
+    const sortedOffers = offerSorter(offers).reverse();
+    const newestOffer = sortedOffers[0];
+
+    if (sortedOffers.length > 0) {
+      if (
+        !newestOffer?.negotiations ||
+        newestOffer?.negotiations?.length === 0
+      ) {
+        return true;
+      }
+
+      return false;
+    }
+
+    return false;
+  };
+
+  const checkLastestNego = () => {
+    const offer = offers.find((offer) => {
+      if (offer?.negotiations) {
+        const negoSorter = sortBy(prop('created_at'));
+        const sortedNegos = negoSorter(offer?.negotiations).reverse();
+
+        return sortedNegos[0]?.type === 'NEW_OFFER';
+      }
+      return false;
+    });
+    const hasOffer = offer?.id;
+
+    return hasOffer;
+  };
+
+  if (areAllOffersAccepted()) {
+    return false;
+  }
+
+  if (checkHasLastestOfferWithoutNego()) {
+    return true;
+  } else {
+    return checkLastestNego();
+  }
 };
