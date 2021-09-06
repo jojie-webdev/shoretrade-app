@@ -6,6 +6,7 @@ import {
   NotificationType,
   NotifName,
 } from 'types/store/GetNotificationsState';
+import { UserCompany } from 'types/store/GetUserState';
 
 export interface NotificationsGeneratedProps {
   tabItems: TabItem[];
@@ -21,4 +22,5 @@ export interface NotificationsGeneratedProps {
     appType: 'buyer' | 'seller',
     name?: NotifName
   ) => void;
+  currentCompany: UserCompany | undefined;
 }

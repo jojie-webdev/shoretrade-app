@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
 import { SELLER_ROUTES } from 'consts';
@@ -9,6 +9,7 @@ import {
   readNotificationActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
+import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { notifURLMapper } from 'utils/Notification';
 
@@ -17,9 +18,31 @@ import NotificationsView from './Notifications.view';
 const Notifications = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [currentCompany, setCurrentCompany] = useState<
+    UserCompany | undefined
+  >();
+
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+
+  // Mark:- Variables
+  const companies = user?.companies || [];
+
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
+
+  useEffect(() => {
+    if (!loadingUser) {
+      const c = companies || [];
+
+      setCurrentCompany(c[0]);
+    }
+  }, [loadingUser]);
 
   const tabItems: TabItem[] = [
     {
@@ -31,6 +54,7 @@ const Notifications = (): JSX.Element => {
       title: 'Unread',
     },
   ];
+
   const [activeTab, setActiveTab] = useState(tabItems[0].key);
   const notifsData = getNotifications.data?.data?.notifications || [];
   const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
@@ -63,6 +87,7 @@ const Notifications = (): JSX.Element => {
   const generatedProps = {
     tabItems,
     activeTab,
+    currentCompany,
     handleSelectTab,
     notifsData,
     totalUnreadNotifs,

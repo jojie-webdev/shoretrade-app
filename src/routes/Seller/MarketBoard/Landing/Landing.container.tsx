@@ -236,6 +236,7 @@ const MarketBoardLanding = (): JSX.Element => {
   };
 
   const generatedProps = {
+    marketRequests,
     sellingRequests: marketRequestsData.interests,
     buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersData,

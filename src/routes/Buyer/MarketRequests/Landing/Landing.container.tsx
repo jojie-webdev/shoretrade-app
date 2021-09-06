@@ -50,7 +50,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   );
 
   const onClickItem = (row: Result) => {
-    if (row.offers > 0) {
+    if (row.offers.length > 0) {
       history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(row.id));
     }
   };

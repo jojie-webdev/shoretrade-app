@@ -36,7 +36,7 @@ export const Container = styled.div<InteractionsProps>`
 
   ${({ onClick, type, offers }) =>
     offers !== undefined
-      ? offers > 0
+      ? offers?.length > 0
         ? `cursor: pointer;
           &:hover {
             opacity: 0.9;

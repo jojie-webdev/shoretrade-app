@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { Offer } from 'types/store/GetActiveOffersState';
+
 export type Types =
   | 'next'
   | 'accordion'
@@ -28,5 +30,5 @@ export interface InteractionsProps {
   keepIcon?: boolean;
   flat?: boolean;
   fontColor?: string;
-  offers?: number;
+  offers?: Offer[];
 }

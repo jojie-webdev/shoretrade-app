@@ -7,6 +7,7 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 export type TabOptions = 'Buyer Requests' | 'My Active Offers';
 
 export interface MarketBoardLandingGeneratedProps {
+  marketRequests: GetAllMarketRequestResponseItem[];
   sellingRequests: GetAllMarketRequestResponseItem[];
   buyerRequests: GetAllMarketRequestResponseItem[];
   activeOffers: GetActiveOffersRequestResponseItem[];

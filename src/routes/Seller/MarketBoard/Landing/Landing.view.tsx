@@ -12,7 +12,7 @@ import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { isEmpty, isNil } from 'ramda';
+import { isNil, prop, sortBy, isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import {
   getExpiry,
@@ -77,8 +77,11 @@ const BuyerRequestsInteractions = (props: {
       return false;
     }
 
+    const offerSorter = sortBy(prop('created_at'));
+    const sortedNegos = offerSorter(negotiations).reverse();
+
     const isPaymentRequired =
-      status === 'OPEN' && negotiations[0]?.price === negotiations[1]?.price;
+      status === 'OPEN' && sortedNegos[0]?.price === sortedNegos[1]?.price;
 
     return isPaymentRequired;
   };
@@ -94,8 +97,11 @@ const BuyerRequestsInteractions = (props: {
       return false;
     }
 
-    const hours = moment().diff(moment(negotiations[0]?.created_at), 'hours');
-    const isPending = 24 > hours;
+    const offerSorter = sortBy(prop('created_at'));
+    const sortedNegos = offerSorter(negotiations).reverse();
+
+    const hours = moment().diff(moment(sortedNegos[0]?.created_at), 'hours');
+    const isPending = hours <= 24;
 
     return isPending;
   };
@@ -148,7 +154,10 @@ const BuyerRequestsInteractions = (props: {
             </Typography>
           </div>
           <div className="section">
-            <Typography variant="caption" color="shade6">
+            <Typography
+              variant="caption"
+              color={isRedLabel(data.createdAt) ? 'error' : 'shade6'}
+            >
               {getExpiry(data.createdAt)}
             </Typography>
           </div>
@@ -159,27 +168,28 @@ const BuyerRequestsInteractions = (props: {
                   <BadgeText variant="overlineSmall" color="noshade">
                     PENDING PAYMENT
                   </BadgeText>
+                  <div className="svg-container">{setIcon('OPEN')}</div>
                 </Badge>
               ) : (
-                <Badge
-                  className="badge"
-                  badgeColor={getStatusBadgeColor('DECLINED')}
-                >
-                  <BadgeText variant="overlineSmall" color="noshade">
-                    LOST
-                  </BadgeText>
-                  <div className="svg-container">{setIcon('DECLINED')}</div>
-                </Badge>
+                getExpiry(data.createdAt) === 'Expired' && (
+                  <Badge
+                    className="badge"
+                    badgeColor={getStatusBadgeColor('DECLINED')}
+                  >
+                    <BadgeText variant="overlineSmall" color="noshade">
+                      LOST
+                    </BadgeText>
+                    <div className="svg-container">{setIcon('DECLINED')}</div>
+                  </Badge>
+                )
               )
             ) : (
               isOfferMade() && (
                 <Badge className="badge" badgeColor={theme.brand.success}>
-                  <BadgeText
-                    variant="overlineSmall"
-                    color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
-                  >
-                    OFFER MADE
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    ACTIVE OFFER
                   </BadgeText>
+                  <div className="svg-container">{setIcon('ACCEPTED')}</div>
                 </Badge>
               )
             )}
@@ -201,6 +211,45 @@ const MyActiveOffersInteractions = (props: {
   const status = getStatus(data.status);
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
+
+  const isPaymentPending = () => {
+    const { negotiations } = data || {};
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const offerSorter = sortBy(prop('created_at'));
+    const sortedNegos = offerSorter(negotiations).reverse();
+    const hours = moment().diff(moment(sortedNegos[0]?.created_at), 'hours');
+    const isPending = hours <= 24;
+
+    return isPending;
+  };
+
+  const isPaymentRequired = () => {
+    const { status, negotiations } = data || {};
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const offerSorter = sortBy(prop('created_at'));
+    const sortedNegos = offerSorter(negotiations).reverse();
+
+    const isPaymentRequired =
+      status === 'OPEN' && sortedNegos[0]?.price === sortedNegos[1]?.price;
+
+    return isPaymentRequired;
+  };
 
   return (
     <Interactions
@@ -261,15 +310,33 @@ const MyActiveOffersInteractions = (props: {
             </Typography>
           </div>
           <div className="section">
-            {status && (
+            {isPaymentRequired() ? (
+              isPaymentPending() ? (
+                <Badge className="badge" badgeColor={theme.brand.error}>
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    PENDING PAYMENT
+                  </BadgeText>
+                  <div className="svg-container">{setIcon('OPEN')}</div>
+                </Badge>
+              ) : (
+                getExpiry(data.createdAt) === 'Expired' && (
+                  <Badge
+                    className="badge"
+                    badgeColor={getStatusBadgeColor('DECLINED')}
+                  >
+                    <BadgeText variant="overlineSmall" color="noshade">
+                      LOST
+                    </BadgeText>
+                    <div className="svg-container">{setIcon('DECLINED')}</div>
+                  </Badge>
+                )
+              )
+            ) : (
               <Badge
                 className="badge"
                 badgeColor={getStatusBadgeColor(data.status)}
               >
-                <BadgeText
-                  variant="overlineSmall"
-                  color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
-                >
+                <BadgeText variant="overlineSmall" color="noshade">
                   {status}
                 </BadgeText>
                 <div className="svg-container">{setIcon(data.status)}</div>
@@ -378,7 +445,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 key={data.id}
                 onClick={() => props.onClickActiveOffer(data)}
                 data={data}
-                buyerRequests={props.buyerRequests}
+                buyerRequests={props.marketRequests}
               />
             ))}
         </>
@@ -393,7 +460,7 @@ function getStatus(status: GetActiveOffersRequestResponseItem['status']) {
   if (status === 'OPEN') return 'NEGOTIATION';
   if (status === 'ACCEPTED') return 'ACCEPTED';
   if (status === 'DECLINED') return 'LOST';
-  if (status === 'CLOSED') return 'CLOSED';
+  if (status === 'CLOSED') return 'DECLINED';
   return '';
 }
 
@@ -409,7 +476,7 @@ function getStatusBadgeColor(
 
 function setIcon(status: GetActiveOffersRequestResponseItem['status']) {
   if (status === 'OPEN')
-    return <Sync width={10} height={10} fill={theme.grey.shade9} />;
+    return <Sync width={10} height={10} fill={theme.grey.noshade} />;
   if (status === 'ACCEPTED')
     return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
   if (status === 'DECLINED')

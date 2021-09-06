@@ -49,7 +49,7 @@ export interface Offer {
   size: Size;
   measurementUnit: string;
   specifications: string[];
-  negotiations: any[];
+  negotiations: Negotiations[];
   deliveryDate: string;
   metric: string;
   company_id: string;
