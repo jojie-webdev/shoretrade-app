@@ -27,15 +27,10 @@ export const OptionsContainer = styled.div`
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   padding: 16px;
   display: grid;
-  grid-template-columns: 120px 120px 120px 120px;
+  grid-template-columns: 156px 156px 156px 156px;
 
   row-gap: 10px;
   column-gap: 10px;
-
-  @media ${BREAKPOINTS['iPad']} {
-    grid-template-columns: 120px 120px;
-    padding: 8px;
-  }
 
   @media ${BREAKPOINTS['sm']} {
     grid-template-columns: 150px 150px;
@@ -59,8 +54,4 @@ export const TextIndicatorsContainer = styled.div`
   .text-indicator {
     margin-right: 10px;
   }
-`;
-
-export const DesktopCheckBoxContainer = styled.div`
-  display: flex;
 `;
