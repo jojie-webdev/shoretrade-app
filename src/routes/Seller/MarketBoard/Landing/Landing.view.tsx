@@ -202,6 +202,40 @@ const MyActiveOffersInteractions = (props: {
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
+  const isPaymentRequired = () => {
+    const { status, negotiations } = data;
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const isPaymentRequired =
+      status === 'OPEN' && negotiations[0]?.price === negotiations[1]?.price;
+
+    return isPaymentRequired;
+  };
+
+  const isPaymentPending = () => {
+    const { negotiations } = data;
+
+    if (!negotiations) {
+      return false;
+    }
+
+    if (negotiations?.length === 0) {
+      return false;
+    }
+
+    const hours = moment().diff(moment(negotiations[0]?.created_at), 'hours');
+    const isPending = 24 > hours;
+
+    return isPending;
+  };
+
   return (
     <Interactions
       onClick={() => onClick()}
@@ -261,19 +295,39 @@ const MyActiveOffersInteractions = (props: {
             </Typography>
           </div>
           <div className="section">
-            {status && (
-              <Badge
-                className="badge"
-                badgeColor={getStatusBadgeColor(data.status)}
-              >
-                <BadgeText
-                  variant="overlineSmall"
-                  color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
+            {isPaymentRequired() ? (
+              isPaymentPending() ? (
+                <Badge className="badge" badgeColor={theme.brand.error}>
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    PENDING PAYMENT
+                  </BadgeText>
+                </Badge>
+              ) : (
+                <Badge
+                  className="badge"
+                  badgeColor={getStatusBadgeColor('DECLINED')}
                 >
-                  {status}
-                </BadgeText>
-                <div className="svg-container">{setIcon(data.status)}</div>
-              </Badge>
+                  <BadgeText variant="overlineSmall" color="noshade">
+                    LOST
+                  </BadgeText>
+                  <div className="svg-container">{setIcon('DECLINED')}</div>
+                </Badge>
+              )
+            ) : (
+              status && (
+                <Badge
+                  className="badge"
+                  badgeColor={getStatusBadgeColor(data.status)}
+                >
+                  <BadgeText
+                    variant="overlineSmall"
+                    color={data.status === 'OPEN' ? 'shade9' : 'noshade'}
+                  >
+                    {status}
+                  </BadgeText>
+                  <div className="svg-container">{setIcon(data.status)}</div>
+                </Badge>
+              )
             )}
           </div>
         </>
@@ -378,7 +432,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 key={data.id}
                 onClick={() => props.onClickActiveOffer(data)}
                 data={data}
-                buyerRequests={props.buyerRequests}
+                buyerRequests={props.marketRequests}
               />
             ))}
         </>
