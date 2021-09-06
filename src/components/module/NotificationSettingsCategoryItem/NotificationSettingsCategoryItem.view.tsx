@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Accordion from 'components/base/Accordion';
+import InteractionsView from 'components/base/Interactions';
 import {
   CommentsAlt,
   Desktop,
@@ -30,6 +31,7 @@ import {
   StyledCheckbox,
   LeftComponentContainer,
   TextIndicatorsContainer,
+  DesktopCheckBoxContainer,
 } from './NotificationSettingsCategoryItem.style';
 
 const NotificationSettingsCategoryItem = (
@@ -39,6 +41,7 @@ const NotificationSettingsCategoryItem = (
   const isSeller = theme.appType === 'seller';
   const { title, mobile, email, push, whatsapp, onChange, type } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isIpad = useMediaQuery({ query: BREAKPOINTS['iPad'] });
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
 
@@ -47,7 +50,6 @@ const NotificationSettingsCategoryItem = (
     const defaulAvatarProps = {
       width: 24,
       height: 24,
-      fill: theme.grey.shade7,
     };
     const parsedType = type
       .split(' ')
@@ -130,76 +132,147 @@ const NotificationSettingsCategoryItem = (
 
   return (
     <Container>
-      <Accordion
-        iconColor={theme.brand.primary}
-        keepIcon={true}
-        leftComponent={
-          <LeftComponentContainer>
-            <div className="icon-container">{SettingsIcon()}</div>
-            <div>
-              <Typography color={defaultColor}>{title}</Typography>
-              <div>{isMobile && <TextIndicators />}</div>
-            </div>
-          </LeftComponentContainer>
-        }
-        rightComponent={!isMobile && <TextIndicators />}
-        sameWidth={true}
-        withBackground
-        title="Test"
-      >
-        <OptionsContainer>
-          <CustomCheckBoxContainer>
-            <StyledCheckbox
-              onClick={() => onChange(!push.enabled, CustomSettingKey.PUSH)}
-              disabled={!push.supported}
-              style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={push.enabled}
-            />
-            <Desktop fill={iconColor} width={48} height={48} />
-            <Typography color={defaultColor} variant="label">
-              Push
-            </Typography>
-          </CustomCheckBoxContainer>
-          <CustomCheckBoxContainer>
-            <StyledCheckbox
-              disabled={!email.supported}
-              onClick={() => onChange(!email.enabled, CustomSettingKey.EMAIL)}
-              style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={email.enabled}
-            />
-            <EnvelopeAlt fill={iconColor} width={48} height={48} />
-            <Typography color={defaultColor} variant="label">
-              Email
-            </Typography>
-          </CustomCheckBoxContainer>
-          <CustomCheckBoxContainer>
-            <StyledCheckbox
-              disabled={!mobile.supported}
-              onClick={() => onChange(!mobile.enabled, CustomSettingKey.MOBILE)}
-              style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={mobile.enabled}
-            />
-            <CommentsAlt fill={iconColor} width={48} height={48} />
-            <Typography color={defaultColor} variant="label">
-              SMS
-            </Typography>
-          </CustomCheckBoxContainer>
-          <CustomCheckBoxContainer>
-            <StyledCheckbox
-              disabled={!whatsapp.supported}
-              onClick={() =>
-                onChange(!whatsapp.enabled, CustomSettingKey.WHATSAPP)
-              }
-              style={{ position: 'absolute', top: '12px', right: '12px' }}
-              checked={whatsapp.enabled}
-            />
-            <WhatsApp fill={iconColor} width={48} height={48} />
-            <Typography color={defaultColor} variant="label">
-              WhatsApp
-            </Typography>
-          </CustomCheckBoxContainer>
-        </OptionsContainer>
-      </Accordion>
+      {isMobile && (
+        <Accordion
+          iconColor={theme.brand.primary}
+          keepIcon={true}
+          leftComponent={
+            <LeftComponentContainer>
+              <div className="icon-container">{<SettingsIcon />}</div>
+              <div>
+                <Typography color={defaultColor}>{title}</Typography>
+                <div>{isMobile && <TextIndicators />}</div>
+              </div>
+            </LeftComponentContainer>
+          }
+          rightComponent={!isMobile && <TextIndicators />}
+          sameWidth={true}
+          withBackground
+          title="Test"
+        >
+          <OptionsContainer>
+            <CustomCheckBoxContainer>
+              <StyledCheckbox
+                onClick={() => onChange(!push.enabled, CustomSettingKey.PUSH)}
+                disabled={!push.supported}
+                style={{ position: 'absolute', top: '12px', right: '12px' }}
+                checked={push.enabled}
+              />
+              <Desktop fill={iconColor} width={48} height={48} />
+              <Typography color={defaultColor} variant="label">
+                Push
+              </Typography>
+            </CustomCheckBoxContainer>
+            <CustomCheckBoxContainer>
+              <StyledCheckbox
+                disabled={!email.supported}
+                onClick={() => onChange(!email.enabled, CustomSettingKey.EMAIL)}
+                style={{ position: 'absolute', top: '12px', right: '12px' }}
+                checked={email.enabled}
+              />
+
+              <EnvelopeAlt fill={iconColor} width={48} height={48} />
+              <Typography color={defaultColor} variant="label">
+                Email
+              </Typography>
+            </CustomCheckBoxContainer>
+            <CustomCheckBoxContainer>
+              <StyledCheckbox
+                disabled={!mobile.supported}
+                onClick={() =>
+                  onChange(!mobile.enabled, CustomSettingKey.MOBILE)
+                }
+                style={{ position: 'absolute', top: '12px', right: '12px' }}
+                checked={mobile.enabled}
+              />
+              <CommentsAlt fill={iconColor} width={48} height={48} />
+              <Typography color={defaultColor} variant="label">
+                SMS
+              </Typography>
+            </CustomCheckBoxContainer>
+            <CustomCheckBoxContainer>
+              <StyledCheckbox
+                disabled={!whatsapp.supported}
+                onClick={() =>
+                  onChange(!whatsapp.enabled, CustomSettingKey.WHATSAPP)
+                }
+                style={{ position: 'absolute', top: '12px', right: '12px' }}
+                checked={whatsapp.enabled}
+              />
+              <WhatsApp fill={iconColor} width={48} height={48} />
+              <Typography color={defaultColor} variant="label">
+                WhatsApp
+              </Typography>
+            </CustomCheckBoxContainer>
+          </OptionsContainer>
+        </Accordion>
+      )}
+      {!isMobile && (
+        <InteractionsView
+          leftComponent={
+            <LeftComponentContainer>
+              <div className="icon-container">{<SettingsIcon />}</div>
+              <div>
+                <Typography color={defaultColor}>{title}</Typography>
+              </div>
+            </LeftComponentContainer>
+          }
+          rightComponent={
+            <OptionsContainer>
+              <DesktopCheckBoxContainer>
+                <StyledCheckbox
+                  style={{ marginRight: '16px' }}
+                  onClick={() => onChange(!push.enabled, CustomSettingKey.PUSH)}
+                  disabled={!push.supported}
+                  checked={push.enabled}
+                />
+                <Typography color={defaultColor} variant="label">
+                  Push
+                </Typography>
+              </DesktopCheckBoxContainer>
+              <DesktopCheckBoxContainer>
+                <StyledCheckbox
+                  style={{ marginRight: '16px' }}
+                  disabled={!email.supported}
+                  onClick={() =>
+                    onChange(!email.enabled, CustomSettingKey.EMAIL)
+                  }
+                  checked={email.enabled}
+                />
+                <Typography color={defaultColor} variant="label">
+                  Email
+                </Typography>
+              </DesktopCheckBoxContainer>
+              <DesktopCheckBoxContainer>
+                <StyledCheckbox
+                  style={{ marginRight: '16px' }}
+                  disabled={!mobile.supported}
+                  onClick={() =>
+                    onChange(!mobile.enabled, CustomSettingKey.MOBILE)
+                  }
+                  checked={mobile.enabled}
+                />
+                <Typography color={defaultColor} variant="label">
+                  SMS
+                </Typography>
+              </DesktopCheckBoxContainer>
+              <DesktopCheckBoxContainer>
+                <StyledCheckbox
+                  style={{ marginRight: '16px' }}
+                  disabled={!whatsapp.supported}
+                  onClick={() =>
+                    onChange(!whatsapp.enabled, CustomSettingKey.WHATSAPP)
+                  }
+                  checked={whatsapp.enabled}
+                />
+                <Typography color={defaultColor} variant="label">
+                  WhatsApp
+                </Typography>
+              </DesktopCheckBoxContainer>
+            </OptionsContainer>
+          }
+        />
+      )}
     </Container>
   );
 };
