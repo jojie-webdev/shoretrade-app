@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
@@ -9,6 +9,7 @@ import {
   readNotificationActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
+import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { notifURLMapper } from 'utils/Notification';
 
@@ -20,6 +21,28 @@ const Notifications = (): JSX.Element => {
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
+
+  const [currentCompany, setCurrentCompany] = useState<
+    UserCompany | undefined
+  >();
+
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+
+  // Mark:- Variables
+  const companyRelationship = currentCompany?.relationship || '';
+  const companies = user?.companies || [];
+
+  useEffect(() => {
+    if (!loadingUser) {
+      const c = companies || [];
+
+      setCurrentCompany(c[0]);
+    }
+  }, [loadingUser]);
 
   const { search = '' } = useLocation();
   const tabItems: TabItem[] = [
@@ -75,6 +98,7 @@ const Notifications = (): JSX.Element => {
     totalNotifs,
     handleMarkasRead,
     handleOnDelete,
+    currentCompany,
     handleNotifOnClick,
   };
 
