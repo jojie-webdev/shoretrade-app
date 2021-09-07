@@ -44,10 +44,10 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
 
   const history = useHistory();
 
-  const [isAcceptChecked, setIsAcceptChecked] = useState(false)
+  const [isAcceptChecked, setIsAcceptChecked] = useState(false);
 
   const renderCard = (carNumber: string, description: string, image: any) => (
-    <Card>
+    <Card appType={appType}>
       <Row>
         <Col>
           <div style={{ display: 'flex' }}>
@@ -59,7 +59,11 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
             >
               /
             </Typography>
-            <Typography color="shade9" weight="400" variant="title3">
+            <Typography
+              color={appType === 'buyer' ? 'shade9' : 'noshade'}
+              weight="400"
+              variant="title3"
+            >
               {carNumber}
             </Typography>
           </div>
@@ -69,7 +73,11 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
       <Row style={{ marginTop: '16px' }}>
         <Col>
           <div style={{ width: '95%' }}>
-            <Typography variant="label" color="shade7" weight="400">
+            <Typography
+              variant="label"
+              color={appType === 'buyer' ? 'shade7' : 'shade4'}
+              weight="400"
+            >
               {description}
             </Typography>
           </div>
@@ -84,7 +92,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
 
   const renderAnimation = (animatedComponent: JSX.Element) => (
     <AnimatedComponentContainer>
-      <CircleBackground />
+      <CircleBackground appType={appType}/>
       <div style={{ position: 'absolute' }}>{animatedComponent}</div>
     </AnimatedComponentContainer>
   );

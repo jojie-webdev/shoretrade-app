@@ -109,7 +109,8 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Here you can set the quantity you want to purchase either as a range or a fixed amount.
+              Let the Sellers know how much you want to purchase by entering a
+              range in the boxes below.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -187,12 +188,14 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               disabled={from === '' || to === ''}
               text="Proceed"
               variant="primary"
-              icon={<ChevronRight
-                width={14}
-                height={12}
-                fill="white"
-                style={{ paddingBottom: '2px' }}
-              />}
+              icon={
+                <ChevronRight
+                  width={14}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />
+              }
             />
           </MobileFooter>
         </ContainerWithCategoryImagePreview>

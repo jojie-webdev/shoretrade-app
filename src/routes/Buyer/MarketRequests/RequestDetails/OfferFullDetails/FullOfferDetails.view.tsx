@@ -4,6 +4,7 @@ import Badge from 'components/base/Badge/Badge.view';
 import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
+import moment from 'moment';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -202,11 +203,13 @@ const FullOfferDetails = (props: any) => {
   const specsValue = offer?.specifications
     ?.map((spec: string) => spec?.toUpperCase())
     ?.join(', ');
+
   const sizeValue = sizeToString(
     offer?.metric || '',
     offer?.size?.from,
     offer?.size?.to
   ).toUpperCase();
+
   const quantityValue = offer?.weight + ' ' + offer?.measurementUnit;
 
   return (
@@ -215,13 +218,22 @@ const FullOfferDetails = (props: any) => {
         <Row>
           <Col>
             {renderLabel('SPECIFICATION')}
-            {renderLabelValue(specsValue)}
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {offer?.specifications.map((spec) => (
+                <div style={{ marginRight: 8 }}>{renderLabelValue(spec)}</div>
+              ))}
+            </div>
 
             {renderLabel('SIZE', { marginTop: '24px' })}
             {renderLabelValue(sizeValue)}
 
             {renderLabel('QUANTITY', { marginTop: '24px' })}
             {renderLabelValue(quantityValue)}
+
+            {renderLabel('Delivery Date', { marginTop: '24px' })}
+            {renderLabelValue(
+              moment(offer?.deliveryDate).format('MMMM DD, YYYY')
+            )}
           </Col>
           <CompanyInfoCol xl={3}>
             <div style={{ display: 'flex' }}>

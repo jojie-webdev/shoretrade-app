@@ -46,12 +46,12 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     handleNotifOnClick,
   } = props;
 
-  const isMobile = useMediaQuery({
-    query: BREAKPOINTS.sm,
+  const isNonDesktop = useMediaQuery({
+    query: BREAKPOINTS.nonDesktop,
   });
 
   const handleBellClick = () => {
-    if (isMobile) {
+    if (isNonDesktop) {
       history.push(notifsRoute);
     } else {
       setIsComponentVisible(!isComponentVisible);
@@ -68,7 +68,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   };
 
   const bellColor = () => {
-    if (isMobile) {
+    if (isNonDesktop) {
       return theme.grey.noshade;
     } else if (isSeller) {
       return theme.grey.noshade;

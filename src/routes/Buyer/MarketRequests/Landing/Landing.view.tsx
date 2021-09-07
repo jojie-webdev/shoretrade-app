@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import Case from 'case';
 import Badge from 'components/base/Badge';
@@ -22,6 +22,7 @@ import {
 } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -77,7 +78,7 @@ export const MarketRequestItemNonMobile = (props: {
     paymentRequired,
   } = props;
 
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
   const offerNumberBadge = () => {
     return (
@@ -91,17 +92,18 @@ export const MarketRequestItemNonMobile = (props: {
     );
   };
 
-  const getOfferById = (): Offer => {
-    activeOffersData.forEach((activeOffer) => {
-      activeOffer.offers.forEach((offer) => {
-        if (offer.id === id) {
-          return offer;
-        }
-      });
-    });
-
-    return {} as Offer;
-  };
+  const renderNewOfferBadge = () => (
+    <div className="sub-group">
+      <SubText variant="small">
+        {paymentRequired
+          ? isMobile
+            ? renderPaymentRequiredBadgeForMobile()
+            : renderPaymentRequiredBadge()
+          : hasNewOffer(offers) &&
+            offerStatusBadge(inDetail, offers?.length, offerStatus)}
+      </SubText>
+    </div>
+  );
 
   return (
     <MarketRequestItemContainer>
@@ -109,62 +111,80 @@ export const MarketRequestItemNonMobile = (props: {
         <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
-        <div className="sub-group">
-          <TypographyView variant="label">{type}</TypographyView>
-          <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
-        </div>
-        <div className="sub-group">
-          {buildSize(metric, size?.to?.toString(), size?.from?.toString()) && (
-            <SubText variant="caption">{`Size: ${buildSize(
-              metric,
-              size?.to?.toString(),
-              size?.from?.toString()
-            )}`}</SubText>
-          )}
-          <SubText variant="caption">
-            {weight &&
-              `Qty: ${weight.from}${measurementUnit?.toLocaleLowerCase()} ~ ${
-                weight.to
-              }${measurementUnit?.toLocaleLowerCase()}`}
-          </SubText>
-        </div>
-        <div className="sub-group">
-          <SubText
-            variant="caption"
-            color={expiry === 'Expired' ? 'error' : 'primary'}
-          >
-            {expiry === 'Expired' ? expiry : `${expiry} left`}
-          </SubText>
-        </div>
-        <BadgesContainer>
+        <Col style={{ padding: '0 5px' }}>
           <div className="sub-group">
-            <SubText variant="small">{offerNumberBadge()}</SubText>
+            <TypographyView variant="label">{type}</TypographyView>
+            <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
           </div>
+        </Col>
+
+        <Col style={{ padding: '0 5px' }}>
           <div className="sub-group">
-            <SubText variant="small">
-              {paymentRequired
-                ? renderPaymentRequiredBadge()
-                : hasNewOffer(offers) &&
-                  offerStatusBadge(inDetail, offers?.length, offerStatus)}
+            {buildSize(
+              metric,
+              size?.from?.toString(),
+              size?.to?.toString(),
+              size?.options
+            ) && (
+              <SubText variant="caption">{`Size: ${buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              )}`}</SubText>
+            )}
+            <SubText variant="caption">
+              {weight &&
+                `Qty: ${weight.from} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )} ~ ${weight.to} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )}`}
             </SubText>
           </div>
-        </BadgesContainer>
-        <div className="sub-group">
-          <Button
-            iconPosition="before"
-            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-            onClick={
-              setItemToDelete &&
-              ((e) => {
-                e.stopPropagation();
-                setItemToDelete({ value: id || '' });
-              })
-            }
-            variant="primary"
-            size="sm"
-            className="delete-button"
-          />
-        </div>
+        </Col>
+
+        <Col sm={1} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <SubText
+              variant="caption"
+              color={expiry === 'Expired' ? 'error' : 'primary'}
+            >
+              {expiry === 'Expired' ? expiry : `${expiry} left`}
+            </SubText>
+          </div>
+        </Col>
+
+        <Col style={{ padding: '0 5px' }}>
+          <BadgesContainer>
+            {offers?.length === 1 ? (
+              renderNewOfferBadge()
+            ) : (
+              <div className="sub-group">
+                <SubText variant="small">{offerNumberBadge()}</SubText>
+              </div>
+            )}
+          </BadgesContainer>
+        </Col>
+
+        <Col sm={1} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <Button
+              iconPosition="before"
+              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+              onClick={
+                setItemToDelete &&
+                ((e) => {
+                  e.stopPropagation();
+                  setItemToDelete({ value: id || '' });
+                })
+              }
+              variant="primary"
+              size="sm"
+              className="delete-button"
+            />
+          </div>
+        </Col>
       </div>
     </MarketRequestItemContainer>
   );
@@ -200,7 +220,7 @@ export const MarketRequestItemMobile = (props: {
   } = props;
 
   const offersText =
-    offers.length === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
+    offers?.length === 1 ? `1 Offer` : `${offers?.length || 'No'} Offers`;
 
   const offersMarkup = () => {
     if (inDetail) return '';
@@ -241,13 +261,22 @@ export const MarketRequestItemMobile = (props: {
     </>
   );
 
+  const renderNewOffersBadge = () =>
+    paymentRequired
+      ? renderPaymentRequiredBadge()
+      : offerStatusBadge(inDetail, offers?.length, offerStatus);
+
   const displayBadges = () => {
     return (
       <Badges>
-        {offersMarkup()}
-        {paymentRequired
-          ? renderPaymentRequiredBadge()
-          : offerStatusBadge(inDetail, offers?.length, offerStatus)}
+        {offers?.length === 1 ? (
+          renderNewOffersBadge()
+        ) : (
+          <>
+            {offersMarkup()}
+            {renderNewOffersBadge()}
+          </>
+        )}
       </Badges>
     );
   };
@@ -277,7 +306,7 @@ export const MarketRequestItemMobile = (props: {
                 '-' +
                 weight?.to +
                 ' ' +
-                Case.pascal(measurementUnit || '')
+                Case.pascal(formatUnitToPricePerUnit(measurementUnit || ''))
             )}
           </SubMinorDetail>
 
@@ -286,8 +315,12 @@ export const MarketRequestItemMobile = (props: {
           <SubMinorDetail>
             {subMinorDetail(
               'Size',
-              buildSize(metric, size?.to?.toString(), size?.from?.toString()) ||
-                'None'
+              buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              ) || 'None'
             )}
           </SubMinorDetail>
         </SubMinorInfo>
@@ -302,6 +335,17 @@ const renderPaymentRequiredBadge = () => (
   <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
     <BadgeText variant="overline" style={{ color: theme.brand.error }}>
       PAYMENT REQUIRED
+    </BadgeText>
+  </Badge>
+);
+
+const renderPaymentRequiredBadgeForMobile = () => (
+  <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
+    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
+      PAYMENT
+    </BadgeText>
+    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
+      REQUIRED
     </BadgeText>
   </Badge>
 );
@@ -439,13 +483,13 @@ const MarketRequestsLandingView = (
         textMobile2="Can’t find your product?"
         textMobile3="Create a new Market Request"
         cardText1={
-          'Search in our Database and choose between more than 50+  Categories'
+          'Search for the product you want to request  and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
         }
         cardText2={
-          'Select specifications, size, quantity and send your request to the market'
+          'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
         }
         cardText3={
-          'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade'
+          'Process the payment for accepted offers and get real time delivery updates.'
         }
         isAcceptClicked={isAcceptClicked}
         setIsAcceptClicked={setIsAcceptClicked}
@@ -527,15 +571,35 @@ const MarketRequestsLandingView = (
 function buildSize(
   metric: string,
   sizeFrom: string | undefined,
-  sizeTo: string | undefined
+  sizeTo: string | undefined,
+  options: any
 ) {
-  const _buildSize = sizeToString(
+  let buildSize = sizeToString(
     metric,
     sizeFrom?.toString(),
     sizeTo?.toString()
   );
 
-  return _buildSize;
+  const getCorrectedSize = () => {
+    if (options && Array.isArray(options) && options.length > 1) {
+      return 'Various';
+    }
+
+    return buildSize;
+  };
+
+  if (!sizeFrom) {
+    if (options && Array.isArray(options)) {
+      buildSize = options.join(',');
+    }
+
+    buildSize = getCorrectedSize();
+  } else {
+    buildSize = buildSize.replace('-', 'to');
+    buildSize = getCorrectedSize();
+  }
+
+  return buildSize;
 }
 
 export default MarketRequestsLandingView;

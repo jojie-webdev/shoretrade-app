@@ -148,6 +148,12 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     getFilteredSpecifications().length !== selectedGroups.length &&
     getFilteredSpecifications().length >= selectedGroups.length;
 
+  const getSpecsByGroup = (index: number) => {
+    const specs =
+      index === 0 ? 'Preservations' : index === 1 ? 'State' : 'Condition';
+
+    return specs;
+  };
   return (
     <>
       <CreateRequestHeaderContainer>
@@ -199,7 +205,11 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           </Hidden>
           <TitleContainer>
-            <StyledTitle variant="title5" weight="500">
+            <StyledTitle
+              variant="title5"
+              weight="500"
+              style={{ marginBottom: 12 }}
+            >
               {listingFormData?.type.name}
             </StyledTitle>
             <Typography variant="label" weight="400" color="shade7">
@@ -220,7 +230,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                     color="shade6"
                     style={{ marginBottom: 12 }}
                   >
-                    {`Specs ${index + 1}`}
+                    {getSpecsByGroup(index)}
                   </Typography>
                   <div className="spec-row">
                     {group.map((item) => (

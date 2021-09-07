@@ -21,6 +21,7 @@ export const AnimatedImageContainer = styled.div`
   margin-top: auto;
   width: 100%;
   position: relative;
+  padding-bottom: 20px;
 `;
 
 export const AnimatedImageSubContainer = styled.div`
@@ -30,13 +31,14 @@ export const AnimatedImageSubContainer = styled.div`
   width: fit-content;
 `;
 
-export const Card = styled.div`
+export const Card = styled.div<{ appType: string }>`
   display: flex;
   flex-direction: column;
   padding: 24px 40px 48px 40px;
   max-width: 310.67px;
   height: 100%;
-  background: #ffffff;
+  background: ${({ theme, appType }) =>
+    appType === 'buyer' ? '#fff' : theme.grey.shade10};
   border: 1px solid #dadff2;
   box-sizing: border-box;
   border-radius: 12px;
@@ -46,10 +48,11 @@ export const Card = styled.div`
   }
 `;
 
-export const CircleBackground = styled.div`
+export const CircleBackground = styled.div<{ appType: string }>`
   width: 150px;
   height: 150px;
-  background-color: ${({ theme }) => theme.grey.shade1};
+  background-color: ${({ theme, appType }) =>
+    appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade10};
   border-radius: 50%;
 `;
 
