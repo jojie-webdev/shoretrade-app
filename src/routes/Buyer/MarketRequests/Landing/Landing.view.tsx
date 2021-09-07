@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import Case from 'case';
 import Badge from 'components/base/Badge';
@@ -78,6 +78,8 @@ export const MarketRequestItemNonMobile = (props: {
     paymentRequired,
   } = props;
 
+  const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
+
   const offerNumberBadge = () => {
     return (
       <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
@@ -94,7 +96,9 @@ export const MarketRequestItemNonMobile = (props: {
     <div className="sub-group">
       <SubText variant="small">
         {paymentRequired
-          ? renderPaymentRequiredBadge()
+          ? isMobile
+            ? renderPaymentRequiredBadgeForMobile()
+            : renderPaymentRequiredBadge()
           : hasNewOffer(offers) &&
             offerStatusBadge(inDetail, offers?.length, offerStatus)}
       </SubText>
@@ -107,69 +111,80 @@ export const MarketRequestItemNonMobile = (props: {
         <img src={parseImageUrl(image)} />
       </div>
       <div className="info-container">
-        <div className="sub-group">
-          <TypographyView variant="label">{type}</TypographyView>
-          <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
-        </div>
-        <div className="sub-group">
-          {buildSize(
-            metric,
-            size?.from?.toString(),
-            size?.to?.toString(),
-            size?.options
-          ) && (
-            <SubText variant="caption">{`Size: ${buildSize(
+        <Col style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <TypographyView variant="label">{type}</TypographyView>
+            <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
+          </div>
+        </Col>
+
+        <Col style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            {buildSize(
               metric,
               size?.from?.toString(),
               size?.to?.toString(),
               size?.options
-            )}`}</SubText>
-          )}
-          <SubText variant="caption">
-            {weight &&
-              `Qty: ${weight.from} ${formatUnitToPricePerUnit(
-                measurementUnit?.toLocaleLowerCase()
-              )} ~ ${weight.to} ${formatUnitToPricePerUnit(
-                measurementUnit?.toLocaleLowerCase()
-              )}`}
-          </SubText>
-        </div>
-        <div className="sub-group">
-          <SubText
-            variant="caption"
-            color={expiry === 'Expired' ? 'error' : 'primary'}
-          >
-            {expiry === 'Expired' ? expiry : `${expiry} left`}
-          </SubText>
-        </div>
-        <BadgesContainer>
-          {offers?.length === 1 ? (
-            renderNewOfferBadge()
-          ) : (
-            <>
+            ) && (
+              <SubText variant="caption">{`Size: ${buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              )}`}</SubText>
+            )}
+            <SubText variant="caption">
+              {weight &&
+                `Qty: ${weight.from} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )} ~ ${weight.to} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )}`}
+            </SubText>
+          </div>
+        </Col>
+
+        <Col sm={1} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <SubText
+              variant="caption"
+              color={expiry === 'Expired' ? 'error' : 'primary'}
+            >
+              {expiry === 'Expired' ? expiry : `${expiry} left`}
+            </SubText>
+          </div>
+        </Col>
+
+        <Col style={{ padding: '0 5px' }}>
+          <BadgesContainer>
+            {offers?.length === 1 ? (
+              renderNewOfferBadge()
+            ) : (
               <div className="sub-group">
                 <SubText variant="small">{offerNumberBadge()}</SubText>
               </div>
-              {renderNewOfferBadge()}
-            </>
-          )}
-        </BadgesContainer>
-        <div className="sub-group">
-          <Button
-            iconPosition="before"
-            icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-            onClick={
-              setItemToDelete &&
-              ((e) => {
-                e.stopPropagation();
-                setItemToDelete({ value: id || '' });
-              })
-            }
-            variant="primary"
-            size="sm"
-            className="delete-button"
-          />
-        </div>
+            )}
+          </BadgesContainer>
+        </Col>
+
+        <Col sm={1} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <Button
+              iconPosition="before"
+              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+              onClick={
+                setItemToDelete &&
+                ((e) => {
+                  e.stopPropagation();
+                  setItemToDelete({ value: id || '' });
+                })
+              }
+              variant="primary"
+              size="sm"
+              className="delete-button"
+            />
+          </div>
+        </Col>
       </div>
     </MarketRequestItemContainer>
   );
@@ -320,6 +335,17 @@ const renderPaymentRequiredBadge = () => (
   <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
     <BadgeText variant="overline" style={{ color: theme.brand.error }}>
       PAYMENT REQUIRED
+    </BadgeText>
+  </Badge>
+);
+
+const renderPaymentRequiredBadgeForMobile = () => (
+  <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
+    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
+      PAYMENT
+    </BadgeText>
+    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
+      REQUIRED
     </BadgeText>
   </Badge>
 );

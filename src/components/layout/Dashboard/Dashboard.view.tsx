@@ -99,8 +99,8 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
   const theme = useTheme();
   const history = useHistory();
 
-  const isMobile = useMediaQuery({
-    query: BREAKPOINTS.sm,
+  const isNonDesktop = useMediaQuery({
+    query: BREAKPOINTS.nonDesktop,
   });
 
   return (
@@ -109,7 +109,9 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
         className="icon-wrapper"
         onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
       >
-        <CartIcon fill={isMobile ? theme.grey.noshade : theme.grey.shade8} />
+        <CartIcon
+          fill={isNonDesktop ? theme.grey.noshade : theme.grey.shade8}
+        />
         {cartItems > 0 && (
           <CheckoutCount>
             <Typography color="noshade" variant="small" weight="900">
@@ -148,13 +150,13 @@ const Header = ({
     query: BREAKPOINTS.genericTablet,
   });
 
-  const isMobile = useMediaQuery({
-    query: BREAKPOINTS.sm,
+  const isVisibleTopMenuBar = useMediaQuery({
+    query: BREAKPOINTS.nonDesktop,
   });
 
   const isHomeOld = useHomeOld();
 
-  return isMobile ? (
+  return isVisibleTopMenuBar ? (
     <MobileNav
       onBackOverride={onBack}
       showLogo={!onBack}
@@ -298,37 +300,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
         openSidebar={openSidebar}
         onClick={() => onClickOpenSideBar(!openSidebar)}
       />
-
-      {showSmallSidebar && (
-        <TabletSidebar>
-          <HamburgerWrapper onClick={() => onClickOpenSideBar(!openSidebar)}>
-            <Hamburger
-              onClick={() => onClickOpenSideBar(!openSidebar)}
-              isActive={openSidebar}
-              width={20}
-              height={10}
-              color={theme.grey.noshade}
-            />
-          </HamburgerWrapper>
-
-          {routes.map((route) => (
-            <IconLink
-              onClick={() => {
-                if (openSidebar) {
-                  onClickOpenSideBar(false);
-                }
-              }}
-              key={`sidenav-${route.path}`}
-              isActive={isInnerRoute(route.path)}
-              to={route.path}
-              iconColor={
-                isInnerRoute(route.path) ? theme.grey.noshade : iconColor
-              }
-              Icon={route.icon}
-            />
-          ))}
-        </TabletSidebar>
-      )}
 
       <Sidebar openSidebar={openSidebar}>
         <div className="wrapper">

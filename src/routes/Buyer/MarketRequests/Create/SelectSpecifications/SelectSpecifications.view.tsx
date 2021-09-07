@@ -148,6 +148,12 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     getFilteredSpecifications().length !== selectedGroups.length &&
     getFilteredSpecifications().length >= selectedGroups.length;
 
+  const getSpecsByGroup = (index: number) => {
+    const specs =
+      index === 0 ? 'Preservations' : index === 1 ? 'State' : 'Condition';
+
+    return specs;
+  };
   return (
     <>
       <CreateRequestHeaderContainer>
@@ -224,7 +230,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                     color="shade6"
                     style={{ marginBottom: 12 }}
                   >
-                    {`Specs ${index + 1}`}
+                    {getSpecsByGroup(index)}
                   </Typography>
                   <div className="spec-row">
                     {group.map((item) => (
