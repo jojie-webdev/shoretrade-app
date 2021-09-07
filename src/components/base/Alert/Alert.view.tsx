@@ -12,7 +12,7 @@ import {
 import { SVGProps } from '../SVG/SVG.props';
 import Typography from '../Typography';
 import { AlertProps } from './Alert.props';
-import { Container } from './Alert.style';
+import { AlertContainer, Container } from './Alert.style';
 
 const Alert = (props: AlertProps): JSX.Element => {
   const theme = useTheme();
@@ -35,7 +35,7 @@ const Alert = (props: AlertProps): JSX.Element => {
     Icon = InfoFilled;
     IconFill = theme.brand.info;
   } else if (variant === 'infoAlert') {
-    Icon = InfoFilled;
+    Icon = QuestionFilled;
     IconFill = theme.brand.alert;
   } else if (variant === 'alert') {
     Icon = QuestionFilled;
@@ -84,9 +84,9 @@ const Alert = (props: AlertProps): JSX.Element => {
             {content}
           </Typography>
         </div>
-
-        {iconRight && <div>{iconRight}</div>}
       </div>
+
+      {iconRight && <AlertContainer>{iconRight}</AlertContainer>}
     </Container>
   );
 };

@@ -96,6 +96,10 @@ export const SummaryContentContainer = styled.div`
       }
     }
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 16px;
+  }
 `;
 
 export const BadgeText = styled(TypographyView)`

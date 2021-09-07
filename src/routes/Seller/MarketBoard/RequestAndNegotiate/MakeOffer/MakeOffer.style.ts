@@ -114,3 +114,8 @@ export const SummaryCard = styled.div`
     margin-left: 6px;
   }
 `;
+
+export const MobileFromToTextFieldsContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
+import Divider from 'components/base/Divider';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import MobileModal from 'components/layout/MobileModal';
@@ -30,7 +31,7 @@ const Content = (props: NegotiateSellerModalProps) => {
     ...modalProps
   } = props;
   const theme = useTheme();
-  const textColor = 'noshade';
+  const textColor = 'shade7';
 
   const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
     undefined
@@ -67,7 +68,7 @@ const Content = (props: NegotiateSellerModalProps) => {
       <Typography
         weight="bold"
         variant="title4"
-        color={textColor}
+        color="noshade"
         style={{ fontFamily: 'Media Sans' }}
       >
         Negotiate
@@ -77,7 +78,7 @@ const Content = (props: NegotiateSellerModalProps) => {
         <StyledTextField
           type="number"
           inputType="decimal"
-          label={'Make a new Offer'}
+          label={'Counter offer'}
           value={negotiationPrice}
           onChangeText={(v) => {
             setNegotiationPrice(parseFloat(v));
@@ -91,17 +92,36 @@ const Content = (props: NegotiateSellerModalProps) => {
         />
       </Inputs>
       <ComputationContainer>
+        <div className="computation-item-container">
+          <Typography variant="body" weight="400" color={textColor}>
+            Original offer was
+          </Typography>
+          <Typography variant="body" weight="400" color={textColor}>
+            {toPrice(marketOffer.price)}/{unit}
+          </Typography>
+        </div>
+
         {sortedNegotiations.length >= 1 && (
           <div className="computation-item-container">
-            <Typography variant="body" color={textColor}>
-              Buyer&apos;s Counter Offer
+            <Typography variant="body" weight="400" color={textColor}>
+              Buyer&apos;s counter offer
             </Typography>
-            <Typography variant="body" color={textColor}>
+            <Typography variant="body" weight="400" color={textColor}>
               {toPrice(latestCounterOffer.price)}/{unit}
             </Typography>
           </div>
         )}
 
+        <div className="computation-item-container">
+          <Typography variant="body" weight="400" color={textColor}>
+            Your counter offer is
+          </Typography>
+          <Typography variant="body" weight="400" color={textColor}>
+            {toPrice(negotiationPrice || 0)}/{unit}
+          </Typography>
+        </div>
+
+        {/* 
         {latestCounterOffer && sortedNegotiations.length <= 3 && (
           <div className="computation-item-container">
             <Typography variant="body" color={textColor}>
@@ -111,20 +131,18 @@ const Content = (props: NegotiateSellerModalProps) => {
               {toPrice(negotiationPrice || 0)}/{unit}
             </Typography>
           </div>
-        )}
+        )} */}
 
         <div className="computation-item-container">
-          <Typography variant="body" color={textColor}>
-            Change in Price{' '}
-            <span className="indicator">{`${
-              discountValue > 0 ? '+' : ''
-            }${discountPercentage}%`}</span>
+          <Typography variant="body" weight="400" color={textColor}>
+            Change in value{' '}
+            <span
+              className="indicator"
+              style={{ color: theme.grey.noshade }}
+            >{`${discountValue > 0 ? '+' : ''}${discountPercentage}%`}</span>
           </Typography>
           {discountValue !== 0 ? (
-            <Typography
-              color={discountValue >= 0 ? 'success' : 'error'}
-              variant="body"
-            >
+            <Typography weight="400" color={textColor} variant="body">
               {toPrice(discountValue)}/{formatMeasurementUnit(unit)}
             </Typography>
           ) : (
@@ -133,11 +151,14 @@ const Content = (props: NegotiateSellerModalProps) => {
             </Typography>
           )}
         </div>
+
+        <Divider backgroundColor={theme.grey.shade7} />
+
         <div className="computation-item-container total-delivery">
           <Typography variant="body" weight="bold" color={textColor}>
             Total Value inc. Delivery
           </Typography>
-          <Typography variant="body" weight="bold" color={textColor}>
+          <Typography variant="body" weight="bold" color="noshade">
             {toPrice(totalValue)}
           </Typography>
         </div>
@@ -169,6 +190,7 @@ const Content = (props: NegotiateSellerModalProps) => {
           }}
           takeFullWidth
           loading={isNegotiating}
+          style={{ borderRadius: 12 }}
         />
       </MobileFooter>
     </>
@@ -192,7 +214,7 @@ const NegotiateSellerModal = (
   return (
     <>
       <ModalLayout
-        backgroundColor={theme.grey.shade8}
+        backgroundColor={theme.grey.shade10}
         style={{
           width: '',
           maxWidth: 430,

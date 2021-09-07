@@ -51,11 +51,16 @@ export const Container = styled.div`
   }
 `;
 
-export const Dropdown = styled.div<{ active: boolean; error?: boolean }>`
+export const Dropdown = styled.div<{
+  active: boolean;
+  error?: boolean;
+  height?: string;
+  borderRadius?: string;
+}>`
   background: ${(props) => props.theme.grey.noshade};
   padding: 12px;
-  border-radius: 4px;
-  height: 48px;
+  border-radius: ${({ borderRadius }) => borderRadius || '4px'};
+  height: ${({ height }) => height || '48px'};
   width: 100%;
   border: 1px solid
     ${({ theme, active, error }) =>

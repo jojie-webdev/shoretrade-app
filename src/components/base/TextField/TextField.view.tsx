@@ -70,6 +70,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         error={(error || '').length > 0}
         readOnly={props.readOnly}
         borderRadius={props.borderRadius}
+        height={props.height?.toString()}
       >
         {LeftComponent && (
           <LeftComponentContainer disabled={disabled}>

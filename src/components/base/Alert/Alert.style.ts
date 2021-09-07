@@ -50,3 +50,8 @@ export const Container = styled.div<AlertContainerProps>`
     }
   }
 `;
+
+export const AlertContainer = styled.div`
+  margin: auto;
+  padding: 0px 20px 0px 0px;
+`;
