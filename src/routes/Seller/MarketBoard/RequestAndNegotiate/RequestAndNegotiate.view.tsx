@@ -655,6 +655,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
             disabled={props.userPending}
             text="Make an offer"
             variant={props.userPending ? 'disabled' : 'primary'}
+            style={{ borderRadius: '12px' }}
           />
         </MobileFooter>
       )}

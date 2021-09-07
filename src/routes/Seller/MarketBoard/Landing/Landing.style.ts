@@ -1,3 +1,5 @@
+import Badge from 'components/base/Badge';
+import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
@@ -86,4 +88,37 @@ export const FilterButton = styled.button`
 
 export const BadgeText = styled(Typography)`
   font-size: ${pxToRem(12)};
+`;
+
+export const ItemInteraction = styled(Interactions)`
+  justify-content: initial;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  padding: 8px;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px;
+  }
+
+  padding-right: 12px;
+  align-items: center;
+
+  .left-content {
+    flex-grow: 2;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    height: 140px;
+    align-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 10px;
+  }
+`;
+
+export const StyledBadge = styled(Badge)`
+  height: 22px;
+  border-radius: 8px;
 `;

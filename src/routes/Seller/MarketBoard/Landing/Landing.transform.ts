@@ -210,3 +210,85 @@ export const hasShippingAddress = (
 
   return hasAddress;
 };
+
+export const getOfferByMarketRequest = (
+  data: GetAllMarketRequestResponseItem,
+  activeOffers?: GetActiveOffersRequestResponseItem[]
+) => {
+  const _offer = activeOffers?.find(
+    (offer) => offer.marketRequest.id === data.id
+  );
+
+  return _offer;
+};
+
+export const isPaymentRequired = (
+  data: GetAllMarketRequestResponseItem,
+  activeOffers?: GetActiveOffersRequestResponseItem[]
+) => {
+  const { status, negotiations } =
+    getOfferByMarketRequest(data, activeOffers) || {};
+
+  if (!negotiations) {
+    return false;
+  }
+
+  if (negotiations?.length === 0) {
+    return false;
+  }
+
+  const isPaymentRequired =
+    status === 'OPEN' && negotiations[0]?.price === negotiations[1]?.price;
+
+  return isPaymentRequired;
+};
+
+export const isPaymentPending = (
+  data: GetAllMarketRequestResponseItem,
+  activeOffers?: GetActiveOffersRequestResponseItem[]
+) => {
+  const { negotiations } = getOfferByMarketRequest(data, activeOffers) || {};
+
+  if (!negotiations) {
+    return false;
+  }
+
+  if (negotiations?.length === 0) {
+    return false;
+  }
+
+  const hours = moment().diff(moment(negotiations[0]?.created_at), 'hours');
+  const isPending = 24 > hours;
+
+  return isPending;
+};
+
+export const getStatusBadgeColor = (
+  status: GetActiveOffersRequestResponseItem['status']
+) => {
+  if (status === 'OPEN') return theme.brand.alert;
+  if (status === 'ACCEPTED') return theme.brand.success;
+  if (status === 'DECLINED') return theme.brand.error;
+  if (status === 'CLOSED') return theme.brand.error;
+  return '';
+};
+
+export const isOfferMade = (
+  data: GetAllMarketRequestResponseItem,
+  activeOffers?: GetActiveOffersRequestResponseItem[]
+) => {
+  const { status } = getOfferByMarketRequest(data, activeOffers) || {};
+  const isOfferMade = status === 'OPEN';
+
+  return isOfferMade;
+};
+
+export const getStatus = (
+  status: GetActiveOffersRequestResponseItem['status']
+) => {
+  if (status === 'OPEN') return 'NEGOTIATION';
+  if (status === 'ACCEPTED') return 'ACCEPTED';
+  if (status === 'DECLINED') return 'LOST';
+  if (status === 'CLOSED') return 'DECLINED';
+  return '';
+};

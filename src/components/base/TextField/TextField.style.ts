@@ -8,13 +8,14 @@ export const FieldContainer = styled.div<{
   error: boolean;
   readOnly?: boolean;
   borderRadius?: string;
+  height?: string;
 }>`
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: 4px;
   width: 100%;
-  height: 48px;
+  height: ${({ height }) => height || '48px'};
   box-sizing: border-box;
   border-radius: ${({ borderRadius }) => borderRadius || '4px'};
   border: 1px solid

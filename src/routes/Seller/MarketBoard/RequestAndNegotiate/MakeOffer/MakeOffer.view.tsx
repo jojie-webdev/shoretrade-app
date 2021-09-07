@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
@@ -6,7 +7,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select/Select.view';
-import { Cross7 } from 'components/base/SVG';
+import { Cross7, Close } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -14,7 +15,7 @@ import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerD
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isEmpty, pathOr } from 'ramda';
-import { Col, Row } from 'react-grid-system';
+import { Col, Row, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { capitalize } from 'utils/String';
@@ -25,12 +26,86 @@ import {
   Container,
   Error,
   MetricContainer,
+  MobileFromToTextFieldsContainer,
   SummaryCard,
 } from './MakeOffer.style';
 
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
+
+  const renferFromTextField = () => (
+    <TextField
+      label="From"
+      placeholder={props.buyerRequest?.sizeFrom?.toString() || ''}
+      value={props.size.from}
+      onChangeText={(v) =>
+        props.setSize((prevState) => ({
+          from: v,
+          to: prevState.to && prevState.to !== 'ungraded' ? prevState.to : '',
+        }))
+      }
+      min={props.buyerRequest.sizeFrom}
+      type="number"
+      inputType="decimal"
+      error={pathOr('', ['sizeFrom', '0'], errors)}
+      borderRadius="12px"
+      height="40px"
+    />
+  );
+
+  const renderToTextField = () => (
+    <TextField
+      label={`To\n(Optional)`}
+      placeholder={props.buyerRequest?.sizeTo?.toString() || ''}
+      value={props.size.to}
+      onChangeText={(v) => {
+        props.setSize((prevState) => ({
+          from:
+            prevState.from && prevState.from !== 'ungraded'
+              ? prevState.from
+              : '',
+          to: v,
+        }));
+      }}
+      min={1}
+      max={props.buyerRequest.sizeTo}
+      type="number"
+      inputType="decimal"
+      error={pathOr('', ['sizeTo', '0'], errors)}
+      borderRadius="12px"
+      height="40px"
+    />
+  );
+
+  const renderFromToTextFieldsDesktop = () => (
+    <Hidden xs sm>
+      {props.buyerRequest.sizeFrom && (
+        <Col md={6} style={{ marginBottom: 16 }}>
+          {renferFromTextField()}
+        </Col>
+      )}
+
+      {props.buyerRequest.sizeTo && (
+        <Col md={6} style={{ marginBottom: 16 }}>
+          {renderToTextField()}
+        </Col>
+      )}
+    </Hidden>
+  );
+
+  const renderFromToTextFieldsMobile = () => (
+    <Visible xs sm>
+      <MobileFromToTextFieldsContainer>
+        {props.buyerRequest.sizeFrom && (
+          <Col style={{ marginBottom: 16 }}>{renferFromTextField()}</Col>
+        )}
+        {props.buyerRequest.sizeTo && (
+          <Col style={{ marginBottom: 16 }}>{renderToTextField()}</Col>
+        )}
+      </MobileFromToTextFieldsContainer>
+    </Visible>
+  );
 
   return (
     <Container>
@@ -39,13 +114,18 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Alert
             variant="infoAlert"
             fullWidth
+            header={
+              'When you are making an offer you are committing to sell this product to this buyer.'
+            }
             content={
-              'When you are making an offer you are committing to sell this product to this buyer. ' +
               'You need to make sure that the product is available if the buyer accepts.'
             }
             style={{
               marginBottom: 32,
             }}
+            iconRight={
+              <Close width={20} height={20} fill={theme.grey.shade4} />
+            }
           />
 
           {props.stateOptions.map((options, i) => {
@@ -126,52 +206,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               </Col>
             ))}
 
-            {props.buyerRequest.sizeFrom && (
-              <Col md={6} style={{ marginBottom: 16 }}>
-                <TextField
-                  label="From"
-                  placeholder={props.buyerRequest.sizeFrom.toString()}
-                  value={props.size.from}
-                  onChangeText={(v) =>
-                    props.setSize((prevState) => ({
-                      from: v,
-                      to:
-                        prevState.to && prevState.to !== 'ungraded'
-                          ? prevState.to
-                          : '',
-                    }))
-                  }
-                  min={props.buyerRequest.sizeFrom}
-                  type="number"
-                  inputType="decimal"
-                  error={pathOr('', ['sizeFrom', '0'], errors)}
-                />
-              </Col>
-            )}
-
-            {props.buyerRequest.sizeTo && (
-              <Col md={6} style={{ marginBottom: 16 }}>
-                <TextField
-                  label={`To\n(Optional)`}
-                  placeholder={props.buyerRequest.sizeTo.toString()}
-                  value={props.size.to}
-                  onChangeText={(v) => {
-                    props.setSize((prevState) => ({
-                      from:
-                        prevState.from && prevState.from !== 'ungraded'
-                          ? prevState.from
-                          : '',
-                      to: v,
-                    }));
-                  }}
-                  min={1}
-                  max={props.buyerRequest.sizeTo}
-                  type="number"
-                  inputType="decimal"
-                  error={pathOr('', ['sizeTo', '0'], errors)}
-                />
-              </Col>
-            )}
+            {renderFromToTextFieldsMobile()}
+            {renderFromToTextFieldsDesktop()}
           </Row>
 
           <div className="checkbox-container ungraded">
@@ -198,59 +234,109 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           ) : null}
 
           <Row className="textfield-row">
-            <Col md={4} className="textfield-col">
-              <TextField
-                label="Quantity"
-                LeftComponent={
-                  <Typography variant="label" weight="bold" color="shade6">
-                    {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
-                  </Typography>
-                }
-                value={props.weight}
-                onChangeText={props.setWeight}
-                min={1}
-                type="number"
-                inputType="decimal"
-                error={pathOr('', ['weight', '0'], errors)}
-              />
-            </Col>
+            <Hidden sm xs>
+              <Col md={4} className="textfield-col">
+                <TextField
+                  label="Quantity"
+                  value={props.weight}
+                  onChangeText={props.setWeight}
+                  min={1}
+                  type="number"
+                  inputType="decimal"
+                  error={pathOr('', ['weight', '0'], errors)}
+                  borderRadius="12px"
+                  height="40px"
+                />
+              </Col>
 
-            <Col md={4} className="textfield-col">
-              <TextField
-                label={`Price per ${formatMeasurementUnit(
-                  props.buyerRequest.measurementUnit
-                )}`}
-                LeftComponent={
-                  <Typography variant="label" weight="bold" color="shade6">
-                    $
-                  </Typography>
-                }
-                value={props.price}
-                onChangeText={props.setPrice}
-                min={1}
-                type="number"
-                inputType="decimal"
-                error={pathOr('', ['price', '0'], errors)}
-              />
+              <Col md={4} className="textfield-col">
+                <TextField
+                  label={`Price per ${formatMeasurementUnit(
+                    props.buyerRequest.measurementUnit
+                  )}`}
+                  value={props.price}
+                  onChangeText={props.setPrice}
+                  min={1}
+                  type="number"
+                  inputType="decimal"
+                  error={pathOr('', ['price', '0'], errors)}
+                  borderRadius="12px"
+                  height="40px"
+                />
 
-              {/*<div className="shipping-to">*/}
-              {/*  <Typography variant="label" color="shade6">*/}
-              {/*    Shipping to*/}
-              {/*  </Typography>*/}
-              {/*  <Typography variant="label" color="noshade" weight="bold">*/}
-              {/*    {props.shippingTo}*/}
-              {/*  </Typography>*/}
-              {/*</div>*/}
-            </Col>
+                {/*<div className="shipping-to">*/}
+                {/*  <Typography variant="label" color="shade6">*/}
+                {/*    Shipping to*/}
+                {/*  </Typography>*/}
+                {/*  <Typography variant="label" color="noshade" weight="bold">*/}
+                {/*    {props.shippingTo}*/}
+                {/*  </Typography>*/}
+                {/*</div>*/}
+              </Col>
 
-            <Col md={4} className="textfield-col">
-              <DatePickerDropdown
-                label="Delivery date"
-                date={props.deliveryDate ? moment(props.deliveryDate) : null}
-                onDateChange={(d) => props.setDeliveryDate(d?.toDate() || null)}
-                error={pathOr('', ['deliveryDate', '0'], errors)}
-              />
-            </Col>
+              <Col md={4} className="textfield-col">
+                <DatePickerDropdown
+                  label="Delivery date"
+                  date={props.deliveryDate ? moment(props.deliveryDate) : null}
+                  onDateChange={(d) =>
+                    props.setDeliveryDate(d?.toDate() || null)
+                  }
+                  error={pathOr('', ['deliveryDate', '0'], errors)}
+                  showCalendarIcon={false}
+                  showArrowDownIcon={false}
+                  borderRadius="12px"
+                  height="40px"
+                />
+              </Col>
+            </Hidden>
+
+            <Visible xs sm>
+              <MobileFromToTextFieldsContainer>
+                <Col>
+                  <TextField
+                    label="Quantity"
+                    value={props.weight}
+                    onChangeText={props.setWeight}
+                    min={1}
+                    type="number"
+                    inputType="decimal"
+                    error={pathOr('', ['weight', '0'], errors)}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
+                <Col className="textfield-col">
+                  <TextField
+                    label={`Price per ${formatMeasurementUnit(
+                      props.buyerRequest.measurementUnit
+                    )}`}
+                    value={props.price}
+                    onChangeText={props.setPrice}
+                    min={1}
+                    type="number"
+                    inputType="decimal"
+                    error={pathOr('', ['price', '0'], errors)}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
+              </MobileFromToTextFieldsContainer>
+
+              <Col md={4} className="textfield-col">
+                <DatePickerDropdown
+                  label="Delivery date"
+                  date={props.deliveryDate ? moment(props.deliveryDate) : null}
+                  onDateChange={(d) =>
+                    props.setDeliveryDate(d?.toDate() || null)
+                  }
+                  error={pathOr('', ['deliveryDate', '0'], errors)}
+                  showCalendarIcon={false}
+                  showArrowDownIcon={false}
+                  borderRadius="12px"
+                  height="40px"
+                />
+              </Col>
+            </Visible>
           </Row>
 
           <div className="textfield-col">
@@ -406,7 +492,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Button
             onClick={props.addToMarketOffers}
             className="submit-btn-step2"
-            text="Review offer"
+            text="Make an offer"
             variant="primary"
           />
         </div>
@@ -415,9 +501,10 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
       <MobileFooter>
         <Button
           onClick={props.addToMarketOffers}
-          text="Review offer"
+          text="Make an offer"
           variant="primary"
           takeFullWidth
+          style={{ borderRadius: '12px' }}
         />
       </MobileFooter>
     </Container>

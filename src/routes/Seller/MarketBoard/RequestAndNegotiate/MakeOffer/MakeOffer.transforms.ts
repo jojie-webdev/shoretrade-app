@@ -6,7 +6,7 @@ export const getGroupName = (name: string): string => {
     case 'FROZEN':
     case 'LIVE':
     case 'OPEN':
-      return 'Preservation';
+      return 'Conservation';
     case 'WILD':
     case 'FARMED':
       return 'CATCH TYPE';

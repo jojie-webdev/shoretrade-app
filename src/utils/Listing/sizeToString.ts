@@ -3,11 +3,11 @@ const toKilo: Function = (value: string): number =>
 
 const toKilogramsRange: Function = (sizeFrom: string, sizeTo: string): string =>
   Number(sizeTo) >= 1000
-    ? `${toKilo(sizeFrom) || ''}kg - ${toKilo(sizeTo) || ''}kg`
-    : `${sizeFrom || ''}g - ${sizeTo || ''}g`;
+    ? `${toKilo(sizeFrom) || ''} - ${toKilo(sizeTo) || ''} kg`
+    : `${sizeFrom || ''} - ${sizeTo || ''} g`;
 
 const toKilograms: Function = (size: string): string =>
-  Number(size) >= 1000 ? `${toKilo(size) || ''}kg` : `${size || ''}g`;
+  Number(size) >= 1000 ? `${toKilo(size) || ''} g` : `${size || ''} g`;
 
 export const sizeToString = (
   typeMetric: string,

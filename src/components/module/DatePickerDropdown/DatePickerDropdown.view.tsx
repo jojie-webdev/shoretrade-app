@@ -28,6 +28,10 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
     placeholder = '',
     error,
     isOutsideRange,
+    showCalendarIcon,
+    showArrowDownIcon,
+    height,
+    borderRadius,
   } = props;
 
   return (
@@ -41,9 +45,11 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
           onClick={() => setShow(!show)}
           active={show}
           error={(error || '').length > 0}
+          height={height}
+          borderRadius={borderRadius}
         >
           <div className="left-content">
-            <Calendar fill={theme.grey.shade6} />
+            {showCalendarIcon && <Calendar fill={theme.grey.shade6} />}
             {date ? (
               <Typography variant="label">
                 {date.format('DD.MM.yyyy')}
@@ -54,7 +60,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
               </Typography>
             )}
           </div>
-          <DropdownArrow />
+          {showArrowDownIcon && <DropdownArrow />}
         </Dropdown>
 
         {show && (
@@ -65,6 +71,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
               setShow(false);
             }}
             focused={true}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             onFocusChange={() => {}}
             horizontalMonthPadding={0}
             numberOfMonths={1}

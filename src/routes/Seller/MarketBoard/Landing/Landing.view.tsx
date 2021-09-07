@@ -1,23 +1,25 @@
 import React from 'react';
 
 import Alert from 'components/base/Alert';
-import Badge from 'components/base/Badge/Badge.view';
 import Interactions from 'components/base/Interactions';
-import { Sync, CheckFilled, CloseFilled } from 'components/base/SVG';
+import { Sync, ChevronRight } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
-import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isNil, prop, sortBy, isEmpty } from 'ramda';
+import { Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import {
   getExpiry,
   getShippingAddress,
+  getStatus,
+  getStatusBadgeColor,
   hasShippingAddress,
+  isOfferMade,
   isRedLabel,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -25,10 +27,18 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
-import theme, { useTheme } from 'utils/Theme';
+import theme from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
-import { Container, FilterButton, BadgeText } from './Landing.style';
+import {
+  Container,
+  FilterButton,
+  BadgeText,
+  ItemInteraction,
+  StyledBadge,
+} from './Landing.style';
+import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
+import MobileOffers from './MobileOffers/MobileOffers.view';
 
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
@@ -57,13 +67,6 @@ const BuyerRequestsInteractions = (props: {
     );
 
     return _offer;
-  };
-
-  const isOfferMade = () => {
-    const { status } = getOfferByMarketRequest() || {};
-    const isOfferMade = status === 'OPEN';
-
-    return isOfferMade;
   };
 
   const isPaymentRequired = () => {
@@ -140,9 +143,7 @@ const BuyerRequestsInteractions = (props: {
               style={{ marginTop: 4 }}
             >
               Qty:{' '}
-              {`${data.weight?.from || ''}${unit} - ${
-                data.weight?.to || ''
-              }${unit}`}
+              {`${data.weight?.from || ''} - ${data.weight?.to || ''}${unit}`}
             </Typography>
             <Typography
               variant="caption"
@@ -164,33 +165,46 @@ const BuyerRequestsInteractions = (props: {
           <div className="section">
             {isPaymentRequired() ? (
               isPaymentPending() ? (
-                <Badge className="badge" badgeColor={theme.brand.error}>
-                  <BadgeText variant="overlineSmall" color="noshade">
+                <StyledBadge
+                  className="badge"
+                  badgeColor={theme.brand.error}
+                  style={{ lineHeight: '15px' }}
+                >
+                  <BadgeText
+                    variant="overlineSmall"
+                    color="noshade"
+                    style={{ lineHeight: '15px' }}
+                  >
                     PENDING PAYMENT
                   </BadgeText>
-                  <div className="svg-container">{setIcon('OPEN')}</div>
-                </Badge>
+                </StyledBadge>
               ) : (
                 getExpiry(data.createdAt) === 'Expired' && (
-                  <Badge
+                  <StyledBadge
                     className="badge"
                     badgeColor={getStatusBadgeColor('DECLINED')}
                   >
-                    <BadgeText variant="overlineSmall" color="noshade">
+                    <BadgeText
+                      variant="overlineSmall"
+                      color="noshade"
+                      style={{ lineHeight: '15px' }}
+                    >
                       LOST
                     </BadgeText>
-                    <div className="svg-container">{setIcon('DECLINED')}</div>
-                  </Badge>
+                  </StyledBadge>
                 )
               )
             ) : (
-              isOfferMade() && (
-                <Badge className="badge" badgeColor={theme.brand.success}>
-                  <BadgeText variant="overlineSmall" color="noshade">
+              isOfferMade(data, activeOffers) && (
+                <StyledBadge className="badge" badgeColor={theme.brand.success}>
+                  <BadgeText
+                    variant="overlineSmall"
+                    color="noshade"
+                    style={{ lineHeight: '15px' }}
+                  >
                     ACTIVE OFFER
                   </BadgeText>
-                  <div className="svg-container">{setIcon('ACCEPTED')}</div>
-                </Badge>
+                </StyledBadge>
               )
             )}
           </div>
@@ -277,8 +291,7 @@ const MyActiveOffersInteractions = (props: {
           </div>
           <div className="section">
             <Typography variant="caption" color="shade6">
-              Size:{' '}
-              {!data.size.from ? 'Ungraded' : `${data.size.from}${sizeUnit}`}
+              Size: {!data.size.from ? 'Ungraded' : `${data.size.from}`}
               {data.size.to && ` - ${data.size.to}${sizeUnit}`}
             </Typography>
             <Typography
@@ -312,35 +325,44 @@ const MyActiveOffersInteractions = (props: {
           <div className="section">
             {isPaymentRequired() ? (
               isPaymentPending() ? (
-                <Badge className="badge" badgeColor={theme.brand.error}>
-                  <BadgeText variant="overlineSmall" color="noshade">
+                <StyledBadge className="badge" badgeColor={theme.brand.error}>
+                  <BadgeText
+                    variant="overlineSmall"
+                    color="noshade"
+                    style={{ lineHeight: '15px' }}
+                  >
                     PENDING PAYMENT
                   </BadgeText>
-                  <div className="svg-container">{setIcon('OPEN')}</div>
-                </Badge>
+                </StyledBadge>
               ) : (
                 getExpiry(data.createdAt) === 'Expired' && (
-                  <Badge
+                  <StyledBadge
                     className="badge"
                     badgeColor={getStatusBadgeColor('DECLINED')}
                   >
-                    <BadgeText variant="overlineSmall" color="noshade">
+                    <BadgeText
+                      variant="overlineSmall"
+                      color="noshade"
+                      style={{ lineHeight: '15px' }}
+                    >
                       LOST
                     </BadgeText>
-                    <div className="svg-container">{setIcon('DECLINED')}</div>
-                  </Badge>
+                  </StyledBadge>
                 )
               )
             ) : (
-              <Badge
+              <StyledBadge
                 className="badge"
                 badgeColor={getStatusBadgeColor(data.status)}
               >
-                <BadgeText variant="overlineSmall" color="noshade">
+                <BadgeText
+                  variant="overlineSmall"
+                  color={status === 'NEGOTIATION' ? 'shade10' : 'noshade'}
+                  style={{ lineHeight: '15px' }}
+                >
                   {status}
                 </BadgeText>
-                <div className="svg-container">{setIcon(data.status)}</div>
-              </Badge>
+              </StyledBadge>
             )}
           </div>
         </>
@@ -383,7 +405,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
             props.setSearchTerm(event.currentTarget.value)
           }
           resetValue={() => props.setSearchTerm('')}
-          placeholder="Search for a product"
+          placeholder="Product Name"
           rounded
         />
       </div>
@@ -403,14 +425,40 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   Products I Sell
                 </Typography>
 
-                {props.sellingRequests.map((data) => (
-                  <BuyerRequestsInteractions
-                    key={data.id}
-                    onClick={() => props.onClickOffer(data)}
-                    data={data}
-                    activeOffers={props.activeOffers}
-                  />
-                ))}
+                <Hidden xs sm>
+                  {props.sellingRequests.map((data) => (
+                    <BuyerRequestsInteractions
+                      key={data.id}
+                      onClick={() => props.onClickOffer(data)}
+                      data={data}
+                      activeOffers={props.activeOffers}
+                    />
+                  ))}
+                </Hidden>
+
+                <Visible xs sm>
+                  {props.sellingRequests.map((data) => (
+                    <ItemInteraction
+                      key={data.id}
+                      type={data.offers.length > 0 ? 'next' : 'none'}
+                      onClick={() => props.onClickOffer(data)}
+                      offers={data.offers}
+                      leftComponent={
+                        <MobileMarketRequests
+                          data={data}
+                          activeOffers={props.activeOffers}
+                        />
+                      }
+                      rightComponent={
+                        <div className="cta">
+                          <div>
+                            <ChevronRight width={8} height={12} />
+                          </div>
+                        </div>
+                      }
+                    />
+                  ))}
+                </Visible>
 
                 <div style={{ marginBottom: 32 }} />
               </>
@@ -427,27 +475,81 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   All Products
                 </Typography>
 
-                {props.buyerRequests.map((data) => (
-                  <BuyerRequestsInteractions
-                    key={data.id}
-                    onClick={() => props.onClickOffer(data)}
-                    data={data}
-                    activeOffers={props.activeOffers}
-                  />
-                ))}
+                <Hidden xs sm>
+                  {props.buyerRequests.map((data) => (
+                    <BuyerRequestsInteractions
+                      key={data.id}
+                      onClick={() => props.onClickOffer(data)}
+                      data={data}
+                      activeOffers={props.activeOffers}
+                    />
+                  ))}
+                </Hidden>
+
+                <Visible xs sm>
+                  {props.buyerRequests.map((data) => (
+                    <ItemInteraction
+                      key={data.id}
+                      type={data.offers.length > 0 ? 'next' : 'none'}
+                      onClick={() => props.onClickOffer(data)}
+                      offers={data.offers}
+                      leftComponent={
+                        <MobileMarketRequests
+                          data={data}
+                          activeOffers={props.activeOffers}
+                        />
+                      }
+                      rightComponent={
+                        <div className="cta">
+                          <div>
+                            <ChevronRight width={8} height={12} />
+                          </div>
+                        </div>
+                      }
+                    />
+                  ))}
+                </Visible>
               </>
             )}
 
-          {props.currentTab === 'My Active Offers' &&
-            !isNil(props.activeOffers) &&
-            props.activeOffers.map((data, i) => (
-              <MyActiveOffersInteractions
-                key={data.id}
-                onClick={() => props.onClickActiveOffer(data)}
-                data={data}
-                buyerRequests={props.marketRequests}
-              />
-            ))}
+          <Hidden xs sm>
+            {props.currentTab === 'My Active Offers' &&
+              !isNil(props.activeOffers) &&
+              props.activeOffers.map((data) => (
+                <MyActiveOffersInteractions
+                  key={data.id}
+                  onClick={() => props.onClickActiveOffer(data)}
+                  data={data}
+                  buyerRequests={props.buyerRequests}
+                />
+              ))}
+          </Hidden>
+
+          <Visible xs sm>
+            {props.currentTab === 'My Active Offers' &&
+              !isNil(props.activeOffers) &&
+              props.activeOffers.map((data) => (
+                <ItemInteraction
+                  key={data.id}
+                  type={data.offers?.length > 0 ? 'next' : 'none'}
+                  onClick={() => props.onClickActiveOffer(data)}
+                  offers={data.offers}
+                  leftComponent={
+                    <MobileOffers
+                      data={data}
+                      buyerRequests={props.buyerRequests}
+                    />
+                  }
+                  rightComponent={
+                    <div className="cta">
+                      <div>
+                        <ChevronRight width={8} height={12} />
+                      </div>
+                    </div>
+                  }
+                />
+              ))}
+          </Visible>
         </>
       )}
 
@@ -455,34 +557,5 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
     </Container>
   );
 };
-
-function getStatus(status: GetActiveOffersRequestResponseItem['status']) {
-  if (status === 'OPEN') return 'NEGOTIATION';
-  if (status === 'ACCEPTED') return 'ACCEPTED';
-  if (status === 'DECLINED') return 'LOST';
-  if (status === 'CLOSED') return 'DECLINED';
-  return '';
-}
-
-function getStatusBadgeColor(
-  status: GetActiveOffersRequestResponseItem['status']
-) {
-  if (status === 'OPEN') return theme.brand.warning;
-  if (status === 'ACCEPTED') return theme.brand.success;
-  if (status === 'DECLINED') return theme.brand.error;
-  if (status === 'CLOSED') return theme.brand.error;
-  return '';
-}
-
-function setIcon(status: GetActiveOffersRequestResponseItem['status']) {
-  if (status === 'OPEN')
-    return <Sync width={10} height={10} fill={theme.grey.noshade} />;
-  if (status === 'ACCEPTED')
-    return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
-  if (status === 'DECLINED')
-    return <CloseFilled width={10} height={10} fill={theme.grey.noshade} />;
-  if (status === 'CLOSED')
-    return <CheckFilled width={10} height={10} fill={theme.grey.noshade} />;
-}
 
 export default MarketBoardLandingView;
