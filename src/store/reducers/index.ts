@@ -3,6 +3,7 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
+/* PLOP_INJECT_IMPORT */
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -110,6 +111,7 @@ export default (routeHistory: History) =>
   combineReducers(
     Object.fromEntries(
       Object.entries({
+        /* PLOP_INJECT_INSTANCE */
         addAddress,
         addCardAndPay,
         addCardToken,
