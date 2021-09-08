@@ -75,3 +75,20 @@ export const TitleContainer = styled.div`
     margin-top: 0px;
   }
 `;
+
+export const CircleBackground = styled.div`
+  width: 250px;
+  height: 250px;
+  background-color: #edeff8;
+  border-radius: 50%;
+  -webkit-filter: blur(5px);
+`;
+
+export const AnimatedComponentContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+`;

@@ -199,7 +199,11 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           </Hidden>
           <TitleContainer>
-            <StyledTitle variant="title5" weight="500">
+            <StyledTitle
+              variant="title5"
+              weight="500"
+              style={{ marginBottom: 12 }}
+            >
               {listingFormData?.type.name}
             </StyledTitle>
             <Typography variant="label" weight="400" color="shade7">

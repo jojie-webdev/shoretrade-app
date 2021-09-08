@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AnimationPlayer from 'components/base/AnimationPlayer';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Select from 'components/base/Select';
 import {
@@ -17,6 +18,7 @@ import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { AnimatedSwordfish } from 'res/images/animated/swordfish';
 
 import { CreateRequestHeaderContainer } from '../Create.style';
 import {
@@ -35,6 +37,8 @@ import {
   TopGroupContainer,
   NoResultMessage,
   TitleContainer,
+  CircleBackground,
+  AnimatedComponentContainer,
 } from './CategorySelection.style';
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
@@ -134,7 +138,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.currentTarget.value)}
             resetValue={() => setSearchTerm('')}
-            placeholder="Search a product"
+            placeholder="Search for a product"
             style={{ borderRadius: 12, width: '100%' }}
           />
         </div>
@@ -176,15 +180,21 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
               <BottomGroupContainer>
                 <Group195 />
               </BottomGroupContainer>
-              <LeftAbsoContainer>
-                <Wave51 />
-              </LeftAbsoContainer>
+              <LeftAbsoContainer>{/* <Wave51 /> */}</LeftAbsoContainer>
               <LeftGroupContainer>
                 <Group194 />
               </LeftGroupContainer>
             </Hidden>
             <EmptyContainer>
-              <Group204 />
+              <AnimatedComponentContainer>
+                <CircleBackground />
+                <div style={{ position: 'absolute' }}>
+                  <AnimationPlayer
+                    src={AnimatedSwordfish}
+                    style={{ width: '301px', height: '305px' }}
+                  />
+                </div>
+              </AnimatedComponentContainer>
             </EmptyContainer>
           </>
         )}

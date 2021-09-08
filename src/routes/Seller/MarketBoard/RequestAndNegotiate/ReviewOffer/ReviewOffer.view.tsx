@@ -16,6 +16,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
+import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -147,79 +148,86 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           </>
         )}
 
-        <ThirdSpecsContainer>
-          <ThirdItemContainer>
-            <Typography
-              style={{ margin: '24px 0 12px 0' }}
-              color="shade6"
-              variant="overline"
-            >
-              Quantity
-            </Typography>
-            <div className="quantity-container">
-              <StyledBadge badgeColor={theme.grey.shade3}>
-                <BadgeText color="shade9" variant="overline">
-                  {properOffer?.weight || 0}
-                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
-                </BadgeText>
-              </StyledBadge>
-            </div>
-          </ThirdItemContainer>
-
-          <ThirdItemContainer>
-            <Typography
-              style={{ margin: '24px 0 12px 0' }}
-              color="shade6"
-              variant="overline"
-            >
-              Price per {formatMeasurementUnit(properOffer.measurementUnit)}
-            </Typography>
-            <div className="quantity-container">
-              <StyledBadge badgeColor={theme.grey.shade3}>
-                <BadgeText color="shade9" variant="overline">
-                  {properOffer?.price || 0}
-                  {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
-                </BadgeText>
-              </StyledBadge>
-            </div>
-          </ThirdItemContainer>
-        </ThirdSpecsContainer>
-
-        <ThirdSpecsContainer>
-          <ThirdItemContainer>
-            <Typography
-              style={{ margin: '24px 0 12px 0' }}
-              color="shade6"
-              variant="overline"
-            >
-              Shipping to
-            </Typography>
-            <div className="quantity-container">
-              <StyledBadge badgeColor={theme.grey.shade3}>
-                <BadgeText color="shade9" variant="overline">
-                  {`${props.buyerRequest?.shippingTo.suburb}, ${props.buyerRequest?.shippingTo.state} ${props.buyerRequest?.shippingTo.postcode}`}
-                </BadgeText>
-              </StyledBadge>
-            </div>
-          </ThirdItemContainer>
-
-          <ThirdItemContainer>
-            <Typography
-              style={{ margin: '24px 0 12px 0' }}
-              color="shade6"
-              variant="overline"
-            >
-              Delivery Date
-            </Typography>
-            <div className="quantity-container">
-              <StyledBadge badgeColor={theme.grey.shade3}>
-                <BadgeText color="shade9" variant="overline">
-                  {moment(properOffer.deliveryDate).format('DD.MM.yyyy')}
-                </BadgeText>
-              </StyledBadge>
-            </div>
-          </ThirdItemContainer>
-        </ThirdSpecsContainer>
+        <Row>
+          <Col>
+            {' '}
+            <ThirdItemContainer>
+              <Typography
+                style={{ margin: '24px 0 12px 0' }}
+                color="shade6"
+                variant="overline"
+              >
+                Quantity
+              </Typography>
+              <div className="quantity-container">
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {properOffer?.weight || 0}
+                    {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+                  </BadgeText>
+                </StyledBadge>
+              </div>
+            </ThirdItemContainer>
+          </Col>
+          <Col>
+            <ThirdItemContainer>
+              <Typography
+                style={{ margin: '24px 0 12px 0' }}
+                color="shade6"
+                variant="overline"
+              >
+                Price per {formatMeasurementUnit(properOffer.measurementUnit)}
+              </Typography>
+              <div className="quantity-container">
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {properOffer?.price || 0}
+                    {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+                  </BadgeText>
+                </StyledBadge>
+              </div>
+            </ThirdItemContainer>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {' '}
+            <ThirdItemContainer>
+              <Typography
+                style={{ margin: '24px 0 12px 0' }}
+                color="shade6"
+                variant="overline"
+              >
+                Shipping to
+              </Typography>
+              <div className="quantity-container">
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {`${props.buyerRequest?.shippingTo.suburb}, ${props.buyerRequest?.shippingTo.state} ${props.buyerRequest?.shippingTo.postcode}`}
+                  </BadgeText>
+                </StyledBadge>
+              </div>
+            </ThirdItemContainer>
+          </Col>
+          <Col>
+            <ThirdItemContainer>
+              <Typography
+                style={{ margin: '24px 0 12px 0' }}
+                color="shade6"
+                variant="overline"
+              >
+                Delivery Date
+              </Typography>
+              <div className="quantity-container">
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {moment(properOffer.deliveryDate).format('DD.MM.yyyy')}
+                  </BadgeText>
+                </StyledBadge>
+              </div>
+            </ThirdItemContainer>
+          </Col>
+        </Row>
 
         <ThirdItemContainer>
           <Typography

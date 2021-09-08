@@ -22,6 +22,7 @@ import {
 } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -77,8 +78,6 @@ export const MarketRequestItemNonMobile = (props: {
     paymentRequired,
   } = props;
 
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
   const offerNumberBadge = () => {
     return (
       <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
@@ -91,17 +90,16 @@ export const MarketRequestItemNonMobile = (props: {
     );
   };
 
-  const getOfferById = (): Offer => {
-    activeOffersData.forEach((activeOffer) => {
-      activeOffer.offers.forEach((offer) => {
-        if (offer.id === id) {
-          return offer;
-        }
-      });
-    });
-
-    return {} as Offer;
-  };
+  const renderNewOfferBadge = () => (
+    <div className="sub-group">
+      <SubText variant="small">
+        {paymentRequired
+          ? renderPaymentRequiredBadge()
+          : hasNewOffer(offers) &&
+            offerStatusBadge(inDetail, offers?.length, offerStatus)}
+      </SubText>
+    </div>
+  );
 
   return (
     <MarketRequestItemContainer>
@@ -114,18 +112,26 @@ export const MarketRequestItemNonMobile = (props: {
           <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
         </div>
         <div className="sub-group">
-          {buildSize(metric, size?.to?.toString(), size?.from?.toString()) && (
+          {buildSize(
+            metric,
+            size?.from?.toString(),
+            size?.to?.toString(),
+            size?.options
+          ) && (
             <SubText variant="caption">{`Size: ${buildSize(
               metric,
+              size?.from?.toString(),
               size?.to?.toString(),
-              size?.from?.toString()
+              size?.options
             )}`}</SubText>
           )}
           <SubText variant="caption">
             {weight &&
-              `Qty: ${weight.from}${measurementUnit?.toLocaleLowerCase()} ~ ${
-                weight.to
-              }${measurementUnit?.toLocaleLowerCase()}`}
+              `Qty: ${weight.from} ${formatUnitToPricePerUnit(
+                measurementUnit?.toLocaleLowerCase()
+              )} ~ ${weight.to} ${formatUnitToPricePerUnit(
+                measurementUnit?.toLocaleLowerCase()
+              )}`}
           </SubText>
         </div>
         <div className="sub-group">
@@ -137,17 +143,16 @@ export const MarketRequestItemNonMobile = (props: {
           </SubText>
         </div>
         <BadgesContainer>
-          <div className="sub-group">
-            <SubText variant="small">{offerNumberBadge()}</SubText>
-          </div>
-          <div className="sub-group">
-            <SubText variant="small">
-              {paymentRequired
-                ? renderPaymentRequiredBadge()
-                : hasNewOffer(offers) &&
-                  offerStatusBadge(inDetail, offers?.length, offerStatus)}
-            </SubText>
-          </div>
+          {offers?.length === 1 ? (
+            renderNewOfferBadge()
+          ) : (
+            <>
+              <div className="sub-group">
+                <SubText variant="small">{offerNumberBadge()}</SubText>
+              </div>
+              {renderNewOfferBadge()}
+            </>
+          )}
         </BadgesContainer>
         <div className="sub-group">
           <Button
@@ -200,7 +205,7 @@ export const MarketRequestItemMobile = (props: {
   } = props;
 
   const offersText =
-    offers.length === 1 ? `1 Offer` : `${offers || 'No'} Offers`;
+    offers?.length === 1 ? `1 Offer` : `${offers?.length || 'No'} Offers`;
 
   const offersMarkup = () => {
     if (inDetail) return '';
@@ -241,13 +246,22 @@ export const MarketRequestItemMobile = (props: {
     </>
   );
 
+  const renderNewOffersBadge = () =>
+    paymentRequired
+      ? renderPaymentRequiredBadge()
+      : offerStatusBadge(inDetail, offers?.length, offerStatus);
+
   const displayBadges = () => {
     return (
       <Badges>
-        {offersMarkup()}
-        {paymentRequired
-          ? renderPaymentRequiredBadge()
-          : offerStatusBadge(inDetail, offers?.length, offerStatus)}
+        {offers?.length === 1 ? (
+          renderNewOffersBadge()
+        ) : (
+          <>
+            {offersMarkup()}
+            {renderNewOffersBadge()}
+          </>
+        )}
       </Badges>
     );
   };
@@ -277,7 +291,7 @@ export const MarketRequestItemMobile = (props: {
                 '-' +
                 weight?.to +
                 ' ' +
-                Case.pascal(measurementUnit || '')
+                Case.pascal(formatUnitToPricePerUnit(measurementUnit || ''))
             )}
           </SubMinorDetail>
 
@@ -286,8 +300,12 @@ export const MarketRequestItemMobile = (props: {
           <SubMinorDetail>
             {subMinorDetail(
               'Size',
-              buildSize(metric, size?.to?.toString(), size?.from?.toString()) ||
-                'None'
+              buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              ) || 'None'
             )}
           </SubMinorDetail>
         </SubMinorInfo>
@@ -439,13 +457,13 @@ const MarketRequestsLandingView = (
         textMobile2="Can’t find your product?"
         textMobile3="Create a new Market Request"
         cardText1={
-          'Search in our Database and choose between more than 50+  Categories'
+          'Search for the product you want to request  and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
         }
         cardText2={
-          'Select specifications, size, quantity and send your request to the market'
+          'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
         }
         cardText3={
-          'Check and negotiate offers from more than 10.000+ sellers from ShoreTrade'
+          'Process the payment for accepted offers and get real time delivery updates.'
         }
         isAcceptClicked={isAcceptClicked}
         setIsAcceptClicked={setIsAcceptClicked}
@@ -527,15 +545,35 @@ const MarketRequestsLandingView = (
 function buildSize(
   metric: string,
   sizeFrom: string | undefined,
-  sizeTo: string | undefined
+  sizeTo: string | undefined,
+  options: any
 ) {
-  const _buildSize = sizeToString(
+  let buildSize = sizeToString(
     metric,
     sizeFrom?.toString(),
     sizeTo?.toString()
   );
 
-  return _buildSize;
+  const getCorrectedSize = () => {
+    if (options && Array.isArray(options) && options.length > 1) {
+      return 'Various';
+    }
+
+    return buildSize;
+  };
+
+  if (!sizeFrom) {
+    if (options && Array.isArray(options)) {
+      buildSize = options.join(',');
+    }
+
+    buildSize = getCorrectedSize();
+  } else {
+    buildSize = buildSize.replace('-', 'to');
+    buildSize = getCorrectedSize();
+  }
+
+  return buildSize;
 }
 
 export default MarketRequestsLandingView;
