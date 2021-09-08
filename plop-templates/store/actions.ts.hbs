@@ -1,0 +1,13 @@
+import { createUpdateAction, createClearAction } from 'utils/Redux';
+import { {{pascalCase name}}State } from 'types/store/{{pascalCase name}}State';
+
+const ns = '{{constantCase name}}';
+const updateAction = createUpdateAction<{{pascalCase name}}State>(ns);
+const clearAction = createClearAction(ns);
+
+const {{camelCase name}}Actions = {
+  ...updateAction,
+  ...clearAction,
+};
+
+export default {{camelCase name}}Actions;

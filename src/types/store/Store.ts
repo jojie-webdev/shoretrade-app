@@ -1,3 +1,4 @@
+/* PLOP_INJECT_IMPORT */
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import {
@@ -91,14 +92,16 @@ import {
 } from './DeleteLinkedAccountState';
 import {
   DeleteMarketRequestOfferMeta,
-  DeleteMarketRequestOfferPayload
-}
-  from './DeleteMarketRequestOfferState';
+  DeleteMarketRequestOfferPayload,
+} from './DeleteMarketRequestOfferState';
 import {
   DeleteMarketRequestMeta,
   DeleteMarketRequestPayload,
 } from './DeleteMarketRequestState';
-import { DeleteNotificationMetaData, DeleteNotificationPayload } from './DeleteNotificationState';
+import {
+  DeleteNotificationMetaData,
+  DeleteNotificationPayload,
+} from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
 import { EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
@@ -278,6 +281,7 @@ import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
+  /* PLOP_INJECT_INSTANCE */
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;

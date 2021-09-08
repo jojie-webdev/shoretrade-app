@@ -1,5 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
+/* PLOP_INJECT_IMPORT */
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -91,6 +92,7 @@ import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 const sagas = [
+  /* PLOP_INJECT_INSTANCE */
   addAddress,
   addCardAndPay,
   addCardToken,
