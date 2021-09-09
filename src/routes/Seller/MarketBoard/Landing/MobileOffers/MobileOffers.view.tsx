@@ -136,7 +136,7 @@ const MobileOffers = (props: {
           </SubMinorDetail>
 
           <SubMinorDetail>
-            {subMinorDetail('Shipping to', getShippingAddress(data))}
+            {subMinorDetail('Shipping to', getShippingAddress(data.shippingTo))}
           </SubMinorDetail>
         </SubMinorInfo>
 

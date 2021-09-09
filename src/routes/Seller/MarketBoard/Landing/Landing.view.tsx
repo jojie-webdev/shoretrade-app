@@ -149,7 +149,8 @@ const BuyerRequestsInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Shipping to: {getShippingAddress(data)}
+              Shipping to: {data.shippingTo.suburb}, {data.shippingTo.state}{' '}
+              {data.shippingTo.postcode}
             </Typography>
           </div>
           <div className="section">
@@ -304,7 +305,7 @@ const MyActiveOffersInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Shipping to: {getShippingAddress(data)}
+              Shipping to: {getShippingAddress(data.shippingTo)}
             </Typography>
           </div>
           <div className="section">

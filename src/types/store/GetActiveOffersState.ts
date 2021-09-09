@@ -69,6 +69,7 @@ export interface Offer {
   deliveryDate: string;
   metric: string;
   company_id: string;
+  shippingFrom: ShippingAddress;
 }
 
 export interface Negotiations {
