@@ -36,7 +36,6 @@ import {
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
-import { getShippingAddress } from '../Landing/Landing.transform';
 
 const Step1 = ({
   isReview,
@@ -552,7 +551,9 @@ const Step1 = ({
       <div className="quantity-container">
         <StyledBadge badgeColor={theme.grey.shade3}>
           <BadgeText color="shade9" variant="overline">
-            {getShippingAddress(activeOffer)}
+            {isReview
+              ? getAddressFromBuyerRequest()
+              : getAddressFromActiveOffer()}
           </BadgeText>
         </StyledBadge>
       </div>
