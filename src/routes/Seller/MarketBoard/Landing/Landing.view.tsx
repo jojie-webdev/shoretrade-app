@@ -442,7 +442,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       key={data.id}
                       type={data.offers.length > 0 ? 'next' : 'none'}
                       onClick={() => props.onClickOffer(data)}
-                      offers={data.offers}
                       leftComponent={
                         <MobileMarketRequests
                           data={data}
@@ -492,7 +491,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                       key={data.id}
                       type={data.offers.length > 0 ? 'next' : 'none'}
                       onClick={() => props.onClickOffer(data)}
-                      offers={data.offers}
                       leftComponent={
                         <MobileMarketRequests
                           data={data}
@@ -533,7 +531,6 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   key={data.id}
                   type={data.offers?.length > 0 ? 'next' : 'none'}
                   onClick={() => props.onClickActiveOffer(data)}
-                  offers={data.offers}
                   leftComponent={
                     <MobileOffers
                       data={data}
