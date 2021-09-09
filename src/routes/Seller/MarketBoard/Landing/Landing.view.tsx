@@ -18,7 +18,6 @@ import {
   getShippingAddress,
   getStatus,
   getStatusBadgeColor,
-  hasShippingAddress,
   isOfferMade,
   isRedLabel,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
@@ -150,8 +149,7 @@ const BuyerRequestsInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Shipping to: {data?.shippingTo?.suburb}, {data?.shippingTo?.state}{' '}
-              {data?.shippingTo?.postcode}
+              Shipping to: {getShippingAddress(data)}
             </Typography>
           </div>
           <div className="section">
@@ -306,10 +304,7 @@ const MyActiveOffersInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Shipping to:{' '}
-              {hasShippingAddress(data, buyerRequests)
-                ? getShippingAddress(data, buyerRequests)
-                : 'No address'}
+              Shipping to: {getShippingAddress(data)}
             </Typography>
           </div>
           <div className="section">

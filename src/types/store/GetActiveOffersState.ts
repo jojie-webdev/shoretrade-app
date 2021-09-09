@@ -4,6 +4,20 @@ export type GetActiveOffersMeta = {
   queryParams?: Record<string, any>;
 };
 
+export type ShippingAddress = {
+  country_code: string;
+  depot_address_id: string;
+  flat_delivery_fee: string;
+  id: string;
+  level: string;
+  postcode: string;
+  state: string;
+  street_name: string;
+  street_number: string;
+  suburb: string;
+  unit_number: string;
+};
+
 export type GetActiveOffersRequestResponseItem = {
   id: string;
   status: 'OPEN' | 'ACCEPTED' | 'DECLINED' | 'CLOSED';
@@ -38,6 +52,8 @@ export type GetActiveOffersRequestResponseItem = {
   };
   negotiations: Negotiations[];
   offers: Array<Offer>;
+  shippingTo: ShippingAddress;
+  shippingFrom: ShippingAddress;
 };
 
 export interface Offer {

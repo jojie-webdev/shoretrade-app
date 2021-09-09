@@ -14,7 +14,6 @@ import {
   getShippingAddress,
   getStatus,
   getStatusBadgeColor,
-  hasShippingAddress,
   isRedLabel,
 } from '../Landing.transform';
 import {
@@ -89,14 +88,6 @@ const MobileOffers = (props: {
     return priceValue;
   };
 
-  const buildAddressValue = () => {
-    const addressValue = hasShippingAddress(data, buyerRequests)
-      ? getShippingAddress(data, buyerRequests)
-      : 'No address';
-
-    return addressValue;
-  };
-
   const renderBadges = () => (
     <Badges>
       <StyledStatusBadge
@@ -145,7 +136,7 @@ const MobileOffers = (props: {
           </SubMinorDetail>
 
           <SubMinorDetail>
-            {subMinorDetail('Shipping to', buildAddressValue())}
+            {subMinorDetail('Shipping to', getShippingAddress(data))}
           </SubMinorDetail>
         </SubMinorInfo>
 

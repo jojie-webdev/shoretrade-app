@@ -190,25 +190,11 @@ export const identifyBuyerRequest = (
 };
 
 export const getShippingAddress = (
-  data: GetActiveOffersRequestResponseItem,
-  buyerRequests?: GetAllMarketRequestResponseItem[]
+  data: GetActiveOffersRequestResponseItem
 ) => {
-  const buyerRequest = identifyBuyerRequest(data, buyerRequests);
-  const { shippingTo } = buyerRequest || {};
-  const address = `${shippingTo?.suburb} ${shippingTo?.state} ${shippingTo?.postcode}`;
+  const shippingAddress = `${data.shippingTo.suburb} ${data.shippingTo.state} ${data.shippingTo.postcode}`;
 
-  return address;
-};
-
-export const hasShippingAddress = (
-  data: GetActiveOffersRequestResponseItem,
-  buyerRequests?: GetAllMarketRequestResponseItem[]
-) => {
-  const { shippingTo } = identifyBuyerRequest(data, buyerRequests) || {};
-  const { suburb, state, postcode } = shippingTo || {};
-  const hasAddress = suburb || state || postcode;
-
-  return hasAddress;
+  return shippingAddress;
 };
 
 export const getOfferByMarketRequest = (
