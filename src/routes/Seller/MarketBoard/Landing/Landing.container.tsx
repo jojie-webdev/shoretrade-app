@@ -37,6 +37,9 @@ const MarketBoardLanding = (): JSX.Element => {
   const [activeOffersData, setActiveOffersData] = useState<
     GetActiveOffersRequestResponseItem[]
   >([]);
+  const [activeOffersDataCopy, setActiveOffersDataCopy] = useState<
+    GetActiveOffersRequestResponseItem[]
+  >([]);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
@@ -134,6 +137,7 @@ const MarketBoardLanding = (): JSX.Element => {
     dispatch(getActiveOffersActions.request({}));
 
     setActiveOffersData(filteredActiveOffers);
+    setActiveOffersDataCopy(filteredActiveOffers);
 
     // if (currentTab === 'Buyer Requests') {
     //   dispatch(getAllMarketRequestActions.request({}));
@@ -178,12 +182,11 @@ const MarketBoardLanding = (): JSX.Element => {
         })
       );
 
-      const filteredActiveOffers = activeOffersData?.filter(
-        (activeOffer) =>
-          activeOffer.name.toLowerCase() === searchTerm.toLowerCase()
+      const filteredActiveOffers = activeOffersData?.filter((activeOffer) =>
+        activeOffer.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
-      setActiveOffersData(filteredActiveOffers);
+      setActiveOffersDataCopy(filteredActiveOffers);
     }, 800);
 
     setTimer(timerId);
@@ -256,7 +259,7 @@ const MarketBoardLanding = (): JSX.Element => {
     marketRequests,
     sellingRequests: marketRequestsData.interests,
     buyerRequests: marketRequestsData.others,
-    activeOffers: activeOffersData,
+    activeOffers: activeOffersDataCopy,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
     onChangeCurrentTab,
