@@ -416,7 +416,6 @@ const MarketRequestsLandingView = (
             key={mr.id}
             type={mr.offers?.length > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
-            offers={mr.offers}
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
               <div className="cta">
@@ -453,9 +452,8 @@ const MarketRequestsLandingView = (
         marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
-            type={'next'}
+            type={mr.offers?.length > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
-            offers={mr.offers}
             leftComponent={
               <MarketRequestItemNonMobile
                 activeOffersData={activeOffersData}

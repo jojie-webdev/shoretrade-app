@@ -35,15 +35,8 @@ export const Container = styled.div<InteractionsProps>`
       : 'none !important';
   }};
 
-  ${({ onClick, type, offers }) =>
-    offers !== undefined
-      ? offers?.length > 0
-        ? `cursor: pointer;
-          &:hover {
-            opacity: 0.9;
-          }`
-        : ''
-      : onClick && type !== 'none'
+  ${({ type }) =>
+    type !== 'none'
       ? `cursor: pointer;
         &:hover {
           opacity: 0.9;
