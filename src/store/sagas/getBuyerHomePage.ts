@@ -1,20 +1,16 @@
 import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getBuyerHomepage } from 'services/company';
-import { AsyncAction, SocketAction } from 'types/Action';
+import { AsyncAction, Action } from 'types/Action';
 import {
   GetBuyerHomepageMeta,
   GetBuyerHomepagePayload,
   GetBuyerHomepageResponseListingItem,
 } from 'types/store/GetBuyerHomepageState';
-import {
-  SocketHomePageMeta,
-  SocketHomePagePayload,
-} from 'types/store/socketHomePageState';
 import { Store } from 'types/store/Store';
 import { findProduct } from 'utils/Listing';
 
-import { getBuyerHomepageActions, socketHomePageActions } from '../actions';
+import { getBuyerHomepageActions, socketActions } from '../actions';
 
 function* getBuyerHomepageRequest(
   action: AsyncAction<GetBuyerHomepageMeta, GetBuyerHomepagePayload>
@@ -36,9 +32,7 @@ function* getBuyerHomepageRequest(
   }
 }
 
-function* handleSocketEvent(
-  action: SocketAction<SocketHomePageMeta, SocketHomePagePayload>
-) {
+function* getBuyerHomepagePatchRemaining(action: Action<any>) {
   const state: Store = yield select();
   const homeState = state.getBuyerHomepage.data;
   // findindex of id
@@ -129,7 +123,10 @@ function* handleSocketEvent(
 
 function* getBuyerHomepageWatcher() {
   yield takeLatest(getBuyerHomepageActions.REQUEST, getBuyerHomepageRequest);
-  yield takeLatest(socketHomePageActions.HANDLE_EVENT, handleSocketEvent);
+  yield takeLatest(
+    socketActions.UPDATE_REMAINING_BOXES,
+    getBuyerHomepagePatchRemaining
+  );
 }
 
 export default getBuyerHomepageWatcher;

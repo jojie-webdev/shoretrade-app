@@ -89,11 +89,7 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
-import socketCredit from './socketCredit';
-import socketGetAllListings from './socketGetAllListings';
-import socketGetListing from './socketGetListing';
-import socketGetListingsByType from './socketGetListingsByType';
-import socketHomePage from './socketHomePage';
+import socket from './socket';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -112,6 +108,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        socket,
         addAddress,
         addCardAndPay,
         addCardToken,
@@ -208,11 +205,6 @@ export default (routeHistory: History) =>
         verify,
         getPaymentMode,
         sendDispute,
-        socketCredit,
-        socketHomePage,
-        socketGetAllListings,
-        socketGetListing,
-        socketGetListingsByType,
         getNotificationsSettings,
         editableMarketRequest,
         updateNotificationSettings,
