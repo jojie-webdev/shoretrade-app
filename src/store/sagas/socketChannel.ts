@@ -8,13 +8,9 @@ import {
   race,
   takeEvery,
 } from 'redux-saga/effects';
+import { getSocketToken } from 'services/auth';
 import createSocketConnection from 'services/websocket';
-import {
-  authActions,
-  getUserActions,
-  socketActions,
-  verifyActions,
-} from 'store/actions';
+import { authActions, getUserActions, socketActions } from 'store/actions';
 import { GetUserPayload, UserCompany } from 'types/store/GetUserState';
 import { SOCKET_EVENT } from 'types/store/SocketState';
 import { Store } from 'types/store/Store';
@@ -26,18 +22,33 @@ const SOCKET_EVENTS: SOCKET_EVENT[] = [
   'INAPP_NOTIFICATION',
 ];
 
-const socketEventChannel = (config: { userId: string; companyId: string }) => {
+const socketEventChannel = (config: {
+  token: string;
+  userId: string;
+  companyId: string;
+}) => {
   console.log('SOCKET: NEW CONNECTION', new Date());
   const socket = createSocketConnection();
 
   return eventChannel((emitter) => {
     socket.on('connect', () => {
-      if (config.userId) {
-        socket.emit('join', config.userId);
-      }
+      console.log('SOCKET: CONNECTED');
 
-      if (config.companyId) {
-        socket.emit('join', config.companyId);
+      if (config.userId && config.companyId) {
+        getSocketToken(config.token).then((socketToken) => {
+          socket.emit('authenticate', {
+            id: config.userId,
+            token: socketToken,
+          });
+
+          // wait for auth to be successful
+          setTimeout(() => {
+            socket.emit('join', {
+              userId: config.userId,
+              companyId: config.companyId,
+            });
+          }, 3000);
+        });
       }
 
       SOCKET_EVENTS.forEach((event) => {
@@ -52,6 +63,10 @@ const socketEventChannel = (config: { userId: string; companyId: string }) => {
       emitter({ event: 'CONNECTED' });
     });
 
+    socket.on('disconnect', () => {
+      emitter({ event: 'DISCONNECTED' });
+    });
+
     // The subscriber must return an unsubscribe function
     return () => {
       console.log('SOCKET: DISCONNECT');
@@ -63,9 +78,12 @@ const socketEventChannel = (config: { userId: string; companyId: string }) => {
 function* socketWatcher(): any {
   const connected: string =
     (yield select((state: Store) => state.socket.connected)) || false;
+
   const getUserPayload: GetUserPayload | null = yield select(
     (state: Store) => state.getUser.data
   );
+
+  const token = getUserPayload?.data.token || '';
 
   const userId = getUserPayload?.data.user.id || '';
   const companies: UserCompany[] = getUserPayload?.data.user.companies || [];
@@ -80,6 +98,7 @@ function* socketWatcher(): any {
 
   if (defaultCompany && !connected) {
     const channel: any = yield call(socketEventChannel, {
+      token,
       userId,
       companyId: defaultCompany?.id || '',
     });
@@ -91,12 +110,13 @@ function* socketWatcher(): any {
           socketData: take(channel),
         });
 
-        if (logoutAction) {
+        if (logoutAction || socketData.event === 'DISCONNECTED') {
           console.log('SOCKET: TRIGGER DISCONNECT');
           channel.close();
         } else if (socketData.event === 'CONNECTED') {
           yield put(socketActions.update({ connected: true }));
         } else if (socketData.event) {
+          console.log('SOCKET: EVENT', socketData.event);
           yield put(
             socketActions.triggerEvent(socketData.event, socketData.metadata)
           );
@@ -110,10 +130,7 @@ function* socketWatcher(): any {
 }
 
 function* initSocket(): any {
-  yield takeEvery(
-    [verifyActions.SUCCESS, getUserActions.SUCCESS],
-    socketWatcher
-  );
+  yield takeEvery([getUserActions.SUCCESS], socketWatcher);
 }
 
 export default initSocket;
