@@ -264,6 +264,30 @@ const MyActiveOffersInteractions = (props: {
     return isPaymentRequired;
   };
 
+  const buildSizeData = () => {
+    const getFromOnlySize = () => {
+      if (!data.size.to) {
+        return data.size.from + ' ' + sizeUnit;
+      } else return '';
+    };
+
+    const getFromAndToSize = () => {
+      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
+
+      if (!toSize) {
+        return '';
+      }
+
+      return toSize;
+    };
+
+    const sizeData = !data.size.from
+      ? 'Ungraded'
+      : getFromOnlySize() + ' ' + getFromAndToSize();
+
+    return sizeData;
+  };
+
   return (
     <Interactions
       onClick={() => onClick()}
@@ -290,8 +314,7 @@ const MyActiveOffersInteractions = (props: {
           </div>
           <div className="section">
             <Typography variant="caption" color="shade6">
-              Size: {!data.size.from ? 'Ungraded' : `${data.size.from}`}
-              {data.size.to && ` - ${data.size.to}${sizeUnit}`}
+              Size: {buildSizeData()}
             </Typography>
             <Typography
               variant="caption"
