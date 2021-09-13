@@ -283,6 +283,30 @@ const MyActiveOffersInteractions = (props: {
     }
   };
 
+  const buildSizeData = () => {
+    const getFromOnlySize = () => {
+      if (!data.size.to) {
+        return data.size.from + ' ' + sizeUnit;
+      } else return '';
+    };
+
+    const getFromAndToSize = () => {
+      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
+
+      if (!toSize) {
+        return '';
+      }
+
+      return toSize;
+    };
+
+    const sizeData = !data.size.from
+      ? 'Ungraded'
+      : getFromOnlySize() + ' ' + getFromAndToSize();
+
+    return sizeData;
+  };
+
   return (
     <Interactions
       onClick={() => onClick()}
