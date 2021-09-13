@@ -9,9 +9,9 @@ export interface AsyncAction<Request = any, Payload = any> {
   payload: Payload;
   error: string;
 }
-export interface SocketAction<Meta = any, Payload = any> {
-  type: string;
-  meta: Meta;
-  payload: Payload;
-  error: string;
-}
+// export interface SocketAction<Meta = any, Payload = any> {
+//   type: string;
+//   meta: Meta;
+//   payload: Payload;
+//   error: string;
+// }

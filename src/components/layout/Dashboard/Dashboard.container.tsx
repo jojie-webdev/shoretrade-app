@@ -14,7 +14,6 @@ import {
   getNotificationsActions,
   logoutActions,
   readNotificationActions,
-  socketCreditActions,
   getUserActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
@@ -81,9 +80,6 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     location.pathname.search(path.split('/')[2]) > 0;
 
   const userType = useSelector((state: Store) => state.auth.type) || '';
-
-  const socketCreditData =
-    useSelector((state: Store) => state.socketCredit.data) || null;
 
   const userData = getUser.data?.data.user;
   const notifsData = getNotifications.data?.data?.notifications || [];

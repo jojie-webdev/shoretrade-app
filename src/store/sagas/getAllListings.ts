@@ -1,21 +1,16 @@
 import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllListings } from 'services/listing';
-import socketGetAllListingsAction from 'store/actions/socketGetAllListings';
-import { AsyncAction, SocketAction } from 'types/Action';
+import { AsyncAction, Action } from 'types/Action';
 import {
   GetAllListingsMeta,
   GetAllListingsPayload,
   GetAllListingsResponseItem,
 } from 'types/store/GetAllListingsState';
-import {
-  SocketGetAllListingsMeta,
-  SocketGetAllListingsPayload,
-} from 'types/store/socketGetAllListingsState';
 import { Store } from 'types/store/Store';
 import { findProduct } from 'utils/Listing';
 
-import { getAllListingsActions } from '../actions';
+import { getAllListingsActions, socketActions } from '../actions';
 
 function* getAllListingsRequest(
   action: AsyncAction<GetAllListingsMeta, GetAllListingsPayload>
@@ -33,9 +28,7 @@ function* getAllListingsRequest(
   }
 }
 
-function* handleSocketEvent(
-  action: SocketAction<SocketGetAllListingsMeta, SocketGetAllListingsPayload>
-) {
+function* getAllListingsPatchRemaining(action: Action<any>) {
   const state: Store = yield select();
   const allListingState = state.getAllListings.data;
   const realtimeRemaining: {
@@ -87,7 +80,10 @@ function* handleSocketEvent(
 
 function* getAllListingsWatcher() {
   yield takeLatest(getAllListingsActions.REQUEST, getAllListingsRequest);
-  yield takeLatest(socketGetAllListingsAction.HANDLE_EVENT, handleSocketEvent);
+  yield takeLatest(
+    socketActions.UPDATE_REMAINING_BOXES,
+    getAllListingsPatchRemaining
+  );
 }
 
 export default getAllListingsWatcher;
