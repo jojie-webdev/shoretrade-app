@@ -3,11 +3,11 @@ const toKilo: Function = (value: string): number =>
 
 const toKilogramsRange: Function = (sizeFrom: string, sizeTo: string): string =>
   Number(sizeTo) >= 1000
-    ? `${toKilo(sizeFrom) || ''} - ${toKilo(sizeTo) || ''} kg`
-    : `${sizeFrom || ''} - ${sizeTo || ''} g`;
+    ? `${toKilo(sizeFrom) || ''} kg - ${toKilo(sizeTo) || ''} kg`
+    : `${sizeFrom || ''} g - ${sizeTo || ''} g`;
 
 const toKilograms: Function = (size: string): string =>
-  Number(size) >= 1000 ? `${toKilo(size) || ''} g` : `${size || ''} g`;
+  Number(size) >= 1000 ? `${toKilo(size) || ''} kg` : `${size || ''} g`;
 
 export const sizeToString = (
   typeMetric: string,
@@ -23,18 +23,18 @@ export const sizeToString = (
     case 'Oyster Grade':
     case 'Numbers':
     case 'Scale':
-      return sizeFrom === sizeTo || !sizeTo || sizeTo === ''
+      return sizeFrom === sizeTo || !sizeTo
         ? `${sizeFrom || ''}`
         : `${sizeFrom || ''} - ${sizeTo || ''}`;
     case 'Portions':
     case 'Grams':
-      return sizeFrom === sizeTo || !sizeTo || sizeTo === ''
+      return !sizeTo
         ? toKilograms(sizeFrom)
         : toKilogramsRange(sizeFrom, sizeTo);
     case 'Grade':
       return `${sizeFrom || ''}`;
     case 'Units per pound':
-      return sizeFrom === sizeTo || !sizeTo || sizeTo === ''
+      return sizeFrom === sizeTo || !sizeTo
         ? `U${sizeFrom || ''}`
         : `U${sizeFrom || ''}/${sizeTo || ''}`;
     default:

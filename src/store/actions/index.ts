@@ -1,3 +1,5 @@
+/* PLOP_INJECT_IMPORT */
+export { default as socketActions } from './socket';
 export { default as authActions } from './auth';
 export { default as loginActions } from './login';
 export { default as logoutActions } from './logout';
@@ -92,12 +94,6 @@ export { default as addCardAndPayActions } from './addCardAndPay';
 export { default as modifyBulkUploadActions } from './modifyBulkUpload';
 export { default as getPaymentModeActions } from './getPaymentMode';
 export { default as sendDisputeActions } from './sendDispute';
-export { default as socketCreditActions } from './socketCredit';
-export { default as socketHomePageActions } from './socketHomePage';
-export { default as socketGetAllListingsActions } from './socketGetAllListings';
-export { default as socketGetListingActions } from './socketGetListing';
-export { default as sockgetGetListingsByTypeActions } from './socketGetListingsByType';
-export { default as socketAllBuyerListingsActions } from './socketAllBuyerListings';
 export { default as getCratesActions } from './getCrates';
 export { default as getNotificationsSettingsActions } from './getNotificationsSettings';
 export { default as getNotificationsActions } from './getNotifications';

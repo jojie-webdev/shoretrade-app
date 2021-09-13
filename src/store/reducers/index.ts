@@ -3,6 +3,7 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
+/* PLOP_INJECT_IMPORT */
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -88,11 +89,7 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
-import socketCredit from './socketCredit';
-import socketGetAllListings from './socketGetAllListings';
-import socketGetListing from './socketGetListing';
-import socketGetListingsByType from './socketGetListingsByType';
-import socketHomePage from './socketHomePage';
+import socket from './socket';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -110,6 +107,8 @@ export default (routeHistory: History) =>
   combineReducers(
     Object.fromEntries(
       Object.entries({
+        /* PLOP_INJECT_INSTANCE */
+        socket,
         addAddress,
         addCardAndPay,
         addCardToken,
@@ -206,11 +205,6 @@ export default (routeHistory: History) =>
         verify,
         getPaymentMode,
         sendDispute,
-        socketCredit,
-        socketHomePage,
-        socketGetAllListings,
-        socketGetListing,
-        socketGetListingsByType,
         getNotificationsSettings,
         editableMarketRequest,
         updateNotificationSettings,

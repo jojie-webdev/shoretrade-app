@@ -1,28 +1,16 @@
 import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllBuyerListings } from 'services/listing';
-import { SocketAction } from 'types/Action';
+import { Action } from 'types/Action';
 import {
   GetAllBuyerListingResponseItem,
   GetAllBuyerListingsPayload,
 } from 'types/store/GetAllBuyerListingsState';
-import {
-  SocketGetAllListingsMeta,
-  SocketGetAllListingsPayload,
-} from 'types/store/socketGetAllListingsState';
-// import { AsyncAction } from 'types/Action';
-// import {
-//   GetAllBuyerListingsMeta,
-//   GetAllBuyerListingsPayload,
-// } from 'types/store/GetAllBuyerListingsState';
 import { Store } from 'types/store/Store';
 import { downloadCsv } from 'utils/downloadCsv';
 import { findProduct } from 'utils/Listing';
 
-import {
-  getAllBuyerListingsActions,
-  socketAllBuyerListingsActions,
-} from '../actions';
+import { getAllBuyerListingsActions, socketActions } from '../actions';
 
 function* getAllBuyerListingsRequest(action: any) {
   const state: Store = yield select();
@@ -69,9 +57,7 @@ function* getAllBuyerListingsCSV(action: any) {
   }
 }
 
-function* handleSocketEvent(
-  action: SocketAction<SocketGetAllListingsMeta, SocketGetAllListingsPayload>
-) {
+function* getAllBuyerListingsPatchRemaining(action: Action<any>) {
   const state: Store = yield select();
   const allListingState = state.getAllBuyerListings.data;
   const realtimeRemaining: {
@@ -132,8 +118,8 @@ function* getAllBuyerListingsWatcher() {
     getAllBuyerListingsCSV
   );
   yield takeLatest(
-    socketAllBuyerListingsActions.HANDLE_EVENT,
-    handleSocketEvent
+    socketActions.UPDATE_REMAINING_BOXES,
+    getAllBuyerListingsPatchRemaining
   );
 }
 

@@ -1,0 +1,11 @@
+import { createAsyncReducer } from 'utils/Redux';
+import {
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload,
+} from 'types/store/{{pascalCase name}}State';
+import { {{camelCase name}}Actions } from '../actions';
+
+export default createAsyncReducer<
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload
+>({{camelCase name}}Actions);

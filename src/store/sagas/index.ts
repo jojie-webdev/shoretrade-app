@@ -1,5 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
+/* PLOP_INJECT_IMPORT */
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -77,6 +78,7 @@ import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
+import socketChannel from './socketChannel';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -91,6 +93,7 @@ import uploadBulk from './uploadBulk';
 import verify from './verify';
 
 const sagas = [
+  /* PLOP_INJECT_INSTANCE */
   addAddress,
   addCardAndPay,
   addCardToken,
@@ -180,6 +183,7 @@ const sagas = [
   sendDispute,
   getNotifications,
   getNotificationsSettings,
+  socketChannel,
 ];
 
 export default function* root() {

@@ -1,0 +1,42 @@
+import { put, call, takeLatest, select } from 'redux-saga/effects';
+import pathOr from 'ramda/es/pathOr';
+
+import {
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload,
+} from 'types/store/{{pascalCase name}}State';
+import { AsyncAction } from 'types/Action';
+import { Store } from 'types/store/Store';
+import { {{camelCase name}}Actions } from '../actions';
+
+const dummyService = (data: {{pascalCase name}}Meta, token: string) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        data: {},
+      });
+    }, 2000);
+  });
+};
+
+function* {{camelCase name}}Request(
+  action: AsyncAction<{{pascalCase name}}Meta, {{pascalCase name}}Payload>,
+) {
+  const state: Store = yield select();
+  if (state.auth.token) {
+    try {
+      const { data } = yield call(dummyService, action.meta, state.auth.token);
+      yield put({{camelCase name}}Actions.success(data));
+    } catch (e) {
+      yield put({{camelCase name}}Actions.failed(e.message));
+    }
+  } else {
+    yield put({{camelCase name}}Actions.failed('Token not found'));
+  }
+}
+
+function* {{camelCase name}}Watcher() {
+  yield takeLatest({{camelCase name}}Actions.REQUEST, {{camelCase name}}Request);
+}
+
+export default {{camelCase name}}Watcher;

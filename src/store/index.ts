@@ -17,7 +17,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import createRootReducer from 'store/reducers';
-import createSocketMiddleware from 'utils/WebSocket';
+// import createSocketMiddleware from 'utils/WebSocket';
 
 export const history = createBrowserHistory();
 
@@ -38,8 +38,6 @@ const persistConfig = {
     'history',
     'uploadBulk',
     'modifyBulkUpload',
-    'websocket',
-    'editableMarketRequest'
   ],
 };
 
@@ -49,7 +47,7 @@ export const sagaMiddleware = createSagaMiddleware();
 
 const enhancer = applyMiddleware(
   sagaMiddleware,
-  createSocketMiddleware(),
+  // createSocketMiddleware(),
   routerMiddleware(history)
 );
 

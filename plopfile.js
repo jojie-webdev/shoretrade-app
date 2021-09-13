@@ -358,4 +358,143 @@ module.exports = (plop) => {
       },
     ],
   });
+  plop.setGenerator('store', {
+    description:
+      'Create a basic action and reducer for global state management',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your state name? (ex. Cart)',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/types/store/{{pascalCase name}}State.ts',
+        templateFile: 'plop-templates/store/state.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/types/store/Store.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template:
+          "import { {{pascalCase name}}State } from './{{pascalCase name}}State';",
+      },
+      {
+        type: 'append',
+        path: 'src/types/store/Store.ts',
+        pattern: '/* PLOP_INJECT_INSTANCE */',
+        template: '  {{camelCase name}}: {{pascalCase name}}State;',
+      },
+      {
+        type: 'add',
+        path: 'src/store/actions/{{camelCase name}}.ts',
+        templateFile: 'plop-templates/store/actions.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/store/actions/index.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template:
+          "export { default as {{camelCase name}}Actions } from './{{camelCase name}}';",
+      },
+      {
+        type: 'add',
+        path: 'src/store/reducers/{{camelCase name}}.ts',
+        templateFile: 'plop-templates/store/reducers.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/store/reducers/index.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "import {{camelCase name}} from './{{camelCase name}}';",
+      },
+      {
+        type: 'append',
+        path: 'src/store/reducers/index.ts',
+        pattern: '/* PLOP_INJECT_INSTANCE */',
+        template: '  {{camelCase name}},',
+      },
+    ],
+  });
+  plop.setGenerator('store:async', {
+    description: 'Create asynchronous global state',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your state name? (ex. Get All Listings)',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/types/store/{{pascalCase name}}State.ts',
+        templateFile: 'plop-templates/store/async/state.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/types/store/Store.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: `import {
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload,
+} from './{{pascalCase name}}State';`,
+      },
+      {
+        type: 'append',
+        path: 'src/types/store/Store.ts',
+        pattern: '/* PLOP_INJECT_INSTANCE */',
+        template:
+          '  {{camelCase name}}: AsyncState<{{pascalCase name}}Meta, {{pascalCase name}}Payload>;',
+      },
+      {
+        type: 'add',
+        path: 'src/store/actions/{{camelCase name}}.ts',
+        templateFile: 'plop-templates/store/async/actions.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/store/actions/index.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template:
+          "export { default as {{camelCase name}}Actions } from './{{camelCase name}}';",
+      },
+      {
+        type: 'add',
+        path: 'src/store/reducers/{{camelCase name}}.ts',
+        templateFile: 'plop-templates/store/async/reducers.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/store/reducers/index.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "import {{camelCase name}} from './{{camelCase name}}';",
+      },
+      {
+        type: 'append',
+        path: 'src/store/reducers/index.ts',
+        pattern: '/* PLOP_INJECT_INSTANCE */',
+        template: '  {{camelCase name}},',
+      },
+      {
+        type: 'add',
+        path: 'src/store/sagas/{{camelCase name}}.ts',
+        templateFile: 'plop-templates/store/async/sagas.ts.hbs',
+      },
+      {
+        type: 'append',
+        path: 'src/store/sagas/index.ts',
+        pattern: '/* PLOP_INJECT_IMPORT */',
+        template: "import {{camelCase name}} from './{{camelCase name}}';",
+      },
+      {
+        type: 'append',
+        path: 'src/store/sagas/index.ts',
+        pattern: '/* PLOP_INJECT_INSTANCE */',
+        template: '  {{camelCase name}},',
+      },
+    ],
+  });
 };

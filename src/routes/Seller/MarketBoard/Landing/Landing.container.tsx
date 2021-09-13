@@ -34,6 +34,10 @@ const MarketBoardLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [activeOffersData, setActiveOffersData] = useState<
+    GetActiveOffersRequestResponseItem[]
+  >([]);
+
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
     user !== undefined &&
@@ -51,9 +55,9 @@ const MarketBoardLanding = (): JSX.Element => {
     (store: Store) => store.getAllMarketRequest
   );
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
-  const activeOffersData = (activeOffers.data?.data.marketOffers || []).filter(
-    (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
-  );
+  const filteredActiveOffers = (
+    activeOffers.data?.data.marketOffers || []
+  ).filter((d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7);
   const buyerRequestsFilters = useSelector(
     (store: Store) => store.getAllMarketRequestFilters.data?.data
   );
@@ -129,6 +133,8 @@ const MarketBoardLanding = (): JSX.Element => {
     dispatch(getAllMarketRequestActions.request({}));
     dispatch(getActiveOffersActions.request({}));
 
+    setActiveOffersData(filteredActiveOffers);
+
     // if (currentTab === 'Buyer Requests') {
     //   dispatch(getAllMarketRequestActions.request({}));
     // } else {
@@ -159,14 +165,25 @@ const MarketBoardLanding = (): JSX.Element => {
       setTimer(null);
     }
 
+    const finalSearchTerm = () => {
+      return {
+        term: searchTerm.length > 2 ? searchTerm : '',
+      };
+    };
+
     const timerId = setTimeout(() => {
       dispatch(
         getAllMarketRequestActions.request({
-          queryParams: qs.stringify({
-            term: searchTerm.length > 2 ? searchTerm : '',
-          }),
+          queryParams: qs.stringify(finalSearchTerm()),
         })
       );
+
+      const filteredActiveOffers = activeOffersData?.filter(
+        (activeOffer) =>
+          activeOffer.name.toLowerCase() === searchTerm.toLowerCase()
+      );
+
+      setActiveOffersData(filteredActiveOffers);
     }, 800);
 
     setTimer(timerId);
@@ -276,13 +293,13 @@ const MarketBoardLanding = (): JSX.Element => {
         textMobile2="Can’t find your product?"
         textMobile3="Create a new Market Request"
         cardText1={
-          'Search for the product you want to request and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
+          'View the products Buyers have requested and make offers directly to them.'
         }
         cardText2={
-          'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
+          'Negotiate and accept offers before the Buyer Request closes 7 days after creation or once the quantity requested has been filled.'
         }
         cardText3={
-          'Process the payment for accepted offers and get real time delivery updates.'
+          'Organise shipping for all finalised Buyer Requests. Keep in mind that a Buyer Request is not finalised until the Buyer has processed the payment. Turn on your notifications to ensure you stay up to date.'
         }
         isAcceptClicked={isAcceptClicked}
         setIsAcceptClicked={setIsAcceptClicked}

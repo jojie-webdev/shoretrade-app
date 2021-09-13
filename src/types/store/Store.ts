@@ -1,3 +1,4 @@
+/* PLOP_INJECT_IMPORT */
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import {
@@ -69,7 +70,7 @@ import {
   AddLinkedAccountMeta,
   AddLinkedAccountPayload,
 } from './AddLinkedAccountState';
-import { AsyncState, SocketState } from './AsyncState';
+import { AsyncState } from './AsyncState';
 import { AuthState } from './AuthState';
 import { CartState } from './CartState';
 import {
@@ -91,14 +92,16 @@ import {
 } from './DeleteLinkedAccountState';
 import {
   DeleteMarketRequestOfferMeta,
-  DeleteMarketRequestOfferPayload
-}
-  from './DeleteMarketRequestOfferState';
+  DeleteMarketRequestOfferPayload,
+} from './DeleteMarketRequestOfferState';
 import {
   DeleteMarketRequestMeta,
   DeleteMarketRequestPayload,
 } from './DeleteMarketRequestState';
-import { DeleteNotificationMetaData, DeleteNotificationPayload } from './DeleteNotificationState';
+import {
+  DeleteNotificationMetaData,
+  DeleteNotificationPayload,
+} from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
 import { EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
@@ -231,27 +234,7 @@ import {
 } from './SearchProductTypeState';
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
-import {
-  SocketAllBuyerListingsMeta,
-  SocketAllBuyerListingsPayload,
-} from './socketAllBuyerListingsState';
-import { SocketCreditMeta, SocketCreditPayload } from './SocketCreditState';
-import {
-  SocketGetAllListingsMeta,
-  SocketGetAllListingsPayload,
-} from './socketGetAllListingsState';
-import {
-  SocketGetListingsByTypeMeta,
-  SocketGetListingsByTypePayload,
-} from './socketGetListingsByTypeState';
-import {
-  SocketGetListingMeta,
-  SocketGetListingPayload,
-} from './socketGetListingState';
-import {
-  SocketHomePageMeta,
-  SocketHomePagePayload,
-} from './socketHomePageState';
+import { SocketState } from './SocketState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -278,6 +261,8 @@ import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
+  /* PLOP_INJECT_INSTANCE */
+  socket: SocketState;
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
   login: AsyncState<LoginMeta, LoginPayload>;
@@ -482,21 +467,6 @@ export interface Store {
       currentStep?: number;
     };
   };
-  socketCredit: SocketState<SocketCreditMeta, SocketCreditPayload>;
-  socketHomePage: SocketState<SocketHomePageMeta, SocketHomePagePayload>;
-  socketGetAllListings: SocketState<
-    SocketGetAllListingsMeta,
-    SocketGetAllListingsPayload
-  >;
-  socketGetListing: SocketState<SocketGetListingMeta, SocketGetListingPayload>;
-  socketGetListingsByType: SocketState<
-    SocketGetListingsByTypeMeta,
-    SocketGetListingsByTypePayload
-  >;
-  socketAllBuyerListings: SocketState<
-    SocketAllBuyerListingsMeta,
-    SocketAllBuyerListingsPayload
-  >;
   getCrates: AsyncState<GetCratesMeta, GetCratesPayload>;
   getAvailableCrates: AsyncState<
     GetAvailableCratesMeta,

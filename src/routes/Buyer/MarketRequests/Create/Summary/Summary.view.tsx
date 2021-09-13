@@ -198,7 +198,8 @@ const SummaryView = (props: SummaryProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Review the details of your Market Request and select your shipping address. If you need to make any changes, click the relevant section above. Once you’re ready, press Send Market Request.
+              Your Market Request will automatically close after 7 days or once
+              the maximum quantity requested is reached.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -312,12 +313,14 @@ const SummaryView = (props: SummaryProps) => {
                 className="submit-btn"
                 text="send market request"
                 variant="primary"
-                icon={<ChevronRight
-                  width={14}
-                  height={12}
-                  fill="white"
-                  style={{ paddingBottom: '2px' }}
-                />}
+                icon={
+                  <ChevronRight
+                    width={14}
+                    height={12}
+                    fill="white"
+                    style={{ paddingBottom: '2px' }}
+                  />
+                }
               />
             </MobileFooter>
           </SummaryContentContainer>

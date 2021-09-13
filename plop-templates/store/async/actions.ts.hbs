@@ -1,0 +1,17 @@
+import { createAsyncAction } from 'utils/Redux';
+import {
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload,
+} from 'types/store/{{pascalCase name}}State';
+
+const ns = '{{constantCase name}}';
+const asyncAction = createAsyncAction<
+  {{pascalCase name}}Meta,
+  {{pascalCase name}}Payload
+>(ns);
+
+const {{camelCase name}}Actions = {
+  ...asyncAction,
+};
+
+export default {{camelCase name}}Actions;

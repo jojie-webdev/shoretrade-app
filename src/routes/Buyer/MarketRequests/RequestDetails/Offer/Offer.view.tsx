@@ -12,6 +12,7 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
+import moment from 'moment';
 import { Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -58,6 +59,24 @@ const Offer = (props: OfferProps) => {
     }
   };
 
+  const getCorrectedSize = (offer: any) => {
+    let convertedSize = sizeToString(
+      offer.metric,
+      offer.size.from,
+      offer.size.to
+    );
+
+    if (
+      offer?.options &&
+      Array.isArray(offer?.options) &&
+      offer?.options.length > 1
+    ) {
+      convertedSize = 'Various';
+    }
+
+    return convertedSize;
+  };
+
   const renderSubDetails = (offer: any) => (
     <div className="sub-details">
       <Typography
@@ -81,7 +100,6 @@ const Offer = (props: OfferProps) => {
       >
         Specs: {offer.specifications.join(', ')}
       </Typography>
-      <div></div>
       <Typography
         weight="400"
         variant="small"
@@ -90,7 +108,17 @@ const Offer = (props: OfferProps) => {
         }}
         color="shade7"
       >
-        Size: {sizeToString(offer.metric, offer.size.from, offer.size.to)}
+        Size: {getCorrectedSize(offer)}
+      </Typography>
+      <Typography
+        weight="400"
+        variant="small"
+        style={{
+          fontFamily: 'Basis Grotesque Pro',
+        }}
+        color="shade7"
+      >
+        Delivery Date: {moment(offer.deliveryDate).format('MMMM DD, YYYY')}
       </Typography>
     </div>
   );

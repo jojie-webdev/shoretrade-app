@@ -13,7 +13,7 @@ export {
 export const API = {
   URL: process.env.REACT_APP_API_URL || 'http://localhost:3000',
   VERSION: process.env.REACT_APP_API_VERSION || 'v1',
-  VERSION_NEXT: process.env.REACT_APP_API_VERSION_NEXT,
+  VERSION_NEXT: process.env.REACT_APP_API_VERSION_NEXT || 'v2',
 };
 export const placeholderImage =
   'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/No-Image-Placeholder-(blue).png';
