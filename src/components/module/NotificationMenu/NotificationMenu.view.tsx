@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Button from 'components/base/Button';
-import { Bell, Crab, Octopus } from 'components/base/SVG';
+import { Bell, Octopus } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
@@ -78,7 +77,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
 
   const handleOnClickSeeAll = () => {
     setIsComponentVisible(false);
-    history.push(notifsRoute + '?tab=Unread');
+    history.push(notifsRoute + '?tab=All');
   };
 
   return (
@@ -129,23 +128,18 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                     </DropdownItemContainer>
                   ))}
                 {notifsData.length < 1 && (
-                  <EmptyStateView
-                    Svg={Octopus}
-                    fluid
-                    height={90}
-                    title="No notifications at the moment."
-                  />
+                  <Typography variant="title5" align="center" color="shade5">
+                    No Unread Notifications
+                  </Typography>
                 )}
               </div>
               <div className="menu-footer">
-                {notifsData.length > 0 && (
-                  <Button
-                    onClick={() => handleOnClickSeeAll()}
-                    size="sm"
-                    variant="outline"
-                    text="See All"
-                  />
-                )}
+                <Button
+                  onClick={() => handleOnClickSeeAll()}
+                  size="sm"
+                  variant="outline"
+                  text="See All"
+                />
               </div>
             </div>
           </div>
