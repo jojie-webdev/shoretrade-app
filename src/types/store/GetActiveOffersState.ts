@@ -55,6 +55,7 @@ export type GetActiveOffersRequestResponseItem = {
   shippingTo: ShippingAddress;
   shippingFrom: ShippingAddress;
   paymentRequired: boolean;
+  orderRefNumber: number;
 };
 
 export interface Offer {
@@ -71,6 +72,8 @@ export interface Offer {
   metric: string;
   company_id: string;
   shippingFrom: ShippingAddress;
+  paymentRequired: boolean;
+  orderRefNumber: string;
 }
 
 export interface Negotiations {

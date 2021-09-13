@@ -235,6 +235,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               <Col md={4} className="textfield-col">
                 <TextField
                   label="Quantity"
+                  LeftComponent={
+                    <Typography variant="label" weight="bold" color="shade6">
+                      {formatMeasurementUnit(
+                        props.buyerRequest.measurementUnit
+                      )}
+                    </Typography>
+                  }
                   value={props.weight}
                   onChangeText={props.setWeight}
                   min={1}
@@ -254,6 +261,11 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   label={`Price per ${formatMeasurementUnit(
                     props.buyerRequest.measurementUnit
                   )}`}
+                  LeftComponent={
+                    <Typography variant="label" weight="bold" color="shade6">
+                      $
+                    </Typography>
+                  }
                   value={props.price}
                   onChangeText={props.setPrice}
                   min={1}
@@ -283,7 +295,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     props.setDeliveryDate(d?.toDate() || null)
                   }
                   error={pathOr('', ['deliveryDate', '0'], errors)}
-                  showCalendarIcon={false}
+                  showCalendarIcon={true}
                   showArrowDownIcon={false}
                   borderRadius="12px"
                   height="40px"

@@ -53,6 +53,8 @@ const MarketRequestDetail = (): JSX.Element => {
       const splits = location.pathname.split('/');
       const offerId = splits[splits.length - 1];
       setOfferId(offerId);
+    } else {
+      setShowPaymentMethod(false);
     }
   }, [location.pathname]);
 
@@ -148,6 +150,10 @@ const MarketRequestDetail = (): JSX.Element => {
   const onClickFilterButton = () => {
     setIsFilterModalOpen((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [showPaymentMethod]);
 
   const handleAcceptOffer = () => {
     // history.push(BUYER_ROUTES.CHECKOUT);

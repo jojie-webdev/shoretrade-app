@@ -35,7 +35,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   } = props;
 
   const getIcon = () => {
-    if (type === 'none') return <></>;
+    if (type === 'none') return <div style={{ padding: '0px 5px' }} />;
 
     if (type === 'accordion') {
       const Dropdown = () => (

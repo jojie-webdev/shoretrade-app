@@ -6,11 +6,12 @@ import Badge from 'components/base/Badge/Badge.view';
 import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
+import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { prop, sortBy } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
@@ -52,6 +53,7 @@ const FullOfferDetails = (props: any) => {
   } = props;
 
   const location = useLocation();
+  const history = useHistory();
   const splits = location.pathname.split('/');
   const offerId = splits[splits.length - 1];
 
@@ -247,7 +249,7 @@ const FullOfferDetails = (props: any) => {
     }
     if (offerStatus === 'PAYMENT MISSED') {
       alertProps = {
-        variant: 'warning',
+        variant: 'error',
         header: 'Payment Missed',
         content: contentTypo(
           'The offer has automatically closed due to missed payment.'
@@ -258,7 +260,18 @@ const FullOfferDetails = (props: any) => {
       alertProps = {
         variant: 'success',
         header: 'Finalised',
-        content: contentTypo('This offer is now Order [XXXX-XXXX].'),
+        content: (
+          <div
+            onClick={() => {
+              history.replace(BUYER_ROUTES.ORDERS);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            {contentTypo(
+              `This offer is now Order [#0000-${offer.orderRefNumber}].`
+            )}
+          </div>
+        ),
       };
     }
     if (offerStatus === 'NEW OFFER') {
@@ -365,27 +378,28 @@ const FullOfferDetails = (props: any) => {
             <Col>{renderTotalPriceContainer()}</Col>
           </Row>
 
-          {offer?.status !== 'ACCEPTED' && (
-            <CTAContainer>
-              <StyledNegotiateButtonContainer>
-                <StyledNegotiateButton
-                  onClick={() => handleStartNegotiate()}
-                  variant="outline"
-                  text="NEGOTIATE"
-                  icon={<Refresh />}
-                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
-                />
-              </StyledNegotiateButtonContainer>
-              <div style={{ width: '124px' }}>
-                <StyledAcceptButton
-                  text="ACCEPT"
-                  icon={<Check width={10} height={9} />}
-                  onClick={() => handleAcceptOffer()}
-                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
-                />
-              </div>
-            </CTAContainer>
-          )}
+          {offer?.status !== 'ACCEPTED' &&
+            getOfferStatus(offer, 'buyer') !== 'PAYMENT MISSED' && (
+              <CTAContainer>
+                <StyledNegotiateButtonContainer>
+                  <StyledNegotiateButton
+                    onClick={() => handleStartNegotiate()}
+                    variant="outline"
+                    text="NEGOTIATE"
+                    icon={<Refresh />}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </StyledNegotiateButtonContainer>
+                <div style={{ width: '124px' }}>
+                  <StyledAcceptButton
+                    text="ACCEPT"
+                    icon={<Check width={10} height={9} />}
+                    onClick={() => handleAcceptOffer()}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </div>
+              </CTAContainer>
+            )}
         </Hidden>
       </FullOfferDetailsContainer>
 

@@ -28,6 +28,7 @@ export const Field = styled.input<{
   disabled?: boolean;
   readOnly?: boolean;
   borderRadius?: string;
+  removeArrows?: boolean;
 }>`
   background-color: ${({ readOnly, theme, disabled }) =>
     readOnly || disabled ? theme.grey.shade3 : theme.grey.noshade};
@@ -48,6 +49,16 @@ export const Field = styled.input<{
     color: ${({ theme }) => theme.grey.shade5};
     opacity: 1;
   }
+
+  /* Chrome, Safari, Edge, Opera */
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  -moz-appearance: textfield;
 `;
 
 export const LeftComponentContainer = styled.div<{ disabled?: boolean }>`

@@ -18,7 +18,6 @@ import {
   getExpiry,
   getShippingAddress,
   getStatus,
-  getStatusBadgeColor,
   isOfferMade,
   isPaymentPending,
   isPaymentRequired,
@@ -74,35 +73,54 @@ const BuyerRequestsInteractions = (props: {
     return offer || ({} as Offer);
   };
 
+  const statusTag = (
+    badgeColor: string,
+    badgeTextColor: TypographyProps['color'],
+    text: string
+  ) => (
+    <StyledBadge className="badge" badgeColor={badgeColor}>
+      <BadgeText
+        variant="overlineSmall"
+        color={badgeTextColor}
+        style={{ lineHeight: '15px' }}
+      >
+        {text}
+      </BadgeText>
+    </StyledBadge>
+  );
+
   const renderTagByStatus = () => {
     const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
 
-    const statusTag = (
-      badgeColor: string,
-      badgeTextColor: TypographyProps['color'],
-      text: string
-    ) => (
-      <StyledBadge className="badge" badgeColor={badgeColor}>
-        <BadgeText
-          variant="overlineSmall"
-          color={badgeTextColor}
-          style={{ lineHeight: '15px' }}
-        >
-          {text}
-        </BadgeText>
-      </StyledBadge>
-    );
+    // if (offerStatus === 'PAYMENT MISSED') {
+    //   return statusTag(theme.brand.error, 'noshade', 'LOST');
+    // }
 
-    if (offerStatus === 'PAYMENT MISSED') {
-      return statusTag(getStatusBadgeColor('DECLINED'), 'noshade', 'LOST');
-    }
-
-    if (offerStatus === 'PAYMENT REQUIRED') {
-      return statusTag(theme.brand.error, 'noshade', 'PENDING PAYMENT');
-    }
+    // if (offerStatus === 'PAYMENT REQUIRED') {
+    //   return statusTag(theme.brand.warning, 'noshade', 'PENDING PAYMENT');
+    // }
 
     if (offerStatus === 'NEW OFFER') {
       return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
+    }
+  };
+
+  const getOfferCount = () => {
+    const offer = getOfferByMarketRequest();
+
+    const initialOffer = 1;
+    const totalOfferAndNegos = initialOffer + offer?.negotiations?.length;
+
+    return totalOfferAndNegos;
+  };
+
+  const getCorrectOfferCountLabel = () => {
+    const offerCount = getOfferCount();
+
+    if (offerCount === 1) {
+      return '1 OFFER';
+    } else {
+      return offerCount + ' OFFERS';
     }
   };
 
@@ -160,51 +178,15 @@ const BuyerRequestsInteractions = (props: {
             </Typography>
           </Col>
           <Col style={{ padding: '0 5px' }}>
-            {renderTagByStatus()}
-            {/* {isPaymentRequired(getOfferByMarketRequest().negotiations) ? (
-              isPaymentPending(getOfferByMarketRequest().negotiations) ? (
-                <StyledBadge
-                  className="badge"
-                  badgeColor={theme.brand.error}
-                  style={{ lineHeight: '15px' }}
-                >
-                  <BadgeText
-                    variant="overlineSmall"
-                    color="noshade"
-                    style={{ lineHeight: '15px' }}
-                  >
-                    PENDING PAYMENT
-                  </BadgeText>
-                </StyledBadge>
-              ) : (
-                getExpiry(data.createdAt) === 'Expired' && (
-                  <StyledBadge
-                    className="badge"
-                    badgeColor={getStatusBadgeColor('DECLINED')}
-                  >
-                    <BadgeText
-                      variant="overlineSmall"
-                      color="noshade"
-                      style={{ lineHeight: '15px' }}
-                    >
-                      LOST
-                    </BadgeText>
-                  </StyledBadge>
-                )
-              )
-            ) : (
-              isOfferMade(data, activeOffers) && (
-                <StyledBadge className="badge" badgeColor={theme.brand.success}>
-                  <BadgeText
-                    variant="overlineSmall"
-                    color="noshade"
-                    style={{ lineHeight: '15px' }}
-                  >
-                    ACTIVE OFFER
-                  </BadgeText>
-                </StyledBadge>
-              )
-            )} */}
+            <div style={{ display: 'flex' }}>
+              {renderTagByStatus()}
+              {getOfferCount() &&
+                statusTag(
+                  theme.grey.shade3,
+                  'shade10',
+                  getCorrectOfferCountLabel()
+                )}
+            </div>
           </Col>
         </>
       }
@@ -267,20 +249,68 @@ const MyActiveOffersInteractions = (props: {
     );
 
     if (offerStatus === 'ACCEPTED') {
-      return tag(theme.brand.success, 'ACCEPTED');
+      return tag(theme.brand.success, 'FINALISED');
     }
     if (offerStatus === 'PAYMENT MISSED') {
-      return tag(theme.brand.error, 'PAYMENT MISSED');
+      return tag(theme.brand.error, 'LOST');
     }
     if (offerStatus === 'DECLINED') {
       return tag(theme.brand.error, 'DECLINED');
     }
     if (offerStatus === 'PAYMENT REQUIRED') {
-      return tag(theme.brand.error, 'PAYMENT REQUIRED');
+      return tag(theme.brand.warning, 'PENDING PAYMENT');
     }
     if (offerStatus === 'NEGOTIATION') {
       return tag(theme.brand.alert, 'NEGOTIATION', 'shade10');
     }
+  };
+
+  const buildSizeData = () => {
+    const getFromOnlySize = () => {
+      if (!data.size.to) {
+        return data.size.from + ' ' + sizeUnit;
+      } else return '';
+    };
+
+    const getFromAndToSize = () => {
+      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
+
+      if (!toSize) {
+        return '';
+      }
+
+      return toSize;
+    };
+
+    const sizeData = !data.size.from
+      ? 'Ungraded'
+      : getFromOnlySize() + ' ' + getFromAndToSize();
+
+    return sizeData;
+  };
+
+  const buildSizeData = () => {
+    const getFromOnlySize = () => {
+      if (!data.size.to) {
+        return data.size.from + ' ' + sizeUnit;
+      } else return '';
+    };
+
+    const getFromAndToSize = () => {
+      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
+
+      if (!toSize) {
+        return '';
+      }
+
+      return toSize;
+    };
+
+    const sizeData = !data.size.from
+      ? 'Ungraded'
+      : getFromOnlySize() + ' ' + getFromAndToSize();
+
+    return sizeData;
   };
 
   const buildSizeData = () => {

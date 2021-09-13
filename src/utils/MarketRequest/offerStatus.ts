@@ -30,17 +30,33 @@ export const getOfferStatus = (offer: any, from: 'seller' | 'buyer') => {
     return 'PAYMENT REQUIRED';
   }
 
-  if (
-    status === 'OPEN' &&
-    negotiations?.length > 0 &&
-    isCounterOfferMade(negotiations, from)
-  ) {
-    return 'NEGOTIATION';
-  }
+  const isNotExpired = () => {
+    const isNotExpired = daysPassed <= 7;
 
-  console.log(daysPassed);
+    return isNotExpired;
+  };
 
-  if (daysPassed <= 7 && status === 'OPEN' && (!negotiations || negotiations?.length === 0)) {
-    return 'NEW OFFER';
+  if (status === 'OPEN' && isNotExpired()) {
+    if (from === 'seller') {
+      if (
+        negotiations?.length > 0 &&
+        isCounterOfferMade(negotiations, 'buyer')
+      ) {
+        return 'NEW OFFER';
+      }
+
+      return 'NEGOTIATION';
+    }
+    if (from === 'buyer') {
+      if (
+        (negotiations?.length > 0 &&
+          isCounterOfferMade(negotiations, 'seller')) ||
+        !negotiations
+      ) {
+        return 'NEW OFFER';
+      }
+
+      return 'NEGOTIATION';
+    }
   }
 };

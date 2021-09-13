@@ -12,7 +12,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
@@ -51,6 +51,7 @@ const Step1 = ({
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const history = useHistory();
 
   const unit = formatMeasurementUnit(
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
@@ -131,14 +132,6 @@ const Step1 = ({
               {toPrice(activeOffer.price * activeOffer.weight)}
             </Typography>
           </div>
-
-          {isNegoOpen && (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                The buyer is reviewing your offer.
-              </Typography>
-            </div>
-          )}
         </div>
       );
     }
@@ -330,14 +323,6 @@ const Step1 = ({
               {toPrice(totalValue)}
             </Typography>
           </div>
-
-          {!isNegotiationAllowed && (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                The buyer is reviewing your offer.
-              </Typography>
-            </div>
-          )}
         </div>
 
         {showButtons && !isMobile && (
@@ -426,7 +411,7 @@ const Step1 = ({
 
     if (offerStatus === 'PAYMENT MISSED') {
       alertProps = {
-        variant: 'warning',
+        variant: 'error',
         header: 'Lost',
         content: contentTypo(
           'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.'
@@ -460,7 +445,18 @@ const Step1 = ({
       alertProps = {
         variant: 'success',
         header: 'Finalised',
-        content: contentTypo('This offer is now Order [XXXX-XXXX].'),
+        content: (
+          <div
+            onClick={() => {
+              history.replace(SELLER_ROUTES.SOLD);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            {contentTypo(
+              `This offer is now Order [#0000-${activeOffer.orderRefNumber}].`
+            )}
+          </div>
+        ),
       };
     }
     if (offerStatus === 'NEW OFFER') {
@@ -489,17 +485,11 @@ const Step1 = ({
     return isGoodToDisplayAlert;
   };
 
-  const renderAlertContainer = () => (
-    <div style={{ maxWidth: 641 }}>
-      <Alert {...buildAlertProperties()} fullWidth />
-    </div>
-  );
-
   return (
     <>
       {isGoodToDisplayAlert() && (
         <>
-          {renderAlertContainer()}
+          <Alert {...buildAlertProperties()} fullWidth />
           <div style={{ marginBottom: '16px' }} />
         </>
       )}

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import Alert from 'components/base/Alert';
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
@@ -22,10 +23,11 @@ import LoadingOverlay from 'components/module/LoadingOverlay';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { BUYER_ROUTES } from 'consts/routes';
 import { connect, FormikProps } from 'formik';
-import { Col, Row } from 'react-grid-system';
+import { Col, Hidden, Row } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { CCImageRow } from 'routes/Buyer/Account/Card/Card.style';
 import { marketRequestAcceptOfferActions } from 'store/actions';
 import { AcceptOffer } from 'types/store/MarketOfferState';
@@ -185,6 +187,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const params = useParams<{ id: string }>();
+  const { id } = params;
 
   const renderBrand = (brand: string) => {
     brand = brand ? brand.toLowerCase() : '';
@@ -204,6 +208,25 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         return null;
     }
   };
+
+  const offerBreadCrumb = [
+    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
+    {
+      label: 'Request Details',
+      onClick: () => {
+        history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
+      },
+    },
+    {
+      label: 'Offer Details',
+      onClick: () => {
+        props.onBack();
+      },
+    },
+    {
+      label: 'Payment',
+    },
+  ];
 
   return (
     <Container>
@@ -229,11 +252,17 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         </div>
       )}
 
+      <Hidden xs sm>
+        <div style={{ marginBottom: 24 }}>
+          <Breadcrumbs sections={offerBreadCrumb} />
+        </div>
+      </Hidden>
+
       <Typography
+        className="header-text"
         variant="title5"
         weight="700"
         color="shade9"
-        style={{ fontFamily: 'Media Sans' }}
       >
         Select Payment Method
       </Typography>
@@ -796,7 +825,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           }
         }}
         actionText="Proceed"
-        cancelText="Keep Shopping"
+        cancelText="Cancel"
       />
 
       {isLoading && <LoadingOverlay />}

@@ -198,8 +198,9 @@ const SummaryView = (props: SummaryProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Your Market Request will automatically close after 7 days or once
-              the maximum quantity requested is reached.
+              Review the details of your Market Request and select your shipping
+              address. If you need to make any changes, click the relevant
+              section above. Once you’re ready, press Send Market Request.
             </Typography>
           </TitleContainer>
         </MainContainer>
@@ -211,15 +212,13 @@ const SummaryView = (props: SummaryProps) => {
               label="Specs"
               items={selectedSpecifications.items.map((spec) => spec.label)}
             />
-            {selectedSize.items[0] === '' && (
-              <TypographyView
-                style={{ marginBottom: '8px' }}
-                color="shade6"
-                variant="overline"
-              >
-                Size
-              </TypographyView>
-            )}
+            <TypographyView
+              style={{ marginBottom: '8px' }}
+              color="shade6"
+              variant="overline"
+            >
+              Size
+            </TypographyView>
             <div className="size-container">{sizeSummary()}</div>
             <TypographyView
               style={{ marginBottom: '8px' }}
@@ -292,8 +291,7 @@ const SummaryView = (props: SummaryProps) => {
                     variant="caption"
                     style={{ marginLeft: 8, marginTop: 8 }}
                   >
-                    This request will automatically close once maximum quantity
-                    requested is reached
+                    Your Market Request will automatically close after 7 days or once the maximum quantity requested is reached.
                   </TypographyView>
                 </CheckboxContainer>
               </CheckboxMain>

@@ -72,7 +72,11 @@ export const hasNewOffer = (offers: Offer[]) => {
   }
 
   const areAllOffersAccepted = () => {
-    const oneOfOfferNotAccepted = offers?.find(
+    if (!offers) {
+      return false;
+    }
+
+    const oneOfOfferNotAccepted = offers.find(
       (offer) => offer.status !== 'ACCEPTED'
     );
 

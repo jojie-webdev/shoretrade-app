@@ -37,17 +37,11 @@ function* negotiationOfferRequest(
 function* negotiationOfferSuccess(
   action: AsyncAction<NegotiateOfferMeta, NegotiatePayload>
 ) {
-  const accepted = pathOr(false, ['payload', 'data', 'accepted'], action);
-
-  if (accepted) {
-    yield put(replace(SELLER_ROUTES.SOLD));
-  } else {
-    yield put(
-      replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-        currentTab: 'My Active Offers',
-      })
-    );
-  }
+  yield put(
+    replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+      currentTab: 'My Active Offers',
+    })
+  );
 }
 
 function* negotiationOfferWatcher() {
