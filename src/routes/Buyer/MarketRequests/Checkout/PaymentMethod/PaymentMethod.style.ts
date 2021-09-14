@@ -197,10 +197,10 @@ export const Method = styled.div<{ disabled?: boolean }>`
 
   @media ${BREAKPOINTS['sm']} {
     height: 156px;
-    border-radius: 4px;
+    border-radius: 12px;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     margin-bottom: 16px;
-    padding: 8px;
+    padding: 12px;
   }
 
   &:hover {

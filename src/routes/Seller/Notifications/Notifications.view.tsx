@@ -74,7 +74,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
           />
         ))}
       {notifsData.length < 1 && (
-        <EmptyStateView Svg={Crab} title="No notifications at the moment." />
+        <EmptyStateView Svg={Crab} title="No Unread Notifications" />
       )}
     </Container>
   );
