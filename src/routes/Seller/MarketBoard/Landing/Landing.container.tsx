@@ -139,9 +139,6 @@ const MarketBoardLanding = (): JSX.Element => {
       dispatch(getActiveOffersActions.request({}));
     }
 
-    // dispatch(getAllMarketRequestActions.request({}));
-    // dispatch(getActiveOffersActions.request({}));
-
     setActiveOffersData(filteredActiveOffers);
     setActiveOffersDataCopy(filteredActiveOffers);
 
