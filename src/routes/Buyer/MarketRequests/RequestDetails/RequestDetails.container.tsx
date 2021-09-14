@@ -30,6 +30,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
+import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 import {
   getFavouriteSellers,
   getLocation,
@@ -37,7 +38,6 @@ import {
   requestToModalFilter,
 } from './RequestDetails.transform';
 import MarketRequestDetailView from './RequestDetails.view';
-import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 
 const MarketRequestDetail = (): JSX.Element => {
   const location = useLocation();
@@ -53,6 +53,8 @@ const MarketRequestDetail = (): JSX.Element => {
       const splits = location.pathname.split('/');
       const offerId = splits[splits.length - 1];
       setOfferId(offerId);
+    } else {
+      setShowPaymentMethod(false);
     }
   }, [location.pathname]);
 
@@ -148,6 +150,10 @@ const MarketRequestDetail = (): JSX.Element => {
   const onClickFilterButton = () => {
     setIsFilterModalOpen((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [showPaymentMethod]);
 
   const handleAcceptOffer = () => {
     // history.push(BUYER_ROUTES.CHECKOUT);
