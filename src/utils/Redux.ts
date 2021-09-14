@@ -1,6 +1,6 @@
 import pathOr from 'ramda/es/pathOr';
-import { AsyncAction, SocketAction } from 'types/Action';
-import { AsyncState, SocketState } from 'types/store/AsyncState';
+import { AsyncAction } from 'types/Action';
+import { AsyncState } from 'types/store/AsyncState';
 export const createSetAction = <Payload = any>(namespace: string) => {
   const type = `${namespace}/SET`;
   return {
@@ -121,59 +121,4 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
         : {}),
     });
   };
-};
-
-// ==== REDUCER ====
-
-export const createSocketReducer = <Meta = any, Payload = any>(
-  { HANDLE_EVENT, DISCONNECT }: SocketActionTypes,
-  customEventsHandler?: (
-    state: SocketState<Meta, Payload>,
-    action: SocketAction<Meta, Payload>,
-    defaultState: SocketState<Meta, Payload>
-  ) => Record<string, SocketState<Meta, Payload>>
-) => {
-  const DEFAULT_STATE: SocketState<Meta, Payload> = {
-    data: null,
-    error: '',
-  };
-  return (
-    state: SocketState<Meta, Payload> = DEFAULT_STATE,
-    action: AsyncAction<Meta, Payload>
-  ): SocketState<Meta, Payload> => {
-    return pathOr(state, [action.type], {
-      [HANDLE_EVENT]: {
-        ...state,
-        pending: false,
-        data: action.payload,
-      },
-      [DISCONNECT]: DEFAULT_STATE,
-
-      ...(customEventsHandler
-        ? customEventsHandler(state, action, DEFAULT_STATE)
-        : {}),
-    });
-  };
-};
-
-export const createSocketAction = <Meta = any, Payload = any>(
-  namespace: string
-) => {
-  const handleEventType = `${namespace}/HANDLE_EVENT`;
-  const disconnectType = `${namespace}/DISCONNECT`;
-  return {
-    handleEvent: () => ({
-      type: handleEventType,
-    }),
-    disconnect: () => ({
-      type: disconnectType,
-    }),
-    HANDLE_EVENT: handleEventType,
-    DISCONNECT: disconnectType,
-  };
-};
-
-type SocketActionTypes = {
-  HANDLE_EVENT: string;
-  DISCONNECT: string;
 };

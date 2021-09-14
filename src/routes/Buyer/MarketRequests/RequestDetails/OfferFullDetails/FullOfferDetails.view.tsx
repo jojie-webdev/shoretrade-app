@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
+import Alert from 'components/base/Alert';
+import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge/Badge.view';
 import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import moment from 'moment';
+import { prop, sortBy } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import {
-  GetActiveOffersRequestResponseItem,
-  Offer,
-} from 'types/store/GetActiveOffersState';
+import { Offer } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import Button from '../../../../../components/base/Button/Button.view';
 import Check from '../../../../../components/base/SVG/Check';
 import Refresh from '../../../../../components/base/SVG/Refresh';
 import { Store } from '../../../../../types/store/Store';
@@ -48,6 +48,7 @@ const FullOfferDetails = (props: any) => {
     thereIsNewOffer,
     counterOffer,
     newOffer,
+    selectedOffer,
   } = props;
 
   const location = useLocation();
@@ -213,8 +214,79 @@ const FullOfferDetails = (props: any) => {
 
   const quantityValue = offer?.weight + ' ' + offer?.measurementUnit;
 
+  const buildAlertProperties = () => {
+    const offerStatus = getOfferStatus(offer, 'buyer');
+
+    const contentTypo = (content: string): ReactNode => (
+      <Typography variant="body" color="shade6" weight="400">
+        {content}
+      </Typography>
+    );
+
+    let alertProps = {} as AlertProps;
+
+    if (
+      offerStatus === 'NEGOTIATION' &&
+      !thereIsNewOffer &&
+      parseFloat(counterOffer) > 0
+    ) {
+      alertProps = {
+        variant: 'infoAlert',
+        header: 'In Negotiation',
+        content: contentTypo('Your offer is being reviewed by the Seller.'),
+      };
+    }
+    if (offerStatus === 'PAYMENT REQUIRED') {
+      alertProps = {
+        variant: 'warning',
+        header: 'Payment Required',
+        content: contentTypo(
+          'Please process the payment within the remaining time. This offer will automatically close if payment is not received.'
+        ),
+      };
+    }
+    if (offerStatus === 'PAYMENT MISSED') {
+      alertProps = {
+        variant: 'warning',
+        header: 'Payment Missed',
+        content: contentTypo(
+          'The offer has automatically closed due to missed payment.'
+        ),
+      };
+    }
+    if (offerStatus === 'ACCEPTED') {
+      alertProps = {
+        variant: 'success',
+        header: 'Finalised',
+        content: contentTypo('This offer is now Order [XXXX-XXXX].'),
+      };
+    }
+    if (offerStatus === 'NEW OFFER') {
+      alertProps = {
+        variant: 'success',
+        header: 'New Offer',
+        content: contentTypo(
+          'Review the offer details and Negotiate or Accept the offer to proceed.'
+        ),
+      };
+    }
+
+    return alertProps;
+  };
+
   return (
     <>
+      {buildAlertProperties().variant && (
+        <>
+          <Row>
+            <Col>
+              <Alert {...buildAlertProperties()} fullWidth />
+            </Col>
+          </Row>
+          <div style={{ marginBottom: '16px' }} />
+        </>
+      )}
+
       <FullOfferDetailsContainer>
         <Row>
           <Col>
@@ -293,9 +365,6 @@ const FullOfferDetails = (props: any) => {
             <Col>{renderTotalPriceContainer()}</Col>
           </Row>
 
-          <Row>
-            <Col>{renderOfferSeenTextContainer()}</Col>
-          </Row>
           {offer?.status !== 'ACCEPTED' && (
             <CTAContainer>
               <StyledNegotiateButtonContainer>

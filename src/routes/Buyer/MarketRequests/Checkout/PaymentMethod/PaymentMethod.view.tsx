@@ -171,7 +171,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
   const [paymentMethod, setPaymentMethod] = useState<'account' | 'card' | ''>(
     ''
   );
-  const [currentTab, setCurrentTab] = useState(TABS[0]);
+
   const [isDefault, setIsDefault] = useState<boolean>(false);
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
@@ -240,7 +240,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
       <Row>
         <Col>
-          {isMobile && (
+          {/* {isMobile && (
             <MobileTopRow>
               {PAYMENT_METHODS.map((p) => (
                 <div
@@ -260,51 +260,51 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 </div>
               ))}
             </MobileTopRow>
-          )}
+          )} */}
 
-          {!isMobile && (
-            <Row
-              className="payment-methods"
-              align="center"
-              justify="start"
-              style={{ zIndex: 0 }}
-            >
-              {PAYMENT_METHODS.map(({ ...p }) => (
-                <Col
-                  id="col"
-                  key={p.label}
-                  width={isTablet || isMobile ? '50%' : 255}
-                  className="payment-method-col"
+          <Row
+            className="payment-methods"
+            align="center"
+            justify="start"
+            style={{ zIndex: 0 }}
+          >
+            {PAYMENT_METHODS.map(({ ...p }) => (
+              <Col
+                id="col"
+                key={p.label}
+                width={isTablet || isMobile ? '50%' : 255}
+                className="payment-method-col"
+              >
+                <Method
+                  id="method"
+                  onClick={() => setPaymentMethod(p.value as any)}
+                  disabled={false}
+                  style={{ boxShadow: '0px 6px 12px rgba(41, 43, 50, 0.12)' }}
                 >
-                  <Method
-                    id="method"
-                    onClick={() => setPaymentMethod(p.value as any)}
-                    disabled={false}
-                    style={{ boxShadow: '0px 6px 12px rgba(41, 43, 50, 0.12)' }}
-                  >
-                    <div className="radio">
-                      <Radio checked={paymentMethod === p.value} />
-                    </div>
-                    <img
-                      src={p.img}
-                      style={{ width: isMobile ? p.mWidth : 'inherit' }}
-                    />
-                    <div>
-                      <Typography
-                        variant={isMobile ? 'label' : 'body'}
-                        align="center"
-                      >
-                        {p.label}
-                      </Typography>
-                      {/* <Typography
+                  <div className="radio">
+                    <Radio checked={paymentMethod === p.value} />
+                  </div>
+                  <img
+                    src={p.img}
+                    style={{ width: isMobile ? p.mWidth : 'inherit' }}
+                  />
+                  <div>
+                    <Typography
+                      variant={isMobile ? 'label' : 'body'}
+                      align="center"
+                    >
+                      {p.label}
+                    </Typography>
+                    {/* <Typography
                         variant="overlineSmall"
                         color="shade5"
                         align="center"
                       >
                         ADDITIONAL INFO
                       </Typography> */}
-                    </div>
-                  </Method>
+                  </div>
+                </Method>
+                {!isMobile && (
                   <div className="tooltip">
                     <InfoFilled
                       width={20}
@@ -313,23 +313,25 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                     />
                     <span className="tooltip-text">{p.verbiage}</span>
                   </div>
-                </Col>
-              ))}
-            </Row>
-          )}
+                )}
+              </Col>
+            ))}
+          </Row>
         </Col>
 
-        <StyledTotalCardColumn lg={4}>
-          <TotalCard
-            totalOrderValue={props.totalValue}
-            removeCredits={paymentMethod === 'card'}
-          />
-        </StyledTotalCardColumn>
+        {!(isMobile && paymentMethod === 'card') && (
+          <StyledTotalCardColumn lg={4}>
+            <TotalCard
+              totalOrderValue={props.totalValue}
+              removeCredits={paymentMethod === 'card'}
+            />
+          </StyledTotalCardColumn>
+        )}
       </Row>
 
       {paymentMethod === 'card' && (
         <Row style={{ marginBottom: 24 }}>
-          {isMobile && (
+          {/* {isMobile && (
             <Col style={{ marginBottom: 12 }}>
               <SegmentedControls
                 options={TABS}
@@ -340,7 +342,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 }}
               />
             </Col>
-          )}
+          )} */}
 
           <Col lg={9}>
             <Typography color="shade6" variant="label">
@@ -675,7 +677,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         </BottomRow>
       ) : (
         <Footer>
-          <div className="balances">
+          {/* <div className="balances">
             <div>
               <Typography variant="caption" color="shade6" weight="400">
                 Credit Balance
@@ -703,7 +705,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 {toPrice(props.totalValue)}
               </Typography>
             </div>
-          </div>
+          </div> */}
 
           <div className="btns-container">
             <Button
@@ -716,7 +718,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               disabled={
                 isLoading ||
                 paymentMethod === '' ||
-                (currentTab === TABS[1] && !props.selectedCard)
+                (paymentMethod === 'card' && !props.selectedCard)
               }
               onClick={() => setShowConfirmationModal(true)}
               takeFullWidth

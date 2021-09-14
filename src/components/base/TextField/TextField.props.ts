@@ -12,6 +12,7 @@ export interface TextFieldProps
   className?: string;
   alert?: string;
   prefix?: string;
+  suffix?: string;
   variant?: Variants;
   color?: keyof Theme['brand'] | keyof Theme['grey'];
   inputType?:

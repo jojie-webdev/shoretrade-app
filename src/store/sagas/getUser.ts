@@ -2,16 +2,12 @@ import { lensPath, set, view } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getUser } from 'services/auth';
-import { AsyncAction, SocketAction } from 'types/Action';
+import { AsyncAction, Action } from 'types/Action';
 import {
   GetUserMeta,
   GetUserPayload,
   UserCompany,
 } from 'types/store/GetUserState';
-import {
-  SocketCreditMeta,
-  SocketCreditPayload,
-} from 'types/store/SocketCreditState';
 import { Store } from 'types/store/Store';
 
 import {
@@ -19,7 +15,7 @@ import {
   authActions,
   getAddressesActions,
   getPaymentModeActions,
-  socketCreditActions,
+  socketActions,
 } from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
@@ -62,9 +58,7 @@ function* getUserFailed(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   }
 }
 
-function* handleSocketEvent(
-  action: SocketAction<SocketCreditMeta, SocketCreditPayload>
-) {
+function* getUserPatchCredit(action: Action<any>) {
   const state: Store = yield select();
   const getUser = state.getUser.data;
   const realtimeCredit = pathOr(0, ['payload'], action);
@@ -98,7 +92,7 @@ function* handleSocketEvent(
 function* getUserWatcher() {
   yield takeLatest(getUserActions.REQUEST, getUserRequest);
   yield takeLatest(getUserActions.SUCCESS, getUserSuccess);
-  yield takeLatest(socketCreditActions.HANDLE_EVENT, handleSocketEvent);
+  yield takeLatest(socketActions.NEW_CREDIT, getUserPatchCredit);
   yield takeLatest(getUserActions.FAILED, getUserFailed);
 }
 

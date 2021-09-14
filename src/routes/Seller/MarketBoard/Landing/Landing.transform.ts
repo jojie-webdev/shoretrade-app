@@ -3,8 +3,10 @@ import {
   Filters,
 } from 'components/module/FilterModal/FilterModal.props';
 import moment from 'moment';
+import { prop, sortBy } from 'ramda';
 import {
   GetActiveOffersRequestResponseItem,
+  Negotiations,
   ShippingAddress,
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
@@ -209,45 +211,45 @@ export const getOfferByMarketRequest = (
   return _offer;
 };
 
-export const isPaymentRequired = (
-  data: GetAllMarketRequestResponseItem,
-  activeOffers?: GetActiveOffersRequestResponseItem[]
-) => {
-  const { status, negotiations } =
-    getOfferByMarketRequest(data, activeOffers) || {};
+const sortNegos = (negotiations: Negotiations[]) => {
+  const negoSorter = sortBy(prop('created_at'));
+  const sortedNegos = negoSorter(negotiations || []).reverse();
 
-  if (!negotiations) {
-    return false;
-  }
-
-  if (negotiations?.length === 0) {
-    return false;
-  }
-
-  const isPaymentRequired =
-    status === 'OPEN' && negotiations[0]?.price === negotiations[1]?.price;
-
-  return isPaymentRequired;
+  return sortedNegos;
 };
 
-export const isPaymentPending = (
-  data: GetAllMarketRequestResponseItem,
-  activeOffers?: GetActiveOffersRequestResponseItem[]
-) => {
-  const { negotiations } = getOfferByMarketRequest(data, activeOffers) || {};
+export const isPaymentRequired = (negotiations: Negotiations[]) => {
+  const sortedNegos = sortNegos(negotiations);
 
-  if (!negotiations) {
-    return false;
+  if (sortedNegos.length >= 2) {
+    if (sortedNegos[0].price === sortedNegos[1].price) {
+      return true;
+    }
   }
+};
 
-  if (negotiations?.length === 0) {
-    return false;
-  }
-
-  const hours = moment().diff(moment(negotiations[0]?.created_at), 'hours');
+export const isPaymentPending = (negotiations: Negotiations[]) => {
+  const sortedNegos = sortNegos(negotiations);
+  const hours = moment().diff(moment(sortedNegos[0]?.created_at), 'hours');
   const isPending = 24 > hours;
 
   return isPending;
+};
+
+export const isCounterOfferMade = (
+  negotiations: Negotiations[],
+  from: 'seller' | 'buyer'
+) => {
+  const sortedNegos = sortNegos(negotiations);
+  let isCounterOfferMade = false;
+
+  if (from === 'seller') {
+    isCounterOfferMade = sortedNegos[0].type === 'NEW_OFFER';
+  } else {
+    isCounterOfferMade = sortedNegos[0].type === 'COUNTER_OFFER';
+  }
+
+  return isCounterOfferMade;
 };
 
 export const getStatusBadgeColor = (

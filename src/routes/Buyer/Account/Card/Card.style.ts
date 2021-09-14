@@ -17,6 +17,10 @@ export const CCImageRow = styled.div`
   flex-flow: row nowrap;
   align-items: flex-start;
   margin-bottom: 32px;
+
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 5px;
+  }
 `;
 
 export const CCImage = styled.div`

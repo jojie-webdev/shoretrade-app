@@ -54,6 +54,7 @@ export type GetActiveOffersRequestResponseItem = {
   offers: Array<Offer>;
   shippingTo: ShippingAddress;
   shippingFrom: ShippingAddress;
+  paymentRequired: boolean;
 };
 
 export interface Offer {

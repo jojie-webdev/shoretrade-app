@@ -98,8 +98,8 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         </Typography>
         <Inputs>
           <StyledTextField
-            type="number"
-            inputType="decimal"
+            type="text"
+            inputType="text"
             label={'Counter Offer'}
             value={negotiationPrice}
             onChangeText={(v) => {
@@ -112,6 +112,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               </Typography>
             }
             placeholder={`per ${unit}`}
+            suffix={`per ${unit}`}
           />
         </Inputs>
         {/* <CheckBoxContainer>

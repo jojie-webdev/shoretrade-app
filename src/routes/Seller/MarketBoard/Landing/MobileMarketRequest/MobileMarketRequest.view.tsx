@@ -3,7 +3,10 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -102,10 +105,18 @@ const MobileMarketRequests = (props: {
     return address;
   };
 
+  const getOfferByMarketRequest = () => {
+    const offer = activeOffers?.find(
+      (offer) => offer.marketRequest.id === data.id
+    );
+
+    return offer || ({} as Offer);
+  };
+
   const renderBadges = () => (
     <Badges>
-      {isPaymentRequired(data, activeOffers) ? (
-        isPaymentPending(data, activeOffers) ? (
+      {isPaymentRequired(getOfferByMarketRequest().negotiations) ? (
+        isPaymentPending(getOfferByMarketRequest().negotiations) ? (
           <StyledBadge className="badge" badgeColor={theme.brand.error}>
             <BadgeText
               variant="small"

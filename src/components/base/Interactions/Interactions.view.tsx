@@ -76,7 +76,9 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
 
       <div
         className="left-content"
-        style={fullWidth ? { flex: 1 } : { width: '100%' }}
+        style={
+          fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }
+        }
       >
         {leftComponent ? (
           leftComponent

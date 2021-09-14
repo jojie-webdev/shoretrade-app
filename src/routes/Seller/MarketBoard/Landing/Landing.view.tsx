@@ -2,16 +2,17 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
-import { Sync, ChevronRight } from 'components/base/SVG';
+import { ChevronRight } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
+import { TypographyProps } from 'components/base/Typography/Typography.props';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isNil, prop, sortBy, isEmpty } from 'ramda';
-import { Hidden, Visible } from 'react-grid-system';
+import { Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import {
   getExpiry,
@@ -19,19 +20,24 @@ import {
   getStatus,
   getStatusBadgeColor,
   isOfferMade,
+  isPaymentPending,
+  isPaymentRequired,
   isRedLabel,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import {
   Container,
-  FilterButton,
   BadgeText,
   ItemInteraction,
   StyledBadge,
@@ -61,51 +67,43 @@ const BuyerRequestsInteractions = (props: {
   };
 
   const getOfferByMarketRequest = () => {
-    const _offer = activeOffers?.find(
+    const offer = activeOffers?.find(
       (offer) => offer.marketRequest.id === data.id
     );
 
-    return _offer;
+    return offer || ({} as Offer);
   };
 
-  const isPaymentRequired = () => {
-    const { status, negotiations } = getOfferByMarketRequest() || {};
+  const renderTagByStatus = () => {
+    const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
 
-    if (!negotiations) {
-      return false;
+    const statusTag = (
+      badgeColor: string,
+      badgeTextColor: TypographyProps['color'],
+      text: string
+    ) => (
+      <StyledBadge className="badge" badgeColor={badgeColor}>
+        <BadgeText
+          variant="overlineSmall"
+          color={badgeTextColor}
+          style={{ lineHeight: '15px' }}
+        >
+          {text}
+        </BadgeText>
+      </StyledBadge>
+    );
+
+    if (offerStatus === 'PAYMENT MISSED') {
+      return statusTag(getStatusBadgeColor('DECLINED'), 'noshade', 'LOST');
     }
 
-    if (negotiations?.length === 0) {
-      return false;
+    if (offerStatus === 'PAYMENT REQUIRED') {
+      return statusTag(theme.brand.error, 'noshade', 'PENDING PAYMENT');
     }
 
-    const offerSorter = sortBy(prop('created_at'));
-    const sortedNegos = offerSorter(negotiations).reverse();
-
-    const isPaymentRequired =
-      status === 'OPEN' && sortedNegos[0]?.price === sortedNegos[1]?.price;
-
-    return isPaymentRequired;
-  };
-
-  const isPaymentPending = () => {
-    const { negotiations } = getOfferByMarketRequest() || {};
-
-    if (!negotiations) {
-      return false;
+    if (offerStatus === 'NEW OFFER') {
+      return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
     }
-
-    if (negotiations?.length === 0) {
-      return false;
-    }
-
-    const offerSorter = sortBy(prop('created_at'));
-    const sortedNegos = offerSorter(negotiations).reverse();
-
-    const hours = moment().diff(moment(sortedNegos[0]?.created_at), 'hours');
-    const isPending = hours <= 24;
-
-    return isPending;
   };
 
   return (
@@ -114,7 +112,7 @@ const BuyerRequestsInteractions = (props: {
       leftComponent={
         <>
           <img src={parseImageUrl(data.image)} />
-          <div className="section">
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color="noshade"
@@ -131,8 +129,8 @@ const BuyerRequestsInteractions = (props: {
                 Array.isArray(data.specifications) &&
                 data.specifications.map((s) => s.stateName).join(', ')}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography variant="caption" color="shade6">
               Size: {buildSizeValue()}
             </Typography>
@@ -152,18 +150,19 @@ const BuyerRequestsInteractions = (props: {
               Shipping to: {data.shippingTo.suburb}, {data.shippingTo.state}{' '}
               {data.shippingTo.postcode}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color={isRedLabel(data.createdAt) ? 'error' : 'shade6'}
             >
               {getExpiry(data.createdAt)}
             </Typography>
-          </div>
-          <div className="section">
-            {isPaymentRequired() ? (
-              isPaymentPending() ? (
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
+            {renderTagByStatus()}
+            {/* {isPaymentRequired(getOfferByMarketRequest().negotiations) ? (
+              isPaymentPending(getOfferByMarketRequest().negotiations) ? (
                 <StyledBadge
                   className="badge"
                   badgeColor={theme.brand.error}
@@ -205,8 +204,8 @@ const BuyerRequestsInteractions = (props: {
                   </BadgeText>
                 </StyledBadge>
               )
-            )}
-          </div>
+            )} */}
+          </Col>
         </>
       }
       padding="8px 20px 8px 8px"
@@ -219,50 +218,10 @@ const MyActiveOffersInteractions = (props: {
   data: GetActiveOffersRequestResponseItem;
   buyerRequests?: GetAllMarketRequestResponseItem[];
 }) => {
-  const { onClick, data, buyerRequests } = props;
+  const { onClick, data } = props;
 
-  const status = getStatus(data.status);
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
-
-  const isPaymentPending = () => {
-    const { negotiations } = data || {};
-
-    if (!negotiations) {
-      return false;
-    }
-
-    if (negotiations?.length === 0) {
-      return false;
-    }
-
-    const offerSorter = sortBy(prop('created_at'));
-    const sortedNegos = offerSorter(negotiations).reverse();
-    const hours = moment().diff(moment(sortedNegos[0]?.created_at), 'hours');
-    const isPending = hours <= 24;
-
-    return isPending;
-  };
-
-  const isPaymentRequired = () => {
-    const { status, negotiations } = data || {};
-
-    if (!negotiations) {
-      return false;
-    }
-
-    if (negotiations?.length === 0) {
-      return false;
-    }
-
-    const offerSorter = sortBy(prop('created_at'));
-    const sortedNegos = offerSorter(negotiations).reverse();
-
-    const isPaymentRequired =
-      status === 'OPEN' && sortedNegos[0]?.price === sortedNegos[1]?.price;
-
-    return isPaymentRequired;
-  };
 
   const buildSizeData = () => {
     const getFromOnlySize = () => {
@@ -288,13 +247,49 @@ const MyActiveOffersInteractions = (props: {
     return sizeData;
   };
 
+  const buildTagByStatus = () => {
+    const offerStatus = getOfferStatus(data, 'seller');
+
+    const tag = (
+      badgeColor: string,
+      status: string,
+      textColor: TypographyProps['color'] = 'noshade'
+    ) => (
+      <StyledBadge className="badge" badgeColor={badgeColor}>
+        <BadgeText
+          variant="overlineSmall"
+          color={textColor}
+          style={{ lineHeight: '15px' }}
+        >
+          {status}
+        </BadgeText>
+      </StyledBadge>
+    );
+
+    if (offerStatus === 'ACCEPTED') {
+      return tag(theme.brand.success, 'ACCEPTED');
+    }
+    if (offerStatus === 'PAYMENT MISSED') {
+      return tag(theme.brand.error, 'PAYMENT MISSED');
+    }
+    if (offerStatus === 'DECLINED') {
+      return tag(theme.brand.error, 'DECLINED');
+    }
+    if (offerStatus === 'PAYMENT REQUIRED') {
+      return tag(theme.brand.error, 'PAYMENT REQUIRED');
+    }
+    if (offerStatus === 'NEGOTIATION') {
+      return tag(theme.brand.alert, 'NEGOTIATION', 'shade10');
+    }
+  };
+
   return (
     <Interactions
       onClick={() => onClick()}
       leftComponent={
         <>
           <img src={parseImageUrl(data.image)} />
-          <div className="section">
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color="noshade"
@@ -311,8 +306,8 @@ const MyActiveOffersInteractions = (props: {
                 Array.isArray(data.specifications) &&
                 data.specifications.join(', ')}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography variant="caption" color="shade6">
               Size: {buildSizeData()}
             </Typography>
@@ -330,8 +325,8 @@ const MyActiveOffersInteractions = (props: {
             >
               Shipping to: {getShippingAddress(data.shippingTo)}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color={
@@ -340,50 +335,8 @@ const MyActiveOffersInteractions = (props: {
             >
               {getExpiry(data.marketRequest.createdAt)}
             </Typography>
-          </div>
-          <div className="section">
-            {isPaymentRequired() ? (
-              isPaymentPending() ? (
-                <StyledBadge className="badge" badgeColor={theme.brand.error}>
-                  <BadgeText
-                    variant="overlineSmall"
-                    color="noshade"
-                    style={{ lineHeight: '15px' }}
-                  >
-                    PENDING PAYMENT
-                  </BadgeText>
-                </StyledBadge>
-              ) : (
-                getExpiry(data.createdAt) === 'Expired' && (
-                  <StyledBadge
-                    className="badge"
-                    badgeColor={getStatusBadgeColor('DECLINED')}
-                  >
-                    <BadgeText
-                      variant="overlineSmall"
-                      color="noshade"
-                      style={{ lineHeight: '15px' }}
-                    >
-                      LOST
-                    </BadgeText>
-                  </StyledBadge>
-                )
-              )
-            ) : (
-              <StyledBadge
-                className="badge"
-                badgeColor={getStatusBadgeColor(data.status)}
-              >
-                <BadgeText
-                  variant="overlineSmall"
-                  color={status === 'NEGOTIATION' ? 'shade10' : 'noshade'}
-                  style={{ lineHeight: '15px' }}
-                >
-                  {status}
-                </BadgeText>
-              </StyledBadge>
-            )}
-          </div>
+          </Col>
+          <Col style={{ padding: '0 5px' }}>{buildTagByStatus()}</Col>
         </>
       }
       padding="8px 20px 8px 8px"

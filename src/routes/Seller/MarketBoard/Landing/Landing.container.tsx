@@ -133,22 +133,24 @@ const MarketBoardLanding = (): JSX.Element => {
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   useEffect(() => {
-    dispatch(getAllMarketRequestActions.request({}));
-    dispatch(getActiveOffersActions.request({}));
+    if (currentTab === 'Buyer Requests') {
+      dispatch(getAllMarketRequestActions.request({}));
+    } else {
+      dispatch(getActiveOffersActions.request({}));
+    }
 
     setActiveOffersData(filteredActiveOffers);
     setActiveOffersDataCopy(filteredActiveOffers);
-
-    // if (currentTab === 'Buyer Requests') {
-    //   dispatch(getAllMarketRequestActions.request({}));
-    // } else {
-    //   dispatch(getActiveOffersActions.request({}));
-    // }
 
     setInitial(false);
     setSearchTerm('');
     setIsFilterModalOpen(false);
   }, [currentTab]);
+
+  useEffect(() => {
+    setActiveOffersData(filteredActiveOffers);
+    setActiveOffersDataCopy(filteredActiveOffers);
+  }, [filteredActiveOffers.length]);
 
   useEffect(() => {
     if (companyId) {

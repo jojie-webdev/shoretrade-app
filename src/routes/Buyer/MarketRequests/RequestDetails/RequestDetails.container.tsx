@@ -30,6 +30,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
+import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 import {
   getFavouriteSellers,
   getLocation,
@@ -37,7 +38,6 @@ import {
   requestToModalFilter,
 } from './RequestDetails.transform';
 import MarketRequestDetailView from './RequestDetails.view';
-import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 
 const MarketRequestDetail = (): JSX.Element => {
   const location = useLocation();

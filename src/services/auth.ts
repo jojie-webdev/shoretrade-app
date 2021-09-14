@@ -33,7 +33,6 @@ export const logout = (token: string) => {
   });
 };
 
-
 export const verify = (data: VerifyMeta) => {
   return axios({
     method: 'post',
@@ -103,4 +102,16 @@ export const validateAccount = (email: string) => {
       email,
     },
   });
+};
+
+export const getSocketToken = (token: string): Promise<string> => {
+  return axios({
+    method: 'get',
+    url: `${API.URL}/${API.VERSION_NEXT}/auth/socket-token`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(({ data }) => data.temporary_token || '')
+    .catch((e) => '');
 };
