@@ -11,7 +11,7 @@ import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isNil, prop, sortBy, isEmpty } from 'ramda';
-import { Hidden, Visible } from 'react-grid-system';
+import { Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import {
   getExpiry,
@@ -114,7 +114,7 @@ const BuyerRequestsInteractions = (props: {
       leftComponent={
         <>
           <img src={parseImageUrl(data.image)} />
-          <div className="section">
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color="noshade"
@@ -131,8 +131,8 @@ const BuyerRequestsInteractions = (props: {
                 Array.isArray(data.specifications) &&
                 data.specifications.map((s) => s.stateName).join(', ')}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography variant="caption" color="shade6">
               Size: {buildSizeValue()}
             </Typography>
@@ -152,16 +152,16 @@ const BuyerRequestsInteractions = (props: {
               Shipping to: {data.shippingTo.suburb}, {data.shippingTo.state}{' '}
               {data.shippingTo.postcode}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color={isRedLabel(data.createdAt) ? 'error' : 'shade6'}
             >
               {getExpiry(data.createdAt)}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             {isPaymentRequired() ? (
               isPaymentPending() ? (
                 <StyledBadge
@@ -206,7 +206,7 @@ const BuyerRequestsInteractions = (props: {
                 </StyledBadge>
               )
             )}
-          </div>
+          </Col>
         </>
       }
       padding="8px 20px 8px 8px"
@@ -294,7 +294,7 @@ const MyActiveOffersInteractions = (props: {
       leftComponent={
         <>
           <img src={parseImageUrl(data.image)} />
-          <div className="section">
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color="noshade"
@@ -311,8 +311,8 @@ const MyActiveOffersInteractions = (props: {
                 Array.isArray(data.specifications) &&
                 data.specifications.join(', ')}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography variant="caption" color="shade6">
               Size: {buildSizeData()}
             </Typography>
@@ -330,8 +330,8 @@ const MyActiveOffersInteractions = (props: {
             >
               Shipping to: {getShippingAddress(data.shippingTo)}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
               color={
@@ -340,8 +340,8 @@ const MyActiveOffersInteractions = (props: {
             >
               {getExpiry(data.marketRequest.createdAt)}
             </Typography>
-          </div>
-          <div className="section">
+          </Col>
+          <Col style={{ padding: '0 5px' }}>
             {isPaymentRequired() ? (
               isPaymentPending() ? (
                 <StyledBadge className="badge" badgeColor={theme.brand.error}>
@@ -383,7 +383,7 @@ const MyActiveOffersInteractions = (props: {
                 </BadgeText>
               </StyledBadge>
             )}
-          </div>
+          </Col>
         </>
       }
       padding="8px 20px 8px 8px"
