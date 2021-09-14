@@ -5,6 +5,11 @@ import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  .header-text {
+    font-family: 'Media Sans';
+    margin-bottom: 20px;
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 150px;
   }
@@ -18,7 +23,6 @@ export const Container = styled.div`
   }
 
   .payment-methods {
-    margin-top: 20px;
     margin-bottom: 40px;
 
     .payment-method-col {

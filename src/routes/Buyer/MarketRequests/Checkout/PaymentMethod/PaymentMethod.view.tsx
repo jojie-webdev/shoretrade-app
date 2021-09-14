@@ -230,10 +230,10 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
       )}
 
       <Typography
+        className="header-text"
         variant="title5"
         weight="700"
         color="shade9"
-        style={{ fontFamily: 'Media Sans' }}
       >
         Select Payment Method
       </Typography>
