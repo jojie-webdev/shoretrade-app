@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import { Eye, EyeOff, InfoFilled } from 'components/base/SVG';
@@ -47,9 +47,15 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     disabled,
     inputType,
     maxLength,
+    suffix,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
+
+  const fieldRef = useRef<HTMLInputElement>(null);
+
+  const VisibilityIcon = showSecuredText ? EyeOff : Eye;
+  const defaultInputType = type || 'text';
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!props.readOnly) {
@@ -58,8 +64,86 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     }
   };
 
-  const VisibilityIcon = showSecuredText ? EyeOff : Eye;
-  const defaultInputType = type || 'text';
+  const handleNegoFieldClick = () => {
+    if (!fieldRef.current) {
+      return;
+    }
+
+    const value = fieldRef.current.value;
+    const output = value?.toString().substring(0, 0) + ` ${placeholder}`;
+    fieldRef.current.value = output;
+    fieldRef.current.selectionStart = fieldRef.current.selectionEnd = 0;
+  };
+
+  const handleFieldChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.keyCode === 8) {
+      const newVal = value
+        ?.toString()
+        ?.split('')
+        .splice(0, value?.toString()?.split('').length - 1);
+
+      if (newVal.length === 0) {
+        onChangeText('0');
+        return;
+      }
+
+      onChangeText(newVal.join(''));
+    }
+
+    if (isNaN(parseInt(e.key))) {
+      return;
+    }
+
+    if (parseInt(e.key)) {
+      onChangeText(value + e.key);
+    }
+  };
+
+  const renderTextFieldHandlesSuffix = () => (
+    <Field
+      id={id}
+      ref={fieldRef}
+      type="text"
+      inputMode={inputType}
+      value={
+        readOnly && (prefix || '').length > 0
+          ? `${prefix} ${value}`
+          : value + ' ' + placeholder
+      }
+      onBlur={onBlur}
+      placeholder={` ${placeholder}`}
+      readOnly={readOnly}
+      onKeyUp={onKeyUp}
+      onKeyDown={(e) => handleFieldChange(e)}
+      onClick={() => handleNegoFieldClick()}
+      disabled={disabled}
+      borderRadius={props?.borderRadius}
+      maxLength={maxLength}
+    />
+  );
+
+  const renderNormalTextField = () => (
+    <Field
+      id={id}
+      type={secured && !showSecuredText ? 'password' : defaultInputType}
+      inputMode={inputType}
+      value={
+        readOnly && (prefix || '').length > 0 ? `${prefix} ${value}` : value
+      }
+      onChange={handleChange}
+      onBlur={onBlur}
+      placeholder={placeholder}
+      readOnly={readOnly}
+      onKeyUp={onKeyUp}
+      onKeyDown={onKeyDown}
+      disabled={disabled}
+      min={props?.min}
+      borderRadius={props?.borderRadius}
+      maxLength={maxLength}
+    />
+  );
 
   return (
     <Container className={className} style={style}>
@@ -78,24 +162,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
           </LeftComponentContainer>
         )}
         {!readOnly && (prefix || '').length > 0 && <Prefix>{prefix}</Prefix>}
-        <Field
-          id={id}
-          type={secured && !showSecuredText ? 'password' : defaultInputType}
-          inputMode={inputType}
-          value={
-            readOnly && (prefix || '').length > 0 ? `${prefix} ${value}` : value
-          }
-          onChange={handleChange}
-          onBlur={onBlur}
-          placeholder={placeholder}
-          readOnly={readOnly}
-          onKeyUp={onKeyUp}
-          onKeyDown={onKeyDown}
-          disabled={disabled}
-          min={props.min}
-          borderRadius={props.borderRadius}
-          maxLength={maxLength}
-        />
+        {suffix ? renderTextFieldHandlesSuffix() : renderNormalTextField()}
         {RightComponent && (
           <RightComponentContainer>{RightComponent}</RightComponentContainer>
         )}

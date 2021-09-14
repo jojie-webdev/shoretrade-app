@@ -89,6 +89,8 @@ const Content = (props: NegotiateSellerModalProps) => {
               {'$'}
             </Typography>
           }
+          placeholder={`per ${unit}`}
+          suffix={`per ${unit}`}
         />
       </Inputs>
       <ComputationContainer>
