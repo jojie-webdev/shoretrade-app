@@ -235,7 +235,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
         {measuredTextContent()}
 
         <Typography color="shade6" variant="caption">
-          {moment(date).format('MM/DD/YYYY - HH:mm')}
+          {moment(date).format('MMM DD, YYYY - HH:mm')}
         </Typography>
       </div>
       <RightComponentContainer>
