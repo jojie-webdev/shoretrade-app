@@ -49,7 +49,7 @@ export const HamburgerWrapper = styled.div`
 
   margin-bottom: 64px;
 
-  @media ${BREAKPOINTS['sm']} {
+  @media ${BREAKPOINTS.nonDesktop} {
     width: 37px;
     height: 37px;
     margin-bottom: 0;
@@ -246,24 +246,25 @@ export const Content = styled.div<{
     justify-content: center;
 
     .screen {
-      background: ${(props) =>
-        props.screenBackground
-          ? props.screenBackground
-          : props.theme.appType === 'buyer'
-          ? props.theme.grey.shade2
-          : props.theme.grey.shade8};
+      @media (min-width: 835px) {
+        background: ${(props) =>
+          props.screenBackground
+            ? props.screenBackground
+            : props.theme.appType === 'buyer'
+            ? props.theme.grey.shade2
+            : props.theme.grey.shade8};
+        border-radius: 8px;
+        border: ${({ theme }) => {
+          return `2px solid ${
+            theme.appType === 'seller' ? 'transparent' : theme.grey.shade3
+          }`;
+        }};
+        padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
+      }
 
       width: ${(props) => dashboardWidth(props.theme.appType === 'seller')};
-      padding: ${(props) => (props.shouldIncludePadding ? '48px' : '0')};
-      border-radius: 8px;
       overflow-x: hidden;
       overflow-y: auto;
-
-      border: ${({ theme }) => {
-        return `2px solid ${
-          theme.appType === 'seller' ? 'transparent' : theme.grey.shade3
-        }`;
-      }};
 
       .container {
         min-height: 100%;
@@ -312,7 +313,7 @@ export const Content = styled.div<{
 
       .screen {
         width: calc(100% - 32px);
-        padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')};
+        padding: ${(props) => (props.shouldIncludePadding ? '12px' : '0')};
       }
     }
 
@@ -396,14 +397,14 @@ export const HeaderRightContent = styled.div`
 
   .cart-container {
     margin-left: 8px;
-    @media ${BREAKPOINTS.sm} {
+    @media ${BREAKPOINTS.nonDesktop} {
       margin-right: 0px;
     }
   }
 
   .notif-container {
     margin-left: 8px;
-    @media ${BREAKPOINTS.sm} {
+    @media ${BREAKPOINTS.nonDesktop} {
       margin-right: 0px;
     }
   }
@@ -420,7 +421,7 @@ export const HeaderRightContent = styled.div`
     border: 1px solid ${({ theme }) => theme.grey.shade3};
     border-radius: 12px;
 
-    @media ${BREAKPOINTS.sm} {
+    @media ${BREAKPOINTS.nonDesktop} {
       width: 32px;
       height: 32px;
       border: 1px solid ${({ theme }) => theme.grey.shade10};
@@ -497,6 +498,14 @@ export const CheckoutCount = styled.div`
   position: absolute;
   top: -10px;
   right: -10px;
+
+  @media ${BREAKPOINTS.nonDesktop} {
+    width: 20px;
+    height: 20px;
+
+    top: -6px;
+    right: -6px;
+  }
 `;
 
 export const HeaderWrapper = styled.div`

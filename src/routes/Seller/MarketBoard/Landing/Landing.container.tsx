@@ -37,6 +37,9 @@ const MarketBoardLanding = (): JSX.Element => {
   const [activeOffersData, setActiveOffersData] = useState<
     GetActiveOffersRequestResponseItem[]
   >([]);
+  const [activeOffersDataCopy, setActiveOffersDataCopy] = useState<
+    GetActiveOffersRequestResponseItem[]
+  >([]);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
@@ -130,21 +133,24 @@ const MarketBoardLanding = (): JSX.Element => {
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   useEffect(() => {
-    dispatch(getAllMarketRequestActions.request({}));
-    dispatch(getActiveOffersActions.request({}));
+    if (currentTab === 'Buyer Requests') {
+      dispatch(getAllMarketRequestActions.request({}));
+    } else {
+      dispatch(getActiveOffersActions.request({}));
+    }
 
     setActiveOffersData(filteredActiveOffers);
-
-    // if (currentTab === 'Buyer Requests') {
-    //   dispatch(getAllMarketRequestActions.request({}));
-    // } else {
-    //   dispatch(getActiveOffersActions.request({}));
-    // }
+    setActiveOffersDataCopy(filteredActiveOffers);
 
     setInitial(false);
     setSearchTerm('');
     setIsFilterModalOpen(false);
   }, [currentTab]);
+
+  useEffect(() => {
+    setActiveOffersData(filteredActiveOffers);
+    setActiveOffersDataCopy(filteredActiveOffers);
+  }, [filteredActiveOffers.length]);
 
   useEffect(() => {
     if (companyId) {
@@ -178,12 +184,11 @@ const MarketBoardLanding = (): JSX.Element => {
         })
       );
 
-      const filteredActiveOffers = activeOffersData?.filter(
-        (activeOffer) =>
-          activeOffer.name.toLowerCase() === searchTerm.toLowerCase()
+      const filteredActiveOffers = activeOffersData?.filter((activeOffer) =>
+        activeOffer.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
-      setActiveOffersData(filteredActiveOffers);
+      setActiveOffersDataCopy(filteredActiveOffers);
     }, 800);
 
     setTimer(timerId);
@@ -256,7 +261,7 @@ const MarketBoardLanding = (): JSX.Element => {
     marketRequests,
     sellingRequests: marketRequestsData.interests,
     buyerRequests: marketRequestsData.others,
-    activeOffers: activeOffersData,
+    activeOffers: activeOffersDataCopy,
     isLoading: buyerRequests.pending || activeOffers.pending || false,
     currentTab,
     onChangeCurrentTab,

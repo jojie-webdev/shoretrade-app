@@ -2,7 +2,7 @@ import React from 'react';
 
 import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMarketOfferActions } from 'store/actions';
+import { createMarketOfferActions, getActiveOffersActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import { ReviewOfferProps } from './ReviewOffer.props';
@@ -30,6 +30,7 @@ const ReviewOffer = (props: ReviewOfferProps): JSX.Element => {
 
   const onSubmit = () => {
     dispatch(createMarketOfferActions.request(offer));
+    dispatch(getActiveOffersActions.request({}));
   };
 
   const generatedProps = {

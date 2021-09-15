@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
@@ -62,7 +63,7 @@ const FullOfferDetails = (props: any) => {
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
   );
 
-  const [offer, setOffer] = useState<Offer | null>(null);
+  const [offer, setOffer] = useState<Offer>({} as Offer);
   const [seller, setSeller] = useState<any>({});
   const [nego, setNego] = useState<any>({});
 
@@ -219,7 +220,7 @@ const FullOfferDetails = (props: any) => {
           <Col>
             {renderLabel('SPECIFICATION')}
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {offer?.specifications.map((spec) => (
+              {offer?.specifications?.map((spec) => (
                 <div style={{ marginRight: 8 }}>{renderLabelValue(spec)}</div>
               ))}
             </div>
@@ -234,6 +235,9 @@ const FullOfferDetails = (props: any) => {
             {renderLabelValue(
               moment(offer?.deliveryDate).format('MMMM DD, YYYY')
             )}
+
+            {renderLabel('Delivery Address', { marginTop: '24px' })}
+            {renderLabelValue(getShippingAddress(offer.shippingFrom))}
           </Col>
           <CompanyInfoCol xl={3}>
             <div style={{ display: 'flex' }}>

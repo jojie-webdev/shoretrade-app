@@ -167,6 +167,8 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
 
         {!removeCredits && (
           <>
+            <Divider spacing={20} />
+
             <div style={{ marginTop: '10px' }}>
               <Typography
                 variant="label"
@@ -184,8 +186,6 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
                 {credit ? toPrice(credit).replace('$', '') : '0.00'}
               </Typography>
             </div>
-
-            <Divider spacing={20} />
 
             <div style={{ marginTop: '10px' }}>
               <Typography
