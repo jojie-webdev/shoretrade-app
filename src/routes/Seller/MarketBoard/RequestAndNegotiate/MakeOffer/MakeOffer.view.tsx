@@ -123,9 +123,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             style={{
               marginBottom: 32,
             }}
-            iconRight={
-              <Close width={20} height={20} fill={theme.grey.shade4} />
-            }
           />
 
           {props.stateOptions.map((options, i) => {
@@ -246,6 +243,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   error={pathOr('', ['weight', '0'], errors)}
                   borderRadius="12px"
                   height="40px"
+                  placeholder={formatMeasurementUnit(
+                    props.buyerRequest.measurementUnit
+                  )}
                 />
               </Col>
 
@@ -262,6 +262,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   error={pathOr('', ['price', '0'], errors)}
                   borderRadius="12px"
                   height="40px"
+                  placeholder="$"
                 />
 
                 {/*<div className="shipping-to">*/}
@@ -286,6 +287,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   showArrowDownIcon={false}
                   borderRadius="12px"
                   height="40px"
+                  placeholder="01.01.2022"
                 />
               </Col>
             </Hidden>
@@ -303,6 +305,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     error={pathOr('', ['weight', '0'], errors)}
                     borderRadius="12px"
                     height="40px"
+                    placeholder={formatMeasurementUnit(
+                      props.buyerRequest.measurementUnit
+                    )}
                   />
                 </Col>
                 <Col className="textfield-col">
@@ -318,6 +323,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     error={pathOr('', ['price', '0'], errors)}
                     borderRadius="12px"
                     height="40px"
+                    placeholder="$"
                   />
                 </Col>
               </MobileFromToTextFieldsContainer>
@@ -334,6 +340,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   showArrowDownIcon={false}
                   borderRadius="12px"
                   height="40px"
+                  placeholder="01.01.2022"
                 />
               </Col>
             </Visible>

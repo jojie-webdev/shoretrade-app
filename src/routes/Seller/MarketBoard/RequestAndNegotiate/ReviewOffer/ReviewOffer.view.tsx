@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
@@ -80,24 +81,40 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   };
 
   const renderSize = (size: any) => {
-    size = flatMap(size.split('-'), function (part: any) {
-      return [part, <ArrowRight fill={theme.grey.shade7} />];
+    size = flatMap(size.split('-'), function (part: any, key: number) {
+      return [part, <ArrowRight key={key} fill={theme.grey.shade7} />];
     });
     size.pop();
     return size;
   };
 
+  const properOffer = props.offer[0];
+
   const getSizeBadge = () => {
+    if (properOffer.size && properOffer.size.from) {
+      return [properOffer.size.from];
+    }
     if (props.buyerRequest && !isEmpty(props.buyerRequest.sizeOptions)) {
       return props.buyerRequest.sizeOptions;
     }
 
     return [];
   };
-
-  const properOffer = props.offer[0];
   return (
     <Container>
+      <Alert
+        variant="infoAlert"
+        fullWidth
+        header={
+          'When you are making an offer you are committing to sell and deliver this product to the buyer.'
+        }
+        content={
+          'You need to make sure that the product is available if the buyer accepts.'
+        }
+        style={{
+          marginBottom: 32,
+        }}
+      />
       <SummaryContentContainer>
         <SummaryBadges
           label="Specifications"
@@ -153,7 +170,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             {' '}
             <ThirdItemContainer>
               <Typography
-                style={{ margin: '24px 0 12px 0' }}
+                style={{ marginBottom: '12px' }}
                 color="shade6"
                 variant="overline"
               >
@@ -172,7 +189,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           <Col>
             <ThirdItemContainer>
               <Typography
-                style={{ margin: '24px 0 12px 0' }}
+                style={{ marginBottom: '12px' }}
                 color="shade6"
                 variant="overline"
               >
