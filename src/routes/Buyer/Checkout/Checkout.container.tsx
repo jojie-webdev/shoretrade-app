@@ -48,7 +48,7 @@ const Checkout = (): JSX.Element => {
   };
 
   const [selectedShippingId, setSelectedShippingId] = useReducer(
-    createUpdateReducer<Record<string, number>>(),
+    createUpdateReducer<Record<string, string>>(),
     {}
   );
 
@@ -72,7 +72,7 @@ const Checkout = (): JSX.Element => {
         (accumulator, key) => ({
           ...accumulator,
           ...(shippingQuotes[key].priceResult.length > 0
-            ? { [key]: shippingQuotes[key].priceResult[0].priceId }
+            ? { [key]: shippingQuotes[key].priceResult[0].id }
             : {}),
         }),
         {}
@@ -111,8 +111,9 @@ const Checkout = (): JSX.Element => {
             shippingQuotes[cartItem.companyId] || { priceResult: [] }
           ).priceResult.map((data) => {
             const shipmentMode = shipmentModeToString(data.shipmentMode);
-            const serviceName = serviceNameToString(data.serviceName);
+            const serviceName = serviceNameToString(data.serviceName, data.locationName);
             return {
+              id: data.id,
               priceId: data.priceId,
               name:
                 data.serviceName === 'CLICK AND COLLECT'
@@ -124,8 +125,10 @@ const Checkout = (): JSX.Element => {
               price: toPrice(data.grossPrice, false),
               est: estimatedDeliveryToString(
                 data.minTransitTime,
-                data.maxTransitTime
+                data.maxTransitTime,
+                data.estimatedDate
               ),
+              imageUrl: data.imageUrl
             };
           })
         : [],
@@ -139,7 +142,7 @@ const Checkout = (): JSX.Element => {
     (selectedShippingData: Record<string, OrderShipping>, companyId) => {
       const data = shippingQuotes[companyId];
       const selectedPriceData = shippingQuotes[companyId].priceResult.find(
-        (pricing) => pricing.priceId === selectedShippingId[companyId]
+        (pricing) => pricing.id === selectedShippingId[companyId]
       );
       return {
         ...selectedShippingData,
@@ -156,7 +159,7 @@ const Checkout = (): JSX.Element => {
           minTransitTime: selectedPriceData?.minTransitTime || '',
           netCharge: selectedPriceData?.netPrice || 0,
           price: selectedPriceData?.grossPrice || 0,
-          priceId: selectedPriceData?.priceId || 0,
+          priceId: selectedPriceData?.priceId || '',
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
         },
