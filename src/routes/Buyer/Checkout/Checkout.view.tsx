@@ -83,9 +83,9 @@ const Orders = (props: CheckoutGeneratedProps) => {
                   if (a.est > b.est) return 1;
                   return 0;
                 })}
-                onPress={(priceId) =>
+                onPress={(id) =>
                   setSelectedShippingId({
-                    [item.listings[0].vendorId]: priceId,
+                    [item.listings[0].vendorId]: id,
                   })
                 }
               />
@@ -120,7 +120,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
   const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
-    (sum, companyId) => sum + (selectedShippingId[companyId] === 0 ? 0 : 1),
+    (sum, companyId) => sum + (selectedShippingId[companyId] === '' ? 0 : 1),
     0
   );
   const disablePlaceOrder = totalSelectedShipping < totalCartGroups;

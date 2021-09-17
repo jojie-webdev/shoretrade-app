@@ -5,7 +5,7 @@ import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Select from 'components/base/Select';
-import { DollarSign } from 'components/base/SVG';
+import { DollarSign, InfoFilled } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -21,6 +21,7 @@ import { PlaceData } from 'types/PlaceData';
 import { originToPlaceData } from 'utils/Address/originToPlaceData';
 import { placeDataToOrigin } from 'utils/Address/placeDataToOrigin';
 import { createUpdateReducer } from 'utils/Hooks';
+import IconTooltip from 'components/module/IconTooltip';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -313,24 +314,38 @@ const AddDetails = ({
           </Typography>
           <Row className="textfield-row checkbox-row">
             <Col>
-              <Checkbox
-                onClick={handleToggleAquaFuture}
-                checked={isAquafuture}
-                label="Aquafuture"
-                disabled={editableListing?.isAlreadyCreated}
-                error={pathOr('', ['isAquafuture', '0'], errors)}
-              />
+              <div className="toolip-container">
+                <Checkbox
+                  onClick={handleToggleAquaFuture}
+                  checked={isAquafuture}
+                  label="Aquafuture"
+                  disabled={editableListing?.isAlreadyCreated}
+                  error={pathOr('', ['isAquafuture', '0'], errors)}
+                />
+                <IconTooltip
+                  iconSize={16}
+                  variant="info"
+                  content="If this product will be caught by a future date, select this box to gain sales in advance."
+                />
+              </div>
             </Col>
           </Row>
           <Row className="textfield-row">
             <Col>
-              <Checkbox
-                onClick={toggleAlwaysAvailable}
-                checked={alwaysAvailable}
-                label="Always available"
-                disabled={isAquafuture}
-                error={pathOr('', ['alwaysAvailable', '0'], errors)}
-              />
+              <div className="toolip-container">
+                <Checkbox
+                  onClick={toggleAlwaysAvailable}
+                  checked={alwaysAvailable}
+                  label="Always available"
+                  disabled={isAquafuture}
+                  error={pathOr('', ['alwaysAvailable', '0'], errors)}
+                />
+                <IconTooltip
+                  iconSize={16}
+                  variant="info"
+                  content="Select this box if this product is caught on a regular basis and will be available for next day shipment."
+                />
+              </div>
             </Col>
           </Row>
         </CheckboxContainer>

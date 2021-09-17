@@ -33,6 +33,7 @@ import {
   CategoryItemContainer,
   FooterContainer,
 } from './NotificationsSettings.style';
+import IconTooltip from 'components/module/IconTooltip';
 
 const NotificationsSettingsView = ({
   globalSettings,
@@ -96,9 +97,15 @@ const NotificationsSettingsView = ({
         </Col>
       </Row>
       <GlobalNotificationsContainer>
-        <Typography className="section-title" variant="body">
-          Global Notification Settings
-        </Typography>
+        <header className="header">
+          <Typography className="section-title" variant="body">
+            Global Notification Settings{' '}
+          </Typography>
+          <IconTooltip
+            variant="info"
+            content="Toggle the notification mediums On and Off to update your preferences for all notifications."
+          />
+        </header>
         <div className="items-container">
           <div className="item">
             <GlobalNotificationToggle

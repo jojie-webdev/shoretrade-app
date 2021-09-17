@@ -3,6 +3,12 @@ import styled from 'utils/styled';
 export const Container = styled.div``;
 
 export const GlobalNotificationsContainer = styled.div`
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .items-container {
     display: flex;
     flex-directon: row;
@@ -16,7 +22,6 @@ export const GlobalNotificationsContainer = styled.div`
   }
 
   .section-title {
-    margin-bottom: 16px;
     color: ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
   }

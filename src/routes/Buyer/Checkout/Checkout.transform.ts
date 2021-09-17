@@ -10,20 +10,27 @@ export const shipmentModeToString = (shipmentMode: string) => {
   return 'Road freight';
 };
 
-export const serviceNameToString = (serviceName: string) => {
+export const serviceNameToString = (serviceName: string, locationName?: string) => {
   if (serviceName === 'CLICK AND COLLECT') return 'Pick Up at';
 
   return serviceName.indexOf('TO DOOR') !== -1 ||
     serviceName.indexOf('METRO TO METRO') !== -1 ||
     serviceName.indexOf('MANAGED') !== -1
     ? 'delivery to door'
-    : 'pickup at airport';
+    : `pickup at ${locationName || 'airport'}`;
 };
 
 export const estimatedDeliveryToString = (
   minTransit: string,
-  maxTransit: string
+  maxTransit: string,
+  estimatedDate?: string
 ) => {
+  if (estimatedDate) {
+    const dateSplit = estimatedDate.split('-').map(d => d.trim())
+    const dateFrom = moment(dateSplit[0]).format('D MMM')
+    const dateTo = moment(dateSplit[1]).format('D MMM')
+    return `Est. delivery: ${dateFrom}${dateTo ? ` - ${dateTo}` : ''}`
+  }
   const minDeliveryDate = moment(minTransit, 'YYYYMMDD').format('D MMM');
   const maxDeliveryDate = moment(maxTransit, 'YYYYMMDD').format('D MMM');
 

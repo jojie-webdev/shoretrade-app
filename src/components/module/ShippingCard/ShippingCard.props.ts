@@ -1,13 +1,15 @@
 export type Option = {
-  priceId: number;
+  id: string;
+  priceId: string;
   name: string;
   secondName?: string;
   est: string;
   price: string;
+  imageUrl: string
 };
 
 export interface ShippingCardProps {
   options: Option[];
-  selectedPriceId: number;
-  onPress: (priceId: number) => void;
+  selectedPriceId: string;
+  onPress: (priceId: string) => void;
 }

@@ -6,6 +6,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
+import { parseImageUrl } from 'utils/parseImageURL';
 
 import { ShippingCardProps } from './ShippingCard.props';
 import { Container, Rectangle, Spacer } from './ShippingCard.style';
@@ -26,16 +27,19 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
       )}
       {options.map((o) => (
         <Rectangle
-          key={o.priceId.toString()}
+          key={o.id}
           onClick={() => {
-            if (selectedPriceId !== o.priceId) {
-              onPress(o.priceId);
+            if (selectedPriceId !== o.id) {
+              onPress(o.id);
             }
           }}
         >
           <Row align="center" nogutter>
             <Col>
               <div className="shipping-option-left">
+                <div className="thumbnail-container">
+                  <img src={parseImageUrl(o.imageUrl)} />
+                </div>
                 <div>
                   <Typography
                     variant={isMobile ? 'caption' : 'body'}
@@ -70,7 +74,7 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                 >
                   ${o.price}
                 </Typography>
-                {selectedPriceId === o.priceId ? (
+                {selectedPriceId === o.id ? (
                   <CheckFilled
                     width={isMobile ? 14 : 20}
                     height={isMobile ? 14 : 20}

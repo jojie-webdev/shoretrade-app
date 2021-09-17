@@ -225,7 +225,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
             {props.catchRecurrence && (
               <Badge className="badge" badgeColor={theme.brand.success}>
                 <Typography color="noshade" variant="overline">
-                  Always Available
+                  Next Day Shipment
                 </Typography>
               </Badge>
             )}

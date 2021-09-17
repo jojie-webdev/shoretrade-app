@@ -73,7 +73,7 @@ export interface Offer {
   company_id: string;
   shippingFrom: ShippingAddress;
   paymentRequired: boolean;
-  orderRefNumber: string;
+  orderRefNumber: number;
 }
 
 export interface Negotiations {
