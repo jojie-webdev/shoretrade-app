@@ -180,7 +180,7 @@ const BuyerRequestsInteractions = (props: {
           <Col style={{ padding: '0 5px' }}>
             <div style={{ display: 'flex' }}>
               {renderTagByStatus()}
-              {getOfferCount() &&
+              {getOfferCount() >= 1 &&
                 statusTag(
                   theme.grey.shade3,
                   'shade10',
@@ -263,30 +263,9 @@ const MyActiveOffersInteractions = (props: {
     if (offerStatus === 'NEGOTIATION') {
       return tag(theme.brand.alert, 'NEGOTIATION', 'shade10');
     }
-  };
-
-  const buildSizeData = () => {
-    const getFromOnlySize = () => {
-      if (!data.size.to) {
-        return data.size.from + ' ' + sizeUnit;
-      } else return '';
-    };
-
-    const getFromAndToSize = () => {
-      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
-
-      if (!toSize) {
-        return '';
-      }
-
-      return toSize;
-    };
-
-    const sizeData = !data.size.from
-      ? 'Ungraded'
-      : getFromOnlySize() + ' ' + getFromAndToSize();
-
-    return sizeData;
+    if (offerStatus === 'NEW OFFER') {
+      return tag(theme.brand.success, 'NEW OFFER');
+    }
   };
 
   return (
