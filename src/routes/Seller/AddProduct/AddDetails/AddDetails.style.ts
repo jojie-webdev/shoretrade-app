@@ -8,6 +8,16 @@ export const CheckboxContainer = styled.div`
     margin-top: 12px;
     margin-bottom: 12px;
   }
+
+  .toolip-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .tooltip-container {
+    margin: 0;
+  }
 `;
 
 export const Container = styled.div`

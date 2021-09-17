@@ -10,15 +10,18 @@ import { SVGProps } from 'components/base/SVG/SVG.props';
 import Typography from 'components/base/Typography';
 import ReactTooltip from 'react-tooltip';
 import { useTheme } from 'utils/Theme';
+import { v1 } from 'uuid';
 
 import { IconTooltipProps } from './IconTooltip.props';
 import { Container, StyledContent } from './IconTooltip.style';
 
 const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   const theme = useTheme();
-  const { variant, content } = props;
+  const { variant, content, iconSize = 18 } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
+
+  const tooltipId = v1();
 
   if (variant === 'info') {
     Icon = InfoFilled;
@@ -38,17 +41,17 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   }
 
   return (
-    <Container>
+    <Container className="tooltip-container">
       <div
         data-tip
-        data-for="tooltip"
+        data-for={tooltipId}
         data-background-color={theme.grey.shade10}
         data-effect="solid"
         data-place="bottom"
       >
-        <Icon width={18} height={18} fill={IconFill} />
+        <Icon width={iconSize} height={iconSize} fill={IconFill} />
       </div>
-      <ReactTooltip aria-haspopup="true" id="tooltip">
+      <ReactTooltip aria-haspopup="true" id={tooltipId}>
         <StyledContent align="center" color="noshade">
           {content}
         </StyledContent>
