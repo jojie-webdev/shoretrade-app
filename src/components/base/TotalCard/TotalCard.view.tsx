@@ -59,6 +59,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
             const shipmentMode = shipmentModeToString(data.shipmentMode);
             const serviceName = serviceNameToString(data.serviceName);
             return {
+              id: data.id,
               priceId: data.priceId,
               name:
                 data.serviceName === 'CLICK AND COLLECT'
@@ -72,6 +73,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
                 data.minTransitTime,
                 data.maxTransitTime
               ),
+              imageUrl: data.imageUrl
             };
           })
         : [],
@@ -79,7 +81,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
   );
 
   const [selectedShippingId, setSelectedShippingId] = useReducer(
-    createUpdateReducer<Record<string, number>>(),
+    createUpdateReducer<Record<string, string>>(),
     {}
   );
 
@@ -87,7 +89,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
     (selectedShippingData: Record<string, OrderShipping>, companyId) => {
       const data = shippingQuotes[companyId];
       const selectedPriceData = shippingQuotes[companyId].priceResult.find(
-        (pricing) => pricing.priceId === selectedShippingId[companyId]
+        (pricing) => pricing.id === selectedShippingId[companyId]
       );
       return {
         ...selectedShippingData,
@@ -104,7 +106,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
           minTransitTime: selectedPriceData?.minTransitTime || '',
           netCharge: selectedPriceData?.netPrice || 0,
           price: selectedPriceData?.grossPrice || 0,
-          priceId: selectedPriceData?.priceId || 0,
+          priceId: selectedPriceData?.priceId || '',
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
         },

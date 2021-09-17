@@ -42,7 +42,8 @@ export type GetShippingQuoteResponseItem = {
   quoteId: number;
   insuredValue: number;
   priceResult: {
-    priceId: number;
+    id: string;
+    priceId: string;
     freightPrice: number;
     insurancePrice: number;
     consignmentFee: number;
@@ -56,6 +57,9 @@ export type GetShippingQuoteResponseItem = {
     shipmentMode: string; // ROAD
     minTransitTime: string; // yyyy-mm-dd
     maxTransitTime: string; // yyyy-mm-dd
+    imageUrl: string;
+    locationName: string;
+    estimatedDate: string;
   }[];
 };
 

@@ -14,10 +14,12 @@ export type OrderItem = {
   vendorId: string;
   unit: string;
   shippingOptions: {
-    priceId: number;
+    id: string;
+    priceId: string;
     name: string;
     est: string;
     price: string;
+    imageUrl: string;
   }[];
 };
 
@@ -29,8 +31,8 @@ export interface CheckoutGeneratedProps {
   keepShopping: () => void;
   placeOrder: () => void;
   selectedShipping: Record<string, any>;
-  selectedShippingId: Record<string, number>;
-  setSelectedShippingId: Dispatch<Partial<Record<string, number>>>;
+  selectedShippingId: Record<string, string>;
+  setSelectedShippingId: Dispatch<Partial<Record<string, string>>>;
   processingOrder: boolean;
   removeItem: (id: string) => void;
   orderError: string;

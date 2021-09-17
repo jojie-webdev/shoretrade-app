@@ -21,6 +21,20 @@ export const Rectangle = styled.div`
   .shipping-option-left {
     display: flex;
     align-items: center;
+
+    .thumbnail-container {
+      margin-right: 1rem;
+
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        @media ${BREAKPOINTS['sm']} {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
   }
 
   .shipping-option-right {
