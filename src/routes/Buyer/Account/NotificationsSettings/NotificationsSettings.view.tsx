@@ -12,6 +12,7 @@ import {
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
+import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
@@ -96,9 +97,16 @@ const NotificationsSettingsView = ({
         </Col>
       </Row>
       <GlobalNotificationsContainer>
-        <Typography className="section-title" variant="body">
-          Global Notification Settings
-        </Typography>
+        <header className="header">
+          <Typography className="section-title" variant="body">
+            Global Notification Settings{' '}
+          </Typography>
+          <IconTooltip
+            variant="info"
+            content="Toggle the notification mediums On and Off to update your preferences for all notifications."
+          />
+        </header>
+
         <div className="items-container">
           <div className="item">
             <GlobalNotificationToggle
