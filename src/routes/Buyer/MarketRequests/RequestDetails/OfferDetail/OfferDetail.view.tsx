@@ -152,18 +152,21 @@ const OfferDetailView = (props: any) => {
                 return (
                   <div key={offer.id} className="computation-item-container">
                     <TypographyView variant="label" color="shade9">
-                      {`${offer.type === 'COUNTER_OFFER'
-                        ? `Your ${sortedNegotiations[sortedNegotiations.length - 1]
-                          .type === 'COUNTER_OFFER'
-                          ? ''
-                          : 'Previous '
-                        }`
-                        : `Seller's ${sortedNegotiations[sortedNegotiations.length - 1]
-                          .type === 'NEW_OFFER'
-                          ? 'Current '
-                          : 'Previous '
-                        }`
-                        }Offer `}
+                      {`${
+                        offer.type === 'COUNTER_OFFER'
+                          ? `Your ${
+                              sortedNegotiations[sortedNegotiations.length - 1]
+                                .type === 'COUNTER_OFFER'
+                                ? ''
+                                : 'Previous '
+                            }`
+                          : `Seller's ${
+                              sortedNegotiations[sortedNegotiations.length - 1]
+                                .type === 'NEW_OFFER'
+                                ? 'Current '
+                                : 'Previous '
+                            }`
+                      }Offer `}
                     </TypographyView>
                     <TypographyView
                       variant="label"
@@ -179,8 +182,9 @@ const OfferDetailView = (props: any) => {
               <div className="computation-item-container">
                 <TypographyView variant="label" color="shade9">
                   Change in Price{' '}
-                  <span className="indicator">{`${discountValue > 0 ? '+' : ''
-                    }${discountPercentage}%`}</span>
+                  <span className="indicator">{`${
+                    discountValue > 0 ? '+' : ''
+                  }${discountPercentage}%`}</span>
                 </TypographyView>
                 {discountValue !== 0 ? (
                   <TypographyView

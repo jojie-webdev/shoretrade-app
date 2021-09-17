@@ -25,7 +25,7 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
     position = 'fixed',
   } = props;
 
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
 
   if (!isSmallScreen) return children ? <>{children}</> : null;
 

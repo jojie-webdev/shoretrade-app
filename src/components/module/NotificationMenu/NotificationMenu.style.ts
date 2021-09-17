@@ -21,7 +21,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
     background: ${({ theme }) =>
       theme.appType === 'buyer' ? theme.grey.shade2 : theme.grey.shade8};
     border-radius: 12px;
-    @media ${BREAKPOINTS.sm} {
+    @media ${BREAKPOINTS.nonDesktop} {
       width: 32px;
       height: 32px;
       border: 1px solid ${({ theme }) => theme.grey.shade10};
@@ -132,7 +132,7 @@ export const NotifCount = styled.div`
   top: -10px;
   right: -10px;
 
-  @media ${BREAKPOINTS.sm} {
+  @media ${BREAKPOINTS.nonDesktop} {
     width: 20px;
     height: 20px;
 

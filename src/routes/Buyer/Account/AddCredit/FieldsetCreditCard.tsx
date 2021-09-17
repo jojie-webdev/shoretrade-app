@@ -29,6 +29,8 @@ export const FieldsetCreditCard = (props: FieldsetCreditCardProps) => {
               brand={card.brand}
               lastFour={card.lastFour}
               onClick={(e) => props.setSelectedCardId(card.id)}
+              expMonth={card.expMonth.toString()}
+              expYear={card.expYear.toString()}
             />
           ))}
         </Field>

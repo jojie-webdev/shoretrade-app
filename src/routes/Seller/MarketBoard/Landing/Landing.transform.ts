@@ -3,7 +3,10 @@ import {
   Filters,
 } from 'components/module/FilterModal/FilterModal.props';
 import moment from 'moment';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  ShippingAddress,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import theme from 'utils/Theme';
@@ -189,26 +192,10 @@ export const identifyBuyerRequest = (
   return buyerRequest;
 };
 
-export const getShippingAddress = (
-  data: GetActiveOffersRequestResponseItem,
-  buyerRequests?: GetAllMarketRequestResponseItem[]
-) => {
-  const buyerRequest = identifyBuyerRequest(data, buyerRequests);
-  const { shippingTo } = buyerRequest || {};
-  const address = `${shippingTo?.suburb} ${shippingTo?.state} ${shippingTo?.postcode}`;
+export const getShippingAddress = (shippingAddress: ShippingAddress) => {
+  const selectedShippingAddressData = `${shippingAddress?.suburb} ${shippingAddress?.state} ${shippingAddress?.postcode}`;
 
-  return address;
-};
-
-export const hasShippingAddress = (
-  data: GetActiveOffersRequestResponseItem,
-  buyerRequests?: GetAllMarketRequestResponseItem[]
-) => {
-  const { shippingTo } = identifyBuyerRequest(data, buyerRequests) || {};
-  const { suburb, state, postcode } = shippingTo || {};
-  const hasAddress = suburb || state || postcode;
-
-  return hasAddress;
+  return selectedShippingAddressData;
 };
 
 export const getOfferByMarketRequest = (

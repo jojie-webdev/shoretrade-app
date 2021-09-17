@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
@@ -34,15 +35,8 @@ export const Container = styled.div<InteractionsProps>`
       : 'none !important';
   }};
 
-  ${({ onClick, type, offers }) =>
-    offers !== undefined
-      ? offers?.length > 0
-        ? `cursor: pointer;
-          &:hover {
-            opacity: 0.9;
-          }`
-        : ''
-      : onClick && type !== 'none'
+  ${({ type }) =>
+    type !== 'none'
       ? `cursor: pointer;
         &:hover {
           opacity: 0.9;
@@ -62,6 +56,11 @@ export const Value = styled(Typography)<{ fontColor?: string }>`
     return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);
   }};
   padding-right: 16px;
+  white-space: nowrap;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding-right: 0;
+  }
 `;
 
 export const Label = styled(Typography)`

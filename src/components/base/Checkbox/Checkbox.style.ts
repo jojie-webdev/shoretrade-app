@@ -60,7 +60,7 @@ export const CustomCheckbox = styled.span<{
   border-radius: 4px;
   position: relative;
   height: ${({ size }) => `${size}px`};
-  width: ${({ size }) => `${size}px`};
+  min-width: ${({ size }) => `${size}px`};
   border: ${({ checked, disabled, theme, borderColor }) => {
     if (disabled) return `1px solid ${theme.grey.shade6}`;
     if (checked) return `1px solid transparent`;
