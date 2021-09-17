@@ -47,10 +47,11 @@ function* getShippingQuoteRequest(
         string,
         GetShippingQuoteResponseItem
       > => {
+        const quoteData = pathOr({}, [index, 'data', 'data', 'data'], getMultipleShippingQuoteResponse)
         return {
           ...accum,
 
-          [current]: getMultipleShippingQuoteResponse[index].data.data.data,
+          [current]: quoteData
         };
       }, {});
 

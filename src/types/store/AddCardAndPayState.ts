@@ -12,7 +12,7 @@ export type OrderShipping = {
   minTransitTime: string;
   netCharge: number;
   price: number;
-  priceId: number;
+  priceId: string;
   quoteId: number;
   serviceName: string;
 };
