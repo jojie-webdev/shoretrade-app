@@ -143,7 +143,7 @@ const Header = ({
   const theme = useTheme();
 
   const isMenuVisible = useMediaQuery({
-    query: '(max-width: 768px)',
+    query: '(min-width: 768px)',
   });
 
   const isTablet = useMediaQuery({
