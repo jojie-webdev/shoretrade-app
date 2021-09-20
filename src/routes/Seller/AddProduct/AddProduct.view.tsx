@@ -222,7 +222,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           ? 'Product Type'
           : 'No Results found';
       case 3:
-        return 'Enter Type';
+        return 'Select Product Specifications';
       case 4:
         return 'Set Size';
       case 5:
