@@ -12,7 +12,6 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import { BUYER_ROUTES } from 'consts';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -23,6 +22,7 @@ import {
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -41,7 +41,6 @@ import {
   SubText,
   BadgesContainer,
 } from './Landing.style';
-import { hasNewOffer } from './Landing.transform';
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
@@ -62,10 +61,8 @@ export const MarketRequestItemNonMobile = (props: {
 }) => {
   const {
     id,
-    inDetail,
     expiry,
     offers,
-    offerStatus,
     type,
     image,
     measurementUnit,
@@ -73,37 +70,10 @@ export const MarketRequestItemNonMobile = (props: {
     specs,
     size,
     setItemToDelete,
-    activeOffersData,
     metric,
-    paymentRequired,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
-
-  const offerNumberBadge = () => {
-    return (
-      <Badge className="offers-badge" badgeColor={theme.grey.shade3}>
-        <BadgeText variant="overline" empty={offers?.length === 0}>
-          {`${offers?.length > 0 ? offers?.length : 'No'} ${
-            offers?.length === 1 ? 'Offer' : 'Offers'
-          }`}
-        </BadgeText>
-      </Badge>
-    );
-  };
-
-  const renderNewOfferBadge = () => (
-    <div className="sub-group">
-      <SubText variant="small">
-        {paymentRequired
-          ? isMobile
-            ? renderPaymentRequiredBadgeForMobile()
-            : renderPaymentRequiredBadge()
-          : hasNewOffer(offers) &&
-            offerStatusBadge(inDetail, offers?.length, offerStatus)}
-      </SubText>
-    </div>
-  );
 
   return (
     <MarketRequestItemContainer>
@@ -157,13 +127,7 @@ export const MarketRequestItemNonMobile = (props: {
 
         <Col style={{ padding: '0 5px' }}>
           <BadgesContainer>
-            {offers?.length === 1 ? (
-              renderNewOfferBadge()
-            ) : (
-              <div className="sub-group">
-                <SubText variant="small">{offerNumberBadge()}</SubText>
-              </div>
-            )}
+            {renderInOrderBadge(offers, isMobile)}
           </BadgesContainer>
         </Col>
 
@@ -205,7 +169,6 @@ export const MarketRequestItemMobile = (props: {
   offerStatus?: string;
 }) => {
   const {
-    inDetail,
     expiry,
     offers,
     type,
@@ -215,35 +178,9 @@ export const MarketRequestItemMobile = (props: {
     specs,
     size,
     metric,
-    offerStatus,
-    paymentRequired,
   } = props;
 
-  const offersText =
-    offers?.length === 1 ? `1 Offer` : `${offers?.length || 'No'} Offers`;
-
-  const offersMarkup = () => {
-    if (inDetail) return '';
-
-    return (
-      <div>
-        <Badge
-          className="offers-badge"
-          badgeColor={theme.grey.shade3}
-          padding="8px 8px"
-          borderRadius="8px"
-        >
-          <BadgeText
-            color="success"
-            variant="overline"
-            empty={offers?.length === 0}
-          >
-            {offersText}
-          </BadgeText>
-        </Badge>
-      </div>
-    );
-  };
+  const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
   const subMinorDetail = (label: string, value: string) => (
     <>
@@ -260,26 +197,6 @@ export const MarketRequestItemMobile = (props: {
       </Typography>
     </>
   );
-
-  const renderNewOffersBadge = () =>
-    paymentRequired
-      ? renderPaymentRequiredBadge()
-      : offerStatusBadge(inDetail, offers?.length, offerStatus);
-
-  const displayBadges = () => {
-    return (
-      <Badges>
-        {offers?.length === 1 ? (
-          renderNewOffersBadge()
-        ) : (
-          <>
-            {offersMarkup()}
-            {renderNewOffersBadge()}
-          </>
-        )}
-      </Badges>
-    );
-  };
 
   return (
     <MarketRequestItemMobileContainer>
@@ -325,62 +242,9 @@ export const MarketRequestItemMobile = (props: {
           </SubMinorDetail>
         </SubMinorInfo>
 
-        {displayBadges()}
+        <Badges>{renderInOrderBadge(offers, isMobile, true)}</Badges>
       </MinorInfo>
     </MarketRequestItemMobileContainer>
-  );
-};
-
-const renderPaymentRequiredBadge = () => (
-  <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
-    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
-      PAYMENT REQUIRED
-    </BadgeText>
-  </Badge>
-);
-
-const renderPaymentRequiredBadgeForMobile = () => (
-  <Badge className="offers-badge" badgeColor="#FFF4F6" padding="8px 8px">
-    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
-      PAYMENT
-    </BadgeText>
-    <BadgeText variant="overline" style={{ color: theme.brand.error }}>
-      REQUIRED
-    </BadgeText>
-  </Badge>
-);
-
-const offerStatusBadge = (
-  inDetail: boolean,
-  offers: number,
-  offerStatus: any
-) => {
-  let badgeColor = '';
-  let textColor;
-
-  if (!offerStatus) {
-    return null;
-  }
-
-  switch (offerStatus) {
-    case 'NEW OFFER':
-      badgeColor = '#EAFFF9';
-      textColor = theme.brand.success;
-      break;
-    case 'NEGOTIATION':
-      badgeColor = '#FFFBF2';
-      textColor = theme.brand.alert;
-      break;
-  }
-
-  if (inDetail || offers < 1) return null;
-
-  return (
-    <Badge className="offers-badge" badgeColor={badgeColor} padding="8px 8px">
-      <BadgeText variant="overline" style={{ color: textColor }}>
-        {offerStatus}
-      </BadgeText>
-    </Badge>
   );
 };
 
@@ -599,5 +463,115 @@ function buildSize(
 
   return buildSize;
 }
+
+const roundBadge = (children: JSX.Element, badgeColor = '#FFF7F2') => (
+  <Badge
+    className="offers-badge"
+    badgeColor={badgeColor}
+    padding="8px 8px"
+    borderRadius="8px"
+  >
+    {children}
+  </Badge>
+);
+
+const offersCountTextBadge = (offers: Offer[]) => (
+  <BadgeText variant="overline" empty={offers?.length === 0}>
+    {`${offers?.length > 0 ? offers?.length : 'No'} ${
+      offers?.length === 1 ? 'Offer' : 'Offers'
+    }`}
+  </BadgeText>
+);
+
+const offerNumberBadge = (offers: Offer[]) => {
+  return roundBadge(offersCountTextBadge(offers), theme.grey.shade3);
+};
+
+const hasOfferWithPaymentRequired = (offers: Offer[]) => {
+  if (!offers) {
+    return;
+  }
+
+  const offer = offers.find(
+    (offer) => getOfferStatus(offer, 'buyer') === 'PAYMENT REQUIRED'
+  );
+
+  return offer;
+};
+
+const hasOfferThatIsNew = (offers: Offer[]) => {
+  if (!offers) {
+    return;
+  }
+
+  const offer = offers.find(
+    (offer) => getOfferStatus(offer, 'buyer') === 'NEW OFFER'
+  );
+
+  return offer;
+};
+
+const hasOfferWithNegotiation = (offers: Offer[]) => {
+  if (!offers) {
+    return;
+  }
+
+  const offer = offers.find(
+    (offer) => getOfferStatus(offer, 'buyer') === 'NEGOTIATION'
+  );
+
+  return offer;
+};
+
+const paymentRequiredTextBadgeForSmallerDesktopScreens = (
+  <>
+    <BadgeText variant="overline" style={{ color: theme.brand.warning }}>
+      PAYMENT
+    </BadgeText>
+    <BadgeText variant="overline" style={{ color: theme.brand.warning }}>
+      REQUIRED
+    </BadgeText>
+  </>
+);
+
+const renderInOrderBadge = (
+  offers: Offer[],
+  isSmallDesktopScreen: boolean,
+  isMobile = false
+) => {
+  const badgeText = (fontColor: string, text: string) => (
+    <BadgeText variant="overline" style={{ color: fontColor }}>
+      {text}
+    </BadgeText>
+  );
+
+  if (hasOfferThatIsNew(offers)) {
+    const newBadgeText = badgeText(theme.brand.success, 'New Offer');
+
+    return roundBadge(newBadgeText, '#EAFFF9');
+  }
+
+  if (hasOfferWithNegotiation(offers)) {
+    const newBadgeText = badgeText(theme.brand.alert, 'Negotiation');
+
+    return roundBadge(newBadgeText, '#FFFBF2');
+  }
+
+  if (hasOfferWithPaymentRequired(offers)) {
+    const newBadgeText = badgeText(theme.brand.warning, 'Payment Required');
+
+    if (!isMobile) {
+      const correctNewBadgeText = !isSmallDesktopScreen
+        ? newBadgeText
+        : paymentRequiredTextBadgeForSmallerDesktopScreens;
+
+      return roundBadge(correctNewBadgeText, '#FFF7F2');
+    } else {
+      return roundBadge(newBadgeText, '#FFF7F2');
+    }
+  }
+
+  return offerNumberBadge(offers);
+};
 
 export default MarketRequestsLandingView;

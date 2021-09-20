@@ -102,19 +102,23 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   };
   return (
     <Container>
-      <Alert
-        variant="infoAlert"
-        fullWidth
-        header={
-          'When you are making an offer you are committing to sell and deliver this product to the buyer.'
-        }
-        content={
-          'You need to make sure that the product is available if the buyer accepts.'
-        }
-        style={{
-          marginBottom: 32,
-        }}
-      />
+      <div style={{ maxWidth: 641 }}>
+        <Alert
+          variant="infoAlert"
+          fullWidth
+          header={
+            'When you are making an offer you are committing to sell and deliver this product to the buyer.'
+          }
+          content={
+            'You need to make sure that the product is available if the buyer accepts.'
+          }
+          style={{
+            marginBottom: 32,
+          }}
+          iconRight={null}
+        />
+      </div>
+
       <SummaryContentContainer>
         <SummaryBadges
           label="Specifications"

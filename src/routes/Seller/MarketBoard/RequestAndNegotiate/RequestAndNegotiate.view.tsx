@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
+import Alert from 'components/base/Alert';
+import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
@@ -10,16 +12,18 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
+import { getShippingAddress } from '../Landing/Landing.transform';
 import MakeOffer from './MakeOffer';
 import { MakeOfferProps } from './MakeOffer/MakeOffer.props';
 import {
@@ -46,6 +50,8 @@ const Step1 = ({
   ...props
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
 
   const unit = formatMeasurementUnit(
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
@@ -126,14 +132,6 @@ const Step1 = ({
               {toPrice(activeOffer.price * activeOffer.weight)}
             </Typography>
           </div>
-
-          {isNegoOpen && (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                The buyer is reviewing your offer.
-              </Typography>
-            </div>
-          )}
         </div>
       );
     }
@@ -325,14 +323,6 @@ const Step1 = ({
               {toPrice(totalValue)}
             </Typography>
           </div>
-
-          {!isNegotiationAllowed && (
-            <div className="computation-item-container">
-              <Typography variant="label" color="noshade">
-                The buyer is reviewing your offer.
-              </Typography>
-            </div>
-          )}
         </div>
 
         {showButtons && !isMobile && (
@@ -406,170 +396,261 @@ const Step1 = ({
     return address;
   };
 
-  const getAddressFromActiveOffer = () => {
-    const { shippingTo } = buyerRequestForActiveOfferTab || {};
-    const { suburb, state, postcode } = shippingTo || {};
-    const address = `${suburb}, ${state} ${postcode}`;
-
-    return address;
-  };
-
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  return (
-    <SummaryContentContainer>
-      <SummaryBadges
-        label="Specifications"
-        items={
-          isReview
-            ? buyerRequest.specifications
-              ? buyerRequest.specifications.map((v) => v.stateName)
-              : []
-            : activeOffer.specifications
-        }
-      />
-      {!isEmpty(getSizeBadge()) ? (
-        <SummaryBadges label="Sizes" items={getSizeBadge()} />
-      ) : (
-        <>
-          <Typography
-            style={{ marginBottom: 12 }}
-            color="shade6"
-            variant="overline"
+
+  const buildAlertProperties = () => {
+    const offerStatus = getOfferStatus(activeOffer, 'seller');
+
+    const contentTypo = (content: string): ReactNode => (
+      <Typography variant="body" color="shade6" weight="400">
+        {content}
+      </Typography>
+    );
+
+    let alertProps = {} as AlertProps;
+
+    if (offerStatus === 'PAYMENT MISSED') {
+      alertProps = {
+        variant: 'error',
+        header: 'Lost',
+        content: contentTypo(
+          'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.'
+        ),
+      };
+    }
+    if (offerStatus === 'DECLINED') {
+      alertProps = {
+        variant: 'error',
+        header: 'Declined',
+        content: contentTypo('Your offer was declined by the Buyer.'),
+      };
+    }
+    if (offerStatus === 'PAYMENT REQUIRED') {
+      alertProps = {
+        variant: 'warning',
+        header: 'Pending Payment',
+        content: contentTypo(
+          'The Buyer needs to process the payment for the accepted offer.'
+        ),
+      };
+    }
+    if (offerStatus === 'NEGOTIATION') {
+      alertProps = {
+        variant: 'infoAlert',
+        header: 'In Negotiation',
+        content: contentTypo('Your offer is being reviewed by the Buyer.'),
+      };
+    }
+    if (offerStatus === 'ACCEPTED') {
+      alertProps = {
+        variant: 'success',
+        header: 'Finalised',
+        content: (
+          <div
+            onClick={() => {
+              history.replace(SELLER_ROUTES.SOLD);
+            }}
+            style={{ cursor: 'pointer' }}
           >
-            Size
-          </Typography>
-          {metric !== '' && (
-            <MetricContainer>
-              <Typography color="shade6" variant="overline">
-                Metric:
-              </Typography>
-              <Typography
-                style={{ marginLeft: '8px' }}
-                color="shade2"
-                variant="overline"
-              >
-                {metric}
-              </Typography>
-            </MetricContainer>
-          )}
-
-          <div className="quantity-container">
-            <StyledBadge badgeColor={theme.grey.shade3}>
-              <BadgeText color="shade9" variant="overline">
-                {isReview
-                  ? buyerRequest.sizeFrom || 0
-                  : activeOffer.size.from || 0}
-                {metric === 'Grams' ? 'g' : unit}
-              </BadgeText>
-            </StyledBadge>
-
-            {isReview && (
-              <>
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  weight="bold"
-                  className="dash"
-                >
-                  -
-                </Typography>
-                <StyledBadge badgeColor={theme.grey.shade3}>
-                  <BadgeText color="shade9" variant="overline">
-                    {buyerRequest.sizeTo || 0}
-                    {metric === 'Grams' ? 'g' : unit}
-                  </BadgeText>
-                </StyledBadge>
-              </>
-            )}
-
-            {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
-              <>
-                <Typography
-                  variant="label"
-                  color="noshade"
-                  weight="bold"
-                  className="dash"
-                >
-                  -
-                </Typography>
-                <StyledBadge badgeColor={theme.grey.shade3}>
-                  <BadgeText color="shade9" variant="overline">
-                    {activeOffer.size.to}
-                    {metric === 'Grams' ? 'g' : unit}
-                  </BadgeText>
-                </StyledBadge>
-              </>
+            {contentTypo(
+              `This offer is now Order [#0000-${activeOffer.orderRefNumber}].`
             )}
           </div>
+        ),
+      };
+    }
+    if (offerStatus === 'NEW OFFER') {
+      alertProps = {
+        variant: 'success',
+        header: 'New Offer',
+        content: contentTypo(
+          'Review the offer details and Negotiate or Accept the offer to proceed.'
+        ),
+      };
+    }
+
+    return alertProps;
+  };
+
+  const isMyActiveOffersTab = () => {
+    const isNotBuyersRequestTab = !location.pathname.includes('/offers');
+
+    return isNotBuyersRequestTab;
+  };
+
+  const isGoodToDisplayAlert = () => {
+    const isGoodToDisplayAlert =
+      isMyActiveOffersTab() && buildAlertProperties().variant;
+
+    return isGoodToDisplayAlert;
+  };
+
+  return (
+    <>
+      {isGoodToDisplayAlert() && (
+        <>
+          <Alert {...buildAlertProperties()} fullWidth />
+          <div style={{ marginBottom: '16px' }} />
         </>
       )}
 
-      <Typography
-        style={{ margin: '24px 0 12px 0' }}
-        color="shade6"
-        variant="overline"
-      >
-        Quantity
-      </Typography>
-      <div className="quantity-container">
-        <StyledBadge badgeColor={theme.grey.shade3}>
-          <BadgeText color="shade9" variant="overline">
-            {isReview
-              ? buyerRequest.weight?.from || 0
-              : activeOffer.weight || 0}
-            {unit}
-          </BadgeText>
-        </StyledBadge>
+      <div style={{ marginBottom: '16px' }} />
 
-        {isReview && (
+      <SummaryContentContainer>
+        <SummaryBadges
+          label="Specifications"
+          items={
+            isReview
+              ? buyerRequest.specifications
+                ? buyerRequest.specifications.map((v) => v.stateName)
+                : []
+              : activeOffer.specifications
+          }
+        />
+        {!isEmpty(getSizeBadge()) ? (
+          <SummaryBadges label="Sizes" items={getSizeBadge()} />
+        ) : (
           <>
             <Typography
-              variant="label"
-              color="noshade"
-              weight="bold"
-              className="dash"
+              style={{ marginBottom: 12 }}
+              color="shade6"
+              variant="overline"
             >
-              -
+              Size
             </Typography>
-            <StyledBadge badgeColor={theme.grey.shade3}>
-              <BadgeText color="shade9" variant="overline">
-                {buyerRequest.weight?.to || 0}
-                {unit}
-              </BadgeText>
-            </StyledBadge>
+            {metric !== '' && (
+              <MetricContainer>
+                <Typography color="shade6" variant="overline">
+                  Metric:
+                </Typography>
+                <Typography
+                  style={{ marginLeft: '8px' }}
+                  color="shade2"
+                  variant="overline"
+                >
+                  {metric}
+                </Typography>
+              </MetricContainer>
+            )}
+
+            <div className="quantity-container">
+              <StyledBadge badgeColor={theme.grey.shade3}>
+                <BadgeText color="shade9" variant="overline">
+                  {isReview
+                    ? buyerRequest.sizeFrom || 0
+                    : activeOffer.size.from || 0}
+                  {metric === 'Grams' ? 'g' : unit}
+                </BadgeText>
+              </StyledBadge>
+
+              {isReview && (
+                <>
+                  <Typography
+                    variant="label"
+                    color="noshade"
+                    weight="bold"
+                    className="dash"
+                  >
+                    -
+                  </Typography>
+                  <StyledBadge badgeColor={theme.grey.shade3}>
+                    <BadgeText color="shade9" variant="overline">
+                      {buyerRequest.sizeTo || 0}
+                      {metric === 'Grams' ? 'g' : unit}
+                    </BadgeText>
+                  </StyledBadge>
+                </>
+              )}
+
+              {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
+                <>
+                  <Typography
+                    variant="label"
+                    color="noshade"
+                    weight="bold"
+                    className="dash"
+                  >
+                    -
+                  </Typography>
+                  <StyledBadge badgeColor={theme.grey.shade3}>
+                    <BadgeText color="shade9" variant="overline">
+                      {activeOffer.size.to}
+                      {metric === 'Grams' ? 'g' : unit}
+                    </BadgeText>
+                  </StyledBadge>
+                </>
+              )}
+            </div>
           </>
         )}
-      </div>
 
-      <Typography
-        style={{ margin: '24px 0 12px 0' }}
-        color="shade6"
-        variant="overline"
-      >
-        Shipping to
-      </Typography>
-      <div className="quantity-container">
-        <StyledBadge badgeColor={theme.grey.shade3}>
-          <BadgeText color="shade9" variant="overline">
-            {isReview
-              ? getAddressFromBuyerRequest()
-              : getAddressFromActiveOffer()}
-          </BadgeText>
-        </StyledBadge>
-      </div>
+        <Typography
+          style={{ margin: '24px 0 12px 0' }}
+          color="shade6"
+          variant="overline"
+        >
+          Quantity
+        </Typography>
+        <div className="quantity-container">
+          <StyledBadge badgeColor={theme.grey.shade3}>
+            <BadgeText color="shade9" variant="overline">
+              {isReview
+                ? buyerRequest.weight?.from || 0
+                : activeOffer.weight || 0}
+              {unit}
+            </BadgeText>
+          </StyledBadge>
 
-      <Negotiations activeOffer={activeOffer} />
+          {isReview && (
+            <>
+              <Typography
+                variant="label"
+                color="noshade"
+                weight="bold"
+                className="dash"
+              >
+                -
+              </Typography>
+              <StyledBadge badgeColor={theme.grey.shade3}>
+                <BadgeText color="shade9" variant="overline">
+                  {buyerRequest.weight?.to || 0}
+                  {unit}
+                </BadgeText>
+              </StyledBadge>
+            </>
+          )}
+        </div>
 
-      {isReview && !isMobile && (
-        <Button
-          onClick={() => props.setStep && props.setStep(2)}
-          className="submit-btn"
-          disabled={userPending}
-          text="Make an offer"
-          variant={userPending ? 'disabled' : 'primary'}
-        />
-      )}
-    </SummaryContentContainer>
+        <Typography
+          style={{ margin: '24px 0 12px 0' }}
+          color="shade6"
+          variant="overline"
+        >
+          Shipping to
+        </Typography>
+        <div className="quantity-container">
+          <StyledBadge badgeColor={theme.grey.shade3}>
+            <BadgeText color="shade9" variant="overline">
+              {isReview
+                ? getAddressFromBuyerRequest()
+                : getShippingAddress(activeOffer.shippingTo)}
+            </BadgeText>
+          </StyledBadge>
+        </div>
+
+        <Negotiations activeOffer={activeOffer} />
+
+        {isReview && !isMobile && (
+          <Button
+            onClick={() => props.setStep && props.setStep(2)}
+            className="submit-btn"
+            disabled={userPending}
+            text="Make an offer"
+            variant={userPending ? 'disabled' : 'primary'}
+          />
+        )}
+      </SummaryContentContainer>
+    </>
   );
 };
 

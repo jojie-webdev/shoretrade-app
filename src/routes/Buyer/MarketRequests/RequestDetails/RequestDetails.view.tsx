@@ -418,6 +418,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
               thereIsNewOffer={thereIsNewOffer}
               counterOffer={counterOffer}
               newOffer={newOffer}
+              selectedOffer={selectedOffer}
             />
           </div>
         </Route>
