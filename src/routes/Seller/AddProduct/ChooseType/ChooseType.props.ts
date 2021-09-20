@@ -8,6 +8,7 @@ export type ChooseTypePublicProps = {
   search: (term: string) => void;
   pendingSearch: boolean;
   searchResults: SearchProductTypeResponseItem[];
+  productsToSell: SearchProductTypeResponseItem[];
   selectProductType: (typeId: string) => void;
   showCustomTypeSettings: boolean;
   setShowCustomTypeSettings: Dispatch<boolean>;
