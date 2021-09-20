@@ -154,7 +154,7 @@ const SoldView = (props: SoldGeneratedProps) => {
 
   let content;
   if (loadingCurrentTab) {
-    content = <Loading label="Getting Listings" />;
+    content = <Loading />;
   } else if (
     (currentTab === TO_SHIP &&
       isEmpty(props.toShip) &&
