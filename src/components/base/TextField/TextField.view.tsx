@@ -78,11 +78,18 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   const handleFieldChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    if (e.keyCode === 8) {
+    const removeDigitsFromTheRight = () => {
       const newVal = value
         ?.toString()
         ?.split('')
         .splice(0, value?.toString()?.split('').length - 1);
+
+      return newVal;
+    };
+
+    //check backspace
+    if (e.keyCode === 8) {
+      const newVal = removeDigitsFromTheRight();
 
       if (newVal.length === 0) {
         onChangeText('0');
@@ -96,7 +103,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
       return;
     }
 
-    if (parseInt(e.key)) {
+    if (Number.isInteger(parseInt(e.key))) {
       onChangeText(value + e.key);
     }
   };

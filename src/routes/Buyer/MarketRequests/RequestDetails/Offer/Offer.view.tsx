@@ -9,6 +9,7 @@ import {
   Crab,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { TypographyProps } from 'components/base/Typography/Typography.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import { BUYER_ROUTES } from 'consts';
@@ -16,6 +17,8 @@ import moment from 'moment';
 import { Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 
 import theme from '../../../../../utils/Theme';
@@ -88,7 +91,8 @@ const Offer = (props: OfferProps) => {
         color="shade10"
       >
         {offer.weight}
-        {offer.measurementUnit} at ${offer.price}/{offer.measurementUnit}
+        {formatUnitToPricePerUnit(offer.measurementUnit)} at ${offer.price}/
+        {formatUnitToPricePerUnit(offer.measurementUnit)}
       </Typography>
       <Typography
         weight="400"
@@ -212,51 +216,100 @@ const Offer = (props: OfferProps) => {
     e.stopPropagation();
   };
 
-  const renderTags = (offer: any) => (
-    <TagsContainer>
-      {offer.status === 'DECLINED' || offer.status === 'ACCEPTED' ? (
+  const getFinalStatus = (offer: any) => {
+    const finalStatus =
+      offer.status === 'DECLINED'
+        ? 'LOST'
+        : offer.status === 'ACCEPTED'
+        ? 'FINALISED'
+        : offer.status;
+
+    return finalStatus;
+  };
+
+  const renderTags = (offer: any) => {
+    const renderFirstBadge = (status: string, badgeColor: string) => (
+      <Badge
+        className="offers-badge"
+        badgeColor={badgeColor}
+        style={{ marginRight: 10 }}
+      >
+        <StatusBadgeText color="shade1" weight="bold" variant="overline">
+          {status}
+        </StatusBadgeText>
+      </Badge>
+    );
+
+    const renderNegoBadge = () => (
+      <Badge className="offers-badge" badgeColor="#fffff4" padding="5px 8px">
+        <StatusBadgeText weight="bold" variant="overline" color="alert">
+          Negotiation
+        </StatusBadgeText>
+      </Badge>
+    );
+
+    const renderNonNegoBadge = () => {
+      const offerStatus = getOfferStatus(offer, 'buyer');
+
+      const renderBadge = (
+        status: string,
+        badgeColor: string,
+        textColor: TypographyProps['color']
+      ) => (
         <Badge
           id="status-badge"
           className="offers-badge"
-          badgeColor={
-            offer.status === 'ACCEPTED' ? '#EAFFF9' : theme.brand.error
-          }
+          badgeColor={badgeColor}
         >
-          <StatusBadgeText color="success" weight="bold" variant="overline">
-            {offer.status === 'DECLINED' ? 'LOST' : offer.status}
+          <StatusBadgeText color={textColor} weight="bold" variant="overline">
+            {status}
           </StatusBadgeText>
         </Badge>
-      ) : (
+      );
+
+      if (offerStatus === 'PAYMENT MISSED') {
+        return renderBadge('PAYMENT MISSED', '#FFF4F6', 'error');
+      }
+      if (offerStatus === 'PAYMENT REQUIRED') {
+        return renderBadge('PAYMENT REQUIRED', '#FFF7F2', 'warning');
+      }
+      if (offerStatus === 'ACCEPTED') {
+        return renderBadge('FINALISED', '#EAFFF9', 'success');
+      }
+      if (offerStatus === 'NEW OFFER') {
+        return renderBadge('NEW OFFER', '#EAFFF9', 'success');
+      }
+    };
+
+    const checkIsNonNego = () => {
+      const offerStatus = getOfferStatus(offer, 'buyer');
+      const isNonNego =
+        offerStatus === 'PAYMENT REQUIRED' ||
+        offerStatus === 'PAYMENT MISSED' ||
+        offerStatus === 'ACCEPTED' ||
+        offerStatus === 'NEW OFFER';
+
+      return isNonNego;
+    };
+
+    const renderNegoBadges = () => (
+      <>
+        {offer.price < sellerOffer?.marketRequest?.averagePrice &&
+          renderFirstBadge('Great Value', theme.brand.success)}
+        {offer.price > sellerOffer?.marketRequest?.averagePrice &&
+          renderFirstBadge('Above Market', theme.brand.error)}
+        {renderNegoBadge()}
+      </>
+    );
+
+    return (
+      <TagsContainer>
         <NoActionsYetBadgesContainer>
-          {offer.price < sellerOffer?.marketRequest?.averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.success}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Great Value
-              </StatusBadgeText>
-            </Badge>
-          )}
-          {offer.price > sellerOffer?.marketRequest?.averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.error}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Above Market
-              </StatusBadgeText>
-            </Badge>
-          )}
-          {offer.negotiations && (
-            <Badge
-              className="offers-badge"
-              badgeColor="#FFF7F2"
-              padding="5px 8px"
-            >
-              <StatusBadgeText weight="bold" variant="overline" color="warning">
-                Negotiation
-              </StatusBadgeText>
-            </Badge>
-          )}
+          {checkIsNonNego() ? renderNonNegoBadge() : renderNegoBadges()}
         </NoActionsYetBadgesContainer>
-      )}
-    </TagsContainer>
-  );
+      </TagsContainer>
+    );
+  };
 
   const renderNonMobile = () => {
     return sellerOffer.offers.map((offer, index) => (

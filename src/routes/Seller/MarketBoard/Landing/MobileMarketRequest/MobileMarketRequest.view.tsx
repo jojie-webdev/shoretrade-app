@@ -1,20 +1,21 @@
 import React from 'react';
 
-import Badge from 'components/base/Badge';
-import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { TypographyProps } from 'components/base/Typography/Typography.props';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { BadgeText } from '../Landing.style';
 import {
   getExpiry,
-  getStatusBadgeColor,
-  isOfferMade,
   isPaymentPending,
   isPaymentRequired,
   isRedLabel,
@@ -102,51 +103,57 @@ const MobileMarketRequests = (props: {
     return address;
   };
 
-  const renderBadges = () => (
-    <Badges>
-      {isPaymentRequired(data, activeOffers) ? (
-        isPaymentPending(data, activeOffers) ? (
-          <StyledBadge className="badge" badgeColor={theme.brand.error}>
-            <BadgeText
-              variant="small"
-              color="noshade"
-              weight="900"
-              style={{ lineHeight: '15px' }}
-            >
-              PENDING PAYMENT
-            </BadgeText>
-          </StyledBadge>
-        ) : (
-          <StyledBadge
-            className="badge"
-            badgeColor={getStatusBadgeColor('DECLINED')}
-          >
-            <BadgeText
-              variant="small"
-              color="noshade"
-              weight="900"
-              style={{ lineHeight: '15px' }}
-            >
-              LOST
-            </BadgeText>
-          </StyledBadge>
-        )
-      ) : (
-        isOfferMade(data, activeOffers) && (
-          <StyledBadge className="badge" badgeColor={theme.brand.success}>
-            <BadgeText
-              variant="small"
-              color="noshade"
-              weight="900"
-              style={{ lineHeight: '15px' }}
-            >
-              ACTIVE OFFER
-            </BadgeText>
-          </StyledBadge>
-        )
-      )}
-    </Badges>
+  const getOfferByMarketRequest = () => {
+    const offer = activeOffers?.find(
+      (offer) => offer.marketRequest.id === data.id
+    );
+
+    return offer || ({} as Offer);
+  };
+
+  const getOfferCount = () => {
+    const offer = getOfferByMarketRequest();
+
+    const initialOffer = 1;
+    const totalOfferAndNegos = initialOffer + offer?.negotiations?.length;
+
+    return totalOfferAndNegos;
+  };
+
+  const statusTag = (
+    badgeColor: string,
+    badgeTextColor: TypographyProps['color'],
+    text: string
+  ) => (
+    <StyledBadge className="badge" badgeColor={badgeColor}>
+      <BadgeText
+        variant="small"
+        color={badgeTextColor}
+        weight="900"
+        style={{ lineHeight: '15px' }}
+      >
+        {text}
+      </BadgeText>
+    </StyledBadge>
   );
+
+  const renderTagByStatus = () => {
+    const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
+
+    if (offerStatus === 'NEW OFFER') {
+      return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
+    }
+  };
+
+  const getCorrectOfferCountLabel = () => {
+    const offerCount = getOfferCount();
+
+    if (offerCount === 1) {
+      return '1 OFFER';
+    } else {
+      return offerCount + ' OFFERS';
+    }
+  };
 
   return (
     <BuyerRequestMobileContainer>
@@ -201,7 +208,15 @@ const MobileMarketRequests = (props: {
           </Typography>
         </SubMinorDetail>
 
-        {renderBadges()}
+        <Badges>
+          {renderTagByStatus()}
+          {getOfferCount() &&
+            statusTag(
+              theme.grey.shade3,
+              'shade10',
+              getCorrectOfferCountLabel()
+            )}
+        </Badges>
       </MinorInfo>
     </BuyerRequestMobileContainer>
   );

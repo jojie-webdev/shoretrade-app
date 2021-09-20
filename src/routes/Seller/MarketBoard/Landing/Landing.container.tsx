@@ -133,11 +133,14 @@ const MarketBoardLanding = (): JSX.Element => {
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   useEffect(() => {
-    if (currentTab === 'Buyer Requests') {
-      dispatch(getAllMarketRequestActions.request({}));
-    } else {
-      dispatch(getActiveOffersActions.request({}));
-    }
+    // if (currentTab === 'Buyer Requests') {
+    //   dispatch(getAllMarketRequestActions.request({}));
+    // } else {
+    //   dispatch(getActiveOffersActions.request({}));
+    // }
+
+    dispatch(getAllMarketRequestActions.request({}));
+    dispatch(getActiveOffersActions.request({}));
 
     setActiveOffersData(filteredActiveOffers);
     setActiveOffersDataCopy(filteredActiveOffers);
