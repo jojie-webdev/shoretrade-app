@@ -124,6 +124,15 @@ const NotificationSettingsCategoryItem = (
             SMS
           </Typography>
         )}
+        {whatsapp.supported && (
+          <Typography
+            className="text-indicator"
+            variant="caption"
+            color={textIndicatorColor(whatsapp.enabled)}
+          >
+            WhatsApp
+          </Typography>
+        )}
       </TextIndicatorsContainer>
     );
   };
