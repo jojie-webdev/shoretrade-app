@@ -45,6 +45,7 @@ const ChooseType = ({
   search,
   selectProductType,
   searchResults,
+  productsToSell,
   pendingSearch,
   showCustomTypeSettings,
   setShowCustomTypeSettings,
@@ -245,13 +246,15 @@ const ChooseType = ({
                 </Typography>
               )}
 
-              {searchResults.map((item, index) => (
-                <div className="item-container" key={item.value}>
-                  <Interactions onClick={() => selectProductType(item.value)}>
-                    <ProductView {...item} />
-                  </Interactions>
-                </div>
-              ))}
+              {(searchKey === '' ? productsToSell : searchResults).map(
+                (item, index) => (
+                  <div className="item-container" key={item.value}>
+                    <Interactions onClick={() => selectProductType(item.value)}>
+                      <ProductView {...item} />
+                    </Interactions>
+                  </div>
+                )
+              )}
             </>
           ) : (
             <>

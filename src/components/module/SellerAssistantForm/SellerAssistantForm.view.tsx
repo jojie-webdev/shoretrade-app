@@ -160,10 +160,8 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
                   checked={role === 'ASSISTANT'}
                   onClick={() => setRole('ASSISTANT')}
                 >
-                  Has the same permission and user rights as you, the primary
-                  account holder, however they cannot edit your bank details or
-                  add other fishermen/assistants. User does not appear as a
-                  fishermen on your account.
+                  An Assistant has the same permissions as you, except the
+                  ability to edit your bank account or business details.
                 </Role>
 
                 <Role
@@ -171,9 +169,10 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
                   checked={role === 'FISHERMAN'}
                   onClick={() => setRole('FISHERMAN')}
                 >
-                  Can list and edit items as fisherman using your business name.
-                  Can only view sales for items they have listed. Cannot edit
-                  your bank, address, password or linked accounts.
+                  A Fisherman can add and edit listings under your business
+                  name. They can view sales for their listings only. A Fisherman
+                  cannot edit your bank details, addresses, passwords or add
+                  other Fishermen or Assistants.
                 </Role>
               </Col>
             </RolesRow>

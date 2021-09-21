@@ -37,6 +37,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     onSelectAccount,
     search,
     searchResults,
+    productsToSell,
     pendingSearch,
     selectProductType,
     showCustomTypeSettings,
@@ -121,6 +122,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             setShowCustomTypeSettings={setShowCustomTypeSettings}
             search={search}
             searchResults={searchResults}
+            productsToSell={productsToSell}
             pendingSearch={pendingSearch}
             selectProductType={selectProductType}
             categories={categories}
@@ -222,7 +224,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           ? 'Product Type'
           : 'No Results found';
       case 3:
-        return 'Enter Type';
+        return 'Select Product Specifications';
       case 4:
         return 'Set Size';
       case 5:
