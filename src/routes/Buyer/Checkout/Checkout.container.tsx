@@ -162,6 +162,7 @@ const Checkout = (): JSX.Element => {
           priceId: selectedPriceData?.priceId || '',
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
+          locationName: selectedPriceData?.locationName || ''
         },
       };
     },

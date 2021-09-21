@@ -37,9 +37,17 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
           <Row align="center" nogutter>
             <Col>
               <div className="shipping-option-left">
-                <div className="thumbnail-container">
-                  <img src={parseImageUrl(o.imageUrl)} />
-                </div>
+                {
+                  o.imageUrl ?
+                  (
+                    <div className="thumbnail-container">
+                      <img src={parseImageUrl(o.imageUrl)} />
+                    </div>
+                  ) :
+                  (
+                    <div>{''}</div>
+                  )
+                }
                 <div>
                   <Typography
                     variant={isMobile ? 'caption' : 'body'}
