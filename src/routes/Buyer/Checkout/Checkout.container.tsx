@@ -23,14 +23,13 @@ import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
-
 import {
   shipmentModeToString,
   serviceNameToString,
   estimatedDeliveryToString,
   shipmentModeToDeliveryMethod,
   serviceNameToDeliveryOption,
-} from './Checkout.transform';
+} from 'utils/String/toShipmentDateString';
 import CheckoutView from './Checkout.view';
 
 const Checkout = (): JSX.Element => {

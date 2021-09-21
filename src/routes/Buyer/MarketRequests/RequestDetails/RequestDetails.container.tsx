@@ -8,7 +8,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   serviceNameToDeliveryOption,
   shipmentModeToDeliveryMethod,
-} from 'routes/Buyer/Checkout/Checkout.transform';
+} from 'utils/String/toShipmentDateString';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import {
   deleteMarketRequestActions,

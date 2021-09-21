@@ -55,9 +55,27 @@ export const shipmentModeToDeliveryMethod = (shipmentMode: string) => {
 };
 
 export const serviceNameToDeliveryOption = (serviceName: string) => {
-  return serviceName.indexOf('TO DOOR') !== -1 ||
-    serviceName.indexOf('METRO TO METRO') !== -1 ||
-    serviceName.indexOf('MANAGED') !== -1
-    ? 'door'
-    : 'depot';
+  switch(serviceName.toUpperCase()) {
+    case 'DELIVERY TO DOOR':
+      return 'door'
+    case 'CLICK & COLLECT':
+      return 'collect'
+    case 'PICKUP AT':
+    default:
+     return 'depot'
+  }
 };
+
+export const deliveryOptionToServiceNameString = (deliveryOption: string, locationName: string) => {
+  switch(deliveryOption.toUpperCase()) {
+    case 'DOOR':
+      return 'delivery to door'
+    case 'COLLECT':
+    case 'DEPOT':
+      return `pick up at ${locationName}`
+    default:
+      return ''
+  }
+}
+
+export default {}
