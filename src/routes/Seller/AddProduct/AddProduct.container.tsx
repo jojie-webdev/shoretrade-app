@@ -15,6 +15,7 @@ import {
   createListingActions,
   getCustomFormDataActions,
   modifyBulkUploadActions,
+  getMarketInterestsActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -106,6 +107,13 @@ const AddProduct = (): JSX.Element => {
       (state: Store) => state.searchProductType.data?.data.types || []
     ) || [];
 
+  const productsToSell = useSelector((state: Store) =>
+    (state.getMarketInterests.data?.data.selling || []).map((p) => ({
+      label: p.name,
+      value: p.id,
+    }))
+  );
+
   const pendingSearch =
     useSelector((state: Store) => state.searchProductType.pending) || false;
 
@@ -133,6 +141,7 @@ const AddProduct = (): JSX.Element => {
         setShowCustomTypeSettings(false);
       }
       dispatch(searchProductTypeActions.clear());
+      dispatch(getMarketInterestsActions.request({ companyId }));
     }
   }, [currentPage]);
 
@@ -551,6 +560,7 @@ const AddProduct = (): JSX.Element => {
     onSelectAccount,
     search,
     searchResults,
+    productsToSell,
     pendingSearch,
     selectProductType,
     showCustomTypeSettings,
