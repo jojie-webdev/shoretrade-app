@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { FormikForm } from 'components/module/BuyerAssistantForm/BuyerAssistantForm.props';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { PERMISSIONS } from 'consts/permissions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -8,6 +10,7 @@ import {
   getLinkedAccountsActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
+import { isPermitted } from 'utils/isPermitted';
 import { replaceCallingCode } from 'utils/String/callingCode';
 
 import {
@@ -34,7 +37,16 @@ const EditAssistant = (): JSX.Element => {
       (a) => a.userId === assistantId
     )
   );
-
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const permission =
+    isPendingAccount &&
+    isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
   // MARK:- State
   const [callingCode, setCallingCode] = useState('61');
 
@@ -56,7 +68,10 @@ const EditAssistant = (): JSX.Element => {
     if (companyId && !getLinkedAccounts.data) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
-  }, [companyId, getLinkedAccounts.data]);
+    if (!permission) {
+      history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
+    }
+  }, [companyId, getLinkedAccounts.data, permission]);
 
   // MARK:- Variables
   const formikInitial: FormikForm = {

@@ -11,6 +11,7 @@ import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './LinkedAccounts.props';

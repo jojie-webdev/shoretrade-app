@@ -52,6 +52,19 @@ export type GetUserPayload = GenericResponse<{
     userGroup: string; // SELLER_ADMIN | BUYER_ADMIN
     status: string;
     companies: UserCompany[]; // TODO: Change to actual company data type
+    role: {
+      id: string;
+      alias: string;
+      name: string;
+      regions: string[];
+      permissions: {
+        id: string;
+        alias: string;
+        name: string;
+        description: string;
+        groups: string[];
+      }[]
+    }
   };
   token: string;
 }>;
