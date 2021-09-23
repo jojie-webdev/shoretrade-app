@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
-import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
@@ -21,19 +20,14 @@ import { Store } from 'types/store/Store';
 
 import { QueryParams } from '../EditAddress/EditAddress.props';
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
-import {
-  toNotificationResourceGroup,
-  toUpdateNotification,
-  toUpdateSettingItem,
-} from './NotificationsSettings.transform';
+import { toNotificationResourceGroup } from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
 
 const NotificationsSettings = (): JSX.Element => {
-  // TODO Setup redux for container
-
   const dispatch = useDispatch();
   const location = useLocation();
   const [companyId, setCompanyId] = useState('');
+  const [settingsUpdated, setSettingsUpdated] = useState(false);
   const [updateTriggered, setUpdateTriggered] = useState<null | any>(null);
   const [currentCustomSetting, setCurrentCustomSetting] = useState<null | {
     item: NotificationSettingItem;
@@ -71,35 +65,19 @@ const NotificationsSettings = (): JSX.Element => {
     (state: Store) => state.updateNotificationSettings.pending || false
   );
 
-  useEffect(() => {
-    const { companyId } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    }) as QueryParams;
-
-    if (!companyId) {
-      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
-    }
-
-    setCompanyId(companyId);
-  }, []);
-
-  useEffect(() => {
-    if (companyId) {
-      dispatch(
-        getNotificationsSettingsActions.request({
-          companyId,
-        })
-      );
-    }
-  }, [companyId]);
-
   const handleOnSaveCustom = (val: any) => {
+    if (!settingsUpdated) {
+      setSettingsUpdated(true);
+    }
     dispatch(updateNotificationSettingsActions.request(val));
   };
 
   const handleOnSaveGlobal = (
     key: 'email' | 'mobile' | 'push' | 'whatsapp'
   ) => {
+    if (!settingsUpdated) {
+      setSettingsUpdated(true);
+    }
     dispatch(
       updateNotificationSettingsActions.request({
         global: { [key]: globalSettings[key] },
@@ -165,6 +143,28 @@ const NotificationsSettings = (): JSX.Element => {
   );
 
   useEffect(() => {
+    const { companyId } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    }) as QueryParams;
+
+    if (!companyId) {
+      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+    }
+
+    setCompanyId(companyId);
+  }, []);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(
+        getNotificationsSettingsActions.request({
+          companyId,
+        })
+      );
+    }
+  }, [companyId]);
+
+  useEffect(() => {
     if (updateTriggered && customSettings) {
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
@@ -227,7 +227,7 @@ const NotificationsSettings = (): JSX.Element => {
     groupedNotifSettings,
     email: getUser?.data?.user.email || '',
     contactNo: getUser?.data?.user.mobile || '',
-    loading: getPendingNotificationsSettings,
+    loading: getPendingNotificationsSettings && !settingsUpdated,
     handleCustomSettingUpdate,
     setShowDeactivationWarning,
     showDeactivationWarning,
