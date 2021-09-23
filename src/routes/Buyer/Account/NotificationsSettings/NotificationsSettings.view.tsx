@@ -74,6 +74,14 @@ const NotificationsSettingsView = ({
     }
   };
 
+  if (loading) {
+    return (
+      <Container>
+        <Loading />;
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Row nogutter justify="between" align="center">

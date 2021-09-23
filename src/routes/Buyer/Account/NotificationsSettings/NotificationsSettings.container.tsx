@@ -41,6 +41,7 @@ const NotificationsSettings = (): JSX.Element => {
     val: boolean;
     deactivationWarning: string | null;
   }>(null);
+  const [settingsUpdated, setSettingsUpdated] = useState(false);
   const [currentGlobalSetting, setCurrentGlobalSetting] = useState('');
   const [showDeactivationWarning, setShowDeactivationWarning] = useState('');
   const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
@@ -71,35 +72,19 @@ const NotificationsSettings = (): JSX.Element => {
     (state: Store) => state.updateNotificationSettings.pending || false
   );
 
-  useEffect(() => {
-    const { companyId } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    }) as QueryParams;
-
-    if (!companyId) {
-      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
-    }
-
-    setCompanyId(companyId);
-  }, []);
-
-  useEffect(() => {
-    if (companyId) {
-      dispatch(
-        getNotificationsSettingsActions.request({
-          companyId,
-        })
-      );
-    }
-  }, [companyId]);
-
   const handleOnSaveCustom = (val: any) => {
+    if (!settingsUpdated) {
+      setSettingsUpdated(true);
+    }
     dispatch(updateNotificationSettingsActions.request(val));
   };
 
   const handleOnSaveGlobal = (
     key: 'email' | 'mobile' | 'push' | 'whatsapp'
   ) => {
+    if (!settingsUpdated) {
+      setSettingsUpdated(true);
+    }
     dispatch(
       updateNotificationSettingsActions.request({
         global: { [key]: globalSettings[key] },
@@ -164,6 +149,28 @@ const NotificationsSettings = (): JSX.Element => {
   );
 
   useEffect(() => {
+    const { companyId } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    }) as QueryParams;
+
+    if (!companyId) {
+      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+    }
+
+    setCompanyId(companyId);
+  }, []);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(
+        getNotificationsSettingsActions.request({
+          companyId,
+        })
+      );
+    }
+  }, [companyId]);
+
+  useEffect(() => {
     if (updateTriggered && customSettings) {
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
@@ -226,7 +233,7 @@ const NotificationsSettings = (): JSX.Element => {
     groupedNotifSettings,
     email: getUser?.data?.user.email || '',
     contactNo: getUser?.data?.user.mobile || '',
-    loading: getPendingNotificationsSettings,
+    loading: getPendingNotificationsSettings && !settingsUpdated, // one time loading
     handleCustomSettingUpdate,
     setShowDeactivationWarning,
     showDeactivationWarning,
