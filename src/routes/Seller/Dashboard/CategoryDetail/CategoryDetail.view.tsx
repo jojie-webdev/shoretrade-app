@@ -33,9 +33,6 @@ const CategoryDetailView = ({
         {isSmallScreen ? (
           <>
             <InnerRouteHeader title="Categories" fullRow={false} />
-            <Typography variant="overline" color="shade6" className="text">
-              {props.dateRange}
-            </Typography>
           </>
         ) : (
           <div className="padding-bread">

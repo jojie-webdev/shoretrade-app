@@ -477,11 +477,14 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
     yAxisLabelFormat = (value: number) => `${value}`,
     cHeight,
     strokeWidth = 3,
+    dotSize = 1.5,
     isEarning,
   } = props;
-  let stroke = props.stroke;
+  let stroke = props.stroke || 'primary';
   if (data.dates.length === 0) return null;
-  stroke = !isEarning ? 'error' : 'success';
+  if (typeof props.isEarning !== 'undefined') {
+    stroke = !isEarning ? 'error' : 'success';
+  }
   const graphData = data.dates.map((d, i) => ({
     date: moment(d).toDate().getTime(),
     value: data.values[i],
@@ -533,7 +536,7 @@ const LineChart = (props: LineChartProps): JSX.Element | null => {
           contentInset={{ left: 5, top: 20 }}
           curve={shape.curveLinear}
         >
-          <Tooltip svg={{ r: 3, fill: theme.brand[stroke] }} />
+          <Tooltip svg={{ r: dotSize, fill: theme.brand[stroke] }} />
           <Grid svg={{ x: 5, stroke: theme.grey.shade8 }} belowChart />
         </LineChartView>
       </YAxisContainer>

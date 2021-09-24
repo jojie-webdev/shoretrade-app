@@ -1,11 +1,12 @@
 export interface CashFlowGeneratedProps {
   innerRouteTitle: string;
-  name: string;
-  isLoading: boolean;
-  data: {
+  paidCashFlow: {
+    values: any[];
+    dates: any[];
+  };
+  pendingCashFlow: {
     values: any[];
     dates: any[];
   };
   breadCrumbSections: any[];
-  isEarning: boolean;
 }
