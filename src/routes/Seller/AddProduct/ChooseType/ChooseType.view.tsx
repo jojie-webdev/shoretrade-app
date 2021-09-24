@@ -246,15 +246,16 @@ const ChooseType = ({
                 </Typography>
               )}
 
-              {(searchKey === '' ? productsToSell : searchResults).map(
-                (item, index) => (
-                  <div className="item-container" key={item.value}>
-                    <Interactions onClick={() => selectProductType(item.value)}>
-                      <ProductView {...item} />
-                    </Interactions>
-                  </div>
-                )
-              )}
+              {(!desktopSearchValue && productsToSell.length
+                ? productsToSell
+                : searchResults
+              ).map((item, index) => (
+                <div className="item-container" key={item.value}>
+                  <Interactions onClick={() => selectProductType(item.value)}>
+                    <ProductView {...item} />
+                  </Interactions>
+                </div>
+              ))}
             </>
           ) : (
             <>
