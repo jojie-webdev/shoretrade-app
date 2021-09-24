@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { SELLER_ROUTES, SELLER_DASHBOARD_ROUTES } from 'consts';
 import moment from 'moment';
+import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getSellerDashboard } from 'services/company';
 import {
   getMarketNotificationActions,
+  getSellerDashboardSalesActions,
+  getSellerDashboardTopCategoriesActions,
   readMarketNotificationActions,
   sellerDashboardActions,
 } from 'store/actions';
@@ -14,14 +17,16 @@ import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import { DashboardLandingGeneratedProps, onApply } from './Landing.props';
+// import { salesDataToMonthlyGraph } from './Landing.transforms';
 import DashboardView from './Landing.view';
 
-const DEFAULT_DATA = {
-  categories: [],
-  months: [],
-  paid: '',
-  pending: '',
-};
+// const DEFAULT_DATA = {
+//   categories: [],
+//   months: [],
+//   paid: '',
+//   pending: '',
+//   monthsPending: [],
+// };
 
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
@@ -43,9 +48,33 @@ const Dashboard = (): JSX.Element => {
     useSelector((state: Store) => state.sellerDashboardDate) ||
     fiscalYearDateRange;
 
+  const salesData = useSelector(
+    (state: Store) => state.getSellerDashboardSales.data?.data
+  ) || {
+    graph: [],
+    total: {
+      paid: 0,
+      pending: 0,
+    },
+    previousMonthTotal: {
+      paid: 0,
+      pending: 0,
+    },
+  };
+
+  const topCategoriesData = useSelector(
+    (state: Store) => state.getSellerDashboardTopCategories.data?.data
+  ) || {
+    topCategories: [],
+    previousTopCategories: [],
+  };
+
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-  const [data, setData] = useState(DEFAULT_DATA);
+
+  const isLoading =
+    useSelector((state: Store) => state.getSellerDashboardSales.pending) ||
+    false;
+  // const [data, setData] = useState(DEFAULT_DATA);
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
@@ -58,6 +87,7 @@ const Dashboard = (): JSX.Element => {
       year: start.get('year'),
       month: start.get('month') + 1,
       day: start.get('date'),
+      isoString: start.startOf('day').toISOString(),
     };
 
     const endDate = {
@@ -66,6 +96,7 @@ const Dashboard = (): JSX.Element => {
       year: end.get('year'),
       month: end.get('month') + 1,
       day: end.get('date'),
+      isoString: end.endOf('day').toISOString(),
     };
 
     dispatch(
@@ -78,30 +109,45 @@ const Dashboard = (): JSX.Element => {
     toggleModal();
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (token) {
-        setLoading(true);
-        try {
-          const resp = await getSellerDashboard(
-            {
-              dateFrom: dateRange.start.dateString.replace(/-/g, ''),
-              dateTo: dateRange.end.dateString.replace(/-/g, ''),
-            },
-            token
-          );
-          setData(resp.data?.data || DEFAULT_DATA);
-        } catch (e) {
-          setData(DEFAULT_DATA);
-        }
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [dateRange, token]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (token) {
+  //       setLoading(true);
+  //       try {
+  //         const resp = await getSellerDashboard(
+  //           {
+  //             dateFrom: dateRange.start.dateString.replace(/-/g, ''),
+  //             dateTo: dateRange.end.dateString.replace(/-/g, ''),
+  //           },
+  //           token
+  //         );
+  //         setData(resp.data?.data || DEFAULT_DATA);
+  //       } catch (e) {
+  //         setData(DEFAULT_DATA);
+  //       }
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [dateRange, token]);
 
   const setDateRange = (dateRange: any) => {
-    dispatch(sellerDashboardActions.set(dateRange));
+    dispatch(
+      sellerDashboardActions.set({
+        start: {
+          ...dateRange.start,
+          isoString: moment(dateRange.start.dateString)
+            .startOf('day')
+            .toISOString(),
+        },
+        end: {
+          ...dateRange.end,
+          isoString: moment(dateRange.end.dateString)
+            .endOf('day')
+            .toISOString(),
+        },
+      })
+    );
   };
 
   const toPaidGraph = () => {
@@ -136,7 +182,7 @@ const Dashboard = (): JSX.Element => {
 
     return {
       pathname,
-      state: { data: data.categories },
+      // state: { data: data.categories },
     };
   };
 
@@ -159,11 +205,25 @@ const Dashboard = (): JSX.Element => {
     };
   };
 
-  // Market Notification Logic - Start
   useEffect(() => {
+    const dateStringFrom = pathOr('', ['start', 'dateString'], dateRange);
+    const dateStringTo = pathOr('', ['end', 'dateString'], dateRange);
+    dispatch(
+      getSellerDashboardSalesActions.request({
+        dateFrom: moment(dateStringFrom).startOf('day').toISOString(),
+        dateTo: moment(dateStringTo).endOf('day').toISOString(),
+      })
+    );
+    dispatch(
+      getSellerDashboardTopCategoriesActions.request({
+        dateFrom: moment(dateStringFrom).startOf('day').toISOString(),
+        dateTo: moment(dateStringTo).endOf('day').toISOString(),
+      })
+    );
     dispatch(getMarketNotificationActions.request({}));
   }, []);
 
+  // Market Notification Logic - Start
   const marketNotification = useSelector(
     (state: Store) => state.getMarketNotification.data?.data.currentNotification
   );
@@ -197,7 +257,7 @@ const Dashboard = (): JSX.Element => {
     isCalendarModalOpen,
     toggleModal,
     isLoading,
-    data,
+    // data,
     toPaidGraph: toPaidGraph(),
     toCategories: toCategories(),
     toCategoryDetails,
@@ -207,6 +267,8 @@ const Dashboard = (): JSX.Element => {
     currentNotificationType,
     onClickMarketNotification,
     userPending,
+    salesData,
+    topCategoriesData,
   };
   return <DashboardView {...generatedProps} />;
 };

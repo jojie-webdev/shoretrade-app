@@ -18,14 +18,22 @@ import { FocusedInputShape } from 'react-dates';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import { getGraphData } from 'routes/Seller/Dashboard/Landing/Landing.transforms';
+import {
+  getGraphData,
+  includeTopCategoriesPercentChange,
+  salesDataToMonthlyGraph,
+} from 'routes/Seller/Dashboard/Landing/Landing.transforms';
 import getFiscalQuarter from 'utils/Date/getFiscalQuarter';
 import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
 
-import { DashboardLandingGeneratedProps } from './Landing.props';
+import {
+  DashboardLandingGeneratedProps,
+  SalesData,
+  TopCategoriesData,
+} from './Landing.props';
 import {
   Container,
   FilterRow,
@@ -264,22 +272,13 @@ const MobileFilterHeader = ({
   );
 };
 
-const TotalSales = (props: any) => {
-  const PaidCard = (ownProps: any) => {
-    return (
-      <TotalSalesCard className="figma-width">
-        <Typography variant="overline" color="shade6" className="overline">
-          Paid
-        </Typography>
-        <Typography variant="title4" color="noshade">
-          {numberToShortenAmount(ownProps.data.paid ? ownProps.data.paid : 0)}
-        </Typography>
-      </TotalSalesCard>
-    );
-  };
-
+const TotalSales = (props: {
+  paid: number;
+  pending: number;
+  linkToPaidGraph: any;
+}) => {
   return (
-    <TotalSalesRow >
+    <TotalSalesRow>
       <Col md={12} className="title-col">
         <Link to={SELLER_DASHBOARD_ROUTES.CASH_FLOW('FY')}>
           <Typography variant="label" color="shade6" component="span">
@@ -288,36 +287,41 @@ const TotalSales = (props: any) => {
         </Link>
       </Col>
       <SalesRow nowrap gutterWidth={24}>
-        {props.data.paid ? (
-          <Link
-            to={props.toPaid}
-            className="figma-width"
-            style={{ marginRight: 16 }}
-          >
-            <PaidCard {...props} />
-          </Link>
-        ) : (
-          <PaidCard {...props} />
-        )}
+        <Link
+          to={props.linkToPaidGraph}
+          className="figma-width"
+          style={{ marginRight: 16 }}
+        >
+          <TotalSalesCard className="figma-width">
+            <Typography variant="overline" color="shade6" className="overline">
+              Paid
+            </Typography>
+            <Typography variant="title4" color="noshade">
+              {numberToShortenAmount(props.paid)}
+            </Typography>
+          </TotalSalesCard>
+        </Link>
+
         <TotalSalesCard>
           <div>
             <Typography variant="overline" color="shade6" className="overline">
               Pending
             </Typography>
             <Typography variant="title4" color="noshade">
-              {numberToShortenAmount(
-                props.data.pending ? props.data.pending : 0
-              )}
+              {numberToShortenAmount(props.pending)}
             </Typography>
           </div>
         </TotalSalesCard>
-        
       </SalesRow>
     </TotalSalesRow>
   );
 };
 
-const MonthlySales = (props: any) => {
+const MonthlySales = (props: { salesData: SalesData }) => {
+  const monthlyGraphData = salesDataToMonthlyGraph(
+    props.salesData.graph,
+    props.salesData.previousMonthTotal
+  );
   const theme = useTheme();
 
   return (
@@ -330,7 +334,7 @@ const MonthlySales = (props: any) => {
         </Col>
       </Row>
       <MonthlyRow nowrap gutterWidth={24}>
-        {props.data.months.map((m: any, i: any) => (
+        {monthlyGraphData.map((m, i: number) => (
           <Link
             key={i}
             to={SELLER_DASHBOARD_ROUTES.CASH_FLOW(
@@ -386,14 +390,22 @@ const MonthlySales = (props: any) => {
   );
 };
 
-const TopCategories = (props: any) => {
+const TopCategories = (props: {
+  topCategoriesData: TopCategoriesData;
+  linkToCategories: any;
+  linkToCategoryDetails: any;
+}) => {
   const theme = useTheme();
+
+  const topCategoriesPercentage = includeTopCategoriesPercentChange(
+    props.topCategoriesData
+  );
 
   return (
     <TopCategoriesContainer>
       <Row>
         <Col md={12} className="title-col">
-          <Link to={props.to}>
+          <Link to={props.linkToCategories}>
             <Typography variant="label" color="shade6" component="span">
               Top Categories
             </Typography>
@@ -401,8 +413,8 @@ const TopCategories = (props: any) => {
         </Col>
       </Row>
       <MonthlyRow nowrap gutterWidth={24}>
-        {props.data.categories.map((c: any, i: any) => (
-          <Link key={i} to={props.toDetails(c.id, c.name)}>
+        {topCategoriesPercentage.map((c, i: number) => (
+          <Link key={i} to={props.linkToCategoryDetails(c.id, c.name)}>
             <SalesCard className="many-cards">
               <Typography
                 variant="overline"
@@ -432,7 +444,7 @@ const TopCategories = (props: any) => {
                     }
                     className="text"
                   >
-                    {hasIncreased(c.percentageChange) ? '+' : '-'}
+                    {hasIncreased(c.percentageChange) ? '+' : ''}
                     {c.percentageChange}%
                   </Typography>
                 </div>
@@ -451,7 +463,7 @@ const TopCategories = (props: any) => {
 
 const DashboardView = (props: DashboardLandingGeneratedProps) => {
   const {
-    data,
+    // data,
     isLoading,
     isCalendarModalOpen,
     toggleModal,
@@ -461,10 +473,12 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     currentNotificationType,
     onClickMarketNotification,
     userPending,
+    salesData,
+    topCategoriesData,
   } = props;
 
-  const [startDate, setStartDate] = useState(moment());
-  const [endDate, setEndDate] = useState(moment().add('day', 7));
+  const [startDate, setStartDate] = useState(moment().subtract(7, 'days'));
+  const [endDate, setEndDate] = useState(moment());
   const [focus, setFocus] = useState<FocusedInputShape>('startDate');
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -477,78 +491,84 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     setFocus(!arg ? 'startDate' : arg);
   };
 
-  const onReset = () => {
-    setStartDate(moment());
-    setEndDate(moment().add('day', 7));
-  };
+  // const onReset = () => {
+  //   setStartDate(moment());
+  //   setEndDate(moment().add(7, 'days'));
+  // };
+
+  const hasSalesData =
+    salesData.graph.length > 0 &&
+    (salesData.total.paid !== 0 || salesData.total.pending !== 0);
 
   return (
     <Container>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          {userPending && (
-            <Alert
-              variant="alert"
-              content={`Your account needs approval.`}
-              fullWidth
-              alignText="center"
-              style={{ marginBottom: 16 }}
+      <>
+        {userPending && (
+          <Alert
+            variant="alert"
+            content={`Your account needs approval.`}
+            fullWidth
+            alignText="center"
+            style={{ marginBottom: 16 }}
+          />
+        )}
+        {currentNotificationType.length > 0 && (
+          <NotificationsContainer>
+            <MarketNotification
+              onPress={onClickMarketNotification}
+              type={currentNotificationType}
             />
-          )}
-          {currentNotificationType.length > 0 && (
-            <NotificationsContainer>
-              <MarketNotification
-                onPress={onClickMarketNotification}
-                type={currentNotificationType}
-              />
-            </NotificationsContainer>
-          )}
-          <FilterHeader {...props} />
+          </NotificationsContainer>
+        )}
+        <FilterHeader {...props} />
 
-          {data.months.length > 0 ? (
-            <>
-              <TotalSales data={data} toPaid={toPaidGraph} />
-              {(data.paid || data.pending) && (
-                <>
-                  <MonthlySales data={data} />
-                  <TopCategories
-                    data={data}
-                    to={toCategories}
-                    toDetails={toCategoryDetails}
-                  />
-                </>
-              )}
-            </>
-          ) : (
-            <EmptyDashboard />
-          )}
+        {isLoading && <Loading />}
 
-          {isCalendarModalOpen && (
-            <DatePickerModal
-              startDate={startDate}
-              endDate={endDate}
-              focusedInput={focus}
-              isOpen={true}
-              onFocusChange={onFocusChange}
-              onDateChange={onDateChange}
-              onClickApply={() =>
-                props.onApplyCustom({ start: startDate, end: endDate })
-              }
-              onClickClose={toggleModal}
-              onClickCloseMobile={toggleModal}
-              onReset={onReset}
-            >
-              {isSmallScreen && (
-                <MobileFilterContainer>
-                  <MobileFilterHeader {...props} />
-                </MobileFilterContainer>
-              )}
-            </DatePickerModal>
-          )}
-        </>
-      )}
+        {!isLoading &&
+          !hasSalesData &&
+          topCategoriesData.topCategories.length === 0 && <EmptyDashboard />}
+
+        {hasSalesData && (
+          <TotalSales
+            paid={salesData.total.paid}
+            pending={salesData.total.pending}
+            linkToPaidGraph={toPaidGraph}
+          />
+        )}
+
+        {hasSalesData && <MonthlySales salesData={salesData} />}
+
+        {topCategoriesData.topCategories.length > 0 && (
+          <TopCategories
+            topCategoriesData={topCategoriesData}
+            linkToCategories={toCategories}
+            linkToCategoryDetails={toCategoryDetails}
+          />
+        )}
+
+        {isCalendarModalOpen && (
+          <DatePickerModal
+            startDate={startDate}
+            endDate={endDate}
+            focusedInput={focus}
+            isOpen={true}
+            onFocusChange={onFocusChange}
+            onDateChange={onDateChange}
+            onClickApply={() =>
+              props.onApplyCustom({ start: startDate, end: endDate })
+            }
+            onClickClose={toggleModal}
+            onClickCloseMobile={toggleModal}
+            // onReset={onReset}
+          >
+            {isSmallScreen && (
+              <MobileFilterContainer>
+                <MobileFilterHeader {...props} />
+              </MobileFilterContainer>
+            )}
+          </DatePickerModal>
+        )}
+      </>
     </Container>
   );
 };

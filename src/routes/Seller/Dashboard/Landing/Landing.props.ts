@@ -13,16 +13,59 @@ export type onApply = {
   end: moment.Moment;
 };
 
+export type SalesData = {
+  graph: { date: string; paid: number; pending: number }[];
+  total: {
+    paid: number;
+    pending: number;
+  };
+  previousMonthTotal: {
+    paid: number;
+    pending: number;
+  };
+};
+
+export type MonthlyGraph = {
+  graphData: {
+    date: string[];
+    increase: number[];
+  };
+  startDate: string;
+  percentage: string;
+  total: number;
+}[];
+
+export type TopCategoriesData = {
+  topCategories: {
+    id: string;
+    name: string;
+    total: number;
+  }[];
+  previousTopCategories: {
+    id: string;
+    name: string;
+    total: number;
+  }[];
+};
+
+export type TopCategoriesPercentageData = {
+  id: string;
+  name: string;
+  total: number;
+  percentageChange: string;
+}[];
+
 export interface DashboardLandingGeneratedProps {
   isCalendarModalOpen: boolean;
   toggleModal: () => void;
   isLoading: boolean;
-  data: {
-    categories: any[];
-    months: any[];
-    paid: string | number;
-    pending: string | number;
-  };
+  // data: {
+  //   categories: any[];
+  //   months: any[];
+  //   paid: string | number;
+  //   pending: string | number;
+  //   monthsPending: any[];
+  // };
   toPaidGraph: Record<string, unknown>;
   toCategories: Record<string, unknown>;
   toCategoryDetails: (id: string, title: string) => Record<string, unknown>;
@@ -37,4 +80,6 @@ export interface DashboardLandingGeneratedProps {
   currentNotificationType: string;
   onClickMarketNotification: () => void;
   userPending: boolean;
+  salesData: SalesData;
+  topCategoriesData: TopCategoriesData;
 }
