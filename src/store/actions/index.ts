@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as getSellerDashboardTopCategoriesActions } from './getSellerDashboardTopCategories';
+export { default as getSellerDashboardSalesActions } from './getSellerDashboardSales';
 export { default as socketActions } from './socket';
 export { default as authActions } from './auth';
 export { default as loginActions } from './login';

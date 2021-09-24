@@ -1,5 +1,13 @@
+import { P } from 'components/base/Typography/Typography.style';
 import moment from 'moment';
-import { isEmpty } from 'ramda';
+import groupBy from 'ramda/es/groupBy';
+import isEmpty from 'ramda/es/isEmpty';
+
+import {
+  MonthlyGraph,
+  TopCategoriesData,
+  TopCategoriesPercentageData,
+} from './Landing.props';
 
 export const getGraphData = (data: any, from: string) => {
   const dates = data.graphData.date;
@@ -59,4 +67,90 @@ export const getGraphData = (data: any, from: string) => {
     dates: [firstDay, lastDay],
     values: [0, 0],
   };
+};
+
+const groupByMonth: any = groupBy((data: { date: string }) =>
+  moment(data.date).format('YYYY-MM')
+);
+
+const calculatePercentChangeInPrice = (initial: number, last: number) => {
+  if (initial === 0 && last > 0) {
+    return '100.00';
+  }
+
+  if (initial === 0 && last === 0) {
+    return '0.00';
+  }
+
+  return (((last - initial) / initial) * 100).toFixed(2);
+};
+
+export const salesDataToMonthlyGraph = (
+  data: { date: string; paid: number; pending: number }[],
+  previousMonthTotal: { paid: number; pending: number }
+): MonthlyGraph => {
+  const previousDateData = data.filter((a) => moment(a.date) < moment());
+  const groupedByMonth = groupByMonth(previousDateData);
+  const monthlyData = Object.keys(groupedByMonth).reduce((accumA: any, key) => {
+    return [
+      ...accumA,
+      {
+        graphData: groupedByMonth[key].reduce(
+          (accumB: any, current: { paid: number; date: string }) => {
+            return {
+              date: [...accumB.date, current.date],
+              increase: [...accumB.increase, current.paid],
+            };
+          },
+          {
+            date: [],
+            increase: [],
+          }
+        ),
+        startDate: moment(key + '-01', 'YYYY-MM-DD')
+          .startOf('day')
+          .toISOString(),
+        percentage: '0',
+        total: groupedByMonth[key].reduce(
+          (accumB: number, current: { paid: number }) => accumB + current.paid,
+          0
+        ),
+      },
+    ];
+  }, []);
+
+  const monthlyDataWithPercentage = monthlyData.map(
+    (current: any, index: number) => ({
+      ...current,
+      percentage:
+        index === 0
+          ? calculatePercentChangeInPrice(
+              previousMonthTotal.paid,
+              current.total
+            )
+          : calculatePercentChangeInPrice(
+              monthlyData[index - 1].total,
+              current.total
+            ),
+    })
+  );
+
+  return monthlyDataWithPercentage;
+};
+
+export const includeTopCategoriesPercentChange = (
+  data: TopCategoriesData
+): TopCategoriesPercentageData => {
+  return data.topCategories.map((a) => {
+    const previousData = data.previousTopCategories.find(
+      (b) => b.id === a.id
+    ) || { total: 0 };
+
+    const previousTotal = previousData.total;
+
+    return {
+      ...a,
+      percentageChange: calculatePercentChangeInPrice(previousTotal, a.total),
+    };
+  });
 };

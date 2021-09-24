@@ -60,6 +60,8 @@ import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
+import getSellerDashboardSales from './getSellerDashboardSales';
+import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
@@ -108,6 +110,8 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        getSellerDashboardTopCategories,
+        getSellerDashboardSales,
         socket,
         addAddress,
         addCardAndPay,

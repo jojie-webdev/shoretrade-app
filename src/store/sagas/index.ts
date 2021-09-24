@@ -1,6 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
+import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -54,6 +55,7 @@ import getNotificationsSettings from './getNotificationsSettings';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
+import getSellerDashboardSales from './getSellerDashboardSales';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
@@ -76,6 +78,7 @@ import resetPassword from './resetPassword';
 import router from './router';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import socketChannel from './socketChannel';
@@ -94,6 +97,8 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getSellerDashboardTopCategories,
+  getSellerDashboardSales,
   addAddress,
   addCardAndPay,
   addCardToken,
@@ -184,6 +189,7 @@ const sagas = [
   getNotifications,
   getNotificationsSettings,
   socketChannel,
+  sellerDashboardDate,
 ];
 
 export default function* root() {

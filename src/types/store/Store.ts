@@ -187,6 +187,14 @@ import {
 import { GetPaymentModeMeta, GetPaymentModePayload } from './GetPaymentMode';
 import { GetSellerByIdMeta, GetSellerByIdPayload } from './GetSellerByIdState';
 import {
+  GetSellerDashboardSalesMeta,
+  GetSellerDashboardSalesPayload,
+} from './GetSellerDashboardSalesState';
+import {
+  GetSellerDashboardTopCategoriesMeta,
+  GetSellerDashboardTopCategoriesPayload,
+} from './GetSellerDashboardTopCategoriesState';
+import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
 } from './GetSellerOrdersState';
@@ -262,6 +270,14 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getSellerDashboardTopCategories: AsyncState<
+    GetSellerDashboardTopCategoriesMeta,
+    GetSellerDashboardTopCategoriesPayload
+  >;
+  getSellerDashboardSales: AsyncState<
+    GetSellerDashboardSalesMeta,
+    GetSellerDashboardSalesPayload
+  >;
   socket: SocketState;
   router: RouterState<History.UnknownFacade>;
   auth: AuthState;
