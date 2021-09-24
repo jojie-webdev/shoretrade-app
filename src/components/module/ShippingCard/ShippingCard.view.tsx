@@ -5,8 +5,8 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useTheme } from 'utils/Theme';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
 import { ShippingCardProps } from './ShippingCard.props';
 import { Container, Rectangle, Spacer } from './ShippingCard.style';
@@ -37,9 +37,11 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
           <Row align="center" nogutter>
             <Col>
               <div className="shipping-option-left">
-                <div className="thumbnail-container">
-                  <img src={parseImageUrl(o.imageUrl)} />
-                </div>
+                {o.imageUrl && (
+                  <div className="thumbnail-container">
+                    <img src={parseImageUrl(o.imageUrl)} />
+                  </div>
+                )}
                 <div>
                   <Typography
                     variant={isMobile ? 'caption' : 'body'}

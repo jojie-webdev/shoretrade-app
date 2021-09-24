@@ -16,7 +16,9 @@ export type GetBuyerOrdersResponseItem = {
   buyerEmployeeLastName: string;
   buyerId: string;
   deliveryDate: string | null;
-  deliveryInstruction: string | null;
+  deliveryInstruction: {
+    locationName: string
+  };
   deliveryMethod: string; // ROAD
   deliveryOption: string; // DOOR
   fromAddress: {

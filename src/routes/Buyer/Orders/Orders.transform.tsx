@@ -7,19 +7,19 @@ import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
+import {
+  shipmentModeToString,
+  deliveryOptionToServiceNameString
+} from 'utils/String/toShipmentDateString'
 
 import { DateType, OrderItem } from './Orders.props';
 
 export const getShipmentOptionString = (
   deliveryMethod: string,
-  deliveryOption: string
+  deliveryOption: string,
+  locationName: string
 ) => {
-  if (deliveryOption === 'COLLECT') {
-    return `Pick Up at ${collectAddressShort}`;
-  }
-  return `${deliveryMethod === 'AIR' ? 'Air freight' : 'Road freight'} ${
-    deliveryOption !== 'DOOR' ? 'pickup at airport' : 'delivery to door'
-  }`;
+  return `${shipmentModeToString(deliveryMethod)} ${deliveryOptionToServiceNameString(deliveryOption, locationName)}`
 };
 
 const getDeliveredDate = (
@@ -70,7 +70,8 @@ export const transformOrder = (
       })),
       shippingOption: getShipmentOptionString(
         orderItem.deliveryMethod,
-        orderItem.deliveryOption
+        orderItem.deliveryOption,
+        orderItem?.deliveryInstruction?.locationName
       ),
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
       shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
