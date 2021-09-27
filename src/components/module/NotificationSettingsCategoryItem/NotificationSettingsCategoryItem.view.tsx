@@ -72,6 +72,9 @@ const NotificationSettingsCategoryItem = (
       case 'orders':
         icon = <Orders {...defaulAvatarProps} />;
         break;
+      case 'sold':
+        icon = <CheckCircle {...defaulAvatarProps} />;
+        break;
       case 'rating_favourite':
         icon = <Star {...defaulAvatarProps} />;
         break;

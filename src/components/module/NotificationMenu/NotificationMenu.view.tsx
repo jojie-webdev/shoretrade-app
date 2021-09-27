@@ -12,8 +12,6 @@ import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
 import { useTheme } from 'utils/Theme';
 
-// import { useTheme } from 'utils/Theme';
-import EmptyStateView from '../EmptyState';
 import NotificationItem from '../NotificationItem';
 import { NotificationMenuProps } from './NotificationMenu.props';
 import {
@@ -31,6 +29,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     setIsComponentVisible,
   } = useComponentVisible(false);
   const isSeller = theme.appType === 'seller';
+  const defaultColor = isSeller ? 'shade2' : 'shade6';
   const notifsRoute =
     theme.appType === 'buyer'
       ? BUYER_ROUTES.NOTIFICATIONS
@@ -127,8 +126,12 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                       />
                     </DropdownItemContainer>
                   ))}
-                {notifsData.length < 1 && (
-                  <Typography variant="title5" align="center" color="shade5">
+                {unreadTotal < 1 && (
+                  <Typography
+                    variant="title6"
+                    align="center"
+                    color={defaultColor}
+                  >
                     No Unread Notifications
                   </Typography>
                 )}

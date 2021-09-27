@@ -16,14 +16,7 @@ import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
 import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
-import { isMobile } from 'react-device-detect';
 import { Col, Row } from 'react-grid-system';
-import {
-  SpecificNotificationSettingItem,
-  SettingsToggleItem,
-  NotificationSettingItem,
-  CustomSettingKey,
-} from 'types/store/GetNotificationSettingsState';
 import { GLOBAL_DEACTIVATION_MESSAGE } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';
 
@@ -32,7 +25,6 @@ import {
   Container,
   GlobalNotificationsContainer,
   CategoryItemContainer,
-  FooterContainer,
 } from './NotificationsSettings.style';
 
 const NotificationsSettingsView = ({
@@ -81,6 +73,14 @@ const NotificationsSettingsView = ({
       handleGlobalToggle(key);
     }
   };
+
+  if (loading) {
+    return (
+      <Container>
+        <Loading />;
+      </Container>
+    );
+  }
 
   return (
     <Container>
