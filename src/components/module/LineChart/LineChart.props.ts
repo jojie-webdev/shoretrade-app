@@ -9,4 +9,5 @@ export interface LineChartProps {
   stroke?: keyof Theme['brand'];
   strokeWidth?: number;
   isEarning?: boolean;
+  dotSize?: number;
 }

@@ -14,7 +14,7 @@ import { CashFlowGeneratedProps } from './CashFlow.props';
 import { Container, HeaderRow } from './CashFlow.style';
 
 const CashFlowView = (props: CashFlowGeneratedProps) => {
-  const { breadCrumbSections } = props;
+  const { breadCrumbSections, paidCashFlow, pendingCashFlow } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -23,17 +23,6 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
         {isSmallScreen ? (
           <>
             <InnerRouteHeader title={props.innerRouteTitle} fullRow={false} />
-            <Typography
-              variant="overline"
-              color="shade6"
-              className={
-                props.innerRouteTitle === 'Cash Flow Details'
-                  ? 'text-long'
-                  : 'text'
-              }
-            >
-              {props.name}
-            </Typography>
           </>
         ) : (
           <div className="padding-bread">
@@ -42,23 +31,33 @@ const CashFlowView = (props: CashFlowGeneratedProps) => {
         )}
       </HeaderRow>
 
-      {props.isLoading ? (
-        <Loading />
-      ) : (
-        <Row style={{ marginBottom: '56px' }}>
-          <Col>
-            <LineChart
-              title="Paid"
-              isEarning={props.isEarning}
-              data={props.data}
-              yAxisLabelFormat={(v) =>
-                `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
-              }
-              cHeight={263}
-            />
-          </Col>
-        </Row>
-      )}
+      <Row style={{ marginBottom: '56px' }}>
+        <Col>
+          <LineChart
+            title="Paid"
+            data={paidCashFlow}
+            yAxisLabelFormat={(v) =>
+              `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
+            }
+            cHeight={263}
+            stroke="success"
+            strokeWidth={1.5}
+            dotSize={2}
+          />
+
+          <LineChart
+            title="Pending"
+            data={pendingCashFlow}
+            yAxisLabelFormat={(v) =>
+              `${v === 0 ? '' : `$${numeral(v).format('0.0a')}`}`
+            }
+            cHeight={263}
+            stroke="warning"
+            strokeWidth={1.5}
+            dotSize={2}
+          />
+        </Col>
+      </Row>
     </Container>
   );
 };

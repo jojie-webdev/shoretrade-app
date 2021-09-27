@@ -20,14 +20,6 @@ import { DashboardLandingGeneratedProps, onApply } from './Landing.props';
 // import { salesDataToMonthlyGraph } from './Landing.transforms';
 import DashboardView from './Landing.view';
 
-// const DEFAULT_DATA = {
-//   categories: [],
-//   months: [],
-//   paid: '',
-//   pending: '',
-//   monthsPending: [],
-// };
-
 const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 //TODO: refactor other dashboard data since dateRange is on redux
@@ -41,8 +33,6 @@ const Dashboard = (): JSX.Element => {
     !(user.companies || []).some((a) =>
       a.addresses.some((b) => b.approved === 'APPROVED')
     );
-
-  const token = useSelector((state: Store) => state.auth.token) || '';
 
   const dateRange =
     useSelector((state: Store) => state.sellerDashboardDate) ||
@@ -74,7 +64,6 @@ const Dashboard = (): JSX.Element => {
   const isLoading =
     useSelector((state: Store) => state.getSellerDashboardSales.pending) ||
     false;
-  // const [data, setData] = useState(DEFAULT_DATA);
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
@@ -108,28 +97,6 @@ const Dashboard = (): JSX.Element => {
 
     toggleModal();
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (token) {
-  //       setLoading(true);
-  //       try {
-  //         const resp = await getSellerDashboard(
-  //           {
-  //             dateFrom: dateRange.start.dateString.replace(/-/g, ''),
-  //             dateTo: dateRange.end.dateString.replace(/-/g, ''),
-  //           },
-  //           token
-  //         );
-  //         setData(resp.data?.data || DEFAULT_DATA);
-  //       } catch (e) {
-  //         setData(DEFAULT_DATA);
-  //       }
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [dateRange, token]);
 
   const setDateRange = (dateRange: any) => {
     dispatch(

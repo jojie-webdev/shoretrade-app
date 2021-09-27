@@ -132,6 +132,7 @@ const AddProduct = (): JSX.Element => {
     return () => {
       dispatch(searchProductTypeActions.clear());
       dispatch(editableListingActions.clear());
+      dispatch(getMarketInterestsActions.clear());
     };
   }, []);
 

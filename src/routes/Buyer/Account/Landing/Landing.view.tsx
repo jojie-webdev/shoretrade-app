@@ -1,3 +1,5 @@
+import { AnyCnameRecord } from 'dns';
+
 import React, { useRef, useState } from 'react';
 
 import Button from 'components/base/Button';
@@ -10,6 +12,7 @@ import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
+import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import theme from 'utils/Theme';
@@ -30,6 +33,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     loadingUser,
     updateImage,
     updatingImage,
+    permission,
   } = props;
 
   const INTERACTIONS = [
@@ -47,7 +51,9 @@ const LandingView = (props: LandingGeneratedProps) => {
       value: "Products I'm Buying",
       path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
     },
-    { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS },
+    permission
+      ? { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS }
+      : {},
     { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     {
       value: 'Notifications Settings',
@@ -115,15 +121,20 @@ const LandingView = (props: LandingGeneratedProps) => {
         )}
       </Header>
 
-      {INTERACTIONS.map((link) => (
-        <NavInteraction
-          key={link.path}
-          value={link.value}
-          onClick={() => {
-            history.push(link.path);
-          }}
-        />
-      ))}
+      {INTERACTIONS.map((link: any) => {
+        if (isEmpty(link)) {
+          return <></>;
+        }
+        return (
+          <NavInteraction
+            key={link.path}
+            value={link.value}
+            onClick={() => {
+              history.push(link.path);
+            }}
+          />
+        );
+      })}
 
       {isMobile && (
         <Button

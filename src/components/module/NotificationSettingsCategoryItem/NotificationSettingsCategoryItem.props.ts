@@ -15,5 +15,6 @@ export interface NotificationSettingsCategoryItemProps {
   whatsapp: CategoryStatus;
   inapp: CategoryStatus;
   type: NotificationType | string;
+  loading?: boolean;
   onChange: (val: boolean, option: CustomSettingKey) => void;
 }

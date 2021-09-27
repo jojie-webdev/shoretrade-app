@@ -12,17 +12,11 @@ import {
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle';
+import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
-import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
-import { isMobile } from 'react-device-detect';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Col, Row } from 'react-grid-system';
-import {
-  SpecificNotificationSettingItem,
-  SettingsToggleItem,
-  NotificationSettingItem,
-  CustomSettingKey,
-} from 'types/store/GetNotificationSettingsState';
 import { GLOBAL_DEACTIVATION_MESSAGE } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';
 
@@ -31,9 +25,7 @@ import {
   Container,
   GlobalNotificationsContainer,
   CategoryItemContainer,
-  FooterContainer,
 } from './NotificationsSettings.style';
-import IconTooltip from 'components/module/IconTooltip';
 
 const NotificationsSettingsView = ({
   globalSettings,
@@ -82,6 +74,14 @@ const NotificationsSettingsView = ({
     }
   };
 
+  if (loading) {
+    return (
+      <Container>
+        <Loading />;
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Row nogutter justify="between" align="center">
@@ -89,7 +89,7 @@ const NotificationsSettingsView = ({
           <div style={{ marginRight: 20, marginBottom: 40 }}>
             <Breadcrumbs
               sections={[
-                { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+                { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
                 { label: 'Notifications' },
               ]}
             />

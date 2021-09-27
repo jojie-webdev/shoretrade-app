@@ -13,15 +13,27 @@ import { Link } from 'react-router-dom';
 import numberToShortenAmount from 'utils/String/numberToShortenAmount';
 import { useTheme } from 'utils/Theme';
 
+import { includeTopCategoriesPercentChange } from '../Landing/Landing.transforms';
 import { CategoriesGeneratedProps } from './Categories.props';
 import { Container, HeaderRow, CategoryContainer } from './Categories.style';
 
 const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
 
-const CategoriesView = ({ data, ...props }: CategoriesGeneratedProps) => {
+const CategoriesView = ({
+  topCategoriesData,
+  ...props
+}: CategoriesGeneratedProps) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const topCategoriesPercentage = includeTopCategoriesPercentChange(
+    topCategoriesData
+  );
+
+  const total = topCategoriesPercentage.reduce((accum: number, current) => {
+    return accum + current.total;
+  }, 0);
 
   return (
     <Container>
@@ -44,10 +56,10 @@ const CategoriesView = ({ data, ...props }: CategoriesGeneratedProps) => {
         <Loading />
       ) : (
         <Row>
-          {data.map((d, i) => (
+          {topCategoriesPercentage.map((d, i) => (
             <Col md={12} key={i}>
               <Link to={props.toCategoryDetails(d.id, d.name)}>
-                <CategoryContainer progress={d.percentageTotal}>
+                <CategoryContainer progress={(d.total / total) * 100}>
                   <div className="top">
                     <div className="text-container">
                       <Typography

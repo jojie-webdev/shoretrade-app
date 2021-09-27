@@ -9,7 +9,7 @@ import {
   serviceNameToString,
   shipmentModeToDeliveryMethod,
   shipmentModeToString,
-} from 'routes/Buyer/Checkout/Checkout.transform';
+} from 'utils/String/toShipmentDateString';
 import { OrderShipping } from 'types/store/AddCardAndPayState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -109,6 +109,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
           priceId: selectedPriceData?.priceId || '',
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
+          locationName: selectedPriceData?.locationName || '',
         },
       };
     },
