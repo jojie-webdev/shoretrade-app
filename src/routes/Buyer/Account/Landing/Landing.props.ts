@@ -12,4 +12,5 @@ export interface LandingGeneratedProps {
   updateImage: (image: File) => void;
   updatingImage: boolean;
   logout: () => void;
+  permission: boolean;
 }

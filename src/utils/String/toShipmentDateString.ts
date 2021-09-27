@@ -77,5 +77,3 @@ export const deliveryOptionToServiceNameString = (deliveryOption: string, locati
       return ''
   }
 }
-
-export default {}

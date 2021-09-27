@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import { PERMISSIONS } from 'consts/permissions';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   authActions,
@@ -10,6 +11,7 @@ import {
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import { isPermitted } from 'utils/isPermitted';
 
 import { LandingGeneratedProps } from './Landing.props';
 import LandingView from './Landing.view';
@@ -25,6 +27,12 @@ const Landing = (): JSX.Element => {
     (state: Store) => state.getUser.pending || false
   );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
   const companies = user?.companies || [];
   const companyRelationship = currentCompany?.relationship || '';
   const profilePicture = user?.profileImage || '';
@@ -49,6 +57,10 @@ const Landing = (): JSX.Element => {
     dispatch(authActions.clear());
   };
 
+  const permission =
+    isPendingAccount &&
+    isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
+
   useEffect(() => {
     if (!loadingUser) {
       const c = companies || [];
@@ -68,6 +80,7 @@ const Landing = (): JSX.Element => {
     updatingImage,
     updateImage,
     logout,
+    permission,
   };
   return <LandingView {...generatedProps} />;
 };
