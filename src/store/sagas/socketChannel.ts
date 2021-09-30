@@ -81,11 +81,12 @@ function* socketWatcher(): any {
   const connected: string =
     (yield select((state: Store) => state.socket.connected)) || false;
 
+  const token: string =
+    (yield select((state: Store) => state.auth.token)) || '';
+
   const getUserPayload: GetUserPayload | null = yield select(
     (state: Store) => state.getUser.data
   );
-
-  const token = getUserPayload?.data.token || '';
 
   const userId = getUserPayload?.data.user.id || '';
   const companies: UserCompany[] = getUserPayload?.data.user.companies || [];
