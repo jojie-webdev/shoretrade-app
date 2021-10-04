@@ -127,7 +127,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
             {showAlwaysAvailable && (
               <Badge className="badge" badgeColor={theme.brand.success}>
                 <Typography color="noshade" variant="overline">
-                  Always Available
+                  Next Day Shipment
                 </Typography>
               </Badge>
             )}
@@ -203,7 +203,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           {showAlwaysAvailable && (
             <Badge className="badge" badgeColor={theme.brand.success}>
               <Typography color="noshade" variant="overline">
-                Always Available
+                Next Day Shipment
               </Typography>
             </Badge>
           )}
