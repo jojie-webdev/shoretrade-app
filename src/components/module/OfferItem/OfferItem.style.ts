@@ -1,7 +1,9 @@
-import styled from './../../../../../utils/styled';
-import theme from './../../../../../utils/Theme';
-import { BREAKPOINTS } from './../../../../../consts/breakpoints';
+import styled from 'utils/styled';
+import theme, { pxToRem } from '../../../utils/Theme';
+import { BREAKPOINTS } from './../../..//consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import Interactions from 'components/base/Interactions';
+import Typography from 'components/base/Typography';
 
 export const OfferContainer = styled.div` 
     background: #FFFFFF;
@@ -148,3 +150,62 @@ export const MajorInfoNonMobileContainer = styled.div`
     height: 100%;
     padding-bottom: 10px;
 `
+
+export const MajorInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const MarketRequestItemMobileContainer = styled.div`
+  .thumbnail-container {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin-right: 8px;
+    }
+  }
+`;
+
+export const MarketRequestItemInteraction = styled(Interactions)`
+  justify-content: initial;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  padding: 8px;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 12px;
+  }
+
+  padding-right: 12px;
+  align-items: center;
+
+  .left-content {
+    flex-grow: 2;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    height: 140px;
+    align-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
+export const StatusBadgeText = styled(Typography)`
+  font-size: ${pxToRem(9)};
+  text-align: center;
+`;
+
+export const AvatarPlaceholder = styled.div<{ borderRadius?: string, width?: string, height?: string }>`
+  border-radius: 5px;
+  width: ${({ width }) => width || '56px'};
+  height: ${({ height }) => height || '56px'};
+  background-color: ${({ theme }) => theme.grey.shade2};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${({ borderRadius }) => borderRadius};
+`;

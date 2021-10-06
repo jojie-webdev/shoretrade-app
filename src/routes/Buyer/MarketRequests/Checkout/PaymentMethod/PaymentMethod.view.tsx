@@ -21,7 +21,7 @@ import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
 import LoadingOverlay from 'components/module/LoadingOverlay';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { BUYER_ROUTES } from 'consts/routes';
+import { BUYER_MARKET_REQUEST_ROUTES, BUYER_ROUTES } from 'consts/routes';
 import { connect, FormikProps } from 'formik';
 import { Col, Hidden, Row } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
@@ -214,7 +214,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
     {
       label: 'Request Details',
       onClick: () => {
-        history.push(BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER_LIST(id));
+        history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
       },
     },
     {

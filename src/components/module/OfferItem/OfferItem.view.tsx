@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 import Badge from 'components/base/Badge/Badge.view';
+import Button from 'components/base/Button';
 import {
   Star,
   StarFilled,
   TrashCan,
   PlaceholderProfile,
   Crab,
+  ChevronRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
@@ -17,23 +19,19 @@ import moment from 'moment';
 import { Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 
-import theme from '../../../../../utils/Theme';
+import theme from '../../../utils/Theme';
+import { OfferItemProps } from './OfferItem.props';
 import {
+  StatusBadgeText,
   MajorInfo,
   MarketRequestItemInteraction,
   MarketRequestItemMobileContainer,
-} from '../../Landing/Landing.style';
-import { StatusBadgeText } from '../RequestDetails.style';
-import Button from './../../../../../components/base/Button/Button.view';
-import ChevronRight from './../../../../../components/base/SVG/ChevronRight';
-import { AvatarPlaceholder } from './../../../../../components/module/ProductSellerCard/ProductSellerCard.style';
-import { sizeToString } from './../../../../../utils/Listing/sizeToString';
-import { OfferProps } from './Offer.props';
-import {
+  AvatarPlaceholder,
   OfferContainer,
   MarketRequestItemInteractionContainer,
   TagsContainer,
@@ -42,25 +40,14 @@ import {
   MajorInfoContainer,
   OfferRowContainer,
   MajorInfoNonMobileContainer,
-} from './Offer.style';
+} from './OfferItem.style';
 
-const Offer = (props: OfferProps) => {
-  const { sellerOffer, onOfferDelete } = props;
-
+const Offer = (props: OfferItemProps) => {
+  const { sellerOffer, onOfferDelete, onClickItem } = props;
+  console.log(sellerOffer);
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');
-
-  const onClickItem = (offer: any) => {
-    if (sellerOffer.offers.length > 0) {
-      history.push(
-        BUYER_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-          sellerOffer.marketRequest.id,
-          offer.id
-        )
-      );
-    }
-  };
 
   const getCorrectedSize = (offer: any) => {
     let convertedSize = sizeToString(
@@ -131,11 +118,11 @@ const Offer = (props: OfferProps) => {
     <StarsContainer>
       {[...Array(5).keys()].map((r, index) =>
         Number(sellerOffer?.company?.rating || 0) > r ? (
-          <div id={index.toString()} style={{ marginRight: '3px' }}>
+          <div key={index} id={index.toString()} style={{ marginRight: '3px' }}>
             <StarFilled fill={theme.brand.alert} width={12} height={12} />
           </div>
         ) : (
-          <div id={index.toString()} style={{ marginRight: '3px' }}>
+          <div key={index} id={index.toString()} style={{ marginRight: '3px' }}>
             <Star fill={theme.brand.alert} width={12} height={12} />
           </div>
         )
@@ -179,9 +166,8 @@ const Offer = (props: OfferProps) => {
   const renderMobile = () =>
     sellerOffer?.offers?.length > 0 ? (
       sellerOffer?.offers?.map((offer) => (
-        <MarketRequestItemInteractionContainer>
+        <MarketRequestItemInteractionContainer key={offer.id}>
           <MarketRequestItemInteraction
-            key={offer.id}
             type={'next'}
             onClick={() => onClickItem(offer)}
             leftComponent={renderOffersForMobile(offer)}

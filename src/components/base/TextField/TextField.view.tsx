@@ -123,6 +123,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
       placeholder={` ${placeholder}`}
       readOnly={readOnly}
       onKeyUp={onKeyUp}
+      onChange={() => null}
       onKeyDown={(e) => handleFieldChange(e)}
       onClick={() => handleNegoFieldClick()}
       disabled={disabled}

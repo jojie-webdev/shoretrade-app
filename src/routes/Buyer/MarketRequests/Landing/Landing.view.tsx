@@ -12,6 +12,7 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import { BUYER_ROUTES } from 'consts';
+import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -398,7 +399,9 @@ const MarketRequestsLandingView = (
         <Col xs="content">
           <Visible sm md lg xl xxl>
             <Button
-              onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+              onClick={() =>
+                history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+              }
               text="CREATE REQUEST"
               variant={props.isPendingAccount ? 'disabled' : 'primary'}
               size="md"
@@ -411,7 +414,9 @@ const MarketRequestsLandingView = (
       {renderNonMobile()}
       <MobileFooter>
         <Button
-          onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+          onClick={() =>
+            history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+          }
           text="CREATE REQUEST"
           variant={props.isPendingAccount ? 'disabled' : 'primary'}
           takeFullWidth
@@ -500,7 +505,7 @@ const hasOfferWithPaymentRequired = (offers: Offer[]) => {
 };
 
 const hasOfferThatIsNew = (offers: Offer[]) => {
-  if (!offers) {
+  if (!offers || offers.length < 1) {
     return;
   }
 

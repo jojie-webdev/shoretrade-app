@@ -3,8 +3,13 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import Alert from 'components/base/Alert';
 import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge/Badge.view';
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import ConfirmationModal from 'components/module/ConfirmationModal';
+import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
+import MarketRequestSummary from 'components/module/MarketRequestSummary';
+import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
@@ -15,15 +20,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
+import { createdAtToExpiry } from 'utils/MarketRequest';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import Check from '../../../../../components/base/SVG/Check';
-import Refresh from '../../../../../components/base/SVG/Refresh';
-import { Store } from '../../../../../types/store/Store';
-import { NoActionsYetBadgesContainer } from '../Offer/Offer.style';
-import { StatusBadgeText } from '../RequestDetails.style';
+import Check from '../../../../components/base/SVG/Check';
+import Refresh from '../../../../components/base/SVG/Refresh';
+import { Store } from '../../../../types/store/Store';
+import { StatusBadgeText } from '../RequestDetails/RequestDetails.style';
+import { OfferDetailsProps } from './OfferDetails.props';
 import {
   FullOfferDetailsContainer,
   CompanyInfoCol,
@@ -39,9 +45,13 @@ import {
   StyledNumberRating,
   CTAContainer,
   StyledNegotiateButtonContainer,
-} from './FullOfferDetails.style';
+  NoActionsYetBadgesContainer,
+  Container,
+  HeaderContainer,
+  AlertsContainer,
+} from './OfferDetails.style';
 
-const FullOfferDetails = (props: any) => {
+const OfferDetailsView = (props: OfferDetailsProps) => {
   const {
     handleStartNegotiate,
     handleAcceptOffer,
@@ -50,46 +60,24 @@ const FullOfferDetails = (props: any) => {
     counterOffer,
     newOffer,
     selectedOffer,
+    seller,
+    nego,
+    closeOnAccept,
+    setCloseOnAccept,
+    negotiating,
+    lastNegotiationsOffers,
+    setNegotiating,
+    sortedNegotiations,
+    submitNegotiation,
+    breadCrumb,
+    marketRequest,
+    countAcceptedWeight,
+    onClickDelete,
+    showDelete,
+    setShowDelete,
   } = props;
 
-  const location = useLocation();
   const history = useHistory();
-  const splits = location.pathname.split('/');
-  const offerId = splits[splits.length - 1];
-
-  const activeOffers = useSelector((store: Store) => store.getActiveOffers);
-  const buyerRequests = useSelector(
-    (store: Store) => store.getAllMarketRequest
-  );
-
-  const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
-    (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
-  );
-
-  const [offer, setOffer] = useState<Offer>({} as Offer);
-  const [seller, setSeller] = useState<any>({});
-  const [nego, setNego] = useState<any>({});
-
-  useEffect(() => {
-    activeOffers.data?.data.marketOffers.forEach((marketOffer) =>
-      marketOffer.offers.forEach((offer) => {
-        if (offer?.id === offerId) {
-          setOffer(offer);
-          setNego(offer?.negotiations ? offer?.negotiations[0] : {});
-          return;
-        }
-      })
-    );
-
-    activeOffers.data?.data.marketOffers.forEach((marketOffer) => {
-      marketOffer.offers.forEach((offer) => {
-        if (offer?.id === offerId) {
-          setSeller(marketOffer.company);
-          return;
-        }
-      });
-    });
-  }, [offerId]);
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
@@ -103,9 +91,10 @@ const FullOfferDetails = (props: any) => {
         style={{ marginTop: '8px' }}
       >
         $
-        {((offer?.weight || 0) * (nego?.price || offer?.price || 0))?.toFixed(
-          2
-        )}
+        {(
+          (selectedOffer?.weight || 0) *
+          (nego?.price || selectedOffer?.price || 0)
+        )?.toFixed(2)}
       </Typography>
     </TotalPriceContainer>
   );
@@ -117,8 +106,8 @@ const FullOfferDetails = (props: any) => {
           {!thereIsNewOffer && counterOffer === '' && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                You have received an offer by the Seller. Either click accept or
-                negotiate to proceed.
+                You have received an selectedOffer by the Seller. Either click
+                accept or negotiate to proceed.
               </Typography>
             </div>
           )}
@@ -126,8 +115,8 @@ const FullOfferDetails = (props: any) => {
           {thereIsNewOffer && counterOffer === newOffer && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                You have received an offer by the Seller. Either click accept or
-                negotiate to proceed.
+                You have received an selectedOffer by the Seller. Either click
+                accept or negotiate to proceed.
               </Typography>
             </div>
           )}
@@ -135,59 +124,13 @@ const FullOfferDetails = (props: any) => {
           {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                The seller is reviewing your offer.
+                The seller is reviewing your selectedOffer.
               </Typography>
             </div>
           )}
         </>
       )}
     </div>
-  );
-
-  const renderTags = () => (
-    <TagsContainer>
-      {offer?.status === 'DECLINED' || offer?.status === 'ACCEPTED' ? (
-        <Badge
-          id="status-badge"
-          className="offers-badge"
-          badgeColor={
-            offer?.status === 'ACCEPTED' ? '#EAFFF9' : theme.brand.error
-          }
-        >
-          <StatusBadgeText color="success" weight="bold" variant="overline">
-            {offer?.status === 'DECLINED' ? 'LOST' : offer?.status}
-          </StatusBadgeText>
-        </Badge>
-      ) : (
-        <NoActionsYetBadgesContainer>
-          {(offer?.price || 0) < seller.averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.success}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Great Value
-              </StatusBadgeText>
-            </Badge>
-          )}
-          {(offer?.price || 0) > seller.averagePrice && (
-            <Badge className="offers-badge" badgeColor={theme.brand.error}>
-              <StatusBadgeText color="shade1" weight="bold" variant="overline">
-                Above Market
-              </StatusBadgeText>
-            </Badge>
-          )}
-          {offer?.negotiations && (
-            <Badge
-              className="offers-badge"
-              badgeColor="#FFF7F2"
-              padding="5px 8px"
-            >
-              <StatusBadgeText weight="bold" variant="overline" color="warning">
-                Negotiation
-              </StatusBadgeText>
-            </Badge>
-          )}
-        </NoActionsYetBadgesContainer>
-      )}
-    </TagsContainer>
   );
 
   const renderLabel = (label: string, style?: any) => (
@@ -204,23 +147,24 @@ const FullOfferDetails = (props: any) => {
     </DetailsValueContainer>
   );
 
-  const specsValue = offer?.specifications
+  const specsValue = selectedOffer?.specifications
     ?.map((spec: string) => spec?.toUpperCase())
     ?.join(', ');
 
   const sizeValue = sizeToString(
-    offer?.metric || '',
-    offer?.size?.from,
-    offer?.size?.to
+    selectedOffer?.metric || '',
+    selectedOffer?.size?.from,
+    selectedOffer?.size?.to
   ).toUpperCase();
 
-  const quantityValue = offer?.weight + ' ' + offer?.measurementUnit;
+  const quantityValue =
+    selectedOffer?.weight + ' ' + selectedOffer?.measurementUnit;
 
   const buildAlertProperties = () => {
-    const offerStatus = getOfferStatus(offer, 'buyer');
+    const offerStatus = getOfferStatus(selectedOffer, 'buyer');
 
     const contentTypo = (content: string): ReactNode => (
-      <Typography variant="body" color="shade6" weight="400">
+      <Typography component={'span'} variant="body" color="shade6" weight="400">
         {content}
       </Typography>
     );
@@ -235,7 +179,9 @@ const FullOfferDetails = (props: any) => {
       alertProps = {
         variant: 'infoAlert',
         header: 'In Negotiation',
-        content: contentTypo('Your offer is being reviewed by the Seller.'),
+        content: contentTypo(
+          'Your selectedOffer is being reviewed by the Seller.'
+        ),
       };
     }
     if (offerStatus === 'PAYMENT REQUIRED') {
@@ -243,7 +189,7 @@ const FullOfferDetails = (props: any) => {
         variant: 'warning',
         header: 'Payment Required',
         content: contentTypo(
-          'Please process the payment within the remaining time. This offer will automatically close if payment is not received.'
+          'Please process the payment within the remaining time. This selectedOffer will automatically close if payment is not received.'
         ),
       };
     }
@@ -252,7 +198,7 @@ const FullOfferDetails = (props: any) => {
         variant: 'error',
         header: 'Payment Missed',
         content: contentTypo(
-          'The offer has automatically closed due to missed payment.'
+          'The selectedOffer has automatically closed due to missed payment.'
         ),
       };
     }
@@ -261,16 +207,16 @@ const FullOfferDetails = (props: any) => {
         variant: 'success',
         header: 'Finalised',
         content: (
-          <div
+          <span
             onClick={() => {
               history.replace(BUYER_ROUTES.ORDERS);
             }}
             style={{ cursor: 'pointer' }}
           >
             {contentTypo(
-              `This offer is now Order [#0000-${offer.orderRefNumber}].`
+              `This offer is now Order [#0000-${selectedOffer.orderRefNumber}].`
             )}
-          </div>
+          </span>
         ),
       };
     }
@@ -287,26 +233,27 @@ const FullOfferDetails = (props: any) => {
     return alertProps;
   };
 
-  return (
-    <>
+  const renderLeftComponent = () => (
+    <Col sm={12} md={12} xl={8}>
       {buildAlertProperties().variant && (
-        <>
+        <AlertsContainer>
           <Row>
             <Col>
               <Alert {...buildAlertProperties()} fullWidth />
             </Col>
           </Row>
           <div style={{ marginBottom: '16px' }} />
-        </>
+        </AlertsContainer>
       )}
-
       <FullOfferDetailsContainer>
         <Row>
           <Col>
             {renderLabel('SPECIFICATION')}
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {offer?.specifications?.map((spec) => (
-                <div style={{ marginRight: 8 }}>{renderLabelValue(spec)}</div>
+              {selectedOffer?.specifications?.map((spec) => (
+                <div key={spec} style={{ marginRight: 8 }}>
+                  {renderLabelValue(spec)}
+                </div>
               ))}
             </div>
 
@@ -318,11 +265,11 @@ const FullOfferDetails = (props: any) => {
 
             {renderLabel('Delivery Date', { marginTop: '24px' })}
             {renderLabelValue(
-              moment(offer?.deliveryDate).format('MMMM DD, YYYY')
+              moment(selectedOffer?.deliveryDate).format('MMMM DD, YYYY')
             )}
 
             {renderLabel('Delivery Address', { marginTop: '24px' })}
-            {renderLabelValue(getShippingAddress(offer.shippingFrom))}
+            {renderLabelValue(getShippingAddress(selectedOffer.shippingFrom))}
           </Col>
           <CompanyInfoCol xl={3}>
             <div style={{ display: 'flex' }}>
@@ -347,9 +294,9 @@ const FullOfferDetails = (props: any) => {
               <StyledNumberRating variant="caption" color="shade7">
                 {seller?.rating || 0}
               </StyledNumberRating>
-              {[...Array(5).keys()].map((r) =>
+              {[...Array(5).keys()].map((r, i) =>
                 Number(seller?.rating || 0) > r ? (
-                  <div style={{ marginRight: '3px' }}>
+                  <div key={i} style={{ marginRight: '3px' }}>
                     <StarFilled
                       fill={theme.brand.alert}
                       width={13}
@@ -357,7 +304,7 @@ const FullOfferDetails = (props: any) => {
                     />
                   </div>
                 ) : (
-                  <div style={{ marginRight: '3px' }}>
+                  <div key={i} style={{ marginRight: '3px' }}>
                     <Star fill={theme.brand.alert} width={13} height={13} />
                   </div>
                 )
@@ -378,8 +325,8 @@ const FullOfferDetails = (props: any) => {
             <Col>{renderTotalPriceContainer()}</Col>
           </Row>
 
-          {offer?.status !== 'ACCEPTED' &&
-            getOfferStatus(offer, 'buyer') !== 'PAYMENT MISSED' && (
+          {selectedOffer?.status !== 'ACCEPTED' &&
+            getOfferStatus(selectedOffer, 'buyer') !== 'PAYMENT MISSED' && (
               <CTAContainer>
                 <StyledNegotiateButtonContainer>
                   <StyledNegotiateButton
@@ -402,6 +349,112 @@ const FullOfferDetails = (props: any) => {
             )}
         </Hidden>
       </FullOfferDetailsContainer>
+    </Col>
+  );
+
+  return (
+    <Container>
+      <ConfirmationModal
+        isOpen={showDelete}
+        title="Delete Market Request"
+        description="Are you sure you want to delete this market request?"
+        action={() => {
+          onClickDelete && onClickDelete();
+        }}
+        actionText="DELETE"
+        onClickClose={() => setShowDelete(false)}
+      />
+      <NegotiateBuyerModal
+        closeOnAccept={closeOnAccept}
+        setCloseOnAccept={setCloseOnAccept}
+        onSubmit={submitNegotiation}
+        originalOffer={selectedOffer?.price}
+        counterOffer={counterOffer}
+        newOffer={newOffer}
+        weight={{
+          unit: selectedOffer?.measurementUnit,
+          value: selectedOffer?.weight,
+        }}
+        isOpen={negotiating}
+        onClickClose={() => {
+          setNegotiating(false);
+        }}
+        sortedNegotiations={sortedNegotiations}
+        modalLastNegotiationsArray={lastNegotiationsOffers}
+      />
+      <Hidden xs sm>
+        <HeaderContainer>
+          <div>
+            <Breadcrumbs sections={breadCrumb} />
+          </div>
+        </HeaderContainer>
+      </Hidden>
+      <Row>
+        {' '}
+        <Col>
+          <Typography
+            color="shade9"
+            font-weight="700"
+            style={{ fontFamily: 'Media Sans' }}
+            variant="title5"
+          >
+            {marketRequest.type}
+          </Typography>
+        </Col>
+      </Row>
+      <Row gutterWidth={30}>
+        <Hidden xs sm md lg>
+          {renderLeftComponent()}
+          <Col sm={12} md={12} xl={4}>
+            <MarketRequestDetailPill
+              countAcceptedWeight={countAcceptedWeight}
+              imgUrl={marketRequest?.image || ''}
+              measurementUnit={marketRequest?.measurementUnit || ''}
+              onClickDelete={() => setShowDelete(true)}
+              weight={marketRequest?.weight}
+              expiry={createdAtToExpiry(marketRequest?.createdAt)}
+            />
+            <MarketRequestSummary
+              measurementUnit={marketRequest?.measurementUnit || ''}
+              metric={marketRequest?.metric || ''}
+              sizeOptions={marketRequest?.sizeOptions || []}
+              sizeUngraded={marketRequest?.sizeUngraded || false}
+              sizeFrom={marketRequest?.size.from}
+              sizeTo={marketRequest?.size.to}
+              specs={marketRequest?.specs}
+              weight={marketRequest?.weight}
+            />
+          </Col>
+        </Hidden>
+        <Visible xs sm md lg>
+          <Col sm={12} md={12} xl={4}>
+            <MarketRequestDetailPill
+              countAcceptedWeight={countAcceptedWeight}
+              imgUrl={marketRequest?.image || ''}
+              measurementUnit={marketRequest?.measurementUnit || ''}
+              onClickDelete={() => setShowDelete(true)}
+              weight={marketRequest?.weight}
+              expiry={createdAtToExpiry(marketRequest?.createdAt)}
+            />
+          </Col>
+          {/* {renderRightComponent()} */}
+          {renderLeftComponent()}
+        </Visible>
+        <Visible md lg>
+          <Col>
+            <MarketRequestSummary
+              measurementUnit={marketRequest?.measurementUnit || ''}
+              metric={marketRequest?.metric || ''}
+              sizeOptions={marketRequest?.sizeOptions || []}
+              sizeUngraded={marketRequest?.sizeUngraded || false}
+              sizeFrom={marketRequest?.size.from}
+              sizeTo={marketRequest?.size.to}
+              specs={marketRequest?.specs}
+              weight={marketRequest?.weight}
+            />
+          </Col>
+        </Visible>
+      </Row>
 
       <Visible xs sm>
         <Row>
@@ -411,7 +464,7 @@ const FullOfferDetails = (props: any) => {
         <Row>
           <Col>{renderOfferSeenTextContainer()}</Col>
         </Row>
-        {offer?.status !== 'ACCEPTED' && (
+        {selectedOffer?.status !== 'ACCEPTED' && (
           <Row style={{ marginTop: '40px' }}>
             <Col style={{ paddingRight: '5px' }}>
               <StyledNegotiateButton
@@ -433,8 +486,8 @@ const FullOfferDetails = (props: any) => {
           </Row>
         )}
       </Visible>
-    </>
+    </Container>
   );
 };
 
-export default FullOfferDetails;
+export default OfferDetailsView;

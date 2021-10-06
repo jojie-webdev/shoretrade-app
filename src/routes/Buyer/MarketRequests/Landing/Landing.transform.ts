@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { sortWith, descend, prop, sortBy, isEmpty } from 'ramda';
 import {
-  GetActiveOffersRequestResponseItem,
   Offer,
 } from 'types/store/GetActiveOffersState';
 import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';

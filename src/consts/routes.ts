@@ -100,13 +100,6 @@ export const BUYER_ROUTES = {
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
   MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
-  MARKET_REQUEST_DETAILS: (id = ':id') =>
-    `${BUYER_ROOT}/market-requests/details/${id}`,
-  CREATE_MARKET_REQUEST: `${BUYER_ROOT}/market-requests/create`,
-  MARKET_REQUEST_DETAILS_OFFER_LIST: (id = ':id') =>
-    `${BUYER_ROOT}/market-requests/details/${id}/list`,
-  MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = 'offerId') =>
-    `${BUYER_ROOT}/market-requests/details/${id}/offer/${offerId}`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
@@ -115,6 +108,15 @@ export const BUYER_ROUTES = {
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
   ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
+};
+
+export const BUYER_MARKET_REQUEST_ROUTES = {
+  LANDING: `${BUYER_ROUTES.MARKET_REQUESTS}`,
+  MARKET_REQUEST_DETAILS: (id = ':id') =>
+    `${BUYER_ROUTES.MARKET_REQUESTS}/details/${id}`,
+  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.MARKET_REQUESTS}/market-requests/create`,
+  MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = ':offerId') =>
+    `${BUYER_ROUTES.MARKET_REQUESTS}/market-requests/offer-details/${id}/${offerId}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

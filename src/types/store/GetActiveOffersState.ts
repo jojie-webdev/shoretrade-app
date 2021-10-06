@@ -18,6 +18,16 @@ export type ShippingAddress = {
   unit_number: string;
 };
 
+export type OfferMarketRequest = {
+  id: string;
+  status: 'OPEN' | 'CLOSED';
+  createdAt: string;
+  averagePrice: number;
+  image: string;
+  weight: { from: number; to: number };
+  name: string;
+};
+
 export type GetActiveOffersRequestResponseItem = {
   id: string;
   status: 'OPEN' | 'ACCEPTED' | 'DECLINED' | 'CLOSED';
@@ -27,14 +37,7 @@ export type GetActiveOffersRequestResponseItem = {
   image: string;
   name: string;
   measurementUnit: string;
-  marketRequest: {
-    id: string;
-    status: 'OPEN' | 'CLOSED';
-    createdAt: string;
-    averagePrice: number;
-    image: string;
-    weight: { from: number; to: number };
-  };
+  marketRequest: OfferMarketRequest;
   size: {
     from?: string;
     to?: string;

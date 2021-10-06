@@ -4,8 +4,15 @@ import {
   isPaymentPending,
   isPaymentRequired,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 
-export const getOfferStatus = (offer: any, from: 'seller' | 'buyer') => {
+export const getOfferStatus = (
+  offer: GetActiveOffersRequestResponseItem | Offer,
+  from: 'seller' | 'buyer'
+) => {
   if (!offer) {
     return '';
   }

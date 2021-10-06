@@ -4,19 +4,11 @@ import { FilterModalProps } from 'components/module/FilterModal/FilterModal.prop
 import {
   GetActiveOffersRequestResponseItem,
   Negotiations,
+  Offer,
+  OfferMarketRequest,
 } from 'types/store/GetActiveOffersState';
+import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-
-export type RequestDetail = {
-  id: string;
-  type: string;
-  offers: number;
-  image: string;
-  status: string;
-  expiry: string;
-  weight: { from: number; to: number };
-  measurementUnit: string;
-};
 
 export enum MarketRequestOfferTip {
   Negotiation = 'Negotiation',
@@ -42,30 +34,27 @@ export interface MarketRequestOffer {
   tip: MarketRequestOfferTip;
 }
 
-export interface MarketRequestDetailProps {
-  data: any;
-  totalOffers: number;
-  marketRequestId: string;
-  filteredBuyerRequest?: GetAllMarketRequestResponseItem;
-  currentPath: string;
-  measurementUnit: string;
-  searchTerm: string;
-  breadCrumbSections: any[];
-  sellerOffers: GetActiveOffersRequestResponseItem[];
-  setSearchTerm: Dispatch<SetStateAction<string>>;
-  onClickItem: (row: any, company: any) => void;
-  currentOfferId: string;
-  selectedOffer: any;
-  selectedCompany: any;
+export interface OfferDetailsProps {
+  handleAcceptOffer: () => void;
+  handleStartNegotiate: () => void;
+  counterOffer: string;
+  newOffer: string;
+  thereIsNewOffer: boolean;
+  isAccepted: boolean;
+  selectedOffer: Offer;
+  seller: any;
+  nego?: Negotiations;
+  negotiating: boolean;
+  setNegotiating: Dispatch<SetStateAction<boolean>>;
   closeOnAccept: boolean;
   setCloseOnAccept: Dispatch<SetStateAction<boolean>>;
+  sortedNegotiations: Negotiations[];
+  lastNegotiationsOffers: Negotiations[];
+  submitNegotiation: (counterOffer: number) => void;
+  breadCrumb: any[];
+  marketRequest: GetAllMarketRequestResponseItem;
+  countAcceptedWeight: number;
   onClickDelete: () => void;
   showDelete: boolean;
   setShowDelete: Dispatch<SetStateAction<boolean>>;
-  filterModalProps: FilterModalProps;
-  onClickFilterButton: () => void;
-  isLoading: boolean;
-  showNotEnoughCreditAlert: boolean;
-  setShowNotEnoughCreditAlert: Dispatch<SetStateAction<boolean>>;
-  onOfferDelete: (offerIdToDelete: string) => void;
 }
