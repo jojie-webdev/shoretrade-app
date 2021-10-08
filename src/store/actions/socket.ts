@@ -6,6 +6,20 @@ const eventNS = 'SOCKET_EVENT';
 const updateAction = createUpdateAction<Partial<SocketState>>(ns);
 const clearAction = createClearAction(ns);
 
+export const SocketEvents: Record<SOCKET_EVENT, string> = {
+  NEW_ORDER: `${eventNS}/NEW_ORDER`,
+  NEW_CREDIT: `${eventNS}/NEW_CREDIT`,
+  UPDATE_REMAINING_BOXES: `${eventNS}/UPDATE_REMAINING_BOXES`,
+  INAPP_NOTIFICATION: `${eventNS}/INAPP_NOTIFICATION`,
+  INAPP_NOTIFICATION_READ: `${eventNS}/INAPP_NOTIFICATION_READ`,
+  INAPP_NOTIFICATION_DELETED: `${eventNS}/INAPP_NOTIFICATION_DELETED`,
+  CART_ITEM_ADDED: `${eventNS}/CART_ITEM_ADDED`,
+  CART_ITEM_REMOVED: `${eventNS}/CART_ITEM_REMOVED`,
+  CART_EXPIRY_WARNING: `${eventNS}/CART_EXPIRY_WARNING`,
+  CART_EXPIRY_EXTENDED: `${eventNS}/CART_EXPIRY_EXTENDED`,
+  CART_CLOSED: `${eventNS}/CART_CLOSED`,
+};
+
 const socketActions = {
   ...updateAction,
   ...clearAction,
@@ -13,12 +27,7 @@ const socketActions = {
     type: `${eventNS}/${event}`,
     payload,
   }),
-  NEW_ORDER: `${eventNS}/NEW_ORDER`,
-  NEW_CREDIT: `${eventNS}/NEW_CREDIT`,
-  UPDATE_REMAINING_BOXES: `${eventNS}/UPDATE_REMAINING_BOXES`,
-  INAPP_NOTIFICATION: `${eventNS}/INAPP_NOTIFICATION`,
-  INAPP_NOTIFICATION_READ: `${eventNS}/INAPP_NOTIFICATION_READ`,
-  INAPP_NOTIFICATION_DELETED: `${eventNS}/INAPP_NOTIFICATION_DELETED`,
+  ...SocketEvents,
 };
 
 export default socketActions;

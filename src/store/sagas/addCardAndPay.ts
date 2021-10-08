@@ -28,6 +28,8 @@ function* addCardAndPayRequest(
         const { data } = yield call(
           addCardAndPay,
           {
+            cartId: action.meta.cartId,
+            employeeId: action.meta.employeeId,
             companyId: action.meta.companyId,
             existingCard: action.meta.existingCard,
             currency: 'aud',
@@ -49,6 +51,8 @@ function* addCardAndPayRequest(
         const { data } = yield call(
           addCardAndPay,
           {
+            cartId: action.meta.cartId,
+            employeeId: action.meta.employeeId,
             companyId: action.meta.companyId,
             cardToken: cardTokenData.id,
             currency: 'aud',

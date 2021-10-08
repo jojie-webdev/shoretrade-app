@@ -14,9 +14,10 @@ import {
   updateFavoriteSellerActions,
   updateFavouriteProductActions,
   currentAddressActions,
+  addCartItemActions,
 } from 'store/actions';
 import getSellerByIdActions from 'store/actions/getSellerById';
-import { GetAddressOptions } from 'store/selectors/buyer';
+import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { CartItem } from 'types/store/CartState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
@@ -57,6 +58,9 @@ const ProductDetails = (): JSX.Element => {
       })
     );
   };
+
+  const company = GetDefaultCompany();
+  const employeeId = company?.employeeId || '';
 
   const currentSeller: Seller | undefined = useSelector(
     (state: Store) => state.getSellerById.data?.data.seller
@@ -154,46 +158,56 @@ const ProductDetails = (): JSX.Element => {
     const currentBox = groupedBox.find((box) => box.id === pressedBoxRadio);
 
     if (currentBox) {
-      const payload: CartItem = {
-        companyId: currentListing.coop?.id || '',
-        companyName: currentListing.coop?.name || '',
-        listing: {
-          id: currentListing.id,
-          type: currentListing.type,
-          fisherman: currentListing.fisherman,
-          metric: currentListing.size.unit,
-          sizeFrom: currentListing.size.from,
-          sizeTo: currentListing.size.to,
-          price: currentListing.price,
-          origin: currentListing.origin,
-          description: currentListing.description,
-          caught: currentListing.caught,
-          ends: currentListing.ends,
-          catchRecurrence: currentListing.catchRecurrence,
-          specifications: currentListing.state,
-          image: currentListing.images[0] || '',
-          minimumOrder: currentListing.minimumOrder,
-          sellInMultiplesOf: currentListing.sellInMultiplesOf,
-          remaining: currentListing.remaining,
-          average: currentListing.average,
-          isAquafuture: currentListing.isAquafuture,
-          allowedWeightAdjustment: currentListing.allowedWeightAdjustment,
-          isFavourite: currentListing.isFavourite,
-          address: currentListing.address,
-          measurementUnit: currentListing.measurementUnit,
-          packagingId: currentListing.packaging?.id || null,
-        },
-        orderBoxes: currentBox.boxes.map((b) => ({
-          id: b.id,
-          weight: b.weight,
-          quantity: b.quantity || 0,
-          count: b.count || 0,
-        })),
-        subTotal: currentBox.cost,
-        weight: currentBox.totalWeight,
-      };
-      dispatch(cartActions.add(payload));
-      history.push(BUYER_ROUTES.CHECKOUT);
+      // const payload: CartItem = {
+      //   companyId: currentListing.coop?.id || '',
+      //   companyName: currentListing.coop?.name || '',
+      //   listing: {
+      //     id: currentListing.id,
+      //     type: currentListing.type,
+      //     fisherman: currentListing.fisherman,
+      //     metric: currentListing.size.unit,
+      //     sizeFrom: currentListing.size.from,
+      //     sizeTo: currentListing.size.to,
+      //     price: currentListing.price,
+      //     origin: currentListing.origin,
+      //     description: currentListing.description,
+      //     caught: currentListing.caught,
+      //     ends: currentListing.ends,
+      //     catchRecurrence: currentListing.catchRecurrence,
+      //     specifications: currentListing.state,
+      //     image: currentListing.images[0] || '',
+      //     minimumOrder: currentListing.minimumOrder,
+      //     sellInMultiplesOf: currentListing.sellInMultiplesOf,
+      //     remaining: currentListing.remaining,
+      //     average: currentListing.average,
+      //     isAquafuture: currentListing.isAquafuture,
+      //     allowedWeightAdjustment: currentListing.allowedWeightAdjustment,
+      //     isFavourite: currentListing.isFavourite,
+      //     address: currentListing.address,
+      //     measurementUnit: currentListing.measurementUnit,
+      //     packagingId: currentListing.packaging?.id || null,
+      //   },
+      //   orderBoxes: currentBox.boxes.map((b) => ({
+      //     id: b.id,
+      //     weight: b.weight,
+      //     quantity: b.quantity || 0,
+      //     count: b.count || 0,
+      //   })),
+      //   subTotal: currentBox.cost,
+      //   weight: currentBox.totalWeight,
+      // };
+      // dispatch(cartActions.add(payload));
+
+      dispatch(
+        addCartItemActions.request({
+          employeeId,
+          boxes: currentBox.boxes.map((b) => ({
+            id: b.id,
+            quantity: b.quantity || 0,
+          })),
+        })
+      );
+      // history.push(BUYER_ROUTES.CHECKOUT); // moved to sagas
     }
   };
 

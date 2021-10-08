@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import {
   BUYER_ROUTES,
@@ -14,9 +14,12 @@ import {
   getShippingQuoteActions,
   orderActions,
   cartActions,
+  getCartActions,
+  removeCartItemActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { CartItem } from 'types/store/CartState';
+import { GetCartDataItem } from 'types/store/GetCartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
@@ -30,6 +33,7 @@ import {
   shipmentModeToDeliveryMethod,
   serviceNameToDeliveryOption,
 } from 'utils/String/toShipmentDateString';
+
 import CheckoutView from './Checkout.view';
 
 const Checkout = (): JSX.Element => {
@@ -42,10 +46,6 @@ const Checkout = (): JSX.Element => {
 
   const currentCompany = GetDefaultCompany();
 
-  const removeItem = (id: string) => {
-    dispatch(cartActions.remove(id));
-  };
-
   const [selectedShippingId, setSelectedShippingId] = useReducer(
     createUpdateReducer<Record<string, string>>(),
     {}
@@ -56,6 +56,9 @@ const Checkout = (): JSX.Element => {
     [];
 
   const currentAddress = addresses.find((a) => a.default);
+
+  const loadingCart =
+    useSelector((store: Store) => store.getCart.pending) || false;
 
   const loadingShippingQuotes =
     useSelector((store: Store) => store.getShippingQuote.pending) || false;
@@ -80,21 +83,35 @@ const Checkout = (): JSX.Element => {
     }
   }, [loadingShippingQuotes]);
 
-  const cart = useSelector((store: Store) => store.cart) || {};
+  const cartData = useSelector((store: Store) => store.getCart.data?.data);
 
-  const cartItems = Object.keys(cart).map((key) => ({
-    ...cart[key],
-    cartId: key,
+  const cartDataItems = cartData?.items || {};
+
+  const removeItem = (id: string) => {
+    dispatch(
+      removeCartItemActions.request({
+        employeeId: currentCompany?.employeeId || '',
+        cartId: cartData?.id || '',
+        transactionRef: id,
+      })
+    );
+  };
+
+  const cartItems = Object.keys(cartDataItems).map((key) => ({
+    ...cartDataItems[key],
+    cartItemId: key,
   }));
 
   const orders = cartItems.map(
     (cartItem): OrderItem => ({
-      cartId: cartItem.cartId || '',
+      cartItemId: cartItem.cartItemId,
       title: 'Order Summary',
       uri: cartItem.listing.image,
       name: cartItem.listing.type,
       price: cartItem.subTotal.toFixed(2),
-      tags: cartItem.listing.specifications.map((label) => ({ label })),
+      tags: cartItem.listing.specifications
+        .split(',')
+        .map((label) => ({ label })),
       weight: cartItem.weight.toFixed(2),
       unit: cartItem.listing.measurementUnit,
       size: sizeToString(
@@ -110,7 +127,10 @@ const Checkout = (): JSX.Element => {
             shippingQuotes[cartItem.companyId] || { priceResult: [] }
           ).priceResult.map((data) => {
             const shipmentMode = shipmentModeToString(data.shipmentMode);
-            const serviceName = serviceNameToString(data.serviceName, data.locationName);
+            const serviceName = serviceNameToString(
+              data.serviceName,
+              data.locationName
+            );
             return {
               id: data.id,
               priceId: data.priceId,
@@ -127,7 +147,7 @@ const Checkout = (): JSX.Element => {
                 data.maxTransitTime,
                 data.estimatedDate
               ),
-              imageUrl: data.imageUrl
+              imageUrl: data.imageUrl,
             };
           })
         : [],
@@ -161,7 +181,7 @@ const Checkout = (): JSX.Element => {
           priceId: selectedPriceData?.priceId || '',
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
-          locationName: selectedPriceData?.locationName || ''
+          locationName: selectedPriceData?.locationName || '',
         },
       };
     },
@@ -194,7 +214,7 @@ const Checkout = (): JSX.Element => {
       isPaymentMethodAvailable(paymentModes, 'ACCT_CRED')
     ) {
       const groupCartItemByCompany = groupBy(
-        (item: CartItem) => item.companyId
+        (item: GetCartDataItem) => item.companyId
       );
       const groupedCartItems = groupCartItemByCompany(cartItems);
       const payload = Object.keys(groupedCartItems).reduce(
@@ -211,6 +231,8 @@ const Checkout = (): JSX.Element => {
       );
       dispatch(
         orderActions.request({
+          cartId: cartData?.id || '',
+          employeeId: currentCompany?.employeeId || '',
           cart: payload,
           currentAddress,
           totalPrice: totalValue,
@@ -307,6 +329,16 @@ const Checkout = (): JSX.Element => {
     }
   }, [cartItems.length]);
 
+  useEffect(() => {
+    if (currentCompany) {
+      dispatch(
+        getCartActions.request({
+          employeeId: currentCompany?.employeeId || '',
+        })
+      );
+    }
+  }, [currentCompany]);
+
   const generatedProps = {
     balance: currentCompany?.credit || '',
     groupedOrders,
@@ -314,6 +346,7 @@ const Checkout = (): JSX.Element => {
     keepShopping,
     placeOrder,
     loadingShippingQuotes,
+    loadingCart,
     selectedShipping,
     selectedShippingId,
     setSelectedShippingId,

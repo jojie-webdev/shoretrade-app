@@ -1,4 +1,17 @@
 /* PLOP_INJECT_IMPORT */
+import { GlobalModalState } from './GlobalModalState';
+import {
+  RemoveCartItemMeta,
+  RemoveCartItemPayload,
+} from './RemoveCartItemState';
+import {
+  AddCartItemMeta,
+  AddCartItemPayload,
+} from './AddCartItemState';
+import {
+  GetCartMeta,
+  GetCartPayload,
+} from './GetCartState';
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import { GenericResponse } from 'types/GenericResponse';
@@ -271,6 +284,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  globalModal: GlobalModalState;
+  removeCartItem: AsyncState<RemoveCartItemMeta, RemoveCartItemPayload>;
+  addCartItem: AsyncState<AddCartItemMeta, AddCartItemPayload>;
+  getCart: AsyncState<GetCartMeta, GetCartPayload>;
   getSellerDashboardTopCategories: AsyncState<
     GetSellerDashboardTopCategoriesMeta,
     GetSellerDashboardTopCategoriesPayload

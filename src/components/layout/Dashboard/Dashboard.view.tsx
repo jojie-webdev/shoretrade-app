@@ -14,6 +14,7 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileNav from 'components/layout/MobileNav';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import Hamburger from 'components/module/Hamburger';
 import NotificationMenu from 'components/module/NotificationMenu';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
@@ -280,6 +281,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     handleMarkasRead,
     handleOnDelete,
     handleNotifOnClick,
+    globalModalType,
+    callGlobalModalAction,
   } = props;
 
   const history = useHistory();
@@ -294,11 +297,43 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
 
   const isHomeOld = useHomeOld();
 
+  const globalModalData = (() => {
+    if (globalModalType === 'CART_EXPIRY_WARNING') {
+      return {
+        title: 'Pending Cart Items',
+        description: 'Do you still want to purchase the products in your cart?',
+        actionText: 'Yes',
+        cancelText: 'Remove from Cart',
+      };
+    }
+    return {
+      title: '',
+      description: '',
+    };
+  })();
+
   return (
     <DashboardContainer openSidebar={openSidebar}>
       <MenuOverlay
         openSidebar={openSidebar}
         onClick={() => onClickOpenSideBar(!openSidebar)}
+      />
+
+      <ConfirmationModal
+        isOpen={globalModalType !== ''}
+        title={globalModalData.title}
+        description={globalModalData.description}
+        action={() => {
+          callGlobalModalAction('POSITIVE');
+        }}
+        cancel={() => {
+          callGlobalModalAction('NEGATIVE');
+        }}
+        actionText={globalModalData.actionText}
+        cancelText={globalModalData.cancelText}
+        onClickClose={() => {
+          callGlobalModalAction('NEUTRAL');
+        }}
       />
 
       <Sidebar openSidebar={openSidebar}>

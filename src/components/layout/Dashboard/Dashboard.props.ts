@@ -2,9 +2,14 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { Route } from 'types/Routes';
+import {
+  GetNotificationsPayload,
+  NotificationItemResponse,
+  NotificationType,
+} from 'types/store/GetNotificationsState';
 import { GetUserPayload } from 'types/store/GetUserState';
+import { GlobalModalType } from 'types/store/GlobalModalState';
 import { Theme } from 'types/Theme';
-import { GetNotificationsPayload, NotificationItemResponse, NotificationType } from 'types/store/GetNotificationsState';
 
 export interface DashboardPublicProps {
   ref?: any;
@@ -38,6 +43,8 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
     resource: NotificationType,
     appType: 'buyer' | 'seller'
   ) => void;
+  globalModalType: GlobalModalType;
+  callGlobalModalAction: (mode: 'NEUTRAL' | 'NEGATIVE' | 'POSITIVE') => void;
 }
 
 // Inner component props

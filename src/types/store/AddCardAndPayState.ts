@@ -2,6 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 import { CartItem } from './CartState';
 import { GetAddressesResponseItem } from './GetAddressesState';
+import { GetCartDataItem } from './GetCartState';
 
 export type OrderShipping = {
   carrierName: string;
@@ -17,11 +18,13 @@ export type OrderShipping = {
   serviceName: string;
 };
 
-export type OrderCartItem = CartItem & {
+export type OrderCartItem = (CartItem | GetCartDataItem) & {
   shipping: OrderShipping;
 };
 
 export type AddCardAndPayMeta = {
+  cartId: string;
+  employeeId: string;
   cart: OrderCartItem[][];
   currentAddress: GetAddressesResponseItem;
   totalPrice: number;
@@ -41,6 +44,8 @@ export type AddCardAndPayMeta = {
 };
 
 export type AddCardAndPayRealPayload = {
+  cartId: string;
+  employeeId: string;
   cart: OrderCartItem[][];
   currentAddress: GetAddressesResponseItem;
   totalPrice: number;

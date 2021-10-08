@@ -16,6 +16,7 @@ import {
   getAddressesActions,
   getPaymentModeActions,
   socketActions,
+  getCartActions,
 } from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
@@ -47,6 +48,26 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
         state.getAddresses.request?.companyId !== companyId
       ) {
         yield put(getAddressesActions.request({ companyId }));
+      }
+
+      // avoids calling request twice
+      if (state.router.location.pathname !== '/buyer/checkout') {
+        const defaultCompany =
+          companies.find((company) => company.relationship === 'ADMIN') ||
+          // Fallback if company have no admin relationship
+          companies.find(
+            (company) =>
+              company.relationship === 'ASSISTANT' ||
+              company.relationship === 'SECONDARY'
+          );
+
+        if (defaultCompany) {
+          yield put(
+            getCartActions.request({
+              employeeId: defaultCompany?.employeeId || '',
+            })
+          );
+        }
       }
     }
   }

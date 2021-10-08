@@ -11,18 +11,12 @@ import {
 import { getSocketToken } from 'services/auth';
 import createSocketConnection from 'services/websocket';
 import { authActions, getUserActions, socketActions } from 'store/actions';
+import { SocketEvents } from 'store/actions/socket';
 import { GetUserPayload, UserCompany } from 'types/store/GetUserState';
 import { SOCKET_EVENT } from 'types/store/SocketState';
 import { Store } from 'types/store/Store';
 
-const SOCKET_EVENTS: SOCKET_EVENT[] = [
-  'NEW_ORDER',
-  'NEW_CREDIT',
-  'UPDATE_REMAINING_BOXES',
-  'INAPP_NOTIFICATION',
-  'INAPP_NOTIFICATION_READ',
-  'INAPP_NOTIFICATION_DELETED',
-];
+const SOCKET_EVENTS = Object.keys(SocketEvents) as Array<SOCKET_EVENT>;
 
 const socketEventChannel = (config: {
   token: string;
