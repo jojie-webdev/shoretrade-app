@@ -177,7 +177,7 @@ const BuyerRequestsInteractions = (props: {
               {getExpiry(data.createdAt)}
             </Typography>
           </Col>
-          <Col style={{ padding: '0 5px' }}>
+          {/* <Col style={{ padding: '0 5px' }}>
             <div style={{ display: 'flex' }}>
               {renderTagByStatus()}
               {getOfferCount() >= 1 &&
@@ -187,7 +187,7 @@ const BuyerRequestsInteractions = (props: {
                   getCorrectOfferCountLabel()
                 )}
             </div>
-          </Col>
+          </Col> */}
         </>
       }
       padding="8px 20px 8px 8px"

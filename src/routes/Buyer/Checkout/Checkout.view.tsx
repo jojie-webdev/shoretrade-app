@@ -58,8 +58,8 @@ const Orders = (props: CheckoutGeneratedProps) => {
             >
               {item.listings.map((listing) => (
                 <CheckoutCard
-                  key={listing.cartId}
-                  onRemove={() => removeItem(listing.cartId)}
+                  key={listing.cartItemId}
+                  onRemove={() => removeItem(listing.cartItemId)}
                   {...listing}
                 />
               ))}
@@ -109,6 +109,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     placeOrder,
     selectedShipping,
     loadingShippingQuotes,
+    loadingCart,
     selectedShippingId,
     processingOrder,
     orderError,
@@ -139,10 +140,13 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
   return (
     <Container>
-      {loadingShippingQuotes ? (
-        <LoadingOverlay label="Loading Shipping Quotes" />
+      {loadingCart ? (
+        <Loading />
       ) : (
         <>
+          {loadingShippingQuotes && (
+            <LoadingOverlay label="Loading Shipping Quotes" />
+          )}
           {isEmpty(groupedOrders) ? (
             <EmptyContainer>
               <Row nogutter className="row">

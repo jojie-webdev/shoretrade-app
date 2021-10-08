@@ -10,7 +10,7 @@ import {
 import { addCardAndPayActions, getPaymentMethodsActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { OrderCartItem } from 'types/store/AddCardAndPayState';
-import { CartItem } from 'types/store/CartState';
+import { GetCartDataItem } from 'types/store/GetCartState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
@@ -58,11 +58,12 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     }
   );
 
-  const cart = useSelector((store: Store) => store.cart) || {};
+  const cartData = useSelector((store: Store) => store.getCart.data?.data);
+  const cartDataItems = cartData?.items || {};
 
-  const cartItems = Object.keys(cart).map((key) => ({
-    ...cart[key],
-    cartId: key,
+  const cartItems = Object.keys(cartDataItems).map((key) => ({
+    ...cartDataItems[key],
+    cartItemId: key,
   }));
 
   const onAddCard = (values: CardDetails) => {
@@ -72,7 +73,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
       const groupCartItemByCompany = groupBy(
-        (item: CartItem) => item.companyId
+        (item: GetCartDataItem) => item.companyId
       );
       const groupedCartItems = groupCartItemByCompany(cartItems);
       const payload = Object.keys(groupedCartItems).reduce(
@@ -90,6 +91,8 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
 
       dispatch(
         addCardAndPayActions.request({
+          cartId: cartData?.id || '',
+          employeeId: currentCompany?.employeeId || '',
           cart: payload,
           currentAddress,
           totalPrice: props.totalValue,
@@ -116,7 +119,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
       const groupCartItemByCompany = groupBy(
-        (item: CartItem) => item.companyId
+        (item: GetCartDataItem) => item.companyId
       );
       const groupedCartItems = groupCartItemByCompany(cartItems);
       const payload = Object.keys(groupedCartItems).reduce(
@@ -134,6 +137,8 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
 
       dispatch(
         addCardAndPayActions.request({
+          cartId: cartData?.id || '',
+          employeeId: currentCompany?.employeeId || '',
           cart: payload,
           currentAddress,
           totalPrice: props.totalValue,

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
 export type OrderItem = {
-  cartId: string;
+  cartItemId: string;
   title: string;
   uri: string;
   name: string;
@@ -27,6 +27,7 @@ export interface CheckoutGeneratedProps {
   balance: string;
   groupedOrders: Record<string, OrderItem[]>;
   loadingShippingQuotes: boolean;
+  loadingCart: boolean;
   totalValue: number;
   keepShopping: () => void;
   placeOrder: () => void;

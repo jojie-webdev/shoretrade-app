@@ -37,7 +37,7 @@ const Assistants = (): JSX.Element => {
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const [notifMsg, setNotifMsg] = useState('');
   const permission =
-    isPendingAccount &&
+    !isPendingAccount &&
     isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
 
   // MARK:- Methods

@@ -92,7 +92,11 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
 
   const getSizeBadge = () => {
     if (properOffer.size && properOffer.size.from) {
-      return [properOffer.size.from];
+      sizeToString(
+        props.buyerRequest.metric,
+        properOffer.size.from,
+        properOffer.size.to || ''
+      );
     }
     if (props.buyerRequest && !isEmpty(props.buyerRequest.sizeOptions)) {
       return props.buyerRequest.sizeOptions;
@@ -110,7 +114,9 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             'When you are making an offer you are committing to sell and deliver this product to the buyer.'
           }
           content={
-            'You need to make sure that the product is available if the buyer accepts.'
+            'You need to make sure that the product is available if the buyer accepts. ' +
+            'Review the details of your offer below. Keep in mind that an accepted Buyer Request is not finalised until the Buyer has processed the payment. ' +
+            'Ensure your notifications are turned on to receive updates. '
           }
           style={{
             marginBottom: 32,
@@ -202,8 +208,10 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               <div className="quantity-container">
                 <StyledBadge badgeColor={theme.grey.shade3}>
                   <BadgeText color="shade9" variant="overline">
-                    {properOffer?.price || 0}
-                    {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+                    {`${properOffer?.price || 0} /
+                    ${formatMeasurementUnit(
+                      props.buyerRequest.measurementUnit
+                    )}`}
                   </BadgeText>
                 </StyledBadge>
               </div>

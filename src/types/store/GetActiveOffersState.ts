@@ -4,6 +4,17 @@ export type GetActiveOffersMeta = {
   queryParams?: Record<string, any>;
 };
 
+export enum OfferStatus {
+  ACCEPTED = 'ACCEPTED',
+  PARTIAL = 'PARTIAL',
+  PAYMENT_MISSED = 'PAYMENT MISSED',
+  DECLINED = 'DECLINED',
+  PAYMENT_REQUIRED = 'PAYMENT REQUIRED',
+  NEW_OFFER = 'NEW OFFER',
+  NEGOTIATION = 'NEGOTIATION',
+  OPEN = 'OPEN',
+}
+
 export type ShippingAddress = {
   country_code: string;
   depot_address_id: string;
@@ -18,6 +29,16 @@ export type ShippingAddress = {
   unit_number: string;
 };
 
+export type OfferMarketRequest = {
+  id: string;
+  status: 'OPEN' | 'CLOSED';
+  createdAt: string;
+  averagePrice: number;
+  image: string;
+  weight: { from: number; to: number };
+  name: string;
+};
+
 export type GetActiveOffersRequestResponseItem = {
   id: string;
   status: 'OPEN' | 'ACCEPTED' | 'DECLINED' | 'CLOSED';
@@ -27,14 +48,7 @@ export type GetActiveOffersRequestResponseItem = {
   image: string;
   name: string;
   measurementUnit: string;
-  marketRequest: {
-    id: string;
-    status: 'OPEN' | 'CLOSED';
-    createdAt: string;
-    averagePrice: number;
-    image: string;
-    weight: { from: number; to: number };
-  };
+  marketRequest: OfferMarketRequest;
   size: {
     from?: string;
     to?: string;

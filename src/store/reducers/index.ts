@@ -4,9 +4,11 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
+import globalModal from './globalModal';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
+import addCartItem from './addCartItem';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
 import auth from './auth';
@@ -42,6 +44,7 @@ import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
 import getBuyerOrdersPlaced from './getBuyerOrdersPlaced';
 import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
@@ -77,6 +80,7 @@ import marketOffer from './marketOffer';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import notify from './notify';
 import order from './order';
@@ -84,6 +88,7 @@ import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
 import register from './register';
+import removeCartItem from './removeCartItem';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
 import searchAndCountProductType from './searchAndCountProductType';
@@ -110,6 +115,10 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+  globalModal,
+        removeCartItem,
+        addCartItem,
+        getCart,
         getSellerDashboardTopCategories,
         getSellerDashboardSales,
         socket,
@@ -180,6 +189,7 @@ export default (routeHistory: History) =>
         logout,
         marketOffer,
         marketRequestAcceptOffer,
+        marketRequestOfferConfirm,
         marketOfferNegotiate,
         marketRequestNegotiation,
         modifyBulkUpload,

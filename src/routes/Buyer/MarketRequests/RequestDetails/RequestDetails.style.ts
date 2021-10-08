@@ -4,10 +4,11 @@ import Interactions from 'components/base/Interactions';
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem, theme } from 'utils/Theme';
-import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png'
-import { Col } from 'react-grid-system';
+
+import marketRequestSummary from '../../../../res/images/market-request-summary-bg.png';
 
 export const RequestDetailsContainer = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ export const RequestDetailsCardContainer = styled(Interactions)`
       width: 32px;
       border-radius: 12px;
       align-self: center;
-  
+
       path {
         fill: ${({ theme }) => theme.grey.shade7};
       }
@@ -198,7 +199,7 @@ export const StyledAlert = styled(Alert)`
   margin-bottom: 24px;
 `;
 
-export const StyledTextField = styled(TextField) <{ noMargin?: boolean }>`
+export const StyledTextField = styled(TextField)<{ noMargin?: boolean }>`
   flex: 1;
   margin-right: ${({ noMargin }) => (noMargin ? '0' : '24px')};
 `;
@@ -239,7 +240,7 @@ export const OffersContainer = styled.div`
   flex-direction: column;
 
   @media ${BREAKPOINTS['sm']} {
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
     border-radius: 12px;
   }
@@ -328,10 +329,10 @@ export const FilterButton = styled.button`
 export const RequestDetailsParentContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.grey.shade4};
   border-radius: 8px;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 8px;
   margin-top: 16px;
-`
+`;
 
 export const RequestDetailsMobileContainer = styled.div`
   display: flex;
@@ -341,7 +342,7 @@ export const RequestDetailsMobileContainer = styled.div`
       width: 72px;
       height: 72px;
       border-radius: 8px;
-      margin-right: 8px
+      margin-right: 8px;
     }
   }
 
@@ -349,8 +350,8 @@ export const RequestDetailsMobileContainer = styled.div`
     width: 100%;
   }
 
-  @media(max-width: 380px){
-    .typo{
+  @media (max-width: 380px) {
+    .typo {
       font-size: 15px;
     }
   }
@@ -362,7 +363,7 @@ export const ProgressContainer = styled.div`
   background-color: ${({ theme }) => theme.grey.shade3};
   border-radius: 1px;
   position: relative;
-`
+`;
 
 export const SummaryContainer = styled.div<{ margin?: string }>`
   width: 100%;
@@ -381,44 +382,44 @@ export const DeleteButtonContainer = styled.div`
   margin: auto;
 
   .delete-button {
-      background-color:  ${theme.grey.shade2};
-      height: 32px;
-      width: 32px;
-      border-radius: 12px;
-      align-self: center;
-      border: 1px solid ${theme.grey.shade4};
+    background-color: ${theme.grey.shade2};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+    border: 1px solid ${theme.grey.shade4};
 
-      path {
-          fill: ${theme.grey.shade7};
-      }
+    path {
+      fill: ${theme.grey.shade7};
+    }
   }
-`
+`;
 
 export const CounterContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
-`
+`;
 
 export const CounterCol = styled(Col)`
- display: flex;
+  display: flex;
 
- @media ${BREAKPOINTS['sm']} {
-  display: block;
+  @media ${BREAKPOINTS['sm']} {
+    display: block;
   }
-`
+`;
 
 export const SelectContainer = styled.div`
   margin-left: 16px;
   width: 94px;
   cursor: pointer;
-`
+`;
 
 export const Sorter = styled.div`
   padding: 6px 12px;
-  background-color: #E5E8F5;
+  background-color: #e5e8f5;
   border-radius: 8px;
   display: flex;
   align-items: center;
   cursor: pointer;
-`
+`;

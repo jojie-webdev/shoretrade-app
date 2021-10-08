@@ -58,7 +58,7 @@ const Landing = (): JSX.Element => {
   };
 
   const permission =
-    isPendingAccount &&
+    !isPendingAccount &&
     isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
 
   useEffect(() => {

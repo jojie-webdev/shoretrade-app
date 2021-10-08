@@ -21,6 +21,7 @@ import {
   SVGContainer,
 } from 'routes/Buyer/Search/SearchLanding.style';
 import { useTheme } from 'utils/Theme';
+import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 
 const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   const theme = useTheme();
@@ -102,7 +103,7 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
           <Button
             variant="primary"
             text="Create a market request"
-            onClick={() => history.push(BUYER_ROUTES.CREATE_MARKET_REQUEST)}
+            onClick={() => history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)}
             style={{ margin: '25px 0' }}
           />
         </>

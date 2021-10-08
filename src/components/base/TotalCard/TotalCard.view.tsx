@@ -3,6 +3,11 @@ import React, { useMemo, useReducer } from 'react';
 import { clickAndCollectAddress, clickAndCollectAddress2 } from 'consts';
 import { useSelector } from 'react-redux';
 import { OrderItem } from 'routes/Buyer/Checkout/Checkout.props';
+import { OrderShipping } from 'types/store/AddCardAndPayState';
+import { Store } from 'types/store/Store';
+import { createUpdateReducer } from 'utils/Hooks';
+import { sizeToString } from 'utils/Listing';
+import { toPrice } from 'utils/String/toPrice';
 import {
   estimatedDeliveryToString,
   serviceNameToDeliveryOption,
@@ -10,11 +15,6 @@ import {
   shipmentModeToDeliveryMethod,
   shipmentModeToString,
 } from 'utils/String/toShipmentDateString';
-import { OrderShipping } from 'types/store/AddCardAndPayState';
-import { Store } from 'types/store/Store';
-import { createUpdateReducer } from 'utils/Hooks';
-import { sizeToString } from 'utils/Listing';
-import { toPrice } from 'utils/String/toPrice';
 
 import Divider from '../Divider';
 import Typography from '../Typography';
@@ -36,7 +36,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
 
   const orders = cartItems.map(
     (cartItem): OrderItem => ({
-      cartId: cartItem.cartId || '',
+      cartItemId: cartItem.cartId,
       title: 'Order Summary',
       uri: cartItem.listing.image,
       name: cartItem.listing.type,
@@ -73,7 +73,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
                 data.minTransitTime,
                 data.maxTransitTime
               ),
-              imageUrl: data.imageUrl
+              imageUrl: data.imageUrl,
             };
           })
         : [],

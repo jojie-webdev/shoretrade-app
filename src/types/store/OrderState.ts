@@ -2,6 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 import { CartItem } from './CartState';
 import { GetAddressesResponseItem } from './GetAddressesState';
+import { GetCartDataItem } from './GetCartState';
 
 export type OrderShipping = {
   carrierName: string;
@@ -17,11 +18,13 @@ export type OrderShipping = {
   serviceName: string;
 };
 
-export type OrderCartItem = CartItem & {
+export type OrderCartItem = (CartItem | GetCartDataItem) & {
   shipping: OrderShipping;
 };
 
 export type OrderMeta = {
+  cartId: string;
+  employeeId: string;
   cart: OrderCartItem[][]; // Array of listings inside array of sellers
   currentAddress: GetAddressesResponseItem;
   totalPrice: number;

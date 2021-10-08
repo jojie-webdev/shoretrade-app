@@ -1,10 +1,10 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
-import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
+import addCartItem from './addCartItem';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
 import changePassword from './changePassword';
@@ -37,6 +37,7 @@ import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
@@ -56,23 +57,27 @@ import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
 import getSellerDashboardSales from './getSellerDashboardSales';
+import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
+import globalModal from './globalModal';
 import login from './login';
 import logout from './logout';
 import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
 import register from './register';
+import removeCartItem from './removeCartItem';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
 import router from './router';
@@ -97,6 +102,9 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  removeCartItem,
+  addCartItem,
+  getCart,
   getSellerDashboardTopCategories,
   getSellerDashboardSales,
   addAddress,
@@ -159,6 +167,7 @@ const sagas = [
   logout,
   marketOfferNegotiate,
   marketRequestAcceptOffer,
+  marketRequestOfferConfirm,
   marketRequestNegotiation,
   modifyBulkUpload,
   order,
@@ -190,6 +199,7 @@ const sagas = [
   getNotificationsSettings,
   socketChannel,
   sellerDashboardDate,
+  globalModal,
 ];
 
 export default function* root() {

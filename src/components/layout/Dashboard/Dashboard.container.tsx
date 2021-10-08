@@ -5,6 +5,7 @@ import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import { isMobile } from 'react-device-detect';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { extendCartExpiry, closeCart } from 'services/cart';
 import {
   authActions,
   cartActions,
@@ -15,6 +16,7 @@ import {
   logoutActions,
   readNotificationActions,
   getUserActions,
+  globalModalActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
@@ -65,6 +67,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
+
+  const getCartData =
+    useSelector((state: Store) => state.getCart.data?.data) || null;
+
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
 
@@ -73,7 +79,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
       : null;
   }, [getUser]);
 
-  const cart = useSelector((store: Store) => store.cart) || {};
+  // const cart = useSelector((store: Store) => store.cart) || {};
+
+  const globalModalType = useSelector((store: Store) => store.globalModal.type);
 
   // MARK:- Variables
   const isInnerRoute = (path: string) =>
@@ -85,13 +93,40 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const notifsData = getNotifications.data?.data?.notifications || [];
   const totalUnreadNotifs = getNotifications?.data?.data.unread || 0;
   const totalNotifs = getNotifications.data?.data?.total || 0;
-  const cartItems = Object.keys(cart).length;
+  const cartItems = Object.keys(getCartData?.items || {}).length;
 
   // MARK:- Methods
   const formatRouteString = (s: string) => {
     let str = s;
     str = s.replace('-', ' ');
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const token = useSelector((state: Store) => state.auth.token) || '';
+
+  const callGlobalModalAction = (mode: 'NEUTRAL' | 'NEGATIVE' | 'POSITIVE') => {
+    if (globalModalType === 'CART_EXPIRY_WARNING') {
+      if (mode === 'POSITIVE') {
+        extendCartExpiry(
+          {
+            employeeId: defaultCompany?.employeeId || '',
+            cartId: getCartData?.id || '',
+          },
+          token
+        );
+      }
+
+      if (mode === 'NEGATIVE') {
+        closeCart(
+          {
+            employeeId: defaultCompany?.employeeId || '',
+            cartId: getCartData?.id || '',
+          },
+          token
+        );
+      }
+    }
+    dispatch(globalModalActions.clear());
   };
 
   const logout = () => {
@@ -196,6 +231,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     handleMarkasRead,
     handleOnDelete,
     handleNotifOnClick,
+    globalModalType,
+    callGlobalModalAction,
   };
 
   return <DashboardView {...generatedProps} />;

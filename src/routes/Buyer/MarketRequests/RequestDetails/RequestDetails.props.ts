@@ -5,6 +5,7 @@ import {
   GetActiveOffersRequestResponseItem,
   Negotiations,
 } from 'types/store/GetActiveOffersState';
+import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 
 export type RequestDetail = {
   id: string;
@@ -45,40 +46,26 @@ export interface MarketRequestDetailProps {
   data: any;
   totalOffers: number;
   marketRequestId: string;
+  filteredBuyerRequest?: GetAllMarketRequestResponseItem;
   currentPath: string;
   measurementUnit: string;
   searchTerm: string;
   breadCrumbSections: any[];
-  negotiating: boolean;
   sellerOffers: GetActiveOffersRequestResponseItem[];
-  setNegotiating: Dispatch<SetStateAction<boolean>>;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   onClickItem: (row: any, company: any) => void;
   currentOfferId: string;
   selectedOffer: any;
   selectedCompany: any;
-  handleAcceptOffer: () => void;
-  counterOffer: string;
-  newOffer: string;
-  deliveryTotal: number | undefined;
-  submitNegotiation: (counterOffer: number) => void;
-  hideNegotiate: boolean;
   closeOnAccept: boolean;
   setCloseOnAccept: Dispatch<SetStateAction<boolean>>;
-  thereIsNewOffer: boolean;
-  discountValue: number;
-  discountPercentage: string;
-  disableAccept: boolean;
-  isAccepted: boolean;
   onClickDelete: () => void;
   showDelete: boolean;
   setShowDelete: Dispatch<SetStateAction<boolean>>;
-  sortedNegotiations: Negotiations[];
-  lastNegotiationsOffers: Negotiations[];
   filterModalProps: FilterModalProps;
   onClickFilterButton: () => void;
   isLoading: boolean;
   showNotEnoughCreditAlert: boolean;
   setShowNotEnoughCreditAlert: Dispatch<SetStateAction<boolean>>;
-  onOfferDelete: (offerIdToDelete: string) => void
+  onOfferDelete: (offerIdToDelete: string) => void;
 }

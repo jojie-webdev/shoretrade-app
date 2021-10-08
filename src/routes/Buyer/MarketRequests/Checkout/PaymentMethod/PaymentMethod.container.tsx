@@ -43,7 +43,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     useSelector((store: Store) => store.order.pending) || false;
 
   const addCardAndPayError =
-    useSelector((store: Store) => store.addCardAndPay.error) || '';
+    useSelector((store: Store) => store.marketRequestAcceptOffer.error) || '';
 
   const currentAddress = addresses.find((a) => a.default);
 

@@ -1,6 +1,20 @@
 /* PLOP_INJECT_IMPORT */
+import { GlobalModalState } from './GlobalModalState';
+import {
+  RemoveCartItemMeta,
+  RemoveCartItemPayload,
+} from './RemoveCartItemState';
+import {
+  AddCartItemMeta,
+  AddCartItemPayload,
+} from './AddCartItemState';
+import {
+  GetCartMeta,
+  GetCartPayload,
+} from './GetCartState';
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
+import { GenericResponse } from 'types/GenericResponse';
 import {
   AddCardAndPayMeta,
   AddCardAndPayPayload,
@@ -49,7 +63,7 @@ import {
   GetSellerLicenseMeta,
   GetSellerLicensePayload,
 } from 'types/store/GetSellerLicenseState';
-import { MarketOfferPayload } from 'types/store/MarketOfferState';
+import { MarketOfferPayload, OfferConfirm } from 'types/store/MarketOfferState';
 import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
@@ -270,6 +284,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  globalModal: GlobalModalState;
+  removeCartItem: AsyncState<RemoveCartItemMeta, RemoveCartItemPayload>;
+  addCartItem: AsyncState<AddCartItemMeta, AddCartItemPayload>;
+  getCart: AsyncState<GetCartMeta, GetCartPayload>;
   getSellerDashboardTopCategories: AsyncState<
     GetSellerDashboardTopCategoriesMeta,
     GetSellerDashboardTopCategoriesPayload
@@ -475,6 +493,7 @@ export interface Store {
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
   marketOffer: MarketOfferState;
   marketRequestAcceptOffer: AsyncState<AcceptOffer, NegotiationPayload>;
+  marketRequestOfferConfirm: AsyncState<OfferConfirm, GenericResponse>;
   notify: NotifyState;
   modifyBulkUpload: {
     modifiedData: Record<number, Partial<UploadBulkState>>;
