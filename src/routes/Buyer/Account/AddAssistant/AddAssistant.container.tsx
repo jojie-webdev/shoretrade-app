@@ -31,7 +31,7 @@ const AddAssistant = (): JSX.Element => {
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const permission =
-    isPendingAccount &&
+    !isPendingAccount &&
     isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
   // MARK:- State
   const [callingCode, setCallingCode] = useState('61');
