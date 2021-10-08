@@ -17,7 +17,15 @@ const MarketRequestSummary = (
   props: MarketRequestSummaryProps
 ): JSX.Element => {
   // const theme = useTheme();
-  const { specs, sizeTo, sizeFrom, metric, weight, measurementUnit } = props;
+  const {
+    specs,
+    sizeTo,
+    sizeFrom,
+    metric,
+    weight,
+    measurementUnit,
+    sizeOptions,
+  } = props;
 
   const renderSpecs = () =>
     specs && (
@@ -55,7 +63,8 @@ const MarketRequestSummary = (
     const _sizeFromSizeToString = sizeToString(
       metric,
       sizeFrom?.toString(),
-      sizeTo?.toString()
+      sizeTo?.toString(),
+      sizeOptions
     );
 
     const getSizeFromData = () => {

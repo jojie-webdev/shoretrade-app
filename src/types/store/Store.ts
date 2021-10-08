@@ -1,6 +1,7 @@
 /* PLOP_INJECT_IMPORT */
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
+import { GenericResponse } from 'types/GenericResponse';
 import {
   AddCardAndPayMeta,
   AddCardAndPayPayload,
@@ -49,7 +50,7 @@ import {
   GetSellerLicenseMeta,
   GetSellerLicensePayload,
 } from 'types/store/GetSellerLicenseState';
-import { MarketOfferPayload } from 'types/store/MarketOfferState';
+import { MarketOfferPayload, OfferConfirm } from 'types/store/MarketOfferState';
 import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
@@ -475,6 +476,7 @@ export interface Store {
   marketOfferNegotiate: AsyncState<NegotiateOfferMeta, NegotiatePayload>;
   marketOffer: MarketOfferState;
   marketRequestAcceptOffer: AsyncState<AcceptOffer, NegotiationPayload>;
+  marketRequestOfferConfirm: AsyncState<OfferConfirm, GenericResponse>;
   notify: NotifyState;
   modifyBulkUpload: {
     modifiedData: Record<number, Partial<UploadBulkState>>;

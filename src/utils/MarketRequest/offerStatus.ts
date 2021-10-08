@@ -7,12 +7,13 @@ import {
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
+  OfferStatus,
 } from 'types/store/GetActiveOffersState';
 
 export const getOfferStatus = (
   offer: GetActiveOffersRequestResponseItem | Offer,
   from: 'seller' | 'buyer'
-) => {
+): OfferStatus | string => {
   if (!offer) {
     return '';
   }
@@ -21,20 +22,24 @@ export const getOfferStatus = (
 
   const daysPassed = moment().startOf('day').diff(moment(createdAt), 'days');
 
-  if (status === 'ACCEPTED') {
-    return 'ACCEPTED';
+  if (status === OfferStatus.ACCEPTED) {
+    return OfferStatus.ACCEPTED;
+  }
+
+  if (status === OfferStatus.PARTIAL) {
+    return OfferStatus.PAYMENT_REQUIRED;
   }
 
   if (isPaymentRequired(negotiations) && !isPaymentPending(negotiations)) {
-    return 'PAYMENT MISSED';
+    return OfferStatus.PAYMENT_MISSED;
   }
 
-  if (from === 'seller' && status === 'DECLINED') {
-    return 'DECLINED';
+  if (from === 'seller' && status === OfferStatus.DECLINED) {
+    return OfferStatus.DECLINED;
   }
 
   if (isPaymentRequired(negotiations)) {
-    return 'PAYMENT REQUIRED';
+    return OfferStatus.NEGOTIATION;
   }
 
   const isNotExpired = () => {
@@ -43,16 +48,16 @@ export const getOfferStatus = (
     return isNotExpired;
   };
 
-  if (status === 'OPEN' && isNotExpired()) {
+  if (status === OfferStatus.OPEN && isNotExpired()) {
     if (from === 'seller') {
       if (
         negotiations?.length > 0 &&
         isCounterOfferMade(negotiations, 'buyer')
       ) {
-        return 'NEW OFFER';
+        return OfferStatus.NEW_OFFER;
       }
 
-      return 'NEGOTIATION';
+      return OfferStatus.NEGOTIATION;
     }
     if (from === 'buyer') {
       if (
@@ -60,10 +65,24 @@ export const getOfferStatus = (
           isCounterOfferMade(negotiations, 'seller')) ||
         !negotiations
       ) {
-        return 'NEW OFFER';
+        return OfferStatus.NEW_OFFER;
       }
 
-      return 'NEGOTIATION';
+      return OfferStatus.NEGOTIATION;
     }
   }
+
+  return '';
+};
+
+export const hasOfferWithPaymentRequired = (offers: Offer[]) => {
+  if (!offers) {
+    return;
+  }
+
+  const offer = offers.find(
+    (offer) => getOfferStatus(offer, 'buyer') === 'PAYMENT REQUIRED'
+  );
+
+  return offer;
 };

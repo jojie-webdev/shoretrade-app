@@ -7,8 +7,8 @@ import {
   Offer,
   OfferMarketRequest,
 } from 'types/store/GetActiveOffersState';
-import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
 
 export enum MarketRequestOfferTip {
   Negotiation = 'Negotiation',
@@ -36,6 +36,7 @@ export interface MarketRequestOffer {
 
 export interface OfferDetailsProps {
   handleAcceptOffer: () => void;
+  handleConfirmOffer: () => void;
   handleStartNegotiate: () => void;
   counterOffer: string;
   newOffer: string;
@@ -57,4 +58,7 @@ export interface OfferDetailsProps {
   onClickDelete: () => void;
   showDelete: boolean;
   setShowDelete: Dispatch<SetStateAction<boolean>>;
+  isLoadingAcceptOffer: boolean;
+  isLoadingConfirmOffer: boolean;
+  isLoadingOffer: boolean;
 }

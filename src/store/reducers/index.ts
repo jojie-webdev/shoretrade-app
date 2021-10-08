@@ -77,6 +77,7 @@ import marketOffer from './marketOffer';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import notify from './notify';
 import order from './order';
@@ -180,6 +181,7 @@ export default (routeHistory: History) =>
         logout,
         marketOffer,
         marketRequestAcceptOffer,
+        marketRequestOfferConfirm,
         marketOfferNegotiate,
         marketRequestNegotiation,
         modifyBulkUpload,

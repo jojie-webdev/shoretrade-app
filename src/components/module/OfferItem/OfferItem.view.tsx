@@ -14,11 +14,13 @@ import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
+import OfferTag from 'components/module/OfferTag';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Col, Visible, Hidden } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
@@ -44,7 +46,6 @@ import {
 
 const Offer = (props: OfferItemProps) => {
   const { sellerOffer, onOfferDelete, onClickItem } = props;
-  console.log(sellerOffer);
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');
@@ -109,7 +110,7 @@ const Offer = (props: OfferItemProps) => {
         }}
         color="shade7"
       >
-        Delivery Date: {moment(offer.deliveryDate).format('MMMM DD, YYYY')}
+        {formatEstDelivery(offer.deliveryDate)}
       </Typography>
     </div>
   );
@@ -158,7 +159,12 @@ const Offer = (props: OfferItemProps) => {
 
         <div style={{ marginTop: '8px' }}>{renderSubDetails(offer)}</div>
 
-        <div style={{ marginTop: '8px' }}>{renderTags(offer)}</div>
+        <div style={{ marginTop: '8px' }}>
+          <OfferTag
+            offer={offer}
+            marketRequestAvgPrice={sellerOffer.marketRequest.averagePrice}
+          />
+        </div>
       </MarketRequestItemMobileContainer>
     );
   };
@@ -213,90 +219,6 @@ const Offer = (props: OfferItemProps) => {
     return finalStatus;
   };
 
-  const renderTags = (offer: any) => {
-    const renderFirstBadge = (status: string, badgeColor: string) => (
-      <Badge
-        className="offers-badge"
-        badgeColor={badgeColor}
-        style={{ marginRight: 10 }}
-      >
-        <StatusBadgeText color="shade1" weight="bold" variant="overline">
-          {status}
-        </StatusBadgeText>
-      </Badge>
-    );
-
-    const renderNegoBadge = () => (
-      <Badge className="offers-badge" badgeColor="#fffff4" padding="5px 8px">
-        <StatusBadgeText weight="bold" variant="overline" color="alert">
-          Negotiation
-        </StatusBadgeText>
-      </Badge>
-    );
-
-    const renderNonNegoBadge = () => {
-      const offerStatus = getOfferStatus(offer, 'buyer');
-
-      const renderBadge = (
-        status: string,
-        badgeColor: string,
-        textColor: TypographyProps['color']
-      ) => (
-        <Badge
-          id="status-badge"
-          className="offers-badge"
-          badgeColor={badgeColor}
-        >
-          <StatusBadgeText color={textColor} weight="bold" variant="overline">
-            {status}
-          </StatusBadgeText>
-        </Badge>
-      );
-
-      if (offerStatus === 'PAYMENT MISSED') {
-        return renderBadge('PAYMENT MISSED', '#FFF4F6', 'error');
-      }
-      if (offerStatus === 'PAYMENT REQUIRED') {
-        return renderBadge('PAYMENT REQUIRED', '#FFF7F2', 'warning');
-      }
-      if (offerStatus === 'ACCEPTED') {
-        return renderBadge('FINALISED', '#EAFFF9', 'success');
-      }
-      if (offerStatus === 'NEW OFFER') {
-        return renderBadge('NEW OFFER', '#EAFFF9', 'success');
-      }
-    };
-
-    const checkIsNonNego = () => {
-      const offerStatus = getOfferStatus(offer, 'buyer');
-      const isNonNego =
-        offerStatus === 'PAYMENT REQUIRED' ||
-        offerStatus === 'PAYMENT MISSED' ||
-        offerStatus === 'ACCEPTED' ||
-        offerStatus === 'NEW OFFER';
-
-      return isNonNego;
-    };
-
-    const renderNegoBadges = () => (
-      <>
-        {offer.price < sellerOffer?.marketRequest?.averagePrice &&
-          renderFirstBadge('Great Value', theme.brand.success)}
-        {offer.price > sellerOffer?.marketRequest?.averagePrice &&
-          renderFirstBadge('Above Market', theme.brand.error)}
-        {renderNegoBadge()}
-      </>
-    );
-
-    return (
-      <TagsContainer>
-        <NoActionsYetBadgesContainer>
-          {checkIsNonNego() ? renderNonNegoBadge() : renderNegoBadges()}
-        </NoActionsYetBadgesContainer>
-      </TagsContainer>
-    );
-  };
-
   const renderNonMobile = () => {
     return sellerOffer.offers.map((offer, index) => (
       <OfferContainer key={index} onClick={() => onClickItem(offer)}>
@@ -345,7 +267,7 @@ const Offer = (props: OfferItemProps) => {
           </Col>
 
           <Col className="badges-col" sm={12} md={6} lg={3}>
-            {renderTags(offer)}
+            <OfferTag offer={offer} marketRequestAvgPrice={0} />
           </Col>
 
           <Col

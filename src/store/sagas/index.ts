@@ -1,7 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
-import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -56,6 +55,7 @@ import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
 import getSellerDashboardSales from './getSellerDashboardSales';
+import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
@@ -67,6 +67,7 @@ import logRequest from './logRequest';
 import marketOfferNegotiate from './marketOfferNegotiate';
 import marketRequestAcceptOffer from './marketRequestAcceptOffer';
 import marketRequestNegotiation from './marketRequestNegotiation';
+import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
 import placeOrder from './placeOrder';
@@ -159,6 +160,7 @@ const sagas = [
   logout,
   marketOfferNegotiate,
   marketRequestAcceptOffer,
+  marketRequestOfferConfirm,
   marketRequestNegotiation,
   modifyBulkUpload,
   order,

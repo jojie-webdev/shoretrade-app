@@ -1,9 +1,10 @@
+import React from 'react';
+
 import Badge from 'components/base/Badge';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
-import React from 'react';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
-
 import { useTheme } from 'utils/Theme';
+
 import { OfferTagProps } from './OfferTag.props';
 import { Container, StatusBadgeText } from './OfferTag.style';
 
@@ -38,11 +39,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
       badgeColor: string,
       textColor: TypographyProps['color']
     ) => (
-      <Badge
-        id="status-badge"
-        className="offers-badge"
-        badgeColor={badgeColor}
-      >
+      <Badge id="status-badge" className="offers-badge" badgeColor={badgeColor}>
         <StatusBadgeText color={textColor} weight="bold" variant="overline">
           {status}
         </StatusBadgeText>
@@ -84,11 +81,11 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
     </>
   );
 
-  return <Container>
-    <div>
-          {checkIsNonNego() ? renderNonNegoBadge() : renderNegoBadges()}
-        </div>
-  </Container>;
+  return (
+    <Container>
+      <div>{checkIsNonNego() ? renderNonNegoBadge() : renderNegoBadges()}</div>
+    </Container>
+  );
 };
 
 export default React.memo(OfferTag);

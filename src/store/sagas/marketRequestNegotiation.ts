@@ -1,5 +1,5 @@
-import { replace } from 'connected-react-router';
-import { BUYER_ROUTES } from 'consts';
+import { goBack, replace } from 'connected-react-router';
+import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import qs from 'qs';
 import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
@@ -30,7 +30,7 @@ function* negotiationOfferRequest(
       yield put(
         marketRequestNegotiationOfferActions.success({
           ...data,
-          data: { ...data.data, marketRequestId: action.meta.marketRequestId },
+          data: { ...data.data, ...action.meta },
         })
       );
     } catch (e) {
@@ -44,7 +44,33 @@ function* negotiationOfferRequest(
 function* negotiationOfferSuccess(
   action: AsyncAction<NegotiateOffer, NegotiationPayload>
 ) {
-  yield put(replace(BUYER_ROUTES.MARKET_REQUESTS));
+  const data = pathOr('', ['payload', 'data'], action);
+  const marketOfferId = pathOr(
+    '',
+    ['payload', 'data', 'marketOfferId'],
+    action
+  );
+  const marketRequestId = pathOr(
+    '',
+    ['payload', 'data', 'marketRequestId'],
+    action
+  );
+
+  yield put(
+    getActiveOffersActions.request({
+      queryParams: {
+        marketRequestId,
+      },
+    })
+  );
+  yield put(
+    replace(
+      BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
+        marketRequestId,
+        marketOfferId
+      )
+    )
+  );
 }
 
 function* negotiationOfferWatcher() {

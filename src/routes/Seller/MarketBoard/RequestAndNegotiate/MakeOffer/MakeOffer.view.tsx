@@ -17,6 +17,11 @@ import moment from 'moment';
 import { isEmpty, pathOr } from 'ramda';
 import { Col, Row, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import {
+  GetAllMarketRequestResponseItem,
+  ShippingTo,
+} from 'types/store/GetAllMarketRequestState';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { capitalize } from 'utils/String';
 import theme from 'utils/Theme';
@@ -30,6 +35,12 @@ import {
   SummaryCard,
 } from './MakeOffer.style';
 
+export const getShippingTo = (shippingTo: ShippingTo) => {
+  const selectedShippingAddressData = `${shippingTo?.suburb} ${shippingTo?.state} ${shippingTo?.postcode}`;
+
+  return selectedShippingAddressData;
+};
+
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
@@ -37,7 +48,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renferFromTextField = () => (
     <TextField
       label="From"
-      placeholder={props.buyerRequest?.sizeFrom?.toString() || ''}
       value={props.size.from}
       onChangeText={(v) =>
         props.setSize((prevState) => ({
@@ -57,7 +67,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renderToTextField = () => (
     <TextField
       label={`To\n(Optional)`}
-      placeholder={props.buyerRequest?.sizeTo?.toString() || ''}
       value={props.size.to}
       onChangeText={(v) => {
         props.setSize((prevState) => ({
@@ -115,7 +124,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             variant="infoAlert"
             fullWidth
             header={
-              'When you are making an offer you are committing to sell this product to this buyer.'
+              'When you are making an offer you are committing to sell and deliver this product to the buyer. .'
             }
             content={
               'You need to make sure that the product is available if the buyer accepts.'
@@ -250,9 +259,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   error={pathOr('', ['weight', '0'], errors)}
                   borderRadius="12px"
                   height="40px"
-                  placeholder={formatMeasurementUnit(
-                    props.buyerRequest.measurementUnit
-                  )}
                 />
               </Col>
 
@@ -260,7 +266,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 <TextField
                   label={`Price per ${formatMeasurementUnit(
                     props.buyerRequest.measurementUnit
-                  )}`}
+                  )} (Inc. Delivery)`}
                   LeftComponent={
                     <Typography variant="label" weight="bold" color="shade6">
                       $
@@ -274,7 +280,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   error={pathOr('', ['price', '0'], errors)}
                   borderRadius="12px"
                   height="40px"
-                  placeholder="$"
                 />
 
                 {/*<div className="shipping-to">*/}
@@ -299,7 +304,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   showArrowDownIcon={false}
                   borderRadius="12px"
                   height="40px"
-                  placeholder="01.01.2022"
                 />
               </Col>
             </Hidden>
@@ -317,9 +321,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     error={pathOr('', ['weight', '0'], errors)}
                     borderRadius="12px"
                     height="40px"
-                    placeholder={formatMeasurementUnit(
-                      props.buyerRequest.measurementUnit
-                    )}
                   />
                 </Col>
                 <Col className="textfield-col">
@@ -335,7 +336,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     error={pathOr('', ['price', '0'], errors)}
                     borderRadius="12px"
                     height="40px"
-                    placeholder="$"
                   />
                 </Col>
               </MobileFromToTextFieldsContainer>
@@ -352,7 +352,6 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   showArrowDownIcon={false}
                   borderRadius="12px"
                   height="40px"
-                  placeholder="01.01.2022"
                 />
               </Col>
             </Visible>
@@ -433,20 +432,11 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                         color="noshade"
                         variant="title5"
                       >
-                        {capitalize(
-                          (props.buyerRequest?.sizeFrom &&
-                            props.buyerRequest?.sizeFrom?.toString()) +
-                            ' ' +
-                            props.buyerRequest.measurementUnit.toLowerCase() ||
-                            ''
+                        {sizeToString(
+                          props.buyerRequest.metric,
+                          props.buyerRequest.sizeFrom || '',
+                          props.buyerRequest.sizeTo || ''
                         )}
-                        {props.buyerRequest.sizeTo
-                          ? ` - ${
-                              props.buyerRequest.sizeTo.toString() +
-                              ' ' +
-                              props.buyerRequest.measurementUnit.toLowerCase()
-                            }`
-                          : ''}
                       </Typography>
                     </div>
                   </>
@@ -497,6 +487,27 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                       {formatMeasurementUnit(
                         props.buyerRequest.measurementUnit
                       )}
+                    </Typography>
+                  </div>
+                </>
+              )}
+              {props.buyerRequest.shippingTo && (
+                <>
+                  <Typography
+                    className="header"
+                    color="shade6"
+                    variant="title5"
+                  >
+                    Shipping To:
+                  </Typography>
+                  <div className="value">
+                    <Cross7 />
+                    <Typography
+                      className="values"
+                      color="noshade"
+                      variant="title5"
+                    >
+                      {getShippingTo(props.buyerRequest.shippingTo)}
                     </Typography>
                   </div>
                 </>

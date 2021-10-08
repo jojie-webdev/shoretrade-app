@@ -3,7 +3,6 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
-  height: 100%;
   width: 100%;
   align-items: flex-start !important;
   display: flex;
@@ -20,6 +19,7 @@ export const Container = styled.div`
 export const StatusBadgeText = styled(Typography)`
   font-size: ${pxToRem(9)};
   text-align: center;
+  white-space: break-spaces;
 `;
 
 export const NoActionsYetBadgesContainer = styled.div`

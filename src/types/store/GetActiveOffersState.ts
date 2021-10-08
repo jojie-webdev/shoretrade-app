@@ -4,6 +4,17 @@ export type GetActiveOffersMeta = {
   queryParams?: Record<string, any>;
 };
 
+export enum OfferStatus {
+  ACCEPTED = 'ACCEPTED',
+  PARTIAL = 'PARTIAL',
+  PAYMENT_MISSED = 'PAYMENT MISSED',
+  DECLINED = 'DECLINED',
+  PAYMENT_REQUIRED = 'PAYMENT REQUIRED',
+  NEW_OFFER = 'NEW OFFER',
+  NEGOTIATION = 'NEGOTIATION',
+  OPEN = 'OPEN',
+}
+
 export type ShippingAddress = {
   country_code: string;
   depot_address_id: string;

@@ -36,6 +36,7 @@ export { default as addLinkedAccountActions } from './addLinkedAccount';
 export { default as addAddressActions } from './addAddress';
 export { default as deleteLinkedAccountActions } from './deleteLinkedAccount';
 export { default as deleteMarketRequestActions } from './deleteMarketRequest';
+export { default as marketRequestOfferConfirm } from './marketRequestOfferConfirm';
 export { default as deleteMarketRequestOfferActions } from './deleteMarketRequestOffer';
 export { default as updateFavoriteSellerActions } from './updateFavoriteSeller';
 export { default as getSellerByIdActions } from './getSellerById';

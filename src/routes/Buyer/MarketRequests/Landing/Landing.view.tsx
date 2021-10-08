@@ -10,6 +10,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
+import OfferAlert from 'components/module/OfferAlert';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
@@ -19,11 +20,12 @@ import { useHistory } from 'react-router-dom';
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
+  OfferStatus,
 } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
+import { getOfferStatus, hasOfferWithPaymentRequired } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -45,6 +47,7 @@ import {
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
+  setHasPaymentRequired: Dispatch<SetStateAction<boolean>>;
   offers: Offer[];
   type: string;
   image: string;
@@ -72,9 +75,14 @@ export const MarketRequestItemNonMobile = (props: {
     size,
     setItemToDelete,
     metric,
+    setHasPaymentRequired,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
+
+  if (hasOfferWithPaymentRequired(offers)) {
+    setHasPaymentRequired(true);
+  }
 
   return (
     <MarketRequestItemContainer>
@@ -115,7 +123,7 @@ export const MarketRequestItemNonMobile = (props: {
           </div>
         </Col>
 
-        <Col sm={1} style={{ padding: '0 5px' }}>
+        <Col sm={2} style={{ padding: '0 5px' }}>
           <div className="sub-group">
             <SubText
               variant="caption"
@@ -165,6 +173,7 @@ export const MarketRequestItemMobile = (props: {
   paymentRequired: boolean;
   weight?: { from: number; to: number };
   measurementUnit?: string;
+  setHasPaymentRequired: Dispatch<SetStateAction<boolean>>;
   specs?: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
   offerStatus?: string;
@@ -179,7 +188,12 @@ export const MarketRequestItemMobile = (props: {
     specs,
     size,
     metric,
+    setHasPaymentRequired,
   } = props;
+
+  if (hasOfferWithPaymentRequired(offers)) {
+    setHasPaymentRequired(true);
+  }
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
@@ -262,6 +276,8 @@ const MarketRequestsLandingView = (
     pendingDeleteMarketRequest,
     loading,
     activeOffersData,
+    hasPaymentRequired,
+    setHasPaymentRequired,
   } = props;
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
@@ -281,7 +297,13 @@ const MarketRequestsLandingView = (
             key={mr.id}
             type={mr.offers?.length > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
-            leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
+            leftComponent={
+              <MarketRequestItemMobile
+                setHasPaymentRequired={setHasPaymentRequired}
+                inDetail={false}
+                {...mr}
+              />
+            }
             rightComponent={
               <div className="cta">
                 <div>
@@ -321,6 +343,7 @@ const MarketRequestsLandingView = (
             onClick={() => onClickItem(mr)}
             leftComponent={
               <MarketRequestItemNonMobile
+                setHasPaymentRequired={setHasPaymentRequired}
                 activeOffersData={activeOffersData}
                 inDetail={false}
                 setItemToDelete={setItemToDelete}
@@ -410,6 +433,13 @@ const MarketRequestsLandingView = (
           </Visible>
         </Col>
       </Row>
+      <Row>
+        <Col>
+          {hasPaymentRequired && (
+            <OfferAlert status={OfferStatus.PAYMENT_REQUIRED} />
+          )}
+        </Col>
+      </Row>
       {renderMobile()}
       {renderNonMobile()}
       <MobileFooter>
@@ -492,18 +522,6 @@ const offerNumberBadge = (offers: Offer[]) => {
   return roundBadge(offersCountTextBadge(offers), theme.grey.shade3);
 };
 
-const hasOfferWithPaymentRequired = (offers: Offer[]) => {
-  if (!offers) {
-    return;
-  }
-
-  const offer = offers.find(
-    (offer) => getOfferStatus(offer, 'buyer') === 'PAYMENT REQUIRED'
-  );
-
-  return offer;
-};
-
 const hasOfferThatIsNew = (offers: Offer[]) => {
   if (!offers || offers.length < 1) {
     return;
@@ -564,7 +582,6 @@ const renderInOrderBadge = (
 
   if (hasOfferWithPaymentRequired(offers)) {
     const newBadgeText = badgeText(theme.brand.warning, 'Payment Required');
-
     if (!isMobile) {
       const correctNewBadgeText = !isSmallDesktopScreen
         ? newBadgeText

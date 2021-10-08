@@ -36,4 +36,6 @@ export interface MarketRequestsLandingGeneratedProps {
   setItemToDelete: Dispatch<SetStateAction<{ value: null | string }>>;
   loading: boolean;
   activeOffersData: GetActiveOffersRequestResponseItem[];
+  setHasPaymentRequired: Dispatch<SetStateAction<boolean>>;
+  hasPaymentRequired: boolean;
 }

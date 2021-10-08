@@ -7,9 +7,11 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestSummary from 'components/module/MarketRequestSummary';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
+import OfferAlert from 'components/module/OfferAlert';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
@@ -18,11 +20,14 @@ import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import { Offer } from 'types/store/GetActiveOffersState';
+import { Offer, OfferStatus } from 'types/store/GetActiveOffersState';
+import { formatPrice } from 'utils/formatPrice';
 import { sizeToString } from 'utils/Listing';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { createdAtToExpiry } from 'utils/MarketRequest';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import Check from '../../../../components/base/SVG/Check';
@@ -55,6 +60,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   const {
     handleStartNegotiate,
     handleAcceptOffer,
+    handleConfirmOffer,
     isAccepted,
     thereIsNewOffer,
     counterOffer,
@@ -75,6 +81,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     onClickDelete,
     showDelete,
     setShowDelete,
+    isLoadingAcceptOffer,
+    isLoadingOffer,
+    isLoadingConfirmOffer,
   } = props;
 
   const history = useHistory();
@@ -159,92 +168,22 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
   const quantityValue =
     selectedOffer?.weight + ' ' + selectedOffer?.measurementUnit;
+  const pricePerUnit = `${toPrice(
+    selectedOffer.price
+  )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
-  const buildAlertProperties = () => {
-    const offerStatus = getOfferStatus(selectedOffer, 'buyer');
-
-    const contentTypo = (content: string): ReactNode => (
-      <Typography component={'span'} variant="body" color="shade6" weight="400">
-        {content}
-      </Typography>
-    );
-
-    let alertProps = {} as AlertProps;
-
-    if (
-      offerStatus === 'NEGOTIATION' &&
-      !thereIsNewOffer &&
-      parseFloat(counterOffer) > 0
-    ) {
-      alertProps = {
-        variant: 'infoAlert',
-        header: 'In Negotiation',
-        content: contentTypo(
-          'Your selectedOffer is being reviewed by the Seller.'
-        ),
-      };
-    }
-    if (offerStatus === 'PAYMENT REQUIRED') {
-      alertProps = {
-        variant: 'warning',
-        header: 'Payment Required',
-        content: contentTypo(
-          'Please process the payment within the remaining time. This selectedOffer will automatically close if payment is not received.'
-        ),
-      };
-    }
-    if (offerStatus === 'PAYMENT MISSED') {
-      alertProps = {
-        variant: 'error',
-        header: 'Payment Missed',
-        content: contentTypo(
-          'The selectedOffer has automatically closed due to missed payment.'
-        ),
-      };
-    }
-    if (offerStatus === 'ACCEPTED') {
-      alertProps = {
-        variant: 'success',
-        header: 'Finalised',
-        content: (
-          <span
-            onClick={() => {
-              history.replace(BUYER_ROUTES.ORDERS);
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            {contentTypo(
-              `This offer is now Order [#0000-${selectedOffer.orderRefNumber}].`
-            )}
-          </span>
-        ),
-      };
-    }
-    if (offerStatus === 'NEW OFFER') {
-      alertProps = {
-        variant: 'success',
-        header: 'New Offer',
-        content: contentTypo(
-          'Review the offer details and Negotiate or Accept the offer to proceed.'
-        ),
-      };
-    }
-
-    return alertProps;
-  };
-
+  const offerStatus = getOfferStatus(selectedOffer, 'buyer');
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {buildAlertProperties().variant && (
-        <AlertsContainer>
-          <Row>
-            <Col>
-              <Alert {...buildAlertProperties()} fullWidth />
-            </Col>
-          </Row>
-          <div style={{ marginBottom: '16px' }} />
-        </AlertsContainer>
+      {offerStatus !== '' && (
+        <OfferAlert
+          status={offerStatus as OfferStatus}
+          counterOffer={counterOffer}
+          thereIsNewOffer={thereIsNewOffer}
+          orderRefNumber={selectedOffer.orderRefNumber}
+        />
       )}
+
       <FullOfferDetailsContainer>
         <Row>
           <Col>
@@ -262,6 +201,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
             {renderLabel('QUANTITY', { marginTop: '24px' })}
             {renderLabelValue(quantityValue)}
+
+            {renderLabel('PRICE', { marginTop: '24px' })}
+            {renderLabelValue(pricePerUnit)}
 
             {renderLabel('Delivery Date', { marginTop: '24px' })}
             {renderLabelValue(
@@ -326,6 +268,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           </Row>
 
           {selectedOffer?.status !== 'ACCEPTED' &&
+            selectedOffer?.status !== 'PARTIAL' &&
             getOfferStatus(selectedOffer, 'buyer') !== 'PAYMENT MISSED' && (
               <CTAContainer>
                 <StyledNegotiateButtonContainer>
@@ -341,16 +284,32 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                   <StyledAcceptButton
                     text="ACCEPT"
                     icon={<Check width={10} height={9} />}
-                    onClick={() => handleAcceptOffer()}
+                    onClick={() => handleConfirmOffer()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
                 </div>
               </CTAContainer>
             )}
+          {selectedOffer?.status === 'PARTIAL' && (
+            <CTAContainer>
+              <div style={{ width: '124px' }}>
+                <StyledAcceptButton
+                  text="Pay Now"
+                  icon={<Check width={10} height={9} />}
+                  onClick={() => handleAcceptOffer()}
+                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                />
+              </div>
+            </CTAContainer>
+          )}
         </Hidden>
       </FullOfferDetailsContainer>
     </Col>
   );
+
+  if (isLoadingAcceptOffer || isLoadingOffer) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -417,7 +376,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             <MarketRequestSummary
               measurementUnit={marketRequest?.measurementUnit || ''}
               metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.sizeOptions || []}
+              sizeOptions={marketRequest?.size.options || []}
               sizeUngraded={marketRequest?.sizeUngraded || false}
               sizeFrom={marketRequest?.size.from}
               sizeTo={marketRequest?.size.to}
@@ -445,7 +404,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             <MarketRequestSummary
               measurementUnit={marketRequest?.measurementUnit || ''}
               metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.sizeOptions || []}
+              sizeOptions={marketRequest?.size.options || []}
               sizeUngraded={marketRequest?.sizeUngraded || false}
               sizeFrom={marketRequest?.size.from}
               sizeTo={marketRequest?.size.to}
@@ -464,26 +423,40 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         <Row>
           <Col>{renderOfferSeenTextContainer()}</Col>
         </Row>
-        {selectedOffer?.status !== 'ACCEPTED' && (
-          <Row style={{ marginTop: '40px' }}>
-            <Col style={{ paddingRight: '5px' }}>
-              <StyledNegotiateButton
-                onClick={() => handleStartNegotiate()}
-                variant="outline"
-                text="NEGOTIATE"
-                icon={<Refresh />}
-                disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
-              />
-            </Col>
-            <Col style={{ paddingLeft: '5px' }}>
+        {selectedOffer?.status !== 'ACCEPTED' &&
+          selectedOffer?.status !== 'PARTIAL' && (
+            <Row style={{ marginTop: '40px' }}>
+              <Col style={{ paddingRight: '5px' }}>
+                <StyledNegotiateButton
+                  onClick={() => handleStartNegotiate()}
+                  variant="outline"
+                  text="NEGOTIATE"
+                  icon={<Refresh />}
+                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                />
+              </Col>
+              <Col style={{ paddingLeft: '5px' }}>
+                <StyledAcceptButton
+                  text="ACCEPT"
+                  icon={<Check width={10} height={9} />}
+                  onClick={() => handleConfirmOffer()}
+                  loading={isLoadingConfirmOffer}
+                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                />
+              </Col>
+            </Row>
+          )}
+        {selectedOffer?.status === 'PARTIAL' && (
+          <CTAContainer>
+            <div style={{ width: '124px' }}>
               <StyledAcceptButton
-                text="ACCEPT"
+                text="Pay Now"
                 icon={<Check width={10} height={9} />}
                 onClick={() => handleAcceptOffer()}
                 disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
               />
-            </Col>
-          </Row>
+            </div>
+          </CTAContainer>
         )}
       </Visible>
     </Container>

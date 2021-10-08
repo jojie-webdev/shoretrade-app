@@ -14,12 +14,17 @@ import {
   marketOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
-import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
-import { AcceptOfferItem } from 'types/store/MarketOfferState';
+import marketRequestOfferConfirmActions from 'store/actions/marketRequestOfferConfirm';
+import marketRequestOfferConfirm from 'store/reducers/marketRequestOfferConfirm';
+import {
+  GetActiveOffersRequestResponseItem,
+  Negotiations,
+  Offer,
+} from 'types/store/GetActiveOffersState';
+import { AcceptOfferItem, OfferConfirm } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
 
 import PaymentMethod from '../Checkout/PaymentMethod/PaymentMethod.container';
-// import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 import { OfferDetailsProps } from './OfferDetails.props';
 import OfferDetailsView from './OfferDetails.view';
 
@@ -58,6 +63,10 @@ const OfferDetails = (): JSX.Element => {
 
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
+  );
+
+  const confirmOffer = useSelector(
+    (store: Store) => store.marketRequestOfferConfirm
   );
 
   const buyerRequests = useSelector(
@@ -104,6 +113,14 @@ const OfferDetails = (): JSX.Element => {
     };
 
     dispatch(marketOfferActions.add(payload));
+  };
+
+  const handleConfirmOffer = () => {
+    const meta: OfferConfirm = {
+      marketOfferId: selectedOffer?.id || '',
+    };
+
+    dispatch(marketRequestOfferConfirmActions.request(meta));
   };
 
   const handleStartNegotiate = () => {
@@ -297,6 +314,8 @@ const OfferDetails = (): JSX.Element => {
     counterOffer,
     handleAcceptOffer,
     handleStartNegotiate,
+    isLoadingAcceptOffer: acceptOffer.pending || false,
+    isLoadingOffer: activeOffers.pending || false,
     isAccepted,
     newOffer,
     selectedOffer,
@@ -316,6 +335,8 @@ const OfferDetails = (): JSX.Element => {
     onClickDelete,
     showDelete,
     setShowDelete,
+    handleConfirmOffer,
+    isLoadingConfirmOffer: confirmOffer.pending || false,
   };
 
   const getPrice = () => {

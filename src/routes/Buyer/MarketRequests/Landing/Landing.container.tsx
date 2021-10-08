@@ -21,6 +21,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [hasPaymentRequired, setHasPaymentRequired] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
@@ -92,6 +93,8 @@ const MarketRequestsLanding = (): JSX.Element => {
     setItemToDelete,
     loading: loading || false,
     activeOffersData,
+    hasPaymentRequired,
+    setHasPaymentRequired,
   };
 
   return <MarketRequestsLandingView {...generatedProps} />;

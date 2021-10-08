@@ -11,11 +11,29 @@ const toKilograms: Function = (size: string): string =>
 
 export const sizeToString = (
   typeMetric: string,
-  sizeFrom?: string,
-  sizeTo?: string
+  sizeFrom?: string | number,
+  sizeTo?: string | number,
+  options?: string[]
 ): string => {
-  if (!sizeFrom || sizeFrom === '') {
+  sizeFrom = sizeFrom ? sizeFrom.toString() : '';
+  sizeTo = sizeTo ? sizeTo.toString() : '';
+
+  if ((!sizeFrom || sizeFrom === '') && !options) {
     return 'Ungraded';
+  }
+
+  if (options) {
+    switch (typeMetric) {
+      case 'Oyster Grade':
+        if (!sizeFrom || sizeFrom === '') {
+          if (options && options.length > 2) {
+            return 'Various';
+          } else if (options && options.length) {
+            return options.join(', ');
+          }
+          return '';
+        }
+    }
   }
 
   switch (typeMetric) {

@@ -5,151 +5,147 @@ import { Row, Col } from 'react-grid-system';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 
-export const OfferContainer = styled.div` 
-    background: #FFFFFF;
-    box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
-    border-radius: 8px;
-    padding: 8px 24px 8px 8px;
-    margin-top: 12px;
-    cursor: pointer;
+export const OfferContainer = styled.div`
+  background: #ffffff;
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  border-radius: 8px;
+  padding: 8px 24px 8px 8px;
+  margin-top: 12px;
+  cursor: pointer;
 
-    .sub-details{
-        padding-top: 5px;
+  .sub-details {
+    padding-top: 5px;
 
-        @media (max-width: 833px) {
-            background-color: red !important;
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    @media (max-width: 833px) {
+      background-color: red !important;
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+  }
 
-    .cta{
-        @media (max-width: 833px) {
-            margin-top: 15px;
-            justify-content: flex-start !important;
-        }
+  .cta {
+    @media (max-width: 833px) {
+      margin-top: 15px;
+      justify-content: flex-start !important;
     }
+  }
 
-    .sub-details{
-        @media (max-width: 1199px) {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+  .sub-details {
+    @media (max-width: 1199px) {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+  }
 
-    .delete-button {
-        background-color:  ${theme.grey.shade2};
-        height: 32px;
-        width: 32px;
-        border-radius: 12px;
-        align-self: center;
-        border: 1px solid ${theme.grey.shade4};
+  .delete-button {
+    background-color: ${theme.grey.shade2};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+    border: 1px solid ${theme.grey.shade4};
 
-        path {
-            fill: ${theme.grey.shade7};
-        }
+    path {
+      fill: ${theme.grey.shade7};
     }
+  }
 
-    .badges-col{
-        display: flex;
-        align-items: center;
-        justify-content: center !important;
-
-        @media ${BREAKPOINTS['lg']} {
-            margin-bottom: 5px !important;
-        }
-    }
-`
+  .badges-col {
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+  }
+`;
 
 export const MarketRequestItemInteractionContainer = styled.div`
-    margin-top: 12px;
+  margin-top: 12px;
 
-    .delete-button {
-        background-color:  ${theme.grey.shade2};
-        height: 32px;
-        width: 32px;
-        border-radius: 12px;
-        align-self: center;
-        border: 1px solid ${theme.grey.shade4};
+  .delete-button {
+    background-color: ${theme.grey.shade2};
+    height: 32px;
+    width: 32px;
+    border-radius: 12px;
+    align-self: center;
+    border: 1px solid ${theme.grey.shade4};
 
-        path {
-            fill: ${theme.grey.shade7};
-        }
+    path {
+      fill: ${theme.grey.shade7};
     }
+  }
 
-    .cta{
-        display: flex;
-        align-items: center;
-        height: 115px;
-        align-content: space-between;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-`
+  .cta {
+    display: flex;
+    align-items: center;
+    height: 115px;
+    align-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
 
 export const TagsContainer = styled.div`
-    height: 100%; 
-    width: 100%;
-    align-items: flex-start !important;
-    display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: flex-start !important;
+  display: flex;
 
-    #status-badge{
-        margin: 0px;
+  #status-badge {
+    margin: 0px;
 
-        @media (min-width: 993px){
-            margin:auto;
-        }
+    @media (min-width: 993px) {
+      margin: auto;
     }
-`
+  }
+`;
 
 export const NoActionsYetBadgesContainer = styled.div`
-    display: flex;
-    height: 100%;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
 
-    @media (max-width: 1480px) {
-        flex-flow: column !important;
-    }
+  @media (max-width: 1480px) {
+    flex-flow: column !important;
+  }
 
-    @media (max-width: 991px) {
-        display: -webkit-inline-box !important;
-    }
-`
+  @media (max-width: 991px) {
+    display: -webkit-inline-box !important;
+  }
+`;
 
 export const StarsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    height: 12px;
-`
+  display: flex;
+  align-items: center;
+  height: 12px;
+`;
 
 export const MajorInfoContainer = styled.div`
-    margin-left: 12px;
-    display: flex;
-    flex-flow: column;
-    align-items: baseline;
-    justify-content: space-evenly;
-    height: 100%;
-`
+  margin-left: 12px;
+  display: flex;
+  flex-flow: column;
+  align-items: baseline;
+  justify-content: space-evenly;
+  height: 100%;
+`;
 
 export const OfferRowContainer = styled(Row)`
-    display: flex;
-    justify-content: space-between;
-`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const MajorInfoNonMobileContainer = styled.div`
-    margin-left: 12px;
-    display: flex;
-    flex-flow: column;
-    align-items: baseline;
-    justify-content: space-evenly;
-    height: 100%;
-    padding-bottom: 10px;
-`
+  margin-left: 12px;
+  display: flex;
+  flex-flow: column;
+  align-items: baseline;
+  justify-content: space-evenly;
+  height: 100%;
+  padding-bottom: 10px;
+`;
 
 export const MajorInfo = styled.div`
   display: flex;
@@ -199,7 +195,11 @@ export const StatusBadgeText = styled(Typography)`
   text-align: center;
 `;
 
-export const AvatarPlaceholder = styled.div<{ borderRadius?: string, width?: string, height?: string }>`
+export const AvatarPlaceholder = styled.div<{
+  borderRadius?: string;
+  width?: string;
+  height?: string;
+}>`
   border-radius: 5px;
   width: ${({ width }) => width || '56px'};
   height: ${({ height }) => height || '56px'};

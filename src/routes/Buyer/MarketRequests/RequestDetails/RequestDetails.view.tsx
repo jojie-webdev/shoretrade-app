@@ -16,6 +16,7 @@ import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import MarketRequestSummaryView from 'components/module/MarketRequestSummary';
+import OfferAlert from 'components/module/OfferAlert';
 import OfferItem from 'components/module/OfferItem';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -25,18 +26,16 @@ import { useMediaQuery } from 'react-responsive';
 import { useLocation } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { getAllMarketRequestActions } from 'store/actions';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  OfferStatus,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { createdAtToExpiry } from 'utils/MarketRequest';
+import { hasOfferWithPaymentRequired } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import {
-  DetailsContentContainer,
-  DetailsDataContainer,
-  DetailsHeaderContainer,
-} from '../Create/Create.style';
-import Cross7 from './../../../../components/base/SVG/Cross7';
 import { Store } from './../../../../types/store/Store';
 import {
   RequestDetailsContainer,
@@ -277,6 +276,10 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         )}
       </Row>
 
+      {hasOfferWithPaymentRequired(filteredBuyerRequest?.offers || []) && (
+        <OfferAlert status={OfferStatus.PAYMENT_REQUIRED} />
+      )}
+
       {sellerOffersCopy?.length > 0 ? (
         sellerOffersCopy.map(
           (offer: GetActiveOffersRequestResponseItem, index: number) => (
@@ -380,7 +383,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           <MarketRequestSummaryView
             measurementUnit={filteredBuyerRequest?.measurementUnit || ''}
             metric={filteredBuyerRequest?.metric || ''}
-            sizeOptions={filteredBuyerRequest?.sizeOptions || []}
+            sizeOptions={filteredBuyerRequest?.size.options || []}
             sizeUngraded={filteredBuyerRequest?.sizeUngraded || false}
             sizeFrom={filteredBuyerRequest?.size.from}
             sizeTo={filteredBuyerRequest?.size.to}
@@ -468,7 +471,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                 <MarketRequestSummaryView
                   measurementUnit={filteredBuyerRequest?.measurementUnit || ''}
                   metric={filteredBuyerRequest?.metric || ''}
-                  sizeOptions={filteredBuyerRequest?.sizeOptions || []}
+                  sizeOptions={filteredBuyerRequest?.size.options || []}
                   sizeUngraded={filteredBuyerRequest?.sizeUngraded || false}
                   sizeFrom={filteredBuyerRequest?.size.from}
                   sizeTo={filteredBuyerRequest?.size.to}

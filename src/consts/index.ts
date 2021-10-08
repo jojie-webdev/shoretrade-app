@@ -8,6 +8,7 @@ export {
   SELLER_SOLD_ROUTES,
   SELLING_ROUTES,
   ADD_PRODUCT_ROUTES,
+  BUYER_MARKET_REQUEST_ROUTES,
 } from './routes';
 
 export const API = {
