@@ -19,6 +19,7 @@ import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String';
@@ -110,13 +111,9 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         <Alert
           variant="infoAlert"
           fullWidth
-          header={
-            'When you are making an offer you are committing to sell and deliver this product to the buyer.'
-          }
+          header={'Review the details of your offer below.'}
           content={
-            'You need to make sure that the product is available if the buyer accepts. ' +
-            'Review the details of your offer below. Keep in mind that an accepted Buyer Request is not finalised until the Buyer has processed the payment. ' +
-            'Ensure your notifications are turned on to receive updates. '
+            'Keep in mind that an accepted Buyer Request is not finalised until the Buyer has processed the payment. Ensure your notifications are turned on to receive updates.'
           }
           style={{
             marginBottom: 32,
@@ -133,46 +130,48 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         {!isEmpty(getSizeBadge()) ? (
           <SummaryBadges label="Sizes" items={getSizeBadge()} />
         ) : (
-          <>
-            <Typography
-              style={{ marginBottom: 12 }}
-              color="shade6"
-              variant="overline"
-            >
-              Size
-            </Typography>
+          <Row>
+            <Col>
+              <Typography
+                style={{ marginBottom: 12 }}
+                color="shade6"
+                variant="overline"
+              >
+                Size
+              </Typography>
 
-            <div className="quantity-container">
-              <StyledBadge badgeColor={theme.grey.shade3}>
-                <BadgeText color="shade9" variant="overline">
-                  {sizeToString(
-                    props.buyerRequest.metric,
-                    properOffer?.size.from?.toString()
-                  )}
-                </BadgeText>
-              </StyledBadge>
-              {properOffer?.size.to && (
-                <>
-                  <Typography
-                    variant="label"
-                    color="noshade"
-                    weight="bold"
-                    className="dash"
-                  >
-                    -
-                  </Typography>
-                  <StyledBadge badgeColor={theme.grey.shade3}>
-                    <BadgeText color="shade9" variant="overline">
-                      {sizeToString(
-                        props.buyerRequest.metric,
-                        properOffer?.size.to?.toString()
-                      )}
-                    </BadgeText>
-                  </StyledBadge>
-                </>
-              )}
-            </div>
-          </>
+              <div className="quantity-container">
+                <StyledBadge badgeColor={theme.grey.shade3}>
+                  <BadgeText color="shade9" variant="overline">
+                    {sizeToString(
+                      props.buyerRequest.metric,
+                      properOffer?.size.from?.toString()
+                    )}
+                  </BadgeText>
+                </StyledBadge>
+                {properOffer?.size.to && (
+                  <>
+                    <Typography
+                      variant="label"
+                      color="noshade"
+                      weight="bold"
+                      className="dash"
+                    >
+                      -
+                    </Typography>
+                    <StyledBadge badgeColor={theme.grey.shade3}>
+                      <BadgeText color="shade9" variant="overline">
+                        {sizeToString(
+                          props.buyerRequest.metric,
+                          properOffer?.size.to?.toString()
+                        )}
+                      </BadgeText>
+                    </StyledBadge>
+                  </>
+                )}
+              </div>
+            </Col>
+          </Row>
         )}
 
         <Row>
@@ -180,7 +179,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             {' '}
             <ThirdItemContainer>
               <Typography
-                style={{ marginBottom: '12px' }}
+                style={{ margin: '24px 0 12px 0' }}
                 color="shade6"
                 variant="overline"
               >
@@ -199,7 +198,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           <Col>
             <ThirdItemContainer>
               <Typography
-                style={{ marginBottom: '12px' }}
+                style={{ margin: '24px 0 12px 0' }}
                 color="shade6"
                 variant="overline"
               >
@@ -208,7 +207,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               <div className="quantity-container">
                 <StyledBadge badgeColor={theme.grey.shade3}>
                   <BadgeText color="shade9" variant="overline">
-                    {`${properOffer?.price || 0} /
+                    {`${toPrice(properOffer?.price)} /
                     ${formatMeasurementUnit(
                       props.buyerRequest.measurementUnit
                     )}`}
@@ -250,7 +249,9 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               <div className="quantity-container">
                 <StyledBadge badgeColor={theme.grey.shade3}>
                   <BadgeText color="shade9" variant="overline">
-                    {moment(properOffer.deliveryDate).format('DD.MM.yyyy')}
+                    {formatEstDelivery(
+                      properOffer.deliveryDate ? properOffer.deliveryDate : ''
+                    )}
                   </BadgeText>
                 </StyledBadge>
               </div>

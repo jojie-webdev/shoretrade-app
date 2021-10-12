@@ -47,6 +47,7 @@ export type GetActiveOffersRequestResponseItem = {
   weight: number;
   image: string;
   name: string;
+  metric: string;
   measurementUnit: string;
   marketRequest: OfferMarketRequest;
   size: {

@@ -115,8 +115,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           {!thereIsNewOffer && counterOffer === '' && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                You have received an selectedOffer by the Seller. Either click
-                accept or negotiate to proceed.
+                You have received an offer by the Seller. Either click accept or
+                negotiate to proceed.
               </Typography>
             </div>
           )}
@@ -124,8 +124,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           {thereIsNewOffer && counterOffer === newOffer && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                You have received an selectedOffer by the Seller. Either click
-                accept or negotiate to proceed.
+                You have received an offer by the Seller. Either click accept 
+                or negotiate to proceed.
               </Typography>
             </div>
           )}

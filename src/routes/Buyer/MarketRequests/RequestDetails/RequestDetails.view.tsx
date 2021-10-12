@@ -32,7 +32,6 @@ import {
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { createdAtToExpiry } from 'utils/MarketRequest';
-import { hasOfferWithPaymentRequired } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -275,10 +274,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
           )
         )}
       </Row>
-
-      {hasOfferWithPaymentRequired(filteredBuyerRequest?.offers || []) && (
-        <OfferAlert status={OfferStatus.PAYMENT_REQUIRED} />
-      )}
 
       {sellerOffersCopy?.length > 0 ? (
         sellerOffersCopy.map(

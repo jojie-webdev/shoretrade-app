@@ -27,7 +27,6 @@ export const Container = styled.div`
 export const BadgesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 24px;
 
   .badge {
     padding: 6px 8px;

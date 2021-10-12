@@ -42,7 +42,7 @@ function* confirmOfferRequest(
 }
 
 function* confirmOfferSuccess(action: AsyncAction<Offer, GenericResponse>) {
-  yield put(replace(BUYER_ROUTES.MARKET_REQUESTS));
+  // yield put(replace(BUYER_ROUTES.MARKET_REQUESTS));
 }
 
 function* confirmOfferWatcher() {

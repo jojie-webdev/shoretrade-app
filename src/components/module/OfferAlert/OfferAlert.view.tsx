@@ -83,12 +83,11 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
   };
 
   const alertProps = buildAlertProperties();
+
   return (
     <Container>
       <Row>
-        <Col>
-          <Alert {...buildAlertProperties()} fullWidth />
-        </Col>
+        <Col>{alertProps.header && <Alert {...alertProps} fullWidth />}</Col>
       </Row>
     </Container>
   );

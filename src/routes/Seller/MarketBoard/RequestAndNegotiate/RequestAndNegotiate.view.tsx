@@ -40,6 +40,7 @@ import {
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
+import { sizeToString } from 'utils/Listing';
 
 const Step1 = ({
   isReview,
@@ -95,7 +96,7 @@ const Step1 = ({
     return (
       <div>
         <Typography
-          style={{ marginBottom: 12 }}
+          style={{ margin: '24px 0 12px 0' }}
           color="shade6"
           variant="overline"
         >
@@ -536,50 +537,23 @@ const Step1 = ({
             <div className="quantity-container">
               <StyledBadge badgeColor={theme.grey.shade3}>
                 <BadgeText color="shade9" variant="overline">
-                  {isReview
+                  {/* {isReview
                     ? buyerRequest.sizeFrom || 0
-                    : activeOffer.size.from || 0}
-                  {metric === 'Grams' ? 'g' : unit}
+                    : activeOffer.size.from || 0} */}
+                  {isReview
+                    ? sizeToString(
+                        metric,
+                        buyerRequest.sizeFrom,
+                        buyerRequest.sizeTo,
+                        buyerRequest.sizeOptions
+                      )
+                    : sizeToString(
+                        activeOffer.metric,
+                        activeOffer.size.from,
+                        activeOffer.size.to
+                      )}
                 </BadgeText>
               </StyledBadge>
-
-              {isReview && (
-                <>
-                  <Typography
-                    variant="label"
-                    color="noshade"
-                    weight="bold"
-                    className="dash"
-                  >
-                    -
-                  </Typography>
-                  <StyledBadge badgeColor={theme.grey.shade3}>
-                    <BadgeText color="shade9" variant="overline">
-                      {buyerRequest.sizeTo || 0}
-                      {metric === 'Grams' ? 'g' : unit}
-                    </BadgeText>
-                  </StyledBadge>
-                </>
-              )}
-
-              {!isReview && parseFloat(activeOffer.size.to || '0') > 0 && (
-                <>
-                  <Typography
-                    variant="label"
-                    color="noshade"
-                    weight="bold"
-                    className="dash"
-                  >
-                    -
-                  </Typography>
-                  <StyledBadge badgeColor={theme.grey.shade3}>
-                    <BadgeText color="shade9" variant="overline">
-                      {activeOffer.size.to}
-                      {metric === 'Grams' ? 'g' : unit}
-                    </BadgeText>
-                  </StyledBadge>
-                </>
-              )}
             </div>
           </>
         )}

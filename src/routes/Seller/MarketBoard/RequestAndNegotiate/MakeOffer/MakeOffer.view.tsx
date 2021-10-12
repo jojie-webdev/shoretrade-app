@@ -124,7 +124,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             variant="infoAlert"
             fullWidth
             header={
-              'When you are making an offer you are committing to sell and deliver this product to the buyer. .'
+              'When you are making an offer you are committing to sell and deliver this product to the buyer.'
             }
             content={
               'You need to make sure that the product is available if the buyer accepts.'
@@ -310,7 +310,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
 
             <Visible xs sm>
               <MobileFromToTextFieldsContainer>
-                <Col>
+                <Col className="textfield-col">
                   <TextField
                     label="Quantity"
                     value={props.weight}
@@ -327,7 +327,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   <TextField
                     label={`Price per ${formatMeasurementUnit(
                       props.buyerRequest.measurementUnit
-                    )}`}
+                    )} (Inc. Delivery)`}
                     value={props.price}
                     onChangeText={props.setPrice}
                     min={1}
@@ -338,22 +338,23 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     height="40px"
                   />
                 </Col>
+                <Col className="textfield-col">
+                  <DatePickerDropdown
+                    label="Delivery date"
+                    date={
+                      props.deliveryDate ? moment(props.deliveryDate) : null
+                    }
+                    onDateChange={(d) =>
+                      props.setDeliveryDate(d?.toDate() || null)
+                    }
+                    error={pathOr('', ['deliveryDate', '0'], errors)}
+                    showCalendarIcon={false}
+                    showArrowDownIcon={false}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
               </MobileFromToTextFieldsContainer>
-
-              <Col md={4} className="textfield-col">
-                <DatePickerDropdown
-                  label="Delivery date"
-                  date={props.deliveryDate ? moment(props.deliveryDate) : null}
-                  onDateChange={(d) =>
-                    props.setDeliveryDate(d?.toDate() || null)
-                  }
-                  error={pathOr('', ['deliveryDate', '0'], errors)}
-                  showCalendarIcon={false}
-                  showArrowDownIcon={false}
-                  borderRadius="12px"
-                  height="40px"
-                />
-              </Col>
             </Visible>
           </Row>
 
