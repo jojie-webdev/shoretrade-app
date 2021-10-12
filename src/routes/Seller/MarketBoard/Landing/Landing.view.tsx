@@ -26,6 +26,7 @@ import {
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
+  OfferStatus,
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
@@ -100,7 +101,7 @@ const BuyerRequestsInteractions = (props: {
     //   return statusTag(theme.brand.warning, 'noshade', 'PENDING PAYMENT');
     // }
 
-    if (offerStatus === 'NEW OFFER') {
+    if (offerStatus === OfferStatus.NEGOTIATION) {
       return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
     }
   };
@@ -177,17 +178,9 @@ const BuyerRequestsInteractions = (props: {
               {getExpiry(data.createdAt)}
             </Typography>
           </Col>
-          {/* <Col style={{ padding: '0 5px' }}>
-            <div style={{ display: 'flex' }}>
-              {renderTagByStatus()}
-              {getOfferCount() >= 1 &&
-                statusTag(
-                  theme.grey.shade3,
-                  'shade10',
-                  getCorrectOfferCountLabel()
-                )}
-            </div>
-          </Col> */}
+          <Col style={{ padding: '0 5px' }}>
+            <div style={{ display: 'flex' }}>{renderTagByStatus()}</div>
+          </Col>
         </>
       }
       padding="8px 20px 8px 8px"
@@ -204,30 +197,6 @@ const MyActiveOffersInteractions = (props: {
 
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
-
-  const buildSizeData = () => {
-    const getFromOnlySize = () => {
-      if (!data.size.to) {
-        return data.size.from + ' ' + sizeUnit;
-      } else return '';
-    };
-
-    const getFromAndToSize = () => {
-      const toSize = data.size.to && ` - ${data.size.to} ${sizeUnit}`;
-
-      if (!toSize) {
-        return '';
-      }
-
-      return toSize;
-    };
-
-    const sizeData = !data.size.from
-      ? 'Ungraded'
-      : getFromOnlySize() + ' ' + getFromAndToSize();
-
-    return sizeData;
-  };
 
   const buildTagByStatus = () => {
     const offerStatus = getOfferStatus(data, 'seller');
@@ -294,7 +263,7 @@ const MyActiveOffersInteractions = (props: {
           </Col>
           <Col style={{ padding: '0 5px' }}>
             <Typography variant="caption" color="shade6">
-              Size: {buildSizeData()}
+              Size: {sizeToString(data.metric, data.size.from, data.size.to)}
             </Typography>
             <Typography
               variant="caption"

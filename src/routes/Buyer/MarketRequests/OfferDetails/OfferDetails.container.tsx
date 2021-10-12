@@ -218,6 +218,12 @@ const OfferDetails = (): JSX.Element => {
     }
   }, [activeOffersData]);
 
+  useEffect(() => {
+    if (confirmOffer.data) {
+      setShowPaymentMethod(true);
+    }
+  }, [confirmOffer]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';

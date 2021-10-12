@@ -106,32 +106,11 @@ const SummaryView = (props: SummaryProps) => {
                 {sizeToString(
                   listingFormData?.metric.name || '',
                   selectedSize.from,
-                  selectedSize.from
+                  selectedSize.to
                 )}
               </BadgeText>
             </Badge>
           </div>
-          {selectedSize.to && (
-            <>
-              <div style={{ marginTop: -4, marginLeft: 4, marginRight: 4 }}>
-                <ArrowRight width={8} height={8} fill={theme.grey.shade6} />
-              </div>
-              <div>
-                <Badge
-                  className="offers-state-badge"
-                  badgeColor={theme.grey.shade3}
-                >
-                  <BadgeText color="shade9" weight="900" variant="overline">
-                    {sizeToString(
-                      listingFormData?.metric.name || '',
-                      selectedSize.to,
-                      selectedSize.to
-                    )}
-                  </BadgeText>
-                </Badge>
-              </div>
-            </>
-          )}
         </Row>
       );
     } else {
