@@ -5,6 +5,7 @@ import { TypographyProps } from 'components/base/Typography/Typography.props';
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
+  OfferStatus,
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
@@ -140,7 +141,10 @@ const MobileMarketRequests = (props: {
   const renderTagByStatus = () => {
     const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
 
-    if (offerStatus === 'NEW OFFER') {
+    if (
+      offerStatus === OfferStatus.NEGOTIATION ||
+      offerStatus === OfferStatus.NEW_OFFER
+    ) {
       return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
     }
   };
@@ -208,15 +212,7 @@ const MobileMarketRequests = (props: {
           </Typography>
         </SubMinorDetail>
 
-        <Badges>
-          {renderTagByStatus()}
-          {getOfferCount() &&
-            statusTag(
-              theme.grey.shade3,
-              'shade10',
-              getCorrectOfferCountLabel()
-            )}
-        </Badges>
+        <Badges>{renderTagByStatus()}</Badges>
       </MinorInfo>
     </BuyerRequestMobileContainer>
   );

@@ -220,7 +220,7 @@ const OfferDetails = (): JSX.Element => {
 
   useEffect(() => {
     if (confirmOffer.data) {
-      setShowPaymentMethod(true);
+      handleAcceptOffer();
     }
   }, [confirmOffer]);
 
