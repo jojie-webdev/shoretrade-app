@@ -802,14 +802,16 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           };
 
           const processCheckoutWithAccount = () => {
-            const payload: AcceptOffer = {
-              marketOfferId: marketOffer.marketOfferId.toString(),
-              marketNegotiationId: marketOffer.marketNegotiationId.toString(),
-              marketRequestId: marketOffer.marketRequestId.toString(),
-              paymentMode: 'ACCT_CRED',
-            };
+            if (marketOffer && marketOffer.marketOfferId) {
+              const payload: AcceptOffer = {
+                marketOfferId: marketOffer.marketOfferId.toString(),
+                marketNegotiationId: marketOffer.marketNegotiationId.toString(),
+                marketRequestId: marketOffer.marketRequestId.toString(),
+                paymentMode: 'ACCT_CRED',
+              };
 
-            dispatch(marketRequestAcceptOfferActions.request(payload));
+              dispatch(marketRequestAcceptOfferActions.request(payload));
+            }
           };
 
           if (paymentMethod === 'account') {

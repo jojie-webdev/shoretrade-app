@@ -101,7 +101,10 @@ const BuyerRequestsInteractions = (props: {
     //   return statusTag(theme.brand.warning, 'noshade', 'PENDING PAYMENT');
     // }
 
-    if (offerStatus === OfferStatus.NEGOTIATION) {
+    if (
+      offerStatus === OfferStatus.NEW_OFFER ||
+      offerStatus === OfferStatus.NEGOTIATION
+    ) {
       return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
     }
   };
