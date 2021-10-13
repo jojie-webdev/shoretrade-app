@@ -37,6 +37,10 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
       (state: Store) => state.getPaymentMethods.data?.data.data?.cards
     ) || [];
 
+  const acceptOffer = useSelector(
+    (store: Store) => store.marketRequestAcceptOffer
+  );
+
   const pendingAddCard =
     useSelector((state: Store) => state.addCardAndPay.pending) || false;
   const processingOrder =
@@ -78,7 +82,8 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     setCardDetails,
     selectedCard,
     setSelectedCard,
-    isLoading: pendingAddCard || processingOrder,
+    isLoading:
+      pendingAddCard || processingOrder || acceptOffer.pending || false,
     addCardAndPayError,
     ...props,
   };

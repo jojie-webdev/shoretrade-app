@@ -103,7 +103,8 @@ const BuyerRequestsInteractions = (props: {
 
     if (
       offerStatus === OfferStatus.NEW_OFFER ||
-      offerStatus === OfferStatus.NEGOTIATION
+      offerStatus === OfferStatus.NEGOTIATION ||
+      offerStatus === OfferStatus.PAYMENT_REQUIRED
     ) {
       return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
     }
