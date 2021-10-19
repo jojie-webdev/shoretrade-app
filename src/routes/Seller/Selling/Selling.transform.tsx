@@ -22,7 +22,10 @@ export const listingToItem = (
     })),
     size: sizeToString(data.typeMetric, data.sizeFrom, data.sizeTo),
     listedOn: moment(data.createdAt).toDate(),
-    expiresIn: data.ends ? moment(data.ends).toDate() : undefined,
+    expiresIn:
+      data.ends && !data.catchRecurrence
+        ? moment(data.ends).toDate()
+        : undefined,
     remaining: Number(data.remaining).toFixed(2),
     unit: formatMeasurementUnit(data.measurementUnit),
     originalWeight: Number(data.originalWeight).toFixed(2),
