@@ -16,6 +16,9 @@ import {
   NavButton,
   Dropdown,
   Error,
+  IconContainer,
+  ContentAndArrowContainer,
+  FlippedArrowContainer,
 } from './DatePickerDropdown.style';
 
 const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
@@ -48,19 +51,35 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
           height={height}
           borderRadius={borderRadius}
         >
-          <div className="left-content">
-            {showCalendarIcon && <Calendar fill={theme.grey.shade6} />}
+          <IconContainer>
+            {showCalendarIcon && (
+              <div style={{ paddingLeft: 3 }}>
+                <Calendar fill={theme.grey.shade6} />{' '}
+              </div>
+            )}
+          </IconContainer>
+          <ContentAndArrowContainer>
             {date ? (
-              <Typography variant="label">
-                {date.format('DD.MM.yyyy')}
-              </Typography>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="label">
+                  {date.format('DD.MM.yyyy')}
+                </Typography>
+              </div>
             ) : (
               <Typography variant="label" color="shade5">
                 {placeholder}
               </Typography>
             )}
-          </div>
-          {showArrowDownIcon && <DropdownArrow />}
+            {showArrowDownIcon ? (
+              show ? (
+                <FlippedArrowContainer>
+                  <DropdownArrow />
+                </FlippedArrowContainer>
+              ) : (
+                <DropdownArrow />
+              )
+            ) : null}
+          </ContentAndArrowContainer>
         </Dropdown>
 
         {show && (

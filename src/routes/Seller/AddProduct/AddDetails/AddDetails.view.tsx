@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
-import Typography from 'components/base/Typography';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Select from 'components/base/Select';
-import { DollarSign, InfoFilled } from 'components/base/SVG';
+import { Calendar, DollarSign, InfoFilled } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
+import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
+import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment-timezone';
@@ -21,7 +22,6 @@ import { PlaceData } from 'types/PlaceData';
 import { originToPlaceData } from 'utils/Address/originToPlaceData';
 import { placeDataToOrigin } from 'utils/Address/placeDataToOrigin';
 import { createUpdateReducer } from 'utils/Hooks';
-import IconTooltip from 'components/module/IconTooltip';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -386,6 +386,8 @@ const AddDetails = ({
                 pathOr('', ['catchDate', '0'], errors) ||
                 pathOr('', ['isDateRangeValid', '0'], errors)
               }
+              showCalendarIcon={true}
+              showArrowDownIcon={true}
             />
           ) : (
             <Select
@@ -441,6 +443,8 @@ const AddDetails = ({
                 isOutsideRange={(date) =>
                   date < new Date().setHours(0, 0, 0, 0)
                 }
+                showCalendarIcon={true}
+                showArrowDownIcon={true}
               />
             </Col>
             <Col md={6} className="textfield-col">

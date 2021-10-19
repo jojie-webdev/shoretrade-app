@@ -58,7 +58,7 @@ export const Dropdown = styled.div<{
   borderRadius?: string;
 }>`
   background: ${(props) => props.theme.grey.noshade};
-  padding: 12px;
+  padding: 0px 12px;
   border-radius: ${({ borderRadius }) => borderRadius || '4px'};
   height: ${({ height }) => height || '48px'};
   width: 100%;
@@ -69,18 +69,18 @@ export const Dropdown = styled.div<{
         : active
         ? theme.brand.primary
         : theme.grey.shade3};
-
   display: flex;
   align-items: center;
-  justify-content: space-between;
+`;
 
-  .left-content {
-    display: flex;
-    align-items: center;
+export const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-right: 1px solid ${({ theme }) => theme.grey.shade6};
 
-    svg {
-      margin-right: 16px;
-    }
+  svg {
+    margin-right: 16px;
   }
 `;
 
@@ -97,4 +97,16 @@ export const NavButton = styled.div<{ direction: 'left' | 'right' }>`
 
 export const Error = styled(Typography)`
   margin-top: 4px;
+`;
+
+export const ContentAndArrowContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0px 8px 0px 15px;
+`;
+
+export const FlippedArrowContainer = styled.div`
+  transform: rotate(180deg);
 `;

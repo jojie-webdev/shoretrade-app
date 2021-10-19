@@ -1,8 +1,10 @@
 import Typography from 'components/base/Typography/Typography.view';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import Dropdown from 'react-dropdown';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
-import { BREAKPOINTS } from 'consts/breakpoints';
+
+import { DropdownProps } from './Select.props';
 
 export const PREFIX = 'dropdownSelect';
 
@@ -16,31 +18,23 @@ const font = `
     line-height: 24px;
     font-weight: 500;`;
 
-export const StyledDropdown = styled(Dropdown) <{
-  dark?: boolean;
-  grey?: boolean;
-  disabled?: boolean;
-  border?: string;
-  background?: string;
-  borderRadius?: string
-  unbordered?: boolean;
-}>`
+export const StyledDropdown = styled(Dropdown)<DropdownProps>`
   .${PREFIX}Container {
     height: 48px;
     background: ${({ theme, disabled, dark, grey }) =>
-    disabled || grey
-      ? theme.grey.shade3
-      : dark
+      disabled || grey
+        ? theme.grey.shade3
+        : dark
         ? theme.grey.shade9
         : '#ffffff'};
     color: ${({ theme, disabled, dark }) =>
-    disabled
-      ? theme.grey.shade6
-      : dark
+      disabled
+        ? theme.grey.shade6
+        : dark
         ? theme.grey.noshade
         : theme.grey.shade9};
     border: ${({ theme, dark }) =>
-    `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
+      `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
     // margin-top: 4px;
@@ -50,23 +44,23 @@ export const StyledDropdown = styled(Dropdown) <{
   .${PREFIX}ContainerThin {
     height: 30px;
     background: ${({ theme, disabled, dark, grey, background }) =>
-    background ?
-      background :
-      disabled || grey
+      background
+        ? background
+        : disabled || grey
         ? theme.grey.shade3
         : dark
-          ? theme.grey.shade9
-          : '#ffffff'};
+        ? theme.grey.shade9
+        : '#ffffff'};
     color: ${({ theme, disabled, dark }) =>
-    disabled
-      ? theme.grey.shade6
-      : dark
+      disabled
+        ? theme.grey.shade6
+        : dark
         ? theme.grey.noshade
         : theme.grey.shade9};
     border: ${({ theme, dark }) =>
-    `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
+      `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: ${({ borderRadius }) =>
-    borderRadius ? borderRadius : '4px'};
+      borderRadius ? borderRadius : '4px'};
     padding: 4px 16px;
     // margin-top: 4px;
   }
@@ -78,30 +72,28 @@ export const StyledDropdown = styled(Dropdown) <{
 
   .${PREFIX}Menu {
     border: 1px solid ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     border-radius: 4px;
     box-shadow: 0px 2px 8px rgba(41, 43, 50, 0.10);
     // padding: 0 16px;
     margin-top: 8px;
     background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     
   }
 
   .Dropdown-option {
     ${font};
     background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+      theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
     padding: 12px 16px;
     &:hover {
       background-color: ${({ theme }) =>
-    theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
+        theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
     }
   }
-
-  
 
   .Dropdown-control {
     border:  ${({ theme, unbordered }) =>
