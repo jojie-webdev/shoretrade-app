@@ -82,13 +82,13 @@ const ROUTES: Routes = {
     icon: CheckBorder,
     nested: true,
   },
-  CREATES_MANAGEMENT: {
-    path: SELLER_ROUTES.CREATES_MANAGEMENT,
-    title: 'Crates Management',
-    children: <CratesManagement />,
-    icon: Crates,
-    nested: true,
-  },
+  // CREATES_MANAGEMENT: {
+  //   path: SELLER_ROUTES.CREATES_MANAGEMENT,
+  //   title: 'Crates Management',
+  //   children: <CratesManagement />,
+  //   icon: Crates,
+  //   nested: true,
+  // },
   ACCOUNT: {
     path: SELLER_ROUTES.ACCOUNT,
     title: 'Account',

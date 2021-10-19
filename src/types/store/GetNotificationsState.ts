@@ -14,7 +14,7 @@ export type NotificationType =
   | 'rating_favourite'
   | 'aquafutures';
 
-export type NotifName = 'Credit Added' | 'Order Placed';
+export type NotifName = 'Credit Added' | 'Order Placed' | 'Address Approved';
 
 export type NotificationItemResponse = {
   resource: NotificationType;
