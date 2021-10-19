@@ -53,52 +53,6 @@ import {
   TotalSalesCard,
 } from './Landing.style';
 
-const MarketNotification = (props: { type: string; onPress: () => void }) => {
-  const { type, onPress } = props;
-  const theme = useTheme();
-  if (type === 'NEW_MARKET_REQUEST') {
-    return (
-      <Alert
-        fullWidth
-        content="There’s a new market request that matches the types of product that you are selling"
-        variant="alert"
-        onClick={() => onPress()}
-        iconRight={
-          <ArrowRight height={12} width={12} fill={theme.brand.alert} />
-        }
-      />
-    );
-  }
-  if (type === 'MARKET_OFFER_NEGOTIATED') {
-    return (
-      <Alert
-        fullWidth
-        content="A buyer is negotiating on one of your offers"
-        variant="error"
-        onClick={() => onPress()}
-        iconRight={
-          <ArrowRight height={12} width={12} fill={theme.brand.error} />
-        }
-      />
-    );
-  }
-  if (type === 'MARKET_OFFER_ACCEPTED') {
-    return (
-      <Alert
-        fullWidth
-        content="Some of your market offers have been accepted and moved to your orders"
-        variant="success"
-        onClick={() => onPress()}
-        iconRight={
-          <ArrowRight height={12} width={12} fill={theme.brand.success} />
-        }
-      />
-    );
-  }
-
-  return null;
-};
-
 const hasIncreased = (percentage: string) =>
   percentage ? parseFloat(percentage) > 0 : false;
 
@@ -511,14 +465,6 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
             alignText="center"
             style={{ marginBottom: 16 }}
           />
-        )}
-        {currentNotificationType.length > 0 && (
-          <NotificationsContainer>
-            <MarketNotification
-              onPress={onClickMarketNotification}
-              type={currentNotificationType}
-            />
-          </NotificationsContainer>
         )}
         <FilterHeader {...props} />
 
