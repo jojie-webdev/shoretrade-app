@@ -7,7 +7,7 @@ import {
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 
 //TODO will add more once logic/routing is planned
-const NOTIF_NAMES: NotifName[] = ['Credit Added'];
+const NOTIF_NAMES: NotifName[] = ['Credit Added', 'Address Approved'];
 
 /**
  * Handle on click of notif
@@ -93,6 +93,9 @@ function buyerNotifNameToUrl(name: NotifName): string {
   switch (name) {
     case 'Credit Added':
       url = BUYER_ACCOUNT_ROUTES.BANK_DETAILS;
+      break;
+    case 'Address Approved':
+      url = BUYER_ROUTES.HOME;
       break;
     default:
       url = BUYER_ROUTES.HOME;
