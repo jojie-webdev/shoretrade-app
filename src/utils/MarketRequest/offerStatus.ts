@@ -27,7 +27,7 @@ export const getOfferStatus = (
   }
 
   if (status === OfferStatus.PARTIAL) {
-    return OfferStatus.PAYMENT_REQUIRED;
+    return OfferStatus.PENDING_PAYMENT;
   }
 
   if (isPaymentRequired(negotiations) && !isPaymentPending(negotiations)) {
@@ -48,7 +48,7 @@ export const getOfferStatus = (
     return isNotExpired;
   };
 
-  if (status === OfferStatus.OPEN && isNotExpired()) {
+  if (status === OfferStatus.NEGOTIATION && isNotExpired()) {
     if (from === 'seller') {
       if (
         negotiations?.length > 0 &&

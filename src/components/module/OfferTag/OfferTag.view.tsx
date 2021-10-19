@@ -10,7 +10,7 @@ import { Container, StatusBadgeText } from './OfferTag.style';
 
 const OfferTag = (props: OfferTagProps): JSX.Element => {
   const theme = useTheme();
-  const { offer, marketRequestAvgPrice } = props;
+  const { offer, marketRequestAvgPrice = 0, perspective } = props;
   const renderFirstBadge = (status: string, badgeColor: string) => (
     <Badge
       className="offers-badge"
@@ -32,7 +32,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
   );
 
   const renderNonNegoBadge = () => {
-    const offerStatus = getOfferStatus(offer, 'buyer');
+    const offerStatus = getOfferStatus(offer, perspective);
 
     const renderBadge = (
       status: string,
@@ -61,7 +61,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
   };
 
   const checkIsNonNego = () => {
-    const offerStatus = getOfferStatus(offer, 'buyer');
+    const offerStatus = getOfferStatus(offer, perspective);
     const isNonNego =
       offerStatus === 'PAYMENT REQUIRED' ||
       offerStatus === 'PAYMENT MISSED' ||
@@ -73,10 +73,10 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
 
   const renderNegoBadges = () => (
     <>
-      {offer.price < marketRequestAvgPrice &&
-        renderFirstBadge('Great Value', theme.brand.success)}
-      {offer.price > marketRequestAvgPrice &&
-        renderFirstBadge('Above Market', theme.brand.error)}
+      {offer.price < marketRequestAvgPrice ||
+        (0 && renderFirstBadge('Great Value', theme.brand.success))}
+      {offer.price > marketRequestAvgPrice ||
+        (0 && renderFirstBadge('Above Market', theme.brand.error))}
       {renderNegoBadge()}
     </>
   );

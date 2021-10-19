@@ -256,7 +256,9 @@ export const getStatusBadgeColor = (
   status: GetActiveOffersRequestResponseItem['status']
 ) => {
   if (status === 'OPEN') return theme.brand.alert;
+  if(status === 'NEGOTIATION') return theme.brand.alert;
   if (status === 'ACCEPTED') return theme.brand.success;
+  if (status === 'NEW OFFER') return theme.brand.success;
   if (status === 'DECLINED') return theme.brand.error;
   if (status === 'CLOSED') return theme.brand.error;
   return '';
@@ -275,8 +277,8 @@ export const isOfferMade = (
 export const getStatus = (
   status: GetActiveOffersRequestResponseItem['status']
 ) => {
-  if (status === 'OPEN') return 'NEGOTIATION';
-  if (status === 'ACCEPTED') return 'ACCEPTED';
+  if (status === 'NEGOTIATION') return 'NEGOTIATION';
+  if (status === 'ACCEPTED') return 'FINALISED';
   if (status === 'DECLINED') return 'LOST';
   if (status === 'CLOSED') return 'DECLINED';
   return '';

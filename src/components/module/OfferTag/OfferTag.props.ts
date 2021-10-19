@@ -1,6 +1,10 @@
-import { GetActiveOffersRequestResponseItem, Offer } from "types/store/GetActiveOffersState";
+import {
+  GetActiveOffersRequestResponseItem,
+  Offer,
+} from 'types/store/GetActiveOffersState';
 
 export interface OfferTagProps {
   offer: GetActiveOffersRequestResponseItem | Offer;
-  marketRequestAvgPrice: number;
+  marketRequestAvgPrice?: number;
+  perspective: 'buyer' | 'seller';
 }

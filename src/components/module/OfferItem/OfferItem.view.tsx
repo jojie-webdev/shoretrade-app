@@ -162,6 +162,7 @@ const Offer = (props: OfferItemProps) => {
         <div style={{ marginTop: '8px' }}>
           <OfferTag
             offer={offer}
+            perspective="buyer"
             marketRequestAvgPrice={sellerOffer.marketRequest.averagePrice}
           />
         </div>
@@ -267,7 +268,11 @@ const Offer = (props: OfferItemProps) => {
           </Col>
 
           <Col className="badges-col" sm={12} md={6} lg={3}>
-            <OfferTag offer={offer} marketRequestAvgPrice={0} />
+            <OfferTag
+              perspective="buyer"
+              offer={offer}
+              marketRequestAvgPrice={0}
+            />
           </Col>
 
           <Col

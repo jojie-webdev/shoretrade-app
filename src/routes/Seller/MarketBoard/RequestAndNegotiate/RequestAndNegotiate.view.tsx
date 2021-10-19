@@ -41,6 +41,7 @@ import {
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
 import { sizeToString } from 'utils/Listing';
+import { OfferStatus } from 'types/store/GetActiveOffersState';
 
 const Step1 = ({
   isReview,
@@ -61,7 +62,9 @@ const Step1 = ({
   const metric = isReview ? buyerRequest.metric : '';
 
   const noNegotiations = isReview ? true : isEmpty(activeOffer.negotiations);
-  const isNegoOpen = isReview ? false : activeOffer.status === 'OPEN';
+  const isNegoOpen = isReview
+    ? false
+    : activeOffer.status === OfferStatus.NEGOTIATION;
 
   const getSizeBadge = () => {
     if (buyerRequest && !isEmpty(buyerRequest.sizeOptions)) {
@@ -612,6 +615,7 @@ const Step1 = ({
           </StyledBadge>
         </div>
 
+        {/* TODO DELIVERY DATE */}
         <Negotiations activeOffer={activeOffer} />
 
         {isReview && !isMobile && (

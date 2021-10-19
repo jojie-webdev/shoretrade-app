@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem, OfferStatus } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
@@ -25,6 +25,7 @@ import {
   SubMinorInfo,
 } from '../MobileMarketRequest/MobileMarketRequest.style';
 import { StyledStatusBadge } from './MobileOffers.style';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 
 const MobileOffers = (props: {
   data: GetActiveOffersRequestResponseItem;
@@ -41,6 +42,8 @@ const MobileOffers = (props: {
     status,
     marketRequest,
   } = data;
+  
+  const parsedStatus = getOfferStatus(data, 'seller');
 
   const sizeUnit = formatMeasurementUnit(measurementUnit) === 'kg' ? 'kg' : '';
 
@@ -81,9 +84,21 @@ const MobileOffers = (props: {
 
     return sizeFrom;
   };
+  let latestOfferPrice = price;
+
+  if (data.negotiations.length > 0) {
+    const latestSellerOffer = data.negotiations.filter(
+      (n) => n.type === 'NEW_OFFER'
+    )[0];
+    if (latestSellerOffer) {
+      latestOfferPrice = latestSellerOffer.price;
+    }
+  }
 
   const buildPriceValue = () => {
-    const priceValue = `$${price}/${formatMeasurementUnit(measurementUnit)}`;
+    const priceValue = `$${latestOfferPrice}/${formatMeasurementUnit(
+      measurementUnit
+    )}`;
 
     return priceValue;
   };
@@ -92,14 +107,16 @@ const MobileOffers = (props: {
     <Badges>
       <StyledStatusBadge
         className="badge"
-        badgeColor={getStatusBadgeColor(status)}
+        badgeColor={getStatusBadgeColor(parsedStatus as OfferStatus)}
       >
         <BadgeText
           variant="small"
           weight="900"
-          color={status === 'OPEN' ? 'shade9' : 'noshade'}
+          color={
+            parsedStatus === OfferStatus.NEGOTIATION ? 'shade9' : 'noshade'
+          }
         >
-          {getStatus(status)}
+          {parsedStatus}
         </BadgeText>
       </StyledStatusBadge>
     </Badges>
