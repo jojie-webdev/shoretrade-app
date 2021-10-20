@@ -35,6 +35,7 @@
     "react-device-detect": "^1.17.0",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
+    "react-dropzone": "^11.4.2",
     "react-gradient-progress": "^1.0.3",
     "react-grid-system": "^7.0.3",
     "react-helmet": "^6.1.0",

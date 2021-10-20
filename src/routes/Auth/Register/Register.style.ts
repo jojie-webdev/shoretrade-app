@@ -376,3 +376,16 @@ export const StyledBadge = styled(Badge)`
 export const StyledTouchable = styled(Touchable)`
   padding: 0;
 `;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  margin-top: 16px;
+
+  button {
+    width: fit-content;
+  }
+
+  button:nth-of-type(2) {
+    margin-left: 8px;
+  }
+`;

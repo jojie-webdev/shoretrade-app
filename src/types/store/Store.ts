@@ -216,6 +216,7 @@ import {
   GetShippingQuoteMeta,
   GetShippingQuotePayload,
 } from './GetShippingQuoteState';
+import { GetStatesMeta, GetStatesPayload } from './GetStatesState';
 import {
   GetTransactionHistoryMeta,
   GetTransactionHistoryPayload,
@@ -397,6 +398,7 @@ export interface Store {
   >;
   getListing: AsyncState<GetListingMeta, GetListingPayload>;
   getListingBoxes: AsyncState<GetListingBoxesMeta, GetListingBoxesPayload>;
+  getStates: AsyncState<GetStatesMeta, GetStatesPayload>;
   history: HistoryState;
   updateFavouriteProduct: AsyncState<
     UpdateFavouriteProductMeta,

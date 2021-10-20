@@ -130,6 +130,7 @@ import {
   CarouselChevronRight,
   CarouselChevronLeft,
   Wetshop,
+  Prawn,
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
@@ -572,6 +573,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="EyeOff">
           <EyeOff width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Prawn">
+          <Prawn width={30} height={30} />
         </Wrapper>
       </Content>
     </Container>

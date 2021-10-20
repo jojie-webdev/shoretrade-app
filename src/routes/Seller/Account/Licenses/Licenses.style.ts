@@ -14,17 +14,21 @@ export const Container = styled.div`
   .add-col {
     margin-bottom: 16px;
 
-    .license-file-text {
-      margin-bottom: 6px;
+    .Dropdown-control {
+      border-radius: 4px;
     }
 
-    .add-container {
-      height: 64px;
+    .license-file-text {
+      margin-bottom: 6px;
     }
   }
 
   .btn-save-row {
     margin: 24px 0;
+
+    > div {
+      display: flex;
+    }
   }
 
   .preview-col {
@@ -59,4 +63,59 @@ export const DeleteBadge = styled.button`
 
 export const DeleteText = styled(Typography)`
   margin-left: 4px;
+`;
+
+export const TipsContainer = styled.div`
+  border-radius: 12px;
+  background: ${({ theme }) => theme.grey.shade9};
+  padding: 24px;
+  p {
+    color: #fff;
+  }
+
+  p:nth-of-type(3) {
+    margin-top: 16px;
+  }
+`;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    width: fit-content;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  > div,
+  p,
+  button {
+    margin: 0 auto;
+  }
+`;
+
+export const Image = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 16px;
+`;
+
+export const LicenseDetailsText = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const IconsContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  > div {
+    margin-left: 20px;
+  }
 `;

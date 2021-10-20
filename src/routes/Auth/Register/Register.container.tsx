@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAvailableCategories } from 'services/category';
 import { getInactiveTypesByCategory } from 'services/listing';
-import { registerActions } from 'store/actions';
+import { registerActions, getStatesActions } from 'store/actions';
 import {
   Category,
   CategoryType,
@@ -39,6 +39,13 @@ const Register = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSummaryEdit, setIsSummaryEdit] = useState(false);
 
+  const states = useSelector(
+    (store: Store) => store.getStates.data?.data || []
+  );
+
+  const getStateOptions = () =>
+    states.map((s) => ({ value: s.id, label: s.name }));
+
   const setSummaryEdit = () => {
     setIsSummaryEdit(true);
   };
@@ -46,6 +53,10 @@ const Register = (): JSX.Element => {
   const onChangeSearch = (search: string) => {
     setSearchTerm(search);
   };
+
+  useEffect(() => {
+    dispatch(getStatesActions.request({}));
+  }, []);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
@@ -306,6 +317,7 @@ const Register = (): JSX.Element => {
     setSearchTerm,
     onRemoveSelectedCategory,
     goToLogIn,
+    states: getStateOptions(),
   };
   return <RegisterView {...generatedProps} />;
 };

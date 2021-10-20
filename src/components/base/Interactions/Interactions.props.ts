@@ -28,4 +28,6 @@ export interface InteractionsProps {
   keepIcon?: boolean;
   flat?: boolean;
   fontColor?: string;
+  marginBottom?: string;
+  customIcon?: React.ReactNode;
 }

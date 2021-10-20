@@ -8,6 +8,7 @@ export const Container = styled.div<InteractionsProps>`
   width: 100%;
   border-radius: 8px;
   padding: ${({ padding }) => padding || '24px'};
+  margin-bottom: ${({ marginBottom }) => marginBottom};
   display: flex;
   justify-content: space-between;
   position: relative;

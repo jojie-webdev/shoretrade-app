@@ -308,8 +308,15 @@ export const updateSellerLicense = (
       Authorization: `Bearer ${token}`,
     },
     data: {
-      status: 'DELETED',
       id: data.id,
+      name: data.name,
+      status: data.status,
+      expiredAt: data.expiredAt,
+      fileType: data.fileType,
+      url: data.url,
+      urlBack: data.urlBack,
+      stateId: data.stateId,
+      fileTypeBack: data.fileTypeBack,
     },
   });
 };

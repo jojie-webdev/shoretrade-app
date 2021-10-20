@@ -19,14 +19,15 @@ const Select = ({
   label,
   error,
   border,
-  borderRadius,
   background,
+  marginTop,
+  borderRadius,
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
 
   return (
-    <Container label={label}>
+    <Container label={label} marginTop={marginTop}>
       {label ? (
         <Label variant="overline" color="shade6">
           {label}

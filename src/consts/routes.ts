@@ -78,6 +78,8 @@ export const SELLER_ACCOUNT_ROUTES = {
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
   LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
+  ADD_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/add-license`,
+  EDIT_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/edit-license`,
   MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
   NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications-settings`,
 };

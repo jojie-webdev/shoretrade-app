@@ -6,6 +6,15 @@ import {
   CategoryType,
   CategoryPayload,
 } from 'types/store/GetCategories';
+import { State } from 'types/store/GetStatesState';
+
+export interface License {
+  file: File | null;
+  fileName: string;
+  fileBack?: File | null;
+  stateId?: string;
+  expiredAt?: string;
+}
 
 export interface RegistrationDetails {
   // user
@@ -38,7 +47,7 @@ export interface RegistrationDetails {
   categoryMarketSector: string;
 
   //license
-  licenses: { file: File | null; fileName: string }[];
+  licenses: License[];
 }
 
 export interface BankDetails {
@@ -79,6 +88,7 @@ export interface RegisterGeneratedProps {
   handleDownloadApplicationForm: () => void;
   goToLogIn: () => void;
   onRemoveSelectedCategory: (name: string) => void;
+  states: { value: string; label: string }[];
 }
 
 export interface StepFormProps extends RegisterGeneratedProps {
