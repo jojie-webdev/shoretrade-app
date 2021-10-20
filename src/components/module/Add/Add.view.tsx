@@ -17,6 +17,7 @@ const Add = (props: AddProps): JSX.Element => {
     Svg,
     onClickImage,
     onClickFile,
+    customTitle,
     imageTypeWhiteList = ['image/jpeg', 'image/png'],
     documentTypeWhiteList = [
       'image/jpeg',
@@ -24,6 +25,8 @@ const Add = (props: AddProps): JSX.Element => {
       'application/pdf',
       'application/msword',
     ],
+    inputProps = {},
+    error = false,
   } = props;
 
   const enableImagePicker = onClickImage !== undefined;
@@ -113,6 +116,7 @@ const Add = (props: AddProps): JSX.Element => {
           hidden
           name="image"
           onChange={handleImageChange}
+          {...inputProps}
         />
       )}
       {enableFilePicker && (
@@ -122,21 +126,28 @@ const Add = (props: AddProps): JSX.Element => {
           hidden
           name="file"
           onChange={handleFileChange}
+          {...inputProps}
         />
       )}
       <Container
-        error={invalid}
+        error={error || invalid}
         onClick={handleOnClick}
         className="add-container"
+        noSvg={!Svg}
       >
         <div className="content">
-          <div className="svg-container">
-            <Svg fill={theme.brand.primary} />
-          </div>
+          {Svg && (
+            <div className="svg-container">
+              <Svg fill={theme.brand.primary} />
+            </div>
+          )}
 
-          <Typography color="primary" variant="label">
-            {title}
-          </Typography>
+          {title && (
+            <Typography color="primary" variant="label">
+              {title}
+            </Typography>
+          )}
+          {customTitle}
         </div>
       </Container>
       {invalid && (

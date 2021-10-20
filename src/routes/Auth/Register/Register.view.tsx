@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {
   useState,
   Fragment,
@@ -20,15 +21,20 @@ import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import MobileNav from 'components/layout/MobileNav';
 import Add from 'components/module/Add/Add.view';
+import AddFile from 'components/module/AddFile';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
+import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import LocationSearch from 'components/module/LocationSearch';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, FormikProps } from 'formik';
+import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
+import { TipsContainer } from 'routes/Seller/Account/Licenses/Licenses.style';
+import { LicenseDetails } from 'routes/Seller/Account/Licenses/Licenses.view';
 import { validateAccount } from 'services/auth';
 import {
   Category,
@@ -103,6 +109,7 @@ import {
   MobileFooter,
   StyledBadge,
   StyledTouchable,
+  ButtonsContainer,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -143,6 +150,7 @@ const StepForm = ({
   handleSelectShorePay,
   handleDownloadApplicationForm,
   onRemoveSelectedCategory,
+  states,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -156,7 +164,21 @@ const StepForm = ({
     file: null,
     fileName: '',
   });
+  const [licenseBack, setLicenseBack] = useState<{
+    file: File | null;
+    fileName: string;
+  }>({
+    file: null,
+    fileName: '',
+  });
+  const [hasLicenseBack, setHasLicenseBack] = useState(false);
   const [licenseError, setLicenseError] = useState('');
+  const [licenseFileError, setLicenseFileError] = useState('');
+  const [expirationDate, setExpirationDate] = useState<Date | null>();
+  const [activeLicenseIdx, setActiveLicenseIdx] = useState<
+    'new' | number | null
+  >(null);
+  const [stateId, setStateId] = useState<string>();
   const [currentCategory, setCurrentCategory] = useState({
     name: '',
     id: '',
@@ -202,28 +224,47 @@ const StepForm = ({
 
   const onAddMoreLicense = () => {
     if (!license.file) {
-      setLicenseError('Please add a license file');
+      setLicenseFileError('Please add a license file');
     } else if (license.file && license.fileName.length === 0) {
       setLicenseError('Please add a license name');
     } else {
       setLicenseError('');
+      setLicenseFileError('');
+      const newLicense = {
+        ...license,
+        fileBack: licenseBack.file,
+        expiredAt: expirationDate?.toISOString(),
+        stateId,
+      };
       updateRegistrationDetails({
         licenses: [
           ...registrationDetails.licenses.filter(
-            (f) => f.fileName !== license.fileName
+            (f, idx) => activeLicenseIdx !== idx
           ),
-          license,
+          newLicense,
         ],
       });
+      setLicense({ file: null, fileName: '' });
+      setLicenseBack({ file: null, fileName: '' });
+      setExpirationDate(null);
+      setStateId('');
+      setActiveLicenseIdx(null);
     }
   };
 
-  const onDeleteLicense = (fileName: string) => {
+  const onDeleteLicense = () => {
     updateRegistrationDetails({
       licenses: [
-        ...registrationDetails.licenses.filter((f) => f.fileName !== fileName),
+        ...registrationDetails.licenses.filter(
+          (f, idx) => activeLicenseIdx !== idx
+        ),
       ],
     });
+    setLicense({ file: null, fileName: '' });
+    setLicenseBack({ file: null, fileName: '' });
+    setExpirationDate(null);
+    setStateId('');
+    setActiveLicenseIdx(null);
   };
 
   const handleSubmit = () => {
@@ -237,10 +278,7 @@ const StepForm = ({
 
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
-      if (registrationDetails.licenses.length > 0) {
-        return 'NEXT';
-      }
-      return 'SKIP';
+      return 'NEXT';
     } else if (theme.appType === 'seller' && step === 6) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
@@ -903,69 +941,211 @@ const StepForm = ({
                 <>
                   {isSeller && (
                     <>
-                      <UploadLabel variant="overline" color={'shade6'}>
-                        License File
-                      </UploadLabel>
-                      <Add
-                        onClickFile={(file) => {
-                          if (file) {
-                            const { name } = file;
-                            const fileName = name.substring(
-                              0,
-                              name.lastIndexOf('.')
-                            );
+                      {activeLicenseIdx !== null ? (
+                        <>
+                          <UploadLabel variant="overline" color={'shade6'}>
+                            License (Front)
+                          </UploadLabel>
+                          <AddFile
+                            onSelectFile={(file) => {
+                              if (file) {
+                                const { name } = file;
+                                const fileName = name.substring(
+                                  0,
+                                  name.lastIndexOf('.')
+                                );
 
-                            setLicense({
-                              file: file,
-                              fileName: fileName,
-                            });
-                          }
-                        }}
-                        title="Add a File"
-                        Svg={FileCheck}
-                      />
-                      <BaseTextField
-                        value={license.fileName}
-                        onChangeText={(v) =>
-                          setLicense((prevState) => ({
-                            ...prevState,
-                            fileName: v,
-                          }))
-                        }
-                        label="License Name"
-                        type="text"
-                        error={licenseError || ''}
-                        style={{ marginBottom: 8, marginTop: 16 }}
-                      />
+                                setLicense({
+                                  file: file,
+                                  fileName: fileName,
+                                });
+                              }
+                            }}
+                            file={license.file}
+                            fileName={license.fileName}
+                            onRemoveFile={() =>
+                              setLicense({
+                                file: null,
+                                fileName: '',
+                              })
+                            }
+                            error={licenseFileError}
+                          />
+                          {hasLicenseBack && (
+                            <>
+                              <UploadLabel variant="overline" color={'shade6'}>
+                                License (Back)
+                              </UploadLabel>
+                              <AddFile
+                                onSelectFile={(file) => {
+                                  if (file) {
+                                    const { name } = file;
+                                    const fileName = name.substring(
+                                      0,
+                                      name.lastIndexOf('.')
+                                    );
 
-                      {registrationDetails.licenses.map((l, index) => (
-                        <LicensePreview key={index}>
-                          <Typography variant="overline" color="shade6">
-                            License
-                          </Typography>
-                          <div className="license-details">
-                            <Typography variant="label" color="noshade">
-                              {l.fileName}
-                            </Typography>
-                            <button
-                              type="button"
-                              onClick={() => onDeleteLicense(l.fileName)}
-                            >
-                              <Subtract
-                                innerFill={theme.brand.error}
-                                fill={theme.grey.noshade}
+                                    setLicenseBack({
+                                      file: file,
+                                      fileName: fileName,
+                                    });
+                                  }
+                                }}
+                                file={licenseBack.file}
+                                fileName={license.fileName}
+                                onRemoveFile={() =>
+                                  setLicenseBack({
+                                    file: null,
+                                    fileName: '',
+                                  })
+                                }
                               />
-                              <Typography
-                                color="shade2"
-                                variant="label"
-                                style={{ marginLeft: 4 }}
+                            </>
+                          )}
+                          <Checkbox
+                            checked={hasLicenseBack}
+                            onClick={() => setHasLicenseBack((v) => !v)}
+                            label="License Back"
+                            style={{ marginTop: 16 }}
+                          />
+                          <BaseTextField
+                            value={license.fileName}
+                            onChangeText={(v) =>
+                              setLicense((prevState) => ({
+                                ...prevState,
+                                fileName: v,
+                              }))
+                            }
+                            label="License Name"
+                            type="text"
+                            error={licenseError || ''}
+                            style={{ marginBottom: 16, marginTop: 16 }}
+                          />
+                          <DatePickerDropdown
+                            placeholder="17/01/2025"
+                            label="Expiration Date"
+                            date={
+                              expirationDate ? moment(expirationDate) : null
+                            }
+                            onDateChange={(d) =>
+                              setExpirationDate(d?.toDate() || null)
+                            }
+                            showCalendarIcon
+                          />
+                          <Select
+                            label="State"
+                            options={states}
+                            value={stateId}
+                            onChange={(v) => setStateId(v.value)}
+                            borderRadius="4px"
+                            marginTop="16px"
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <UploadLabel variant="overline" color={'shade6'}>
+                            My Licenses
+                          </UploadLabel>
+                          {registrationDetails.licenses.length === 0 ? (
+                            <Typography
+                              variant="body"
+                              color="noshade"
+                              style={{ marginTop: 48, marginBottom: 48 }}
+                            >
+                              No licenses uploaded yet
+                            </Typography>
+                          ) : (
+                            registrationDetails.licenses.map((l, index) => (
+                              <Interactions
+                                key={index}
+                                onClick={() => {
+                                  setActiveLicenseIdx(index);
+                                  setLicense({
+                                    file: l.file,
+                                    fileName: l.fileName,
+                                  });
+                                  setLicenseBack({
+                                    file: l.fileBack || null,
+                                    fileName: '',
+                                  });
+                                  if (l.expiredAt) {
+                                    setExpirationDate(new Date(l.expiredAt));
+                                  }
+                                  setStateId(l.stateId);
+                                }}
+                                type="edit"
+                                padding="12px"
+                                marginBottom="8px"
                               >
-                                Delete
-                              </Typography>
-                            </button>
-                          </div>
-                        </LicensePreview>
-                      ))}
+                                <LicenseDetails
+                                  value={l.file?.name || ''}
+                                  label={l.fileName}
+                                  image={l.file}
+                                  expiredAt={l.expiredAt}
+                                  pending
+                                />
+                              </Interactions>
+                            ))
+                          )}
+                        </>
+                      )}
+                      <ButtonsContainer>
+                        <NextButton
+                          text={
+                            (typeof activeLicenseIdx === 'number'
+                              ? 'EDIT'
+                              : 'ADD') + ' LICENSE'
+                          }
+                          type={'button'}
+                          onClick={() =>
+                            activeLicenseIdx !== null
+                              ? onAddMoreLicense()
+                              : setActiveLicenseIdx('new')
+                          }
+                        />
+                        {typeof activeLicenseIdx === 'number' && (
+                          <NextButton
+                            text="Delete"
+                            type={'button'}
+                            onClick={() => onDeleteLicense()}
+                            variant="outline"
+                          />
+                        )}
+                        {activeLicenseIdx === 'new' && (
+                          <NextButton
+                            text="Cancel"
+                            type={'button'}
+                            onClick={() => setActiveLicenseIdx(null)}
+                            variant="outline"
+                          />
+                        )}
+                      </ButtonsContainer>
+                      {activeLicenseIdx === null && (
+                        <TipsContainer style={{ marginTop: 16 }}>
+                          <Typography variant="body" weight="bold">
+                            Do I need a Fishing License?
+                          </Typography>
+                          <Typography variant="body">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit.
+                          </Typography>
+                          <Typography variant="body" weight="bold">
+                            How to upload a Fishing License
+                          </Typography>
+                          <Typography variant="body">
+                            Click the “Add a License” Button. Make sure the
+                            license informations are legible. The approval
+                            process may take 1-2 business days
+                          </Typography>
+                          <Typography variant="body" weight="bold">
+                            Can I upload a Fishing License later?
+                          </Typography>
+                          <Typography variant="body">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit.
+                          </Typography>
+                        </TipsContainer>
+                      )}
                     </>
                   )}
                   {!isSeller && (
@@ -1078,7 +1258,7 @@ const StepForm = ({
             </Content>
           </Container>
           <ButtonContainer>
-            {!isSuccess ? (
+            {!isSuccess && (step === 4 ? activeLicenseIdx === null : true) ? (
               <>
                 <NextButton
                   takeFullWidth={isSmallScreen}
@@ -1097,15 +1277,6 @@ const StepForm = ({
                 takeFullWidth={isSmallScreen}
                 text={'ADD MORE'}
                 onClick={() => hideDetails()}
-              />
-            )}
-
-            {step === 4 && isSeller && (
-              <NextButton
-                takeFullWidth={isSmallScreen}
-                text={'ADD'}
-                type={'button'}
-                onClick={() => onAddMoreLicense()}
               />
             )}
 

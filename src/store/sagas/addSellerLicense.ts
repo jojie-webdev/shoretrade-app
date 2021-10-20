@@ -1,3 +1,5 @@
+import { push } from 'connected-react-router';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { addSellerLicense } from 'services/company';
 import { uploadImageData } from 'services/upload';
@@ -17,6 +19,7 @@ function* addSellerLicenseRequest(
   if (state.auth.token) {
     try {
       let sellerLicenseUrl = '';
+      let sellerLicenseBackUrl = '';
 
       if (action.meta.sellerLicenseFile) {
         const { data: sellerLicenseFile } = yield call(uploadImageData, {
@@ -24,6 +27,13 @@ function* addSellerLicenseRequest(
           asset: 'company',
         });
         sellerLicenseUrl = sellerLicenseFile.url;
+      }
+      if (action.meta.sellerLicenseFileBack) {
+        const { data: sellerLicenseFileBack } = yield call(uploadImageData, {
+          file: action.meta.sellerLicenseFileBack,
+          asset: 'company',
+        });
+        sellerLicenseBackUrl = sellerLicenseFileBack.url;
       }
 
       let fileType = '';
@@ -40,6 +50,19 @@ function* addSellerLicenseRequest(
         fileType = 'IMAGE';
       }
 
+      let fileTypeBack;
+      const licenseExtensionBack = sellerLicenseBackUrl.substring(
+        sellerLicenseBackUrl.lastIndexOf('.') + 1,
+        sellerLicenseBackUrl.length
+      );
+      if (licenseExtensionBack.toLowerCase().includes('doc')) {
+        fileTypeBack = 'DOC';
+      } else if (licenseExtensionBack.toLowerCase().includes('pdf')) {
+        fileTypeBack = 'PDF';
+      } else if (sellerLicenseBackUrl.length) {
+        fileTypeBack = 'IMAGE';
+      }
+
       const { data } = yield call(
         addSellerLicense,
         {
@@ -48,6 +71,10 @@ function* addSellerLicenseRequest(
             url: sellerLicenseUrl,
             name: action.meta.fileName || '',
             fileType,
+            urlBack: sellerLicenseBackUrl,
+            fileTypeBack,
+            stateId: action.meta.stateId || '',
+            expiredAt: action.meta.expiredAt || '',
           },
         },
         state.auth.token
@@ -74,6 +101,11 @@ function* addSellerLicenseSuccess(
     getSellerLicenseActions.request({
       companyId: action.payload.companyId,
     })
+  );
+  yield put(
+    push(
+      `${SELLER_ACCOUNT_ROUTES.LICENSES}?companyId=${action.payload.companyId}`
+    )
   );
 }
 

@@ -70,6 +70,7 @@ import getSellerOrdersDelivered from './getSellerOrdersDelivered';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
+import getStates from './getStates';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import history from './history';
@@ -169,6 +170,7 @@ export default (routeHistory: History) =>
         getListingFormData,
         getListingTypesByCategory,
         getListingsByType,
+        getStates,
         getMarketEstimate,
         getMarketInterests,
         getMarketNotification,

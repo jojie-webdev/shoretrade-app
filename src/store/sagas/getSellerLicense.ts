@@ -34,6 +34,7 @@ export function* getSellerLicensesRequest(
 
 function* getSellerLicensesSuccess(
   action: AsyncAction<GetSellerLicenseMeta, GetSellerLicensePayload>
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 ) {}
 
 function* getSellerLicensesWatcher() {

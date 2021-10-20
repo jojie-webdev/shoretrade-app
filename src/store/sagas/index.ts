@@ -61,6 +61,7 @@ import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
+import getStates from './getStates';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import globalModal from './globalModal';
@@ -160,6 +161,7 @@ const sagas = [
   getSellerLicense,
   getSellerOrders,
   getShippingQuote,
+  getStates,
   getTransactionHistory,
   getUser,
   logRequest,

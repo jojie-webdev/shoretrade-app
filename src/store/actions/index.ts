@@ -58,6 +58,7 @@ export { default as getShippingQuoteActions } from './getShippingQuote';
 export { default as orderActions } from './order';
 export { default as getListingActions } from './getListing';
 export { default as getListingBoxesActions } from './getListingBoxes';
+export { default as getStatesActions } from './getStates';
 export { default as searchAndCountProductTypeActions } from './searchAndCountProductType';
 export { default as historyActions } from './history';
 export { default as confirmWeightActions } from './confirmWeight';

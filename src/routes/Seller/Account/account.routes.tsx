@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens
 import AccountCompletion from './AccountCompletion';
+import AddLicense from './AddLicense';
 import Assistants from './Assistants';
 import BankDetails from './BankDetails';
 import ChangePassword from './ChangePassword';
@@ -13,6 +14,7 @@ import CreateAddress from './CreateAddress';
 import CreateAssistant from './CreateAssistant';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
+import EditLicense from './EditLicense';
 import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Licenses from './Licenses';
@@ -77,6 +79,14 @@ const ROUTES: Routes = {
   LICENSES: {
     path: SELLER_ACCOUNT_ROUTES.LICENSES,
     children: <Licenses />,
+  },
+  ADD_LICENSE: {
+    path: SELLER_ACCOUNT_ROUTES.ADD_LICENSE,
+    children: <AddLicense />,
+  },
+  EDIT_LICENSE: {
+    path: SELLER_ACCOUNT_ROUTES.EDIT_LICENSE,
+    children: <EditLicense />,
   },
   NOTIFICATIONS_SETTINGS: {
     path: SELLER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS,

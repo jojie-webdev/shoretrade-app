@@ -25,7 +25,13 @@ export type RegisterMeta = {
   debtFinancingSegment?: string;
   debtFinancingEstRevenue?: string;
   products?: string[];
-  licenses?: { file: any; fileName: string }[];
+  licenses?: {
+    file: any;
+    fileName: string;
+    fileBack?: any;
+    stateId?: string;
+    expiredAt?: string;
+  }[];
   marketSector: string;
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
@@ -61,6 +67,10 @@ export type RegisterRequestData = {
     url: string;
     name: string;
     fileType: 'IMAGE' | 'PDF' | 'DOC';
+    url_back?: string;
+    file_type_back?: string;
+    expired_at: string;
+    state_id: string;
   }[];
   marketSector: string;
   marketSelling?: CategoryPayload[];

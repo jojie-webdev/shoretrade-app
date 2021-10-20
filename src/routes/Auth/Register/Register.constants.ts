@@ -15,7 +15,7 @@ export const SELLER_STEPS = [
       'Provide your bank details so we can deposit your sales revenue.',
   },
   {
-    title: 'Licenses',
+    title: 'Fishing Licenses',
     description:
       'You have the ability to upload relevant licenses for your seafood business.',
   },
@@ -185,7 +185,7 @@ export const BUYER_STEP_SUBTITLE: { [key: number]: string } = {
 export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing your business details we will automatically generate invoices and can organise shipment of your sales.',
   3: 'Providing your bank details allows us to deposit your sales directly to your nominated account.',
-  4: 'To ensure compliance with government regulations, please upload any relevant fishing licenses you may have.',
+  4: '',
   5: 'By choosing your market sector, we learn more about your business and can optimise your ShoreTrade experience.',
   6: 'These selections will result in a personalised ShoreTrade experience through customised notifications and relevant market statistics. They can also be amended at any time within your account.',
 };

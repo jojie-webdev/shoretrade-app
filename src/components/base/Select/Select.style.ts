@@ -8,9 +8,10 @@ import { DropdownProps } from './Select.props';
 
 export const PREFIX = 'dropdownSelect';
 
-export const Container = styled.div<{ label?: string }>`
+export const Container = styled.div<{ label?: string; marginTop?: string }>`
   width: 100%;
   position: relative;
+  margin-top: ${({ marginTop }) => marginTop};
 `;
 
 const font = `
@@ -37,7 +38,6 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
       `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: 4px;
     padding: 12px 16px;
-    // margin-top: 4px;
   }
 
   /* TODO: Should extend .${PREFIX}Container */
@@ -98,7 +98,8 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
   .Dropdown-control {
     border:  ${({ theme, unbordered }) =>
       unbordered ? '0' : `1px solid ${theme.grey.shade9}`};
-    border-radius:12px;
+    border-radius: ${({ borderRadius }) =>
+      borderRadius ? borderRadius : '12px'};
     border: ${({ border }) => border};
   }
 

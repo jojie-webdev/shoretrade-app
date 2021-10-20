@@ -1,7 +1,7 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const Container = styled.div<{ error: boolean }>`
+export const Container = styled.div<{ error: boolean; noSvg: boolean }>`
   min-height: 64px;
   max-height: 88px;
   width: 100%;
@@ -12,6 +12,17 @@ export const Container = styled.div<{ error: boolean }>`
   border: 1px dashed
     ${(props) =>
       props.error ? props.theme.brand.error : props.theme.grey.shade6};
+  border-radius: 4px;
+
+  ${({ noSvg, error, theme }) => {
+    if (noSvg) {
+      return `
+        max-height: unset;
+        border: 2px dashed ${error ? theme.brand.error : theme.grey.shade6};
+        border-radius: 8px;
+      `;
+    }
+  }}
 
   @media ${BREAKPOINTS['sm']} {
     border: unset;
@@ -19,7 +30,6 @@ export const Container = styled.div<{ error: boolean }>`
   }
 
   padding: 28px 0;
-  border-radius: 4px;
 
   .content {
     display: flex;
