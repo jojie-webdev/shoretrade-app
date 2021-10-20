@@ -15,7 +15,14 @@ import {
   Error,
 } from './Select.style';
 
-const Select = ({ label, error, border, borderRadius, background, ...props }: SelectProps): JSX.Element => {
+const Select = ({
+  label,
+  error,
+  border,
+  borderRadius,
+  background,
+  ...props
+}: SelectProps): JSX.Element => {
   const theme = useTheme();
 
   return (
@@ -45,8 +52,8 @@ const Select = ({ label, error, border, borderRadius, background, ...props }: Se
                 props.disabled
                   ? theme.grey.shade6
                   : theme.appType === 'buyer'
-                    ? theme.brand.primary
-                    : theme.grey.shade7
+                  ? theme.brand.primary
+                  : theme.grey.shade7
               }
             />
           </ArrowContainer>

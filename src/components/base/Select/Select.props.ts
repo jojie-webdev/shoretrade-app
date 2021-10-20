@@ -6,8 +6,18 @@ export interface SelectProps extends ReactDropdownProps {
   size?: 'small' | 'large';
   dark?: boolean;
   grey?: boolean;
-  border?: string
-  borderRadius?: string
-  background?: string
+  border?: string;
+  borderRadius?: string;
+  background?: string;
+  unbordered?: boolean;
+}
+
+export interface DropdownProps {
+  dark?: boolean;
+  grey?: boolean;
+  disabled?: boolean;
+  border?: string;
+  background?: string;
+  borderRadius?: string;
   unbordered?: boolean;
 }

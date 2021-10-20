@@ -10,9 +10,11 @@ export enum OfferStatus {
   PAYMENT_MISSED = 'PAYMENT MISSED',
   DECLINED = 'DECLINED',
   PAYMENT_REQUIRED = 'PAYMENT REQUIRED',
+  PENDING_PAYMENT = 'PENDING PAYMENT',
   NEW_OFFER = 'NEW OFFER',
   NEGOTIATION = 'NEGOTIATION',
   OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
 }
 
 export type ShippingAddress = {
@@ -41,7 +43,7 @@ export type OfferMarketRequest = {
 
 export type GetActiveOffersRequestResponseItem = {
   id: string;
-  status: 'OPEN' | 'ACCEPTED' | 'DECLINED' | 'CLOSED';
+  status: OfferStatus;
   createdAt: string;
   price: number;
   weight: number;

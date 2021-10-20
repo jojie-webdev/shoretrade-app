@@ -41,15 +41,16 @@ const Content = (props: NegotiateSellerModalProps) => {
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
   const sortedNegotiations = sortByDate(negotiations);
-  // const newOffers = sortedNegotiations.filter((a) => a.type === 'NEW_OFFER');
+  const newOffers = sortedNegotiations.filter((a) => a.type === 'NEW_OFFER');
   const counterOffers = sortedNegotiations.filter(
     (a) => a.type === 'COUNTER_OFFER'
   );
-  // const latestNewOffer = newOffers.slice(-1)[0];
+  const latestNewOffer = newOffers.slice(-1)[0];
   const latestCounterOffer = counterOffers.slice(-1)[0];
   const currentOfferPrice = latestCounterOffer?.price || price;
 
   const currentNewOffer = negotiationPrice || currentOfferPrice;
+  const latestPrice = latestNewOffer?.price || price;
 
   // input field vs latest buyer's counter offer
   const discountValue = currentNewOffer - currentOfferPrice;
@@ -57,7 +58,6 @@ const Content = (props: NegotiateSellerModalProps) => {
     (discountValue / currentOfferPrice) *
     100
   ).toFixed(2);
-
   const totalValue = currentNewOffer * weight;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -90,16 +90,15 @@ const Content = (props: NegotiateSellerModalProps) => {
             </Typography>
           }
           placeholder={`per ${unit}`}
-          suffix={`per ${unit}`}
         />
       </Inputs>
       <ComputationContainer>
         <div className="computation-item-container">
           <Typography variant="body" weight="400" color={textColor}>
-            Original offer was
+            Previous offer was
           </Typography>
           <Typography variant="body" weight="400" color={textColor}>
-            {toPrice(marketOffer.price)}/{unit}
+            {toPrice(latestPrice)}/{unit}
           </Typography>
         </div>
 

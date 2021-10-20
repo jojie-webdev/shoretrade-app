@@ -241,6 +241,17 @@ const MyActiveOffersInteractions = (props: {
     }
   };
 
+  let latestOfferPrice = data.price;
+
+  if (data.negotiations.length > 0) {
+    const latestSellerOffer = data.negotiations.filter(
+      (n) => n.type === 'NEW_OFFER'
+    )[0];
+    if (latestSellerOffer) {
+      latestOfferPrice = latestSellerOffer.price;
+    }
+  }
+
   return (
     <Interactions
       onClick={() => onClick()}
@@ -274,7 +285,8 @@ const MyActiveOffersInteractions = (props: {
               color="shade6"
               style={{ marginTop: 4 }}
             >
-              Price: ${data.price}/{formatMeasurementUnit(data.measurementUnit)}
+              Price: ${latestOfferPrice}/
+              {formatMeasurementUnit(data.measurementUnit)}
             </Typography>
             <Typography
               variant="caption"
