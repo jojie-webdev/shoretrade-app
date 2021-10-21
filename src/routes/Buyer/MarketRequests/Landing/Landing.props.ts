@@ -8,8 +8,8 @@ import {
 export type Result = {
   id: string;
   type: string;
-  offers: Offer[];
-  offerStatus: any;
+  offers: number;
+  offerStatus: string;
   image: string;
   expiry: string;
   metric: string;

@@ -172,7 +172,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     selectedOffer.price
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
-  const offerStatus = getOfferStatus(selectedOffer, 'buyer');
+  const offerStatus = selectedOffer.status;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
       {offerStatus !== '' && (

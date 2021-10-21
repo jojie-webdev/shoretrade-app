@@ -10,6 +10,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
+import OfferTag from 'components/module/OfferTag';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
@@ -49,7 +50,7 @@ import {
 
 export const MarketRequestItemNonMobile = (props: {
   expiry: string;
-  offers: Offer[];
+  offers: number;
   type: string;
   image: string;
   inDetail: boolean;
@@ -76,6 +77,7 @@ export const MarketRequestItemNonMobile = (props: {
     size,
     setItemToDelete,
     metric,
+    offerStatus,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
@@ -131,9 +133,7 @@ export const MarketRequestItemNonMobile = (props: {
         </Col>
 
         <Col style={{ padding: '0 5px' }}>
-          <BadgesContainer>
-            {renderInOrderBadge(offers, isMobile)}
-          </BadgesContainer>
+          <OfferTag status={offerStatus || ''} perspective="buyer" />
         </Col>
 
         <Col sm={1} style={{ padding: '0 5px' }}>
@@ -161,7 +161,7 @@ export const MarketRequestItemNonMobile = (props: {
 
 export const MarketRequestItemMobile = (props: {
   expiry: string;
-  offers: Offer[];
+  offers: number;
   type: string;
   image: string;
   inDetail: boolean;
@@ -183,6 +183,7 @@ export const MarketRequestItemMobile = (props: {
     specs,
     size,
     metric,
+    offerStatus,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
@@ -247,7 +248,7 @@ export const MarketRequestItemMobile = (props: {
           </SubMinorDetail>
         </SubMinorInfo>
 
-        <Badges>{renderInOrderBadge(offers, isMobile, true)}</Badges>
+        {/* <Badges>{renderInOrderBadge(offers, isMobile, true)}</Badges> */}
       </MinorInfo>
     </MarketRequestItemMobileContainer>
   );
@@ -283,7 +284,7 @@ const MarketRequestsLandingView = (
         marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
-            type={mr.offers?.length > 0 ? 'next' : 'none'}
+            type={mr.offers > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
@@ -321,7 +322,7 @@ const MarketRequestsLandingView = (
         marketRequests?.map((mr) => (
           <MarketRequestItemInteraction
             key={mr.id}
-            type={mr.offers?.length > 0 ? 'next' : 'none'}
+            type={mr.offers > 0 ? 'next' : 'none'}
             onClick={() => onClickItem(mr)}
             leftComponent={
               <MarketRequestItemNonMobile
@@ -542,18 +543,18 @@ const renderInOrderBadge = (
     </BadgeText>
   );
 
-  if (hasOfferWithPaymentRequired(offers)) {
-    const newBadgeText = badgeText(theme.brand.warning, 'Payment Required');
-    if (!isMobile) {
-      const correctNewBadgeText = !isSmallDesktopScreen
-        ? newBadgeText
-        : paymentRequiredTextBadgeForSmallerDesktopScreens;
+  // if (hasOfferWithPaymentRequired(offers)) {
+  //   const newBadgeText = badgeText(theme.brand.warning, 'Payment Required');
+  //   if (!isMobile) {
+  //     const correctNewBadgeText = !isSmallDesktopScreen
+  //       ? newBadgeText
+  //       : paymentRequiredTextBadgeForSmallerDesktopScreens;
 
-      return roundBadge(correctNewBadgeText, '#FFF7F2');
-    } else {
-      return roundBadge(newBadgeText, '#FFF7F2');
-    }
-  }
+  //     return roundBadge(correctNewBadgeText, '#FFF7F2');
+  //   } else {
+  //     return roundBadge(newBadgeText, '#FFF7F2');
+  //   }
+  // }
 
   if (hasOfferThatIsNew(offers)) {
     const newBadgeText = badgeText(theme.brand.success, 'New Offer');
