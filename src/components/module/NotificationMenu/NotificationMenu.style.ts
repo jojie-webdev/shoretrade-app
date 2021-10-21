@@ -42,10 +42,10 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
         display: ${({ isOpenMenu }) => (isOpenMenu ? 'block' : 'none')};
         z-index: 1;
         top: 32px;
-        left: -394px;
+        left: -474px;
         min-height: 10px;
         min-width: 10px;
-        width: 408px;
+        width: 488px;
         .menu-header {
           background: ${({ theme }) =>
             theme.appType === 'buyer'
@@ -59,7 +59,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
           .triangle {
             position: absolute;
             top: -8px;
-            left: 368px;
+            left: 448px;
             height: 15px;
             width: 15px;
             border-radius: 6px 0px 0px 0px;

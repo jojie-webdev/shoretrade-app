@@ -34,7 +34,8 @@ export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
     margin-right: 10px;
 
     .content {
-      display: inline;
+      display: block;
+      line-height: 1.5;
     }
 
     .see-more-link-text {
@@ -65,15 +66,15 @@ export const NotifAvatarContainer = styled.div`
 
 export const NewIndicatorContainer = styled.div`
   background-color: rgba(227, 93, 50, 0.1);
-  padding: 4px;
+  padding: 10px 6px;
   border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 20px;
+  
 
-  max-width: 45px;
 
   min-height: 20px;
   .dot {
@@ -83,6 +84,13 @@ export const NewIndicatorContainer = styled.div`
     border-radius: 50%;
     min-width: 8px;
     background-color: ${({ theme }) => theme.brand.primary};
+  }
+
+  .text {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 1.6px;
   }
 `;
 
