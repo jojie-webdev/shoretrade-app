@@ -204,16 +204,6 @@ const AddLicenseView = ({
           <Row>
             <TipsContainer>
               <Typography variant="body" weight="bold">
-                Why you need to upload your Fishing License
-              </Typography>
-              <Typography variant="body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Aliquam, ullamcorper pellentesque elementum sit augue ornare
-                consectetur velit. Nam suspendisse nascetur pellentesque quis
-                in. Eu maecenas luctus faucibus pulvinar ultricies luctus ut
-                nisl.
-              </Typography>
-              <Typography variant="body" weight="bold">
                 Upload Tips
               </Typography>
               <Typography variant="body">
