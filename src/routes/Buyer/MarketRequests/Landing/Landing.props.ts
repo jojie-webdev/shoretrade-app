@@ -11,6 +11,7 @@ export type Result = {
   offers: number;
   offerStatus: string;
   image: string;
+  status: string;
   expiry: string;
   metric: string;
   paymentRequired: boolean;

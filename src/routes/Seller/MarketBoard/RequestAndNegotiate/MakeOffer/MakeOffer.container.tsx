@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { groupBy, isEmpty } from 'ramda';
+import { F, forEach, groupBy, isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupName } from 'routes/Seller/MarketBoard/RequestAndNegotiate/MakeOffer/MakeOffer.transforms';
 import { getAddressesActions } from 'store/actions';
@@ -33,9 +33,8 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       })
     : [];
 
-  const groupedStateOptions = Object.values(
-    groupBy((s) => s.groupOrder.toString(), stateOptions)
-  );
+  const stateGroups = groupBy((s) => s.groupOrder.toString(), stateOptions);
+  const groupedStateOptions = Object.values(stateGroups);
 
   const [specifications, setSpecifications] = useState<Option[]>(
     currentOfferItemData?.stateOptions
@@ -135,6 +134,29 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
         ];
       } else {
         marketOfferValidation.sizeTo = [];
+      }
+    }
+
+    if (specifications) {
+      //check each group
+      const stateGroupIds = Object.keys(stateGroups);
+      let missingSpec = false;
+      stateGroupIds.forEach((id) => {
+        let found = false;
+        specifications.forEach((selectedSpec) => {
+          if (id === selectedSpec.groupOrder.toString()) {
+            found = true;
+          }
+        });
+        if (!found) {
+          missingSpec = true;
+        }
+      });
+
+      if (missingSpec) {
+        marketOfferValidation.specifications = [
+          'Select at least 1 specification from each section',
+        ];
       }
     }
 

@@ -45,7 +45,8 @@ const MobileOffers = (props: {
     status,
     marketRequest,
   } = data;
-  const parsedStatus = status.toUpperCase();
+
+  const parsedStatus = getOfferStatus(data, 'seller');
 
   const sizeUnit = formatMeasurementUnit(measurementUnit) === 'kg' ? 'kg' : '';
 
