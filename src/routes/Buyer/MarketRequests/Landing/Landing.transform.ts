@@ -59,7 +59,6 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
     ...item,
     expiry: buildExpiryData(item),
     offers: item?.offers,
-    offerStatus: getOfferStatus(item.offers),
   }));
 
   return marketRequest;

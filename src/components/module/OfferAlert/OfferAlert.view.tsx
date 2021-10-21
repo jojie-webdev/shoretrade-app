@@ -15,6 +15,10 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
   // const theme = useTheme();
   const history = useHistory();
   const { status, thereIsNewOffer, counterOffer, orderRefNumber } = props;
+  let offerStatus = '';
+  if (status) {
+    offerStatus = status.toLocaleUpperCase();
+  }
   const buildAlertProperties = () => {
     const contentTypo = (content: string): ReactNode => (
       <Typography component={'span'} variant="body" color="shade6" weight="400">
@@ -23,9 +27,8 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
     );
 
     let alertProps = {} as AlertProps;
-
     if (
-      status === 'NEGOTIATION' &&
+      offerStatus === 'NEGOTIATION' &&
       !thereIsNewOffer &&
       parseFloat(counterOffer || '0') > 0
     ) {
@@ -37,7 +40,7 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         ),
       };
     }
-    if (status === 'PAYMENT REQUIRED') {
+    if (offerStatus === 'PAYMENT REQUIRED') {
       alertProps = {
         variant: 'warning',
         header: 'Payment Required',
@@ -46,7 +49,7 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         ),
       };
     }
-    if (status === 'PAYMENT MISSED') {
+    if (offerStatus === 'PAYMENT MISSED') {
       alertProps = {
         variant: 'error',
         header: 'Payment Missed',
@@ -55,7 +58,7 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         ),
       };
     }
-    if (status === 'ACCEPTED') {
+    if (offerStatus === 'ACCEPTED') {
       alertProps = {
         variant: 'success',
         header: 'Finalised',
@@ -69,7 +72,7 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         ),
       };
     }
-    if (status === 'NEW OFFER') {
+    if (offerStatus === 'NEW OFFER') {
       alertProps = {
         variant: 'success',
         header: 'New Offer',

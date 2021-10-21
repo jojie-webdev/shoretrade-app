@@ -50,7 +50,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   );
 
   const onClickItem = (row: Result) => {
-    if (row.offers?.length > 0) {
+    if (row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));
     }
   };
@@ -76,6 +76,7 @@ const MarketRequestsLanding = (): JSX.Element => {
       dispatch(getAllMarketRequestActions.request({}));
     }
   }, [deleteMarketRequest]);
+
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,

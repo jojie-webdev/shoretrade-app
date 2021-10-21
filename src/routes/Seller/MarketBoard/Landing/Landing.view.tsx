@@ -203,7 +203,7 @@ const MyActiveOffersInteractions = (props: {
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
   const buildTagByStatus = () => {
-    const offerStatus = getOfferStatus(data, 'seller');
+    const offerStatus = data.status.toLocaleUpperCase();
 
     const tag = (
       badgeColor: string,

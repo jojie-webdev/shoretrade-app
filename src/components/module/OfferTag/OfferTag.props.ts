@@ -4,7 +4,8 @@ import {
 } from 'types/store/GetActiveOffersState';
 
 export interface OfferTagProps {
-  offer: GetActiveOffersRequestResponseItem | Offer;
+  status: string;
+  price?: number;
   marketRequestAvgPrice?: number;
   perspective: 'buyer' | 'seller';
 }

@@ -2,9 +2,13 @@ import React from 'react';
 
 import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { GetActiveOffersRequestResponseItem, OfferStatus } from 'types/store/GetActiveOffersState';
+import {
+  GetActiveOffersRequestResponseItem,
+  OfferStatus,
+} from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -25,7 +29,6 @@ import {
   SubMinorInfo,
 } from '../MobileMarketRequest/MobileMarketRequest.style';
 import { StyledStatusBadge } from './MobileOffers.style';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 
 const MobileOffers = (props: {
   data: GetActiveOffersRequestResponseItem;
@@ -42,8 +45,7 @@ const MobileOffers = (props: {
     status,
     marketRequest,
   } = data;
-  
-  const parsedStatus = getOfferStatus(data, 'seller');
+  const parsedStatus = status.toUpperCase();
 
   const sizeUnit = formatMeasurementUnit(measurementUnit) === 'kg' ? 'kg' : '';
 
