@@ -1123,26 +1123,12 @@ const StepForm = ({
                       {activeLicenseIdx === null && (
                         <TipsContainer style={{ marginTop: 16 }}>
                           <Typography variant="body" weight="bold">
-                            Do I need a Fishing License?
-                          </Typography>
-                          <Typography variant="body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit.
-                          </Typography>
-                          <Typography variant="body" weight="bold">
                             How to upload a Fishing License
                           </Typography>
                           <Typography variant="body">
                             Click the “Add a License” Button. Make sure the
                             license informations are legible. The approval
                             process may take 1-2 business days
-                          </Typography>
-                          <Typography variant="body" weight="bold">
-                            Can I upload a Fishing License later?
-                          </Typography>
-                          <Typography variant="body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit.
                           </Typography>
                         </TipsContainer>
                       )}
