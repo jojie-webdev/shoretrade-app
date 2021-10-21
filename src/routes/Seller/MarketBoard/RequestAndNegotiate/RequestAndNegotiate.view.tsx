@@ -240,9 +240,12 @@ const Step1 = ({
       }
     });
 
-    // this logic is now handle in the backend that is the OfferStatus
     const showButtons =
-      !isReview && activeOffer.status.toUpperCase() === OfferStatus.NEW_OFFER;
+      !isReview &&
+      !noNegotiations &&
+      isNegoOpen &&
+      isNegotiationAllowed &&
+      !isNegotiationEqual;
 
     return (
       <>
@@ -400,7 +403,7 @@ const Step1 = ({
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const buildAlertProperties = () => {
-    const offerStatus = activeOffer.status.toUpperCase(); 
+    const offerStatus = getOfferStatus(activeOffer, 'seller');
 
     const contentTypo = (content: string): ReactNode => (
       <Typography variant="body" color="shade6" weight="400">
@@ -720,3 +723,5 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 };
 
 export default RequestAndNegotiateView;
+
+

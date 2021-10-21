@@ -15,6 +15,7 @@ export enum OfferStatus {
   NEGOTIATION = 'NEGOTIATION',
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
+  FINALISED = 'FINALISED',
 }
 
 export type ShippingAddress = {

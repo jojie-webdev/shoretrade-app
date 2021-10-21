@@ -203,7 +203,7 @@ const MyActiveOffersInteractions = (props: {
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
   const buildTagByStatus = () => {
-    const offerStatus = data.status.toLocaleUpperCase();
+    const offerStatus = getOfferStatus(data, 'seller');
 
     const tag = (
       badgeColor: string,
@@ -498,3 +498,4 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 };
 
 export default MarketBoardLandingView;
+

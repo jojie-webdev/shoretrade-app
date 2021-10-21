@@ -6,6 +6,8 @@ import {
 export interface OfferTagProps {
   status: string;
   price?: number;
+  offers?: number;
+  marketStatus?: string;
   marketRequestAvgPrice?: number;
   perspective: 'buyer' | 'seller';
 }

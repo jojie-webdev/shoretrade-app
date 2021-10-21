@@ -2,16 +2,23 @@ import React from 'react';
 
 import Badge from 'components/base/Badge';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
+import { OfferStatus } from 'types/store/GetActiveOffersState';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { useTheme } from 'utils/Theme';
 
 import { OfferTagProps } from './OfferTag.props';
 import { Container, StatusBadgeText } from './OfferTag.style';
-import { OfferStatus } from 'types/store/GetActiveOffersState';
 
 const OfferTag = (props: OfferTagProps): JSX.Element => {
   const theme = useTheme();
-  const { status, price = 0, marketRequestAvgPrice = 0, perspective } = props;
+  const {
+    status,
+    price = 0,
+    marketRequestAvgPrice = 0,
+    perspective,
+    marketStatus,
+    offers,
+  } = props;
   let offerStatus = '';
   if (status) {
     offerStatus = status.toLocaleUpperCase();
@@ -39,11 +46,14 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
   const renderNonNegoBadge = () => {
     const renderBadge = (
       badgeColor: string,
-      textColor: TypographyProps['color']
+      textColor: TypographyProps['color'],
+      showCount?: boolean
     ) => (
       <Badge id="status-badge" className="offers-badge" badgeColor={badgeColor}>
         <StatusBadgeText color={textColor} weight="bold" variant="overline">
-          {offerStatus}
+          {showCount
+            ? `${offers || 'No'} ${offers === 1 ? 'offer' : 'offers'}`
+            : offerStatus}
         </StatusBadgeText>
       </Badge>
     );
@@ -63,18 +73,30 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
     if (offerStatus === OfferStatus.DECLINED) {
       return renderBadge('#FFF4F6', 'error');
     }
+
+    if (offerStatus === OfferStatus.FINALISED) {
+      if (marketStatus && marketStatus.toUpperCase() === OfferStatus.OPEN) {
+        return renderBadge(
+          theme.grey.shade3,
+          !offers || offers === 0 ? 'shade5' : 'shade9',
+          true
+        );
+      }
+    }
+
+    if (offerStatus === '') {
+      if (marketStatus && marketStatus.toUpperCase() === OfferStatus.OPEN) {
+        return renderBadge(
+          theme.grey.shade3,
+          !offers || offers === 0 ? 'shade5' : 'shade9',
+          true
+        );
+      }
+    }
   };
 
   const checkIsNonNego = () => {
-    const isNonNego =
-      offerStatus === 'PAYMENT REQUIRED' ||
-      status === 'PAYMENT MISSED' ||
-      status === 'ACCEPTED' ||
-      status === '' ||
-      status === OfferStatus.DECLINED ||
-      offerStatus === 'NEW OFFER';
-
-    return isNonNego;
+    return offerStatus !== OfferStatus.NEGOTIATION;
   };
 
   const renderNegoBadges = () => {

@@ -103,7 +103,12 @@ const NewIndicator = () => {
   return (
     <NewIndicatorContainer>
       <div className="dot"></div>
-      <Typography weight="900" color="primary" variant="overlineSmall">
+      <Typography
+        className="text"
+        weight="900"
+        color="primary"
+        variant="overlineSmall"
+      >
         New
       </Typography>
     </NewIndicatorContainer>
@@ -183,8 +188,12 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     if (!fullView) {
       return (
         <>
-          <Typography color={defaultColor} className="content">
-            {ellipsisOnOverflow(content, 70)}
+          <Typography
+            variant="caption"
+            color={defaultColor}
+            className="content"
+          >
+            {ellipsisOnOverflow(content, 90)}
           </Typography>
           <Link
             onClick={(e) => {
@@ -193,19 +202,22 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
             }}
             to={notifsRoute + '?tab=Unread'}
           >
-            <Typography
-              weight="700"
-              className="see-more-link-text"
-              color="primary"
-            >
-              see more
-            </Typography>
+            {content.length > 90 && (
+              <Typography
+                weight="700"
+                variant="caption"
+                className="see-more-link-text"
+                color="primary"
+              >
+                see more
+              </Typography>
+            )}
           </Link>
         </>
       );
     }
     return (
-      <Typography color={defaultColor} className="content">
+      <Typography color={defaultColor} variant="body" className="content">
         {content}
       </Typography>
     );
@@ -227,7 +239,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
         <Typography
           weight="900"
           color={isRead ? 'shade7' : 'primary'}
-          variant="overlineSmall"
+          variant="overline"
         >
           {name}
         </Typography>

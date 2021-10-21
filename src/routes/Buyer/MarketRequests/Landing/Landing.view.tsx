@@ -63,6 +63,7 @@ export const MarketRequestItemNonMobile = (props: {
   id?: string;
   offerStatus?: string;
   specs?: string;
+  status: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
 }) => {
   const {
@@ -78,6 +79,7 @@ export const MarketRequestItemNonMobile = (props: {
     setItemToDelete,
     metric,
     offerStatus,
+    status,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
@@ -133,7 +135,12 @@ export const MarketRequestItemNonMobile = (props: {
         </Col>
 
         <Col style={{ padding: '0 5px' }}>
-          <OfferTag status={offerStatus || ''} perspective="buyer" />
+          <OfferTag
+           offers={offers}
+            marketStatus={status}
+            status={offerStatus || ''}
+            perspective="buyer"
+          />
         </Col>
 
         <Col sm={1} style={{ padding: '0 5px' }}>
@@ -172,6 +179,7 @@ export const MarketRequestItemMobile = (props: {
   specs?: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
   offerStatus?: string;
+  status: string;
 }) => {
   const {
     expiry,
@@ -184,6 +192,7 @@ export const MarketRequestItemMobile = (props: {
     size,
     metric,
     offerStatus,
+    status,
   } = props;
 
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
@@ -248,7 +257,14 @@ export const MarketRequestItemMobile = (props: {
           </SubMinorDetail>
         </SubMinorInfo>
 
-        {/* <Badges>{renderInOrderBadge(offers, isMobile, true)}</Badges> */}
+        <Badges>
+          <OfferTag
+            marketStatus={status}
+            offers={offers}
+            status={offerStatus || ''}
+            perspective="buyer"
+          />
+        </Badges>
       </MinorInfo>
     </MarketRequestItemMobileContainer>
   );
