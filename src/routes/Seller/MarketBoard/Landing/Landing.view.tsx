@@ -230,7 +230,10 @@ const MyActiveOffersInteractions = (props: {
     if (offerStatus === 'DECLINED') {
       return tag(theme.brand.error, 'DECLINED');
     }
-    if (offerStatus === 'PAYMENT REQUIRED') {
+    if (
+      offerStatus === 'PAYMENT REQUIRED' ||
+      offerStatus === OfferStatus.PENDING_PAYMENT
+    ) {
       return tag(theme.brand.warning, 'PENDING PAYMENT');
     }
     if (offerStatus === 'NEGOTIATION') {

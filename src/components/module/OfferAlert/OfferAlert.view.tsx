@@ -40,7 +40,10 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         ),
       };
     }
-    if (offerStatus === 'PAYMENT REQUIRED') {
+    if (
+      offerStatus === 'PAYMENT REQUIRED' ||
+      offerStatus === 'PENDING PAYMENT'
+    ) {
       alertProps = {
         variant: 'warning',
         header: 'Payment Required',
