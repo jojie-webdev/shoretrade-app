@@ -45,9 +45,6 @@ const MarketRequestDetail = (): JSX.Element => {
   const [selectedCompany, setSelectedCompany] = useState('');
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
-    false
-  );
 
   //filters
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -232,11 +229,6 @@ const MarketRequestDetail = (): JSX.Element => {
     );
   }, [user]);
 
-  useEffect(() => {
-    if (acceptOffer.error) {
-      setShowNotEnoughCreditAlert(true);
-    }
-  }, [acceptOffer]);
 
   useEffect(() => {
     activeOffers.data?.data.marketOffers.forEach((marketOffer) =>
@@ -291,8 +283,6 @@ const MarketRequestDetail = (): JSX.Element => {
       onClickClose: () => setIsFilterModalOpen(false),
     },
     onClickFilterButton,
-    showNotEnoughCreditAlert,
-    setShowNotEnoughCreditAlert,
     onOfferDelete,
   };
 

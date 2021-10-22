@@ -20,6 +20,7 @@ export type NotificationItemResponse = {
   resource: NotificationType;
   id: string;
   name: NotifName;
+  title: string;
   description: string;
   isRead: boolean;
   content: string;

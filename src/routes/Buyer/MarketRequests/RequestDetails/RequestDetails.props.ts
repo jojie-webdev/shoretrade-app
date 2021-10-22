@@ -65,7 +65,5 @@ export interface MarketRequestDetailProps {
   filterModalProps: FilterModalProps;
   onClickFilterButton: () => void;
   isLoading: boolean;
-  showNotEnoughCreditAlert: boolean;
-  setShowNotEnoughCreditAlert: Dispatch<SetStateAction<boolean>>;
   onOfferDelete: (offerIdToDelete: string) => void;
 }

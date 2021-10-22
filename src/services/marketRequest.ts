@@ -131,6 +131,8 @@ export const acceptOffer = (data: AcceptOffer, token: string) => {
       Authorization: `Bearer ${token}`,
     },
     data,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
   });
 };
 
