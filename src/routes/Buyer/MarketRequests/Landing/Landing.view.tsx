@@ -133,6 +133,7 @@ export const MarketRequestItemNonMobile = (props: {
 
         <Col style={{ padding: '0 5px' }}>
           <OfferTag
+            isMarketRequest
             offers={offers}
             marketStatus={status}
             status={offerStatus || ''}
