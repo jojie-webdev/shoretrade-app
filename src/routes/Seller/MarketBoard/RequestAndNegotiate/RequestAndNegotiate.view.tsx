@@ -429,7 +429,10 @@ const Step1 = ({
         content: contentTypo('Your offer was declined by the Buyer.'),
       };
     }
-    if (offerStatus === 'PAYMENT REQUIRED') {
+    if (
+      offerStatus === 'PAYMENT REQUIRED' ||
+      offerStatus === OfferStatus.PENDING_PAYMENT
+    ) {
       alertProps = {
         variant: 'warning',
         header: 'Pending Payment',
@@ -723,5 +726,3 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 };
 
 export default RequestAndNegotiateView;
-
-

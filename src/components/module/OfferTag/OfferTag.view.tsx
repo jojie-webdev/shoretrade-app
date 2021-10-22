@@ -61,7 +61,13 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
     if (offerStatus === 'PAYMENT MISSED') {
       return renderBadge('#FFF4F6', 'error');
     }
-    if (offerStatus === 'PAYMENT REQUIRED') {
+    if (
+      offerStatus === 'PAYMENT REQUIRED' ||
+      offerStatus === OfferStatus.PENDING_PAYMENT
+    ) {
+      if (perspective === 'buyer') {
+        offerStatus = OfferStatus.PAYMENT_REQUIRED;
+      }
       return renderBadge('#FFF7F2', 'warning');
     }
     if (offerStatus === 'ACCEPTED') {
