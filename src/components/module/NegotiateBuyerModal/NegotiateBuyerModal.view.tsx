@@ -112,7 +112,6 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               </Typography>
             }
             placeholder={`per ${unit}`}
-            suffix={`per ${unit}`}
           />
         </Inputs>
         {/* <CheckBoxContainer>

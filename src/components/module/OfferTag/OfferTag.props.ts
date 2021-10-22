@@ -10,4 +10,5 @@ export interface OfferTagProps {
   marketStatus?: string;
   marketRequestAvgPrice?: number;
   perspective: 'buyer' | 'seller';
+  isMarketRequest?: boolean;
 }

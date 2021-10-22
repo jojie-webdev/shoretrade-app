@@ -18,6 +18,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
     perspective,
     marketStatus,
     offers,
+    isMarketRequest,
   } = props;
   let offerStatus = '';
   if (status) {
@@ -58,7 +59,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
       </Badge>
     );
 
-    if (offerStatus === 'PAYMENT MISSED') {
+    if (offerStatus === 'PAYMENT MISSED' && !isMarketRequest) {
       return renderBadge('#FFF4F6', 'error');
     }
     if (
@@ -70,27 +71,22 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
       }
       return renderBadge('#FFF7F2', 'warning');
     }
-    if (offerStatus === 'ACCEPTED') {
+    if (offerStatus === 'ACCEPTED' && !isMarketRequest) {
+      offerStatus = OfferStatus.FINALISED;
       return renderBadge('#EAFFF9', 'success');
     }
     if (offerStatus === 'NEW OFFER') {
       return renderBadge('#EAFFF9', 'success');
     }
-    if (offerStatus === OfferStatus.DECLINED) {
+    if (offerStatus === OfferStatus.DECLINED && !isMarketRequest) {
       return renderBadge('#FFF4F6', 'error');
     }
 
-    if (offerStatus === OfferStatus.FINALISED) {
-      if (marketStatus && marketStatus.toUpperCase() === OfferStatus.OPEN) {
-        return renderBadge(
-          theme.grey.shade3,
-          !offers || offers === 0 ? 'shade5' : 'shade9',
-          true
-        );
-      }
-    }
-
-    if (offerStatus === '') {
+    if (
+      offerStatus === OfferStatus.FINALISED ||
+      offerStatus === '' ||
+      offerStatus === OfferStatus.NEGOTIATION
+    ) {
       if (marketStatus && marketStatus.toUpperCase() === OfferStatus.OPEN) {
         return renderBadge(
           theme.grey.shade3,
@@ -102,7 +98,14 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
   };
 
   const checkIsNonNego = () => {
-    return offerStatus !== OfferStatus.NEGOTIATION;
+    if (offerStatus === OfferStatus.NEGOTIATION) {
+      if (isMarketRequest) {
+        return true;
+      }
+      return false;
+      // return offerStatus !== OfferStatus.NEGOTIATION;
+    }
+    return true;
   };
 
   const renderNegoBadges = () => {
@@ -116,7 +119,7 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
           ? price > marketRequestAvgPrice &&
             renderFirstBadge('Above Market', theme.brand.error)
           : ''}
-        {renderNegoBadge()}
+        {!isMarketRequest && renderNegoBadge()}
       </>
     );
   };
