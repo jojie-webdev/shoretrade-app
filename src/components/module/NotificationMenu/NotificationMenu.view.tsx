@@ -122,7 +122,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                         content={nd.description}
                         date={nd.created_at}
                         isRead={nd.read_at !== null}
-                        name={nd.name}
+                        name={nd.title || nd.name}
                       />
                     </DropdownItemContainer>
                   ))}
