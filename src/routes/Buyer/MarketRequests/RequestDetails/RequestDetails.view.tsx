@@ -120,8 +120,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     onClickDelete,
     marketRequestId,
     isLoading,
-    showNotEnoughCreditAlert,
-    setShowNotEnoughCreditAlert,
     onOfferDelete,
     filteredBuyerRequest,
   } = props;
@@ -416,22 +414,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
         actionText="DELETE"
         onClickClose={() => setShowDelete(false)}
       />
-      <DialogModal
-        title="Not Enough Credit."
-        // overline="Please top up your Account Credit to accept this order."
-        isOpen={showNotEnoughCreditAlert}
-        onClickClose={() => setShowNotEnoughCreditAlert(false)}
-        backgroundColor={theme.grey.shade8}
-      >
-        <Typography
-          color="alert"
-          weight="400"
-          align={isMobile ? 'center' : 'left'}
-        >
-          Please top up your Account Credit to accept this order.
-        </Typography>
-      </DialogModal>
-
       <Hidden xs sm>
         <HeaderContainer>
           <div>

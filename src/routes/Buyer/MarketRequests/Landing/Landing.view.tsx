@@ -25,10 +25,7 @@ import {
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
-import {
-  getOfferStatus,
-  hasOfferWithPaymentRequired,
-} from 'utils/MarketRequest/offerStatus';
+import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -136,7 +133,7 @@ export const MarketRequestItemNonMobile = (props: {
 
         <Col style={{ padding: '0 5px' }}>
           <OfferTag
-           offers={offers}
+            offers={offers}
             marketStatus={status}
             status={offerStatus || ''}
             perspective="buyer"
@@ -558,19 +555,6 @@ const renderInOrderBadge = (
       {text}
     </BadgeText>
   );
-
-  // if (hasOfferWithPaymentRequired(offers)) {
-  //   const newBadgeText = badgeText(theme.brand.warning, 'Payment Required');
-  //   if (!isMobile) {
-  //     const correctNewBadgeText = !isSmallDesktopScreen
-  //       ? newBadgeText
-  //       : paymentRequiredTextBadgeForSmallerDesktopScreens;
-
-  //     return roundBadge(correctNewBadgeText, '#FFF7F2');
-  //   } else {
-  //     return roundBadge(newBadgeText, '#FFF7F2');
-  //   }
-  // }
 
   if (hasOfferThatIsNew(offers)) {
     const newBadgeText = badgeText(theme.brand.success, 'New Offer');

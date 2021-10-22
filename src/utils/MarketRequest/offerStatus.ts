@@ -48,7 +48,10 @@ export const getOfferStatus = (
     return isNotExpired;
   };
 
-  if (status === OfferStatus.NEGOTIATION && isNotExpired()) {
+  if (
+    status === OfferStatus.NEGOTIATION ||
+    (status === OfferStatus.OPEN && isNotExpired())
+  ) {
     if (from === 'seller') {
       if (
         negotiations?.length > 0 &&
@@ -73,16 +76,4 @@ export const getOfferStatus = (
   }
 
   return '';
-};
-
-export const hasOfferWithPaymentRequired = (offers: Offer[]) => {
-  if (!offers) {
-    return;
-  }
-
-  const offer = offers.find(
-    (offer) => getOfferStatus(offer, 'buyer') === 'PAYMENT REQUIRED'
-  );
-
-  return offer;
 };
