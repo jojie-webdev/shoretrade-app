@@ -71,10 +71,8 @@ export const NewIndicatorContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 60px;
   height: 20px;
-  
-
 
   min-height: 20px;
   .dot {
