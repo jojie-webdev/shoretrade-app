@@ -98,6 +98,13 @@ const SummaryView = (props: SummaryProps) => {
       return (
         <Row style={{ marginLeft: 0 }}>
           <div>
+            <TypographyView
+              style={{ marginBottom: '8px' }}
+              color="shade6"
+              variant="overline"
+            >
+              Size 
+            </TypographyView>
             <Badge
               className="offers-state-badge"
               badgeColor={theme.grey.shade3}
@@ -191,13 +198,6 @@ const SummaryView = (props: SummaryProps) => {
               label="Specs"
               items={selectedSpecifications.items.map((spec) => spec.label)}
             />
-            <TypographyView
-              style={{ marginBottom: '8px' }}
-              color="shade6"
-              variant="overline"
-            >
-              Size
-            </TypographyView>
             <div className="size-container">{sizeSummary()}</div>
             <TypographyView
               style={{ marginBottom: '8px' }}

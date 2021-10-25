@@ -124,8 +124,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           {thereIsNewOffer && counterOffer === newOffer && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                You have received an offer by the Seller. Either click accept 
-                or negotiate to proceed.
+                You have received an offer by the Seller. Either click accept or
+                negotiate to proceed.
               </Typography>
             </div>
           )}
@@ -166,10 +166,12 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     selectedOffer?.size?.to
   ).toUpperCase();
 
+  const latestOfferPrice = newOffer !== '' ? newOffer : selectedOffer.price;
+
   const quantityValue =
     selectedOffer?.weight + ' ' + selectedOffer?.measurementUnit;
   const pricePerUnit = `${toPrice(
-    selectedOffer.price
+    latestOfferPrice
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
   const offerStatus = getOfferStatus(selectedOffer, 'buyer');

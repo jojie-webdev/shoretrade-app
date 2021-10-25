@@ -22,5 +22,7 @@ export const createCardToken = (card: {
     data: qs.stringify({
       card,
     }),
+  }).catch((e) => {
+    return Promise.reject(e.response.data.error);
   });
 };
