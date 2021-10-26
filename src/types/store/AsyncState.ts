@@ -5,6 +5,7 @@ export type AsyncState<Meta = any, Payload = any> = {
   data: Payload | null;
   pending: boolean | null;
   error: string;
+  patched_at?: string;
 };
 
 // export type SocketState<Meta = any, Payload = any, SocketInstance = any> = {

@@ -26,10 +26,12 @@ function* getCartRequest(action: AsyncAction<GetCartMeta, GetCartPayload>) {
       );
       yield put(getCartActions.success(data));
       if (data.data) {
-        const millisBeforeCartExpiry = moment()
+        const millisBeforeCartExpiry = moment(data.data.lastModified)
           .add(cartExpiry.minutesBeforeExpiry, 'minutes')
-          .diff(moment(data.data.lastModified), 'milliseconds');
-        yield delay(millisBeforeCartExpiry);
+          .diff(moment(), 'milliseconds');
+        console.log('DELAY', millisBeforeCartExpiry);
+        yield delay(millisBeforeCartExpiry > 0 ? millisBeforeCartExpiry : 0);
+        yield console.log('DELAY FINISHED');
         yield put(getCartActions.request(action.meta));
       }
     } catch (e) {

@@ -114,6 +114,21 @@ function* getBuyerHomepagePatchRemaining(action: Action<any>) {
       );
 
       yield put(getBuyerHomepageActions.patch(modifiedHomePageData));
+
+      const pathname: string = yield select(
+        (state: Store) => state.router.location.pathname
+      );
+
+      // if in categories screen or if recent listings does not include
+      //  target listing (ex. sold out via cart)
+      // manually refresh the whole buyer home page
+      const isBuyerCategories = pathname.includes('buyer/categories');
+      if (
+        isBuyerCategories ||
+        modifiedRecentListings === homePageData.recentListing
+      ) {
+        yield put(getBuyerHomepageActions.request());
+      }
     }
   } catch (err) {
     console.log(err);

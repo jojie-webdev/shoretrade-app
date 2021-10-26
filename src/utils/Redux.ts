@@ -108,6 +108,7 @@ export const createAsyncReducer = <Meta = any, Payload = any>(
         ...state,
         pending: false,
         data: pathOr(null, ['payload'], action),
+        patched_at: new Date().toISOString(),
       },
       [FAILED]: {
         ...state,
