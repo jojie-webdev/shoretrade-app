@@ -5,6 +5,7 @@ import {
   NotificationItemResponse,
   NotificationType,
   NotifName,
+  NotifTitle,
 } from 'types/store/GetNotificationsState';
 import { UserCompany } from 'types/store/GetUserState';
 
@@ -20,7 +21,8 @@ export interface NotificationsGeneratedProps {
   handleNotifOnClick: (
     resource: NotificationType,
     appType: 'buyer' | 'seller',
-    name?: NotifName
+    name?: NotifName,
+    title?: NotifTitle | string
   ) => void;
   currentCompany: UserCompany | undefined;
 }

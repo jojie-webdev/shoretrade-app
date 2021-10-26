@@ -1,13 +1,22 @@
+import { time } from 'console';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_ROUTES,
   SELLER_ACCOUNT_ROUTES,
   SELLER_ROUTES,
 } from 'consts';
-import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
+import {
+  NotificationType,
+  NotifName,
+  NotifTitle,
+} from 'types/store/GetNotificationsState';
 
 //TODO will add more once logic/routing is planned
-const NOTIF_NAMES: NotifName[] = ['Credit Added', 'Address Approved'];
+const NOTIF_NAMES: NotifName[] = [
+  'Credit Added',
+  'Address Approved',
+  'Address Approval',
+];
 
 /**
  * Handle on click of notif
@@ -16,13 +25,18 @@ const NOTIF_NAMES: NotifName[] = ['Credit Added', 'Address Approved'];
 export function notifURLMapper(
   resource: NotificationType,
   appType?: 'seller' | 'buyer',
-  name?: NotifName
+  name?: NotifName,
+  title?: NotifTitle | string
 ): string {
   let url = '';
 
   if (name && NOTIF_NAMES.includes(name)) {
     if (appType === 'buyer') {
       url = buyerNotifNameToUrl(name);
+    } else {
+      if (title) {
+        url = sellerNotifNameToUrl(title);
+      }
     }
     return url;
   }
@@ -99,6 +113,20 @@ function buyerNotifNameToUrl(name: NotifName): string {
       break;
     default:
       url = BUYER_ROUTES.HOME;
+      break;
+  }
+
+  return url;
+}
+
+function sellerNotifNameToUrl(title: NotifTitle | string): string {
+  let url = '';
+  switch (title) {
+    case 'New Address Approved':
+      url = SELLER_ROUTES.ADD_PRODUCT;
+      break;
+    default:
+      url = SELLER_ROUTES.DASHBOARD;
       break;
   }
 

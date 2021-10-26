@@ -60,7 +60,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
         .map((nd) => (
           <NotificationItemView
             handleNotifOnClick={() =>
-              handleNotifOnClick(nd.resource, theme.appType, nd.name)
+              handleNotifOnClick(nd.resource, theme.appType, nd.name, nd.title)
             }
             key={nd.id}
             fullView
