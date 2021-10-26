@@ -59,10 +59,10 @@ function* getAllBuyerListingsCSV(action: any) {
 
 function* getAllBuyerListingsPatchRemaining(action: Action<any>) {
   const state: Store = yield select();
+  const previousRequest = state.getAllBuyerListings.request;
   const allListingState = state.getAllBuyerListings.data;
   const realtimeRemaining: {
     id: string;
-
     remaining: number;
   } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
   let idx = -1;
@@ -87,20 +87,19 @@ function* getAllBuyerListingsPatchRemaining(action: Action<any>) {
             }
             return i;
           });
-        } else if (realtimeRemaining.remaining === 0) {
-          modifiedOrders = ordersData.filter(
-            (i) => i.id !== realtimeRemaining.id
-          );
-        }
 
-        const modifiedAllListing: GetAllBuyerListingsPayload = set(
-          ordersLens,
-          modifiedOrders,
-          allListingState
-        );
-        if (allListingState) {
+          const modifiedAllListing: GetAllBuyerListingsPayload = set(
+            ordersLens,
+            modifiedOrders,
+            allListingState
+          );
+
           yield put(getAllBuyerListingsActions.patch(modifiedAllListing));
+        } else if (realtimeRemaining.remaining === 0) {
+          yield put(getAllBuyerListingsActions.request(previousRequest));
         }
+      } else {
+        yield put(getAllBuyerListingsActions.request(previousRequest));
       }
     }
   } catch (err) {
