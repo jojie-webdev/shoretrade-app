@@ -48,7 +48,7 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
         variant: 'warning',
         header: 'Payment Required',
         content: contentTypo(
-          'Please process the payment within the remaining time. This selected offer will automatically close if payment is not received.'
+          'Please process the payment within the remaining time. This offer will automatically close if payment is not received.'
         ),
       };
     }

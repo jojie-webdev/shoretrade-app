@@ -23,6 +23,7 @@ import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersS
 import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { getOfferLatestPrice } from 'utils/MarketRequest';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 
@@ -79,7 +80,8 @@ const Offer = (props: OfferItemProps) => {
         color="shade10"
       >
         {offer.weight}
-        {formatUnitToPricePerUnit(offer.measurementUnit)} at ${offer.price}/
+        {formatUnitToPricePerUnit(offer.measurementUnit)} at $
+        {getOfferLatestPrice(offer)}/
         {formatUnitToPricePerUnit(offer.measurementUnit)}
       </Typography>
       <Typography
@@ -161,8 +163,8 @@ const Offer = (props: OfferItemProps) => {
 
         <div style={{ marginTop: '8px' }}>
           <OfferTag
-            status={getOfferStatus(offer, 'buyer')}
             perspective="buyer"
+            status={getOfferStatus(offer, 'buyer')}
             marketRequestAvgPrice={sellerOffer.marketRequest.averagePrice}
           />
         </div>

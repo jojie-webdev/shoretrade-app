@@ -40,6 +40,7 @@ const CreateRequest = (): JSX.Element => {
   const [selectedSize, setSelectedSize] = useState<SizeOptions>({
     from: '',
     to: '',
+    ungraded: false,
     items: [''],
   });
   const [sendConfModalisOpen, setSendConfModalisOpen] = useState(false);
