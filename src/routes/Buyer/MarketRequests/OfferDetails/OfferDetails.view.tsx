@@ -212,7 +212,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               moment(selectedOffer?.deliveryDate).format('MMMM DD, YYYY')
             )}
 
-            {renderLabel('Shipping From', { marginTop: '24px' })}
+            {renderLabel('Delivery Address', { marginTop: '24px' })}
             {renderLabelValue(getShippingAddress(selectedOffer.shippingFrom))}
           </Col>
           <CompanyInfoCol xl={3}>

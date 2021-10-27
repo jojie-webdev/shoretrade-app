@@ -46,6 +46,7 @@ export type GetActiveOffersRequestResponseItem = {
   id: string;
   status: OfferStatus;
   createdAt: string;
+  deliveryDate?: string;
   price: number;
   weight: number;
   image: string;
