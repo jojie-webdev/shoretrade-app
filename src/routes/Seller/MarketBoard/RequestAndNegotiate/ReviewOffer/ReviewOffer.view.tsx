@@ -249,9 +249,9 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               <div className="quantity-container">
                 <StyledBadge badgeColor={theme.grey.shade3}>
                   <BadgeText color="shade9" variant="overline">
-                    {formatEstDelivery(
-                      properOffer.deliveryDate ? properOffer.deliveryDate : ''
-                    )}
+                    {properOffer.deliveryDate
+                      ? moment(properOffer.deliveryDate).format('MMM. DD, YYYY')
+                      : ''}
                   </BadgeText>
                 </StyledBadge>
               </div>

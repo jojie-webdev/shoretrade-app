@@ -48,6 +48,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renferFromTextField = () => (
     <TextField
       label="From"
+      placeholder="From"
       value={props.size.from}
       onChangeText={(v) =>
         props.setSize((prevState) => ({
@@ -67,6 +68,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renderToTextField = () => (
     <TextField
       label={`To\n(Optional)`}
+      placeholder="To"
       value={props.size.to}
       onChangeText={(v) => {
         props.setSize((prevState) => ({
@@ -244,6 +246,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               <Col md={4} className="textfield-col">
                 <TextField
                   label="Quantity"
+                  className="textfield"
                   LeftComponent={
                     <Typography variant="label" weight="bold" color="shade6">
                       {formatMeasurementUnit(
@@ -264,6 +267,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
 
               <Col md={4} className="textfield-col">
                 <TextField
+                  className="textfield"
                   label={`Price per ${formatMeasurementUnit(
                     props.buyerRequest.measurementUnit
                   )} (Inc. Delivery)`}
@@ -295,6 +299,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               <Col md={4} className="textfield-col">
                 <DatePickerDropdown
                   label="Delivery date"
+                  className="textfield"
                   date={props.deliveryDate ? moment(props.deliveryDate) : null}
                   onDateChange={(d) =>
                     props.setDeliveryDate(d?.toDate() || null)
@@ -313,6 +318,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 <Col className="textfield-col">
                   <TextField
                     label="Quantity"
+                    className="textfield"
                     value={props.weight}
                     onChangeText={props.setWeight}
                     min={1}
@@ -325,6 +331,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 </Col>
                 <Col className="textfield-col">
                   <TextField
+                    className="textfield"
                     label={`Price per ${formatMeasurementUnit(
                       props.buyerRequest.measurementUnit
                     )} (Inc. Delivery)`}

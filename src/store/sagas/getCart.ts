@@ -29,9 +29,7 @@ function* getCartRequest(action: AsyncAction<GetCartMeta, GetCartPayload>) {
         const millisBeforeCartExpiry = moment(data.data.lastModified)
           .add(cartExpiry.minutesBeforeExpiry, 'minutes')
           .diff(moment(), 'milliseconds');
-        console.log('DELAY', millisBeforeCartExpiry);
         yield delay(millisBeforeCartExpiry > 0 ? millisBeforeCartExpiry : 0);
-        yield console.log('DELAY FINISHED');
         yield put(getCartActions.request(action.meta));
       }
     } catch (e) {
