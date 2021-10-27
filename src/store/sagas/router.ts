@@ -3,7 +3,11 @@ import { put, takeLatest, select } from 'redux-saga/effects';
 import { Action } from 'types/Action';
 import { Store } from 'types/store/Store';
 
-import { getCoopUsersActions, getUserActions } from '../actions';
+import {
+  getCoopUsersActions,
+  getUserActions,
+  getBuyerHomepageActions,
+} from '../actions';
 
 function* routerRequest(
   action: Action<{
@@ -27,6 +31,13 @@ function* routerRequest(
       pathname === ADD_PRODUCT_ROUTES.BULK_UPLOAD_PREVIEW)
   ) {
     yield put(getCoopUsersActions.request());
+  }
+
+  if (
+    !!state.getBuyerHomepage.patched_at &&
+    pathname.includes('buyer/categories')
+  ) {
+    yield put(getBuyerHomepageActions.request());
   }
 }
 

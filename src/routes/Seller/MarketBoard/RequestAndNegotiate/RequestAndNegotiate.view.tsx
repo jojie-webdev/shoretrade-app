@@ -17,6 +17,8 @@ import moment from 'moment';
 import { isEmpty, pathOr, sortBy } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
+import { OfferStatus } from 'types/store/GetActiveOffersState';
+import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
@@ -40,8 +42,6 @@ import {
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
-import { sizeToString } from 'utils/Listing';
-import { OfferStatus } from 'types/store/GetActiveOffersState';
 
 const Step1 = ({
   isReview,
@@ -619,6 +619,25 @@ const Step1 = ({
         </div>
 
         {/* TODO DELIVERY DATE */}
+        {!isReview && (
+          <>
+            <Typography
+              style={{ margin: '24px 0 12px 0' }}
+              color="shade6"
+              variant="overline"
+            >
+              Delivery Date
+            </Typography>
+            <div className="quantity-container">
+              <StyledBadge badgeColor={theme.grey.shade3}>
+                <BadgeText color="shade9" variant="overline">
+                  {moment(activeOffer.deliveryDate).format('MMM. DD, YYYY')}
+                </BadgeText>
+              </StyledBadge>
+            </div>
+          </>
+        )}
+
         <Negotiations activeOffer={activeOffer} />
 
         {isReview && !isMobile && (
