@@ -44,6 +44,20 @@ export const Container = styled.div`
 
   .textfield-col {
     margin-bottom: 16px;
+    margin-top: 16px;
+    .textfield {
+      > p {
+        position: absolute;
+        bottom: 44px;
+
+        @media ${BREAKPOINTS['sm']} {
+          bottom: 44px;
+        }
+        @media ${BREAKPOINTS['md']} {
+          bottom: 44px;
+        }
+      }
+    }
   }
 
   .total-container {
