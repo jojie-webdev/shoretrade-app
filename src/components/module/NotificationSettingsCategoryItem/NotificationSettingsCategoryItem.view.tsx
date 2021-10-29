@@ -156,7 +156,7 @@ const NotificationSettingsCategoryItem = (
     <Typography
       variant="label"
       color={defaultColor}
-      style={{ paddingTop: '4px', paddingLeft: '32px' }}
+      style={{ padding: isMobile ? '4px 24px 0 24px' : '4px 32px 0 32px' }}
     >
       {description}
     </Typography>
