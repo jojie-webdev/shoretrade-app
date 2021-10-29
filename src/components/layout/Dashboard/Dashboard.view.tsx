@@ -138,6 +138,7 @@ const Header = ({
   totalNotifs,
   notifsData,
   handleMarkasRead,
+  handleMarkAllasRead,
   handleOnDelete,
   handleNotifOnClick,
 }: HeaderProps) => {
@@ -180,6 +181,7 @@ const Header = ({
             handleNotifOnClick={handleNotifOnClick}
             handleOnDelete={handleOnDelete}
             handleMarkasRead={handleMarkasRead}
+            handleMarkAllasRead={handleMarkAllasRead}
             notifsData={notifsData}
             notifTotal={totalNotifs}
             unreadTotal={totalUnreadNotifs}
@@ -245,6 +247,7 @@ const Header = ({
         <NotificationMenu
           handleNotifOnClick={handleNotifOnClick}
           handleMarkasRead={handleMarkasRead}
+          handleMarkAllasRead={handleMarkAllasRead}
           handleOnDelete={handleOnDelete}
           notifsData={notifsData}
           notifTotal={totalNotifs}
@@ -279,6 +282,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     totalNotifs,
     notifsData,
     handleMarkasRead,
+    handleMarkAllasRead,
     handleOnDelete,
     handleNotifOnClick,
     globalModalType,
@@ -440,6 +444,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 <Header
                   handleOnDelete={handleOnDelete}
                   handleMarkasRead={handleMarkasRead}
+                  handleMarkAllasRead={handleMarkAllasRead}
                   handleNotifOnClick={handleNotifOnClick}
                   pageTitle={pageTitle}
                   userData={userData}
@@ -465,6 +470,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 pageTitle={pageTitle}
                 handleNotifOnClick={handleNotifOnClick}
                 handleMarkasRead={handleMarkasRead}
+                handleMarkAllasRead={handleMarkAllasRead}
                 userData={userData}
                 totalNotifs={totalNotifs}
                 totalUnreadNotifs={totalUnreadNotifs}

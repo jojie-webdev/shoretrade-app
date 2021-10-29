@@ -152,6 +152,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     dispatch(readNotificationActions.request({ id: notificationId }));
   };
 
+  const handleMarkAllasRead = () => {
+    dispatch(readNotificationActions.request({ id: 'all' }));
+  };
+
   const handleOnDelete = (notificationId: string) => {
     dispatch(deleteNotificationActions.request({ id: notificationId }));
   };
@@ -229,6 +233,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     totalNotifs,
     totalUnreadNotifs,
     handleMarkasRead,
+    handleMarkAllasRead,
     handleOnDelete,
     handleNotifOnClick,
     globalModalType,

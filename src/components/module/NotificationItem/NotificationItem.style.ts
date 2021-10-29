@@ -12,8 +12,6 @@ export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   width: 100%;
   // max-width: 375px;
-  box-shadow: 0 4px 12px rgba(41, 43, 50, 0.04);
-  border-radius: 8px;
   dispaly: flex;
   align-items: center;
   padding: 16px;
@@ -26,8 +24,6 @@ export const Container = styled.div<{ isRead: boolean; fullView?: boolean }>`
     width: 4px;
     left: 0;
     position: absolute;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
   }
 
   .content-container {

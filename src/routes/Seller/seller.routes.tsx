@@ -9,6 +9,7 @@ import {
   CheckBorder,
   Bolt,
   Crates,
+  Cog,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ROUTES } from 'consts';
@@ -27,6 +28,7 @@ import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
 import SellerAccountRoutes from './Account/account.routes';
+import NotificationsSettings from './Account/NotificationsSettings';
 import AddProduct from './AddProduct/addProduct.routes';
 import CratesManagement from './CratesManagement';
 import DashboardRoutes from './Dashboard/dashboard.routes';
@@ -89,6 +91,12 @@ const ROUTES: Routes = {
   //   icon: Crates,
   //   nested: true,
   // },
+  NOTIFICATIONS_SETTINGS: {
+    path: SELLER_ROUTES.NOTIFICATIONS_SETTINGS,
+    children: <NotificationsSettings />,
+    title: 'Notifications Settings',
+    icon: Cog,
+  },
   ACCOUNT: {
     path: SELLER_ROUTES.ACCOUNT,
     title: 'Account',
@@ -171,6 +179,12 @@ const SellerRoutes = (): JSX.Element => {
     if (pathname === SELLER_ROUTES.CREATES_MANAGEMENT) {
       return {
         pageTitle: 'Crates Management',
+      };
+    }
+
+    if (pathname === SELLER_ROUTES.NOTIFICATIONS_SETTINGS) {
+      return {
+        pageTitle: 'Notifications Settings',
       };
     }
     return {};

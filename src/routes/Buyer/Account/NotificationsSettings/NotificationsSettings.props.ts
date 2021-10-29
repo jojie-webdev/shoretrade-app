@@ -38,4 +38,5 @@ export interface NotificationsSettingsProps {
   >;
   currentGlobalSetting: string;
   setCurrentGlobalSetting: Dispatch<SetStateAction<string>>;
+  showBreadcrumbs: boolean;
 }

@@ -47,6 +47,9 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
         min-width: 10px;
         width: 488px;
         .menu-header {
+          padding: 16px;
+          display: flex;
+          justify-content: space-between;
           background: ${({ theme }) =>
             theme.appType === 'buyer'
               ? theme.grey.noshade
@@ -89,12 +92,9 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
               : theme.grey.shade10};
           overflow-y: auto;
           overflow-x: hidden;
-          border-radius: 6px;
 
           .menu-content {
             display: flex;
-            padding: 24px;
-            padding-bottom: 48px;
             flex-direction: column;
             background: ${({ theme }) =>
               theme.appType === 'buyer'
@@ -105,8 +105,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
-            padding-top: 0px;
+            padding: 16px 24px;
             background: ${({ theme }) =>
               theme.appType === 'seller'
                 ? theme.grey.shade10
@@ -145,7 +144,6 @@ export const DropdownItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
 
   .text {
     margin-left: 10px;

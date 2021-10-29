@@ -8,6 +8,7 @@ import {
   Notepad as OrderIcon,
   Bolt as BoltIcon,
   Listing as ListingIcon,
+  Cog as CogIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -24,6 +25,7 @@ import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
+import NotificationsSettings from './Account/NotificationsSettings';
 import Categories from './Categories/categories.routes';
 import CategoriesLanding from './Categories/Landing';
 import CategoriesPreview from './Categories/Preview';
@@ -104,6 +106,12 @@ const ROUTES: Routes = {
     children: <Listings />,
     title: 'All Listings',
     icon: ListingIcon,
+  },
+  NOTIFICATIONS_SETTINGS: {
+    path: BUYER_ROUTES.NOTIFICATIONS_SETTINGS,
+    children: <NotificationsSettings />,
+    title: 'Notifications Settings',
+    icon: CogIcon,
   },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,
@@ -229,6 +237,12 @@ const BuyerRoutes = (): JSX.Element => {
       return {
         pageTitle: 'All Listings',
         onBack: history.goBack,
+      };
+    }
+
+    if (pathname.includes('/buyer/notifications-settings')) {
+      return {
+        pageTitle: 'Notifications Settings',
       };
     }
     return {};
