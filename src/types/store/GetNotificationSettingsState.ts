@@ -84,6 +84,7 @@ export type NotificationSettingItem = {
   title: string; // subgroup or name
   notificationIds: string[];
   deactivationWarning: string | null;
+  description: string | null;
   settings: {
     inapp: {
       supported: boolean;
@@ -114,6 +115,7 @@ export type SpecificNotificationSettingItem = {
   name: string;
   subgroup: string;
   deactivationWarning: string | null;
+  description: string | null;
   settings: SettingsToggleItem;
 };
 

@@ -22,6 +22,11 @@ export const CustomCheckBoxContainer = styled.div`
     theme.appType === 'seller' ? theme.grey.shade8 : theme.grey.shade1};
 `;
 
+export const Description = styled.div`
+  background-color: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+`;
+
 export const OptionsContainer = styled.div`
   background-color: ${({ theme }) =>
     theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};

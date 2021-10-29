@@ -12,6 +12,8 @@ export const Container = styled.div<InteractionsProps>`
   display: flex;
   justify-content: space-between;
   position: relative;
+  flex-direction: ${({ bottomComponent }) =>
+    bottomComponent ? 'column' : 'row'};
 
   background-color: ${({ theme, backgroundColor, noBg }) => {
     const isSeller = theme.appType !== 'buyer';
@@ -44,8 +46,10 @@ export const Container = styled.div<InteractionsProps>`
         }`
       : ''}
 
+  .top-content,
   .left-content,
-  .right-content {
+  .right-content,
+  .bottom-content {
     display: flex;
     align-items: center;
   }
