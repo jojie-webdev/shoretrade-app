@@ -30,6 +30,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     onClick,
     leftComponent,
     rightComponent,
+    bottomComponent,
     iconAlignment = 'center',
     iconColor,
     children,
@@ -74,6 +75,44 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     return <ChevronRight width={8} height={12} />;
   };
 
+  const renderLeftContent = () => (
+    <div
+      className="left-content"
+      style={fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }}
+    >
+      {leftComponent ? (
+        leftComponent
+      ) : (
+        <>{value ? <Value fontColor={fontColor}>{value}</Value> : null}</>
+      )}
+      {children}
+    </div>
+  );
+
+  const renderRightContent = () =>
+    rightComponent && !keepIcon ? (
+      rightComponent
+    ) : (
+      <div className="right-content">
+        {keepIcon && rightComponent}
+        <IconContainer
+          className="interactions-right"
+          iconAlignment={iconAlignment}
+        >
+          <Typography
+            className="right-content-text"
+            variant="overline"
+            weight="bold"
+            color="shade6"
+            style={{ marginRight: '8px' }}
+          >
+            {resultCount}
+          </Typography>
+          {getIcon()}
+        </IconContainer>
+      </div>
+    );
+
   return (
     <Container className="interactions" {...props} onClick={onClick}>
       {label ? (
@@ -82,41 +121,19 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </Label>
       ) : null}
 
-      <div
-        className="left-content"
-        style={
-          fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }
-        }
-      >
-        {leftComponent ? (
-          leftComponent
-        ) : (
-          <>{value ? <Value fontColor={fontColor}>{value}</Value> : null}</>
-        )}
-        {children}
-      </div>
-
-      {rightComponent && !keepIcon ? (
-        rightComponent
+      {bottomComponent ? (
+        <>
+          <div className="top-content">
+            {renderLeftContent()}
+            {renderRightContent()}
+          </div>
+          <div className="bottom-content">{bottomComponent}</div>
+        </>
       ) : (
-        <div className="right-content">
-          {keepIcon && rightComponent}
-          <IconContainer
-            className="interactions-right"
-            iconAlignment={iconAlignment}
-          >
-            <Typography
-              className="right-content-text"
-              variant="overline"
-              weight="bold"
-              color="shade6"
-              style={{ marginRight: '8px' }}
-            >
-              {resultCount}
-            </Typography>
-            {getIcon()}
-          </IconContainer>
-        </div>
+        <>
+          {renderLeftContent()}
+          {renderRightContent()}
+        </>
       )}
     </Container>
   );

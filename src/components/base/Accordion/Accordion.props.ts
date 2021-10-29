@@ -14,6 +14,7 @@ export interface AccordionProps {
   withBackground?: boolean;
   rightComponent?: ReactNode;
   leftComponent?: ReactNode;
+  bottomComponent?: ReactNode;
   keepIcon?: boolean;
   sameWidth?: boolean;
 }

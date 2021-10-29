@@ -172,6 +172,7 @@ const NotificationsSettingsView = ({
               email={i.settings.email}
               type={ns.resource}
               title={i.title}
+              description={i.description}
             ></NotificationSettingsCategoryItem>
           ))}
         </CategoryItemContainer>
