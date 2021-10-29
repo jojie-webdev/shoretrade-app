@@ -85,7 +85,7 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
       <>
         {isError && (
           <Alert
-            content={`Verification Failed!\nYour verification code were incorrect.`}
+            content={`Incorrect Verification Code.\nPlease try again.`}
             variant="error"
             fullWidth
             style={{
