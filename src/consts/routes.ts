@@ -29,6 +29,7 @@ export const SELLER_ROUTES = {
   MARKET_BOARD: `${SELLER_ROOT}/market-board`,
   CREATES_MANAGEMENT: `${SELLER_ROOT}/creates-management`,
   NOTIFICATIONS: `${SELLER_ROOT}/notifications`,
+  NOTIFICATIONS_SETTINGS: `${SELLER_ROOT}/notifications-settings`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -81,7 +82,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   ADD_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/add-license`,
   EDIT_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/edit-license`,
   MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
-  NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications-settings`,
+  NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications`,
 };
 
 export const BUYER_ROUTES = {
@@ -110,6 +111,7 @@ export const BUYER_ROUTES = {
   SELLER_DETAILS: (id = ':id') => `${BUYER_ROOT}/seller-details/${id}`,
   ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
+  NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
 };
 
 export const BUYER_MARKET_REQUEST_ROUTES = {
@@ -139,5 +141,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
   MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
-  NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications-settings`,
+  NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications`,
 };

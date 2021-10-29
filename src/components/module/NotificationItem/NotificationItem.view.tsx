@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 
 // eslint-disable-next-line import/order
@@ -129,7 +130,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
     handleNotifOnClick,
   } = props;
   const isSeller = theme.appType === 'seller';
-  const defaultColor = isSeller ? 'noshade' : 'shade9';
+  const defaultColor = isSeller ? 'noshade' : 'shade7';
   const history = useHistory();
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
   const notifsRoute =
@@ -217,7 +218,7 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       );
     }
     return (
-      <Typography color={defaultColor} variant="body" className="content">
+      <Typography color={defaultColor} variant="caption" className="content">
         {content}
       </Typography>
     );
@@ -238,15 +239,15 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
       <div className="content-container">
         <Typography
           weight="900"
-          color={isRead ? 'shade7' : 'primary'}
-          variant="overline"
+          color={isSeller ? 'noshade' : 'shade9'}
+          variant="label"
         >
           {name}
         </Typography>
 
         {measuredTextContent()}
 
-        <Typography color="shade6" variant="caption">
+        <Typography color="shade6" variant="small">
           {moment(date).format('MMM DD, YYYY - HH:mm')}
         </Typography>
       </div>

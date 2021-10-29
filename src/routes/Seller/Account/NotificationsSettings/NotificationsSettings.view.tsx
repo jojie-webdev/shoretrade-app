@@ -149,7 +149,11 @@ const NotificationsSettingsView = ({
       {groupedNotifSettings.map((ns) => (
         <CategoryItemContainer key={ns.resource}>
           <div>
-            <Typography color={defaultColor} variant="body">
+            <Typography
+              color={defaultColor}
+              variant="body"
+              style={{ fontFamily: 'Media Sans' }}
+            >
               {ns.resource}
             </Typography>
           </div>

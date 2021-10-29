@@ -38,6 +38,7 @@ export interface DashboardGeneratedProps extends DashboardPublicProps {
   totalNotifs: number;
   totalUnreadNotifs: number;
   handleMarkasRead: (notificationId: string) => void;
+  handleMarkAllasRead: () => void;
   handleOnDelete: (notificationId: string) => void;
   handleNotifOnClick: (
     resource: NotificationType,
@@ -81,6 +82,7 @@ export type HeaderProps = {
   totalNotifs: number;
   totalUnreadNotifs: number;
   handleMarkasRead: (notificationId: string) => void;
+  handleMarkAllasRead: () => void;
   handleOnDelete: (notificationId: string) => void;
   handleNotifOnClick: (
     resource: NotificationType,

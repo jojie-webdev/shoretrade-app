@@ -40,6 +40,7 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
     unreadTotal,
     notifsData,
     handleMarkasRead,
+    handleMarkAllasRead,
     handleOnDelete,
     handleNotifOnClick,
   } = props;
@@ -96,6 +97,22 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
         <div className="menu-container">
           <div className="notif-menu">
             <div className="menu-header">
+              <Typography
+                variant="body"
+                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                color={isSeller ? 'noshade' : 'shade9'}
+              >
+                Notifications
+              </Typography>
+              <Button
+                variant="outline"
+                textVariant="overline"
+                text="Mark all as read"
+                size="sm"
+                textWeight="900"
+                style={{ borderRadius: '8px' }}
+                onClick={handleMarkAllasRead}
+              />
               <span className="triangle"></span>
             </div>
             <div className="menu-body">
@@ -141,7 +158,10 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
                   onClick={() => handleOnClickSeeAll()}
                   size="sm"
                   variant="outline"
+                  textVariant="overline"
                   text="See All"
+                  textWeight="900"
+                  style={{ borderRadius: '8px' }}
                 />
               </div>
             </div>

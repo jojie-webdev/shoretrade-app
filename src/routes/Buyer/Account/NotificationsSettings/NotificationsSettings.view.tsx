@@ -41,6 +41,7 @@ const NotificationsSettingsView = ({
   setCurrentCustomSetting,
   setCurrentGlobalSetting,
   currentGlobalSetting,
+  showBreadcrumbs,
 }: NotificationsSettingsProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -84,21 +85,27 @@ const NotificationsSettingsView = ({
 
   return (
     <Container>
-      <Row nogutter justify="between" align="center">
-        <Col>
-          <div style={{ marginRight: 20, marginBottom: 40 }}>
-            <Breadcrumbs
-              sections={[
-                { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-                { label: 'Notifications' },
-              ]}
-            />
-          </div>
-        </Col>
-      </Row>
+      {showBreadcrumbs && (
+        <Row nogutter justify="between" align="center">
+          <Col>
+            <div style={{ marginRight: 20, marginBottom: 40 }}>
+              <Breadcrumbs
+                sections={[
+                  { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+                  { label: 'Notifications' },
+                ]}
+              />
+            </div>
+          </Col>
+        </Row>
+      )}
       <GlobalNotificationsContainer>
         <header className="header">
-          <Typography className="section-title" variant="body">
+          <Typography
+            className="section-title"
+            variant="body"
+            style={{ fontFamily: 'Media Sans' }}
+          >
             Global Notification Settings{' '}
           </Typography>
           <IconTooltip
@@ -150,7 +157,11 @@ const NotificationsSettingsView = ({
       {groupedNotifSettings.map((ns) => (
         <CategoryItemContainer key={ns.resource}>
           <div>
-            <Typography color={defaultColor} variant="body">
+            <Typography
+              color={defaultColor}
+              variant="body"
+              style={{ fontFamily: 'Media Sans' }}
+            >
               {ns.resource}
             </Typography>
           </div>
