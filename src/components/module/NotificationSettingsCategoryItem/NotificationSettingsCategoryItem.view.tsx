@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import Accordion from 'components/base/Accordion';
@@ -20,6 +21,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { CustomSettingKey } from 'types/store/GetNotificationSettingsState';
+import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationSettingsCategoryItemProps } from './NotificationSettingsCategoryItem.props';
@@ -30,6 +32,7 @@ import {
   StyledCheckbox,
   LeftComponentContainer,
   TextIndicatorsContainer,
+  Description,
 } from './NotificationSettingsCategoryItem.style';
 
 const NotificationSettingsCategoryItem = (
@@ -37,7 +40,16 @@ const NotificationSettingsCategoryItem = (
 ): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { title, mobile, email, push, whatsapp, onChange, type } = props;
+  const {
+    title,
+    mobile,
+    email,
+    push,
+    whatsapp,
+    onChange,
+    type,
+    description,
+  } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const defaultColor = isSeller ? 'noshade' : 'shade9';
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
@@ -140,6 +152,16 @@ const NotificationSettingsCategoryItem = (
     );
   };
 
+  const renderDescription = () => (
+    <Typography
+      variant="label"
+      color={defaultColor}
+      style={{ padding: isMobile ? '4px 24px 0 24px' : '4px 32px 0 32px' }}
+    >
+      {description}
+    </Typography>
+  );
+
   return (
     <Container>
       <Accordion
@@ -155,10 +177,12 @@ const NotificationSettingsCategoryItem = (
           </LeftComponentContainer>
         }
         rightComponent={!isMobile && <TextIndicators />}
+        bottomComponent={!isMobile && renderDescription()}
         sameWidth={true}
         withBackground
         title="Test"
       >
+        {isMobile && <Description>{renderDescription()}</Description>}
         <OptionsContainer>
           <CustomCheckBoxContainer>
             <StyledCheckbox

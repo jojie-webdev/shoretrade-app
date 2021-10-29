@@ -47,7 +47,7 @@ export const LicenseDetails = (props: LicenseOption) => {
             badgeColor={theme.brand.warning}
             style={{ marginBottom: 4 }}
           >
-            <Typography color="shade4" variant="overline">
+            <Typography color="noshade" variant="overline">
               Pending Approval
             </Typography>
           </Badge>
@@ -57,7 +57,7 @@ export const LicenseDetails = (props: LicenseOption) => {
         </Typography>
         {!pending && (
           <Typography variant="caption" color="shade6">
-            Expires {expiredAt ? moment(expiredAt).format('dd MMMM YYYY') : ''}
+            Expires {expiredAt ? moment(expiredAt).format('DD MMMM YYYY') : ''}
           </Typography>
         )}
       </LicenseDetailsText>
@@ -126,7 +126,7 @@ const LicensesView = ({
               {showSuccess && (
                 <Alert
                   header="License Successfully Uploaded"
-                  content="Your License is under approval process. It may takes 1-2 days to be approved"
+                  content="Your License will be reviewed within the next 48 hours"
                   variant="success"
                   fullWidth
                   style={{ marginBottom: 24 }}

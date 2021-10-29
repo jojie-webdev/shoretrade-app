@@ -8,6 +8,7 @@ import { NotificationType } from 'types/store/GetNotificationsState';
 
 export interface NotificationSettingsCategoryItemProps {
   title: string;
+  description: string | null;
   icon?: JSX.Element;
   mobile: CategoryStatus;
   push: CategoryStatus;

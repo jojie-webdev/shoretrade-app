@@ -225,8 +225,10 @@ const StepForm = ({
   const onAddMoreLicense = () => {
     if (!license.file) {
       setLicenseFileError('Please add a license file');
+      return true;
     } else if (license.file && license.fileName.length === 0) {
       setLicenseError('Please add a license name');
+      return true;
     } else {
       setLicenseError('');
       setLicenseFileError('');
@@ -249,6 +251,7 @@ const StepForm = ({
       setExpirationDate(null);
       setStateId('');
       setActiveLicenseIdx(null);
+      return false;
     }
   };
 
@@ -267,6 +270,14 @@ const StepForm = ({
     setActiveLicenseIdx(null);
   };
 
+  const handleSubmitLicense = () => {
+    const error = onAddMoreLicense();
+    if (error) return;
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  };
+
   const handleSubmit = () => {
     if (buttonTextHandler(step) === 'SKIP') {
       hideDetails();
@@ -278,7 +289,7 @@ const StepForm = ({
 
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
-      return 'NEXT';
+      return 'ADD LICENSE';
     } else if (theme.appType === 'seller' && step === 6) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
@@ -941,107 +952,105 @@ const StepForm = ({
                 <>
                   {isSeller && (
                     <>
-                      {activeLicenseIdx !== null ? (
-                        <>
-                          <UploadLabel variant="overline" color={'shade6'}>
-                            License (Front)
-                          </UploadLabel>
-                          <AddFile
-                            onSelectFile={(file) => {
-                              if (file) {
-                                const { name } = file;
-                                const fileName = name.substring(
-                                  0,
-                                  name.lastIndexOf('.')
-                                );
+                      {/* {activeLicenseIdx !== null ? (*/}
+                      <>
+                        <UploadLabel variant="overline" color={'shade6'}>
+                          License (Front)
+                        </UploadLabel>
+                        <AddFile
+                          onSelectFile={(file) => {
+                            if (file) {
+                              const { name } = file;
+                              const fileName = name.substring(
+                                0,
+                                name.lastIndexOf('.')
+                              );
 
-                                setLicense({
-                                  file: file,
-                                  fileName: fileName,
-                                });
-                              }
-                            }}
-                            file={license.file}
-                            fileName={license.fileName}
-                            onRemoveFile={() =>
                               setLicense({
-                                file: null,
-                                fileName: '',
-                              })
+                                file: file,
+                                fileName: fileName,
+                              });
                             }
-                            error={licenseFileError}
-                          />
-                          {hasLicenseBack && (
-                            <>
-                              <UploadLabel variant="overline" color={'shade6'}>
-                                License (Back)
-                              </UploadLabel>
-                              <AddFile
-                                onSelectFile={(file) => {
-                                  if (file) {
-                                    const { name } = file;
-                                    const fileName = name.substring(
-                                      0,
-                                      name.lastIndexOf('.')
-                                    );
+                          }}
+                          file={license.file}
+                          fileName={license.fileName}
+                          onRemoveFile={() =>
+                            setLicense({
+                              file: null,
+                              fileName: '',
+                            })
+                          }
+                          error={licenseFileError}
+                        />
+                        {hasLicenseBack && (
+                          <>
+                            <UploadLabel variant="overline" color={'shade6'}>
+                              License (Back)
+                            </UploadLabel>
+                            <AddFile
+                              onSelectFile={(file) => {
+                                if (file) {
+                                  const { name } = file;
+                                  const fileName = name.substring(
+                                    0,
+                                    name.lastIndexOf('.')
+                                  );
 
-                                    setLicenseBack({
-                                      file: file,
-                                      fileName: fileName,
-                                    });
-                                  }
-                                }}
-                                file={licenseBack.file}
-                                fileName={license.fileName}
-                                onRemoveFile={() =>
                                   setLicenseBack({
-                                    file: null,
-                                    fileName: '',
-                                  })
+                                    file: file,
+                                    fileName: fileName,
+                                  });
                                 }
-                              />
-                            </>
-                          )}
-                          <Checkbox
-                            checked={hasLicenseBack}
-                            onClick={() => setHasLicenseBack((v) => !v)}
-                            label="License Back"
-                            style={{ marginTop: 16 }}
-                          />
-                          <BaseTextField
-                            value={license.fileName}
-                            onChangeText={(v) =>
-                              setLicense((prevState) => ({
-                                ...prevState,
-                                fileName: v,
-                              }))
-                            }
-                            label="License Name"
-                            type="text"
-                            error={licenseError || ''}
-                            style={{ marginBottom: 16, marginTop: 16 }}
-                          />
-                          <DatePickerDropdown
-                            placeholder="17/01/2025"
-                            label="Expiration Date"
-                            date={
-                              expirationDate ? moment(expirationDate) : null
-                            }
-                            onDateChange={(d) =>
-                              setExpirationDate(d?.toDate() || null)
-                            }
-                            showCalendarIcon
-                          />
-                          <Select
-                            label="State"
-                            options={states}
-                            value={stateId}
-                            onChange={(v) => setStateId(v.value)}
-                            borderRadius="4px"
-                            marginTop="16px"
-                          />
-                        </>
-                      ) : (
+                              }}
+                              file={licenseBack.file}
+                              fileName={license.fileName}
+                              onRemoveFile={() =>
+                                setLicenseBack({
+                                  file: null,
+                                  fileName: '',
+                                })
+                              }
+                            />
+                          </>
+                        )}
+                        <Checkbox
+                          checked={hasLicenseBack}
+                          onClick={() => setHasLicenseBack((v) => !v)}
+                          label="License Back"
+                          style={{ marginTop: 16 }}
+                        />
+                        <BaseTextField
+                          value={license.fileName}
+                          onChangeText={(v) =>
+                            setLicense((prevState) => ({
+                              ...prevState,
+                              fileName: v,
+                            }))
+                          }
+                          label="License Name"
+                          type="text"
+                          error={licenseError || ''}
+                          style={{ marginBottom: 16, marginTop: 16 }}
+                        />
+                        <DatePickerDropdown
+                          placeholder="17/01/2025"
+                          label="Expiration Date"
+                          date={expirationDate ? moment(expirationDate) : null}
+                          onDateChange={(d) =>
+                            setExpirationDate(d?.toDate() || null)
+                          }
+                          showCalendarIcon
+                        />
+                        <Select
+                          label="State"
+                          options={states}
+                          value={stateId}
+                          onChange={(v) => setStateId(v.value)}
+                          borderRadius="4px"
+                          marginTop="16px"
+                        />
+                      </>
+                      {/*}) : (
                         <>
                           <UploadLabel variant="overline" color={'shade6'}>
                             My Licenses
@@ -1088,39 +1097,46 @@ const StepForm = ({
                             ))
                           )}
                         </>
-                      )}
+                      )}*/}
                       <ButtonsContainer>
-                        <NextButton
+                        {/*<NextButton
                           text={
                             (typeof activeLicenseIdx === 'number'
                               ? 'EDIT'
                               : 'ADD') + ' LICENSE'
                           }
                           type={'button'}
-                          onClick={() =>
-                            activeLicenseIdx !== null
-                              ? onAddMoreLicense()
-                              : setActiveLicenseIdx('new')
+                          onClick={
+                            () =>
+                              // activeLicenseIdx !== null ?
+                              onAddMoreLicense()
+                            // : setActiveLicenseIdx('new')
                           }
-                        />
-                        {typeof activeLicenseIdx === 'number' && (
+                        />*/}
+                        {/* typeof activeLicenseIdx === 'number' && (
                           <NextButton
                             text="Delete"
                             type={'button'}
                             onClick={() => onDeleteLicense()}
                             variant="outline"
                           />
-                        )}
-                        {activeLicenseIdx === 'new' && (
+                        ) */}
+                        {/*activeLicenseIdx === 'new' && (
                           <NextButton
                             text="Cancel"
                             type={'button'}
                             onClick={() => setActiveLicenseIdx(null)}
                             variant="outline"
                           />
-                        )}
+                        ) */}
                       </ButtonsContainer>
-                      {activeLicenseIdx === null && (
+                      <Alert
+                        variant="info"
+                        fullWidth
+                        content={`You can upload more licenses to your seller account once you’re approved`}
+                        style={{ marginTop: 8 }}
+                      />
+                      {/* {activeLicenseIdx === null && (
                         <TipsContainer style={{ marginTop: 16 }}>
                           <Typography variant="body" weight="bold">
                             How to upload a Fishing License
@@ -1131,7 +1147,7 @@ const StepForm = ({
                             process may take 1-2 business days
                           </Typography>
                         </TipsContainer>
-                      )}
+                      )} */}
                     </>
                   )}
                   {!isSeller && (
@@ -1244,20 +1260,31 @@ const StepForm = ({
             </Content>
           </Container>
           <ButtonContainer>
-            {!isSuccess && (step === 4 ? activeLicenseIdx === null : true) ? (
+            {!isSuccess ? (
               <>
                 <NextButton
                   takeFullWidth={isSmallScreen}
                   loading={isPending && step === MAX_STEP}
                   type={step === MAX_STEP ? 'submit' : 'button'}
                   text={buttonTextHandler(step)}
-                  onClick={() => handleSubmit()}
+                  onClick={() =>
+                    step === 4 ? handleSubmitLicense() : handleSubmit()
+                  }
                   variant={
                     buttonTextHandler(step) === 'SKIP' ? 'outline' : 'primary'
                   }
                 />
               </>
             ) : null}
+            {step === 4 && (
+              <NextButton
+                takeFullWidth={isSmallScreen}
+                type={step === MAX_STEP ? 'submit' : 'button'}
+                text={'SKIP'}
+                onClick={() => handleSubmit()}
+                variant={'outline'}
+              />
+            )}
             {isGotoDetails && (
               <NextButton
                 takeFullWidth={isSmallScreen}

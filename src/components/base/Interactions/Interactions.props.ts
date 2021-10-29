@@ -30,4 +30,5 @@ export interface InteractionsProps {
   fontColor?: string;
   marginBottom?: string;
   customIcon?: React.ReactNode;
+  bottomComponent?: React.ReactNode;
 }
