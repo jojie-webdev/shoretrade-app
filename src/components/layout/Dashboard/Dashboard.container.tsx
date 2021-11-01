@@ -131,9 +131,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   const logout = () => {
     dispatch(logoutActions.request());
-    dispatch(editableListingActions.clear());
-    dispatch(cartActions.clear());
-    dispatch(authActions.clear());
+    // dispatch(editableListingActions.clear());
+    // dispatch(cartActions.clear());
+    // dispatch(authActions.clear());
   };
 
   const onClickAccount = () => {

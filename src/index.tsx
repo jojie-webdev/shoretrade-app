@@ -5,6 +5,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import { ConnectedRouter } from 'connected-react-router';
 import { API, SELLER_ROUTES } from 'consts';
 import { ThemeProvider } from 'emotion-theming';
+import ErrorBoundary from 'ErrorBoundary';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -56,18 +57,20 @@ const App = () => {
     setRehydrated(true);
   };
   return (
-    <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persistor(onRehydate)}>
-        <ConnectedRouter history={history}>
-          <ScrollToTop />
-          <React.StrictMode>
-            <Theme>
-              <Routes />
-            </Theme>
-          </React.StrictMode>
-        </ConnectedRouter>
-      </PersistGate>
-    </ReduxProvider>
+    <ErrorBoundary>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor(onRehydate)}>
+          <ConnectedRouter history={history}>
+            <ScrollToTop />
+            <React.StrictMode>
+              <Theme>
+                <Routes />
+              </Theme>
+            </React.StrictMode>
+          </ConnectedRouter>
+        </PersistGate>
+      </ReduxProvider>
+    </ErrorBoundary>
   );
 };
 

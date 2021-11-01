@@ -65,6 +65,7 @@ import getStates from './getStates';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import globalModal from './globalModal';
+import healthCheck from './healthCheck';
 import login from './login';
 import logout from './logout';
 import logRequest from './logRequest';
@@ -202,6 +203,7 @@ const sagas = [
   socketChannel,
   sellerDashboardDate,
   globalModal,
+  healthCheck,
 ];
 
 export default function* root() {
