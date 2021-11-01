@@ -14,7 +14,13 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import { CloseFilled, FileCheck, Search, Subtract } from 'components/base/SVG';
+import {
+  CloseFilled,
+  Download,
+  FileCheck,
+  Search,
+  Subtract,
+} from 'components/base/SVG';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -75,7 +81,6 @@ import {
   GetStartedWrapper,
   InputContainer,
   DownloadTermsContainer,
-  DownloadIcon,
   DownloadTermsText,
   LocationField,
   Error,
@@ -110,6 +115,7 @@ import {
   StyledBadge,
   StyledTouchable,
   ButtonsContainer,
+  DownloadApplicationFormButton,
 } from './Register.style';
 import { addressToPlaceData } from './Register.transform';
 import {
@@ -678,7 +684,7 @@ const StepForm = ({
             justifyContent={'flex-start'}
           >
             <DownloadTermsContainer>
-              <DownloadIcon />
+              <Download />
               <DownloadTermsText variant="label" color="shade6">
                 Download terms and conditions here
               </DownloadTermsText>
@@ -925,7 +931,7 @@ const StepForm = ({
                           label="Are you interested in applying for ShorePay?"
                         />
                         {interestedInShorePay && (
-                          <Button
+                          <DownloadApplicationFormButton
                             text="Download Application Form"
                             variant="outline"
                             onClick={(e) => {
@@ -934,13 +940,12 @@ const StepForm = ({
                             }}
                             takeFullWidth
                             icon={
-                              <DownloadIcon
+                              <Download
                                 fill={theme.brand.primary}
                                 height={15}
                                 width={20}
                               />
                             }
-                            style={{ margin: '10px 0' }}
                           />
                         )}
                       </div>

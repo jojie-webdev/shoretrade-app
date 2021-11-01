@@ -1,6 +1,6 @@
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import { Download, ArrowLeft } from 'components/base/SVG';
+import { ArrowLeft } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
@@ -162,10 +162,6 @@ export const DownloadTermsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-export const DownloadIcon = styled(Download)`
-  margin-right: 11px;
 `;
 
 export const DownloadTermsText = styled(Typography)``;
@@ -388,4 +384,9 @@ export const ButtonsContainer = styled.div`
   button:nth-of-type(2) {
     margin-left: 8px;
   }
+`;
+
+export const DownloadApplicationFormButton = styled(Button)`
+  margin: 10px 0;
+  padding: 16px;
 `;
