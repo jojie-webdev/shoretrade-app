@@ -35,6 +35,7 @@ const NotificationsSettings = (): JSX.Element => {
     val: boolean;
     deactivationWarning: string | null;
   }>(null);
+  const inAccount = location.pathname.includes('account');
   const [currentGlobalSetting, setCurrentGlobalSetting] = useState('');
   const [showDeactivationWarning, setShowDeactivationWarning] = useState('');
   const [globalUpdateTriggered, setGlobalUpdateTriggered] = useState<
@@ -51,6 +52,12 @@ const NotificationsSettings = (): JSX.Element => {
   const [customSettings, setCustomSettings] = useState<
     SpecificNotificationSettingItem[]
   >([]);
+
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const companies = user?.companies || [];
   const getNotificationsSettings = useSelector(
     (state: Store) => state.getNotificationsSettings.data
   );
@@ -143,15 +150,22 @@ const NotificationsSettings = (): JSX.Element => {
   );
 
   useEffect(() => {
-    const { companyId } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    }) as QueryParams;
-
-    if (!companyId) {
-      dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+    if (!inAccount && !loadingUser && companies?.length > 0) {
+      setCompanyId(companies[0].id);
     }
+  }, [loadingUser]);
 
-    setCompanyId(companyId);
+  useEffect(() => {
+    if (inAccount) {
+      const { companyId } = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      }) as QueryParams;
+
+      if (!companyId) {
+        dispatch(push(SELLER_ACCOUNT_ROUTES.LANDING));
+      }
+      setCompanyId(companyId);
+    }
   }, []);
 
   useEffect(() => {
