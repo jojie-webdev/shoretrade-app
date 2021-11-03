@@ -3,7 +3,6 @@ import { getServerHealth } from 'services/system';
 import { logoutActions } from 'store/actions';
 
 function* healthCheckWatcher(): any {
-  console.log('test');
   try {
     const { data } = yield call(getServerHealth);
 
@@ -17,10 +16,12 @@ function* healthCheckWatcher(): any {
 }
 
 function* initHealthCheck(): any {
-  yield takeEvery(
-    ({ type = '' }) => type.toUpperCase().includes('/FAILED'),
-    healthCheckWatcher
-  );
+  if (process.env.REACT_APP_ENV !== 'development') {
+    yield takeEvery(
+      ({ type = '' }) => type.toUpperCase().includes('/FAILED'),
+      healthCheckWatcher
+    );
+  }
 }
 
 export default initHealthCheck;

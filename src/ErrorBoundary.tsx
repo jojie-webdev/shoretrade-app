@@ -27,9 +27,11 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    sendReport(error.message).finally(() => {
-      window.location.replace('/');
-    });
+    if (process.env.REACT_APP_ENV !== 'development') {
+      sendReport(error.message).finally(() => {
+        window.location.replace('/');
+      });
+    }
   }
 
   render() {

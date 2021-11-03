@@ -12,14 +12,12 @@ export const getServerHealth = () => {
 };
 
 export const sendReport = (error: string) => {
-  // create time based auth token
-
   return axios({
     method: 'post',
     url: `${SYSTEM_URL}/send-report`,
     data: {
       error,
-      env: process.env.NODE_ENV,
+      env: process.env.REACT_APP_ENV,
       platform: 'WEB',
     },
   });
