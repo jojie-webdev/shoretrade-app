@@ -6,6 +6,7 @@ import { ChevronRight } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
+import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
@@ -14,6 +15,7 @@ import moment from 'moment';
 import { isNil, prop, sortBy, isEmpty } from 'ramda';
 import { Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { AnimatedOctopus } from 'res/images/animated/octopus';
 import {
   getExpiry,
   getShippingAddress,
@@ -492,6 +494,20 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 />
               ))}
           </Visible>
+          {isEmpty(props.activeOffers) &&
+            props.currentTab === 'My Active Offers' && (
+              <EmptyState
+                AnimatedSvg={AnimatedOctopus}
+                title="No active offers"
+              />
+            )}
+          {isEmpty(props.buyerRequests) &&
+            props.currentTab === 'Buyer Requests' && (
+              <EmptyState
+                AnimatedSvg={AnimatedOctopus}
+                title="No buyer requests"
+              />
+            )}
         </>
       )}
 
@@ -501,4 +517,3 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 };
 
 export default MarketBoardLandingView;
-

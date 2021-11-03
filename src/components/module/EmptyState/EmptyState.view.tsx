@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AnimationPlayer from 'components/base/AnimationPlayer';
 import Button from 'components/base/Button';
 import { useTheme } from 'utils/Theme';
 
@@ -18,6 +19,7 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
     height,
     width,
     textAlign,
+    AnimatedSvg,
   } = props;
 
   const textColor = theme.appType === 'buyer' ? 'shade9' : 'noshade';
@@ -38,16 +40,27 @@ const EmptyState = (props: EmptyStateProps): JSX.Element => {
           {title}
         </MainText>
       )}
-      <SVGContainer
-        containerHeight={props.containerHeight}
-        containerWidth={props.containerWidth}
-        circleHeight={props.circleHeight}
-        circleWidth={props.circleWidth}
-        circleColor={circleColor}
-        fluid={fluid}
-      >
-        <Svg height={height || 311} width={width || 311} fill={svgColor} />
-      </SVGContainer>
+      {AnimatedSvg && (
+        <AnimationPlayer
+          src={AnimatedSvg}
+          style={{
+            width: `${props.containerWidth}px`,
+            height: `${props.containerHeight}px`,
+          }}
+        />
+      )}
+      {Svg && (
+        <SVGContainer
+          containerHeight={props.containerHeight}
+          containerWidth={props.containerWidth}
+          circleHeight={props.circleHeight}
+          circleWidth={props.circleWidth}
+          circleColor={circleColor}
+          fluid={fluid}
+        >
+          <Svg height={height || 311} width={width || 311} fill={svgColor} />
+        </SVGContainer>
+      )}
 
       {onButtonClicked && (
         <Button text={buttonText} onClick={onButtonClicked} />
