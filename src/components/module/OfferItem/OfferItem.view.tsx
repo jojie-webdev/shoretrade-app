@@ -48,7 +48,6 @@ import {
 
 const Offer = (props: OfferItemProps) => {
   const { sellerOffer, onOfferDelete, onClickItem } = props;
-  console.log(sellerOffer);
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');

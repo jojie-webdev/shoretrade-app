@@ -16,7 +16,6 @@ const PaymentTimeLeft = (props: PaymentTimeLeftProps): JSX.Element => {
   const theme = useTheme();
   // parse time left -> HH:mm:ss
   const timeParts = timeLeft.split(':');
-  console.log(timeParts);
   const now = moment();
   const expiryDate = now
     .add(timeParts[0], 'hours')

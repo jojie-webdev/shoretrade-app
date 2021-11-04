@@ -175,7 +175,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   const mrStatusProps = transformMarketRequestStatusText(
     selectedOffer.statusText
   );
-  console.log(selectedOffer.expiryDate);
 
   const withTimer = () => (
     <>
