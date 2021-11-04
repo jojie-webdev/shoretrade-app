@@ -29,6 +29,8 @@ import {
   SubMinorInfo,
 } from '../MobileMarketRequest/MobileMarketRequest.style';
 import { StyledStatusBadge } from './MobileOffers.style';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
+import OfferTag from 'components/module/OfferTag';
 
 const MobileOffers = (props: {
   data: GetActiveOffersRequestResponseItem;
@@ -46,7 +48,10 @@ const MobileOffers = (props: {
     marketRequest,
   } = data;
 
-  const parsedStatus = getOfferStatus(data, 'seller');
+  const statusTextProps = transformMarketRequestStatusText(
+    data.statusText,
+    true
+  );
 
   const sizeUnit = formatMeasurementUnit(measurementUnit) === 'kg' ? 'kg' : '';
 
@@ -108,20 +113,12 @@ const MobileOffers = (props: {
 
   const renderBadges = () => (
     <Badges>
-      <StyledStatusBadge
-        className="badge"
-        badgeColor={getStatusBadgeColor(parsedStatus as OfferStatus)}
-      >
-        <BadgeText
-          variant="small"
-          weight="900"
-          color={
-            parsedStatus === OfferStatus.NEGOTIATION ? 'shade9' : 'noshade'
-          }
-        >
-          {parsedStatus}
-        </BadgeText>
-      </StyledStatusBadge>
+      <OfferTag
+        text={statusTextProps.text}
+        badgeColor={statusTextProps.badgeColor || ''}
+        variantColor={statusTextProps.variantColor}
+        color={statusTextProps.tagColor}
+      />
     </Badges>
   );
 

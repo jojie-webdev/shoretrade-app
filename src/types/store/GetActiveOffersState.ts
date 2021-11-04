@@ -45,6 +45,7 @@ export type OfferMarketRequest = {
 export type GetActiveOffersRequestResponseItem = {
   id: string;
   status: OfferStatus;
+  statusText: string;
   createdAt: string;
   deliveryDate?: string;
   price: number;
@@ -81,8 +82,10 @@ export interface Offer {
   id: string;
   status: string;
   createdAt: string;
+  statusText: string;
   price: number;
   weight: number;
+  expiryDate: string;
   size: Size;
   measurementUnit: string;
   specifications: string[];

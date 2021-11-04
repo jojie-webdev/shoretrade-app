@@ -30,6 +30,7 @@ export const HeaderContainer = styled.header`
 
 export const AlertsContainer = styled.header`
   margin-top: 16px;
+  margin-bottom: 16px;
 `;
 
 export const FullOfferDetailsContainer = styled.div`

@@ -25,6 +25,7 @@ import {
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
@@ -58,7 +59,7 @@ export const MarketRequestItemNonMobile = (props: {
   measurementUnit?: string;
   setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
   id?: string;
-  offerStatus?: string;
+  requestStatus: string;
   specs?: string;
   status: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
@@ -75,11 +76,10 @@ export const MarketRequestItemNonMobile = (props: {
     size,
     setItemToDelete,
     metric,
-    offerStatus,
+    requestStatus,
     status,
   } = props;
-
-  const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
+  const statusTextProps = transformMarketRequestStatusText(requestStatus);
 
   return (
     <MarketRequestItemContainer>
@@ -132,13 +132,14 @@ export const MarketRequestItemNonMobile = (props: {
         </Col>
 
         <Col style={{ padding: '0 5px' }}>
-          <OfferTag
-            isMarketRequest
-            offers={offers}
-            marketStatus={status}
-            status={offerStatus || ''}
-            perspective="buyer"
-          />
+          <Badges>
+            <OfferTag
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
+            />
+          </Badges>
         </Col>
 
         <Col sm={1} style={{ padding: '0 5px' }}>
@@ -176,7 +177,7 @@ export const MarketRequestItemMobile = (props: {
   measurementUnit?: string;
   specs?: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
-  offerStatus?: string;
+  requestStatus: string;
   status: string;
 }) => {
   const {
@@ -189,10 +190,11 @@ export const MarketRequestItemMobile = (props: {
     specs,
     size,
     metric,
-    offerStatus,
+    requestStatus,
     status,
   } = props;
 
+  const statusTextProps = transformMarketRequestStatusText(requestStatus);
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
   const subMinorDetail = (label: string, value: string) => (
@@ -257,10 +259,10 @@ export const MarketRequestItemMobile = (props: {
 
         <Badges>
           <OfferTag
-            marketStatus={status}
-            offers={offers}
-            status={offerStatus || ''}
-            perspective="buyer"
+            text={statusTextProps.text}
+            badgeColor={statusTextProps.badgeColor || ''}
+            variantColor={statusTextProps.variantColor}
+            color={statusTextProps.tagColor}
           />
         </Badges>
       </MinorInfo>
@@ -534,17 +536,6 @@ const hasOfferWithNegotiation = (offers: Offer[]) => {
 
   return offer;
 };
-
-const paymentRequiredTextBadgeForSmallerDesktopScreens = (
-  <>
-    <BadgeText variant="overline" style={{ color: theme.brand.warning }}>
-      PAYMENT
-    </BadgeText>
-    <BadgeText variant="overline" style={{ color: theme.brand.warning }}>
-      REQUIRED
-    </BadgeText>
-  </>
-);
 
 const renderInOrderBadge = (
   offers: Offer[],

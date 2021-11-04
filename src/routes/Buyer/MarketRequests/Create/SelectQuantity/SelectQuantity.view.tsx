@@ -121,6 +121,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             <StyledTextField
               type="number"
               inputType="decimal"
+              color="shade10"
               label="Quantity From"
               value={from}
               onChangeText={(v) => {
@@ -143,6 +144,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             <StyledTextField
               className="quantity-to"
               type="number"
+              color="shade10"
               inputType="decimal"
               label="Quantity  To"
               value={to}
@@ -174,7 +176,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
                   onClick={() => handleSubmit()}
                   className="submit-btn"
                   disabled={from === '' || to === ''}
-                  text="Proceed"
+                  text="Next"
                   variant="primary"
                 />
               </ButtonContainer>
@@ -186,7 +188,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               onClick={() => handleSubmit()}
               className="submit-btn"
               disabled={from === '' || to === ''}
-              text="Proceed"
+              text="Next"
               variant="primary"
               icon={
                 <ChevronRight

@@ -20,6 +20,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { OfferStatus } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
@@ -402,93 +403,18 @@ const Step1 = ({
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const buildAlertProperties = () => {
-    const offerStatus = getOfferStatus(activeOffer, 'seller');
-
-    const contentTypo = (content: string): ReactNode => (
-      <Typography variant="body" color="shade6" weight="400">
-        {content}
-      </Typography>
-    );
-
-    let alertProps = {} as AlertProps;
-
-    if (offerStatus === 'PAYMENT MISSED') {
-      alertProps = {
-        variant: 'error',
-        header: 'Lost',
-        content: contentTypo(
-          'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.'
-        ),
-      };
-    }
-    if (offerStatus === 'DECLINED') {
-      alertProps = {
-        variant: 'error',
-        header: 'Declined',
-        content: contentTypo('Your offer was declined by the Buyer.'),
-      };
-    }
-    if (
-      offerStatus === 'PAYMENT REQUIRED' ||
-      offerStatus === OfferStatus.PENDING_PAYMENT
-    ) {
-      alertProps = {
-        variant: 'warning',
-        header: 'Pending Payment',
-        content: contentTypo(
-          'The Buyer needs to process the payment for the accepted offer.'
-        ),
-      };
-    }
-    if (offerStatus === 'NEGOTIATION') {
-      alertProps = {
-        variant: 'infoAlert',
-        header: 'In Negotiation',
-        content: contentTypo('Your offer is being reviewed by the Buyer.'),
-      };
-    }
-    if (offerStatus === 'ACCEPTED') {
-      alertProps = {
-        variant: 'success',
-        header: 'Finalised',
-        content: (
-          <div
-            onClick={() => {
-              history.replace(SELLER_ROUTES.SOLD);
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            {contentTypo(
-              `This offer is now Order [#0000-${activeOffer.orderRefNumber}].`
-            )}
-          </div>
-        ),
-      };
-    }
-    if (offerStatus === 'NEW OFFER') {
-      alertProps = {
-        variant: 'success',
-        header: 'New Offer',
-        content: contentTypo(
-          'Review the offer details and Negotiate or Accept the offer to proceed.'
-        ),
-      };
-    }
-
-    return alertProps;
-  };
+  const statusTextProps = transformMarketRequestStatusText(
+    activeOffer?.statusText || '',
+    true
+  );
 
   const isMyActiveOffersTab = () => {
-    const isNotBuyersRequestTab = !location.pathname.includes('/offers');
-
+    const isNotBuyersRequestTab = !location.pathname.includes('/offer');
     return isNotBuyersRequestTab;
   };
 
   const isGoodToDisplayAlert = () => {
-    const isGoodToDisplayAlert =
-      isMyActiveOffersTab() && buildAlertProperties().variant;
-
+    const isGoodToDisplayAlert = isMyActiveOffersTab() && statusTextProps.text !== '';
     return isGoodToDisplayAlert;
   };
 
@@ -496,7 +422,13 @@ const Step1 = ({
     <>
       {isGoodToDisplayAlert() && (
         <>
-          <Alert {...buildAlertProperties()} fullWidth />
+          <Alert
+            content={statusTextProps.description}
+            header={statusTextProps.text}
+            variant={statusTextProps.variantColor || 'info'}
+            color={statusTextProps.tagColor}
+            fullWidth
+          />
           <div style={{ marginBottom: '16px' }} />
         </>
       )}

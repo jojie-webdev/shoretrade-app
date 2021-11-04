@@ -9,7 +9,7 @@ export type Result = {
   id: string;
   type: string;
   offers: number;
-  offerStatus: string;
+  requestStatus: string;
   image: string;
   status: string;
   expiry: string;

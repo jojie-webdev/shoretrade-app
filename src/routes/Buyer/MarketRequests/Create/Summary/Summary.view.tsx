@@ -32,6 +32,7 @@ import {
   SubmitButton,
   CheckboxContainer,
   CheckboxMain,
+  StyledAddressSelect,
 } from './Summary.style';
 
 const SummaryView = (props: SummaryProps) => {
@@ -77,7 +78,7 @@ const SummaryView = (props: SummaryProps) => {
           <>
             <TypographyView
               style={{ marginBottom: '8px' }}
-              color="shade6"
+              color="shade10"
               variant="overline"
             >
               {label}
@@ -100,7 +101,7 @@ const SummaryView = (props: SummaryProps) => {
           <div>
             <TypographyView
               style={{ marginBottom: '8px' }}
-              color="shade6"
+              color="shade10"
               variant="overline"
             >
               Size 
@@ -201,7 +202,7 @@ const SummaryView = (props: SummaryProps) => {
             <div className="size-container">{sizeSummary()}</div>
             <TypographyView
               style={{ marginBottom: '8px' }}
-              color="shade6"
+              color="shade10"
               variant="overline"
             >
               Quantity
@@ -250,7 +251,7 @@ const SummaryView = (props: SummaryProps) => {
                   </>
                 )}
               </Row>
-              <Select
+              <StyledAddressSelect
                 value={props.selectedAddress}
                 onChange={props.onChangeAddress}
                 options={props.addressOptions}
@@ -260,7 +261,7 @@ const SummaryView = (props: SummaryProps) => {
               <CheckboxMain>
                 <TypographyView
                   style={{ marginBottom: 4 }}
-                  color="shade6"
+                  color="shade10"
                   variant="overline"
                 >
                   Notes

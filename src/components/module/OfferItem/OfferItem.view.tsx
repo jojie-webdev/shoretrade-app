@@ -24,6 +24,7 @@ import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferLatestPrice } from 'utils/MarketRequest';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 
@@ -47,6 +48,7 @@ import {
 
 const Offer = (props: OfferItemProps) => {
   const { sellerOffer, onOfferDelete, onClickItem } = props;
+  console.log(sellerOffer);
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');
@@ -134,6 +136,7 @@ const Offer = (props: OfferItemProps) => {
   );
 
   const renderOffersForMobile = (offer: any) => {
+    const statusTextProps = transformMarketRequestStatusText(offer.statusText);
     return (
       <MarketRequestItemMobileContainer>
         <MajorInfo id="major info">
@@ -163,9 +166,10 @@ const Offer = (props: OfferItemProps) => {
 
         <div style={{ marginTop: '8px' }}>
           <OfferTag
-            perspective="buyer"
-            status={getOfferStatus(offer, 'buyer')}
-            marketRequestAvgPrice={sellerOffer.marketRequest.averagePrice}
+            text={statusTextProps.text}
+            badgeColor={statusTextProps.badgeColor || ''}
+            variantColor={statusTextProps.variantColor}
+            color={statusTextProps.tagColor}
           />
         </div>
       </MarketRequestItemMobileContainer>
@@ -186,7 +190,7 @@ const Offer = (props: OfferItemProps) => {
                   <ChevronRight width={8} height={12} />
                 </div>
 
-                {offer.status !== 'ACCEPTED' && (
+                {offer.status !== 'ACCEPTED' && offer.status !== 'DECLINED' && (
                   <Button
                     iconPosition="before"
                     icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
@@ -211,101 +215,101 @@ const Offer = (props: OfferItemProps) => {
     e.stopPropagation();
   };
 
-  const getFinalStatus = (offer: any) => {
-    const finalStatus =
-      offer.status === 'DECLINED'
-        ? 'LOST'
-        : offer.status === 'ACCEPTED'
-        ? 'FINALISED'
-        : offer.status;
-
-    return finalStatus;
-  };
-
   const renderNonMobile = () => {
-    return sellerOffer.offers.map((offer, index) => (
-      <OfferContainer key={index} onClick={() => onClickItem(offer)}>
-        <OfferRowContainer>
-          <Col
-            sm={12}
-            md={6}
-            lg={4}
-            style={{ display: 'flex', alignItems: 'center' }}
-          >
-            {sellerOffer.company.image ? (
-              <img
-                style={{
-                  width: '48px',
-                  height: '48px',
-                  backgroundColor: 'grey',
-                  borderRadius: '8px',
-                }}
-                src={parseImageUrl(sellerOffer.company.image || '')}
+    return sellerOffer.offers.map((offer, index) => {
+      const statusTextProps = transformMarketRequestStatusText(
+        offer.statusText
+      );
+
+      return (
+        <OfferContainer key={index} onClick={() => onClickItem(offer)}>
+          <OfferRowContainer>
+            <Col
+              sm={12}
+              md={6}
+              lg={4}
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              {sellerOffer.company.image ? (
+                <img
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    backgroundColor: 'grey',
+                    borderRadius: '8px',
+                  }}
+                  src={parseImageUrl(sellerOffer.company.image || '')}
+                />
+              ) : (
+                <AvatarPlaceholder
+                  width="48px"
+                  height="48px"
+                  borderRadius="8px"
+                >
+                  <PlaceholderProfile width={48} height={48} />
+                </AvatarPlaceholder>
+              )}
+
+              <MajorInfoNonMobileContainer>
+                <Typography
+                  weight="700"
+                  variant="label"
+                  style={{
+                    fontFamily: 'Basis Grotesque Pro',
+                    marginTop: '3px',
+                  }}
+                  color="shade9"
+                >
+                  {sellerOffer.company.name}
+                </Typography>
+
+                {renderStars()}
+              </MajorInfoNonMobileContainer>
+            </Col>
+
+            <Col sm={12} md={6} lg={3}>
+              {renderSubDetails(offer)}
+            </Col>
+
+            <Col className="badges-col" sm={12} md={6} lg={3}>
+              <OfferTag
+                text={statusTextProps.text}
+                badgeColor={statusTextProps.badgeColor || ''}
+                variantColor={statusTextProps.variantColor}
+                color={statusTextProps.tagColor}
               />
-            ) : (
-              <AvatarPlaceholder width="48px" height="48px" borderRadius="8px">
-                <PlaceholderProfile width={48} height={48} />
-              </AvatarPlaceholder>
-            )}
+            </Col>
 
-            <MajorInfoNonMobileContainer>
-              <Typography
-                weight="700"
-                variant="label"
-                style={{
-                  fontFamily: 'Basis Grotesque Pro',
-                  marginTop: '3px',
-                }}
-                color="shade9"
-              >
-                {sellerOffer.company.name}
-              </Typography>
-
-              {renderStars()}
-            </MajorInfoNonMobileContainer>
-          </Col>
-
-          <Col sm={12} md={6} lg={3}>
-            {renderSubDetails(offer)}
-          </Col>
-
-          <Col className="badges-col" sm={12} md={6} lg={3}>
-            <OfferTag
-              perspective="buyer"
-              status={getOfferStatus(offer, 'buyer')}
-              marketRequestAvgPrice={0}
-            />
-          </Col>
-
-          <Col
-            className="cta"
-            sm={12}
-            md={6}
-            lg={2}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
-            {offer.status !== 'ACCEPTED' && (
-              <Button
-                iconPosition="before"
-                icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                onClick={(e) => handleTrashIconClick(e, offer.id)}
-                variant="primary"
-                size="sm"
-                className="delete-button"
-                style={{ marginRight: '20px' }}
-              />
-            )}
-            <div>
-              <ChevronRight width={10} height={10} />
-            </div>
-          </Col>
-        </OfferRowContainer>
-      </OfferContainer>
-    ));
+            <Col
+              className="cta"
+              sm={12}
+              md={6}
+              lg={2}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}
+            >
+              {offer.status !== 'ACCEPTED' && offer.status !== 'DECLINED' && (
+                <Button
+                  iconPosition="before"
+                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+                  onClick={(e) => handleTrashIconClick(e, offer.id)}
+                  variant="primary"
+                  size="sm"
+                  className="delete-button"
+                  style={{ marginRight: '20px' }}
+                />
+              )}
+              <div>
+                <ChevronRight width={10} height={10} />
+              </div>
+            </Col>
+          </OfferRowContainer>
+        </OfferContainer>
+      );
+    });
   };
 
   return (

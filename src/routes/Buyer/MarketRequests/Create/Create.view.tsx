@@ -434,6 +434,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             stepCountComponent={<StepCountComponent step={step} />}
             selectedQuantity={selectedQuantity}
             didFinishStep={didFinishStep}
+            detailsListComponent={<DetailsComponent />}
             setDidFinishStep={setDidFinishStep}
           />
         );

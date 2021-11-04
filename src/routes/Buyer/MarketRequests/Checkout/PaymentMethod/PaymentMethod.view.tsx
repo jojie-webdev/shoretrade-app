@@ -778,7 +778,6 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               paymentMode: 'CREDIT_CARD',
             };
 
-            history.push(BUYER_ROUTES.MARKET_REQUESTS);
             dispatch(marketRequestAcceptOfferActions.request(payload));
           };
 

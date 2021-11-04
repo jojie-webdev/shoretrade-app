@@ -96,6 +96,7 @@ const SizeInput = (props: SizeInputProps) => {
         <SelectRowContainer>
           <TextField
             type="text"
+            color="shade10"
             inputType="decimal"
             label="Size From"
             value={fromSize}
@@ -119,6 +120,7 @@ const SizeInput = (props: SizeInputProps) => {
 
           <TextField
             type="text"
+            color="shade10"
             inputType="decimal"
             label={`Size To\n(Optional)`}
             value={toSize}
@@ -314,7 +316,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                     <ProceedButton
                       onClick={() => handleSubmit()}
                       className="submit-btn"
-                      text="Proceed"
+                      text="Next"
                       disabled={disabledNext()}
                       variant="primary"
                     />
@@ -324,7 +326,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   <Button
                     onClick={() => handleSubmit()}
                     className="submit-btn"
-                    text="Proceed"
+                    text="Next"
                     disabled={disabledNext()}
                     variant="primary"
                     takeFullWidth
