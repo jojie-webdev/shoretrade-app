@@ -20,6 +20,7 @@ import {
   GetActiveOffersRequestResponseItem,
   Negotiations,
   Offer,
+  OfferMarketRequest,
 } from 'types/store/GetActiveOffersState';
 import { AcceptOfferItem, OfferConfirm } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
@@ -40,6 +41,7 @@ const OfferDetails = (): JSX.Element => {
   const [countAcceptedWeight, setCountAcceptedWeight] = useState(0);
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
+  const [offerMR, setOfferMR] = useState<OfferMarketRequest>();
   const [negotiating, setNegotiating] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
@@ -71,6 +73,10 @@ const OfferDetails = (): JSX.Element => {
 
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
+  );
+
+  const marketRequestNegotiateOfferPending = useSelector(
+    (store: Store) => store.marketRequestNegotiation.pending
   );
 
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
@@ -191,6 +197,7 @@ const OfferDetails = (): JSX.Element => {
         if (offer?.id === offerId) {
           setSelectedOffer(offer);
           setSeller(marketOffer.company);
+          setOfferMR(marketOffer.marketRequest);
           if (offer && offer.negotiations) {
             setNego(offer?.negotiations[0]);
           }
@@ -312,7 +319,7 @@ const OfferDetails = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-  if (!selectedOffer || !filteredBuyerRequest) {
+  if (!selectedOffer || !filteredBuyerRequest || !offerMR) {
     return <Loading />;
   }
 
@@ -337,12 +344,14 @@ const OfferDetails = (): JSX.Element => {
     submitNegotiation,
     breadCrumb,
     marketRequest: filteredBuyerRequest,
+    offerMR,
     countAcceptedWeight,
     onClickDelete,
     showDelete,
     setShowDelete,
     handleConfirmOffer,
     isLoadingConfirmOffer: confirmOffer.pending || false,
+    isLoadingNegotiate: marketRequestNegotiateOfferPending || false,
   };
 
   const getPrice = () => {

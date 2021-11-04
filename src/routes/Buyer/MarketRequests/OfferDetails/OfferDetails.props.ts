@@ -54,6 +54,7 @@ export interface OfferDetailsProps {
   submitNegotiation: (counterOffer: number) => void;
   breadCrumb: any[];
   marketRequest: GetAllMarketRequestResponseItem;
+  offerMR: OfferMarketRequest;
   countAcceptedWeight: number;
   onClickDelete: () => void;
   showDelete: boolean;
@@ -61,4 +62,5 @@ export interface OfferDetailsProps {
   isLoadingAcceptOffer: boolean;
   isLoadingConfirmOffer: boolean;
   isLoadingOffer: boolean;
+  isLoadingNegotiate: boolean;
 }

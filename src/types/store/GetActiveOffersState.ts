@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+import { ShippingTo } from './GetAllMarketRequestState';
 
 export type GetActiveOffersMeta = {
   queryParams?: Record<string, any>;
@@ -38,6 +39,7 @@ export type OfferMarketRequest = {
   createdAt: string;
   averagePrice: number;
   image: string;
+  shippingTo: ShippingTo;
   weight: { from: number; to: number };
   name: string;
 };

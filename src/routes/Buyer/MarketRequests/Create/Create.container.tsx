@@ -194,6 +194,11 @@ const CreateRequest = (): JSX.Element => {
 
   useEffect(() => {
     window.scrollTo(0, 0); //reset scroll to top
+    if (currentStep === 1) {
+      setSelectedSpecifications({ items: [] });
+      setSelectedSize({ from: '', to: '', ungraded: false, items: [] });
+      setSelectedQuantity({ from: '', to: '' });
+    }
   }, [currentStep]);
 
   useEffect(() => {

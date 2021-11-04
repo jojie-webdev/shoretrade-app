@@ -159,7 +159,7 @@ const MarketRequestSummary = (
           weight="400"
           color="shade9"
         >
-          Summary
+          My Market Request 
         </Typography>
       </DetailsHeaderContainer>
 

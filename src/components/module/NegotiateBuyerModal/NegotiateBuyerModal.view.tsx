@@ -103,7 +103,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             label={'Counter Offer'}
             value={negotiationPrice}
             onChangeText={(v) => {
-              setNegotiationPrice(parseFloat(v));
+              setNegotiationPrice(parseFloat(v || '0'));
             }}
             min={1}
             LeftComponent={

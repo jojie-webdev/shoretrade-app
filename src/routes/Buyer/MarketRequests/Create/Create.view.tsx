@@ -315,7 +315,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </Typography>
           </DetailsDataContainer>
         </DetailsContentContainer>
-        {(selectedSize?.items[0] !== '' || selectedSize?.from) && (
+        {((selectedSize?.items.length > 0 && selectedSize?.items[0] !== '') ||
+          selectedSize?.from !== '') && (
           <DetailsContentContainer>
             <Typography
               color="shade6"

@@ -21,7 +21,7 @@ import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import { Offer, OfferStatus } from 'types/store/GetActiveOffersState';
+import { Offer, OfferStatus, ShippingAddress } from 'types/store/GetActiveOffersState';
 import { formatPrice } from 'utils/formatPrice';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -86,9 +86,12 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     isLoadingAcceptOffer,
     isLoadingOffer,
     isLoadingConfirmOffer,
+    isLoadingNegotiate,
+    offerMR,
   } = props;
 
   const history = useHistory();
+  console.log(selectedOffer);
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
@@ -228,7 +231,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             )}
 
             {renderLabel('Delivery Address', { marginTop: '24px' })}
-            {renderLabelValue(getShippingAddress(selectedOffer.shippingFrom))}
+            {renderLabelValue(
+              getShippingAddress(offerMR.shippingTo as ShippingAddress)
+            )}
           </Col>
           <CompanyInfoCol xl={3}>
             <div style={{ display: 'flex' }}>
@@ -324,7 +329,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     </Col>
   );
 
-  if (isLoadingAcceptOffer || isLoadingOffer) {
+  if (isLoadingAcceptOffer || isLoadingOffer || isLoadingNegotiate) {
     return <Loading />;
   }
 
