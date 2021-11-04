@@ -37,7 +37,7 @@ const PaymentTimeLeft = (props: PaymentTimeLeftProps): JSX.Element => {
       // Render a countdown
       return (
         <span style={{ color: theme.brand.error }}>
-          ({hours < 1 && `${hours} hour(s)`} {hours < 1 && minutes && `${minutes} minute(s)`}{' '}
+          ({hours >= 1 && `${hours} hour(s)`} {hours < 1 && minutes && `${minutes} minute(s)`}{' '}
           {hours < 1 && seconds && `${seconds} second(s)`} remaining)
         </span>
       );
