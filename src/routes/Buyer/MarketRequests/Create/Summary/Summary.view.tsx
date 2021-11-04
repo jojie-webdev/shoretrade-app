@@ -50,6 +50,7 @@ const SummaryView = (props: SummaryProps) => {
     didFinishStep,
   } = props;
   const history = useHistory();
+  console.log(didFinishStep);
 
   const handleSubmit = () => {
     setSendConfModalisOpen(true);

@@ -63,7 +63,7 @@ import {
   GetSellerLicenseMeta,
   GetSellerLicensePayload,
 } from 'types/store/GetSellerLicenseState';
-import { MarketOfferPayload, OfferConfirm } from 'types/store/MarketOfferState';
+import { MarketOfferPayload, NegotiateOffer, OfferConfirm } from 'types/store/MarketOfferState';
 import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
@@ -496,6 +496,7 @@ export interface Store {
   marketOffer: MarketOfferState;
   marketRequestAcceptOffer: AsyncState<AcceptOffer, NegotiationPayload>;
   marketRequestOfferConfirm: AsyncState<OfferConfirm, GenericResponse>;
+  marketRequestNegotiation: AsyncState<NegotiateOffer, NegotiationPayload>;
   notify: NotifyState;
   modifyBulkUpload: {
     modifiedData: Record<number, Partial<UploadBulkState>>;
