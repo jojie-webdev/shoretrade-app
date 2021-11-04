@@ -373,7 +373,6 @@ export const SummaryContainer = styled.div<{ margin?: string }>`
   border: 1px solid #dadff2;
   border-radius: 12px;
   min-height: 312px;
-  max-height: 312px;
   margin: ${({ margin }) => margin};
   background-image: url(${marketRequestSummary});
 `;

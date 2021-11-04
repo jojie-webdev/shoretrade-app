@@ -5,7 +5,8 @@ export interface EmptyStateProps {
   buttonText?: string;
   fluid?: boolean;
   onButtonClicked?: () => void;
-  Svg: React.FC<SVGProps>;
+  AnimatedSvg?: string;
+  Svg?: React.FC<SVGProps>;
   height?: number;
   width?: number;
   containerHeight?: number;

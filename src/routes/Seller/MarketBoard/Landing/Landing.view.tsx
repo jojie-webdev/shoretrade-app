@@ -6,6 +6,7 @@ import { ChevronRight } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
+import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
@@ -14,6 +15,7 @@ import moment from 'moment';
 import { isNil, prop, sortBy, isEmpty } from 'ramda';
 import { Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { AnimatedOctopus } from 'res/images/animated/octopus';
 import {
   getExpiry,
   getShippingAddress,
@@ -44,6 +46,8 @@ import {
 } from './Landing.style';
 import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
 import MobileOffers from './MobileOffers/MobileOffers.view';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
+import OfferTag from 'components/module/OfferTag';
 
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
@@ -202,47 +206,10 @@ const MyActiveOffersInteractions = (props: {
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
-  const buildTagByStatus = () => {
-    const offerStatus = getOfferStatus(data, 'seller');
-
-    const tag = (
-      badgeColor: string,
-      status: string,
-      textColor: TypographyProps['color'] = 'noshade'
-    ) => (
-      <StyledBadge className="badge" badgeColor={badgeColor}>
-        <BadgeText
-          variant="overlineSmall"
-          color={textColor}
-          style={{ lineHeight: '15px' }}
-        >
-          {status}
-        </BadgeText>
-      </StyledBadge>
-    );
-
-    if (offerStatus === 'ACCEPTED') {
-      return tag(theme.brand.success, 'FINALISED');
-    }
-    if (offerStatus === 'PAYMENT MISSED') {
-      return tag(theme.brand.error, 'LOST');
-    }
-    if (offerStatus === 'DECLINED') {
-      return tag(theme.brand.error, 'DECLINED');
-    }
-    if (
-      offerStatus === 'PAYMENT REQUIRED' ||
-      offerStatus === OfferStatus.PENDING_PAYMENT
-    ) {
-      return tag(theme.brand.warning, 'PENDING PAYMENT');
-    }
-    if (offerStatus === 'NEGOTIATION') {
-      return tag(theme.brand.alert, 'NEGOTIATION', 'shade10');
-    }
-    if (offerStatus === 'NEW OFFER') {
-      return tag(theme.brand.success, 'NEW OFFER');
-    }
-  };
+  const statusTextProps = transformMarketRequestStatusText(
+    data.statusText,
+    true
+  );
 
   let latestOfferPrice = data.price;
 
@@ -309,7 +276,14 @@ const MyActiveOffersInteractions = (props: {
               {getExpiry(data.marketRequest.createdAt)}
             </Typography>
           </Col>
-          <Col style={{ padding: '0 5px' }}>{buildTagByStatus()}</Col>
+          <Col style={{ padding: '0 5px' }}>
+            <OfferTag
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
+            />
+          </Col>
         </>
       }
       padding="8px 20px 8px 8px"
@@ -492,6 +466,20 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 />
               ))}
           </Visible>
+          {isEmpty(props.activeOffers) &&
+            props.currentTab === 'My Active Offers' && (
+              <EmptyState
+                AnimatedSvg={AnimatedOctopus}
+                title="No active offers"
+              />
+            )}
+          {isEmpty(props.buyerRequests) &&
+            props.currentTab === 'Buyer Requests' && (
+              <EmptyState
+                AnimatedSvg={AnimatedOctopus}
+                title="No buyer requests"
+              />
+            )}
         </>
       )}
 
@@ -501,4 +489,3 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 };
 
 export default MarketBoardLandingView;
-

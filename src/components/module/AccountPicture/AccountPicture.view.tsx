@@ -43,7 +43,6 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
       }
     });
 
-    console.log(invalid);
 
     setImageError(invalid);
 

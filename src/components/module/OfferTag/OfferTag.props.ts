@@ -1,14 +1,14 @@
+import { Variants } from 'components/base/Alert/Alert.props';
+import { TypographyProps } from 'components/base/Typography/Typography.props';
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
 } from 'types/store/GetActiveOffersState';
+import { Theme } from 'types/Theme';
 
 export interface OfferTagProps {
-  status: string;
-  price?: number;
-  offers?: number;
-  marketStatus?: string;
-  marketRequestAvgPrice?: number;
-  perspective: 'buyer' | 'seller';
-  isMarketRequest?: boolean;
+  text: string;
+  badgeColor: string;
+  variantColor: Variants;
+  color?: TypographyProps['color'];
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
@@ -36,6 +36,7 @@ import {
   CheckboxGroupContainer,
   SpecsContainer,
   StyledTitle,
+  LabelContainer,
 } from './SelectSpecification.style';
 import { SelectSpecificationProps } from './SelectSpecifications.props';
 
@@ -50,6 +51,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     setStep,
     didFinishStep,
     setDidFinishStep,
+    detailsListComponent,
   } = props;
 
   const stateOptions = (listingFormData?.stateOptions || []).map((group) =>
@@ -149,11 +151,13 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     getFilteredSpecifications().length >= selectedGroups.length;
 
   const getSpecsByGroup = (index: number) => {
-    const specs =
-      index === 0 ? 'Preservations' : index === 1 ? 'State' : 'Condition';
-
-    return specs;
+    return `Specification ${index + 1}`;
   };
+
+  useEffect(() => {
+    setSelectedSpecifications({ items: selectedState.selectedStates });
+  }, [selectedState.selectedStates]);
+
   return (
     <>
       <CreateRequestHeaderContainer>
@@ -225,13 +229,18 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             <Hidden xs sm>
               {getFilteredSpecifications().map((group, index) => (
                 <div key={group[0].groupOrder} className="interaction-group">
-                  <Typography
-                    variant="overline"
-                    color="shade6"
-                    style={{ marginBottom: 12 }}
-                  >
-                    {getSpecsByGroup(index)}
-                  </Typography>
+                  <LabelContainer>
+                    <Typography
+                      variant="overline"
+                      color="shade10"
+                      style={{ marginBottom: 12, marginRight: 4 }}
+                    >
+                      {getSpecsByGroup(index)}
+                    </Typography>
+                    <Typography variant="overline" color="shade6">
+                      (min. 1)
+                    </Typography>
+                  </LabelContainer>
                   <div className="spec-row">
                     {group.map((item) => (
                       <Checkbox
@@ -295,7 +304,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                 <ProceedButton
                   onClick={() => handleSelectSpecs()}
                   disabled={isEmpty(groupOrders) || isDisabled}
-                  text="Proceed >"
+                  text="Next"
                   variant="primary"
                 />
               </ButtonContainer>
@@ -304,7 +313,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
               <Button
                 onClick={() => handleSelectSpecs()}
                 disabled={isEmpty(groupOrders) || isDisabled}
-                text="Proceed"
+                text="Next"
                 variant="primary"
                 takeFullWidth
                 icon={
@@ -321,21 +330,8 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
         </ContainerWithCategoryImagePreview>
 
         <Hidden xs sm>
-          <RequestDetailsContainer currentStep={1}>
-            <DetailsHeaderContainer>
-              <Typography
-                style={{
-                  marginBottom: 8,
-                  fontFamily: 'Wilderness',
-                  fontSize: 48,
-                }}
-              >
-                Summary
-              </Typography>
-            </DetailsHeaderContainer>
-            <AnchorContainer>
-              <ShoretradeAnchor />
-            </AnchorContainer>
+          <RequestDetailsContainer>
+            <DetailsContainer>{detailsListComponent}</DetailsContainer>
           </RequestDetailsContainer>
         </Hidden>
       </RequestRow>

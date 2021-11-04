@@ -1,4 +1,5 @@
 import Button from 'components/base/Button';
+import Select from 'components/base/Select';
 import TextField from 'components/base/TextField';
 import TypographyView from 'components/base/Typography';
 import styled from 'utils/styled';
@@ -66,4 +67,12 @@ export const CheckboxMain = styled.div`
 export const CheckboxContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+export const StyledAddressSelect = styled(Select)`
+  height: auto;
+
+  .dropdownSelectContainer {
+    height: auto;
+  }
 `;

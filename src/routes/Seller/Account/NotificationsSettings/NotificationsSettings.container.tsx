@@ -99,7 +99,6 @@ const NotificationsSettings = (): JSX.Element => {
       key === 'push' ||
       key === 'whatsapp'
     ) {
-      console.log(key);
       setGlobalSettings({
         ...globalSettings,
         [key]: !globalSettings[key],

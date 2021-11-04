@@ -11,14 +11,13 @@ export const SpecificationFormContainer = styled(
   .spec-row {
     min-width: 180px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     margin-bottom: 2rem;
 
     div {
       margin-right: 4rem;
       margin-bottom: 1rem;
-      width: 120px;
       display: flex;
       align-items: flex-start;
     }
@@ -68,4 +67,9 @@ export const SpecsContainer = styled.div`
 export const StyledTitle = styled(Typography)`
   font-family: 'Media Sans';
   margin-bottom: 12;
+`;
+
+export const LabelContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;

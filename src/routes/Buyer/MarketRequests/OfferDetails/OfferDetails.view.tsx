@@ -12,6 +12,7 @@ import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestSummary from 'components/module/MarketRequestSummary';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
 import OfferAlert from 'components/module/OfferAlert';
+import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
@@ -25,6 +26,7 @@ import { formatPrice } from 'utils/formatPrice';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { createdAtToExpiry } from 'utils/MarketRequest';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String';
@@ -133,7 +135,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           {!thereIsNewOffer && parseFloat(counterOffer) > 0 && (
             <div className="computation-item-container">
               <Typography variant="label" color="shade9">
-                The seller is reviewing your selectedOffer.
+                The seller is reviewing your offer.
               </Typography>
             </div>
           )}
@@ -143,7 +145,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   );
 
   const renderLabel = (label: string, style?: any) => (
-    <Typography variant="overline" color="shade6" weight="900" style={style}>
+    <Typography variant="overline" color="shade10" weight="900" style={style}>
       {label}
     </Typography>
   );
@@ -155,10 +157,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
       </StyledTypography>
     </DetailsValueContainer>
   );
-
-  const specsValue = selectedOffer?.specifications
-    ?.map((spec: string) => spec?.toUpperCase())
-    ?.join(', ');
 
   const sizeValue = sizeToString(
     selectedOffer?.metric || '',
@@ -174,16 +172,33 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     latestOfferPrice
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
-  const offerStatus = getOfferStatus(selectedOffer, 'buyer');
+  const mrStatusProps = transformMarketRequestStatusText(
+    selectedOffer.statusText
+  );
+
+  const withTimer = () => (
+    <>
+      {mrStatusProps.description}
+      <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
+    </>
+  );
+
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {offerStatus !== '' && (
-        <OfferAlert
-          status={offerStatus as OfferStatus}
-          counterOffer={counterOffer}
-          thereIsNewOffer={thereIsNewOffer}
-          orderRefNumber={selectedOffer.orderRefNumber}
-        />
+      {mrStatusProps.text && (
+        <AlertsContainer>
+          <Alert
+            content={
+              mrStatusProps.text === 'Payment Required'
+                ? withTimer()
+                : mrStatusProps.description
+            }
+            header={mrStatusProps.text}
+            variant={mrStatusProps.variantColor || 'info'}
+            color={mrStatusProps.tagColor}
+            fullWidth
+          />
+        </AlertsContainer>
       )}
 
       <FullOfferDetailsContainer>
@@ -271,7 +286,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
           {selectedOffer?.status !== 'ACCEPTED' &&
             selectedOffer?.status !== 'PARTIAL' &&
-            getOfferStatus(selectedOffer, 'buyer') !== 'PAYMENT MISSED' && (
+            selectedOffer?.status !== 'DECLINED' && (
               <CTAContainer>
                 <StyledNegotiateButtonContainer>
                   <StyledNegotiateButton
@@ -422,31 +437,34 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           <Col>{renderTotalPriceContainer()}</Col>
         </Row>
 
-        <Row>
-          <Col>{renderOfferSeenTextContainer()}</Col>
-        </Row>
         {selectedOffer?.status !== 'ACCEPTED' &&
-          selectedOffer?.status !== 'PARTIAL' && (
-            <Row style={{ marginTop: '40px' }}>
-              <Col style={{ paddingRight: '5px' }}>
-                <StyledNegotiateButton
-                  onClick={() => handleStartNegotiate()}
-                  variant="outline"
-                  text="NEGOTIATE"
-                  icon={<Refresh />}
-                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
-                />
-              </Col>
-              <Col style={{ paddingLeft: '5px' }}>
-                <StyledAcceptButton
-                  text="ACCEPT"
-                  icon={<Check width={10} height={9} />}
-                  onClick={() => handleConfirmOffer()}
-                  loading={isLoadingConfirmOffer}
-                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
-                />
-              </Col>
-            </Row>
+          selectedOffer?.status !== 'PARTIAL' &&
+          selectedOffer?.status !== 'DECLINED' && (
+            <>
+              <Row>
+                <Col>{renderOfferSeenTextContainer()}</Col>
+              </Row>
+              <Row style={{ marginTop: '40px' }}>
+                <Col style={{ paddingRight: '5px' }}>
+                  <StyledNegotiateButton
+                    onClick={() => handleStartNegotiate()}
+                    variant="outline"
+                    text="NEGOTIATE"
+                    icon={<Refresh />}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </Col>
+                <Col style={{ paddingLeft: '5px' }}>
+                  <StyledAcceptButton
+                    text="ACCEPT"
+                    icon={<Check width={10} height={9} />}
+                    onClick={() => handleConfirmOffer()}
+                    loading={isLoadingConfirmOffer}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </Col>
+              </Row>
+            </>
           )}
         {selectedOffer?.status === 'PARTIAL' && (
           <CTAContainer>
