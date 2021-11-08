@@ -11,9 +11,9 @@ import { Container } from './Breadcrumbs.style';
 const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const { isLight, color } = props;
+  const { isLight, color, className } = props;
   return (
-    <Container>
+    <Container className={className}>
       {props.sections.map((section, i) => {
         return (
           <React.Fragment key={i}>

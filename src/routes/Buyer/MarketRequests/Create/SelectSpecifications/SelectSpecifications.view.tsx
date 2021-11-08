@@ -164,6 +164,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
         <MainContainer>
           <Hidden xs sm>
             <Breadcrumbs
+              className="breadcrumbs"
               color="shade5"
               sections={[
                 {

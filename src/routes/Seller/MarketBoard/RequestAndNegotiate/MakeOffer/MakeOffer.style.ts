@@ -45,18 +45,20 @@ export const Container = styled.div`
   .textfield-col {
     margin-bottom: 16px;
     margin-top: 16px;
-    .textfield {
-      p:first-child && > p {
-        position: absolute;
-        bottom: 44px;
+    height: 64px;
+    .textfield > p:first-child {
+      position: absolute;
+      bottom: 64px;
 
-        @media ${BREAKPOINTS['sm']} {
-          bottom: 44px;
-        }
-        @media ${BREAKPOINTS['md']} {
-          bottom: 44px;
-        }
+      @media ${BREAKPOINTS['sm']} {
+        bottom: 64px;
       }
+      @media ${BREAKPOINTS['md']} {
+        bottom: 64px;
+      }
+    }
+    .textfield > div {
+      position: relative;
     }
   }
 
@@ -66,6 +68,13 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.grey.shade9};
     border-radius: 12px;
     padding: 16px;
+
+    .sup-text-2 {
+      color: ${({ theme }) => theme.grey.shade6};
+      font-weight: normal;
+      font-size: 23px;
+      margin-right: 5px;
+    }
   }
 
   .submit-btns-step2 {

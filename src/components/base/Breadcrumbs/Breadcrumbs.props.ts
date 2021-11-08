@@ -9,4 +9,5 @@ export interface BreadcrumbsProps {
   }[];
   isLight?: boolean;
   color?: keyof Theme['brand'] | keyof Theme['grey'];
+  className?: string;
 }

@@ -107,7 +107,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
       </Typography>
       <Typography
         variant="title3"
-        weight="400"
+        weight="900"
         color="shade9"
         style={{ marginTop: '8px' }}
       >
