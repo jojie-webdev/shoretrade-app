@@ -92,4 +92,5 @@ export const P = styled.p<TypographyProps>`
     ({ ...theme.grey, ...theme.brand }[color])};
   text-align: ${({ align }) => align || 'left'};
   margin: ${({ margin }) => margin || '0'};
+  font-style: ${({fontStyle}) => fontStyle || 'normal'}
 `;

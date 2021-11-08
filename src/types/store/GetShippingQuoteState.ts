@@ -60,6 +60,7 @@ export type GetShippingQuoteResponseItem = {
     imageUrl: string;
     locationName: string;
     estimatedDate: string;
+    subAddress?: string;
   }[];
 };
 
