@@ -33,7 +33,7 @@ const descriptions: Record<statuses, string> = {
     'The offer has automatically closed due to missed payment.' ||
     'The Buyer needs to process the payment for the accepted offer. ',
   CLOSED: 'Closed',
-  FINALISED: 'Finalised',
+  FINALISED: 'This offer is now Order #0000-:t0.',
   PAYMENT_MISSED: 'The offer has automatically closed due to missed payment.',
   DECLINED: 'Your offer was declined by the Buyer. ',
   NO_OFFERS: '',
@@ -54,7 +54,8 @@ type types =
 
 export const transformMarketRequestStatusText = (
   statusText: types | string,
-  isSeller?: boolean
+  isSeller?: boolean,
+  stringTokens?: string[]
 ): {
   variantColor: Variants;
   tagColor: TypographyProps['color'];
@@ -168,7 +169,10 @@ export const transformMarketRequestStatusText = (
     if (isSeller) {
       return {
         text: text.FINALISED,
-        description: '',
+        description: processStringTokens(
+          descriptions.FINALISED,
+          stringTokens || []
+        ),
         tagColor: 'noshade',
         variantColor: 'success',
         badgeColor: theme.brand.success,
@@ -176,7 +180,10 @@ export const transformMarketRequestStatusText = (
     } else {
       return {
         text: text.FINALISED,
-        description: '',
+        description: processStringTokens(
+          descriptions.FINALISED,
+          stringTokens || []
+        ),
         tagColor: 'success',
         variantColor: 'success',
         badgeColor: '#EAFFF9',
@@ -200,3 +207,11 @@ export const transformMarketRequestStatusText = (
     badgeColor: theme.brand.secondary,
   };
 };
+
+function processStringTokens(string: string, tokens: string[]) {
+  let output = '';
+  tokens.forEach((t, i) => {
+    output = string.replace(`:t${i}`, t);
+  });
+  return output;
+}

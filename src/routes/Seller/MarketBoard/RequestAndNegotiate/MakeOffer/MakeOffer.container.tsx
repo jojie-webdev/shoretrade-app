@@ -23,12 +23,12 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   );
 
   const stateOptions = buyerRequest.specifications
-    ? buyerRequest.specifications.map((group) => {
+    ? buyerRequest.specifications.map((group, i) => {
         return {
           label: group.stateName,
           value: group.stateId,
           groupOrder: group.stateGroup,
-          groupName: getGroupName(group.stateName),
+          groupName: `Specifications ${i + 1}`,
         };
       })
     : [];

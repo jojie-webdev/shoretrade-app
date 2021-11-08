@@ -48,7 +48,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renferFromTextField = () => (
     <TextField
       label="From"
-      placeholder="From"
+      placeholder={`${props.buyerRequest.sizeFrom || ''}`}
       value={props.size.from}
       onChangeText={(v) =>
         props.setSize((prevState) => ({
@@ -68,7 +68,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const renderToTextField = () => (
     <TextField
       label={`To\n(Optional)`}
-      placeholder="To"
+      placeholder={`${props.buyerRequest.sizeTo || ''}`}
       value={props.size.to}
       onChangeText={(v) => {
         props.setSize((prevState) => ({
@@ -314,54 +314,76 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             </Hidden>
 
             <Visible xs sm>
-              <MobileFromToTextFieldsContainer>
-                <Col className="textfield-col">
-                  <TextField
-                    label="Quantity"
-                    className="textfield"
-                    value={props.weight}
-                    onChangeText={props.setWeight}
-                    min={1}
-                    type="number"
-                    inputType="decimal"
-                    error={pathOr('', ['weight', '0'], errors)}
-                    borderRadius="12px"
-                    height="40px"
-                  />
-                </Col>
-                <Col className="textfield-col">
-                  <TextField
-                    className="textfield"
-                    label={`Price per ${formatMeasurementUnit(
-                      props.buyerRequest.measurementUnit
-                    )} (Inc. Delivery)`}
-                    value={props.price}
-                    onChangeText={props.setPrice}
-                    min={1}
-                    type="number"
-                    inputType="decimal"
-                    error={pathOr('', ['price', '0'], errors)}
-                    borderRadius="12px"
-                    height="40px"
-                  />
-                </Col>
-                <Col className="textfield-col">
-                  <DatePickerDropdown
-                    label="Delivery date"
-                    date={
-                      props.deliveryDate ? moment(props.deliveryDate) : null
-                    }
-                    onDateChange={(d) =>
-                      props.setDeliveryDate(d?.toDate() || null)
-                    }
-                    error={pathOr('', ['deliveryDate', '0'], errors)}
-                    showCalendarIcon={false}
-                    showArrowDownIcon={false}
-                    borderRadius="12px"
-                    height="40px"
-                  />
-                </Col>
-              </MobileFromToTextFieldsContainer>
+              <Col xs={12}>
+                <Row>
+                  <Col xs={12} className="textfield-col">
+                    <TextField
+                      label="Quantity"
+                      LeftComponent={
+                        <Typography
+                          variant="label"
+                          weight="bold"
+                          color="shade6"
+                        >
+                          {formatMeasurementUnit(
+                            props.buyerRequest.measurementUnit
+                          )}
+                        </Typography>
+                      }
+                      className="textfield"
+                      value={props.weight}
+                      onChangeText={props.setWeight}
+                      min={1}
+                      type="number"
+                      inputType="decimal"
+                      error={pathOr('', ['weight', '0'], errors)}
+                      borderRadius="12px"
+                      height="40px"
+                    />
+                  </Col>
+                  <Col xs={12} className="textfield-col">
+                    <TextField
+                      className="textfield"
+                      label={`Price per ${formatMeasurementUnit(
+                        props.buyerRequest.measurementUnit
+                      )} (Inc. Delivery)`}
+                      value={props.price}
+                      LeftComponent={
+                        <Typography
+                          variant="label"
+                          weight="bold"
+                          color="shade6"
+                        >
+                          $
+                        </Typography>
+                      }
+                      onChangeText={props.setPrice}
+                      min={1}
+                      type="number"
+                      inputType="decimal"
+                      error={pathOr('', ['price', '0'], errors)}
+                      borderRadius="12px"
+                      height="40px"
+                    />
+                  </Col>
+                  <Col xs={12} className="textfield-col">
+                    <DatePickerDropdown
+                      label="Delivery date"
+                      date={
+                        props.deliveryDate ? moment(props.deliveryDate) : null
+                      }
+                      onDateChange={(d) =>
+                        props.setDeliveryDate(d?.toDate() || null)
+                      }
+                      error={pathOr('', ['deliveryDate', '0'], errors)}
+                      showCalendarIcon={true}
+                      showArrowDownIcon={false}
+                      borderRadius="12px"
+                      height="40px"
+                    />
+                  </Col>
+                </Row>
+              </Col>
             </Visible>
           </Row>
 

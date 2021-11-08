@@ -295,11 +295,11 @@ const MarketBoardLanding = (): JSX.Element => {
     return (
       <TermsAndCondition
         appType="seller"
-        textWeb1="Can’t find your product?"
-        textWeb2="Create a new Market Request"
+        textWeb1=""
+        textWeb2=""
         textMobile1="Market Request"
-        textMobile2="Can’t find your product?"
-        textMobile3="Create a new Market Request"
+        textMobile2=""
+        textMobile3=""
         cardText1={
           'View the products Buyers have requested and make offers directly to them.'
         }

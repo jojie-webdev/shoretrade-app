@@ -70,6 +70,12 @@ export const TotalPriceContainer = styled.div`
   @media ${BREAKPOINTS['md']} {
     margin-top: 16px;
   }
+  .sup-text-2 {
+    color: ${({ theme }) => theme.grey.shade6};
+    font-weight: normal;
+    font-size: 23px;
+    margin-right: 5px;
+  }
 `;
 
 export const DetailsValueContainer = styled.div`
