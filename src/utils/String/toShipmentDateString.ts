@@ -18,13 +18,14 @@ export const shipmentModeToString = (
 
 export const serviceNameToString = (
   serviceName: string,
-  locationName?: string
+  locationName?: string,
+  sellerCompany?: string
 ) => {
   if (serviceName === 'CLICK AND COLLECT') return 'Pick Up at';
 
   // serviceName value from shorefreight returns complete sentence on this option
   if (!locationName) {
-    return 'Pickup from Supplier';
+    return `Pickup from ${sellerCompany || ''}`;
   }
 
   return serviceName.indexOf('TO DOOR') !== -1 ||
