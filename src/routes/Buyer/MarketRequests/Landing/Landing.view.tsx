@@ -305,9 +305,11 @@ const MarketRequestsLandingView = (
             leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
             rightComponent={
               <div className="cta">
-                <div>
-                  <ChevronRight width={8} height={12} />
-                </div>
+                {mr.offers > 0 && (
+                  <div>
+                    <ChevronRight width={8} height={12} />
+                  </div>
+                )}
                 <Button
                   iconPosition="before"
                   icon={<TrashCan fill={'#FFF'} width={16} height={16} />}

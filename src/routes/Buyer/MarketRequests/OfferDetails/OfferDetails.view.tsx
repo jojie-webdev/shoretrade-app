@@ -21,7 +21,11 @@ import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import { Offer, OfferStatus, ShippingAddress } from 'types/store/GetActiveOffersState';
+import {
+  Offer,
+  OfferStatus,
+  ShippingAddress,
+} from 'types/store/GetActiveOffersState';
 import { formatPrice } from 'utils/formatPrice';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -95,8 +99,11 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
-      <Typography variant="overline" color="shade7" weight="900">
+      <Typography variant="label" color="shade7" weight="900">
         TOTAL VALUE
+      </Typography>
+      <Typography variant="label" color="shade6">
+        Incl. Delivery
       </Typography>
       <Typography
         variant="title3"
@@ -104,11 +111,11 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         color="shade9"
         style={{ marginTop: '8px' }}
       >
-        $
-        {(
+        <sup className="sup-text-2">$</sup>
+        {toPrice(
           (selectedOffer?.weight || 0) *
-          (nego?.price || selectedOffer?.price || 0)
-        )?.toFixed(2)}
+            (nego?.price || selectedOffer?.price || 0)
+        ).replace('$', '')}
       </Typography>
     </TotalPriceContainer>
   );
@@ -176,7 +183,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
   const mrStatusProps = transformMarketRequestStatusText(
-    selectedOffer.statusText
+    selectedOffer.statusText,
+    false,
+    [`${selectedOffer.orderRefNumber}`]
   );
 
   const withTimer = () => (

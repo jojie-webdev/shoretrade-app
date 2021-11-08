@@ -79,9 +79,16 @@ const Content = (props: NegotiateSellerModalProps) => {
           type="number"
           inputType="decimal"
           label={'Counter offer'}
+          step=".01"
           value={negotiationPrice}
           onChangeText={(v) => {
-            setNegotiationPrice(parseFloat(v));
+            let price = v;
+            if (price.indexOf('.') >= 0) {
+              price =
+                price.substr(0, price.indexOf('.')) +
+                price.substr(price.indexOf('.'), 3);
+            }
+            setNegotiationPrice(parseFloat(price));
           }}
           min={1}
           LeftComponent={

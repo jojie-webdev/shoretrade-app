@@ -98,12 +98,18 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         </Typography>
         <Inputs>
           <StyledTextField
-            type="text"
-            inputType="text"
+            type="number"
+            inputType="decimal"
+            step=".01"
             label={'Counter Offer'}
             value={negotiationPrice}
             onChangeText={(v) => {
-              setNegotiationPrice(parseFloat(v || '0'));
+              let price = v;
+              if (price.indexOf('.') >= 0) {
+                price = price.substr(0, price.indexOf('.')) +
+                  price.substr(price.indexOf('.'), 3);
+              }
+              setNegotiationPrice(parseFloat(price));
             }}
             min={1}
             LeftComponent={

@@ -405,7 +405,8 @@ const Step1 = ({
 
   const statusTextProps = transformMarketRequestStatusText(
     activeOffer?.statusText || '',
-    true
+    true,
+    [`${activeOffer?.orderRefNumber}`]
   );
 
   const isMyActiveOffersTab = () => {
