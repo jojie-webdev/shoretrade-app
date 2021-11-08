@@ -75,6 +75,7 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
         <div>
           {isMobile ? null : (
             <Breadcrumbs
+              className="breadcrumbs"
               color="shade5"
               sections={[
                 { label: 'Product' },

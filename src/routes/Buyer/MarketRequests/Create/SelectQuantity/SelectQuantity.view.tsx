@@ -56,6 +56,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
         <MainContainer>
           <Hidden xs sm>
             <Breadcrumbs
+              className="breadcrumbs"
               color="shade5"
               sections={[
                 {

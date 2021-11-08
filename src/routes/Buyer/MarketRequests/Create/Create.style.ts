@@ -1,3 +1,4 @@
+import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
@@ -36,6 +37,10 @@ export const CreateRequestHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  .breadcrumbs {
+    z-index: 9;
+  }
 
   .title-container {
     display: flex;
@@ -365,4 +370,8 @@ export const ProceedButton = styled(Button)`
   border-radius: 12px;
   max-width: 124px;
   margin-left: 8px;
+`;
+
+export const StyledBreadCrumbs = styled(Breadcrumbs)`
+  z-index: 9;
 `;

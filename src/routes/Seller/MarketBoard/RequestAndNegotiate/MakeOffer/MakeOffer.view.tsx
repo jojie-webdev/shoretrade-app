@@ -23,7 +23,7 @@ import {
 } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { capitalize } from 'utils/String';
+import { capitalize, toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
@@ -405,12 +405,11 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             >
               Total Value
             </Typography>
-            <Typography variant="title3" color="noshade">
-              {props.weight && props.price ? (
-                <>${parseFloat(props.weight) * parseFloat(props.price)}.00</>
-              ) : (
-                `$0.00`
-              )}
+            <Typography weight="900" variant="title3" color="noshade">
+              <sup className="sup-text-2">$</sup>
+              {toPrice(
+                parseFloat(props?.weight) || 0 * parseFloat(props?.price) || 0
+              ).replace('$', '')}
             </Typography>
           </div>
         </Col>
