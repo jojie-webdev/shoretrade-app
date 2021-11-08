@@ -49,12 +49,13 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                   >
                     {o.name}
                   </Typography>
-                  {o.secondName && (
+                  {o.subAddress && (
                     <Typography
-                      variant={isMobile ? 'caption' : 'body'}
-                      weight="700"
+                      variant={isMobile ? 'small' : 'caption'}
+                      color="shade6"
+                      fontStyle="italic"
                     >
-                      {o.secondName}
+                      {o.subAddress}
                     </Typography>
                   )}
                   <Spacer />

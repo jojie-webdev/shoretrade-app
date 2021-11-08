@@ -20,6 +20,7 @@ export type OrderItem = {
     est: string;
     price: string;
     imageUrl: string;
+    subAddress?: string;
   }[];
 };
 

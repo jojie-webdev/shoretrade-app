@@ -9,8 +9,8 @@ import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNum
 import { toPrice } from 'utils/String/toPrice';
 import {
   shipmentModeToString,
-  deliveryOptionToServiceNameString
-} from 'utils/String/toShipmentDateString'
+  deliveryOptionToServiceNameString,
+} from 'utils/String/toShipmentDateString';
 
 import { DateType, OrderItem } from './Orders.props';
 
@@ -19,7 +19,10 @@ export const getShipmentOptionString = (
   deliveryOption: string,
   locationName: string
 ) => {
-  return `${shipmentModeToString(deliveryMethod)} ${deliveryOptionToServiceNameString(deliveryOption, locationName)}`
+  return `${shipmentModeToString(
+    deliveryMethod,
+    deliveryOption
+  )} ${deliveryOptionToServiceNameString(deliveryOption, locationName)}`;
 };
 
 const getDeliveredDate = (

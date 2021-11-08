@@ -56,7 +56,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
         ? (
             shippingQuotes[cartItem.companyId] || { priceResult: [] }
           ).priceResult.map((data) => {
-            const shipmentMode = shipmentModeToString(data.shipmentMode);
+            const shipmentMode = shipmentModeToString(data.shipmentMode, data.serviceName);
             const serviceName = serviceNameToString(data.serviceName);
             return {
               id: data.id,

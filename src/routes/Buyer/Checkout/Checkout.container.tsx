@@ -126,7 +126,7 @@ const Checkout = (): JSX.Element => {
         ? (
             shippingQuotes[cartItem.companyId] || { priceResult: [] }
           ).priceResult.map((data) => {
-            const shipmentMode = shipmentModeToString(data.shipmentMode);
+            const shipmentMode = shipmentModeToString(data.shipmentMode, data.serviceName);
             const serviceName = serviceNameToString(
               data.serviceName,
               data.locationName
@@ -148,6 +148,7 @@ const Checkout = (): JSX.Element => {
                 data.estimatedDate
               ),
               imageUrl: data.imageUrl,
+              subAddress: data.subAddress
             };
           })
         : [],
