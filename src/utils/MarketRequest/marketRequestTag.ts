@@ -63,7 +63,7 @@ export const transformMarketRequestStatusText = (
   description: string;
   badgeColor?: string;
 } => {
-  if (statusText === 'Negotiation') {
+  if (statusText === 'Negotiation' || statusText === 'In Negotiation') {
     if (isSeller) {
       return {
         text: 'Awaiting Buyer',
@@ -75,6 +75,40 @@ export const transformMarketRequestStatusText = (
     }
     return {
       text: 'Awaiting Seller',
+      description: 'Your offer is being reviewed by the Seller.',
+      tagColor: 'alert',
+      variantColor: 'alert',
+      badgeColor: '#fffff4',
+    };
+  }
+
+  if (statusText === 'Awaiting Buyer') {
+    if (isSeller) {
+      return {
+        text: 'Awaiting Buyer',
+        description: 'Your offer is being reviewed by the Buyer.',
+        tagColor: 'noshade',
+        variantColor: 'alert',
+        badgeColor: theme.brand.warning,
+      };
+    }
+  }
+
+  if (statusText === 'Awaiting Seller') {
+    if (!isSeller) {
+      return {
+        text: 'Awaiting Seller',
+        description: 'Your offer is being reviewed by the Seller.',
+        tagColor: 'alert',
+        variantColor: 'alert',
+        badgeColor: '#fffff4',
+      };
+    }
+  }
+
+  if (statusText === 'Counter Offer') {
+    return {
+      text: 'Counter Offer',
       description: 'Your offer is being reviewed by the Seller.',
       tagColor: 'alert',
       variantColor: 'alert',
@@ -215,3 +249,30 @@ function processStringTokens(string: string, tokens: string[]) {
   });
   return output;
 }
+
+export const numberOffersTransform = (
+  offers: number
+): {
+  variantColor: Variants;
+  tagColor: TypographyProps['color'];
+  text: string;
+  description: string;
+  badgeColor?: string;
+} => {
+  if (offers > 0) {
+    return {
+      text: `${offers} offer${offers > 1 ? 's' : ''}`,
+      description: text.NO_OFFERS,
+      tagColor: 'shade10',
+      variantColor: 'info',
+      badgeColor: '#E5E9F5',
+    };
+  }
+  return {
+    text: text.NO_OFFERS,
+    description: text.NO_OFFERS,
+    tagColor: 'shade6',
+    variantColor: 'info',
+    badgeColor: '#E5E9F5',
+  };
+};

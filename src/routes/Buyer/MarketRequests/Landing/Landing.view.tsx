@@ -25,7 +25,10 @@ import {
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
-import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
+import {
+  numberOffersTransform,
+  transformMarketRequestStatusText,
+} from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
@@ -80,6 +83,7 @@ export const MarketRequestItemNonMobile = (props: {
     status,
   } = props;
   const statusTextProps = transformMarketRequestStatusText(requestStatus);
+  const offersTextProps = numberOffersTransform(offers);
 
   return (
     <MarketRequestItemContainer>
@@ -133,11 +137,20 @@ export const MarketRequestItemNonMobile = (props: {
 
         <Col style={{ padding: '0 5px' }}>
           <Badges>
+            {statusTextProps.text !== '' && (
+              <OfferTag
+                text={statusTextProps.text}
+                badgeColor={statusTextProps.badgeColor || ''}
+                variantColor={statusTextProps.variantColor}
+                color={statusTextProps.tagColor}
+              />
+            )}
+
             <OfferTag
-              text={statusTextProps.text}
-              badgeColor={statusTextProps.badgeColor || ''}
-              variantColor={statusTextProps.variantColor}
-              color={statusTextProps.tagColor}
+              text={offersTextProps.text}
+              badgeColor={offersTextProps.badgeColor || ''}
+              variantColor={offersTextProps.variantColor}
+              color={offersTextProps.tagColor}
             />
           </Badges>
         </Col>
@@ -195,6 +208,8 @@ export const MarketRequestItemMobile = (props: {
   } = props;
 
   const statusTextProps = transformMarketRequestStatusText(requestStatus);
+  const offersTextProps = numberOffersTransform(offers);
+
   const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
   const subMinorDetail = (label: string, value: string) => (
@@ -258,12 +273,20 @@ export const MarketRequestItemMobile = (props: {
         </SubMinorInfo>
 
         <Badges>
+          {statusTextProps.text !== '' && (
+            <OfferTag
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
+            />
+          )}
           <OfferTag
-            text={statusTextProps.text}
-            badgeColor={statusTextProps.badgeColor || ''}
-            variantColor={statusTextProps.variantColor}
-            color={statusTextProps.tagColor}
-          />
+              text={offersTextProps.text}
+              badgeColor={offersTextProps.badgeColor || ''}
+              variantColor={offersTextProps.variantColor}
+              color={offersTextProps.tagColor}
+            />
         </Badges>
       </MinorInfo>
     </MarketRequestItemMobileContainer>

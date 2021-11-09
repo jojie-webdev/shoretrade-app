@@ -164,12 +164,14 @@ const Offer = (props: OfferItemProps) => {
         <div style={{ marginTop: '8px' }}>{renderSubDetails(offer)}</div>
 
         <div style={{ marginTop: '8px' }}>
-          <OfferTag
-            text={statusTextProps.text}
-            badgeColor={statusTextProps.badgeColor || ''}
-            variantColor={statusTextProps.variantColor}
-            color={statusTextProps.tagColor}
-          />
+          {statusTextProps.text !== '' && (
+            <OfferTag
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
+            />
+          )}
         </div>
       </MarketRequestItemMobileContainer>
     );
@@ -271,12 +273,14 @@ const Offer = (props: OfferItemProps) => {
             </Col>
 
             <Col className="badges-col" sm={12} md={6} lg={3}>
-              <OfferTag
-                text={statusTextProps.text}
-                badgeColor={statusTextProps.badgeColor || ''}
-                variantColor={statusTextProps.variantColor}
-                color={statusTextProps.tagColor}
-              />
+              {statusTextProps.text !== '' && (
+                <OfferTag
+                  text={statusTextProps.text}
+                  badgeColor={statusTextProps.badgeColor || ''}
+                  variantColor={statusTextProps.variantColor}
+                  color={statusTextProps.tagColor}
+                />
+              )}
             </Col>
 
             <Col

@@ -167,6 +167,10 @@ export const SubMinorDetail = styled.div`
 export const Badges = styled.div`
   display: flex;
   margin-top: 10px;
+  flex-direction: column;
+  > div {
+    margin-bottom: 4px;
+  }
 `;
 
 export const MarketRequestItemMobileContainer = styled.div`
