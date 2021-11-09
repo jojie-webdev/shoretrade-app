@@ -29,7 +29,9 @@ const MarketRequestDetailPill = (
 
   const calculatePercentage = () => {
     const percentage = (100 * countAcceptedWeight) / (weight?.to || 0) || 0;
-
+    if (percentage > 100) {
+      return 100;
+    }
     return percentage;
   };
 
