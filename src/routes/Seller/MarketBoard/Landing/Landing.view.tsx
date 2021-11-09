@@ -277,12 +277,14 @@ const MyActiveOffersInteractions = (props: {
             </Typography>
           </Col>
           <Col style={{ padding: '0 5px' }}>
-            <OfferTag
-              text={statusTextProps.text}
-              badgeColor={statusTextProps.badgeColor || ''}
-              variantColor={statusTextProps.variantColor}
-              color={statusTextProps.tagColor}
-            />
+            {statusTextProps.text !== '' && (
+              <OfferTag
+                text={statusTextProps.text}
+                badgeColor={statusTextProps.badgeColor || ''}
+                variantColor={statusTextProps.variantColor}
+                color={statusTextProps.tagColor}
+              />
+            )}
           </Col>
         </>
       }

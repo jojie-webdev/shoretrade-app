@@ -113,12 +113,14 @@ const MobileOffers = (props: {
 
   const renderBadges = () => (
     <Badges>
-      <OfferTag
-        text={statusTextProps.text}
-        badgeColor={statusTextProps.badgeColor || ''}
-        variantColor={statusTextProps.variantColor}
-        color={statusTextProps.tagColor}
-      />
+      {statusTextProps.text !== '' && (
+        <OfferTag
+          text={statusTextProps.text}
+          badgeColor={statusTextProps.badgeColor || ''}
+          variantColor={statusTextProps.variantColor}
+          color={statusTextProps.tagColor}
+        />
+      )}
     </Badges>
   );
 

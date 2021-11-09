@@ -76,10 +76,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   };
 
   const renderLeftContent = () => (
-    <div
-      className="left-content"
-      style={fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }}
-    >
+    <div className="left-content" style={{ paddingRight: '16px' }}>
       {leftComponent ? (
         leftComponent
       ) : (
@@ -112,6 +109,38 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </IconContainer>
       </div>
     );
+
+  if (type === 'radio') {
+    return (
+      <Container className="interactions" {...props} onClick={onClick}>
+        {label ? (
+          <Label variant="overline" color="shade5">
+            {label}
+          </Label>
+        ) : null}
+        <>
+          <div
+            className="left-content"
+            style={
+              fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }
+            }
+          >
+            {keepIcon && rightComponent}
+            <IconContainer iconAlignment={iconAlignment}>
+              {getIcon()}
+              <>
+                {value ? (
+                  <Value style={{ paddingLeft: '16px' }} fontColor={fontColor}>
+                    {value}
+                  </Value>
+                ) : null}
+              </>
+            </IconContainer>
+          </div>
+        </>
+      </Container>
+    );
+  }
 
   return (
     <Container className="interactions" {...props} onClick={onClick}>
