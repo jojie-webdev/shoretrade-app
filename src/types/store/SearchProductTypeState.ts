@@ -7,6 +7,7 @@ export type SearchProductTypeMeta = {
 export type SearchProductTypeResponseItem = {
   label: string;
   value: string;
+  image: string;
 };
 
 export type SearchProductTypePayload = GenericResponse<{

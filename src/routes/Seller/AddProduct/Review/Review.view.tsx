@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Accordion from 'components/base/Accordion';
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
@@ -47,6 +48,20 @@ const Review = ({
   );
   const sfm = availableCrates?.sfm || [{ id: '' }];
   const polystyrene = availableCrates?.polystyrene || [];
+
+  const historicalListings =
+    useSelector(
+      (state: Store) => state.getHistoricalListings?.data?.data.listings || []
+    ) || [];
+
+  const currentHistoricalListingId =
+    editableListing.currentHistoricalListingId || '';
+
+  const currentHistoricalListingData = currentHistoricalListingId
+    ? historicalListings.find((a) => a.id === currentHistoricalListingId)
+    : undefined;
+
+  const isMissingDate = !(editableListing.ends && editableListing.catchDate);
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
 
@@ -137,6 +152,20 @@ const Review = ({
   return (
     <Container>
       <Row>
+        {currentHistoricalListingData && isMissingDate && (
+          <Col md={12} className="interaction-col">
+            <Alert
+              fullWidth
+              variant="alert"
+              header="You need to define new Dates for this Listing"
+              content={`This listing has been added on ${moment(
+                currentHistoricalListingData.created_at
+              ).format(
+                'DD MMMM YYYY'
+              )}. You can edit details here and add new Dates for “Catch Details” and “Listing Valid Until” fields.`}
+            />
+          </Col>
+        )}
         <Col md={12} className="interaction-col">
           <Interactions
             label="Type"
@@ -232,6 +261,7 @@ const Review = ({
                 label="Catch Date"
                 value={catchDate}
                 type="edit"
+                showEmptyIndicator
                 onClick={() => onChangeCurrentPage(8)}
               />
             </Col>
@@ -240,6 +270,7 @@ const Review = ({
                 label="Listing valid until (AEST)"
                 value={listingEnds}
                 type="edit"
+                showEmptyIndicator
                 onClick={() => onChangeCurrentPage(8)}
               />
             </Col>
@@ -250,6 +281,7 @@ const Review = ({
               label="Catch Date"
               value={catchRecurrence}
               type="edit"
+              showEmptyIndicator
               onClick={() => onChangeCurrentPage(8)}
             />
           </Col>
@@ -261,6 +293,7 @@ const Review = ({
               label="Notes"
               value={notes}
               type="edit"
+              showEmptyIndicator
               onClick={() => onChangeCurrentPage(8)}
             />
           </div>

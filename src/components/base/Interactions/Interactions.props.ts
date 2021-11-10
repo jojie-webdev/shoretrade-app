@@ -31,4 +31,5 @@ export interface InteractionsProps {
   marginBottom?: string;
   customIcon?: React.ReactNode;
   bottomComponent?: React.ReactNode;
+  showEmptyIndicator?: boolean;
 }

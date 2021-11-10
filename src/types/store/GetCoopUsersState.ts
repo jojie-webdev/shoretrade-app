@@ -10,10 +10,12 @@ export type GetCoopUsersRequest = {
 export type GetCoopUsersResponseItem = {
   ownerEmployeeId: string;
   company: string;
+  profileImage: string;
   employees: {
     employeeId: string;
     firstName: string;
     lastName: string;
+    profileImage: string;
     relationship: string; // ex. 'ADMIN'
   }[];
 };

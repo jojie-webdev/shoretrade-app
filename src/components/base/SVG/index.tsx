@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as AddListing } from './AddListing';
 export { default as WhatsApp } from './WhatsApp';
 export { default as MarketRequests } from './MarketRequests';
 export { default as DashboardAlt } from './DashboardAlt';

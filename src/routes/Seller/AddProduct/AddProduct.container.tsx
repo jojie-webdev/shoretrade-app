@@ -16,6 +16,8 @@ import {
   getCustomFormDataActions,
   modifyBulkUploadActions,
   getMarketInterestsActions,
+  getHistoricalListingsActions,
+  useHistoricalListingActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -35,12 +37,14 @@ export const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
             ? user.company
             : `${user.company} - ${employee.firstName} ${employee.lastName}`,
         value: employee.employeeId,
+        image: employee.profileImage || '',
         company: user.company,
       }))
     : {
         label: user.company,
         value: user.ownerEmployeeId,
         company: user.company,
+        image: user.profileImage || '',
       };
 
 const AddProduct = (): JSX.Element => {
@@ -89,15 +93,36 @@ const AddProduct = (): JSX.Element => {
             company,
           })
         );
-        onChangeCurrentPage(2);
+        onChangeCurrentPage(1.5);
       }
     }
   };
 
-  const search = (term: string) => {
+  const editableListing = useSelector((state: Store) => state.editableListing);
+
+  const searchHistoricalListings = (term: string) => {
     dispatch(
-      searchProductTypeActions.request({
+      getHistoricalListingsActions.request({
         term,
+        employeeId: editableListing.employee || '',
+      })
+    );
+  };
+
+  const historicalListings =
+    useSelector(
+      (state: Store) => state.getHistoricalListings.data?.data.listings || []
+    ) || [];
+
+  const onSkipHistoricalListings = () => {
+    onChangeCurrentPage(2);
+  };
+
+  const onUseHistoricalListing = (listingId: string, typeId: string) => {
+    dispatch(
+      useHistoricalListingActions.update({
+        id: listingId,
+        typeId,
       })
     );
   };
@@ -108,14 +133,31 @@ const AddProduct = (): JSX.Element => {
     ) || [];
 
   const productsToSell = useSelector((state: Store) =>
-    (state.getMarketInterests.data?.data.selling || []).map((p) => ({
-      label: p.name,
-      value: p.id,
-    }))
+    (state.getMarketInterests.data?.data.selling || []).map((p) => {
+      const availableData = searchResults.find((a) => a.value === p.id);
+      return {
+        label: p.name,
+        value: p.id,
+        image: availableData?.image || '',
+      };
+    })
   );
 
-  const pendingSearch =
+  const search = (term: string) => {
+    dispatch(
+      searchProductTypeActions.request({
+        term,
+      })
+    );
+  };
+
+  const pendingSearchProductType =
     useSelector((state: Store) => state.searchProductType.pending) || false;
+
+  const pendingMarketInterests =
+    useSelector((state: Store) => state.getMarketInterests.pending) || false;
+
+  const pendingSearch = pendingSearchProductType || pendingMarketInterests;
 
   const selectProductType = (typeId: string) => {
     dispatch(
@@ -129,20 +171,11 @@ const AddProduct = (): JSX.Element => {
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
 
   useEffect(() => {
-    return () => {
-      dispatch(searchProductTypeActions.clear());
-      dispatch(editableListingActions.clear());
-      dispatch(getMarketInterestsActions.clear());
-    };
-  }, []);
-
-  useEffect(() => {
     if (currentPage === 1) {
       if (showCustomTypeSettings) {
         setShowCustomTypeSettings(false);
       }
       dispatch(searchProductTypeActions.clear());
-      dispatch(getMarketInterestsActions.request({ companyId }));
     }
   }, [currentPage]);
 
@@ -185,8 +218,6 @@ const AddProduct = (): JSX.Element => {
 
   const listingFormData =
     useSelector((state: Store) => state.getListingFormData.data?.data) || null;
-
-  const editableListing = useSelector((state: Store) => state.editableListing);
 
   const modifyBulkUpload = useSelector(
     (state: Store) => state.modifyBulkUpload
@@ -323,6 +354,7 @@ const AddProduct = (): JSX.Element => {
           companyId,
         })
       );
+      dispatch(getMarketInterestsActions.request({ companyId }));
     }
   }, [companyId]);
 
@@ -549,6 +581,10 @@ const AddProduct = (): JSX.Element => {
   const navBack = () => {
     if (isBulkUpload && currentPage === 7) {
       onChangeCurrentPage(5);
+    } else if (currentPage === 2) {
+      onChangeCurrentPage(1.5);
+    } else if (currentPage === 1.5) {
+      onChangeCurrentPage(1);
     } else {
       onChangeCurrentPage(currentPage - 1);
     }
@@ -559,6 +595,10 @@ const AddProduct = (): JSX.Element => {
     onChangeCurrentPage,
     accountOptions,
     onSelectAccount,
+    historicalListings,
+    onSkipHistoricalListings,
+    onUseHistoricalListing,
+    searchHistoricalListings,
     search,
     searchResults,
     productsToSell,

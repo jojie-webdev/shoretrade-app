@@ -26,9 +26,9 @@ import {
   EmptyResultDesktop,
 } from './ChooseType.style';
 
-const ProductView = (props: SearchProductTypeResponseItem) => {
+const ProductView = (props: { image: string; label: string }) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const image = '';
+  const image = props.image;
   return (
     <>
       {!isMobile && (
@@ -63,8 +63,6 @@ const ChooseType = ({
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    setSearchKey(searchKey);
-
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -75,7 +73,7 @@ const ChooseType = ({
         setIsTriggered(true);
       }, 800);
       setTimer(timerId);
-    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+    } else if (searchKey.length <= 2 && isEmpty(searchResults)) {
       search('');
     }
   }, [searchKey]);
@@ -252,7 +250,7 @@ const ChooseType = ({
               ).map((item, index) => (
                 <div className="item-container" key={item.value}>
                   <Interactions onClick={() => selectProductType(item.value)}>
-                    <ProductView {...item} />
+                    <ProductView label={item.label} image={item.image || ''} />
                   </Interactions>
                 </div>
               ))}

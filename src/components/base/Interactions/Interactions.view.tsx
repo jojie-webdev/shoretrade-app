@@ -39,6 +39,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     keepIcon,
     fontColor,
     customIcon,
+    showEmptyIndicator,
   } = props;
 
   const getIcon = () => {
@@ -80,7 +81,13 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
       {leftComponent ? (
         leftComponent
       ) : (
-        <>{value ? <Value fontColor={fontColor}>{value}</Value> : null}</>
+        <>
+          {value ? (
+            <Value fontColor={fontColor}>{value}</Value>
+          ) : showEmptyIndicator ? (
+            <Value fontColor={theme.brand.alert}>Not Entered</Value>
+          ) : null}
+        </>
       )}
       {children}
     </div>

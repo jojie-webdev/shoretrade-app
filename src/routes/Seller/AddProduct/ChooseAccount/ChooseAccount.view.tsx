@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
+import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import { placeholderImage } from 'consts';
@@ -13,13 +14,24 @@ import { useMediaQuery } from 'react-responsive';
 import template from 'res/docs/bulkUpload.xlsx';
 
 import { AccountOption, ChooseAccountProps } from './ChooseAccount.props';
-import { Container, Image, ButtonImport } from './ChooseAccount.style';
+import {
+  Container,
+  Image,
+  ButtonImport,
+  PlaceholderImage,
+} from './ChooseAccount.style';
 
 const AccountsView = (props: AccountOption) => {
-  const image = '';
+  const image = props.image;
   return (
     <>
-      {image ? <Image src={image} /> : <Image src={placeholderImage} />}
+      {image ? (
+        <Image src={image} />
+      ) : (
+        <PlaceholderImage>
+          <PlaceholderProfile />
+        </PlaceholderImage>
+      )}
       <Typography variant="body" color="noshade">
         {props.label}
       </Typography>

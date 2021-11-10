@@ -26,6 +26,7 @@ function* getListingFormDataRequest(
           data: {
             ...data.data,
             currentListingId: action.meta.currentListingId,
+            currentHistoricalListingId: action.meta.currentHistoricalListingId,
           },
         })
       );

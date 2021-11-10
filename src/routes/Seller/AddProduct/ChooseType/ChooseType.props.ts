@@ -7,8 +7,8 @@ import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeStat
 export type ChooseTypePublicProps = {
   search: (term: string) => void;
   pendingSearch: boolean;
-  searchResults: SearchProductTypeResponseItem[];
-  productsToSell: SearchProductTypeResponseItem[];
+  searchResults: { label: string; value: string; image?: string }[];
+  productsToSell: { label: string; value: string; image?: string }[];
   selectProductType: (typeId: string) => void;
   showCustomTypeSettings: boolean;
   setShowCustomTypeSettings: Dispatch<boolean>;

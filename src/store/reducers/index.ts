@@ -4,7 +4,6 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
-import globalModal from './globalModal';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -48,6 +47,7 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
+import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
@@ -73,6 +73,7 @@ import getShippingQuote from './getShippingQuote';
 import getStates from './getStates';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
+import globalModal from './globalModal';
 import history from './history';
 import login from './login';
 import logout from './logout';
@@ -116,7 +117,8 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-  globalModal,
+        getHistoricalListings,
+        globalModal,
         removeCartItem,
         addCartItem,
         getCart,

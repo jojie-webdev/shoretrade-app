@@ -16,6 +16,9 @@ import {
   createListingActions,
   getAllListingsActions,
   editableListingActions,
+  searchProductTypeActions,
+  getMarketInterestsActions,
+  getHistoricalListingsActions,
 } from '../actions';
 
 function* createListingRequest(
@@ -68,6 +71,9 @@ function* createListingSuccess(
 ) {
   yield put(getAllListingsActions.request());
   yield put(editableListingActions.clear());
+  yield put(searchProductTypeActions.clear());
+  yield put(getMarketInterestsActions.clear());
+  yield put(getHistoricalListingsActions.clear());
   yield put(push(SELLER_ROUTES.ADD_PRODUCT));
 }
 

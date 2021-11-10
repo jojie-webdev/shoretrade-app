@@ -26,6 +26,7 @@ export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
         employee: state.employee,
         type: action.payload.type,
         currentListingId: action.payload.currentListingId,
+        currentHistoricalListingId: action.payload.currentHistoricalListingId,
         currentStep: action.payload.currentStep,
       };
     }

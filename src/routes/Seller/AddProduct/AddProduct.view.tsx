@@ -25,6 +25,7 @@ import ChooseAccount from './ChooseAccount/ChooseAccount.view';
 import ChooseSize from './ChooseSize/ChooseSize.view';
 import ChooseSpecifications from './ChooseSpecifications/ChooseSpecifications.view';
 import ChooseType from './ChooseType/ChooseType.view';
+import HistoricalListings from './HistoricalListings/HistoricalListings.view';
 import Review from './Review/Review.view';
 
 const AddProductView = (props: AddProductGeneratedProps) => {
@@ -34,6 +35,10 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     currentPage,
     onChangeCurrentPage,
     accountOptions,
+    searchHistoricalListings,
+    historicalListings,
+    onSkipHistoricalListings,
+    onUseHistoricalListing,
     onSelectAccount,
     search,
     searchResults,
@@ -77,8 +82,6 @@ const AddProductView = (props: AddProductGeneratedProps) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [isTriggered, setIsTriggered] = useState(false);
   useEffect(() => {
-    setSearchKey(searchKey);
-
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -87,16 +90,16 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       const timerId = setTimeout(() => {
         search(searchKey);
         setIsTriggered(true);
-      }, 800);
+      }, 200);
       setTimer(timerId);
-    } else if (setSearchKey.length <= 2 && isEmpty(searchResults)) {
+    } else if (searchKey.length <= 2 && isEmpty(searchResults)) {
       search('');
     }
   }, [searchKey]);
   //#endregion1
 
   useEffect(() => {
-    if (currentPage === 1) {
+    if (currentPage === 1 || currentPage === 1.5) {
       setSearchKey('');
     }
   }, [currentPage]);
@@ -112,6 +115,16 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             onUploadCSV={onUploadCSV}
             isUploadingCSV={isUploadingCSV}
             userPending={userPending}
+          />
+        );
+      case 1.5:
+        return (
+          <HistoricalListings
+            searchHistoricalListings={searchHistoricalListings}
+            historicalListings={historicalListings}
+            navBack={navBack}
+            onSkipHistoricalListings={onSkipHistoricalListings}
+            onUseHistoricalListing={onUseHistoricalListing}
           />
         );
       case 2:
@@ -249,7 +262,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
   const actualCurrentPage = currentPage - 1;
   return (
     <Container>
-      {currentPage > 1 && (
+      {currentPage > 1.5 && (
         <ProgressIndicator
           style={{ width: `${(actualCurrentPage / 8) * 100}%` }}
         />
@@ -266,7 +279,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         )}
         {isMobile && <MobileHeader>Add a Product</MobileHeader>}
 
-        {currentPage > 1 && (
+        {currentPage > 1.5 && (
           <Typography variant="overline" color="shade6">
             Step {currentPage - 1} - 8
           </Typography>
@@ -274,7 +287,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
         <InnerHeaderContainer currentPage={currentPage}>
           <InnerRouteHeader
-            title={currentPage > 1 && !isMobile ? title : ''}
+            title={currentPage > 1.5 && !isMobile ? title : ''}
             onClickBack={() => {
               if (isExisting) {
                 if (currentPage === 9) {

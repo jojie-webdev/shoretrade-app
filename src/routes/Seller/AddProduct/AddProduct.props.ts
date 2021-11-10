@@ -9,10 +9,12 @@ import { ChooseAccountPublicProps } from './ChooseAccount/ChooseAccount.props';
 import { ChooseSizePublicProps } from './ChooseSize/ChooseSize.props';
 import { ChooseSpecificationsPublicProps } from './ChooseSpecifications/ChooseSpecifications.props';
 import { ChooseTypePublicProps } from './ChooseType/ChooseType.props';
+import { HistoricalListingsPublicProps } from './HistoricalListings/HistoricalListings.props';
 import { ReviewPublicProps } from './Review/Review.props';
 
 export interface AddProductGeneratedProps
   extends ChooseAccountPublicProps,
+    HistoricalListingsPublicProps,
     ChooseTypePublicProps,
     ChooseSpecificationsPublicProps,
     ChooseSizePublicProps,

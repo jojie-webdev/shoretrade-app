@@ -1,17 +1,4 @@
 /* PLOP_INJECT_IMPORT */
-import { GlobalModalState } from './GlobalModalState';
-import {
-  RemoveCartItemMeta,
-  RemoveCartItemPayload,
-} from './RemoveCartItemState';
-import {
-  AddCartItemMeta,
-  AddCartItemPayload,
-} from './AddCartItemState';
-import {
-  GetCartMeta,
-  GetCartPayload,
-} from './GetCartState';
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import { GenericResponse } from 'types/GenericResponse';
@@ -63,7 +50,11 @@ import {
   GetSellerLicenseMeta,
   GetSellerLicensePayload,
 } from 'types/store/GetSellerLicenseState';
-import { MarketOfferPayload, NegotiateOffer, OfferConfirm } from 'types/store/MarketOfferState';
+import {
+  MarketOfferPayload,
+  NegotiateOffer,
+  OfferConfirm,
+} from 'types/store/MarketOfferState';
 import {
   UpdateMarketInterestsMeta,
   UpdateMarketInterestsPayload,
@@ -80,6 +71,7 @@ import {
 
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
+import { AddCartItemMeta, AddCartItemPayload } from './AddCartItemState';
 import {
   AddLinkedAccountMeta,
   AddLinkedAccountPayload,
@@ -148,11 +140,16 @@ import {
   GetBuyerSearchFilterDataMeta,
   GetBuyerSearchFilterDataPayload,
 } from './GetBuyerSearchFilterDataState';
+import { GetCartMeta, GetCartPayload } from './GetCartState';
 import { GetCoopUsersMeta, GetCoopUsersPayload } from './GetCoopUsersState';
 import {
   GetCustomFormDataMeta,
   GetCustomFormDataPayload,
 } from './GetCustomFormDataState';
+import {
+  GetHistoricalListingsMeta,
+  GetHistoricalListingsPayload,
+} from './GetHistoricalListingsState';
 import {
   GetLinkedAccountsMeta,
   GetLinkedAccountsPayload,
@@ -222,6 +219,7 @@ import {
   GetTransactionHistoryPayload,
 } from './GetTransactionHistoryState';
 import { GetUserMeta, GetUserPayload } from './GetUserState';
+import { GlobalModalState } from './GlobalModalState';
 import { HistoryState } from './HistoryState';
 import { LoginMeta, LoginPayload } from './LoginState';
 import { RequestLogState } from './LogRequestState';
@@ -242,6 +240,10 @@ import {
   ReadNotificationPayload,
 } from './ReadNotificationState';
 import { RegisterMeta, RegisterPayload } from './RegisterState';
+import {
+  RemoveCartItemMeta,
+  RemoveCartItemPayload,
+} from './RemoveCartItemState';
 import {
   ResendVerificationMeta,
   ResendVerificationPayload,
@@ -285,6 +287,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getHistoricalListings: AsyncState<
+    GetHistoricalListingsMeta,
+    GetHistoricalListingsPayload
+  >;
   globalModal: GlobalModalState;
   removeCartItem: AsyncState<RemoveCartItemMeta, RemoveCartItemPayload>;
   addCartItem: AsyncState<AddCartItemMeta, AddCartItemPayload>;
