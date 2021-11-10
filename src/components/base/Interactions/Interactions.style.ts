@@ -53,6 +53,9 @@ export const Container = styled.div<InteractionsProps>`
     display: flex;
     align-items: center;
   }
+  .left-radio {
+    flex-direction: row;
+  }
 `;
 
 export const Value = styled(Typography)<{ fontColor?: string }>`
