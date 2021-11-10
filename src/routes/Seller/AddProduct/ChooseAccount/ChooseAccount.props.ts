@@ -1,6 +1,7 @@
 export type AccountOption = {
   value: string;
   label: string;
+  image: string;
 };
 
 export type ChooseAccountPublicProps = {

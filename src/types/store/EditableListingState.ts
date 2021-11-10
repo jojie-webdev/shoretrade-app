@@ -1,6 +1,7 @@
 export type EditableListingState = Partial<{
   isAlreadyCreated?: boolean; //from listing details edit
   currentStep: number;
+  currentHistoricalListingId?: string; // passed with type to control form data flow
   currentListingId?: string; // passed with type to control form data flow
   company: string; // company name, to get shipping address later on
   employee: string; // employee id

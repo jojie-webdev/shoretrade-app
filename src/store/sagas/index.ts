@@ -41,6 +41,7 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
+import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
@@ -100,10 +101,12 @@ import updateNotificationSettings from './updateNotificationSettings';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
+import useHistoricalListing from './useHistoricalListing';
 import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getHistoricalListings,
   removeCartItem,
   addCartItem,
   getCart,
@@ -204,6 +207,7 @@ const sagas = [
   sellerDashboardDate,
   globalModal,
   healthCheck,
+  useHistoricalListing,
 ];
 
 export default function* root() {

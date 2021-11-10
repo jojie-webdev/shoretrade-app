@@ -26,7 +26,6 @@ import {
   OfferStatus,
   ShippingAddress,
 } from 'types/store/GetActiveOffersState';
-import { formatPrice } from 'utils/formatPrice';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { createdAtToExpiry } from 'utils/MarketRequest';

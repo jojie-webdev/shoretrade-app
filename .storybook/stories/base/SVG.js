@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  AddListing,
   MarketRequests,
   DashboardAlt,
   Anchor,
@@ -15,7 +16,7 @@ import {
   Bell,
   Sold,
   CommentsAlt,
-  EnvolopeAlt,
+  EnvelopeAlt,
   Desktop,
   NewWave51,
   WaveNew31,
@@ -195,6 +196,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="AddListing">
+          <AddListing width={30} height={30} />
+        </Wrapper>
         <Wrapper label="MarketRequests">
           <MarketRequests width={30} height={30} />
         </Wrapper>
@@ -228,8 +232,8 @@ storiesOf('base/SVG', module).add('Summary', () => {
         <Wrapper label="CommentsAlt">
           <CommentsAlt width={30} height={30} />
         </Wrapper>
-        <Wrapper label="EnvolopeAlt">
-          <EnvolopeAlt width={30} height={30} />
+        <Wrapper label="EnvelopeAlt">
+          <EnvelopeAlt width={30} height={30} />
         </Wrapper>
         <Wrapper label="Desktop">
           <Desktop width={30} height={30} />

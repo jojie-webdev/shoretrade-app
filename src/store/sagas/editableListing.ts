@@ -15,6 +15,8 @@ function* editableListingRunner(action: Action<EditableListingPayload>) {
       getListingFormDataActions.request({
         typeId: action.payload.type,
         currentListingId: action.payload.currentListingId || '',
+        currentHistoricalListingId:
+          action.payload.currentHistoricalListingId || '',
       })
     );
   }

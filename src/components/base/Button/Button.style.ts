@@ -47,7 +47,7 @@ export const ButtonContainer = styled.button<
   background-color: ${({ variant, color }) =>
     color ? backgroundColor[color] : backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
-  border-radius: ${(props) => (props.circular ? '50%' : '4px')};
+  border-radius: ${(props) => (props.circular ? '50%' : '12px')};
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   white-space: nowrap;

@@ -3,10 +3,12 @@ import { GenericResponse } from 'types/GenericResponse';
 export type GetListingFormDataMeta = {
   typeId: string;
   currentListingId?: string;
+  currentHistoricalListingId?: string;
 };
 
 export type GetListingFormDataResponse = {
   currentListingId?: string; // generated locally
+  currentHistoricalListingId?: string; // generated locally
   token: string;
   categoryId: string;
   defaultPhoto: string; // uri

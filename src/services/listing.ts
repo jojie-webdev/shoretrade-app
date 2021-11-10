@@ -8,6 +8,7 @@ import { CreateListingRequestData } from 'types/store/CreateListingState';
 import { EndListingMeta } from 'types/store/EndListingState';
 import { GetAllBuyerListingRequestOption } from 'types/store/GetAllBuyerListingsState';
 import { GetBuyerSearchFilterDataMeta } from 'types/store/GetBuyerSearchFilterDataState';
+import { GetHistoricalListingsMeta } from 'types/store/GetHistoricalListingsState';
 import { GetListingBoxesMeta } from 'types/store/GetListingBoxesState';
 import { GetListingFormDataMeta } from 'types/store/GetListingFormDataState';
 import { GetListingsByTypeRequestData } from 'types/store/GetListingsByTypeState';
@@ -271,5 +272,20 @@ export const createBulkListing = (
       Authorization: `Bearer ${token}`,
     },
     data,
+  });
+};
+
+export const getHistoricalListings = (
+  data: GetHistoricalListingsMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${API.URL}/${API.VERSION_NEXT}/listing/historical?${qs.stringify(
+      data
+    )}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
