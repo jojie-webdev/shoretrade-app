@@ -27,11 +27,6 @@ export const Container = styled.div`
 export const Choices = styled.div`
   .interactions {
     margin-bottom: 12px;
-
-    .left-content {
-      align-items: flex-start;
-      flex-direction: column;
-    }
   }
 
   .radio-group {

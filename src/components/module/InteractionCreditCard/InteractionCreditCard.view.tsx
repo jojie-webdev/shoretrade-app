@@ -18,19 +18,6 @@ const InteractionCreditCard = (
   return (
     <CustomInteractions
       {...props}
-      leftComponent={
-        <LeftComponent>
-          <CardName variant="overline" color="shade6">
-            Credit Cards
-          </CardName>
-          <CreditCard
-            lastFour={props.lastFour}
-            brand={props.brand}
-            expMonth={props.expMonth.toString() || ''}
-            expYear={props.expYear.toString() || ''}
-          />
-        </LeftComponent>
-      }
       rightComponent={
         props.isDefault ? (
           <RightComponent>
@@ -41,7 +28,17 @@ const InteractionCreditCard = (
           </RightComponent>
         ) : null
       }
-    />
+    >
+      <CardName variant="overline" color="shade6">
+        Credit Cards
+      </CardName>
+      <CreditCard
+        lastFour={props.lastFour}
+        brand={props.brand}
+        expMonth={props.expMonth.toString() || ''}
+        expYear={props.expYear.toString() || ''}
+      />
+    </CustomInteractions>
   );
 };
 

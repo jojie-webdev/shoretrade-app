@@ -53,6 +53,10 @@ export type GetCartData = {
   id: string;
   lastModified: string; // iso date string
   items: Record<string, GetCartDataItem>;
+  timer: {
+    expiry: number;
+    warning: number;
+  };
 };
 
 export type GetCartPayload = {

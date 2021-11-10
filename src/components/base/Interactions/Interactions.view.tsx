@@ -120,7 +120,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         ) : null}
         <>
           <div
-            className="left-content"
+            className="left-content left-radio"
             style={
               fullWidth ? { flex: 1 } : { width: '100%', paddingRight: '16px' }
             }
@@ -136,7 +136,9 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
                 ) : null}
               </>
             </IconContainer>
+            <div style={{ paddingLeft: '16px' }}>{children}</div>
           </div>
+          <div>{rightComponent}</div>
         </>
       </Container>
     );

@@ -1,4 +1,3 @@
-import cartExpiry from 'consts/cartExpiry';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select, delay } from 'redux-saga/effects';
@@ -27,7 +26,7 @@ function* getCartRequest(action: AsyncAction<GetCartMeta, GetCartPayload>) {
       yield put(getCartActions.success(data));
       if (data.data) {
         const millisBeforeCartExpiry = moment(data.data.lastModified)
-          .add(cartExpiry.minutesBeforeExpiry, 'minutes')
+          .add(data.data.timer.expiry, 'minutes')
           .diff(moment(), 'milliseconds');
         yield delay(millisBeforeCartExpiry > 0 ? millisBeforeCartExpiry : 0);
         yield put(getCartActions.request(action.meta));
