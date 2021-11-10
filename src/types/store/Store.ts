@@ -109,7 +109,7 @@ import {
   DeleteNotificationPayload,
 } from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
-import { EditableMarketRequestState } from './EditableMarketRequest';
+import { EditableMarketRequestPayload, EditableMarketRequestState } from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -488,6 +488,10 @@ export interface Store {
   createMarketOffer: AsyncState<
     CreateMarketOfferMeta,
     CreateMarketOfferPayload
+  >;
+  createMarketRequest: AsyncState<
+    EditableMarketRequestState,
+    EditableMarketRequestPayload
   >;
   getMarketNotification: AsyncState<
     GetMarketNotificationMeta,

@@ -15,16 +15,6 @@ const CreditCardCard = (props: CreditCardCardProps): JSX.Element => {
   return (
     <CustomInteractions
       {...props}
-      leftComponent={
-        <LeftComponent>
-          <CreditCard
-            lastFour={props.lastFour}
-            brand={props.brand}
-            expMonth={props.expMonth?.toString() || ''}
-            expYear={props.expYear?.toString() || ''}
-          />
-        </LeftComponent>
-      }
       rightComponent={
         props.isDefault ? (
           <RightComponent>
@@ -35,7 +25,14 @@ const CreditCardCard = (props: CreditCardCardProps): JSX.Element => {
           </RightComponent>
         ) : null
       }
-    />
+    >
+      <CreditCard
+        lastFour={props.lastFour}
+        brand={props.brand}
+        expMonth={props.expMonth?.toString() || ''}
+        expYear={props.expYear?.toString() || ''}
+      />
+    </CustomInteractions>
   );
 };
 
