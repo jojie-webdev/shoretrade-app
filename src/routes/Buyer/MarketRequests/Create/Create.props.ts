@@ -21,6 +21,7 @@ export interface CreateRequestGeneratedProps
     SummaryProps {
   step: CreateRequestStep;
   termsAgreement: boolean;
+  isLoadingCreate: boolean;
   sendConfModalisOpen: boolean;
   setTermsAgreement: Dispatch<SetStateAction<boolean>>;
   onSubmitRequest: () => void;

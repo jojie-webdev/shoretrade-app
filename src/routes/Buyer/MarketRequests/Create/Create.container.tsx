@@ -18,8 +18,8 @@ import { SizeOptions } from './SelectSize/SelectSize.props';
 const CreateRequest = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
-  const editableMarketRequest = useSelector(
-    (state: Store) => state.editableMarketRequest
+  const pendingCreate = useSelector(
+    (state: Store) => state.createMarketRequest.pending
   );
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -242,6 +242,7 @@ const CreateRequest = (): JSX.Element => {
     setSelectedAddress,
     onChangeAddress,
     updateCategory,
+    isLoadingCreate: pendingCreate || false
   };
 
   return <CreateRequestLandingView {...generatedProps} />;

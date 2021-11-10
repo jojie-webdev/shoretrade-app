@@ -23,6 +23,7 @@ import {
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import Loading from 'components/module/Loading';
 import NumberedHeroView from 'components/module/NumberedHero';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { getTermsAndConditions } from 'utils/Links';
@@ -57,6 +58,7 @@ import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {
@@ -90,6 +92,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     updateCategory,
     didFinishStep,
     setDidFinishStep,
+    isLoadingCreate,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -103,6 +106,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   };
 
   const onSubmit = () => {
+    setSendConfModalisOpen(false);
     onSubmitRequest();
   };
 
@@ -504,6 +508,10 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         return <></>;
     }
   };
+
+  if (isLoadingCreate) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <>
