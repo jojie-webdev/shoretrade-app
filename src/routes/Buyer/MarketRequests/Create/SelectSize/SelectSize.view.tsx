@@ -34,7 +34,6 @@ import {
   MetricLabelContainer,
   SelectRowContainer,
 } from './SelectSize.style';
-import { restrictTwoDecimalPlaces } from 'utils/MarketRequest';
 
 const SizeInput = (props: SizeInputProps) => {
   const {
@@ -96,14 +95,15 @@ const SizeInput = (props: SizeInputProps) => {
         </MetricLabelContainer>
         <SelectRowContainer>
           <TextField
-            type="number"
+            type="text"
             color="shade10"
             inputType="decimal"
             label="Size From"
             value={fromSize}
             onChangeText={(v) => {
-              const fv = restrictTwoDecimalPlaces(v);
-              setFromSize(fv);
+              if (!Number.isNaN(Number(v))) {
+                setFromSize(v);
+              }
             }}
             placeholder=""
             onBlur={() => {
@@ -119,14 +119,15 @@ const SizeInput = (props: SizeInputProps) => {
           />
 
           <TextField
-            type="number"
+            type="text"
             color="shade10"
             inputType="decimal"
             label={`Size To\n(Optional)`}
             value={toSize}
             onChangeText={(v) => {
-              const fv = restrictTwoDecimalPlaces(v);
-              setToSize(fv);
+              if (!Number.isNaN(Number(v))) {
+                setToSize(v);
+              }
             }}
             placeholder=""
             onBlur={() => {

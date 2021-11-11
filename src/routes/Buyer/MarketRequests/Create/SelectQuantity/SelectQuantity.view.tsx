@@ -10,7 +10,6 @@ import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { Hidden } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { restrictTwoDecimalPlaces } from 'utils/MarketRequest/restrictTwoDecimalPlaces';
 import theme from 'utils/Theme';
 
 import {
@@ -127,8 +126,9 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               label="Quantity From"
               value={from}
               onChangeText={(v) => {
-                const fv = restrictTwoDecimalPlaces(v);
-                setFrom(fv);
+                if (!Number.isNaN(Number(v))) {
+                  setFrom(v);
+                }
               }}
               min={1}
               onBlur={() => {
@@ -150,8 +150,9 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               label="Quantity  To"
               value={to}
               onChangeText={(v) => {
-                const fv = restrictTwoDecimalPlaces(v);
-                setTo(fv);
+                if (!Number.isNaN(Number(v))) {
+                  setTo(v);
+                }
               }}
               onBlur={() => {
                 if (from !== '' && to !== '' && Number(from) > Number(to)) {
