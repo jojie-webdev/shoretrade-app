@@ -1,13 +1,24 @@
 const toKilo: Function = (value: string): number =>
   Math.round((10 * Number(value)) / 1000) / 10;
 
+export const formatDecimal: Function = (value: string) => {
+  const val = Number(value);
+  if (Number.isInteger(val)) {
+    return val;
+  } else {
+    return Math.round(val).toFixed(2);
+  }
+};
+
 const toKilogramsRange: Function = (sizeFrom: string, sizeTo: string): string =>
   Number(sizeTo) >= 1000
     ? `${toKilo(sizeFrom) || ''} kg - ${toKilo(sizeTo) || ''} kg`
-    : `${sizeFrom || ''} g - ${sizeTo || ''} g`;
+    : `${formatDecimal(sizeFrom) || ''} g - ${formatDecimal(sizeTo) || ''} g`;
 
 const toKilograms: Function = (size: string): string =>
-  Number(size) >= 1000 ? `${toKilo(size) || ''} kg` : `${size || ''} g`;
+  Number(size) >= 1000
+    ? `${toKilo(size) || ''} kg`
+    : `${formatDecimal(size) || ''} g`;
 
 export const sizeToString = (
   typeMetric: string,
