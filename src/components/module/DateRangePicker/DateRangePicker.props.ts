@@ -16,4 +16,6 @@ export interface DateRangePickerProps {
   format: Format;
   disabled?: boolean;
   onClear: () => void;
+  background?: string;
+  border?: string;
 }

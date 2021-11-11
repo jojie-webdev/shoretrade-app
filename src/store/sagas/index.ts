@@ -89,6 +89,7 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
+import sendOrderRating from './sendOrderRating'
 import socketChannel from './socketChannel';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -187,6 +188,7 @@ const sagas = [
   searchAndCountProductType,
   searchProductType,
   sendMessage,
+  sendOrderRating,
   updateAddress,
   updateBankDetails,
   updateDefaultCard,

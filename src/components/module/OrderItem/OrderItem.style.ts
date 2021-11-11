@@ -6,196 +6,200 @@ import styled from 'utils/styled';
 
 import { ItemDetailVariants } from './OrderItem.props';
 
-const ItemDetailsAlignment: Record<ItemDetailVariants, string> = {
-  left: 'flex-start',
-  center: 'center',
-  right: 'flex-end',
-};
-
-export const Confirmed = styled(Typography)`
-  margin-bottom: 4px;
-`;
-
-export const StyledInteraction = styled(InteractionsView)`
-  border-radius: 4px;
-  box-shadow: none;
-`;
-
-export const ItemContainer = styled.div`
-  margin-bottom: 8px;
-  border-radius: 4px;
-  background: ${(props) => props.theme.grey.noshade};
-
-  @media ${BREAKPOINTS['sm']} {
-    background: none;
+export const OrderItemContainer = styled.div`
+  :not(:last-child) {
+    margin-bottom: 8px;
   }
 
-  .section {
-    padding: 16px 16px 8px 16px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    white-space: nowrap;
-    flex-wrap: wrap;
+  @media ${BREAKPOINTS['sm']} {
+    :not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+`;
 
-    .label {
-      font-size: 12px;
+export const OrderInfoContainer = styled.div`
+  background: ${({ theme }) => theme.grey.noshade};
+  padding: 16px 16px 10px 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.grey.shade3};
+  
+  .end-text { text-align: right; }
+
+  @media ${BREAKPOINTS['sm']} {
+    border: none;
+    border-radius: 0;
+
+    .end-text { text-align: left; }
+
+    .btn-rate-seller {
+      margin: auto 0 auto auto !important;
     }
 
-    .shipping-value {
-      margin-right: 4px;
-      flex: 1 0 auto;
-    }
+    .detail-container { margin-bottom: 8px; }
+  }
+`;
 
-    .delivery-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      flex: 3;
-
-      .shipping-from {
-        margin-right: 80px;
-      }
+export const OrderItemsContainer = styled.div`
+  padding: 16px;
+  background: ${({ theme }) => theme.grey.noshade};
+  border: 1px solid ${({ theme }) =>theme.grey.shade3};
+  border-top: none;
+  
+  .item {
+    background: ${({ theme }) => theme.grey.shade1};
+    border: 1px solid ${({ theme }) =>theme.grey.shade3};
+    border-radius: 12px;
+    padding: 4px 8px !important;
+    
+    img {
+      height: 48px;
+      width: 48px;
+      border-radius: 6px;
+      margin-right: 8px;
     }
 
     :not(:last-child) {
-      border-bottom: 1px solid ${(props) => props.theme.grey.shade3};
-    }
-
-    @media ${BREAKPOINTS['sm']} {
-      .label,
-      .shipping-value {
-        font-size: 12px;
-      }
-    }
-
-    @media (max-width: 550px) {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
+      margin-bottom: 8px;
     }
   }
 
-  .item {
-    display: block;
+  .end-text { text-align: right; }
 
-    .item-detail-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      flex-wrap: wrap;
+  @media ${BREAKPOINTS['sm']} {
+    padding: 8px 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    
+    .end-text {
+      text-align: left;
+      font-size: 12px;
+    }
 
-      :not(:last-child) {
-        margin-bottom: 24px;
-      }
-    }
-  }
+    .value { font-size: 14px; }
 
-  /* Utility classes */
-  .wrap-text {
-    white-space: normal;
-  }
+    img { margin-bottom: 4px; }
 
-  .wrap-content {
-    flex-wrap: wrap;
-  }
+    .item { padding: 8px !important; }
 
-  .right-section {
-    flex: 1.2;
-    display: flex;
-    justify-content: space-between;
-
-    @media ${BREAKPOINTS.sm} {
-      display: block;
-      button {
-        margin-bottom: 12px;
-      }
-    }
-    @media ${BREAKPOINTS.md} {
-      display: block;
-      button {
-        margin-bottom: 12px;
-      }
-    }
-    @media ${BREAKPOINTS.lg} {
-      display: block;
-      button {
-        margin-bottom: 12px;
-      }
-    }
-    @media ${BREAKPOINTS.iPad} {
-      display: block;
-      button {
-        margin-bottom: 12px;
-      }
-    }
-    @media (max-width: 425px) {
-      flex-wrap: nowrap;
-    }
+    .detail-container { margin-bottom: 8px; }
   }
 `;
 
-export const ItemDetail = styled.div<{
-  type: ItemDetailVariants;
-  row?: boolean;
-}>`
-  display: flex;
-  flex-direction: ${(props) => (props.row ? 'row' : 'column')};
-  align-items: ${({ type }) => ItemDetailsAlignment[type]};
-  margin-bottom: 8px;
+export const OrderTotalContainer = styled.div`
+  background: ${({ theme }) => theme.grey.noshade};
+  padding: 16px 16px 10px 16px;
+  border: 1px solid ${({ theme }) => theme.grey.shade3};
+  border-top: none;
+  
+  .end-text { text-align: right; }
 
-  img {
-    height: 56px;
-    width: 56px;
-    border-radius: 4px;
-    margin-right: 16px;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .left-details {
-    @media ${BREAKPOINTS.sm} {
-      min-width: 375px;
-    }
-  }
-
-  @media (max-width: 1135px) {
-    align-items: flex-start;
-  }
-
-  @media ${BREAKPOINTS.sm} {
-    align-items: ${(props) => (props.row ? 'center' : 'flex-start')};
-    display: block;
+  @media ${BREAKPOINTS['sm']} {
+    background: none;
+    border: none;
+    margin-bottom: 8px;
+    
+    .end-text { text-align: left; }
+    
+    .detail-container { margin-bottom: 8px; }
   }
 `;
 
-export const RightContent = styled.div`
-  flex: 1.2;
-  display: flex;
-  justify-content: space-between;
+export const OrderShippingContainer = styled.div`
+  background: ${({ theme }) => theme.grey.noshade};
+  padding: 16px 16px 10px 16px;
+  border: 1px solid ${({ theme }) => theme.grey.shade3};
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  
+  .end-text { text-align: right; }
+  
+  .btn-raise-dispute { margin-right: 8px; }
 
-  @media ${BREAKPOINTS.sm} {
-    flex: 2;
-    p {
-      font-size: 10px;
+  @media ${BREAKPOINTS['sm']} {
+    background: none;
+    border: none;
+    border-radius: 0;
+
+    .end-text { text-align: left; }
+
+    .detail-container { margin-bottom: 8px; }
+  }
+
+  @media ${BREAKPOINTS['md']} {
+    .btn-raise-dispute { margin-right: 0; }
+
+    .detail-container:not(:last-child) {
+      margin-bottom: 8px;
     }
   }
-  @media (max-width: 425px) {
-    flex-wrap: nowrap;
+
+  @media ${BREAKPOINTS['xl']} {
+    .btn-raise-dispute { margin-right: 0; }
   }
 `;
 
 export const Tag = styled.div`
-  padding: 4px 8px;
-  background-color: ${(props) => props.theme.grey.shade2};
-  border-radius: 4px;
-  margin-right: 4px;
+  width: fit-content;
+  padding: 6px 8px 4px 8px;
+  background-color: ${(props) => props.theme.grey.shade3};
+  border-radius: 8px;
   margin-bottom: 4px;
+  margin-right: 4px;
+
+  @media ${BREAKPOINTS.sm} {
+    padding: 4px 6px 2px 6px;
+    border-radius: 6px;
+    p { font-size: 8px }
+  }
+
+  @media ${BREAKPOINTS.md} {
+    p { font-size: 8px }
+  }
+`;
+
+export const ItemDetailLabel = styled(Typography)`
+  @media ${BREAKPOINTS.sm} {
+    font-size: 10px;
+  }
+
+  @media ${BREAKPOINTS.md} {
+    font-size: 10px;
+  }
+
+  @media ${BREAKPOINTS.xl} {
+    font-size: 10px;
+  }
+`;
+
+export const ItemDetailValue = styled(Typography)`
+  @media ${BREAKPOINTS.sm} {
+    font-size: 12px;
+  }
+
+  @media ${BREAKPOINTS.md} {
+    font-size: 12px;
+  }
+
+  @media ${BREAKPOINTS.xl} {
+    font-size: 12px;
+  }
+`;
+
+export const FlexiContainer = styled.div<{ justifyReversed?: boolean; }>`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: ${({ justifyReversed }) => justifyReversed ? 'flex-end' : 'flex-start'};
+  
+  > * { align-self: center; }
+
+  @media ${BREAKPOINTS['sm']} {
+    justify-content: ${({ justifyReversed }) => justifyReversed ? 'flex-start' : 'flex-end'};
+  }
 `;
 
 export const StyledTouchable = styled(TouchableView)`

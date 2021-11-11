@@ -11,12 +11,14 @@ import {
   getBuyerOrdersTransitActions,
   getBuyerOrdersDeliveredActions,
   sendDisputeActions,
+  sendOrderRatingActions
 } from 'store/actions';
 import {
   GetBuyerOrdersToShipPending,
   GetBuyerOrdersToShip,
   GetBuyerOrdersInTransit,
   GetBuyerOrdersDelivered,
+
 } from 'store/selectors/buyer/';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -236,12 +238,28 @@ const OrdersContainer = (): JSX.Element => {
       );
     }
   };
+
+  const isSendingOrderRating = useSelector(
+    (state: Store) => state.sendOrderRating.pending
+  )
+
+  const sendOrderRating = (orderId: string, rating: number, privateFeedback: string) => {
+    dispatch(
+      sendOrderRatingActions.request({
+        orderId,
+        privateFeedback,
+        rating
+      })
+    );
+  }
+
   const generatedProps: OrdersGeneratedProps = {
     pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
     toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
     inTransitOrders: groupByDate('estDeliveryDate')(inTransitOrders),
     completedOrders: groupByDate('deliveredDate')(completedOrders),
     getAllOrders,
+    getCompletedOrders: getOrders.delivered,
     toShipOrdersCount,
     completedOrdersCount,
     inTransitOrdersCount,
@@ -254,6 +272,8 @@ const OrdersContainer = (): JSX.Element => {
 
     isSendingDispute,
     sendDispute,
+    sendOrderRating,
+    isSendingOrderRating
   };
 
   return <OrdersView {...generatedProps} />;

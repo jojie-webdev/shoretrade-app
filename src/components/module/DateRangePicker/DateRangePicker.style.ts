@@ -90,13 +90,19 @@ export const Container = styled.div`
   }
 `;
 
-export const Dropdown = styled.div<{ disabled?: boolean }>`
-  background: ${({ theme, disabled }) =>
-    disabled ? theme.grey.shade3 : theme.grey.noshade};
-  padding: 12px;
-  border-radius: 4px;
+export const Dropdown = styled.div<{ 
+  disabled?: boolean;
+  border?: string;
+  background?: string;
+}>`
+  background: ${({ theme, background, disabled }) =>
+    disabled ? theme.grey.shade3 
+      : background ? background : theme.grey.noshade};
+  padding: 10px 12px;
+  border-radius: 12px;
   cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.grey.shade6};
+  border: ${({ border, theme }) => border ? border 
+    : `1px solid ${theme.grey.shade6}`};
 
   display: flex;
   flex: 1 0 auto;

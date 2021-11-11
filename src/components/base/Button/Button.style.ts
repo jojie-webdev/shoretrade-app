@@ -79,6 +79,16 @@ export const ButtonContainer = styled.button<
   p {
     line-height: 100%;
   }
+
+  p:after {
+    content: '${({ text }) => text}';
+  }
+
+  @media ${BREAKPOINTS.sm} {
+    p:after {
+      content: '${({ shortenedText, text }) => shortenedText ? shortenedText : text}';
+    }
+  }
 `;
 
 export const LoadingContainer = styled.div`
@@ -95,7 +105,7 @@ export const IconContainer = styled.div<{
   display: flex;
   align-items: center;
   margin-left: ${(props) =>
-    props.hasText && props.iconPosition === 'after' ? '8px' : '0'};
+    props.hasText && props.iconPosition === 'after' ? '5px' : '0'};
   margin-right: ${(props) =>
-    props.hasText && props.iconPosition === 'before' ? '8px' : '0'};
+    props.hasText && props.iconPosition === 'before' ? '5px' : '0'};
 `;

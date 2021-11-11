@@ -83,7 +83,7 @@ export type GetBuyerOrdersResponseItem = {
   }[];
   orderRefNumber: number;
   originalExpectedDeliveryDate: string; // yyyy-mm-dd
-  rating: string | null;
+  rating: number | null;
   ratingId: string | null;
   sellerCompanyId: string;
   sellerCompanyName: string;

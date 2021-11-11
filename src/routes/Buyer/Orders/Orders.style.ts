@@ -73,27 +73,28 @@ export const StyledAccordion = styled(AccordionView)`
 `;
 
 export const OrderBadge = styled.div`
-  padding: 8px 16px;
+  padding: 8px 8px 6px 8px;
   background: ${(props) => props.theme.grey.shade3};
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-right: 24px;
   white-space: nowrap;
-  width: 100px;
 
   p {
     line-height: 100%;
   }
 `;
 
-export const AccordionTitleContainer = styled.div`
+export const AccordionTitleContainer = styled.div<{
+  border?: string;
+}>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
-  .title {
-    margin-right: 4px;
+  .label {
+    margin-right: 10px;
   }
 `;

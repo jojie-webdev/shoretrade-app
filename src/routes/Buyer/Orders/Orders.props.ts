@@ -11,6 +11,8 @@ export interface OrderItem {
     orderNumber: string;
     seller: string;
     orderedBy: string;
+    rating: number | null;
+    ratingId: string | null;
     detailsProps: {
       uri: string;
       name: string;
@@ -25,6 +27,7 @@ export interface OrderItem {
       vendor: string;
       cBorderRadius: string;
       cBorderWidth: string;
+      pricePerUnit: string;
     }[];
     shippingOption: string;
     shippingPrice: string;
@@ -70,6 +73,7 @@ export interface OrdersGeneratedProps {
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;
   getAllOrders: () => void;
+  getCompletedOrders: () => void;
   toShipOrdersCount: string;
   completedOrdersCount: string;
   inTransitOrdersCount: string;
@@ -86,7 +90,9 @@ export interface OrdersGeneratedProps {
   token: string;
 
   sendDispute: (orderId: string, message: string) => void;
+  sendOrderRating: (orderId: string, rating: number, privateFeedback: string) => void;
   isSendingDispute: boolean;
+  isSendingOrderRating: boolean | null;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';
