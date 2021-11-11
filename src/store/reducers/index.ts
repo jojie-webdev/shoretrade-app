@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
+import sendOrderRating from './sendOrderRating';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -119,6 +120,7 @@ export default (routeHistory: History) =>
         /* PLOP_INJECT_INSTANCE */
         getHistoricalListings,
         globalModal,
+        sendOrderRating,
         removeCartItem,
         addCartItem,
         getCart,

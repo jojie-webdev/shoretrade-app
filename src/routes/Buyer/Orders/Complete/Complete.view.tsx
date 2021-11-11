@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 
 import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -6,8 +6,8 @@ import EmptyState from 'components/module/EmptyState';
 import MessageModal from 'components/module/MessageModal';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
+import RateSellerModal from 'components/module/RateSellerModal';
 import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
-import moment from 'moment-timezone';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router';
@@ -30,6 +30,9 @@ const Complete = (props: OrdersGeneratedProps) => {
     filters,
     isSendingDispute,
     sendDispute,
+    getCompletedOrders,
+    sendOrderRating,
+    isSendingOrderRating
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -48,8 +51,35 @@ const Complete = (props: OrdersGeneratedProps) => {
     }
   );
 
+  const [rateSellerModal, updateRateSellerModal] = useReducer(
+    createUpdateReducer<{
+      orderId: string;
+      isOpen: boolean;
+    }>(),
+    {
+      orderId: '',
+      isOpen: false,
+    }
+  );
+
+  useEffect(() => {
+    if (isSendingOrderRating == false && rateSellerModal.isOpen) {
+      updateRateSellerModal({ isOpen: false, orderId: '' })
+      getCompletedOrders()
+    }
+  }, [isSendingOrderRating])
+
   return (
     <>
+      <RateSellerModal 
+        loading={isSendingOrderRating || false}
+        isOpen={rateSellerModal.isOpen}
+        onClickClose={() => updateRateSellerModal({ isOpen: false })}
+        backgroundColor={theme.grey.noshade}
+        sendReview={(rating, feedback) => {
+          sendOrderRating(rateSellerModal.orderId, rating, feedback)
+        }}
+      />
       <MessageModal
         isOpen={isSendingDispute || disputeModal.isOpen}
         recipient="Raise Dispute"
@@ -78,16 +108,19 @@ const Complete = (props: OrdersGeneratedProps) => {
           <StyledAccordion
             key={key}
             title={''}
-            padding="24px"
+            headerBorder={`1px solid ${theme.grey.shade3}`}
+            contentBorder={`1px solid ${theme.grey.shade3}`}
+            padding="20px 24px"
+            innerContentPadding="8px 24px"
             marginBottom="16px"
             keepIcon
             iconColor={theme.brand.primary}
             leftComponent={
               <AccordionTitleContainer>
-                <Typography color="shade7" className="title">
+                <Typography color="shade6" className="label" weight="400">
                   Date Delivered:
                 </Typography>
-                <Typography color="shade9">{key}</Typography>
+                <Typography color="shade9" className="labelBold">{key}</Typography>
               </AccordionTitleContainer>
             }
             rightComponent={
@@ -110,6 +143,7 @@ const Complete = (props: OrdersGeneratedProps) => {
                 }}
                 deliveredDate={d.deliveredDate}
                 completedOrder
+                onRateClick={() => !d.data.rating && updateRateSellerModal({ isOpen: true, orderId: d.id }) }
               />
             ))}
           </StyledAccordion>

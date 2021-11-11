@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+import { SendOrderRatingMeta, SendOrderRatingPayload } from './SendOrderRatingState';
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import { GenericResponse } from 'types/GenericResponse';
@@ -291,6 +292,7 @@ export interface Store {
     GetHistoricalListingsMeta,
     GetHistoricalListingsPayload
   >;
+  sendOrderRating: AsyncState<SendOrderRatingMeta, SendOrderRatingPayload>;
   globalModal: GlobalModalState;
   removeCartItem: AsyncState<RemoveCartItemMeta, RemoveCartItemPayload>;
   addCartItem: AsyncState<AddCartItemMeta, AddCartItemPayload>;

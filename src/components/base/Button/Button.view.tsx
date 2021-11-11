@@ -69,6 +69,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       iconPosition={iconPosition}
       takeFullWidth={takeFullWidth}
       disabled={disabled || loading}
+      text={text}
       {...buttonProps}
     >
       {icon && iconPosition === 'before' && (
@@ -82,8 +83,9 @@ const Button = (props: ButtonProps): JSX.Element => {
           variant={props.textVariant || textVariant}
           color={defaultTextColor}
           weight={props.textWeight || textWeight}
+          style={{ marginTop: '2px' }}
         >
-          {text}
+          {/* Added in CSS */}
         </Typography>
       )}
 

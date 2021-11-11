@@ -38,7 +38,7 @@ const styles: Record<Variants, string> = {
     `,
   label: `
         font-size: ${pxToRem(14)};
-        line-height: 24px;
+        line-height: 20px;
     `,
   caption: `
         font-size: ${pxToRem(12)};

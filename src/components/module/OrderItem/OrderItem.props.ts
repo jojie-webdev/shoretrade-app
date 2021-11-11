@@ -8,6 +8,7 @@ export interface OrderItemProps extends OrderItem {
   onClick?: MouseEventHandler<any>;
   completedOrder?: boolean;
   validity?: string;
+  onRateClick?: MouseEventHandler<any>;
 }
 
 export interface OrderItem {
@@ -18,6 +19,8 @@ export interface OrderItem {
     orderNumber: string;
     seller: string;
     orderedBy: string;
+    rating: number | null;
+    ratingId: string | null;
     detailsProps: {
       uri: string;
       name: string;
@@ -32,6 +35,7 @@ export interface OrderItem {
       vendor: string;
       cBorderRadius: string;
       cBorderWidth: string;
+      pricePerUnit: string;
     }[];
     shippingOption: string;
     shippingPrice: string;

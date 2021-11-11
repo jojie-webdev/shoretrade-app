@@ -28,7 +28,7 @@ export const theme: Theme = {
     shade8: '#111E2B',
     shade9: '#09131D',
     shade10: '#050E16',
-    noshade: '#FFFFFF',
+    noshade: '#FFFFFF'
   },
   states: {
     hover: '#F96F43',

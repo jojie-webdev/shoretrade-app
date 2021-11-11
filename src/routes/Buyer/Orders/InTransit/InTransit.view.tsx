@@ -51,7 +51,10 @@ const InTransit = (props: OrdersGeneratedProps) => {
           <StyledAccordion
             key={key}
             title={''}
-            padding="24px"
+            headerBorder={`1px solid ${theme.grey.shade3}`}
+            contentBorder={`1px solid ${theme.grey.shade3}`}
+            padding="20px 24px"
+            innerContentPadding="8px 24px"
             marginBottom="16px"
             keepIcon
             iconColor={theme.brand.primary}

@@ -11,18 +11,22 @@ type statuses =
   | 'PAYMENT_MISSED'
   | 'DECLINED'
   | 'NO_OFFERS'
+  | 'COUNTER_OFFER'
+  | 'LOST'
   | 'PAYMENT_REQUIRED';
 
 const text: Record<statuses, string> = {
   NEGOTIATION: 'In Negotiation',
   NEW_OFFER: 'New Offer',
-  PENDING_PAYMENT: 'Pending Payment',
+  PENDING_PAYMENT: "Pending Buyer's Payment",
   CLOSED: 'Closed',
   FINALISED: 'Finalised',
   PAYMENT_MISSED: 'Payment Missed',
   DECLINED: 'Declined',
   PAYMENT_REQUIRED: 'Payment Required',
   NO_OFFERS: 'No Offers',
+  COUNTER_OFFER: 'Counter Offer',
+  LOST: 'Lost'
 };
 
 const descriptions: Record<statuses, string> = {
@@ -39,6 +43,9 @@ const descriptions: Record<statuses, string> = {
   NO_OFFERS: '',
   PAYMENT_REQUIRED:
     'Please process the payment within the remaining time. This offer will atuomatically close if payment is not received.',
+  COUNTER_OFFER:
+    'Review the offer details and Negotiate or Accept the offer to proceed.',
+  LOST: 'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.'
 };
 
 type types =
@@ -109,10 +116,10 @@ export const transformMarketRequestStatusText = (
   if (statusText === 'Counter Offer') {
     return {
       text: 'Counter Offer',
-      description: 'Your offer is being reviewed by the Seller.',
-      tagColor: 'alert',
+      description: descriptions.COUNTER_OFFER,
+      tagColor: 'noshade',
       variantColor: 'alert',
-      badgeColor: '#fffff4',
+      badgeColor: theme.brand.alert,
     };
   }
 
@@ -158,15 +165,15 @@ export const transformMarketRequestStatusText = (
     };
   }
 
-  if (statusText === 'Pending Payment' || statusText === 'Payment Required') {
+  if (statusText === 'Pending Payment' || statusText === text.PENDING_PAYMENT) {
     if (isSeller) {
       return {
         text: text.PENDING_PAYMENT,
         description:
           'The Buyer needs to process the payment for the accepted offer. ',
-        tagColor: 'warning',
+        tagColor: 'noshade',
         variantColor: 'warning',
-        badgeColor: '#FFF7F2',
+        badgeColor: theme.brand.warning,
       };
     }
 
@@ -179,7 +186,7 @@ export const transformMarketRequestStatusText = (
     };
   }
 
-  if (statusText === 'Payment Missed' || statusText === 'LOST') {
+  if (statusText === 'Payment Missed' || statusText === text.LOST) {
     if (isSeller) {
       return {
         text: 'Lost',

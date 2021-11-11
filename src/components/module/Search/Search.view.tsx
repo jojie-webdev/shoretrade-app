@@ -11,7 +11,7 @@ const Search = (props: SearchProps): JSX.Element => {
 
   return (
     <InputContainer style={style} className={className} rounded={rounded}>
-      <SearchSVG height={16} width={16} />
+      <SearchSVG height={16} width={16} fill={theme.grey.shade7}/>
       <input type="text" {...inputProps} value={value} />
       {resetValue && (
         <div onClick={resetValue} className="close-svg-container">

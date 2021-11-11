@@ -20,6 +20,7 @@ import {
   DateRangeContainer,
 } from './Orders.style';
 import Pending from './Pending/Pending.view';
+import theme from 'utils/Theme';
 
 const PENDING = 'Pending';
 const IN_TRANSIT = 'In Transit';
@@ -152,14 +153,16 @@ const OrdersView = (props: OrdersGeneratedProps) => {
             }}
             placeholder={
               isMobile
-                ? 'Order#, product type or seller...'
-                : 'Search by order#, product type or seller...'
+                ? 'Order#, product type, seller..'
+                : 'Search by order#, product type, seller..'
             }
             rounded
           />
         </SearchContainer>
         <DateRangeContainer>
           <DateRangePicker
+            background={theme.grey.shade3}
+            border="none"
             startDate={currentFilter.dateFrom}
             endDate={currentFilter.dateTo}
             onDatesChange={(val) => fromOnDatesChange(val)}

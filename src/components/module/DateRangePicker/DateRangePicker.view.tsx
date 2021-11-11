@@ -35,6 +35,8 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
     endDate,
     startDate,
     onClear,
+    background,
+    border
   } = props;
 
   const theme = useTheme();
@@ -98,25 +100,27 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
           }}
           disabled={disabled}
           style={disabled ? { pointerEvents: 'none' } : {}}
+          border={border}
+          background={background}
         >
           <div className="left-content">
             {startDate && !endDate && (
-              <DateTypography variant="caption" color="shade7">
-                <Calendar width={16.67} height={16.67} />
+              <DateTypography variant="label" color="shade9" weight="400">
+                <Calendar width={16.67} height={16.67} fill={theme.grey.shade7}/>
                 {startDate.format(format)}
               </DateTypography>
             )}
             {startDate && endDate && (
-              <DateTypography variant="caption" color="shade7">
+              <DateTypography variant="label" color="shade9" weight="400">
                 <Calendar width={16.67} height={16.67} />
                 {startDate.format(format)}&nbsp; <Minus />
                 {endDate.format(format)}
               </DateTypography>
             )}
             {!startDate && !endDate && (
-              <DateTypography variant="caption" color="shade7">
+              <DateTypography variant="label" color="shade9" weight="400">
                 <Calendar width={16.67} height={16.67} />
-                <AllTextTypography>All</AllTextTypography>
+                <AllTextTypography variant="label" color="shade9" weight="400">All</AllTextTypography>
               </DateTypography>
             )}
           </div>

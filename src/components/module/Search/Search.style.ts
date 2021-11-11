@@ -3,10 +3,10 @@ import styled from 'utils/styled';
 
 export const InputContainer = styled.div<{ rounded?: boolean }>`
   background: ${(props) => props.theme.grey.noshade};
-  border: ${(props) => `1px solid ${props.theme.grey.shade5}`};
+  border: ${(props) => `1px solid ${props.theme.grey.shade6}`};
   border-radius: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
-      ? '12px'
+      ? '10px 12px'
       : props.theme.appType === 'buyer'
         ? '4px'
         : '12px'};
@@ -34,7 +34,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     border: 0;
     margin: 0 10px;
     height: 100%;
-
+    font-weight: normal;
     :focus {
       outline: none;
       border: none;

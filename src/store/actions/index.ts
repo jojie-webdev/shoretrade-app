@@ -1,5 +1,6 @@
 /* PLOP_INJECT_IMPORT */
 export { default as getHistoricalListingsActions } from './getHistoricalListings';
+export { default as sendOrderRatingActions } from './sendOrderRating';
 export { default as globalModalActions } from './globalModal';
 export { default as removeCartItemActions } from './removeCartItem';
 export { default as addCartItemActions } from './addCartItem';

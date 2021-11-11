@@ -255,7 +255,7 @@ export const Content = styled.div<{
             : props.theme.grey.shade8};
         border-radius: 8px;
         border: ${({ theme }) => {
-          return `2px solid ${
+          return `1px solid ${
             theme.appType === 'seller' ? 'transparent' : theme.grey.shade3
           }`;
         }};

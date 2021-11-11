@@ -15,6 +15,7 @@ import {
   shipmentModeToDeliveryMethod,
   shipmentModeToString,
 } from 'utils/String/toShipmentDateString';
+import { useTheme } from 'utils/Theme';
 
 import Divider from '../Divider';
 import Typography from '../Typography';
@@ -23,6 +24,7 @@ import { Container } from './TotalCard.style';
 
 const TotalCard = (props: TotalCardProps): JSX.Element => {
   const { removeCredits } = props;
+  const theme = useTheme();
 
   const getUser = useSelector((state: Store) => state.getUser);
   const cart = useSelector((store: Store) => store.cart) || {};
@@ -143,7 +145,7 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
       <div
         style={{
           borderRadius: '16px',
-          border: '1px solid #E5E8F5',
+          border: `1px solid ${theme.grey.shade3}`,
           padding: '20px',
           backgroundColor: '#fff',
         }}

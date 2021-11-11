@@ -50,27 +50,34 @@ export const transformOrder = (
       orderNumber: formatOrderReferenceNumber(orderItem.orderRefNumber),
       seller: orderItem.sellerCompanyName,
       orderedBy: `${orderItem.buyerEmployeeFirstName} ${orderItem.buyerEmployeeLastName}`,
-      detailsProps: orderItem.orderLineItem.map((lineItem) => ({
-        uri: lineItem.listing.images[0],
-        name: lineItem.listing.typeName,
-        price: toPrice(lineItem.price),
-        tags: lineItem.listing.specifications.map((label) => ({ label })),
-        weight: lineItem.listingBoxes
-          .reduce((accum, current) => {
-            return accum + current.quantity * current.weight;
-          }, 0)
-          .toFixed(2),
-        unit: formatMeasurementUnit(lineItem.listing.measurementUnit),
-        size: sizeToString(
-          lineItem.listing.metricLabel,
-          lineItem.listing.sizeFrom,
-          lineItem.listing.sizeTo
-        ),
-        location: lineItem.listing.origin.suburb,
-        vendor: orderItem.sellerCompanyName,
-        cBorderRadius: '0',
-        cBorderWidth: '0',
-      })),
+      rating: orderItem.rating,
+      ratingId: orderItem.ratingId,
+      detailsProps: orderItem.orderLineItem.map((lineItem) => { 
+        const unit = formatMeasurementUnit(lineItem.listing.measurementUnit)
+
+        return {
+          uri: lineItem.listing.images[0],
+          name: lineItem.listing.typeName,
+          price: toPrice(lineItem.price),
+          tags: lineItem.listing.specifications.map((label) => ({ label })),
+          weight: lineItem.listingBoxes
+            .reduce((accum, current) => {
+              return accum + current.quantity * current.weight;
+            }, 0)
+            .toFixed(2) + ` ${unit}`,
+          unit,
+          size: sizeToString(
+            lineItem.listing.metricLabel,
+            lineItem.listing.sizeFrom,
+            lineItem.listing.sizeTo
+          ),
+          location: lineItem.listing.origin.suburb,
+          vendor: orderItem.sellerCompanyName,
+          cBorderRadius: '0',
+          cBorderWidth: '0',
+          pricePerUnit: toPrice(lineItem.listing.pricePerKilo)
+        }
+      }),
       shippingOption: getShipmentOptionString(
         orderItem.deliveryMethod,
         orderItem.deliveryOption,

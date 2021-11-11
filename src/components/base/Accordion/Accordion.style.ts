@@ -1,6 +1,7 @@
 import styled from 'utils/styled';
 
 import Interactions from '../Interactions';
+import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const Container = styled.div<{
   isOpen?: boolean;
@@ -28,17 +29,17 @@ export const Content = styled.div<{
 }>`
   width: 100%;
   overflow: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  padding: ${({ sameWidth, isOpen }) => {
+  padding: ${({ sameWidth, isOpen, padding }) => {
     if (!isOpen) {
       return '0';
     }
-    return sameWidth ? '0' : '16px';
+    return sameWidth ? '0' : padding ? padding : '16px';
   }};
-  padding-top: ${({ withBackground, isOpen }) => {
+  padding-top: ${({ withBackground, isOpen, padding }) => {
     if (!isOpen) {
       return '0';
     }
-    return withBackground ? '0' : '16px';
+    return withBackground ? '0' : padding ? padding : '16px';
   }};
   height: ${(props) => (props.isOpen ? '100%' : '0')};
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
@@ -48,18 +49,27 @@ export const Content = styled.div<{
     //   border: ${({ theme }) => `1px solid ${theme.grey.shade3}`};
     //   margin: 0px 24px;
     // }
+  @media ${BREAKPOINTS['sm']} {
+    padding: ${({ sameWidth, isOpen }) => {
+      if (!isOpen) {
+        return '0';
+      }
+      return sameWidth ? '0' : '8px 0';
+    }};
   }
 `;
 
 export const StyledInteractions = styled(Interactions)<{
   sameWidth?: boolean;
   isOpen?: boolean;
+  border?: string;
 }>`
   transition: all 0.25s ease-in-out;
   border-radius: ${({ sameWidth, isOpen }) => {
     if (!isOpen) {
-      return '8px';
+      return '12px';
     }
-    return sameWidth ? '8px 8px 0px 0px' : '8px';
+    return sameWidth ? '12px 12px 0px 0px' : '12px';
   }};
+  border: ${({ border }) => border ? border : 'none'};
 `;
