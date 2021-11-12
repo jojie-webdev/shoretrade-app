@@ -26,7 +26,7 @@ const text: Record<statuses, string> = {
   PAYMENT_REQUIRED: 'Payment Required',
   NO_OFFERS: 'No Offers',
   COUNTER_OFFER: 'Counter Offer',
-  LOST: 'Lost'
+  LOST: 'Lost',
 };
 
 const descriptions: Record<statuses, string> = {
@@ -45,7 +45,8 @@ const descriptions: Record<statuses, string> = {
     'Please process the payment within the remaining time. This offer will atuomatically close if payment is not received.',
   COUNTER_OFFER:
     'Review the offer details and Negotiate or Accept the offer to proceed.',
-  LOST: 'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.'
+  LOST:
+    'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.',
 };
 
 type types =
@@ -236,8 +237,9 @@ export const transformMarketRequestStatusText = (
     return {
       text: text.DECLINED,
       description: descriptions.DECLINED,
-      tagColor: 'error',
+      tagColor: 'noshade',
       variantColor: 'error',
+      badgeColor: theme.brand.error,
     };
   }
   return {

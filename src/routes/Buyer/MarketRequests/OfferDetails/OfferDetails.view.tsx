@@ -187,12 +187,27 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     [`${selectedOffer.orderRefNumber}`]
   );
 
-  const withTimer = () => (
-    <>
-      {mrStatusProps.description}
-      <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
-    </>
-  );
+  const AlertContent = (props: { text: string; description: string }) => {
+    if (props.text === 'Finalised') {
+      return (
+        <span
+          onClick={() => history.replace(BUYER_ROUTES.ORDERS)}
+          style={{ cursor: 'pointer' }}
+        >
+          {props.description}
+        </span>
+      );
+    }
+    if (props.text === 'Payment Required') {
+      return (
+        <>
+          {props.description}
+          <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
+        </>
+      );
+    }
+    return <>{props.description}</>;
+  };
 
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
@@ -200,9 +215,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         <AlertsContainer>
           <Alert
             content={
-              mrStatusProps.text === 'Payment Required'
-                ? withTimer()
-                : mrStatusProps.description
+              <AlertContent
+                text={mrStatusProps.text}
+                description={mrStatusProps.description}
+              />
             }
             header={mrStatusProps.text}
             variant={mrStatusProps.variantColor || 'info'}
