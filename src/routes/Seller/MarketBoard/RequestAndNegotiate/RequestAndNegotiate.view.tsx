@@ -11,6 +11,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
+import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
@@ -415,16 +416,50 @@ const Step1 = ({
   };
 
   const isGoodToDisplayAlert = () => {
-    const isGoodToDisplayAlert = isMyActiveOffersTab() && statusTextProps.text !== '';
+    const isGoodToDisplayAlert =
+      isMyActiveOffersTab() && statusTextProps.text !== '';
     return isGoodToDisplayAlert;
   };
 
+  const AlertContent = (props: { text: string; description: string }) => {
+    if (props.text === 'Finalised') {
+      return (
+        <span
+          onClick={() => history.replace(SELLER_ROUTES.SOLD)}
+          style={{ cursor: 'pointer' }}
+        >
+          <Typography
+            component={'span'}
+            variant="body"
+            color="shade6"
+            weight="400"
+          >
+            {props.description}
+          </Typography>
+        </span>
+      );
+    }
+    // if (props.text === 'Payment Required') {
+    //   return (
+    //     <>
+    //       {props.description}
+    //       <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
+    //     </>
+    //   );
+    // }
+    return <>{props.description}</>;
+  };
   return (
     <>
       {isGoodToDisplayAlert() && (
         <>
           <Alert
-            content={statusTextProps.description}
+            content={
+              <AlertContent
+                text={statusTextProps.text}
+                description={statusTextProps.description}
+              />
+            }
             header={statusTextProps.text}
             variant={statusTextProps.variantColor || 'info'}
             color={statusTextProps.tagColor}
