@@ -16,7 +16,7 @@ import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Hidden } from 'react-grid-system';
+import { Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { AnimatedSwordfish } from 'res/images/animated/swordfish';
 
@@ -119,6 +119,9 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             />
           )}
           <TitleContainer>
+            <Visible xs sm>
+              {stepCountComponent}
+            </Visible>
             <Typography
               variant="title5"
               weight="500"

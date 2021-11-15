@@ -9,7 +9,7 @@ import { ArrowRight, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import { Row, Hidden } from 'react-grid-system';
+import { Row, Hidden, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -179,6 +179,9 @@ const SummaryView = (props: SummaryProps) => {
             />
           </Hidden>
           <TitleContainer>
+            <Visible xs sm>
+              {stepCountComponent}
+            </Visible>
             <Typography
               variant="title5"
               weight="500"

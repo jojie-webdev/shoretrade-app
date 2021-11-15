@@ -11,7 +11,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { SIZE_METRICS } from 'consts/sizeMetrics';
 import { pathOr } from 'ramda';
-import { Row, Col, Hidden } from 'react-grid-system';
+import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import theme from 'utils/Theme';
 
 import {
@@ -278,6 +278,9 @@ const SelectSizeView = (props: SelectSizeProps) => {
             />
           </Hidden>
           <TitleContainer>
+            <Visible xs sm>
+              {stepCountComponent}
+            </Visible>
             <Typography
               variant="title5"
               weight="500"

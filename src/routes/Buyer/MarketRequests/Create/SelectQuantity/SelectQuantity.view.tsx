@@ -4,11 +4,10 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { ArrowLeft, ChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
-import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
-import { Hidden } from 'react-grid-system';
+import { Hidden, Visible } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
@@ -102,6 +101,9 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             />
           </Hidden>
           <TitleContainer>
+            <Visible xs sm>
+              {stepCountComponent}
+            </Visible>
             <Typography
               variant="title5"
               weight="500"
@@ -137,9 +139,9 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
                 }
               }}
               LeftComponent={
-                <TypographyView variant="label" color="shade6">
+                <Typography variant="label" color="shade6">
                   {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                </TypographyView>
+                </Typography>
               }
             />
             <StyledTextField
@@ -161,9 +163,9 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
               }}
               min={1}
               LeftComponent={
-                <TypographyView variant="label" color="shade6">
+                <Typography variant="label" color="shade6">
                   {formatMeasurementUnit(listingFormData?.measurementUnit)}
-                </TypographyView>
+                </Typography>
               }
             />
             <Hidden xs>

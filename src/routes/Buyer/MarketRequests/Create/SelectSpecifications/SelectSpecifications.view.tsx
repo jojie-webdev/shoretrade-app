@@ -210,6 +210,9 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             />
           </Hidden>
           <TitleContainer>
+            <Visible xs sm>
+              {stepCountComponent}
+            </Visible>
             <StyledTitle
               variant="title5"
               weight="500"

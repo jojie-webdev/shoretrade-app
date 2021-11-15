@@ -132,4 +132,10 @@ export const ThirdItemContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  .sup-text-2 {
+    color: ${({ theme }) => theme.grey.shade6};
+    font-weight: normal;
+    font-size: 23px;
+    margin-right: 5px;
+  }
 `;
