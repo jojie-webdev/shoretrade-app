@@ -103,6 +103,7 @@ export const BoxSummaryContainer = styled.div`
   border-radius: 8px;
   padding: 16px 24px;
   width: 100%;
+  margin-top: 8px;
 
   @media ${BREAKPOINTS['sm']} {
     margin-bottom: 24px;

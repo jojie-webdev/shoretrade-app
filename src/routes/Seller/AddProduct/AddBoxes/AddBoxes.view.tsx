@@ -49,7 +49,7 @@ export const BoxDetails = ({
       <div className="texts">
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            {`${unit} per Box`}
+            Weight
           </Typography>
           <Typography color="noshade" variant="copy">
             {weight.toFixed(2)} {unit}
@@ -57,7 +57,7 @@ export const BoxDetails = ({
         </div>
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            Qty
+            QTY
           </Typography>
           <Typography color="noshade" variant="copy">
             {quantity}
@@ -65,10 +65,10 @@ export const BoxDetails = ({
         </div>
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            Count per box
+            Count
           </Typography>
           <Typography color="noshade" variant="copy">
-            {count}
+            {count || '\u00A0'}
           </Typography>
         </div>
       </div>
@@ -94,13 +94,18 @@ const BoxSummary = ({
   summary,
   unit,
 }: {
-  summary: { weights: number; quantities: number; counts: number };
+  summary: {
+    weights: number;
+    quantities: number;
+    counts: number;
+    average: number;
+  };
   unit: string;
 }) => (
   <BoxSummaryContainer>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Total {unit}
+        Total Weight
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.weights.toFixed(2)} {unit}
@@ -108,7 +113,7 @@ const BoxSummary = ({
     </div>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Total Quantity
+        Total QTY
       </Typography>
       <Typography color="noshade" variant="copy">
         {summary.quantities}
@@ -116,10 +121,10 @@ const BoxSummary = ({
     </div>
     <div className="text-container">
       <Typography variant="overline" color="shade6" className="overline">
-        Total count per box
+        AVG Box Size
       </Typography>
       <Typography color="noshade" variant="copy">
-        {summary.counts}
+        {summary.average.toFixed(2)}
       </Typography>
     </div>
   </BoxSummaryContainer>
@@ -153,9 +158,10 @@ const AddBoxInputs = ({
     <AddBoxRow>
       <div className="add-box-col">
         <TextField
+          borderRadius="12px"
           type="number"
           inputType="decimal"
-          label={`${unit} per box`}
+          label={'Weight'}
           value={values.weight}
           onChangeText={(v) => {
             setValues({ ...values, weight: v });
@@ -167,9 +173,10 @@ const AddBoxInputs = ({
       </div>
       <div className="add-box-col qty-col">
         <TextField
+          borderRadius="12px"
           type="number"
           inputType="numeric"
-          label="Qty"
+          label="Quantity"
           value={values.quantity}
           onChangeText={(v) => {
             setValues({ ...values, quantity: v });
@@ -181,10 +188,11 @@ const AddBoxInputs = ({
       </div>
       <div className="add-box-col">
         <TextField
+          borderRadius="12px"
           type="number"
           inputType="numeric"
           readOnly={unit === 'portions'}
-          label="Count per box"
+          label="Count (Optional)"
           value={values.count}
           onChangeText={(v) => {
             setValues({ ...values, count: v });
@@ -270,20 +278,23 @@ const AddBoxes = ({
   const [showAlert, setShowAlert] = useState(false);
 
   const summary = boxes.reduce(
-    (computed, current) => {
-      const currentWeight = current.weight + computed.weights;
+    (computed, current, index) => {
+      const currentWeight =
+        current.weight * current.quantity + computed.weights;
       const currentQuantities = computed.quantities + current.quantity;
       const currentCounts = computed.counts + (current.count || 0);
       return {
         weights: currentWeight,
         quantities: currentQuantities,
         counts: currentCounts,
+        average: currentWeight / currentQuantities,
       };
     },
     {
       weights: 0,
       quantities: 0,
       counts: 0,
+      average: 0,
     }
   );
 
@@ -295,36 +306,20 @@ const AddBoxes = ({
 
   return (
     <Container>
-      <BoxSummary summary={summary} unit={measurementUnit} />
-
-      <Row>
-        {boxes.map((box, index) => (
-          <Col xs={12} key={box.id}>
-            <BoxDetails
-              {...box}
-              unit={measurementUnit}
-              onRemove={() => {
-                setBoxes(remove(index, 1, boxes));
-              }}
-            />
-          </Col>
-        ))}
-      </Row>
-
-      {showAlert && (
-        <div className="box-error-container">
-          <Alert
-            fullWidth
-            alignText="center"
-            variant="error"
-            content="Please include at least 1 box and set minimum order"
-          />
-        </div>
+      {!isMobile && (
+        <AddBoxInputs
+          values={values}
+          setValues={setValues}
+          boxes={boxes}
+          setBoxes={setBoxes}
+          unit={measurementUnit}
+        />
       )}
 
       <Row className="minimum-row" align="center">
         <Col xs={12} sm={6} xl={4}>
           <TextField
+            borderRadius="12px"
             inputType="decimal"
             className="text-field"
             label="Minimum Order"
@@ -347,6 +342,9 @@ const AddBoxes = ({
             checked={sellInMultiples}
             onClick={() => setSellInMultiples((s) => !s)}
             label="Sell in multiples of the minimum"
+            typographyProps={{
+              weight: 'normal',
+            }}
           />
           {/*<div className="tooltip">*/}
           {/*  <InfoFilled width={20} height={20} fill={theme.grey.shade5} />*/}
@@ -357,14 +355,31 @@ const AddBoxes = ({
         </Col>
       </Row>
 
-      {!isMobile && (
-        <AddBoxInputs
-          values={values}
-          setValues={setValues}
-          boxes={boxes}
-          setBoxes={setBoxes}
-          unit={measurementUnit}
-        />
+      <Row>
+        {boxes.map((box, index) => (
+          <Col xs={12} key={box.id}>
+            <BoxDetails
+              {...box}
+              unit={measurementUnit}
+              onRemove={() => {
+                setBoxes(remove(index, 1, boxes));
+              }}
+            />
+          </Col>
+        ))}
+      </Row>
+
+      <BoxSummary summary={summary} unit={measurementUnit} />
+
+      {showAlert && (
+        <div className="box-error-container">
+          <Alert
+            fullWidth
+            alignText="center"
+            variant="error"
+            content="Please include at least 1 box and set minimum order"
+          />
+        </div>
       )}
 
       {isBulkUpload && (
@@ -393,7 +408,7 @@ const AddBoxes = ({
       )}
 
       {!isMobile && (
-        <Row justify="start" style={{ padding: '0 15px' }}>
+        <Row justify="start" style={{ padding: '16px 15px 0px 15px' }}>
           <Button
             variant={'outline'}
             text="Back"
