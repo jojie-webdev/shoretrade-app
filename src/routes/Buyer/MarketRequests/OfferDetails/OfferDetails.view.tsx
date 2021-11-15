@@ -71,6 +71,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     counterOffer,
     newOffer,
     selectedOffer,
+    handlePayNow,
     seller,
     nego,
     closeOnAccept,
@@ -94,8 +95,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   } = props;
 
   const history = useHistory();
-  console.log(selectedOffer);
-
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
       <Typography variant="label" color="shade7" weight="900">
@@ -342,7 +341,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 <StyledAcceptButton
                   text="Pay Now"
                   icon={<Check width={10} height={9} />}
-                  onClick={() => handleAcceptOffer()}
+                  onClick={() => handlePayNow()}
                   disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                 />
               </div>

@@ -50,6 +50,10 @@ const OfferDetails = (): JSX.Element => {
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
   const [closeOnAccept, setCloseOnAccept] = useState(false);
 
+  const pendingConfirmOffer = useSelector(
+    (state: Store) => state.marketRequestOfferConfirm.pending
+  );
+
   const activeOffersData = useMemo(() => {
     if (activeOffers.data?.data.marketOffers) {
       return activeOffers.data?.data.marketOffers.filter(
@@ -101,9 +105,7 @@ const OfferDetails = (): JSX.Element => {
   ];
 
   const handleAcceptOffer = () => {
-    // history.push(BUYER_ROUTES.CHECKOUT);
     setShowPaymentMethod(true);
-
     const getMarketNegotiationId = () => {
       if (!selectedOffer?.negotiations) {
         return '';
@@ -125,12 +127,16 @@ const OfferDetails = (): JSX.Element => {
     const meta: OfferConfirm = {
       marketOfferId: selectedOffer?.id || '',
     };
-
+    handleAcceptOffer();
     dispatch(marketRequestOfferConfirmActions.request(meta));
   };
 
   const handleStartNegotiate = () => {
     setNegotiating(true);
+  };
+
+  const handlePayNow = () => {
+    handleAcceptOffer();
   };
 
   const onClickDelete = () => {
@@ -186,9 +192,8 @@ const OfferDetails = (): JSX.Element => {
       const splits = location.pathname.split('/');
       const offerId = splits[splits.length - 1];
       setOfferId(offerId);
-    } else {
-      setShowPaymentMethod(false);
     }
+    setShowPaymentMethod(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -212,6 +217,10 @@ const OfferDetails = (): JSX.Element => {
   }, [showPaymentMethod]);
 
   useEffect(() => {
+    setShowPaymentMethod(false);
+  }, []);
+
+  useEffect(() => {
     if (activeOffersData.length > 0) {
       let acceptedWeights = 0;
       activeOffersData.forEach((marketOffer) => {
@@ -224,12 +233,6 @@ const OfferDetails = (): JSX.Element => {
       setCountAcceptedWeight(acceptedWeights);
     }
   }, [activeOffersData]);
-
-  useEffect(() => {
-    if (confirmOffer.data) {
-      handleAcceptOffer();
-    }
-  }, [confirmOffer]);
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -319,7 +322,12 @@ const OfferDetails = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-  if (!selectedOffer || !filteredBuyerRequest || !offerMR) {
+  if (
+    !selectedOffer ||
+    !filteredBuyerRequest ||
+    !offerMR ||
+    pendingConfirmOffer
+  ) {
     return <Loading />;
   }
 
@@ -352,6 +360,7 @@ const OfferDetails = (): JSX.Element => {
     handleConfirmOffer,
     isLoadingConfirmOffer: confirmOffer.pending || false,
     isLoadingNegotiate: marketRequestNegotiateOfferPending || false,
+    handlePayNow,
   };
 
   const getPrice = () => {

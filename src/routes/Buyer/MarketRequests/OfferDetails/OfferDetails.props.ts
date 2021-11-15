@@ -63,4 +63,5 @@ export interface OfferDetailsProps {
   isLoadingConfirmOffer: boolean;
   isLoadingOffer: boolean;
   isLoadingNegotiate: boolean;
+  handlePayNow: () => void;
 }

@@ -352,7 +352,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           <StyledTotalCardColumn lg={4}>
             <TotalCard
               totalOrderValue={props.totalValue}
-              removeCredits={paymentMethod === 'card'}
+              removeCredits={paymentMethod !== 'account'}
             />
           </StyledTotalCardColumn>
         )}
