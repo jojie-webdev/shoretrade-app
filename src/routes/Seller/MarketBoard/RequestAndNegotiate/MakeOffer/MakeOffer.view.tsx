@@ -408,7 +408,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Typography weight="900" variant="title3" color="noshade">
               <sup className="sup-text-2">$</sup>
               {toPrice(
-                parseFloat(props?.weight) || 0 * parseFloat(props?.price) || 0
+                parseFloat(props?.weight || '0') *
+                  parseFloat(props?.price || '0')
               ).replace('$', '')}
             </Typography>
           </div>

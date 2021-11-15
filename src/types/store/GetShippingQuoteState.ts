@@ -61,6 +61,8 @@ export type GetShippingQuoteResponseItem = {
     locationName: string;
     estimatedDate: string;
     subAddress?: string;
+    sellerAddress?: string;
+    marketAddress?: string;
   }[];
 };
 

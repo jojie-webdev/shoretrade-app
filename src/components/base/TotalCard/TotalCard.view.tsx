@@ -14,6 +14,7 @@ import {
   serviceNameToString,
   shipmentModeToDeliveryMethod,
   shipmentModeToString,
+  CLICK_AND_COLLECT_SERVICE,
 } from 'utils/String/toShipmentDateString';
 import { useTheme } from 'utils/Theme';
 
@@ -64,10 +65,10 @@ const TotalCard = (props: TotalCardProps): JSX.Element => {
               id: data.id,
               priceId: data.priceId,
               name:
-                data.serviceName === 'CLICK AND COLLECT'
+                data.serviceName === CLICK_AND_COLLECT_SERVICE
                   ? `${serviceName} ${clickAndCollectAddress}`
                   : `${shipmentMode} ${serviceName}`,
-              ...(data.serviceName === 'CLICK AND COLLECT'
+              ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
                 ? { secondName: clickAndCollectAddress2 }
                 : {}),
               price: toPrice(data.grossPrice, false),

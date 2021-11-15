@@ -365,7 +365,7 @@ const OfferDetails = (): JSX.Element => {
   if (showPaymentMethod) {
     return (
       <PaymentMethod
-        totalValue={getPrice() * (selectedOffer?.weight || 0) || 0}
+        totalValue={getPrice() * (selectedOffer?.weight || 0)}
         orderError={''}
         selectedShipping={{}}
         placeOrder={() => {}}

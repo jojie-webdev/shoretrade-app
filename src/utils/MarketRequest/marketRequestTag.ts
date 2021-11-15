@@ -118,7 +118,7 @@ export const transformMarketRequestStatusText = (
     return {
       text: 'Counter Offer',
       description: descriptions.COUNTER_OFFER,
-      tagColor: 'noshade',
+      tagColor: 'shade10',
       variantColor: 'alert',
       badgeColor: theme.brand.alert,
     };
@@ -166,7 +166,10 @@ export const transformMarketRequestStatusText = (
     };
   }
 
-  if (statusText === 'Pending Payment' || statusText === text.PENDING_PAYMENT) {
+  if (
+    statusText === text.PAYMENT_REQUIRED ||
+    statusText === text.PENDING_PAYMENT
+  ) {
     if (isSeller) {
       return {
         text: text.PENDING_PAYMENT,
