@@ -29,7 +29,7 @@ const RateSellerModal = (props: RateSellerModalProps): JSX.Element => {
         Rate Seller
       </Typography>
       <Typography variant="overline" color="shade6" style={{ fontFamily: 'Basis Grotesque Pro', marginTop: '20px' }}>
-        Leave a Rate
+        Rate the quality of the products you received out of 5 stars
       </Typography>
       <StarRating
         editable={true}
@@ -50,14 +50,14 @@ const RateSellerModal = (props: RateSellerModalProps): JSX.Element => {
         style={{ borderRadius: '12px', border: `1px solid ${theme.grey.shade6}`, fontWeight: 'lighter' }}
       />
       <Typography variant="label" color="shade7" style={{ fontFamily: 'Basis Grotesque Pro' }}>
-        *The private feedback will be sent only to ShoreTrade Administrators for review purposes. Seller will only know your review from 1 to 5.
+        *The private feedback will be sent only to ShoreTrade Administrators for review purposes.
       </Typography>
       <Button
         loading={props.loading}
         disabled={!rating}
         variant="primary"
         textVariant="overline"
-        text="Send Review"
+        text="Send Feedback"
         size="md"
         textWeight="900"
         style={{ borderRadius: '12px', marginTop: '20px' }}
