@@ -269,7 +269,8 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           </Typography>
 
           <Typography color="noshade" variant="title3">
-            {toPrice(properOffer.price * properOffer.weight)}
+            <sup className="sup-text-2">$</sup>
+            {toPrice(properOffer?.weight * properOffer?.price).replace('$', '')}
           </Typography>
         </ThirdItemContainer>
       </SummaryContentContainer>
