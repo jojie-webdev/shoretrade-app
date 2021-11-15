@@ -460,7 +460,7 @@ const Step1 = ({
                 description={statusTextProps.description}
               />
             }
-            header={statusTextProps.text}
+            header={statusTextProps.alertTitle}
             variant={statusTextProps.variantColor || 'info'}
             color={statusTextProps.tagColor}
             fullWidth

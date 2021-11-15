@@ -219,7 +219,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 description={mrStatusProps.description}
               />
             }
-            header={mrStatusProps.text}
+            header={mrStatusProps.alertTitle}
             variant={mrStatusProps.variantColor || 'info'}
             color={mrStatusProps.tagColor}
             fullWidth
