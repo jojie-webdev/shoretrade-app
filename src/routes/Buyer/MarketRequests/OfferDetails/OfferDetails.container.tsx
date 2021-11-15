@@ -355,7 +355,10 @@ const OfferDetails = (): JSX.Element => {
   };
 
   const getPrice = () => {
-    if (!selectedOffer?.negotiations) {
+    if (
+      !selectedOffer?.negotiations ||
+      selectedOffer?.negotiations.length < 1
+    ) {
       return selectedOffer?.price || 0;
     }
 
