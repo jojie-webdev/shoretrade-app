@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+export const CLICK_AND_COLLECT_SERVICE = 'CLICK & COLLECT';
+
 export const shipmentModeToString = (
   shipmentMode: string,
   serviceName: string
@@ -21,7 +23,7 @@ export const serviceNameToString = (
   locationName?: string,
   sellerCompany?: string
 ) => {
-  if (serviceName === 'CLICK AND COLLECT') return 'Pick Up at';
+  if (serviceName === CLICK_AND_COLLECT_SERVICE) return 'Pick Up at';
 
   // serviceName value from shorefreight returns complete sentence on this option
   if (!locationName) {
@@ -33,6 +35,14 @@ export const serviceNameToString = (
     serviceName.indexOf('MANAGED') !== -1
     ? 'delivery to door'
     : `Pickup at ${locationName || 'airport'}`;
+};
+
+export const subAddressToString = (
+  serviceName: string,
+  address: string | undefined
+) => {
+  console.log(serviceName, address);
+  return (address || '').replace(`${serviceName}, `, '');
 };
 
 export const estimatedDeliveryToString = (
@@ -73,7 +83,7 @@ export const serviceNameToDeliveryOption = (serviceName: string) => {
   switch (serviceName.toUpperCase()) {
     case 'DELIVERY TO DOOR':
       return 'door';
-    case 'CLICK & COLLECT':
+    case CLICK_AND_COLLECT_SERVICE:
       return 'collect';
     case 'PICKUP AT':
     default:

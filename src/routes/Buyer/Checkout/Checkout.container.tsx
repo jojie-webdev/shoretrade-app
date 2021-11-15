@@ -29,9 +29,11 @@ import { toPrice } from 'utils/String/toPrice';
 import {
   shipmentModeToString,
   serviceNameToString,
+  subAddressToString,
   estimatedDeliveryToString,
   shipmentModeToDeliveryMethod,
   serviceNameToDeliveryOption,
+  CLICK_AND_COLLECT_SERVICE,
 } from 'utils/String/toShipmentDateString';
 
 import CheckoutView from './Checkout.view';
@@ -135,14 +137,20 @@ const Checkout = (): JSX.Element => {
               data.locationName,
               cartItem.companyName
             );
+            const subAddress = subAddressToString(
+              cartItem.companyName,
+              data.serviceName === CLICK_AND_COLLECT_SERVICE
+                ? data.marketAddress
+                : data.sellerAddress
+            );
             return {
               id: data.id,
               priceId: data.priceId,
               name:
-                data.serviceName === 'CLICK AND COLLECT'
+                data.serviceName === CLICK_AND_COLLECT_SERVICE
                   ? `${serviceName} ${clickAndCollectAddress}`
                   : `${shipmentMode} ${serviceName}`,
-              ...(data.serviceName === 'CLICK AND COLLECT'
+              ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
                 ? { secondName: clickAndCollectAddress2 }
                 : {}),
               price: toPrice(data.grossPrice, false),
@@ -152,7 +160,7 @@ const Checkout = (): JSX.Element => {
                 data.estimatedDate
               ),
               imageUrl: data.imageUrl,
-              subAddress: data.subAddress,
+              subAddress: subAddress || data.subAddress,
             };
           })
         : [],
