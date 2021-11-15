@@ -2,13 +2,14 @@ import React from 'react';
 
 import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import OfferTag from 'components/module/OfferTag';
 import {
   GetActiveOffersRequestResponseItem,
   OfferStatus,
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
@@ -29,8 +30,6 @@ import {
   SubMinorInfo,
 } from '../MobileMarketRequest/MobileMarketRequest.style';
 import { StyledStatusBadge } from './MobileOffers.style';
-import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import OfferTag from 'components/module/OfferTag';
 
 const MobileOffers = (props: {
   data: GetActiveOffersRequestResponseItem;

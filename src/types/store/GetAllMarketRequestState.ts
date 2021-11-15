@@ -14,7 +14,7 @@ export type GetAllMarketRequestResponseItem = {
   image: string;
   status: string;
   shippingTo: ShippingTo;
-  offers: Offer[];
+  offers: number;
   size: {
     from: string;
     options: any;
