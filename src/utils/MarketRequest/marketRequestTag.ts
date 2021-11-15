@@ -70,6 +70,7 @@ export const transformMarketRequestStatusText = (
   text: string;
   description: string;
   badgeColor?: string;
+  alertTitle: string;
 } => {
   if (statusText === 'Negotiation' || statusText === 'In Negotiation') {
     if (isSeller) {
@@ -79,6 +80,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'noshade',
         variantColor: 'alert',
         badgeColor: theme.brand.warning,
+        alertTitle: 'Awaiting Buyer',
       };
     }
     return {
@@ -87,6 +89,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'alert',
       variantColor: 'alert',
       badgeColor: '#fffff4',
+      alertTitle: 'Awaiting Seller',
     };
   }
 
@@ -98,6 +101,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'noshade',
         variantColor: 'alert',
         badgeColor: theme.brand.warning,
+        alertTitle: 'Awaiting Buyer',
       };
     }
   }
@@ -110,6 +114,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'alert',
         variantColor: 'alert',
         badgeColor: '#fffff4',
+        alertTitle: 'Awaiting Seller',
       };
     }
   }
@@ -121,25 +126,18 @@ export const transformMarketRequestStatusText = (
       tagColor: 'shade10',
       variantColor: 'alert',
       badgeColor: theme.brand.alert,
+      alertTitle: 'Buyer Sent Counter Offer',
     };
   }
 
   if (statusText === 'New Offer') {
-    if (isSeller) {
-      return {
-        text: text.NEW_OFFER,
-        description: descriptions.NEW_OFFER,
-        tagColor: 'noshade',
-        variantColor: 'success',
-        badgeColor: theme.brand.success,
-      };
-    }
     return {
       text: text.NEW_OFFER,
       description: descriptions.NEW_OFFER,
       tagColor: 'success',
       variantColor: 'success',
       badgeColor: '#EAFFF9',
+      alertTitle: 'New Offer from the Buyer',
     };
   }
 
@@ -150,6 +148,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'shade6',
       variantColor: 'info',
       badgeColor: '#E5E9F5',
+      alertTitle: 'No Offers',
     };
   }
 
@@ -163,6 +162,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'shade10',
       variantColor: 'info',
       badgeColor: '#E5E9F5',
+      alertTitle: 'No Offers',
     };
   }
 
@@ -178,6 +178,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'noshade',
         variantColor: 'warning',
         badgeColor: theme.brand.warning,
+        alertTitle: text.PENDING_PAYMENT,
       };
     }
 
@@ -187,6 +188,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'warning',
       badgeColor: '#FFF7F2',
       variantColor: 'warning',
+      alertTitle: 'Your Payment is Required',
     };
   }
 
@@ -199,6 +201,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'noshade',
         variantColor: 'error',
         badgeColor: theme.brand.error,
+        alertTitle: 'Lost',
       };
     }
     return {
@@ -207,6 +210,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'error',
       variantColor: 'error',
       badgeColor: '#FFF4F6',
+      alertTitle: text.PAYMENT_MISSED,
     };
   }
 
@@ -221,6 +225,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'noshade',
         variantColor: 'success',
         badgeColor: theme.brand.success,
+        alertTitle: text.FINALISED,
       };
     } else {
       return {
@@ -232,6 +237,7 @@ export const transformMarketRequestStatusText = (
         tagColor: 'success',
         variantColor: 'success',
         badgeColor: '#EAFFF9',
+        alertTitle: text.FINALISED,
       };
     }
   }
@@ -243,6 +249,7 @@ export const transformMarketRequestStatusText = (
       tagColor: 'noshade',
       variantColor: 'error',
       badgeColor: theme.brand.error,
+      alertTitle: text.DECLINED,
     };
   }
   return {
@@ -251,6 +258,7 @@ export const transformMarketRequestStatusText = (
     tagColor: 'secondary',
     variantColor: 'info',
     badgeColor: theme.brand.secondary,
+    alertTitle: '',
   };
 };
 

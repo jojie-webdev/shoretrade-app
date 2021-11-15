@@ -28,7 +28,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
           label: group.stateName,
           value: group.stateId,
           groupOrder: group.stateGroup,
-          groupName: `Specifications ${i + 1}`,
+          groupName: `Specifications ${group.stateGroup}`,
         };
       })
     : [];

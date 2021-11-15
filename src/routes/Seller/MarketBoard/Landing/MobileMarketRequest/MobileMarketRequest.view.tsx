@@ -2,6 +2,7 @@ import React from 'react';
 
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
+import OfferTag from 'components/module/OfferTag';
 import {
   GetActiveOffersRequestResponseItem,
   Offer,
@@ -139,13 +140,15 @@ const MobileMarketRequests = (props: {
   );
 
   const renderTagByStatus = () => {
-    const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
-
-    if (
-      offerStatus === OfferStatus.NEGOTIATION ||
-      offerStatus === OfferStatus.NEW_OFFER
-    ) {
-      return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
+    if (data.offers > 0) {
+      return (
+        <OfferTag
+          text="Active Offers"
+          badgeColor={theme.brand.success}
+          variantColor="success"
+          color="noshade"
+        />
+      );
     }
   };
 

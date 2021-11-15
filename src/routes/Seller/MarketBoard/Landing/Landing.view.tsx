@@ -9,6 +9,7 @@ import { TypographyProps } from 'components/base/Typography/Typography.props';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
+import OfferTag from 'components/module/OfferTag';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -33,6 +34,7 @@ import {
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
@@ -46,8 +48,6 @@ import {
 } from './Landing.style';
 import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
 import MobileOffers from './MobileOffers/MobileOffers.view';
-import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import OfferTag from 'components/module/OfferTag';
 
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
@@ -95,22 +95,15 @@ const BuyerRequestsInteractions = (props: {
   );
 
   const renderTagByStatus = () => {
-    const offerStatus = getOfferStatus(getOfferByMarketRequest(), 'seller');
-
-    // if (offerStatus === 'PAYMENT MISSED') {
-    //   return statusTag(theme.brand.error, 'noshade', 'LOST');
-    // }
-
-    // if (offerStatus === 'PAYMENT REQUIRED') {
-    //   return statusTag(theme.brand.warning, 'noshade', 'PENDING PAYMENT');
-    // }
-
-    if (
-      offerStatus === OfferStatus.NEW_OFFER ||
-      offerStatus === OfferStatus.NEGOTIATION ||
-      offerStatus === OfferStatus.PAYMENT_REQUIRED
-    ) {
-      return statusTag(theme.brand.success, 'noshade', 'ACTIVE OFFER');
+    if (data.offers > 0) {
+      return (
+        <OfferTag
+          text="Active Offers"
+          badgeColor={theme.brand.success}
+          variantColor="success"
+          color="noshade"
+        />
+      );
     }
   };
 
@@ -121,16 +114,6 @@ const BuyerRequestsInteractions = (props: {
     const totalOfferAndNegos = initialOffer + offer?.negotiations?.length;
 
     return totalOfferAndNegos;
-  };
-
-  const getCorrectOfferCountLabel = () => {
-    const offerCount = getOfferCount();
-
-    if (offerCount === 1) {
-      return '1 OFFER';
-    } else {
-      return offerCount + ' OFFERS';
-    }
   };
 
   return (
@@ -361,7 +344,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   {props.sellingRequests.map((data) => (
                     <ItemInteraction
                       key={data.id}
-                      type={data.offers.length > 0 ? 'next' : 'none'}
+                      type={data.offers > 0 ? 'next' : 'none'}
                       onClick={() => props.onClickOffer(data)}
                       leftComponent={
                         <MobileMarketRequests
@@ -410,7 +393,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                   {props.buyerRequests.map((data) => (
                     <ItemInteraction
                       key={data.id}
-                      type={data.offers.length > 0 ? 'next' : 'none'}
+                      type={data.offers > 0 ? 'next' : 'none'}
                       onClick={() => props.onClickOffer(data)}
                       leftComponent={
                         <MobileMarketRequests
