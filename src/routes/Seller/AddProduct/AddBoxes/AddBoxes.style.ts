@@ -8,6 +8,7 @@ export const Container = styled.div`
 
   .minimum-row {
     margin: 40px 0;
+    padding: 0 24px;
 
     .checkbox-col {
       margin-top: 16px;
