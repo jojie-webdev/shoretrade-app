@@ -42,6 +42,7 @@ export type HistoricalListingItem = {
   } | null;
   is_aquafuture: boolean;
   address_id: string;
+  quality: string | null;
 };
 
 export type GetHistoricalListingsPayload = {

@@ -33,6 +33,7 @@ export type UpdateListingRequestData = {
       airlineApproved?: boolean;
     };
   };
+  quality: string | null;
 };
 
 export type UpdateListingPayload = GenericResponse;

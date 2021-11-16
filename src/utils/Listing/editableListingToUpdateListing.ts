@@ -46,4 +46,5 @@ export const editableListingToUpdateListing = (
         }
       : {}),
   },
+  quality: data?.quality || null,
 });

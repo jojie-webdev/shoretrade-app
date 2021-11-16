@@ -40,6 +40,7 @@ export type UploadBulkState = {
   ref?: string;
   typeDisplayText: string;
   specificationsDisplayText: string[];
+  quality: string | null;
 };
 
 export type UploadBulkPayload = GenericResponse<{

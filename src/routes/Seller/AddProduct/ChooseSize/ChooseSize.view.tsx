@@ -13,7 +13,7 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
 import { ChooseSizeProps, SizeInputProps } from './ChooseSize.props';
-import { Container } from './ChooseSize.style';
+import { Container, ProductQualityDropdown } from './ChooseSize.style';
 
 const SizeInput = (props: SizeInputProps) => {
   const { metric, fromSize, toSize, setFromSize, setToSize, disabled } = props;
@@ -160,6 +160,22 @@ const ChooseSize = ({
     }
   }, [toSize, fromSize, isUngraded]);
 
+  const qualityOptions = listingFormData?.qualityOptions || [];
+  const actualQualityOptions = [
+    ...qualityOptions.map((a) => ({
+      label: a,
+      value: a,
+    })),
+    {
+      label: 'Ungraded',
+      value: 'Ungraded', // should override to null later
+    },
+  ];
+
+  const [quality, setQuality] = useState(
+    editableListing?.quality || 'Ungraded'
+  ); // should override to null later
+
   const isComplete = !showError && (isUngraded || fromSize);
 
   return (
@@ -208,6 +224,24 @@ const ChooseSize = ({
         </Col>
       </Row>
 
+      {qualityOptions.length > 0 && (
+        <Row className="quality-row">
+          <Col>
+            <Typography variant="title6" color="noshade">
+              Product Quality
+            </Typography>
+            <ProductQualityDropdown
+              options={actualQualityOptions}
+              value={quality}
+              onChange={(o) => {
+                setQuality(o.value);
+              }}
+              label=""
+            />
+          </Col>
+        </Row>
+      )}
+
       {!isMobile && (
         <Row justify="start" nogutter>
           <Button
@@ -228,6 +262,7 @@ const ChooseSize = ({
                   sizeFrom: isUngraded ? undefined : fromSize,
                   sizeTo: isUngraded ? undefined : toSize,
                   isUngraded,
+                  quality: quality === 'Ungraded' ? null : quality,
                 });
               }
             }}
@@ -255,6 +290,7 @@ const ChooseSize = ({
                 sizeFrom: isUngraded ? undefined : fromSize,
                 sizeTo: isUngraded ? undefined : toSize,
                 isUngraded,
+                quality: quality === 'Ungraded' ? null : quality,
               });
             }
           }}

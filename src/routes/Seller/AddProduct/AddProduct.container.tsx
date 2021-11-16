@@ -275,6 +275,7 @@ const AddProduct = (): JSX.Element => {
     sizeFrom?: string;
     sizeTo?: string;
     isUngraded: boolean;
+    quality: string | null;
   }) => {
     if (isBulkUpload) {
       dispatch(
@@ -282,6 +283,7 @@ const AddProduct = (): JSX.Element => {
           sizeFrom: sizes.sizeFrom,
           sizeTo: sizes.sizeTo,
           isUngraded: sizes.isUngraded,
+          quality: sizes.quality,
         })
       );
     } else {
@@ -290,6 +292,7 @@ const AddProduct = (): JSX.Element => {
           sizeFrom: sizes.sizeFrom,
           sizeTo: sizes.sizeTo,
           isUngraded: sizes.isUngraded,
+          quality: sizes.quality,
         })
       );
       onChangeCurrentPage(5);

@@ -49,6 +49,7 @@ export const historicalListingToEditableListing = (
           },
         }
       : {}),
+    quality: data?.quality,
     currentStep: 9,
   };
 };

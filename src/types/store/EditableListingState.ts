@@ -62,6 +62,7 @@ export type EditableListingState = Partial<{
       airlineApproved?: boolean;
     };
   };
+  quality: null | string;
 }>;
 
 export type EditableListingPayload = EditableListingState;

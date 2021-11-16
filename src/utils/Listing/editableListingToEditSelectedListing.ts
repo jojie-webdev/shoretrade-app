@@ -64,5 +64,6 @@ export const editableListingToEditSelectedListing = (
       : {}),
     currentStep: 9,
     isAlreadyCreated: true,
+    quality: data?.quality || null,
   };
 };

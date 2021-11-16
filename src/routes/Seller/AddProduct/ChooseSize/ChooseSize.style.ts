@@ -1,3 +1,4 @@
+import Select from 'components/base/Select';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -64,6 +65,10 @@ export const Container = styled.div`
     margin-bottom: 40px;
   }
 
+  .quality-row {
+    margin-bottom: 40px;
+  }
+
   .back-btn {
     margin-right: 16px;
     max-width: 67px;
@@ -71,5 +76,13 @@ export const Container = styled.div`
 
   .next-btn {
     max-width: 67px;
+  }
+`;
+
+export const ProductQualityDropdown = styled(Select)`
+  width: 220px;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: auto;
   }
 `;

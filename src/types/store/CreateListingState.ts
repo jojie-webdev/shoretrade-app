@@ -40,6 +40,7 @@ export type CreateListingRequestData = {
       airlineApproved?: boolean;
     };
   };
+  quality: string | null;
 };
 
 export type CreateListingPayload = GenericResponse;

@@ -45,4 +45,5 @@ export const editableListingToCreateListing = (
         }
       : {}),
   },
+  quality: data?.quality || null,
 });

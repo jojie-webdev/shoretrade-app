@@ -35,6 +35,7 @@ export type GetListingFormDataResponse = {
     id: string;
     name: string;
   };
+  qualityOptions: string[];
 };
 
 export type GetListingFormDataPayload = GenericResponse<

@@ -70,6 +70,7 @@ export type GetAllListingsResponseItem = {
     height: number;
     company_id: string | null;
   } | null;
+  quality: string | null;
 };
 
 export type GetAllListingsPayload = GenericResponse<{

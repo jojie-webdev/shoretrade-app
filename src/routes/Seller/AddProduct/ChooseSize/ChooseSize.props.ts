@@ -17,6 +17,7 @@ export type ChooseSizePublicProps = {
     sizeFrom?: string;
     sizeTo?: string;
     isUngraded: boolean;
+    quality: string | null;
   }) => void;
   navBack: () => void;
 };
