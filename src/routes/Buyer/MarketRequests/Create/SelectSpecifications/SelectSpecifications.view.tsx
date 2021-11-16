@@ -267,14 +267,18 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
               <SpecsContainer>
                 {getFilteredSpecifications().map((group, index) => (
                   <div key={`spec-${index}`} style={{ marginBottom: '32px' }}>
-                    <Typography
-                      variant="overline"
-                      color="shade6"
-                      style={{ marginBottom: 12 }}
-                    >
-                      {`Specs ${index + 1}`}
-                    </Typography>
-
+                    <LabelContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade10"
+                        style={{ marginBottom: 12, marginRight: 4 }}
+                      >
+                        {getSpecsByGroup(index)}
+                      </Typography>
+                      <Typography variant="overline" color="shade6">
+                        (min. 1)
+                      </Typography>
+                    </LabelContainer>
                     <CheckboxGroupContainer>
                       {group?.map((item) => (
                         <CheckboxContainer>

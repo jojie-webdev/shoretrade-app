@@ -106,7 +106,8 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             onChangeText={(v) => {
               let price = v;
               if (price.indexOf('.') >= 0) {
-                price = price.substr(0, price.indexOf('.')) +
+                price =
+                  price.substr(0, price.indexOf('.')) +
                   price.substr(price.indexOf('.'), 3);
               }
               setNegotiationPrice(parseFloat(price));

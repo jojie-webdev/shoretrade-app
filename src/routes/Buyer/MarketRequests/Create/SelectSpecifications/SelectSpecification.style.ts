@@ -55,6 +55,7 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const CheckboxGroupContainer = styled.div`
+  flex-direction: column;
   display: flex;
   flex-wrap: wrap;
 `;

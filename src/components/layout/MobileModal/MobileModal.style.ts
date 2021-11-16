@@ -36,3 +36,44 @@ export const ModalContainer = styled.div<{
     );
   }};
 `;
+
+export const ExitButton = styled.button`
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: ${(props) => props.theme.grey.noshade};
+  box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :focus {
+    outline: none;
+  }
+`;
+
+export const CloseContainer = styled.button`
+  position: absolute;
+  z-index: 1;
+  right: 0px;
+  top: 135px;
+  background: ${(props) => props.theme.grey.noshade};
+  box-shadow: 0px 12px 24px rgba(41, 43, 50, 0.25);
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :focus {
+    outline: none;
+  }
+`;

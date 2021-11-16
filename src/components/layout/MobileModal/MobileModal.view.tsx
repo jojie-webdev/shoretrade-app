@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 
+import { Close } from 'components/base/SVG';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 
 import { MobileModalProps } from './MobileModal.props';
-import { Container, Backdrop, ModalContainer } from './MobileModal.style';
+import {
+  Container,
+  Backdrop,
+  ModalContainer,
+  CloseContainer,
+} from './MobileModal.style';
 
 const MobileModal = (props: MobileModalProps): JSX.Element => {
   const { isOpen, onClickClose, children } = props;
@@ -33,6 +39,16 @@ const MobileModal = (props: MobileModalProps): JSX.Element => {
           onClickClose();
         }}
       />
+      {onClickClose && (
+        <CloseContainer
+          onClick={(e) => {
+            e.preventDefault();
+            onClickClose();
+          }}
+        >
+          <Close />
+        </CloseContainer>
+      )}
       <ModalContainer
         backgroundColor={props.backgroundColor}
         style={props.modalStyle}
