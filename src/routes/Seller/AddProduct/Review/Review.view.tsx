@@ -93,7 +93,9 @@ const Review = ({
     editableListing?.sizeTo || ''
   );
 
-  const boxes = (editableListing?.boxes || []).length.toString();
+  const boxes = editableListing?.boxes
+    ? (editableListing?.boxes || []).length.toString()
+    : '';
 
   const images = (
     (editableListing?.images || []).length +
@@ -148,6 +150,23 @@ const Review = ({
       }
     }
   }, [availableCrates]);
+
+  const [showValidationError, setShowValidationError] = useState(false);
+
+  const isValidData = (() => {
+    // TODO: add more checks if needed
+    if ((currentHistoricalListingData || false) && isMissingDate) {
+      return false;
+    }
+    return true;
+  })();
+
+  useEffect(() => {
+    // only recheck if previously true
+    setShowValidationError((currentValue) =>
+      currentValue ? !isValidData : false
+    );
+  }, [editableListing]);
 
   return (
     <Container>
@@ -220,6 +239,7 @@ const Review = ({
             onClick={() => {
               onChangeCurrentPage(7);
             }}
+            showEmptyIndicator
           />
         </Col>
         <Col md={12} className="interaction-col">
@@ -293,12 +313,21 @@ const Review = ({
               label="Notes"
               value={notes}
               type="edit"
-              showEmptyIndicator
               onClick={() => onChangeCurrentPage(8)}
             />
           </div>
         </Col>
       </Row>
+
+      {showValidationError && (
+        <Col md={12} className="interaction-col">
+          <Alert
+            fullWidth
+            variant="error"
+            content={'Please complete required fields to continue'}
+          />
+        </Col>
+      )}
 
       {!isMobile && (
         <ButtonRow
@@ -312,13 +341,27 @@ const Review = ({
             text="Preview"
             variant="outline"
             disabled={pendingSave}
-            onClick={() => preview()}
+            onClick={() => {
+              if (!isValidData) {
+                setShowValidationError(true);
+              } else {
+                setShowValidationError(false);
+                preview();
+              }
+            }}
             className="button"
           />
           <Button
             text={isExisting ? 'Update Listing' : 'Add Listing'}
             loading={pendingSave}
-            onClick={() => saveListing()}
+            onClick={() => {
+              if (!isValidData) {
+                setShowValidationError(true);
+              } else {
+                setShowValidationError(false);
+                saveListing();
+              }
+            }}
             className="button"
           />
         </ButtonRow>
@@ -330,14 +373,28 @@ const Review = ({
           text="Preview"
           variant="outline"
           disabled={pendingSave}
-          onClick={() => preview()}
+          onClick={() => {
+            if (!isValidData) {
+              setShowValidationError(true);
+            } else {
+              setShowValidationError(false);
+              preview();
+            }
+          }}
           style={{ marginRight: 8 }}
         />
         <Button
           takeFullWidth
           text={isExisting ? 'Update Listing' : 'Add Listing'}
           loading={pendingSave}
-          onClick={() => saveListing()}
+          onClick={() => {
+            if (!isValidData) {
+              setShowValidationError(true);
+            } else {
+              setShowValidationError(false);
+              saveListing();
+            }
+          }}
         />
       </MobileFooter>
     </Container>
