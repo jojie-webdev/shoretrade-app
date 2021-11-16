@@ -42,7 +42,7 @@ const descriptions: Record<statuses, string> = {
   DECLINED: 'Your offer was declined by the Buyer. ',
   NO_OFFERS: '',
   PAYMENT_REQUIRED:
-    'Please process the payment within the remaining time. This offer will atuomatically close if payment is not received.',
+    'Please process the payment within the remaining time. This offer will automatically close if payment is not received.',
   COUNTER_OFFER:
     'Review the offer details and Negotiate or Accept the offer to proceed.',
   LOST:
