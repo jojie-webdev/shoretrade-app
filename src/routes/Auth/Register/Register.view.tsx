@@ -277,8 +277,10 @@ const StepForm = ({
   };
 
   const handleSubmitLicense = () => {
-    const error = onAddMoreLicense();
-    if (error) return;
+    if (isSeller) {
+      const error = onAddMoreLicense();
+      if (error) return;
+    }
     if (formRef.current) {
       formRef.current.handleSubmit();
     }
