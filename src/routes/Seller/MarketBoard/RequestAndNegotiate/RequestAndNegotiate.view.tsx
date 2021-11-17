@@ -196,11 +196,6 @@ const Step1 = ({
         latestCounterOfferDate > latestNewOfferDate) ||
       (latestBuyerNego && !latestNewOfferDate);
 
-    const isNegotiationEqual =
-      latestSellerNego &&
-      latestBuyerNego &&
-      latestSellerNego.price === latestBuyerNego.price;
-
     const lastNegotiationsArray = negotiations.slice(
       Math.max(negotiations.length - (negotiations.length >= 2 ? 2 : 1), 0)
     );
@@ -245,11 +240,7 @@ const Step1 = ({
     });
 
     const showButtons =
-      !isReview &&
-      !noNegotiations &&
-      isNegoOpen &&
-      isNegotiationAllowed &&
-      !isNegotiationEqual;
+      !isReview && !noNegotiations && isNegoOpen && isNegotiationAllowed;
 
     return (
       <>
