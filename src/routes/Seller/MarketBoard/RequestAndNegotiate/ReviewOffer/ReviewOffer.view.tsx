@@ -99,8 +99,12 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         properOffer.size.to || ''
       );
     }
-    if (props.buyerRequest && !isEmpty(props.buyerRequest.sizeOptions)) {
-      return props.buyerRequest.sizeOptions;
+    if (
+      props.buyerRequest &&
+      !isEmpty(props.buyerRequest.sizeOptions) &&
+      properOffer.size.from
+    ) {
+      sizeToString(props.buyerRequest.metric, properOffer.size.from);
     }
 
     return [];
