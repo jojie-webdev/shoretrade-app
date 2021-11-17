@@ -297,7 +297,7 @@ const MarketBoardLanding = (): JSX.Element => {
         appType="seller"
         textWeb1=""
         textWeb2=""
-        textMobile1="Market Request"
+        textMobile1="Buyer Request"
         textMobile2=""
         textMobile3=""
         cardText1={
