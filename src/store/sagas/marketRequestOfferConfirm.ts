@@ -1,5 +1,6 @@
 import { replace } from 'connected-react-router';
 import { BUYER_ROUTES } from 'consts';
+import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { offerConfirm } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';
@@ -8,7 +9,7 @@ import { Offer } from 'types/store/GetActiveOffersState';
 import { OfferConfirm } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
 
-import { marketRequestOfferConfirm } from '../actions';
+import { getActiveOffersActions, marketRequestOfferConfirm } from '../actions';
 
 function* confirmOfferRequest(
   action: AsyncAction<OfferConfirm, GenericResponse>
@@ -42,7 +43,19 @@ function* confirmOfferRequest(
 }
 
 function* confirmOfferSuccess(action: AsyncAction<Offer, GenericResponse>) {
-  // yield put(replace(BUYER_ROUTES.MARKET_REQUESTS));
+  const marketRequestId = pathOr(
+    '',
+    ['payload', 'data', 'market_request_id'],
+    action
+  );
+
+  yield put(
+    getActiveOffersActions.request({
+      queryParams: {
+        marketRequestId,
+      },
+    })
+  );
 }
 
 function* confirmOfferWatcher() {

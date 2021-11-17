@@ -51,7 +51,6 @@ export interface AcceptOffer {
   paymentMode?: string;
 }
 
-
 export interface OfferConfirm {
   marketOfferId: string;
 }
