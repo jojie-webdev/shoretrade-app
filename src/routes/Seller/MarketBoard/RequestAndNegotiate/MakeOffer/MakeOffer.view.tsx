@@ -300,6 +300,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 <DatePickerDropdown
                   label="Delivery date"
                   className="textfield"
+                  isOutsideRange={(date) =>
+                    date < new Date().setHours(0, 0, 0, 0)
+                  }
                   date={props.deliveryDate ? moment(props.deliveryDate) : null}
                   onDateChange={(d) =>
                     props.setDeliveryDate(d?.toDate() || null)
@@ -368,6 +371,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   </Col>
                   <Col xs={12} className="textfield-col">
                     <DatePickerDropdown
+                      isOutsideRange={(date) =>
+                        date < new Date().setHours(0, 0, 0, 0)
+                      }
                       label="Delivery date"
                       date={
                         props.deliveryDate ? moment(props.deliveryDate) : null
