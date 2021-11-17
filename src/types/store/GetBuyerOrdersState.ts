@@ -32,6 +32,7 @@ export type GetBuyerOrdersResponseItem = {
     suburb: string;
     unitNumber: string | null;
   };
+  isMarketRequest: boolean;
   latestExpectedDeliveryDate: string | null;
   orderDate: string; // iso date string
   orderId: string;

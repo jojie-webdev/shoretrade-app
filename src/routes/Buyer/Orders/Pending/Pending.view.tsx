@@ -75,14 +75,14 @@ const Pending = (props: OrdersGeneratedProps) => {
               iconColor={theme.brand.primary}
               leftComponent={
                 <AccordionTitleContainer>
-                  <Typography color="shade7" className="title">
+                  <Typography color="shade6" className="label" weight="400">
                     Estimated{' '}
                     {pendingOrders[key][0].isAquafuture
                       ? 'Catchment'
                       : 'Delivery'}
                     :
                   </Typography>
-                  <Typography color="shade9">{key}</Typography>
+                  <Typography color="shade9" className="labelBold">{' '}{key}</Typography>
                 </AccordionTitleContainer>
               }
               rightComponent={

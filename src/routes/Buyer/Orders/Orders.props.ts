@@ -13,6 +13,7 @@ export interface OrderItem {
     orderedBy: string;
     rating: number | null;
     ratingId: string | null;
+    isMarketRequest: boolean;
     detailsProps: {
       uri: string;
       name: string;

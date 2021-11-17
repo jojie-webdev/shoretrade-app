@@ -35,6 +35,22 @@ const getDeliveredDate = (
   if (original != null) return original;
 };
 
+const getLocation = (
+  suburb: string | null,
+  state: string | null,
+  countryCode: string | null
+) => {
+  const haveSuburb = !!suburb && suburb.length > 0
+  const haveState = !!state && state.length > 0
+  const haveCountryCode = !!countryCode && countryCode.length > 0
+
+  return (haveSuburb ? `${suburb}` : '')
+  + (haveSuburb && (haveState || haveCountryCode) ? ', ' : '')
+  + (haveState ? `${state}` : '')
+  + (haveState && haveCountryCode ? ', ' : '')
+  + (haveCountryCode ? `${countryCode}` : '')
+}
+
 export const transformOrder = (
   orderItem: GetBuyerOrdersResponseItem
 ): OrderItem => {
@@ -52,9 +68,10 @@ export const transformOrder = (
       orderedBy: `${orderItem.buyerEmployeeFirstName} ${orderItem.buyerEmployeeLastName}`,
       rating: orderItem.rating,
       ratingId: orderItem.ratingId,
+      isMarketRequest: orderItem.isMarketRequest,
       detailsProps: orderItem.orderLineItem.map((lineItem) => { 
         const unit = formatMeasurementUnit(lineItem.listing.measurementUnit)
-
+        
         return {
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
@@ -71,7 +88,11 @@ export const transformOrder = (
             lineItem.listing.sizeFrom,
             lineItem.listing.sizeTo
           ),
-          location: lineItem.listing.origin.suburb,
+          location: getLocation(
+            lineItem.listing.origin.suburb, 
+            lineItem.listing.origin.state, 
+            lineItem.listing.origin.countryCode
+          ),
           vendor: orderItem.sellerCompanyName,
           cBorderRadius: '0',
           cBorderWidth: '0',

@@ -32,6 +32,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const diffDays = diff / (1000 * 3600 * 24);
   const showDispute = props.completedOrder && diffDays < 1
   const rating = props.data.rating
+  const showCatchment = !props.data.isMarketRequest
   
   return (
     <OrderItemContainer>
@@ -99,7 +100,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           {props.data.detailsProps.map((d, ndx) => (
             <Col xs={12} className="item">
               <Row nogutter={true}>
-                <Col xs={12} sm={4}><Row nogutter={true}>
+                <Col xs={12} sm={showCatchment ? 4 : 5}><Row nogutter={true}>
                   <Col xs="content">
                     <FlexiContainer>
                       <img src={parseImageUrl(d.uri)} alt="Product" />
@@ -120,17 +121,19 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   </Col>
                 </Row></Col>
                 
-                <Col xs={12} sm={8} style={{ alignSelf: 'center' }}><Row nogutter={true} >
-                  <Col xs={4} sm={3} className="detail-container">
-                    <ItemDetailLabel color="shade6" variant="caption">
-                      Catchment
-                    </ItemDetailLabel>
-                    <ItemDetailValue variant="label" weight="bold" color="shade9">
-                      {d.location}
-                    </ItemDetailValue>
-                  </Col>
+                <Col xs={12} sm={showCatchment ? 8 : 7} style={{ alignSelf: 'center' }}><Row nogutter={true} >
+                  { showCatchment &&
+                    <Col xs={4} sm={3} className={`${showCatchment ? 'detail-container' : ''}`} style={{ paddingRight: '10px' }}>
+                      <ItemDetailLabel color="shade6" variant="caption">
+                        Catchment
+                      </ItemDetailLabel>
+                      <ItemDetailValue variant="label" weight="bold" color="shade9">
+                        {d.location}
+                      </ItemDetailValue>
+                    </Col>
+                  }
 
-                  <Col xs={8} sm={3} className="detail-container">
+                  <Col xs={showCatchment ? 8 : 3} sm={3} className={`${showCatchment ? 'detail-container' : ''}`}>
                     <ItemDetailLabel color="shade6" variant="caption">
                       Size
                     </ItemDetailLabel>
@@ -139,7 +142,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                     </ItemDetailValue>
                   </Col>
 
-                  <Col xs={4} sm={2}>
+                  <Col xs={showCatchment ? 4 : 3} sm={showCatchment ? 2 : 3}>
                     <ItemDetailLabel color="shade6" variant="caption">
                       Weight
                     </ItemDetailLabel>
@@ -148,7 +151,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                     </ItemDetailValue>
                   </Col>
 
-                  <Col xs={5} sm={2}>
+                  <Col xs={showCatchment ? 5 : 3} sm={showCatchment ? 2 : 3}>
                     <ItemDetailLabel color="shade6" variant="caption">
                       Price per {d.unit}
                     </ItemDetailLabel>
@@ -157,7 +160,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                     </ItemDetailValue>
                   </Col>
 
-                  <Col xs={3} sm={2}>
+                  <Col xs={showCatchment ? 3 : 3} sm={showCatchment ? 2 : 3}>
                     <ItemDetailLabel className="end-text" color="shade6" variant="caption">
                       Subtotal
                     </ItemDetailLabel>
