@@ -393,8 +393,9 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             </Visible>
           </Row>
 
-          <div className="textfield-col">
+          <div className="textfield-col shipping-from-col">
             <Select
+              className="shipping-from"
               value={props.selectedAddress}
               onChange={(o) => props.setSelectedAddress(o.value)}
               options={props.addresses}

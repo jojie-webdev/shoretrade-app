@@ -62,6 +62,16 @@ export const Container = styled.div`
     }
   }
 
+  .shipping-from-col {
+    height: auto;
+  }
+
+  .shipping-from {
+    .dropdownSelectContainer {
+      height: auto;
+    }
+  }
+
   .total-container {
     height: 96px;
     width: 100%;
