@@ -7,6 +7,7 @@ import MessageModal from 'components/module/MessageModal';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import RateSellerModal from 'components/module/RateSellerModal';
+import Alert from 'components/base/Alert';
 import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
@@ -19,6 +20,7 @@ import {
   AccordionTitleContainer,
   StyledAccordion,
   OrderBadge,
+  AlertContainer
 } from '../Orders.style';
 import { sortByDate } from '../Orders.transform';
 
@@ -32,7 +34,8 @@ const Complete = (props: OrdersGeneratedProps) => {
     sendDispute,
     getCompletedOrders,
     sendOrderRating,
-    isSendingOrderRating
+    isSendingOrderRating,
+    isSendOrderRatingSuccess
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -62,12 +65,21 @@ const Complete = (props: OrdersGeneratedProps) => {
     }
   );
 
+  const [showSuccessFeedbackAlert, setShowSuccessFeedbackAlert] = useState(false)
+
   useEffect(() => {
     if (isSendingOrderRating == false && rateSellerModal.isOpen) {
       updateRateSellerModal({ isOpen: false, orderId: '' })
       getCompletedOrders()
     }
   }, [isSendingOrderRating])
+
+  useEffect(() => {
+    if (isSendOrderRatingSuccess && isSendingOrderRating == false) {
+      setShowSuccessFeedbackAlert(true)
+      setTimeout(() => setShowSuccessFeedbackAlert(false), 5000)
+    }
+  }, [isSendOrderRatingSuccess])
 
   return (
     <>
@@ -92,6 +104,15 @@ const Complete = (props: OrdersGeneratedProps) => {
         }}
         loading={isSendingDispute}
       />
+      <AlertContainer className={`${showSuccessFeedbackAlert ? '' : 'hidden'}`}>
+        <Alert
+          header="Feedback Successfully Sent"
+          content="Thank you for rating your Seller. Your feedback is appreciated."
+          variant="success"
+          alignText="center"
+          fullWidth
+        />
+      </AlertContainer>
       {Object.keys(completedOrders).length === 0 ? (
         <Row className="emptystate-row" align="center" justify="center">
           <Col>

@@ -94,6 +94,7 @@ export interface OrdersGeneratedProps {
   sendOrderRating: (orderId: string, rating: number, privateFeedback: string) => void;
   isSendingDispute: boolean;
   isSendingOrderRating: boolean | null;
+  isSendOrderRatingSuccess: boolean | null;
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';

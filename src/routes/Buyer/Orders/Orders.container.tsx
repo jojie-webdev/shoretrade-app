@@ -243,6 +243,10 @@ const OrdersContainer = (): JSX.Element => {
     (state: Store) => state.sendOrderRating.pending
   )
 
+  const isSendOrderRatingSuccess = useSelector(
+    (state: Store) => !!state.sendOrderRating.data
+  )
+
   const sendOrderRating = (orderId: string, rating: number, privateFeedback: string) => {
     dispatch(
       sendOrderRatingActions.request({
@@ -273,7 +277,8 @@ const OrdersContainer = (): JSX.Element => {
     isSendingDispute,
     sendDispute,
     sendOrderRating,
-    isSendingOrderRating
+    isSendingOrderRating,
+    isSendOrderRatingSuccess
   };
 
   return <OrdersView {...generatedProps} />;
