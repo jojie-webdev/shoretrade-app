@@ -17,7 +17,7 @@ export const SpecificationFormContainer = styled(
 
     div {
       margin-right: 4rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: flex-start;
     }

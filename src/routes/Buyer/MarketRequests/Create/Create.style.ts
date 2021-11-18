@@ -281,7 +281,7 @@ export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
 
   margin-left: 16px;
   min-height: 312px;
-  max-height: 360px;
+  max-height: 400px;
 `;
 
 export const DetailsHeaderContainer = styled.div`

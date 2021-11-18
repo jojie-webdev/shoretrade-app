@@ -137,7 +137,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
           <Row>
             <Col>
               <Typography
-                style={{ marginBottom: 12 }}
+                style={{ margin: '24px 0 12px 0' }}
                 color="shade6"
                 variant="overline"
               >
@@ -272,7 +272,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             Total Value
           </Typography>
 
-          <Typography color="noshade" variant="title3">
+          <Typography weight="bold" color="noshade" variant="title3">
             <sup className="sup-text-2">$</sup>
             {toPrice(properOffer?.weight * properOffer?.price).replace('$', '')}
           </Typography>

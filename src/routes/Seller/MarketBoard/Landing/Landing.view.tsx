@@ -7,6 +7,7 @@ import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
 import EmptyState from 'components/module/EmptyState';
+import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import OfferTag from 'components/module/OfferTag';
@@ -468,7 +469,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         </>
       )}
 
-      {/*<FilterModal {...props.filterModalProps} isBuyerRequestFilters />*/}
+      <FilterModal {...props.filterModalProps} isBuyerRequestFilters />
     </Container>
   );
 };

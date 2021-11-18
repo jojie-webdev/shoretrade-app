@@ -67,10 +67,10 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .${PREFIX}Placeholder {
     ${font};
-    margin-right: 8px;
+    margin-right: 10px;
   }
 
-  .${PREFIX}Menu {
+
     border: 1px solid ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     border-radius: 4px;

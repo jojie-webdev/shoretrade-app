@@ -480,13 +480,13 @@ const Step1 = ({
         ) : (
           <>
             <Typography
-              style={{ marginBottom: 12 }}
+              style={{ margin: '24px 0 12px 0' }}
               color="shade6"
               variant="overline"
             >
               Size
             </Typography>
-            {metric !== '' && (
+            {/* {metric !== '' && (
               <MetricContainer>
                 <Typography color="shade6" variant="overline">
                   Metric:
@@ -499,7 +499,7 @@ const Step1 = ({
                   {metric}
                 </Typography>
               </MetricContainer>
-            )}
+            )} */}
 
             <div className="quantity-container">
               <StyledBadge badgeColor={theme.grey.shade3}>

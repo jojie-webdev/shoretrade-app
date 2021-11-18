@@ -313,7 +313,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                 <Hidden xs>
                   <ButtonContainer>
                     <PreviousButton
-                      text="<"
+                      text="Back"
                       variant="outline"
                       onClick={() => onBack(2)}
                     />

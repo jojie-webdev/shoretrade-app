@@ -171,7 +171,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
             <Hidden xs>
               <ButtonContainer>
                 <PreviousButton
-                  text="<"
+                  text="Back"
                   variant="outline"
                   onClick={() => onBack(3)}
                 />

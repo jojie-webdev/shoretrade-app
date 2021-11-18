@@ -309,6 +309,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 fontSize: 42,
                 marginLeft: 8.5,
                 marginTop: -8,
+                lineHeight: '0.8em',
               }}
             >
               {selectedSpecifications?.items?.map((i, index) => {
@@ -343,6 +344,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   fontSize: 42,
                   marginLeft: 8.5,
                   marginTop: -8,
+                  lineHeight: '0.8em',
                 }}
               >
                 {selectedSize?.items[0] !== '' && !selectedSize?.from
@@ -386,6 +388,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   fontSize: 42,
                   marginLeft: 8.5,
                   marginTop: -8,
+                  lineHeight: '0.8em',
                 }}
               >
                 {`${selectedQuantity?.from}${measurement} ${
