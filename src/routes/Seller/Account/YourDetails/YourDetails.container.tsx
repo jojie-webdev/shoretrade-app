@@ -123,6 +123,9 @@ const YourDetails = (): JSX.Element => {
     updateUserSuccess: updateUser.data?.status === 200 && submitted,
     callingCode,
     setCallingCode,
+    companyRelationship: getUser.data?.data.user.companies.find(company => 
+      company.id == companyId
+    )?.relationship || ''
   };
   return <YourDetailsView {...generatedProps} />;
 };

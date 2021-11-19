@@ -9,6 +9,7 @@ import Loading from 'components/module/Loading';
 import PhoneTextField from 'components/module/PhoneTextField';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -27,8 +28,10 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     updateUserSuccess,
     callingCode,
     setCallingCode,
+    companyRelationship
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isNotAdmin = companyRelationship != COMPANY_RELATIONSHIPS.ADMIN
   const formRef = useRef();
 
   if (loadingUser && !userDetails.firstName) {
@@ -96,10 +99,10 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business" name="businessName" />
+              <FormikTextField label="Business" name="businessName" disabled={isNotAdmin}/>
             </Col>
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business number (optional)" name="abn" />
+              <FormikTextField label="Business number (optional)" name="abn" disabled={isNotAdmin}/>
             </Col>
           </InputRow>
 

@@ -5,6 +5,7 @@ export interface BankDetailsGeneratedProps {
   isError: boolean;
   onClickSave: (details: BankDetails) => void;
   bankDetails: BankDetails;
+  companyRelationship: string;
 }
 
 export type BankDetails = {

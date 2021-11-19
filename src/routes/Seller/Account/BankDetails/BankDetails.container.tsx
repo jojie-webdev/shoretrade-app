@@ -23,6 +23,7 @@ const BankDetails = (): JSX.Element => {
   const updateBankDetails = useSelector(
     (state: Store) => state.updateBankDetails
   );
+  const user = useSelector((state: Store) => state.getUser.data?.data.user)
 
   // MARK:- State
   const [submitted, setSubmitted] = useState(false);
@@ -98,6 +99,7 @@ const BankDetails = (): JSX.Element => {
     isSuccess: updateBankDetails.data?.status === 200 && submitted,
     isError: updateBankDetails.error.length > 0,
     onClickSave,
+    companyRelationship: user?.companies.find(company => company.id == companyId)?.relationship || ''
   };
 
   return <BankDetailsView {...generatedProps} />;

@@ -8,6 +8,7 @@ import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import qs from 'qs';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -73,6 +74,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         { companyId: currentCompany?.id },
         { addQueryPrefix: true }
       )}`,
+      hideFrom: [COMPANY_RELATIONSHIPS.FISHERMAN]
     },
     {
       value: 'Bank Details',
@@ -146,13 +148,16 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         )}
       </Header>
 
-      {INTERACTIONS.map((interaction) => (
-        <NavInteraction
-          key={interaction.path}
-          value={interaction.value}
-          onClick={() => history.push(interaction.path)}
-        />
-      ))}
+      { INTERACTIONS.filter(interaction => 
+          !interaction.hideFrom?.includes(companyRelationship)
+        ).map((interaction) => (
+          <NavInteraction
+            key={interaction.path}
+            value={interaction.value}
+            onClick={() => history.push(interaction.path)}
+          />
+        )
+      )}
 
       {isMobile && (
         <Button

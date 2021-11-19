@@ -8,6 +8,7 @@ import FormikTextField from 'components/module/FormikTextField';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import { Formik, Form } from 'formik';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -24,8 +25,10 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
     submitting,
     isSuccess,
     isError,
+    companyRelationship
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isNotAdmin = companyRelationship != COMPANY_RELATIONSHIPS.ADMIN
   const formRef = useRef();
 
   if (loading) {
@@ -71,6 +74,15 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         />
       )}
 
+      { isNotAdmin && (
+        <StyledAlert
+          content="Only the primary account holder can edit the nominated bank account."
+          variant="info"
+          alignText="center"
+          fullWidth
+        />
+      )}
+
       <Typography color="shade1">
         Your earnings will be transferred here. Australian banks only.
       </Typography>
@@ -81,10 +93,10 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         <Form>
           <TextFieldRow>
             <Col md={12} xl={4} className="textfield-col">
-              <FormikTextField label="Account name" name="accountName" />
+              <FormikTextField label="Account name" name="accountName" disabled={isNotAdmin}/>
             </Col>
             <Col md={12} xl={4} className="textfield-col">
-              <FormikTextField label="BSB" name="bsb" maxLength={6} />
+              <FormikTextField label="BSB" name="bsb" maxLength={6} disabled={isNotAdmin}/>
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="textfield-col">
@@ -92,11 +104,12 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
                 label="Account number"
                 name="accountNumber"
                 maxLength={10}
+                disabled={isNotAdmin}
               />
             </Col>
           </TextFieldRow>
           {!isMobile && (
-            <Button text="Save" type="submit" loading={submitting} />
+            <Button text="Save" type="submit" loading={submitting} disabled={isNotAdmin}/>
           )}
         </Form>
       </Formik>
@@ -112,6 +125,7 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
           }}
           loading={submitting}
           takeFullWidth
+          disabled={isNotAdmin}
         />
       </MobileFooter>
     </Container>
