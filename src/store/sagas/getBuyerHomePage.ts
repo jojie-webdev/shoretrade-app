@@ -34,86 +34,63 @@ function* getBuyerHomepageRequest(
 
 function* getBuyerHomepagePatchRemaining(action: Action<any>) {
   const state: Store = yield select();
-  const homeState = state.getBuyerHomepage.data;
-  // findindex of id
-  const realtimeRemaining: {
-    id: string;
+  const buyerHomepageData = state.getBuyerHomepage.data;
+  if (buyerHomepageData) {
+    const recentListingLens = lensPath(['data', 'data', 'recentListing']);
+    const recentListings: GetBuyerHomepageResponseListingItem[] = view(
+      recentListingLens,
+      buyerHomepageData
+    );
 
-    remaining: number;
-  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
+    const favouriteListingLens = lensPath(['data', 'data', 'favouriteListing']);
+    const favouriteListings: GetBuyerHomepageResponseListingItem[] = view(
+      favouriteListingLens,
+      buyerHomepageData
+    );
 
-  let idx = -1;
-  try {
-    if (homeState && homeState.data.data.recentListing) {
-      const homePageDataLens = lensPath(['data', 'data']);
-      const homePageData: {
-        recentListing: GetBuyerHomepageResponseListingItem[];
-        favouriteListing: GetBuyerHomepageResponseListingItem[];
-      } = view(homePageDataLens, homeState);
-      let modifiedRecentListings: GetBuyerHomepageResponseListingItem[] = [];
-      let modifiedFavouriteListings: GetBuyerHomepageResponseListingItem[] = [];
+    const realtimeRemaining: {
+      id?: string;
+      remaining?: number;
+    } = pathOr({}, ['payload'], action);
 
-      idx = homePageData.recentListing.findIndex((i) =>
-        findProduct(i, realtimeRemaining.id)
+    if (typeof realtimeRemaining === 'object' && realtimeRemaining.id) {
+      const modifiedRecentListings = recentListings
+        .map((a) => {
+          if (a.id === realtimeRemaining.id) {
+            return {
+              ...a,
+              remaining: realtimeRemaining.remaining,
+            };
+          }
+          return a;
+        })
+        .filter((a) => (a.remaining || 0) > 0);
+
+      const modifiedFavouriteListings = favouriteListings
+        .map((a) => {
+          if (a.id === realtimeRemaining.id) {
+            return {
+              ...a,
+              remaining: realtimeRemaining.remaining,
+            };
+          }
+          return a;
+        })
+        .filter((a) => (a.remaining || 0) > 0);
+
+      let modifiedBuyerHomepageData: GetBuyerHomepagePayload = set(
+        recentListingLens,
+        modifiedRecentListings,
+        buyerHomepageData
       );
 
-      if (idx !== -1) {
-        if (realtimeRemaining.remaining !== 0) {
-          modifiedRecentListings = homePageData.recentListing.map((i) => {
-            if (i.id === realtimeRemaining.id) {
-              return {
-                ...i,
-                remaining: realtimeRemaining.remaining,
-              };
-            }
-            return i;
-          });
-        } else if (realtimeRemaining.remaining === 0) {
-          modifiedRecentListings = homePageData.recentListing.filter(
-            (i) => i.id !== realtimeRemaining.id
-          );
-        }
-      } else {
-        modifiedRecentListings = homePageData.recentListing;
-      }
-
-      idx = homePageData.favouriteListing.findIndex((i) =>
-        findProduct(i, realtimeRemaining.id)
+      modifiedBuyerHomepageData = set(
+        favouriteListingLens,
+        modifiedFavouriteListings,
+        modifiedBuyerHomepageData
       );
 
-      if (idx !== -1) {
-        if (realtimeRemaining.remaining !== 0) {
-          modifiedFavouriteListings = homePageData.favouriteListing.map((i) => {
-            if (i.id === realtimeRemaining.id) {
-              return {
-                ...i,
-                remaining: realtimeRemaining.remaining,
-              };
-            }
-            return i;
-          });
-        } else if (realtimeRemaining.remaining === 0) {
-          modifiedFavouriteListings = homePageData.favouriteListing.filter(
-            (i) => i.id !== realtimeRemaining.id
-          );
-        }
-      } else {
-        modifiedFavouriteListings = homePageData.favouriteListing;
-      }
-
-      const modifiedListings = {
-        ...homePageData,
-        recentListing: modifiedRecentListings,
-        favouriteListing: modifiedFavouriteListings,
-      };
-
-      const modifiedHomePageData: GetBuyerHomepagePayload = set(
-        homePageDataLens,
-        modifiedListings,
-        homeState
-      );
-
-      yield put(getBuyerHomepageActions.patch(modifiedHomePageData));
+      yield put(getBuyerHomepageActions.patch(modifiedBuyerHomepageData));
 
       const pathname: string = yield select(
         (state: Store) => state.router.location.pathname
@@ -125,15 +102,102 @@ function* getBuyerHomepagePatchRemaining(action: Action<any>) {
       const isBuyerCategories = pathname.includes('buyer/categories');
       if (
         isBuyerCategories ||
-        modifiedRecentListings === homePageData.recentListing
+        recentListings.findIndex((a) => a.id === realtimeRemaining.id) === -1
       ) {
         yield put(getBuyerHomepageActions.request());
       }
     }
-  } catch (err) {
-    console.log(err);
   }
-  // check each array in buyer homepage
+}
+
+function* getBuyerHomepagePatchUpdate(action: Action<any>) {
+  const state: Store = yield select();
+  const buyerHomepageData = state.getBuyerHomepage.data;
+  if (buyerHomepageData) {
+    const recentListingLens = lensPath(['data', 'data', 'recentListing']);
+    const recentListings: GetBuyerHomepageResponseListingItem[] = view(
+      recentListingLens,
+      buyerHomepageData
+    );
+
+    const favouriteListingLens = lensPath(['data', 'data', 'favouriteListing']);
+    const favouriteListings: GetBuyerHomepageResponseListingItem[] = view(
+      favouriteListingLens,
+      buyerHomepageData
+    );
+
+    const realtimeData: {
+      id?: string;
+      remaining?: number;
+      price?: string;
+      minimumOrder?: string;
+      boxes?: {
+        count: number;
+        id: string;
+        quantity: number;
+        weight: number;
+      }[];
+    } = pathOr({}, ['payload'], action);
+
+    if (typeof realtimeData === 'object' && realtimeData.id) {
+      const modifiedRecentListings = recentListings
+        .map((a) => {
+          if (a.id === realtimeData.id) {
+            return {
+              ...a,
+              remaining: realtimeData.remaining,
+              price: realtimeData.price,
+              minimumOrder: realtimeData.minimumOrder,
+            };
+          }
+          return a;
+        })
+        .filter((a) => (a.remaining || 0) > 0);
+
+      const modifiedFavouriteListings = favouriteListings
+        .map((a) => {
+          if (a.id === realtimeData.id) {
+            return {
+              ...a,
+              remaining: realtimeData.remaining,
+              price: realtimeData.price,
+              minimumOrder: realtimeData.minimumOrder,
+            };
+          }
+          return a;
+        })
+        .filter((a) => (a.remaining || 0) > 0);
+
+      let modifiedBuyerHomepageData: GetBuyerHomepagePayload = set(
+        recentListingLens,
+        modifiedRecentListings,
+        buyerHomepageData
+      );
+
+      modifiedBuyerHomepageData = set(
+        favouriteListingLens,
+        modifiedFavouriteListings,
+        modifiedBuyerHomepageData
+      );
+
+      yield put(getBuyerHomepageActions.patch(modifiedBuyerHomepageData));
+
+      const pathname: string = yield select(
+        (state: Store) => state.router.location.pathname
+      );
+
+      // if in categories screen or if recent listings does not include
+      //  target listing (ex. sold out via cart)
+      // manually refresh the whole buyer home page
+      const isBuyerCategories = pathname.includes('buyer/categories');
+      if (
+        isBuyerCategories ||
+        recentListings.findIndex((a) => a.id === realtimeData.id) === -1
+      ) {
+        yield put(getBuyerHomepageActions.request());
+      }
+    }
+  }
 }
 
 function* getBuyerHomepageWatcher() {
@@ -142,6 +206,7 @@ function* getBuyerHomepageWatcher() {
     socketActions.UPDATE_REMAINING_BOXES,
     getBuyerHomepagePatchRemaining
   );
+  yield takeLatest(socketActions.UPDATE_LISTING, getBuyerHomepagePatchUpdate);
 }
 
 export default getBuyerHomepageWatcher;

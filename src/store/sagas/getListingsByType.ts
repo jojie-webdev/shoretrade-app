@@ -35,51 +35,83 @@ function* getListingsByTypeRequest(
 
 function* getListingByTypePatchRemaining(action: Action<any>) {
   const state: Store = yield select();
-  const listingsByTypeData = state.getListingsByType.data;
-  const realtimeRemaining: {
-    id: string;
+  const getListingByTypeData = state.getListingsByType.data;
+  if (getListingByTypeData) {
+    const listingsLens = lensPath(['data', 'listings']);
+    const listings: GetListingsByTypeResponseListingItem[] = view(
+      listingsLens,
+      getListingByTypeData
+    );
+    const realtimeRemaining: {
+      id?: string;
+      remaining?: number;
+    } = pathOr({}, ['payload'], action);
 
-    remaining: number;
-  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
-  let idx = -1;
-  try {
-    if (listingsByTypeData && listingsByTypeData.data) {
-      const listingsLens = lensPath(['data', 'listings']);
-      const listingsData: GetListingsByTypeResponseListingItem[] = view(
+    if (typeof realtimeRemaining === 'object' && realtimeRemaining.id) {
+      const modifiedListings = listings.map((a) => {
+        if (a.id === realtimeRemaining.id) {
+          return {
+            ...a,
+            remaining: realtimeRemaining.remaining,
+          };
+        }
+        return a;
+      });
+
+      const modifiedGetListingData: GetListingsByTypePayload = set(
         listingsLens,
-        listingsByTypeData
+        modifiedListings,
+        getListingByTypeData
       );
-      let modifiedOrders: GetListingsByTypeResponseListingItem[] = [];
-      idx = listingsData.findIndex((i) => findProduct(i, realtimeRemaining.id));
-      if (idx !== -1) {
-        if (realtimeRemaining.remaining !== 0) {
-          modifiedOrders = listingsData.map((i) => {
-            if (i.id === realtimeRemaining.id) {
-              return {
-                ...i,
-                remaining: realtimeRemaining.remaining,
-              };
-            }
-            return i;
-          });
-        } else if (realtimeRemaining.remaining === 0) {
-          modifiedOrders = listingsData.filter(
-            (i) => i.id !== realtimeRemaining.id
-          );
-        }
 
-        const modifiedAllListing: GetListingsByTypePayload = set(
-          listingsLens,
-          modifiedOrders,
-          listingsByTypeData
-        );
-        if (listingsByTypeData) {
-          yield put(getListingsByTypeActions.patch(modifiedAllListing));
-        }
-      }
+      yield put(getListingsByTypeActions.patch(modifiedGetListingData));
     }
-  } catch (err) {
-    console.log(err);
+  }
+}
+
+function* getListingByTypePatchUpdate(action: Action<any>) {
+  const state: Store = yield select();
+  const getListingByTypeData = state.getListingsByType.data;
+  if (getListingByTypeData) {
+    const listingsLens = lensPath(['data', 'listings']);
+    const listings: GetListingsByTypeResponseListingItem[] = view(
+      listingsLens,
+      getListingByTypeData
+    );
+    const realtimeData: {
+      id?: string;
+      remaining?: number;
+      price?: string;
+      minimumOrder?: string;
+      boxes?: {
+        count: number;
+        id: string;
+        quantity: number;
+        weight: number;
+      }[];
+    } = pathOr({}, ['payload'], action);
+
+    if (typeof realtimeData === 'object' && realtimeData.id) {
+      const modifiedListings = listings.map((a) => {
+        if (a.id === realtimeData.id) {
+          return {
+            ...a,
+            remaining: realtimeData.remaining,
+            price: realtimeData.price,
+            minimumOrder: realtimeData.minimumOrder,
+          };
+        }
+        return a;
+      });
+
+      const modifiedGetListingData: GetListingsByTypePayload = set(
+        listingsLens,
+        modifiedListings,
+        getListingByTypeData
+      );
+
+      yield put(getListingsByTypeActions.patch(modifiedGetListingData));
+    }
   }
 }
 
@@ -89,6 +121,7 @@ function* getListingsByTypeWatcher() {
     socketActions.UPDATE_REMAINING_BOXES,
     getListingByTypePatchRemaining
   );
+  yield takeLatest(socketActions.UPDATE_LISTING, getListingByTypePatchUpdate);
 }
 
 export default getListingsByTypeWatcher;

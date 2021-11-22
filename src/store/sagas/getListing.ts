@@ -31,50 +31,70 @@ function* getListingRequest(
 function* getListingPatchRemaining(action: Action<any>) {
   const state: Store = yield select();
   const getListingData = state.getListing.data;
-  const realtimeRemaining: {
-    id: string;
+  if (getListingData) {
+    const idLens = lensPath(['data', 'listing', '0', 'id']);
+    const currentListingId: string = view(idLens, getListingData);
+    const realtimeRemaining: {
+      id?: string;
+      remaining?: number;
+    } = pathOr({}, ['payload'], action);
 
-    remaining: number;
-  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
-  let idx = -1;
-  try {
-    if (getListingData && getListingData.data) {
-      const listingLens = lensPath(['data', 'listing']);
-      const listingData: GetListingResponseItem[] = view(
-        listingLens,
+    if (
+      typeof realtimeRemaining === 'object' &&
+      realtimeRemaining.id &&
+      currentListingId === realtimeRemaining.id
+    ) {
+      const remainingLens = lensPath(['data', 'listing', '0', 'remaining']);
+
+      const modifiedGetListingData: GetListingPayload = set(
+        remainingLens,
+        realtimeRemaining.remaining,
         getListingData
       );
-      let modifiedListing: GetListingResponseItem[] = [];
-      idx = listingData.findIndex((i) => findProduct(i, realtimeRemaining.id));
-      if (idx !== -1) {
-        if (realtimeRemaining.remaining !== 0) {
-          modifiedListing = listingData.map((i) => {
-            if (i.id === realtimeRemaining.id) {
-              return {
-                ...i,
-                remaining: realtimeRemaining.remaining,
-              };
-            }
-            return i;
-          });
-        } else if (realtimeRemaining.remaining === 0) {
-          modifiedListing = listingData.filter(
-            (i) => i.id !== realtimeRemaining.id
-          );
-        }
 
-        const modifiedLstingData: GetListingPayload = set(
-          listingLens,
-          modifiedListing,
-          getListingData
-        );
-        if (getListingData) {
-          yield put(getListingActions.patch(modifiedLstingData));
-        }
-      }
+      yield put(getListingActions.patch(modifiedGetListingData));
     }
-  } catch (err) {
-    console.log(err);
+  }
+}
+
+function* getListingPatchUpdate(action: Action<any>) {
+  const state: Store = yield select();
+  const getListingData = state.getListing.data;
+  if (getListingData) {
+    const idLens = lensPath(['data', 'listing', '0', 'id']);
+    const currentListingId: string = view(idLens, getListingData);
+    const realtimeData: {
+      id?: string;
+      remaining?: number;
+      price?: string;
+      minimumOrder?: string;
+      boxes?: {
+        count: number;
+        id: string;
+        quantity: number;
+        weight: number;
+      }[];
+    } = pathOr({}, ['payload'], action);
+
+    if (
+      typeof realtimeData === 'object' &&
+      realtimeData.id &&
+      currentListingId === realtimeData.id
+    ) {
+      const modifiedGetListingData = [
+        'remaining',
+        'price',
+        'minimumOrder',
+      ].reduce((accum: GetListingPayload, key): GetListingPayload => {
+        const keyLens = lensPath(['data', 'listing', '0', key]);
+        // @ts-ignore
+        // key is guaranteed to be a property of realtimeData
+        const replacementData = realtimeData[key];
+        return set(keyLens, replacementData, accum);
+      }, getListingData);
+
+      yield put(getListingActions.patch(modifiedGetListingData));
+    }
   }
 }
 
@@ -84,6 +104,7 @@ function* getListingWatcher() {
     socketActions.UPDATE_REMAINING_BOXES,
     getListingPatchRemaining
   );
+  yield takeLatest(socketActions.UPDATE_LISTING, getListingPatchUpdate);
 }
 
 export default getListingWatcher;

@@ -78,12 +78,17 @@ function* getAllListingsPatchRemaining(action: Action<any>) {
   }
 }
 
+function* getAllListingsPatchUpdate(action: Action<any>) {
+  yield put(getAllListingsActions.request());
+}
+
 function* getAllListingsWatcher() {
   yield takeLatest(getAllListingsActions.REQUEST, getAllListingsRequest);
   yield takeLatest(
     socketActions.UPDATE_REMAINING_BOXES,
     getAllListingsPatchRemaining
   );
+  yield takeLatest(socketActions.UPDATE_LISTING, getAllListingsPatchUpdate);
 }
 
 export default getAllListingsWatcher;

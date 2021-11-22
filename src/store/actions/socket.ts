@@ -18,6 +18,7 @@ export const SocketEvents: Record<SOCKET_EVENT, string> = {
   CART_EXPIRY_WARNING: `${eventNS}/CART_EXPIRY_WARNING`,
   CART_EXPIRY_EXTENDED: `${eventNS}/CART_EXPIRY_EXTENDED`,
   CART_CLOSED: `${eventNS}/CART_CLOSED`,
+  UPDATE_LISTING: `${eventNS}/UPDATE_LISTING`,
 };
 
 const socketActions = {

@@ -9,7 +9,8 @@ export type SOCKET_EVENT =
   | 'CART_ITEM_REMOVED'
   | 'CART_EXPIRY_WARNING'
   | 'CART_EXPIRY_EXTENDED'
-  | 'CART_CLOSED';
+  | 'CART_CLOSED'
+  | 'UPDATE_LISTING';
 
 export type SocketState = {
   connected: boolean;

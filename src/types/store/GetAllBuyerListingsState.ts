@@ -23,7 +23,9 @@ export type GetAllBuyerListingResponseItem = {
   end_data: string;
   catch_date: string;
   created_at: string;
-  sortField?: string;
+  catch_recurrence: string | null;
+  remaining_weight: number;
+  total_weight: number;
 };
 
 export interface GetAllBuyerListingRequestOption {
@@ -40,6 +42,5 @@ export interface GetAllBuyerListingRequestOption {
 
 export type GetAllBuyerListingsPayload = GenericResponse<{
   token: string;
-  sortField: string;
   orders: GetAllBuyerListingResponseItem[];
 }>;

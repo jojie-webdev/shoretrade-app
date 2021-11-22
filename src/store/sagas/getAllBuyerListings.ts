@@ -107,6 +107,65 @@ function* getAllBuyerListingsPatchRemaining(action: Action<any>) {
   }
 }
 
+function* getAllBuyerListingsPatchUpdate(action: Action<any>) {
+  const state: Store = yield select();
+  const previousRequest = state.getAllBuyerListings.request;
+  const allListingState = state.getAllBuyerListings.data;
+  const realtimeData: {
+    id: string;
+    remaining: number;
+    price?: string;
+    minimumOrder?: string;
+    boxes?: {
+      count: number;
+      id: string;
+      quantity: number;
+      weight: number;
+    }[];
+  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
+  let idx = -1;
+
+  try {
+    if (allListingState && allListingState.data) {
+      const ordersLens = lensPath(['data', 'listings']);
+      const ordersData: GetAllBuyerListingResponseItem[] = view(
+        ordersLens,
+        allListingState
+      );
+      let modifiedOrders: GetAllBuyerListingResponseItem[] = [];
+      idx = ordersData.findIndex((i) => findProduct(i, realtimeData.id));
+      if (idx !== -1) {
+        if (realtimeData.remaining !== 0) {
+          modifiedOrders = ordersData.map((i) => {
+            if (i.id === realtimeData.id) {
+              return {
+                ...i,
+                price: realtimeData.price || i.price,
+                remaining_weight: realtimeData.remaining,
+              };
+            }
+            return i;
+          });
+
+          const modifiedAllListing: GetAllBuyerListingsPayload = set(
+            ordersLens,
+            modifiedOrders,
+            allListingState
+          );
+
+          yield put(getAllBuyerListingsActions.patch(modifiedAllListing));
+        } else if (realtimeData.remaining === 0) {
+          yield put(getAllBuyerListingsActions.request(previousRequest));
+        }
+      } else {
+        yield put(getAllBuyerListingsActions.request(previousRequest));
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function* getAllBuyerListingsWatcher() {
   yield takeLatest(
     getAllBuyerListingsActions.REQUEST,
@@ -119,6 +178,10 @@ function* getAllBuyerListingsWatcher() {
   yield takeLatest(
     socketActions.UPDATE_REMAINING_BOXES,
     getAllBuyerListingsPatchRemaining
+  );
+  yield takeLatest(
+    socketActions.UPDATE_LISTING,
+    getAllBuyerListingsPatchUpdate
   );
 }
 
