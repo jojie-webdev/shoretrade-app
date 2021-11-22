@@ -192,7 +192,7 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
               <div className="quantity-container">
                 <StyledBadge badgeColor={theme.grey.shade3}>
                   <BadgeText color="shade9" variant="overline">
-                    {properOffer?.weight || 0}
+                    {properOffer?.weight || 0}{' '}
                     {formatMeasurementUnit(props.buyerRequest.measurementUnit)}
                   </BadgeText>
                 </StyledBadge>

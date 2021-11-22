@@ -21,8 +21,12 @@ export const Container = styled.div`
     }
   }
 
-  .row-label {
+  .row-label-friendly-text {
     margin-top: 16px;
+    margin-bottom: 4px;
+  }
+
+  .row-label {
     margin-bottom: 8px;
   }
 
@@ -45,20 +49,10 @@ export const Container = styled.div`
   .textfield-col {
     margin-bottom: 16px;
     margin-top: 16px;
-    height: 64px;
-    .textfield > p:first-child {
-      position: absolute;
-      bottom: 64px;
+    height: auto;
 
-      @media ${BREAKPOINTS['sm']} {
-        bottom: 64px;
-      }
-      @media ${BREAKPOINTS['md']} {
-        bottom: 64px;
-      }
-    }
-    .textfield > div {
-      position: relative;
+    .friendly-text {
+      margin-bottom: 4px;
     }
   }
 
@@ -133,6 +127,12 @@ export const SummaryCard = styled.div`
   .header {
     font-family: 'Wilderness', serif;
     margin-top: 12px;
+  }
+
+  .header-product {
+    font-family: 'Wilderness', serif;
+    margin-top: 12px;
+    font-size: ${pxToRem(38)};
   }
 
   .value {

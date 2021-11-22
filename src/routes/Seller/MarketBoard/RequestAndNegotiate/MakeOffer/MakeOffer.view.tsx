@@ -135,7 +135,14 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               marginBottom: 32,
             }}
           />
-
+          <Typography
+            color="shade4"
+            className="row-label-friendly-text"
+            style={{ fontFamily: 'Media Sans' }}
+          >
+            What product do you have available to offer? You must select one
+            from each specification.
+          </Typography>
           {props.stateOptions.map((options, i) => {
             return (
               <div
@@ -151,13 +158,15 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 {options.map((o, i) => (
                   <div key={o.value}>
                     {i === 0 && (
-                      <Typography
-                        variant="overline"
-                        color="shade6"
-                        style={{ marginBottom: 8 }}
-                      >
-                        {o.groupName}
-                      </Typography>
+                      <>
+                        <Typography
+                          variant="overline"
+                          color="shade6"
+                          style={{ marginBottom: 8 }}
+                        >
+                          Specs {o.groupOrder}
+                        </Typography>
+                      </>
                     )}
                     <Interactions
                       backgroundColor={theme.grey.shade9}
@@ -180,25 +189,16 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               {pathOr('', ['specifications', '0'], errors)}
             </Error>
           ) : null}
-
+          <Typography
+            color="shade4"
+            className="row-label-friendly-text"
+            style={{ fontFamily: 'Media Sans' }}
+          >
+            What size product do you have or let the buyer know it’s ungraded?
+          </Typography>
           <Typography variant="overline" color="shade6" className="row-label">
             Size
           </Typography>
-          {props.buyerRequest.sizeFrom && (
-            <MetricContainer>
-              <Typography color="shade6" variant="overline">
-                Metric:
-              </Typography>
-              <Typography
-                style={{ marginLeft: '8px' }}
-                color="shade2"
-                variant="overline"
-              >
-                {props.buyerRequest.metric}
-              </Typography>
-            </MetricContainer>
-          )}
-
           <Row>
             {props.marketSizes.map((v) => (
               <Col key={v}>
@@ -242,155 +242,93 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           ) : null}
 
           <Row className="textfield-row">
-            <Hidden sm xs>
-              <Col md={4} className="textfield-col">
-                <TextField
-                  label="Quantity"
-                  className="textfield"
-                  LeftComponent={
-                    <Typography variant="label" weight="bold" color="shade6">
-                      {formatMeasurementUnit(
-                        props.buyerRequest.measurementUnit
-                      )}
-                    </Typography>
-                  }
-                  value={props.weight}
-                  onChangeText={props.setWeight}
-                  min={1}
-                  type="number"
-                  inputType="decimal"
-                  error={pathOr('', ['weight', '0'], errors)}
-                  borderRadius="12px"
-                  height="40px"
-                />
-              </Col>
-
-              <Col md={4} className="textfield-col">
-                <TextField
-                  className="textfield"
-                  label={`Price per ${formatMeasurementUnit(
-                    props.buyerRequest.measurementUnit
-                  )} (Inc. Delivery)`}
-                  LeftComponent={
-                    <Typography variant="label" weight="bold" color="shade6">
-                      $
-                    </Typography>
-                  }
-                  value={props.price}
-                  onChangeText={props.setPrice}
-                  min={1}
-                  type="number"
-                  inputType="decimal"
-                  error={pathOr('', ['price', '0'], errors)}
-                  borderRadius="12px"
-                  height="40px"
-                />
-
-                {/*<div className="shipping-to">*/}
-                {/*  <Typography variant="label" color="shade6">*/}
-                {/*    Shipping to*/}
-                {/*  </Typography>*/}
-                {/*  <Typography variant="label" color="noshade" weight="bold">*/}
-                {/*    {props.shippingTo}*/}
-                {/*  </Typography>*/}
-                {/*</div>*/}
-              </Col>
-
-              <Col md={4} className="textfield-col">
-                <DatePickerDropdown
-                  label="Delivery date"
-                  className="textfield"
-                  isOutsideRange={(date) =>
-                    date < new Date().setHours(0, 0, 0, 0)
-                  }
-                  date={props.deliveryDate ? moment(props.deliveryDate) : null}
-                  onDateChange={(d) =>
-                    props.setDeliveryDate(d?.toDate() || null)
-                  }
-                  error={pathOr('', ['deliveryDate', '0'], errors)}
-                  showCalendarIcon={true}
-                  showArrowDownIcon={false}
-                  borderRadius="12px"
-                  height="40px"
-                />
-              </Col>
-            </Hidden>
-
-            <Visible xs sm>
-              <Col xs={12}>
-                <Row>
-                  <Col xs={12} className="textfield-col">
-                    <TextField
-                      label="Quantity"
-                      LeftComponent={
-                        <Typography
-                          variant="label"
-                          weight="bold"
-                          color="shade6"
-                        >
-                          {formatMeasurementUnit(
-                            props.buyerRequest.measurementUnit
-                          )}
-                        </Typography>
-                      }
-                      className="textfield"
-                      value={props.weight}
-                      onChangeText={props.setWeight}
-                      min={1}
-                      type="number"
-                      inputType="decimal"
-                      error={pathOr('', ['weight', '0'], errors)}
-                      borderRadius="12px"
-                      height="40px"
-                    />
-                  </Col>
-                  <Col xs={12} className="textfield-col">
-                    <TextField
-                      className="textfield"
-                      label={`Price per ${formatMeasurementUnit(
-                        props.buyerRequest.measurementUnit
-                      )} (Inc. Delivery)`}
-                      value={props.price}
-                      LeftComponent={
-                        <Typography
-                          variant="label"
-                          weight="bold"
-                          color="shade6"
-                        >
-                          $
-                        </Typography>
-                      }
-                      onChangeText={props.setPrice}
-                      min={1}
-                      type="number"
-                      inputType="decimal"
-                      error={pathOr('', ['price', '0'], errors)}
-                      borderRadius="12px"
-                      height="40px"
-                    />
-                  </Col>
-                  <Col xs={12} className="textfield-col">
-                    <DatePickerDropdown
-                      isOutsideRange={(date) =>
-                        date < new Date().setHours(0, 0, 0, 0)
-                      }
-                      label="Delivery date"
-                      date={
-                        props.deliveryDate ? moment(props.deliveryDate) : null
-                      }
-                      onDateChange={(d) =>
-                        props.setDeliveryDate(d?.toDate() || null)
-                      }
-                      error={pathOr('', ['deliveryDate', '0'], errors)}
-                      showCalendarIcon={true}
-                      showArrowDownIcon={false}
-                      borderRadius="12px"
-                      height="40px"
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Visible>
+            <Col xs={12}>
+              <Row>
+                <Col xs={12} className="textfield-col">
+                  <Typography
+                    color="shade4"
+                    className="friendly-text"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    How much product are you willing to offer?
+                  </Typography>
+                  <TextField
+                    label="Quantity"
+                    LeftComponent={
+                      <Typography variant="label" weight="bold" color="shade6">
+                        {formatMeasurementUnit(
+                          props.buyerRequest.measurementUnit
+                        )}
+                      </Typography>
+                    }
+                    className="textfield"
+                    value={props.weight}
+                    onChangeText={props.setWeight}
+                    min={1}
+                    type="number"
+                    inputType="decimal"
+                    error={pathOr('', ['weight', '0'], errors)}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
+                <Col xs={12} className="textfield-col">
+                  <Typography
+                    className="friendly-text"
+                    color="shade4"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    How much do you want to charge for this product including
+                    delivery to {getShippingTo(props.buyerRequest.shippingTo)}?
+                  </Typography>
+                  <TextField
+                    className="textfield"
+                    label={`Price per ${formatMeasurementUnit(
+                      props.buyerRequest.measurementUnit
+                    )} (Inc. Delivery)`}
+                    value={props.price}
+                    LeftComponent={
+                      <Typography variant="label" weight="bold" color="shade6">
+                        $
+                      </Typography>
+                    }
+                    onChangeText={props.setPrice}
+                    min={1}
+                    type="number"
+                    inputType="decimal"
+                    error={pathOr('', ['price', '0'], errors)}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
+                <Col xs={12} className="textfield-col">
+                  <Typography
+                    className="friendly-text"
+                    color="shade4"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    When will you be able to deliver the product to the buyer?
+                  </Typography>
+                  <DatePickerDropdown
+                    isOutsideRange={(date) =>
+                      date < new Date().setHours(0, 0, 0, 0)
+                    }
+                    label="Delivery date"
+                    date={
+                      props.deliveryDate ? moment(props.deliveryDate) : null
+                    }
+                    onDateChange={(d) =>
+                      props.setDeliveryDate(d?.toDate() || null)
+                    }
+                    error={pathOr('', ['deliveryDate', '0'], errors)}
+                    showCalendarIcon={true}
+                    showArrowDownIcon={false}
+                    borderRadius="12px"
+                    height="40px"
+                  />
+                </Col>
+              </Row>
+            </Col>
           </Row>
 
           <div className="textfield-col shipping-from-col">
@@ -428,6 +366,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 Buyer Request
               </Typography>
               <div className="summary-border" />
+              <Typography
+                className="header-product"
+                color="noshade"
+                variant="title5"
+              >
+                {props.buyerRequest.type}
+              </Typography>
               {!isEmpty(props.buyerRequest.specifications) && (
                 <>
                   <Typography

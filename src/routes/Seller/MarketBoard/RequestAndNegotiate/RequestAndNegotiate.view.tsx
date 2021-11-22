@@ -538,7 +538,7 @@ const Step1 = ({
               {isReview
                 ? buyerRequest.weight?.from || 0
                 : activeOffer.weight || 0}
-              {unit}
+              {` ${unit}`}
             </BadgeText>
           </StyledBadge>
 
@@ -555,7 +555,7 @@ const Step1 = ({
               <StyledBadge badgeColor={theme.grey.shade3}>
                 <BadgeText color="shade9" variant="overline">
                   {buyerRequest.weight?.to || 0}
-                  {unit}
+                  {` ${unit}`}
                 </BadgeText>
               </StyledBadge>
             </>
