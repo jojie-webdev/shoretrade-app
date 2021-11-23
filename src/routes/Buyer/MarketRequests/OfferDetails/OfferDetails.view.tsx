@@ -4,8 +4,9 @@ import Alert from 'components/base/Alert';
 import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import { PlaceholderProfile, Star, StarFilled } from 'components/base/SVG';
+import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
@@ -95,6 +96,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   } = props;
 
   const history = useHistory();
+
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
       <Typography variant="label" color="shade7" weight="900">
@@ -281,21 +283,12 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <StyledNumberRating variant="caption" color="shade7">
                 {seller?.rating || 0}
               </StyledNumberRating>
-              {[...Array(5).keys()].map((r, i) =>
-                Number(seller?.rating || 0) > r ? (
-                  <div key={i} style={{ marginRight: '3px' }}>
-                    <StarFilled
-                      fill={theme.brand.alert}
-                      width={13}
-                      height={13}
-                    />
-                  </div>
-                ) : (
-                  <div key={i} style={{ marginRight: '3px' }}>
-                    <Star fill={theme.brand.alert} width={13} height={13} />
-                  </div>
-                )
-              )}
+              <StarRating
+                rating={seller?.rating || 0} 
+                spacing={3}
+                starSize={13}
+                unfilledColor={theme.brand.alert}
+              />
             </StarContainer>
 
             <Typography

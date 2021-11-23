@@ -7,8 +7,6 @@ import Button from 'components/base/Button';
 import {
   Expand,
   Location,
-  StarFilled,
-  Star,
   PlaceholderProfile,
   Pen,
   TrashCan,
@@ -16,6 +14,7 @@ import {
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import StarRating from 'components/base/StarRating';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Carousel from 'components/module/Carousel';
@@ -524,13 +523,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     {productDetails.vendor.name}
                   </Typography>
                   <div>
-                    {[...Array(5).keys()].map((r) =>
-                      Number(productDetails.vendor.rating || 0) > r ? (
-                        <StarFilled fill={theme.brand.alert} />
-                      ) : (
-                        <Star />
-                      )
-                    )}
+                    <StarRating
+                      rating={productDetails.vendor.rating || 0} 
+                      style={{ marginTop: '5px' }}
+                    />
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // import { useTheme } from 'utils/Theme';
 import { StarRatingProps } from './StarRating.props';
 import { Container, StarHolder } from './StarRating.style';
-import { Star, StarFilled } from 'components/base/SVG';
+import { Star, StarFilled, StarHalfFilled } from 'components/base/SVG';
 
 import { useTheme } from 'utils/Theme';
 
@@ -17,24 +17,30 @@ const StarRating = (props: StarRatingProps): JSX.Element => {
 
   const renderStars = () => {
     const starsFilled = useTemp ? tempRating : props.rating
-    return [...new Array(5).keys()].map(starCount =>
-      <StarHolder 
+    return [...new Array(5).keys()].map(starCount => {
+
+      const diff = starsFilled - starCount
+
+      return <StarHolder 
+        starSpacing={spacing} 
         editable={editable}
         onClick={() => editable && props.onChange && props.onChange(starCount + 1)}
         onMouseOver={() => editable && setTempRating(starCount + 1)}
       >
-        { starCount < starsFilled ? 
-          <StarFilled fill={filledColor || theme.brand.alert} width={starSize || 14} height={starSize || 14}/>
-          : <Star fill={unfilledColor || theme.grey.shade5} width={starSize || 14} height={starSize || 14}/>            
+        { diff < 1 && diff > 0 ? <StarHalfFilled fill={filledColor || theme.brand.alert} stroke={unfilledColor} width={starSize} height={starSize}/>
+          : diff > 0 ? <StarFilled fill={filledColor || theme.brand.alert} width={starSize} height={starSize}/>
+          : <Star fill={unfilledColor} width={starSize} height={starSize}/>
         }
       </StarHolder>
+    }
+      
     )
   }
  
   return (
     <Container 
+      starSize={starSize}
       style={style}
-      starSpacing={spacing || 3} 
       onMouseEnter={() => editable && setUseTemp(true)} 
       onMouseLeave={() => editable && setUseTemp(false)}
     >

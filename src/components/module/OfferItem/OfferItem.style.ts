@@ -117,12 +117,6 @@ export const NoActionsYetBadgesContainer = styled.div`
   }
 `;
 
-export const StarsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 12px;
-`;
-
 export const MajorInfoContainer = styled.div`
   margin-left: 12px;
   display: flex;

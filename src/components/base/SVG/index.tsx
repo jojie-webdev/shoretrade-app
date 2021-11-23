@@ -82,6 +82,7 @@ export { default as HeartFilled } from './HeartFilled';
 export { default as Heart } from './Heart';
 export { default as Star } from './Star';
 export { default as StarFilled } from './StarFilled';
+export { default as StarHalfFilled } from './StarHalfFilled';
 export { default as Oysters } from './Oysters';
 export { default as Download } from './Download';
 export { default as Fish } from './Fish';

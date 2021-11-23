@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import FavoriteButton from 'components/base/FavoriteButton';
-import { Star, StarFilled, PlaceholderProfile } from 'components/base/SVG';
+import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import StarRating from 'components/base/StarRating';
 import { useTheme } from 'utils/Theme';
 import { BREAKPOINTS } from './../../../consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
@@ -12,7 +13,6 @@ import {
   Row,
   FlexShrinked,
   RatingRow,
-  StarContainer,
   EndRow,
   AvatarContainer,
   AvatarPreview,
@@ -81,15 +81,10 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
                   rating || 0
               }
             </Typography>
-            {[...Array(5).keys()].map((r) => (
-              <StarContainer key={r} location={location}>
-                {Number(rating) > r ? (
-                  <StarFilled fill={theme.brand.alert} />
-                ) : (
-                  <Star />
-                )}
-              </StarContainer>
-            ))}
+            <StarRating
+              rating={Number(rating)} 
+              spacing={6}
+            />
           </RatingRow>
         </FlexShrinked>
         <EndRow>

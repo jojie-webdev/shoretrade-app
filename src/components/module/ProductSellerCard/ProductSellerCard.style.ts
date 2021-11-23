@@ -71,7 +71,3 @@ export const FlexShrinked = styled.div<{ showCursor?: boolean }>`
 
   cursor: ${({ showCursor }) => (showCursor ? 'pointer' : 'inherit')};
 `;
-
-export const StarContainer = styled.div<{ location?: string }>`
-  margin-right: 6px;
-`;

@@ -5,8 +5,8 @@ export interface StarRatingProps {
   onChange?: (rating: number) => void;
   starSize?: number;
   spacing?: number;
-  unfilledColor?: keyof Theme['brand'] | keyof Theme['grey'];
-  filledColor?: keyof Theme['brand'] | keyof Theme['grey'];
+  unfilledColor?: string;
+  filledColor?: string;
   style?: any;
   editable?: boolean
 }

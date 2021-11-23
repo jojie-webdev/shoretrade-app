@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
 import {
-  Star,
-  StarFilled,
   TrashCan,
   PlaceholderProfile,
   Crab,
@@ -12,6 +10,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
+import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import OfferTag from 'components/module/OfferTag';
@@ -40,7 +39,6 @@ import {
   MarketRequestItemInteractionContainer,
   TagsContainer,
   NoActionsYetBadgesContainer,
-  StarsContainer,
   MajorInfoContainer,
   OfferRowContainer,
   MajorInfoNonMobileContainer,
@@ -118,22 +116,6 @@ const Offer = (props: OfferItemProps) => {
     </div>
   );
 
-  const renderStars = () => (
-    <StarsContainer>
-      {[...Array(5).keys()].map((r, index) =>
-        Number(sellerOffer?.company?.rating || 0) > r ? (
-          <div key={index} id={index.toString()} style={{ marginRight: '3px' }}>
-            <StarFilled fill={theme.brand.alert} width={12} height={12} />
-          </div>
-        ) : (
-          <div key={index} id={index.toString()} style={{ marginRight: '3px' }}>
-            <Star fill={theme.brand.alert} width={12} height={12} />
-          </div>
-        )
-      )}
-    </StarsContainer>
-  );
-
   const renderOffersForMobile = (offer: any) => {
     const statusTextProps = transformMarketRequestStatusText(offer.statusText);
     return (
@@ -156,8 +138,12 @@ const Offer = (props: OfferItemProps) => {
             <Typography variant="label" style={{ lineHeight: '20px' }}>
               {sellerOffer?.company?.name}
             </Typography>
-
-            {renderStars()}
+            <StarRating
+              rating={sellerOffer?.company?.rating || 0} 
+              spacing={3}
+              starSize={12}
+              unfilledColor={theme.brand.alert}
+            />
           </MajorInfoContainer>
         </MajorInfo>
 
@@ -263,8 +249,12 @@ const Offer = (props: OfferItemProps) => {
                 >
                   {sellerOffer.company.name}
                 </Typography>
-
-                {renderStars()}
+                <StarRating
+                  rating={sellerOffer?.company?.rating || 0} 
+                  spacing={3}
+                  starSize={12}
+                  unfilledColor={theme.brand.alert}
+                />
               </MajorInfoNonMobileContainer>
             </Col>
 

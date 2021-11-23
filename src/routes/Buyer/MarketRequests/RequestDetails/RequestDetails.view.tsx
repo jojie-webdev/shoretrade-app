@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import {
   PlaceholderProfile,
-  Star,
-  StarFilled,
   Octopus,
   DropdownArrow,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import DialogModal from 'components/module/DialogModal';
 import EmptyStateView from 'components/module/EmptyState';
@@ -55,8 +54,6 @@ export const OffersSellerAccordionContent = (props: {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const { sellerName, sellerLocation, sellerRating, image } = props;
-  const starHeight = 16;
-  const starWidth = 16;
 
   const displayForNonMobile = () => (
     <OffersSellerAccordionContentContainer>
@@ -77,23 +74,12 @@ export const OffersSellerAccordionContent = (props: {
             <span className="value">{sellerRating}</span>
           </div>
           <div>
-            {sellerRating
-              ? [...Array(5).keys()].map((r) =>
-                  Number(sellerRating || 0) > r ? (
-                    <StarFilled
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  ) : (
-                    <Star
-                      fill={theme.brand.alert}
-                      width={starWidth}
-                      height={starHeight}
-                    />
-                  )
-                )
-              : ''}
+            <StarRating
+              rating={sellerRating || 0} 
+              spacing={3}
+              starSize={16}
+              unfilledColor={theme.brand.alert}
+            />
           </div>
         </div>
       </div>
