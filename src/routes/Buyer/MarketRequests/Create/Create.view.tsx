@@ -564,14 +564,20 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const SentRequestDescription = () => {
     return (
       <div>
-        <Typography variant="body">
+        <Typography color="shade7" variant="body">
           Your request has been sent to our network of sellers.
         </Typography>
         <br />
-        <Typography variant="body" weight="bold">
+        <Typography
+          style={{ fontFamily: 'Media Sans' }}
+          color="shade7"
+          variant="body"
+          weight="bold"
+        >
           What happens next?
         </Typography>
-        <Typography variant="body">
+        <br />
+        <Typography color="shade7" variant="body">
           <ol>
             <li>
               You will receive offers directly from our authorised sellers which
@@ -587,7 +593,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             </li>
           </ol>
         </Typography>
-        <Typography variant="body">
+        <Typography color="shade7" variant="body">
           You can review your requests and offers in my ‘Market Requests’
         </Typography>
       </div>
@@ -613,7 +619,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         onClickClose={() => onConfirmSentRequest({ continue: false })}
         title="Market Request Sent"
         action={() => onConfirmSentRequest({ continue: true })}
-        actionText="Continue"
+        actionText="View Requests"
         hideCancel={true}
         description={<SentRequestDescription />}
       />

@@ -68,7 +68,7 @@ const SummaryView = (props: SummaryProps) => {
     const { items, label } = props;
 
     if (!items) return <></>;
-
+ 
     const tagsMarkup = items.map((item, index) => (
       <Badge
         key={index}
@@ -99,7 +99,7 @@ const SummaryView = (props: SummaryProps) => {
     );
   };
 
-  const sizeSummary = () => {
+  const sizeSummary = () => { 
     if (selectedSize.ungraded === true) {
       return <SummaryBadges label="Size" items={['Ungraded']} />;
     }
@@ -198,26 +198,15 @@ const SummaryView = (props: SummaryProps) => {
               {listingFormData?.type.name}
             </Typography>
             <Typography variant="label" weight="400" color="shade7">
-              Review the details of your Market Request and select your shipping
-              address. If you need to make any changes, click the relevant
-              section above. Once you’re ready, press Send Market Request.
+              Review the details of your request and select your shipping
+              address. If you need to edit your request simply go back and
+              update before sending your market request.
             </Typography>
           </TitleContainer>
         </MainContainer>
       </CreateRequestHeaderContainer>
       <RequestRow>
         <ContainerWithCategoryImagePreview>
-          <FriendlyTextContainer>
-            <Typography
-              color="shade10"
-              className="row-label-friendly-text"
-              style={{ fontFamily: 'Media Sans' }}
-            >
-              Review the details of your request and select your shipping
-              address. If you need to edit your request simply go back and
-              update before sending your market request.
-            </Typography>
-          </FriendlyTextContainer>
           <SummaryContentContainer>
             {selectedSpecifications?.items.length > 0 && (
               <>

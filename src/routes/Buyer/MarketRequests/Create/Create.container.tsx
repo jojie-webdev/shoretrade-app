@@ -164,6 +164,7 @@ const CreateRequest = (): JSX.Element => {
 
   const onConfirmSentRequest = (props: ConfirmSentRequestModalProps) => {
     setShowSentModal(false);
+    dispatch(createMarketRequestActions.clear());
     if (props.continue) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.LANDING);
     }
