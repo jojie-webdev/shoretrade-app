@@ -1,9 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
 export type AddDetailsPublicProps = {
   onUpdateDetails: ({
     pricePerKilo,
+    auctionDate,
     catchDate,
     ends,
     origin,
@@ -11,9 +14,14 @@ export type AddDetailsPublicProps = {
     addressId,
     alwaysAvailable,
     isAquafuture,
+    isAuctionSale,
+    isPreAuctionSale,
   }: {
     isAquafuture: boolean;
+    isAuctionSale: boolean;
+    isPreAuctionSale: boolean;
     pricePerKilo: number;
+    auctionDate: Date | null;
     catchDate: Date | null;
     catchRecurrence: string | null;
     ends: Date | null;

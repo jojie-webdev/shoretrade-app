@@ -3,6 +3,8 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
+import Interactions from 'components/base/Interactions';
+import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
 import { Calendar, DollarSign, InfoFilled } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
@@ -29,9 +31,20 @@ import {
 import { toPrice } from 'utils/String/toPrice';
 
 import { AddDetailsProps } from './AddDetails.props';
-import { Container, CheckboxContainer } from './AddDetails.style';
+import {
+  Container,
+  CheckboxContainer,
+  CustomCol,
+  DatePickerTop,
+} from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
-import { isValid, isDateRangeValid, isValidAlt } from './AddDetails.validation';
+import {
+  isValid,
+  isDateRangeValid,
+  isValidAlt,
+  isValidAuction,
+  isValidPreAuction,
+} from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
 const timeOptions = [...Array(48)].map((v, i) => {
@@ -55,6 +68,24 @@ const catchRecurrenceOptions = [
   { label: 'Fortnightly', value: 'FORTNIGHTLY' },
 ];
 
+const SALES_CHANNELS = [
+  {
+    value: 'direct',
+    name: 'Direct Sale',
+    description: 'Supplier currently has – going to sell immediately',
+  },
+  {
+    value: 'aquafuture',
+    name: 'Aquafuture',
+    description: 'If this product will be caught by a future date',
+  },
+  {
+    value: 'auction',
+    name: 'Auction',
+    description: 'Goes into all listings under Auction',
+  },
+];
+
 const AddDetails = ({
   isBulkUpload,
   editableListing,
@@ -76,13 +107,36 @@ const AddDetails = ({
       : false
   );
 
-  const [isAquafuture, setIsAquaFuture] = useState<boolean>(
+  const [selectedChannel, setSelectedChannel] = useState(
+    editableListing?.isAquafuture
+      ? SALES_CHANNELS[1].value
+      : editableListing.isAuctionSale
+      ? SALES_CHANNELS[2].value
+      : SALES_CHANNELS[0].value
+  );
+
+  const [isAquafuture, setIsAquafuture] = useState<boolean>(
     !!editableListing?.isAquafuture
+  );
+
+  const [isAuctionSale, setIsAuctionSale] = useState<boolean>(
+    !!editableListing?.isAuctionSale
+  );
+
+  const [isPreAuctionSale, setIsPreAuctionSale] = useState<boolean>(
+    !!editableListing?.isPreAuctionSale
   );
 
   const [price, setPrice] = useState(
     editableListing?.pricePerKilo ? editableListing.pricePerKilo.toString() : ''
   );
+
+  const [auctionDate, setAuctionDate] = useState<Date | null>(
+    editableListing?.auctionDate
+      ? moment(editableListing?.auctionDate).toDate()
+      : null
+  );
+
   const [catchDate, setCatchDate] = useState<Date | null>(
     editableListing?.catchDate
       ? moment(editableListing?.catchDate).toDate()
@@ -156,6 +210,10 @@ const AddDetails = ({
       );
     }
 
+    if (auctionDate && !isAuctionSale) {
+      setErrors(isValid({ auctionDate }));
+    }
+
     if (origin) {
       setErrors(
         isValid({
@@ -186,7 +244,12 @@ const AddDetails = ({
       );
     }
 
-    if (catchDate && listingEndDate && listingEndTime && !alwaysAvailable) {
+    if (
+      catchDate &&
+      listingEndDate &&
+      listingEndTime &&
+      !(alwaysAvailable || isAuctionSale)
+    ) {
       setErrors(
         isValid({
           catchDate,
@@ -199,10 +262,17 @@ const AddDetails = ({
         })
       );
     }
-  }, [catchDate, origin, listingEndDate, listingEndTime, shippingAddress]);
+  }, [
+    catchDate,
+    auctionDate,
+    origin,
+    listingEndDate,
+    listingEndTime,
+    shippingAddress,
+  ]);
 
   const toggleAlwaysAvailable = () => {
-    if (isAquafuture) return;
+    if (isAquafuture || isAuctionSale) return;
 
     if (!editableListing?.isAquafuture) {
       setAlwaysAvailable((prevState) => !prevState);
@@ -212,10 +282,35 @@ const AddDetails = ({
   };
 
   const onNext = () => {
-    const detailsError = alwaysAvailable
-      ? isValidAlt({ price, catchRecurrence, origin, shippingAddress })
-      : isValid({
+    let detailsError: any;
+    switch (true) {
+      case isPreAuctionSale:
+        detailsError = isValidPreAuction({
           price,
+          catchDate,
+          auctionDate,
+          origin,
+        });
+        break;
+      case isAuctionSale:
+        detailsError = isValidAuction({
+          catchDate,
+          auctionDate,
+          origin,
+        });
+        break;
+      case alwaysAvailable:
+        detailsError = isValidAlt({
+          price,
+          catchRecurrence,
+          origin,
+          shippingAddress,
+        });
+        break;
+      default:
+        detailsError = isValid({
+          price,
+          auctionDate,
           catchDate,
           origin,
           listingEndDate,
@@ -229,6 +324,8 @@ const AddDetails = ({
                 )
               : false,
         });
+        break;
+    }
 
     const isEmptyError = Object.keys(detailsError).every(
       (k) => detailsError[k].length === 0
@@ -247,10 +344,35 @@ const AddDetails = ({
       ) {
         onUpdateDetails({
           isAquafuture,
+          isAuctionSale,
+          isPreAuctionSale,
           pricePerKilo: Number(price),
           catchDate,
+          auctionDate,
           catchRecurrence: null,
           ends: combineDateTime(listingEndDate, listingEndTime),
+          origin: placeDataToOrigin(origin),
+          description,
+          addressId: shippingAddress,
+          alwaysAvailable: false,
+        });
+      } else if (
+        isEmptyError &&
+        isAuctionSale &&
+        (!isPreAuctionSale || price.length > 0) &&
+        auctionDate &&
+        catchDate &&
+        origin
+      ) {
+        onUpdateDetails({
+          isAquafuture: false,
+          isAuctionSale,
+          isPreAuctionSale,
+          pricePerKilo: Number(price),
+          catchDate,
+          auctionDate,
+          catchRecurrence: null,
+          ends: null,
           origin: placeDataToOrigin(origin),
           description,
           addressId: shippingAddress,
@@ -267,7 +389,10 @@ const AddDetails = ({
       ) {
         onUpdateDetails({
           isAquafuture,
+          isAuctionSale,
+          isPreAuctionSale,
           pricePerKilo: Number(price),
+          auctionDate,
           catchDate: null,
           catchRecurrence,
           ends: null,
@@ -289,15 +414,29 @@ const AddDetails = ({
         )} in the past 14 days`
       : 'No Data Available';
 
-  const handleToggleAquaFuture = () => {
+  const handleToggleAquafuture = () => {
     if (editableListing.isAlreadyCreated) return;
-    setIsAquaFuture((prevState) => !prevState);
+    setIsAquafuture((prevState) => !prevState);
     setAlwaysAvailable(false);
+    setIsAuctionSale(false);
+  };
+
+  const handleToggleAuctionSale = () => {
+    if (editableListing.isAlreadyCreated) return;
+    setIsAuctionSale((prevState) => !prevState);
+    setAlwaysAvailable(false);
+    setIsAquafuture(false);
+  };
+
+  const handleToggleDirect = () => {
+    if (editableListing.isAlreadyCreated) return;
+    setIsAquafuture(false);
+    setIsAuctionSale(false);
   };
 
   return (
     <Container>
-      <Row>
+      {/* <Row>
         <Col>
           <Alert
             variant="infoAlert"
@@ -306,8 +445,82 @@ const AddDetails = ({
             style={{ marginBottom: 16 }}
           />
         </Col>
+      </Row> */}
+      <Row>
+        <Col>
+          <Typography
+            variant="title6"
+            color="noshade"
+            className="title"
+            style={{
+              fontFamily: 'Media Sans',
+              lineHeight: '24px',
+              marginBottom: '8px',
+            }}
+          >
+            Sales Channel
+          </Typography>
+        </Col>
       </Row>
-      {!isBulkUpload && (
+      <Row style={{ marginLeft: 0 }}>
+        {SALES_CHANNELS.map((c) => (
+          <CustomCol key={c.value} sm={4} md={3}>
+            <Interactions
+              padding="12px"
+              onClick={() => {
+                setSelectedChannel((prevState) => {
+                  if (prevState === c.value) return '';
+                  else return c.value;
+                });
+                if (c.value === 'aquafuture') {
+                  handleToggleAquafuture();
+                } else if (c.value === 'auction') {
+                  handleToggleAuctionSale();
+                } else {
+                  handleToggleDirect();
+                }
+              }}
+              leftComponent={
+                <Typography
+                  variant="label"
+                  color="noshade"
+                  style={{
+                    paddingTop: '28px',
+                    fontSize: '18px',
+                    lineHeight: '24px',
+                  }}
+                >
+                  {c.name}
+                </Typography>
+              }
+              rightComponent={<Radio checked={c.value === selectedChannel} />}
+              bottomComponent={
+                <Typography variant="caption" color="shade6">
+                  {c.description}
+                </Typography>
+              }
+            />
+          </CustomCol>
+        ))}
+      </Row>
+      <Row>
+        <Col>
+          <Typography
+            variant="title6"
+            color="noshade"
+            className="title"
+            style={{
+              fontFamily: 'Media Sans',
+              lineHeight: '24px',
+              marginTop: '40px',
+              marginBottom: '8px',
+            }}
+          >
+            Product Information
+          </Typography>
+        </Col>
+      </Row>
+      {/* {!isBulkUpload && (
         <CheckboxContainer>
           <Typography variant={'overline'} color={'shade6'}>
             Optional Listing Type
@@ -316,7 +529,7 @@ const AddDetails = ({
             <Col>
               <div className="toolip-container">
                 <Checkbox
-                  onClick={handleToggleAquaFuture}
+                  onClick={handleToggleAquafuture}
                   checked={isAquafuture}
                   label="Aquafuture"
                   disabled={editableListing?.isAlreadyCreated}
@@ -349,47 +562,103 @@ const AddDetails = ({
             </Col>
           </Row>
         </CheckboxContainer>
-      )}
+      )} */}
 
-      <Row className="textfield-row">
-        <Col md={6} className="textfield-col">
-          <TextField
-            inputType="decimal"
-            label={`Price per ${formatUnitToPricePerUnit(
-              formatMeasurementUnit(listingFormData?.measurementUnit)
-            )} (excluding freight)`}
-            LeftComponent={<DollarSign height={15} width={15} />}
-            value={price}
-            onChangeText={(v) => {
-              if (!Number.isNaN(Number(v))) {
-                setPrice(
-                  v.includes('.') && v.split('.')[1].length >= 2
-                    ? parseFloat(v).toFixed(2).toString()
-                    : v
-                );
+      {isAuctionSale && (
+        <Row className="textfield-row" style={{ marginTop: '16px' }}>
+          <Col sm={12} md={8} className="textfield-col">
+            <Checkbox
+              onClick={() => setIsPreAuctionSale((prevState) => !prevState)}
+              checked={isPreAuctionSale}
+              label="Pre-Auction – Allow for this product to be sold while on it’s way to Auction"
+              error={pathOr('', ['isPreAuctionSale', '0'], errors)}
+              typographyProps={{ variant: 'label', weight: 'normal' }}
+            />
+          </Col>
+        </Row>
+      )}
+      {(!isAuctionSale || (isAuctionSale && isPreAuctionSale)) && (
+        <Row className="textfield-row">
+          <Col md={6} className="textfield-col">
+            <TextField
+              inputType="decimal"
+              label={`Price per ${formatUnitToPricePerUnit(
+                formatMeasurementUnit(listingFormData?.measurementUnit)
+              )} (excluding freight)`}
+              LeftComponent={<DollarSign height={15} width={15} />}
+              value={price}
+              onChangeText={(v) => {
+                if (!Number.isNaN(Number(v))) {
+                  setPrice(
+                    v.includes('.') && v.split('.')[1].length >= 2
+                      ? parseFloat(v).toFixed(2).toString()
+                      : v
+                  );
+                }
+              }}
+              error={pathOr('', ['price', '0'], errors)}
+              onBlur={() => {
+                setErrors(isValid({ price }));
+              }}
+              RightComponent={
+                <Typography
+                  variant="overlineSmall"
+                  color="shade6"
+                  style={{ paddingRight: '14px' }}
+                >
+                  AUD
+                </Typography>
               }
-            }}
-            error={pathOr('', ['price', '0'], errors)}
-            onBlur={() => {
-              setErrors(isValid({ price }));
-            }}
-          />
-        </Col>
-        <Col md={6} className="textfield-col">
-          {!alwaysAvailable ? (
+            />
+          </Col>
+        </Row>
+      )}
+      {isAuctionSale && (
+        <Row className="textfield-row">
+          <Col sm={12} md={6} className="textfield-col">
             <DatePickerDropdown
               placeholder=""
-              label="Catch Date"
-              date={catchDate ? moment(catchDate) : null}
-              onDateChange={(d) => setCatchDate(d?.toDate() || null)}
-              error={
-                pathOr('', ['catchDate', '0'], errors) ||
-                pathOr('', ['isDateRangeValid', '0'], errors)
-              }
+              label="Auction date (date arriving at sfm)"
+              date={auctionDate ? moment(auctionDate) : null}
+              onDateChange={(d) => setAuctionDate(d?.toDate() || null)}
+              error={pathOr('', ['auctionDate', '0'], errors)}
               showCalendarIcon={true}
               showArrowDownIcon={true}
             />
-          ) : (
+          </Col>
+        </Row>
+      )}
+      <Row className="textfield-row">
+        <Col md={6} className="textfield-col">
+          {/* {!alwaysAvailable ? ( */}
+          <DatePickerDropdown
+            placeholder={alwaysAvailable ? 'Always Available' : ''}
+            label="Catch Date"
+            date={catchDate ? moment(catchDate) : null}
+            onDateChange={(d) => setCatchDate(d?.toDate() || null)}
+            error={
+              pathOr('', ['catchDate', '0'], errors) ||
+              pathOr('', ['isDateRangeValid', '0'], errors)
+            }
+            showCalendarIcon={true}
+            showArrowDownIcon={true}
+            topComponent={
+              !isAquafuture &&
+              !isAuctionSale && (
+                <DatePickerTop>
+                  <Checkbox
+                    onClick={toggleAlwaysAvailable}
+                    checked={alwaysAvailable}
+                    label="Always Available"
+                    disabled={editableListing?.isAlreadyCreated}
+                    error={pathOr('', ['alwaysAvailable', '0'], errors)}
+                    typographyProps={{ color: 'shade9', variant: 'label' }}
+                  />
+                </DatePickerTop>
+              )
+            }
+          />
+          {/* ) : (
             <Select
               value={catchRecurrence}
               onChange={(option) => {
@@ -399,8 +668,10 @@ const AddDetails = ({
               label="Catch Date"
               error={pathOr('', ['catchRecurrence', '0'], errors)}
             />
-          )}
+          )}*/}
         </Col>
+      </Row>
+      <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           <LocationSearch
             onSelect={(location) => {
@@ -416,24 +687,30 @@ const AddDetails = ({
             }}
           />
         </Col>
-        <Col md={6} className="textfield-col">
-          <Select
-            value={shippingAddress}
-            onChange={(option) => {
-              setShippingAddress(option.value);
-            }}
-            options={shippingAddressOptions}
-            label="Shipping Address"
-            error={pathOr('', ['shippingAddress', '0'], errors)}
-          />
-        </Col>
-        {!alwaysAvailable && (
-          <>
+      </Row>
+      {!isAuctionSale && (
+        <Row className="textfield-row">
+          <Col md={6} className="textfield-col">
+            <Select
+              value={shippingAddress}
+              onChange={(option) => {
+                setShippingAddress(option.value);
+              }}
+              options={shippingAddressOptions}
+              label="Shipping Address"
+              error={pathOr('', ['shippingAddress', '0'], errors)}
+            />
+          </Col>
+        </Row>
+      )}
+      {!alwaysAvailable && !isAuctionSale && (
+        <>
+          <Row className="textfield-row">
             <Col md={6} className="textfield-col">
               <DatePickerDropdown
                 className="date-picker"
                 placeholder=""
-                label="Listing valid until"
+                label="Listing valid until (Date)"
                 date={listingEndDate ? moment(listingEndDate) : null}
                 onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
                 error={
@@ -447,6 +724,8 @@ const AddDetails = ({
                 showArrowDownIcon={true}
               />
             </Col>
+          </Row>
+          <Row className="textfield-row">
             <Col md={6} className="textfield-col">
               <Select
                 value={listingEndTimeString}
@@ -461,12 +740,15 @@ const AddDetails = ({
                 }
               />
             </Col>
-          </>
-        )}
+          </Row>
+        </>
+      )}
 
+      <Row className="textfield-row">
         <Col md={12} className="textfield-col text-area">
           <TextArea
             label="Additional notes (Optional)"
+            placeholder="Enter any additional note here…"
             value={description}
             onChangeText={setDescription}
             autoHeight

@@ -445,6 +445,7 @@ const AddProduct = (): JSX.Element => {
   const onUpdateDetails = ({
     pricePerKilo,
     catchDate,
+    auctionDate,
     catchRecurrence,
     ends,
     origin,
@@ -452,8 +453,11 @@ const AddProduct = (): JSX.Element => {
     addressId,
     alwaysAvailable,
     isAquafuture,
+    isAuctionSale,
+    isPreAuctionSale,
   }: {
     pricePerKilo: number;
+    auctionDate: Date | null;
     catchDate: Date | null;
     catchRecurrence: string | null;
     ends: Date | null;
@@ -466,6 +470,8 @@ const AddProduct = (): JSX.Element => {
     addressId: string;
     alwaysAvailable: boolean;
     isAquafuture: boolean;
+    isAuctionSale: boolean;
+    isPreAuctionSale: boolean;
   }) => {
     if (isBulkUpload) {
       dispatch(
@@ -494,7 +500,10 @@ const AddProduct = (): JSX.Element => {
               }
             : {
                 isAquafuture,
+                isPreAuctionSale,
+                isAuctionSale,
                 pricePerKilo,
+                auctionDate,
                 catchDate,
                 catchRecurrence: null,
                 ends,
