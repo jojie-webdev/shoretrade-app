@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { marketOfferNegotiateActions } from 'store/actions';
+import {
+  getActiveOffersActions,
+  marketOfferNegotiateActions,
+} from 'store/actions';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
@@ -27,6 +30,9 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const buyerRequest = state.buyerRequest;
   const activeOffer = state.activeOffer;
+  const offerSentStatus = useSelector(
+    (state: Store) => state.marketOfferNegotiate.data?.status
+  );
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const buyerRequests = useSelector(
@@ -45,6 +51,7 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const [offer, setOffer] = useState<MarketOfferItem[]>([]);
   const [currentOfferItem, setCurrentOfferItem] = useState('');
+  const [showOfferSentModal, setShowOfferSentModal] = useState(false);
 
   const isNegotiating =
     useSelector((state: Store) => state.marketOfferNegotiate.pending) || false;
@@ -65,6 +72,23 @@ const RequestAndNegotiate = (): JSX.Element => {
     );
   };
 
+  const onConfirmSentOffer = () => {
+    setShowOfferSentModal(false);
+    dispatch(marketOfferNegotiateActions.clear());
+    dispatch(getActiveOffersActions.request({}));
+    history.push(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+      currentTab: 'My Active Offers',
+    });
+  };
+
+  useEffect(() => {
+    if (offerSentStatus === 200) {
+      setShowOfferSentModal(true);
+    } else {
+      setShowOfferSentModal(false);
+    }
+  }, [offerSentStatus]);
+
   if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
     return <></>;
@@ -82,6 +106,8 @@ const RequestAndNegotiate = (): JSX.Element => {
     isNegotiating,
     userPending,
     buyerRequestForActiveOfferTab,
+    showOfferSentModal,
+    onConfirmSentOffer,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API } from 'consts';
 import { CreateMarketOfferRequestData } from 'types/store/CreateMarketOfferState';
 import { DeleteMarketRequestMeta } from 'types/store/DeleteMarketRequestState';
-import { EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
+import { EditableMarketRequestMeta, EditableMarketRequestPayload } from 'types/store/EditableMarketRequest';
 import { NegotiateOfferMeta } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersMeta } from 'types/store/GetAllMarketRequestFiltersState';
 import { GetMarketRequestBuyerFiltersMeta } from 'types/store/GetMarketRequestBuyerFiltersState';
@@ -61,7 +61,7 @@ export const getActiveOffers = (token: string, queryString?: string) => {
 };
 
 export const createMarketRequest = (
-  data: EditableMarketRequestPayload,
+  data: EditableMarketRequestMeta,
   token: string
 ) => {
   return axios({

@@ -16,6 +16,7 @@ import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
   DetailsContainer,
+  FriendlyTextContainer,
   MainContainer,
   PreviousButton,
   ProceedButton,
@@ -121,6 +122,15 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
       <RequestRow>
         <ContainerWithCategoryImagePreview>
           <QuantityFormContainer>
+            <FriendlyTextContainer>
+              <Typography
+                color="shade10"
+                className="row-label-friendly-text"
+                style={{ fontFamily: 'Media Sans' }}
+              >
+                 How much product do you want to purchase?
+              </Typography>
+            </FriendlyTextContainer>
             <StyledTextField
               type="number"
               inputType="decimal"

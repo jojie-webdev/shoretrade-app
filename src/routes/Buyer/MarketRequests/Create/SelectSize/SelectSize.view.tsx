@@ -27,6 +27,7 @@ import {
   ButtonContainer,
   ProceedButton,
   PreviousButton,
+  FriendlyTextContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
 import {
@@ -300,6 +301,15 @@ const SelectSizeView = (props: SelectSizeProps) => {
           <SizeFormContainer>
             {listingFormData ? (
               <>
+                <FriendlyTextContainer>
+                  <Typography
+                    color="shade10"
+                    className="row-label-friendly-text"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    Select the size you would like.
+                  </Typography>
+                </FriendlyTextContainer>
                 <SizeInput
                   metric={listingFormData.metric.name}
                   fromSize={sizeToFrom.from}

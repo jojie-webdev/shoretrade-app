@@ -24,7 +24,9 @@ import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
+import LoadingOverlay from 'components/module/LoadingOverlay';
 import NumberedHeroView from 'components/module/NumberedHero';
+import { groupBy } from 'ramda';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { getTermsAndConditions } from 'utils/Links';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -46,19 +48,18 @@ import {
   LeftAbsoContainer,
   LeftGroupContainer,
   DetailsContentContainer,
-  DetailsHeaderContainer,
   DetailsDataContainer,
   MultipleBottomGroupContainer,
   MultipleLeftAbsoContainer,
   MultipleLeftGroupContainer,
   MultipleTopAbsoContainer,
   MultipleTopGroupContainer,
+  DetailsHeaderContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
 import SelectSpecificationsView from './SelectSpecifications/SelectSpecifications.view';
 import SummaryView from './Summary/Summary.view';
-import LoadingOverlay from 'components/module/LoadingOverlay';
 
 const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   const {
@@ -93,6 +94,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     didFinishStep,
     setDidFinishStep,
     isLoadingCreate,
+    showSentModal,
+    onConfirmSentRequest,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -103,6 +106,12 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     setTermsAgreement(true);
     setSearchTerm('');
     setStep(1);
+  };
+
+  const groupSpecs = () => {
+    return groupBy((a: any) => {
+      return `group${a.groupOrder}`;
+    }, selectedSpecifications.items);
   };
 
   const onSubmit = () => {
@@ -297,7 +306,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
               fontSize: 36,
             }}
           >
-            Specs:
+            Product
           </Typography>
           <DetailsDataContainer>
             <Cross7 />
@@ -312,14 +321,50 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                 lineHeight: '0.8em',
               }}
             >
-              {selectedSpecifications?.items?.map((i, index) => {
-                return index === selectedSpecifications?.items?.length - 1
-                  ? `${i.label} `
-                  : `${i.label}, `;
-              })}
+              {selectedCategory?.name}
             </Typography>
           </DetailsDataContainer>
         </DetailsContentContainer>
+        {selectedSpecifications.items.length > 0 && (
+          <DetailsContentContainer>
+            {Object.keys(groupSpecs()).map((group, index) => {
+              return (
+                <>
+                  <Typography
+                    color="shade6"
+                    variant="label"
+                    style={{
+                      marginBottom: 16,
+                      fontFamily: 'Wilderness',
+                      fontSize: 36,
+                    }}
+                  >
+                    Specs: {index + 1}
+                  </Typography>
+                  <DetailsDataContainer>
+                    <Cross7 />
+                    <Typography
+                      color="shade9"
+                      variant="label"
+                      style={{
+                        fontFamily: 'Wilderness',
+                        fontSize: 42,
+                        marginLeft: 8.5,
+                        marginTop: -8,
+                        lineHeight: '0.8em',
+                      }}
+                    >
+                      {groupSpecs()[group].map(
+                        (spec, i, arr) =>
+                          `${spec.label}${i < arr.length - 1 ? ', ' : ''}`
+                      )}
+                    </Typography>
+                  </DetailsDataContainer>
+                </>
+              );
+            })}
+          </DetailsContentContainer>
+        )}
         {((selectedSize?.items.length > 0 && selectedSize?.items[0] !== '') ||
           selectedSize?.from !== '') && (
           <DetailsContentContainer>
@@ -516,6 +561,39 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     return <LoadingOverlay />;
   }
 
+  const SentRequestDescription = () => {
+    return (
+      <div>
+        <Typography variant="body">
+          Your request has been sent to our network of sellers.
+        </Typography>
+        <br />
+        <Typography variant="body" weight="bold">
+          What happens next?
+        </Typography>
+        <Typography variant="body">
+          <ol>
+            <li>
+              You will receive offers directly from our authorised sellers which
+              you can accept or negotiate
+            </li>
+            <li>
+              Process payment within 24 hours for accepted offers to finalise
+              the order
+            </li>
+            <li>
+              Your Market Request will automatically close after 7 days or once
+              your maximum quantity is fulfilled
+            </li>
+          </ol>
+        </Typography>
+        <Typography variant="body">
+          You can review your requests and offers in my ‘Market Requests’
+        </Typography>
+      </div>
+    );
+  };
+
   return (
     <>
       <ConfirmationModal
@@ -529,6 +607,15 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
         style={{ width: 686, borderRadius: 12 }}
+      />
+      <ConfirmationModal
+        isOpen={showSentModal}
+        onClickClose={() => onConfirmSentRequest({ continue: false })}
+        title="Market Request Sent"
+        action={() => onConfirmSentRequest({ continue: true })}
+        actionText="Continue"
+        hideCancel={true}
+        description={<SentRequestDescription />}
       />
       {StepView({ step })}
       <ProgressBar progress={(step.current / step.total) * 100} />

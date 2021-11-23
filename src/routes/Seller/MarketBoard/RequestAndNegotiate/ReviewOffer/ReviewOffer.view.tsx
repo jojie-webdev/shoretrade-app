@@ -14,6 +14,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
@@ -111,6 +112,15 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   };
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={props.showOfferSentModal}
+        onClickClose={() => props.onConfirmOfferSentModal()}
+        title="Offer successfully sent"
+        action={() => props.onConfirmOfferSentModal()}
+        actionText="Continue"
+        hideCancel={true}
+        description="Your offer has been submitted and is ready for review by the buyer. This offer is not finalised until the Buyer has accepted and processed payment."
+      />
       <div style={{ maxWidth: 641 }}>
         <Alert
           variant="infoAlert"

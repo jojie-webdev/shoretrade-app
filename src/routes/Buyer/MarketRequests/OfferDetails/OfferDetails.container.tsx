@@ -49,6 +49,7 @@ const OfferDetails = (): JSX.Element => {
   );
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
   const [closeOnAccept, setCloseOnAccept] = useState(false);
+  const [showOfferSentModal, setShowOfferSentModal] = useState(false);
 
   const pendingConfirmOffer = useSelector(
     (state: Store) => state.marketRequestOfferConfirm.pending
@@ -81,6 +82,10 @@ const OfferDetails = (): JSX.Element => {
 
   const marketRequestNegotiateOfferPending = useSelector(
     (store: Store) => store.marketRequestNegotiation.pending
+  );
+
+  const offerSentStatus = useSelector(
+    (state: Store) => state.marketRequestNegotiation.data?.status
   );
 
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
@@ -147,6 +152,11 @@ const OfferDetails = (): JSX.Element => {
         })
       );
     }
+  };
+
+  const onConfirmSentOffer = () => {
+    setShowOfferSentModal(false);
+    history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
   };
 
   const submitNegotiation = (counterOffer: number) => {
@@ -233,6 +243,15 @@ const OfferDetails = (): JSX.Element => {
       setCountAcceptedWeight(acceptedWeights);
     }
   }, [activeOffersData]);
+
+  useEffect(() => {
+    if (offerSentStatus === 200) {
+      console.log(offerSentStatus);
+      setShowOfferSentModal(true);
+    } else {
+      setShowOfferSentModal(false);
+    }
+  }, [offerSentStatus]);
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -361,6 +380,8 @@ const OfferDetails = (): JSX.Element => {
     isLoadingConfirmOffer: confirmOffer.pending || false,
     isLoadingNegotiate: marketRequestNegotiateOfferPending || false,
     handlePayNow,
+    onConfirmSentOffer,
+    showOfferSentModal,
   };
 
   const getPrice = () => {

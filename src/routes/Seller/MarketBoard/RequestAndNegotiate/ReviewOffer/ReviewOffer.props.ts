@@ -7,4 +7,6 @@ export interface ReviewOfferGeneratedProps extends ReviewOfferProps {
   onDelete: (id: string) => void;
   onSubmit: () => void;
   isSubmitting: boolean;
+  showOfferSentModal: boolean;
+  onConfirmOfferSentModal: () => void;
 }

@@ -379,9 +379,10 @@ const Step1 = ({
           isOpen={isOpen}
           onClickClose={() => setIsOpen(false)}
           isNegotiating={props.isNegotiating}
-          onSubmit={(counterOffer) =>
-            props.onNegotiateOffer(activeOffer.id, counterOffer)
-          }
+          onSubmit={(counterOffer) => {
+            props.onNegotiateOffer(activeOffer.id, counterOffer);
+            setIsOpen(false);
+          }}
         />
       </>
     );
@@ -632,6 +633,25 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={props.showOfferSentModal}
+        onClickClose={() => props.onConfirmSentOffer()}
+        title="Offer submitted"
+        action={() => props.onConfirmSentOffer()}
+        actionText="View offers"
+        hideCancel={true}
+        description={
+          <>
+            <Typography color="noshade" variant="body">
+              The buyer will review your offer.{' '}
+            </Typography>
+            <Typography color="noshade" variant="body">
+              Please ensure you have notifications turned on so that you stay up
+              to date on this offer.
+            </Typography>
+          </>
+        }
+      />
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[

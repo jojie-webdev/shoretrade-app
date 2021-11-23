@@ -25,6 +25,7 @@ import {
   MultipleBottomGroupContainer,
   MultipleLeftAbsoContainer,
   MultipleLeftGroupContainer,
+  FriendlyTextContainer,
 } from '../Create.style';
 import {
   SpecificationFormContainer,
@@ -151,12 +152,33 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     getFilteredSpecifications().length >= selectedGroups.length;
 
   const getSpecsByGroup = (index: number) => {
-    return `Specification ${index + 1}`;
+    return `Specs ${index + 1}`;
   };
 
   useEffect(() => {
     setSelectedSpecifications({ items: selectedState.selectedStates });
   }, [selectedState.selectedStates]);
+
+  const SpecsFriendlyText = (props: { index: number }) => {
+    const idxToWordKeys = ['first', 'second', 'third', 'fourth'];
+    return (
+      <FriendlyTextContainer>
+        <Typography
+          color="shade10"
+          className="row-label-friendly-text"
+          style={{ fontFamily: 'Media Sans' }}
+        >
+          Please select your {idxToWordKeys[props.index]} specification
+        </Typography>
+        <Typography
+          color="shade6"
+          style={{ fontFamily: 'Basis Grotesque Pro' }}
+        >
+          You can select more than one.
+        </Typography>
+      </FriendlyTextContainer>
+    );
+  };
 
   return (
     <>
@@ -232,35 +254,35 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           <SpecificationFormContainer>
             <Hidden xs sm>
               {getFilteredSpecifications().map((group, index) => (
-                <div key={group[0].groupOrder} className="interaction-group">
-                  <LabelContainer>
-                    <Typography
-                      variant="overline"
-                      color="shade10"
-                      style={{ marginBottom: 12, marginRight: 4 }}
-                    >
-                      {getSpecsByGroup(index)}
-                    </Typography>
-                    <Typography variant="overline" color="shade6">
-                      (min. 1)
-                    </Typography>
-                  </LabelContainer>
-                  <div className="spec-row">
-                    {group.map((item) => (
-                      <Checkbox
-                        checked={
-                          selectedState.selectedStates.filter(
-                            (state) => state.value === item.value
-                          )[0]
-                        }
-                        value={item.value}
-                        onClick={() => handleStateCheck(item)}
-                        key={item.value}
-                        label={item.label}
-                      />
-                    ))}
+                <>
+                <SpecsFriendlyText index={index} />
+                  <div key={group[0].groupOrder} className="interaction-group">
+                    <LabelContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade10"
+                        style={{ marginBottom: 12, marginRight: 4 }}
+                      >
+                        {getSpecsByGroup(index)}
+                      </Typography>
+                    </LabelContainer>
+                    <div className="spec-row">
+                      {group.map((item) => (
+                        <Checkbox
+                          checked={
+                            selectedState.selectedStates.filter(
+                              (state) => state.value === item.value
+                            )[0]
+                          }
+                          value={item.value}
+                          onClick={() => handleStateCheck(item)}
+                          key={item.value}
+                          label={item.label}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               ))}
             </Hidden>
             <Visible xs sm>

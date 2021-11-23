@@ -55,21 +55,12 @@ function* negotiationOfferSuccess(
     ['payload', 'data', 'marketRequestId'],
     action
   );
-
   yield put(
     getActiveOffersActions.request({
       queryParams: {
         marketRequestId,
       },
     })
-  );
-  yield put(
-    replace(
-      BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS_OFFER(
-        marketRequestId,
-        marketOfferId
-      )
-    )
   );
 }
 

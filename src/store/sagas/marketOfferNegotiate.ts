@@ -37,11 +37,11 @@ function* negotiationOfferRequest(
 function* negotiationOfferSuccess(
   action: AsyncAction<NegotiateOfferMeta, NegotiatePayload>
 ) {
-  yield put(
-    replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-      currentTab: 'My Active Offers',
-    })
-  );
+  // yield put(
+  //   replace(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+  //     currentTab: 'My Active Offers',
+  //   })
+  // );
 }
 
 function* negotiationOfferWatcher() {

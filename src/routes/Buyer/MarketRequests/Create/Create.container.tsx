@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { BUYER_MARKET_REQUEST_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import {
   getListingFormDataActions,
   getMarketInterestsActions,
@@ -11,15 +13,23 @@ import {
 import { GetDefaultCompany, GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
-import { CreateRequestGeneratedProps } from './Create.props';
+import {
+  ConfirmSentRequestModalProps,
+  CreateRequestGeneratedProps,
+} from './Create.props';
 import CreateRequestLandingView from './Create.view';
 import { SizeOptions } from './SelectSize/SelectSize.props';
 
 const CreateRequest = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
+  const history = useHistory();
   const pendingCreate = useSelector(
     (state: Store) => state.createMarketRequest.pending
+  );
+
+  const successStatus = useSelector(
+    (state: Store) => state.createMarketRequest.data?.status
   );
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -28,6 +38,7 @@ const CreateRequest = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(1);
   const [didFinishStep, setDidFinishStep] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showSentModal, setShowSentModal] = useState(false);
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
     items: any[];
   }>({
@@ -151,6 +162,13 @@ const CreateRequest = (): JSX.Element => {
     );
   };
 
+  const onConfirmSentRequest = (props: ConfirmSentRequestModalProps) => {
+    setShowSentModal(false);
+    if (props.continue) {
+      history.push(BUYER_MARKET_REQUEST_ROUTES.LANDING);
+    }
+  };
+
   const typeSearchResults =
     useSelector(
       (state: Store) => state.searchProductType.data?.data.types || []
@@ -207,6 +225,14 @@ const CreateRequest = (): JSX.Element => {
     }
   }, [selectedCategory.id]);
 
+  useEffect(() => {
+    if (successStatus === 200) {
+      setShowSentModal(true);
+    } else {
+      setShowSentModal(false);
+    }
+  }, [successStatus]);
+
   const generatedProps: CreateRequestGeneratedProps = {
     didFinishStep,
     setDidFinishStep,
@@ -242,7 +268,9 @@ const CreateRequest = (): JSX.Element => {
     setSelectedAddress,
     onChangeAddress,
     updateCategory,
-    isLoadingCreate: pendingCreate || false
+    isLoadingCreate: pendingCreate || false,
+    showSentModal: successStatus === 200,
+    onConfirmSentRequest,
   };
 
   return <CreateRequestLandingView {...generatedProps} />;

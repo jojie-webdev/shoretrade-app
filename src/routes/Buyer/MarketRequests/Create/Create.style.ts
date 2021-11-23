@@ -281,7 +281,6 @@ export const RequestDetailsContainer = styled.div<{ currentStep?: number }>`
 
   margin-left: 16px;
   min-height: 312px;
-  max-height: 400px;
 `;
 
 export const DetailsHeaderContainer = styled.div`
@@ -374,4 +373,8 @@ export const ProceedButton = styled(Button)`
 
 export const StyledBreadCrumbs = styled(Breadcrumbs)`
   z-index: 9;
+`;
+
+export const FriendlyTextContainer = styled.div`
+  margin-bottom: 8px;
 `;

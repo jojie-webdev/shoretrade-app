@@ -1,4 +1,6 @@
-export type EditableMarketRequestState = Partial<{
+import { GenericResponse } from 'types/GenericResponse';
+
+export type EditableMarketRequestMeta = Partial<{
   typeId: string;
   typeName?: string;
   buyerId: string;
@@ -29,4 +31,4 @@ export interface Weight {
   to: number | null;
 }
 
-export type EditableMarketRequestPayload = EditableMarketRequestState;
+export type EditableMarketRequestPayload = GenericResponse;

@@ -5,7 +5,7 @@ import { createMarketRequest, acceptOffer } from 'services/marketRequest';
 // import editableMarketRequest from 'store/reducers/editableMarketRequest';
 import { AsyncAction } from 'types/Action';
 import {
-  EditableMarketRequestState,
+  EditableMarketRequestMeta,
   EditableMarketRequestPayload,
 } from 'types/store/EditableMarketRequest';
 import { Store } from 'types/store/Store';
@@ -17,7 +17,7 @@ import {
 } from '../actions';
 
 function* createMarketRequestDatabase(
-  action: AsyncAction<EditableMarketRequestState, EditableMarketRequestPayload>
+  action: AsyncAction<EditableMarketRequestMeta, EditableMarketRequestPayload>
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
@@ -37,10 +37,10 @@ function* createMarketRequestDatabase(
 }
 
 function* createMarketRequestSuccess(
-  action: AsyncAction<EditableMarketRequestState, EditableMarketRequestPayload>
+  action: AsyncAction<EditableMarketRequestMeta, EditableMarketRequestPayload>
 ) {
   yield put(editableMarketRequestActions.clear());
-  yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
+  // yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
 }
 
 function* createMarketRequestWatcher() {

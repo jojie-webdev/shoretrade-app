@@ -359,6 +359,25 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   return (
     <Container>
       <ConfirmationModal
+        isOpen={props.showOfferSentModal}
+        onClickClose={() => props.onConfirmSentOffer()}
+        title="Offer submitted"
+        action={() => props.onConfirmSentOffer()}
+        actionText="View offers"
+        hideCancel={true}
+        description={
+          <>
+            <Typography color="shade8" variant="body">
+              The seller will review your offer.{' '}
+            </Typography>
+            <Typography color="shade8" variant="body">
+              Please ensure you have notifications turned on so that you stay up
+              to date on this offer.
+            </Typography>
+          </>
+        }
+      />
+      <ConfirmationModal
         isOpen={showDelete}
         title="Delete Market Request"
         description="Are you sure you want to delete this market request?"

@@ -366,13 +366,27 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                 Buyer Request
               </Typography>
               <div className="summary-border" />
-              <Typography
-                className="header-product"
-                color="noshade"
-                variant="title5"
-              >
-                {props.buyerRequest.type}
-              </Typography>
+              {!isEmpty(props.buyerRequest.type) && (
+                <>
+                  <Typography
+                    className="header"
+                    color="shade6"
+                    variant="title5"
+                  >
+                    Product:
+                  </Typography>
+                  <div className="value">
+                    <Cross7 />
+                    <Typography
+                      className="values"
+                      color="noshade"
+                      variant="title5"
+                    >
+                      {props.buyerRequest.type}
+                    </Typography>
+                  </div>
+                </>
+              )}
               {!isEmpty(props.buyerRequest.specifications) && (
                 <>
                   <Typography

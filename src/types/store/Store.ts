@@ -1,5 +1,4 @@
 /* PLOP_INJECT_IMPORT */
-import { SendOrderRatingMeta, SendOrderRatingPayload } from './SendOrderRatingState';
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import { GenericResponse } from 'types/GenericResponse';
@@ -110,7 +109,10 @@ import {
   DeleteNotificationPayload,
 } from './DeleteNotificationState';
 import { EditableListingState } from './EditableListingState';
-import { EditableMarketRequestPayload, EditableMarketRequestState } from './EditableMarketRequest';
+import {
+  EditableMarketRequestPayload,
+  EditableMarketRequestMeta,
+} from './EditableMarketRequest';
 import { EndListingMeta, EndListingPayload } from './EndListingState';
 import {
   ForgotPasswordMeta,
@@ -260,6 +262,10 @@ import {
 } from './SearchProductTypeState';
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
+import {
+  SendOrderRatingMeta,
+  SendOrderRatingPayload,
+} from './SendOrderRatingState';
 import { SocketState } from './SocketState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
@@ -330,7 +336,7 @@ export interface Store {
     SearchProductTypePayload
   >;
   editableListing: EditableListingState;
-  editableMarketRequest: EditableMarketRequestState;
+  editableMarketRequest: EditableMarketRequestMeta;
   getListingFormData: AsyncState<
     GetListingFormDataMeta,
     GetListingFormDataPayload
@@ -492,7 +498,7 @@ export interface Store {
     CreateMarketOfferPayload
   >;
   createMarketRequest: AsyncState<
-    EditableMarketRequestState,
+    EditableMarketRequestMeta,
     EditableMarketRequestPayload
   >;
   getMarketNotification: AsyncState<

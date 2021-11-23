@@ -1,21 +1,21 @@
+import pathOr from 'ramda/es/pathOr';
 import { Action } from 'types/Action';
-
 import {
   EditableMarketRequestPayload,
-  EditableMarketRequestState,
+  EditableMarketRequestMeta,
 } from 'types/store/EditableMarketRequest';
-import pathOr from 'ramda/es/pathOr';
+
 import { editableMarketRequestActions } from '../actions';
 
-const DEFAULT_STATE: EditableMarketRequestState = {};
+const DEFAULT_STATE: EditableMarketRequestMeta = {};
 
-const DEFAULT_ACTION: Action<EditableMarketRequestPayload> = {
+const DEFAULT_ACTION: Action<EditableMarketRequestMeta> = {
   type: '',
   payload: {},
 };
 
 export default (state = DEFAULT_STATE, action = DEFAULT_ACTION) => {
-  const localReducer = (): EditableMarketRequestState => {
+  const localReducer = (): EditableMarketRequestMeta => {
     if (action.payload?.typeId) {
       return {
         companyId: state.companyId,

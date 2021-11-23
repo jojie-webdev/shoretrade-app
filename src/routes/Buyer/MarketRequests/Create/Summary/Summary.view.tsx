@@ -9,6 +9,7 @@ import { ArrowRight, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
+import { groupBy } from 'ramda';
 import { Row, Hidden, Visible } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
@@ -19,6 +20,7 @@ import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
   DetailsContainer,
+  FriendlyTextContainer,
   MainContainer,
   RequestDetailsContainer,
   RequestRow,
@@ -54,6 +56,12 @@ const SummaryView = (props: SummaryProps) => {
 
   const handleSubmit = () => {
     setSendConfModalisOpen(true);
+  };
+
+  const groupSpecs = () => {
+    return groupBy((a: any) => {
+      return `group${a.groupOrder}`;
+    }, selectedSpecifications.items);
   };
 
   const SummaryBadges = (props: { items: string[]; label: string }) => {
@@ -105,7 +113,7 @@ const SummaryView = (props: SummaryProps) => {
               color="shade10"
               variant="overline"
             >
-              Size 
+              Size
             </TypographyView>
             <Badge
               className="offers-state-badge"
@@ -199,11 +207,34 @@ const SummaryView = (props: SummaryProps) => {
       </CreateRequestHeaderContainer>
       <RequestRow>
         <ContainerWithCategoryImagePreview>
+          <FriendlyTextContainer>
+            <Typography
+              color="shade10"
+              className="row-label-friendly-text"
+              style={{ fontFamily: 'Media Sans' }}
+            >
+              Review the details of your request and select your shipping
+              address. If you need to edit your request simply go back and
+              update before sending your market request.
+            </Typography>
+          </FriendlyTextContainer>
           <SummaryContentContainer>
-            <SummaryBadges
-              label="Specs"
-              items={selectedSpecifications.items.map((spec) => spec.label)}
-            />
+            {selectedSpecifications?.items.length > 0 && (
+              <>
+                {Object.keys(groupSpecs()).map((group, index) => {
+                  return (
+                    <SummaryBadges
+                      items={groupSpecs()[group].map(
+                        (spec: any, i: any, arr: any[]) =>
+                          `${spec.label}${i < arr.length - 1 ? ', ' : ''}`
+                      )}
+                      key={index}
+                      label={`Specs ${index + 1}`}
+                    />
+                  );
+                })}
+              </>
+            )}
             <div className="size-container">{sizeSummary()}</div>
             <TypographyView
               style={{ marginBottom: '8px' }}
@@ -220,7 +251,7 @@ const SummaryView = (props: SummaryProps) => {
                     badgeColor={theme.grey.shade3}
                   >
                     <BadgeText color="shade9" weight="900" variant="overline">
-                      {selectedQuantity.from}
+                      {selectedQuantity.from}{' '}
                       {formatMeasurementUnit(listingFormData?.measurementUnit)}
                     </BadgeText>
                   </Badge>
@@ -246,7 +277,7 @@ const SummaryView = (props: SummaryProps) => {
                           weight="900"
                           variant="overline"
                         >
-                          {selectedQuantity.to}
+                          {selectedQuantity.to}{' '}
                           {formatMeasurementUnit(
                             listingFormData?.measurementUnit
                           )}
@@ -276,7 +307,8 @@ const SummaryView = (props: SummaryProps) => {
                     variant="caption"
                     style={{ marginLeft: 8, marginTop: 8 }}
                   >
-                    Your Market Request will automatically close after 7 days or once the maximum quantity requested is reached.
+                    Your Market Request will automatically close after 7 days or
+                    once the maximum quantity requested is reached.
                   </TypographyView>
                 </CheckboxContainer>
               </CheckboxMain>
