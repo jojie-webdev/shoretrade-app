@@ -42,11 +42,11 @@ function* createMarketRequestOfferDatabase(
 }
 
 function* createMarketRequestOfferSuccess() {
-  // yield put(
-  //   push(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-  //     currentTab: 'My Active Offers',
-  //   })
-  // );
+  yield put(
+    push(SELLER_MARKET_BOARD_ROUTES.LANDING, {
+      currentTab: 'My Active Offers',
+    })
+  );
 }
 
 function* createMarketRequestOfferWatcher() {
