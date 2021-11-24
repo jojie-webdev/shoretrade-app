@@ -156,6 +156,7 @@ const OfferDetails = (): JSX.Element => {
 
   const onConfirmSentOffer = () => {
     setShowOfferSentModal(false);
+    dispatch(marketRequestNegotiateOfferActions.clear());
     history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
   };
 

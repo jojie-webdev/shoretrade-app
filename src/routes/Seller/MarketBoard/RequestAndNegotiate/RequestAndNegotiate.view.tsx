@@ -15,10 +15,11 @@ import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
-import { isEmpty, pathOr, sortBy } from 'ramda';
+import { groupBy, isEmpty, pathOr, sortBy } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
 import { OfferStatus } from 'types/store/GetActiveOffersState';
+import { Specification } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
@@ -84,6 +85,13 @@ const Step1 = ({
 
     return [];
   };
+
+  const groupSpecs = groupBy((a: Specification) => `group${a.stateGroup}`)(
+    buyerRequest?.specifications || []
+  );
+  const offerGroupSpecs = groupBy((a: string) => `group${a}`)(
+    activeOffer?.specifications || []
+  );
 
   const SummaryBadges = (badgeProps: { items: string[]; label: string }) => {
     const { items, label } = badgeProps;
@@ -466,16 +474,42 @@ const Step1 = ({
       <div style={{ marginBottom: '16px' }} />
 
       <SummaryContentContainer>
-        <SummaryBadges
-          label="Specifications"
-          items={
-            isReview
-              ? buyerRequest.specifications
-                ? buyerRequest.specifications.map((v) => v.stateName)
-                : []
-              : activeOffer.specifications
-          }
-        />
+        {isReview && (
+          <Typography color="noshade" style={{ fontFamily: 'Media Sans' }}>
+            The buyer has requested the following items to be shipped to{' '}
+            {getAddressFromBuyerRequest()}.
+          </Typography>
+        )}
+        {isReview &&
+          Object.keys(groupSpecs).map((group, index) => {
+            return (
+              <>
+                <SummaryBadges
+                  label={`Specs ${index + 1}`}
+                  items={
+                    buyerRequest.specifications
+                      ? groupSpecs[group].map((spec, i, arr) => spec.stateName)
+                      : []
+                  }
+                />
+              </>
+            );
+          })}
+        {!isReview &&
+          Object.keys(offerGroupSpecs).map((group, index) => {
+            return (
+              <>
+                <SummaryBadges
+                  label={`Specs ${index + 1}`}
+                  items={
+                    activeOffer.specifications
+                      ? offerGroupSpecs[group].map((spec, i, arr) => spec)
+                      : []
+                  }
+                />
+              </>
+            );
+          })}
         {!isEmpty(getSizeBadge()) ? (
           <SummaryBadges label="Sizes" items={getSizeBadge()} />
         ) : (

@@ -204,7 +204,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
 
         return [...o, payload];
       });
-
+      props.setOfferSpecs(specifications);
       props.setCurrentOfferItem('');
       props.setStep && props.setStep(3);
     }

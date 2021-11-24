@@ -484,7 +484,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               />
 
               <div className="screen-wrapper">
-                <div className="screen">
+                <div id="screen" className="screen">
                   <Container
                     className="container"
                     style={{

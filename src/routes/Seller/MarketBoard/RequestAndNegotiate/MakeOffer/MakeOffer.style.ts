@@ -72,7 +72,7 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.grey.shade9};
     border-radius: 12px;
     padding: 16px;
-
+    margin-top: 48px;
     .sup-text-2 {
       color: ${({ theme }) => theme.grey.shade6};
       font-weight: normal;
@@ -145,6 +145,10 @@ export const SummaryCard = styled.div`
     font-family: 'Wilderness', serif;
     font-size: ${pxToRem(38)};
     margin-left: 6px;
+  }
+
+  .product-type {
+    margin-top: 16px;
   }
 `;
 

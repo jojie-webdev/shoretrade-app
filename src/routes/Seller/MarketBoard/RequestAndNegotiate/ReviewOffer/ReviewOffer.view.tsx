@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
@@ -17,12 +17,13 @@ import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { isEmpty } from 'ramda';
+import { groupBy, isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { sellerScreenScrollToTop } from 'utils/ScrollToTop';
 import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
@@ -110,6 +111,15 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
 
     return [];
   };
+
+  const groupSpecs = groupBy((a: any) => `group${a.groupOrder}`)(
+    props.offerSpecs || []
+  );
+
+  useEffect(() => {
+    sellerScreenScrollToTop();
+  }, []);
+
   return (
     <Container>
       <ConfirmationModal
@@ -117,9 +127,17 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         onClickClose={() => props.onConfirmOfferSentModal()}
         title="Offer successfully sent"
         action={() => props.onConfirmOfferSentModal()}
-        actionText="Continue"
+        actionText="View Offers"
         hideCancel={true}
-        description="Your offer has been submitted and is ready for review by the buyer. This offer is not finalised until the Buyer has accepted and processed payment."
+        description={
+          <>
+            <Typography variant="body" color="shade4">
+              Your offer has been submitted and is ready for review by the
+              buyer. This offer is not finalised until the Buyer has accepted
+              and processed payment.
+            </Typography>
+          </>
+        }
       />
       <div style={{ maxWidth: 641 }}>
         <Alert
@@ -137,17 +155,38 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
       </div>
 
       <SummaryContentContainer>
-        <SummaryBadges
-          label="Specifications"
-          items={properOffer.listStateOptions || []}
-        />
+        <Row>
+          <Col xs={12}>
+            <Typography
+              variant="title4"
+              color="noshade"
+              style={{ fontFamily: 'Media Sans', marginBottom: 24 }}
+            >
+              {properOffer.type || ''}
+            </Typography>
+          </Col>
+        </Row>
+
+        {Object.keys(groupSpecs).map((group, index) => {
+          return (
+            <Row style={{ marginBottom: 12 }} key={index}>
+              <Col xs={12}>
+                <SummaryBadges
+                  key={index}
+                  label={`Specs ${index + 1}`}
+                  items={groupSpecs[group].map((spec, i, arr) => spec.label)}
+                />
+              </Col>
+            </Row>
+          );
+        })}
         {!isEmpty(getSizeBadge()) ? (
           <SummaryBadges label="Sizes" items={getSizeBadge()} />
         ) : (
           <Row>
             <Col>
               <Typography
-                style={{ margin: '24px 0 12px 0' }}
+                style={{ margin: '12px 0 12px 0' }}
                 color="shade6"
                 variant="overline"
               >

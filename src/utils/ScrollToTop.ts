@@ -11,3 +11,10 @@ export default function ScrollToTop() {
 
   return null;
 }
+
+export function sellerScreenScrollToTop(): void {
+  const elmnt = document.getElementById('screen');
+  if (elmnt) {
+    elmnt.scroll(0, 0);
+  }
+}

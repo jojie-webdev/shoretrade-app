@@ -108,11 +108,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     setStep(1);
   };
 
-  const groupSpecs = () => {
-    return groupBy((a: any) => {
-      return `group${a.groupOrder}`;
-    }, selectedSpecifications.items);
-  };
+  const groupSpecs = groupBy((a: any) => `group${a.groupOrder}`)(
+    selectedSpecifications.items || []
+  );
 
   const onSubmit = () => {
     setSendConfModalisOpen(false);
@@ -327,7 +325,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         </DetailsContentContainer>
         {selectedSpecifications.items.length > 0 && (
           <DetailsContentContainer>
-            {Object.keys(groupSpecs()).map((group, index) => {
+            {Object.keys(groupSpecs).map((group, index) => {
               return (
                 <>
                   <Typography
@@ -354,7 +352,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                         lineHeight: '0.8em',
                       }}
                     >
-                      {groupSpecs()[group].map(
+                      {groupSpecs[group].map(
                         (spec, i, arr) =>
                           `${spec.label}${i < arr.length - 1 ? ', ' : ''}`
                       )}

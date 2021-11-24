@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { Option } from './MakeOffer/MakeOffer.props';
 
 export interface StepProps {
   setStep?: Dispatch<SetStateAction<number>>;
@@ -26,6 +27,8 @@ export interface Step1Props extends StepProps, CommonProps {
 
 export interface OfferProps {
   offer: MarketOfferItem[];
+  offerSpecs: Option[];
+  setOfferSpecs: Dispatch<SetStateAction<Option[]>>;
   setOffer: Dispatch<SetStateAction<MarketOfferItem[]>>;
   currentOfferItem: string;
   setCurrentOfferItem: Dispatch<SetStateAction<string>>;

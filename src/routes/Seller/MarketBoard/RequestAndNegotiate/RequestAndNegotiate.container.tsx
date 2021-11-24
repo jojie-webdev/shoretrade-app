@@ -4,6 +4,7 @@ import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+  createMarketOfferActions,
   getActiveOffersActions,
   marketOfferNegotiateActions,
 } from 'store/actions';
@@ -13,6 +14,7 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 import { Store } from 'types/store/Store';
 
 import RequestAndNegotiateView from './RequestAndNegotiate.view';
+import { Option } from './MakeOffer/MakeOffer.props';
 
 const RequestAndNegotiate = (): JSX.Element => {
   const history = useHistory();
@@ -31,6 +33,9 @@ const RequestAndNegotiate = (): JSX.Element => {
   const buyerRequest = state.buyerRequest;
   const activeOffer = state.activeOffer;
   const offerSentStatus = useSelector(
+    (state: Store) => state.createMarketOffer.data?.status
+  );
+  const counterOfferSentStatus = useSelector(
     (state: Store) => state.marketOfferNegotiate.data?.status
   );
 
@@ -50,6 +55,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     );
 
   const [offer, setOffer] = useState<MarketOfferItem[]>([]);
+  const [offerSpecs, setOfferSpecs] = useState<Option[]>([]);
   const [currentOfferItem, setCurrentOfferItem] = useState('');
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
 
@@ -75,6 +81,8 @@ const RequestAndNegotiate = (): JSX.Element => {
   const onConfirmSentOffer = () => {
     setShowOfferSentModal(false);
     dispatch(marketOfferNegotiateActions.clear());
+    dispatch(createMarketOfferActions.clear());
+    dispatch(getActiveOffersActions.request({}));
     dispatch(getActiveOffersActions.request({}));
     history.push(SELLER_MARKET_BOARD_ROUTES.LANDING, {
       currentTab: 'My Active Offers',
@@ -88,6 +96,14 @@ const RequestAndNegotiate = (): JSX.Element => {
       setShowOfferSentModal(false);
     }
   }, [offerSentStatus]);
+
+  useEffect(() => {
+    if (counterOfferSentStatus === 200) {
+      setShowOfferSentModal(true);
+    } else {
+      setShowOfferSentModal(false);
+    }
+  }, [counterOfferSentStatus]);
 
   if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
@@ -108,6 +124,8 @@ const RequestAndNegotiate = (): JSX.Element => {
     buyerRequestForActiveOfferTab,
     showOfferSentModal,
     onConfirmSentOffer,
+    offerSpecs,
+    setOfferSpecs,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

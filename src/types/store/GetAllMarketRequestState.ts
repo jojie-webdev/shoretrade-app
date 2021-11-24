@@ -34,7 +34,7 @@ export type GetAllMarketRequestResponseItem = {
   measurementUnit: string;
 };
 
-interface Specification {
+export interface Specification {
   stateId: string;
   stateName: string;
   stateGroup: number;

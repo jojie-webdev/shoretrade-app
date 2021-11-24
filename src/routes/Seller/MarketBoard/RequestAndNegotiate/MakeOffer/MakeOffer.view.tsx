@@ -14,15 +14,17 @@ import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown/DatePickerDropdown.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { isEmpty, pathOr } from 'ramda';
+import { groupBy, isEmpty, pathOr } from 'ramda';
 import { Col, Row, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import {
   GetAllMarketRequestResponseItem,
   ShippingTo,
+  Specification,
 } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { sellerScreenScrollToTop } from 'utils/ScrollToTop';
 import { capitalize, toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
@@ -44,6 +46,10 @@ export const getShippingTo = (shippingTo: ShippingTo) => {
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
+
+  const groupSpecs = groupBy((a: Specification) => `group${a.stateGroup}`)(
+    props.buyerRequest.specifications || []
+  );
 
   const renferFromTextField = () => (
     <TextField
@@ -118,6 +124,10 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
     </Visible>
   );
 
+  useEffect(() => {
+    sellerScreenScrollToTop();
+  }, []);
+
   return (
     <Container>
       <Row>
@@ -189,57 +199,74 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               {pathOr('', ['specifications', '0'], errors)}
             </Error>
           ) : null}
-          <Typography
-            color="shade4"
-            className="row-label-friendly-text"
-            style={{ fontFamily: 'Media Sans' }}
-          >
-            What size product do you have or let the buyer know it’s ungraded?
-          </Typography>
-          <Typography variant="overline" color="shade6" className="row-label">
-            Size
-          </Typography>
-          <Row>
-            {props.marketSizes.map((v) => (
-              <Col key={v}>
-                <Interactions
-                  backgroundColor={theme.grey.noshade}
-                  fontColor={theme.grey.shade9}
-                  value={v}
-                  type="radio"
-                  padding="14px 18px"
-                  pressed={props.size.from === v}
-                  onClick={() => props.setSize({ from: v, to: '' })}
-                />
-              </Col>
-            ))}
+          <Row className="textfield-row">
+            <Col xs={12}>
+              <Row>
+                <Col xs={12} className="textfield-col">
+                  <Typography
+                    color="shade4"
+                    className="row-label-friendly-text"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    What size product do you have or let the buyer know it’s
+                    ungraded?
+                  </Typography>
+                  <Typography
+                    variant="overline"
+                    color="shade6"
+                    className="row-label"
+                  >
+                    Size
+                  </Typography>
+                  <Row>
+                    {props.marketSizes.map((v) => (
+                      <Col key={v}>
+                        <Interactions
+                          backgroundColor={theme.grey.noshade}
+                          fontColor={theme.grey.shade9}
+                          value={v}
+                          type="radio"
+                          padding="14px 18px"
+                          pressed={props.size.from === v}
+                          onClick={() => props.setSize({ from: v, to: '' })}
+                        />
+                      </Col>
+                    ))}
 
-            {renderFromToTextFieldsMobile()}
-            {renderFromToTextFieldsDesktop()}
+                    {renderFromToTextFieldsMobile()}
+                    {renderFromToTextFieldsDesktop()}
+                  </Row>
+
+                  <div className="checkbox-container ungraded">
+                    <Checkbox
+                      onClick={() =>
+                        props.setSize({
+                          from: 'ungraded',
+                          to: '',
+                        })
+                      }
+                      className="checkbox"
+                      checked={props.size.from === 'ungraded'}
+                    />
+                    <Typography
+                      className="label"
+                      variant="label"
+                      color="noshade"
+                    >
+                      Ungraded
+                    </Typography>
+                  </div>
+
+                  {!props.buyerRequest.sizeFrom &&
+                  pathOr('', ['sizeFrom', '0'], errors) ? (
+                    <Error variant="caption" color="error">
+                      {pathOr('', ['sizeFrom', '0'], errors)}
+                    </Error>
+                  ) : null}
+                </Col>
+              </Row>
+            </Col>
           </Row>
-
-          <div className="checkbox-container ungraded">
-            <Checkbox
-              onClick={() =>
-                props.setSize({
-                  from: 'ungraded',
-                  to: '',
-                })
-              }
-              className="checkbox"
-              checked={props.size.from === 'ungraded'}
-            />
-            <Typography className="label" variant="label" color="noshade">
-              Ungraded
-            </Typography>
-          </div>
-
-          {!props.buyerRequest.sizeFrom &&
-          pathOr('', ['sizeFrom', '0'], errors) ? (
-            <Error variant="caption" color="error">
-              {pathOr('', ['sizeFrom', '0'], errors)}
-            </Error>
-          ) : null}
 
           <Row className="textfield-row">
             <Col xs={12}>
@@ -272,6 +299,12 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     height="40px"
                   />
                 </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row className="textfield-row">
+            <Col xs={12}>
+              <Row>
                 <Col xs={12} className="textfield-col">
                   <Typography
                     className="friendly-text"
@@ -301,6 +334,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     height="40px"
                   />
                 </Col>
+              </Row>
+            </Col>
+          </Row>
+
+          <Row className="textfield-row">
+            <Col xs={12}>
+              <Row>
                 <Col xs={12} className="textfield-col">
                   <Typography
                     className="friendly-text"
@@ -330,17 +370,22 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               </Row>
             </Col>
           </Row>
-
-          <div className="textfield-col shipping-from-col">
-            <Select
-              className="shipping-from"
-              value={props.selectedAddress}
-              onChange={(o) => props.setSelectedAddress(o.value)}
-              options={props.addresses}
-              label="Shipping From"
-              error={pathOr('', ['selectedAddress', '0'], errors)}
-            />
-          </div>
+          <Row className="textfield-row">
+            <Col xs={12}>
+              <Row>
+                <Col xs={12} className="textfield-col shipping-from-col">
+                  <Select
+                    className="shipping-from"
+                    value={props.selectedAddress}
+                    onChange={(o) => props.setSelectedAddress(o.value)}
+                    options={props.addresses}
+                    label="Shipping From"
+                    error={pathOr('', ['selectedAddress', '0'], errors)}
+                  />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
 
           <div className="total-container">
             <Typography
@@ -365,52 +410,45 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               <Typography className="summary" color="noshade" weight="400">
                 Buyer Request
               </Typography>
-              <div className="summary-border" />
               {!isEmpty(props.buyerRequest.type) && (
-                <>
-                  <Typography
-                    className="header"
-                    color="shade6"
-                    variant="title5"
-                  >
-                    Product:
-                  </Typography>
-                  <div className="value">
-                    <Cross7 />
-                    <Typography
-                      className="values"
-                      color="noshade"
-                      variant="title5"
-                    >
-                      {props.buyerRequest.type}
-                    </Typography>
-                  </div>
-                </>
+                <Typography
+                  className="summary product-type"
+                  color="noshade"
+                  weight="400"
+                >
+                  {props.buyerRequest.type}
+                </Typography>
               )}
-              {!isEmpty(props.buyerRequest.specifications) && (
-                <>
-                  <Typography
-                    className="header"
-                    color="shade6"
-                    variant="title5"
-                  >
-                    Specs:
-                  </Typography>
-                  <div className="value">
-                    <Cross7 />
-                    <Typography
-                      className="values"
-                      color="noshade"
-                      variant="title5"
-                    >
-                      {props.buyerRequest.specifications &&
-                        props.buyerRequest.specifications
-                          .map((v) => v.stateName)
-                          .join(', ')}
-                    </Typography>
-                  </div>
-                </>
-              )}
+              <div className="summary-border" />
+              {!isEmpty(props.buyerRequest.specifications) &&
+                Object.keys(groupSpecs).map((group, index) => {
+                  return (
+                    <>
+                      <Typography
+                        className="header"
+                        color="shade6"
+                        variant="title5"
+                      >
+                        Specs {index + 1}
+                      </Typography>
+                      <div className="value">
+                        <Cross7 />
+                        <Typography
+                          className="values"
+                          color="noshade"
+                          variant="title5"
+                        >
+                          {groupSpecs[group].map(
+                            (spec: any, i: any, arr: any[]) =>
+                              `${spec.stateName}${
+                                i < arr.length - 1 ? ', ' : ''
+                              }`
+                          )}
+                        </Typography>
+                      </div>
+                    </>
+                  );
+                })}
               {props.buyerRequest?.sizeFrom &&
                 props.buyerRequest?.sizeFrom?.toString().length > 0 && (
                   <>

@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+
 import { ShippingTo } from './GetAllMarketRequestState';
 
 export type GetActiveOffersMeta = {
