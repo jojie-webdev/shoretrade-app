@@ -176,12 +176,8 @@ const Review = ({
             <Alert
               fullWidth
               variant="alert"
-              header="You need to define new Dates for this Listing"
-              content={`This listing has been added on ${moment(
-                currentHistoricalListingData.created_at
-              ).format(
-                'DD MMMM YYYY'
-              )}. You can edit details here and add new Dates for “Catch Details” and “Listing Valid Until” fields.`}
+              header="Please complete the outstanding fields"
+              content="Confirm the box weights and enter the catch and expiry dates for this listing."
             />
           </Col>
         )}
@@ -324,7 +320,7 @@ const Review = ({
           <Alert
             fullWidth
             variant="error"
-            content={'Please complete required fields to continue'}
+            content={'Please complete the required fields to continue.'}
           />
         </Col>
       )}
