@@ -220,7 +220,10 @@ const SelectSizeView = (props: SelectSizeProps) => {
       return sizeToFrom.from === '';
     }
 
-    if (sizeItemChecked.items.length < 1) {
+    if (
+      sizeItemChecked.items.length < 1 &&
+      listingFormData?.metric.name !== 'N/A'
+    ) {
       return true;
     }
 
