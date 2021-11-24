@@ -174,7 +174,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
           color="shade6"
           style={{ fontFamily: 'Basis Grotesque Pro' }}
         >
-          You can select more than one.
+          You can select more than one
         </Typography>
       </FriendlyTextContainer>
     );
@@ -255,7 +255,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             <Hidden xs sm>
               {getFilteredSpecifications().map((group, index) => (
                 <>
-                <SpecsFriendlyText index={index} />
+                  <SpecsFriendlyText index={index} />
                   <div key={group[0].groupOrder} className="interaction-group">
                     <LabelContainer>
                       <Typography
@@ -288,39 +288,42 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             <Visible xs sm>
               <SpecsContainer>
                 {getFilteredSpecifications().map((group, index) => (
-                  <div key={`spec-${index}`} style={{ marginBottom: '32px' }}>
-                    <LabelContainer>
-                      <Typography
-                        variant="overline"
-                        color="shade10"
-                        style={{ marginBottom: 12, marginRight: 4 }}
-                      >
-                        {getSpecsByGroup(index)}
-                      </Typography>
-                      <Typography variant="overline" color="shade6">
-                        (min. 1)
-                      </Typography>
-                    </LabelContainer>
-                    <CheckboxGroupContainer>
-                      {group?.map((item) => (
-                        <CheckboxContainer>
-                          <Checkbox
-                            checked={
-                              selectedState.selectedStates.filter(
-                                (state) => state.value === item.value
-                              )[0]
-                            }
-                            value={item.value}
-                            onClick={() => handleStateCheck(item)}
-                            key={item.value}
-                            label={item.label}
-                            style={{ margin: '0px 16px 0px 0px' }}
-                            borderColor={theme.grey.shade6}
-                          />
-                        </CheckboxContainer>
-                      ))}
-                    </CheckboxGroupContainer>
-                  </div>
+                  <>
+                    <SpecsFriendlyText index={index} />
+                    <div key={`spec-${index}`} style={{ marginBottom: '32px' }}>
+                      <LabelContainer>
+                        <Typography
+                          variant="overline"
+                          color="shade10"
+                          style={{ marginBottom: 12, marginRight: 4 }}
+                        >
+                          {getSpecsByGroup(index)}
+                        </Typography>
+                        <Typography variant="overline" color="shade6">
+                          (min. 1)
+                        </Typography>
+                      </LabelContainer>
+                      <CheckboxGroupContainer>
+                        {group?.map((item) => (
+                          <CheckboxContainer>
+                            <Checkbox
+                              checked={
+                                selectedState.selectedStates.filter(
+                                  (state) => state.value === item.value
+                                )[0]
+                              }
+                              value={item.value}
+                              onClick={() => handleStateCheck(item)}
+                              key={item.value}
+                              label={item.label}
+                              style={{ margin: '0px 16px 0px 0px' }}
+                              borderColor={theme.grey.shade6}
+                            />
+                          </CheckboxContainer>
+                        ))}
+                      </CheckboxGroupContainer>
+                    </div>
+                  </>
                 ))}
               </SpecsContainer>
             </Visible>

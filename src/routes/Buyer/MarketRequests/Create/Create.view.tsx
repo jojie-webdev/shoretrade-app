@@ -293,36 +293,16 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           >
             Summary
           </Typography>
-        </DetailsHeaderContainer>
-        <DetailsContentContainer>
           <Typography
-            color="shade6"
-            variant="label"
             style={{
               marginBottom: 16,
               fontFamily: 'Wilderness',
-              fontSize: 36,
+              fontSize: 42,
             }}
           >
-            Product
+            {selectedCategory?.name}
           </Typography>
-          <DetailsDataContainer>
-            <Cross7 />
-            <Typography
-              color="shade9"
-              variant="label"
-              style={{
-                fontFamily: 'Wilderness',
-                fontSize: 42,
-                marginLeft: 8.5,
-                marginTop: -8,
-                lineHeight: '0.8em',
-              }}
-            >
-              {selectedCategory?.name}
-            </Typography>
-          </DetailsDataContainer>
-        </DetailsContentContainer>
+        </DetailsHeaderContainer>
         {selectedSpecifications.items.length > 0 && (
           <DetailsContentContainer>
             {Object.keys(groupSpecs).map((group, index) => {

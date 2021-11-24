@@ -86,14 +86,6 @@ const SizeInput = (props: SizeInputProps) => {
   if (metricString === 'GRAMS' || metricString === 'UNITS_PER_POUND') {
     return (
       <>
-        <MetricLabelContainer>
-          <Typography color="shade6" variant="label">
-            Metric:
-          </Typography>
-          <Typography className="metric-value" color="shade7" variant="body">
-            {metric}
-          </Typography>
-        </MetricLabelContainer>
         <SelectRowContainer>
           <TextField
             type="text"
@@ -310,7 +302,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                     className="row-label-friendly-text"
                     style={{ fontFamily: 'Media Sans' }}
                   >
-                    Select the size you would like.
+                    Select the size you would like
                   </Typography>
                 </FriendlyTextContainer>
                 <SizeInput
