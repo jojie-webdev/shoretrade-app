@@ -172,11 +172,13 @@ const ChooseSize = ({
     },
   ];
 
-  const [quality, setQuality] = useState(
-    editableListing?.quality || 'Ungraded'
-  ); // should override to null later
+  const [quality, setQuality] = useState(editableListing?.quality || null);
 
-  const isComplete = !showError && (isUngraded || fromSize);
+  const hasQualityOption = qualityOptions.length > 0;
+  const isComplete =
+    !showError &&
+    (isUngraded || fromSize) &&
+    (!hasQualityOption || (hasQualityOption && quality));
 
   return (
     <Container>
@@ -224,15 +226,16 @@ const ChooseSize = ({
         </Col>
       </Row>
 
-      {qualityOptions.length > 0 && (
+      {hasQualityOption && (
         <Row className="quality-row">
           <Col>
             <Typography variant="title6" color="noshade">
               Product Quality
             </Typography>
             <ProductQualityDropdown
+              placeholder="Select Grade"
               options={actualQualityOptions}
-              value={quality}
+              value={quality || undefined}
               onChange={(o) => {
                 setQuality(o.value);
               }}
