@@ -94,8 +94,8 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     didFinishStep,
     setDidFinishStep,
     isLoadingCreate,
-    showSentModal,
     onConfirmSentRequest,
+    showRequestSentModal,
   } = props;
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
@@ -578,6 +578,20 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     );
   };
 
+  if (showRequestSentModal) {
+    return (
+      <ConfirmationModal
+        isOpen={showRequestSentModal}
+        onClickClose={() => onConfirmSentRequest()}
+        title="Market Request Sent"
+        action={() => onConfirmSentRequest()}
+        actionText="View Requests"
+        hideCancel={true}
+        description={<SentRequestDescription />}
+      />
+    );
+  }
+
   return (
     <>
       <ConfirmationModal
@@ -591,15 +605,6 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         cancelText="NO"
         onClickClose={() => setSendConfModalisOpen(false)}
         style={{ width: 686, borderRadius: 12 }}
-      />
-      <ConfirmationModal
-        isOpen={showSentModal}
-        onClickClose={() => onConfirmSentRequest({ continue: false })}
-        title="Market Request Sent"
-        action={() => onConfirmSentRequest({ continue: true })}
-        actionText="View Requests"
-        hideCancel={true}
-        description={<SentRequestDescription />}
       />
       {StepView({ step })}
       <ProgressBar progress={(step.current / step.total) * 100} />

@@ -40,7 +40,12 @@ function* createMarketRequestSuccess(
   action: AsyncAction<EditableMarketRequestMeta, EditableMarketRequestPayload>
 ) {
   yield put(editableMarketRequestActions.clear());
-  // yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
+}
+
+function* createMarketRequestClear(
+  action: AsyncAction<EditableMarketRequestMeta, EditableMarketRequestPayload>
+) {
+  yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
 }
 
 function* createMarketRequestWatcher() {
@@ -52,6 +57,7 @@ function* createMarketRequestWatcher() {
     createMarketRequestActions.SUCCESS,
     createMarketRequestSuccess
   );
+  yield takeLatest(createMarketRequestActions.CLEAR, createMarketRequestClear);
 }
 
 export default createMarketRequestWatcher;

@@ -284,7 +284,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 {seller?.rating || 0}
               </StyledNumberRating>
               <StarRating
-                rating={seller?.rating || 0} 
+                rating={seller?.rating || 0}
                 spacing={3}
                 starSize={13}
                 unfilledColor={theme.brand.alert}
@@ -366,6 +366,21 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             <Typography color="shade8" variant="body">
               Please ensure you have notifications turned on so that you stay up
               to date on this offer.
+            </Typography>
+          </>
+        }
+      />
+      <ConfirmationModal
+        isOpen={props.showConfirmOfferSentModal}
+        onClickClose={() => props.onCloseAcceptSentModal()}
+        title="Offer accepted"
+        action={() => props.onPayNow()}
+        actionText="Pay now"
+        hideCancel={true}
+        description={
+          <>
+            <Typography color="shade8" variant="body">
+              Please finalise your payment within 24 hours to confirm the sale.
             </Typography>
           </>
         }

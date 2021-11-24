@@ -65,5 +65,8 @@ export interface OfferDetailsProps {
   isLoadingNegotiate: boolean;
   handlePayNow: () => void;
   showOfferSentModal: boolean;
+  showConfirmOfferSentModal: boolean;
   onConfirmSentOffer: () => void;
+  onCloseAcceptSentModal: () => void;
+  onPayNow: () => void;
 }

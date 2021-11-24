@@ -282,11 +282,11 @@ export const MarketRequestItemMobile = (props: {
             />
           )}
           <OfferTag
-              text={offersTextProps.text}
-              badgeColor={offersTextProps.badgeColor || ''}
-              variantColor={offersTextProps.variantColor}
-              color={offersTextProps.tagColor}
-            />
+            text={offersTextProps.text}
+            badgeColor={offersTextProps.badgeColor || ''}
+            variantColor={offersTextProps.variantColor}
+            color={offersTextProps.tagColor}
+          />
         </Badges>
       </MinorInfo>
     </MarketRequestItemMobileContainer>
@@ -406,8 +406,56 @@ const MarketRequestsLandingView = (
     );
   }
 
+  const SentRequestDescription = () => {
+    return (
+      <div>
+        <Typography color="shade7" variant="body">
+          Your request has been sent to our network of sellers.
+        </Typography>
+        <br />
+        <Typography
+          style={{ fontFamily: 'Media Sans' }}
+          color="shade7"
+          variant="body"
+          weight="bold"
+        >
+          What happens next?
+        </Typography>
+        <br />
+        <Typography color="shade7" variant="body">
+          <ol>
+            <li>
+              You will receive offers directly from our authorised sellers which
+              you can accept or negotiate
+            </li>
+            <li>
+              Process payment within 24 hours for accepted offers to finalise
+              the order
+            </li>
+            <li>
+              Your Market Request will automatically close after 7 days or once
+              your maximum quantity is fulfilled
+            </li>
+          </ol>
+        </Typography>
+        <Typography color="shade7" variant="body">
+          You can review your requests and offers in my ‘Market Requests’
+        </Typography>
+      </div>
+    );
+  };
+
   return (
     <MarketRequestsContainer>
+      {/* <ConfirmationModal
+        isOpen={showRequestSentModal}
+        onClickClose={() => onConfirmSentRequest()}
+        title="Market Request Sent"
+        action={() => onConfirmSentRequest()}
+        actionText="View Requests"
+        hideCancel={true}
+        description={<SentRequestDescription />}
+      /> */}
       <ConfirmationModal
         isOpen={itemToDelete.value !== null}
         title="Delete Market Request"

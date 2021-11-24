@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import {
   getListingFormDataActions,
   getMarketInterestsActions,
@@ -23,12 +22,11 @@ import { SizeOptions } from './SelectSize/SelectSize.props';
 const CreateRequest = (): JSX.Element => {
   // MARK:- States / Variables
   const dispatch = useDispatch();
-  const history = useHistory();
   const pendingCreate = useSelector(
     (state: Store) => state.createMarketRequest.pending
   );
 
-  const successStatus = useSelector(
+  const createMarketRequestSuccess = useSelector(
     (state: Store) => state.createMarketRequest.data?.status
   );
 
@@ -162,12 +160,8 @@ const CreateRequest = (): JSX.Element => {
     );
   };
 
-  const onConfirmSentRequest = (props: ConfirmSentRequestModalProps) => {
-    setShowSentModal(false);
+  const onConfirmSentRequest = () => {
     dispatch(createMarketRequestActions.clear());
-    if (props.continue) {
-      history.push(BUYER_MARKET_REQUEST_ROUTES.LANDING);
-    }
   };
 
   const typeSearchResults =
@@ -226,14 +220,6 @@ const CreateRequest = (): JSX.Element => {
     }
   }, [selectedCategory.id]);
 
-  useEffect(() => {
-    if (successStatus === 200) {
-      setShowSentModal(true);
-    } else {
-      setShowSentModal(false);
-    }
-  }, [successStatus]);
-
   const generatedProps: CreateRequestGeneratedProps = {
     didFinishStep,
     setDidFinishStep,
@@ -270,7 +256,7 @@ const CreateRequest = (): JSX.Element => {
     onChangeAddress,
     updateCategory,
     isLoadingCreate: pendingCreate || false,
-    showSentModal: successStatus === 200,
+    showRequestSentModal: createMarketRequestSuccess === 200,
     onConfirmSentRequest,
   };
 

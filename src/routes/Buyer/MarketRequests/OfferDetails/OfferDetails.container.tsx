@@ -132,7 +132,6 @@ const OfferDetails = (): JSX.Element => {
     const meta: OfferConfirm = {
       marketOfferId: selectedOffer?.id || '',
     };
-    handleAcceptOffer();
     dispatch(marketRequestOfferConfirmActions.request(meta));
   };
 
@@ -158,6 +157,15 @@ const OfferDetails = (): JSX.Element => {
     setShowOfferSentModal(false);
     dispatch(marketRequestNegotiateOfferActions.clear());
     history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
+  };
+
+  const onPayNow = () => {
+    dispatch(marketRequestOfferConfirmActions.clear());
+    handlePayNow();
+  };
+
+  const onCloseAcceptSentModal = () => {
+    dispatch(marketRequestOfferConfirmActions.clear());
   };
 
   const submitNegotiation = (counterOffer: number) => {
@@ -383,6 +391,9 @@ const OfferDetails = (): JSX.Element => {
     handlePayNow,
     onConfirmSentOffer,
     showOfferSentModal,
+    showConfirmOfferSentModal: confirmOffer.data?.data?.status === 'PARTIAL',
+    onCloseAcceptSentModal,
+    onPayNow,
   };
 
   const getPrice = () => {

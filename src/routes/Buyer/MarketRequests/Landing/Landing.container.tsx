@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+  createMarketRequestActions,
   deleteMarketRequestActions,
   getAllMarketRequestActions,
 } from 'store/actions';
@@ -76,7 +77,6 @@ const MarketRequestsLanding = (): JSX.Element => {
       dispatch(getAllMarketRequestActions.request({}));
     }
   }, [deleteMarketRequest]);
-
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,

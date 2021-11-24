@@ -27,8 +27,8 @@ export interface CreateRequestGeneratedProps
   onSubmitRequest: () => void;
   selectedAddress: { label: string; value: string };
   setSelectedAddress: Dispatch<{ label: string; value: string }>;
-  showSentModal: boolean;
-  onConfirmSentRequest: (props: ConfirmSentRequestModalProps) => void;
+  showRequestSentModal: boolean;
+  onConfirmSentRequest: () => void;
 }
 
 export interface ConfirmSentRequestModalProps {
