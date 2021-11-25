@@ -6,7 +6,6 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import { ArrowRight, ChevronRight } from 'components/base/SVG';
-import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import { groupBy } from 'ramda';
@@ -68,7 +67,7 @@ const SummaryView = (props: SummaryProps) => {
     const { items, label } = props;
 
     if (!items) return <></>;
- 
+
     const tagsMarkup = items.map((item, index) => (
       <Badge
         key={index}
@@ -85,13 +84,13 @@ const SummaryView = (props: SummaryProps) => {
       <div>
         {items[0] !== '' && (
           <>
-            <TypographyView
+            <Typography
               style={{ marginBottom: '8px' }}
               color="shade10"
               variant="overline"
             >
               {label}
-            </TypographyView>
+            </Typography>
             <BadgesContainer>{tagsMarkup}</BadgesContainer>
           </>
         )}
@@ -99,7 +98,7 @@ const SummaryView = (props: SummaryProps) => {
     );
   };
 
-  const sizeSummary = () => { 
+  const sizeSummary = () => {
     if (selectedSize.ungraded === true) {
       return <SummaryBadges label="Size" items={['Ungraded']} />;
     }
@@ -108,13 +107,13 @@ const SummaryView = (props: SummaryProps) => {
       return (
         <Row style={{ marginLeft: 0 }}>
           <div>
-            <TypographyView
+            <Typography
               style={{ marginBottom: '8px' }}
               color="shade10"
               variant="overline"
             >
               Size
-            </TypographyView>
+            </Typography>
             <Badge
               className="offers-state-badge"
               badgeColor={theme.grey.shade3}
@@ -214,8 +213,7 @@ const SummaryView = (props: SummaryProps) => {
                   return (
                     <SummaryBadges
                       items={groupSpecs()[group].map(
-                        (spec: any, i: any, arr: any[]) =>
-                          `${spec.label}${i < arr.length - 1 ? ', ' : ''}`
+                        (spec: any, i: any, arr: any[]) => `${spec.label}`
                       )}
                       key={index}
                       label={`Specs ${index + 1}`}
@@ -225,13 +223,13 @@ const SummaryView = (props: SummaryProps) => {
               </>
             )}
             <div className="size-container">{sizeSummary()}</div>
-            <TypographyView
+            <Typography
               style={{ marginBottom: '8px' }}
               color="shade10"
               variant="overline"
             >
               Quantity
-            </TypographyView>
+            </Typography>
             <div className="quantity-container">
               <Row style={{ marginLeft: 0, marginBottom: 24 }}>
                 <div>
@@ -284,21 +282,21 @@ const SummaryView = (props: SummaryProps) => {
               />
 
               <CheckboxMain>
-                <TypographyView
+                <Typography
                   style={{ marginBottom: 4 }}
                   color="shade10"
                   variant="overline"
                 >
                   Notes
-                </TypographyView>
+                </Typography>
                 <CheckboxContainer>
-                  <TypographyView
+                  <Typography
                     variant="caption"
                     style={{ marginLeft: 8, marginTop: 8 }}
                   >
                     Your Market Request will automatically close after 7 days or
                     once the maximum quantity requested is reached.
-                  </TypographyView>
+                  </Typography>
                 </CheckboxContainer>
               </CheckboxMain>
             </div>
