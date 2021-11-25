@@ -12,6 +12,7 @@ import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { SIZE_METRICS } from 'consts/sizeMetrics';
 import { pathOr } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
+import { isUngraded } from 'routes/Buyer/Categories/Preview/Preview.transform';
 import theme from 'utils/Theme';
 
 import {
@@ -46,6 +47,8 @@ const SizeInput = (props: SizeInputProps) => {
     disabled,
     setSizeItemChecked,
     sizeItemChecked,
+    handleOnClickUngraded,
+    ungraded,
   } = props;
   const metricString = metric.toUpperCase().replace(/\s/g, '_');
 
@@ -135,26 +138,42 @@ const SizeInput = (props: SizeInputProps) => {
             readOnly={disabled}
           />
         </SelectRowContainer>
+        <SelectRowContainer>
+          <Checkbox
+            onClick={handleOnClickUngraded}
+            checked={ungraded}
+            label="Ungraded"
+          />
+        </SelectRowContainer>
       </>
     );
   }
 
   if (sizeMetrics && sizeMetrics.length > 0) {
     const sizeOptions = sizeMetrics.map((metric) => (
-      <div key={metric.value} style={{ marginBottom: '1rem' }}>
+      <>
+        <div key={metric.value} style={{ marginBottom: '1rem' }}>
+          <Checkbox
+            checked={sizeItemChecked.items.includes(metric.value)}
+            onClick={() => handleStateCheck(metric.value)}
+            key={metric.value}
+            value={metric.value}
+            label={metric.label}
+          />
+        </div>
         <Checkbox
-          checked={sizeItemChecked.items.includes(metric.value)}
-          onClick={() => handleStateCheck(metric.value)}
-          key={metric.value}
-          value={metric.value}
-          label={metric.label}
+          onClick={handleOnClickUngraded}
+          checked={true}
+          label="Ungraded"
         />
-      </div>
+      </>
     ));
     return <>{sizeOptions}</>;
   }
 
-  return <Checkbox checked={true} label="Ungraded" />;
+  return (
+    <Checkbox onClick={handleOnClickUngraded} checked={true} label="Ungraded" />
+  );
 };
 
 const SelectSizeView = (props: SelectSizeProps) => {
@@ -183,6 +202,21 @@ const SelectSizeView = (props: SelectSizeProps) => {
     items: [...selectedSize.items],
   });
 
+  const handleOnClickUngraded = () => {
+    if (!ungraded) {
+      setSizeToFrom({
+        from: '',
+        to: '',
+      });
+      setSizeItemChecked({
+        items: [],
+      });
+      setUngraded(true);
+    } else {
+      setUngraded(false);
+    }
+  };
+
   const handleSubmit = () => {
     setSelectedSize({
       from: sizeToFrom.from,
@@ -203,6 +237,10 @@ const SelectSizeView = (props: SelectSizeProps) => {
   };
 
   const disabledNext = () => {
+    if (ungraded) {
+      return false;
+    }
+
     if (
       listingFormData?.metric.name.toUpperCase().replace(/\s/g, '_') ===
         'GRAMS' ||
@@ -306,6 +344,8 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   </Typography>
                 </FriendlyTextContainer>
                 <SizeInput
+                  ungraded={ungraded}
+                  handleOnClickUngraded={handleOnClickUngraded}
                   metric={listingFormData.metric.name}
                   fromSize={sizeToFrom.from}
                   toSize={sizeToFrom.to}

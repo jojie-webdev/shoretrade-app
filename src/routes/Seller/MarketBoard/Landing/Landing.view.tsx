@@ -2,7 +2,7 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
-import { ChevronRight } from 'components/base/SVG';
+import { ChevronRight, Filter } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
@@ -46,6 +46,8 @@ import {
   BadgeText,
   ItemInteraction,
   StyledBadge,
+  FilterSearchContainer,
+  FilterButton,
 } from './Landing.style';
 import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
 import MobileOffers from './MobileOffers/MobileOffers.view';
@@ -292,7 +294,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Browse Buyer Requests</MobileHeader>}
+      {isMobile && <MobileHeader>Market Board</MobileHeader>}
 
       <div className="tabs-row">
         <div className="tabs">
@@ -303,16 +305,35 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           />
         </div>
 
-        <Search
-          className="search"
-          value={props.searchTerm}
-          onChange={(event: any) =>
-            props.setSearchTerm(event.currentTarget.value)
-          }
-          resetValue={() => props.setSearchTerm('')}
-          placeholder="Product Name"
-          rounded
-        />
+        <FilterSearchContainer>
+          <Search
+            className="search"
+            value={props.searchTerm}
+            onChange={(event: any) =>
+              props.setSearchTerm(event.currentTarget.value)
+            }
+            resetValue={() => props.setSearchTerm('')}
+            placeholder="Product Name"
+            rounded
+          />
+          {props.currentTab === 'Buyer Requests' && (
+            <FilterButton
+              className="filter-button"
+              onClick={props.onClickFilterButton}
+            >
+              <Typography
+                variant="label"
+                color="noshade"
+                weight="500"
+                className="btn-text"
+              >
+                Filters
+              </Typography>
+
+              <Filter />
+            </FilterButton>
+          )}
+        </FilterSearchContainer>
       </div>
 
       {props.isLoading ? (

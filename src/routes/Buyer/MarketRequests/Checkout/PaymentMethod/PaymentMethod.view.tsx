@@ -242,7 +242,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         description={
           <>
             <OrderPlacedIconContainer>
-              <OrderPlaced />
+              <OrderPlaced width={240} height={240} />
             </OrderPlacedIconContainer>
             <Typography
               style={{ marginBottom: 16 }}
@@ -797,6 +797,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
       <ConfirmationModal
         title="Final Order Confirmation"
+        style={{ padding: 32 }}
         description="Press proceed to confirm you want to place this order."
         isOpen={showConfirmationModal}
         onClickClose={() => {

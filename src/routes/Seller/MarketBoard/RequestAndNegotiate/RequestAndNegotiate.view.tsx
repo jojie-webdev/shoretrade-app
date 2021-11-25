@@ -70,6 +70,10 @@ const Step1 = ({
     : activeOffer.status === OfferStatus.NEGOTIATION;
 
   const getSizeBadge = () => {
+    if (buyerRequest && buyerRequest.sizeUngraded) {
+      return ['Ungraded'];
+    }
+
     if (buyerRequest && !isEmpty(buyerRequest.sizeOptions)) {
       return buyerRequest.sizeOptions;
     }

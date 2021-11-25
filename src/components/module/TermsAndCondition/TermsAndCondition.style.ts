@@ -65,14 +65,17 @@ export const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: 100%;
 
-  .swiper-pagination-bullet-active {
-    background-color: ${({ theme }) => theme.brand.primary};
-  }
-
   .swiper-pagination-bullet {
     margin: 0 2px;
     @media ${BREAKPOINTS['sm']} {
       background: ${({ theme }) => theme.grey.noshade};
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background: ${({ theme }) => theme.brand.primary};
+    @media ${BREAKPOINTS['sm']} {
+      background: ${({ theme }) => theme.brand.primary};
     }
   }
 `;

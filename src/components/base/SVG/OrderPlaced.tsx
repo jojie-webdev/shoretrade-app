@@ -12,8 +12,8 @@ const OrderPlaced = (props: SVGProps): JSX.Element => {
   // https://react-svgr.com/playground/?typescript=true
   return (
     <svg
-      width="278"
-      height="277"
+      width={width || '278px'}
+      height={height || '277px'}
       viewBox="0 0 278 277"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

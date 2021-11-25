@@ -26,4 +26,6 @@ export type SizeInputProps = {
   disabled: boolean;
   sizeItemChecked: { items: string[] };
   setSizeItemChecked: Dispatch<{ items: string[] }>;
+  handleOnClickUngraded: () => void;
+  ungraded: boolean;
 };

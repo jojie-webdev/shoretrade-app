@@ -122,3 +122,13 @@ export const StyledBadge = styled(Badge)`
   height: 22px;
   border-radius: 8px;
 `;
+
+export const FilterSearchContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .filter-button {
+    margin-left: 16px;
+  }
+`;

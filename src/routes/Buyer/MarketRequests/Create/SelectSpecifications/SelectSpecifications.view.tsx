@@ -299,9 +299,6 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
                         >
                           {getSpecsByGroup(index)}
                         </Typography>
-                        <Typography variant="overline" color="shade6">
-                          (min. 1)
-                        </Typography>
                       </LabelContainer>
                       <CheckboxGroupContainer>
                         {group?.map((item) => (

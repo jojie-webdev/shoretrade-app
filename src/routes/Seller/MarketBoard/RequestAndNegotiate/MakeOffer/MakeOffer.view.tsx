@@ -157,7 +157,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             color="shade6"
             style={{ fontFamily: 'Basis Grotesque Pro', marginTop: 0 }}
           >
-            You must select one from each specification.
+            You must select one from each specification
           </Typography>
           {props.stateOptions.map((options, i) => {
             return (

@@ -182,6 +182,18 @@ const SellerRoutes = (): JSX.Element => {
       };
     }
 
+    if (pathname.includes(SELLER_ROUTES.MARKET_BOARD)) {
+      return {
+        pageTitle: 'Market Board',
+      };
+    }
+
+    if (pathname.includes(SELLER_ROUTES.ADD_PRODUCT)) {
+      return {
+        pageTitle: 'Add Listing',
+      };
+    }
+
     if (pathname === SELLER_ROUTES.NOTIFICATIONS_SETTINGS) {
       return {
         pageTitle: 'Notifications Settings',

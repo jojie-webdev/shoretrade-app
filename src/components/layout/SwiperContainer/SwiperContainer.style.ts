@@ -111,7 +111,7 @@ export const Container = styled.div<{ variant?: string }>`
       opacity: 1;
       background: ${({ theme }) => theme.brand.primary};
       @media ${BREAKPOINTS['sm']} {
-        background: ${({ theme }) => theme.grey.noshade};
+        background: ${({ theme }) => theme.brand.primary};
       }
     }
   }
