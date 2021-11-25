@@ -129,7 +129,6 @@ const MarketBoardLanding = (): JSX.Element => {
     'isTermsAndConAccepted',
     false
   );
-
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   useEffect(() => {
@@ -296,8 +295,8 @@ const MarketBoardLanding = (): JSX.Element => {
       <TermsAndCondition
         appType="seller"
         textWeb1=""
-        textWeb2=""
-        textMobile1="Buyer Request"
+        textWeb2="Browse Buyer Requests"
+        textMobile1="Browse Buyer Requests"
         textMobile2=""
         textMobile3=""
         cardText1={

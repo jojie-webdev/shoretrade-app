@@ -13,8 +13,8 @@ import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersS
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 
-import RequestAndNegotiateView from './RequestAndNegotiate.view';
 import { Option } from './MakeOffer/MakeOffer.props';
+import RequestAndNegotiateView from './RequestAndNegotiate.view';
 
 const RequestAndNegotiate = (): JSX.Element => {
   const history = useHistory();
@@ -35,8 +35,8 @@ const RequestAndNegotiate = (): JSX.Element => {
   const offerSentStatus = useSelector(
     (state: Store) => state.createMarketOffer.data?.status
   );
-  const counterOfferSentStatus = useSelector(
-    (state: Store) => state.marketOfferNegotiate.data?.status
+  const marketOfferNegotiate = useSelector(
+    (state: Store) => state.marketOfferNegotiate
   );
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
@@ -58,6 +58,9 @@ const RequestAndNegotiate = (): JSX.Element => {
   const [offerSpecs, setOfferSpecs] = useState<Option[]>([]);
   const [currentOfferItem, setCurrentOfferItem] = useState('');
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
+  const [showOfferAcceptSentModal, setShowOfferAcceptSentModal] = useState(
+    false
+  );
 
   const isNegotiating =
     useSelector((state: Store) => state.marketOfferNegotiate.pending) || false;
@@ -80,6 +83,7 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const onConfirmSentOffer = () => {
     setShowOfferSentModal(false);
+    setShowOfferAcceptSentModal(false);
     dispatch(marketOfferNegotiateActions.clear());
     dispatch(createMarketOfferActions.clear());
     dispatch(getActiveOffersActions.request({}));
@@ -98,12 +102,17 @@ const RequestAndNegotiate = (): JSX.Element => {
   }, [offerSentStatus]);
 
   useEffect(() => {
-    if (counterOfferSentStatus === 200) {
-      setShowOfferSentModal(true);
+    if (marketOfferNegotiate?.data?.status === 200) {
+      if (marketOfferNegotiate?.request?.accepted === true) {
+        setShowOfferAcceptSentModal(true);
+      } else {
+        setShowOfferSentModal(true);
+      }
     } else {
       setShowOfferSentModal(false);
+      setShowOfferAcceptSentModal(false);
     }
-  }, [counterOfferSentStatus]);
+  }, [marketOfferNegotiate]);
 
   if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
@@ -126,6 +135,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     onConfirmSentOffer,
     offerSpecs,
     setOfferSpecs,
+    showOfferAcceptSentModal,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

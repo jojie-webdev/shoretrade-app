@@ -41,4 +41,5 @@ export interface RequestAndNegotiateGeneratedProps
   buyerRequestForActiveOfferTab?: GetAllMarketRequestResponseItem;
   onConfirmSentOffer: () => void;
   showOfferSentModal: boolean;
+  showOfferAcceptSentModal: boolean;
 }

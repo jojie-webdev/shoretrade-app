@@ -29,4 +29,7 @@ export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {
   onAddCard?: (values: CardDetails) => void;
   onExistingCard?: () => void;
   addCardAndPayError: string;
+  showPaymentSuccessModal: boolean;
+  onConfirmSentOffer: () => void;
+  onCloseConfirmedModal: () => void;
 }

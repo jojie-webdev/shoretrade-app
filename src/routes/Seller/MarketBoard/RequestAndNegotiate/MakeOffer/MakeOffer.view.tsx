@@ -148,10 +148,16 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Typography
             color="shade4"
             className="row-label-friendly-text"
-            style={{ fontFamily: 'Media Sans' }}
+            style={{ fontFamily: 'Media Sans', marginBottom: 0 }}
           >
-            What product do you have available to offer? You must select one
-            from each specification.
+            What product do you have available to offer?{' '}
+          </Typography>
+          <Typography
+            className="row-label-friendly-text"
+            color="shade6"
+            style={{ fontFamily: 'Basis Grotesque Pro', marginTop: 0 }}
+          >
+            You must select one from each specification.
           </Typography>
           {props.stateOptions.map((options, i) => {
             return (
@@ -209,7 +215,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                     style={{ fontFamily: 'Media Sans' }}
                   >
                     What size product do you have or let the buyer know it’s
-                    ungraded?
+                    ungraded.
                   </Typography>
                   <Typography
                     variant="overline"
@@ -374,6 +380,13 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Col xs={12}>
               <Row>
                 <Col xs={12} className="textfield-col shipping-from-col">
+                  <Typography
+                    className="friendly-text"
+                    color="shade4"
+                    style={{ fontFamily: 'Media Sans' }}
+                  >
+                    What address will you be shipping the product from?
+                  </Typography>
                   <Select
                     className="shipping-from"
                     value={props.selectedAddress}

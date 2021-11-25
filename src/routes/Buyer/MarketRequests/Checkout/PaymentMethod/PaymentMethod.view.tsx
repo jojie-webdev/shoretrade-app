@@ -230,6 +230,28 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={props.showPaymentSuccessModal}
+        onClickClose={() => props.onConfirmSentOffer()}
+        title="Thanks for your payment!"
+        action={() => props.onCloseConfirmedModal()}
+        actionText="View Order"
+        hideCancel={true}
+        description={
+          <>
+            <Typography color="shade8" variant="body">
+              We have successfully processed your transaction.
+            </Typography>
+            <Typography color="shade8" variant="body">
+              An order has been generated and the seller will begin preparing
+              your product.
+            </Typography>
+            <Typography color="shade8" variant="body">
+              We will let you know when your order is on its way.
+            </Typography>
+          </>
+        }
+      />
       {props.orderError && (
         <div className="box-error-container">
           <Alert

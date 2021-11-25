@@ -676,12 +676,29 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         hideCancel={true}
         description={
           <>
-            <Typography color="noshade" variant="body">
+            <Typography color="shade6" variant="body">
               The buyer will review your offer.{' '}
             </Typography>
-            <Typography color="noshade" variant="body">
+            <Typography color="shade6" variant="body">
               Please ensure you have notifications turned on so that you stay up
               to date on this offer.
+            </Typography>
+          </>
+        }
+      />
+      <ConfirmationModal
+        isOpen={props.showOfferAcceptSentModal}
+        onClickClose={() => props.onConfirmSentOffer()}
+        title="Offer accepted"
+        action={() => props.onConfirmSentOffer()}
+        actionText="View offers"
+        hideCancel={true}
+        description={
+          <>
+            <Typography color="shade6" variant="body">
+              Once payment is finalised an order number will be generated and
+              you will be required to confirm the weight and arrange the
+              shipping of the product.
             </Typography>
           </>
         }

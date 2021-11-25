@@ -292,7 +292,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Market Board</MobileHeader>}
+      {isMobile && <MobileHeader>Browse Buyer Requests</MobileHeader>}
 
       <div className="tabs-row">
         <div className="tabs">

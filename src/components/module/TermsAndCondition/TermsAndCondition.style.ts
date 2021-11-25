@@ -71,5 +71,8 @@ export const StyledSwiper = styled(Swiper)`
 
   .swiper-pagination-bullet {
     margin: 0 2px;
+    @media ${BREAKPOINTS['sm']} {
+      background: ${({ theme }) => theme.grey.noshade};
+    }
   }
 `;

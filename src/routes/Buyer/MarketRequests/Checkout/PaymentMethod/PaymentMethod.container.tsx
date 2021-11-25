@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
+import { BUYER_MARKET_REQUEST_ROUTES, BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +8,11 @@ import {
   CardDetails,
   PaymentMethodPublicProps,
 } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.props';
-import { addCardAndPayActions, getPaymentMethodsActions } from 'store/actions';
+import {
+  addCardAndPayActions,
+  getPaymentMethodsActions,
+  marketRequestAcceptOfferActions,
+} from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { OrderCartItem } from 'types/store/AddCardAndPayState';
 import { CartItem } from 'types/store/CartState';
@@ -16,11 +21,13 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
 import PaymentMethodView from './PaymentMethod.view';
+import { useHistory } from 'react-router';
 
 const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
+  const history = useHistory();
   const paymentModes = useSelector(
     (state: Store) => state.getPaymentMode.data?.data.payment_mode
   );
@@ -69,6 +76,20 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     cartId: key,
   }));
 
+  const onConfirmSentOffer = () => {
+    dispatch(marketRequestAcceptOfferActions.clear());
+    history.push(BUYER_ROUTES.ORDERS);
+  };
+
+  const onCloseConfirmedModal = () => {
+    history.push(
+      BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(
+        acceptOffer?.request?.marketRequestId
+      )
+    );
+    dispatch(marketRequestAcceptOfferActions.clear());
+  };
+
   useEffect(() => {
     if (companyId) {
       dispatch(getPaymentMethodsActions.request({ companyId }));
@@ -85,6 +106,9 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     isLoading:
       pendingAddCard || processingOrder || acceptOffer.pending || false,
     addCardAndPayError,
+    showPaymentSuccessModal: acceptOffer.data?.status === 200,
+    onConfirmSentOffer,
+    onCloseConfirmedModal,
     ...props,
   };
   return <PaymentMethodView {...generatedProps} />;

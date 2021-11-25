@@ -28,6 +28,7 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks

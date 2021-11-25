@@ -4,9 +4,9 @@ import Alert from 'components/base/Alert';
 import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import StarRating from 'components/base/StarRating';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
@@ -16,10 +16,12 @@ import OfferAlert from 'components/module/OfferAlert';
 import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { prop, sortBy } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import {
@@ -96,6 +98,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   } = props;
 
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
@@ -250,7 +253,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             {renderLabel('PRICE', { marginTop: '24px' })}
             {renderLabelValue(pricePerUnit)}
 
-            {renderLabel('Delivery Date', { marginTop: '24px' })}
+            {renderLabel(
+              isMobile ? 'Est. Delivery Date' : 'Estimated Delivery Date',
+              { marginTop: '24px' }
+            )}
             {renderLabelValue(
               moment(selectedOffer?.deliveryDate).format('MMMM DD, YYYY')
             )}

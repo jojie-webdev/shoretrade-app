@@ -62,7 +62,7 @@ function* acceptOfferRequest(
 function* acceptOfferSuccess(
   action: AsyncAction<AcceptOffer, NegotiationPayload>
 ) {
-  yield put(replace(BUYER_ROUTES.ORDERS));
+  // yield put(replace(BUYER_ROUTES.ORDERS));
 }
 
 function* acceptOfferWatcher() {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import { useTheme } from 'utils/Theme';
 
 import { Credentials } from './Login.props';
 import LoginView from './Login.view';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 const Login = (): JSX.Element => {
   const history = useHistory();
@@ -16,6 +17,10 @@ const Login = (): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const pending = useSelector((state: Store) => state.login.pending) || false;
+  const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
+    'isTermsAndConAccepted',
+    false
+  );
 
   const isError =
     (useSelector((state: Store) => state.login.error) || '').length > 0;
@@ -40,6 +45,11 @@ const Login = (): JSX.Element => {
   const goToRegister = () => {
     history.push(isSeller ? SELLER_ROUTES.REGISTER : BUYER_ROUTES.REGISTER);
   };
+
+  useEffect(() => {
+    // reset terms
+    setIsAcceptClicked(false);
+  }, []);
 
   const generatedProps = {
     // generated props here
