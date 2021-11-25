@@ -10,6 +10,7 @@ import {
   Amex,
   InfoFilled,
   Mastercard,
+  OrderPlaced,
   Paypal,
   Visa,
   Zippay,
@@ -50,6 +51,7 @@ import {
   MobileTopRow,
   StyledCreditCard,
   StyledTotalCardColumn,
+  OrderPlacedIconContainer,
 } from './PaymentMethod.style';
 
 //TODO: refactor with field set card
@@ -232,21 +234,36 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
     <Container>
       <ConfirmationModal
         isOpen={props.showPaymentSuccessModal}
-        onClickClose={() => props.onConfirmSentOffer()}
+        onClickClose={() => props.onCloseConfirmedModal()}
         title="Thanks for your payment!"
-        action={() => props.onCloseConfirmedModal()}
+        action={() => props.onConfirmSentOffer()}
         actionText="View Order"
         hideCancel={true}
         description={
           <>
-            <Typography color="shade8" variant="body">
+            <OrderPlacedIconContainer>
+              <OrderPlaced />
+            </OrderPlacedIconContainer>
+            <Typography
+              style={{ marginBottom: 16 }}
+              color="shade6"
+              variant="body"
+            >
               We have successfully processed your transaction.
             </Typography>
-            <Typography color="shade8" variant="body">
+            <Typography
+              style={{ marginBottom: 16 }}
+              color="shade6"
+              variant="body"
+            >
               An order has been generated and the seller will begin preparing
               your product.
             </Typography>
-            <Typography color="shade8" variant="body">
+            <Typography
+              style={{ marginBottom: 16 }}
+              color="shade6"
+              variant="body"
+            >
               We will let you know when your order is on its way.
             </Typography>
           </>

@@ -259,3 +259,9 @@ export const StyledTotalCardColumn = styled(Col)`
     margin-bottom: 40px;
   }
 `;
+
+export const OrderPlacedIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+`;

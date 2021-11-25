@@ -4,6 +4,7 @@ import { BUYER_MARKET_REQUEST_ROUTES, BUYER_ROUTES } from 'consts';
 import moment from 'moment';
 import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import {
   CardDetails,
   PaymentMethodPublicProps,
@@ -21,7 +22,6 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
 import PaymentMethodView from './PaymentMethod.view';
-import { useHistory } from 'react-router';
 
 const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -47,6 +47,8 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
   );
+
+  const marketOffer = useSelector((store: Store) => store.marketOffer);
 
   const pendingAddCard =
     useSelector((state: Store) => state.addCardAndPay.pending) || false;
@@ -82,11 +84,12 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
   };
 
   const onCloseConfirmedModal = () => {
-    history.push(
-      BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(
-        acceptOffer?.request?.marketRequestId
-      )
-    );
+    if (marketOffer?.marketRequestId)
+      history.push(
+        BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(
+          marketOffer?.marketRequestId.toString()
+        )
+      );
     dispatch(marketRequestAcceptOfferActions.clear());
   };
 
