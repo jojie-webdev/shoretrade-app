@@ -252,7 +252,10 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                         })
                       }
                       className="checkbox"
-                      checked={props.size.from === 'ungraded'}
+                      checked={
+                        props.size.from === 'ungraded' ||
+                        props.buyerRequest.sizeUngraded === true
+                      }
                     />
                     <Typography
                       className="label"

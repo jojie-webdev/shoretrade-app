@@ -45,7 +45,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   );
   const [size, setSize] = useState({
     from:
-      currentOfferItemData?.size.from === null
+      currentOfferItemData?.size.from === null || props.buyerRequest.sizeUngraded
         ? 'ungraded'
         : currentOfferItemData?.size.from || '',
     to:
@@ -185,7 +185,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
       measurementUnit: buyerRequest?.measurementUnit || '',
     };
 
-    if (size.from === 'ungraded') {
+    if (size.from === 'ungraded' || size.from === null) {
       payload.size = {
         from: null,
         to: null,
