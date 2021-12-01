@@ -16,6 +16,45 @@ export const Container = styled.div`
   .controls-row {
     width: 100%;
     margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .tabs {
+    width: 330px;
+
+    .main-tab {
+      padding: 4px 8px;
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+
+  .search {
+    width: 280px;
+    height: 40px;
+    background: ${({ theme }) => theme.grey.shade9};
+    border: 0;
+    color: ${({ theme }) => theme.grey.shade7};
+
+    input {
+      background: ${({ theme }) => theme.grey.shade9};
+      color: ${({ theme }) => theme.grey.shade7};
+
+      ::placeholder {
+        color: ${({ theme }) => theme.grey.shade7};
+      }
+    }
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+    }
   }
 `;
 
@@ -55,7 +94,8 @@ export const SearchFilterRow = styled.div`
 `;
 
 export const SearchContainer = styled.div`
-  width: 380px;
+  width: 280px;
+  height: 40px;
   position: relative;
 `;
 

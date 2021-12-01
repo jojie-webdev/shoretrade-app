@@ -8,11 +8,16 @@ import React, {
 } from 'react';
 
 import Button from 'components/base/Button';
+import Divider from 'components/base/Divider';
 import {
   InfoFilled,
   Message,
   CheckList,
   CheckFilled,
+  Truck,
+  Box,
+  PaperPlane,
+  Exclamation,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
@@ -24,6 +29,7 @@ import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -49,6 +55,36 @@ import {
   Spacer,
 } from './ToShip.styles';
 
+const generatePlaceOrderPayload = (config: {
+  isPartial: boolean;
+  order: GetSellerOrdersResponseItem;
+}) => {
+  const { order } = config;
+  return {
+    orderId: order?.orderId || '',
+    buyerCompanyId: order?.buyerCompanyId || '',
+    sellerCompanyId: order?.sellerCompanyId || '',
+    buyerId: order?.buyerId || '',
+    sellerId: order?.sellerId || '',
+    deliveryMethod: order?.deliveryMethod || '',
+    deliveryOption: order?.deliveryOption || '',
+    fromAddressId: order?.fromAddress.id || '',
+    toAddressId: order?.toAddress.id || '',
+    isPartial: config.isPartial,
+    orderLineItem: order?.orderLineItem
+      ? order?.orderLineItem.map((lineItem) => ({
+          id: lineItem.id,
+          weight: lineItem.weight,
+          price: lineItem.price,
+          weightConfirmed: lineItem.weightConfirmed,
+          priceDelta: lineItem.priceDelta,
+          listingBoxes: lineItem.listingBoxes,
+          listing: lineItem.listing,
+        }))
+      : [],
+  };
+};
+
 export const PendingItem = (props: {
   data: PendingToShipItemData;
   updateConfirmModal: React.Dispatch<
@@ -62,6 +98,9 @@ export const PendingItem = (props: {
   placeOrder: (data: PlaceOrderMeta) => void;
   placeOrderId: string;
   setPlaceOrderId: Dispatch<string>;
+  isSendingMessage: boolean;
+  updateMessageModal: any;
+  messageModal: any;
 }): any => {
   const theme = useTheme();
   const {
@@ -71,6 +110,9 @@ export const PendingItem = (props: {
     placeOrderId,
     placeOrder,
     isPlacingOrder,
+    isSendingMessage,
+    updateMessageModal,
+    messageModal,
   } = props;
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
@@ -94,33 +136,6 @@ export const PendingItem = (props: {
       (i) => i.weightConfirmed
     );
 
-    const generatePlaceOrderPayload = (config: { isPartial: boolean }) => {
-      setPlaceOrderId(order.orderId);
-      return {
-        orderId: order?.orderId || '',
-        buyerCompanyId: order?.buyerCompanyId || '',
-        sellerCompanyId: order?.sellerCompanyId || '',
-        buyerId: order?.buyerId || '',
-        sellerId: order?.sellerId || '',
-        deliveryMethod: order?.deliveryMethod || '',
-        deliveryOption: order?.deliveryOption || '',
-        fromAddressId: order?.fromAddress.id || '',
-        toAddressId: order?.toAddress.id || '',
-        isPartial: config.isPartial,
-        orderLineItem: order?.orderLineItem
-          ? order?.orderLineItem.map((lineItem) => ({
-              id: lineItem.id,
-              weight: lineItem.weight,
-              price: lineItem.price,
-              weightConfirmed: lineItem.weightConfirmed,
-              priceDelta: lineItem.priceDelta,
-              listingBoxes: lineItem.listingBoxes,
-              listing: lineItem.listing,
-            }))
-          : [],
-      };
-    };
-
     return (
       <Fragment key={order.orderId}>
         <InnerStyledInteraction
@@ -129,6 +144,7 @@ export const PendingItem = (props: {
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
+          columnedRightContent
         >
           <div className="content">
             <div className="left-content">
@@ -137,11 +153,11 @@ export const PendingItem = (props: {
                 color="noshade"
                 className="center-text"
               >
-                Order&nbsp;{order.orderRefNumber}
+                <span>Order</span>&nbsp;#{order.orderRefNumber}
               </Typography>
 
               <div className="order-count">
-                <Typography variant="label" color="noshade">
+                <Typography variant="overlineSmall" color="noshade">
                   {order.itemCount}&nbsp;
                   {order.itemCount > 1 ? 'ITEMS' : 'ITEM'}
                 </Typography>
@@ -149,46 +165,68 @@ export const PendingItem = (props: {
             </div>
             <Spacer />
             <div className="right-content">
-              {!isOpen.includes(order.orderId) && (
-                <>
-                  <ItemDetail variant="caption" color="shade6">
-                    Sold Weight <span>{order.totalWeight.toFixed(2)} kg</span>
-                  </ItemDetail>
+              <ItemDetail variant="caption" color="shade6" row>
+                Buyer <span>{order.buyerCompanyName}</span>
+              </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(order.totalPrice)}</span>
-                  </ItemDetail>
-                </>
-              )}
+              <ItemDetail variant="caption" color="shade6" row>
+                Type <span>Direct Sale</span>
+                {/*Should check if aquafuture or auction*/}
+              </ItemDetail>
             </div>
             <div className="buttons">
-              {allowPartialShipment && !allowFullShipment && (
+              <Button
+                text={'Message Buyer'}
+                textColor={'primary'}
+                textVariant="overline"
+                iconPosition="before"
+                variant="outline"
+                size="sm"
+                onClick={(e) => {
+                  updateMessageModal({
+                    isOpen: true,
+                    buyerId: order.buyerId,
+                    buyerName: order.buyerCompanyName,
+                  });
+                  e.stopPropagation();
+                }}
+                loading={
+                  messageModal.buyerId === order.buyerCompanyId &&
+                  isSendingMessage
+                }
+              />
+              {allowPartialShipment && !allowFullShipment ? (
                 <Button
                   text={'Ship Partial'}
+                  textVariant="overline"
                   style={{ width: 169, height: 32 }}
                   size="sm"
                   onClick={(e) => {
+                    setPlaceOrderId(order.orderId);
                     placeOrder(
                       generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
+                        order,
                       })
                     );
                     e.stopPropagation();
                   }}
                   loading={isPlacingOrder && placeOrderId === order.orderId}
                 />
-              )}
-
-              {allowPartialShipment && allowFullShipment && (
+              ) : (
                 <Button
                   className="ship-order"
                   text={'Ship Order'}
+                  textVariant="overline"
                   style={{ width: 169, height: 32 }}
+                  disabled={!allowFullShipment}
                   size="sm"
                   onClick={(e) => {
+                    setPlaceOrderId(order.orderId);
                     placeOrder(
                       generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
+                        order,
                       })
                     );
                     e.stopPropagation();
@@ -210,78 +248,108 @@ export const PendingItem = (props: {
             <CollapsibleContent
               key={lineItem.id}
               isOpen={isOpen.includes(order.orderId)}
+              style={{ background: theme.grey.shade9 }}
             >
               <ItemCard>
-                <div className="left-content">
-                  <ItemImage
-                    src={parseImageUrl(lineItem.listing.images[0])}
-                    alt=""
-                  />
+                <div>
+                  <div className="left-content">
+                    <ItemImage
+                      src={parseImageUrl(lineItem.listing.images[0])}
+                      alt=""
+                    />
 
-                  <div className="text-content">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="item-title"
-                    >
-                      {lineItem.listing.typeName}
-                    </Typography>
+                    <div className="text-content">
+                      <Typography
+                        variant="label"
+                        color="noshade"
+                        className="item-title"
+                      >
+                        {lineItem.listing.typeName}
+                      </Typography>
 
-                    <div className="tags-container">
-                      {lineItem.listing.specifications.map((tag) => (
-                        <Tag key={tag}>
-                          <Typography variant="caption" color="noshade">
-                            {tag}
-                          </Typography>
-                        </Tag>
-                      ))}
+                      <div className="tags-container">
+                        {lineItem.listing.specifications.map((tag) => (
+                          <Tag key={tag}>
+                            <Typography variant="caption" color="noshade">
+                              {tag}
+                            </Typography>
+                          </Tag>
+                        ))}
+                      </div>
+
+                      <ItemDetail variant="caption" color="shade5" row>
+                        {/* {sizeToString(
+                          lineItem.listing.metricLabel,
+                          lineItem.listing.sizeFrom || undefined,
+                          lineItem.listing.sizeTo || undefined
+                        )} */}
+                        Size:{' '}
+                        <span>
+                          {sizeToString(
+                            lineItem.listing.metricLabel,
+                            lineItem.listing.sizeFrom || '',
+                            lineItem.listing.sizeTo || ''
+                          )}
+                        </span>
+                      </ItemDetail>
                     </div>
+                  </div>
+                  <Spacer />
+                  <div
+                    className="right-content"
+                    style={{ flex: 1, width: 'auto' }}
+                  >
+                    <ItemDetail variant="caption" color="shade6">
+                      Total Weight{' '}
+                      <span>
+                        {lineItemTotalWeight.toFixed(2)}{' '}
+                        {formatMeasurementUnit(
+                          lineItem.listing.measurementUnit
+                        )}
+                      </span>
+                    </ItemDetail>
 
-                    <ItemDetail variant="caption" color="shade5" row>
-                      {sizeToString(
-                        lineItem.listing.metricLabel,
-                        lineItem.listing.sizeFrom || undefined,
-                        lineItem.listing.sizeTo || undefined
-                      )}
+                    <ItemDetail variant="caption" color="shade6">
+                      Price per kg <span>{toPrice(lineItem.price)}</span>
+                    </ItemDetail>
+
+                    <ItemDetail variant="caption" color="shade6">
+                      Price (AUD)
+                      <span>
+                        {toPrice(lineItem.price * lineItemTotalWeight)}
+                      </span>
                     </ItemDetail>
                   </div>
                 </div>
-                <Spacer />
-                <div className="right-content">
-                  <ItemDetail variant="caption" color="shade6">
-                    Sold Weight{' '}
-                    <span>
-                      {lineItemTotalWeight.toFixed(2)}{' '}
-                      {formatMeasurementUnit(lineItem.listing.measurementUnit)}
-                    </span>
-                  </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(lineItem.price)}</span>
-                  </ItemDetail>
-                </div>
+                <Divider backgroundColor={theme.grey.shade8} />
 
-                <div className="buttons">
+                <div className="buttons" style={{ marginRight: 0 }}>
                   {lineItem.weightConfirmed ? (
                     <Button
                       text={'Weight Confirmed'}
-                      icon={<CheckFilled fill="white" height={16} width={16} />}
                       iconPosition="before"
-                      style={{ width: 169, height: 32 }}
+                      textColor="success"
+                      style={{
+                        width: 169,
+                        height: 32,
+                        borderRadius: '8px',
+                        border: `2px solid ${theme.brand.success}`,
+                      }}
                       size="sm"
                       onClick={(e) => {
                         //DO NOTHING
                         e.stopPropagation();
                       }}
-                      variant="success"
+                      variant="outline"
                     />
                   ) : (
                     <Button
                       text={'Confirm Weight'}
-                      icon={<CheckList fill="white" height={15} width={20} />}
                       iconPosition="before"
-                      style={{ width: 169, height: 32 }}
+                      style={{ width: 169, height: 32, borderRadius: '8px' }}
                       size="sm"
+                      variant="outline"
                       onClick={(e) => {
                         if (!lineItem.weightConfirmed) {
                           updateConfirmModal({
@@ -410,6 +478,18 @@ const ToShip = (props: SoldGeneratedProps) => {
     return a + c.orderTotal;
   }, 0);
 
+  const getDeliveryIcon = (deliveryMethod: string) => {
+    const iconProps = { width: 14, height: 14, fill: theme.grey.shade6 };
+    switch (deliveryMethod) {
+      case 'ROAD':
+        return <Truck {...iconProps} />;
+      case 'SELLER':
+        return <Box {...iconProps} />;
+      default:
+        return <PaperPlane {...iconProps} />;
+    }
+  };
+
   return (
     <>
       <ConfirmModal
@@ -435,38 +515,42 @@ const ToShip = (props: SoldGeneratedProps) => {
       />
       <TitleRow>
         <Col md={12} className="title-col">
-          <div className="svg-container">
-            <InfoFilled fill={theme.brand.alert} height={18} width={18} />
-          </div>
-          <Typography color="alert">
-            Pending Confirmation - {pendingToShipTotal}
+          <Typography
+            color="noshade"
+            style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+          >
+            Pending
           </Typography>
+          <span className="notification">{pendingToShipTotal}</span>
         </Col>
       </TitleRow>
 
       {pendingToShip.map((group) => {
         return (
-          <ItemRow key={group.buyerCompanyId} id={group.buyerCompanyId}>
+          <ItemRow key={group.deliveryMethod} id={group.deliveryMethod}>
             <Col>
               <StyledInteraction
-                pressed={isOpen.includes(group.buyerCompanyId)}
-                onClick={() => toggleAccordion(group.buyerCompanyId)}
+                pressed={isOpen.includes(group.deliveryMethod)}
+                onClick={() => toggleAccordion(group.deliveryMethod)}
                 type="accordion"
                 iconColor={theme.brand.primary}
                 fullWidth
               >
                 <div className="content">
                   <div className="left-content left-content-extended">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="center-text title-text"
-                    >
-                      {group.buyerCompanyName}
-                    </Typography>
+                    <div className="label">
+                      {getDeliveryIcon(group.deliveryMethod)}
+                      <Typography
+                        variant="label"
+                        color="shade6"
+                        className="center-text title-text"
+                      >
+                        {group.deliveryMethodLabel}
+                      </Typography>
+                    </div>
 
                     <div className="order-count">
-                      <Typography variant="label" color="noshade">
+                      <Typography variant="overlineSmall" color="noshade">
                         {group.orderCount}&nbsp;
                         {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
                       </Typography>
@@ -475,58 +559,36 @@ const ToShip = (props: SoldGeneratedProps) => {
                   <Spacer />
                   <div className="right-content">
                     <ItemDetail variant="caption" color="shade6">
-                      Sold Weight <span>{group.totalWeight.toFixed(2)} kg</span>
+                      Sold Weight{' '}
+                      <span style={{ color: theme.brand.alert }}>
+                        <Exclamation width={16} height={16} />
+                        &nbsp;
+                        {/*group.totalWeight.toFixed(2)} kg*/}To be confirmed
+                      </span>
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6">
-                      Price (AUD) <span>{toPrice(group.totalPrice)}</span>
+                      Total Price (AUD) <span>{toPrice(group.totalPrice)}</span>
                     </ItemDetail>
-                  </div>
-                  <div className="buttons">
-                    <Button
-                      text={'Message Buyer'}
-                      icon={
-                        messageModal.buyerId === group.buyerCompanyId &&
-                        isSendingMessage ? undefined : (
-                          <Message
-                            fill={theme.grey.shade9}
-                            height={16}
-                            width={16}
-                          />
-                        )
-                      }
-                      textColor={'shade9'}
-                      iconPosition="before"
-                      style={{
-                        width: 169,
-                        height: 32,
-                        backgroundColor: theme.grey.noshade,
-                      }}
-                      size="sm"
-                      onClick={(e) => {
-                        updateMessageModal({
-                          isOpen: true,
-                          buyerId: group.buyerId,
-                          buyerName: group.buyerCompanyName,
-                        });
-                        e.stopPropagation();
-                      }}
-                      loading={
-                        messageModal.buyerId === group.buyerCompanyId &&
-                        isSendingMessage
-                      }
-                    />
                   </div>
                 </div>
               </StyledInteraction>
 
               <CollapsibleContent
-                isOpen={isOpen.includes(group.buyerCompanyId)}
-                style={
-                  addHorizontalRowMargin
-                    ? { marginLeft: 24, marginRight: 24 }
-                    : { marginLeft: 8, marginRight: 8 }
-                }
+                isOpen={isOpen.includes(group.deliveryMethod)}
+                style={{
+                  ...(addHorizontalRowMargin
+                    ? { paddingLeft: 24, paddingRight: 24 }
+                    : { marginLeft: 8, marginRight: 8 }),
+                  marginBottom: isOpen.includes(group.deliveryMethod)
+                    ? '8px'
+                    : undefined,
+                  borderBottomLeftRadius: '8px',
+                  borderBottomRightRadius: '8px',
+                  paddingBottom: isOpen.includes(group.deliveryMethod)
+                    ? '8px'
+                    : undefined,
+                }}
               >
                 <PendingItem
                   data={group}
@@ -535,6 +597,9 @@ const ToShip = (props: SoldGeneratedProps) => {
                   setPlaceOrderId={setPlaceOrderId}
                   isPlacingOrder={isPlacingOrder}
                   placeOrder={placeOrder}
+                  isSendingMessage={isSendingMessage}
+                  updateMessageModal={updateMessageModal}
+                  messageModal={messageModal}
                 />
               </CollapsibleContent>
             </Col>
@@ -542,13 +607,13 @@ const ToShip = (props: SoldGeneratedProps) => {
         );
       })}
 
-      <TitleRow style={{ marginTop: 24 }}>
+      {/* <TitleRow style={{ marginTop: 24 }}>
         <Col md={12} className="title-col">
           <Typography variant="overline" color="shade6">
             TO SHIP - {toShipTotal}
           </Typography>
         </Col>
-      </TitleRow>
+      </TitleRow> */}
 
       {sort(sortByDate, toShip).map((group) => {
         const getDisplayDate = () => {
@@ -569,7 +634,7 @@ const ToShip = (props: SoldGeneratedProps) => {
             return 'Tomorrow';
           }
 
-          return targetDate.format('Do MMMM');
+          return targetDate.format('MMMM DD');
         };
 
         const calendarDateString = getDisplayDate();
@@ -577,7 +642,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         return (
           <ItemRow key={calendarDateString}>
             <Col>
-              <StyledInteraction
+              {/* <StyledInteraction
                 pressed={isOpen.includes(calendarDateString)}
                 onClick={() => toggleAccordion(calendarDateString)}
                 type="accordion"
@@ -604,9 +669,22 @@ const ToShip = (props: SoldGeneratedProps) => {
                   <div className="right-content" />
                   <div className="buttons" />
                 </div>
-              </StyledInteraction>
+              </StyledInteraction> */}
+              <TitleRow style={{ marginTop: 24 }}>
+                <Col md={12} className="title-col">
+                  <Typography
+                    color="noshade"
+                    style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                  >
+                    {calendarDateString}
+                  </Typography>
+                  <span className="notification notif-reg">
+                    {group.orderTotal}
+                  </span>
+                </Col>
+              </TitleRow>
 
-              <CollapsibleContent
+              {/* <CollapsibleContent
                 isOpen={isOpen.includes(calendarDateString)}
                 style={{
                   marginLeft: 24,
@@ -615,7 +693,32 @@ const ToShip = (props: SoldGeneratedProps) => {
                 }}
               >
                 <SoldItem data={group.data} token={token} status="PLACED" />
-              </CollapsibleContent>
+              </CollapsibleContent> */}
+
+              <SoldItem
+                data={group.data}
+                token={token}
+                status="PLACED"
+                updateMessageModal={updateMessageModal}
+                messageModal={messageModal}
+                isSendingMessage={isSendingMessage}
+                shipOrder={(
+                  isPartial: boolean,
+                  order?: GetSellerOrdersResponseItem
+                ) => {
+                  if (order) {
+                    setPlaceOrderId(order.orderId);
+                    placeOrder(
+                      generatePlaceOrderPayload({
+                        isPartial,
+                        order,
+                      })
+                    );
+                  }
+                }}
+                isPlacingOrder={isPlacingOrder}
+                placeOrderId={placeOrderId}
+              />
             </Col>
           </ItemRow>
         );
