@@ -11,6 +11,7 @@ import { useTheme } from 'utils/Theme';
 import { SoldGeneratedProps } from '../Sold.props';
 import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
+import { TitleRow } from '../ToShip/ToShip.styles';
 import {
   StyledInteraction,
   CollapsibleContent,
@@ -41,7 +42,7 @@ const InTransit = (props: SoldGeneratedProps) => {
 
   return (
     <>
-      {sort(sortByDate, inTransit).map((group) => {
+      {sort(sortByDate, inTransit).map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
           const currentDate = moment();
@@ -60,7 +61,7 @@ const InTransit = (props: SoldGeneratedProps) => {
             return 'Tomorrow';
           }
 
-          return targetDate.format('Do MMMM');
+          return targetDate.format('MMMM DD');
         };
 
         const calendarDateString = getDisplayDate();
@@ -68,38 +69,24 @@ const InTransit = (props: SoldGeneratedProps) => {
         return (
           <ItemRow key={calendarDateString}>
             <Col>
-              <StyledInteraction
-                pressed={isOpen.includes(calendarDateString)}
-                onClick={() => toggleAccordion(calendarDateString)}
-                type="accordion"
-                iconColor={theme.brand.primary}
+              <TitleRow
+                style={{
+                  marginTop: idx === 0 ? 0 : 24,
+                }}
               >
-                <div className="content">
-                  <div className="left-content left-content-extended">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="center-text title-text"
-                    >
-                      {calendarDateString}
-                    </Typography>
-
-                    <div className="order-count">
-                      <Typography variant="label" color="noshade">
-                        {group.orderTotal}&nbsp;
-                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
-                      </Typography>
-                    </div>
-                  </div>
-                </div>
-              </StyledInteraction>
-
-              <CollapsibleContent
-                isOpen={isOpen.includes(calendarDateString)}
-                style={{ marginLeft: 24, marginRight: 24, overflow: 'visible' }}
-              >
-                <SoldItem data={group.data} token={token} status="TRANSIT" />
-              </CollapsibleContent>
+                <Col md={12} className="title-col">
+                  <Typography
+                    color="noshade"
+                    style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                  >
+                    {calendarDateString}
+                  </Typography>
+                  <span className="notification notif-reg">
+                    {group.orderTotal}
+                  </span>
+                </Col>
+              </TitleRow>
+              <SoldItem data={group.data} token={token} status="TRANSIT" />
             </Col>
           </ItemRow>
         );
