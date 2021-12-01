@@ -2,7 +2,13 @@ import React, { useState, Fragment } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Plane, Truck, DownloadFile, Exclamation } from 'components/base/SVG';
+import {
+  Plane,
+  Truck,
+  DownloadFile,
+  Exclamation,
+  FileCheck,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
 import { useMediaQuery } from 'react-responsive';
@@ -461,117 +467,111 @@ const SoldItem = (props: {
                     <Divider backgroundColor={theme.grey.shade8} />
 
                     <div className="buttons">
-                      {showDownloads === key && (
-                        <div
-                          className="downloads-menu"
-                          onMouseEnter={() => {
-                            if (timer) {
-                              clearTimeout(timer);
-                              setTimer(null);
-                            }
-                          }}
-                          onMouseLeave={() => {
-                            onExitDownloads();
-                          }}
+                      <div className="downloads-menu">
+                        <Button
+                          text="Packing Lists"
+                          textColor="noshade"
+                          textVariant="caption"
+                          variant="outline"
+                          iconPosition="before"
+                          icon={
+                            <FileCheck
+                              fill={theme.brand.primary}
+                              width={12}
+                              height={12}
+                            />
+                          }
                           onClick={(e) => {
+                            const orderRefNumbers = entry.map((v) => {
+                              return v.orderRefNumber;
+                            });
+                            window.open(
+                              `${API.URL}/${
+                                API.VERSION
+                              }/order/packing-list/${orderRefNumbers.join()}?token=${
+                                props.token
+                              }&state=${toAddressState}&status=${props.status}`,
+                              '_blank'
+                            );
+                            setShowDownloads('');
                             e.stopPropagation();
                           }}
-                        >
-                          <Typography
-                            color="noshade"
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/packing-list/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }&state=${toAddressState}&status=${
-                                  props.status
-                                }`,
-                                '_blank'
-                              );
-                              setShowDownloads('');
-                              e.stopPropagation();
-                            }}
-                          >
-                            Packing Lists
-                          </Typography>
-                          <Typography
-                            color="noshade"
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/invoice/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }`,
-                                '_blank'
-                              );
-                              setShowDownloads('');
-                              e.stopPropagation();
-                            }}
-                          >
-                            Invoices
-                          </Typography>
-                          <Typography
-                            color="noshade"
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/order-summary/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }&state=${toAddressState}&status=${
-                                  props.status
-                                }`,
-                                '_blank'
-                              );
-                              setShowDownloads('');
-                              e.stopPropagation();
-                            }}
-                          >
-                            Order Summary
-                          </Typography>
-                        </div>
-                      )}
-
+                        />
+                        <Button
+                          text="Invoices"
+                          textColor="noshade"
+                          textVariant="caption"
+                          variant="outline"
+                          iconPosition="before"
+                          icon={
+                            <FileCheck
+                              fill={theme.brand.primary}
+                              width={12}
+                              height={12}
+                            />
+                          }
+                          onClick={(e) => {
+                            const orderRefNumbers = entry.map((v) => {
+                              return v.orderRefNumber;
+                            });
+                            window.open(
+                              `${API.URL}/${
+                                API.VERSION
+                              }/order/invoice/${orderRefNumbers.join()}?token=${
+                                props.token
+                              }`,
+                              '_blank'
+                            );
+                            setShowDownloads('');
+                            e.stopPropagation();
+                          }}
+                        />
+                        <Button
+                          text="Order Summary"
+                          textColor="noshade"
+                          textVariant="caption"
+                          variant="outline"
+                          iconPosition="before"
+                          icon={
+                            <FileCheck
+                              fill={theme.brand.primary}
+                              width={12}
+                              height={12}
+                            />
+                          }
+                          onClick={(e) => {
+                            const orderRefNumbers = entry.map((v) => {
+                              return v.orderRefNumber;
+                            });
+                            window.open(
+                              `${API.URL}/${
+                                API.VERSION
+                              }/order/order-summary/${orderRefNumbers.join()}?token=${
+                                props.token
+                              }&state=${toAddressState}&status=${props.status}`,
+                              '_blank'
+                            );
+                            setShowDownloads('');
+                            e.stopPropagation();
+                          }}
+                        />
+                      </div>
                       <Button
-                        text={'Downloads'}
-                        icon={
-                          <DownloadFile
-                            fill={theme.grey.noshade}
-                            height={16}
-                            width={16}
-                          />
-                        }
-                        textColor={'noshade'}
+                        text={'Weight Confirmed'}
                         iconPosition="before"
+                        textColor="success"
                         style={{
-                          width: 123,
+                          width: 169,
                           height: 32,
-                          backgroundColor: theme.grey.shade8,
+                          borderRadius: '8px',
+                          border: `2px solid ${theme.brand.success}`,
                         }}
                         size="sm"
-                        onMouseLeave={() => {
-                          onExitDownloads();
-                        }}
                         onClick={(e) => {
-                          if (showDownloads.length > 0) {
-                            setShowDownloads('');
-                          } else {
-                            onEnterDownloads(key);
-                          }
+                          //DO NOTHING
                           e.stopPropagation();
                         }}
+                        variant="outline"
                       />
                     </div>
                   </ItemCard>

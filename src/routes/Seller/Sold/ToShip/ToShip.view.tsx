@@ -513,99 +513,105 @@ const ToShip = (props: SoldGeneratedProps) => {
         }}
         loading={isSendingMessage}
       />
-      <TitleRow>
-        <Col md={12} className="title-col">
-          <Typography
-            color="noshade"
-            style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
-          >
-            Pending
-          </Typography>
-          <span className="notification">{pendingToShipTotal}</span>
-        </Col>
-      </TitleRow>
-
-      {pendingToShip.map((group) => {
-        return (
-          <ItemRow key={group.deliveryMethod} id={group.deliveryMethod}>
-            <Col>
-              <StyledInteraction
-                pressed={isOpen.includes(group.deliveryMethod)}
-                onClick={() => toggleAccordion(group.deliveryMethod)}
-                type="accordion"
-                iconColor={theme.brand.primary}
-                fullWidth
+      {filters.toShipFilters.page === '1' && (
+        <>
+          <TitleRow>
+            <Col md={12} className="title-col">
+              <Typography
+                color="noshade"
+                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
               >
-                <div className="content">
-                  <div className="left-content left-content-extended">
-                    <div className="label">
-                      {getDeliveryIcon(group.deliveryMethod)}
-                      <Typography
-                        variant="label"
-                        color="shade6"
-                        className="center-text title-text"
-                      >
-                        {group.deliveryMethodLabel}
-                      </Typography>
-                    </div>
-
-                    <div className="order-count">
-                      <Typography variant="overlineSmall" color="noshade">
-                        {group.orderCount}&nbsp;
-                        {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
-                      </Typography>
-                    </div>
-                  </div>
-                  <Spacer />
-                  <div className="right-content">
-                    <ItemDetail variant="caption" color="shade6">
-                      Sold Weight{' '}
-                      <span style={{ color: theme.brand.alert }}>
-                        <Exclamation width={16} height={16} />
-                        &nbsp;
-                        {/*group.totalWeight.toFixed(2)} kg*/}To be confirmed
-                      </span>
-                    </ItemDetail>
-
-                    <ItemDetail variant="caption" color="shade6">
-                      Total Price (AUD) <span>{toPrice(group.totalPrice)}</span>
-                    </ItemDetail>
-                  </div>
-                </div>
-              </StyledInteraction>
-
-              <CollapsibleContent
-                isOpen={isOpen.includes(group.deliveryMethod)}
-                style={{
-                  ...(addHorizontalRowMargin
-                    ? { paddingLeft: 24, paddingRight: 24 }
-                    : { marginLeft: 8, marginRight: 8 }),
-                  marginBottom: isOpen.includes(group.deliveryMethod)
-                    ? '8px'
-                    : undefined,
-                  borderBottomLeftRadius: '8px',
-                  borderBottomRightRadius: '8px',
-                  paddingBottom: isOpen.includes(group.deliveryMethod)
-                    ? '8px'
-                    : undefined,
-                }}
-              >
-                <PendingItem
-                  data={group}
-                  updateConfirmModal={updateConfirmModal}
-                  placeOrderId={placeOrderId}
-                  setPlaceOrderId={setPlaceOrderId}
-                  isPlacingOrder={isPlacingOrder}
-                  placeOrder={placeOrder}
-                  isSendingMessage={isSendingMessage}
-                  updateMessageModal={updateMessageModal}
-                  messageModal={messageModal}
-                />
-              </CollapsibleContent>
+                Pending
+              </Typography>
+              <span className="notification">{pendingToShipTotal}</span>
             </Col>
-          </ItemRow>
-        );
-      })}
+          </TitleRow>
+
+          {pendingToShip.map((group) => {
+            return (
+              <ItemRow key={group.deliveryMethod} id={group.deliveryMethod}>
+                <Col>
+                  <StyledInteraction
+                    pressed={isOpen.includes(group.deliveryMethod)}
+                    onClick={() => toggleAccordion(group.deliveryMethod)}
+                    type="accordion"
+                    iconColor={theme.brand.primary}
+                    fullWidth
+                  >
+                    <div className="content">
+                      <div className="left-content left-content-extended">
+                        <div className="label">
+                          {getDeliveryIcon(group.deliveryMethod)}
+                          <Typography
+                            variant="label"
+                            color="shade6"
+                            className="center-text title-text"
+                          >
+                            {group.deliveryMethodLabel}
+                          </Typography>
+                        </div>
+
+                        <div className="order-count">
+                          <Typography variant="overlineSmall" color="noshade">
+                            {group.orderCount}&nbsp;
+                            {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
+                          </Typography>
+                        </div>
+                      </div>
+                      <Spacer />
+                      <div className="right-content">
+                        <ItemDetail variant="caption" color="shade6">
+                          Sold Weight{' '}
+                          <span style={{ color: theme.brand.alert }}>
+                            <Exclamation width={16} height={16} />
+                            &nbsp;
+                            {/*group.totalWeight.toFixed(2)} kg*/}To be
+                            confirmed
+                          </span>
+                        </ItemDetail>
+
+                        <ItemDetail variant="caption" color="shade6">
+                          Total Price (AUD){' '}
+                          <span>{toPrice(group.totalPrice)}</span>
+                        </ItemDetail>
+                      </div>
+                    </div>
+                  </StyledInteraction>
+
+                  <CollapsibleContent
+                    isOpen={isOpen.includes(group.deliveryMethod)}
+                    style={{
+                      ...(addHorizontalRowMargin
+                        ? { paddingLeft: 24, paddingRight: 24 }
+                        : { marginLeft: 8, marginRight: 8 }),
+                      marginBottom: isOpen.includes(group.deliveryMethod)
+                        ? '8px'
+                        : undefined,
+                      borderBottomLeftRadius: '8px',
+                      borderBottomRightRadius: '8px',
+                      paddingBottom: isOpen.includes(group.deliveryMethod)
+                        ? '8px'
+                        : undefined,
+                    }}
+                  >
+                    <PendingItem
+                      data={group}
+                      updateConfirmModal={updateConfirmModal}
+                      placeOrderId={placeOrderId}
+                      setPlaceOrderId={setPlaceOrderId}
+                      isPlacingOrder={isPlacingOrder}
+                      placeOrder={placeOrder}
+                      isSendingMessage={isSendingMessage}
+                      updateMessageModal={updateMessageModal}
+                      messageModal={messageModal}
+                    />
+                  </CollapsibleContent>
+                </Col>
+              </ItemRow>
+            );
+          })}
+        </>
+      )}
 
       {/* <TitleRow style={{ marginTop: 24 }}>
         <Col md={12} className="title-col">
@@ -615,7 +621,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         </Col>
       </TitleRow> */}
 
-      {sort(sortByDate, toShip).map((group) => {
+      {sort(sortByDate, toShip).map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
 
@@ -670,7 +676,12 @@ const ToShip = (props: SoldGeneratedProps) => {
                   <div className="buttons" />
                 </div>
               </StyledInteraction> */}
-              <TitleRow style={{ marginTop: 24 }}>
+              <TitleRow
+                style={{
+                  marginTop:
+                    filters.toShipFilters.page !== '1' && idx === 0 ? 0 : 24,
+                }}
+              >
                 <Col md={12} className="title-col">
                   <Typography
                     color="noshade"
