@@ -344,7 +344,7 @@ const SoldItem = (props: {
                   <Spacer />
                   <div className="right-content">
                     <ItemDetail variant="caption" color="shade6" row>
-                      Buyer <span></span>
+                      Buyer <span>{v.buyerCompanyName}</span>
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6" row>
