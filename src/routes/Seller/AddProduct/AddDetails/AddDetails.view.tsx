@@ -143,7 +143,7 @@ const AddDetails = ({
       : null
   );
   const [catchRecurrence, setCatchRecurrence] = useState(
-    editableListing?.catchRecurrence || ''
+    editableListing?.catchRecurrence || catchRecurrenceOptions[1].value
   );
   const [origin, setOrigin] = useState<PlaceData | null>(
     editableListing?.origin ? originToPlaceData(editableListing.origin) : null
@@ -183,7 +183,12 @@ const AddDetails = ({
         address.suburb
       }, ${address.state}, ${address.countryCode}, ${address.postcode}`,
       value: address.id,
+      isDefault: address.default,
     })
+  );
+
+  const defaultShippingAddress = shippingAddressOptions.find(
+    (s) => s.isDefault
   );
 
   useEffect(() => {
@@ -202,13 +207,14 @@ const AddDetails = ({
           catchDate,
         })
       );
-    } else if (catchRecurrence && alwaysAvailable) {
-      setErrors(
-        isValid({
-          catchRecurrence,
-        })
-      );
     }
+    // else if (catchRecurrence && alwaysAvailable) {
+    //   setErrors(
+    //     isValid({
+    //       catchRecurrence,
+    //     })
+    //   );
+    // }
 
     if (auctionDate && !isAuctionSale) {
       setErrors(isValid({ auctionDate }));
@@ -302,7 +308,7 @@ const AddDetails = ({
       case alwaysAvailable:
         detailsError = isValidAlt({
           price,
-          catchRecurrence,
+          // catchRecurrence,
           origin,
           shippingAddress,
         });
@@ -342,6 +348,7 @@ const AddDetails = ({
         listingEndTime &&
         shippingAddress
       ) {
+        console.log(1);
         onUpdateDetails({
           isAquafuture,
           isAuctionSale,
@@ -359,11 +366,11 @@ const AddDetails = ({
       } else if (
         isEmptyError &&
         isAuctionSale &&
-        (!isPreAuctionSale || price.length > 0) &&
         auctionDate &&
         catchDate &&
         origin
       ) {
+        console.log(2);
         onUpdateDetails({
           isAquafuture: false,
           isAuctionSale,
@@ -372,21 +379,16 @@ const AddDetails = ({
           catchDate,
           auctionDate,
           catchRecurrence: null,
-          ends: null,
+          ends: auctionDate,
           origin: placeDataToOrigin(origin),
           description,
-          addressId: shippingAddress,
           alwaysAvailable: false,
+          addressId: defaultShippingAddress?.value || '',
         });
       }
     } else {
-      if (
-        isEmptyError &&
-        price.length > 0 &&
-        catchRecurrence &&
-        origin &&
-        shippingAddress
-      ) {
+      if (isEmptyError && price.length > 0 && origin && shippingAddress) {
+        console.log(3);
         onUpdateDetails({
           isAquafuture,
           isAuctionSale,
