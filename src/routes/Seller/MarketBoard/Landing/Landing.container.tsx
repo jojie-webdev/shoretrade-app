@@ -49,7 +49,7 @@ const MarketBoardLanding = (): JSX.Element => {
     );
 
   const location: { state?: { currentTab?: string } } = useLocation();
-  const locationTab = location.state?.currentTab || 'Buyer Requests';
+  const locationTab = location.state?.currentTab || 'My Active Offers';
 
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
