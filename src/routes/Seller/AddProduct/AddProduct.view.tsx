@@ -247,7 +247,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
       case 7:
         return 'Add Boxes';
       case 8:
-        return 'Details';
+        return 'Listing Details';
       case 9:
         return 'Summary';
       default:

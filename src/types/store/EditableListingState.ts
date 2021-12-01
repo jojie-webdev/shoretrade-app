@@ -32,6 +32,7 @@ export type EditableListingState = Partial<{
   }[];
   minOrder: number;
   sellInMultiplesOfMinOrder?: boolean;
+  auctionDate: Date | null;
   catchDate: Date | null;
   catchRecurrence: string | null;
   description: string;
@@ -42,6 +43,8 @@ export type EditableListingState = Partial<{
   };
   ends: Date | null;
   isAquafuture: boolean;
+  isAuctionSale: boolean;
+  isPreAuctionSale: boolean;
   addressId: string;
   isCustomType?: boolean;
   customTypeData?: {

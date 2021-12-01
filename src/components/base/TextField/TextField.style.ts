@@ -81,7 +81,7 @@ export const RightComponentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid ${({ theme }) => theme.grey.shade6};
+  // border-left: 1px solid ${({ theme }) => theme.grey.shade6};
 `;
 
 export const VisibilityContainer = styled.div`

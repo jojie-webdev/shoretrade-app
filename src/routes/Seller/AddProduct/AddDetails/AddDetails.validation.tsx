@@ -54,6 +54,12 @@ const constraintsAlt = {
       allowEmpty: false,
     },
   },
+  catchDate: {
+    presence: {
+      message: '^Please set catch date',
+      allowEmpty: false,
+    },
+  },
   price: {
     presence: {
       message: '^Please enter a price',
@@ -75,8 +81,34 @@ const constraintsAlt = {
   },
 };
 
+const constraintsAuction = {
+  auctionDate: {
+    presence: {
+      message: '^Please set auction date',
+      allowEmpty: false,
+    },
+  },
+  catchDate: {
+    presence: {
+      message: '^Please set auction date',
+      allowEmpty: false,
+    },
+  },
+  origin: {
+    presence: {
+      message: '^Please enter origin',
+      allowEmpty: false,
+    },
+  },
+};
+
 export const isValid = createValidator(constraints);
 export const isValidAlt = createValidator(constraintsAlt);
+export const isValidAuction = createValidator(constraintsAuction);
+export const isValidPreAuction = createValidator({
+  ...constraintsAuction,
+  price: constraintsAlt.price,
+});
 
 export const isDateRangeValid = (endListing: Date, catchDate: Date) => {
   return (

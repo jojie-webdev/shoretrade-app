@@ -19,6 +19,7 @@ import {
   IconContainer,
   ContentAndArrowContainer,
   FlippedArrowContainer,
+  DropdownContainer,
 } from './DatePickerDropdown.style';
 
 const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
@@ -35,7 +36,38 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
     showArrowDownIcon,
     height,
     borderRadius,
+    topComponent,
   } = props;
+
+  const renderDropdownContent = () => (
+    <DayPickerSingleDateController
+      date={date}
+      onDateChange={(date) => {
+        onDateChange(date);
+        setShow(false);
+      }}
+      focused={true}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onFocusChange={() => {}}
+      horizontalMonthPadding={0}
+      numberOfMonths={1}
+      daySize={37}
+      hideKeyboardShortcutsPanel
+      enableOutsideDays
+      isOutsideRange={isOutsideRange}
+      noBorder
+      navNext={
+        <NavButton direction="right">
+          <ArrowRight />
+        </NavButton>
+      }
+      navPrev={
+        <NavButton direction="left">
+          <ArrowLeft />
+        </NavButton>
+      }
+    />
+  );
 
   return (
     <Container className={props.className}>
@@ -82,35 +114,15 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
           </ContentAndArrowContainer>
         </Dropdown>
 
-        {show && (
-          <DayPickerSingleDateController
-            date={date}
-            onDateChange={(date) => {
-              onDateChange(date);
-              setShow(false);
-            }}
-            focused={true}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onFocusChange={() => {}}
-            horizontalMonthPadding={0}
-            numberOfMonths={1}
-            daySize={37}
-            hideKeyboardShortcutsPanel
-            enableOutsideDays
-            isOutsideRange={isOutsideRange}
-            noBorder
-            navNext={
-              <NavButton direction="right">
-                <ArrowRight />
-              </NavButton>
-            }
-            navPrev={
-              <NavButton direction="left">
-                <ArrowLeft />
-              </NavButton>
-            }
-          />
-        )}
+        {show &&
+          (topComponent ? (
+            <DropdownContainer>
+              {topComponent}
+              {renderDropdownContent()}
+            </DropdownContainer>
+          ) : (
+            renderDropdownContent()
+          ))}
       </div>
       {(error || '').length > 0 && (
         <Error variant="caption" color="error">

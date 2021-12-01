@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { FocusedInputShape } from 'react-dates';
 
 export interface DatePickerDropdownProps {
@@ -12,4 +14,5 @@ export interface DatePickerDropdownProps {
   showArrowDownIcon?: boolean;
   height?: string;
   borderRadius?: string;
+  topComponent?: React.ReactNode;
 }

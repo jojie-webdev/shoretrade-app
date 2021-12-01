@@ -110,3 +110,23 @@ export const ContentAndArrowContainer = styled.div`
 export const FlippedArrowContainer = styled.div`
   transform: rotate(180deg);
 `;
+
+export const DropdownContainer = styled.div`
+  position: absolute;
+  top: calc(48px + 12px);
+  right: 0;
+  box-shadow: 0px 6px 12px rgb(41 43 50 / 12%);
+  border-radius: 4px;
+  z-index: 999;
+  background: #fff;
+  text-align: center;
+
+  .DayPicker {
+    position: unset;
+    top: unset;
+    right: unset;
+    box-shadow: unset;
+    border-radius: unset;
+    z-index: unset;
+  }
+`;
