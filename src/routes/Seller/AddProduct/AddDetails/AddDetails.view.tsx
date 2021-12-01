@@ -348,7 +348,6 @@ const AddDetails = ({
         listingEndTime &&
         shippingAddress
       ) {
-        console.log(1);
         onUpdateDetails({
           isAquafuture,
           isAuctionSale,
@@ -370,7 +369,6 @@ const AddDetails = ({
         catchDate &&
         origin
       ) {
-        console.log(2);
         onUpdateDetails({
           isAquafuture: false,
           isAuctionSale,
@@ -388,7 +386,6 @@ const AddDetails = ({
       }
     } else {
       if (isEmptyError && price.length > 0 && origin && shippingAddress) {
-        console.log(3);
         onUpdateDetails({
           isAquafuture,
           isAuctionSale,
