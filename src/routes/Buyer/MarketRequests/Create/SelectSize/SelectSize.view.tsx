@@ -29,6 +29,7 @@ import {
   ProceedButton,
   PreviousButton,
   FriendlyTextContainer,
+  CreateRequestContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
 import {
@@ -164,14 +165,18 @@ const SizeInput = (props: SizeInputProps) => {
             label={metric.label}
           />
         </div>
+      </>
+    ));
+    return (
+      <>
+        {sizeOptions}
         <Checkbox
           onClick={handleOnClickUngraded}
-          checked={true}
+          checked={ungraded}
           label="Ungraded"
         />
       </>
-    ));
-    return <>{sizeOptions}</>;
+    );
   }
 
   return (
