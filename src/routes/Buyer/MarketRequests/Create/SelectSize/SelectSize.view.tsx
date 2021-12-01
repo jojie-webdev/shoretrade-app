@@ -92,6 +92,7 @@ const SizeInput = (props: SizeInputProps) => {
         <SelectRowContainer>
           <TextField
             type="text"
+            disabled={ungraded}
             color="shade10"
             inputType="decimal"
             label="Size From"
@@ -119,6 +120,7 @@ const SizeInput = (props: SizeInputProps) => {
             color="shade10"
             inputType="decimal"
             label={`Size To\n(Optional)`}
+            disabled={ungraded}
             value={toSize}
             onChangeText={(v) => {
               if (!Number.isNaN(Number(v))) {
@@ -157,6 +159,7 @@ const SizeInput = (props: SizeInputProps) => {
             checked={sizeItemChecked.items.includes(metric.value)}
             onClick={() => handleStateCheck(metric.value)}
             key={metric.value}
+            disabled={ungraded}
             value={metric.value}
             label={metric.label}
           />
