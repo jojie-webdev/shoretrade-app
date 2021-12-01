@@ -158,7 +158,7 @@ const SizeInput = (props: SizeInputProps) => {
         <div key={metric.value} style={{ marginBottom: '1rem' }}>
           <Checkbox
             checked={sizeItemChecked.items.includes(metric.value)}
-            onClick={() => handleStateCheck(metric.value)}
+            onClick={() => !disabled && handleStateCheck(metric.value)}
             key={metric.value}
             disabled={ungraded}
             value={metric.value}
@@ -357,7 +357,7 @@ const SelectSizeView = (props: SelectSizeProps) => {
                   metric={listingFormData.metric.name}
                   fromSize={sizeToFrom.from}
                   toSize={sizeToFrom.to}
-                  disabled={false}
+                  disabled={ungraded}
                   setToSize={(v: any) => handleSetToSize(v)}
                   setFromSize={(v: any) => handleSetFromSize(v)}
                   sizeItemChecked={sizeItemChecked}
