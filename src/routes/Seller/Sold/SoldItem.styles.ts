@@ -115,31 +115,6 @@ export const StyledInteraction = styled(Interaction)<{
           margin-left: 190px;
         }
       }
-
-      .downloads-menu {
-        position: absolute;
-        background-color: ${({ theme }) => theme.grey.shade9};
-        width: 123px;
-        height: 64px;
-        top: -56px;
-        right: 56px;
-        z-index: 999;
-        border-radius: 4px;
-        padding: 8px 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        p {
-          font-size: ${pxToRem(12)};
-          line-height: 16px;
-          width: 100%;
-
-          :hover {
-            color: ${({ theme }) => theme.brand.primary};
-          }
-        }
-      }
     }
 
     .center-text {
@@ -308,9 +283,29 @@ export const ItemCard = styled.div`
 
   .buttons {
     display: flex;
-    flex: 1;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
+    flex: 1;
+
+    .downloads-menu {
+      background-color: ${({ theme }) => theme.grey.shade9};
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+
+      button {
+        border: 0;
+        padding: 4px 8px;
+
+        p {
+          font-weight: 500;
+        }
+      }
+
+      button:not(:first-of-type) {
+        margin-left: 16px;
+      }
+    }
   }
 `;
 
