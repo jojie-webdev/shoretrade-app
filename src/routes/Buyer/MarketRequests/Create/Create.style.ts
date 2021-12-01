@@ -31,6 +31,9 @@ export const CreateRequestContainer = styled.div`
   flex-wrap: wrap;
   height: 100%;
   padding-bottom: 16px;
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 16vh;
+  }
 `;
 
 export const CreateRequestHeaderContainer = styled.div`

@@ -55,6 +55,7 @@ import {
   MultipleTopAbsoContainer,
   MultipleTopGroupContainer,
   DetailsHeaderContainer,
+  CreateRequestContainer,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -593,7 +594,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
   }
 
   return (
-    <>
+    <CreateRequestContainer>
       <ConfirmationModal
         isOpen={sendConfModalisOpen}
         title="Let us confirm your Market Request"
@@ -627,7 +628,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           </MultipleLeftGroupContainer>
         </Hidden>
       )}
-    </>
+    </CreateRequestContainer>
   );
 };
 
