@@ -13,6 +13,7 @@ import { SIZE_METRICS } from 'consts/sizeMetrics';
 import { pathOr } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { isUngraded } from 'routes/Buyer/Categories/Preview/Preview.transform';
+import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
 
 import {
@@ -103,6 +104,13 @@ const SizeInput = (props: SizeInputProps) => {
                 setFromSize(v);
               }
             }}
+            LeftComponent={
+              <Typography color="shade6">
+                {metricString === 'GRAMS'
+                  ? 'g'
+                  : formatMeasurementUnit(props.metric)}
+              </Typography>
+            }
             placeholder=""
             onBlur={() => {
               if (
@@ -128,6 +136,13 @@ const SizeInput = (props: SizeInputProps) => {
                 setToSize(v);
               }
             }}
+            LeftComponent={
+              <Typography color="shade6">
+                {metricString === 'GRAMS'
+                  ? 'g'
+                  : formatMeasurementUnit(props.metric)}
+              </Typography>
+            }
             placeholder=""
             onBlur={() => {
               if (
