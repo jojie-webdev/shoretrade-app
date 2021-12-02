@@ -308,7 +308,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       <div className="tabs-row">
         <div className="tabs">
           <Tabs
-            tabs={['Buyer Requests', 'My Active Offers']}
+            tabs={['My Active Offers', 'Buyer Requests']}
             selectedTab={props.currentTab}
             onClickTab={(tab) => props.onChangeCurrentTab(tab as TabOptions)}
           />
