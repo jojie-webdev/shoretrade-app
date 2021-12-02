@@ -29,7 +29,10 @@ export type CreateListingRequestData = {
     countryCode: string;
   };
   ends: string | null; // date iso string
+  auctionDate: string | null;
   isAquafuture: boolean;
+  isPreAuctionSale: boolean;
+  isAuctionSale: boolean;
   addressId: string;
   packaging?: {
     id?: string;
