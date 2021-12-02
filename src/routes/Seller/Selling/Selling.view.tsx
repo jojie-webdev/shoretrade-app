@@ -267,7 +267,7 @@ const SellingView = (props: SellingGeneratedProps) => {
     onChangeTab
   } = props;
 
-  const totalPages = counter ? (Math.floor(counter[activeTab as keyof CounterProps] / 10)) : 0
+  const totalPages = Math.ceil(counter[activeTab as keyof CounterProps] / 10)
 
   return (
     <>
@@ -344,11 +344,11 @@ const SellingView = (props: SellingGeneratedProps) => {
           }
           </Col>
         </Row>
-        { totalPages > 0 && 
+        { totalPages > 1 && 
           <Row justify="center">
             <Pagination
               numPages={totalPages}
-              currentValue={totalPages > 0 ? page : 0}
+              currentValue={page}
               onClickButton={(value) => onChangePage(value)}
               variant="number"
             />

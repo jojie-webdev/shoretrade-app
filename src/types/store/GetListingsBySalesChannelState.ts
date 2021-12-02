@@ -10,9 +10,9 @@ export type GetListingsBySalesChannelMeta = {
 
 export type GetListingsBySalesChannelResponseItem = {
   listing_id: string;
-  sellerId: string;
+  seller_id: string;
   type_name: string;
-  typeId: string;
+  type_id: string;
   end_date?: string; // ex. "yyyy-mm-ddThh:mm:ss.000Z"
   origin: {
     state: string;
@@ -24,14 +24,14 @@ export type GetListingsBySalesChannelResponseItem = {
   size_from?: string;
   size_to?: string;
   categoryName: string;
-  catchDate?: string; // ex. yyyy-mm-dd
+  catch_date?: string; // ex. yyyy-mm-dd
   catch_recurrence?: string;
   default_photo: string;
   description: string; // note
   fishermanId: string;
   fishermanFirstName: string;
   fishermanLastName: string;
-  coopName: string;
+  coop_name: string;
   coopImage: string; // image uri
   coopId: string;
   rating?: string; // ex. "5.0"
@@ -40,22 +40,23 @@ export type GetListingsBySalesChannelResponseItem = {
     id: string;
     name: string;
   }[];
-  stateIds: string[];
+  state_ids: string[];
   images: {
-    requirementId: string;
+    requirement_id: string;
     url: string;
   }[];
-  minimumOrder: string; // number string
-  sellInMultiplesOf: boolean;
+  minimum_order: string; // number string
+  sell_in_multiples_of: boolean;
   remaining_weight: number;
   original_weight: number;
   boxes: {
+    id: string;
     weight: number;
-    count: number;
     quantity: number;
+    count?: number;
   }[];
   average: number;
-  addressId: string;
+  address_id: string;
   addressStreetNumber: string;
   addressUnitNumber: string;
   addressLevel: string;
@@ -65,7 +66,7 @@ export type GetListingsBySalesChannelResponseItem = {
   addressState: string;
   addressCountryCode: string;
   flatDeliveryFee?: any;
-  isAquafuture: boolean;
+  is_aquafuture: boolean;
   allowedWeightAdjustment: number;
   measurement_unit: string; // ex. 'kg' or 'dozen'
   metric_label?: string;

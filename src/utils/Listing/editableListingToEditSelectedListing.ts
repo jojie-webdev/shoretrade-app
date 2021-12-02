@@ -1,49 +1,46 @@
 import moment from 'moment';
 import { EditableListingState } from 'types/store/EditableListingState';
-import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
+import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
 export const editableListingToEditSelectedListing = (
-  data: GetAllListingsResponseItem | null,
+  data: GetListingsBySalesChannelResponseItem | null,
   formData: GetListingFormDataResponse
 ): EditableListingState => {
   return {
-    company: data?.coopName,
-    employee: data?.sellerId || '',
-    states: data?.stateIds || [],
-    isUngraded: data?.sizeFrom === null,
-    sizeFrom: data?.sizeFrom,
-    sizeTo: data?.sizeTo,
-    existingImages: data?.images
-      .map((image, index) => ({
-        image,
-        requirementId: formData.photoRequirements[index].id,
-      }))
-      // removes images that came from default gallery
-      .filter(
-        (image) =>
-          // for common types
-          !image.image.includes('type-default') &&
-          // for custom types
-          !image.image.includes('No-Image-Placeholder')
-      ),
-    pricePerKilo: Number(data?.pricePerKilo || 0),
+    company: data?.coop_name,
+    employee: data?.seller_id || '',
+    states: data?.state_ids || [],
+    isUngraded: data?.size_from === null,
+    sizeFrom: data?.size_from,
+    sizeTo: data?.size_to,
+    existingImages: data?.images ? data.images.map((image, index) => ({
+      image: image.url,
+      requirementId: image.requirement_id,
+    })).filter( // removes images that came from default gallery
+      (image) =>
+        // for common types
+        !image.image.includes('type-default') &&
+        // for custom types
+        !image.image.includes('No-Image-Placeholder')
+    ) : [],
+    pricePerKilo: Number(data?.price_per_kilo || 0),
     boxes: data?.boxes,
-    minOrder: Number(data?.minimumOrder || 0),
-    sellInMultiplesOfMinOrder: data?.sellInMultiplesOf,
-    catchDate: data?.catchDate
-      ? moment(data?.catchDate, 'YYYY-MM-DD').toDate()
+    minOrder: Number(data?.minimum_order || 0),
+    sellInMultiplesOfMinOrder: data?.sell_in_multiples_of,
+    catchDate: data?.catch_date
+      ? moment(data?.catch_date, 'YYYY-MM-DD').toDate()
       : undefined,
-    catchRecurrence: data?.catchRecurrence || undefined,
+    catchRecurrence: data?.catch_recurrence || undefined,
     description: data?.description || '',
     origin: data?.origin || {
       countryCode: '',
       state: '',
       suburb: '',
     },
-    ends: data?.ends ? moment(data?.ends).toDate() : undefined,
-    isAquafuture: data?.isAquafuture || false,
-    addressId: data?.addressId || '',
+    ends: data?.end_date ? moment(data?.end_date).toDate() : undefined,
+    isAquafuture: data?.is_aquafuture || false,
+    addressId: data?.address_id || '',
     ...(data?.packaging
       ? {
           packaging: {

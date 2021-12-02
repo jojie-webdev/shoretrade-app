@@ -46,6 +46,7 @@ export type GetListingByIdData = {
   remaining_weight: number;
   original_weight: number;
   boxes: {
+    id: string;
     weight: number;
     count: number;
     quantity: number;
