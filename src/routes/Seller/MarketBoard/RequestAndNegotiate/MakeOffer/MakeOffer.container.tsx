@@ -194,15 +194,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
 
     if (isEmptyError) {
       props.setOffer((o) => {
-        const existing = o.some((item) => item.editId === payload.editId);
-        if (existing) {
-          return [
-            payload,
-            ...o.filter((item) => item.editId !== payload.editId),
-          ];
-        }
-
-        return [...o, payload];
+        return [payload];
       });
       props.setOfferSpecs(specifications);
       props.setCurrentOfferItem('');

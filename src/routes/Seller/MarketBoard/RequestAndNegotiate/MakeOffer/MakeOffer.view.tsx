@@ -124,6 +124,20 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
     </Visible>
   );
 
+  const handleOnClickUngraded = () => {
+    if (props.size.from === 'ungraded') {
+      props.setSize({
+        from: '',
+        to: '',
+      });
+    } else {
+      props.setSize({
+        from: 'ungraded',
+        to: '',
+      });
+    }
+  };
+
   useEffect(() => {
     sellerScreenScrollToTop();
   }, []);
@@ -245,12 +259,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
 
                   <div className="checkbox-container ungraded">
                     <Checkbox
-                      onClick={() =>
-                        props.setSize({
-                          from: 'ungraded',
-                          to: '',
-                        })
-                      }
+                      onClick={() => handleOnClickUngraded()}
                       className="checkbox"
                       checked={
                         props.size.from === 'ungraded' ||
