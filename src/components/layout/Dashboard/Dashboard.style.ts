@@ -289,7 +289,6 @@ export const Content = styled.div<{
         padding: 24px;
         border: 0;
         border-radius: 0;
-
         background: ${(props) =>
           props.screenBackground
             ? props.screenBackground
@@ -319,6 +318,19 @@ export const Content = styled.div<{
 
     .container {
       max-width: 100% !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .screen {
+      width: 100% !important;
+      padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')} !important;
+      background: ${(props) =>
+        props.screenBackground
+          ? props.screenBackground
+          : props.theme.appType === 'buyer'
+          ? props.theme.grey.shade1
+          : props.theme.grey.shade8};
     }
   }
 

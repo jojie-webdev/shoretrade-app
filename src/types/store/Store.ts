@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
 import { GenericResponse } from 'types/GenericResponse';
@@ -161,10 +162,18 @@ import {
   GetListingBoxesMeta,
   GetListingBoxesPayload,
 } from './GetListingBoxesState';
+import { 
+  GetListingByIdMeta, 
+  GetListingByIdPayload 
+} from './GetListingByIdState';
 import {
   GetListingFormDataMeta,
   GetListingFormDataPayload,
 } from './GetListingFormDataState';
+import { 
+  GetListingsBySalesChannelMeta,
+  GetListingsBySalesChannelPayload  
+} from './GetListingsBySalesChannelState';
 import {
   GetListingsByTypeMeta,
   GetListingsByTypePayload,
@@ -406,12 +415,17 @@ export interface Store {
     GetBuyerSearchFilterDataMeta,
     GetBuyerSearchFilterDataPayload
   >;
+  getListingsBySalesChannel: AsyncState<
+    GetListingsBySalesChannelMeta,
+    GetListingsBySalesChannelPayload
+  >;
   getListingsByType: AsyncState<
     GetListingsByTypeMeta,
     GetListingsByTypePayload
   >;
   getListing: AsyncState<GetListingMeta, GetListingPayload>;
   getListingBoxes: AsyncState<GetListingBoxesMeta, GetListingBoxesPayload>;
+  getListingById: AsyncState<GetListingByIdMeta, GetListingByIdPayload>;
   getStates: AsyncState<GetStatesMeta, GetStatesPayload>;
   history: HistoryState;
   updateFavouriteProduct: AsyncState<

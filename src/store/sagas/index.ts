@@ -45,7 +45,9 @@ import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
+import getListingById from './getListingById';
 import getListingFormData from './getListingFormData';
+import getListingsBySalesChannel from './getListingsBySalesChannel';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
@@ -154,7 +156,9 @@ const sagas = [
   getLinkedAccounts,
   getListing,
   getListingBoxes,
+  getListingById,
   getListingFormData,
+  getListingsBySalesChannel,
   getListingTypesByCategory,
   getListingsByType,
   getMarketEstimate,

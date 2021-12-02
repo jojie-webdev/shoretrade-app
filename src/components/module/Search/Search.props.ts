@@ -6,4 +6,5 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   rounded?: boolean;
   style?: any;
+  darkMode?: boolean;
 }

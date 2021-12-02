@@ -1,137 +1,145 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 
 import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import {
   editSelectedListingActions,
   endListingActions,
-  getAllListingsActions,
+  getListingsBySalesChannelActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
-import { SellingGeneratedProps } from './Selling.props';
+import { 
+  SellingGeneratedProps, SearchFilterProps, 
+  TabPageFilterProps, CounterProps
+} from './Selling.props';
 import SellingView from './Selling.view';
+
+import { createUpdateReducer } from 'utils/Hooks';
+
+import { SALES_CHANNELS } from 'consts/salesChannels';
 
 const Selling = (): JSX.Element => {
   // MARK:- Hooks / Selectors
   const history = useHistory();
-
   const dispatch = useDispatch();
 
-  const pending =
-    useSelector((state: Store) => state.getAllListings.pending) || false;
-
-  const staticListings =
-    useSelector((state: Store) => state.getAllListings.data?.data.orders) || [];
-
-  const listings =
-    useSelector((state: Store) => state.getAllListings.data?.data.orders) || [];
-
-  const getAllListings =
-    useSelector((state: Store) => state.getAllListings) || [];
-
-  const isDeleted =
-    useSelector((state: Store) => state.endListing.data?.status) === 200;
+  const listingsData = useSelector((state: Store) => 
+    state.getListingsBySalesChannel.data?.data
+  );
+  const userData = useSelector((state: Store) => 
+    state.getUser.data?.data.user
+  );
 
   // MARK:- State
-  const [search, setSearch] = useState('');
-  const [pressed, setPressed] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [listingData, setListingData] = useState({
-    listingId: '',
-    companyId: '',
-  });
+  const [activeTab, setActiveTab] = useState("allListing")
+  const [isPending, setIsPending] = useState(true)
+  const [tabCounts, setTabCounts] = useState<CounterProps>({
+    allListing: 0,
+    directSale: 0,
+    aquafuture: 0,
+    preAuction: 0
+  })
 
-  // MARK: Variables
-  const filteredListings = useMemo(() => {
-    const res = !search
-      ? listings
-      : listings.filter((listing) =>
-          listing.type.toLowerCase().includes(search.toLowerCase())
-        );
-    return res;
-  }, [listings, getAllListings, search]);
+  // MARK:- Reducers
+  const [tabPageFilters, updateTabPageFilters] = useReducer(
+    createUpdateReducer<TabPageFilterProps>(),
+    {
+      allListing: 1,
+      directSale: 1,
+      aquafuture: 1,
+      preAuction: 1
+    }
+  );
+
+  const [searchFilters, updateSearchFilters] = useReducer(
+    createUpdateReducer<SearchFilterProps>(),
+    {
+      allListing: "",
+      directSale: "",
+      aquafuture: "",
+      preAuction: ""
+    }
+  );
 
   // MARK:- Method
-  const onClickRemoveListing = (listingId: string, companyId: string) => {
-    setShowModal(true);
-
-    setListingData({ listingId, companyId });
-  };
-
-  const onChangeSearch = (value: string) => {
-    setSearch(value);
-  };
-
-  const resetSearch = () => {
-    setSearch('');
-  };
-
-  const clearListingData = () => {
-    setListingData({
-      listingId: '',
-      companyId: '',
-    });
-
-    setShowModal(false);
-  };
-
-  const onRemove = () => {
-    const { listingId, companyId } = listingData;
-
-    dispatch(
-      endListingActions.request({
-        listingId,
-        companyId,
-      })
-    );
-
-    setShowModal(false);
-    setPressed(true);
-  };
-
   const goToListingDetails = (id: string) => {
     history.push(SELLING_ROUTES.LISTING_DETAILS.replace(':listingId', id));
-  };
-
-  const onClickEdit = (listingId: string) => {
-    dispatch(
-      editSelectedListingActions.update({
-        id: listingId,
-      })
-    );
   };
 
   // MARK:- Effects
   useEffect(() => {
     // On Mount
-    if (!isDeleted && !pressed) {
-      dispatch(getAllListingsActions.request());
+    if (userData) {
+      dispatch(getListingsBySalesChannelActions.request({
+        employeeId: userData?.companies[0].employeeId || '',
+        term: searchFilters[activeTab as keyof TabPageFilterProps],
+        salesChannel: SALES_CHANNELS.find(channel => 
+          channel.value === activeTab
+        )?.constant || SALES_CHANNELS[0].constant,
+        limit: 10,
+        page: tabPageFilters[activeTab as keyof TabPageFilterProps]
+      }));
     }
+  }, [userData]);
 
-    // On Press Delete
-    if (isDeleted && pressed) {
-      dispatch(getAllListingsActions.request());
+  useEffect(() => {
+    if (userData) {
+      dispatch(getListingsBySalesChannelActions.request({
+        employeeId: userData?.companies[0].employeeId || '',
+        term: searchFilters[activeTab as keyof TabPageFilterProps],
+        salesChannel: SALES_CHANNELS.find(channel => 
+          channel.value === activeTab
+        )?.constant || SALES_CHANNELS[0].constant,
+        limit: 10,
+        page: tabPageFilters[activeTab as keyof TabPageFilterProps]
+      }));
     }
-  }, [isDeleted, pressed]);
+  }, [activeTab, searchFilters, tabPageFilters])
+
+  useEffect(() => {
+    if (listingsData && userData) {
+      setTabCounts({
+        allListing: Number(listingsData.counter.all_listing || 0),
+        directSale: Number(listingsData.counter.direct_listing || 0),
+        aquafuture: Number(listingsData.counter.aquafuture || 0),
+        preAuction: Number(listingsData.counter.pre_auction || 0)
+      })
+      setIsPending(false)
+    }
+  }, [listingsData])
 
   const generatedProps: SellingGeneratedProps = {
     // generated props here
-    listings: filteredListings,
-    goToListingDetails,
-    pending,
-    onClickRemoveListing,
-    onClickEdit,
+    listings: listingsData?.listings || [],
+    counter: tabCounts,
+    pending: isPending,
     showModal,
-    clearListingData,
-    onRemove,
-    showDeletedSuccess: isDeleted,
-    search,
-    onChangeSearch,
-    resetSearch,
-    staticListings,
+    search: searchFilters[activeTab as keyof TabPageFilterProps],
+    page: tabPageFilters[activeTab as keyof TabPageFilterProps],
+    activeTab,
+    goToListingDetails,
+    onChangeSearch: (value) => {
+      updateSearchFilters({ [activeTab]: value })
+      setIsPending(true)
+    },
+    resetSearch: () => {
+      updateSearchFilters({ [activeTab]: '' })
+      setIsPending(true)
+    },
+    onChangeTab: (tab) => { 
+      setActiveTab(tab) 
+      setIsPending(true)
+    },
+    onChangePage: (page) => { 
+      updateTabPageFilters({ [activeTab]: page })
+      setIsPending(true)
+    } 
   };
+
   return <SellingView {...generatedProps} />;
 };
 

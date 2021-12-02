@@ -1,35 +1,56 @@
-import { GetAllListingsResponseItem } from 'types/store/GetAllListingsState';
+import { GetListingsBySalesChannelResponseItem } from "types/store/GetListingsBySalesChannelState";
 
 export interface SellingGeneratedProps {
-  listings: GetAllListingsResponseItem[];
-  staticListings: GetAllListingsResponseItem[];
+  listings: GetListingsBySalesChannelResponseItem[];
+  counter: CounterProps;
   pending: boolean;
   goToListingDetails: (id: string) => void;
-  onClickRemoveListing: (listingId: string, companyId: string) => void;
-  showDeletedSuccess: boolean;
-  onClickEdit: (listingId: string) => void;
-  clearListingData: () => void;
   showModal: boolean;
-  onRemove: () => void;
   search: string;
   onChangeSearch: (value: string) => void;
   resetSearch: () => void;
+  activeTab: string;
+  onChangeTab: (tab: string) => void;
+  page: number,
+  onChangePage: (page: number) => void
 }
 
 export type ItemProp = {
-  uri?: string;
+  id: string;
+  uri: string;
   title: string;
   price: string;
   tags?: { label: string }[];
   size?: string;
   listedOn?: Date;
   expiresIn?: Date;
+  timeLeft?: string;
   remaining?: string;
   sales?: string;
-  data: GetAllListingsResponseItem;
+  data: GetListingsBySalesChannelResponseItem;
   unit?: string;
   originalWeight?: string;
-  onClick: () => void;
-  onClickEdit: () => void;
-  onRemove: () => void;
+  goToListingDetails?: (id: string) => void;
 };
+
+export interface CounterProps {
+  allListing: number;
+  directSale: number;
+  aquafuture: number;
+  preAuction: number;
+}
+
+export interface SearchFilterProps {
+  allListing: string;
+  directSale: string;
+  aquafuture: string;
+  preAuction: string;
+}
+
+export interface TabPageFilterProps {
+  allListing: number;
+  directSale: number;
+  aquafuture: number;
+  preAuction: number;
+}
+

@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as getListingByIdActions } from './getListingById';
+export { default as getListingsBySalesChannelActions } from './getListingsBySalesChannel';
 export { default as getHistoricalListingsActions } from './getHistoricalListings';
 export { default as sendOrderRatingActions } from './sendOrderRating';
 export { default as globalModalActions } from './globalModal';

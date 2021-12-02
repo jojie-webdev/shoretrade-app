@@ -1,338 +1,207 @@
-import React, { useEffect, useState } from 'react';
-
-// import { useTheme } from 'utils/Theme';
+import React, { useEffect, useState, useReducer } from 'react';
 
 import Button from 'components/base/Button';
 import {
-  Crab,
-  Pen,
-  TrashCan,
-  Fish2,
+  TexturedSwordFish,
   ArrowRight,
   ChevronRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import Tabs from 'components/base/Tabs';
+import Select from 'components/base/Select';
+
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
+import Pagination from 'components/module/Pagination';
+
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SALES_CHANNELS } from 'consts/salesChannels';
+
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
-import { useTheme } from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
+import { createUpdateReducer } from 'utils/Hooks';
 
-import { SellingGeneratedProps, ItemProp } from './Selling.props';
+import { 
+  SellingGeneratedProps, 
+  ItemProp,
+  CounterProps
+} from './Selling.props';
+
 import {
   ItemImage,
   ItemCard,
-  ItemDetail,
   Tag,
   Container,
   StyledTouchable,
   StyledAlert,
   NoSellingContainer,
   SVGContainer,
-  ItemCardMobile,
-  ItemImageMobile,
-  ItemDetailMobile,
-  StyledInteraction,
+  TabItem
 } from './Selling.style';
+
 import { listingToItem } from './Selling.transform';
 
+const flatMap = (array: [], fn: any) => {
+  let result: any[] = [];
+  array.forEach((element) => {
+    const mapping = fn(element);
+    result = result.concat(mapping);
+  });
+  return result;
+};
+
+const renderSize = (size: any, color: string) => {
+  size = flatMap(size.split('-'), function (part: any) {
+    return [part, <ArrowRight key={part} fill={color} />];
+  });
+  size.pop();
+  return size;
+};
+
+const formattedRemaining = (remaining?: string, unit?: string) => {
+  if (remaining && unit) {
+    return ellipsisOnOverflow(
+      `${Number(remaining).toFixed(0)} ${unit?.toLowerCase()}`,
+      15
+    );
+  }
+  return '';
+};
+
 const Item = (props: ItemProp) => {
-  const formattedExpiresIn = () => moment().to(props.expiresIn);
   const theme = useTheme();
-
-  const flatMap = (array: [], fn: any) => {
-    let result: any[] = [];
-    array.forEach((element) => {
-      const mapping = fn(element);
-      result = result.concat(mapping);
-    });
-    return result;
-  };
-
-  const renderSize = (size: any) => {
-    size = flatMap(size.split('-'), function (part: any) {
-      return [part, <ArrowRight key={part} fill={theme.grey.shade7} />];
-    });
-    size.pop();
-    return size;
-  };
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const { goToListingDetails } = props
 
   return (
-    <ItemCard>
-      <div className="wrapper" onClick={props.onClick}>
-        <div className="left-content">
-          <ItemImage src={parseImageUrl(props.data.images[0])} alt="" />
-
-          <div className="text-content">
-            <Typography variant="label" color="noshade" className="item-title">
+    <ItemCard onClick={() => goToListingDetails && goToListingDetails(props.id)}>
+      <Row nogutter>
+        <Col xs="content" sm="content">
+          <ItemImage src={parseImageUrl(props.uri)} alt="" />
+        </Col>
+        
+        <Col><Row nogutter>
+          <Col sm={4} style={{ padding: "0 12px" }}>
+            <Typography className="item-title" variant="label" color="noshade" weight="400">
               {props.title}
             </Typography>
 
-            <div className="tags-container">
-              {props.tags &&
+            <Row nogutter>
+              { props.tags &&
                 props.tags.length !== 0 &&
-                props.tags.map((tag) => (
-                  <Tag key={tag.label}>
-                    <Typography variant="caption" color="noshade">
-                      {tag.label}
-                    </Typography>
-                  </Tag>
-                ))}
-            </div>
-
-            <ItemDetail variant="small" weight="regular" color="shade6" row>
-              <span>
-                {props.size?.includes('-') ? (
-                  <>{renderSize(props.size)}</>
-                ) : (
-                  props.size
-                )}
-              </span>
-            </ItemDetail>
-          </div>
-        </div>
-
-        <div className="right-content">
-          <div className="item-data">
-            <div className="column-order">
-              <div className="label-container">
-                <ItemDetail variant="overlineSmall" color="shade6">
-                  Remaining Stock:{' '}
-                </ItemDetail>
-                <ItemDetail
-                  variant="label"
-                  color="noshade"
-                  className="bottom-space"
-                >
-                  {Number(props.remaining).toFixed(0)}{' '}
-                  {props.unit?.toLowerCase()}
-                </ItemDetail>
-              </div>
-              <div className="label-container">
-                <ItemDetail variant="overlineSmall" color="shade6">
-                  Price:{' '}
-                </ItemDetail>
-                <ItemDetail variant="label" color="noshade">
-                  ${props.price} / {formatUnitToPricePerUnit(props.unit)}
-                </ItemDetail>
-              </div>
-            </div>
-
-            <div className="column-order">
-              <div className="label-container">
-                <ItemDetail variant="overlineSmall" color="shade6">
-                  Sales:
-                </ItemDetail>
-                <ItemDetail
-                  variant="label"
-                  color="noshade"
-                  className="bottom-space"
-                >
-                  {props.sales}
-                </ItemDetail>
-              </div>
-              <div
-                className="label-container"
-                style={{ opacity: props.expiresIn ? 1 : 0 }}
-              >
-                <ItemDetail variant="overlineSmall" color="shade6">
-                  Time left:
-                </ItemDetail>
-                <ItemDetail variant="label" color="noshade">
-                  {props.expiresIn ? formattedExpiresIn() : '-'}
-                </ItemDetail>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="buttons">
-        <StyledTouchable onPress={props.onClick} dark>
-          <ChevronRight height={12} width={12} />
-        </StyledTouchable>
-      </div>
-    </ItemCard>
-  );
-};
-
-const ItemMobile = (props: ItemProp) => {
-  const formattedExpiresIn = () => {
-    return ellipsisOnOverflow(moment().to(props.expiresIn), 15);
-  };
-  const formattedListedOn = () => {
-    return ellipsisOnOverflow(moment(props.listedOn).format('d MMMM YY'), 15);
-  };
-
-  const formattedRemaining = () => {
-    if (props.remaining && props.unit) {
-      return ellipsisOnOverflow(
-        `${Number(props.remaining).toFixed(0)} ${props.unit?.toLowerCase()}`,
-        15
-      );
-    }
-    return '';
-  };
-
-  return (
-    <ItemCardMobile>
-      <div className="wrapper" onClick={props.onClick}>
-        <div className="parent-container">
-          <div className="product-container">
-            <ItemImageMobile src={props.data.images[0]} alt="" />
-            <Typography variant="label" color="noshade">
-              {props.title}
-            </Typography>
-            <div className="price-container">
-              <Typography variant="label" color="noshade" align="right">
-                ${props.price}
-              </Typography>
-              <Typography variant="small" color="shade6" align="right">
-                per {formatUnitToPricePerUnit(props.unit)}
-              </Typography>
-            </div>
-          </div>
-
-          <div className="tags-container">
-            {props.tags &&
-              props.tags.length !== 0 &&
-              props.tags.map((tag) => (
-                <Tag key={tag.label}>
-                  <Typography variant="caption" color="noshade">
-                    {tag.label}
-                  </Typography>
-                </Tag>
-              ))}
-          </div>
-          <div className="details-container">
-            <div className="details-column-container">
-              <div className="label-container">
-                <ItemDetailMobile
-                  variant="small"
-                  color="shade6"
-                  className="left-text"
-                >
-                  Size:
-                </ItemDetailMobile>
-                <ItemDetailMobile
-                  variant="small"
-                  color="noshade"
-                  className="right-text"
-                >
-                  {ellipsisOnOverflow(props.size || '', 15)}
-                </ItemDetailMobile>
-              </div>
-              <div className="label-container">
-                <ItemDetailMobile
-                  variant="small"
-                  color="shade6"
-                  className="left-text"
-                >
-                  Listed on:
-                </ItemDetailMobile>
-                <ItemDetailMobile
-                  variant="small"
-                  color="noshade"
-                  className="right-text"
-                >
-                  {props.listedOn && formattedListedOn()}
-                </ItemDetailMobile>
-              </div>
-            </div>
-            <div className="details-column-container">
-              <div className="label-container">
-                <ItemDetailMobile
-                  variant="small"
-                  color="shade6"
-                  className="left-text"
-                >
-                  Remaining:
-                </ItemDetailMobile>
-                <ItemDetailMobile
-                  variant="small"
-                  color="noshade"
-                  className="right-text"
-                >
-                  {formattedRemaining()}
-                </ItemDetailMobile>
-              </div>
-              {props.expiresIn && (
-                <div className="label-container">
-                  <ItemDetailMobile
-                    variant="small"
-                    color="shade6"
-                    className="left-text"
-                  >
-                    Expires in:
-                  </ItemDetailMobile>
-                  <ItemDetailMobile
-                    variant="small"
-                    color="noshade"
-                    className="right-text"
-                  >
-                    {props.expiresIn && formattedExpiresIn()}
-                  </ItemDetailMobile>
-                </div>
+                props.tags.map((tag) => 
+                  <Col xs="content" style={{ margin: "4px 4px 0 0" }}>
+                    <Tag key={tag.label}>
+                      <Typography variant="overlineSmall" color="noshade">
+                        {tag.label}
+                      </Typography>
+                    </Tag>
+                  </Col>
               )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </ItemCardMobile>
-  );
-};
+            </Row>
 
-interface DeleteAlertProps {
-  timeout: number;
-}
+            <Typography variant="caption" color="noshade" weight="400" style={{ marginTop: "8px" }}>
+              {props.size?.includes('-') ? (
+                <>{renderSize(props.size, theme.grey.shade7)}</>
+              ) : (
+                props.size
+              )}
+            </Typography>
+          </Col>
 
-const DeleteAlert = (props: DeleteAlertProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+          <Col sm={8} style={{ padding: "0 12px", marginTop: isMobile ? "16px" : 0 }}>
+            <Row nogutter>
+              <Col><Row nogutter>
+                <Col xs={6}>
+                  <Typography variant="caption" color="shade7">
+                    Remaining Stock
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="400">
+                    {formattedRemaining(props.remaining, props.unit)}
+                  </Typography>
+                </Col>
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, props.timeout);
+                <Col xs={6} >
+                  <Typography variant="caption" color="shade7">
+                    Sales
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="400">
+                    {props.sales}
+                  </Typography>
+                </Col>
 
-    return () => clearTimeout(timer);
-  }, []);
+                <Col xs={6} style={{ marginTop: "8px" }}>
+                  <Typography variant="caption" color="shade7">
+                    Price
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="400">
+                    $ {props.price} / {formatUnitToPricePerUnit(props.unit)}
+                  </Typography>
+                </Col>
 
-  if (!isVisible) return null;
+                <Col xs={6} style={{ marginTop: "8px" }}>
+                  <Typography variant="caption" color="shade7">
+                    Time Left
+                  </Typography>
+                  <Typography variant="label" color="noshade" weight="400">
+                    { props.timeLeft } {props.timeLeft && 'left'}
+                  </Typography>
+                </Col>
+              </Row></Col>
+            </Row>
+          </Col>
+        </Row></Col>
 
-  return (
-    <StyledAlert
-      variant="success"
-      content="Your listing has successfully been removed"
-    />
+        <Col xs="content" sm="content">
+          <StyledTouchable onPress={() => goToListingDetails && goToListingDetails(props.id)} dark>
+            <ChevronRight height={12} width={12} />
+          </StyledTouchable>
+        </Col>
+      </Row>
+    </ItemCard>
   );
 };
 
 const NoSelling = () => {
   const history = useHistory();
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isTablet = useMediaQuery({ query: BREAKPOINTS['md'] });
+  const isSmallScreen = isMobile || isTablet
+
   return (
     <NoSellingContainer>
+      { isMobile &&
+        <SVGContainer circleColor='none'>
+          <TexturedSwordFish height={200} width={200}/>
+        </SVGContainer>
+      }
       <div className="parent-details">
-        <Typography className="title-text" variant="title4" color="noshade">
+        <Typography 
+          className="title-text" 
+          variant="title4" 
+          color="noshade" 
+          style={{ fontFamily: 'Media Sans', fontSize: isSmallScreen ? '20px' : '32px' }}
+        >
           You have no selling products
         </Typography>
         <div className="details-container">
           <div className="circle" />
           <div className="text-container">
-            <Typography variant="copy" weight="bold" color="noshade">
+            <Typography variant="copy" weight="400" color="noshade">
               Customise your products and list them
             </Typography>
-            <Typography variant="copy" weight="regular" color="shade6">
+            <Typography variant="label" weight="regular" color="shade7">
               Follow the steps and sell your products to the thousands of Buyers
               on ShoreTrade.
             </Typography>
@@ -341,10 +210,10 @@ const NoSelling = () => {
         <div className="details-container">
           <div className="circle" />
           <div className="text-container">
-            <Typography variant="copy" weight="bold" color="noshade">
+            <Typography variant="copy" weight="400" color="noshade">
               Make changes in real time
             </Typography>
-            <Typography variant="copy" weight="regular" color="shade6">
+            <Typography variant="label" weight="regular" color="shade7">
               Edit your listings easily, with changes instantly reflected to
               Buyers.
             </Typography>
@@ -353,10 +222,10 @@ const NoSelling = () => {
         <div className="details-container">
           <div className="circle" />
           <div className="text-container">
-            <Typography variant="copy" weight="bold" color="noshade">
+            <Typography variant="copy" weight="400" color="noshade">
               Get notified for new sales
             </Typography>
-            <Typography variant="copy" weight="regular" color="shade6">
+            <Typography variant="label" weight="regular" color="shade7">
               Ensure your notifications for new orders are enabled to pack the
               products sooner.
             </Typography>
@@ -365,116 +234,127 @@ const NoSelling = () => {
         <Button
           className="add-product-btn"
           text="Add Product"
+          textVariant="overline"
           onClick={() => history.push(SELLER_ROUTES.ADD_PRODUCT)}
         />
       </div>
-      <SVGContainer circleColor={theme.grey.shade9}>
-        <Fish2 height={311} width={311} fill={theme.grey.shade6} />
-      </SVGContainer>
+      { !isMobile &&
+        <SVGContainer circleColor='none'>
+          <TexturedSwordFish height={320} width={320}/>
+        </SVGContainer>
+      }
     </NoSellingContainer>
   );
 };
 
 const SellingView = (props: SellingGeneratedProps) => {
-  // const theme = useTheme();
   const history = useHistory();
-  const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isTablet = useMediaQuery({ query: BREAKPOINTS['md'] });
+  const isSmallScreen = isMobile || isTablet
   const {
     listings,
+    counter,
     pending,
     goToListingDetails,
-    onClickRemoveListing,
-    showDeletedSuccess,
-    onClickEdit,
     showModal,
-    onRemove,
-    clearListingData,
     search,
     onChangeSearch,
     resetSearch,
-    staticListings,
+    page,
+    onChangePage,
+    activeTab,
+    onChangeTab
   } = props;
 
-  if (pending) {
-    return <LoadingView />;
-  }
+  const totalPages = counter ? (Math.floor(counter[activeTab as keyof CounterProps] / 10)) : 0
 
   return (
     <>
       <Container>
-        {showDeletedSuccess && <DeleteAlert timeout={3000} />}
-
         {isSmallScreen && <MobileHeader>Selling</MobileHeader>}
 
-        {staticListings.length > 0 && (
+        { (counter.allListing > 0 || search) &&
           <Row className="search-row">
-            <Col>
+            <Col sm={9}>
+              {isMobile ? 
+                <Select
+                  dark={true}
+                  borderRadius="12px"
+                  marginTop="0"
+                  height="40px"
+                  padding="10px 12px"
+                  options={[...SALES_CHANNELS].map(channel => ({ 
+                    value: channel.value,
+                    label: `Show ${channel.label}`
+                  }))}
+                  value={activeTab}
+                  onChange={(o) => onChangeTab(o.value)}
+                  arrowIcon={<ChevronRight fill={theme.brand.primary} style={{ transform: 'rotate(90deg)' }}/>}
+                />
+                : 
+                <Tabs
+                  tabStyle={{ padding: "9px 12px" }}
+                  fitTabWidthToContent={true}
+                  selectedTab={activeTab}
+                  onClickTab={(tab) => onChangeTab(tab)}
+                  justify="start"
+                  tabValues={SALES_CHANNELS.map(channel => channel.value)}
+                  tabElements={SALES_CHANNELS.map(channel => 
+                    <TabItem>
+                      <div className="tab-label">{channel.label}</div>
+                      <Tag background={theme.grey.shade9}>
+                        <Typography variant="overlineSmall" color="noshade" style={{ fontSize: "9px" }}>
+                          { counter && counter[channel.value as keyof CounterProps] }
+                        </Typography>
+                      </Tag>
+                    </TabItem>
+                  )}
+                />
+              }
+            </Col>
+            
+            <Col sm={3}>
               <Search
                 value={search}
                 resetValue={resetSearch}
                 onChange={(e) => onChangeSearch(e.target.value)}
-                placeholder="e.g. Ocean Trout"
+                placeholder="Search..."
+                style={{ 
+                  marginBottom: '0',
+                  marginTop: isMobile ? '8px' : '0' 
+                }}
+                darkMode={true}
               />
             </Col>
           </Row>
-        )}
+        }
 
         <Row className="row" justify="center">
           <Col>
-            {listings.length === 0 && !search ? (
-              isSmallScreen ? (
-                <EmptyState
-                  textAlign="center"
-                  title="There are no listings here at the moment"
-                  buttonText="Add a product"
-                  Svg={Crab}
-                  onButtonClicked={() =>
-                    history.push(SELLER_ROUTES.ADD_PRODUCT)
-                  }
-                  fluid
-                />
-              ) : (
-                <NoSelling />
-              )
-            ) : isSmallScreen ? (
-              listings.map((listing) => (
-                <StyledInteraction key={listing.id}>
-                  <ItemMobile
+          { pending ? <LoadingView /> 
+            : (counter.allListing > 0 || search) ?
+                listings.map((listing) =>
+                  <Item
                     {...listingToItem(listing)}
-                    onClick={() => goToListingDetails(listing.id)}
-                    onClickEdit={() => onClickEdit(listing.id)}
-                    onRemove={() =>
-                      onClickRemoveListing(listing.id, listing.coopId)
-                    }
+                    goToListingDetails={goToListingDetails}
                   />
-                </StyledInteraction>
-              ))
-            ) : (
-              listings.map((listing) => (
-                <Item
-                  key={listing.id}
-                  {...listingToItem(listing)}
-                  onClick={() => goToListingDetails(listing.id)}
-                  onClickEdit={() => onClickEdit(listing.id)}
-                  onRemove={() =>
-                    onClickRemoveListing(listing.id, listing.coopId)
-                  }
-                />
-              ))
-            )}
+                )
+              : <NoSelling />
+          }
           </Col>
         </Row>
+        { totalPages > 0 && 
+          <Row justify="center">
+            <Pagination
+              numPages={totalPages}
+              currentValue={totalPages > 0 ? page : 0}
+              onClickButton={(value) => onChangePage(value)}
+              variant="number"
+            />
+          </Row>
+        }
       </Container>
-
-      <ConfirmationModal
-        title="Delete Listing"
-        description="Are you sure you want to remove the listing? This cannot be undone."
-        isOpen={showModal}
-        onClickClose={clearListingData}
-        action={onRemove}
-        actionText="Delete"
-        cancelText="Cancel"
-      />
     </>
   );
 };

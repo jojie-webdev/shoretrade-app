@@ -18,6 +18,8 @@ import { GetMarketEstimateMeta } from 'types/store/GetMarketEstimateState';
 import { GetShippingQuoteRequestData } from 'types/store/GetShippingQuoteState';
 import { UpdateListingRequestData } from 'types/store/UpdateListingState';
 import { UploadBulkMeta } from 'types/store/UploadBulkState';
+import { GetListingsBySalesChannelMeta } from 'types/store/GetListingsBySalesChannelState';
+import { GetListingByIdMeta } from 'types/store/GetListingByIdState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const ENDPOINT = 'listing';
@@ -289,3 +291,31 @@ export const getHistoricalListings = (
     },
   });
 };
+
+export const getListingsBySalesChannel = (
+  data: GetListingsBySalesChannelMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${API.URL}/${API.VERSION_NEXT}/listing/sales-channel?${qs.stringify(
+      data
+    )}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export const getListingById = (
+  data: GetListingByIdMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${API.URL}/${API.VERSION_NEXT}/listing/${data.listingId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

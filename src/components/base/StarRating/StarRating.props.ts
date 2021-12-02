@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { Theme } from 'types/Theme';
 
 export interface StarRatingProps {
@@ -7,6 +8,6 @@ export interface StarRatingProps {
   spacing?: number;
   unfilledColor?: string;
   filledColor?: string;
-  style?: any;
+  style?: CSSProperties;
   editable?: boolean
 }

@@ -1,9 +1,12 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
-export const InputContainer = styled.div<{ rounded?: boolean }>`
-  background: ${(props) => props.theme.grey.noshade};
-  border: ${(props) => `1px solid ${props.theme.grey.shade6}`};
+export const InputContainer = styled.div<{ 
+  rounded?: boolean;
+  darkMode?: boolean;
+}>`
+  background: ${({ darkMode, theme }) => darkMode ? theme.grey.shade9 : theme.grey.noshade};
+  border: ${({ darkMode, theme }) => darkMode ? 'none' : `1px solid ${theme.grey.shade6}`};
   border-radius: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
       ? '10px 12px'
@@ -16,7 +19,7 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
       ? '10px 10px 10px 15px'
       : props.theme.appType === 'buyer'
         ? '19px 13px'
-        : '10px 15px'};
+        : '6px 12px'};
   margin-bottom: 16px;
 
   display: flex;
@@ -27,6 +30,13 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  :focus-within {
+    border: 1px solid ${({ darkMode, theme }) => darkMode ? theme.grey.shade7 : theme.grey.shade6};
   }
 
   input {
@@ -34,14 +44,17 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
     border: 0;
     margin: 0 10px;
     height: 100%;
+    width: inherit;
     font-weight: normal;
+    background: ${({ darkMode, theme }) => darkMode ? theme.grey.shade9 : theme.grey.noshade};
+    ${({ darkMode, theme }) => darkMode ? `color: ${theme.grey.noshade};` : ''}
     :focus {
       outline: none;
       border: none;
     }
 
     ::placeholder {
-      color: ${(props) => props.theme.grey.shade5};
+      color: ${({ darkMode, theme }) => darkMode ? theme.grey.shade7 : theme.grey.shade5};
       font-size: ${(props) =>
     props.rounded && props.theme.appType === 'buyer'
       ? '14px'
@@ -54,10 +67,6 @@ export const InputContainer = styled.div<{ rounded?: boolean }>`
       width: 100%;
       height: 38px;
     }
-  }
-
-  .close-svg-container {
-    display: none;
   }
 
   @media ${BREAKPOINTS.sm} {

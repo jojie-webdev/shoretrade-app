@@ -22,6 +22,7 @@ const Select = ({
   background,
   marginTop,
   borderRadius,
+  arrowIcon,
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
@@ -35,7 +36,9 @@ const Select = ({
       ) : null}
       <StyledDropdown
         border={border}
+        borderRadius={borderRadius}
         background={background}
+        marginTop={marginTop}
         {...props}
         unbordered={props.unbordered}
         controlClassName={
@@ -47,27 +50,31 @@ const Select = ({
         menuClassName={`${PREFIX}Menu`}
         arrowClosed={
           <ArrowContainer size={props.size}>
-            <DropdownArrow
-              // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
-              fill={
-                props.disabled
-                  ? theme.grey.shade6
-                  : theme.appType === 'buyer'
-                  ? theme.brand.primary
-                  : theme.grey.shade7
-              }
-            />
+            { arrowIcon ? arrowIcon
+              : <DropdownArrow
+                  // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
+                  fill={
+                    props.disabled
+                      ? theme.grey.shade6
+                      : theme.appType === 'buyer'
+                      ? theme.brand.primary
+                      : theme.grey.shade7
+                  }
+                />
+            }
           </ArrowContainer>
         }
         arrowOpen={
           <ArrowContainer size={props.size} flipped>
-            <DropdownArrow
-              fill={
-                theme.appType === 'buyer'
-                  ? theme.brand.primary
-                  : theme.grey.shade7
-              }
-            />
+            { arrowIcon ? arrowIcon
+              : <DropdownArrow
+                  fill={
+                    theme.appType === 'buyer'
+                      ? theme.brand.primary
+                      : theme.grey.shade7
+                  }
+                />
+            }
           </ArrowContainer>
         }
       />

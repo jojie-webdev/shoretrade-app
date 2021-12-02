@@ -47,7 +47,6 @@ export interface ListingProps {
   };
   boxDetails: {
     boxes?: {
-      id: string;
       weight: number;
       count?: number | null;
       quantity: number;

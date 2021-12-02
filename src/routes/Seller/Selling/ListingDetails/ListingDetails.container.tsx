@@ -6,10 +6,11 @@ import {
   createListingActions,
   editSelectedListingActions,
   endListingActions,
-  getAllListingsActions,
+  getListingByIdActions,
 } from 'store/actions';
 import { GetListingSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
+import { GetListingsByTypePayload } from 'types/store/GetListingsByTypeState';
 
 import {
   ListingDetailsPublicProps,
@@ -24,9 +25,8 @@ const ListingDetailsContainer = (
   const dispatch = useDispatch();
 
   const listingId = props.match?.params.listingId || '';
-
-  const currentListing = GetListingSelector(listingId);
-  const listing = listingToListingProps(currentListing);
+  const listingData = useSelector((state: Store) => state.getListingById.data?.data) || null
+  const listing = listingToListingProps(listingData);
 
   const onEdit = () => {
     dispatch(
@@ -44,15 +44,13 @@ const ListingDetailsContainer = (
     dispatch(
       endListingActions.request({
         listingId,
-        companyId: currentListing?.coopId || '',
+        companyId: listingData?.coop_id || '',
       })
     );
   };
 
   useEffect(() => {
-    if (!currentListing) {
-      dispatch(getAllListingsActions.request());
-    }
+    dispatch(getListingByIdActions.request({ listingId }));
 
     // scrolls to top when displaying the screen
     document.querySelector('.screen')?.scrollTo(0, 0);
@@ -61,7 +59,7 @@ const ListingDetailsContainer = (
   const sellingDetailsBreadCrumbs = [
     { label: 'Selling', link: SELLER_ROUTES.SELLING },
     {
-      label: currentListing?.categoryName || 'Category',
+      label: listingData?.categoryName || 'Category',
       link: SELLER_ROUTES.SELLING,
     },
     {
