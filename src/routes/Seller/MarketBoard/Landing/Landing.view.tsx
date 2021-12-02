@@ -192,6 +192,8 @@ const MyActiveOffersInteractions = (props: {
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
+  const quantity = props.data.weight;
+
   const statusTextProps = transformMarketRequestStatusText(
     data.statusText,
     true
@@ -243,6 +245,13 @@ const MyActiveOffersInteractions = (props: {
             >
               Price: ${latestOfferPrice}/
               {formatMeasurementUnit(data.measurementUnit)}
+            </Typography>
+            <Typography
+              variant="caption"
+              color="shade6"
+              style={{ marginTop: 4 }}
+            >
+              Qty: {`${data.weight} ${sizeUnit}`}
             </Typography>
             <Typography
               variant="caption"

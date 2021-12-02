@@ -110,6 +110,10 @@ const MobileOffers = (props: {
     return priceValue;
   };
 
+  const buildQtyValue = `${data.weight} ${formatMeasurementUnit(
+    measurementUnit
+  )}`;
+
   const renderBadges = () => (
     <Badges>
       {statusTextProps.text !== '' && (
@@ -153,6 +157,9 @@ const MobileOffers = (props: {
             {subMinorDetail('Price', buildPriceValue())}
           </SubMinorDetail>
 
+          <SubMinorDetail>
+            {subMinorDetail('Qty', buildQtyValue)}
+          </SubMinorDetail>
           <SubMinorDetail>
             {subMinorDetail('Shipping to', getShippingAddress(data.shippingTo))}
           </SubMinorDetail>
