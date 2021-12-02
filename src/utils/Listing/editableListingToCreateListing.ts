@@ -26,7 +26,12 @@ export const editableListingToCreateListing = (
     countryCode: '',
   },
   ends: data?.ends ? moment(data.ends).toISOString() : null,
+  auctionDate: data?.auctionDate
+    ? moment(data.auctionDate).toISOString()
+    : null,
   isAquafuture: data?.isAquafuture || false,
+  isPreAuctionSale: data?.isPreAuctionSale || false,
+  isAuctionSale: data?.isAuctionSale || false,
   addressId: data?.addressId || '',
   packaging: {
     ...(data?.packaging?.id
