@@ -47,6 +47,10 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
 
+  const metricString = props.buyerRequest.metric
+    .toUpperCase()
+    .replace(/\s/g, '_');
+
   const groupSpecs = groupBy((a: Specification) => `group${a.stateGroup}`)(
     props.buyerRequest.specifications || []
   );
@@ -68,12 +72,26 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
       error={pathOr('', ['sizeFrom', '0'], errors)}
       borderRadius="12px"
       height="40px"
+      LeftComponent={
+        <Typography color="shade6">
+          {props.buyerRequest.metric.toLowerCase().includes('grams')
+            ? 'g'
+            : formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+        </Typography>
+      }
     />
   );
 
   const renderToTextField = () => (
     <TextField
       label={`To\n(Optional)`}
+      LeftComponent={
+        <Typography color="shade6">
+          {props.buyerRequest.metric.toLowerCase().includes('grams')
+            ? 'g'
+            : formatMeasurementUnit(props.buyerRequest.measurementUnit)}
+        </Typography>
+      }
       placeholder={`${props.buyerRequest.sizeTo || ''}`}
       value={props.size.to}
       onChangeText={(v) => {
