@@ -185,6 +185,26 @@ const SoldItem = (props: {
                   >
                     Order Summary
                   </Typography>
+                  <Typography
+                    color="noshade"
+                    onClick={(e) => {
+                      const orderRefNumbers = entry.map((v) => {
+                        return v.orderRefNumber;
+                      });
+                      window.open(
+                        `${API.URL}/${
+                          API.VERSION
+                        }/order/pdf-label/${orderRefNumbers.join()}?token=${
+                          props.token
+                        }&state=${toAddressState}&status=${props.status}`,
+                        '_blank'
+                      );
+                      setShowDownloads('');
+                      e.stopPropagation();
+                    }}
+                  >
+                    Order Label
+                  </Typography>
                 </div>
               )}
 

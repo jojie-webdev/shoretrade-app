@@ -156,6 +156,30 @@ const DetailsView = (props: DetailsProps) => {
               </Typography>
             </ActionContainer>
           </Touchable>
+          <Touchable
+            dark
+            onPress={() => {
+              window.open(
+                `${API.URL}/${
+                  API.VERSION
+                }/order/pdf-label/${orderRefNumber}?token=${token}&status=${
+                  statusOptions[status] || ''
+                }&state=${toAddressState}`,
+                '_blank'
+              );
+            }}
+          >
+            <ActionContainer>
+              <FileCheck width={13} height={13} fill={theme.grey.noshade} />
+              <Typography
+                className="action-text"
+                variant="caption"
+                color="noshade"
+              >
+                Order Label
+              </Typography>
+            </ActionContainer>
+          </Touchable>
         </div>
       </Header>
       <DetailsRow>
