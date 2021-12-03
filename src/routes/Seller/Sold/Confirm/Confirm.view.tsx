@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Divider from 'components/base/Divider';
 import { Box as BoxSVG, Subtract } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -9,6 +10,7 @@ import AddBoxModal from 'components/module/AddBoxModal';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { capitalize } from 'lodash';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
 import remove from 'ramda/es/remove';
@@ -29,6 +31,7 @@ import {
   BoxDetailsContainer,
   BoxSummaryContainer,
   ScrollWrapper,
+  Description,
 } from './Confirm.style';
 
 const BoxDetails = ({
@@ -45,12 +48,12 @@ const BoxDetails = ({
       <div className="text-container">
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant="label"
             color="shade6"
             className="overline"
             weight="900"
           >
-            {measurementUnit} per Box
+            {capitalize(measurementUnit)} per Box
           </Typography>
           <Typography color="noshade">{`${weight.toFixed(
             2
@@ -58,7 +61,7 @@ const BoxDetails = ({
         </div>
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant="label"
             color="shade6"
             className="overline"
             weight="900"
@@ -69,7 +72,7 @@ const BoxDetails = ({
         </div>
         <div className="inner-text">
           <Typography
-            variant="overline"
+            variant="label"
             color="shade6"
             className="overline"
             weight="900"
@@ -113,10 +116,11 @@ const BoxSummary = ({
   differencePercentage: string;
 }) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const theme = useTheme();
 
   return isSmallScreen ? (
     <BoxSummaryContainer>
-      <Typography color="noshade" variant="title5" weight="bold">
+      <Typography color="noshade" variant="title5">
         {`Difference ${differencePercentage}`}
       </Typography>
       <div className="text-container">
@@ -124,27 +128,21 @@ const BoxSummary = ({
           <Typography variant="caption" color="shade6">
             Quantity
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {quantities}
-          </Typography>
+          <Typography color="noshade">{quantities}</Typography>
         </div>
 
         <div>
           <Typography variant="caption" color="shade6">
             Weight
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {weight}
-          </Typography>
+          <Typography color="noshade">{weight}</Typography>
         </div>
 
         <div>
           <Typography variant="caption" color="shade6">
             Total
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {amount}
-          </Typography>
+          <Typography color="noshade">{amount}</Typography>
         </div>
       </div>
     </BoxSummaryContainer>
@@ -152,56 +150,45 @@ const BoxSummary = ({
     <BoxSummaryContainer>
       <div className="text-container">
         <div className="left-text">
-          <Typography variant="label" color="shade6" className="overline">
+          <Typography variant="label" color="shade6" className="label">
             Original Order
           </Typography>
-          <Typography color="noshade" weight="bold">
+          <Typography color="noshade" variant="body">
             {`Difference ${differencePercentage}`}
           </Typography>
         </div>
         <div className="inner-text">
-          <Typography variant="label" color="shade6" className="overline">
+          <Typography variant="label" color="shade6" className="label">
             {originalQuantity}
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {differenceQuantity}
-          </Typography>
+          <Typography color="noshade">{differenceQuantity}</Typography>
         </div>
         <div className="inner-text">
-          <Typography variant="label" color="shade6" className="overline">
+          <Typography variant="label" color="shade6" className="label">
             {originalWeight}
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {differenceWeight}
-          </Typography>
+          <Typography color="noshade">{differenceWeight}</Typography>
         </div>
         <div className="right-text">
-          <Typography variant="label" color="shade6" className="overline">
+          <Typography variant="label" color="shade6" className="label">
             {originalAmount}
           </Typography>
-          <Typography color="noshade" weight="bold">
-            {differenceAmount}
-          </Typography>
+          <Typography color="noshade">{differenceAmount}</Typography>
         </div>
       </div>
+      <Divider thickness={1} backgroundColor={theme.grey.shade8} />
       <div className="text-container">
         <div className="left-text">
-          <Typography color="noshade" weight="bold">
-            New Total
-          </Typography>
+          <Typography color="noshade">New Total</Typography>
         </div>
         <div className="inner-text">
-          <Typography color="noshade" weight="bold">
-            {quantities}
-          </Typography>
+          <Typography color="noshade">{quantities}</Typography>
         </div>
         <div className="inner-text">
-          <Typography color="noshade" weight="bold">
-            {weight}
-          </Typography>
+          <Typography color="noshade">{weight}</Typography>
         </div>
         <div className="right-text">
-          <Typography variant="title5" color="noshade" weight="bold">
+          <Typography variant="title5" color="noshade">
             {amount}
           </Typography>
         </div>
@@ -297,57 +284,54 @@ const ConfirmView = (props: ConfirmProps) => {
   return (
     <ScrollWrapper>
       <Wrapper>
-        <InnerRouteHeader title={'Confirm Weights'} showIcon={false} />
-        <Typography color="shade5">
-          Weight must be confirmed before products can be moved to{' '}
+        <Typography
+          color="noshade"
+          variant="title5"
+          style={{ fontFamily: 'Media Sans' }}
+        >
+          Confirm Weights
         </Typography>
-        <Typography variant="title5" color="noshade">
-          “To Ship”
-        </Typography>
+        <Description>
+          <Typography color="shade6" variant="body">
+            Weight must be confirmed before products can be moved to{' '}
+          </Typography>
+          <Typography color="noshade" variant="body">
+            “To Ship”
+          </Typography>
+        </Description>
         <DetailsContainer>
           <OrderDetails>
             <div className="order-details-item">
-              <Typography variant="overline" color="shade5">
-                ORDER
+              <Typography variant="label" color="shade5">
+                Order
               </Typography>
-              <Typography
-                className="order-details-item-value"
-                color="primary"
-                weight="bold"
-              >
+              <Typography className="order-details-item-value" color="primary">
                 {orderNumber}
               </Typography>
             </div>
             <div className="order-details-item">
-              <Typography variant="overline" color="shade5">
-                PRICE
+              <Typography variant="label" color="shade5">
+                Price
               </Typography>
-              <Typography
-                className="order-details-item-value"
-                color="noshade"
-                weight="bold"
-              >
+              <Typography className="order-details-item-value" color="noshade">
                 {price}
               </Typography>
             </div>
             <div className="order-details-item">
-              <Typography variant="overline" color="shade5">
-                BUYER
+              <Typography variant="label" color="shade5">
+                Buyer
               </Typography>
-              <Typography
-                className="order-details-item-value"
-                color="noshade"
-                weight="bold"
-              >
+              <Typography className="order-details-item-value" color="noshade">
                 {buyer}
               </Typography>
             </div>
           </OrderDetails>
+          <Divider thickness={1} backgroundColor={theme.grey.shade8} />
           <ItemRow>
             <ItemImage src={uri} alt="" />
             <ItemColumn>
               <Typography
-                variant={isMobile ? 'caption' : 'title5'}
+                variant={isMobile ? 'caption' : 'body'}
                 color="noshade"
               >
                 {name}
@@ -355,7 +339,7 @@ const ConfirmView = (props: ConfirmProps) => {
               <div className="tags-container">
                 {tags.map((tag) => (
                   <Tag key={tag.label}>
-                    <Typography variant="caption" color="noshade">
+                    <Typography variant="overlineSmall" color="noshade">
                       {tag.label}
                     </Typography>
                   </Tag>
@@ -365,14 +349,14 @@ const ConfirmView = (props: ConfirmProps) => {
                 <Typography
                   className="size-label"
                   color="shade6"
-                  variant={isMobile ? 'small' : 'body'}
+                  variant={isMobile ? 'small' : 'label'}
                   weight={isMobile ? '400' : '500'}
                 >
                   Size:
                 </Typography>
                 <Typography
                   color="noshade"
-                  variant={isMobile ? 'small' : 'body'}
+                  variant={isMobile ? 'small' : 'label'}
                   weight={isMobile ? '900' : '500'}
                 >
                   {size}
@@ -393,7 +377,7 @@ const ConfirmView = (props: ConfirmProps) => {
         ))}
         <div className="add-box-container">
           <Add
-            title="Add a box"
+            title="Add a Box"
             Svg={BoxSVG}
             onClick={() => setShowModal(true)}
           />
@@ -401,7 +385,7 @@ const ConfirmView = (props: ConfirmProps) => {
         <BoxSummary {...summary} />
         <div className="actions-container">
           <Button
-            style={{ marginRight: 16, width: 200 }}
+            style={{ marginRight: 16 }}
             text="CANCEL"
             variant="outline"
             onClick={() => onCancel()}
@@ -410,7 +394,6 @@ const ConfirmView = (props: ConfirmProps) => {
           <Button
             disabled={isEmpty(boxes)}
             loading={pending}
-            style={{ width: 200 }}
             text="CONFIRM"
             onClick={() => onConfirm()}
           />

@@ -138,7 +138,8 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
       isOpen={isOpen}
       style={{
         width: isLargeScreen ? '75%' : 'calc(100% - 48px)',
-        height: isLargeScreen ? '75%' : 'calc(100% - 48px)',
+        height: isLargeScreen ? '95%' : 'calc(100% - 48px)',
+        borderRadius: '8px',
       }}
     >
       <ConfirmView {...props} {...generatedProps} />

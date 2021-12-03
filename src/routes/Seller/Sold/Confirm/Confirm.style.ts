@@ -14,10 +14,14 @@ export const ScrollWrapper = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  padding: 0px 0px 50px 0px;
-
   .add-box-container {
-    margin-top: 32px;
+    margin-top: 16px;
+
+    > div {
+      border-width: 2px;
+      border-radius: 8px;
+      border-color: ${({ theme }) => theme.brand.primary};
+    }
   }
 
   .actions-container {
@@ -25,7 +29,16 @@ export const Wrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 50px;
+    margin-top: 24px;
+  }
+`;
+
+export const Description = styled.div`
+  display: flex;
+  margin-top: 12px;
+
+  p:first-of-type {
+    margin-right: 8px;
   }
 `;
 
@@ -35,7 +48,8 @@ export const DetailsContainer = styled.div`
   padding: 24px;
   background: #09131d;
   border-radius: 4px;
-  margin-top: 32px;
+  margin-top: 24px;
+  border-radius: 8px;
 `;
 
 export const OrderDetails = styled.div`
@@ -64,7 +78,6 @@ export const OrderDetails = styled.div`
 export const ItemRow = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
 `;
 
 export const ItemColumn = styled.div`
@@ -82,7 +95,6 @@ export const ItemColumn = styled.div`
   .size-container {
     display: flex;
     flex-direction: row;
-    margin-top: 8px;
 
     @media ${BREAKPOINTS['sm']} {
       margin-top: 4px;
@@ -102,8 +114,8 @@ export const Tag = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 148px;
-  height: 148px;
+  width: 88px;
+  height: 88px;
   margin-right: 16px;
   border-radius: 4px;
 
@@ -129,12 +141,12 @@ export const Box = styled.div`
 
 export const BoxDetailsContainer = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  border-radius: 4px;
-  padding: 16px 24px;
+  padding: 24px;
   margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-radius: 8px;
 
   .text-container {
     display: flex;
@@ -162,17 +174,20 @@ export const BoxSummaryContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 24px;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 100%;
   background: ${(props) => props.theme.grey.shade9};
-  margin-top: 32px;
-  overflow: scroll;
+  margin-top: 16px;
+
+  .divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
 
   .text-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 16px;
 
     @media ${BREAKPOINTS['sm']} {
       justify-content: space-between;
@@ -185,7 +200,7 @@ export const BoxSummaryContainer = styled.div`
       margin-right: 16px;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: flex-start;
     }
 
     .left-text {
