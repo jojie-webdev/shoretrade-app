@@ -116,7 +116,9 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
 
         {show &&
           (topComponent ? (
-            <DropdownContainer>
+            <DropdownContainer
+              onClick={() => setShow((prevState) => !prevState)}
+            >
               {topComponent}
               {renderDropdownContent()}
             </DropdownContainer>

@@ -281,6 +281,7 @@ const AddDetails = ({
     if (isAquafuture || isAuctionSale) return;
 
     if (!editableListing?.isAquafuture) {
+      setCatchDate(null);
       setAlwaysAvailable((prevState) => !prevState);
     } else {
       setErrors(isValid({ alwaysAvailable }));
@@ -634,7 +635,10 @@ const AddDetails = ({
             placeholder={alwaysAvailable ? 'Always Available' : ''}
             label="Catch Date"
             date={catchDate ? moment(catchDate) : null}
-            onDateChange={(d) => setCatchDate(d?.toDate() || null)}
+            onDateChange={(d) => {
+              setCatchDate(d?.toDate() || null);
+              setAlwaysAvailable(false);
+            }}
             error={
               pathOr('', ['catchDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)

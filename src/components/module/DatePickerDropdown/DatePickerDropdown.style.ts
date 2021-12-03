@@ -111,7 +111,9 @@ export const FlippedArrowContainer = styled.div`
   transform: rotate(180deg);
 `;
 
-export const DropdownContainer = styled.div`
+export const DropdownContainer = styled.div<{
+  disabled?: boolean;
+}>`
   position: absolute;
   top: calc(48px + 12px);
   right: 0;
