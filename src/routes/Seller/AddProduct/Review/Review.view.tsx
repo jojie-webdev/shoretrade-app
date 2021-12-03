@@ -61,7 +61,9 @@ const Review = ({
     ? historicalListings.find((a) => a.id === currentHistoricalListingId)
     : undefined;
 
-  const isMissingDate = !(editableListing.ends && editableListing.catchDate);
+  const isMissingDate =
+    !editableListing.currentHistoricalListingId &&
+    !(editableListing.ends && editableListing.catchDate);
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
 
