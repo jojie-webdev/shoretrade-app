@@ -111,7 +111,9 @@ export const FlippedArrowContainer = styled.div`
   transform: rotate(180deg);
 `;
 
-export const DropdownContainer = styled.div`
+export const DropdownContainer = styled.div<{
+  disabled?: boolean;
+}>`
   position: absolute;
   top: calc(48px + 12px);
   right: 0;
@@ -128,5 +130,15 @@ export const DropdownContainer = styled.div`
     box-shadow: unset;
     border-radius: unset;
     z-index: unset;
+
+    ${({ disabled }) => {
+      if (disabled) {
+        return `
+          opacity: 0.5;
+          pointer-events: none;
+          cursor: not-allowed;
+        `;
+      }
+    }}
   }
 `;

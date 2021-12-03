@@ -37,6 +37,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
     height,
     borderRadius,
     topComponent,
+    disabled,
   } = props;
 
   const renderDropdownContent = () => (
@@ -116,7 +117,7 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
 
         {show &&
           (topComponent ? (
-            <DropdownContainer>
+            <DropdownContainer disabled={disabled}>
               {topComponent}
               {renderDropdownContent()}
             </DropdownContainer>

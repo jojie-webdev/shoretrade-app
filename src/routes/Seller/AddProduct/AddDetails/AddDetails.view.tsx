@@ -281,6 +281,7 @@ const AddDetails = ({
     if (isAquafuture || isAuctionSale) return;
 
     if (!editableListing?.isAquafuture) {
+      setCatchDate(null);
       setAlwaysAvailable((prevState) => !prevState);
     } else {
       setErrors(isValid({ alwaysAvailable }));
@@ -641,6 +642,7 @@ const AddDetails = ({
             }
             showCalendarIcon={true}
             showArrowDownIcon={true}
+            disabled={alwaysAvailable}
             topComponent={
               !isAquafuture &&
               !isAuctionSale && (
