@@ -109,6 +109,7 @@ export type GetSellerOrdersResponseItem = {
       };
     }
   ];
+  shippingDate: string;
 };
 
 export type GetSellerOrdersPayload = GenericResponse<{

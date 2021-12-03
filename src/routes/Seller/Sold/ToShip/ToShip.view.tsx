@@ -39,6 +39,7 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
+import ShippingDateModal from '../ShippingDateModal';
 import { PendingToShipItemData, SoldGeneratedProps } from '../Sold.props';
 import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
@@ -82,6 +83,9 @@ const generatePlaceOrderPayload = (config: {
           listing: lineItem.listing,
         }))
       : [],
+    shippingDate: order?.shippingDate
+      ? moment(order.shippingDate).toISOString()
+      : '',
   };
 };
 
@@ -92,6 +96,12 @@ export const PendingItem = (props: {
       isOpen: boolean;
       orderId: string;
       lineItemId: string;
+    }>
+  >;
+  updateShippingDateModal: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      order: PlaceOrderMeta;
     }>
   >;
   isPlacingOrder: boolean;
@@ -106,6 +116,7 @@ export const PendingItem = (props: {
   const {
     data,
     updateConfirmModal,
+    updateShippingDateModal,
     setPlaceOrderId,
     placeOrderId,
     placeOrder,
@@ -203,12 +214,13 @@ export const PendingItem = (props: {
                   size="sm"
                   onClick={(e) => {
                     setPlaceOrderId(order.orderId);
-                    placeOrder(
-                      generatePlaceOrderPayload({
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
                         order,
-                      })
-                    );
+                      }),
+                    });
                     e.stopPropagation();
                   }}
                   loading={isPlacingOrder && placeOrderId === order.orderId}
@@ -223,12 +235,13 @@ export const PendingItem = (props: {
                   size="sm"
                   onClick={(e) => {
                     setPlaceOrderId(order.orderId);
-                    placeOrder(
-                      generatePlaceOrderPayload({
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
                         order,
-                      })
-                    );
+                      }),
+                    });
                     e.stopPropagation();
                   }}
                   loading={isPlacingOrder && placeOrderId === order.orderId}
@@ -278,11 +291,6 @@ export const PendingItem = (props: {
                       </div>
 
                       <ItemDetail variant="caption" color="shade5" row>
-                        {/* {sizeToString(
-                          lineItem.listing.metricLabel,
-                          lineItem.listing.sizeFrom || undefined,
-                          lineItem.listing.sizeTo || undefined
-                        )} */}
                         Size:{' '}
                         <span>
                           {sizeToString(
@@ -422,6 +430,17 @@ const ToShip = (props: SoldGeneratedProps) => {
     }
   );
 
+  const [shippingDateModal, updateShippingDateModal] = useReducer(
+    createUpdateReducer<{
+      order: PlaceOrderMeta | null;
+      isOpen: boolean;
+    }>(),
+    {
+      order: null,
+      isOpen: false,
+    }
+  );
+
   const [placeOrderId, setPlaceOrderId] = useState('');
   const [isOpen, setIsOpen] = useState<string[]>([]);
   const [lastOpenAccordion, setLastOpenAccordion] = useState('');
@@ -447,6 +466,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   useEffect(() => {
     if (!isPlacingOrder && placeOrderId.length > 0) {
       setPlaceOrderId('');
+      updateShippingDateModal({ isOpen: false });
     }
 
     if (lastOpenAccordion && !isPlacingOrder) {
@@ -512,6 +532,18 @@ const ToShip = (props: SoldGeneratedProps) => {
           updateMessageModal({ isOpen: false });
         }}
         loading={isSendingMessage}
+      />
+      <ShippingDateModal
+        isOpen={shippingDateModal.isOpen}
+        onConfirm={(shippingDate) => {
+          if (shippingDateModal.order) {
+            placeOrder({ ...shippingDateModal.order, shippingDate });
+          }
+        }}
+        onClickClose={() => {
+          updateShippingDateModal({ isOpen: false });
+        }}
+        loading={isPlacingOrder}
       />
       {filters.toShipFilters.page === '1' && (
         <>
@@ -596,6 +628,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                   >
                     <PendingItem
                       data={group}
+                      updateShippingDateModal={updateShippingDateModal}
                       updateConfirmModal={updateConfirmModal}
                       placeOrderId={placeOrderId}
                       setPlaceOrderId={setPlaceOrderId}
@@ -612,14 +645,6 @@ const ToShip = (props: SoldGeneratedProps) => {
           })}
         </>
       )}
-
-      {/* <TitleRow style={{ marginTop: 24 }}>
-        <Col md={12} className="title-col">
-          <Typography variant="overline" color="shade6">
-            TO SHIP - {toShipTotal}
-          </Typography>
-        </Col>
-      </TitleRow> */}
 
       {sort(sortByDate, toShip).map((group, idx) => {
         const getDisplayDate = () => {
@@ -648,34 +673,6 @@ const ToShip = (props: SoldGeneratedProps) => {
         return (
           <ItemRow key={calendarDateString}>
             <Col>
-              {/* <StyledInteraction
-                pressed={isOpen.includes(calendarDateString)}
-                onClick={() => toggleAccordion(calendarDateString)}
-                type="accordion"
-                iconColor={theme.brand.primary}
-              >
-                <div className="content">
-                  <div className="left-content left-content-extended">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="center-text title-text"
-                    >
-                      {calendarDateString}
-                    </Typography>
-
-                    <div className="order-count">
-                      <Typography variant="label" color="noshade">
-                        {group.orderTotal}&nbsp;
-                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
-                      </Typography>
-                    </div>
-                  </div>
-                  <Spacer />
-                  <div className="right-content" />
-                  <div className="buttons" />
-                </div>
-              </StyledInteraction> */}
               <TitleRow
                 style={{
                   marginTop:
@@ -695,19 +692,9 @@ const ToShip = (props: SoldGeneratedProps) => {
                 </Col>
               </TitleRow>
 
-              {/* <CollapsibleContent
-                isOpen={isOpen.includes(calendarDateString)}
-                style={{
-                  marginLeft: 24,
-                  marginRight: 24,
-                  overflow: 'visible',
-                }}
-              >
-                <SoldItem data={group.data} token={token} status="PLACED" />
-              </CollapsibleContent> */}
-
               <SoldItem
                 data={group.data}
+                rawData={group.rawData}
                 token={token}
                 status="PLACED"
                 updateMessageModal={updateMessageModal}
@@ -719,12 +706,13 @@ const ToShip = (props: SoldGeneratedProps) => {
                 ) => {
                   if (order) {
                     setPlaceOrderId(order.orderId);
-                    placeOrder(
-                      generatePlaceOrderPayload({
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
                         isPartial,
                         order,
-                      })
-                    );
+                      }),
+                    });
                   }
                 }}
                 isPlacingOrder={isPlacingOrder}
