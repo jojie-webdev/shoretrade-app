@@ -15,5 +15,4 @@ export interface DatePickerDropdownProps {
   height?: string;
   borderRadius?: string;
   topComponent?: React.ReactNode;
-  disabled?: boolean;
 }

@@ -130,15 +130,5 @@ export const DropdownContainer = styled.div<{
     box-shadow: unset;
     border-radius: unset;
     z-index: unset;
-
-    ${({ disabled }) => {
-      if (disabled) {
-        return `
-          opacity: 0.5;
-          pointer-events: none;
-          cursor: not-allowed;
-        `;
-      }
-    }}
   }
 `;

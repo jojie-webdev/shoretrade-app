@@ -635,14 +635,16 @@ const AddDetails = ({
             placeholder={alwaysAvailable ? 'Always Available' : ''}
             label="Catch Date"
             date={catchDate ? moment(catchDate) : null}
-            onDateChange={(d) => setCatchDate(d?.toDate() || null)}
+            onDateChange={(d) => {
+              setCatchDate(d?.toDate() || null);
+              setAlwaysAvailable(false);
+            }}
             error={
               pathOr('', ['catchDate', '0'], errors) ||
               pathOr('', ['isDateRangeValid', '0'], errors)
             }
             showCalendarIcon={true}
             showArrowDownIcon={true}
-            disabled={alwaysAvailable}
             topComponent={
               !isAquafuture &&
               !isAuctionSale && (
