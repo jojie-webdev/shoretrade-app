@@ -51,6 +51,9 @@ export type SoldItem = {
   title: Date;
   data: { [p: string]: SoldItemData[] };
   orderTotal: number;
+  rawData: {
+    [index: string]: GetSellerOrdersResponseItem[];
+  };
 };
 
 export type RequestFilters = {

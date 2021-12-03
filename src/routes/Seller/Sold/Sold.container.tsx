@@ -35,6 +35,7 @@ import {
   orderItemToSoldItemData,
 } from './Sold.tranform';
 import SoldView from './Sold.view';
+
 const Sold = (): JSX.Element => {
   // MARK:- Hooks
   const dispatch = useDispatch();
@@ -169,6 +170,7 @@ const Sold = (): JSX.Element => {
       return {
         title: orderGroup.title,
         data: toShipItemData,
+        rawData: orderGroup.data,
         orderTotal,
       };
     });

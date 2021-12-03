@@ -13,7 +13,6 @@ import Typography from 'components/base/Typography';
 import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
@@ -32,6 +31,9 @@ import { Spacer } from './ToShip/ToShip.styles';
 
 const SoldItem = (props: {
   data: { [p: string]: SoldItemData[] };
+  rawData: {
+    [index: string]: GetSellerOrdersResponseItem[];
+  };
   token: string;
   status: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   updateMessageModal?: React.Dispatch<
@@ -58,6 +60,7 @@ const SoldItem = (props: {
     shipOrder,
     isPlacingOrder,
     placeOrderId,
+    rawData,
   } = props;
   const history = useHistory();
   const theme = useTheme();
@@ -100,8 +103,13 @@ const SoldItem = (props: {
     }
   };
 
-  return Object.values(props.data).map((entry) => {
+  return Object.values(props.data).map((entry, idx) => {
     const { type = 'air', toAddressState, totalWeight, totalPrice } = entry[0];
+
+    const getSellerOrder = (id: string) => {
+      const orderData = Object.values(rawData)[idx];
+      return orderData.find((o) => o.orderId === id);
+    };
 
     const desc = (() => {
       if (type === 'air') {
@@ -386,7 +394,7 @@ const SoldItem = (props: {
                             if (shipOrder) {
                               shipOrder(
                                 !v.allowFullShipment,
-                                GetSellerOrder(v.id, 'PLACED')
+                                getSellerOrder(v.id)
                               );
                             }
                             e.stopPropagation();
@@ -405,7 +413,7 @@ const SoldItem = (props: {
                             if (shipOrder) {
                               shipOrder(
                                 !v.allowFullShipment,
-                                GetSellerOrder(v.id, 'PLACED')
+                                getSellerOrder(v.id)
                               );
                             }
                             e.stopPropagation();
