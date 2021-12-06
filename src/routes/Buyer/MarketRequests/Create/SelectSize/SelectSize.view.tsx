@@ -195,7 +195,11 @@ const SizeInput = (props: SizeInputProps) => {
   }
 
   return (
-    <Checkbox onClick={handleOnClickUngraded} checked={true} label="Ungraded" />
+    <Checkbox
+      onClick={handleOnClickUngraded}
+      checked={ungraded}
+      label="Ungraded"
+    />
   );
 };
 
