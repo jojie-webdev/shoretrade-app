@@ -73,10 +73,27 @@ const groupByBuyer = groupBy((order: GetSellerOrdersResponseItem) => {
   return order.buyerCompanyId;
 });
 
+const groupByDeliveryMethod = groupBy((order: GetSellerOrdersResponseItem) => {
+  return order.deliveryMethod;
+});
+
+const getDeliveryMethodLabel = (deliveryMethod: string) => {
+  switch (deliveryMethod) {
+    case 'AIR':
+      return 'Air Freight';
+    case 'ROAD':
+      return 'Road Freight';
+    case 'SELLER':
+      return 'Pick Up';
+    default:
+      return 'Deliver Myself';
+  }
+};
+
 export const orderItemToPendingToShipItem = (
   data: GetSellerOrdersResponseItem[]
 ): PendingToShipItemData[] => {
-  const groupedData = groupByBuyer(data);
+  const groupedData = groupByDeliveryMethod(data);
   return Object.keys(groupedData).reduce(
     (accum: PendingToShipItemData[], current: string) => {
       const currentData = groupedData[current];
@@ -121,6 +138,10 @@ export const orderItemToPendingToShipItem = (
         {
           buyerCompanyId: currentData[0].buyerCompanyId,
           buyerCompanyName: currentData[0].buyerCompanyName,
+          deliveryMethod: currentData[0].deliveryMethod,
+          deliveryMethodLabel: getDeliveryMethodLabel(
+            currentData[0].deliveryMethod
+          ),
           buyerId: currentData[0].buyerId, // this is employee id
           orderCount: currentData.length,
           totalWeight,
@@ -138,7 +159,6 @@ export const orderItemToSoldItemData = (data: {
 }): { [p: string]: SoldItemData[] } => {
   //@ts-ignore
   const newObj: { [p: string]: ToShipItemData[] } = { ...data };
-
   for (const [key, value] of Object.entries(data)) {
     newObj[key] = value.map((order) => ({
       id: order.orderId,
@@ -148,6 +168,14 @@ export const orderItemToSoldItemData = (data: {
           ? 'pickup'
           : order.deliveryMethod.toLowerCase(),
       orderRefNumber: order.orderRefNumber,
+      totalPrice: `${toPrice(
+        order.orderLineItem.reduce((t, lineItem) => t + lineItem.weight, 0)
+      )}`,
+      totalWeight: `${order.orderLineItem
+        .reduce((t, lineItem) => t + lineItem.price, 0)
+        .toFixed(2)} ${formatMeasurementUnit(
+        order.orderLineItem[0]?.listing.measurementUnit
+      )}`,
       orders: order.orderLineItem.map((lineItem) => ({
         orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
         buyer: order.buyerCompanyName,
@@ -159,6 +187,7 @@ export const orderItemToSoldItemData = (data: {
         weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
           lineItem.listing.measurementUnit
         )}`,
+        totalPrice: `${toPrice(lineItem.price * lineItem.weight)}`,
         name: lineItem.listing.typeName,
         tags: lineItem.listing.specifications.map((s) => ({ label: s })),
         size: sizeToString(
@@ -168,6 +197,11 @@ export const orderItemToSoldItemData = (data: {
         ),
       })),
       toAddressState: order.toAddress.state,
+      allowPartialShipment: order.orderLineItem.some((i) => i.weightConfirmed),
+      allowFullShipment: order.orderLineItem.every((i) => i.weightConfirmed),
+      buyerId: order.buyerId,
+      buyerCompanyName: order.buyerCompanyName,
+      buyerCompanyId: order.buyerCompanyId,
     }));
   }
 

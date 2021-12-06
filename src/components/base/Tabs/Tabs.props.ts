@@ -10,6 +10,7 @@ export interface TabsProps {
   justify?: Justify;
   selectedTab: string;
   onClickTab: (tab: string) => void;
+  customTabContent?: string[] | number[];
 }
 
 export interface TabColProps extends ColProps{

@@ -19,4 +19,14 @@ export const Tab = styled.div<{ active: boolean }>`
     font-weight: 500;
     line-height: 20px;
   }
+
+  .custom-tab {
+    border-radius: 8px;
+    padding: 4px 8px;
+    background: ${({ theme }) => theme.grey.shade9};
+    font-size: 9px;
+    font-weight: 900;
+    margin-left: 8px;
+    color: ${({ theme }) => theme.grey.noshade};
+  }
 `;

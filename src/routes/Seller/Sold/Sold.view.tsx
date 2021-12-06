@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
 import { Octopus, Crab, Fish } from 'components/base/SVG';
+import Tabs from 'components/base/Tabs';
 import DateRangePicker from 'components/module/DateRangePicker';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
@@ -176,38 +177,38 @@ const SoldView = (props: SoldGeneratedProps) => {
   return (
     <Container>
       <div className="controls-row">
-        <SegmentedControls
-          options={[TO_SHIP, IN_TRANSIT, DELIVERED]}
-          selectedOption={currentTab}
-          onClickControl={(value) => onChangeCurrentTab(value as TabOptions)}
-        />
-      </div>
-      <SearchFilterRow>
-        <SearchContainer>
-          <Search
-            onKeyUp={onKeyUp}
-            value={searchValue}
-            onChange={(val) => {
-              setSearchValue(val.currentTarget.value);
-              updateSearchValueTable({
-                [currentTab]: val.currentTarget.value,
-              });
-            }}
-            resetValue={() => {
-              clearSearchValue();
-              updateSearchValueTable({
-                [currentTab]: '',
-              });
-            }}
-            placeholder={
-              isMobile
-                ? 'Order#, product type or seller...'
-                : 'Search by order#, product type or seller...'
-            }
-            rounded
+        <div className="tabs">
+          <Tabs
+            tabs={[TO_SHIP, IN_TRANSIT, DELIVERED]}
+            selectedTab={currentTab}
+            onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
+            customTabContent={[3, 10, 14]} // TODO: set actual text
           />
-        </SearchContainer>
-        <DateRangeContainer>
+        </div>
+
+        <SearchFilterRow>
+          <SearchContainer>
+            <Search
+              className="search"
+              onKeyUp={onKeyUp}
+              value={searchValue}
+              onChange={(val) => {
+                setSearchValue(val.currentTarget.value);
+                updateSearchValueTable({
+                  [currentTab]: val.currentTarget.value,
+                });
+              }}
+              resetValue={() => {
+                clearSearchValue();
+                updateSearchValueTable({
+                  [currentTab]: '',
+                });
+              }}
+              placeholder="Search for a listing…"
+              rounded
+            />
+          </SearchContainer>
+          {/* <DateRangeContainer>
           <DateRangePicker
             startDate={currentFilter.dateFrom}
             endDate={currentFilter.dateTo}
@@ -221,8 +222,9 @@ const SoldView = (props: SoldGeneratedProps) => {
               });
             }}
           />
-        </DateRangeContainer>
-      </SearchFilterRow>
+        </DateRangeContainer> */}
+        </SearchFilterRow>
+      </div>
       {content}
     </Container>
   );

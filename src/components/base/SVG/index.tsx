@@ -123,6 +123,7 @@ export { default as ChevronLeft } from './ChevronLeft';
 export { default as Search } from './Search';
 export { default as CheckFilled } from './CheckFilled';
 export { default as CloseFilled } from './CloseFilled';
+export { default as Exclamation } from './Exclamation';
 export { default as ExclamationFilled } from './ExclamationFilled';
 export { default as QuestionFilled } from './QuestionFilled';
 export { default as InfoFilled } from './InfoFilled';

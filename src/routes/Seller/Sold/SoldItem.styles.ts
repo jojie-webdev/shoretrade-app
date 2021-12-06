@@ -4,9 +4,21 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
-export const StyledInteraction = styled(Interaction)`
-  margin-bottom: 8px;
+export const StyledInteraction = styled(Interaction)<{
+  pressed?: boolean;
+  columnedRightContent?: boolean;
+}>`
+  margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
+
+  ${({ pressed }) => {
+    if (pressed) {
+      return `
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      `;
+    }
+  }}
 
   .content {
     display: flex;
@@ -21,17 +33,21 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: space-between;
       padding-right: 32px;
 
+      .label {
+        display: flex;
+      }
+
       @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
 
       .order-count {
-        padding: 8px 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 8px;
         background-color: ${({ theme }) => theme.grey.shade8};
-
-        p {
-          font-size: 11px;
-        }
+        border-radius: 8px;
       }
     }
 
@@ -48,6 +64,8 @@ export const StyledInteraction = styled(Interaction)`
       align-items: center;
       justify-content: space-evenly;
       width: 210px;
+      flex-direction: ${({ columnedRightContent }) =>
+        columnedRightContent ? 'column' : 'row'};
 
       @media ${BREAKPOINTS['sm']} {
         width: 240px;
@@ -65,6 +83,38 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: flex-end;
       flex: 1;
       margin-right: 16px;
+
+      button {
+        border-radius: 8px;
+
+        &:not(:first-of-type) {
+          margin-left: 8px;
+        }
+      }
+
+      .ship-order {
+        &:disabled {
+          background: ${(props) => props.theme.grey.shade3};
+          cursor: not-allowed;
+          opacity: 1;
+
+          p {
+            color: ${(props) => props.theme.grey.shade6};
+          }
+        }
+
+        @media ${BREAKPOINTS['iPad']} {
+          margin-right: -8px;
+        }
+      }
+
+      @media ${BREAKPOINTS['xl']} {
+        margin-right: 8px;
+        justify-content: center;
+        > button {
+          margin-left: 190px;
+        }
+      }
 
       .downloads-menu {
         position: absolute;
@@ -119,6 +169,17 @@ export const StyledInteraction = styled(Interaction)`
 export const InnerStyledInteraction = styled(StyledInteraction)`
   min-height: 60px;
   padding: 10px 24px;
+  background: ${(props) => props.theme.grey.shade10};
+  border: 1px solid ${(props) => props.theme.grey.shade8};
+
+  ${({ pressed }) => {
+    if (pressed) {
+      return `
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      `;
+    }
+  }}
 `;
 
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
@@ -127,6 +188,7 @@ export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
   transition: all 0.25s ease-in-out;
   transform-origin: top;
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
+  background: ${(props) => props.theme.grey.shade9};
 `;
 
 export const CarouselContainer = styled.div`
@@ -138,8 +200,11 @@ export const ItemCard = styled.div`
   min-height: 144px;
   background: ${(props) => props.theme.grey.shade9};
   padding: 16px;
+  margin-top: 8px;
   margin-bottom: 8px;
   border-radius: 4px;
+  border: 1px solid ${(props) => props.theme.grey.shade8};
+  border-radius: 8px;
 
   display: flex;
   position: relative;

@@ -123,6 +123,7 @@ import {
   Search,
   CheckFilled,
   CloseFilled,
+  Exclamation,
   ExclamationFilled,
   QuestionFilled,
   InfoFilled,
@@ -563,6 +564,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="CloseFilled">
           <CloseFilled width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Exclamation">
+          <Exclamation width={30} height={30} />
         </Wrapper>
         <Wrapper label="ExclamationFilled">
           <ExclamationFilled width={30} height={30} />
