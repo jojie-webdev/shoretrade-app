@@ -9,6 +9,7 @@ import {
 import Typography from 'components/base/Typography';
 import Tabs from 'components/base/Tabs';
 import Select from 'components/base/Select';
+import EmptyState from 'components/module/EmptyState';
 
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import LoadingView from 'components/module/Loading';
@@ -30,6 +31,8 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import theme, { useTheme } from 'utils/Theme';
 import { createUpdateReducer } from 'utils/Hooks';
+
+import { AnimatedSwordfish } from 'res/images/animated/swordfish';
 
 import { 
   SellingGeneratedProps, 
@@ -333,14 +336,28 @@ const SellingView = (props: SellingGeneratedProps) => {
         <Row className="row" justify="center">
           <Col>
           { pending ? <LoadingView /> 
-            : (counter.allListing > 0 || search) ?
-                listings.map((listing) =>
-                  <Item
-                    {...listingToItem(listing)}
-                    goToListingDetails={goToListingDetails}
-                  />
-                )
-              : <NoSelling />
+            : counter[activeTab as keyof CounterProps] > 0 ?
+              listings.map((listing) =>
+                <Item
+                  {...listingToItem(listing)}
+                  goToListingDetails={goToListingDetails}
+                />
+              )
+            : search ? 
+              <div style={{ marginTop: isTablet ? '0' : '30px' }}>
+                <EmptyState
+                  AnimatedSvg={AnimatedSwordfish}
+                  title="No search result"
+                />
+              </div>
+            : counter.allListing > 0 ?
+              <div style={{ marginTop: isTablet ? '0' : '30px' }}>
+                <EmptyState
+                  AnimatedSvg={AnimatedSwordfish}
+                  title="No active listing"
+                />
+              </div>
+            : <NoSelling />
           }
           </Col>
         </Row>
