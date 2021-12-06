@@ -11,6 +11,7 @@ import {
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
@@ -64,6 +65,8 @@ const SoldItem = (props: {
   } = props;
   const history = useHistory();
   const theme = useTheme();
+  const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
 
   const [showDownloads, setShowDownloads] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -315,7 +318,7 @@ const SoldItem = (props: {
           style={{
             ...(addHorizontalRowMargin
               ? { paddingLeft: 24, paddingRight: 24 }
-              : { marginLeft: 8, marginRight: 8 }),
+              : { paddingLeft: 8, paddingRight: 8 }),
             marginBottom: isOpen.includes(toAddress) ? '8px' : undefined,
             borderBottomLeftRadius: '8px',
             borderBottomRightRadius: '8px',
@@ -363,7 +366,7 @@ const SoldItem = (props: {
                   {props.status === 'PLACED' && (
                     <div className="buttons">
                       <Button
-                        text={'Message Buyer'}
+                        text={nonDesktop ? 'Message' : 'Message Buyer'}
                         textColor={'primary'}
                         textVariant="overline"
                         iconPosition="before"
@@ -388,7 +391,10 @@ const SoldItem = (props: {
                         <Button
                           text={'Ship Partial'}
                           textVariant="overline"
-                          style={{ width: 169, height: 32 }}
+                          style={{
+                            width: nonDesktop ? undefined : 169,
+                            height: 32,
+                          }}
                           size="sm"
                           onClick={(e) => {
                             if (shipOrder) {
@@ -406,7 +412,10 @@ const SoldItem = (props: {
                           className="ship-order"
                           text={'Ship Order'}
                           textVariant="overline"
-                          style={{ width: 169, height: 32 }}
+                          style={{
+                            width: nonDesktop ? undefined : 169,
+                            height: 32,
+                          }}
                           disabled={!v.allowFullShipment}
                           size="sm"
                           onClick={(e) => {
@@ -492,7 +501,9 @@ const SoldItem = (props: {
                       </div>
                     </div>
 
-                    <Divider backgroundColor={theme.grey.shade8} />
+                    {!isMobile && (
+                      <Divider backgroundColor={theme.grey.shade8} />
+                    )}
 
                     <div className="buttons">
                       <div className="downloads-menu">
@@ -586,6 +597,7 @@ const SoldItem = (props: {
                       </div>
                       <Button
                         text={'Weight Confirmed'}
+                        textVariant="overline"
                         iconPosition="before"
                         textColor="success"
                         style={{

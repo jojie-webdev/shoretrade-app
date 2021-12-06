@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
+import Select from 'components/base/Select';
 import { Octopus, Crab, Fish } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
+import Typography from 'components/base/Typography';
 import DateRangePicker from 'components/module/DateRangePicker';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
@@ -15,6 +17,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
+import { useTheme } from 'utils/Theme';
 
 import Delivered from './Delivered/Delivered.view';
 import InTransit from './InTransit/InTransit.view';
@@ -69,6 +72,8 @@ const EmptyView = (props: { currentTab: string }) => {
 
 const SoldView = (props: SoldGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const isNonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
+  const theme = useTheme();
 
   const [searchValue, setSearchValue] = useState('');
   const [searchValueTable, updateSearchValueTable] = useReducer(
@@ -176,16 +181,37 @@ const SoldView = (props: SoldGeneratedProps) => {
 
   return (
     <Container>
+      {isNonDesktop && (
+        <Typography
+          variant="title5"
+          style={{ fontFamily: 'Media Sans', marginBottom: 16 }}
+          color="noshade"
+        >
+          Sold
+        </Typography>
+      )}
       <div className="controls-row">
         <div className="tabs">
-          <Tabs
-            tabs={[TO_SHIP, IN_TRANSIT, DELIVERED]}
-            selectedTab={currentTab}
-            onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
-            customTabContent={[3, 10, 14]} // TODO: set actual text
-          />
+          {isMobile ? (
+            <Select
+              options={[
+                { label: TO_SHIP, value: TO_SHIP },
+                { label: IN_TRANSIT, value: IN_TRANSIT },
+                { label: DELIVERED, value: DELIVERED },
+              ]}
+              value={currentTab}
+              onChange={(v) => onChangeCurrentTab(v.value as TabOptions)}
+              dark
+            />
+          ) : (
+            <Tabs
+              tabs={[TO_SHIP, IN_TRANSIT, DELIVERED]}
+              selectedTab={currentTab}
+              onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
+              customTabContent={[3, 10, 14]} // TODO: set actual text
+            />
+          )}
         </div>
-
         <SearchFilterRow>
           <SearchContainer>
             <Search
