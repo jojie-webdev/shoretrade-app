@@ -68,6 +68,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
       }
       min={props.buyerRequest.sizeFrom}
       type="number"
+      disabled={props.size.from === 'ungraded'}
       inputType="decimal"
       error={pathOr('', ['sizeFrom', '0'], errors)}
       borderRadius="12px"
@@ -92,6 +93,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             : formatMeasurementUnit(props.buyerRequest.measurementUnit)}
         </Typography>
       }
+      disabled={props.size.from === 'ungraded'}
       placeholder={`${props.buyerRequest.sizeTo || ''}`}
       value={props.size.to}
       onChangeText={(v) => {
