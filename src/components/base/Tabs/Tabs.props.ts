@@ -1,4 +1,5 @@
 import { CSSProperties, HTMLAttributes } from 'react';
+
 import { Justify, ColProps } from 'react-grid-system';
 
 export interface TabsProps {
@@ -13,7 +14,7 @@ export interface TabsProps {
   customTabContent?: string[] | number[];
 }
 
-export interface TabColProps extends ColProps{
+export interface TabColProps extends ColProps {
   fitTabWidthToContent?: boolean;
   children: JSX.Element;
 }
