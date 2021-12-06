@@ -11,6 +11,18 @@ export const StyledInteraction = styled(Interaction)<{
   margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
 
+  @media ${BREAKPOINTS.sm} {
+    padding: 16px;
+
+    > .left-content {
+      padding-right: 0 !important;
+    }
+
+    > .right-content {
+      align-items: flex-start;
+    }
+  }
+
   ${({ pressed }) => {
     if (pressed) {
       return `
@@ -37,8 +49,13 @@ export const StyledInteraction = styled(Interaction)<{
         display: flex;
       }
 
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
+      @media (max-width: 1440px) {
+        width: 200px;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .order-count {
@@ -48,6 +65,11 @@ export const StyledInteraction = styled(Interaction)<{
         padding: 4px 8px;
         background-color: ${({ theme }) => theme.grey.shade8};
         border-radius: 8px;
+
+        @media ${BREAKPOINTS['sm']} {
+          margin-top: 8px;
+          margin-bottom: 8px;
+        }
       }
     }
 
@@ -67,13 +89,17 @@ export const StyledInteraction = styled(Interaction)<{
       flex-direction: ${({ columnedRightContent }) =>
         columnedRightContent ? 'column' : 'row'};
 
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
+      @media ${BREAKPOINTS.genericTablet} {
+        width: 195px;
       }
 
       @media (max-width: 1237px) {
         justify-content: flex-start;
         margin-left: 8px;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        margin-left: 0;
       }
     }
 
@@ -82,13 +108,17 @@ export const StyledInteraction = styled(Interaction)<{
       align-items: center;
       justify-content: flex-end;
       flex: 1;
-      margin-right: 16px;
 
       button {
         border-radius: 8px;
 
         &:not(:first-of-type) {
           margin-left: 8px;
+        }
+
+        @media ${BREAKPOINTS.sm} {
+          flex: 1;
+          margin-top: 8px;
         }
       }
 
@@ -287,11 +317,28 @@ export const ItemCard = styled.div`
     align-items: center;
     flex: 1;
 
+    @media ${BREAKPOINTS.sm} {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+
+      > button {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        flex: 1;
+        width: 100% !important;
+      }
+    }
+
     .downloads-menu {
       background-color: ${({ theme }) => theme.grey.shade9};
       border-radius: 4px;
       display: flex;
       align-items: center;
+
+      @media ${BREAKPOINTS.sm} {
+        align-items: flex-start;
+        flex-direction: column;
+      }
 
       button {
         border: 0;
@@ -304,6 +351,13 @@ export const ItemCard = styled.div`
 
       button:not(:first-of-type) {
         margin-left: 16px;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        button:not(:first-of-type) {
+          margin-top: 8px;
+          margin-left: 0;
+        }
       }
     }
   }
@@ -334,11 +388,13 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     margin-right: 16px;
   }
 
+  @media ${BREAKPOINTS.sm} {
+    margin-right: 0;
+  }
+
   span {
     color: ${(props) => props.theme.grey.noshade};
-    font-size: 14px;
     margin-left: ${(props) => (props.row ? '8px' : '0')};
-    line-height: 24px;
   }
 `;
 

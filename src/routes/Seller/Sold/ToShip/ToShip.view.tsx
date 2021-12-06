@@ -23,6 +23,7 @@ import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
@@ -126,6 +127,8 @@ export const PendingItem = (props: {
     messageModal,
   } = props;
   const [isOpen, setIsOpen] = useState<string[]>([]);
+  const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
 
   const toggleAccordion = (title: string) => {
     const isExisting = isOpen.some((v) => v === title);
@@ -187,7 +190,7 @@ export const PendingItem = (props: {
             </div>
             <div className="buttons">
               <Button
-                text={'Message Buyer'}
+                text={nonDesktop ? 'Message' : 'Message Buyer'}
                 textColor={'primary'}
                 textVariant="overline"
                 iconPosition="before"
@@ -210,7 +213,7 @@ export const PendingItem = (props: {
                 <Button
                   text={'Ship Partial'}
                   textVariant="overline"
-                  style={{ width: 169, height: 32 }}
+                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
                   size="sm"
                   onClick={(e) => {
                     setPlaceOrderId(order.orderId);
@@ -230,7 +233,7 @@ export const PendingItem = (props: {
                   className="ship-order"
                   text={'Ship Order'}
                   textVariant="overline"
-                  style={{ width: 169, height: 32 }}
+                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
                   disabled={!allowFullShipment}
                   size="sm"
                   onClick={(e) => {
@@ -330,12 +333,13 @@ export const PendingItem = (props: {
                   </div>
                 </div>
 
-                <Divider backgroundColor={theme.grey.shade8} />
+                {!isMobile && <Divider backgroundColor={theme.grey.shade8} />}
 
                 <div className="buttons" style={{ marginRight: 0 }}>
                   {lineItem.weightConfirmed ? (
                     <Button
                       text={'Weight Confirmed'}
+                      textVariant="overline"
                       iconPosition="before"
                       textColor="success"
                       style={{
@@ -354,6 +358,7 @@ export const PendingItem = (props: {
                   ) : (
                     <Button
                       text={'Confirm Weight'}
+                      textVariant="overline"
                       iconPosition="before"
                       style={{ width: 169, height: 32, borderRadius: '8px' }}
                       size="sm"
@@ -591,6 +596,8 @@ const ToShip = (props: SoldGeneratedProps) => {
                         </div>
                       </div>
                       <Spacer />
+                      <Spacer />
+                      <Spacer />
                       <div className="right-content">
                         <ItemDetail variant="caption" color="shade6">
                           Sold Weight{' '}
@@ -615,7 +622,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                     style={{
                       ...(addHorizontalRowMargin
                         ? { paddingLeft: 24, paddingRight: 24 }
-                        : { marginLeft: 8, marginRight: 8 }),
+                        : { paddingLeft: 8, paddingRight: 8 }),
                       marginBottom: isOpen.includes(group.deliveryMethod)
                         ? '8px'
                         : undefined,

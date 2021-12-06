@@ -23,6 +23,10 @@ export const Container = styled.div`
     margin-bottom: 32px;
   }
 
+  @media ${BREAKPOINTS['sm']} {
+    margin-bottom: 16px;
+  }
+
   .tabs {
     width: 330px;
 
@@ -91,12 +95,20 @@ export const SearchFilterRow = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  @media ${BREAKPOINTS['sm']} {
+    flex: 1;
+  }
 `;
 
 export const SearchContainer = styled.div`
   width: 280px;
   height: 40px;
   position: relative;
+
+  @media ${BREAKPOINTS['sm']} {
+    width: 100%;
+  }
 `;
 
 export const DateRangeContainer = styled.div`

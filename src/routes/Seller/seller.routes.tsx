@@ -13,7 +13,9 @@ import {
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ROUTES } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import {
   Route,
   Switch,
@@ -125,6 +127,7 @@ const SellerRoutes = (): JSX.Element => {
   const location = useLocation();
   const theme = useTheme();
   const { pathname } = location;
+  const isTablet = useMediaQuery({ query: BREAKPOINTS.genericTablet });
   const creatingListingStatus = useSelector(
     (state: Store) => state.createListing
   );
@@ -161,6 +164,12 @@ const SellerRoutes = (): JSX.Element => {
         shouldIncludePadding: false,
         onBack: history.goBack,
         pageTitle: 'Product Preview',
+      };
+    }
+
+    if (pathname.includes(SELLER_ROUTES.SOLD) && isTablet) {
+      return {
+        background: theme.grey.shade8,
       };
     }
 
