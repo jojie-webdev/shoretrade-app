@@ -176,7 +176,7 @@ const DetailsView = (props: DetailsProps) => {
                 variant="caption"
                 color="noshade"
               >
-                Order Label
+                Shipping Label
               </Typography>
             </ActionContainer>
           </Touchable>

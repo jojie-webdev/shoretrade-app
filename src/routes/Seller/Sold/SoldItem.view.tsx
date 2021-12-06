@@ -203,7 +203,7 @@ const SoldItem = (props: {
                       e.stopPropagation();
                     }}
                   >
-                    Order Label
+                    Shipping Label
                   </Typography>
                 </div>
               )}
