@@ -32,6 +32,7 @@ import getAllBuyerListings from './getAllBuyerListings';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAllSellerOrders from './getAllSellerOrders';
 import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
@@ -91,7 +92,7 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
-import sendOrderRating from './sendOrderRating'
+import sendOrderRating from './sendOrderRating';
 import socketChannel from './socketChannel';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -109,6 +110,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getAllSellerOrders,
   getHistoricalListings,
   removeCartItem,
   addCartItem,

@@ -5,13 +5,13 @@ import {
 } from 'types/store/GetAllSellerOrdersState';
 import { createAsyncAction } from 'utils/Redux';
 
-const ns = 'GET_SELLER_ORDERS_DELIVERED';
+const ns = 'GET_SELLER_ORDERS_PENDING';
 const asyncAction = createAsyncAction<
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload
 >(ns);
 
-const getSellerOrdersDeliveredActions = {
+const getSellerOrdersPendingActions = {
   ...asyncAction,
   request: (filter?: {
     page: string;
@@ -21,12 +21,11 @@ const getSellerOrdersDeliveredActions = {
   } => ({
     type: asyncAction.REQUEST,
     meta: {
-      status: 'DELIVERED',
-      pending: false,
+      pending: true,
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },
   }),
 };
 
-export default getSellerOrdersDeliveredActions;
+export default getSellerOrdersPendingActions;

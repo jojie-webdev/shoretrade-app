@@ -51,18 +51,18 @@ function* getSellerOrdersWatcher() {
     getSellerOrdersActions.REQUEST,
     getSellerOrdersActionsRequest
   );
-  yield takeLatest(
-    getSellerOrdersPlacedActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersPlacedActions)
-  );
-  yield takeLatest(
-    getSellerOrdersTransitActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersTransitActions)
-  );
-  yield takeLatest(
-    getSellerOrdersDeliveredActions.REQUEST,
-    createGetSellerOrdersRequest(getSellerOrdersDeliveredActions)
-  );
+  // yield takeLatest(
+  //   getSellerOrdersPlacedActions.REQUEST,
+  //   createGetSellerOrdersRequest(getSellerOrdersPlacedActions)
+  // );
+  // yield takeLatest(
+  //   getSellerOrdersTransitActions.REQUEST,
+  //   createGetSellerOrdersRequest(getSellerOrdersTransitActions)
+  // );
+  // yield takeLatest(
+  //   getSellerOrdersDeliveredActions.REQUEST,
+  //   createGetSellerOrdersRequest(getSellerOrdersDeliveredActions)
+  // );
 }
 
 export default getSellerOrdersWatcher;

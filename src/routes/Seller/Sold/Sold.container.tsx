@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import { push } from 'connected-react-router';
 import { SELLER_SOLD_ROUTES } from 'consts';
@@ -11,6 +11,7 @@ import {
   getSellerOrdersDeliveredActions,
   sendMessageActions,
   placeOrderActions,
+  getSellerOrdersPendingActions,
 } from 'store/actions';
 import {
   GetSellerOrdersToShipPending,
@@ -18,7 +19,7 @@ import {
   GetSellerOrdersInTransit,
   GetSellerOrdersDelivered,
 } from 'store/selectors/seller/orders';
-import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -27,11 +28,10 @@ import {
   SoldGeneratedProps,
   TabOptions,
   RequestFilters,
-  PendingToShipItemData,
+  SoldItem,
 } from './Sold.props';
 import {
   orderItemToPendingToShipItem,
-  groupToShipOrders,
   orderItemToSoldItemData,
 } from './Sold.tranform';
 import SoldView from './Sold.view';
@@ -126,36 +126,25 @@ const Sold = (): JSX.Element => {
     }
   };
 
-  const getOrdersPlaced = (filter?: {
-    page: string;
-    term: string;
-    dateFrom: moment.Moment | null;
-    dateTo: moment.Moment | null;
-  }) => {
+  const getOrdersPending = (filter?: { page: string }) => {
+    dispatch(getSellerOrdersPendingActions.request(filter));
+  };
+
+  const getOrdersPlaced = (filter?: { page: string }) => {
     dispatch(getSellerOrdersPlacedActions.request(filter));
   };
 
-  const getOrdersTransit = (filter?: {
-    page: string;
-    term: string;
-    dateFrom: moment.Moment | null;
-    dateTo: moment.Moment | null;
-  }) => {
+  const getOrdersTransit = (filter?: { page: string }) => {
     dispatch(getSellerOrdersTransitActions.request(filter));
   };
 
-  const getOrdersDelivered = (filter?: {
-    page: string;
-    term: string;
-    dateFrom: moment.Moment | null;
-    dateTo: moment.Moment | null;
-  }) => {
+  const getOrdersDelivered = (filter?: { page: string }) => {
     dispatch(getSellerOrdersDeliveredActions.request(filter));
   };
 
-  const rawDataToSoldItems = (rawData: GetSellerOrdersResponseItem[]) => {
-    return groupToShipOrders(rawData).map((orderGroup) => {
-      const toShipItemData = orderItemToSoldItemData(orderGroup.data);
+  const rawDataToSoldItems = (rawData: GetAllSellerOrder[]): SoldItem[] => {
+    return rawData.map((orderGroup) => {
+      const toShipItemData = orderItemToSoldItemData(orderGroup);
       const orderTotal = Object.keys(toShipItemData).reduce(
         (accum, current) => {
           return (
@@ -168,9 +157,9 @@ const Sold = (): JSX.Element => {
         0
       );
       return {
-        title: orderGroup.title,
+        title: orderGroup.date || '',
         data: toShipItemData,
-        rawData: orderGroup.data,
+        rawData: orderGroup,
         orderTotal,
       };
     });
@@ -193,6 +182,7 @@ const Sold = (): JSX.Element => {
 
   // MARK:- Variables
   const getOrders = {
+    pending: getOrdersPending,
     placed: getOrdersPlaced,
     transit: getOrdersTransit,
     delivered: getOrdersDelivered,
@@ -229,6 +219,7 @@ const Sold = (): JSX.Element => {
   // MARK:- Effects
   useEffect(() => {
     if (currentTab === 'To Ship') {
+      getOrders.pending();
       getOrders.placed(toShipFilters);
     }
   }, [

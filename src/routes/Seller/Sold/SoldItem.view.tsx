@@ -2,13 +2,7 @@ import React, { useState, Fragment } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import {
-  Plane,
-  Truck,
-  DownloadFile,
-  Exclamation,
-  FileCheck,
-} from 'components/base/SVG';
+import { Plane, Truck, FileCheck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -68,29 +62,9 @@ const SoldItem = (props: {
   const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
 
-  const [showDownloads, setShowDownloads] = useState('');
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const addHorizontalRowMargin = useMediaQuery({
     query: '(min-width: 1080px)',
   });
-  const onEnterDownloads = (id: string) => {
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-    setShowDownloads(id);
-  };
-
-  const onExitDownloads = () => {
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-    const timerId = setTimeout(() => {
-      setShowDownloads('');
-    }, 500);
-    setTimer(timerId);
-  };
 
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
@@ -105,26 +79,20 @@ const SoldItem = (props: {
       });
     }
   };
-
   return Object.values(props.data).map((entry, idx) => {
-    const { type = 'air', toAddressState, totalWeight, totalPrice } = entry[0];
+    if (entry.length === 0) return;
+    const {
+      type = 'air',
+      toAddressState,
+      totalWeight,
+      totalPrice,
+      key,
+    } = entry[0];
 
     const getSellerOrder = (id: string) => {
       const orderData = Object.values(rawData)[idx];
       return orderData.find((o) => o.orderId === id);
     };
-
-    const desc = (() => {
-      if (type === 'air') {
-        return 'Air Freight Cut Off';
-      }
-
-      if (type === 'pickup') {
-        return `Pick Up at ${collectAddressShort}`;
-      }
-
-      return 'Road Freight Pick Up';
-    })();
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (
@@ -132,14 +100,14 @@ const SoldItem = (props: {
       ) : (
         <Truck fill={theme.grey.shade6} />
       );
-    const toAddress = toAddressState ? `${toAddressState}` : '';
-    const key = `${desc}-${toAddress}`;
+
+    const accordionId = `${key}-${toAddressState}`;
 
     return (
-      <Fragment key={key}>
+      <Fragment key={accordionId}>
         <StyledInteraction
-          pressed={isOpen.includes(toAddress)}
-          onClick={() => toggleAccordion(toAddress)}
+          pressed={isOpen.includes(accordionId)}
+          onClick={() => toggleAccordion(accordionId)}
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
@@ -153,13 +121,8 @@ const SoldItem = (props: {
                   color="shade6"
                   className="center-text"
                 >
-                  {desc}
+                  {key}
                 </Typography>
-                {type !== 'pickup' && (
-                  <Typography variant="label" color="noshade">
-                    {`${toAddress}`}
-                  </Typography>
-                )}
               </div>
 
               <div className="order-count">
@@ -179,150 +142,19 @@ const SoldItem = (props: {
                 Total Price (AUD) <span>{totalPrice}</span>
               </ItemDetail>
             </div>
-
-            {/* <div className="buttons">
-              {showDownloads === key && (
-                <div
-                  className="downloads-menu"
-                  onMouseEnter={() => {
-                    if (timer) {
-                      clearTimeout(timer);
-                      setTimer(null);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    onExitDownloads();
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <Typography
-                    color="noshade"
-                    onClick={(e) => {
-                      const orderRefNumbers = entry.map((v) => {
-                        return v.orderRefNumber;
-                      });
-                      window.open(
-                        `${API.URL}/${
-                          API.VERSION
-                        }/order/packing-list/${orderRefNumbers.join()}?token=${
-                          props.token
-                        }&state=${toAddressState}&status=${props.status}`,
-                        '_blank'
-                      );
-                      setShowDownloads('');
-                      e.stopPropagation();
-                    }}
-                  >
-                    Packing Lists
-                  </Typography>
-                  <Typography
-                    color="noshade"
-                    onClick={(e) => {
-                      const orderRefNumbers = entry.map((v) => {
-                        return v.orderRefNumber;
-                      });
-                      window.open(
-                        `${API.URL}/${
-                          API.VERSION
-                        }/order/invoice/${orderRefNumbers.join()}?token=${
-                          props.token
-                        }`,
-                        '_blank'
-                      );
-                      setShowDownloads('');
-                      e.stopPropagation();
-                    }}
-                  >
-                    Invoices
-                  </Typography>
-                  <Typography
-                    color="noshade"
-                    onClick={(e) => {
-                      const orderRefNumbers = entry.map((v) => {
-                        return v.orderRefNumber;
-                      });
-                      window.open(
-                        `${API.URL}/${
-                          API.VERSION
-                        }/order/order-summary/${orderRefNumbers.join()}?token=${
-                          props.token
-                        }&state=${toAddressState}&status=${props.status}`,
-                        '_blank'
-                      );
-                      setShowDownloads('');
-                      e.stopPropagation();
-                    }}
-                  >
-                    Order Summary
-                  </Typography>
-                  <Typography
-                    color="noshade"
-                    onClick={(e) => {
-                      const orderRefNumbers = entry.map((v) => {
-                        return v.orderRefNumber;
-                      });
-                      window.open(
-                        `${API.URL}/${
-                          API.VERSION
-                        }/order/pdf-label/${orderRefNumbers.join()}?token=${
-                          props.token
-                        }&state=${toAddressState}&status=${props.status}`,
-                        '_blank'
-                      );
-                      setShowDownloads('');
-                      e.stopPropagation();
-                    }}
-                  >
-                    Shipping Label
-                  </Typography>
-                </div>
-              )}
-
-              <Button
-                text={'Downloads'}
-                icon={
-                  <DownloadFile
-                    fill={theme.grey.noshade}
-                    height={16}
-                    width={16}
-                  />
-                }
-                textColor={'noshade'}
-                iconPosition="before"
-                style={{
-                  width: 123,
-                  height: 32,
-                  backgroundColor: theme.grey.shade8,
-                }}
-                size="sm"
-                onMouseLeave={() => {
-                  onExitDownloads();
-                }}
-                onClick={(e) => {
-                  if (showDownloads.length > 0) {
-                    setShowDownloads('');
-                  } else {
-                    onEnterDownloads(key);
-                  }
-                  e.stopPropagation();
-                }}
-              />
-            </div> */}
           </div>
         </StyledInteraction>
 
         <CollapsibleContent
-          isOpen={isOpen.includes(toAddress)}
+          isOpen={isOpen.includes(accordionId)}
           style={{
             ...(addHorizontalRowMargin
               ? { paddingLeft: 24, paddingRight: 24 }
               : { paddingLeft: 8, paddingRight: 8 }),
-            marginBottom: isOpen.includes(toAddress) ? '8px' : undefined,
+            marginBottom: isOpen.includes(accordionId) ? '8px' : undefined,
             borderBottomLeftRadius: '8px',
             borderBottomRightRadius: '8px',
-            paddingBottom: isOpen.includes(toAddress) ? '8px' : undefined,
+            paddingBottom: isOpen.includes(accordionId) ? '8px' : undefined,
           }}
         >
           {entry.map((v) => (
@@ -359,8 +191,7 @@ const SoldItem = (props: {
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6" row>
-                      Type <span>Direct Sale</span>
-                      {/*Should check if aquafuture or auction*/}
+                      Type <span>{v.salesChannel}</span>
                     </ItemDetail>
                   </div>
                   {props.status === 'PLACED' && (
@@ -532,7 +363,6 @@ const SoldItem = (props: {
                               }&state=${toAddressState}&status=${props.status}`,
                               '_blank'
                             );
-                            setShowDownloads('');
                             e.stopPropagation();
                           }}
                         />
@@ -561,7 +391,6 @@ const SoldItem = (props: {
                               }`,
                               '_blank'
                             );
-                            setShowDownloads('');
                             e.stopPropagation();
                           }}
                         />
@@ -590,7 +419,6 @@ const SoldItem = (props: {
                               }&state=${toAddressState}&status=${props.status}`,
                               '_blank'
                             );
-                            setShowDownloads('');
                             e.stopPropagation();
                           }}
                         />

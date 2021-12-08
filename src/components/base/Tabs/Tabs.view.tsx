@@ -48,6 +48,11 @@ const Tabs = (props: TabsProps): JSX.Element => {
                   onClick={() => onClickTab(tab)}
                 >
                   <span className="tab-text">{tab}</span>
+                  {customTabContent && (
+                    <span className="custom-tab">
+                      {customTabContent[index]}
+                    </span>
+                  )}
                 </Tab>
               </TabCol>
             );

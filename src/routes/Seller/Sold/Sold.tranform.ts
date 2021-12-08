@@ -1,9 +1,8 @@
 import { collectAddressShort } from 'consts';
 import moment from 'moment';
 import groupBy from 'ramda/es/groupBy';
-import prop from 'ramda/es/prop';
-import reverse from 'ramda/es/reverse';
-import sortBy from 'ramda/es/sortBy';
+import omit from 'ramda/es/omit';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -11,36 +10,6 @@ import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNum
 import { toPrice } from 'utils/String/toPrice';
 
 import { SoldItemData, PendingToShipItemData, SoldItem } from './Sold.props';
-
-const groupByDate = groupBy((order: GetSellerOrdersResponseItem) => {
-  if (!order.sellerDropOffCutOffTime && order.deliveryMethod === 'AIR') {
-    return '0';
-  }
-
-  if (
-    !order.sellerDropOffCutOffTime &&
-    !order.originalExpectedDeliveryDate &&
-    !order.latestExpectedDeliveryDate
-  ) {
-    return '0';
-  }
-
-  const deliveryMoment = moment(
-    order.sellerDropOffCutOffTime ||
-      order.latestExpectedDeliveryDate ||
-      order.originalExpectedDeliveryDate
-  );
-
-  const momentDateFormat = 'yyyy-MM-DD';
-
-  if (order.deliveryMethod === 'AIR') {
-    if (deliveryMoment.hour() < 12) {
-      return deliveryMoment.clone().subtract(1, 'day').format(momentDateFormat);
-    }
-  }
-
-  return deliveryMoment.format(momentDateFormat);
-});
 
 const groupByDeliveryMethodAndState = groupBy(
   (order: GetSellerOrdersResponseItem) => {
@@ -55,12 +24,12 @@ const groupByDeliveryMethodAndState = groupBy(
   }
 );
 
-export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
-  const groupedOrders = groupByDate(orders);
+export const groupToShipOrders = (groupedOrders: {
+  [key: string]: GetSellerOrdersResponseItem[];
+}) => {
   return Object.keys(groupedOrders)
-    .filter((k) => k !== '0')
     .map((k) => ({
-      title: moment(k, 'yyyy-MM-DD').toDate(),
+      title: k,
       data: groupedOrders[k],
     }))
     .map((k) => ({
@@ -69,34 +38,32 @@ export const groupToShipOrders = (orders: GetSellerOrdersResponseItem[]) => {
     }));
 };
 
-const groupByBuyer = groupBy((order: GetSellerOrdersResponseItem) => {
-  return order.buyerCompanyId;
-});
-
-const groupByDeliveryMethod = groupBy((order: GetSellerOrdersResponseItem) => {
-  return order.deliveryMethod;
-});
-
-const getDeliveryMethodLabel = (deliveryMethod: string) => {
+const getShipmentMethodLabel = (deliveryMethod: string) => {
   switch (deliveryMethod) {
-    case 'AIR':
-      return 'Air Freight';
-    case 'ROAD':
-      return 'Road Freight';
-    case 'SELLER':
-      return 'Pick Up';
+    case 'airDeliveryOrders':
+      return 'Air Freight: Pickup at Airport';
+    case 'airPickupOrders':
+      return 'Air Freight: Delivery to Door';
+    case 'roadDeliveryOrders':
+      return 'Road Freight: Delivery to Door';
+    case 'roadPickupOrders':
+      return 'Pickup from Supplier';
+    case 'selfDeliveryOrder':
+      return 'Dropoff at Depot';
     default:
-      return 'Deliver Myself';
+      return 'Delivery by Supplier';
   }
 };
 
 export const orderItemToPendingToShipItem = (
-  data: GetSellerOrdersResponseItem[]
+  data: GetAllSellerOrder[]
 ): PendingToShipItemData[] => {
-  const groupedData = groupByDeliveryMethod(data);
+  if (data.length === 0) return [];
+  const groupedData = omit(['date'], data[0]);
   return Object.keys(groupedData).reduce(
     (accum: PendingToShipItemData[], current: string) => {
       const currentData = groupedData[current];
+      if (currentData.length === 0) return accum;
       const totalWeight = currentData.reduce((accumA: number, currentA) => {
         return (
           accumA +
@@ -139,14 +106,17 @@ export const orderItemToPendingToShipItem = (
           buyerCompanyId: currentData[0].buyerCompanyId,
           buyerCompanyName: currentData[0].buyerCompanyName,
           deliveryMethod: currentData[0].deliveryMethod,
-          deliveryMethodLabel: getDeliveryMethodLabel(
-            currentData[0].deliveryMethod
-          ),
+          deliveryMethodLabel: getShipmentMethodLabel(current),
           buyerId: currentData[0].buyerId, // this is employee id
           orderCount: currentData.length,
           totalWeight,
           totalPrice,
           orders: computeSubtotalWeight,
+          salesChannel: currentData[0].orderLineItem.some(
+            (l) => l.listing.isAquafuture
+          )
+            ? 'Aquafuture'
+            : 'Direct Sale',
         },
       ];
     },
@@ -154,13 +124,15 @@ export const orderItemToPendingToShipItem = (
   );
 };
 
-export const orderItemToSoldItemData = (data: {
-  [p: string]: GetSellerOrdersResponseItem[];
-}): { [p: string]: SoldItemData[] } => {
+export const orderItemToSoldItemData = ({
+  date,
+  ...data
+}: GetAllSellerOrder): { [p: string]: SoldItemData[] } => {
   //@ts-ignore
   const newObj: { [p: string]: ToShipItemData[] } = { ...data };
   for (const [key, value] of Object.entries(data)) {
-    newObj[key] = value.map((order) => ({
+    newObj[key] = value.map((order: GetSellerOrdersResponseItem) => ({
+      key: getShipmentMethodLabel(key),
       id: order.orderId,
       date: moment(order.orderDate).toDate(),
       type:
@@ -202,6 +174,9 @@ export const orderItemToSoldItemData = (data: {
       buyerId: order.buyerId,
       buyerCompanyName: order.buyerCompanyName,
       buyerCompanyId: order.buyerCompanyId,
+      salesChannel: order.orderLineItem.some((l) => l.listing.isAquafuture)
+        ? 'Aquafuture'
+        : 'Direct Sale',
     }));
   }
 
@@ -209,7 +184,7 @@ export const orderItemToSoldItemData = (data: {
 };
 
 export const sortByDate = function (a: SoldItem, b: SoldItem) {
-  const getTime = (z: Date) => {
+  const getTime = (z: string) => {
     return moment(z).toDate().getTime();
   };
 

@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as getSellerOrdersPendingActions } from './getSellerOrdersPending';
+export { default as getAllSellerOrdersActions } from './getAllSellerOrders';
 export { default as getListingByIdActions } from './getListingById';
 export { default as getListingsBySalesChannelActions } from './getListingsBySalesChannel';
 export { default as getHistoricalListingsActions } from './getHistoricalListings';

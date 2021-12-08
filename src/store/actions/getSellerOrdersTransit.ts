@@ -1,37 +1,32 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import {
-  GetSellerOrdersMeta,
-  GetSellerOrdersPayload,
-} from 'types/store/GetSellerOrdersState';
+  GetAllSellerOrdersMeta,
+  GetAllSellerOrdersPayload,
+} from 'types/store/GetAllSellerOrdersState';
 import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'GET_SELLER_ORDERS_TRANSIT';
 const asyncAction = createAsyncAction<
-  GetSellerOrdersMeta,
-  GetSellerOrdersPayload
+  GetAllSellerOrdersMeta,
+  GetAllSellerOrdersPayload
 >(ns);
 
-const getSellerOrdersPlacedActions = {
+const getSellerOrdersTransitActions = {
   ...asyncAction,
   request: (filter?: {
-    term: string;
     page: string;
-    dateFrom: moment.Moment | null;
-    dateTo: moment.Moment | null;
   }): {
     type: string;
-    meta: GetSellerOrdersMeta;
+    meta: GetAllSellerOrdersMeta;
   } => ({
     type: asyncAction.REQUEST,
     meta: {
       status: 'TRANSIT',
-      dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
-      dateTo: filter?.dateTo?.format('M/DD/yyyy'),
-      term: filter?.term,
+      pending: false,
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },
   }),
 };
 
-export default getSellerOrdersPlacedActions;
+export default getSellerOrdersTransitActions;

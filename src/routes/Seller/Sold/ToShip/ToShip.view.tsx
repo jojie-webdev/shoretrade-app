@@ -9,16 +9,7 @@ import React, {
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import {
-  InfoFilled,
-  Message,
-  CheckList,
-  CheckFilled,
-  Truck,
-  Box,
-  PaperPlane,
-  Exclamation,
-} from 'components/base/SVG';
+import { Truck, Box, PaperPlane } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
@@ -173,7 +164,7 @@ export const PendingItem = (props: {
               <div className="order-count">
                 <Typography variant="overlineSmall" color="noshade">
                   {order.itemCount}&nbsp;
-                  {order.itemCount > 1 ? 'ITEMS' : 'ITEM'}
+                  {order.itemCount === 1 ? 'ITEM' : 'ITEMS'}
                 </Typography>
               </div>
             </div>
@@ -184,8 +175,7 @@ export const PendingItem = (props: {
               </ItemDetail>
 
               <ItemDetail variant="caption" color="shade6" row>
-                Type <span>Direct Sale</span>
-                {/*Should check if aquafuture or auction*/}
+                Type <span>{data.salesChannel}</span>
               </ItemDetail>
             </div>
             <div className="buttons">
@@ -570,7 +560,10 @@ const ToShip = (props: SoldGeneratedProps) => {
                 <Col>
                   <StyledInteraction
                     pressed={isOpen.includes(group.deliveryMethod)}
-                    onClick={() => toggleAccordion(group.deliveryMethod)}
+                    onClick={() =>
+                      group.orderCount > 0 &&
+                      toggleAccordion(group.deliveryMethod)
+                    }
                     type="accordion"
                     iconColor={theme.brand.primary}
                     fullWidth
@@ -582,7 +575,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                           <Typography
                             variant="label"
                             color="shade6"
-                            className="center-text title-text"
+                            className="center-text"
                           >
                             {group.deliveryMethodLabel}
                           </Typography>
@@ -591,7 +584,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                         <div className="order-count">
                           <Typography variant="overlineSmall" color="noshade">
                             {group.orderCount}&nbsp;
-                            {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
+                            {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
                           </Typography>
                         </div>
                       </div>
@@ -599,15 +592,15 @@ const ToShip = (props: SoldGeneratedProps) => {
                       <Spacer />
                       <Spacer />
                       <div className="right-content">
-                        <ItemDetail variant="caption" color="shade6">
+                        {/* <ItemDetail variant="caption" color="shade6">
                           Sold Weight{' '}
                           <span style={{ color: theme.brand.alert }}>
                             <Exclamation width={16} height={16} />
                             &nbsp;
-                            {/*group.totalWeight.toFixed(2)} kg*/}To be
+                            To be
                             confirmed
                           </span>
-                        </ItemDetail>
+                        </ItemDetail> */}
 
                         <ItemDetail variant="caption" color="shade6">
                           Total Price (AUD){' '}
@@ -654,31 +647,8 @@ const ToShip = (props: SoldGeneratedProps) => {
       )}
 
       {sort(sortByDate, toShip).map((group, idx) => {
-        const getDisplayDate = () => {
-          const targetDate = moment(group.title);
-
-          const currentDate = moment();
-          const dateDiff = Math.floor(
-            currentDate.diff(targetDate, 'days', true)
-          );
-          // 1 -> 1.99
-          if (dateDiff === 1) {
-            return 'Yesterday';
-            // 0 -> 0.99
-          } else if (dateDiff === 0) {
-            return 'Today';
-            // -1 -> -0
-          } else if (dateDiff === -1) {
-            return 'Tomorrow';
-          }
-
-          return targetDate.format('MMMM DD');
-        };
-
-        const calendarDateString = getDisplayDate();
-
         return (
-          <ItemRow key={calendarDateString}>
+          <ItemRow key={group.title}>
             <Col>
               <TitleRow
                 style={{
@@ -691,7 +661,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                     color="noshade"
                     style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
                   >
-                    {calendarDateString}
+                    {group.title}
                   </Typography>
                   <span className="notification notif-reg">
                     {group.orderTotal}

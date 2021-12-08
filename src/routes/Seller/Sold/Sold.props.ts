@@ -18,9 +18,11 @@ export type PendingToShipItemData = {
   orders: PendingOrders[];
   totalPrice: number;
   totalWeight: number;
+  salesChannel?: string;
 };
 
 export type SoldItemData = {
+  key: string;
   id: string;
   date: Date;
   type?: string;
@@ -45,10 +47,11 @@ export type SoldItemData = {
   buyerId: string;
   buyerCompanyName: string;
   buyerCompanyId: string;
+  salesChannel: string;
 };
 
 export type SoldItem = {
-  title: Date;
+  title: string;
   data: { [p: string]: SoldItemData[] };
   orderTotal: number;
   rawData: {

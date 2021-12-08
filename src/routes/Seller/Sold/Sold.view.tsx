@@ -209,6 +209,7 @@ const SoldView = (props: SoldGeneratedProps) => {
               selectedTab={currentTab}
               onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
               customTabContent={[3, 10, 14]} // TODO: set actual text
+              tabStyle={{ padding: '4px 8px' }}
             />
           )}
         </div>

@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
     > div {
       border-width: 2px;
       border-radius: 8px;
+      border-style: dashed;
       border-color: ${({ theme }) => theme.brand.primary};
     }
   }

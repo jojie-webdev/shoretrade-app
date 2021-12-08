@@ -47,6 +47,7 @@ export const StyledInteraction = styled(Interaction)<{
 
       .label {
         display: flex;
+        align-items: center;
       }
 
       @media (max-width: 1440px) {
@@ -395,6 +396,7 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   span {
     color: ${(props) => props.theme.grey.noshade};
     margin-left: ${(props) => (props.row ? '8px' : '0')};
+    line-height: 24px;
   }
 `;
 
