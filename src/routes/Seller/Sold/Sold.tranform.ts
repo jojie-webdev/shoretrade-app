@@ -41,9 +41,9 @@ export const groupToShipOrders = (groupedOrders: {
 const getShipmentMethodLabel = (deliveryMethod: string) => {
   switch (deliveryMethod) {
     case 'airDeliveryOrders':
-      return 'Air Freight: Pickup at Airport';
-    case 'airPickupOrders':
       return 'Air Freight: Delivery to Door';
+    case 'airPickupOrders':
+      return 'Air Freight: Pickup at Airport';
     case 'roadDeliveryOrders':
       return 'Road Freight: Delivery to Door';
     case 'roadPickupOrders':
@@ -103,6 +103,7 @@ export const orderItemToPendingToShipItem = (
       return [
         ...accum,
         {
+          groupName: current,
           buyerCompanyId: currentData[0].buyerCompanyId,
           buyerCompanyName: currentData[0].buyerCompanyName,
           deliveryMethod: currentData[0].deliveryMethod,
@@ -132,6 +133,7 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: ToShipItemData[] } = { ...data };
   for (const [key, value] of Object.entries(data)) {
     newObj[key] = value.map((order: GetSellerOrdersResponseItem) => ({
+      groupName: key,
       key: getShipmentMethodLabel(key),
       id: order.orderId,
       date: moment(order.orderDate).toDate(),

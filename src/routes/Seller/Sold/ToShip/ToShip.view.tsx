@@ -94,6 +94,7 @@ export const PendingItem = (props: {
     Partial<{
       isOpen: boolean;
       order: PlaceOrderMeta;
+      group: string;
     }>
   >;
   isPlacingOrder: boolean;
@@ -213,6 +214,7 @@ export const PendingItem = (props: {
                         isPartial: !allowFullShipment,
                         order,
                       }),
+                      group: data.groupName || '',
                     });
                     e.stopPropagation();
                   }}
@@ -429,10 +431,12 @@ const ToShip = (props: SoldGeneratedProps) => {
     createUpdateReducer<{
       order: PlaceOrderMeta | null;
       isOpen: boolean;
+      group: string | null;
     }>(),
     {
       order: null,
       isOpen: false,
+      group: null,
     }
   );
 
@@ -539,6 +543,7 @@ const ToShip = (props: SoldGeneratedProps) => {
           updateShippingDateModal({ isOpen: false });
         }}
         loading={isPlacingOrder}
+        shippingMethod={shippingDateModal.group || ''}
       />
       {filters.toShipFilters.page === '1' && (
         <>
@@ -679,7 +684,8 @@ const ToShip = (props: SoldGeneratedProps) => {
                 isSendingMessage={isSendingMessage}
                 shipOrder={(
                   isPartial: boolean,
-                  order?: GetSellerOrdersResponseItem
+                  order?: GetSellerOrdersResponseItem,
+                  group?: string
                 ) => {
                   if (order) {
                     setPlaceOrderId(order.orderId);
@@ -689,6 +695,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                         isPartial,
                         order,
                       }),
+                      group,
                     });
                   }
                 }}

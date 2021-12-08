@@ -44,7 +44,11 @@ const SoldItem = (props: {
     isOpen: boolean;
   };
   isSendingMessage?: boolean;
-  shipOrder?: (isPartial: boolean, order?: GetSellerOrdersResponseItem) => void;
+  shipOrder?: (
+    isPartial: boolean,
+    order?: GetSellerOrdersResponseItem,
+    group?: string
+  ) => void;
   isPlacingOrder?: boolean;
   placeOrderId?: string;
 }): any => {
@@ -231,7 +235,8 @@ const SoldItem = (props: {
                             if (shipOrder) {
                               shipOrder(
                                 !v.allowFullShipment,
-                                getSellerOrder(v.id)
+                                getSellerOrder(v.id),
+                                v.groupName
                               );
                             }
                             e.stopPropagation();
@@ -253,7 +258,8 @@ const SoldItem = (props: {
                             if (shipOrder) {
                               shipOrder(
                                 !v.allowFullShipment,
-                                getSellerOrder(v.id)
+                                getSellerOrder(v.id),
+                                v.groupName
                               );
                             }
                             e.stopPropagation();

@@ -1,24 +1,57 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
-import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { useTheme } from 'utils/Theme';
 
 import { ShippingDateModalProps } from './ShippingDateModal.props';
 import { Content } from './ShippingDateModal.style';
 
+const getTitleAndDescription = (key: string) => {
+  return (
+    {
+      airPickupOrders: {
+        title: 'Drop-off Date',
+        desc: 'Please confirm the date this order will be ready for shipment',
+      },
+      airDeliveryOrders: {
+        title: 'Shipment Date',
+        desc:
+          'Please confirm the date this order will be dropped off to Airport',
+      },
+      roadPickupOrders: {
+        title: 'Collection Date',
+        desc: 'Please confirm the date this order will be ready for collection',
+      },
+      roadDeliveryOrders: {
+        title: 'Shipment Date',
+        desc:
+          'Please confirm the date this order will be dropped off to Airport',
+      },
+      selfPickupOrders: {
+        title: 'Delivery Date',
+        desc: 'Please confirm the date this order will be delivered',
+      },
+      selfDeliveryOrder: {
+        title: 'Arrival Date',
+        desc:
+          'Please confirm the date that this order will arrive at the depot',
+      },
+    }[key] || { title: '', desc: '' }
+  );
+};
+
 const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
-  const { children, onConfirm, loading, ...modalProps } = props;
+  const { children, onConfirm, loading, shippingMethod, ...modalProps } = props;
   const theme = useTheme();
   const buyerApp = theme.appType === 'buyer';
 
   const [showError, setShowError] = useState(false);
   const [shippingDate, setShippingDate] = useState<Date | null>(null);
+  const { title, desc } = getTitleAndDescription(shippingMethod);
 
   return (
     <Modal {...modalProps} style={{ borderRadius: '12px', width: '686px' }}>
@@ -28,11 +61,11 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
           variant="title5"
           style={{ fontFamily: 'Media Sans', marginBottom: '24px' }}
         >
-          Shipping Date
+          {title || 'Shipping Date'}
         </Typography>
 
         <Typography color="shade7" variant="body">
-          Please, select a date that this will arrive at the depot
+          {desc || 'Please, select a date that this will arrive at the depot'}
         </Typography>
 
         <div className="content-container">

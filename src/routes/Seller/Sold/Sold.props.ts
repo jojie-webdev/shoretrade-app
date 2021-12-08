@@ -19,9 +19,11 @@ export type PendingToShipItemData = {
   totalPrice: number;
   totalWeight: number;
   salesChannel?: string;
+  groupName?: string;
 };
 
 export type SoldItemData = {
+  groupName: string;
   key: string;
   id: string;
   date: Date;
