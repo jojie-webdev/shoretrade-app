@@ -1,7 +1,5 @@
 import Alert from 'components/base/Alert';
-import InteractionsView from 'components/base/Interactions';
 import Touchable from 'components/base/Touchable';
-import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';

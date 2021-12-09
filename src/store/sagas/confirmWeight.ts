@@ -1,6 +1,3 @@
-import { push } from 'connected-react-router';
-import { SELLER_SOLD_ROUTES } from 'consts';
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { confirmWeight } from 'services/orders';
 import { AsyncAction } from 'types/Action';

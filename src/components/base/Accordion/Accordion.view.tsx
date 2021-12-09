@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import Interactions from 'components/base/Interactions';
-
 import { AccordionProps } from './Accordion.props';
 import { Container, Content, StyledInteractions } from './Accordion.style';
 

@@ -12,7 +12,7 @@ import { base64ToFile } from 'utils/File';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import { AddPhotosProps } from './AddPhotos.props';
-import { Container, DeleteBadge } from './AddPhotos.style';
+import { Container } from './AddPhotos.style';
 
 const AddPhotos = ({
   isCustomType,
@@ -87,6 +87,7 @@ const AddPhotos = ({
         setImages(initialImages);
       });
     }
+    // eslint-disable-next-line
   }, [editableListing.images]);
 
   return (

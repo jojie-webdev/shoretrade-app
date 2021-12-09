@@ -1,5 +1,3 @@
-import { replace } from 'connected-react-router';
-import { BUYER_ROUTES } from 'consts';
 import omit from 'ramda/es/omit';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { acceptOffer } from 'services/marketRequest';

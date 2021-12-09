@@ -8,7 +8,7 @@ import {
   UpdateBankDetailsPayload,
 } from 'types/store/UpdateBankDetailsState';
 
-import { updateBankDetailsActions, getUserActions } from '../actions';
+import { updateBankDetailsActions } from '../actions';
 
 function* updateBankDetailsRequest(
   action: AsyncAction<UpdateBankDetailsMeta, UpdateBankDetailsPayload>

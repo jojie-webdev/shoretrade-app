@@ -7,15 +7,11 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import AddBoxModal from 'components/module/AddBoxModal';
-import InnerRouteHeader from 'components/module/InnerRouteHeader';
-import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { capitalize } from 'lodash';
-import qs from 'qs';
 import { isEmpty } from 'ramda';
 import remove from 'ramda/es/remove';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -198,7 +194,6 @@ const BoxSummary = ({
 };
 
 const ConfirmView = (props: ConfirmProps) => {
-  const theme = useTheme();
   const {
     pending,
     details,
@@ -211,7 +206,8 @@ const ConfirmView = (props: ConfirmProps) => {
     initialBoxes,
   } = props;
 
-  const history = useHistory();
+  const theme = useTheme();
+
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const { orderNumber, buyer, uri, price, name, tags, size } = details;
@@ -242,7 +238,7 @@ const ConfirmView = (props: ConfirmProps) => {
   const differenceAmount = totalPrice - initialPrice;
   // const differencePercentage = (differenceQuantity / totalBoxes) * 100;
   // const differencePercentage = (differenceWeight / totalWeight) * 100;
-  const differencePercentage = (totalWeight / initialWeight) * 100;
+  // const differencePercentage = (totalWeight / initialWeight) * 100;
   const increasedPercentage =
     ((totalWeight - initialWeight) / initialWeight) * 100;
   const decreasePercentage =

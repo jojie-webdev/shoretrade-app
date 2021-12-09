@@ -8,11 +8,8 @@ import { isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
-  getLocation,
   getRespectiveValues,
   getSize,
-  getSpecs,
-  getType,
   requestToModalFilter,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import {
@@ -147,11 +144,13 @@ const MarketBoardLanding = (): JSX.Element => {
     setInitial(false);
     setSearchTerm('');
     setIsFilterModalOpen(false);
+    // eslint-disable-next-line
   }, [currentTab]);
 
   useEffect(() => {
     setActiveOffersData(filteredActiveOffers);
     setActiveOffersDataCopy(filteredActiveOffers);
+    // eslint-disable-next-line
   }, [filteredActiveOffers.length]);
 
   useEffect(() => {
@@ -163,6 +162,7 @@ const MarketBoardLanding = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -194,6 +194,7 @@ const MarketBoardLanding = (): JSX.Element => {
     }, 800);
 
     setTimer(timerId);
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   const onClickOffer = (data: GetAllMarketRequestResponseItem) => {
@@ -216,9 +217,6 @@ const MarketBoardLanding = (): JSX.Element => {
     setIsFilterModalOpen(false);
 
     const sizesFilter = getSize(selectedFilters, buyerRequestsFilters!);
-    const actualSizesFilter = sizesFilter
-      ? sizesFilter?.filter((v) => v !== 'Ungraded')
-      : undefined;
     const isUngraded = (sizesFilter || []).includes('Ungraded');
     const payload = {
       address: getRespectiveValues(

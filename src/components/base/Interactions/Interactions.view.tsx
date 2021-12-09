@@ -2,12 +2,7 @@ import React from 'react';
 
 import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
-import {
-  ChevronRight,
-  DropdownArrow,
-  Pen,
-  TrashCan,
-} from 'components/base/SVG';
+import { ChevronRight, DropdownArrow, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 

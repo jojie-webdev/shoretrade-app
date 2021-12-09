@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Fish2 = (props: SVGProps): JSX.Element => {

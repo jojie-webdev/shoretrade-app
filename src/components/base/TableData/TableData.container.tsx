@@ -5,8 +5,8 @@ import { SortIcon, Minus } from 'components/base/SVG';
 import theme from 'utils/Theme';
 
 import { TableDataProps } from './TableData.props';
-import TableDataContent from './TableData.view';
 import { WidthComputer } from './TableData.styles';
+import TableDataContent from './TableData.view';
 
 function findAndSaveLongestWidth(columnName: string, width: number) {
   if (!columnName || columnName === 'undefined') return;
@@ -54,6 +54,7 @@ export default function TableData(props: TableDataProps) {
       );
       setIsWidthComputed(true);
     }
+    // eslint-disable-next-line
   }, [computerRef]);
 
   const checked = overwriteSelectedProp ? isChecked : selected;

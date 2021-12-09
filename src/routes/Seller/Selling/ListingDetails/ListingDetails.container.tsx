@@ -8,9 +8,7 @@ import {
   endListingActions,
   getListingByIdActions,
 } from 'store/actions';
-import { GetListingSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
-import { GetListingsByTypePayload } from 'types/store/GetListingsByTypeState';
 
 import {
   ListingDetailsPublicProps,
@@ -25,7 +23,8 @@ const ListingDetailsContainer = (
   const dispatch = useDispatch();
 
   const listingId = props.match?.params.listingId || '';
-  const listingData = useSelector((state: Store) => state.getListingById.data?.data) || null
+  const listingData =
+    useSelector((state: Store) => state.getListingById.data?.data) || null;
   const listing = listingToListingProps(listingData);
 
   const onEdit = () => {
@@ -54,6 +53,7 @@ const ListingDetailsContainer = (
 
     // scrolls to top when displaying the screen
     document.querySelector('.screen')?.scrollTo(0, 0);
+    // eslint-disable-next-line
   }, []);
 
   const sellingDetailsBreadCrumbs = [

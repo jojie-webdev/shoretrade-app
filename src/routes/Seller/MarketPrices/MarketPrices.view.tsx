@@ -2,7 +2,6 @@ import React from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Interactions from 'components/base/Interactions';
-import TypographyView from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
@@ -57,6 +56,7 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
                   className="market-item"
                   key={r.typeId}
                 >
+                  {/* eslint-disable-next-line */}
                   <Interactions value={r.typeName} onClick={() => {}} />
                 </Link>
               ))}

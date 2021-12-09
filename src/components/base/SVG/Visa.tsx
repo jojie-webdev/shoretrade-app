@@ -1,14 +1,8 @@
 import React from 'react';
 
-import styled from 'utils/styled';
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Visa = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
-
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (

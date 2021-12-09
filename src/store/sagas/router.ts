@@ -3,11 +3,7 @@ import { put, takeLatest, select } from 'redux-saga/effects';
 import { Action } from 'types/Action';
 import { Store } from 'types/store/Store';
 
-import {
-  getCoopUsersActions,
-  getUserActions,
-  getBuyerHomepageActions,
-} from '../actions';
+import { getCoopUsersActions, getBuyerHomepageActions } from '../actions';
 
 function* routerRequest(
   action: Action<{

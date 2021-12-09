@@ -6,7 +6,6 @@ import { AsyncAction } from 'types/Action';
 import {
   GetShippingQuoteMeta,
   GetShippingQuotePayload,
-  GetShippingQuoteRequestData,
   GetShippingQuoteResponse,
   GetShippingQuoteResponseItem,
 } from 'types/store/GetShippingQuoteState';
@@ -47,11 +46,15 @@ function* getShippingQuoteRequest(
         string,
         GetShippingQuoteResponseItem
       > => {
-        const quoteData = pathOr({}, [index, 'data', 'data', 'data'], getMultipleShippingQuoteResponse)
+        const quoteData = pathOr(
+          {},
+          [index, 'data', 'data', 'data'],
+          getMultipleShippingQuoteResponse
+        );
         return {
           ...accum,
 
-          [current]: quoteData
+          [current]: quoteData,
         };
       }, {});
 

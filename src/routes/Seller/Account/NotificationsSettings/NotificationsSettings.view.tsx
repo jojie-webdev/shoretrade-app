@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Button from 'components/base/Button';
 import {
   CommentsAlt,
   Desktop,
   EnvelopeAlt,
-  Sold,
   WhatsApp,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';

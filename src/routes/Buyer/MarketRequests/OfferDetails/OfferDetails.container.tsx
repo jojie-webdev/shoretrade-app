@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import Loading from 'components/module/Loading';
 import { BUYER_ROUTES } from 'consts';
@@ -15,9 +15,7 @@ import {
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import marketRequestOfferConfirmActions from 'store/actions/marketRequestOfferConfirm';
-import marketRequestOfferConfirm from 'store/reducers/marketRequestOfferConfirm';
 import {
-  GetActiveOffersRequestResponseItem,
   Negotiations,
   Offer,
   OfferMarketRequest,
@@ -44,6 +42,7 @@ const OfferDetails = (): JSX.Element => {
   const [offerMR, setOfferMR] = useState<OfferMarketRequest>();
   const [negotiating, setNegotiating] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  // eslint-disable-next-line
   const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
     false
   );
@@ -192,6 +191,7 @@ const OfferDetails = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {
@@ -204,6 +204,7 @@ const OfferDetails = (): JSX.Element => {
     if (!filteredBuyerRequest) {
       dispatch(getAllMarketRequestActions.request({}));
     }
+    // eslint-disable-next-line
   }, [filteredBuyerRequest]);
 
   useEffect(() => {
@@ -266,14 +267,9 @@ const OfferDetails = (): JSX.Element => {
 
   let counterOffer = '';
   let newOffer = '';
-  let deliveryTotal;
   let counterOfferLatest;
   let newOfferLatest;
-  let hideNegotiate = false;
   let thereIsNewOffer = false;
-  let discountPercentage = '';
-  let discountValue = 0;
-  let disableAccept = false;
   let isAccepted = false;
 
   let sortedNegotiations: Negotiations[] = [];
@@ -291,36 +287,12 @@ const OfferDetails = (): JSX.Element => {
       newOfferLatest = newOfferArr.slice(-1)[0];
       counterOfferLatest = counterOfferArr.slice(-1)[0];
 
-      const acceptedOffer = sortedNegotiations.find((a) => a.is_accepted);
       lastNegotiationsOffers = sortedNegotiations.slice(
         Math.max(
           sortedNegotiations.length - (sortedNegotiations.length >= 2 ? 2 : 1),
           0
         )
       );
-
-      const currentOfferPrice =
-        acceptedOffer?.price || newOfferLatest?.price || selectedOffer.price;
-
-      // counterOfferArr is always greater or equal newOfferArr
-      // if counterOfferArr is greater than newOfferArr, updatedPrice is latestBuyerNego
-      const updatedPrice =
-        counterOfferArr.length > newOfferArr.length
-          ? counterOfferLatest?.price || 0 // 0 should never happen
-          : currentOfferPrice;
-
-      // if counterOfferArr is greater than newOfferArr, initialPrice is currentOfferPrice
-      // initially counterOfferArr is 0 so we fallback to currentOfferPrice
-      const initialPrice =
-        counterOfferArr.length > newOfferArr.length
-          ? currentOfferPrice
-          : counterOfferLatest?.price || currentOfferPrice;
-
-      discountValue = updatedPrice - initialPrice;
-
-      // standard change in price formula
-      discountValue = updatedPrice - initialPrice;
-      discountPercentage = ((discountValue / initialPrice) * 100).toFixed(2);
     }
 
     newOffer = newOfferLatest ? newOfferLatest.price.toString() : '';
@@ -328,24 +300,10 @@ const OfferDetails = (): JSX.Element => {
       ? counterOfferLatest.price.toString()
       : '';
 
-    deliveryTotal = newOfferLatest
-      ? newOfferLatest.price * selectedOffer.weight
-      : selectedOffer.price * selectedOffer.weight;
-
     thereIsNewOffer =
       selectedOffer.negotiations &&
       //@ts-ignore
       newOfferLatest?.updated_at > counterOfferLatest?.updated_at;
-
-    hideNegotiate =
-      (selectedOffer.status === 'OPEN' &&
-        !thereIsNewOffer &&
-        selectedOffer.negotiations !== null) ||
-      selectedOffer.status === 'ACCEPTED';
-
-    disableAccept =
-      selectedOffer.status !== 'OPEN' ||
-      (!thereIsNewOffer && selectedOffer.negotiations !== null);
 
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
@@ -413,7 +371,7 @@ const OfferDetails = (): JSX.Element => {
         totalValue={getPrice() * (selectedOffer?.weight || 0)}
         orderError={''}
         selectedShipping={{}}
-        placeOrder={() => {}}
+        placeOrder={() => {}} // eslint-disable-line
         onBack={() => setShowPaymentMethod(false)}
       />
     );

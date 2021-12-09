@@ -23,6 +23,7 @@ const useResize = (myRef: any) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+    // eslint-disable-next-line
   }, [myRef]);
 
   return dimensions;

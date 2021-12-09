@@ -2,13 +2,8 @@ import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getListing } from 'services/listing';
 import { AsyncAction, Action } from 'types/Action';
-import {
-  GetListingMeta,
-  GetListingPayload,
-  GetListingResponseItem,
-} from 'types/store/GetListingState';
+import { GetListingMeta, GetListingPayload } from 'types/store/GetListingState';
 import { Store } from 'types/store/Store';
-import { findProduct } from 'utils/Listing';
 
 import { getListingActions, socketActions } from '../actions';
 

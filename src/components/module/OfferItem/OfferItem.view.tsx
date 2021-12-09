@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
+import StarRating from 'components/base/StarRating';
 import {
   TrashCan,
   PlaceholderProfile,
@@ -9,36 +9,26 @@ import {
   ChevronRight,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { TypographyProps } from 'components/base/Typography/Typography.props';
-import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyStateView from 'components/module/EmptyState';
 import OfferTag from 'components/module/OfferTag';
-import { BUYER_ROUTES } from 'consts';
-import moment from 'moment';
 import { Col, Visible, Hidden } from 'react-grid-system';
-import { useHistory } from 'react-router';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferLatestPrice } from 'utils/MarketRequest';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 
 import theme from '../../../utils/Theme';
 import { OfferItemProps } from './OfferItem.props';
 import {
-  StatusBadgeText,
   MajorInfo,
   MarketRequestItemInteraction,
   MarketRequestItemMobileContainer,
   AvatarPlaceholder,
   OfferContainer,
   MarketRequestItemInteractionContainer,
-  TagsContainer,
-  NoActionsYetBadgesContainer,
   MajorInfoContainer,
   OfferRowContainer,
   MajorInfoNonMobileContainer,
@@ -46,7 +36,6 @@ import {
 
 const Offer = (props: OfferItemProps) => {
   const { sellerOffer, onOfferDelete, onClickItem } = props;
-  const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');
 
@@ -139,7 +128,7 @@ const Offer = (props: OfferItemProps) => {
               {sellerOffer?.company?.name}
             </Typography>
             <StarRating
-              rating={sellerOffer?.company?.rating || 0} 
+              rating={sellerOffer?.company?.rating || 0}
               spacing={3}
               starSize={12}
               unfilledColor={theme.brand.alert}
@@ -226,6 +215,7 @@ const Offer = (props: OfferItemProps) => {
                     borderRadius: '8px',
                   }}
                   src={parseImageUrl(sellerOffer.company.image || '')}
+                  alt=""
                 />
               ) : (
                 <AvatarPlaceholder
@@ -250,7 +240,7 @@ const Offer = (props: OfferItemProps) => {
                   {sellerOffer.company.name}
                 </Typography>
                 <StarRating
-                  rating={sellerOffer?.company?.rating || 0} 
+                  rating={sellerOffer?.company?.rating || 0}
                   spacing={3}
                   starSize={12}
                   unfilledColor={theme.brand.alert}

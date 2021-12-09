@@ -15,7 +15,7 @@ import {
 } from './BoxRadio.style';
 
 const BoxRadio = (props: BoxRadioProps): JSX.Element => {
-  const { checked, onClick, totalWeight, boxes, cost, unit = 'kg' } = props;
+  const { checked, onClick, boxes, cost, unit = 'kg' } = props;
   // const theme = useTheme();
   return (
     <Container>

@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import { Theme } from 'types/Theme';
 
 export interface StarRatingProps {
@@ -9,5 +10,5 @@ export interface StarRatingProps {
   unfilledColor?: string;
   filledColor?: string;
   style?: CSSProperties;
-  editable?: boolean
+  editable?: boolean;
 }

@@ -1,5 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
 
+import Alert from 'components/base/Alert';
 import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
@@ -7,7 +8,6 @@ import MessageModal from 'components/module/MessageModal';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import RateSellerModal from 'components/module/RateSellerModal';
-import Alert from 'components/base/Alert';
 import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
@@ -20,7 +20,7 @@ import {
   AccordionTitleContainer,
   StyledAccordion,
   OrderBadge,
-  AlertContainer
+  AlertContainer,
 } from '../Orders.style';
 import { sortByDate } from '../Orders.transform';
 
@@ -35,7 +35,7 @@ const Complete = (props: OrdersGeneratedProps) => {
     getCompletedOrders,
     sendOrderRating,
     isSendingOrderRating,
-    isSendOrderRatingSuccess
+    isSendOrderRatingSuccess,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -65,31 +65,35 @@ const Complete = (props: OrdersGeneratedProps) => {
     }
   );
 
-  const [showSuccessFeedbackAlert, setShowSuccessFeedbackAlert] = useState(false)
+  const [showSuccessFeedbackAlert, setShowSuccessFeedbackAlert] = useState(
+    false
+  );
 
   useEffect(() => {
-    if (isSendingOrderRating == false && rateSellerModal.isOpen) {
-      updateRateSellerModal({ isOpen: false, orderId: '' })
-      getCompletedOrders()
+    if (isSendingOrderRating === false && rateSellerModal.isOpen) {
+      updateRateSellerModal({ isOpen: false, orderId: '' });
+      getCompletedOrders();
     }
-  }, [isSendingOrderRating])
+    // eslint-disable-next-line
+  }, [isSendingOrderRating]);
 
   useEffect(() => {
-    if (isSendOrderRatingSuccess && isSendingOrderRating == false) {
-      setShowSuccessFeedbackAlert(true)
-      setTimeout(() => setShowSuccessFeedbackAlert(false), 5000)
+    if (isSendOrderRatingSuccess && isSendingOrderRating === false) {
+      setShowSuccessFeedbackAlert(true);
+      setTimeout(() => setShowSuccessFeedbackAlert(false), 5000);
     }
-  }, [isSendOrderRatingSuccess])
+    // eslint-disable-next-line
+  }, [isSendOrderRatingSuccess]);
 
   return (
     <>
-      <RateSellerModal 
+      <RateSellerModal
         loading={isSendingOrderRating || false}
         isOpen={rateSellerModal.isOpen}
         onClickClose={() => updateRateSellerModal({ isOpen: false })}
         backgroundColor={theme.grey.noshade}
         sendReview={(rating, feedback) => {
-          sendOrderRating(rateSellerModal.orderId, rating, feedback)
+          sendOrderRating(rateSellerModal.orderId, rating, feedback);
         }}
       />
       <MessageModal
@@ -141,7 +145,9 @@ const Complete = (props: OrdersGeneratedProps) => {
                 <Typography color="shade6" className="label" weight="400">
                   Date Delivered:
                 </Typography>
-                <Typography color="shade9" className="labelBold">{key}</Typography>
+                <Typography color="shade9" className="labelBold">
+                  {key}
+                </Typography>
               </AccordionTitleContainer>
             }
             rightComponent={
@@ -164,7 +170,10 @@ const Complete = (props: OrdersGeneratedProps) => {
                 }}
                 deliveredDate={d.deliveredDate}
                 completedOrder
-                onRateClick={() => !d.data.rating && updateRateSellerModal({ isOpen: true, orderId: d.id }) }
+                onRateClick={() =>
+                  !d.data.rating &&
+                  updateRateSellerModal({ isOpen: true, orderId: d.id })
+                }
               />
             ))}
           </StyledAccordion>

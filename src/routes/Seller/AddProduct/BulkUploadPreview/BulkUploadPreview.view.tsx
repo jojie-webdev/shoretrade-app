@@ -8,7 +8,6 @@ import { InfoFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { placeholderImage, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
-import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import getTimeDiff from 'utils/Date/getTimeDiff';
@@ -60,7 +59,6 @@ const BulkUploadPreviewView = ({
 
   const count = showListingCount(data);
   const invalidListing = count[0] > 0;
-  const hasListing = count[1] > 0;
 
   const canSubmit = !invalidListing && shippingAddress.length > 0;
 
@@ -125,7 +123,7 @@ const BulkUploadPreviewView = ({
             return (
               <div key={index} className="listings-data-row">
                 <div className="column-item">
-                  <img src={placeholderImage} />
+                  <img src={placeholderImage} alt="" />
                 </div>
 
                 <div className="column-item">

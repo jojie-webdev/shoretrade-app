@@ -10,7 +10,9 @@ import { GetAllBuyerListingRequestOption } from 'types/store/GetAllBuyerListings
 import { GetBuyerSearchFilterDataMeta } from 'types/store/GetBuyerSearchFilterDataState';
 import { GetHistoricalListingsMeta } from 'types/store/GetHistoricalListingsState';
 import { GetListingBoxesMeta } from 'types/store/GetListingBoxesState';
+import { GetListingByIdMeta } from 'types/store/GetListingByIdState';
 import { GetListingFormDataMeta } from 'types/store/GetListingFormDataState';
+import { GetListingsBySalesChannelMeta } from 'types/store/GetListingsBySalesChannelState';
 import { GetListingsByTypeRequestData } from 'types/store/GetListingsByTypeState';
 import { GetListingMeta } from 'types/store/GetListingState';
 import { GetListingTypesByCategoryRequestData } from 'types/store/GetListingTypesByCategoryState';
@@ -18,8 +20,6 @@ import { GetMarketEstimateMeta } from 'types/store/GetMarketEstimateState';
 import { GetShippingQuoteRequestData } from 'types/store/GetShippingQuoteState';
 import { UpdateListingRequestData } from 'types/store/UpdateListingState';
 import { UploadBulkMeta } from 'types/store/UploadBulkState';
-import { GetListingsBySalesChannelMeta } from 'types/store/GetListingsBySalesChannelState';
-import { GetListingByIdMeta } from 'types/store/GetListingByIdState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const ENDPOINT = 'listing';
@@ -305,12 +305,9 @@ export const getListingsBySalesChannel = (
       Authorization: `Bearer ${token}`,
     },
   });
-}
+};
 
-export const getListingById = (
-  data: GetListingByIdMeta,
-  token: string
-) => {
+export const getListingById = (data: GetListingByIdMeta, token: string) => {
   return axios({
     method: 'get',
     url: `${API.URL}/${API.VERSION_NEXT}/listing/${data.listingId}`,
@@ -318,4 +315,4 @@ export const getListingById = (
       Authorization: `Bearer ${token}`,
     },
   });
-}
+};

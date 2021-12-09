@@ -7,7 +7,7 @@ import {
 } from 'types/store/SendDisputeState';
 import { Store } from 'types/store/Store';
 
-import { sendDisputeActions, getUserActions } from '../actions';
+import { sendDisputeActions } from '../actions';
 
 function* sendDisputeRequest(
   action: AsyncAction<SendDisputeMeta, SendDisputePayload>

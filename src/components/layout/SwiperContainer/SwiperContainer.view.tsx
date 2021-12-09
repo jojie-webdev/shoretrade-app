@@ -55,6 +55,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
     ) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
+    // eslint-disable-next-line
   }, [containerRef?.current?.offsetWidth, windowWidth]);
 
   // helps to trigger recalculation of width
@@ -83,6 +84,7 @@ const SwiperContainer = (props: SwiperContainerProps): JSX.Element => {
         }
       }
     }
+    // eslint-disable-next-line
   }, [containerWidth]);
 
   return (

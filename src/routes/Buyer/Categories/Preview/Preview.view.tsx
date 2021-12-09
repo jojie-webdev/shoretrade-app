@@ -5,7 +5,6 @@ import { Filter } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
-import FilterArea from 'components/module/FilterArea';
 import FilterModal from 'components/module/FilterModal/FilterModal.view';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
@@ -33,7 +32,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     searchValue,
     onChangeSearchValue,
     onResetSearchValue,
-    onLoad,
+    // onLoad,
     typeId,
     selectAddress,
     modalFilterProps,
@@ -55,6 +54,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   useEffect(() => {
     selectAddress(typeId);
     // onLoad(typeId);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -65,13 +65,13 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
             sections={
               isSearch
                 ? [
-                  { label: 'Search', link: BUYER_ROUTES.SEARCH },
-                  { label: title },
-                ]
+                    { label: 'Search', link: BUYER_ROUTES.SEARCH },
+                    { label: title },
+                  ]
                 : [
-                  { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
-                  { label: title },
-                ]
+                    { label: 'Categories', link: BUYER_ROUTES.CATEGORIES },
+                    { label: title },
+                  ]
             }
           />
         ) : (
@@ -120,7 +120,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
             </Typography>
           </div>
 
-          <img src={anchorImg} />
+          <img src={anchorImg} alt="" />
         </EmptyResults>
       )}
 

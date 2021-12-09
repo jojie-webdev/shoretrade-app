@@ -1,5 +1,4 @@
-import { NotificationType, NotifyState } from 'types/store/NotifyState';
-import { createUpdateAction, createClearAction } from 'utils/Redux';
+import { NotificationType } from 'types/store/NotifyState';
 
 const ns = 'NOTIFY';
 const ADD = `${ns}/ADD`;

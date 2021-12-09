@@ -6,7 +6,7 @@ import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Interactions from 'components/base/Interactions';
-import { Close, Prawn, Pen, TrashCan } from 'components/base/SVG';
+import { Close, Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { PreviewFile } from 'components/module/AddFile/AddFile.style';
 import Loading from 'components/module/Loading';

@@ -70,7 +70,7 @@ const Alerts = (props: ChangePasswordGeneratedProps) => {
 };
 
 const ChangePasswordView = (props: ChangePasswordGeneratedProps) => {
-  const { pending, errorMessage } = props;
+  const { pending } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const formRef = useRef();
 

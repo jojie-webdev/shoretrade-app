@@ -1,11 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import SegmentedControls from 'components/base/SegmentedControls';
 import Select from 'components/base/Select';
 import { Octopus, Crab, Fish } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
-import DateRangePicker from 'components/module/DateRangePicker';
+// import DateRangePicker from 'components/module/DateRangePicker';
 import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -17,7 +16,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
-import { useTheme } from 'utils/Theme';
 
 import Delivered from './Delivered/Delivered.view';
 import InTransit from './InTransit/InTransit.view';
@@ -26,7 +24,7 @@ import {
   Container,
   SearchFilterRow,
   SearchContainer,
-  DateRangeContainer,
+  // DateRangeContainer,
 } from './Sold.style';
 import ToShip from './ToShip/ToShip.view';
 
@@ -73,7 +71,6 @@ const EmptyView = (props: { currentTab: string }) => {
 const SoldView = (props: SoldGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isNonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
-  const theme = useTheme();
 
   const [searchValue, setSearchValue] = useState('');
   const [searchValueTable, updateSearchValueTable] = useReducer(
@@ -128,14 +125,14 @@ const SoldView = (props: SoldGeneratedProps) => {
     setSearchValue('');
   };
 
-  const fromOnDatesChange = (value: any) => {
-    updateFilter({
-      ...currentFilter,
-      dateFrom: value.startDate,
-      dateTo: value.endDate,
-      page: '1',
-    });
-  };
+  // const fromOnDatesChange = (value: any) => {
+  //   updateFilter({
+  //     ...currentFilter,
+  //     dateFrom: value.startDate,
+  //     dateTo: value.endDate,
+  //     page: '1',
+  //   });
+  // };
 
   const onKeyUp = (e: any) => {
     // Allowing searching for shorter terms(n < 3) using enter key
@@ -155,10 +152,12 @@ const SoldView = (props: SoldGeneratedProps) => {
       }, 800);
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchValue]);
 
   useEffect(() => {
     setSearchValue(searchValueTable[currentTab]);
+    // eslint-disable-next-line
   }, [currentTab]);
 
   let content;

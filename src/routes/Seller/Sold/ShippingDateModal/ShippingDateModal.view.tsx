@@ -5,7 +5,6 @@ import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import moment from 'moment';
-import { useTheme } from 'utils/Theme';
 
 import { ShippingDateModalProps } from './ShippingDateModal.props';
 import { Content } from './ShippingDateModal.style';
@@ -46,8 +45,6 @@ const getTitleAndDescription = (key: string) => {
 
 const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
   const { children, onConfirm, loading, shippingMethod, ...modalProps } = props;
-  const theme = useTheme();
-  const buyerApp = theme.appType === 'buyer';
 
   const [showError, setShowError] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);

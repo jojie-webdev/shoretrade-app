@@ -1,4 +1,4 @@
-import { isEmpty, reduce } from 'ramda';
+import { reduce } from 'ramda';
 import { UploadBulkState } from 'types/store/UploadBulkState';
 
 //left is error, right is valid

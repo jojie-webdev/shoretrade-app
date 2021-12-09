@@ -1,4 +1,3 @@
-import Breadcrumbs from 'components/base/Breadcrumbs';
 import Interactions from 'components/base/Interactions';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';

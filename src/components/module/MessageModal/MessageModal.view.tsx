@@ -4,7 +4,6 @@ import Button from 'components/base/Button';
 import TextArea from 'components/base/TextArea';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { useTheme } from 'utils/Theme';
 
 import { MessageModalProps } from './MessageModal.props';

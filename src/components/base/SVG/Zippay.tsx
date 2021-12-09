@@ -1,14 +1,8 @@
 import React from 'react';
 
-import styled from 'utils/styled';
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Zippay = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
-
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (
@@ -29,7 +23,7 @@ const Zippay = (props: SVGProps): JSX.Element => {
         d="M10.105 6.885l-4.972 4.46a2.559 2.559 0 01-1.716.653h7.671c1.48-.023 2.525-1.133 2.525-2.558a2.544 2.544 0 00-2.525-2.557l-.983.002z"
         fill="#00B6BD"
       />
-  </svg>
+    </svg>
   );
 };
 

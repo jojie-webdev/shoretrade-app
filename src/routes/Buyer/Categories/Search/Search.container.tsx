@@ -22,6 +22,7 @@ const CategoriesSearch = (): JSX.Element => {
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const addressCount = (addresses || []).length;
 
+  // eslint-disable-next-line
   const [prevTypeId, setPrevTypeId] = useLocalStorage('prev-type-id', '');
 
   const previousId =
@@ -59,10 +60,12 @@ const CategoriesSearch = (): JSX.Element => {
     if (addressCount > 0 && id && previousId !== id) {
       onLoad(id);
     }
+    // eslint-disable-next-line
   }, [id, addressCount]);
 
   useEffect(() => {
     setPrevTypeId(''); // reset item id
+    // eslint-disable-next-line
   }, []);
 
   const generatedProps: CategoriesSearchGeneratedProps = {

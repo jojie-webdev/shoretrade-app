@@ -1,16 +1,11 @@
-import { push } from 'connected-react-router';
-import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
-import { all, put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { updateNotifSettings } from 'services/notifications';
-import { uploadImageData } from 'services/upload';
 import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 import {
   UpdateNotificationSettingsMetaData,
   UpdateNotificationSettingsPayload,
 } from 'types/store/UpdateNotificationSettingsState';
-import { base64ToFile } from 'utils/File';
-import { editableListingToUpdateListing } from 'utils/Listing/editableListingToUpdateListing';
 
 import {
   updateNotificationSettingsActions,

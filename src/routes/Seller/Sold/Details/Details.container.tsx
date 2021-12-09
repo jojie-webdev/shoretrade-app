@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { SELLER_SOLD_ROUTES } from 'consts';
-import pathOr from 'ramda/es/pathOr';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getSellerOrdersPlacedActions } from 'store/actions';
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
-import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import {
   DetailsPublicProps,
@@ -18,7 +15,6 @@ import { sellerOrderToSoldDetails } from './Details.transform';
 import DetailsView from './Details.view';
 
 const DetailsContainer = (props: DetailsPublicProps): JSX.Element => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const token = useSelector((state: Store) => state.auth.token) || '';
 

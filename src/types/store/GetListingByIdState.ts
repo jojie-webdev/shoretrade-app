@@ -78,6 +78,6 @@ export type GetListingByIdData = {
     company_id: string | null;
   } | null;
   quality: string | null;
-}
+};
 
 export type GetListingByIdPayload = GenericResponse<GetListingByIdData>;

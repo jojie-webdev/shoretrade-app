@@ -1,7 +1,7 @@
 import accountCredit from 'res/images/pm-account-credit.svg';
 import credit from 'res/images/pm-credit.svg';
-import finance from 'res/images/pm-finance-invoice.svg';
-import payLater from 'res/images/pm-pay-later.svg';
+// import finance from 'res/images/pm-finance-invoice.svg';
+// import payLater from 'res/images/pm-pay-later.svg';
 
 export const PAYMENT_METHODS = [
   {

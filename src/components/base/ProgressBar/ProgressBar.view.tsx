@@ -8,7 +8,7 @@ import {
 } from './ProgressBar.style';
 
 const ProgressBar = (props: ProgressBarProps): JSX.Element => {
-  const { width, height, borderRadius, progress } = props;
+  const { progress } = props;
 
   return (
     <Container>

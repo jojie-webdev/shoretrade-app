@@ -2,10 +2,10 @@ import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getListingsBySalesChannel } from 'services/listing';
 import { AsyncAction, Action } from 'types/Action';
-import { 
+import {
   GetListingsBySalesChannelMeta,
   GetListingsBySalesChannelPayload,
-  GetListingsBySalesChannelResponseItem
+  GetListingsBySalesChannelResponseItem,
 } from 'types/store/GetListingsBySalesChannelState';
 import { Store } from 'types/store/Store';
 import { findProduct } from 'utils/Listing';
@@ -13,7 +13,10 @@ import { findProduct } from 'utils/Listing';
 import { getListingsBySalesChannelActions, socketActions } from '../actions';
 
 function* getListingsBySalesChannelRequest(
-  action: AsyncAction<GetListingsBySalesChannelMeta, GetListingsBySalesChannelPayload>
+  action: AsyncAction<
+    GetListingsBySalesChannelMeta,
+    GetListingsBySalesChannelPayload
+  >
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
@@ -83,7 +86,10 @@ function* getListingsBySalesChannelPatchRemaining(action: Action<any>) {
 }
 
 function* getListingsBySalesChannelWatcher() {
-  yield takeLatest(getListingsBySalesChannelActions.REQUEST, getListingsBySalesChannelRequest);
+  yield takeLatest(
+    getListingsBySalesChannelActions.REQUEST,
+    getListingsBySalesChannelRequest
+  );
   yield takeLatest(
     socketActions.UPDATE_REMAINING_BOXES,
     getListingsBySalesChannelPatchRemaining

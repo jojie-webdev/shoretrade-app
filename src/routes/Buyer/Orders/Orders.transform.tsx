@@ -1,4 +1,3 @@
-import { collectAddressShort } from 'consts';
 import moment from 'moment';
 import { groupBy } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
@@ -40,16 +39,18 @@ const getLocation = (
   state: string | null,
   countryCode: string | null
 ) => {
-  const haveSuburb = !!suburb && suburb.length > 0
-  const haveState = !!state && state.length > 0
-  const haveCountryCode = !!countryCode && countryCode.length > 0
+  const haveSuburb = !!suburb && suburb.length > 0;
+  const haveState = !!state && state.length > 0;
+  const haveCountryCode = !!countryCode && countryCode.length > 0;
 
-  return (haveSuburb ? `${suburb}` : '')
-  + (haveSuburb && (haveState || haveCountryCode) ? ', ' : '')
-  + (haveState ? `${state}` : '')
-  + (haveState && haveCountryCode ? ', ' : '')
-  + (haveCountryCode ? `${countryCode}` : '')
-}
+  return (
+    (haveSuburb ? `${suburb}` : '') +
+    (haveSuburb && (haveState || haveCountryCode) ? ', ' : '') +
+    (haveState ? `${state}` : '') +
+    (haveState && haveCountryCode ? ', ' : '') +
+    (haveCountryCode ? `${countryCode}` : '')
+  );
+};
 
 export const transformOrder = (
   orderItem: GetBuyerOrdersResponseItem
@@ -69,19 +70,20 @@ export const transformOrder = (
       rating: orderItem.rating,
       ratingId: orderItem.ratingId,
       isMarketRequest: orderItem.isMarketRequest,
-      detailsProps: orderItem.orderLineItem.map((lineItem) => { 
-        const unit = formatMeasurementUnit(lineItem.listing.measurementUnit)
-        
+      detailsProps: orderItem.orderLineItem.map((lineItem) => {
+        const unit = formatMeasurementUnit(lineItem.listing.measurementUnit);
+
         return {
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
           price: toPrice(lineItem.price),
           tags: lineItem.listing.specifications.map((label) => ({ label })),
-          weight: lineItem.listingBoxes
-            .reduce((accum, current) => {
-              return accum + current.quantity * current.weight;
-            }, 0)
-            .toFixed(2) + ` ${unit}`,
+          weight:
+            lineItem.listingBoxes
+              .reduce((accum, current) => {
+                return accum + current.quantity * current.weight;
+              }, 0)
+              .toFixed(2) + ` ${unit}`,
           unit,
           size: sizeToString(
             lineItem.listing.metricLabel,
@@ -89,15 +91,15 @@ export const transformOrder = (
             lineItem.listing.sizeTo
           ),
           location: getLocation(
-            lineItem.listing.origin.suburb, 
-            lineItem.listing.origin.state, 
+            lineItem.listing.origin.suburb,
+            lineItem.listing.origin.state,
             lineItem.listing.origin.countryCode
           ),
           vendor: orderItem.sellerCompanyName,
           cBorderRadius: '0',
           cBorderWidth: '0',
-          pricePerUnit: toPrice(lineItem.listing.pricePerKilo)
-        }
+          pricePerUnit: toPrice(lineItem.listing.pricePerKilo),
+        };
       }),
       shippingOption: getShipmentOptionString(
         orderItem.deliveryMethod,

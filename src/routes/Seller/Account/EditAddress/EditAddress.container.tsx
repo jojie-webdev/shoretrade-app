@@ -95,18 +95,21 @@ const EditAddress = (): JSX.Element => {
 
     setCompanyId(companyId);
     setAddressId(addressId);
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (isEmpty(addresses) && companyId) {
       dispatch(getAddressesActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId, addresses]);
 
   useEffect(() => {
     if (currentAddress && isDefault === null) {
       setIsDefault(currentAddress?.default);
     }
+    // eslint-disable-next-line
   }, [currentAddress]);
 
   useEffect(() => {

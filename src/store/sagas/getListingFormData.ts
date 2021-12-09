@@ -7,7 +7,7 @@ import {
 } from 'types/store/GetListingFormDataState';
 import { Store } from 'types/store/Store';
 
-import { getListingFormDataActions, getAllListingsActions } from '../actions';
+import { getListingFormDataActions } from '../actions';
 
 function* getListingFormDataRequest(
   action: AsyncAction<GetListingFormDataMeta, GetListingFormDataPayload>

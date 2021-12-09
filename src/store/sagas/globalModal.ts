@@ -1,11 +1,8 @@
-import { push } from 'connected-react-router';
-import { BUYER_ROUTES } from 'consts';
-import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
 import { Action } from 'types/Action';
-import { GlobalModalState } from 'types/store/GlobalModalState';
 import { Store } from 'types/store/Store';
 
-import { globalModalActions, getCartActions, socketActions } from '../actions';
+import { globalModalActions, socketActions } from '../actions';
 
 function* globalModalRunner(action: Action<any>) {
   if (action.type === socketActions.CART_EXPIRY_WARNING) {

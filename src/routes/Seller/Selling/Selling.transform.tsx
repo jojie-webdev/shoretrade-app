@@ -1,5 +1,4 @@
 import moment from 'moment';
-import pathOr from 'ramda/es/pathOr';
 import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';

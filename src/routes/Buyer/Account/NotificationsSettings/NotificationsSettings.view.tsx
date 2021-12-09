@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Button from 'components/base/Button';
 import {
   CommentsAlt,
   Desktop,
   EnvelopeAlt,
-  Sold,
   WhatsApp,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -15,7 +13,7 @@ import GlobalNotificationToggle from 'components/module/GlobalNotificationToggle
 import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import NotificationSettingsCategoryItem from 'components/module/NotificationSettingsCategoryItem';
-import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { Col, Row } from 'react-grid-system';
 import { GLOBAL_DEACTIVATION_MESSAGE } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';

@@ -1,13 +1,8 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Group194 = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
-
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (
@@ -53,7 +48,10 @@ const Group194 = (props: SVGProps): JSX.Element => {
           width="1"
           height="1"
         >
-          <use xlinkHref="#group194_image1" transform="scale(0.00909091 0.00295858)" />
+          <use
+            xlinkHref="#group194_image1"
+            transform="scale(0.00909091 0.00295858)"
+          />
         </pattern>
         <image
           id="group194_image0"

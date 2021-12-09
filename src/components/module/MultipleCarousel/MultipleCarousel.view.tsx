@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import SwiperCore, { Autoplay, Pagination } from 'swiper';
+import SwiperCore, { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useTheme } from 'utils/Theme';
 
 import { MultipleCarouselProps } from './MultipleCarousel.props';
-import { ArrowArea, Container, EmptyContainer } from './MultipleCarousel.style';
+import { Container, EmptyContainer } from './MultipleCarousel.style';
 
 SwiperCore.use([Pagination]);
 
@@ -19,7 +16,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>
 ) {
   const [ref, setRef] = useState<any>(null);
-  const theme = useTheme();
+  // eslint-disable-next-line
   const [currentNdx, setCurrentNdx] = useState(0);
   const containerWidthRef = useRef<HTMLDivElement | null>(null);
 
@@ -29,7 +26,6 @@ function MultipleCarousel<D extends { id: string }, CP>(
     data,
     transform,
     link,
-    breakpoints,
     onSlideChange,
     emptyText,
     responsive = false,
@@ -43,6 +39,7 @@ function MultipleCarousel<D extends { id: string }, CP>(
         ref.update();
       }, 1000);
     }
+    // eslint-disable-next-line
   }, [data]);
 
   function slidesPerView() {
@@ -66,9 +63,6 @@ function MultipleCarousel<D extends { id: string }, CP>(
       </EmptyContainer>
     );
   }
-
-  const arrowColor =
-    theme.appType === 'seller' ? theme.brand.primary : theme.grey.shade9;
 
   const showPagination = data.length > slidesPerView();
 

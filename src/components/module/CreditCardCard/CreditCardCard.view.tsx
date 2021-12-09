@@ -5,11 +5,7 @@ import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 
 import { CreditCardCardProps } from './CreditCardCard.props';
-import {
-  CustomInteractions,
-  LeftComponent,
-  RightComponent,
-} from './CreditCardCard.style';
+import { CustomInteractions, RightComponent } from './CreditCardCard.style';
 
 const CreditCardCard = (props: CreditCardCardProps): JSX.Element => {
   return (

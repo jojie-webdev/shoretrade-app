@@ -45,14 +45,18 @@ export const AvatarContainer = styled.div<{ borderRadius?: string }>`
   border-radius: ${({ borderRadius }) => borderRadius};
 `;
 
-export const AvatarPreview = styled.img<{ width?: string, height?: string }>`
+export const AvatarPreview = styled.img<{ width?: string; height?: string }>`
   width: ${({ width }) => width || '56px'};
-  height:${({ height }) => height || '56px'} ;
+  height: ${({ height }) => height || '56px'};
   border-radius: 5px;
   object-fit: contain;
 `;
 
-export const AvatarPlaceholder = styled.div<{ borderRadius?: string, width?: string, height?: string }>`
+export const AvatarPlaceholder = styled.div<{
+  borderRadius?: string;
+  width?: string;
+  height?: string;
+}>`
   border-radius: 5px;
   width: ${({ width }) => width || '56px'};
   height: ${({ height }) => height || '56px'};

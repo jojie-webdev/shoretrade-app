@@ -5,7 +5,6 @@ import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getSellerDashboard } from 'services/company';
 import {
   getMarketNotificationActions,
   getSellerDashboardSalesActions,
@@ -188,6 +187,7 @@ const Dashboard = (): JSX.Element => {
       })
     );
     dispatch(getMarketNotificationActions.request({}));
+    // eslint-disable-next-line
   }, []);
 
   // Market Notification Logic - Start

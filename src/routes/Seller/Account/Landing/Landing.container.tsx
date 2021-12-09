@@ -57,6 +57,7 @@ const AccountLanding = (): JSX.Element => {
 
       setCurrentCompany(c[0]);
     }
+    // eslint-disable-next-line
   }, [loadingUser]);
 
   // Mark:- Render

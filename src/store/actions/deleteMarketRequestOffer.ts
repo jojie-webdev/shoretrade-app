@@ -1,8 +1,8 @@
-import { createAsyncAction } from 'utils/Redux';
 import {
   DeleteMarketRequestOfferMeta,
-  DeleteMarketRequestOfferPayload
+  DeleteMarketRequestOfferPayload,
 } from 'types/store/DeleteMarketRequestOfferState';
+import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'DELETE_MARKET_REQUEST_OFFER';
 const asyncAction = createAsyncAction<

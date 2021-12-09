@@ -49,6 +49,7 @@ const EditLicense = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getStatesActions.request({}));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const EditLicense = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {

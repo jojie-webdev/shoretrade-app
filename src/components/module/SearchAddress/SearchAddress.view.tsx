@@ -10,12 +10,10 @@ import Search from 'components/module/Search';
 import { SearchAddressProps } from 'components/module/SearchAddress/SearchAddress.props';
 import { BUYER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
-import { useTheme } from 'utils/Theme';
 
 import { Container, AddressContainer } from './SearchAddress.style';
 
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
-  const theme = useTheme();
   const {
     addressOptions,
     currentDefaultAddressId,

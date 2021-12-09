@@ -5,7 +5,6 @@ import Interactions from 'components/base/Interactions';
 import { ChevronRight, Filter } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
-import { TypographyProps } from 'components/base/Typography/Typography.props';
 import EmptyState from 'components/module/EmptyState';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
@@ -13,39 +12,27 @@ import MobileHeader from 'components/module/MobileHeader';
 import OfferTag from 'components/module/OfferTag';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import moment from 'moment';
-import { isNil, prop, sortBy, isEmpty } from 'ramda';
+import { isNil, isEmpty } from 'ramda';
 import { Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { AnimatedOctopus } from 'res/images/animated/octopus';
 import {
   getExpiry,
   getShippingAddress,
-  getStatus,
-  isOfferMade,
-  isPaymentPending,
-  isPaymentRequired,
   isRedLabel,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import {
-  GetActiveOffersRequestResponseItem,
-  Offer,
-  OfferStatus,
-} from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import {
   Container,
-  BadgeText,
   ItemInteraction,
-  StyledBadge,
   FilterSearchContainer,
   FilterButton,
 } from './Landing.style';
@@ -57,12 +44,12 @@ const BuyerRequestsInteractions = (props: {
   data: GetAllMarketRequestResponseItem;
   activeOffers?: GetActiveOffersRequestResponseItem[];
 }) => {
-  const { onClick, data, activeOffers } = props;
+  const { onClick, data } = props;
   const unit = formatMeasurementUnit(data.measurementUnit);
 
   const buildSizeValue = () => {
     const sizeValue =
-      data.sizeOptions && Object.keys(data.sizeOptions).length != 0
+      data.sizeOptions && Object.keys(data.sizeOptions).length !== 0
         ? data.sizeOptions.join(', ')
         : sizeToString(
             data.metric,
@@ -72,30 +59,6 @@ const BuyerRequestsInteractions = (props: {
 
     return sizeValue;
   };
-
-  const getOfferByMarketRequest = () => {
-    const offer = activeOffers?.find(
-      (offer) => offer.marketRequest.id === data.id
-    );
-
-    return offer || ({} as Offer);
-  };
-
-  const statusTag = (
-    badgeColor: string,
-    badgeTextColor: TypographyProps['color'],
-    text: string
-  ) => (
-    <StyledBadge className="badge" badgeColor={badgeColor}>
-      <BadgeText
-        variant="overlineSmall"
-        color={badgeTextColor}
-        style={{ lineHeight: '15px' }}
-      >
-        {text}
-      </BadgeText>
-    </StyledBadge>
-  );
 
   const renderTagByStatus = () => {
     if (data.offers > 0) {
@@ -110,21 +73,12 @@ const BuyerRequestsInteractions = (props: {
     }
   };
 
-  const getOfferCount = () => {
-    const offer = getOfferByMarketRequest();
-
-    const initialOffer = 1;
-    const totalOfferAndNegos = initialOffer + offer?.negotiations?.length;
-
-    return totalOfferAndNegos;
-  };
-
   return (
     <Interactions
       onClick={() => onClick()}
       leftComponent={
         <>
-          <img src={parseImageUrl(data.image)} />
+          <img src={parseImageUrl(data.image)} alt="" />
           <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"
@@ -192,8 +146,6 @@ const MyActiveOffersInteractions = (props: {
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
-  const quantity = props.data.weight;
-
   const statusTextProps = transformMarketRequestStatusText(
     data.statusText,
     true
@@ -215,7 +167,7 @@ const MyActiveOffersInteractions = (props: {
       onClick={() => onClick()}
       leftComponent={
         <>
-          <img src={parseImageUrl(data.image)} />
+          <img src={parseImageUrl(data.image)} alt="" />
           <Col style={{ padding: '0 5px' }}>
             <Typography
               variant="caption"

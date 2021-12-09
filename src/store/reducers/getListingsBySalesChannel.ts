@@ -1,10 +1,11 @@
-import { 
+import { getListingsBySalesChannelActions } from 'store/actions';
+import {
   GetListingsBySalesChannelMeta,
-  GetListingsBySalesChannelPayload 
+  GetListingsBySalesChannelPayload,
 } from 'types/store/GetListingsBySalesChannelState';
 import { createAsyncReducer } from 'utils/Redux';
-import { getListingsBySalesChannelActions } from 'store/actions';
 
-export default createAsyncReducer<GetListingsBySalesChannelMeta, GetListingsBySalesChannelPayload>(
-  getListingsBySalesChannelActions
-);
+export default createAsyncReducer<
+  GetListingsBySalesChannelMeta,
+  GetListingsBySalesChannelPayload
+>(getListingsBySalesChannelActions);

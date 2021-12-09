@@ -1,10 +1,8 @@
 import moment from 'moment';
-import pathOr from 'ramda/es/pathOr';
 import unnest from 'ramda/es/unnest';
 import { EditableListingState } from 'types/store/EditableListingState';
 import { CategoryData } from 'types/store/GetCustomFormDataState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
-import { UserCompany } from 'types/store/GetUserState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';

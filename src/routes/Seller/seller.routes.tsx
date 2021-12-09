@@ -8,7 +8,7 @@ import {
   Cart,
   CheckBorder,
   Bolt,
-  Crates,
+  // Crates,
   Cog,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
@@ -32,7 +32,7 @@ import { useTheme } from 'utils/Theme';
 import SellerAccountRoutes from './Account/account.routes';
 import NotificationsSettings from './Account/NotificationsSettings';
 import AddProduct from './AddProduct/addProduct.routes';
-import CratesManagement from './CratesManagement';
+// import CratesManagement from './CratesManagement';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';

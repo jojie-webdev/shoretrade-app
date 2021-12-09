@@ -87,6 +87,7 @@ const ChooseSpecifications = ({
         return i.label !== 'Live';
       }
       if (disabledOptions.includes(i.label.toUpperCase())) {
+        // eslint-disable-next-line
         return;
       }
       return i;

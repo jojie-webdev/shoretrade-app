@@ -1,8 +1,8 @@
-import { createAsyncAction } from 'utils/Redux';
-import { 
-  GetListingByIdMeta, 
-  GetListingByIdPayload
+import {
+  GetListingByIdMeta,
+  GetListingByIdPayload,
 } from 'types/store/GetListingByIdState';
+import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'GET_LISTING_BY_ID';
 const asyncAction = createAsyncAction<
@@ -11,7 +11,7 @@ const asyncAction = createAsyncAction<
 >(ns);
 
 const getListingByIdActions = {
-  ...asyncAction
+  ...asyncAction,
 };
 
 export default getListingByIdActions;

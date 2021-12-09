@@ -1,15 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import {
   Exit,
   Cart as CartIcon,
-  ArrowLeft,
   PlaceholderProfile,
   ChevronRight,
-  ArrowLeftAlt,
+  ArrowLeft,
   ShoretradeLogo,
   Close,
-  Bell,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -31,14 +29,11 @@ import {
   DashboardGeneratedProps,
   NavLinkProps,
   HeaderProps,
-  IconLinkProps,
 } from './Dashboard.props';
 import {
   DashboardContainer,
   Sidebar,
   SidebarItem,
-  TabletSidebar,
-  TabletSidebarItem,
   Content,
   HeaderContainer,
   PageTitle,
@@ -77,22 +72,6 @@ const NavLink = ({
         {linkText}
       </Typography>
     </SidebarItem>
-  );
-};
-
-const IconLink = ({
-  to,
-  iconColor,
-  Icon,
-  onClick,
-  isActive,
-}: IconLinkProps) => {
-  return (
-    <TabletSidebarItem to={to} onClick={onClick} isActive={isActive}>
-      <div className="icon-container">
-        {Icon && <Icon fill={iconColor} height={20} width={20} />}
-      </div>
-    </TabletSidebarItem>
   );
 };
 
@@ -294,10 +273,6 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade7;
-
-  const showSmallSidebar = useMediaQuery({
-    query: BREAKPOINTS.genericTablet,
-  });
 
   const isHomeOld = useHomeOld();
 

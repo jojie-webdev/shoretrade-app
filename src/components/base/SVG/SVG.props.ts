@@ -5,5 +5,5 @@ export type SVGProps = {
   stroke?: string;
   sizeMultiplier?: number;
   fullSize?: boolean;
-  style?: {}
+  style?: {};
 };

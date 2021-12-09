@@ -1,6 +1,3 @@
-import { goBack, replace } from 'connected-react-router';
-import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
-import qs from 'qs';
 import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { negotiateOffer } from 'services/marketRequest';
@@ -44,12 +41,6 @@ function* negotiationOfferRequest(
 function* negotiationOfferSuccess(
   action: AsyncAction<NegotiateOffer, NegotiationPayload>
 ) {
-  const data = pathOr('', ['payload', 'data'], action);
-  const marketOfferId = pathOr(
-    '',
-    ['payload', 'data', 'marketOfferId'],
-    action
-  );
   const marketRequestId = pathOr(
     '',
     ['payload', 'data', 'marketRequestId'],

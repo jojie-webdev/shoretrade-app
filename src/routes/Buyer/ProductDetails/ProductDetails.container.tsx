@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { BUYER_ROUTES } from 'consts';
 import moment from 'moment';
-import { pathOr, splitEvery, take } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { ProductSellerRatingProps } from 'routes/Buyer/ProductDetails/ProductDetails.props';
 import {
   getListingActions,
   getListingBoxesActions,
-  cartActions,
+  // cartActions,
   updateFavoriteSellerActions,
   updateFavouriteProductActions,
   currentAddressActions,
@@ -18,7 +17,7 @@ import {
 } from 'store/actions';
 import getSellerByIdActions from 'store/actions/getSellerById';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
-import { CartItem } from 'types/store/CartState';
+// import { CartItem } from 'types/store/CartState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
@@ -42,11 +41,6 @@ const ProductDetails = (): JSX.Element => {
 
   const listingId = id;
   const addresses = GetAddressOptions();
-  const previousId =
-    useSelector((state: Store) => state.getListing.request?.listingId) || '';
-
-  const getListingData =
-    useSelector((state: Store) => state.getListing.data) || '';
 
   const selectedAddress =
     useSelector((state: Store) => state.currentAddress.id) || '';
@@ -66,9 +60,9 @@ const ProductDetails = (): JSX.Element => {
     (state: Store) => state.getSellerById.data?.data.seller
   );
 
-  const updateFavoriteSeller = useSelector(
-    (state: Store) => state.updateFavoriteSeller
-  );
+  // const updateFavoriteSeller = useSelector(
+  //   (state: Store) => state.updateFavoriteSeller
+  // );
 
   const [isSellerFavorite, setIsSellerFavorite] = useState(
     currentSeller?.isFavourite
@@ -84,17 +78,9 @@ const ProductDetails = (): JSX.Element => {
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
-  const uri = currentListing?.images[0] || '';
-
   const price = Number(currentListing?.price || '0');
   const isAquafuture = currentListing?.isAquafuture || false;
   const catchRecurrence = currentListing?.catchRecurrence || '';
-  const imageTags = [
-    ...(currentListing?.isAquafuture ? [{ label: 'Aquafuture' }] : []),
-    ...(pathOr('', ['images', '0'], currentListing).includes('type-default')
-      ? [{ label: 'Not Actual Product Image' }]
-      : []),
-  ];
 
   const getListingBoxesResponse =
     useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
@@ -277,6 +263,7 @@ const ProductDetails = (): JSX.Element => {
     if (listingId) {
       onLoad(listingId);
     }
+    // eslint-disable-next-line
   }, [listingId]);
 
   useEffect(() => {
@@ -285,16 +272,19 @@ const ProductDetails = (): JSX.Element => {
         getSellerByIdActions.request({ sellerId: currentListing.coop.id })
       );
     }
+    // eslint-disable-next-line
   }, [currentListing?.coop]);
 
   useEffect(() => {
     getBoxes();
+    // eslint-disable-next-line
   }, [weight]);
 
   useEffect(() => {
     if (currentSeller) {
       setIsSellerFavorite(currentSeller.isFavourite);
     }
+    // eslint-disable-next-line
   }, [currentSeller?.isFavourite]);
 
   // On error, set favorite back to what it originally was

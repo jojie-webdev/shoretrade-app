@@ -53,6 +53,7 @@ const AddAssistant = (): JSX.Element => {
   // MARK:- Variables
   useEffect(() => {
     if (submitted && addLinkedAccount.data) history.goBack();
+    // eslint-disable-next-line
   }, [addLinkedAccount]);
 
   const formikInitial = {
@@ -71,6 +72,7 @@ const AddAssistant = (): JSX.Element => {
     if (!permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
+    // eslint-disable-next-line
   }, [permission]);
 
   const generatedProps: AddAssistantGeneratedProps = {

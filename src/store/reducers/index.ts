@@ -4,11 +4,6 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
-import getSellerOrdersPending from './getSellerOrdersPending';
-import getAllSellerOrders from './getAllSellerOrders';
-import getListingById from './getListingById';
-import getListingsBySalesChannel from './getListingsBySalesChannel';
-import sendOrderRating from './sendOrderRating';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -41,6 +36,7 @@ import getAllBuyerListings from './getAllBuyerListings';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAllSellerOrders from './getAllSellerOrders';
 import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomepage';
@@ -56,7 +52,9 @@ import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
 import getListingBoxes from './getListingBoxes';
+import getListingById from './getListingById';
 import getListingFormData from './getListingFormData';
+import getListingsBySalesChannel from './getListingsBySalesChannel';
 import getListingsByType from './getListingsByType';
 import getListingTypesByCategory from './getListingTypesByCategory';
 import getMarketEstimate from './getMarketEstimate';
@@ -72,6 +70,7 @@ import getSellerDashboardSales from './getSellerDashboardSales';
 import getSellerDashboardTopCategories from './getSellerDashboardTopCategories';
 import getSellerLicense from './getSellerLicense';
 import getSellerOrdersDelivered from './getSellerOrdersDelivered';
+import getSellerOrdersPending from './getSellerOrdersPending';
 import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
@@ -103,6 +102,7 @@ import searchProductType from './searchProductType';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
+import sendOrderRating from './sendOrderRating';
 import socket from './socket';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
@@ -122,10 +122,10 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-  getSellerOrdersPending,
-  getAllSellerOrders,
-  getListingById,
-  getListingsBySalesChannel,
+        getSellerOrdersPending,
+        getAllSellerOrders,
+        getListingById,
+        getListingsBySalesChannel,
         getHistoricalListings,
         globalModal,
         sendOrderRating,

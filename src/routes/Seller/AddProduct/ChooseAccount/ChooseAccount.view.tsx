@@ -6,7 +6,6 @@ import Select from 'components/base/Select';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
-import { placeholderImage } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { useMediaQuery } from 'react-responsive';
@@ -57,6 +56,7 @@ const ChooseAccount = ({
     if (selected === '') {
       setSelected(pathOr('', ['0', 'value'], accountOptions));
     }
+    // eslint-disable-next-line
   }, [accountOptions]);
 
   return (

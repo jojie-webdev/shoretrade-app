@@ -7,9 +7,7 @@ import { AsyncAction } from 'types/Action';
 import {
   CreateCustomListingMeta,
   CreateCustomListingPayload,
-  CreateCustomListingRequestData,
 } from 'types/store/CreateCustomListingState';
-import { EditableListingState } from 'types/store/EditableListingState';
 import { Store } from 'types/store/Store';
 import { base64ToFile } from 'utils/File';
 import { editableListingToCreateCustomListing } from 'utils/Listing';

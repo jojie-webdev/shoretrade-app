@@ -3,7 +3,6 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
-import { theme } from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;

@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { F, forEach, groupBy, isEmpty } from 'ramda';
+import { groupBy, isEmpty } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGroupName } from 'routes/Seller/MarketBoard/RequestAndNegotiate/MakeOffer/MakeOffer.transforms';
 import { getAddressesActions } from 'store/actions';
 import { GetAddressOptions } from 'store/selectors/seller/addresses';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
@@ -45,7 +44,8 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
   );
   const [size, setSize] = useState({
     from:
-      currentOfferItemData?.size.from === null || props.buyerRequest.sizeUngraded
+      currentOfferItemData?.size.from === null ||
+      props.buyerRequest.sizeUngraded
         ? 'ungraded'
         : currentOfferItemData?.size.from || '',
     to:
@@ -95,6 +95,7 @@ const MakeOffer = (props: MakeOfferProps): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companies]);
 
   const onClickSpecification = (option: Option) => {

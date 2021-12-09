@@ -1,7 +1,7 @@
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Row, Container, Col } from 'react-grid-system';
-import styled, { css } from 'utils/styled';
+import { Col } from 'react-grid-system';
+import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const ViewContainer = styled.div`

@@ -1,5 +1,3 @@
-import { push } from 'connected-react-router';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { createMarketOffer } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';

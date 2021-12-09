@@ -15,9 +15,8 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
 
-import { ChooseTypeProps, ChooseTypePublicProps } from './ChooseType.props';
+import { ChooseTypeProps } from './ChooseType.props';
 import {
   Container,
   Image,
@@ -76,6 +75,7 @@ const ChooseType = ({
     } else if (searchKey.length <= 2 && isEmpty(searchResults)) {
       search('');
     }
+    // eslint-disable-next-line
   }, [searchKey]);
 
   // Custom type states
@@ -110,12 +110,14 @@ const ChooseType = ({
     if (showCustomTypeSettings && categoryOptions.length === 0) {
       getCustomFormData();
     }
+    // eslint-disable-next-line
   }, [showCustomTypeSettings, searchKey]);
 
   useEffect(() => {
     if (metricOptions.length > 0) {
       setSelectedMetric(metricOptions[0].value);
     }
+    // eslint-disable-next-line
   }, [selectedCategory]);
 
   if (showCustomTypeSettings) {

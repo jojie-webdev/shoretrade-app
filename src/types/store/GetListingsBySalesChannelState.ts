@@ -1,11 +1,11 @@
 import { GenericResponse } from 'types/GenericResponse';
 
 export type GetListingsBySalesChannelMeta = {
-  employeeId: string,
-  term?: string,
+  employeeId: string;
+  term?: string;
   salesChannel: string;
-  limit?: number,
-  page?: number
+  limit?: number;
+  page?: number;
 };
 
 export type GetListingsBySalesChannelResponseItem = {

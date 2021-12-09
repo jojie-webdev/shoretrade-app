@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
@@ -18,18 +18,11 @@ import { sortBy } from 'ramda';
 import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 const Content = (props: NegotiateSellerModalProps) => {
-  const {
-    marketOffer,
-    onSubmit,
-    isNegotiating,
-    modalLastNegotiationsArray,
-    ...modalProps
-  } = props;
+  const { marketOffer, onSubmit, isNegotiating } = props;
   const theme = useTheme();
   const textColor = 'shade7';
 
@@ -59,7 +52,6 @@ const Content = (props: NegotiateSellerModalProps) => {
     100
   ).toFixed(2);
   const totalValue = currentNewOffer * weight;
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const unit = formatMeasurementUnit(measurementUnit);
 

@@ -39,7 +39,7 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
               <div className="shipping-option-left">
                 {o.imageUrl && (
                   <div className="thumbnail-container">
-                    <img src={parseImageUrl(o.imageUrl)} />
+                    <img src={parseImageUrl(o.imageUrl)} alt="" />
                   </div>
                 )}
                 <div>

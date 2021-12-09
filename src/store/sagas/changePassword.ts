@@ -7,7 +7,7 @@ import {
 } from 'types/store/ChangePasswordState';
 import { Store } from 'types/store/Store';
 
-import { changePasswordActions, getUserActions } from '../actions';
+import { changePasswordActions } from '../actions';
 
 function* changePasswordRequest(
   action: AsyncAction<ChangePasswordMeta, ChangePasswordPayload>

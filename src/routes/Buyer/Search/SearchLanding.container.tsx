@@ -86,6 +86,7 @@ const SearchLanding = (): JSX.Element => {
 
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   const generatedProps: SearchLandingGeneratedProps = {

@@ -3,7 +3,7 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import { Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { Row, Col } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -37,14 +37,7 @@ import {
 } from './Preview.style';
 
 export const PreviewDetailAlt = (props: PreviewProps) => {
-  const {
-    cardContainerStyle,
-    cardContainerClass,
-
-    hiddenPrice,
-    hiddenVendor,
-    alternate,
-  } = props;
+  const { hiddenPrice, hiddenVendor, alternate } = props;
   const theme = useTheme();
 
   const remaining = ellipsisOnOverflow(

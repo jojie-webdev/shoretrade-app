@@ -25,6 +25,7 @@ const AccountCompletion = (): JSX.Element => {
         companyId,
       })
     );
+    // eslint-disable-next-line
   }, [companyId]);
 
   const goToLicenses = () => {

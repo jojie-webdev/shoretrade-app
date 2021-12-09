@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+
 import { Option } from './MakeOffer/MakeOffer.props';
 
 export interface StepProps {

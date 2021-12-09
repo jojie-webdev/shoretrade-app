@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 // Screens

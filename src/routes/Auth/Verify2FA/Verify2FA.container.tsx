@@ -66,6 +66,7 @@ const Verify2FA = (): JSX.Element => {
         history.replace(BUYER_ROUTES.LOGIN);
       }
     }
+    // eslint-disable-next-line
   }, [email]);
 
   const generatedProps = {

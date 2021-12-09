@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Badge from 'components/base/Badge';
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
@@ -14,7 +14,6 @@ import { CarouselProps } from './Carousel.props';
 import {
   SwiperArea,
   ArrowArea,
-  Image,
   ImageContainer,
   LeftInsideArrowArea,
   RightInsideArrowArea,
@@ -64,6 +63,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         swiperRef.update();
       }, 1000);
     }
+    // eslint-disable-next-line
   }, [images]);
 
   // logic to rerender the items,
@@ -76,6 +76,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         swiperRef.update();
       }
     }
+    // eslint-disable-next-line
   }, [showSwiperItems]);
 
   const swiperAreaWidth =

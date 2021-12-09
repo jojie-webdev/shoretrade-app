@@ -83,6 +83,7 @@ const EditAddress = (): JSX.Element => {
     if (currentAddress && isDefault === null) {
       setIsDefault(currentAddress?.default);
     }
+    // eslint-disable-next-line
   }, [currentAddress]);
 
   useEffect(() => {

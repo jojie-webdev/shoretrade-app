@@ -4,7 +4,6 @@ import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';

@@ -102,11 +102,11 @@ export const AccordionTitleContainer = styled.div<{
 export const AlertContainer = styled.div`
   overflow: hidden;
   height: 98px;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   &.hidden {
     height: 0;
   }
   @media ${BREAKPOINTS['sm']} {
     height: 120px;
   }
-`
+`;

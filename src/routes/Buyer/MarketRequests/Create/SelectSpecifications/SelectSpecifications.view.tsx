@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ShoretradeAnchor, ChevronRight } from 'components/base/SVG';
+import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import { isEmpty, uniq, groupBy, dropLast, prop } from 'ramda';
@@ -17,14 +17,7 @@ import {
   RequestRow,
   RequestDetailsContainer,
   DetailsContainer,
-  DetailsHeaderContainer,
   MainContainer,
-  MultipleTopAbsoContainer,
-  MultipleTopGroupContainer,
-  MultipleBottomAbsoContainer,
-  MultipleBottomGroupContainer,
-  MultipleLeftAbsoContainer,
-  MultipleLeftGroupContainer,
   FriendlyTextContainer,
 } from '../Create.style';
 import {
@@ -32,7 +25,6 @@ import {
   ProceedButton,
   PreviousButton,
   ButtonContainer,
-  AnchorContainer,
   CheckboxContainer,
   CheckboxGroupContainer,
   SpecsContainer,
@@ -45,7 +37,6 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
   const {
     stepCountComponent,
     onBack,
-    selectedCategory,
     setSelectedSpecifications,
     listingFormData,
     selectedSpecifications,
@@ -157,6 +148,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
 
   useEffect(() => {
     setSelectedSpecifications({ items: selectedState.selectedStates });
+    // eslint-disable-next-line
   }, [selectedState.selectedStates]);
 
   const SpecsFriendlyText = (props: { index: number }) => {

@@ -3,7 +3,6 @@ import React from 'react';
 import Button from 'components/base/Button';
 import { ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import useHomeOld from 'utils/Hooks/useHomeOld';
 
 import { HomeSectionHeaderProps } from './HomeSectionHeader.props';
 import { Container } from './HomeSectionHeader.style';

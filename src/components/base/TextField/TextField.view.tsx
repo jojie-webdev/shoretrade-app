@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import Alert from 'components/base/Alert';
-import { Eye, EyeOff, InfoFilled } from 'components/base/SVG';
+import { Eye, EyeOff } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';

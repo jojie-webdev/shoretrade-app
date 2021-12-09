@@ -7,7 +7,7 @@ import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { DayPickerRangeController, FocusedInputShape } from 'react-dates';
+import { DayPickerRangeController } from 'react-dates';
 import { useMediaQuery } from 'react-responsive';
 import theme from 'utils/Theme';
 

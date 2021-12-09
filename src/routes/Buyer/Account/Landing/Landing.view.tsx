@@ -1,12 +1,8 @@
-import { AnyCnameRecord } from 'dns';
-
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
-import Spinner from 'components/base/Spinner/Spinner.view';
 import Typography from 'components/base/Typography';
-import { BoxContainer } from 'components/layout/BoxContainer';
 import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -15,7 +11,6 @@ import qs from 'qs';
 import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import theme from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
 import { Container, Header, NavInteraction } from './Landing.style';
@@ -64,8 +59,6 @@ const LandingView = (props: LandingGeneratedProps) => {
     },
     { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
   ];
-
-  const imagePicker = useRef<HTMLInputElement | null>(null);
 
   if (loadingUser) {
     return <Loading />;

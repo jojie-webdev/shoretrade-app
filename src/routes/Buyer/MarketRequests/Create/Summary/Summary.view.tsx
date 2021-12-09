@@ -4,13 +4,11 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import Select from 'components/base/Select';
 import { ArrowRight, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import { groupBy } from 'ramda';
 import { Row, Hidden, Visible } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import theme from 'utils/Theme';
@@ -19,7 +17,6 @@ import {
   ContainerWithCategoryImagePreview,
   CreateRequestHeaderContainer,
   DetailsContainer,
-  FriendlyTextContainer,
   MainContainer,
   RequestDetailsContainer,
   RequestRow,
@@ -38,9 +35,7 @@ import {
 
 const SummaryView = (props: SummaryProps) => {
   const {
-    step,
     stepCountComponent,
-    selectedCategory,
     selectedQuantity,
     selectedSize,
     selectedSpecifications,
@@ -50,8 +45,6 @@ const SummaryView = (props: SummaryProps) => {
     detailsListComponent,
     didFinishStep,
   } = props;
-  const history = useHistory();
-  console.log(didFinishStep);
 
   const handleSubmit = () => {
     setSendConfModalisOpen(true);

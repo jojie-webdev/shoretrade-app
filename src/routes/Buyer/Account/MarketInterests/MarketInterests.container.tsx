@@ -84,6 +84,7 @@ const MarketInterests = (): JSX.Element => {
 
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchTerm, isInner]);
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const MarketInterests = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -107,8 +109,10 @@ const MarketInterests = (): JSX.Element => {
           companyId,
         })
       );
+      // eslint-disable-next-line
       setIsInner(false);
     }
+    // eslint-disable-next-line
   }, [updateMarketInterests?.data?.status]);
 
   const onPressCategory = async (id: string) => {

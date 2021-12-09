@@ -1,5 +1,4 @@
 import TextField from 'components/base/TextField';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const StyledTextField = styled(TextField)`

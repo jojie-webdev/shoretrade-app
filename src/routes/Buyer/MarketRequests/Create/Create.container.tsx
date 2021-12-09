@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { BUYER_MARKET_REQUEST_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getListingFormDataActions,
@@ -12,10 +11,7 @@ import {
 import { GetDefaultCompany, GetAddressOptions } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
-import {
-  ConfirmSentRequestModalProps,
-  CreateRequestGeneratedProps,
-} from './Create.props';
+import { CreateRequestGeneratedProps } from './Create.props';
 import CreateRequestLandingView from './Create.view';
 import { SizeOptions } from './SelectSize/SelectSize.props';
 
@@ -36,7 +32,6 @@ const CreateRequest = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(1);
   const [didFinishStep, setDidFinishStep] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showSentModal, setShowSentModal] = useState(false);
   const [selectedSpecifications, setSelectedSpecifications] = useState<{
     items: any[];
   }>({
@@ -95,9 +90,10 @@ const CreateRequest = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (currentFoundAddress?.label != undefined) {
+    if (currentFoundAddress?.label !== undefined) {
       setSelectedAddress(currentFoundAddress);
     }
+    // eslint-disable-next-line
   }, [currentDefaultAddress]);
 
   const onChangeAddress = (e: { label: string; value: string }) => {
@@ -193,6 +189,7 @@ const CreateRequest = (): JSX.Element => {
     } else {
       setHideSearchResult(true);
     }
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   useEffect(() => {
@@ -203,6 +200,7 @@ const CreateRequest = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -212,12 +210,14 @@ const CreateRequest = (): JSX.Element => {
       setSelectedSize({ from: '', to: '', ungraded: false, items: [] });
       setSelectedQuantity({ from: '', to: '' });
     }
+    // eslint-disable-next-line
   }, [currentStep]);
 
   useEffect(() => {
     if (selectedCategory.id) {
       getFormData(selectedCategory.id);
     }
+    // eslint-disable-next-line
   }, [selectedCategory.id]);
 
   const generatedProps: CreateRequestGeneratedProps = {

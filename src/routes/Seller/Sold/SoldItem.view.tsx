@@ -4,7 +4,7 @@ import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import { Plane, Truck, FileCheck } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { API, collectAddressShort, SELLER_SOLD_ROUTES } from 'consts';
+import { API, SELLER_SOLD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +14,6 @@ import { useTheme } from 'utils/Theme';
 
 import { SoldItemData } from './Sold.props';
 import {
-  StyledInteraction,
   InnerStyledInteraction,
   CollapsibleContent,
   ItemCard,
@@ -22,6 +21,7 @@ import {
   ItemDetail,
   Tag,
   Spacer,
+  StyledInteraction,
 } from './SoldItem.styles';
 
 const SoldItem = (props: {
@@ -84,7 +84,7 @@ const SoldItem = (props: {
     }
   };
   return Object.values(props.data).map((entry, idx) => {
-    if (entry.length === 0) return;
+    if (entry.length === 0) return; // eslint-disable-line
     const {
       type = 'air',
       toAddressState,

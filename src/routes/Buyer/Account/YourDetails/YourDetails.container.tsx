@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -18,7 +17,6 @@ import YourDetailsView from './YourDetails.view';
 const YourDetails = (): JSX.Element => {
   // MARK:- Hooks / Store
   const dispatch = useDispatch();
-  const location = useLocation();
   const getUser = useSelector((state: Store) => state.getUser);
   const updateUser = useSelector((state: Store) => state.updateUser);
   const currentCompany = GetDefaultCompany();
@@ -57,6 +55,7 @@ const YourDetails = (): JSX.Element => {
         abn: currentCompany?.abn || '',
       });
     }
+    // eslint-disable-next-line
   }, [getUser]);
 
   // MARK:- Methods

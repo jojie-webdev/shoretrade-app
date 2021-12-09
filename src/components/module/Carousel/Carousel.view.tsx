@@ -5,13 +5,7 @@ import Typography from 'components/base/Typography';
 import SwiperContainer from 'components/layout/SwiperContainer';
 import {
   SwiperArea,
-  ArrowArea,
-  Image,
   ImageContainer,
-  LeftInsideArrowArea,
-  RightInsideArrowArea,
-  ArrowButton,
-  PaginationArea,
   BadgeContainer,
   ActionButtonContainer,
   ThumbNavContainer,
@@ -33,15 +27,10 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     images,
     id,
     height,
-    swiperWidth,
     loop,
     autoplay,
-    arrowWidth,
-    justifyArrows,
-    hideArrowArea,
     aspectRatio = '16:9',
     addMargin,
-    arrowInside,
     showAquafuture,
     showAlmostGone,
     showAlwaysAvailable,
@@ -70,6 +59,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         swiperRef.update();
       }, 1000);
     }
+    // eslint-disable-next-line
   }, [images]);
 
   // logic to rerender the items,
@@ -82,16 +72,8 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         swiperRef.update();
       }
     }
+    // eslint-disable-next-line
   }, [showSwiperItems]);
-
-  const swiperAreaWidth =
-    swiperWidth ||
-    `calc(100% - ${arrowWidth ? `${arrowWidth * 2}px` : '200px'})`;
-  const arrowAreaWidth = arrowWidth
-    ? `${arrowWidth}px`
-    : swiperWidth
-    ? `calc((100% - ${swiperWidth})/2)`
-    : 100;
 
   if (images.length === 0) {
     return <></>;

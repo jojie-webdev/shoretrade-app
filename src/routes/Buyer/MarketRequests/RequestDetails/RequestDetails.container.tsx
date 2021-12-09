@@ -1,9 +1,8 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
-import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
@@ -12,14 +11,10 @@ import {
   getActiveOffersActions,
   getMarketRequestBuyerFiltersActions,
   deleteMarketRequestOfferActions,
-  marketOfferActions,
 } from 'store/actions';
-import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
-import { Negotiations, Offer } from 'types/store/GetActiveOffersState';
-import { AcceptOfferItem } from 'types/store/MarketOfferState';
+import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
 
-import PaymentMethod from './../Checkout/PaymentMethod/PaymentMethod.container';
 import {
   getFavouriteSellers,
   getLocation,
@@ -98,11 +93,6 @@ const MarketRequestDetail = (): JSX.Element => {
     breadCrumbSections = offerBreadCrumb;
   }
 
-
-  const acceptOffer = useSelector(
-    (store: Store) => store.marketRequestAcceptOffer
-  );
-
   const buyerRequests = useSelector(
     (store: Store) => store.getAllMarketRequest
   );
@@ -180,6 +170,7 @@ const MarketRequestDetail = (): JSX.Element => {
         },
       })
     );
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -191,6 +182,7 @@ const MarketRequestDetail = (): JSX.Element => {
     if (activeOffersData[0]?.marketRequest) {
       setCurrentMR(activeOffersData[0].marketRequest);
     }
+    // eslint-disable-next-line
   }, [activeOffers]);
 
   useEffect(() => {
@@ -219,6 +211,7 @@ const MarketRequestDetail = (): JSX.Element => {
     }, 800);
 
     setTimer(timerId);
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   useEffect(() => {
@@ -227,8 +220,8 @@ const MarketRequestDetail = (): JSX.Element => {
         buyerId: user?.id || '',
       })
     );
+    // eslint-disable-next-line
   }, [user]);
-
 
   useEffect(() => {
     activeOffers.data?.data.marketOffers.forEach((marketOffer) =>
@@ -251,7 +244,6 @@ const MarketRequestDetail = (): JSX.Element => {
     }
   }, [location.pathname]);
 
-  const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
   const generatedProps: MarketRequestDetailProps = {
     currentPath: location.pathname,
     currentOfferId,

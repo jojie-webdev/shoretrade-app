@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Subtract = (props: SVGProps & { innerFill?: string }): JSX.Element => {
-  const theme = useTheme();
   const { width, height, fill, innerFill } = props;
 
   // Paste converted svg below

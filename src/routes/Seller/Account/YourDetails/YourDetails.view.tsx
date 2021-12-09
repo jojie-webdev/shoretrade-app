@@ -28,10 +28,10 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     updateUserSuccess,
     callingCode,
     setCallingCode,
-    companyRelationship
+    companyRelationship,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const isNotAdmin = companyRelationship != COMPANY_RELATIONSHIPS.ADMIN
+  const isNotAdmin = companyRelationship !== COMPANY_RELATIONSHIPS.ADMIN;
   const formRef = useRef();
 
   if (loadingUser && !userDetails.firstName) {
@@ -99,10 +99,18 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business" name="businessName" disabled={isNotAdmin}/>
+              <FormikTextField
+                label="Business"
+                name="businessName"
+                disabled={isNotAdmin}
+              />
             </Col>
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business number (optional)" name="abn" disabled={isNotAdmin}/>
+              <FormikTextField
+                label="Business number (optional)"
+                name="abn"
+                disabled={isNotAdmin}
+              />
             </Col>
           </InputRow>
 

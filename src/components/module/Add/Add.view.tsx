@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-import { Camera } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { useTheme } from 'utils/Theme';
 

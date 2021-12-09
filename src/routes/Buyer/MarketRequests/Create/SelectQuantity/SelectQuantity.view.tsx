@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { ArrowLeft, ChevronRight } from 'components/base/SVG';
-import Touchable from 'components/base/Touchable';
+import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { Hidden, Visible } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import theme from 'utils/Theme';
 
 import {
   ButtonContainer,
@@ -33,7 +30,6 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
     listingFormData,
     onBack,
     setSelectedQuantity,
-    selectedCategory,
     selectedQuantity,
     setStep,
     detailsListComponent,
@@ -128,7 +124,7 @@ const SelectQuantityView = (props: SelectQuantityProps) => {
                 className="row-label-friendly-text"
                 style={{ fontFamily: 'Media Sans' }}
               >
-                 How much product do you want to purchase?
+                How much product do you want to purchase?
               </Typography>
             </FriendlyTextContainer>
             <StyledTextField

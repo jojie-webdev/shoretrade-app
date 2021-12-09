@@ -1,6 +1,3 @@
-import { replace } from 'connected-react-router';
-import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { negotiateOffer } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';

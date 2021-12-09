@@ -34,12 +34,14 @@ const Licenses = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
     if (addLicense.data?.status === 200) {
       setShowSuccess(true);
     }
+    // eslint-disable-next-line
   }, [addLicense.data?.status]);
 
   const onClickAddLicense = () => {

@@ -1,6 +1,5 @@
 // TODO: refactor to avoid mutation
 
-import { pathOr } from 'ramda';
 import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetSellerOrdersMeta,

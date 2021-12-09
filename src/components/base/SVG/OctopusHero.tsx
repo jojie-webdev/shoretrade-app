@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const OctopusHero = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
+  const { width, height } = props;
 
   return (
     <svg

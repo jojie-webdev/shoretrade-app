@@ -1,13 +1,5 @@
 import { eventChannel } from 'redux-saga';
-import {
-  take,
-  put,
-  call,
-  select,
-  takeLatest,
-  race,
-  takeEvery,
-} from 'redux-saga/effects';
+import { take, put, call, select, race, takeEvery } from 'redux-saga/effects';
 import { getSocketToken } from 'services/auth';
 import createSocketConnection from 'services/websocket';
 import { authActions, getUserActions, socketActions } from 'store/actions';

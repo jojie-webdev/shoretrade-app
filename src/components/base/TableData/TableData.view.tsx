@@ -11,6 +11,7 @@ import { TableDataContainer, DataWrapper } from './TableData.styles';
 const ResizerComponent = (props: ResizerComponentProps) => {
   const { defaultSize, column, onResize, columns, handleMaximizeColum } = props;
   const [resizeSwitch, setResizeSwitch] = useState(false);
+  // eslint-disable-next-line
   const artKey = useMemo(() => `${Date.now()}.${Math.random()}`, [
     resizeSwitch,
   ]);
@@ -42,6 +43,7 @@ const ResizerComponent = (props: ResizerComponentProps) => {
         if (col) handleMaximizeColum?.(col.selector);
       };
     }
+    // eslint-disable-next-line
   }, [resizerRef, artKey]);
 
   return (
@@ -87,10 +89,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     onMouseLeave,
     onClick,
     sticky,
-    id,
-    onResize,
     column,
-    handleMaximizeColum,
   } = props;
 
   const TableDataContainerRef = useRef<HTMLDivElement>(null);
@@ -105,9 +104,9 @@ export default function TableDataContent(props: TableDataContentProps) {
     onMouseEnter,
     onMouseLeave,
     onClick,
-    ['data-column-type']: columnType,
-    ['data-row-type']: rowType,
-    ['data-row-sticky']: sticky,
+    ['data-column-type']: columnType, // eslint-disable-line
+    ['data-row-type']: rowType, // eslint-disable-line
+    ['data-row-sticky']: sticky, // eslint-disable-line
   };
 
   useEffect(() => {

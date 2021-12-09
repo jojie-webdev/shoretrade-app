@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { InfoFilled, Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -11,7 +11,7 @@ import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { useTheme } from 'utils/Theme';
 
-import { OrderItem, OrdersGeneratedProps } from '../Orders.props';
+import { OrdersGeneratedProps } from '../Orders.props';
 import {
   StyledAccordion,
   OrderBadge,
@@ -82,7 +82,9 @@ const Pending = (props: OrdersGeneratedProps) => {
                       : 'Delivery'}
                     :
                   </Typography>
-                  <Typography color="shade9" className="labelBold">{key}</Typography>
+                  <Typography color="shade9" className="labelBold">
+                    {key}
+                  </Typography>
                 </AccordionTitleContainer>
               }
               rightComponent={
@@ -124,7 +126,9 @@ const Pending = (props: OrdersGeneratedProps) => {
                   <Typography color="shade6" className="label" weight="400">
                     Estimated Delivery:
                   </Typography>
-                  <Typography color="shade9" className="labelBold">{key}</Typography>
+                  <Typography color="shade9" className="labelBold">
+                    {key}
+                  </Typography>
                 </AccordionTitleContainer>
               }
               rightComponent={

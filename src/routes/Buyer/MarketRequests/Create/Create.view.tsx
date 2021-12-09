@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 
-import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import {
   Crab,
-  AnchorHero,
-  CaviarHero,
-  OctopusHero,
   TexturedCrab,
   TexturedOctopus,
   TexturedSwordFish,
@@ -23,7 +19,6 @@ import {
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import Loading from 'components/module/Loading';
 import LoadingOverlay from 'components/module/LoadingOverlay';
 import NumberedHeroView from 'components/module/NumberedHero';
 import { groupBy } from 'ramda';
@@ -304,6 +299,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
             {selectedCategory?.name}
           </Typography>
         </DetailsHeaderContainer>
+        {/* eslint-disable-next-line react/prop-types */}
         {selectedSpecifications.items.length > 0 && (
           <DetailsContentContainer>
             {Object.keys(groupSpecs).map((group, index) => {

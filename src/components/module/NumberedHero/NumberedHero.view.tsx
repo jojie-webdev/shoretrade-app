@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TypographyView from 'components/base/Typography';
-import { Col, Row, setConfiguration } from 'react-grid-system';
+import { Col, setConfiguration } from 'react-grid-system';
 
 // import { useTheme } from 'utils/Theme';
 import { NumberedHeroProps } from './NumberedHero.props';

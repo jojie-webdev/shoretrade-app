@@ -30,7 +30,6 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
-    isSuccess,
     type,
     onDeleteAddress,
   } = props;

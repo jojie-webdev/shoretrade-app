@@ -8,7 +8,7 @@ import {
 } from 'types/store/AddLinkedAccountState';
 import { Store } from 'types/store/Store';
 
-import { addLinkedAccountActions, getLinkedAccountsActions } from '../actions';
+import { addLinkedAccountActions } from '../actions';
 
 function* addLinkedAccountRequest(
   action: AsyncAction<AddLinkedAccountMeta, AddLinkedAccountPayload>

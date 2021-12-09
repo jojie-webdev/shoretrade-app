@@ -39,6 +39,7 @@ const SizeInput = (props: SizeInputProps) => {
         }
       }
     }
+    // eslint-disable-next-line
   }, [fromSize, toSize]);
 
   if (
@@ -158,6 +159,7 @@ const ChooseSize = ({
         setShowError(false);
       }
     }
+    // eslint-disable-next-line
   }, [toSize, fromSize, isUngraded]);
 
   const qualityOptions = listingFormData?.qualityOptions || [];

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { SELLER_DASHBOARD_ROUTES, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getSellerDashboardTopCategoriesActions } from 'store/actions';
 import { Store } from 'types/store/Store';
-import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CategoriesView from './Categories.view';
@@ -66,6 +65,7 @@ const Categories = (): JSX.Element => {
         dateTo: moment(dateStringTo).endOf('day').toISOString(),
       })
     );
+    // eslint-disable-next-line
   }, []);
 
   const generatedProps = {

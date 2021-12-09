@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -63,7 +63,9 @@ const InTransit = (props: OrdersGeneratedProps) => {
                 <Typography color="shade6" className="label" weight="400">
                   Estimated Delivery:
                 </Typography>
-                <Typography color="shade9" className="labelBold">{key}</Typography>
+                <Typography color="shade9" className="labelBold">
+                  {key}
+                </Typography>
               </AccordionTitleContainer>
             }
             rightComponent={

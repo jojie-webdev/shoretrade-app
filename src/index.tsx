@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { ConnectedRouter } from 'connected-react-router';
-import { API, SELLER_ROUTES } from 'consts';
+import { SELLER_ROUTES } from 'consts';
 import { ThemeProvider } from 'emotion-theming';
 import ErrorBoundary from 'ErrorBoundary';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Routes from 'routes/index.routes';
-import io from 'socket.io-client';
 import { store, persistor, sagaMiddleware, history } from 'store';
 import sagas from 'store/sagas';
 import { Store } from 'types/store/Store';
@@ -52,6 +51,7 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => {
+  // eslint-disable-next-line
   const [rehydrated, setRehydrated] = useState(false);
   const onRehydate = async () => {
     setRehydrated(true);

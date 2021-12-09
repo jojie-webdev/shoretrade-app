@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Amex = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
-
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (
-    <svg width={28} height={24} 
+    <svg
+      width={28}
+      height={24}
       // viewBox="0 0 14 14"
       fill="none"
       viewBox="0 0 291.764 291.764"

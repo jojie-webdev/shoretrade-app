@@ -11,7 +11,6 @@ import {
 
 import {
   updateAddressActions,
-  getUserActions,
   getAddressesActions,
   cartActions,
 } from '../actions';

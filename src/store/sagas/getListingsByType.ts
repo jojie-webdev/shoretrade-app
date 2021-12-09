@@ -8,7 +8,6 @@ import {
   GetListingsByTypeResponseListingItem,
 } from 'types/store/GetListingsByTypeState';
 import { Store } from 'types/store/Store';
-import { findProduct } from 'utils/Listing';
 
 import { getListingsByTypeActions, socketActions } from '../actions';
 

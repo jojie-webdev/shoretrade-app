@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useCallback } from 'react';
 
-import { FileUpload, Subtract } from 'components/base/SVG';
+import { Subtract } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Add from 'components/module/Add';
 import isEmpty from 'ramda/es/isEmpty';
@@ -13,7 +13,6 @@ import {
   PreviewContainer,
   PreviewFile,
   DeleteBadge,
-  DeleteText,
   FileDetailsContainer,
   UploadLink,
   UploadTitle,
@@ -22,7 +21,7 @@ import {
 
 const bytesToSize = (bytes) => {
   const sizes = ['Kb', 'Mb', 'Gb', 'Tb'];
-  if (bytes == 0) return '0 Byte';
+  if (bytes === 0) return '0 Byte';
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
@@ -32,8 +31,9 @@ const AddFile = (props: AddFileProps): JSX.Element => {
   const theme = useTheme();
   const onDrop = useCallback((files) => {
     onSelectFile(files.length > 0 ? files[0] : null);
+    // eslint-disable-next-line
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const renderTitle = () => (
     <UploadTitle>

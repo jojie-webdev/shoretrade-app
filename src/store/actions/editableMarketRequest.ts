@@ -1,7 +1,4 @@
-import {
-  EditableMarketRequestMeta,
-  EditableMarketRequestPayload,
-} from 'types/store/EditableMarketRequest';
+import { EditableMarketRequestMeta } from 'types/store/EditableMarketRequest';
 import { createUpdateAction, createClearAction } from 'utils/Redux';
 
 const ns = 'EDITABLE_MARKET_REQUEST';

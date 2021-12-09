@@ -5,11 +5,7 @@ import { AsyncAction } from 'types/Action';
 import { AddAddressMeta, AddAddressPayload } from 'types/store/AddAddressState';
 import { Store } from 'types/store/Store';
 
-import {
-  addAddressActions,
-  getUserActions,
-  getAddressesActions,
-} from '../actions';
+import { addAddressActions, getAddressesActions } from '../actions';
 
 function* addAddressRequest(
   action: AsyncAction<AddAddressMeta, AddAddressPayload>

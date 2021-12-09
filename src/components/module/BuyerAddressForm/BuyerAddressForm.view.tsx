@@ -29,7 +29,6 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     setAddress,
     unitNumber,
     setUnitNumber,
-    isSuccess,
     type,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });

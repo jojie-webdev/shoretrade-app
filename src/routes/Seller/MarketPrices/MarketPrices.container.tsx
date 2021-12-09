@@ -53,6 +53,7 @@ const MarketPrices = (): JSX.Element => {
     } else if (searchValue.length <= 2 && isEmpty(results)) {
       search();
     }
+    // eslint-disable-next-line
   }, [searchValue]);
 
   const generatedProps = {

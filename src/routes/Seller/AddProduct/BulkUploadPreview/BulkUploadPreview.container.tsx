@@ -21,7 +21,8 @@ const BulkUploadPreview = (): JSX.Element => {
   const modifiedData = useSelector(
     (store: Store) => store.modifyBulkUpload.modifiedData
   );
-  const uploadBulkData: UploadBulkState[] = uploadBulk.data?.data.editableListings || [];
+  const uploadBulkData: UploadBulkState[] =
+    uploadBulk.data?.data.editableListings || [];
   const actualData = uploadBulkData.map((a, i) => ({
     ...a,
     ...modifiedData[i],

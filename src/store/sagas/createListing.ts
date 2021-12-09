@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES } from 'consts';
-import { all, put, call, takeLatest, select, delay } from 'redux-saga/effects';
+import { all, put, call, takeLatest, select } from 'redux-saga/effects';
 import { createListing } from 'services/listing';
 import { uploadImageData } from 'services/upload';
 import { AsyncAction } from 'types/Action';

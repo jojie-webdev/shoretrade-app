@@ -1,45 +1,53 @@
 import React, { useState, useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
-import { RateSellerModalProps } from './RateSellerModal.props';
-import Modal from 'components/layout/Modal';
-import Typography from 'components/base/Typography';
+import Button from 'components/base/Button';
 import StarRating from 'components/base/StarRating';
 import TextArea from 'components/base/TextArea';
-import Button from 'components/base/Button';
-
+import Typography from 'components/base/Typography';
+import Modal from 'components/layout/Modal';
 import { useTheme } from 'utils/Theme';
+
+import { RateSellerModalProps } from './RateSellerModal.props';
 
 const RateSellerModal = (props: RateSellerModalProps): JSX.Element => {
   const theme = useTheme();
-  const { ...modalProps } = props
-  const [rating, setRating] = useState(0)
-  const [feedback, setFeedback] = useState("")
+  const { ...modalProps } = props;
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     if (!props.isOpen) {
-      setRating(0)
-      setFeedback("")
+      setRating(0);
+      setFeedback('');
     }
-  }, [props.isOpen])
-  
+  }, [props.isOpen]);
+
   return (
     <Modal {...modalProps} style={{ borderRadius: '12px', width: '686px' }}>
       <Typography variant="title4" style={{ fontFamily: 'Media Sans' }}>
         Rate Seller
       </Typography>
-      <Typography variant="overline" color="shade6" style={{ fontFamily: 'Basis Grotesque Pro', marginTop: '20px' }}>
+      <Typography
+        variant="overline"
+        color="shade6"
+        style={{ fontFamily: 'Basis Grotesque Pro', marginTop: '20px' }}
+      >
         Rate the quality of the products you received out of 5 stars
       </Typography>
       <StarRating
         editable={true}
-        rating={rating} 
-        onChange={(rating) => setRating(rating)} 
+        rating={rating}
+        onChange={(rating) => setRating(rating)}
         starSize={23}
         spacing={6}
         style={{ marginTop: '8px' }}
       />
-      <Typography variant="overline" color="shade6" style={{ fontFamily: 'Basis Grotesque Pro', marginTop: '20px' }}>
+      <Typography
+        variant="overline"
+        color="shade6"
+        style={{ fontFamily: 'Basis Grotesque Pro', marginTop: '20px' }}
+      >
         Private Feedback*
       </Typography>
       <TextArea
@@ -47,10 +55,19 @@ const RateSellerModal = (props: RateSellerModalProps): JSX.Element => {
         onChangeText={setFeedback}
         placeholder="Write a Private Feedback only for Administrators..."
         height={120}
-        style={{ borderRadius: '12px', border: `1px solid ${theme.grey.shade6}`, fontWeight: 'lighter' }}
+        style={{
+          borderRadius: '12px',
+          border: `1px solid ${theme.grey.shade6}`,
+          fontWeight: 'lighter',
+        }}
       />
-      <Typography variant="label" color="shade7" style={{ fontFamily: 'Basis Grotesque Pro' }}>
-        *The private feedback will be sent only to ShoreTrade Administrators for review purposes.
+      <Typography
+        variant="label"
+        color="shade7"
+        style={{ fontFamily: 'Basis Grotesque Pro' }}
+      >
+        *The private feedback will be sent only to ShoreTrade Administrators for
+        review purposes.
       </Typography>
       <Button
         loading={props.loading}

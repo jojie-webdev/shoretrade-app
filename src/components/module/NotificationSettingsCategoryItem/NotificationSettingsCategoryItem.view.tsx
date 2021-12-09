@@ -8,11 +8,8 @@ import {
   EnvelopeAlt,
   Account,
   Anchor,
-  CheckCircle,
   DashboardAlt as ListingsIcon,
-  FolderDownload,
   MarketRequests,
-  More,
   Orders,
   Star,
   WhatsApp,
@@ -21,7 +18,6 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { CustomSettingKey } from 'types/store/GetNotificationSettingsState';
-import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationSettingsCategoryItemProps } from './NotificationSettingsCategoryItem.props';

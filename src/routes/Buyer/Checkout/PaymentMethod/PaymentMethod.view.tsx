@@ -57,7 +57,7 @@ const CardFields = (props: { formik?: any }) => {
               const digits = value.trim().replace(/\s/g, '');
               const isMaxLen = digits.length > 16;
 
-              if (digits.length == 16) {
+              if (digits.length === 16) {
                 // formik.setFieldValue('number', value, false);
                 const visaString =
                   digits.substring(0, 4) +
@@ -226,7 +226,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 setPaymentMethod(p.value as any);
               }}
             >
-              <img src={p.img} style={{ width: p.mTopWidth }} />
+              <img src={p.img} style={{ width: p.mTopWidth }} alt="" />
               <Typography variant="caption" align="center" weight="400">
                 {p.label}
               </Typography>
@@ -262,6 +262,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 <img
                   src={p.img}
                   style={{ width: isMobile ? p.mWidth : 'inherit' }}
+                  alt=""
                 />
                 <div>
                   <Typography

@@ -261,7 +261,7 @@ export const TitleContainer = styled.div`
   flex-direction: column;
   margin-top: 32px;
 
-  @media ${BREAKPOINTS['sm']}{
+  @media ${BREAKPOINTS['sm']} {
     margin-top: 0px;
   }
 `;

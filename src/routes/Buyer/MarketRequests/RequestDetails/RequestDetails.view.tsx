@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import StarRating from 'components/base/StarRating';
 import {
   PlaceholderProfile,
   Octopus,
   DropdownArrow,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import StarRating from 'components/base/StarRating';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import DialogModal from 'components/module/DialogModal';
 import EmptyStateView from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestOfferFilterModalView from 'components/module/MarketRequestOfferFilterModal';
 import MarketRequestSummaryView from 'components/module/MarketRequestSummary';
-import OfferAlert from 'components/module/OfferAlert';
 import OfferItem from 'components/module/OfferItem';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -25,11 +23,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useLocation } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
 import { getAllMarketRequestActions } from 'store/actions';
-import {
-  GetActiveOffersRequestResponseItem,
-  OfferStatus,
-} from 'types/store/GetActiveOffersState';
-import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { createdAtToExpiry } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
@@ -58,7 +52,11 @@ export const OffersSellerAccordionContent = (props: {
   const displayForNonMobile = () => (
     <OffersSellerAccordionContentContainer>
       <div className="thumbnail-container">
-        {image ? <img src={parseImageUrl(image)} /> : <PlaceholderProfile />}
+        {image ? (
+          <img src={parseImageUrl(image)} alt="" />
+        ) : (
+          <PlaceholderProfile />
+        )}
       </div>
       <div className="info-container">
         <Typography variant="caption" color="shade8">
@@ -75,7 +73,7 @@ export const OffersSellerAccordionContent = (props: {
           </div>
           <div>
             <StarRating
-              rating={sellerRating || 0} 
+              rating={sellerRating || 0}
               spacing={3}
               starSize={16}
               unfilledColor={theme.brand.alert}
@@ -104,7 +102,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     showDelete,
     setShowDelete,
     onClickDelete,
-    marketRequestId,
     isLoading,
     onOfferDelete,
     filteredBuyerRequest,
@@ -118,20 +115,18 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
   );
-  const buyerRequests = useSelector(
-    (store: Store) => store.getAllMarketRequest
-  );
 
   const dispatch = useDispatch();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const [sellerOffersCopy, setSellerOffersCopy] = useState<
     GetActiveOffersRequestResponseItem[]
   >([]);
+  // eslint-disable-next-line
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
+  // eslint-disable-next-line
   const [selectedItem, setSelectedItem] = useState<any>({});
 
   useEffect(() => {
@@ -153,6 +148,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     } else {
       dispatch(getAllMarketRequestActions.request({}));
     }
+    // eslint-disable-next-line
   }, [deleteMarketRequest]);
 
   useEffect(() => {
@@ -327,18 +323,6 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
     });
 
     return acceptedWeights;
-  };
-
-  const filteredMarketRequest = (): GetAllMarketRequestResponseItem => {
-    const _marketRequests = buyerRequests.data?.data.marketRequests.filter(
-      (marketRequest) => marketRequest.id === marketRequestId
-    );
-
-    if (_marketRequests && _marketRequests?.length > 0) {
-      return _marketRequests[0];
-    }
-
-    return null as any;
   };
 
   const renderRightComponent = () => (

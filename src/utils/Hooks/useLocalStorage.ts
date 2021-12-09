@@ -54,6 +54,7 @@ function useLocalStorage<T>(
 
   useEffect(() => {
     setStoredValue(readValue());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ function useLocalStorage<T>(
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('local-storage', handleStorageChange);
     };
+    // eslint-disable-next-line
   }, []);
 
   return [storedValue, setValue];

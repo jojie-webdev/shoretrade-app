@@ -1,6 +1,6 @@
 import Interactions from 'components/base/Interactions';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {

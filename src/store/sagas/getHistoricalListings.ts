@@ -1,4 +1,3 @@
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getHistoricalListings } from 'services/listing';
 import { AsyncAction } from 'types/Action';

@@ -53,6 +53,7 @@ const Search = (props: {
 
   useEffect(() => {
     if (props.defaultValue) setValue(props.defaultValue);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -99,7 +100,6 @@ export default function ListingView(props: ListingViewProps) {
     totalCount,
     limit,
     setLimit,
-    isTablet,
     tableSettings,
     setTableSettings,
     showTableSettings,
@@ -136,16 +136,10 @@ export default function ListingView(props: ListingViewProps) {
     columns.forEach((column) => {
       localStorage.removeItem(`col:${column?.selector}`);
     });
+    // eslint-disable-next-line
   }, []);
 
   // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
-
-  const options = columns
-    .filter((column) => column?.sortable)
-    .map((column) => ({
-      value: column.selector,
-      label: column.name,
-    }));
 
   const debouncedSearch = debounce(function (v: string) {
     setSearchTerm(v);
@@ -160,12 +154,6 @@ export default function ListingView(props: ListingViewProps) {
   const handleSaveSettings = () => {
     setShowTableSettings(false);
     setTableSettings(settings);
-  };
-
-  const handleRemoveFromSelectedIds = (id: string) => {
-    setSelectedIds((ids) => {
-      return ids.filter((selectedId) => selectedId !== id);
-    });
   };
 
   const TabComponent = (
@@ -295,7 +283,7 @@ export default function ListingView(props: ListingViewProps) {
     </Modal>
   );
 
-  const mobileListing = !!searchTerm
+  const mobileListing = searchTerm
     ? listings
     : [...prevListingData, ...listings];
 

@@ -10,11 +10,7 @@ import {
 } from 'types/store/AddCardTokenState';
 import { Store } from 'types/store/Store';
 
-import {
-  addCardTokenActions,
-  getUserActions,
-  getPaymentMethodsActions,
-} from '../actions';
+import { addCardTokenActions, getPaymentMethodsActions } from '../actions';
 
 function* addCardTokenRequest(
   action: AsyncAction<AddCardTokenMeta, AddCardTokenPayload>

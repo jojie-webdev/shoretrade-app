@@ -56,11 +56,13 @@ const MarketPriceDetail = (): JSX.Element => {
       setData(resp.data.data);
       setGraphData(getGraphData(resp.data.data));
       setFilters(getFilters(resp.data.data));
+      // eslint-disable-next-line no-empty
     } catch (e) {}
   };
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

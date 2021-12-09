@@ -1,4 +1,3 @@
-import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCard from 'components/module/CreditCardCard/CreditCardCard.view';
 import InteractionCreditCard from 'components/module/InteractionCreditCard/InteractionCreditCard.view';
 import { BREAKPOINTS } from 'consts/breakpoints';

@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Crab = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
   const { width, height, fill, fullSize } = props;
 
   // Paste converted svg below

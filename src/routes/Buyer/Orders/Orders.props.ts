@@ -45,7 +45,6 @@ export interface OrderItem {
   price: string;
   isAquafuture: boolean;
   token?: string;
-
 }
 
 export type RequestFilters = {
@@ -91,7 +90,11 @@ export interface OrdersGeneratedProps {
   token: string;
 
   sendDispute: (orderId: string, message: string) => void;
-  sendOrderRating: (orderId: string, rating: number, privateFeedback: string) => void;
+  sendOrderRating: (
+    orderId: string,
+    rating: number,
+    privateFeedback: string
+  ) => void;
   isSendingDispute: boolean;
   isSendingOrderRating: boolean | null;
   isSendOrderRatingSuccess: boolean | null;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Alert from 'components/base/Alert';
-import Checkbox from 'components/base/Checkbox/Checkbox.view';
+// import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
@@ -15,15 +15,13 @@ import {
   CHOICES,
   PACKAGING,
 } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.constants';
-import { editableListingActions } from 'store/actions';
 import { Polystyrene } from 'types/store/GetAvailableCrates';
 import { Store } from 'types/store/Store';
-import { useTheme } from 'utils/Theme';
 
 import Button from '../../../../components/base/Button';
 import { AddPackagingProps, CustomSize } from './AddPackaging.props';
 import {
-  Aquafuture,
+  // Aquafuture,
   Choices,
   Container,
   StyledTextField,
@@ -35,7 +33,6 @@ const AddPackaging = ({
   onAddPackaging,
   navBack,
 }: AddPackagingProps) => {
-  const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const availableCrates = useSelector(
@@ -51,6 +48,7 @@ const AddPackaging = ({
   const [isAirlineApproved, setIsAirlineApproved] = useState<
     boolean | undefined
   >(editableListing?.packaging?.custom?.airlineApproved);
+  // eslint-disable-next-line
   const [isAquafuture, setIsAquafuture] = useState<boolean>(
     editableListing?.isAquafuture || false
   );
@@ -109,12 +107,13 @@ const AddPackaging = ({
         return;
       }
     }
+    // eslint-disable-next-line
   }, [availableCrates, editableListing.packaging]);
 
-  const isAlreadyCreated = editableListing.isAlreadyCreated;
+  // const isAlreadyCreated = editableListing.isAlreadyCreated;
 
   const isNextDisabled =
-    (choice === '') ||
+    choice === '' ||
     (choice !== '' && choice !== PACKAGING.custom && !selectedId) ||
     (choice === PACKAGING.custom &&
       Object.values(customSize).some((val) => val === ''));
@@ -134,7 +133,7 @@ const AddPackaging = ({
                   setCustomSize({ width: '', height: '', length: '' });
                 }
                 if (p.value === PACKAGING.custom) {
-                  setIsAirlineApproved(false)
+                  setIsAirlineApproved(false);
                 }
 
                 if (p.value !== PACKAGING.sfm) setSelectedId('');

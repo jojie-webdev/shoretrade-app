@@ -1,17 +1,14 @@
 import React from 'react';
 
 import Badge from 'components/base/Badge';
-import { TypographyProps } from 'components/base/Typography/Typography.props';
-import { OfferStatus } from 'types/store/GetActiveOffersState';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
-import { useTheme } from 'utils/Theme';
+// import { useTheme } from 'utils/Theme';
 
 import { OfferTagProps } from './OfferTag.props';
 import { Container, StatusBadgeText } from './OfferTag.style';
 
 const OfferTag = (props: OfferTagProps): JSX.Element => {
-  const theme = useTheme();
-  const { text, badgeColor, color, variantColor } = props;
+  // const theme = useTheme();
+  const { text, badgeColor, color } = props;
 
   // const renderNegoBadges = () => {
   //   return (

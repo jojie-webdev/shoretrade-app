@@ -1,4 +1,3 @@
-import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
 
 // Code copied from https://github.com/jonsuh/hamburgers

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { STRIPE_PUBLIC_KEY } from 'consts';
 import qs from 'qs';
-import { createBasicToken } from 'utils/Token';
 
 const BASE_URL = `https://api.stripe.com/v1/tokens`;
 

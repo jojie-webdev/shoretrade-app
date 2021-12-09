@@ -1,4 +1,4 @@
-import { createFormikValidator, createValidator } from 'utils/Validation';
+import { createValidator } from 'utils/Validation';
 
 const constraints = {
   address: {

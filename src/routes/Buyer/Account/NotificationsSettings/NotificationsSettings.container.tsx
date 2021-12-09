@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
-import { groupBy } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
@@ -21,11 +20,7 @@ import { Store } from 'types/store/Store';
 
 import { QueryParams } from '../EditAddress/EditAddress.props';
 import { NotificationsSettingsProps } from './NotificationsSettings.props';
-import {
-  toNotificationResourceGroup,
-  toUpdateNotification,
-  toUpdateSettingItem,
-} from './NotificationsSettings.transform';
+import { toNotificationResourceGroup } from './NotificationsSettings.transform';
 import NotificationsSettingsView from './NotificationsSettings.view';
 
 const NotificationsSettings = (): JSX.Element => {
@@ -74,10 +69,6 @@ const NotificationsSettings = (): JSX.Element => {
   );
 
   const getUser = useSelector((state: Store) => state.getUser.data);
-
-  const pendingUpdate = useSelector(
-    (state: Store) => state.updateNotificationSettings.pending || false
-  );
 
   const handleOnSaveCustom = (val: any) => {
     if (!settingsUpdated) {
@@ -139,7 +130,7 @@ const NotificationsSettings = (): JSX.Element => {
           (acc: { [key: string]: any }, curr) => (
             (acc[curr] = {
               [currentCustomSetting.option]: currentCustomSetting.val,
-            }),
+            }), // eslint-disable-line
             acc
           ),
           {}
@@ -159,6 +150,7 @@ const NotificationsSettings = (): JSX.Element => {
     if (!inAccount && !loadingUser && companies?.length > 0) {
       setCompanyId(companies[0].id);
     }
+    // eslint-disable-next-line
   }, [loadingUser]);
 
   useEffect(() => {
@@ -172,6 +164,7 @@ const NotificationsSettings = (): JSX.Element => {
       }
       setCompanyId(companyId);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -182,6 +175,7 @@ const NotificationsSettings = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -189,6 +183,7 @@ const NotificationsSettings = (): JSX.Element => {
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
     }
+    // eslint-disable-next-line
   }, [customSettings, updateTriggered]);
 
   useEffect(() => {
@@ -198,6 +193,7 @@ const NotificationsSettings = (): JSX.Element => {
       setCurrentGlobalSetting('');
       setShowDeactivationWarning('');
     }
+    // eslint-disable-next-line
   }, [globalSettings, globalUpdateTriggered]);
 
   useEffect(() => {
@@ -209,10 +205,10 @@ const NotificationsSettings = (): JSX.Element => {
         setCustomSettings(getNotificationsSettings.data.custom);
       }
     }
+    // eslint-disable-next-line
   }, [
     getNotificationsSettings,
-    getNotificationsSettings?.data,
-    getNotificationsSettings?.data,
+    getNotificationsSettings?.data // eslint-disable-line
   ]);
 
   useEffect(() => {
@@ -239,6 +235,7 @@ const NotificationsSettings = (): JSX.Element => {
         handleCustomSettingUpdate();
       }
     }
+    // eslint-disable-next-line
   }, [currentCustomSetting, showDeactivationWarning]);
 
   const generatedProps: NotificationsSettingsProps = {

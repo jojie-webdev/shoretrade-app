@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import Case from 'case';
-import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
 import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
@@ -12,16 +11,10 @@ import EmptyStateView from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import OfferTag from 'components/module/OfferTag';
 import TermsAndCondition from 'components/module/TermsAndCondition';
-import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import { Row, Col, Visible, Hidden } from 'react-grid-system';
-import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import {
-  GetActiveOffersRequestResponseItem,
-  Offer,
-  OfferStatus,
-} from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -29,9 +22,7 @@ import {
   numberOffersTransform,
   transformMarketRequestStatusText,
 } from 'utils/MarketRequest/marketRequestTag';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
-import theme from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
@@ -39,14 +30,12 @@ import {
   MarketRequestItemContainer,
   MarketRequestItemInteraction,
   MarketRequestItemMobileContainer,
-  BadgeText,
   MajorInfo,
   MinorInfo,
   SubMinorInfo,
   Badges,
   SubMinorDetail,
   SubText,
-  BadgesContainer,
 } from './Landing.style';
 
 export const MarketRequestItemNonMobile = (props: {
@@ -80,7 +69,6 @@ export const MarketRequestItemNonMobile = (props: {
     setItemToDelete,
     metric,
     requestStatus,
-    status,
   } = props;
   const statusTextProps = transformMarketRequestStatusText(requestStatus);
   const offersTextProps = numberOffersTransform(offers);
@@ -88,7 +76,7 @@ export const MarketRequestItemNonMobile = (props: {
   return (
     <MarketRequestItemContainer>
       <div className="thumbnail-container">
-        <img src={parseImageUrl(image)} />
+        <img src={parseImageUrl(image)} alt="" />
       </div>
       <div className="info-container">
         <Col style={{ padding: '0 5px' }}>
@@ -204,13 +192,10 @@ export const MarketRequestItemMobile = (props: {
     size,
     metric,
     requestStatus,
-    status,
   } = props;
 
   const statusTextProps = transformMarketRequestStatusText(requestStatus);
   const offersTextProps = numberOffersTransform(offers);
-
-  const isMobile = useMediaQuery({ query: '(max-width: 974px)' });
 
   const subMinorDetail = (label: string, value: string) => (
     <>
@@ -232,7 +217,7 @@ export const MarketRequestItemMobile = (props: {
     <MarketRequestItemMobileContainer>
       <MajorInfo>
         <div className="thumbnail-container">
-          <img src={parseImageUrl(image)} />
+          <img src={parseImageUrl(image)} alt="" />
         </div>
 
         <TypographyView variant="label" style={{ lineHeight: '20px' }}>
@@ -406,44 +391,44 @@ const MarketRequestsLandingView = (
     );
   }
 
-  const SentRequestDescription = () => {
-    return (
-      <div>
-        <Typography color="shade7" variant="body">
-          Your request has been sent to our network of sellers.
-        </Typography>
-        <br />
-        <Typography
-          style={{ fontFamily: 'Media Sans' }}
-          color="shade7"
-          variant="body"
-          weight="bold"
-        >
-          What happens next?
-        </Typography>
-        <br />
-        <Typography color="shade7" variant="body">
-          <ol>
-            <li>
-              You will receive offers directly from our authorised sellers which
-              you can accept or negotiate
-            </li>
-            <li>
-              Process payment within 24 hours for accepted offers to finalise
-              the order
-            </li>
-            <li>
-              Your Market Request will automatically close after 7 days or once
-              your maximum quantity is fulfilled
-            </li>
-          </ol>
-        </Typography>
-        <Typography color="shade7" variant="body">
-          You can review your requests and offers in my ‘Market Requests’
-        </Typography>
-      </div>
-    );
-  };
+  // const SentRequestDescription = () => {
+  //   return (
+  //     <div>
+  //       <Typography color="shade7" variant="body">
+  //         Your request has been sent to our network of sellers.
+  //       </Typography>
+  //       <br />
+  //       <Typography
+  //         style={{ fontFamily: 'Media Sans' }}
+  //         color="shade7"
+  //         variant="body"
+  //         weight="bold"
+  //       >
+  //         What happens next?
+  //       </Typography>
+  //       <br />
+  //       <Typography color="shade7" variant="body">
+  //         <ol>
+  //           <li>
+  //             You will receive offers directly from our authorised sellers which
+  //             you can accept or negotiate
+  //           </li>
+  //           <li>
+  //             Process payment within 24 hours for accepted offers to finalise
+  //             the order
+  //           </li>
+  //           <li>
+  //             Your Market Request will automatically close after 7 days or once
+  //             your maximum quantity is fulfilled
+  //           </li>
+  //         </ol>
+  //       </Typography>
+  //       <Typography color="shade7" variant="body">
+  //         You can review your requests and offers in my ‘Market Requests’
+  //       </Typography>
+  //     </div>
+  //   );
+  // };
 
   return (
     <MarketRequestsContainer>
@@ -562,78 +547,5 @@ function buildSize(
 
   return buildSize;
 }
-
-const roundBadge = (children: JSX.Element, badgeColor = '#FFF7F2') => (
-  <Badge
-    className="offers-badge"
-    badgeColor={badgeColor}
-    padding="8px 8px"
-    borderRadius="8px"
-  >
-    {children}
-  </Badge>
-);
-
-const offersCountTextBadge = (offers: Offer[]) => (
-  <BadgeText variant="overline" empty={offers?.length === 0}>
-    {`${offers?.length > 0 ? offers?.length : 'No'} ${
-      offers?.length === 1 ? 'Offer' : 'Offers'
-    }`}
-  </BadgeText>
-);
-
-const offerNumberBadge = (offers: Offer[]) => {
-  return roundBadge(offersCountTextBadge(offers), theme.grey.shade3);
-};
-
-const hasOfferThatIsNew = (offers: Offer[]) => {
-  if (!offers || offers.length < 1) {
-    return;
-  }
-
-  const offer = offers.find(
-    (offer) => getOfferStatus(offer, 'buyer') === 'NEW OFFER'
-  );
-
-  return offer;
-};
-
-const hasOfferWithNegotiation = (offers: Offer[]) => {
-  if (!offers) {
-    return;
-  }
-
-  const offer = offers.find(
-    (offer) => getOfferStatus(offer, 'buyer') === 'NEGOTIATION'
-  );
-
-  return offer;
-};
-
-const renderInOrderBadge = (
-  offers: Offer[],
-  isSmallDesktopScreen: boolean,
-  isMobile = false
-) => {
-  const badgeText = (fontColor: string, text: string) => (
-    <BadgeText variant="overline" style={{ color: fontColor }}>
-      {text}
-    </BadgeText>
-  );
-
-  if (hasOfferThatIsNew(offers)) {
-    const newBadgeText = badgeText(theme.brand.success, 'New Offer');
-
-    return roundBadge(newBadgeText, '#EAFFF9');
-  }
-
-  if (hasOfferWithNegotiation(offers)) {
-    const newBadgeText = badgeText(theme.brand.alert, 'Negotiation');
-
-    return roundBadge(newBadgeText, '#FFFBF2');
-  }
-
-  return offerNumberBadge(offers);
-};
 
 export default MarketRequestsLandingView;

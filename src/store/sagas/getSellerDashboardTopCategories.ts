@@ -1,4 +1,3 @@
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getSellerDashboardTopCategories } from 'services/data';
 import { AsyncAction } from 'types/Action';

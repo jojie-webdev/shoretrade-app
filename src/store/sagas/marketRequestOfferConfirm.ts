@@ -1,5 +1,3 @@
-import { replace } from 'connected-react-router';
-import { BUYER_ROUTES } from 'consts';
 import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { offerConfirm } from 'services/marketRequest';

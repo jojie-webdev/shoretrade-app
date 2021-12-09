@@ -25,7 +25,6 @@ export const TableComponent = (props: TableComponentProps) => {
     searchTerm,
     setSortOrder,
     selectedIds,
-    setSelectedIds,
     isAllSelected,
     setIsAllSelected,
     onSelect,
@@ -108,6 +107,7 @@ export const TableComponent = (props: TableComponentProps) => {
     return () => {
       window.removeEventListener('resize', handleEvaluateLayout);
     };
+    // eslint-disable-next-line
   }, [tableRef]);
 
   const conditionalStyles: any = {};

@@ -47,7 +47,8 @@ const EditAssistant = (): JSX.Element => {
   const permission =
     !isPendingAccount &&
     isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
-  // MARK:- State
+  // MARK:- State'
+  // eslint-disable-next-line
   const [callingCode, setCallingCode] = useState('61');
 
   // MARK:- Methods
@@ -71,6 +72,7 @@ const EditAssistant = (): JSX.Element => {
     if (!permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
+    // eslint-disable-next-line
   }, [companyId, getLinkedAccounts.data, permission]);
 
   // MARK:- Variables
@@ -81,6 +83,7 @@ const EditAssistant = (): JSX.Element => {
       email: currentLinkedAccount?.email || '',
       mobile: replaceCallingCode(currentLinkedAccount?.mobile || ''),
     },
+    // eslint-disable-next-line
     onSubmit: () => {},
   };
 

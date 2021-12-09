@@ -1,19 +1,8 @@
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import {
-  applyMiddleware,
-  compose,
-  createStore,
-  StoreEnhancer,
-  Store,
-} from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import {
-  persistReducer,
-  persistStore,
-  PersistConfig,
-  Persistor,
-} from 'redux-persist';
+import { persistReducer, persistStore, Persistor } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import createRootReducer from 'store/reducers';

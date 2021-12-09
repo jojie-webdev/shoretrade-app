@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
@@ -6,35 +6,15 @@ import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
-import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps } from '../Sold.props';
 import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
 import { TitleRow } from '../ToShip/ToShip.styles';
-import {
-  StyledInteraction,
-  CollapsibleContent,
-  ItemRow,
-} from './InTransit.styles';
+import { ItemRow } from './InTransit.styles';
 
 const InTransit = (props: SoldGeneratedProps) => {
   const { inTransit, token, inTransitCount, filters, updateFilters } = props;
-
-  const theme = useTheme();
-  const [isOpen, setIsOpen] = useState<string[]>([]);
-
-  const toggleAccordion = (title: string) => {
-    const isExisting = isOpen.some((v) => v === title);
-
-    if (!isExisting) {
-      setIsOpen((prevState) => [...prevState, title]);
-    } else {
-      setIsOpen((prevState) => {
-        return prevState.filter((v) => v !== title);
-      });
-    }
-  };
 
   const inTransitPagesTotal = Math.ceil(
     Number(inTransitCount) / DEFAULT_PAGE_LIMIT

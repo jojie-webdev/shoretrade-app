@@ -64,7 +64,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
         options={[TABS.CC, TABS.BANK]}
         selectedOption={activeTab}
         onClickControl={(value) => {
-          setActiveTab(value == TABS.BANK ? TABS.BANK : TABS.CC);
+          setActiveTab(value === TABS.BANK ? TABS.BANK : TABS.CC);
         }}
       />
 
@@ -81,7 +81,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
           amount: '',
         }}
         onSubmit={(values) => {
-          if (activeTab == TABS.BANK) {
+          if (activeTab === TABS.BANK) {
             downloadInvoice(`${values.amount}`);
           } else {
             addCredit(`${values.amount}`);
@@ -104,9 +104,9 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
             </Col>
           </Row>
 
-          {activeTab == TABS.BANK && <FieldsetBankAccount />}
+          {activeTab === TABS.BANK && <FieldsetBankAccount />}
 
-          {activeTab == TABS.CC && (
+          {activeTab === TABS.CC && (
             <FieldsetCreditCard
               cards={cards}
               selectedCardId={selectedCardId}
@@ -116,7 +116,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
 
           {!isMobile && (
             <>
-              {activeTab == TABS.BANK ? (
+              {activeTab === TABS.BANK ? (
                 <Button type="submit" text="Download Invoice" />
               ) : cards.length ? (
                 <Button type="submit" text="Add Credit" loading={isPending} />
@@ -139,7 +139,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
 
       <MobileFooter>
         <>
-          {activeTab == TABS.BANK ? (
+          {activeTab === TABS.BANK ? (
             <Button
               takeFullWidth
               text="Download Invoice"

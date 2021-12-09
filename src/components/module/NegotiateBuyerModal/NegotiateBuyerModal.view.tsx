@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
-import Checkbox from 'components/base/Checkbox';
-import { InfoFilled } from 'components/base/SVG';
+// import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
@@ -13,10 +12,10 @@ import {
   Inputs,
   ButtonContainer,
   ComputationContainer,
-  CheckBoxContainer,
+  // CheckBoxContainer,
 } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Hidden, Visible } from 'react-grid-system';
+import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';

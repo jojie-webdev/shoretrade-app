@@ -177,6 +177,7 @@ const AddProduct = (): JSX.Element => {
       }
       dispatch(searchProductTypeActions.clear());
     }
+    // eslint-disable-next-line
   }, [currentPage]);
 
   const getCustomFormData = () => {
@@ -231,9 +232,8 @@ const AddProduct = (): JSX.Element => {
     if (isCustomType && currentPage !== 1) {
       setShowCustomTypeSettings(true);
     }
+    // eslint-disable-next-line
   }, [isCustomType]);
-
-  const boxes = (editableListing?.boxes || []).length.toString();
 
   const boxesDetails = editableListing?.boxes || [];
 
@@ -359,6 +359,7 @@ const AddProduct = (): JSX.Element => {
       );
       dispatch(getMarketInterestsActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   const onAddPackaging = ({

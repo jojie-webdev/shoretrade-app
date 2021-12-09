@@ -2,16 +2,14 @@ import React from 'react';
 
 import AnimationPlayer from 'components/base/AnimationPlayer';
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Select from 'components/base/Select';
 import {
   Group194,
   Group195,
   Group196,
   Wave31,
   Wave41,
-  Wave51,
+  // Wave51,
 } from 'components/base/SVG';
-import Group204 from 'components/base/SVG/Group204';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -43,12 +41,9 @@ import {
 
 const CategorySelectionView = (props: CategorySelectionProps) => {
   const {
-    step,
     stepCountComponent,
     searchTerm,
     setSearchTerm,
-    search,
-    buying,
     setSelectedCategory,
     hideSearchResult,
     pendingSearch,

@@ -1,4 +1,4 @@
-import { goBack, push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';

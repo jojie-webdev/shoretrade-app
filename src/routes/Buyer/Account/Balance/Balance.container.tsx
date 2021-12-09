@@ -47,6 +47,7 @@ const Balance = (): JSX.Element => {
 
   useEffect(() => {
     getPaymentMethods();
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -68,6 +69,7 @@ const Balance = (): JSX.Element => {
       setNotifMessage('Credit Card successfully updated.');
       dispatch(updateDefaultCardActions.clear());
     }
+    // eslint-disable-next-line
   }, [addCreditResult, addCardResult, updateDefaultCardResult]);
 
   const generatedProps = {

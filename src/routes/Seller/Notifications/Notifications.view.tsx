@@ -27,8 +27,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
     handleNotifOnClick,
     currentCompany,
   } = props;
-  const isSeller = theme.appType === 'seller';
-  const defaultColor = isSeller ? 'shade2' : 'shade6';
+
   return (
     <Container>
       <TopBarContainer>

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import pick from 'ramda/es/pick';
 import validate from 'validate.js';

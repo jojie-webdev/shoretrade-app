@@ -20,7 +20,6 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
   const {
     callingCode,
     setCallingCode,
-    success,
     error,
     pending,
     formikInitial,

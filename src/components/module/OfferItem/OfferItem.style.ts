@@ -1,9 +1,10 @@
-import styled from 'utils/styled';
-import theme, { pxToRem } from '../../../utils/Theme';
-import { BREAKPOINTS } from './../../..//consts/breakpoints';
-import { Row, Col } from 'react-grid-system';
 import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
+import { Row } from 'react-grid-system';
+import styled from 'utils/styled';
+
+import theme, { pxToRem } from '../../../utils/Theme';
+import { BREAKPOINTS } from './../../..//consts/breakpoints';
 
 export const OfferContainer = styled.div`
   background: #ffffff;

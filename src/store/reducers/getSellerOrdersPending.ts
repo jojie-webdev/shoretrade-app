@@ -5,7 +5,7 @@ import {
 import { createAsyncReducer } from 'utils/Redux';
 
 import { getSellerOrdersPendingActions } from '../actions';
-import { updateToConfirmed } from './getSellerOrdersPlaced';
+// import { updateToConfirmed } from './getSellerOrdersPlaced';
 
 export default createAsyncReducer<GetSellerOrdersMeta, GetSellerOrdersPayload>(
   getSellerOrdersPendingActions

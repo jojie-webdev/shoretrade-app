@@ -21,6 +21,7 @@ const useCompany = () => {
     }
 
     setCompanyId(companyId);
+    // eslint-disable-next-line
   }, []);
 
   return [companyId];

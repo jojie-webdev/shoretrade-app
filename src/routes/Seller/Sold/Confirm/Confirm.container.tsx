@@ -6,10 +6,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router-dom';
 import {
   confirmWeightActions,
-  getSellerOrdersPlacedActions,
+  // getSellerOrdersPlacedActions,
 } from 'store/actions';
 import { GetSellerOrder } from 'store/selectors/seller/orders';
 import { Store } from 'types/store/Store';
@@ -31,7 +30,6 @@ import ConfirmView from './Confirm.view';
 
 const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   // const getOrdersPlaced = () => {
   //   dispatch(

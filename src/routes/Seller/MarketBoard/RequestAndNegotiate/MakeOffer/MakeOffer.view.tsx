@@ -7,7 +7,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select/Select.view';
-import { Cross7, Close } from 'components/base/SVG';
+import { Cross7 } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -18,21 +18,19 @@ import { groupBy, isEmpty, pathOr } from 'ramda';
 import { Col, Row, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import {
-  GetAllMarketRequestResponseItem,
   ShippingTo,
   Specification,
 } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { sellerScreenScrollToTop } from 'utils/ScrollToTop';
-import { capitalize, toPrice } from 'utils/String';
+import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import { MakeOfferGeneratedProps } from './MakeOffer.props';
 import {
   Container,
   Error,
-  MetricContainer,
   MobileFromToTextFieldsContainer,
   SummaryCard,
 } from './MakeOffer.style';
@@ -46,10 +44,6 @@ export const getShippingTo = (shippingTo: ShippingTo) => {
 const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isXxl = useMediaQuery({ query: BREAKPOINTS['xxl'] });
-
-  const metricString = props.buyerRequest.metric
-    .toUpperCase()
-    .replace(/\s/g, '_');
 
   const groupSpecs = groupBy((a: Specification) => `group${a.stateGroup}`)(
     props.buyerRequest.specifications || []

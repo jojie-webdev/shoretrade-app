@@ -3,6 +3,7 @@ import React from 'react';
 import Interactions from 'components/base/Interactions';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
+import EmptyState from 'components/module/EmptyState';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import SellerCard from 'components/module/SellerCard';
@@ -12,7 +13,6 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import EmptyState from 'components/module/EmptyState';
 
 import { SellerLandingGeneratedProps } from './SellerLanding.props';
 import {

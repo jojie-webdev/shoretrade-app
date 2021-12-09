@@ -4,7 +4,6 @@ import React, {
   Fragment,
   Dispatch,
   useEffect,
-  useRef,
 } from 'react';
 
 import Button from 'components/base/Button';
@@ -112,7 +111,6 @@ export const PendingItem = (props: {
     updateShippingDateModal,
     setPlaceOrderId,
     placeOrderId,
-    placeOrder,
     isPlacingOrder,
     isSendingMessage,
     updateMessageModal,
@@ -380,8 +378,6 @@ export const PendingItem = (props: {
 const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
-  const returningRef = useRef();
-
   const {
     toShip,
     toShipCount,
@@ -477,6 +473,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         setLastOpenAccordion('');
       }, 1000);
     }
+    // eslint-disable-next-line
   }, [isPlacingOrder]);
 
   useEffect(() => {
@@ -487,14 +484,11 @@ const ToShip = (props: SoldGeneratedProps) => {
       });
       setDidPressConfirmWeight(false);
     }
+    // eslint-disable-next-line
   }, [confirmWeightPending]);
 
   const pendingToShipTotal = pendingToShip.reduce((a, c) => {
     return a + c.orderCount;
-  }, 0);
-
-  const toShipTotal = toShip.reduce((a, c) => {
-    return a + c.orderTotal;
   }, 0);
 
   const getDeliveryIcon = (deliveryMethod: string) => {

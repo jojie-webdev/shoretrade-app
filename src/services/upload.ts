@@ -59,20 +59,11 @@ export const uploadImageData = async ({
     });
 
     // Upload file
-    const { status: uploadMobileStatus } = await axios.put(
-      uploadMobileUrl,
-      compressedFile,
-      {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      }
-    );
-
-    const downloadMobileUrl = uploadMobileUrl.substr(
-      0,
-      uploadMobileUrl.indexOf('?')
-    );
+    await axios.put(uploadMobileUrl, compressedFile, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
   }
 
   return {

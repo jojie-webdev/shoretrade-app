@@ -9,7 +9,7 @@ import {
 } from 'types/store/AddCartItemState';
 import { Store } from 'types/store/Store';
 
-import { addCartItemActions, getCartActions } from '../actions';
+import { addCartItemActions } from '../actions';
 
 function* addCartItemRequest(
   action: AsyncAction<AddCartItemMeta, AddCartItemPayload>

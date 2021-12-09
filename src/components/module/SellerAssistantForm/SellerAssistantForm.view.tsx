@@ -49,7 +49,6 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
     setRole,
     callingCode,
     setCallingCode,
-    success,
     error,
     pending,
     formikInitial,

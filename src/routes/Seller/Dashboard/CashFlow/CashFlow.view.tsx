@@ -1,10 +1,8 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import LineChart from 'components/module/LineChart';
-import Loading from 'components/module/Loading';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import numeral from 'numeral';
 import { Row, Col } from 'react-grid-system';

@@ -3,7 +3,10 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { Subtract, InfoFilled } from 'components/base/SVG';
+import {
+  Subtract,
+  // InfoFilled
+} from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -16,7 +19,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Aquafuture } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.style';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import theme, { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { AddBoxesProps, BoxType } from './AddBoxes.props';
 import {
@@ -150,6 +153,7 @@ const AddBoxInputs = ({
 
     if (!isWhole(values.quantity)) setValues({ ...values, quantity: '' });
     if (!isWhole(values.count)) setValues({ ...values, count: '' });
+    // eslint-disable-next-line
   }, [values.quantity, values.count]);
 
   const inputFilters = ['e', 'E', '+', '-'];

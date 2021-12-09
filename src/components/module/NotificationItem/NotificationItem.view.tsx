@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 
 // eslint-disable-next-line import/order
 import {
@@ -18,12 +18,9 @@ import {
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { useMediaQuery } from 'react-responsive';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
-import { notifURLMapper } from 'utils/Notification';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
@@ -52,8 +49,7 @@ const MoreMenu = (props: {
     setIsComponentVisible,
   } = useComponentVisible(false);
 
-  const history = useHistory();
-  const { fullView, notifsRoute, onMarkasRead, onDelete } = props;
+  const { onMarkasRead, onDelete } = props;
 
   const handlePress = () => {
     setIsComponentVisible(!isComponentVisible);
@@ -119,7 +115,6 @@ const NewIndicator = () => {
 const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   const theme = useTheme();
   const {
-    type,
     name,
     isRead,
     content,
@@ -131,15 +126,11 @@ const NotificationItem = (props: NotificationItemProps): JSX.Element => {
   } = props;
   const isSeller = theme.appType === 'seller';
   const defaultColor = isSeller ? 'noshade' : 'shade7';
-  const history = useHistory();
   const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade6;
   const notifsRoute =
     theme.appType === 'buyer'
       ? BUYER_ROUTES.NOTIFICATIONS
       : SELLER_ROUTES.NOTIFICATIONS;
-  const isMobile = useMediaQuery({
-    query: BREAKPOINTS.sm,
-  });
 
   const NotifAvatar = (props: NotifAvatarProps) => {
     let icon: JSX.Element;

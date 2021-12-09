@@ -7,7 +7,7 @@ import {
 } from 'types/store/SendMessageState';
 import { Store } from 'types/store/Store';
 
-import { sendMessageActions, getUserActions } from '../actions';
+import { sendMessageActions } from '../actions';
 
 function* sendMessageRequest(
   action: AsyncAction<SendMessageMeta, SendMessagePayload>

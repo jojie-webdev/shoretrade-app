@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { TabItem } from 'components/base/Tab/Tab.props';
-import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import { BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   deleteNotificationActions,
   readNotificationActions,
 } from 'store/actions';
-import { NotificationType, NotifName, NotifTitle } from 'types/store/GetNotificationsState';
+import {
+  NotificationType,
+  NotifName,
+  NotifTitle,
+} from 'types/store/GetNotificationsState';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { notifURLMapper } from 'utils/Notification';
@@ -33,7 +37,6 @@ const Notifications = (): JSX.Element => {
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
 
   // Mark:- Variables
-  const companyRelationship = currentCompany?.relationship || '';
   const companies = user?.companies || [];
 
   useEffect(() => {
@@ -42,6 +45,7 @@ const Notifications = (): JSX.Element => {
 
       setCurrentCompany(c[0]);
     }
+    // eslint-disable-next-line
   }, [loadingUser]);
 
   const { search = '' } = useLocation();
@@ -85,7 +89,7 @@ const Notifications = (): JSX.Element => {
     title?: NotifTitle | string
   ) => {
     const url = notifURLMapper(resource, appType, name, title);
-    if (url != '') {
+    if (url !== '') {
       history.push(url);
     }
   };

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import { Close } from 'components/base/SVG';
-import { P } from 'components/base/Typography/Typography.style';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
@@ -35,6 +34,7 @@ const Content = (props: AddBoxModalProps) => {
 
     if (!isWhole(values.quantity)) setValues({ ...values, quantity: '' });
     if (!isWhole(values.count)) setValues({ ...values, count: '' });
+    // eslint-disable-next-line
   }, [values.quantity, values.count]);
 
   const inputFilters = ['e', 'E', '+', '-'];
@@ -128,7 +128,7 @@ const Content = (props: AddBoxModalProps) => {
 
 const AddBoxModal = (props: AddBoxModalProps): JSX.Element => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const { onAdd, unit = 'kg', ...modalProps } = props;
+  const { onAdd, ...modalProps } = props;
   const theme = useTheme();
   return isSmallScreen ? (
     <MobileModal

@@ -1,24 +1,16 @@
 import React from 'react';
 
-import { CheckFilled, CloseFilled, Sync } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import OfferTag from 'components/module/OfferTag';
-import {
-  GetActiveOffersRequestResponseItem,
-  OfferStatus,
-} from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
-import theme from 'utils/Theme';
 
-import { BadgeText } from '../Landing.style';
 import {
   getExpiry,
   getShippingAddress,
-  getStatus,
-  getStatusBadgeColor,
   isRedLabel,
 } from '../Landing.transform';
 import {
@@ -29,13 +21,12 @@ import {
   SubMinorDetail,
   SubMinorInfo,
 } from '../MobileMarketRequest/MobileMarketRequest.style';
-import { StyledStatusBadge } from './MobileOffers.style';
 
 const MobileOffers = (props: {
   data: GetActiveOffersRequestResponseItem;
   buyerRequests?: GetAllMarketRequestResponseItem[];
 }): JSX.Element => {
-  const { data, buyerRequests } = props;
+  const { data } = props;
   const {
     image,
     specifications,
@@ -43,7 +34,6 @@ const MobileOffers = (props: {
     size,
     price,
     measurementUnit,
-    status,
     marketRequest,
   } = data;
 
@@ -131,7 +121,7 @@ const MobileOffers = (props: {
     <BuyerRequestMobileContainer>
       <MajorInfo>
         <div className="thumbnail-container">
-          <img src={parseImageUrl(image)} />
+          <img src={parseImageUrl(image)} alt="" />
         </div>
 
         <Typography

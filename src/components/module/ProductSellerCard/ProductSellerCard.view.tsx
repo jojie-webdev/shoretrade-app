@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 import FavoriteButton from 'components/base/FavoriteButton';
+import StarRating from 'components/base/StarRating';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import StarRating from 'components/base/StarRating';
-import { useTheme } from 'utils/Theme';
-import { BREAKPOINTS } from './../../../consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
+
+import { BREAKPOINTS } from './../../../consts/breakpoints';
 import { ProductSellerProps } from './ProductSellerCard.props';
 import {
   SellerCardContainer,
@@ -20,7 +20,6 @@ import {
 } from './ProductSellerCard.style';
 
 const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
-  const theme = useTheme();
   const {
     name,
     uri,
@@ -30,7 +29,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
     showFavoriteButton,
     onFavorite,
     onClickSeller,
-    bottomComponent
+    bottomComponent,
   } = props;
 
   const [defaultImage, setDefaultImage] = useState(uri);
@@ -75,16 +74,9 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
               weight="normal"
               color="shade9"
             >
-              {
-                isMobile ?
-                  '' :
-                  rating || 0
-              }
+              {isMobile ? '' : rating || 0}
             </Typography>
-            <StarRating
-              rating={Number(rating)} 
-              spacing={6}
-            />
+            <StarRating rating={Number(rating)} spacing={6} />
           </RatingRow>
         </FlexShrinked>
         <EndRow>
@@ -93,11 +85,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           )}
         </EndRow>
       </Row>
-      {
-        bottomComponent ?
-          bottomComponent :
-          ''
-      }
+      {bottomComponent ? bottomComponent : ''}
     </SellerCardContainer>
   );
 };

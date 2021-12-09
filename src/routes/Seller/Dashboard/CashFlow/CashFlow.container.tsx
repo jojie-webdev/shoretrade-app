@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { SELLER_ROUTES } from 'consts/routes';
-import moment from 'moment';
-import pathOr from 'ramda/es/pathOr';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { getSellerGraphDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
-import getFiscalYear from 'utils/Date/getFiscalYear';
-import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import { salesDataToCashFlowGraph } from './CashFlow.transforms';
 import CashFlowView from './CashFlow.view';
 
-const fiscalYearDateRange = getValidDateRangeByFinancialYear();
-
 const CashFlow = (): JSX.Element => {
   const location: { state: any } = useLocation();
-  const {
-    months = 'FY',
-    isEarning,
-  }: { months: string; isEarning: string } = useParams();
-  const token = useSelector((state: Store) => state.auth.token) || '';
+  const { months = 'FY' }: { months: string; isEarning: string } = useParams();
 
   const innerRouteTitle =
     location.state?.innerRouteTitle || 'Cash Flow Details';

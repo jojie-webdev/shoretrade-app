@@ -25,6 +25,7 @@ const BalanceHistory = (): JSX.Element => {
 
   useEffect(() => {
     getTransactionHistory();
+    // eslint-disable-next-line
   }, [companyId]);
 
   const isLoading =

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Spinner from 'components/base/Spinner';
 import { Location } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
-import Typography from 'components/base/Typography';
+// import Typography from 'components/base/Typography';
 import { isEmpty } from 'ramda';
 import parseGooglePlaceData from 'utils/Address/parseGooglePlaceData';
 import useScript from 'utils/Hooks/useScript';
@@ -11,7 +11,7 @@ import useScript from 'utils/Hooks/useScript';
 import { LocationSearchProps } from './LocationSearch.props';
 import {
   Container,
-  SearchLocationContainer,
+  // SearchLocationContainer,
   SpinnerContainer,
   Results,
   Item,
@@ -38,6 +38,7 @@ const LocationSearch = ({
   const [loadingData, setLoadingData] = useState(false);
   const [doSearch, setDoSearch] = useState(!!textFieldProps?.value);
 
+  // eslint-disable-next-line
   const [hasMap, error] = useScript(
     `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.REACT_APP_GOOGLE_PLACES_AUTOCOMPLETE_API_KEY}`
   );
@@ -171,6 +172,7 @@ const LocationSearch = ({
       }, 800);
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchValue]);
 
   return (

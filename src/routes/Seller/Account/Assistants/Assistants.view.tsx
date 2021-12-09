@@ -10,14 +10,11 @@ import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { useTheme } from 'utils/Theme';
 
 import { AssistantsGeneratedProps } from './Assistants.props';
 import { Container, AccountName, StyledInteraction } from './Assistants.style';
 
 const AssistantsView = (props: AssistantsGeneratedProps) => {
-  const theme = useTheme();
-
   const {
     pending,
     goToCreateAssistant,

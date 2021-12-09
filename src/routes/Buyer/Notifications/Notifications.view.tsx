@@ -6,7 +6,7 @@ import EmptyStateView from 'components/module/EmptyState';
 import NotificationItemView from 'components/module/NotificationItem';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { NotificationType } from 'types/store/GetNotificationsState';
 import { useTheme } from 'utils/Theme';
 
@@ -15,7 +15,6 @@ import { Container, TopBarContainer } from './Notifications.style';
 
 const NotificationsView = (props: NotificationsGeneratedProps) => {
   const theme = useTheme();
-  const history = useHistory();
   const {
     tabItems,
     handleSelectTab,
@@ -28,8 +27,7 @@ const NotificationsView = (props: NotificationsGeneratedProps) => {
     handleNotifOnClick,
     currentCompany,
   } = props;
-  const isSeller = theme.appType === 'seller';
-  const defaultColor = isSeller ? 'shade2' : 'shade6';
+
   return (
     <Container>
       <TopBarContainer>

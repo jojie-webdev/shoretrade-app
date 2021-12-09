@@ -51,6 +51,7 @@ const SellerDetails = (): JSX.Element => {
     if (sellerIdParsed && previousId !== sellerIdParsed) {
       onLoad(sellerIdParsed);
     }
+    // eslint-disable-next-line
   }, [sellerIdParsed]);
 
   const loading: boolean | undefined = useSelector(
@@ -82,6 +83,7 @@ const SellerDetails = (): JSX.Element => {
 
   useEffect(() => {
     if (id) getSeller(id);
+    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {

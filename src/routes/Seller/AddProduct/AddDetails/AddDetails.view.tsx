@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
-import Alert from 'components/base/Alert';
+// import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
-import { Calendar, DollarSign, InfoFilled } from 'components/base/SVG';
+import { DollarSign } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
-import IconTooltip from 'components/module/IconTooltip';
+// import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment-timezone';
@@ -28,12 +28,12 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
-import { toPrice } from 'utils/String/toPrice';
+// import { toPrice } from 'utils/String/toPrice';
 
 import { AddDetailsProps } from './AddDetails.props';
 import {
   Container,
-  CheckboxContainer,
+  // CheckboxContainer,
   CustomCol,
   DatePickerTop,
 } from './AddDetails.style';
@@ -51,7 +51,7 @@ const timeOptions = [...Array(48)].map((v, i) => {
   const value = `${
     (i / 2 < 10 ? '0' : '') +
     (i / 2 - ((i / 2) % 1)) +
-    ((i / 2) % 1 != 0 ? ':30' : ':00')
+    ((i / 2) % 1 !== 0 ? ':30' : ':00')
   }`;
   return {
     value,
@@ -142,6 +142,7 @@ const AddDetails = ({
       ? moment(editableListing?.catchDate).toDate()
       : null
   );
+  // eslint-disable-next-line
   const [catchRecurrence, setCatchRecurrence] = useState(
     editableListing?.catchRecurrence || catchRecurrenceOptions[1].value
   );
@@ -268,6 +269,7 @@ const AddDetails = ({
         })
       );
     }
+    // eslint-disable-next-line
   }, [
     catchDate,
     auctionDate,
@@ -405,14 +407,14 @@ const AddDetails = ({
     }
   };
 
-  const priceAlertMessage =
-    marketEstimate.min !== null && marketEstimate.max !== null
-      ? `${toPrice(marketEstimate.min)} - ${toPrice(
-          marketEstimate.max
-        )} per ${formatUnitToPricePerUnit(
-          formatMeasurementUnit(listingFormData?.measurementUnit)
-        )} in the past 14 days`
-      : 'No Data Available';
+  // const priceAlertMessage =
+  //   marketEstimate.min !== null && marketEstimate.max !== null
+  //     ? `${toPrice(marketEstimate.min)} - ${toPrice(
+  //         marketEstimate.max
+  //       )} per ${formatUnitToPricePerUnit(
+  //         formatMeasurementUnit(listingFormData?.measurementUnit)
+  //       )} in the past 14 days`
+  //     : 'No Data Available';
 
   const handleToggleAquafuture = () => {
     if (editableListing.isAlreadyCreated) return;

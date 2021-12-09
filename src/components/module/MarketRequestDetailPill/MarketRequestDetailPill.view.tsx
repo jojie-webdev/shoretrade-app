@@ -39,7 +39,7 @@ const MarketRequestDetailPill = (
     <Container>
       <RequestDetailsMobileContainer>
         <div className="thumbnail-container">
-          <img src={parseImageUrl(imgUrl || '')} />
+          <img src={parseImageUrl(imgUrl || '')} alt="" />
         </div>
 
         <div style={{ width: '100%', margin: 'auto' }}>

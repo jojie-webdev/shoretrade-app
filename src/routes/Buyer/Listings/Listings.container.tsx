@@ -89,6 +89,7 @@ export default function ListingContainer() {
     return () => {
       document.removeEventListener('scroll', handleMobilePagination);
     };
+    // eslint-disable-next-line
   }, [isMobile, listingRequest, isReadypaginateViaScroll, searchTerm]);
 
   useComponentShouldUpdate(() => {
@@ -108,6 +109,7 @@ export default function ListingContainer() {
         sortOrder,
       })
     );
+    // eslint-disable-next-line
   }, [sortField, searchTerm, page, sortOrder, limit]);
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function ListingContainer() {
   // handle search in mobile
   useComponentShouldUpdate(() => {
     if (isMobile) {
-      if (!!searchTerm.length) {
+      if (searchTerm.length) {
         setLimit(100); // displays the first 100 search result
       } else setLimit(10);
     }

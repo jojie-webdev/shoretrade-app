@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import qs from 'qs';
-import { useDispatch, useStore, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getLinkedAccountsActions,
   addLinkedAccountActions,
@@ -59,6 +59,7 @@ const Assistants = (): JSX.Element => {
     if (companyId) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const Assistants = (): JSX.Element => {
       setNotifMsg('Fisherman / Assistant successfully created!');
       dispatch(addLinkedAccountActions.clear());
     }
+    // eslint-disable-next-line
   }, [addLinkedAccount]);
 
   // MARK:- Render

@@ -5,7 +5,6 @@ import React, {
   useReducer,
   useRef,
   useEffect,
-  RefObject,
 } from 'react';
 
 import Alert from 'components/base/Alert';
@@ -14,19 +13,12 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
-import {
-  CloseFilled,
-  Download,
-  FileCheck,
-  Search,
-  Subtract,
-} from 'components/base/SVG';
+import { CloseFilled, Download, Search } from 'components/base/SVG';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import MobileNav from 'components/layout/MobileNav';
-import Add from 'components/module/Add/Add.view';
 import AddFile from 'components/module/AddFile';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
@@ -39,8 +31,8 @@ import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
-import { TipsContainer } from 'routes/Seller/Account/Licenses/Licenses.style';
-import { LicenseDetails } from 'routes/Seller/Account/Licenses/Licenses.view';
+// import { TipsContainer } from 'routes/Seller/Account/Licenses/Licenses.style';
+// import { LicenseDetails } from 'routes/Seller/Account/Licenses/Licenses.view';
 import { validateAccount } from 'services/auth';
 import {
   Category,
@@ -104,7 +96,6 @@ import {
   ButtonContainer,
   SellerSummaryContainer,
   TopContainer,
-  LicensePreview,
   LogInLinkContainer,
   LogInLinkPrefix,
   LogInLinkAction,
@@ -261,20 +252,20 @@ const StepForm = ({
     }
   };
 
-  const onDeleteLicense = () => {
-    updateRegistrationDetails({
-      licenses: [
-        ...registrationDetails.licenses.filter(
-          (f, idx) => activeLicenseIdx !== idx
-        ),
-      ],
-    });
-    setLicense({ file: null, fileName: '' });
-    setLicenseBack({ file: null, fileName: '' });
-    setExpirationDate(null);
-    setStateId('');
-    setActiveLicenseIdx(null);
-  };
+  // const onDeleteLicense = () => {
+  //   updateRegistrationDetails({
+  //     licenses: [
+  //       ...registrationDetails.licenses.filter(
+  //         (f, idx) => activeLicenseIdx !== idx
+  //       ),
+  //     ],
+  //   });
+  //   setLicense({ file: null, fileName: '' });
+  //   setLicenseBack({ file: null, fileName: '' });
+  //   setExpirationDate(null);
+  //   setStateId('');
+  //   setActiveLicenseIdx(null);
+  // };
 
   const handleSubmitLicense = () => {
     if (isSeller) {
@@ -1317,13 +1308,10 @@ const StepForm = ({
 
 const RegisterView = (props: RegisterGeneratedProps) => {
   const {
-    backToLogin,
     registrationDetails,
     updateRegistrationDetails,
     register,
-    isPending,
     isSuccess,
-    setSummaryEdit,
     isSummaryEdit,
     goToLogIn,
   } = props;

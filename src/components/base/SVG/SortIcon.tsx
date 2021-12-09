@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const SortIcon = (props: SVGProps): JSX.Element => {

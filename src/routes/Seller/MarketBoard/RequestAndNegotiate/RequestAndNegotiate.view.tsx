@@ -1,8 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
-import { AlertProps } from 'components/base/Alert/Alert.props';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
@@ -11,7 +10,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
-import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
+// import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
@@ -23,8 +22,6 @@ import { Specification } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
-import { toOrdinalSuffix } from 'utils/String/toOrdinalSuffix';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
@@ -40,7 +37,7 @@ import {
   Container,
   BadgesContainer,
   BadgeText,
-  MetricContainer,
+  // MetricContainer,
   StyledBadge,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
@@ -216,6 +213,7 @@ const Step1 = ({
       Math.max(negotiations.length - (negotiations.length >= 2 ? 2 : 1), 0)
     );
 
+    // eslint-disable-next-line
     sellerNegos.map((off, index) => {
       const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
       const findModal = modalLastNegotiationsArray.find(
@@ -237,6 +235,7 @@ const Step1 = ({
       }
     });
 
+    // eslint-disable-next-line
     buyerNegos.map((off, index) => {
       const find = lastNegotiationsArray.find((ltn) => off.id === ltn.id);
       const findModal = modalLastNegotiationsArray.find(

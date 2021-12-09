@@ -3,12 +3,12 @@ import { SELLER_ROUTES } from 'consts';
 import { select, put, takeLatest } from 'redux-saga/effects';
 import { Action, AsyncAction } from 'types/Action';
 import { EditSelectedListingPayload } from 'types/store/EditSelectedListingState';
-import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 import {
   GetListingFormDataMeta,
   GetListingFormDataPayload,
   GetListingFormDataResponse,
 } from 'types/store/GetListingFormDataState';
+import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 import { Store } from 'types/store/Store';
 import { editableListingToEditSelectedListing } from 'utils/Listing/editableListingToEditSelectedListing';
 
@@ -21,11 +21,11 @@ import {
 function* editSelectedListingStep1(action: Action<EditSelectedListingPayload>) {
   if (action.payload.id) {
     const allListings: GetListingsBySalesChannelResponseItem[] = yield select(
-      (state: Store) => state.getListingsBySalesChannel.data?.data?.listings || []
+      (state: Store) =>
+        state.getListingsBySalesChannel.data?.data?.listings || []
     );
-    const currentListing = allListings.find((data) => 
-      data.listing_id === action.payload.id
-    ) || null;
+    const currentListing =
+      allListings.find((data) => data.listing_id === action.payload.id) || null;
 
     // this will reset editable listing state and fire getListingFormDataActions
     // step 2 will be triggered when getListingFormDataActions is success
@@ -43,11 +43,13 @@ function* editSelectedListingStep2(
 ) {
   if (action.payload.data.currentListingId) {
     const allListings: GetListingsBySalesChannelResponseItem[] = yield select(
-      (state: Store) => state.getListingsBySalesChannel.data?.data?.listings || []
+      (state: Store) =>
+        state.getListingsBySalesChannel.data?.data?.listings || []
     );
-    const currentListing = allListings.find((data) => 
-      data.listing_id === action.payload.data.currentListingId
-    ) || null;
+    const currentListing =
+      allListings.find(
+        (data) => data.listing_id === action.payload.data.currentListingId
+      ) || null;
 
     const listingFormData: GetListingFormDataResponse = yield select(
       (state: Store) => state.getListingFormData.data?.data || null

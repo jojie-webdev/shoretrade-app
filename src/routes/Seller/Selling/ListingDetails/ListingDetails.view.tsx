@@ -4,6 +4,7 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
+import StarRating from 'components/base/StarRating';
 import {
   Expand,
   Location,
@@ -14,7 +15,6 @@ import {
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import StarRating from 'components/base/StarRating';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Carousel from 'components/module/Carousel';
@@ -27,7 +27,6 @@ import { useHistory } from 'react-router-dom';
 import { BadgeText } from 'routes/Buyer/ProductDetails/ProductDetails.style';
 import { base64ToFile } from 'utils/File';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
-import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { capitalize } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
@@ -113,7 +112,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
   const [images, setImages] = useState<string[]>([]);
 
-  const { productDetails, sales, orderDetails, carousel, boxDetails } = listing;
+  const { productDetails, sales, orderDetails, carousel } = listing;
 
   const formattedCatchDate = () =>
     orderDetails.catchDate
@@ -382,9 +381,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
 
         {!isCreatListingSuccess && <Actions {...props} />}
 
-        {props.sellingDetailsBreadCrumbs && (
+        {sellingDetailsBreadCrumbs && (
           <div className="breadcrumbs-container">
-            <Breadcrumbs sections={props.sellingDetailsBreadCrumbs} isLight />
+            <Breadcrumbs sections={sellingDetailsBreadCrumbs} isLight />
           </div>
         )}
 
@@ -524,7 +523,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </Typography>
                   <div>
                     <StarRating
-                      rating={productDetails.vendor.rating || 0} 
+                      rating={productDetails.vendor.rating || 0}
                       style={{ marginTop: '5px' }}
                     />
                   </div>

@@ -7,15 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { extendCartExpiry, closeCart } from 'services/cart';
 import {
-  authActions,
-  cartActions,
+  // authActions,
+  // cartActions,
   deleteNotificationActions,
-  editableListingActions,
-  getCoopUsersActions,
+  // editableListingActions,
   getNotificationsActions,
   logoutActions,
   readNotificationActions,
-  getUserActions,
+  // getUserActions,
   globalModalActions,
 } from 'store/actions';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
@@ -28,7 +27,6 @@ import {
   DashboardGeneratedProps,
 } from './Dashboard.props';
 import DashboardView from './Dashboard.view';
-import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Store / Hooks
@@ -62,9 +60,9 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }
 
   const getUser = useSelector((state: Store) => state.getUser);
-  const buyerRequests = useSelector(
-    (store: Store) => store.getAllMarketRequest
-  );
+  // const buyerRequests = useSelector(
+  //   (store: Store) => store.getAllMarketRequest
+  // );
   const getNotifications = useSelector(
     (state: Store) => state.getNotifications
   );
@@ -167,7 +165,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     name?: NotifName
   ) => {
     const url = notifURLMapper(resource, appType, name);
-    if (url != '') {
+    if (url !== '') {
       history.push(url);
     }
   };
@@ -190,6 +188,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
         setPageTitle(innerRoute);
       }
     }
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
@@ -211,6 +210,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   useEffect(() => {
     dispatch(getNotificationsActions.request());
+    // eslint-disable-next-line
   }, []);
 
   // useEffect(() => {

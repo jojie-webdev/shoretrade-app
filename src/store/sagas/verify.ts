@@ -20,7 +20,7 @@ function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
     const { data } = yield call(verify, action.meta);
     yield put(verifyActions.success(data));
   } catch (e) {
-    if(e.response.status === 401) {
+    if (e.response.status === 401) {
       yield put(loginActions.failed(e.response.data.message));
       const pathname: string = yield select(
         (state: Store) => state.router.location.pathname
@@ -31,7 +31,6 @@ function* verifyRequest(action: AsyncAction<VerifyMeta, VerifyPayload>) {
       } else {
         yield put(push(BUYER_ROUTES.LOGIN));
       }
-
     }
     yield put(verifyActions.failed(e.message));
   }

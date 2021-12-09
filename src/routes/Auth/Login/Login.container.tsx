@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 
-import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
+import { SELLER_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { loginActions } from 'store/actions';
 import { Store } from 'types/store/Store';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { useTheme } from 'utils/Theme';
 
 import { Credentials } from './Login.props';
 import LoginView from './Login.view';
-import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 const Login = (): JSX.Element => {
   const history = useHistory();
@@ -17,6 +17,7 @@ const Login = (): JSX.Element => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const pending = useSelector((state: Store) => state.login.pending) || false;
+  // eslint-disable-next-line
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
     false
@@ -49,6 +50,7 @@ const Login = (): JSX.Element => {
   useEffect(() => {
     // reset terms
     setIsAcceptClicked(false);
+    // eslint-disable-next-line
   }, []);
 
   const generatedProps = {

@@ -12,7 +12,6 @@ import unnest from 'ramda/es/unnest';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { PACKAGING } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.constants';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { Store } from 'types/store/Store';
 import { sizeToString } from 'utils/Listing';
@@ -20,7 +19,7 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 import { BoxDetails } from '../AddBoxes/AddBoxes.view';
-import { BoxItemProps, ReviewProps } from './Review.props';
+import { ReviewProps } from './Review.props';
 import { Container, ButtonRow } from './Review.style';
 
 const Review = ({
@@ -151,6 +150,7 @@ const Review = ({
         return;
       }
     }
+    // eslint-disable-next-line
   }, [availableCrates]);
 
   const [showValidationError, setShowValidationError] = useState(false);
@@ -168,6 +168,7 @@ const Review = ({
     setShowValidationError((currentValue) =>
       currentValue ? !isValidData : false
     );
+    // eslint-disable-next-line
   }, [editableListing]);
 
   return (

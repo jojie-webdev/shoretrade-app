@@ -5,10 +5,7 @@ import Typography from 'components/base/Typography/Typography.view';
 import Card from 'components/module/CategoryCards/Landing';
 import CategoryImageView from 'components/module/CategoryImage/CategoryImage.view';
 import Loading from 'components/module/Loading';
-import MobileHeader from 'components/module/MobileHeader';
-import Search from 'components/module/Search/Search.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -21,9 +18,9 @@ const CategoriesLandingView = (props: CategoriesLandingGeneratedProps) => {
   const {
     categories,
     currentPath,
-    search,
-    onChangeSearchValue,
-    onResetSearchValue,
+    // search,
+    // onChangeSearchValue,
+    // onResetSearchValue,
   } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 

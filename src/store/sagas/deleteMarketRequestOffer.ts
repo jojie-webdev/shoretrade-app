@@ -1,19 +1,20 @@
-import { replace } from 'connected-react-router';
-import { BUYER_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteOffer } from 'services/marketRequest';
-
+import { getActiveOffersActions } from 'store/actions';
 import { AsyncAction } from 'types/Action';
 import {
   DeleteMarketRequestOfferMeta,
   DeleteMarketRequestOfferPayload,
 } from 'types/store/DeleteMarketRequestOfferState';
 import { Store } from 'types/store/Store';
+
 import { deleteMarketRequestOfferActions } from '../actions';
-import { getAllMarketRequestActions, getActiveOffersActions } from 'store/actions';
 
 function* deleteMarketRequestOfferRequest(
-  action: AsyncAction<DeleteMarketRequestOfferMeta, DeleteMarketRequestOfferPayload>
+  action: AsyncAction<
+    DeleteMarketRequestOfferMeta,
+    DeleteMarketRequestOfferPayload
+  >
 ) {
   const state: Store = yield select();
 
@@ -30,16 +31,22 @@ function* deleteMarketRequestOfferRequest(
 }
 
 function* deleteMarketRequestOfferSuccess(
-  action: AsyncAction<DeleteMarketRequestOfferMeta, DeleteMarketRequestOfferPayload>
+  action: AsyncAction<
+    DeleteMarketRequestOfferMeta,
+    DeleteMarketRequestOfferPayload
+  >
 ) {
   const state: Store = yield select();
-  const marketRequestId = state.deleteMarketRequestOffer.request?.marketRequestId
+  const marketRequestId =
+    state.deleteMarketRequestOffer.request?.marketRequestId;
 
-  yield put(getActiveOffersActions.request({
-    queryParams: {
-      marketRequestId,
-    }
-  }));
+  yield put(
+    getActiveOffersActions.request({
+      queryParams: {
+        marketRequestId,
+      },
+    })
+  );
 }
 
 function* deleteMarketRequestOfferWatcher() {

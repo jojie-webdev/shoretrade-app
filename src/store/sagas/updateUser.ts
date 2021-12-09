@@ -1,6 +1,3 @@
-import { push } from 'connected-react-router';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import { pathOr } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { uploadImageData } from 'services/upload';
 import { updateUser } from 'services/user';

@@ -2,11 +2,7 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
-import {
-  ChevronRight,
-  PlaceholderProfile,
-  ArrowRight,
-} from 'components/base/SVG';
+import { ChevronRight, PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
@@ -22,7 +18,7 @@ import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
-import { Col, Row } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';

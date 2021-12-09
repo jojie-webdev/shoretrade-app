@@ -26,6 +26,7 @@ const EmptyDashboard = (props: EmptyDashboardProps): JSX.Element => {
         <div className="refresh-container">
           <MainText variant="label" color="shade6">
             Please change selected criterias or try to{' '}
+            {/* eslint-disable-next-line */}
             <a
               className="refresh-text"
               onClick={(e) => window.location.reload()}

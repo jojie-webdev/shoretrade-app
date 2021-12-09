@@ -1,4 +1,4 @@
-import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
 import { Action } from 'types/Action';
 import { CurrentAddressPayload } from 'types/store/CurrentAddressState';
 import { Store } from 'types/store/Store';

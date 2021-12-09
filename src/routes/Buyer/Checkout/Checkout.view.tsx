@@ -36,7 +36,6 @@ const Orders = (props: CheckoutGeneratedProps) => {
     setSelectedShippingId,
     removeItem,
   } = props;
-  const theme = useTheme();
 
   const orders = Object.keys(groupedOrders).reduce(
     (data: { id: string; listings: OrderItem[] }[], vendorId) => [
@@ -111,7 +110,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     loadingShippingQuotes,
     loadingCart,
     selectedShippingId,
-    processingOrder,
     orderError,
   } = props;
 

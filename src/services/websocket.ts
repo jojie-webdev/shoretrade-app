@@ -1,7 +1,5 @@
-import React from 'react';
-
 import { API } from 'consts';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 function createSocketConnection() {
   return io(API.URL, {

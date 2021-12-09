@@ -1,5 +1,4 @@
 import { goBack } from 'connected-react-router';
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { chargeCard } from 'services/payment';
 import { AsyncAction } from 'types/Action';
@@ -9,7 +8,7 @@ import { Store } from 'types/store/Store';
 import { chargeCardActions, getUserActions } from '../actions';
 
 function* chargeCardRequest(
-  action: AsyncAction<ChargeCardMeta, ChargeCardPayload>,
+  action: AsyncAction<ChargeCardMeta, ChargeCardPayload>
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
@@ -25,7 +24,7 @@ function* chargeCardRequest(
 }
 
 function* chargeCardSuccess(
-  action: AsyncAction<ChargeCardMeta, ChargeCardPayload>,
+  action: AsyncAction<ChargeCardMeta, ChargeCardPayload>
 ) {
   yield put(getUserActions.request());
   goBack();

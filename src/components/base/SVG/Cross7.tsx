@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const Cross7 = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
-  const { width, height, fill } = props;
+  const { width, height } = props;
 
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
@@ -19,7 +16,13 @@ const Cross7 = (props: SVGProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect x="0.5" y="0.5" width="11" height="13" fill="url(#cross7_pattern0)" />
+      <rect
+        x="0.5"
+        y="0.5"
+        width="11"
+        height="13"
+        fill="url(#cross7_pattern0)"
+      />
       <defs>
         <pattern
           id="cross7_pattern0"

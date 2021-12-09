@@ -1,35 +1,23 @@
 import React, { useEffect } from 'react';
 
-import { SELLING_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   createCustomListingActions,
   createListingActions,
-  editSelectedListingActions,
-  endListingActions,
-  getAllListingsActions,
   getCustomFormDataActions,
   getListingFormDataActions,
   updateListingActions,
 } from 'store/actions';
 import { GetCategoryData } from 'store/selectors/seller/categories';
-import {
-  GetListingFormDataSelector,
-  GetListingSelector,
-} from 'store/selectors/seller/listings';
+import { GetListingFormDataSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
 
-import {
-  ListingDetailsPublicProps,
-  ListingDetailsGeneratedProps,
-} from '../../Selling/ListingDetails/ListingDetails.props';
+import { ListingDetailsGeneratedProps } from '../../Selling/ListingDetails/ListingDetails.props';
 import ListingDetailsView from '../../Selling/ListingDetails/ListingDetails.view';
 import { editableListingToListingProps } from './Preview.transform';
 
 const PreviewContainer = (): JSX.Element => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const editableListing = useSelector((state: Store) => state.editableListing);
   const creatingListingStatus = useSelector(
@@ -103,6 +91,7 @@ const PreviewContainer = (): JSX.Element => {
     if (!categoryData) {
       getCustomFormData();
     }
+    // eslint-disable-next-line
   }, []);
 
   const generatedProps: ListingDetailsGeneratedProps = {

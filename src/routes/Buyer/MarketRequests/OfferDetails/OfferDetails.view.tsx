@@ -1,8 +1,6 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React from 'react';
 
 import Alert from 'components/base/Alert';
-import { AlertProps } from 'components/base/Alert/Alert.props';
-import Badge from 'components/base/Badge/Badge.view';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import StarRating from 'components/base/StarRating';
 import { PlaceholderProfile } from 'components/base/SVG';
@@ -12,36 +10,26 @@ import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestSummary from 'components/module/MarketRequestSummary';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
-import OfferAlert from 'components/module/OfferAlert';
 import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import { prop, sortBy } from 'ramda';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
-import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
-import {
-  Offer,
-  OfferStatus,
-  ShippingAddress,
-} from 'types/store/GetActiveOffersState';
+import { ShippingAddress } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { createdAtToExpiry } from 'utils/MarketRequest';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import Check from '../../../../components/base/SVG/Check';
 import Refresh from '../../../../components/base/SVG/Refresh';
-import { Store } from '../../../../types/store/Store';
-import { StatusBadgeText } from '../RequestDetails/RequestDetails.style';
 import { OfferDetailsProps } from './OfferDetails.props';
 import {
   FullOfferDetailsContainer,
@@ -51,14 +39,12 @@ import {
   StarContainer,
   StyledAcceptButton,
   StyledNegotiateButton,
-  TagsContainer,
   StyledTypography,
   StyledTypography2,
   StyledImage,
   StyledNumberRating,
   CTAContainer,
   StyledNegotiateButtonContainer,
-  NoActionsYetBadgesContainer,
   Container,
   HeaderContainer,
   AlertsContainer,
@@ -263,6 +249,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
             {renderLabel('Delivery Address', { marginTop: '24px' })}
             {renderLabelValue(
+              // eslint-disable-next-line react/prop-types
               getShippingAddress(offerMR.shippingTo as ShippingAddress)
             )}
           </Col>

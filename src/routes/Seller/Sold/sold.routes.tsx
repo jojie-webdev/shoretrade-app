@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SELLER_SOLD_ROUTES } from 'consts';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 // Screens
 import Details from './Details';

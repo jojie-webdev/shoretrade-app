@@ -6,7 +6,6 @@ import Typography from 'components/base/Typography';
 
 import { InteractionCreditCardProps } from './InteractionCreditCard.props';
 import {
-  LeftComponent,
   RightComponent,
   CustomInteractions,
   CardName,

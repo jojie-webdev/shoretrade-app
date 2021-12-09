@@ -2,7 +2,7 @@ import React from 'react';
 
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
-import { Col, Row } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 
 import { Field } from './AddCredit.style';
 

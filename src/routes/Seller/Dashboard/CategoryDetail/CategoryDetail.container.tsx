@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { SELLER_DASHBOARD_ROUTES, SELLER_ROUTES } from 'consts';
+import { SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSellerTypeDashboard } from 'services/company';
 import { Store } from 'types/store/Store';
-import getFiscalYear from 'utils/Date/getFiscalYear';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 
 import CategoryDetailView from './CategoryDetail.view';
@@ -55,6 +54,7 @@ const CategoryDetail = (): JSX.Element => {
     };
 
     fetchData();
+    // eslint-disable-next-line
   }, [token, months, id]);
 
   let breadCrumbSections = [];

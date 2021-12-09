@@ -34,6 +34,7 @@ const EditAssistant = (): JSX.Element => {
   );
 
   // MARK:- State
+  // eslint-disable-next-line
   const [callingCode, setCallingCode] = useState('61');
 
   // MARK:- Methods
@@ -55,6 +56,7 @@ const EditAssistant = (): JSX.Element => {
     if (companyId && !getLinkedAccounts.data) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId, getLinkedAccounts.data]);
 
   // MARK:- Variables

@@ -4,9 +4,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
-import Select from 'components/base/Select';
 import { ArrowLeft, ChevronRight } from 'components/base/SVG';
-import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
@@ -27,8 +25,6 @@ import {
   Reset,
   RadioContainer,
   CheckboxContainer,
-  DropdownContainer,
-  InputContainer,
   Scroll,
   ClickableRow,
   Filter,
@@ -55,7 +51,9 @@ const FilterModal = (
   const [selecting, setSelecting] = useState<null | string>(null);
   const [type, setType] = useState<FilterType | ''>('');
   const [currentValue, setCurrentValue] = useState('');
+  // eslint-disable-next-line
   const [sizeFrom, setSizeFrom] = useState('');
+  // eslint-disable-next-line
   const [sizeTo, setSizeTo] = useState('');
   const [sizeErrors, setSizeErrors] = useState<string[]>([]);
 
@@ -70,7 +68,6 @@ const FilterModal = (
   };
 
   const filterValues = getFilter().values;
-  const { sizeDropdownValues, unit } = getFilter();
 
   const onBack = () => {
     setCurrentValue('');
@@ -139,6 +136,7 @@ const FilterModal = (
 
       if (initialValue) setCurrentValue(initialValue);
     }
+    // eslint-disable-next-line
   }, [selecting]);
 
   return (

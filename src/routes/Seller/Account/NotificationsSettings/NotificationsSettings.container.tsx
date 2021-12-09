@@ -68,10 +68,6 @@ const NotificationsSettings = (): JSX.Element => {
 
   const getUser = useSelector((state: Store) => state.getUser.data);
 
-  const pendingUpdate = useSelector(
-    (state: Store) => state.updateNotificationSettings.pending || false
-  );
-
   const handleOnSaveCustom = (val: any) => {
     if (!settingsUpdated) {
       setSettingsUpdated(true);
@@ -132,7 +128,7 @@ const NotificationsSettings = (): JSX.Element => {
           (acc: { [key: string]: any }, curr) => (
             (acc[curr] = {
               [currentCustomSetting.option]: currentCustomSetting.val,
-            }),
+            }), // eslint-disable-line
             acc
           ),
           {}
@@ -152,6 +148,7 @@ const NotificationsSettings = (): JSX.Element => {
     if (!inAccount && !loadingUser && companies?.length > 0) {
       setCompanyId(companies[0].id);
     }
+    // eslint-disable-next-line
   }, [loadingUser]);
 
   useEffect(() => {
@@ -165,6 +162,7 @@ const NotificationsSettings = (): JSX.Element => {
       }
       setCompanyId(companyId);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -175,6 +173,7 @@ const NotificationsSettings = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -182,6 +181,7 @@ const NotificationsSettings = (): JSX.Element => {
       handleOnSaveCustom(updateTriggered);
       setUpdateTriggered(null);
     }
+    // eslint-disable-next-line
   }, [customSettings, updateTriggered]);
 
   useEffect(() => {
@@ -191,6 +191,7 @@ const NotificationsSettings = (): JSX.Element => {
       setCurrentGlobalSetting('');
       setShowDeactivationWarning('');
     }
+    // eslint-disable-next-line
   }, [globalSettings, globalUpdateTriggered]);
 
   useEffect(() => {
@@ -202,10 +203,10 @@ const NotificationsSettings = (): JSX.Element => {
         setCustomSettings(getNotificationsSettings.data.custom);
       }
     }
+    // eslint-disable-next-line
   }, [
     getNotificationsSettings,
-    getNotificationsSettings?.data,
-    getNotificationsSettings?.data,
+    getNotificationsSettings?.data // eslint-disable-line
   ]);
 
   useEffect(() => {
@@ -232,6 +233,7 @@ const NotificationsSettings = (): JSX.Element => {
         handleCustomSettingUpdate();
       }
     }
+    // eslint-disable-next-line
   }, [currentCustomSetting, showDeactivationWarning]);
 
   const generatedProps: NotificationsSettingsProps = {

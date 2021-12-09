@@ -3,18 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-import { ArrowLeft, ChevronRight } from 'components/base/SVG';
+import { ChevronRight } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
-import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
-import CategoryImagePreviewView from 'components/module/CategoryImagePreview';
 import { SIZE_METRICS } from 'consts/sizeMetrics';
 import { pathOr } from 'ramda';
-import { Row, Col, Hidden, Visible } from 'react-grid-system';
-import { isUngraded } from 'routes/Buyer/Categories/Preview/Preview.transform';
+import { Hidden, Visible } from 'react-grid-system';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import theme from 'utils/Theme';
 
 import {
   ContainerWithCategoryImagePreview,
@@ -23,21 +19,14 @@ import {
   RequestRow,
   RequestDetailsContainer,
   DetailsContainer,
-  DetailsHeaderContainer,
   MainContainer,
-  DetailsContentContainer,
   ButtonContainer,
   ProceedButton,
   PreviousButton,
   FriendlyTextContainer,
-  CreateRequestContainer,
 } from '../Create.style';
 import { SelectSizeProps, SizeInputProps } from './SelectSize.props';
-import {
-  SizeFormContainer,
-  MetricLabelContainer,
-  SelectRowContainer,
-} from './SelectSize.style';
+import { SizeFormContainer, SelectRowContainer } from './SelectSize.style';
 
 const SizeInput = (props: SizeInputProps) => {
   const {
@@ -86,6 +75,7 @@ const SizeInput = (props: SizeInputProps) => {
         }
       }
     }
+    // eslint-disable-next-line
   }, [fromSize, toSize]);
 
   if (metricString === 'GRAMS' || metricString === 'UNITS_PER_POUND') {
@@ -205,10 +195,8 @@ const SizeInput = (props: SizeInputProps) => {
 
 const SelectSizeView = (props: SelectSizeProps) => {
   const {
-    step,
     stepCountComponent,
     onBack,
-    selectedCategory,
     setSelectedSize,
     selectedSize,
     listingFormData,

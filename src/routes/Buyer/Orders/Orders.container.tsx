@@ -11,14 +11,13 @@ import {
   getBuyerOrdersTransitActions,
   getBuyerOrdersDeliveredActions,
   sendDisputeActions,
-  sendOrderRatingActions
+  sendOrderRatingActions,
 } from 'store/actions';
 import {
   GetBuyerOrdersToShipPending,
   GetBuyerOrdersToShip,
   GetBuyerOrdersInTransit,
   GetBuyerOrdersDelivered,
-
 } from 'store/selectors/buyer/';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -27,7 +26,6 @@ import {
   OrdersGeneratedProps,
   TabOptions,
   RequestFilters,
-  OrderItem,
 } from './Orders.props';
 import { groupByDate, transformOrder } from './Orders.transform';
 import OrdersView from './Orders.view';
@@ -42,6 +40,7 @@ const OrdersContainer = (): JSX.Element => {
 
   const token = useSelector((state: Store) => state.auth.token) || '';
 
+  // eslint-disable-next-line
   const [initialPending, setInitialPending] = useState(true);
 
   const getAllOrders = () => {
@@ -178,6 +177,7 @@ const OrdersContainer = (): JSX.Element => {
     if (currentTab === 'Pending') {
       getOrders.placed(toShipOrdersFilter);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     toShipOrdersFilter.page,
@@ -190,6 +190,7 @@ const OrdersContainer = (): JSX.Element => {
     if (currentTab === 'In Transit') {
       getOrders.transit(inTransitOrdersFilter);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     inTransitOrdersFilter.page,
@@ -202,6 +203,7 @@ const OrdersContainer = (): JSX.Element => {
     if (currentTab === 'Complete') {
       getOrders.delivered(completedOrdersFilter);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     completedOrdersFilter.page,
@@ -241,21 +243,25 @@ const OrdersContainer = (): JSX.Element => {
 
   const isSendingOrderRating = useSelector(
     (state: Store) => state.sendOrderRating.pending
-  )
+  );
 
   const isSendOrderRatingSuccess = useSelector(
     (state: Store) => !!state.sendOrderRating.data
-  )
+  );
 
-  const sendOrderRating = (orderId: string, rating: number, privateFeedback: string) => {
+  const sendOrderRating = (
+    orderId: string,
+    rating: number,
+    privateFeedback: string
+  ) => {
     dispatch(
       sendOrderRatingActions.request({
         orderId,
         privateFeedback,
-        rating
+        rating,
       })
     );
-  }
+  };
 
   const generatedProps: OrdersGeneratedProps = {
     pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
@@ -278,7 +284,7 @@ const OrdersContainer = (): JSX.Element => {
     sendDispute,
     sendOrderRating,
     isSendingOrderRating,
-    isSendOrderRatingSuccess
+    isSendOrderRatingSuccess,
   };
 
   return <OrdersView {...generatedProps} />;

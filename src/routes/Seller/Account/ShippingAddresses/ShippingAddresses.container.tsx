@@ -54,6 +54,7 @@ const ShippingAddresses = (): JSX.Element => {
     if (companyId !== '') {
       dispatch(getAddressesActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -80,6 +81,7 @@ const ShippingAddresses = (): JSX.Element => {
       dispatch(updateAddressActions.clear());
       dispatch(addAddressActions.clear());
     }
+    // eslint-disable-next-line
   }, [notificationMessage]);
 
   useEffect(() => {

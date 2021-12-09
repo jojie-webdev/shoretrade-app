@@ -63,8 +63,8 @@ export type GetUserPayload = GenericResponse<{
         name: string;
         description: string;
         groups: string[];
-      }[]
-    }
+      }[];
+    };
   };
   token: string;
 }>;

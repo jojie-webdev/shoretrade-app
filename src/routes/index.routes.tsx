@@ -188,6 +188,7 @@ const RoutesComponent = (): JSX.Element => {
         history.push(BUYER_ROUTES.ROOT);
       }
     }
+    // eslint-disable-next-line
   }, [isAuthenticated, authenticatedUserType]);
 
   return (

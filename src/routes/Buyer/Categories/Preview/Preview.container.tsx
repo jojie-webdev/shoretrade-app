@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   getBuyerSearchFilterDataActions,
   getListingsByTypeActions,
@@ -33,11 +33,6 @@ const CategoriesPreview = (): JSX.Element => {
   const isPendingAccount =
     addressesData !== undefined &&
     !(addressesData || []).some((a) => a.approved === 'APPROVED');
-
-  const previousId =
-    useSelector(
-      (state: Store) => state.getListingTypesByCategory.request?.categoryId
-    ) || '';
 
   const results = (
     useSelector(
@@ -127,6 +122,7 @@ const CategoriesPreview = (): JSX.Element => {
 
   useEffect(() => {
     setPrevTypeId(typeIdParsed);
+    // eslint-disable-next-line
   }, [typeIdParsed]);
 
   useEffect(() => {
@@ -140,7 +136,7 @@ const CategoriesPreview = (): JSX.Element => {
 
     onLoad(typeIdParsed);
 
-    if (prevTypeId == typeIdParsed) {
+    if (prevTypeId === typeIdParsed) {
       dispatch(
         getListingsByTypeActions.request({
           typeId: typeIdParsed,
@@ -155,7 +151,7 @@ const CategoriesPreview = (): JSX.Element => {
           },
         })
       );
-    } else if (prevTypeId != typeIdParsed) {
+    } else if (prevTypeId !== typeIdParsed) {
       dispatch(getListingsByTypeActions.request({ typeId: typeIdParsed }));
       setFilterState({
         catchmentArea: null,
@@ -165,6 +161,7 @@ const CategoriesPreview = (): JSX.Element => {
         showUngraded: false,
       });
     }
+    // eslint-disable-next-line
   }, [typeIdParsed, filterState]);
 
   const onApply = () => {

@@ -2,9 +2,9 @@ import React from 'react';
 
 import { TableData } from 'components/base/TableData';
 import { ColumnType } from 'components/module/ListingTable/Table.props';
+import debounce from 'lodash.debounce';
 
 import { TableHeaderProps } from './TableHeader.props';
-import debounce from 'lodash.debounce';
 
 export default function TableHeader(props: TableHeaderProps) {
   const {

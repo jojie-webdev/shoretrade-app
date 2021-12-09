@@ -1,4 +1,3 @@
-import { P } from 'components/base/Typography/Typography.style';
 import moment from 'moment';
 import groupBy from 'ramda/es/groupBy';
 import isEmpty from 'ramda/es/isEmpty';

@@ -5,7 +5,6 @@ import { CircleProgress } from 'react-gradient-progress';
 import { useTheme } from 'utils/Theme';
 
 import { GradientProgressCircleProps } from './GradientProgressCircle.props';
-import { Container } from './GradientProgressCircle.style';
 
 const GradientProgressCircle = (
   props: GradientProgressCircleProps

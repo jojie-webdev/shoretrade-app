@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import AnimationPlayer from 'components/base/AnimationPlayer';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BUYER_ROUTES } from 'consts/routes';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
 import { AnimatedCrab } from 'res/images/animated/crab';
 import { AnimatedOctopus } from 'res/images/animated/octopus';
 import { AnimatedSwordfish } from 'res/images/animated/swordfish';
 import { SwiperSlide } from 'swiper/react';
-import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { getTermsAndConditions } from 'utils/Links';
 
 import { TermsAndConditionProps } from './TermsAndCondition.props';
@@ -38,11 +35,8 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
     cardText1,
     cardText2,
     cardText3,
-    isAcceptClicked,
     setIsAcceptClicked,
   } = props;
-
-  const history = useHistory();
 
   const [isAcceptChecked, setIsAcceptChecked] = useState(false);
 
@@ -92,7 +86,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
 
   const renderAnimation = (animatedComponent: JSX.Element) => (
     <AnimatedComponentContainer>
-      <CircleBackground appType={appType}/>
+      <CircleBackground appType={appType} />
       <div style={{ position: 'absolute' }}>{animatedComponent}</div>
     </AnimatedComponentContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
@@ -40,10 +40,7 @@ import {
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const {
     currentListing,
-    onLoad,
     listingId,
-    addresses,
-    selectedAddress,
     selectAddress,
     favorite,
     onFavorite,
@@ -53,7 +50,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     sellerRatingProps,
     weight,
     setWeight,
-    getBoxes,
     remainingWeight,
     unit,
     pressedBoxRadio,
@@ -78,12 +74,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     // onLoad(listingId);
     setNewCurrentListing(currentListing);
     setFavorite(currentListing?.isFavourite);
+    // eslint-disable-next-line
   }, [currentListing]);
 
   useEffect(() => {
     if (newCurrentListing !== undefined) {
       setImages(newCurrentListing?.images);
     }
+    // eslint-disable-next-line
   }, [newCurrentListing, newCurrentListing?.images]);
 
   useEffect(() => {
@@ -103,6 +101,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       }
     }
+    // eslint-disable-next-line
   }, [groupedBox]);
 
   return (

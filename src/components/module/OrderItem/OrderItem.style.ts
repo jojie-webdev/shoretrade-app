@@ -1,10 +1,7 @@
-import InteractionsView from 'components/base/Interactions';
 import TouchableView from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-
-import { ItemDetailVariants } from './OrderItem.props';
 
 export const OrderItemContainer = styled.div`
   :not(:last-child) {
@@ -24,35 +21,41 @@ export const OrderInfoContainer = styled.div`
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   border: 1px solid ${({ theme }) => theme.grey.shade3};
-  
-  .end-text { text-align: right; }
+
+  .end-text {
+    text-align: right;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     border: none;
     border-radius: 0;
 
-    .end-text { text-align: left; }
+    .end-text {
+      text-align: left;
+    }
 
     .btn-rate-seller {
       margin: auto 0 auto auto !important;
     }
 
-    .detail-container { margin-bottom: 8px; }
+    .detail-container {
+      margin-bottom: 8px;
+    }
   }
 `;
 
 export const OrderItemsContainer = styled.div`
   padding: 16px;
   background: ${({ theme }) => theme.grey.noshade};
-  border: 1px solid ${({ theme }) =>theme.grey.shade3};
+  border: 1px solid ${({ theme }) => theme.grey.shade3};
   border-top: none;
-  
+
   .item {
     background: ${({ theme }) => theme.grey.shade1};
-    border: 1px solid ${({ theme }) =>theme.grey.shade3};
+    border: 1px solid ${({ theme }) => theme.grey.shade3};
     border-radius: 12px;
     padding: 4px 8px !important;
-    
+
     img {
       height: 48px;
       width: 48px;
@@ -65,26 +68,36 @@ export const OrderItemsContainer = styled.div`
     }
   }
 
-  .end-text { text-align: right; }
+  .end-text {
+    text-align: right;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     padding: 8px 0;
     background: none;
     border: none;
     border-radius: 0;
-    
+
     .end-text {
       text-align: left;
       font-size: 12px;
     }
 
-    .value { font-size: 14px; }
+    .value {
+      font-size: 14px;
+    }
 
-    img { margin-bottom: 4px; }
+    img {
+      margin-bottom: 4px;
+    }
 
-    .item { padding: 8px !important; }
+    .item {
+      padding: 8px !important;
+    }
 
-    .detail-container { margin-bottom: 8px; }
+    .detail-container {
+      margin-bottom: 8px;
+    }
   }
 `;
 
@@ -93,17 +106,23 @@ export const OrderTotalContainer = styled.div`
   padding: 16px 16px 10px 16px;
   border: 1px solid ${({ theme }) => theme.grey.shade3};
   border-top: none;
-  
-  .end-text { text-align: right; }
+
+  .end-text {
+    text-align: right;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     background: none;
     border: none;
     margin-bottom: 8px;
-    
-    .end-text { text-align: left; }
-    
-    .detail-container { margin-bottom: 8px; }
+
+    .end-text {
+      text-align: left;
+    }
+
+    .detail-container {
+      margin-bottom: 8px;
+    }
   }
 `;
 
@@ -114,23 +133,33 @@ export const OrderShippingContainer = styled.div`
   border-top: none;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  
-  .end-text { text-align: right; }
-  
-  .btn-raise-dispute { margin-right: 8px; }
+
+  .end-text {
+    text-align: right;
+  }
+
+  .btn-raise-dispute {
+    margin-right: 8px;
+  }
 
   @media ${BREAKPOINTS['sm']} {
     background: none;
     border: none;
     border-radius: 0;
 
-    .end-text { text-align: left; }
+    .end-text {
+      text-align: left;
+    }
 
-    .detail-container { margin-bottom: 8px; }
+    .detail-container {
+      margin-bottom: 8px;
+    }
   }
 
   @media ${BREAKPOINTS['md']} {
-    .btn-raise-dispute { margin-right: 0; }
+    .btn-raise-dispute {
+      margin-right: 0;
+    }
 
     .detail-container:not(:last-child) {
       margin-bottom: 8px;
@@ -138,7 +167,9 @@ export const OrderShippingContainer = styled.div`
   }
 
   @media ${BREAKPOINTS['xl']} {
-    .btn-raise-dispute { margin-right: 0; }
+    .btn-raise-dispute {
+      margin-right: 0;
+    }
   }
 `;
 
@@ -153,11 +184,15 @@ export const Tag = styled.div`
   @media ${BREAKPOINTS.sm} {
     padding: 4px 6px 2px 6px;
     border-radius: 6px;
-    p { font-size: 8px }
+    p {
+      font-size: 8px;
+    }
   }
 
   @media ${BREAKPOINTS.md} {
-    p { font-size: 8px }
+    p {
+      font-size: 8px;
+    }
   }
 `;
 
@@ -189,16 +224,20 @@ export const ItemDetailValue = styled(Typography)`
   }
 `;
 
-export const FlexiContainer = styled.div<{ justifyReversed?: boolean; }>`
+export const FlexiContainer = styled.div<{ justifyReversed?: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: ${({ justifyReversed }) => justifyReversed ? 'flex-end' : 'flex-start'};
-  
-  > * { align-self: center; }
+  justify-content: ${({ justifyReversed }) =>
+    justifyReversed ? 'flex-end' : 'flex-start'};
+
+  > * {
+    align-self: center;
+  }
 
   @media ${BREAKPOINTS['sm']} {
-    justify-content: ${({ justifyReversed }) => justifyReversed ? 'flex-start' : 'flex-end'};
+    justify-content: ${({ justifyReversed }) =>
+      justifyReversed ? 'flex-start' : 'flex-end'};
   }
 `;
 

@@ -23,5 +23,6 @@ export const useComponentShouldUpdate = (
       return cleanUpFunction;
     }
     return () => {}; // eslint-disable-line
+    // eslint-disable-next-line
   }, [...dependencies]);
 };

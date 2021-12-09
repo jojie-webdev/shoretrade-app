@@ -5,7 +5,7 @@ export type Option = {
   subAddress?: string;
   est: string;
   price: string;
-  imageUrl: string
+  imageUrl: string;
 };
 
 export interface ShippingCardProps {

@@ -1,21 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
-import Interactions from 'components/base/Interactions';
-import Select from 'components/base/Select';
-import {
-  AddListing,
-  ChevronRight,
-  PlaceholderProfile,
-} from 'components/base/SVG';
+import { AddListing, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import Modal from 'components/layout/Modal';
-import Search from 'components/module/Search';
 import SearchV2 from 'components/module/SearchV2';
 import { placeholderImage } from 'consts';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import pathOr from 'ramda/es/pathOr';
-import { useMediaQuery } from 'react-responsive';
 import { HistoricalListingItem } from 'types/store/GetHistoricalListingsState';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String';
@@ -63,6 +52,7 @@ const HistoricalListings = (props: HistoricalListingsProps) => {
     }, 200);
 
     setTimer(timerId);
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (
@@ -108,6 +98,7 @@ const HistoricalListings = (props: HistoricalListingsProps) => {
               <img
                 className="previewImage"
                 src={item.image_preview || placeholderImage}
+                alt=""
               />
               <div className="textDetailsContainer">
                 <Typography color="noshade">{item.type}</Typography>

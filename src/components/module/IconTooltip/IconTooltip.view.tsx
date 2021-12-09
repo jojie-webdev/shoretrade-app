@@ -7,7 +7,6 @@ import {
   QuestionFilled,
 } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
-import Typography from 'components/base/Typography';
 import ReactTooltip from 'react-tooltip';
 import { useTheme } from 'utils/Theme';
 import { v1 } from 'uuid';

@@ -9,6 +9,7 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
+import theme from 'utils/Theme';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
@@ -20,7 +21,6 @@ import {
   DateRangeContainer,
 } from './Orders.style';
 import Pending from './Pending/Pending.view';
-import theme from 'utils/Theme';
 
 const PENDING = 'Pending';
 const IN_TRANSIT = 'In Transit';
@@ -104,20 +104,22 @@ const OrdersView = (props: OrdersGeneratedProps) => {
       }, 800);
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchValue]);
 
   useEffect(() => {
     setSearchValue(searchValueTable[currentTab]);
+    // eslint-disable-next-line
   }, [currentTab]);
 
   let content;
   if (loadingCurrentTab) {
     content = <Loading />;
-  } else if (currentTab == PENDING) {
+  } else if (currentTab === PENDING) {
     content = <Pending {...props} />;
-  } else if (currentTab == IN_TRANSIT) {
+  } else if (currentTab === IN_TRANSIT) {
     content = <InTransit {...props} />;
-  } else if (currentTab == COMPLETE) {
+  } else if (currentTab === COMPLETE) {
     content = <Complete {...props} />;
   }
 

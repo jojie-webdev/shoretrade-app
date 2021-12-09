@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import {
   BUYER_ROUTES,
@@ -13,12 +13,10 @@ import { OrderItem } from 'routes/Buyer/Checkout/Checkout.props';
 import {
   getShippingQuoteActions,
   orderActions,
-  cartActions,
   getCartActions,
   removeCartItemActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
-import { CartItem } from 'types/store/CartState';
 import { GetCartDataItem } from 'types/store/GetCartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
@@ -83,6 +81,7 @@ const Checkout = (): JSX.Element => {
       );
       setSelectedShippingId(defaultShippingIds);
     }
+    // eslint-disable-next-line
   }, [loadingShippingQuotes]);
 
   const cartData = useSelector((store: Store) => store.getCart.data?.data);
@@ -340,6 +339,7 @@ const Checkout = (): JSX.Element => {
         dispatch(getShippingQuoteActions.clear());
       }
     }
+    // eslint-disable-next-line
   }, [cartItems.length]);
 
   useEffect(() => {
@@ -350,6 +350,7 @@ const Checkout = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [currentCompany]);
 
   const generatedProps = {

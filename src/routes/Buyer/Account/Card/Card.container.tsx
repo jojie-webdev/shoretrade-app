@@ -3,13 +3,12 @@ import React, { useState, useReducer, useEffect } from 'react';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   addCardTokenActions,
   updateDefaultCardActions,
   deleteCardActions,
 } from 'store/actions';
-import addCardToken from 'store/reducers/addCardToken';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
@@ -51,6 +50,7 @@ const Card = (): JSX.Element => {
         isDefault: card.isDefault,
       });
     }
+    // eslint-disable-next-line
   }, [card]);
 
   const pendingAddCard =
@@ -73,10 +73,12 @@ const Card = (): JSX.Element => {
       dispatch(addCardTokenActions.clear()); // clear related actions on render
 
     if (addCardResult.data && submitted) history.goBack();
+    // eslint-disable-next-line
   }, [addCardResult]);
 
   useEffect(() => {
     if (updateDefaultCardResult.data && submitted) history.goBack();
+    // eslint-disable-next-line
   }, [updateDefaultCardResult]);
 
   const onAddCard = (formCardDetails: CardDetails) => {

@@ -3,6 +3,8 @@ import React, { useState, useRef } from 'react';
 import { CarouselChevronLeft, CarouselChevronRight } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
@@ -13,8 +15,6 @@ import {
   Container,
   EmptyContainer,
 } from './MultipleCarousel.style.old';
-import { BREAKPOINTS } from 'consts/breakpoints';
-import { useMediaQuery } from 'react-responsive';
 
 function MultipleCarousel<D extends { id: string }, CP>(
   props: MultipleCarouselProps<D, CP>

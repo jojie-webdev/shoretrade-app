@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Minus } from 'components/base/SVG';
-
 import { CheckboxProps } from './Checkbox.props';
 import {
   Container,

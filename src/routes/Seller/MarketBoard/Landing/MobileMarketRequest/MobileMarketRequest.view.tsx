@@ -1,33 +1,20 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
-import { TypographyProps } from 'components/base/Typography/Typography.props';
 import OfferTag from 'components/module/OfferTag';
-import {
-  GetActiveOffersRequestResponseItem,
-  Offer,
-  OfferStatus,
-} from 'types/store/GetActiveOffersState';
+import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
-import { getOfferStatus } from 'utils/MarketRequest/offerStatus';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import { BadgeText } from '../Landing.style';
-import {
-  getExpiry,
-  isPaymentPending,
-  isPaymentRequired,
-  isRedLabel,
-} from '../Landing.transform';
+import { getExpiry, isRedLabel } from '../Landing.transform';
 import {
   Badges,
   BuyerRequestMobileContainer,
   MajorInfo,
   MinorInfo,
-  StyledBadge,
   SubMinorDetail,
   SubMinorInfo,
 } from './MobileMarketRequest.style';
@@ -36,7 +23,7 @@ const MobileMarketRequests = (props: {
   data: GetAllMarketRequestResponseItem;
   activeOffers?: GetActiveOffersRequestResponseItem[];
 }): JSX.Element => {
-  const { data, activeOffers } = props;
+  const { data } = props;
   const {
     image,
     type,
@@ -77,7 +64,7 @@ const MobileMarketRequests = (props: {
 
   const buildSizeValue = () => {
     const sizeValue =
-      sizeOptions && Object.keys(sizeOptions).length != 0
+      sizeOptions && Object.keys(sizeOptions).length !== 0
         ? sizeOptions.join(', ')
         : sizeToString(
             metric,
@@ -105,40 +92,6 @@ const MobileMarketRequests = (props: {
     return address;
   };
 
-  const getOfferByMarketRequest = () => {
-    const offer = activeOffers?.find(
-      (offer) => offer.marketRequest.id === data.id
-    );
-
-    return offer || ({} as Offer);
-  };
-
-  const getOfferCount = () => {
-    const offer = getOfferByMarketRequest();
-
-    const initialOffer = 1;
-    const totalOfferAndNegos = initialOffer + offer?.negotiations?.length;
-
-    return totalOfferAndNegos;
-  };
-
-  const statusTag = (
-    badgeColor: string,
-    badgeTextColor: TypographyProps['color'],
-    text: string
-  ) => (
-    <StyledBadge className="badge" badgeColor={badgeColor}>
-      <BadgeText
-        variant="small"
-        color={badgeTextColor}
-        weight="900"
-        style={{ lineHeight: '15px' }}
-      >
-        {text}
-      </BadgeText>
-    </StyledBadge>
-  );
-
   const renderTagByStatus = () => {
     if (data.offers > 0) {
       return (
@@ -152,21 +105,11 @@ const MobileMarketRequests = (props: {
     }
   };
 
-  const getCorrectOfferCountLabel = () => {
-    const offerCount = getOfferCount();
-
-    if (offerCount === 1) {
-      return '1 OFFER';
-    } else {
-      return offerCount + ' OFFERS';
-    }
-  };
-
   return (
     <BuyerRequestMobileContainer>
       <MajorInfo>
         <div className="thumbnail-container">
-          <img src={parseImageUrl(image)} />
+          <img src={parseImageUrl(image)} alt="" />
         </div>
 
         <Typography

@@ -4,14 +4,6 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge/Badge.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
-import Interactions from 'components/base/Interactions/Interactions.view';
-import {
-  Weight,
-  DollarSign,
-  SubtractHollow,
-  Pen,
-  ArrowRight,
-} from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -20,7 +12,6 @@ import moment from 'moment';
 import { groupBy, isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { formatEstDelivery } from 'utils/formatEstDelivery';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { sellerScreenScrollToTop } from 'utils/ScrollToTop';
@@ -29,18 +20,11 @@ import { useTheme } from 'utils/Theme';
 
 import {
   BadgesContainer,
-  MetricContainer,
   StyledBadge,
   SummaryContentContainer,
 } from '../RequestAndNegotiate.style';
 import { ReviewOfferGeneratedProps } from './ReviewOffer.props';
-import {
-  Container,
-  BadgeText,
-  ItemDetail,
-  ThirdSpecsContainer,
-  ThirdItemContainer,
-} from './ReviewOffer.style';
+import { Container, BadgeText, ThirdItemContainer } from './ReviewOffer.style';
 
 const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
   const theme = useTheme();
@@ -72,23 +56,6 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
         <BadgesContainer>{tagsMarkup}</BadgesContainer>
       </div>
     );
-  };
-
-  const flatMap = (array: [], fn: any) => {
-    let result: any[] = [];
-    array.forEach((element) => {
-      const mapping = fn(element);
-      result = result.concat(mapping);
-    });
-    return result;
-  };
-
-  const renderSize = (size: any) => {
-    size = flatMap(size.split('-'), function (part: any, key: number) {
-      return [part, <ArrowRight key={key} fill={theme.grey.shade7} />];
-    });
-    size.pop();
-    return size;
   };
 
   const properOffer = props.offer[0];

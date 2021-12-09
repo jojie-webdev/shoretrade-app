@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
@@ -31,7 +31,7 @@ const ForgotPasswordView = (
   const isMain = !pathname.includes('seller') && !pathname.includes('buyer');
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const { resetPassword, pending, backToLogin, success } = props;
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false); // eslint-disable-line
   const formikProps = {
     initialValues: {
       email: '',

@@ -4,7 +4,6 @@ import { useTheme } from 'utils/Theme';
 
 import {
   CheckFilled,
-  CloseFilled,
   ExclamationFilled,
   QuestionFilled,
   InfoFilled,

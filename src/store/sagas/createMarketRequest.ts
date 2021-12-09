@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
 import { BUYER_ROUTES } from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
-import { createMarketRequest, acceptOffer } from 'services/marketRequest';
+import { createMarketRequest } from 'services/marketRequest';
 // import editableMarketRequest from 'store/reducers/editableMarketRequest';
 import { AsyncAction } from 'types/Action';
 import {
@@ -12,7 +12,6 @@ import { Store } from 'types/store/Store';
 
 import {
   createMarketRequestActions,
-  getAllMarketRequestActions,
   editableMarketRequestActions,
 } from '../actions';
 

@@ -56,6 +56,7 @@ const Register = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getStatesActions.request({}));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const Register = (): JSX.Element => {
       setSearchCategory(categories);
       setSearchCategoryType([]);
     }
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   const addSelected = (category: {

@@ -1,12 +1,8 @@
 import * as React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 function SvgComponent(props: SVGProps) {
-  const theme = useTheme();
-
   const { sizeMultiplier = 1 } = props;
 
   return (

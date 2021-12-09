@@ -1,6 +1,6 @@
 // Reference: https://reactjs.org/docs/error-boundaries.html
 
-import React, { ErrorInfo, ReactNode, Component } from 'react';
+import { ErrorInfo, ReactNode, Component } from 'react';
 
 import { sendReport } from 'services/system';
 

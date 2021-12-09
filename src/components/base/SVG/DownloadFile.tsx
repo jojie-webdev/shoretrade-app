@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
-
 import { SVGProps } from './SVG.props';
 
 const DownloadFile = (props: SVGProps): JSX.Element => {
-  const theme = useTheme();
   const { width, height, fill } = props;
 
   // Paste converted svg below

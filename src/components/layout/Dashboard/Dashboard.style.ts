@@ -2,7 +2,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link, NavLink } from 'react-router-dom';
-import styled, { css } from 'utils/styled';
+import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 const dashboardWidth = (isSeller: boolean) =>
@@ -324,7 +324,8 @@ export const Content = styled.div<{
   @media (max-width: 768px) {
     .screen {
       width: 100% !important;
-      padding: ${(props) => (props.shouldIncludePadding ? '24px' : '0')} !important;
+      padding: ${(props) =>
+        props.shouldIncludePadding ? '24px' : '0'} !important;
       background: ${(props) =>
         props.screenBackground
           ? props.screenBackground

@@ -1,7 +1,7 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 import Interactions from '../Interactions';
-import { BREAKPOINTS } from 'consts/breakpoints';
 
 export const Container = styled.div<{
   isOpen?: boolean;
@@ -71,5 +71,5 @@ export const StyledInteractions = styled(Interactions)<{
     }
     return sameWidth ? '12px 12px 0px 0px' : '12px';
   }};
-  border: ${({ border }) => border ? border : 'none'};
+  border: ${({ border }) => (border ? border : 'none')};
 `;

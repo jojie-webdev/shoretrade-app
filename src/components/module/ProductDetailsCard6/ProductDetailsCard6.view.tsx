@@ -1,10 +1,7 @@
 import React from 'react';
 
 import moment from 'moment';
-import {
-  formatMeasurementUnit,
-  formatUnitToPricePerUnit,
-} from 'utils/Listing/formatMeasurementUnit';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice, capitalize } from 'utils/String';
 
 import ListingTimeLeftView from '../ListingTimeLeft';
@@ -24,7 +21,6 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     SellerCard,
   } = props;
 
-  const formattedTimeLeft = () => moment().to(timeLeft);
   const formattedCatchDate = () => moment(catchDate).format('DD MMMM YYYY');
 
   return (

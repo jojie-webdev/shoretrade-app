@@ -189,7 +189,7 @@ const MarketInterestsView = ({
           }
           leftComponent={
             <div className="category-container">
-              <img src={parseImageUrl(c.thumbnail)} />
+              <img src={parseImageUrl(c.thumbnail)} alt="" />
               <Typography variant="label">{c.name}</Typography>
             </div>
           }

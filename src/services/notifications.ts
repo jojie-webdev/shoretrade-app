@@ -1,17 +1,7 @@
 import axios from 'axios';
 import { API } from 'consts';
-import omit from 'ramda/es/omit';
-import { AddCardAndPayRealPayload } from 'types/store/AddCardAndPayState';
 import { DeleteNotificationMetaData } from 'types/store/DeleteNotificationState';
-import {
-  GetNotificationsSettingsMeta,
-  GetNotificationsSettingsPayload,
-} from 'types/store/GetNotificationSettingsState';
-import {
-  GetNotificationsMeta,
-  GetNotificationsPayload,
-} from 'types/store/GetNotificationsState';
-import { ReadMarketNotificationMeta } from 'types/store/ReadMarketNotificationState';
+import { GetNotificationsSettingsMeta } from 'types/store/GetNotificationSettingsState';
 import { ReadNotificationMetaData } from 'types/store/ReadNotificationState';
 import { UpdateNotificationSettingsMetaData } from 'types/store/UpdateNotificationSettingsState';
 

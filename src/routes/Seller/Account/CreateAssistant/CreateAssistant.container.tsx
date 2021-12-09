@@ -61,6 +61,7 @@ const CreateAssistant = (): JSX.Element => {
     if (submitted && addLinkedAccount.data) {
       history.goBack();
     }
+    // eslint-disable-next-line
   }, [addLinkedAccount]);
 
   // MARK:- Render

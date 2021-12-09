@@ -8,7 +8,11 @@ import {
   deleteNotificationActions,
   readNotificationActions,
 } from 'store/actions';
-import { NotificationType, NotifName, NotifTitle } from 'types/store/GetNotificationsState';
+import {
+  NotificationType,
+  NotifName,
+  NotifTitle,
+} from 'types/store/GetNotificationsState';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { notifURLMapper } from 'utils/Notification';
@@ -42,6 +46,7 @@ const Notifications = (): JSX.Element => {
 
       setCurrentCompany(c[0]);
     }
+    // eslint-disable-next-line
   }, [loadingUser]);
 
   const tabItems: TabItem[] = [
@@ -77,10 +82,10 @@ const Notifications = (): JSX.Element => {
     resource: NotificationType,
     appType: 'seller' | 'buyer',
     name?: NotifName,
-    title?: NotifTitle | string,
+    title?: NotifTitle | string
   ) => {
     const url = notifURLMapper(resource, appType, name, title);
-    if (url != '') {
+    if (url !== '') {
       history.push(url);
     }
   };

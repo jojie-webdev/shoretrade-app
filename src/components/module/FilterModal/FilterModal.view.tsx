@@ -178,6 +178,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
 
       if (initialValue) setCurrentValue(initialValue);
     }
+    // eslint-disable-next-line
   }, [selecting]);
 
   useEffect(() => {
@@ -195,6 +196,7 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
         setSizeTo(sizeFrom);
       }
     }
+    // eslint-disable-next-line
   }, [sizeFrom, sizeTo]);
 
   const onBuyerRequestPress = (label: string) => {
@@ -241,12 +243,14 @@ const FilterModal = (props: FilterModalProps): JSX.Element => {
         setSizeErrors(errors);
       }
     }
+    // eslint-disable-next-line
   }, [sizeFrom, sizeTo]);
 
   useEffect(() => {
     if (sizeFrom && sizeTo && setSelectedSize) {
       setSelectedSize(`${sizeFrom} - ${sizeTo}`);
     }
+    // eslint-disable-next-line
   }, [sizeFrom, sizeTo]);
 
   return (

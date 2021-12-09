@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { Octopus } from 'components/base/SVG';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
+import EmptyState from 'components/module/EmptyState';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
@@ -15,8 +17,6 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
 import { PreviewContainer, StyledInteraction } from './Favourites.style';
-import EmptyState from 'components/module/EmptyState';
-import { Octopus } from 'components/base/SVG';
 
 const FavouritesView = (props: FavouritesGeneratedProps) => {
   const {

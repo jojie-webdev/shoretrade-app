@@ -7,13 +7,13 @@ import { Container, StyledTypography } from './HomeSellerCard.style';
 
 const HomeSellerCard = (props: HomeSellerCardProps): JSX.Element => {
   const { companyName, companyImage } = props;
-  const [defaultImage, setDefaultImage] = useState(props.companyImage);
+  const [defaultImage, setDefaultImage] = useState(companyImage);
 
   return (
     <Container className="centered">
       <div className="card">
         {(defaultImage || '').length > 0 ? (
-          <img
+          <img // eslint-disable-line
             src={defaultImage}
             alt={`${companyName}-image`}
             onError={() => {

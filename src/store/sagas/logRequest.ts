@@ -1,5 +1,4 @@
 import { put, select, takeEvery } from 'redux-saga/effects';
-import getShippingQuote from 'store/reducers/getShippingQuote';
 import { AsyncAction } from 'types/Action';
 import { Store } from 'types/store/Store';
 

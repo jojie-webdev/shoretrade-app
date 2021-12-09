@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 import { SELLING_ROUTES } from 'consts';
 import { SALES_CHANNELS } from 'consts/salesChannels';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-  editSelectedListingActions,
-  endListingActions,
-  getListingsBySalesChannelActions,
-} from 'store/actions';
+import { getListingsBySalesChannelActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -31,6 +27,7 @@ const Selling = (): JSX.Element => {
   const userData = useSelector((state: Store) => state.getUser.data?.data.user);
 
   // MARK:- State
+  // eslint-disable-next-line
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState('allListing');
   const [isPending, setIsPending] = useState(true);
@@ -83,6 +80,7 @@ const Selling = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [userData]);
 
   useEffect(() => {
@@ -99,6 +97,7 @@ const Selling = (): JSX.Element => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [activeTab, searchFilters, tabPageFilters]);
 
   useEffect(() => {
@@ -111,6 +110,7 @@ const Selling = (): JSX.Element => {
       });
       setIsPending(false);
     }
+    // eslint-disable-next-line
   }, [listingsData]);
 
   const generatedProps: SellingGeneratedProps = {

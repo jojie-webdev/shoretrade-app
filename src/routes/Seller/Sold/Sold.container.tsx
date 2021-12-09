@@ -214,6 +214,7 @@ const Sold = (): JSX.Element => {
       getOrders.pending({ page: '1' });
       getOrders.placed(toShipFilters);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     toShipFilters.page,
@@ -226,6 +227,7 @@ const Sold = (): JSX.Element => {
     if (currentTab === 'In Transit') {
       getOrders.transit(inTransitFilters);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     inTransitFilters.page,
@@ -238,6 +240,7 @@ const Sold = (): JSX.Element => {
     if (currentTab === 'Delivered') {
       getOrders.delivered(deliveredFilters);
     }
+    // eslint-disable-next-line
   }, [
     currentTab,
     deliveredFilters.page,

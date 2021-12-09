@@ -95,6 +95,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     } else if (searchKey.length <= 2 && isEmpty(searchResults)) {
       search('');
     }
+    // eslint-disable-next-line
   }, [searchKey]);
   //#endregion1
 
@@ -257,6 +258,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
   useEffect(() => {
     setTitle(pageTitle());
+    // eslint-disable-next-line
   }, [currentPage, searchResults]);
 
   const actualCurrentPage = currentPage - 1;

@@ -1,4 +1,3 @@
-import qs from 'qs';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllMarketRequest } from 'services/marketRequest';
 import { AsyncAction } from 'types/Action';

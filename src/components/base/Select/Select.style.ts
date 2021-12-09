@@ -20,9 +20,9 @@ const font = `
     font-weight: 500;`;
 
 export const StyledDropdown = styled(Dropdown)<DropdownProps>`
-  margin-top: ${({ marginTop }) => marginTop ? marginTop : '8px'} !important;
+  margin-top: ${({ marginTop }) => (marginTop ? marginTop : '8px')} !important;
   .${PREFIX}Container {
-    height: ${({ height }) => height ? height : '48px'};
+    height: ${({ height }) => (height ? height : '48px')};
     background: ${({ theme, disabled, dark, grey }) =>
       disabled || grey
         ? theme.grey.shade3
@@ -37,8 +37,9 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         : theme.grey.shade9};
     border: ${({ theme, dark }) =>
       `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
-    border-radius: ${({ borderRadius }) => borderRadius ? borderRadius : '4px' };
-    padding: ${({ padding }) => padding ? padding : '12px 16px'};
+    border-radius: ${({ borderRadius }) =>
+      borderRadius ? borderRadius : '4px'};
+    padding: ${({ padding }) => (padding ? padding : '12px 16px')};
   }
 
   /* TODO: Should extend .${PREFIX}Container */
@@ -68,14 +69,16 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .${PREFIX}Placeholder {
     ${font};
-    color: ${({ theme, dark }) => dark ? theme.grey.noshade : theme.grey.shade9};
+    color: ${({ theme, dark }) =>
+      dark ? theme.grey.noshade : theme.grey.shade9};
     margin-right: 10px;
   }
 
   .${PREFIX}Menu {
     border: 1px solid ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
-    border-radius: ${({ borderRadius }) => borderRadius ? borderRadius : '4px' };
+    border-radius: ${({ borderRadius }) =>
+      borderRadius ? borderRadius : '4px'};
     box-shadow: 0px 2px 8px rgba(41, 43, 50, 0.10);
     // padding: 0 16px;
     margin-top: 8px;

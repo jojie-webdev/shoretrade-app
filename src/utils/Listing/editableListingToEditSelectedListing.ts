@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { EditableListingState } from 'types/store/EditableListingState';
-import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
+import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 
 export const editableListingToEditSelectedListing = (
   data: GetListingsBySalesChannelResponseItem | null,
@@ -14,16 +14,21 @@ export const editableListingToEditSelectedListing = (
     isUngraded: data?.size_from === null,
     sizeFrom: data?.size_from,
     sizeTo: data?.size_to,
-    existingImages: data?.images ? data.images.map((image, index) => ({
-      image: image.url,
-      requirementId: image.requirement_id,
-    })).filter( // removes images that came from default gallery
-      (image) =>
-        // for common types
-        !image.image.includes('type-default') &&
-        // for custom types
-        !image.image.includes('No-Image-Placeholder')
-    ) : [],
+    existingImages: data?.images
+      ? data.images
+          .map((image, index) => ({
+            image: image.url,
+            requirementId: image.requirement_id,
+          }))
+          .filter(
+            // removes images that came from default gallery
+            (image) =>
+              // for common types
+              !image.image.includes('type-default') &&
+              // for custom types
+              !image.image.includes('No-Image-Placeholder')
+          )
+      : [],
     pricePerKilo: Number(data?.price_per_kilo || 0),
     boxes: data?.boxes,
     minOrder: Number(data?.minimum_order || 0),

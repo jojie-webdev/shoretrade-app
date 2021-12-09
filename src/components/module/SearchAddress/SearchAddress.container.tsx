@@ -62,6 +62,7 @@ const SearchAddress = (): JSX.Element => {
     ) {
       setDefaultAddress(addressOptions[0].value);
     }
+    // eslint-disable-next-line
   }, [currentDefaultAddressId]);
   //#endregion
 
@@ -129,6 +130,7 @@ const SearchAddress = (): JSX.Element => {
 
       setTimer(timerId);
     }
+    // eslint-disable-next-line
   }, [searchTerm]);
   //#endregion
 

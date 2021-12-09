@@ -19,8 +19,8 @@ import HelpAndSupport from './HelpAndSupport';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
-import YourDetails from './YourDetails';
 import NotificationsSettings from './NotificationsSettings';
+import YourDetails from './YourDetails';
 
 const ROUTES: Routes = {
   LANDING: {

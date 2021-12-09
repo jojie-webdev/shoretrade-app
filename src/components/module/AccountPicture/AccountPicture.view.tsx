@@ -43,7 +43,6 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
       }
     });
 
-
     setImageError(invalid);
 
     // do not proceed
@@ -74,6 +73,7 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
           <>
             {profilePicture !== '' ? (
               <>
+                {/* eslint-disable-next-line */}
                 <img
                   src={
                     hideBrokenProfileImage

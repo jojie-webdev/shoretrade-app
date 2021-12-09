@@ -1,4 +1,3 @@
-import omit from 'ramda/es/omit';
 import pathOr from 'ramda/es/pathOr';
 import { Action } from 'types/Action';
 import { RequestLog, RequestLogState } from 'types/store/LogRequestState';

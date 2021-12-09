@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 
 import Alert from 'components/base/Alert';
-import { ChevronRight, InfoFilled } from 'components/base/SVG';
+import { ChevronRight } from 'components/base/SVG';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -30,7 +30,6 @@ import {
 } from './Home.props';
 import {
   CategoriesContainer,
-  Text,
   Bold,
   FavouritesContainer,
   ViewCol,

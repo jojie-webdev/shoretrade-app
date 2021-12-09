@@ -1,5 +1,9 @@
 import { push } from 'connected-react-router';
-import { SELLER_ROUTES, BUYER_ROUTES, MAIN_ROUTES } from 'consts';
+import {
+  SELLER_ROUTES,
+  BUYER_ROUTES,
+  // MAIN_ROUTES
+} from 'consts';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { login } from 'services/auth';
 import { AsyncAction } from 'types/Action';

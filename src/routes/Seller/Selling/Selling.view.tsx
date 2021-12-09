@@ -9,7 +9,6 @@ import {
 } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
-import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import LoadingView from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
@@ -23,7 +22,6 @@ import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { AnimatedSwordfish } from 'res/images/animated/swordfish';
-import { createUpdateReducer } from 'utils/Hooks';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
@@ -36,7 +34,6 @@ import {
   Tag,
   Container,
   StyledTouchable,
-  StyledAlert,
   NoSellingContainer,
   SVGContainer,
   TabItem,
@@ -192,7 +189,6 @@ const Item = (props: ItemProp) => {
 
 const NoSelling = () => {
   const history = useHistory();
-  const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isTablet = useMediaQuery({ query: BREAKPOINTS['md'] });
   const isSmallScreen = isMobile || isTablet;
@@ -304,7 +300,6 @@ const SearchComponent = (props: {
 };
 
 const SellingView = (props: SellingGeneratedProps) => {
-  const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isTablet = useMediaQuery({ query: BREAKPOINTS['md'] });
   const isSmallScreen = isMobile || isTablet;
@@ -313,7 +308,6 @@ const SellingView = (props: SellingGeneratedProps) => {
     counter,
     pending,
     goToListingDetails,
-    showModal,
     search,
     onChangeSearch,
     page,

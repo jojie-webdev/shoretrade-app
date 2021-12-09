@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
-  createMarketRequestActions,
   deleteMarketRequestActions,
   getAllMarketRequestActions,
 } from 'store/actions';
@@ -68,6 +66,7 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getAllMarketRequestActions.request({}));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -76,6 +75,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     } else {
       dispatch(getAllMarketRequestActions.request({}));
     }
+    // eslint-disable-next-line
   }, [deleteMarketRequest]);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {

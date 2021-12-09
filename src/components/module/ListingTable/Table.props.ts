@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 
 export type RowType = 'header' | 'first-row' | 'last-row';
-export type ColumnType = 'column-first' | 'column-last';
+export type ColumnType = 'column-first' | 'column-last' | '';
 
 export interface TableColumn {
   name: string;

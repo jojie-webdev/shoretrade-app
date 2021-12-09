@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { push } from 'connected-react-router';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
@@ -70,6 +70,7 @@ const YourDetails = (): JSX.Element => {
         abn: currentCompany?.abn || '',
       });
     }
+    // eslint-disable-next-line
   }, [getUser]);
 
   // MARK:- Methods
@@ -123,9 +124,10 @@ const YourDetails = (): JSX.Element => {
     updateUserSuccess: updateUser.data?.status === 200 && submitted,
     callingCode,
     setCallingCode,
-    companyRelationship: getUser.data?.data.user.companies.find(company => 
-      company.id == companyId
-    )?.relationship || ''
+    companyRelationship:
+      getUser.data?.data.user.companies.find(
+        (company) => company.id === companyId
+      )?.relationship || '',
   };
   return <YourDetailsView {...generatedProps} />;
 };

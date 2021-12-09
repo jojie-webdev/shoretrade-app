@@ -88,7 +88,8 @@ export const MobileFilterRow = styled(Row)`
 `;
 
 export const MobileFilterButton = styled(Button)`
-  background-color: ${(props) => props.variant === 'unselected' && props.theme.grey.shade8};
+  background-color: ${(props) =>
+    props.variant === 'unselected' && props.theme.grey.shade8};
 `;
 
 export const TotalSalesRow = styled(Row)`

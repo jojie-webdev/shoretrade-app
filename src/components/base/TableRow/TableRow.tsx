@@ -39,9 +39,10 @@ const TableDataList = (props: TableDataListProps) => {
     ) {
       setShowTooltip(true);
     }
+    // eslint-disable-next-line
   }, [isMobile, isTablet]);
 
-  let columnType: ColumnType;
+  let columnType: ColumnType = '';
 
   if (!index) columnType = 'column-first';
   if (index === length - 1) columnType = 'column-last';
@@ -50,7 +51,7 @@ const TableDataList = (props: TableDataListProps) => {
     <TableData
       id={`container-${identifier}`}
       rowType={rowType}
-      columnType={columnType!}
+      columnType={columnType}
       key={`key-${identifier}`}
       sticky={column?.sticky}
       selected={selected}

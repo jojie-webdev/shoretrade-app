@@ -1,5 +1,4 @@
-import qs from 'qs';
-import { all, put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { deleteNotificationApi } from 'services/notifications';
 import { AsyncAction } from 'types/Action';
 import {
@@ -15,7 +14,6 @@ function* deleteNotifRequest(
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
-    const meta = action.meta;
     try {
       const { data } = yield call(
         deleteNotificationApi,

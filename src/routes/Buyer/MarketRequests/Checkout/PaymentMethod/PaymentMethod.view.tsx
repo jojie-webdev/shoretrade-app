@@ -1,175 +1,176 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
-import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
 import {
   Amex,
   InfoFilled,
   Mastercard,
   OrderPlaced,
-  Paypal,
   Visa,
-  Zippay,
 } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import TotalCard from 'components/base/TotalCard';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
-import FormikTextField from 'components/module/FormikTextField';
+// import FormikTextField from 'components/module/FormikTextField';
 import LoadingOverlay from 'components/module/LoadingOverlay';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { BUYER_MARKET_REQUEST_ROUTES, BUYER_ROUTES } from 'consts/routes';
-import { connect, FormikProps } from 'formik';
+// import { connect, FormikProps } from 'formik';
 import { Col, Hidden, Row } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { CCImageRow } from 'routes/Buyer/Account/Card/Card.style';
 import { marketRequestAcceptOfferActions } from 'store/actions';
 import { AcceptOffer } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
-import { toPrice } from 'utils/String/toPrice';
+// import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
-import { ROUTES } from './../../../../index.routes';
-import { PAYMENT_METHODS, TABS } from './PaymentMethod.constants';
 import {
-  CardDetails,
-  PaymentMethodGeneratedProps,
-} from './PaymentMethod.props';
+  PAYMENT_METHODS,
+  // TABS
+} from './PaymentMethod.constants';
+import { PaymentMethodGeneratedProps } from './PaymentMethod.props';
 import {
   Container,
   Method,
   BottomRow,
   Footer,
   CCImage,
-  MobileTopRow,
+  // MobileTopRow,
   StyledCreditCard,
   StyledTotalCardColumn,
   OrderPlacedIconContainer,
 } from './PaymentMethod.style';
 
 //TODO: refactor with field set card
-const CardFields = (props: { formik?: any }) => {
-  const { formik } = props;
+// const CardFields = (props: { formik?: any }) => {
+//   const { formik } = props;
 
-  return (
-    <>
-      <Row>
-        <Col className="form-card-col" md={12} xl={10}>
-          <FormikTextField
-            type="text"
-            inputType="numeric"
-            name="number"
-            id="number"
-            label="CARD NUMBER"
-            placeholder="•••• •••• •••• ••••"
-            maxLength={19}
-            onChangeText={(value) => {
-              const digits = value.trim().replace(/\s/g, '');
-              const isMaxLen = digits.length > 16;
+//   return (
+//     <>
+//       <Row>
+//         <Col className="form-card-col" md={12} xl={10}>
+//           <FormikTextField
+//             type="text"
+//             inputType="numeric"
+//             name="number"
+//             id="number"
+//             label="CARD NUMBER"
+//             placeholder="•••• •••• •••• ••••"
+//             maxLength={19}
+//             onChangeText={(value) => {
+//               const digits = value.trim().replace(/\s/g, '');
+//               const isMaxLen = digits.length > 16;
 
-              if (digits.length == 16) {
-                // formik.setFieldValue('number', value, false);
-                const visaString =
-                  digits.substring(0, 4) +
-                  ' ' +
-                  digits.substring(4, 8) +
-                  ' ' +
-                  digits.substring(8, 12) +
-                  ' ' +
-                  digits.substring(12);
-                formik.setFieldValue('number', visaString.trim(), false);
-              } else if (digits.length === 15) {
-                const amexString =
-                  digits.substring(0, 4) +
-                  ' ' +
-                  digits.substring(4, 10) +
-                  ' ' +
-                  digits.substring(10, 15) +
-                  ' ' +
-                  digits.substring(15);
-                formik.setFieldValue('number', amexString.trim(), false);
-              } else if (isMaxLen) {
-                // Prevent value to exceed 16 digits + 3 spaces
-                formik.setFieldValue(
-                  'number',
-                  value.slice(0, 19).trim(),
-                  false
-                );
-              }
-            }}
-          />
-        </Col>
-      </Row>
+//               if (digits.length === 16) {
+//                 // formik.setFieldValue('number', value, false);
+//                 const visaString =
+//                   digits.substring(0, 4) +
+//                   ' ' +
+//                   digits.substring(4, 8) +
+//                   ' ' +
+//                   digits.substring(8, 12) +
+//                   ' ' +
+//                   digits.substring(12);
+//                 formik.setFieldValue('number', visaString.trim(), false);
+//               } else if (digits.length === 15) {
+//                 const amexString =
+//                   digits.substring(0, 4) +
+//                   ' ' +
+//                   digits.substring(4, 10) +
+//                   ' ' +
+//                   digits.substring(10, 15) +
+//                   ' ' +
+//                   digits.substring(15);
+//                 formik.setFieldValue('number', amexString.trim(), false);
+//               } else if (isMaxLen) {
+//                 // Prevent value to exceed 16 digits + 3 spaces
+//                 formik.setFieldValue(
+//                   'number',
+//                   value.slice(0, 19).trim(),
+//                   false
+//                 );
+//               }
+//             }}
+//           />
+//         </Col>
+//       </Row>
 
-      <Row>
-        <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
-          <FormikTextField
-            type="text"
-            inputType="numeric"
-            name="exp"
-            id="exp"
-            label="EXPIRY DATE"
-            placeholder="MM / YY"
-            onChangeText={(value) => {
-              const text = value.trim().replace(/\s/g, '');
-              const isFirstHalf = value.length === 2;
-              const isMaxLen = text.replace('/', '').length >= 4;
+//       <Row>
+//         <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
+//           <FormikTextField
+//             type="text"
+//             inputType="numeric"
+//             name="exp"
+//             id="exp"
+//             label="EXPIRY DATE"
+//             placeholder="MM / YY"
+//             onChangeText={(value) => {
+//               const text = value.trim().replace(/\s/g, '');
+//               const isFirstHalf = value.length === 2;
+//               const isMaxLen = text.replace('/', '').length >= 4;
 
-              if (isFirstHalf) {
-                formik.setFieldValue('exp', value + ' / ', false);
-              } else if (isMaxLen) {
-                formik.setFieldValue('exp', value.substr(0, 7), false);
-              }
-            }}
-            onKeyUp={(e) => {
-              if (e.key === 'Backspace' || e.key === 'Delete') {
-                formik.setFieldValue('exp', '', false);
-              }
-            }}
-          />
-        </Col>
-        <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
-          <FormikTextField
-            type="text"
-            inputType="numeric"
-            name="cvc"
-            id="cvc"
-            label="CVC"
-            placeholder="CVC"
-          />
-        </Col>
-      </Row>
+//               if (isFirstHalf) {
+//                 formik.setFieldValue('exp', value + ' / ', false);
+//               } else if (isMaxLen) {
+//                 formik.setFieldValue('exp', value.substr(0, 7), false);
+//               }
+//             }}
+//             onKeyUp={(e) => {
+//               if (e.key === 'Backspace' || e.key === 'Delete') {
+//                 formik.setFieldValue('exp', '', false);
+//               }
+//             }}
+//           />
+//         </Col>
+//         <Col className="form-card-col" xs={6} md={12} lg={6} xl={5}>
+//           <FormikTextField
+//             type="text"
+//             inputType="numeric"
+//             name="cvc"
+//             id="cvc"
+//             label="CVC"
+//             placeholder="CVC"
+//           />
+//         </Col>
+//       </Row>
 
-      <Row>
-        <Col className="form-card-col" md={12} lg={6} xl={10}>
-          <FormikTextField
-            type="text"
-            name="name"
-            id="name"
-            label="NAME ON CARD"
-            placeholder="Name on Card"
-          />
-        </Col>
-      </Row>
-    </>
-  );
-};
+//       <Row>
+//         <Col className="form-card-col" md={12} lg={6} xl={10}>
+//           <FormikTextField
+//             type="text"
+//             name="name"
+//             id="name"
+//             label="NAME ON CARD"
+//             placeholder="Name on Card"
+//           />
+//         </Col>
+//       </Row>
+//     </>
+//   );
+// };
 
-const ConnectedCardFields = connect(CardFields);
+// const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cards, cardDetails, setCardDetails, isLoading } = props;
+  const {
+    cards,
+    // cardDetails,
+    // setCardDetails,
+    isLoading,
+  } = props;
 
   const theme = useTheme();
 
-  const formRef = useRef<FormikProps<CardDetails>>(null);
+  // const formRef = useRef<FormikProps<CardDetails>>(null);
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'account' | 'card' | ''>(
@@ -191,25 +192,6 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
   const history = useHistory();
   const params = useParams<{ id: string }>();
   const { id } = params;
-
-  const renderBrand = (brand: string) => {
-    brand = brand ? brand.toLowerCase() : '';
-
-    switch (brand) {
-      case 'visa':
-        return <Visa />;
-      case 'mastercard':
-        return <Mastercard />;
-      case 'zippay':
-        return <Zippay />;
-      case 'paypal':
-        return <Paypal />;
-      case 'american express':
-        return <Amex />;
-      default:
-        return null;
-    }
-  };
 
   const offerBreadCrumb = [
     { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
@@ -355,6 +337,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                   <img
                     src={p.img}
                     style={{ width: isMobile ? p.mWidth : 'inherit' }}
+                    alt=""
                   />
                   <div>
                     <Typography

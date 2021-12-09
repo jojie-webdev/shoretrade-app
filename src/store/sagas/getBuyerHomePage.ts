@@ -8,7 +8,6 @@ import {
   GetBuyerHomepageResponseListingItem,
 } from 'types/store/GetBuyerHomepageState';
 import { Store } from 'types/store/Store';
-import { findProduct } from 'utils/Listing';
 
 import { getBuyerHomepageActions, socketActions } from '../actions';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Desktop } from 'components/base/SVG';
 import Toggle from 'components/base/Toggle';
 // import { useTheme } from 'utils/Theme';
 import Typography from 'components/base/Typography';

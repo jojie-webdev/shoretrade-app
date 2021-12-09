@@ -1,6 +1,5 @@
 import { push } from 'connected-react-router';
 import { SELLER_ROUTES } from 'consts';
-import moment from 'moment';
 import { all, put, call, takeLatest, select } from 'redux-saga/effects';
 import { updateListing } from 'services/listing';
 import { uploadImageData } from 'services/upload';

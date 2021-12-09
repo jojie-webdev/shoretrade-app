@@ -6,7 +6,7 @@ export const Container = styled.div<{
   display: flex;
   align-items: center;
   width: fit-content;
-  height: ${({starSize}) => starSize || 14}px;
+  height: ${({ starSize }) => starSize || 14}px;
 `;
 
 export const StarHolder = styled.div<{
@@ -14,9 +14,9 @@ export const StarHolder = styled.div<{
   starSpacing?: number;
 }>`
   :not(:last-child) {
-    margin-right: ${({starSpacing}) => `${starSpacing}px` || 0};
+    margin-right: ${({ starSpacing }) => `${starSpacing}px` || 0};
   }
   :hover {
-    cursor: ${({editable}) => editable ? 'pointer' : 'auto'};
+    cursor: ${({ editable }) => (editable ? 'pointer' : 'auto')};
   }
 `;

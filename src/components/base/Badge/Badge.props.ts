@@ -8,5 +8,5 @@ export interface BadgeProps extends HTMLAttributes<HTMLParagraphElement> {
   badgeColor?: string;
   fontColor?: string;
   padding?: string;
-  borderRadius?: string
+  borderRadius?: string;
 }

@@ -46,7 +46,7 @@ const InteractionsChildren = (
                   formatMeasurementUnit(result.measurementUnit)
                 )}
               </Typography>
-              {result.price.from != result.price.to ? (
+              {result.price.from !== result.price.to ? (
                 <Typography variant="caption" weight="500" color="shade8">
                   {toPrice(result.price.from)} - {toPrice(result.price.to)}
                 </Typography>

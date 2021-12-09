@@ -7,11 +7,26 @@ import { SearchProps } from './Search.props';
 import { InputContainer } from './Search.style';
 const Search = (props: SearchProps): JSX.Element => {
   const theme = useTheme();
-  const { value, resetValue, rounded, className, style, darkMode, ...inputProps } = props;
+  const {
+    value,
+    resetValue,
+    rounded,
+    className,
+    style,
+    darkMode,
+    ...inputProps
+  } = props;
 
   return (
-    <InputContainer style={style} className={className} rounded={rounded} darkMode={darkMode}>
-      <div><SearchSVG height={16} width={16} fill={theme.grey.shade7}/></div>
+    <InputContainer
+      style={style}
+      className={className}
+      rounded={rounded}
+      darkMode={darkMode}
+    >
+      <div>
+        <SearchSVG height={16} width={16} fill={theme.grey.shade7} />
+      </div>
       <input type="text" {...inputProps} value={value} />
       {resetValue && value && (
         <div onClick={resetValue} className="close-svg-container">

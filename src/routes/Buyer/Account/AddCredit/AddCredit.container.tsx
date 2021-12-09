@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { API } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ const AddCredit = (): JSX.Element => {
 
   useEffect(() => {
     getPaymentMethods();
+    // eslint-disable-next-line
   }, [companyId]);
 
   const paymentModes = useSelector(
@@ -56,6 +57,7 @@ const AddCredit = (): JSX.Element => {
 
   useEffect(() => {
     if (chargeCardResult.data && submitted) history.goBack();
+    // eslint-disable-next-line
   }, [chargeCardResult]);
 
   const addCredit = (amount: string) => {

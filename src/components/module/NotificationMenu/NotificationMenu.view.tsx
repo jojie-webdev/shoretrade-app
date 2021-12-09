@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { Bell, Octopus } from 'components/base/SVG';
+import { Bell } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
@@ -36,7 +36,6 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
       : SELLER_ROUTES.NOTIFICATIONS;
 
   const {
-    notifTotal,
     unreadTotal,
     notifsData,
     handleMarkasRead,

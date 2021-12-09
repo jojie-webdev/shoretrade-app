@@ -28,6 +28,7 @@ const Authenticate = () => {
           history.push(MAIN_ROUTES.LOGIN);
         });
     }
+    // eslint-disable-next-line
   }, [token, isAuthenticated]);
 
   return <div />;

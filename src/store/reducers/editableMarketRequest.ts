@@ -1,9 +1,6 @@
 import pathOr from 'ramda/es/pathOr';
 import { Action } from 'types/Action';
-import {
-  EditableMarketRequestPayload,
-  EditableMarketRequestMeta,
-} from 'types/store/EditableMarketRequest';
+import { EditableMarketRequestMeta } from 'types/store/EditableMarketRequest';
 
 import { editableMarketRequestActions } from '../actions';
 

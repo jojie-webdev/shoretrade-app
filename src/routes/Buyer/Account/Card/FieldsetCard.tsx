@@ -28,7 +28,7 @@ const CardView = (props: FieldsetCardProps) => {
               const digits = value.trim().replace(/\s/g, '');
               const isMaxLen = digits.length > 16;
 
-              if (digits.length == 16) {
+              if (digits.length === 16) {
                 // formik.setFieldValue('number', value, false);
                 const visaString =
                   digits.substring(0, 4) +

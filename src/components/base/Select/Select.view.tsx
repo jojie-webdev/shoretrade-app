@@ -50,31 +50,35 @@ const Select = ({
         menuClassName={`${PREFIX}Menu`}
         arrowClosed={
           <ArrowContainer size={props.size}>
-            { arrowIcon ? arrowIcon
-              : <DropdownArrow
-                  // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
-                  fill={
-                    props.disabled
-                      ? theme.grey.shade6
-                      : theme.appType === 'buyer'
-                      ? theme.brand.primary
-                      : theme.grey.shade7
-                  }
-                />
-            }
+            {arrowIcon ? (
+              arrowIcon
+            ) : (
+              <DropdownArrow
+                // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
+                fill={
+                  props.disabled
+                    ? theme.grey.shade6
+                    : theme.appType === 'buyer'
+                    ? theme.brand.primary
+                    : theme.grey.shade7
+                }
+              />
+            )}
           </ArrowContainer>
         }
         arrowOpen={
           <ArrowContainer size={props.size} flipped>
-            { arrowIcon ? arrowIcon
-              : <DropdownArrow
-                  fill={
-                    theme.appType === 'buyer'
-                      ? theme.brand.primary
-                      : theme.grey.shade7
-                  }
-                />
-            }
+            {arrowIcon ? (
+              arrowIcon
+            ) : (
+              <DropdownArrow
+                fill={
+                  theme.appType === 'buyer'
+                    ? theme.brand.primary
+                    : theme.grey.shade7
+                }
+              />
+            )}
           </ArrowContainer>
         }
       />

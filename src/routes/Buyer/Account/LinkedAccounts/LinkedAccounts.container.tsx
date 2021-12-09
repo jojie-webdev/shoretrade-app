@@ -8,12 +8,10 @@ import {
   getLinkedAccountsActions,
   addLinkedAccountActions,
 } from 'store/actions';
-import getLinkedAccounts from 'store/reducers/getLinkedAccounts';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { isPermitted } from 'utils/isPermitted';
 
-import { AddAssistantGeneratedProps } from '../AddAssistant/AddAssistant.props';
 import AssistantsView from './LinkedAccounts.view';
 
 const Assistants = (): JSX.Element => {
@@ -63,6 +61,7 @@ const Assistants = (): JSX.Element => {
     if (!permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
+    // eslint-disable-next-line
   }, [companyId, permission]);
 
   useEffect(() => {
@@ -70,6 +69,7 @@ const Assistants = (): JSX.Element => {
       setNotifMsg('Assistant successfully created!');
       dispatch(addLinkedAccountActions.clear());
     }
+    // eslint-disable-next-line
   }, [addLinkedAccount]);
 
   const generatedProps = {

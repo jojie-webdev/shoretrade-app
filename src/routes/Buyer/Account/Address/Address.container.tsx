@@ -54,6 +54,7 @@ const Address = (): JSX.Element => {
   // Mark:- Effect
   useEffect(() => {
     getAddresses();
+    // eslint-disable-next-line
   }, [companyId]);
 
   useEffect(() => {
@@ -80,6 +81,7 @@ const Address = (): JSX.Element => {
       dispatch(updateAddressActions.clear());
       dispatch(addAddressActions.clear());
     }
+    // eslint-disable-next-line
   }, [notificationMessage]);
 
   useEffect(() => {

@@ -155,6 +155,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     if (companyId) {
       dispatch(getPaymentMethodsActions.request({ companyId }));
     }
+    // eslint-disable-next-line
   }, [companyId]);
 
   const generatedProps = {

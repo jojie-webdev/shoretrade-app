@@ -256,7 +256,7 @@ export const getStatusBadgeColor = (
   status: GetActiveOffersRequestResponseItem['status']
 ) => {
   if (status === 'OPEN') return theme.brand.alert;
-  if(status === 'NEGOTIATION') return theme.brand.alert;
+  if (status === 'NEGOTIATION') return theme.brand.alert;
   if (status === 'ACCEPTED') return theme.brand.success;
   if (status === 'NEW OFFER') return theme.brand.success;
   if (status === 'DECLINED') return theme.brand.error;

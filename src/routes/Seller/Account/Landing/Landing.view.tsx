@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
-import Spinner from 'components/base/Spinner';
 import Typography from 'components/base/Typography';
 import AccountPicture from 'components/module/AccountPicture';
 import Loading from 'components/module/Loading';
@@ -74,7 +73,7 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         { companyId: currentCompany?.id },
         { addQueryPrefix: true }
       )}`,
-      hideFrom: [COMPANY_RELATIONSHIPS.FISHERMAN]
+      hideFrom: [COMPANY_RELATIONSHIPS.FISHERMAN],
     },
     {
       value: 'Bank Details',
@@ -148,16 +147,15 @@ const AccountLandingView = (props: AccountLandingGeneratedProps) => {
         )}
       </Header>
 
-      { INTERACTIONS.filter(interaction => 
-          !interaction.hideFrom?.includes(companyRelationship)
-        ).map((interaction) => (
-          <NavInteraction
-            key={interaction.path}
-            value={interaction.value}
-            onClick={() => history.push(interaction.path)}
-          />
-        )
-      )}
+      {INTERACTIONS.filter(
+        (interaction) => !interaction.hideFrom?.includes(companyRelationship)
+      ).map((interaction) => (
+        <NavInteraction
+          key={interaction.path}
+          value={interaction.value}
+          onClick={() => history.push(interaction.path)}
+        />
+      ))}
 
       {isMobile && (
         <Button

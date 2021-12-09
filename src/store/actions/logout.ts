@@ -9,7 +9,7 @@ const logoutActions = {
   request: () => ({
     type: asyncAction.REQUEST,
     meta: {},
-  })
+  }),
 };
 
 export default logoutActions;

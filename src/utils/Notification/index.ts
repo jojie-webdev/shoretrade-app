@@ -1,4 +1,3 @@
-import { time } from 'console';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_ROUTES,
