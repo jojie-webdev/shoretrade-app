@@ -32,6 +32,8 @@ export type SoldItemData = {
   totalWeight: number;
   totalPrice: number;
   orders: {
+    id: string;
+    weightConfirmed: boolean;
     orderNumber: string;
     buyer: string;
     uri: string;

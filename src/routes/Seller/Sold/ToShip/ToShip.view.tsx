@@ -675,6 +675,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                 token={token}
                 status="PLACED"
                 updateMessageModal={updateMessageModal}
+                updateConfirmModal={updateConfirmModal}
                 messageModal={messageModal}
                 isSendingMessage={isSendingMessage}
                 shipOrder={(

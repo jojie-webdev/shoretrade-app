@@ -38,6 +38,13 @@ const SoldItem = (props: {
       isOpen: boolean;
     }>
   >;
+  updateConfirmModal?: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      orderId: string;
+      lineItemId: string;
+    }>
+  >;
   messageModal?: {
     buyerId: string;
     buyerName: string;
@@ -53,6 +60,7 @@ const SoldItem = (props: {
   placeOrderId?: string;
 }): any => {
   const {
+    updateConfirmModal,
     updateMessageModal,
     messageModal,
     isSendingMessage,
@@ -91,6 +99,8 @@ const SoldItem = (props: {
       totalWeight,
       totalPrice,
       key,
+      salesChannel,
+      id,
     } = entry[0];
 
     const getSellerOrder = (id: string) => {
@@ -226,7 +236,7 @@ const SoldItem = (props: {
                           isSendingMessage
                         }
                       />
-                      {v.salesChannel === 'Pre-Auction' && (
+                      {/* {v.salesChannel === 'Pre-Auction' && (
                         <>
                           {v.allowPartialShipment && !v.allowFullShipment ? (
                             <Button
@@ -274,7 +284,7 @@ const SoldItem = (props: {
                             />
                           )}
                         </>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>
@@ -437,24 +447,56 @@ const SoldItem = (props: {
                           }}
                         />
                       </div>
-                      <Button
-                        text={'Weight Confirmed'}
-                        textVariant="overline"
-                        iconPosition="before"
-                        textColor="success"
-                        style={{
-                          width: 169,
-                          height: 32,
-                          borderRadius: '8px',
-                          border: `2px solid ${theme.brand.success}`,
-                        }}
-                        size="sm"
-                        onClick={(e) => {
-                          //DO NOTHING
-                          e.stopPropagation();
-                        }}
-                        variant="outline"
-                      />
+                      {salesChannel === 'Pre-Auction' && (
+                        <>
+                          {order.weightConfirmed ? (
+                            <Button
+                              text={'Weight Confirmed'}
+                              textVariant="overline"
+                              iconPosition="before"
+                              textColor="success"
+                              style={{
+                                width: 169,
+                                height: 32,
+                                borderRadius: '8px',
+                                border: `2px solid ${theme.brand.success}`,
+                              }}
+                              size="sm"
+                              onClick={(e) => {
+                                //DO NOTHING
+                                e.stopPropagation();
+                              }}
+                              variant="outline"
+                            />
+                          ) : (
+                            <Button
+                              text={'Confirm Weight'}
+                              textVariant="overline"
+                              iconPosition="before"
+                              style={{
+                                width: 169,
+                                height: 32,
+                                borderRadius: '8px',
+                              }}
+                              size="sm"
+                              variant="outline"
+                              onClick={(e) => {
+                                if (
+                                  !order.weightConfirmed &&
+                                  updateConfirmModal
+                                ) {
+                                  updateConfirmModal({
+                                    isOpen: true,
+                                    lineItemId: order.id,
+                                    orderId: id,
+                                  });
+                                }
+                                e.stopPropagation();
+                              }}
+                            />
+                          )}
+                        </>
+                      )}
                     </div>
                   </ItemCard>
                 </CollapsibleContent>

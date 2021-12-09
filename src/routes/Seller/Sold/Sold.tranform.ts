@@ -155,6 +155,8 @@ export const orderItemToSoldItemData = ({
         order.orderLineItem[0]?.listing.measurementUnit
       )}`,
       orders: order.orderLineItem.map((lineItem) => ({
+        id: lineItem.id,
+        weightConfirmed: lineItem.weightConfirmed,
         orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
         buyer: order.buyerCompanyName,
         fisherman: lineItem.listing.fishermanFirstName
