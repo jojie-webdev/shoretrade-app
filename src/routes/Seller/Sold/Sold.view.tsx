@@ -96,21 +96,31 @@ const SoldView = (props: SoldGeneratedProps) => {
     deliveredCount,
   } = props;
 
-  const currentFilter = {
+  const currentFilterMap = {
     [PENDING]: filters.pendingFilters,
     [TO_SHIP]: filters.toShipFilters,
     [IN_TRANSIT]: filters.inTransitFilters,
     [DELIVERED]: filters.deliveredFilters,
-  }[currentTab];
-  const updateFilter = {
+  };
+  const currentFilter = currentFilterMap[currentTab];
+  const updateFilterMap = {
     [PENDING]: updateFilters.updatePendingFilters,
     [TO_SHIP]: updateFilters.updateToShipFilters,
     [IN_TRANSIT]: updateFilters.updateInTransitFilters,
     [DELIVERED]: updateFilters.updateDeliveredFilters,
-  }[currentTab];
+  };
+  const updateFilter = updateFilterMap[currentTab];
 
   const handleSearchValue = (value: string) => {
     const parsedValue = parseOrderReferenceNumber(value);
+
+    if (currentTab === TO_SHIP) {
+      updateFilterMap[PENDING]({
+        ...currentFilterMap[PENDING],
+        term: parsedValue,
+        page: '1',
+      });
+    }
 
     updateFilter({
       ...currentFilter,
