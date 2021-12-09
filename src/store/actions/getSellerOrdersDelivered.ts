@@ -15,6 +15,7 @@ const getSellerOrdersDeliveredActions = {
   ...asyncAction,
   request: (filter?: {
     page: string;
+    term?: string;
   }): {
     type: string;
     meta: GetAllSellerOrdersMeta;
@@ -24,6 +25,7 @@ const getSellerOrdersDeliveredActions = {
       status: 'DELIVERED',
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
+      term: filter?.term,
     },
   }),
 };

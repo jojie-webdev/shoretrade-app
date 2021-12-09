@@ -28,6 +28,7 @@ import {
 } from './Sold.style';
 import ToShip from './ToShip/ToShip.view';
 
+const PENDING = 'Pending';
 const TO_SHIP = 'To Ship';
 const IN_TRANSIT = 'In Transit';
 const DELIVERED = 'Delivered';
@@ -96,11 +97,13 @@ const SoldView = (props: SoldGeneratedProps) => {
   } = props;
 
   const currentFilter = {
+    [PENDING]: filters.pendingFilters,
     [TO_SHIP]: filters.toShipFilters,
     [IN_TRANSIT]: filters.inTransitFilters,
     [DELIVERED]: filters.deliveredFilters,
   }[currentTab];
   const updateFilter = {
+    [PENDING]: updateFilters.updatePendingFilters,
     [TO_SHIP]: updateFilters.updateToShipFilters,
     [IN_TRANSIT]: updateFilters.updateInTransitFilters,
     [DELIVERED]: updateFilters.updateDeliveredFilters,

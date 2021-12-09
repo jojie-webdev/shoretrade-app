@@ -18,6 +18,7 @@ const getSellerOrdersPendingActions = {
   ...asyncAction,
   request: (filter?: {
     page: string;
+    term?: string;
   }): {
     type: string;
     meta: GetAllSellerOrdersMeta;
@@ -27,6 +28,7 @@ const getSellerOrdersPendingActions = {
       status: 'PENDING',
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
+      term: filter?.term,
     },
   }),
 

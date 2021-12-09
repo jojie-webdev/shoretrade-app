@@ -95,11 +95,13 @@ export interface SoldGeneratedProps {
   //   }) => void;
   // };
   filters: {
+    pendingFilters: RequestFilters;
     toShipFilters: RequestFilters;
     inTransitFilters: RequestFilters;
     deliveredFilters: RequestFilters;
   };
   updateFilters: {
+    updatePendingFilters: Dispatch<Partial<RequestFilters>>;
     updateToShipFilters: Dispatch<Partial<RequestFilters>>;
     updateInTransitFilters: Dispatch<Partial<RequestFilters>>;
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;

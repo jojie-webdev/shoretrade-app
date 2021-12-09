@@ -122,7 +122,7 @@ export const getAllSellerOrders = (
     method: 'get',
     url: `${ORDER_URL_V2}/all/seller?status=${data.status || ''}&limit=${
       data.limit || ''
-    }&page=${data.page || ''}`,
+    }&page=${data.page || ''}&term=${data.term}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
