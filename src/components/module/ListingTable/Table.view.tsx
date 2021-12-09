@@ -30,7 +30,7 @@ export const TableComponent = (props: TableComponentProps) => {
     setIsAllSelected,
     onSelect,
     unselectedIds,
-    onRowItemClick
+    onRowItemClick,
   } = props;
 
   const tableRef = useRef<HTMLDivElement>(null);

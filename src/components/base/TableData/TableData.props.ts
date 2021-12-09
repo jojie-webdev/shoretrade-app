@@ -24,6 +24,7 @@ export interface TableDataContentProps {
   column?: any;
   handleMaximizeColum?: (name: string) => any;
   columns: TableColumn[];
+  isClickable?: boolean;
 }
 
 export interface TableDataProps {
@@ -40,6 +41,7 @@ export interface TableDataProps {
   column?: any;
   handleMaximizeColum?: (selector: any) => any;
   columns: TableColumn[];
+  isClickable?: boolean;
 }
 export interface ResizerComponentProps extends Partial<TableDataContentProps> {
   defaultSize: any;

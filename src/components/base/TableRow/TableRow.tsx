@@ -7,6 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import ReactTooltip from 'react-tooltip';
 
 import { TableRowProps, TableDataListProps } from './TableRow.props';
+import { CellValueContainer } from './TableRow.style';
 
 const TableDataList = (props: TableDataListProps) => {
   const {
@@ -21,7 +22,7 @@ const TableDataList = (props: TableDataListProps) => {
     onResize,
     handleMaximizeColum,
     columns,
-    onRowItemClick
+    onRowItemClick,
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -64,18 +65,20 @@ const TableDataList = (props: TableDataListProps) => {
       handleMaximizeColum={handleMaximizeColum}
       columns={columns}
       onClick={onRowItemClick}
+      isClickable={data.clickable}
     >
-      <span
+      <CellValueContainer
         id={`text-${identifier}`}
         data-tip={
           showTooltip
             ? column?.tooltip?.(data) || data?.[column.selector]
             : null
         }
+        isClickable={data.clickable}
         className="table-value"
       >
         {column?.component ? column?.component(data) : data?.[column.selector]}
-      </span>
+      </CellValueContainer>
       {!!showTooltip && <ReactTooltip />}
     </TableData>
   );

@@ -1,7 +1,9 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
-export const TableDataContainer = styled.div`
+export const TableDataContainer = styled.div<{
+  isClickable?: boolean;
+}>`
   padding-top: 12px;
   padding-bottom: 12px;
   position: relative;
@@ -11,7 +13,8 @@ export const TableDataContainer = styled.div`
 
   .react-draggable {
     :hover {
-      cursor: pointer !important;
+      cursor: ${({ isClickable }) =>
+        isClickable ? 'pointer' : 'auto'} !important;
     }
   }
 

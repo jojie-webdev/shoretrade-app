@@ -412,7 +412,10 @@ export default function ListingView(props: ListingViewProps) {
         sortOrder={sorting.order}
         columnTemplate={columnTemplate}
         columns={columns}
-        data={listings}
+        data={listings.map((listing) => ({
+          ...listing,
+          clickable: listing.sales_channel !== 'AUCTION',
+        }))}
         isLoading={Boolean(isPending)}
         searchTerm={search}
         setSortOrder={onChangeSortOrder}

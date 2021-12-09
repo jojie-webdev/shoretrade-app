@@ -33,6 +33,7 @@ export default function TableData(props: TableDataProps) {
     column,
     handleMaximizeColum,
     columns,
+    isClickable,
   } = props;
   const [showSortIcon, setShowSortIcon] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -115,6 +116,7 @@ export default function TableData(props: TableDataProps) {
       onResize={onResize}
       column={column}
       handleMaximizeColum={handleMaximizeColum}
+      isClickable={isClickable}
     >
       {Children}
       {!isWidthComptued && (

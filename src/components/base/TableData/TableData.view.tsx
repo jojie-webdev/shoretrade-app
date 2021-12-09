@@ -90,6 +90,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     onClick,
     sticky,
     column,
+    isClickable,
   } = props;
 
   const TableDataContainerRef = useRef<HTMLDivElement>(null);
@@ -107,6 +108,7 @@ export default function TableDataContent(props: TableDataContentProps) {
     ['data-column-type']: columnType, // eslint-disable-line
     ['data-row-type']: rowType, // eslint-disable-line
     ['data-row-sticky']: sticky, // eslint-disable-line
+    isClickable,
   };
 
   useEffect(() => {
