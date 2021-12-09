@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Checkbox from 'components/base/Checkbox';
+import Typography from 'components/base/Typography';
 import { findIndex } from 'ramda';
 import theme from 'utils/Theme';
 
@@ -45,12 +46,13 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
     onSelect,
     last,
     groups = [],
+    handleOnClick
   } = props;
 
   const groupedColumn = groupColumns(columns, groups);
 
   return (
-    <Container last={last}>
+    <Container last={last} onClick={() => handleOnClick && handleOnClick()}>
       <DetailsContainer>
         {groupedColumn.map((columns, groupColumnIndex) => {
           return (
@@ -60,12 +62,16 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
                 .map((column, index) => {
                   return (
                     <Column key={`group-${groupColumnIndex}-${index}`}>
-                      <header>{column.name}</header>
-                      <div>
-                        {column?.component
-                          ? column?.component(data)
-                          : data?.[column.selector]}
-                      </div>
+                      <Typography variant="caption" color="shade6">
+                        {column.name}
+                      </Typography>
+                      { column?.component ? 
+                          <div>{column?.component(data)}</div>
+                          :
+                          <Typography variant="caption" color="shade9">
+                            {data?.[column.selector]}
+                          </Typography>
+                      }
                     </Column>
                   );
                 })}

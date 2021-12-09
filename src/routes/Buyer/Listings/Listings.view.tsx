@@ -2,30 +2,33 @@ import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
-// import Select from 'components/base/Select';
+import Select from 'components/base/Select';
 import { Cog, ChevronRight, Exit, Crab } from 'components/base/SVG';
+import Tabs from 'components/base/Tabs';
+import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
 import Loading from 'components/module/Loading';
-import PaginationBar from 'components/module/PaginationBar';
+import Pagination from 'components/module/Pagination';
 import SearchComponent from 'components/module/Search';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { SALES_CHANNELS } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
+import { useMediaQuery } from 'react-responsive';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import theme from 'utils/Theme';
 
 import {
   // AUCTION_PRODUCT,
-  DIRECT_SALE,
   // AUCTION_PRODUCT_COLUMNS,
   DIRECT_SALE_COLUMNS,
   columnTemplate,
   COLUMN_GROUPS,
 } from './Listings.constants';
-import { ListingViewProps } from './Listings.props';
+import { ListingViewProps, CounterProps } from './Listings.props';
 import {
   ActionContainer,
-  Tab,
   Header,
   FlexContainer,
   SearchContainer,
@@ -43,28 +46,31 @@ import {
   EmptyScreen,
   // TabletHeaderSortContainer,
   MobileResults,
+  TabItem,
+  Tag,
 } from './Listings.styles';
 
 const Search = (props: {
   onChange: (value: string) => void;
-  defaultValue?: string;
+  defaultValue: string;
+  activeTab: string;
 }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    if (props.defaultValue) setValue(props.defaultValue);
+    setValue(props.defaultValue);
     // eslint-disable-next-line
-  }, []);
+  }, [props.activeTab]);
 
   return (
     <SearchComponent
-      style={{ marginBottom: 0 }}
+      style={{ marginBottom: 0, padding: '5px 10px' }}
       onChange={(event) => {
         setValue(event.target.value);
         props?.onChange?.(event.target.value);
       }}
       value={value}
-      placeholder="Search for a listing"
+      placeholder="Search..."
       rounded
       resetValue={() => {
         setValue('');
@@ -76,30 +82,17 @@ const Search = (props: {
 
 export default function ListingView(props: ListingViewProps) {
   const {
-    activeTab,
-    handleSelectTab,
-    setSortField,
-    sortField,
     listings,
-    setSearchTerm,
-    isLoading,
-    searchTerm,
     handleDownloadCSV,
     isDownloadingCsv,
-    page,
-    setPage,
-    maxPage,
     isMobile,
-    setSortOrder,
     showModal,
     setShowModal,
     selectedIds,
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
-    totalCount,
-    limit,
-    setLimit,
+    isTablet,
     tableSettings,
     setTableSettings,
     showTableSettings,
@@ -107,17 +100,33 @@ export default function ListingView(props: ListingViewProps) {
     prevListingData,
     unselectedIds,
     handleSelectRow,
+    isPending,
+    counter,
+    totalCount,
+    totalPage,
+    search,
+    onChangeSearch,
+    activeTab,
+    onChangeTab,
+    page,
+    onChangePage,
+    sorting,
+    onChangeSortField,
+    onChangeSortOrder,
+    goToProductDetails,
   } = props;
 
   const [settings, setSettings] = useState(tableSettings);
 
-  const isEmpty = !isLoading && !listings.length;
+  const isEmpty = !isPending && !listings.length;
 
   const columns = DIRECT_SALE_COLUMNS;
 
   const downloadListingCount = isAllSelected
     ? totalCount - unselectedIds.length
     : selectedIds.length;
+
+  const isSmallDesktop = useMediaQuery({ query: BREAKPOINTS['xl'] });
 
   // sync tableSettingProps
   useComponentShouldUpdate(() => {
@@ -126,10 +135,10 @@ export default function ListingView(props: ListingViewProps) {
 
   // focus on preloading screen
   useComponentShouldUpdate(() => {
-    if (isLoading && prevListingData && isMobile && !searchTerm) {
+    if (isPending && prevListingData && isMobile && !search) {
       window.scrollTo(0, document.body.scrollHeight);
     }
-  }, [isLoading, prevListingData, isMobile, searchTerm]);
+  }, [isPending, prevListingData, isMobile, search]);
 
   // cleanup
   useEffect(() => {
@@ -141,8 +150,8 @@ export default function ListingView(props: ListingViewProps) {
 
   // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
-  const debouncedSearch = debounce(function (v: string) {
-    setSearchTerm(v);
+  const debouncedSearch = debounce(function (value: string) {
+    onChangeSearch(value);
   }, 400);
 
   const handleOnCloseTableSettingsModal = () => {
@@ -158,64 +167,74 @@ export default function ListingView(props: ListingViewProps) {
 
   const TabComponent = (
     <TabContainer>
-      <Tab
-        className={activeTab === DIRECT_SALE ? 'active' : ''}
-        onClick={() => handleSelectTab(DIRECT_SALE)}
-      >
-        Direct Sale
-      </Tab>
-      {/* <Tab
-      className={activeTab === AUCTION_PRODUCT ? 'active' : ''}
-      onClick={() => handleSelectTab(AUCTION_PRODUCT)}
-    >
-      Auction Product
-    </Tab> */}
+      <Tabs
+        tabStyle={{ padding: '9px 12px' }}
+        textColor={theme.grey.shade6}
+        activeTextColor={theme.grey.shade9}
+        underlineColor={theme.grey.shade3}
+        fitTabWidthToContent={true}
+        selectedTab={activeTab}
+        onClickTab={(tab) => onChangeTab(tab)}
+        justify="start"
+        tabValues={SALES_CHANNELS.map((channel) => channel.value)}
+        tabElements={SALES_CHANNELS.map((channel) => (
+          <TabItem key={channel.value}>
+            <div className="tab-label">{channel.label}</div>
+            <Tag background={theme.grey.shade9}>
+              <Typography
+                variant="overlineSmall"
+                color="shade9"
+                style={{ fontSize: '9px' }}
+              >
+                {counter[channel.value as keyof CounterProps]}
+              </Typography>
+            </Tag>
+          </TabItem>
+        ))}
+      />
     </TabContainer>
   );
 
   const DesktopHeader = (
     <Header>
       {TabComponent}
-      <FlexContainer>
+      <FlexContainer
+        style={{
+          width: isSmallDesktop || isTablet ? '100%' : 'fit-content',
+          marginTop: isSmallDesktop || isTablet ? '16px' : '0',
+        }}
+      >
+        {(isSmallDesktop || isTablet) && (
+          <SearchContainer>
+            <Search
+              defaultValue={search}
+              onChange={debouncedSearch}
+              activeTab={activeTab}
+            />
+          </SearchContainer>
+        )}
         <ActionContainer>
           <Button
-            disabled={Boolean(isLoading) || isDownloadingCsv}
+            disabled={Boolean(isPending) || isDownloadingCsv}
             onClick={() => setShowModal(true)}
             text="Download"
-            loading={Boolean(isLoading) || isDownloadingCsv}
             takeFullWidth={isMobile}
+            borderRadius="8px"
+            padding="10px 12px"
           />
         </ActionContainer>
-        <SearchContainer>
-          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
-        </SearchContainer>
+        {!(isSmallDesktop || isTablet) && (
+          <SearchContainer>
+            <Search
+              defaultValue={search}
+              onChange={debouncedSearch}
+              activeTab={activeTab}
+            />
+          </SearchContainer>
+        )}
       </FlexContainer>
     </Header>
   );
-
-  // const TabletHeader = (
-  //   <Header style={{ gap: 8 }}>
-  //     <div>
-  //       <SearchContainer>
-  //         <Search onChange={debouncedSearch} />
-  //       </SearchContainer>
-  //     </div>
-
-  //     <TabletHeaderSortContainer>
-  //       <div className="results">{totalCount} Results</div>
-  //       <div className="dropdown">
-  //         <Select
-  //           label=""
-  //           options={options}
-  //           size="small"
-  //           placeholder="Sort By"
-  //           grey
-  //           onChange={(e) => setSortField(e?.value)}
-  //         />
-  //       </div>
-  //     </TabletHeaderSortContainer>
-  //   </Header>
-  // );
 
   const DownloadConfirmationModal = (
     <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
@@ -283,20 +302,21 @@ export default function ListingView(props: ListingViewProps) {
     </Modal>
   );
 
-  const mobileListing = searchTerm
-    ? listings
-    : [...prevListingData, ...listings];
+  const mobileListing = search ? listings : [...prevListingData, ...listings];
 
   if (isMobile) {
     return (
       <div>
         {DownloadConfirmationModal}
-        {TabComponent}
         {TableSettingsModal}
         <MobileSearchContainer>
-          <Search defaultValue={searchTerm} onChange={debouncedSearch} />
+          <Search
+            defaultValue={search}
+            onChange={debouncedSearch}
+            activeTab={activeTab}
+          />
           <MobileDownloadButton
-            disabled={Boolean(isLoading) || isDownloadingCsv}
+            disabled={Boolean(isPending) || isDownloadingCsv}
             onClick={() => setShowModal(true)}
           >
             <div>
@@ -304,6 +324,26 @@ export default function ListingView(props: ListingViewProps) {
             </div>
           </MobileDownloadButton>
         </MobileSearchContainer>
+        <Select
+          grey={true}
+          borderRadius="12px"
+          border="none"
+          marginTop="0"
+          height="40px"
+          padding="10px 12px"
+          options={[...SALES_CHANNELS].map((channel) => ({
+            value: channel.value,
+            label: `${channel.label} Listings`,
+          }))}
+          value={activeTab}
+          onChange={(o) => onChangeTab(o.value)}
+          arrowIcon={
+            <ChevronRight
+              fill={theme.brand.primary}
+              style={{ transform: 'rotate(90deg)' }}
+            />
+          }
+        />
         <TableSettingsContainer onClick={() => setShowTableSettings(true)}>
           <div>
             <Cog /> <span>Table Settings</span>
@@ -312,7 +352,7 @@ export default function ListingView(props: ListingViewProps) {
         </TableSettingsContainer>
         <MobileResults>
           <div>
-            <span className="total-count">{totalCount}</span> Results
+            <span className="total-count">{totalCount || 0}</span> Results
           </div>
           <div className="checkbox-container">
             <span>Select All</span>
@@ -340,9 +380,10 @@ export default function ListingView(props: ListingViewProps) {
                     : isAllSelected || selectedIds.includes(listing?.id)
                 }
                 onSelect={(selected) => handleSelectRow(listing?.id, !selected)}
+                handleOnClick={() => goToProductDetails(listing.id)}
               />
             ))}
-            {isLoading && (
+            {isPending && (
               <Preloader>
                 <Loading />
               </Preloader>
@@ -353,8 +394,7 @@ export default function ListingView(props: ListingViewProps) {
           <EmptyScreen>
             <Crab height={268} width={268} fill={theme.grey.shade7} />
             <div>
-              Unable to find result{' '}
-              {searchTerm ? `for keyword: '${searchTerm}'` : ''}
+              Unable to find result {search ? `for keyword: '${search}'` : ''}
             </div>
           </EmptyScreen>
         )}
@@ -367,31 +407,35 @@ export default function ListingView(props: ListingViewProps) {
       {DownloadConfirmationModal}
       {!isMobile && DesktopHeader}
       <TableComponent
-        setSortField={setSortField}
-        sortField={sortField}
+        setSortField={onChangeSortField}
+        sortField={sorting.field}
+        sortOrder={sorting.order}
         columnTemplate={columnTemplate}
         columns={columns}
         data={listings}
-        isLoading={Boolean(isLoading)}
-        searchTerm={searchTerm}
-        setSortOrder={setSortOrder}
+        isLoading={Boolean(isPending)}
+        searchTerm={search}
+        setSortOrder={onChangeSortOrder}
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         isAllSelected={isAllSelected}
         setIsAllSelected={setIsAllSelected}
         onSelect={handleSelectRow}
         unselectedIds={unselectedIds}
+        onRowItemClick={goToProductDetails}
       />
-      <PaginationContainer>
-        <PaginationBar
-          page={page}
-          limit={limit}
-          totalCount={totalCount}
-          setLimit={setLimit}
-          setPage={setPage}
-          maxPage={maxPage}
-        />
-      </PaginationContainer>
+      {totalPage > 1 && (
+        <PaginationContainer>
+          <Pagination
+            numPages={totalPage}
+            currentValue={page}
+            onClickButton={(value) => onChangePage(value)}
+            variant="number"
+            color="shade10"
+            iconColor={theme.grey.shade10}
+          />
+        </PaginationContainer>
+      )}
     </div>
   );
 }

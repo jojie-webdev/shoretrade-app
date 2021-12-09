@@ -21,6 +21,7 @@ export const TableComponent = (props: TableComponentProps) => {
     columns,
     data = [],
     sortField,
+    sortOrder,
     setSortField,
     searchTerm,
     setSortOrder,
@@ -29,6 +30,7 @@ export const TableComponent = (props: TableComponentProps) => {
     setIsAllSelected,
     onSelect,
     unselectedIds,
+    onRowItemClick
   } = props;
 
   const tableRef = useRef<HTMLDivElement>(null);
@@ -123,6 +125,7 @@ export const TableComponent = (props: TableComponentProps) => {
           onResize={handleRowResize}
           handleMaximizeColum={handleMaximizeColum}
           sortField={sortField}
+          sortOrder={sortOrder}
           setSortField={setSortField}
           selectAll={isAllSelected}
           onSelectAll={handleOnSelectAll}
@@ -146,6 +149,7 @@ export const TableComponent = (props: TableComponentProps) => {
                       : isAllSelected || selectedIds?.includes(item?.id)
                   }
                   handleOnSelectRow={handleSelectRow}
+                  onRowItemClick={() => onRowItemClick(item.id)}
                 />
               );
             })}

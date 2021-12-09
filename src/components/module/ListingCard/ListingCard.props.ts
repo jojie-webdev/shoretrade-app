@@ -12,4 +12,5 @@ export interface ListingCardProps {
   onSelect: (isSelected: boolean) => void;
   last: boolean;
   groups: string[][];
+  handleOnClick?: () => void;
 }

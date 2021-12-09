@@ -23,6 +23,7 @@ export interface TableRowProps {
     columnDetails: any
   ) => any;
   handleMaximizeColum?: (selector: string) => any;
+  onRowItemClick?: () => void;
 }
 
 export interface TableDataListProps extends TableRowProps {

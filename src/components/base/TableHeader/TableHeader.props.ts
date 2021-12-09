@@ -7,6 +7,7 @@ export interface TableHeaderProps {
   onSelectAll?: (state: boolean) => void;
   setSortField?: (field: string) => void;
   sortField?: string;
+  sortOrder?: string;
   setSortOrder?: (sortOrder: SortOrder) => void;
   handleMaximizeColum?: (columnSelector: string) => any;
   onResize?: (

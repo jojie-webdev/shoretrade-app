@@ -17,6 +17,7 @@ function* getAllBuyerListingsRequest(action: any) {
   if (state.auth.token) {
     try {
       const { data } = yield call(getAllBuyerListings, state.auth.token, {
+        salesChannel: action.payload?.salesChannel,
         sortBy: action.payload?.sortField,
         term: action.payload?.searchTerm,
         page: action.payload?.page,

@@ -21,6 +21,7 @@ const TableDataList = (props: TableDataListProps) => {
     onResize,
     handleMaximizeColum,
     columns,
+    onRowItemClick
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -62,6 +63,7 @@ const TableDataList = (props: TableDataListProps) => {
       column={{ ...column, index }}
       handleMaximizeColum={handleMaximizeColum}
       columns={columns}
+      onClick={onRowItemClick}
     >
       <span
         id={`text-${identifier}`}

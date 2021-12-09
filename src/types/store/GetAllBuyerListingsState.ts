@@ -26,9 +26,11 @@ export type GetAllBuyerListingResponseItem = {
   catch_recurrence: string | null;
   remaining_weight: number;
   total_weight: number;
+  sales_channel?: string;
 };
 
 export interface GetAllBuyerListingRequestOption {
+  salesChannel: string;
   sortBy: string;
   sortOrder: SortOrder;
   term: string;
@@ -40,7 +42,16 @@ export interface GetAllBuyerListingRequestOption {
   exceptId?: string[];
 }
 
+export type CounterResponseItem = {
+  total_count: string;
+  all_listing: string;
+  direct_listing: string;
+  aquafuture: string;
+  pre_auction: string;
+};
+
 export type GetAllBuyerListingsPayload = GenericResponse<{
-  token: string;
-  orders: GetAllBuyerListingResponseItem[];
+  listings: GetAllBuyerListingResponseItem[];
+  counter: CounterResponseItem;
+  count: string;
 }>;

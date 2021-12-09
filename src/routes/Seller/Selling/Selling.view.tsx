@@ -267,16 +267,15 @@ const NoSelling = () => {
 const SearchComponent = (props: {
   defaultValue: string;
   onChange: (value: string) => void;
+  activeTab: string;
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
-    if (props.defaultValue) {
-      setSearchValue(props.defaultValue);
-    }
+    setSearchValue(props.defaultValue);
     // eslint-disable-next-line
-  }, [])
+  }, [props.activeTab])
 
   return (
     <Search
@@ -380,6 +379,7 @@ const SellingView = (props: SellingGeneratedProps) => {
               <SearchComponent
                 defaultValue={search}
                 onChange={debouncedSearch}
+                activeTab={activeTab}
               />
             </Col>
           </Row>

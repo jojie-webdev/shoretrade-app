@@ -72,6 +72,8 @@ export const TabContainer = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
+  justify-content: center;
+  display: flex;
   margin-top: 16px;
 `;
 
@@ -126,7 +128,7 @@ export const TableSettingsContainer = styled.button`
   align-items: center;
   padding: 16px;
   background: #fff;
-  margin-bottom: 16px;
+  margin: 16px 0;
   border-radius: 12px;
   box-shadow: 0px 4px 12px 0px #292b320a;
   border: 0;
@@ -139,9 +141,6 @@ export const TableSettingsContainer = styled.button`
 `;
 
 export const MobileTable = styled.div`
-  border-radius: 12px;
-  background: white;
-  border: 1px solid #e5e8f5;
 `;
 
 export const Preloader = styled.div`
@@ -189,4 +188,24 @@ export const MobileResults = styled.div`
   .total-count {
     color: ${theme.grey.shade9};
   }
+`;
+
+export const TabItem = styled.div`
+  display: flex;
+  
+  .tab-label {
+    margin-right: 6px;
+  }
+`;
+
+export const Tag = styled.div<{
+  background?: string;
+}>`
+  background: ${({ theme }) => theme.grey.shade3};
+  padding: 4px 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
 `;

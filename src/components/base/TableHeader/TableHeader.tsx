@@ -13,6 +13,7 @@ export default function TableHeader(props: TableHeaderProps) {
     onSelectAll,
     setSortField,
     sortField,
+    sortOrder,
     setSortOrder,
     handleMaximizeColum,
     onResize,
@@ -30,8 +31,13 @@ export default function TableHeader(props: TableHeaderProps) {
           if (e?.detail >= 2) {
             handleMaximizeColum?.(columns?.[index - 1]?.selector);
           } else {
-            setSortField?.(column.selector);
-            setSortOrder?.(sortField === column.selector ? 'DESC' : 'ASC');
+            if (sortField !== column.selector) {
+              setSortField?.(column.selector);
+            }
+
+            setSortOrder?.(sortField !== column.selector ? 'ASC'
+              : sortOrder === 'ASC' ? 'DESC' : 'ASC'
+            );
           }
         }, 200);
 

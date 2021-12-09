@@ -9,8 +9,11 @@ export const TableDataContainer = styled.div`
   border-bottom: 1px solid ${theme.grey.shade4};
   font-weight: 500;
 
-  // display: flex;
-  // align-items: center;
+  .react-draggable {
+    :hover {
+      cursor: pointer !important;
+    }
+  }
 
   &[data-row-sticky='true'] {
     left: 0;
@@ -31,11 +34,11 @@ export const TableDataContainer = styled.div`
     }
 
     &[data-column-type='column-first'] {
-      border-top-left-radius: 16px;
+      border-top-left-radius: 8px;
     }
 
     &[data-column-type='column-last'] {
-      border-top-right-radius: 16px;
+      border-top-right-radius: 8px;
     }
   }
 
@@ -49,11 +52,11 @@ export const TableDataContainer = styled.div`
     border-bottom: 0;
 
     &[data-column-type='column-first'] {
-      border-bottom-left-radius: 16px;
+      border-bottom-left-radius: 8px;
     }
 
     &[data-column-type='column-last'] {
-      border-bottom-right-radius: 16px;
+      border-bottom-right-radius: 8px;
     }
   }
 `;

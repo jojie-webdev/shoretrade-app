@@ -21,6 +21,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     currentValue,
     onClickButton = () => null,
     variant = 'number',
+    color
   } = props;
 
   const initialOffset = currentValue - 3;
@@ -39,8 +40,8 @@ const Pagination = (props: PaginationProps): JSX.Element => {
   let pagination;
 
   if (variant === 'number') {
-    const textColor = theme.appType === 'buyer' ? 'primary' : 'noshade';
-    const iconColor =
+    const textColor = color ? color : theme.appType === 'buyer' ? 'primary' : 'noshade';
+    const iconColor = props.iconColor ? props.iconColor :
       theme.appType === 'buyer' ? theme.brand.primary : theme.grey.noshade;
 
     pagination = (

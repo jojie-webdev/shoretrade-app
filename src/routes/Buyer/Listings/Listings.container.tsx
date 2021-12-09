@@ -1,80 +1,137 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useReducer,
+} from 'react';
 
+import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SALES_CHANNELS } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router-dom';
 import { getAllBuyerListingsActions } from 'store/actions';
-import { SortOrder } from 'types/store/GetAllBuyerListingsState';
 import { Store } from 'types/store/Store';
+import { createUpdateReducer } from 'utils/Hooks';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import { capitalize } from 'utils/String';
 
+import { DEFAULT_TABLE_SETTINGS } from './Listings.constants';
 import {
-  DIRECT_SALE,
-  DEFAULT_PAGE_LIMIT,
-  DEFAULT_TABLE_SETTINGS,
-} from './Listings.constants';
+  SearchFilterProps,
+  TabPageFilterProps,
+  CounterProps,
+  TabSortProps,
+  ListingViewProps,
+} from './Listings.props';
 import ListingView from './Listings.view';
 
 export default function ListingContainer() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isTablet = useMediaQuery({
     query: BREAKPOINTS.genericTablet,
   });
 
-  const [activeTab, setActiveTab] = useState<number>(DIRECT_SALE);
-  const [sortField, setSortField] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState<SortOrder>('ASC');
+  // MARK:- States
   const [showModal, setShowModal] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [unselectedIds, setUnselectedIds] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
   const [isCsvPending, setIsCsvPending] = useState(false); // local state
-  const [limit, setLimit] = useState(DEFAULT_PAGE_LIMIT);
   const [showTableSettings, setShowTableSettings] = useState(false);
-  const [tableSettings, setTableSettings] = useState<string[]>(
-    DEFAULT_TABLE_SETTINGS
-  );
-
-  // mobile pagination
   const [prevScrollTop, setPrevScrollTop] = useState(0);
+  const [prevListingData, setPrevListingData] = useState<any[]>([]);
   const [isReadypaginateViaScroll, setIsReadypaginateViaScroll] = useState(
     true
   );
-  const [prevListingData, setPrevListingData] = useState<any[]>([]);
-
-  const isLoading = useSelector(
-    (state: Store) => state.getAllBuyerListings?.pending
+  const [tableSettings, setTableSettings] = useState<string[]>(
+    DEFAULT_TABLE_SETTINGS
   );
+  const [isPending, setIsPending] = useState(true);
+  const [activeTab, setActiveTab] = useState('allListing');
+  const [tabCounts, setTabCounts] = useState<CounterProps>({
+    allListing: 0,
+    directSale: 0,
+    aquafuture: 0,
+    preAuction: 0,
+  });
+
+  // MARK:- Reducers
+  const [tabPageFilters, updateTabPageFilters] = useReducer(
+    createUpdateReducer<TabPageFilterProps>(),
+    {
+      allListing: 1,
+      directSale: 1,
+      aquafuture: 1,
+      preAuction: 1,
+    }
+  );
+
+  const [searchFilters, updateSearchFilters] = useReducer(
+    createUpdateReducer<SearchFilterProps>(),
+    {
+      allListing: '',
+      directSale: '',
+      aquafuture: '',
+      preAuction: '',
+    }
+  );
+
+  const [tabSortField, updateTabSortField] = useReducer(
+    createUpdateReducer<TabSortProps>(),
+    {
+      allListing: 'created_at',
+      directSale: 'created_at',
+      aquafuture: 'created_at',
+      preAuction: 'created_at',
+    }
+  );
+
+  const [tabSortOrder, updateTabSortOrder] = useReducer(
+    createUpdateReducer<TabSortProps>(),
+    {
+      allListing: 'ASC',
+      directSale: 'ASC',
+      aquafuture: 'ASC',
+      preAuction: 'ASC',
+    }
+  );
+
+  // mobile pagination
+
   const isDownloadingCsv = useSelector(
     (state: any) => state.getAllBuyerListings?.isDownloadingCsv
   );
   const listingRequest = useSelector(
-    (state: Store) => state.getAllBuyerListings || {}
+    (state: Store) => state.getAllBuyerListings
   );
-
-  const listingRequestData: any = listingRequest?.data?.data || {};
-  const listingRequestDataCount = listingRequestData?.count;
+  const listingRequestData = useSelector(
+    (state: Store) => state.getAllBuyerListings.data?.data
+  );
   const baseListings = listingRequestData?.listings || [];
   const listings = baseListings.map((a: any) => ({
     ...a,
     catchRecurrence: a.catchRecurrence && capitalize(a.catchRecurrence),
   }));
-  const maxPage = Math.ceil(listingRequestDataCount / limit);
+  const totalPage = Math.ceil(tabCounts[activeTab as keyof CounterProps] / 10);
+  const page = tabPageFilters[activeTab as keyof TabPageFilterProps];
+  const search = searchFilters[activeTab as keyof SearchFilterProps];
+
+  // MARK:- Callbacks
 
   useEffect(() => {
     const handleMobilePagination = debounce((event: any) => {
       // reached the bottom of page
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        if (searchTerm) return;
+        if (search) return;
         if (!isReadypaginateViaScroll) return;
 
-        if (page < maxPage) {
-          setPage((prev) => prev + 1);
+        if (page < totalPage) {
           setPrevScrollTop(window.innerHeight + window.scrollY);
           setIsReadypaginateViaScroll(false);
           setPrevListingData((prevState) => [...prevState, ...baseListings]);
@@ -90,27 +147,30 @@ export default function ListingContainer() {
       document.removeEventListener('scroll', handleMobilePagination);
     };
     // eslint-disable-next-line
-  }, [isMobile, listingRequest, isReadypaginateViaScroll, searchTerm]);
+  }, [isMobile, listingRequest, isReadypaginateViaScroll, search]);
 
   useComponentShouldUpdate(() => {
-    if (!isLoading && !isReadypaginateViaScroll) {
+    if (!isPending && !isReadypaginateViaScroll) {
       window.scrollTo(0, prevScrollTop);
       setIsReadypaginateViaScroll(true);
     }
-  }, [isLoading, isReadypaginateViaScroll, prevScrollTop]);
+  }, [isPending, isReadypaginateViaScroll, prevScrollTop]);
 
   useEffect(() => {
     dispatch(
       getAllBuyerListingsActions.request({
-        sortField,
-        searchTerm,
+        salesChannel:
+          SALES_CHANNELS.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS[0].constant,
+        sortField: tabSortField[activeTab as keyof TabSortProps],
+        searchTerm: search,
         page,
-        limit,
-        sortOrder,
+        limit: isMobile ? 100 : 10,
+        sortOrder: tabSortOrder[activeTab as keyof TabSortProps],
       })
     );
     // eslint-disable-next-line
-  }, [sortField, searchTerm, page, sortOrder, limit]);
+  }, [activeTab, searchFilters, page, tabSortOrder]);
 
   useEffect(() => {
     if (showModal && !isDownloadingCsv && isCsvPending) {
@@ -119,33 +179,35 @@ export default function ListingContainer() {
     }
   }, [isDownloadingCsv, showModal, isCsvPending]);
 
-  // handle search in mobile
-  useComponentShouldUpdate(() => {
-    if (isMobile) {
-      if (searchTerm.length) {
-        setLimit(100); // displays the first 100 search result
-      } else setLimit(10);
-    }
-
-    setPage(1);
-  }, [searchTerm, isMobile]);
-
   useComponentShouldUpdate(() => {
     setSelectedIds([]);
     setUnselectedIds([]);
   }, [isAllSelected]);
 
-  const handleSelectTab = (id: number) => {
-    setActiveTab(id);
-  };
+  useEffect(() => {
+    if (listingRequestData) {
+      setTabCounts({
+        allListing: Number(listingRequestData.counter.all_listing || 0),
+        directSale: Number(listingRequestData.counter.direct_listing || 0),
+        aquafuture: Number(listingRequestData.counter.aquafuture || 0),
+        preAuction: Number(listingRequestData.counter.pre_auction || 0),
+      });
+      setIsPending(false);
+    }
+  }, [listingRequestData]);
+
+  // MARK:- Methods
 
   const handleDownloadCSV = () => {
     dispatch(
       getAllBuyerListingsActions.requestCsv({
-        sortField,
-        searchTerm,
+        salesChannel:
+          SALES_CHANNELS.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS[0].constant,
+        sortField: tabSortField[activeTab as keyof TabSortProps],
+        searchTerm: search,
         csv: true,
-        sortOrder,
+        sortOrder: tabSortOrder[activeTab as keyof TabSortProps],
         ids: selectedIds,
         exceptId: unselectedIds,
         all: true,
@@ -180,32 +242,27 @@ export default function ListingContainer() {
     }
   };
 
-  const ListingViewProps = {
-    activeTab,
-    handleSelectTab,
-    sortField,
-    setSortField,
+  const goToProductDetails = (id: string) => {
+    if (
+      baseListings.find((listing) => listing.id === id)?.sales_channel !==
+      'AUCTION'
+    ) {
+      history.push(BUYER_ROUTES.PRODUCT_DETAIL(id));
+    }
+  };
+
+  const listingViewProps: ListingViewProps = {
     listings,
-    setSearchTerm,
-    isLoading,
-    searchTerm,
     handleDownloadCSV,
     isDownloadingCsv,
-    page,
-    setPage,
-    maxPage,
     isMobile,
     isTablet,
-    setSortOrder,
     showModal,
     setShowModal,
     selectedIds,
     setSelectedIds,
     isAllSelected,
     setIsAllSelected,
-    totalCount: listingRequestDataCount,
-    limit,
-    setLimit,
     tableSettings,
     setTableSettings,
     showTableSettings,
@@ -214,7 +271,39 @@ export default function ListingContainer() {
     unselectedIds,
     setUnselectedIds,
     handleSelectRow,
+    isPending,
+    counter: tabCounts,
+    totalCount: Number(listingRequestData?.count),
+    totalPage,
+    search,
+    onChangeSearch: (value) => {
+      updateSearchFilters({ [activeTab]: value });
+      setIsPending(true);
+    },
+    activeTab,
+    onChangeTab: (tab) => {
+      setActiveTab(tab);
+      setIsPending(true);
+    },
+    page,
+    onChangePage: (page) => {
+      updateTabPageFilters({ [activeTab]: page });
+      setIsPending(true);
+    },
+    sorting: {
+      field: tabSortField[activeTab as keyof TabSortProps],
+      order: tabSortOrder[activeTab as keyof TabSortProps],
+    },
+    onChangeSortField: (field) => {
+      updateTabSortField({ [activeTab]: field });
+      setIsPending(true);
+    },
+    onChangeSortOrder: (order) => {
+      updateTabSortOrder({ [activeTab]: order });
+      setIsPending(true);
+    },
+    goToProductDetails,
   };
 
-  return <ListingView {...ListingViewProps} />;
+  return <ListingView {...listingViewProps} />;
 }

@@ -27,6 +27,9 @@ const Tabs = (props: TabsProps): JSX.Element => {
     selectedTab,
     onClickTab,
     customTabContent,
+    textColor,
+    activeTextColor,
+    underlineColor,
   } = props;
 
   return (
@@ -45,6 +48,9 @@ const Tabs = (props: TabsProps): JSX.Element => {
                 <Tab
                   style={tabStyle}
                   active={tab === selectedTab || index === Number(selectedTab)}
+                  textColor={textColor}
+                  activeTextColor={activeTextColor}
+                  underlineColor={underlineColor}
                   onClick={() => onClickTab(tab)}
                 >
                   <span className="tab-text">{tab}</span>
@@ -72,6 +78,9 @@ const Tabs = (props: TabsProps): JSX.Element => {
                       ? tabValues[index] === selectedTab
                       : index === Number(selectedTab)
                   }
+                  textColor={textColor}
+                  activeTextColor={activeTextColor}
+                  underlineColor={underlineColor}
                   onClick={() =>
                     onClickTab(tabValues ? tabValues[index] : index.toString())
                   }

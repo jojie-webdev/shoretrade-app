@@ -33,7 +33,7 @@ const border: Record<Variants, string> = {
   white: 'none',
 };
 
-const padding: Record<ButtonSizes, string> = {
+const sizePadding: Record<ButtonSizes, string> = {
   sm: '8px 12px',
   md: '18px 32px',
   lg: '',
@@ -43,11 +43,12 @@ export const ButtonContainer = styled.button<
   ButtonStyleProps & ButtonProps & { hasText: boolean }
 >`
   max-height: 48px;
-  padding: ${({ size }) => padding[size]};
+  padding: ${({ size, padding }) => padding ? padding : sizePadding[size]};
   background-color: ${({ variant, color }) =>
     color ? backgroundColor[color] : backgroundColor[variant]};
   border: ${({ variant }) => border[variant]};
-  border-radius: ${(props) => (props.circular ? '50%' : '12px')};
+  border-radius: ${({ circular, borderRadius }) => circular ? '50%' 
+    : (borderRadius ? borderRadius : '12px')};
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   white-space: nowrap;
@@ -65,7 +66,7 @@ export const ButtonContainer = styled.button<
   }
 
   @media (hover: none) and (pointer: coarse) {
-    padding: ${({ size }) => (size === 'sm' ? padding[size] : '18px')};
+    padding: ${({ size, padding }) => padding ? padding : (size === 'sm' ? sizePadding[size] : '18px')};
     :hover {
       opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
     }

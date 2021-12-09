@@ -12,6 +12,9 @@ export interface TabsProps {
   selectedTab: string;
   onClickTab: (tab: string) => void;
   customTabContent?: string[] | number[];
+  textColor?: string;
+  activeTextColor?: string;
+  underlineColor?: string;
 }
 
 export interface TabColProps extends ColProps {

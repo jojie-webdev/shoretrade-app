@@ -28,6 +28,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textColor?: keyof Theme['brand'] | keyof Theme['grey'];
   circular?: boolean;
   shortenedText?: string;
+  padding?: string;
+  borderRadius?: string;
 }
 
 // Styles

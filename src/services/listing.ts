@@ -58,6 +58,7 @@ export const getAllBuyerListings = (
   let url = `${API.URL}/${API.VERSION_NEXT}/${ENDPOINT}/${csvEnpoint}all?sortOrder=${sortOrder}${page}${limit}${ids}${exceptId}`;
   if (requestOptions?.sortBy) url += `&sortBy=${requestOptions.sortBy}`;
   if (requestOptions?.term) url += `&term=${requestOptions.term}`;
+  if (requestOptions?.salesChannel) url += `&salesChannel=${requestOptions.salesChannel}`;
 
   return axios({
     method: 'get',

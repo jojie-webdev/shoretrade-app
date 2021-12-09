@@ -19,6 +19,7 @@ export interface TableComponentProps {
   columns: TableColumn[];
   data?: any[];
   sortField?: string;
+  sortOrder?: string;
   setSortField?: (field: string) => void;
   isLoading?: boolean;
   searchTerm?: string;
@@ -29,4 +30,5 @@ export interface TableComponentProps {
   setIsAllSelected: (state: boolean) => void;
   onSelect: (id: string, state: boolean) => void;
   unselectedIds: string[];
+  onRowItemClick: (id: string) => void;
 }
