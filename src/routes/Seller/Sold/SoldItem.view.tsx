@@ -21,8 +21,8 @@ import {
   ItemImage,
   ItemDetail,
   Tag,
+  Spacer,
 } from './SoldItem.styles';
-import { Spacer } from './ToShip/ToShip.styles';
 
 const SoldItem = (props: {
   data: { [p: string]: SoldItemData[] };
@@ -137,6 +137,8 @@ const SoldItem = (props: {
               </div>
             </div>
             <Spacer />
+            <Spacer />
+            <Spacer />
             <div className="right-content">
               <ItemDetail variant="caption" color="shade6">
                 Sold Weight <span>{totalWeight}</span>
@@ -189,6 +191,8 @@ const SoldItem = (props: {
                     </div>
                   </div>
                   <Spacer />
+                  <Spacer />
+                  <Spacer />
                   <div className="right-content">
                     <ItemDetail variant="caption" color="shade6" row>
                       Buyer <span>{v.buyerCompanyName}</span>
@@ -222,50 +226,54 @@ const SoldItem = (props: {
                           isSendingMessage
                         }
                       />
-                      {v.allowPartialShipment && !v.allowFullShipment ? (
-                        <Button
-                          text={'Ship Partial'}
-                          textVariant="overline"
-                          style={{
-                            width: nonDesktop ? undefined : 169,
-                            height: 32,
-                          }}
-                          size="sm"
-                          onClick={(e) => {
-                            if (shipOrder) {
-                              shipOrder(
-                                !v.allowFullShipment,
-                                getSellerOrder(v.id),
-                                v.groupName
-                              );
-                            }
-                            e.stopPropagation();
-                          }}
-                          loading={isPlacingOrder && placeOrderId === v.id}
-                        />
-                      ) : (
-                        <Button
-                          className="ship-order"
-                          text={'Ship Order'}
-                          textVariant="overline"
-                          style={{
-                            width: nonDesktop ? undefined : 169,
-                            height: 32,
-                          }}
-                          disabled={!v.allowFullShipment}
-                          size="sm"
-                          onClick={(e) => {
-                            if (shipOrder) {
-                              shipOrder(
-                                !v.allowFullShipment,
-                                getSellerOrder(v.id),
-                                v.groupName
-                              );
-                            }
-                            e.stopPropagation();
-                          }}
-                          loading={isPlacingOrder && placeOrderId === v.id}
-                        />
+                      {v.salesChannel === 'Pre-Auction' && (
+                        <>
+                          {v.allowPartialShipment && !v.allowFullShipment ? (
+                            <Button
+                              text={'Ship Partial'}
+                              textVariant="overline"
+                              style={{
+                                width: nonDesktop ? undefined : 169,
+                                height: 32,
+                              }}
+                              size="sm"
+                              onClick={(e) => {
+                                if (shipOrder) {
+                                  shipOrder(
+                                    !v.allowFullShipment,
+                                    getSellerOrder(v.id),
+                                    v.groupName
+                                  );
+                                }
+                                e.stopPropagation();
+                              }}
+                              loading={isPlacingOrder && placeOrderId === v.id}
+                            />
+                          ) : (
+                            <Button
+                              className="ship-order"
+                              text={'Ship Order'}
+                              textVariant="overline"
+                              style={{
+                                width: nonDesktop ? undefined : 169,
+                                height: 32,
+                              }}
+                              disabled={!v.allowFullShipment}
+                              size="sm"
+                              onClick={(e) => {
+                                if (shipOrder) {
+                                  shipOrder(
+                                    !v.allowFullShipment,
+                                    getSellerOrder(v.id),
+                                    v.groupName
+                                  );
+                                }
+                                e.stopPropagation();
+                              }}
+                              loading={isPlacingOrder && placeOrderId === v.id}
+                            />
+                          )}
+                        </>
                       )}
                     </div>
                   )}

@@ -53,6 +53,12 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const { title, desc } = getTitleAndDescription(shippingMethod);
 
+  useEffect(() => {
+    if (modalProps.isOpen) {
+      setDeliveryDate(null);
+    }
+  }, [modalProps.isOpen]);
+
   return (
     <Modal {...modalProps} style={{ borderRadius: '12px', width: '686px' }}>
       <Content>

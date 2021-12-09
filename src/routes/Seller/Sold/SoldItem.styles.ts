@@ -32,6 +32,10 @@ export const StyledInteraction = styled(Interaction)<{
     }
   }}
 
+  > .left-content {
+    flex: 1;
+  }
+
   .content {
     display: flex;
     flex: 1;
@@ -409,4 +413,19 @@ export const Tag = styled.div`
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+`;
+
+export const Spacer = styled.div`
+  width: 0px;
+  @media (min-width: 1300px) {
+    width: 25px;
+  }
+
+  @media (min-width: 1500px) {
+    width: 232px;
+  }
+
+  @media (min-width: 1600px) {
+    width: 332px;
+  }
 `;

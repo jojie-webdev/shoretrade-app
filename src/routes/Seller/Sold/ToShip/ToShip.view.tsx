@@ -465,7 +465,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   useEffect(() => {
     if (!isPlacingOrder && placeOrderId.length > 0) {
       setPlaceOrderId('');
-      updateShippingDateModal({ isOpen: false });
+      updateShippingDateModal({ isOpen: false, order: null });
     }
 
     if (lastOpenAccordion && !isPlacingOrder) {
