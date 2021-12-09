@@ -11,8 +11,7 @@ export type GetAllSellerOrder = GetAllSellerOrderType & {
 };
 
 export type GetAllSellerOrdersMeta = {
-  status?: 'PLACED' | 'TRANSIT' | 'DELIVERED';
-  pending?: boolean;
+  status?: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
   page?: string;
   limit?: number;
 };
@@ -20,6 +19,6 @@ export type GetAllSellerOrdersMeta = {
 // TODO: Update response value
 export type GetAllSellerOrdersPayload = GenericResponse<{
   token: string;
-  count: string;
+  count: { [key: string]: number };
   orders: GetAllSellerOrder[];
 }>;

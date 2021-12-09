@@ -9,7 +9,7 @@ import React, {
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Truck, Box, PaperPlane } from 'components/base/SVG';
+import { Truck, Box, PaperPlane, Exclamation } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
@@ -75,8 +75,8 @@ const generatePlaceOrderPayload = (config: {
           listing: lineItem.listing,
         }))
       : [],
-    shippingDate: order?.shippingDate
-      ? moment(order.shippingDate).toISOString()
+    dropOffDate: order?.dropOffDate
+      ? moment(order.dropOffDate).toISOString()
       : '',
   };
 };
@@ -534,9 +534,12 @@ const ToShip = (props: SoldGeneratedProps) => {
       />
       <ShippingDateModal
         isOpen={shippingDateModal.isOpen}
-        onConfirm={(shippingDate) => {
+        onConfirm={(deliveryDate) => {
           if (shippingDateModal.order) {
-            placeOrder({ ...shippingDateModal.order, shippingDate });
+            placeOrder({
+              ...shippingDateModal.order,
+              dropOffDate: deliveryDate,
+            });
           }
         }}
         onClickClose={() => {
@@ -597,15 +600,13 @@ const ToShip = (props: SoldGeneratedProps) => {
                       <Spacer />
                       <Spacer />
                       <div className="right-content">
-                        {/* <ItemDetail variant="caption" color="shade6">
+                        <ItemDetail variant="caption" color="shade6">
                           Sold Weight{' '}
                           <span style={{ color: theme.brand.alert }}>
                             <Exclamation width={16} height={16} />
-                            &nbsp;
-                            To be
-                            confirmed
+                            &nbsp; To be confirmed
                           </span>
-                        </ItemDetail> */}
+                        </ItemDetail>
 
                         <ItemDetail variant="caption" color="shade6">
                           Total Price (AUD){' '}
@@ -666,7 +667,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                     color="noshade"
                     style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
                   >
-                    {group.title}
+                    {moment(group.title).format('Do MMMM')}
                   </Typography>
                   <span className="notification notif-reg">
                     {group.orderTotal}

@@ -1,4 +1,5 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
+import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload,
@@ -6,10 +7,12 @@ import {
 import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'GET_SELLER_ORDERS_PENDING';
-const asyncAction = createAsyncAction<
-  GetAllSellerOrdersMeta,
-  GetAllSellerOrdersPayload
->(ns);
+
+const asyncAction = {
+  ...createAsyncAction<GetAllSellerOrdersMeta, GetAllSellerOrdersPayload>(ns),
+  // For Confirm Weight
+  UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
+};
 
 const getSellerOrdersPendingActions = {
   ...asyncAction,
@@ -21,10 +24,16 @@ const getSellerOrdersPendingActions = {
   } => ({
     type: asyncAction.REQUEST,
     meta: {
-      pending: true,
+      status: 'PENDING',
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },
+  }),
+
+  // For Confirm Weight
+  updateOptimistically: (meta: Partial<ConfirmWeightMeta>) => ({
+    type: asyncAction.UPDATE_OPTIMISTICALLY,
+    meta,
   }),
 };
 

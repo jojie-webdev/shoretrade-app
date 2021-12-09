@@ -93,6 +93,9 @@ const SoldView = (props: SoldGeneratedProps) => {
     loadingCurrentTab,
     filters,
     updateFilters,
+    toShipCount,
+    inTransitCount,
+    deliveredCount,
   } = props;
 
   const currentFilter = {
@@ -208,7 +211,7 @@ const SoldView = (props: SoldGeneratedProps) => {
               tabs={[TO_SHIP, IN_TRANSIT, DELIVERED]}
               selectedTab={currentTab}
               onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
-              customTabContent={[3, 10, 14]} // TODO: set actual text
+              customTabContent={[toShipCount, inTransitCount, deliveredCount]}
               tabStyle={{ padding: '4px 8px' }}
             />
           )}

@@ -22,7 +22,6 @@ const getSellerOrdersTransitActions = {
     type: asyncAction.REQUEST,
     meta: {
       status: 'TRANSIT',
-      pending: false,
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },

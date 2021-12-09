@@ -14,6 +14,7 @@ import {
   getSellerOrdersPendingActions,
 } from 'store/actions';
 import {
+  GetAllSellerOrdersCount,
   GetSellerOrdersToShipPending,
   GetSellerOrdersToShip,
   GetSellerOrdersInTransit,
@@ -47,20 +48,11 @@ const Sold = (): JSX.Element => {
   // MARK:- Selectors
   const token = useSelector((state: Store) => state.auth.token) || '';
 
-  const toShipCount =
-    useSelector(
-      (state: Store) => state.getSellerOrdersPlaced.data?.data.count
-    ) || '1';
-
-  const inTransitCount =
-    useSelector(
-      (state: Store) => state.getSellerOrdersTransit.data?.data.count
-    ) || '1';
-
-  const deliveredCount =
-    useSelector(
-      (state: Store) => state.getSellerOrdersDelivered.data?.data.count
-    ) || '1';
+  const {
+    placed: toShipCount,
+    transit: inTransitCount,
+    delivered: deliveredCount,
+  } = useSelector(GetAllSellerOrdersCount);
 
   const pendingGetOrdersPlaced =
     useSelector((state: Store) => state.getSellerOrdersPlaced.pending) || false;
@@ -219,7 +211,7 @@ const Sold = (): JSX.Element => {
   // MARK:- Effects
   useEffect(() => {
     if (currentTab === 'To Ship') {
-      getOrders.pending();
+      getOrders.pending({ page: '1' });
       getOrders.placed(toShipFilters);
     }
   }, [

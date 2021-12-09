@@ -50,7 +50,7 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
   const buyerApp = theme.appType === 'buyer';
 
   const [showError, setShowError] = useState(false);
-  const [shippingDate, setShippingDate] = useState<Date | null>(null);
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const { title, desc } = getTitleAndDescription(shippingMethod);
 
   return (
@@ -71,8 +71,8 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
         <div className="content-container">
           <DatePickerDropdown
             placeholder=""
-            date={shippingDate ? moment(shippingDate) : null}
-            onDateChange={(d) => setShippingDate(d?.toDate() || null)}
+            date={deliveryDate ? moment(deliveryDate) : null}
+            onDateChange={(d) => setDeliveryDate(d?.toDate() || null)}
             error={showError ? 'Please enter a shipping date' : undefined}
             showCalendarIcon={true}
             showArrowDownIcon={true}
@@ -84,10 +84,10 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
             text={'Confirm'}
             loading={loading}
             onClick={() => {
-              if (!shippingDate) {
+              if (!deliveryDate) {
                 setShowError(true);
               } else {
-                onConfirm(shippingDate.toISOString());
+                onConfirm(deliveryDate.toISOString());
               }
             }}
           />

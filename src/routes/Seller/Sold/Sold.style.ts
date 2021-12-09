@@ -28,7 +28,7 @@ export const Container = styled.div`
   }
 
   .tabs {
-    width: 330px;
+    width: 340px;
 
     .main-tab {
       padding: 4px 8px;

@@ -22,7 +22,6 @@ const getSellerOrdersDeliveredActions = {
     type: asyncAction.REQUEST,
     meta: {
       status: 'DELIVERED',
-      pending: false,
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },

@@ -47,7 +47,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
 
   const order = GetSellerOrder(orderId, 'PENDING');
   const selectedLineItem = order?.orderLineItem
-    ? order.orderLineItem.find((lineItem) => lineItem.id === lineItemId)
+    ? order.orderLineItem.find((lineItem: any) => lineItem.id === lineItemId)
     : undefined;
 
   const pending =
@@ -78,7 +78,9 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
     )} per ${formatUnitToPricePerUnit(measurementUnit)}`,
     name: selectedLineItem?.listing.typeName || '',
     tags:
-      selectedLineItem?.listing.specifications.map((s) => ({ label: s })) || [],
+      selectedLineItem?.listing.specifications.map((s: any) => ({
+        label: s,
+      })) || [],
     size: sizeToString(
       selectedLineItem?.listing.metricLabel || '',
       selectedLineItem?.listing.sizeFrom || '',
@@ -102,7 +104,7 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   useEffect(() => {
     if (selectedLineItem) {
       const boxes = selectedLineItem?.listingBoxes
-        ? selectedLineItem?.listingBoxes.map((b) => ({
+        ? selectedLineItem?.listingBoxes.map((b: any) => ({
             id: b.id,
             weight: b.weight,
             quantity: b.quantity,

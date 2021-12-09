@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
+
+export const GetAllSellerOrdersCount = (state: Store) =>
+  state.getSellerOrdersPlaced.data?.data.count || {};
 
 const getAllSellerOrdersPending = (state: Store) =>
   state.getSellerOrdersPending.data?.data.orders || [];
@@ -32,17 +36,16 @@ const GetAllSellerOrders = (
 export const GetSellerOrder = (
   id: string,
   status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED'
-) => {
+): GetSellerOrdersResponseItem | any => {
   const sellerOrders = GetAllSellerOrders(status);
   const allOrders = sellerOrders.reduce((arr, order) => {
     const { date, ...obj } = order;
     const objects = _.flattenDeep([Object.values(obj)]);
     return [...arr, ...objects];
   }, []);
-  const orders = Object.values(sellerOrders).filter(
-    (r) => typeof r === 'string'
+  return (
+    allOrders.find((o: GetSellerOrdersResponseItem) => o.orderId === id) || {}
   );
-  return orders.length > 0 ? orders[0].roadDeliveryOrders[0] : undefined;
 };
 
 export const GetSellerOrdersToShip = () => {

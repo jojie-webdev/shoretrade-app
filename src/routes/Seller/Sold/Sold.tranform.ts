@@ -55,6 +55,14 @@ const getShipmentMethodLabel = (deliveryMethod: string) => {
   }
 };
 
+const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
+  return data.orderLineItem.some((l) => l.listing.isAquafuture)
+    ? 'Aquafuture'
+    : data.orderLineItem.some((l) => l.listing.isPreAuctionSale)
+    ? 'Pre-Auction'
+    : 'Direct Sale';
+};
+
 export const orderItemToPendingToShipItem = (
   data: GetAllSellerOrder[]
 ): PendingToShipItemData[] => {
@@ -113,11 +121,7 @@ export const orderItemToPendingToShipItem = (
           totalWeight,
           totalPrice,
           orders: computeSubtotalWeight,
-          salesChannel: currentData[0].orderLineItem.some(
-            (l) => l.listing.isAquafuture
-          )
-            ? 'Aquafuture'
-            : 'Direct Sale',
+          salesChannel: getSalesChannel(currentData[0]),
         },
       ];
     },
@@ -176,9 +180,7 @@ export const orderItemToSoldItemData = ({
       buyerId: order.buyerId,
       buyerCompanyName: order.buyerCompanyName,
       buyerCompanyId: order.buyerCompanyId,
-      salesChannel: order.orderLineItem.some((l) => l.listing.isAquafuture)
-        ? 'Aquafuture'
-        : 'Direct Sale',
+      salesChannel: getSalesChannel(order),
     }));
   }
 

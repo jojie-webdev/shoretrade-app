@@ -75,9 +75,9 @@ export interface SoldGeneratedProps {
   pendingToShip: PendingToShipItemData[];
   inTransit: SoldItem[];
   delivered: SoldItem[];
-  toShipCount: string;
-  inTransitCount: string;
-  deliveredCount: string;
+  toShipCount: number;
+  inTransitCount: number;
+  deliveredCount: number;
   currentTab: TabOptions;
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;

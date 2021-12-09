@@ -4,7 +4,11 @@ import { AsyncAction } from 'types/Action';
 import { PlaceOrderMeta, PlaceOrderPayload } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 
-import { placeOrderActions, getSellerOrdersPlacedActions } from '../actions';
+import {
+  placeOrderActions,
+  getSellerOrdersPendingActions,
+  getSellerOrdersPlacedActions,
+} from '../actions';
 
 function* placeOrderRequest(
   action: AsyncAction<PlaceOrderMeta, PlaceOrderPayload>
@@ -27,13 +31,13 @@ function* placeOrderRequest(
 function* placeOrderSuccess(
   action: AsyncAction<PlaceOrderMeta, PlaceOrderPayload>
 ) {
-  yield put(
-    getSellerOrdersPlacedActions.updateShipOrderOptimisitically(
-      action.payload.orderId
-    )
-  );
-  // yield put(getSellerOrdersPlacedActions.request());
-  // yield put(push(SELLER_SOLD_ROUTES.LANDING));
+  yield put(getSellerOrdersPendingActions.request({ page: '1' }));
+  yield put(getSellerOrdersPlacedActions.request({ page: '1' }));
+  // yield put(
+  //   getSellerOrdersPlacedActions.updateShipOrderOptimisitically(
+  //     action.payload.orderId
+  //   )
+  // );
 }
 
 function* placeOrderWatcher() {

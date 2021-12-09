@@ -11,7 +11,7 @@ import { createAsyncReducer } from 'utils/Redux';
 
 import { getSellerOrdersPlacedActions } from '../actions';
 
-const updateToConfirmed = (
+export const updateToConfirmed = (
   pendingOrders: GetSellerOrdersResponseItem[],
   meta: Partial<ConfirmWeightMeta>
 ): GetSellerOrdersResponseItem[] => {

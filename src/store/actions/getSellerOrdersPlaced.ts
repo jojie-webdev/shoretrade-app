@@ -27,7 +27,6 @@ const getSellerOrdersPlacedActions = {
     type: asyncAction.REQUEST,
     meta: {
       status: 'PLACED',
-      pending: false,
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
     },
