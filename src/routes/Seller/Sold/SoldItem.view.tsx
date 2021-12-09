@@ -446,6 +446,34 @@ const SoldItem = (props: {
                             e.stopPropagation();
                           }}
                         />
+                        <Button
+                          text="Shipping Label"
+                          textColor="noshade"
+                          textVariant="caption"
+                          variant="outline"
+                          iconPosition="before"
+                          icon={
+                            <FileCheck
+                              fill={theme.brand.primary}
+                              width={12}
+                              height={12}
+                            />
+                          }
+                          onClick={(e) => {
+                            const orderRefNumbers = entry.map((v) => {
+                              return v.orderRefNumber;
+                            });
+                            window.open(
+                              `${API.URL}/${
+                                API.VERSION
+                              }/order/pdf-label/${orderRefNumbers.join()}?token=${
+                                props.token
+                              }&state=${toAddressState}&status=${props.status}`,
+                              '_blank'
+                            );
+                            e.stopPropagation();
+                          }}
+                        />
                       </div>
                       {salesChannel === 'Pre-Auction' && (
                         <>
