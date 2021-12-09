@@ -558,13 +558,13 @@ const ToShip = (props: SoldGeneratedProps) => {
 
         {pendingToShip.map((group) => {
           return (
-            <ItemRow key={group.deliveryMethod} id={group.deliveryMethod}>
+            <ItemRow key={group.groupName} id={group.groupName}>
               <Col>
                 <StyledInteraction
-                  pressed={isOpen.includes(group.deliveryMethod)}
+                  pressed={isOpen.includes(group.groupName || '')}
                   onClick={() =>
                     group.orderCount > 0 &&
-                    toggleAccordion(group.deliveryMethod)
+                    toggleAccordion(group.groupName || '')
                   }
                   type="accordion"
                   iconColor={theme.brand.primary}
@@ -611,17 +611,17 @@ const ToShip = (props: SoldGeneratedProps) => {
                 </StyledInteraction>
 
                 <CollapsibleContent
-                  isOpen={isOpen.includes(group.deliveryMethod)}
+                  isOpen={isOpen.includes(group.groupName || '')}
                   style={{
                     ...(addHorizontalRowMargin
                       ? { paddingLeft: 24, paddingRight: 24 }
                       : { paddingLeft: 8, paddingRight: 8 }),
-                    marginBottom: isOpen.includes(group.deliveryMethod)
+                    marginBottom: isOpen.includes(group.groupName || '')
                       ? '8px'
                       : undefined,
                     borderBottomLeftRadius: '8px',
                     borderBottomRightRadius: '8px',
-                    paddingBottom: isOpen.includes(group.deliveryMethod)
+                    paddingBottom: isOpen.includes(group.groupName || '')
                       ? '8px'
                       : undefined,
                   }}
