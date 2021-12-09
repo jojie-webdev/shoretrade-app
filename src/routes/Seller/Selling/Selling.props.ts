@@ -1,4 +1,4 @@
-import { GetListingsBySalesChannelResponseItem } from "types/store/GetListingsBySalesChannelState";
+import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBySalesChannelState';
 
 export interface SellingGeneratedProps {
   listings: GetListingsBySalesChannelResponseItem[];
@@ -8,11 +8,10 @@ export interface SellingGeneratedProps {
   showModal: boolean;
   search: string;
   onChangeSearch: (value: string) => void;
-  resetSearch: () => void;
   activeTab: string;
   onChangeTab: (tab: string) => void;
-  page: number,
-  onChangePage: (page: number) => void
+  page: number;
+  onChangePage: (page: number) => void;
 }
 
 export type ItemProp = {
@@ -53,4 +52,3 @@ export interface TabPageFilterProps {
   aquafuture: number;
   preAuction: number;
 }
-

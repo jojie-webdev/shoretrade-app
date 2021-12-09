@@ -36,7 +36,8 @@ export const StyledTouchable = styled(Touchable)`
 export const Tag = styled.div<{
   background?: string;
 }>`
-  background: ${({ background, theme }) => background ? background : theme.grey.shade8};
+  background: ${({ background, theme }) =>
+    background ? background : theme.grey.shade8};
   padding: 4px 8px;
   border-radius: 8px;
   display: flex;
@@ -160,7 +161,7 @@ export const SVGContainer = styled.div<{
 
 export const TabItem = styled.div`
   display: flex;
-  
+
   .tab-label {
     margin-right: 6px;
   }

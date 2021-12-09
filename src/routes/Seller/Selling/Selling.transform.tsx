@@ -10,12 +10,14 @@ import { ItemProp } from './Selling.props';
 export const listingToItem = (
   data: GetListingsBySalesChannelResponseItem
 ): Omit<ItemProp, 'onClick' | 'onRemove' | 'onClickEdit'> => {
-  const soldWeight = (data?.original_weight || 0) - (data?.remaining_weight || 0);
+  const soldWeight =
+    (data?.original_weight || 0) - (data?.remaining_weight || 0);
   const sales = soldWeight * Number(data?.price_per_kilo || 0);
 
   return {
     id: data.listing_id,
-    uri: data.images && data.images[0] ? data.images[0].url : data.default_photo,
+    uri:
+      data.images && data.images[0] ? data.images[0].url : data.default_photo,
     title: data.type_name,
     price: toPrice(data?.price_per_kilo || 0, false),
     tags: data?.specifications.map((specification) => ({
