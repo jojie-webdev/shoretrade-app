@@ -130,6 +130,13 @@ const SoldView = (props: SoldGeneratedProps) => {
   };
 
   const clearSearchValue = () => {
+    if (currentTab === TO_SHIP) {
+      updateFilterMap[PENDING]({
+        ...currentFilterMap[PENDING],
+        term: '',
+        page: '1',
+      });
+    }
     updateFilter({
       ...currentFilter,
       term: '',

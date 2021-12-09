@@ -234,6 +234,7 @@ export const PendingItem = (props: {
                         isPartial: !allowFullShipment,
                         order,
                       }),
+                      group: data.groupName || '',
                     });
                     e.stopPropagation();
                   }}
