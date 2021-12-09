@@ -49,6 +49,7 @@ export type PlaceOrderMeta = {
   sellerCompanyId: string;
   sellerId: string;
   toAddressId: string;
+  dropOffDate: string;
 };
 
 export type PlaceOrderPayload = GenericResponse & {

@@ -4,6 +4,8 @@ import { combineReducers } from 'redux';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
+import getSellerOrdersPending from './getSellerOrdersPending';
+import getAllSellerOrders from './getAllSellerOrders';
 import getListingById from './getListingById';
 import getListingsBySalesChannel from './getListingsBySalesChannel';
 import sendOrderRating from './sendOrderRating';
@@ -120,6 +122,8 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+  getSellerOrdersPending,
+  getAllSellerOrders,
   getListingById,
   getListingsBySalesChannel,
         getHistoricalListings,

@@ -11,9 +11,26 @@ export const TitleRow = styled.div`
   .title-col {
     display: flex;
     align-items: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 
     .svg-container {
       margin-right: 8px;
+    }
+
+    .notification {
+      border-radius: 8px;
+      padding: 4px 8px;
+      background: ${({ theme }) => theme.brand.alert};
+      font-size: 11px;
+      font-weight: 900;
+      margin-left: 8px;
+      color: ${({ theme }) => theme.grey.shade9};
+    }
+
+    .notif-reg {
+      background: ${({ theme }) => theme.grey.shade9};
+      color: ${({ theme }) => theme.grey.noshade};
     }
   }
 `;
@@ -22,10 +39,6 @@ export const Spacer = styled.div`
   width: 0px;
   @media (min-width: 1300px) {
     width: 32px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 132px;
   }
 
   @media (min-width: 1500px) {
@@ -37,9 +50,34 @@ export const Spacer = styled.div`
   }
 `;
 
-export const StyledInteraction = styled(Interaction)`
-  margin-bottom: 8px;
+export const StyledInteraction = styled(Interaction)<{
+  pressed?: boolean;
+  columnedRightContent?: boolean;
+}>`
+  margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
+
+  ${({ pressed }) => {
+    if (pressed) {
+      return `
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      `;
+    }
+  }}
+
+  @media ${BREAKPOINTS.sm} {
+    padding: 16px;
+
+    > .left-content {
+      padding-right: 0 !important;
+    }
+
+    > .right-content {
+      align-items: flex-start;
+    }
+  }
+
   .content {
     display: flex;
     flex: 1;
@@ -53,20 +91,36 @@ export const StyledInteraction = styled(Interaction)`
       justify-content: space-between;
       padding-right: 32px;
 
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
+      @media (max-width: 1440px) {
+        width: 200px;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        svg {
+          margin-right: 4px;
+        }
       }
 
       .order-count {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 90px;
-        height: 28px;
+        padding: 4px 8px;
         background-color: ${({ theme }) => theme.grey.shade8};
+        border-radius: 8px;
 
-        p {
-          font-size: 11px;
+        @media ${BREAKPOINTS.sm} {
+          margin-top: 8px;
+          margin-bottom: 8px;
         }
       }
     }
@@ -74,8 +128,12 @@ export const StyledInteraction = styled(Interaction)`
     .left-content-extended {
       width: 316px;
 
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
+      @media ${BREAKPOINTS.lg} {
+        width: 250px;
+      }
+
+      @media ${BREAKPOINTS.sm} {
+        width: 100%;
       }
     }
 
@@ -84,14 +142,23 @@ export const StyledInteraction = styled(Interaction)`
       align-items: center;
       justify-content: space-evenly;
       width: 210px;
-
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
-      }
+      flex-direction: ${({ columnedRightContent }) =>
+        columnedRightContent ? 'column' : 'row'};
 
       @media (max-width: 1237px) {
         justify-content: flex-start;
         margin-left: 8px;
+      }
+
+      @media ${BREAKPOINTS.genericTablet} {
+        width: 195px;
+      }
+
+      @media ${BREAKPOINTS['sm']} {
+        width: 240px;
+        margin-left: 0;
+        justify-content: space-between;
+        flex: 1;
       }
     }
 
@@ -100,19 +167,33 @@ export const StyledInteraction = styled(Interaction)`
       align-items: center;
       justify-content: flex-end;
       flex: 1;
-      margin-right: 16px;
 
-      .ship-order {
-        @media ${BREAKPOINTS['iPad']} {
-          margin-right: -8px;
+      button {
+        border-radius: 8px;
+
+        &:not(:first-of-type) {
+          margin-left: 8px;
+        }
+
+        @media ${BREAKPOINTS.sm} {
+          flex: 1;
+          margin-top: 8px;
         }
       }
 
-      @media ${BREAKPOINTS['xl']} {
-        margin-right: 8px;
-        justify-content: center;
-        > button {
-          margin-left: 190px;
+      .ship-order {
+        &:disabled {
+          background: ${(props) => props.theme.grey.shade3};
+          cursor: not-allowed;
+          opacity: 1;
+
+          p {
+            color: ${(props) => props.theme.grey.shade6};
+          }
+        }
+
+        @media ${BREAKPOINTS['iPad']} {
+          margin-right: -8px;
         }
       }
     }
@@ -121,7 +202,11 @@ export const StyledInteraction = styled(Interaction)`
       margin: 0 4px;
       display: flex;
 
-      p:not(:first-child) {
+      span {
+        color: ${(props) => props.theme.grey.shade6};
+      }
+
+      p:not(:first-of-type) {
         margin-left: 4px;
       }
     }
@@ -135,6 +220,17 @@ export const StyledInteraction = styled(Interaction)`
 export const InnerStyledInteraction = styled(StyledInteraction)`
   min-height: 60px;
   padding: 10px 24px;
+  background: ${(props) => props.theme.grey.shade10};
+  border: 1px solid ${(props) => props.theme.grey.shade8};
+
+  ${({ pressed }) => {
+    if (pressed) {
+      return `
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      `;
+    }
+  }}
 `;
 
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
@@ -143,6 +239,7 @@ export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
   transition: all 0.25s ease-in-out;
   transform-origin: top;
   transform: ${(props) => (props.isOpen ? 'scaleY(1)' : 'scaleY(0)')};
+  background: ${(props) => props.theme.grey.shade9};
 `;
 
 export const ItemRow = styled(Row)``;
@@ -155,15 +252,19 @@ export const CarouselContainer = styled.div`
 export const ItemCard = styled.div`
   min-height: 110px;
   background: ${(props) => props.theme.grey.shade9};
-  padding: 8px 12px;
+  padding: 20px;
+  margin-top: 8px;
   margin-bottom: 8px;
-  border-radius: 4px;
+  border: 1px solid ${(props) => props.theme.grey.shade8};
+  border-radius: 8px;
 
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  flex: 1;
+  > div {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex: 1;
+  }
 
   :hover {
     cursor: pointer;
@@ -179,7 +280,7 @@ export const ItemCard = styled.div`
     display: flex;
     flex-direction: row;
 
-    p:not(:first-child) {
+    p:not(:first-of-type) {
       margin-left: 4px;
     }
   }
@@ -265,9 +366,10 @@ export const ItemCard = styled.div`
     justify-content: flex-end;
     margin-right: 32px;
 
-    @media ${BREAKPOINTS['xl']} {
-      justify-content: center;
-      margin-left: 190px;
+    @media ${BREAKPOINTS.sm} {
+      > button {
+        flex: 1;
+      }
     }
   }
 `;
@@ -297,9 +399,12 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     margin-right: 16px;
   }
 
+  @media ${BREAKPOINTS.sm} {
+    margin-right: 0;
+  }
+
   span {
     color: ${(props) => props.theme.grey.noshade};
-    font-size: 14px;
     margin-left: ${(props) => (props.row ? '8px' : '0')};
     line-height: 24px;
   }

@@ -112,7 +112,8 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .Dropdown-placeholder{
     @media ${BREAKPOINTS['sm']} {
-      color: ${({ theme, dark }) => dark ? theme.grey.noshade : theme.grey.shade9};
+      color: ${({ theme, dark }) =>
+        dark ? theme.grey.noshade : theme.grey.shade9};
     }
   }
 `;

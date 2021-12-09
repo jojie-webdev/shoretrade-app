@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 
-interface PendingOrders extends GetSellerOrdersResponseItem {
+export interface PendingOrders extends GetSellerOrdersResponseItem {
   itemCount: number;
   totalWeight: number;
 }
@@ -11,18 +11,26 @@ interface PendingOrders extends GetSellerOrdersResponseItem {
 export type PendingToShipItemData = {
   buyerCompanyId: string;
   buyerCompanyName: string;
+  deliveryMethod: string;
+  deliveryMethodLabel: string;
   buyerId: string;
   orderCount: number;
   orders: PendingOrders[];
   totalPrice: number;
   totalWeight: number;
+  salesChannel?: string;
+  groupName?: string;
 };
 
 export type SoldItemData = {
+  groupName: string;
+  key: string;
   id: string;
   date: Date;
   type?: string;
   orderRefNumber: number;
+  totalWeight: number;
+  totalPrice: number;
   orders: {
     orderNumber: string;
     buyer: string;
@@ -33,14 +41,24 @@ export type SoldItemData = {
     tags: { label: string }[];
     size: string;
     fisherman: string;
+    totalPrice: string;
   }[];
   toAddressState: string;
+  allowPartialShipment: boolean;
+  allowFullShipment: boolean;
+  buyerId: string;
+  buyerCompanyName: string;
+  buyerCompanyId: string;
+  salesChannel: string;
 };
 
 export type SoldItem = {
-  title: Date;
+  title: string;
   data: { [p: string]: SoldItemData[] };
   orderTotal: number;
+  rawData: {
+    [index: string]: GetSellerOrdersResponseItem[];
+  };
 };
 
 export type RequestFilters = {
@@ -57,9 +75,9 @@ export interface SoldGeneratedProps {
   pendingToShip: PendingToShipItemData[];
   inTransit: SoldItem[];
   delivered: SoldItem[];
-  toShipCount: string;
-  inTransitCount: string;
-  deliveredCount: string;
+  toShipCount: number;
+  inTransitCount: number;
+  deliveredCount: number;
   currentTab: TabOptions;
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;

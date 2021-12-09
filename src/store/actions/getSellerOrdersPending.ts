@@ -6,18 +6,16 @@ import {
 } from 'types/store/GetAllSellerOrdersState';
 import { createAsyncAction } from 'utils/Redux';
 
-const ns = 'GET_SELLER_ORDERS_PLACED';
+const ns = 'GET_SELLER_ORDERS_PENDING';
+
 const asyncAction = {
   ...createAsyncAction<GetAllSellerOrdersMeta, GetAllSellerOrdersPayload>(ns),
   // For Confirm Weight
   UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
-  // For Ship Order
-  UPDATE_SHIP_ORDER_OPTIMISTICALLY: `${ns}/UPDATE_SHIP_ORDER_OPTIMISTICALLY`,
 };
 
-const getSellerOrdersPlacedActions = {
+const getSellerOrdersPendingActions = {
   ...asyncAction,
-
   request: (filter?: {
     page: string;
   }): {
@@ -26,16 +24,9 @@ const getSellerOrdersPlacedActions = {
   } => ({
     type: asyncAction.REQUEST,
     meta: {
-      status: 'PLACED',
+      status: 'PENDING',
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
-    },
-  }),
-
-  updateShipOrderOptimisitically: (orderId: string) => ({
-    type: asyncAction.UPDATE_SHIP_ORDER_OPTIMISTICALLY,
-    meta: {
-      orderId,
     },
   }),
 
@@ -46,4 +37,4 @@ const getSellerOrdersPlacedActions = {
   }),
 };
 
-export default getSellerOrdersPlacedActions;
+export default getSellerOrdersPendingActions;

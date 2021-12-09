@@ -10,7 +10,10 @@ import {
 } from 'types/store/ConfirmWeightState';
 import { Store } from 'types/store/Store';
 
-import { confirmWeightActions, getSellerOrdersPlacedActions } from '../actions';
+import {
+  confirmWeightActions,
+  getSellerOrdersPendingActions,
+} from '../actions';
 
 function* confirmWeightRequest(
   action: AsyncAction<ConfirmWeightMeta, ConfirmWeightPayload>
@@ -31,10 +34,11 @@ function* confirmWeightRequest(
 function* confirmWeightSuccess(
   action: AsyncAction<ConfirmWeightMeta, ConfirmWeightPayload>
 ) {
-  // yield put(getSellerOrdersPlacedActions.request());
-  yield put(
-    getSellerOrdersPlacedActions.updateOptimistically(action.payload.meta)
-  );
+  yield put(getSellerOrdersPendingActions.request({ page: '1' }));
+  // yield put(getSellerOrdersPlacedActions.request({ page: '1' }));
+  // yield put(
+  //   getSellerOrdersPendingActions.updateOptimistically(action.payload.meta)
+  // );
 }
 
 function* confirmWeightWatcher() {

@@ -8,22 +8,20 @@ import React, {
 } from 'react';
 
 import Button from 'components/base/Button';
-import {
-  InfoFilled,
-  Message,
-  CheckList,
-  CheckFilled,
-} from 'components/base/SVG';
+import Divider from 'components/base/Divider';
+import { Truck, Box, PaperPlane, Exclamation } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -33,6 +31,7 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
+import ShippingDateModal from '../ShippingDateModal';
 import { PendingToShipItemData, SoldGeneratedProps } from '../Sold.props';
 import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
@@ -49,6 +48,39 @@ import {
   Spacer,
 } from './ToShip.styles';
 
+const generatePlaceOrderPayload = (config: {
+  isPartial: boolean;
+  order: GetSellerOrdersResponseItem;
+}) => {
+  const { order } = config;
+  return {
+    orderId: order?.orderId || '',
+    buyerCompanyId: order?.buyerCompanyId || '',
+    sellerCompanyId: order?.sellerCompanyId || '',
+    buyerId: order?.buyerId || '',
+    sellerId: order?.sellerId || '',
+    deliveryMethod: order?.deliveryMethod || '',
+    deliveryOption: order?.deliveryOption || '',
+    fromAddressId: order?.fromAddress.id || '',
+    toAddressId: order?.toAddress.id || '',
+    isPartial: config.isPartial,
+    orderLineItem: order?.orderLineItem
+      ? order?.orderLineItem.map((lineItem) => ({
+          id: lineItem.id,
+          weight: lineItem.weight,
+          price: lineItem.price,
+          weightConfirmed: lineItem.weightConfirmed,
+          priceDelta: lineItem.priceDelta,
+          listingBoxes: lineItem.listingBoxes,
+          listing: lineItem.listing,
+        }))
+      : [],
+    dropOffDate: order?.dropOffDate
+      ? moment(order.dropOffDate).toISOString()
+      : '',
+  };
+};
+
 export const PendingItem = (props: {
   data: PendingToShipItemData;
   updateConfirmModal: React.Dispatch<
@@ -58,21 +90,37 @@ export const PendingItem = (props: {
       lineItemId: string;
     }>
   >;
+  updateShippingDateModal: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      order: PlaceOrderMeta;
+      group: string;
+    }>
+  >;
   isPlacingOrder: boolean;
   placeOrder: (data: PlaceOrderMeta) => void;
   placeOrderId: string;
   setPlaceOrderId: Dispatch<string>;
+  isSendingMessage: boolean;
+  updateMessageModal: any;
+  messageModal: any;
 }): any => {
   const theme = useTheme();
   const {
     data,
     updateConfirmModal,
+    updateShippingDateModal,
     setPlaceOrderId,
     placeOrderId,
     placeOrder,
     isPlacingOrder,
+    isSendingMessage,
+    updateMessageModal,
+    messageModal,
   } = props;
   const [isOpen, setIsOpen] = useState<string[]>([]);
+  const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
+  const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
 
   const toggleAccordion = (title: string) => {
     const isExisting = isOpen.some((v) => v === title);
@@ -94,33 +142,6 @@ export const PendingItem = (props: {
       (i) => i.weightConfirmed
     );
 
-    const generatePlaceOrderPayload = (config: { isPartial: boolean }) => {
-      setPlaceOrderId(order.orderId);
-      return {
-        orderId: order?.orderId || '',
-        buyerCompanyId: order?.buyerCompanyId || '',
-        sellerCompanyId: order?.sellerCompanyId || '',
-        buyerId: order?.buyerId || '',
-        sellerId: order?.sellerId || '',
-        deliveryMethod: order?.deliveryMethod || '',
-        deliveryOption: order?.deliveryOption || '',
-        fromAddressId: order?.fromAddress.id || '',
-        toAddressId: order?.toAddress.id || '',
-        isPartial: config.isPartial,
-        orderLineItem: order?.orderLineItem
-          ? order?.orderLineItem.map((lineItem) => ({
-              id: lineItem.id,
-              weight: lineItem.weight,
-              price: lineItem.price,
-              weightConfirmed: lineItem.weightConfirmed,
-              priceDelta: lineItem.priceDelta,
-              listingBoxes: lineItem.listingBoxes,
-              listing: lineItem.listing,
-            }))
-          : [],
-      };
-    };
-
     return (
       <Fragment key={order.orderId}>
         <InnerStyledInteraction
@@ -129,6 +150,7 @@ export const PendingItem = (props: {
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
+          columnedRightContent
         >
           <div className="content">
             <div className="left-content">
@@ -137,60 +159,84 @@ export const PendingItem = (props: {
                 color="noshade"
                 className="center-text"
               >
-                Order&nbsp;{order.orderRefNumber}
+                <span>Order</span>&nbsp;#{order.orderRefNumber}
               </Typography>
 
               <div className="order-count">
-                <Typography variant="label" color="noshade">
+                <Typography variant="overlineSmall" color="noshade">
                   {order.itemCount}&nbsp;
-                  {order.itemCount > 1 ? 'ITEMS' : 'ITEM'}
+                  {order.itemCount === 1 ? 'ITEM' : 'ITEMS'}
                 </Typography>
               </div>
             </div>
             <Spacer />
             <div className="right-content">
-              {!isOpen.includes(order.orderId) && (
-                <>
-                  <ItemDetail variant="caption" color="shade6">
-                    Sold Weight <span>{order.totalWeight.toFixed(2)} kg</span>
-                  </ItemDetail>
+              <ItemDetail variant="caption" color="shade6" row>
+                Buyer <span>{order.buyerCompanyName}</span>
+              </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(order.totalPrice)}</span>
-                  </ItemDetail>
-                </>
-              )}
+              <ItemDetail variant="caption" color="shade6" row>
+                Type <span>{data.salesChannel}</span>
+              </ItemDetail>
             </div>
             <div className="buttons">
-              {allowPartialShipment && !allowFullShipment && (
+              <Button
+                text={nonDesktop ? 'Message' : 'Message Buyer'}
+                textColor={'primary'}
+                textVariant="overline"
+                iconPosition="before"
+                variant="outline"
+                size="sm"
+                onClick={(e) => {
+                  updateMessageModal({
+                    isOpen: true,
+                    buyerId: order.buyerId,
+                    buyerName: order.buyerCompanyName,
+                  });
+                  e.stopPropagation();
+                }}
+                loading={
+                  messageModal.buyerId === order.buyerCompanyId &&
+                  isSendingMessage
+                }
+              />
+              {allowPartialShipment && !allowFullShipment ? (
                 <Button
                   text={'Ship Partial'}
-                  style={{ width: 169, height: 32 }}
+                  textVariant="overline"
+                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
                   size="sm"
                   onClick={(e) => {
-                    placeOrder(
-                      generatePlaceOrderPayload({
+                    setPlaceOrderId(order.orderId);
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
-                      })
-                    );
+                        order,
+                      }),
+                      group: data.groupName || '',
+                    });
                     e.stopPropagation();
                   }}
                   loading={isPlacingOrder && placeOrderId === order.orderId}
                 />
-              )}
-
-              {allowPartialShipment && allowFullShipment && (
+              ) : (
                 <Button
                   className="ship-order"
                   text={'Ship Order'}
-                  style={{ width: 169, height: 32 }}
+                  textVariant="overline"
+                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
+                  disabled={!allowFullShipment}
                   size="sm"
                   onClick={(e) => {
-                    placeOrder(
-                      generatePlaceOrderPayload({
+                    setPlaceOrderId(order.orderId);
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
                         isPartial: !allowFullShipment,
-                      })
-                    );
+                        order,
+                      }),
+                    });
                     e.stopPropagation();
                   }}
                   loading={isPlacingOrder && placeOrderId === order.orderId}
@@ -210,78 +256,105 @@ export const PendingItem = (props: {
             <CollapsibleContent
               key={lineItem.id}
               isOpen={isOpen.includes(order.orderId)}
+              style={{ background: theme.grey.shade9 }}
             >
               <ItemCard>
-                <div className="left-content">
-                  <ItemImage
-                    src={parseImageUrl(lineItem.listing.images[0])}
-                    alt=""
-                  />
+                <div>
+                  <div className="left-content">
+                    <ItemImage
+                      src={parseImageUrl(lineItem.listing.images[0])}
+                      alt=""
+                    />
 
-                  <div className="text-content">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="item-title"
-                    >
-                      {lineItem.listing.typeName}
-                    </Typography>
+                    <div className="text-content">
+                      <Typography
+                        variant="label"
+                        color="noshade"
+                        className="item-title"
+                      >
+                        {lineItem.listing.typeName}
+                      </Typography>
 
-                    <div className="tags-container">
-                      {lineItem.listing.specifications.map((tag) => (
-                        <Tag key={tag}>
-                          <Typography variant="caption" color="noshade">
-                            {tag}
-                          </Typography>
-                        </Tag>
-                      ))}
+                      <div className="tags-container">
+                        {lineItem.listing.specifications.map((tag) => (
+                          <Tag key={tag}>
+                            <Typography variant="caption" color="noshade">
+                              {tag}
+                            </Typography>
+                          </Tag>
+                        ))}
+                      </div>
+
+                      <ItemDetail variant="caption" color="shade5" row>
+                        Size:{' '}
+                        <span>
+                          {sizeToString(
+                            lineItem.listing.metricLabel,
+                            lineItem.listing.sizeFrom || '',
+                            lineItem.listing.sizeTo || ''
+                          )}
+                        </span>
+                      </ItemDetail>
                     </div>
+                  </div>
+                  <Spacer />
+                  <div
+                    className="right-content"
+                    style={{ flex: 1, width: 'auto' }}
+                  >
+                    <ItemDetail variant="caption" color="shade6">
+                      Total Weight{' '}
+                      <span>
+                        {lineItemTotalWeight.toFixed(2)}{' '}
+                        {formatMeasurementUnit(
+                          lineItem.listing.measurementUnit
+                        )}
+                      </span>
+                    </ItemDetail>
 
-                    <ItemDetail variant="caption" color="shade5" row>
-                      {sizeToString(
-                        lineItem.listing.metricLabel,
-                        lineItem.listing.sizeFrom || undefined,
-                        lineItem.listing.sizeTo || undefined
-                      )}
+                    <ItemDetail variant="caption" color="shade6">
+                      Price per kg <span>{toPrice(lineItem.price)}</span>
+                    </ItemDetail>
+
+                    <ItemDetail variant="caption" color="shade6">
+                      Price (AUD)
+                      <span>
+                        {toPrice(lineItem.price * lineItemTotalWeight)}
+                      </span>
                     </ItemDetail>
                   </div>
                 </div>
-                <Spacer />
-                <div className="right-content">
-                  <ItemDetail variant="caption" color="shade6">
-                    Sold Weight{' '}
-                    <span>
-                      {lineItemTotalWeight.toFixed(2)}{' '}
-                      {formatMeasurementUnit(lineItem.listing.measurementUnit)}
-                    </span>
-                  </ItemDetail>
 
-                  <ItemDetail variant="caption" color="shade6">
-                    Price (AUD) <span>{toPrice(lineItem.price)}</span>
-                  </ItemDetail>
-                </div>
+                {!isMobile && <Divider backgroundColor={theme.grey.shade8} />}
 
-                <div className="buttons">
+                <div className="buttons" style={{ marginRight: 0 }}>
                   {lineItem.weightConfirmed ? (
                     <Button
                       text={'Weight Confirmed'}
-                      icon={<CheckFilled fill="white" height={16} width={16} />}
+                      textVariant="overline"
                       iconPosition="before"
-                      style={{ width: 169, height: 32 }}
+                      textColor="success"
+                      style={{
+                        width: 169,
+                        height: 32,
+                        borderRadius: '8px',
+                        border: `2px solid ${theme.brand.success}`,
+                      }}
                       size="sm"
                       onClick={(e) => {
                         //DO NOTHING
                         e.stopPropagation();
                       }}
-                      variant="success"
+                      variant="outline"
                     />
                   ) : (
                     <Button
                       text={'Confirm Weight'}
-                      icon={<CheckList fill="white" height={15} width={20} />}
+                      textVariant="overline"
                       iconPosition="before"
-                      style={{ width: 169, height: 32 }}
+                      style={{ width: 169, height: 32, borderRadius: '8px' }}
                       size="sm"
+                      variant="outline"
                       onClick={(e) => {
                         if (!lineItem.weightConfirmed) {
                           updateConfirmModal({
@@ -354,6 +427,19 @@ const ToShip = (props: SoldGeneratedProps) => {
     }
   );
 
+  const [shippingDateModal, updateShippingDateModal] = useReducer(
+    createUpdateReducer<{
+      order: PlaceOrderMeta | null;
+      isOpen: boolean;
+      group: string | null;
+    }>(),
+    {
+      order: null,
+      isOpen: false,
+      group: null,
+    }
+  );
+
   const [placeOrderId, setPlaceOrderId] = useState('');
   const [isOpen, setIsOpen] = useState<string[]>([]);
   const [lastOpenAccordion, setLastOpenAccordion] = useState('');
@@ -379,6 +465,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   useEffect(() => {
     if (!isPlacingOrder && placeOrderId.length > 0) {
       setPlaceOrderId('');
+      updateShippingDateModal({ isOpen: false, order: null });
     }
 
     if (lastOpenAccordion && !isPlacingOrder) {
@@ -410,6 +497,18 @@ const ToShip = (props: SoldGeneratedProps) => {
     return a + c.orderTotal;
   }, 0);
 
+  const getDeliveryIcon = (deliveryMethod: string) => {
+    const iconProps = { width: 14, height: 14, fill: theme.grey.shade6 };
+    switch (deliveryMethod) {
+      case 'ROAD':
+        return <Truck {...iconProps} />;
+      case 'SELLER':
+        return <Box {...iconProps} />;
+      default:
+        return <PaperPlane {...iconProps} />;
+    }
+  };
+
   return (
     <>
       <ConfirmModal
@@ -433,189 +532,177 @@ const ToShip = (props: SoldGeneratedProps) => {
         }}
         loading={isSendingMessage}
       />
-      <TitleRow>
-        <Col md={12} className="title-col">
-          <div className="svg-container">
-            <InfoFilled fill={theme.brand.alert} height={18} width={18} />
-          </div>
-          <Typography color="alert">
-            Pending Confirmation - {pendingToShipTotal}
-          </Typography>
-        </Col>
-      </TitleRow>
-
-      {pendingToShip.map((group) => {
-        return (
-          <ItemRow key={group.buyerCompanyId} id={group.buyerCompanyId}>
-            <Col>
-              <StyledInteraction
-                pressed={isOpen.includes(group.buyerCompanyId)}
-                onClick={() => toggleAccordion(group.buyerCompanyId)}
-                type="accordion"
-                iconColor={theme.brand.primary}
-                fullWidth
-              >
-                <div className="content">
-                  <div className="left-content left-content-extended">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="center-text title-text"
-                    >
-                      {group.buyerCompanyName}
-                    </Typography>
-
-                    <div className="order-count">
-                      <Typography variant="label" color="noshade">
-                        {group.orderCount}&nbsp;
-                        {group.orderCount > 1 ? 'ORDERS' : 'ORDER'}
-                      </Typography>
-                    </div>
-                  </div>
-                  <Spacer />
-                  <div className="right-content">
-                    <ItemDetail variant="caption" color="shade6">
-                      Sold Weight <span>{group.totalWeight.toFixed(2)} kg</span>
-                    </ItemDetail>
-
-                    <ItemDetail variant="caption" color="shade6">
-                      Price (AUD) <span>{toPrice(group.totalPrice)}</span>
-                    </ItemDetail>
-                  </div>
-                  <div className="buttons">
-                    <Button
-                      text={'Message Buyer'}
-                      icon={
-                        messageModal.buyerId === group.buyerCompanyId &&
-                        isSendingMessage ? undefined : (
-                          <Message
-                            fill={theme.grey.shade9}
-                            height={16}
-                            width={16}
-                          />
-                        )
-                      }
-                      textColor={'shade9'}
-                      iconPosition="before"
-                      style={{
-                        width: 169,
-                        height: 32,
-                        backgroundColor: theme.grey.noshade,
-                      }}
-                      size="sm"
-                      onClick={(e) => {
-                        updateMessageModal({
-                          isOpen: true,
-                          buyerId: group.buyerId,
-                          buyerName: group.buyerCompanyName,
-                        });
-                        e.stopPropagation();
-                      }}
-                      loading={
-                        messageModal.buyerId === group.buyerCompanyId &&
-                        isSendingMessage
-                      }
-                    />
-                  </div>
-                </div>
-              </StyledInteraction>
-
-              <CollapsibleContent
-                isOpen={isOpen.includes(group.buyerCompanyId)}
-                style={
-                  addHorizontalRowMargin
-                    ? { marginLeft: 24, marginRight: 24 }
-                    : { marginLeft: 8, marginRight: 8 }
-                }
-              >
-                <PendingItem
-                  data={group}
-                  updateConfirmModal={updateConfirmModal}
-                  placeOrderId={placeOrderId}
-                  setPlaceOrderId={setPlaceOrderId}
-                  isPlacingOrder={isPlacingOrder}
-                  placeOrder={placeOrder}
-                />
-              </CollapsibleContent>
-            </Col>
-          </ItemRow>
-        );
-      })}
-
-      <TitleRow style={{ marginTop: 24 }}>
-        <Col md={12} className="title-col">
-          <Typography variant="overline" color="shade6">
-            TO SHIP - {toShipTotal}
-          </Typography>
-        </Col>
-      </TitleRow>
-
-      {sort(sortByDate, toShip).map((group) => {
-        const getDisplayDate = () => {
-          const targetDate = moment(group.title);
-
-          const currentDate = moment();
-          const dateDiff = Math.floor(
-            currentDate.diff(targetDate, 'days', true)
-          );
-          // 1 -> 1.99
-          if (dateDiff === 1) {
-            return 'Yesterday';
-            // 0 -> 0.99
-          } else if (dateDiff === 0) {
-            return 'Today';
-            // -1 -> -0
-          } else if (dateDiff === -1) {
-            return 'Tomorrow';
+      <ShippingDateModal
+        isOpen={shippingDateModal.isOpen}
+        onConfirm={(deliveryDate) => {
+          if (shippingDateModal.order) {
+            placeOrder({
+              ...shippingDateModal.order,
+              dropOffDate: deliveryDate,
+            });
           }
-
-          return targetDate.format('Do MMMM');
-        };
-
-        const calendarDateString = getDisplayDate();
-
-        return (
-          <ItemRow key={calendarDateString}>
-            <Col>
-              <StyledInteraction
-                pressed={isOpen.includes(calendarDateString)}
-                onClick={() => toggleAccordion(calendarDateString)}
-                type="accordion"
-                iconColor={theme.brand.primary}
+        }}
+        onClickClose={() => {
+          updateShippingDateModal({ isOpen: false });
+        }}
+        loading={isPlacingOrder}
+        shippingMethod={shippingDateModal.group || ''}
+      />
+      {filters.toShipFilters.page === '1' && (
+        <>
+          <TitleRow>
+            <Col md={12} className="title-col">
+              <Typography
+                color="noshade"
+                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
               >
-                <div className="content">
-                  <div className="left-content left-content-extended">
-                    <Typography
-                      variant="label"
-                      color="noshade"
-                      className="center-text title-text"
-                    >
-                      {calendarDateString}
-                    </Typography>
+                Pending
+              </Typography>
+              <span className="notification">{pendingToShipTotal}</span>
+            </Col>
+          </TitleRow>
 
-                    <div className="order-count">
-                      <Typography variant="label" color="noshade">
-                        {group.orderTotal}&nbsp;
-                        {group.orderTotal > 1 ? 'ORDERS' : 'ORDER'}
-                      </Typography>
+          {pendingToShip.map((group) => {
+            return (
+              <ItemRow key={group.deliveryMethod} id={group.deliveryMethod}>
+                <Col>
+                  <StyledInteraction
+                    pressed={isOpen.includes(group.deliveryMethod)}
+                    onClick={() =>
+                      group.orderCount > 0 &&
+                      toggleAccordion(group.deliveryMethod)
+                    }
+                    type="accordion"
+                    iconColor={theme.brand.primary}
+                    fullWidth
+                  >
+                    <div className="content">
+                      <div className="left-content left-content-extended">
+                        <div className="label">
+                          {getDeliveryIcon(group.deliveryMethod)}
+                          <Typography
+                            variant="label"
+                            color="shade6"
+                            className="center-text"
+                          >
+                            {group.deliveryMethodLabel}
+                          </Typography>
+                        </div>
+
+                        <div className="order-count">
+                          <Typography variant="overlineSmall" color="noshade">
+                            {group.orderCount}&nbsp;
+                            {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
+                          </Typography>
+                        </div>
+                      </div>
+                      <Spacer />
+                      <Spacer />
+                      <Spacer />
+                      <div className="right-content">
+                        <ItemDetail variant="caption" color="shade6">
+                          Sold Weight{' '}
+                          <span style={{ color: theme.brand.alert }}>
+                            <Exclamation width={16} height={16} />
+                            &nbsp; To be confirmed
+                          </span>
+                        </ItemDetail>
+
+                        <ItemDetail variant="caption" color="shade6">
+                          Total Price (AUD){' '}
+                          <span>{toPrice(group.totalPrice)}</span>
+                        </ItemDetail>
+                      </div>
                     </div>
-                  </div>
-                  <Spacer />
-                  <div className="right-content" />
-                  <div className="buttons" />
-                </div>
-              </StyledInteraction>
+                  </StyledInteraction>
 
-              <CollapsibleContent
-                isOpen={isOpen.includes(calendarDateString)}
+                  <CollapsibleContent
+                    isOpen={isOpen.includes(group.deliveryMethod)}
+                    style={{
+                      ...(addHorizontalRowMargin
+                        ? { paddingLeft: 24, paddingRight: 24 }
+                        : { paddingLeft: 8, paddingRight: 8 }),
+                      marginBottom: isOpen.includes(group.deliveryMethod)
+                        ? '8px'
+                        : undefined,
+                      borderBottomLeftRadius: '8px',
+                      borderBottomRightRadius: '8px',
+                      paddingBottom: isOpen.includes(group.deliveryMethod)
+                        ? '8px'
+                        : undefined,
+                    }}
+                  >
+                    <PendingItem
+                      data={group}
+                      updateShippingDateModal={updateShippingDateModal}
+                      updateConfirmModal={updateConfirmModal}
+                      placeOrderId={placeOrderId}
+                      setPlaceOrderId={setPlaceOrderId}
+                      isPlacingOrder={isPlacingOrder}
+                      placeOrder={placeOrder}
+                      isSendingMessage={isSendingMessage}
+                      updateMessageModal={updateMessageModal}
+                      messageModal={messageModal}
+                    />
+                  </CollapsibleContent>
+                </Col>
+              </ItemRow>
+            );
+          })}
+        </>
+      )}
+
+      {sort(sortByDate, toShip).map((group, idx) => {
+        return (
+          <ItemRow key={group.title}>
+            <Col>
+              <TitleRow
                 style={{
-                  marginLeft: 24,
-                  marginRight: 24,
-                  overflow: 'visible',
+                  marginTop:
+                    filters.toShipFilters.page !== '1' && idx === 0 ? 0 : 24,
                 }}
               >
-                <SoldItem data={group.data} token={token} status="PLACED" />
-              </CollapsibleContent>
+                <Col md={12} className="title-col">
+                  <Typography
+                    color="noshade"
+                    style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                  >
+                    {moment(group.title).format('Do MMMM')}
+                  </Typography>
+                  <span className="notification notif-reg">
+                    {group.orderTotal}
+                  </span>
+                </Col>
+              </TitleRow>
+
+              <SoldItem
+                data={group.data}
+                rawData={group.rawData}
+                token={token}
+                status="PLACED"
+                updateMessageModal={updateMessageModal}
+                messageModal={messageModal}
+                isSendingMessage={isSendingMessage}
+                shipOrder={(
+                  isPartial: boolean,
+                  order?: GetSellerOrdersResponseItem,
+                  group?: string
+                ) => {
+                  if (order) {
+                    setPlaceOrderId(order.orderId);
+                    updateShippingDateModal({
+                      isOpen: true,
+                      order: generatePlaceOrderPayload({
+                        isPartial,
+                        order,
+                      }),
+                      group,
+                    });
+                  }
+                }}
+                isPlacingOrder={isPlacingOrder}
+                placeOrderId={placeOrderId}
+              />
             </Col>
           </ItemRow>
         );

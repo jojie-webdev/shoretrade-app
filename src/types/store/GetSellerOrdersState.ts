@@ -101,6 +101,7 @@ export type GetSellerOrdersResponseItem = {
         images: string[]; // image urls
         endDate: string; // iso date string
         isAquafuture: boolean;
+        isPreAuctionSale: boolean;
         allowedWeightAdjustment: number;
         measurementUnit: string;
         unitKgConversion: number;
@@ -109,6 +110,7 @@ export type GetSellerOrdersResponseItem = {
       };
     }
   ];
+  dropOffDate: string;
 };
 
 export type GetSellerOrdersPayload = GenericResponse<{

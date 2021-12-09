@@ -129,6 +129,10 @@ import {
   GetAllListingsPayload,
 } from './GetAllListingsState';
 import {
+  GetAllSellerOrdersMeta,
+  GetAllSellerOrdersPayload,
+} from './GetAllSellerOrdersState';
+import {
   GetBankDetailsMeta,
   GetBankDetailsPayload,
 } from './GetBankDetailsState';
@@ -162,17 +166,17 @@ import {
   GetListingBoxesMeta,
   GetListingBoxesPayload,
 } from './GetListingBoxesState';
-import { 
-  GetListingByIdMeta, 
-  GetListingByIdPayload 
+import {
+  GetListingByIdMeta,
+  GetListingByIdPayload,
 } from './GetListingByIdState';
 import {
   GetListingFormDataMeta,
   GetListingFormDataPayload,
 } from './GetListingFormDataState';
-import { 
+import {
   GetListingsBySalesChannelMeta,
-  GetListingsBySalesChannelPayload  
+  GetListingsBySalesChannelPayload,
 } from './GetListingsBySalesChannelState';
 import {
   GetListingsByTypeMeta,
@@ -217,10 +221,6 @@ import {
   GetSellerDashboardTopCategoriesMeta,
   GetSellerDashboardTopCategoriesPayload,
 } from './GetSellerDashboardTopCategoriesState';
-import {
-  GetSellerOrdersMeta,
-  GetSellerOrdersPayload,
-} from './GetSellerOrdersState';
 import {
   GetShippingQuoteMeta,
   GetShippingQuotePayload,
@@ -303,6 +303,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getAllSellerOrders: AsyncState<
+    GetAllSellerOrdersMeta,
+    GetAllSellerOrdersPayload
+  >;
   getHistoricalListings: AsyncState<
     GetHistoricalListingsMeta,
     GetHistoricalListingsPayload
@@ -380,17 +384,21 @@ export interface Store {
   >;
   confirmWeight: AsyncState<ConfirmWeightMeta, ConfirmWeightPayload>;
   placeOrder: AsyncState<PlaceOrderMeta, PlaceOrderPayload>;
+  getSellerOrdersPending: AsyncState<
+    GetAllSellerOrdersMeta,
+    GetAllSellerOrdersPayload
+  >;
   getSellerOrdersPlaced: AsyncState<
-    GetSellerOrdersMeta,
-    GetSellerOrdersPayload
+    GetAllSellerOrdersMeta,
+    GetAllSellerOrdersPayload
   >;
   getSellerOrdersTransit: AsyncState<
-    GetSellerOrdersMeta,
-    GetSellerOrdersPayload
+    GetAllSellerOrdersMeta,
+    GetAllSellerOrdersPayload
   >;
   getSellerOrdersDelivered: AsyncState<
-    GetSellerOrdersMeta,
-    GetSellerOrdersPayload
+    GetAllSellerOrdersMeta,
+    GetAllSellerOrdersPayload
   >;
   getCustomFormData: AsyncState<
     GetCustomFormDataMeta,
