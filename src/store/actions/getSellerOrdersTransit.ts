@@ -15,6 +15,7 @@ const getSellerOrdersTransitActions = {
   ...asyncAction,
   request: (filter?: {
     page: string;
+    term?: string;
   }): {
     type: string;
     meta: GetAllSellerOrdersMeta;
@@ -24,6 +25,7 @@ const getSellerOrdersTransitActions = {
       status: 'TRANSIT',
       limit: DEFAULT_PAGE_LIMIT,
       page: filter?.page,
+      term: filter?.term,
     },
   }),
 };

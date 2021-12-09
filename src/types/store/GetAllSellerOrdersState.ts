@@ -14,6 +14,7 @@ export type GetAllSellerOrdersMeta = {
   status?: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
   page?: string;
   limit?: number;
+  term?: string;
 };
 
 // TODO: Update response value

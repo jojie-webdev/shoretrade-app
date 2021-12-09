@@ -72,6 +72,16 @@ const Sold = (): JSX.Element => {
     useSelector((state: Store) => state.placeOrder.pending) || false;
 
   // MARK:- Reducers
+  const [pendingFilters, updatePendingFilters] = useReducer(
+    createUpdateReducer<RequestFilters>(),
+    {
+      page: '1',
+      term: '',
+      dateFrom: null,
+      dateTo: null,
+    }
+  );
+
   const [toShipFilters, updateToShipFilters] = useReducer(
     createUpdateReducer<RequestFilters>(),
     {
@@ -118,19 +128,19 @@ const Sold = (): JSX.Element => {
     }
   };
 
-  const getOrdersPending = (filter?: { page: string }) => {
+  const getOrdersPending = (filter?: { page: string; term: string }) => {
     dispatch(getSellerOrdersPendingActions.request(filter));
   };
 
-  const getOrdersPlaced = (filter?: { page: string }) => {
+  const getOrdersPlaced = (filter?: { page: string; term: string }) => {
     dispatch(getSellerOrdersPlacedActions.request(filter));
   };
 
-  const getOrdersTransit = (filter?: { page: string }) => {
+  const getOrdersTransit = (filter?: { page: string; term: string }) => {
     dispatch(getSellerOrdersTransitActions.request(filter));
   };
 
-  const getOrdersDelivered = (filter?: { page: string }) => {
+  const getOrdersDelivered = (filter?: { page: string; term: string }) => {
     dispatch(getSellerOrdersDeliveredActions.request(filter));
   };
 
@@ -189,12 +199,14 @@ const Sold = (): JSX.Element => {
   const delivered = rawDataToSoldItems(GetSellerOrdersDelivered());
 
   const filters = {
+    pendingFilters,
     toShipFilters,
     inTransitFilters,
     deliveredFilters,
   };
 
   const updateFilters = {
+    updatePendingFilters,
     updateToShipFilters,
     updateInTransitFilters,
     updateDeliveredFilters,
@@ -211,7 +223,7 @@ const Sold = (): JSX.Element => {
   // MARK:- Effects
   useEffect(() => {
     if (currentTab === 'To Ship') {
-      getOrders.pending({ page: '1' });
+      getOrders.pending(pendingFilters);
       getOrders.placed(toShipFilters);
     }
     // eslint-disable-next-line
