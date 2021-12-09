@@ -64,10 +64,10 @@ const SoldItem = (props: {
     updateMessageModal,
     messageModal,
     isSendingMessage,
-    shipOrder,
-    isPlacingOrder,
-    placeOrderId,
-    rawData,
+    // shipOrder,
+    // isPlacingOrder,
+    // placeOrderId,
+    // rawData,
   } = props;
   const history = useHistory();
   const theme = useTheme();
@@ -103,10 +103,10 @@ const SoldItem = (props: {
       id,
     } = entry[0];
 
-    const getSellerOrder = (id: string) => {
-      const orderData = Object.values(rawData)[idx];
-      return orderData.find((o) => o.orderId === id);
-    };
+    // const getSellerOrder = (id: string) => {
+    //   const orderData = Object.values(rawData)[idx];
+    //   return orderData.find((o) => o.orderId === id);
+    // };
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (

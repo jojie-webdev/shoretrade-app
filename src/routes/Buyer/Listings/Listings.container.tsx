@@ -8,7 +8,7 @@ import React, {
 
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { SALES_CHANNELS } from 'consts/salesChannels';
+import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -59,6 +59,7 @@ export default function ListingContainer() {
     directSale: 0,
     aquafuture: 0,
     preAuction: 0,
+    auction: 0,
   });
 
   // MARK:- Reducers
@@ -69,6 +70,7 @@ export default function ListingContainer() {
       directSale: 1,
       aquafuture: 1,
       preAuction: 1,
+      auction: 1,
     }
   );
 
@@ -79,16 +81,18 @@ export default function ListingContainer() {
       directSale: '',
       aquafuture: '',
       preAuction: '',
+      auction: '',
     }
   );
 
   const [tabSortField, updateTabSortField] = useReducer(
     createUpdateReducer<TabSortProps>(),
     {
-      allListing: 'created_at',
-      directSale: 'created_at',
-      aquafuture: 'created_at',
-      preAuction: 'created_at',
+      allListing: '',
+      directSale: '',
+      aquafuture: '',
+      preAuction: '',
+      auction: '',
     }
   );
 
@@ -99,6 +103,7 @@ export default function ListingContainer() {
       directSale: 'ASC',
       aquafuture: 'ASC',
       preAuction: 'ASC',
+      auction: 'ASC',
     }
   );
 
@@ -160,8 +165,8 @@ export default function ListingContainer() {
     dispatch(
       getAllBuyerListingsActions.request({
         salesChannel:
-          SALES_CHANNELS.find((channel) => channel.value === activeTab)
-            ?.constant || SALES_CHANNELS[0].constant,
+          SALES_CHANNELS_BUYER.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS_BUYER[0].constant,
         sortField: tabSortField[activeTab as keyof TabSortProps],
         searchTerm: search,
         page,
@@ -191,6 +196,7 @@ export default function ListingContainer() {
         directSale: Number(listingRequestData.counter.direct_listing || 0),
         aquafuture: Number(listingRequestData.counter.aquafuture || 0),
         preAuction: Number(listingRequestData.counter.pre_auction || 0),
+        auction: Number(listingRequestData.counter.auction || 0),
       });
       setIsPending(false);
     }
@@ -202,8 +208,8 @@ export default function ListingContainer() {
     dispatch(
       getAllBuyerListingsActions.requestCsv({
         salesChannel:
-          SALES_CHANNELS.find((channel) => channel.value === activeTab)
-            ?.constant || SALES_CHANNELS[0].constant,
+          SALES_CHANNELS_BUYER.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS_BUYER[0].constant,
         sortField: tabSortField[activeTab as keyof TabSortProps],
         searchTerm: search,
         csv: true,

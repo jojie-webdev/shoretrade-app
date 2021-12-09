@@ -13,7 +13,7 @@ import Loading from 'components/module/Loading';
 import Pagination from 'components/module/Pagination';
 import SearchComponent from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { SALES_CHANNELS } from 'consts/salesChannels';
+import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
 import { useMediaQuery } from 'react-responsive';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
@@ -176,8 +176,8 @@ export default function ListingView(props: ListingViewProps) {
         selectedTab={activeTab}
         onClickTab={(tab) => onChangeTab(tab)}
         justify="start"
-        tabValues={SALES_CHANNELS.map((channel) => channel.value)}
-        tabElements={SALES_CHANNELS.map((channel) => (
+        tabValues={SALES_CHANNELS_BUYER.map((channel) => channel.value)}
+        tabElements={SALES_CHANNELS_BUYER.map((channel) => (
           <TabItem key={channel.value}>
             <div className="tab-label">{channel.label}</div>
             <Tag background={theme.grey.shade9}>
@@ -200,7 +200,7 @@ export default function ListingView(props: ListingViewProps) {
       {TabComponent}
       <FlexContainer
         style={{
-          width: isSmallDesktop || isTablet ? '100%' : 'fit-content',
+          width: isSmallDesktop || isTablet ? '100%' : '35%',
           marginTop: isSmallDesktop || isTablet ? '16px' : '0',
         }}
       >
@@ -331,7 +331,7 @@ export default function ListingView(props: ListingViewProps) {
           marginTop="0"
           height="40px"
           padding="10px 12px"
-          options={[...SALES_CHANNELS].map((channel) => ({
+          options={[...SALES_CHANNELS_BUYER].map((channel) => ({
             value: channel.value,
             label: `${channel.label} Listings`,
           }))}

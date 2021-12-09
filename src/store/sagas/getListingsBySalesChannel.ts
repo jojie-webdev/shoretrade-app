@@ -38,6 +38,7 @@ function* getListingsBySalesChannelRequest(
 
 function* getListingsBySalesChannelPatchRemaining(action: Action<any>) {
   const state: Store = yield select();
+  const previousRequest = state.getListingsBySalesChannel.request;
   const getListingsBySalesChannelState = state.getListingsBySalesChannel.data;
   const realtimeRemaining: {
     id: string;
@@ -59,7 +60,7 @@ function* getListingsBySalesChannelPatchRemaining(action: Action<any>) {
             if (i.listing_id === realtimeRemaining.id) {
               return {
                 ...i,
-                remaining: realtimeRemaining.remaining,
+                remaining_weight: realtimeRemaining.remaining,
               };
             }
             return i;
@@ -75,9 +76,73 @@ function* getListingsBySalesChannelPatchRemaining(action: Action<any>) {
           modifiedListings,
           getListingsBySalesChannelState
         );
+
         if (getListingsBySalesChannelState) {
           yield put(getListingsBySalesChannelActions.patch(modifiedAllListing));
         }
+      } else if (previousRequest) {
+        yield put(getListingsBySalesChannelActions.request(previousRequest));
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getListingsBySalesChannelPatchUpdate(action: Action<any>) {
+  const state: Store = yield select();
+  const previousRequest = state.getListingsBySalesChannel.request;
+  const getListingsBySalesChannelState = state.getListingsBySalesChannel.data;
+  const realtimeData: {
+    id: string;
+    remaining: number;
+    price?: string;
+    minimumOrder?: string;
+    boxes?: {
+      count: number;
+      id: string;
+      quantity: number;
+      weight: number;
+    }[];
+  } = pathOr({ id: '', remaining: 0 }, ['payload'], action);
+  let idx = -1;
+
+  try {
+    if (getListingsBySalesChannelState && getListingsBySalesChannelState.data) {
+      const listingsLens = lensPath(['data', 'listings']);
+      const listingsData: GetListingsBySalesChannelResponseItem[] = view(
+        listingsLens,
+        getListingsBySalesChannelState
+      );
+      let modifiedListings: GetListingsBySalesChannelResponseItem[] = [];
+      idx = listingsData.findIndex((i) => findProduct(i, realtimeData.id));
+      if (idx !== -1) {
+        if (realtimeData.remaining !== 0) {
+          modifiedListings = listingsData.map((i) => {
+            if (i.listing_id === realtimeData.id) {
+              return {
+                ...i,
+                price_per_kilo: realtimeData.price || i.price_per_kilo,
+                remaining_weight: realtimeData.remaining,
+              };
+            }
+            return i;
+          });
+        } else if (realtimeData.remaining === 0) {
+          modifiedListings = listingsData.filter(
+            (i) => i.listing_id !== realtimeData.id
+          );
+        }
+
+        const modifiedAllListing: GetListingsBySalesChannelPayload = set(
+          listingsLens,
+          modifiedListings,
+          getListingsBySalesChannelState
+        );
+
+        yield put(getListingsBySalesChannelActions.patch(modifiedAllListing));
+      } else if (previousRequest) {
+        yield put(getListingsBySalesChannelActions.request(previousRequest));
       }
     }
   } catch (err) {
@@ -93,6 +158,10 @@ function* getListingsBySalesChannelWatcher() {
   yield takeLatest(
     socketActions.UPDATE_REMAINING_BOXES,
     getListingsBySalesChannelPatchRemaining
+  );
+  yield takeLatest(
+    socketActions.UPDATE_LISTING,
+    getListingsBySalesChannelPatchUpdate
   );
 }
 

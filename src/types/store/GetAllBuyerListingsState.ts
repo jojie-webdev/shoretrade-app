@@ -48,6 +48,7 @@ export type CounterResponseItem = {
   direct_listing: string;
   aquafuture: string;
   pre_auction: string;
+  auction: string;
 };
 
 export type GetAllBuyerListingsPayload = GenericResponse<{

@@ -49,6 +49,7 @@ export interface CounterProps {
   directSale: number;
   aquafuture: number;
   preAuction: number;
+  auction: number;
 }
 
 export interface SearchFilterProps {
@@ -56,6 +57,7 @@ export interface SearchFilterProps {
   directSale: string;
   aquafuture: string;
   preAuction: string;
+  auction: string;
 }
 
 export interface TabPageFilterProps {
@@ -63,6 +65,7 @@ export interface TabPageFilterProps {
   directSale: number;
   aquafuture: number;
   preAuction: number;
+  auction: number;
 }
 
 export interface TabSortProps {
@@ -70,4 +73,5 @@ export interface TabSortProps {
   directSale: string;
   aquafuture: string;
   preAuction: string;
+  auction: string;
 }

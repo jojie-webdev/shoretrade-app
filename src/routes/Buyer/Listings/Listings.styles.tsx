@@ -32,7 +32,7 @@ export const FlexContainer = styled.section`
 `;
 
 export const SearchContainer = styled.div`
-  // min-width: 300px;
+  width: 30%;
   flex-grow: 1;
   @media ${BREAKPOINTS['sm']} {
     order: 1;
@@ -140,8 +140,7 @@ export const TableSettingsContainer = styled.button`
   }
 `;
 
-export const MobileTable = styled.div`
-`;
+export const MobileTable = styled.div``;
 
 export const Preloader = styled.div`
   padding: 12px 0;
@@ -192,7 +191,7 @@ export const MobileResults = styled.div`
 
 export const TabItem = styled.div`
   display: flex;
-  
+
   .tab-label {
     margin-right: 6px;
   }
