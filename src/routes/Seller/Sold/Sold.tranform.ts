@@ -136,54 +136,64 @@ export const orderItemToSoldItemData = ({
   //@ts-ignore
   const newObj: { [p: string]: ToShipItemData[] } = { ...data };
   for (const [key, value] of Object.entries(data)) {
-    newObj[key] = value.map((order: GetSellerOrdersResponseItem) => ({
-      groupName: key,
-      key: getShipmentMethodLabel(key),
-      id: order.orderId,
-      date: moment(order.orderDate).toDate(),
-      type:
-        order.deliveryOption === 'COLLECT'
-          ? 'pickup'
-          : order.deliveryMethod.toLowerCase(),
-      orderRefNumber: order.orderRefNumber,
-      totalPrice: `${toPrice(
-        order.orderLineItem.reduce((t, lineItem) => t + lineItem.weight, 0)
-      )}`,
-      totalWeight: `${order.orderLineItem
-        .reduce((t, lineItem) => t + lineItem.price, 0)
-        .toFixed(2)} ${formatMeasurementUnit(
-        order.orderLineItem[0]?.listing.measurementUnit
-      )}`,
-      orders: order.orderLineItem.map((lineItem) => ({
-        id: lineItem.id,
-        weightConfirmed: lineItem.weightConfirmed,
-        orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-        buyer: order.buyerCompanyName,
-        fisherman: lineItem.listing.fishermanFirstName
-          ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
-          : 'N/A',
-        uri: lineItem.listing.images[0],
-        price: `${toPrice(lineItem.price)}`,
-        weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
-          lineItem.listing.measurementUnit
+    newObj[key] = value.map((order: GetSellerOrdersResponseItem) => {
+      const referenceMeasurementUnit =
+        order.orderLineItem[0].listing.measurementUnit;
+      const groupMeasurementUnit = order.orderLineItem.every(
+        (a) => a.listing.measurementUnit === referenceMeasurementUnit
+      )
+        ? referenceMeasurementUnit
+        : 'KG'; // assume KG for mixed units
+      return {
+        groupName: key,
+        key: getShipmentMethodLabel(key),
+        id: order.orderId,
+        date: moment(order.orderDate).toDate(),
+        type:
+          order.deliveryOption === 'COLLECT'
+            ? 'pickup'
+            : order.deliveryMethod.toLowerCase(),
+        orderRefNumber: order.orderRefNumber,
+        totalPrice: `${toPrice(
+          order.orderLineItem.reduce((t, lineItem) => t + lineItem.price, 0)
         )}`,
-        totalPrice: `${toPrice(lineItem.price * lineItem.weight)}`,
-        name: lineItem.listing.typeName,
-        tags: lineItem.listing.specifications.map((s) => ({ label: s })),
-        size: sizeToString(
-          lineItem.listing.metricLabel,
-          lineItem.listing.sizeFrom || '',
-          lineItem.listing.sizeTo || ''
+        totalWeight: `${order.orderLineItem
+          .reduce((t, lineItem) => t + lineItem.weight, 0)
+          .toFixed(2)} ${formatMeasurementUnit(groupMeasurementUnit)}`,
+        orders: order.orderLineItem.map((lineItem) => ({
+          id: lineItem.id,
+          weightConfirmed: lineItem.weightConfirmed,
+          unit: lineItem.listing.measurementUnit,
+          orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
+          buyer: order.buyerCompanyName,
+          fisherman: lineItem.listing.fishermanFirstName
+            ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+            : 'N/A',
+          uri: lineItem.listing.images[0],
+          price: `${toPrice(lineItem.listing.pricePerKilo)}`,
+          weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
+            lineItem.listing.measurementUnit
+          )}`,
+          totalPrice: `${toPrice(lineItem.price)}`,
+          name: lineItem.listing.typeName,
+          tags: lineItem.listing.specifications.map((s) => ({ label: s })),
+          size: sizeToString(
+            lineItem.listing.metricLabel,
+            lineItem.listing.sizeFrom || '',
+            lineItem.listing.sizeTo || ''
+          ),
+        })),
+        toAddressState: order.toAddress.state,
+        allowPartialShipment: order.orderLineItem.some(
+          (i) => i.weightConfirmed
         ),
-      })),
-      toAddressState: order.toAddress.state,
-      allowPartialShipment: order.orderLineItem.some((i) => i.weightConfirmed),
-      allowFullShipment: order.orderLineItem.every((i) => i.weightConfirmed),
-      buyerId: order.buyerId,
-      buyerCompanyName: order.buyerCompanyName,
-      buyerCompanyId: order.buyerCompanyId,
-      salesChannel: getSalesChannel(order),
-    }));
+        allowFullShipment: order.orderLineItem.every((i) => i.weightConfirmed),
+        buyerId: order.buyerId,
+        buyerCompanyName: order.buyerCompanyName,
+        buyerCompanyId: order.buyerCompanyId,
+        salesChannel: getSalesChannel(order),
+      };
+    });
   }
 
   return newObj;

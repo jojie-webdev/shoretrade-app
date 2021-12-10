@@ -33,6 +33,7 @@ export type SoldItemData = {
   totalPrice: number;
   orders: {
     id: string;
+    unit: string;
     weightConfirmed: boolean;
     orderNumber: string;
     buyer: string;

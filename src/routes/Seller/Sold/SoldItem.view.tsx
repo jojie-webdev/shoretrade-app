@@ -9,6 +9,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
@@ -344,7 +345,8 @@ const SoldItem = (props: {
                           </div>
                           <div className="data-content">
                             <ItemDetail variant="caption" color="shade6">
-                              Price per kg <span>{order.price}</span>
+                              Price per {formatUnitToPricePerUnit(order.unit)}{' '}
+                              <span>{order.price}</span>
                             </ItemDetail>
                           </div>
                           <div className="data-content">

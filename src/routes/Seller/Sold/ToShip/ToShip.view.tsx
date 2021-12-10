@@ -25,7 +25,10 @@ import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { sizeToString } from 'utils/Listing';
-import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import {
+  formatMeasurementUnit,
+  formatUnitToPricePerUnit,
+} from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -245,12 +248,6 @@ export const PendingItem = (props: {
           </div>
         </InnerStyledInteraction>
         {order.orderLineItem.map((lineItem) => {
-          const lineItemTotalWeight = lineItem.listingBoxes.reduce(
-            (accum: number, current) => {
-              return accum + current.weight * current.quantity;
-            },
-            0
-          );
           return (
             <CollapsibleContent
               key={lineItem.id}
@@ -304,7 +301,7 @@ export const PendingItem = (props: {
                     <ItemDetail variant="caption" color="shade6">
                       Total Weight{' '}
                       <span>
-                        {lineItemTotalWeight.toFixed(2)}{' '}
+                        {lineItem.weight.toFixed(2)}{' '}
                         {formatMeasurementUnit(
                           lineItem.listing.measurementUnit
                         )}
@@ -312,14 +309,16 @@ export const PendingItem = (props: {
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6">
-                      Price per kg <span>{toPrice(lineItem.price)}</span>
+                      Price per{' '}
+                      {formatUnitToPricePerUnit(
+                        lineItem.listing.measurementUnit
+                      )}{' '}
+                      <span>{toPrice(lineItem.listing.pricePerKilo)}</span>
                     </ItemDetail>
 
                     <ItemDetail variant="caption" color="shade6">
                       Price (AUD)
-                      <span>
-                        {toPrice(lineItem.price * lineItemTotalWeight)}
-                      </span>
+                      <span>{toPrice(lineItem.price)}</span>
                     </ItemDetail>
                   </div>
                 </div>
