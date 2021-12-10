@@ -10,8 +10,6 @@ const ns = 'GET_SELLER_ORDERS_PENDING';
 
 const asyncAction = {
   ...createAsyncAction<GetAllSellerOrdersMeta, GetAllSellerOrdersPayload>(ns),
-  // For Confirm Weight
-  UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
 };
 
 const getSellerOrdersPendingActions = {
@@ -30,12 +28,6 @@ const getSellerOrdersPendingActions = {
       page: filter?.page,
       term: filter?.term,
     },
-  }),
-
-  // For Confirm Weight
-  updateOptimistically: (meta: Partial<ConfirmWeightMeta>) => ({
-    type: asyncAction.UPDATE_OPTIMISTICALLY,
-    meta,
   }),
 };
 

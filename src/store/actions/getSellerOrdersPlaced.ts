@@ -1,5 +1,4 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
-import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload,
@@ -9,10 +8,6 @@ import { createAsyncAction } from 'utils/Redux';
 const ns = 'GET_SELLER_ORDERS_PLACED';
 const asyncAction = {
   ...createAsyncAction<GetAllSellerOrdersMeta, GetAllSellerOrdersPayload>(ns),
-  // For Confirm Weight
-  UPDATE_OPTIMISTICALLY: `${ns}/UPDATE_OPTIMISTICALLY`,
-  // For Ship Order
-  UPDATE_SHIP_ORDER_OPTIMISTICALLY: `${ns}/UPDATE_SHIP_ORDER_OPTIMISTICALLY`,
 };
 
 const getSellerOrdersPlacedActions = {
@@ -32,19 +27,6 @@ const getSellerOrdersPlacedActions = {
       page: filter?.page,
       term: filter?.term,
     },
-  }),
-
-  updateShipOrderOptimisitically: (orderId: string) => ({
-    type: asyncAction.UPDATE_SHIP_ORDER_OPTIMISTICALLY,
-    meta: {
-      orderId,
-    },
-  }),
-
-  // For Confirm Weight
-  updateOptimistically: (meta: Partial<ConfirmWeightMeta>) => ({
-    type: asyncAction.UPDATE_OPTIMISTICALLY,
-    meta,
   }),
 };
 
