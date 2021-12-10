@@ -20,6 +20,11 @@ export type GetAllSellerOrdersMeta = {
 // TODO: Update response value
 export type GetAllSellerOrdersPayload = GenericResponse<{
   token: string;
-  count: { [key: string]: number };
+  count: {
+    headerCount: {
+      [key: string]: number;
+    };
+    selectionCount: number;
+  };
   orders: GetAllSellerOrder[];
 }>;

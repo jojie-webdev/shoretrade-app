@@ -35,7 +35,6 @@ import { useTheme } from 'utils/Theme';
 
 import ShippingDateModal from '../ShippingDateModal';
 import { PendingToShipItemData, SoldGeneratedProps } from '../Sold.props';
-import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
 import {
   StyledInteraction,
@@ -379,6 +378,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   const theme = useTheme();
 
   const {
+    count,
     toShip,
     toShipCount,
     filters,
@@ -440,7 +440,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   const [isOpen, setIsOpen] = useState<string[]>([]);
   const [lastOpenAccordion, setLastOpenAccordion] = useState('');
 
-  const toShipPagesTotal = Math.ceil(Number(toShipCount) / DEFAULT_PAGE_LIMIT);
+  const toShipPagesTotal = Math.ceil(Number(count) / DEFAULT_PAGE_LIMIT);
   const addHorizontalRowMargin = useMediaQuery({
     query: '(min-width: 1080px)',
   });
@@ -643,7 +643,7 @@ const ToShip = (props: SoldGeneratedProps) => {
           );
         })}
       </>
-      {sort(sortByDate, toShip).map((group, idx) => {
+      {toShip.map((group, idx) => {
         return (
           <ItemRow key={group.title}>
             <Col>

@@ -4,7 +4,10 @@ import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
 export const GetAllSellerOrdersCount = (state: Store) =>
-  state.getSellerOrdersPlaced.data?.data.count || {};
+  state.getSellerOrdersPlaced.data?.data.count.headerCount || {};
+
+export const GetAllSellerOrdersSelectionCount = (state: Store) =>
+  state.getSellerOrdersPlaced.data?.data.count.selectionCount || 0;
 
 const getAllSellerOrdersPending = (state: Store) =>
   state.getSellerOrdersPending.data?.data.orders || [];

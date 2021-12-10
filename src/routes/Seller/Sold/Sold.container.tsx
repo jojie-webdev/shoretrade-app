@@ -15,6 +15,7 @@ import {
 } from 'store/actions';
 import {
   GetAllSellerOrdersCount,
+  GetAllSellerOrdersSelectionCount,
   GetSellerOrdersToShipPending,
   GetSellerOrdersToShip,
   GetSellerOrdersInTransit,
@@ -53,6 +54,8 @@ const Sold = (): JSX.Element => {
     transit: inTransitCount,
     delivered: deliveredCount,
   } = useSelector(GetAllSellerOrdersCount);
+
+  const count = useSelector(GetAllSellerOrdersSelectionCount);
 
   const pendingGetOrdersPlaced =
     useSelector((state: Store) => state.getSellerOrdersPlaced.pending) || false;
@@ -271,6 +274,7 @@ const Sold = (): JSX.Element => {
     pendingToShip,
     inTransit,
     delivered,
+    count,
     toShipCount,
     inTransitCount,
     deliveredCount,

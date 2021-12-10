@@ -22,7 +22,7 @@ const Delivered = (props: SoldGeneratedProps) => {
 
   return (
     <>
-      {sort(sortByDate, delivered).map((group, idx) => {
+      {delivered.map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
           const currentDate = moment();

@@ -79,6 +79,7 @@ export interface SoldGeneratedProps {
   inTransit: SoldItem[];
   delivered: SoldItem[];
   toShipCount: number;
+  count: number;
   inTransitCount: number;
   deliveredCount: number;
   currentTab: TabOptions;

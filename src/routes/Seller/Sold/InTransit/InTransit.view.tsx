@@ -22,7 +22,7 @@ const InTransit = (props: SoldGeneratedProps) => {
 
   return (
     <>
-      {sort(sortByDate, inTransit).map((group, idx) => {
+      {inTransit.map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
           const currentDate = moment();
