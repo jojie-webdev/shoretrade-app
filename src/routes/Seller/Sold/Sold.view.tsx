@@ -253,7 +253,7 @@ const SoldView = (props: SoldGeneratedProps) => {
                   [currentTab]: '',
                 });
               }}
-              placeholder="Search for a listing…"
+              placeholder="Search for a product, order or buyer"
               rounded
             />
           </SearchContainer>

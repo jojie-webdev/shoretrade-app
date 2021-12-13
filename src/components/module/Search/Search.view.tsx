@@ -23,6 +23,7 @@ const Search = (props: SearchProps): JSX.Element => {
       className={className}
       rounded={rounded}
       darkMode={darkMode}
+      title={inputProps.placeholder}
     >
       <div>
         <SearchSVG height={16} width={16} fill={theme.grey.shade7} />
