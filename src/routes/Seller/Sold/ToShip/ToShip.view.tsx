@@ -176,7 +176,7 @@ export const PendingItem = (props: {
               </ItemDetail>
 
               <ItemDetail variant="caption" color="shade6" row>
-                Type <span>{data.salesChannel}</span>
+                Type <span>{order.salesChannel}</span>
               </ItemDetail>
             </div>
             <div className="buttons">

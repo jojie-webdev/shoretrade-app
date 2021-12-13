@@ -6,6 +6,7 @@ import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 export interface PendingOrders extends GetSellerOrdersResponseItem {
   itemCount: number;
   totalWeight: number;
+  salesChannel: string;
 }
 
 export type PendingToShipItemData = {
@@ -18,7 +19,6 @@ export type PendingToShipItemData = {
   orders: PendingOrders[];
   totalPrice: number;
   totalWeight: number;
-  salesChannel?: string;
   groupName?: string;
 };
 

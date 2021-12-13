@@ -97,6 +97,7 @@ export const orderItemToPendingToShipItem = (
       const computeSubtotalWeight = currentData.map((d) => {
         return {
           ...d,
+          salesChannel: getSalesChannel(d),
           itemCount: d.orderLineItem.length,
           totalWeight: d.orderLineItem.reduce((accumA: number, currentA) => {
             return (
@@ -121,7 +122,6 @@ export const orderItemToPendingToShipItem = (
           totalWeight,
           totalPrice,
           orders: computeSubtotalWeight,
-          salesChannel: getSalesChannel(currentData[0]),
         },
       ];
     },
