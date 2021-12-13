@@ -159,7 +159,10 @@ const Checkout = (): JSX.Element => {
                 data.estimatedDate
               ),
               imageUrl: data.imageUrl,
-              subAddress: subAddress || data.subAddress,
+              subAddress:
+                serviceName !== 'delivery to door'
+                  ? subAddress || data.subAddress
+                  : undefined,
             };
           })
         : [],
