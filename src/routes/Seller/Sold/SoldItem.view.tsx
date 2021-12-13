@@ -144,7 +144,7 @@ const SoldItem = (props: {
               <div className="order-count">
                 <Typography variant="overlineSmall" color="noshade">
                   {entry.length}&nbsp;
-                  {entry.length > 1 ? 'ITEMS' : 'ITEM'}
+                  {entry.length > 1 ? 'ORDERS' : 'ORDER'}
                 </Typography>
               </div>
             </div>
