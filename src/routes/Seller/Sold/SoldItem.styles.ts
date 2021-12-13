@@ -207,7 +207,6 @@ export const CarouselContainer = styled.div`
 `;
 
 export const ItemCard = styled.div`
-  min-height: 144px;
   background: ${(props) => props.theme.grey.shade9};
   padding: 16px;
   margin-top: 8px;
