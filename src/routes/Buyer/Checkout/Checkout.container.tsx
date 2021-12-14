@@ -198,6 +198,7 @@ const Checkout = (): JSX.Element => {
           quoteId: data.quoteId,
           serviceName: selectedPriceData?.serviceName || '',
           locationName: selectedPriceData?.locationName || '',
+          marketAddress: selectedPriceData?.marketAddress || '',
         },
       };
     },
