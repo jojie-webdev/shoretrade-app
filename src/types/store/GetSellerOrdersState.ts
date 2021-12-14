@@ -101,7 +101,7 @@ export type GetSellerOrdersResponseItem = {
         images: string[]; // image urls
         endDate: string; // iso date string
         isAquafuture: boolean;
-        isPreAuctionSale: boolean;
+        isPreAuction: boolean;
         allowedWeightAdjustment: number;
         measurementUnit: string;
         unitKgConversion: number;
