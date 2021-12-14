@@ -60,7 +60,7 @@ const getShipmentMethodLabel = (deliveryMethod: string) => {
 const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
   return data.orderLineItem.some((l) => l.listing.isAquafuture)
     ? 'Aquafuture'
-    : data.orderLineItem.some((l) => l.listing.isPreAuctionSale)
+    : data.orderLineItem.some((l) => l.listing.isPreAuction)
     ? 'Pre-Auction'
     : 'Direct Sale';
 };
