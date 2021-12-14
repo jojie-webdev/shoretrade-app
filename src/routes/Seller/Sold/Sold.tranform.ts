@@ -43,15 +43,15 @@ const getShipmentMethodLabel = (deliveryMethod: string) => {
     case 'airDeliveryOrders':
       return 'Air Freight: Delivery to Door';
     case 'airPickupOrders':
-      return 'Air Freight: Pickup at Airport';
+      return 'Air Freight: Drop off to Airport';
     case 'roadDeliveryOrders':
       return 'Road Freight: Delivery to Door';
     case 'roadPickupOrders':
-      return 'Pickup from Supplier';
-    case 'selfDeliveryOrder':
       return 'Dropoff at Depot';
-    default:
-      return 'Delivery by Supplier';
+    case 'selfDeliveryOrder':
+      return 'Delivering Yourself';
+    case 'selfPickupOrders':
+      return 'Collecting from Supplier';
   }
 };
 
