@@ -69,7 +69,17 @@ export const estimatedDeliveryToString = (
   }`;
 };
 
-export const shipmentModeToDeliveryMethod = (shipmentMode: string) => {
+export const shipmentModeToDeliveryMethod = (
+  shipmentMode: string,
+  serviceName = ''
+) => {
+  const serviceNameMatcher = serviceName.toUpperCase();
+  if (
+    serviceNameMatcher === 'PICKUP FROM SUPPLIER' ||
+    serviceNameMatcher === 'DELIVERY BY SUPPLIER'
+  ) {
+    return 'seller';
+  }
   if (shipmentMode.indexOf('ROAD') !== -1) {
     return 'road';
   }
@@ -81,8 +91,10 @@ export const shipmentModeToDeliveryMethod = (shipmentMode: string) => {
 
 export const serviceNameToDeliveryOption = (serviceName: string) => {
   switch (serviceName.toUpperCase()) {
+    case 'DELIVERY BY SUPPLIER':
     case 'DELIVERY TO DOOR':
       return 'door';
+    case 'PICKUP FROM SUPPLIER':
     case CLICK_AND_COLLECT_SERVICE:
       return 'collect';
     case 'PICKUP AT':

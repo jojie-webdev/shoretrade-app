@@ -184,7 +184,8 @@ const Checkout = (): JSX.Element => {
         [companyId]: {
           carrierName: selectedPriceData?.carrierName || '',
           deliveryMethod: shipmentModeToDeliveryMethod(
-            selectedPriceData?.shipmentMode || ''
+            selectedPriceData?.shipmentMode || '',
+            selectedPriceData?.serviceName || ''
           ),
           deliveryOption: serviceNameToDeliveryOption(
             selectedPriceData?.serviceName || ''
