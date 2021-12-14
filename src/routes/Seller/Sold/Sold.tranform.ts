@@ -52,6 +52,8 @@ const getShipmentMethodLabel = (deliveryMethod: string) => {
       return 'Delivering Yourself';
     case 'selfPickupOrders':
       return 'Collecting from Supplier';
+    default:
+      return '';
   }
 };
 
