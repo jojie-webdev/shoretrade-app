@@ -53,4 +53,6 @@ export const editableListingToUpdateListing = (
       : {}),
   },
   quality: data?.quality || null,
+  isIkeJime: data?.isIkeJime || false,
+  isIceSlurry: data?.isIceSlurry || false,
 });

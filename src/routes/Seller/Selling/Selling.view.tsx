@@ -102,7 +102,12 @@ const Item = (props: ItemProp) => {
                       xs="content"
                       style={{ margin: '4px 4px 0 0' }}
                     >
-                      <Tag key={tag.label}>
+                      <Tag
+                        key={tag.label}
+                        background={
+                          tag.type === 'blue' ? theme.brand.info : undefined
+                        }
+                      >
                         <Typography variant="overlineSmall" color="noshade">
                           {tag.label}
                         </Typography>

@@ -1,5 +1,6 @@
 import { GenericResponse } from 'types/GenericResponse';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type UpdateListingMeta = {};
 
 export type UpdateListingRequestData = {
@@ -38,6 +39,8 @@ export type UpdateListingRequestData = {
     };
   };
   quality: string | null;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 };
 
 export type UpdateListingPayload = GenericResponse;

@@ -38,6 +38,13 @@ export const editableListingToListingProps = (
     }
   );
 
+  const additionalInfos = [];
+  if (editableListing.isIkeJime)
+    additionalInfos[additionalInfos.length] = 'Ike Jime';
+
+  if (editableListing.isIceSlurry)
+    additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
   const defaultImageUri =
     (isCustomType
       ? categoryData?.defaultPhoto
@@ -82,9 +89,17 @@ export const editableListingToListingProps = (
         (isCustomType
           ? editableListing?.customTypeData?.name
           : listingFormData?.type.name) || '',
-      tags: specifications.map((specification) => ({
-        label: specification,
-      })),
+      tags: additionalInfos
+        .map((info) => ({
+          label: info,
+          type: 'blue',
+        }))
+        .concat(
+          specifications.map((specification) => ({
+            label: specification,
+            type: 'plain',
+          }))
+        ),
       size: sizeToString(
         listingFormData?.metric.name || '',
         editableListing?.sizeFrom || '',

@@ -74,6 +74,8 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     isBulkUpload,
     discardBulkUploadChanges,
     navBack,
+    additionalInfos,
+    updateAdditionalInfos,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -152,8 +154,11 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}
+            categories={categories}
+            additionalInfos={additionalInfos}
             navBack={navBack}
             onSelectSpecifications={onSelectSpecifications}
+            updateAdditionalInfos={updateAdditionalInfos}
           />
         );
       case 4:

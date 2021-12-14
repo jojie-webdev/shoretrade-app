@@ -67,5 +67,7 @@ export const editableListingToEditSelectedListing = (
     currentStep: 9,
     isAlreadyCreated: true,
     quality: data?.quality || null,
+    isIkeJime: data?.is_ike_jime || false,
+    isIceSlurry: data?.is_ice_slurry || false,
   };
 };

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
+import Checkbox from 'components/base/Checkbox';
 import Interaction from 'components/base/Interactions';
+import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import uniq from 'ramda/es/uniq';
 import unnest from 'ramda/es/unnest';
-import { Row } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 
@@ -23,17 +25,20 @@ const ChooseSpecifications = ({
   onSelectSpecifications,
   isCustomType,
   navBack,
+  categories,
+  additionalInfos,
+  updateAdditionalInfos,
 }: ChooseSpecificationsProps) => {
   const categoryData = GetCategoryData(
-    editableListing?.customTypeData?.categoryId || ''
+    editableListing?.customTypeData?.categoryId ||
+      listingFormData?.categoryId ||
+      ''
   );
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-
   const typeName =
     (isCustomType
       ? editableListing?.customTypeData?.name
       : listingFormData?.type.name) || '';
-
   const stateOptions = (
     (isCustomType ? categoryData?.states : listingFormData?.stateOptions) || []
   ).map((group) =>
@@ -130,6 +135,53 @@ const ChooseSpecifications = ({
           })}
         </div>
       ))}
+
+      {specifications.length === stateOptions.length &&
+        categoryData?.name === 'Whole Fish' && (
+          <div className="interaction-group">
+            <div className="additional-product-info">
+              <Row nogutter style={{ marginBottom: '12px' }}>
+                <Col xs="content" style={{ marginRight: '4px' }}>
+                  <Typography variant="copy" color="noshade" weight="400">
+                    Additional Product Information
+                  </Typography>
+                </Col>
+                <Col xs="content">
+                  <Typography variant="copy" color="shade7" weight="400">
+                    (Optional)
+                  </Typography>
+                </Col>
+              </Row>
+              <Row nogutter>
+                <Col xs="content">
+                  <Checkbox
+                    label="Ike Jime"
+                    checked={additionalInfos.isIkeJime}
+                    onClick={() =>
+                      updateAdditionalInfos({
+                        isIkeJime: !additionalInfos.isIkeJime,
+                      })
+                    }
+                    typographyProps={{ variant: 'label', weight: '400' }}
+                    style={{ marginRight: '16px' }}
+                  />
+                </Col>
+                <Col xs="content">
+                  <Checkbox
+                    label="Ice Slurry"
+                    checked={additionalInfos.isIceSlurry}
+                    onClick={() =>
+                      updateAdditionalInfos({
+                        isIceSlurry: !additionalInfos.isIceSlurry,
+                      })
+                    }
+                    typographyProps={{ variant: 'label', weight: '400' }}
+                  />
+                </Col>
+              </Row>
+            </div>
+          </div>
+        )}
 
       {stateOptions.length > 0 && (
         <>

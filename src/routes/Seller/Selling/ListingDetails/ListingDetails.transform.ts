@@ -13,6 +13,12 @@ export const listingToListingProps = (
     (data?.original_weight || 0) - (data?.remaining_weight || 0);
   const sales = soldWeight * Number(data?.price_per_kilo || 0);
 
+  const additionalInfos = [];
+  if (data?.is_ike_jime) additionalInfos[additionalInfos.length] = 'Ike Jime';
+
+  if (data?.is_ice_slurry)
+    additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
   return {
     carousel: {
       items:
@@ -36,11 +42,17 @@ export const listingToListingProps = (
     },
     productDetails: {
       title: data?.type_name || '',
-      tags: data?.specifications
-        ? data?.specifications.map((specification) => ({
+      tags: additionalInfos
+        .map((info) => ({
+          label: info,
+          type: 'blue',
+        }))
+        .concat(
+          data?.specifications.map((specification) => ({
             label: specification.name,
-          }))
-        : [],
+            type: 'plain',
+          })) || []
+        ),
       size: sizeToString(
         data?.metric_label || '',
         data?.size_from,

@@ -195,13 +195,21 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   {productDetails.title}
                 </Typography>
                 <div className="tags-container">
-                  {productDetails.tags.map(({ label }) => (
+                  {productDetails.tags.map(({ label, type }) => (
                     <Badge
                       key={label}
-                      fontColor={theme.grey.shade9}
-                      badgeColor={theme.grey.shade3}
+                      fontColor={
+                        type === 'blue' ? theme.grey.noshade : theme.grey.shade9
+                      }
+                      badgeColor={
+                        type === 'blue' ? theme.brand.info : theme.grey.shade3
+                      }
                     >
-                      <BadgeText variant="caption" weight="bold">
+                      <BadgeText
+                        variant="caption"
+                        weight="bold"
+                        color={type === 'blue' ? 'noshade' : 'shade9'}
+                      >
                         {label}
                       </BadgeText>
                     </Badge>
@@ -441,13 +449,21 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               </div>
             </div>
             <div className="tags-container">
-              {productDetails.tags.map(({ label }) => (
+              {productDetails.tags.map(({ label, type }) => (
                 <Badge
                   key={label}
-                  fontColor={theme.grey.shade9}
-                  badgeColor={theme.grey.shade3}
+                  fontColor={
+                    type === 'blue' ? theme.grey.noshade : theme.grey.shade9
+                  }
+                  badgeColor={
+                    type === 'blue' ? theme.brand.info : theme.grey.shade3
+                  }
                 >
-                  <BadgeText variant="caption" weight="bold">
+                  <BadgeText
+                    variant="caption"
+                    weight="bold"
+                    color={type === 'blue' ? 'noshade' : 'shade9'}
+                  >
                     {label}
                   </BadgeText>
                 </Badge>

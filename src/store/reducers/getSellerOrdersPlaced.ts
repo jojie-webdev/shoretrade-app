@@ -1,7 +1,6 @@
 import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
-  GetSellerOrdersResponseItem,
 } from 'types/store/GetSellerOrdersState';
 import { createAsyncReducer } from 'utils/Redux';
 

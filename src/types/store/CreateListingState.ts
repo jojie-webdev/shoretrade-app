@@ -44,6 +44,8 @@ export type CreateListingRequestData = {
     };
   };
   quality: string | null;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 };
 
 export type CreateListingPayload = GenericResponse;

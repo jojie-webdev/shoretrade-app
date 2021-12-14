@@ -86,6 +86,13 @@ const Review = ({
     }
   );
 
+  const additionalInfos = [];
+  if (editableListing.isIkeJime)
+    additionalInfos[additionalInfos.length] = 'Ike Jime';
+
+  if (editableListing.isIceSlurry)
+    additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
   const size = sizeToString(
     (isCustomType
       ? editableListing?.customTypeData?.metric.name
@@ -199,7 +206,7 @@ const Review = ({
         <Col md={12} className="interaction-col">
           <Interactions
             label="Specifications"
-            value={specifications.join(', ')}
+            value={specifications.concat(additionalInfos).join(', ')}
             type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {

@@ -6,6 +6,8 @@ export interface ListingDetailsPublicProps {
   };
 }
 
+export type TagTypes = 'plain' | 'blue';
+
 export interface ListingProps {
   carousel: {
     items: {
@@ -26,7 +28,10 @@ export interface ListingProps {
   };
   productDetails: {
     title: string;
-    tags: { label: string }[];
+    tags: {
+      label: string;
+      type?: string | TagTypes;
+    }[];
     size: string;
     location: string;
     vendor: {

@@ -82,6 +82,8 @@ export type GetListingsBySalesChannelResponseItem = {
     company_id: string | null;
   } | null;
   quality: string | null;
+  is_ike_jime: boolean;
+  is_ice_slurry: boolean;
 };
 
 export type CounterResponseItem = {

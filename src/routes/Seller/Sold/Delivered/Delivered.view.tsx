@@ -4,11 +4,9 @@ import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
-import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 
 import { SoldGeneratedProps } from '../Sold.props';
-import { sortByDate } from '../Sold.tranform';
 import SoldItem from '../SoldItem.view';
 import { TitleRow } from '../ToShip/ToShip.styles';
 import { ItemRow } from './Delivered.styles';

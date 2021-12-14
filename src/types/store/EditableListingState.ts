@@ -66,6 +66,8 @@ export type EditableListingState = Partial<{
     };
   };
   quality: null | string;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 }>;
 
 export type EditableListingPayload = EditableListingState;

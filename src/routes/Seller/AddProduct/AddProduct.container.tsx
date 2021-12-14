@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 
 import { ADD_PRODUCT_ROUTES } from 'consts';
 import pick from 'ramda/src/pick';
@@ -24,6 +24,7 @@ import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetCoopUsersResponseItem } from 'types/store/GetCoopUsersState';
 import { Store } from 'types/store/Store';
 import { fileToBase64 } from 'utils/File';
+import { createUpdateReducer } from 'utils/Hooks';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
@@ -265,6 +266,8 @@ const AddProduct = (): JSX.Element => {
       dispatch(
         editableListingActions.update({
           states: specificationIds,
+          isIkeJime: additionalInfos.isIkeJime,
+          isIceSlurry: additionalInfos.isIceSlurry,
         })
       );
       onChangeCurrentPage(4);
@@ -603,6 +606,17 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const [additionalInfos, updateAdditionalInfos] = useReducer(
+    createUpdateReducer<{
+      isIkeJime: boolean;
+      isIceSlurry: boolean;
+    }>(),
+    {
+      isIkeJime: editableListing.isIkeJime || false,
+      isIceSlurry: editableListing.isIceSlurry || false,
+    }
+  );
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -646,6 +660,8 @@ const AddProduct = (): JSX.Element => {
     isBulkUpload,
     discardBulkUploadChanges,
     navBack,
+    additionalInfos,
+    updateAdditionalInfos,
   };
 
   return <AddProductView {...generatedProps} />;

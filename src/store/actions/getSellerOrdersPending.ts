@@ -1,5 +1,4 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
-import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import {
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload,

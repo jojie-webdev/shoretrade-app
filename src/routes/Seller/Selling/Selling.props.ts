@@ -14,12 +14,17 @@ export interface SellingGeneratedProps {
   onChangePage: (page: number) => void;
 }
 
+export type TagTypes = 'plain' | 'blue';
+
 export type ItemProp = {
   id: string;
   uri: string;
   title: string;
   price: string;
-  tags?: { label: string }[];
+  tags?: {
+    label: string;
+    type?: string | TagTypes;
+  }[];
   size?: string;
   listedOn?: Date;
   expiresIn?: Date;

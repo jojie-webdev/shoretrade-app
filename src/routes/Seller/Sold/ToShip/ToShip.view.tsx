@@ -15,7 +15,6 @@ import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
-import sort from 'ramda/src/sort';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -380,7 +379,6 @@ const ToShip = (props: SoldGeneratedProps) => {
   const {
     count,
     toShip,
-    toShipCount,
     filters,
     updateFilters,
     pendingToShip,
