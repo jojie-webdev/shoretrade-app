@@ -160,7 +160,8 @@ const Checkout = (): JSX.Element => {
               ),
               imageUrl: data.imageUrl,
               subAddress:
-                serviceName !== 'delivery to door'
+                serviceName !== 'delivery to door' &&
+                shipmentMode !== 'Air freight'
                   ? subAddress || data.subAddress
                   : undefined,
             };
