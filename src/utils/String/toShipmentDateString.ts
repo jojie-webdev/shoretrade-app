@@ -30,7 +30,8 @@ export const serviceNameToString = (
     return `Pickup from ${sellerCompany || ''}`;
   }
 
-  return serviceName.indexOf('TO DOOR') !== -1 ||
+  return serviceName.indexOf('DELIVERY BY SUPPLIER') !== -1 ||
+    serviceName.indexOf('TO DOOR') !== -1 ||
     serviceName.indexOf('METRO TO METRO') !== -1 ||
     serviceName.indexOf('MANAGED') !== -1
     ? 'delivery to door'
@@ -41,7 +42,6 @@ export const subAddressToString = (
   serviceName: string,
   address: string | undefined
 ) => {
-  console.log(serviceName, address);
   return (address || '').replace(`${serviceName}, `, '');
 };
 
