@@ -18,6 +18,7 @@ import {
   getMarketInterestsActions,
   getHistoricalListingsActions,
   useHistoricalListingActions,
+  getListingFormDataActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -173,19 +174,10 @@ const AddProduct = (): JSX.Element => {
     );
     onChangeCurrentPage(3);
     updateAdditionalInfos({ isIkeJime: false, isIceSlurry: false });
+    dispatch(getListingFormDataActions.request({ typeId }));
   };
 
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
-
-  useEffect(() => {
-    if (currentPage === 1) {
-      if (showCustomTypeSettings) {
-        setShowCustomTypeSettings(false);
-      }
-      dispatch(searchProductTypeActions.clear());
-    }
-    // eslint-disable-next-line
-  }, [currentPage]);
 
   const getCustomFormData = () => {
     dispatch(getCustomFormDataActions.request());
@@ -237,13 +229,6 @@ const AddProduct = (): JSX.Element => {
   const isCustomType = editableListing?.isCustomType || false;
 
   const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
-
-  useEffect(() => {
-    if (isCustomType && currentPage !== 1) {
-      setShowCustomTypeSettings(true);
-    }
-    // eslint-disable-next-line
-  }, [isCustomType]);
 
   const boxesDetails = editableListing?.boxes || [];
 
@@ -361,18 +346,6 @@ const AddProduct = (): JSX.Element => {
       }
     }
   };
-
-  useEffect(() => {
-    if (companyId) {
-      dispatch(
-        getAvailableCratesActions.request({
-          companyId,
-        })
-      );
-      dispatch(getMarketInterestsActions.request({ companyId }));
-    }
-    // eslint-disable-next-line
-  }, [companyId]);
 
   const onAddPackaging = ({
     isAquafuture,
@@ -625,6 +598,51 @@ const AddProduct = (): JSX.Element => {
       isIceSlurry: editableListing.isIceSlurry || false,
     }
   );
+
+  // MARK:- Effects
+
+  useEffect(() => {
+    if (currentPage === 1) {
+      if (showCustomTypeSettings) {
+        setShowCustomTypeSettings(false);
+      }
+      dispatch(searchProductTypeActions.clear());
+    }
+    // eslint-disable-next-line
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (isCustomType && currentPage !== 1) {
+      setShowCustomTypeSettings(true);
+    }
+    // eslint-disable-next-line
+  }, [isCustomType]);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(
+        getAvailableCratesActions.request({
+          companyId,
+        })
+      );
+      dispatch(getMarketInterestsActions.request({ companyId }));
+    }
+    // eslint-disable-next-line
+  }, [companyId]);
+
+  useEffect(() => {
+    if (editableListing.type) {
+      dispatch(
+        getListingFormDataActions.request({ typeId: editableListing.type })
+      );
+    }
+    // eslint-disable-next-line
+  }, [editableListing])
+
+  useEffect(() => {
+    getCustomFormData();
+    // eslint-disable-next-line
+  }, []);
 
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
