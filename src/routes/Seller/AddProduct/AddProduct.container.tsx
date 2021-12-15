@@ -92,9 +92,12 @@ const AddProduct = (): JSX.Element => {
           editableListingActions.update({
             employee: account,
             company,
+            isIkeJime: false,
+            isIceSlurry: false,
           })
         );
         onChangeCurrentPage(1.5);
+        updateAdditionalInfos({ isIkeJime: false, isIceSlurry: false });
       }
     }
   };
@@ -164,9 +167,12 @@ const AddProduct = (): JSX.Element => {
     dispatch(
       editableListingActions.update({
         type: typeId,
+        isIkeJime: false,
+        isIceSlurry: false,
       })
     );
     onChangeCurrentPage(3);
+    updateAdditionalInfos({ isIkeJime: false, isIceSlurry: false });
   };
 
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
@@ -208,9 +214,12 @@ const AddProduct = (): JSX.Element => {
             name: selectedMetric.name,
           },
         },
+        isIkeJime: false,
+        isIceSlurry: false,
       })
     );
     onChangeCurrentPage(3);
+    updateAdditionalInfos({ isIkeJime: false, isIceSlurry: false });
   };
 
   const categories =

@@ -79,6 +79,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           state={rec.state}
                           hiddenPrice={isPendingAccount}
                           hiddenVendor={isPendingAccount}
+                          isIkeJime={rec.isIkeJime}
+                          isIceSlurry={rec.isIceSlurry}
                         />
                       </StyledInteraction>
                     ) : (
@@ -102,6 +104,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         state={rec.state}
                         hiddenPrice={isPendingAccount}
                         hiddenVendor={isPendingAccount}
+                        isIkeJime={rec.isIkeJime}
+                        isIceSlurry={rec.isIceSlurry}
                       />
                     )}
                   </Link>

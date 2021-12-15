@@ -65,6 +65,8 @@ export function recentlyAddedToPreviewProps(
     hiddenPrice: isPendingAccount,
     hiddenVendor: isPendingAccount,
     catchRecurrence: data.catchRecurrence,
+    isIkeJime: data.isIkeJime,
+    isIceSlurry: data.isIceSlurry,
   };
 }
 
@@ -94,6 +96,8 @@ export function favouritesToPreviewProps(
     unit: data.measurementUnit,
     state: data.state,
     catchRecurrence: data.catchRecurrence,
+    isIkeJime: data.isIkeJime,
+    isIceSlurry: data.isIceSlurry,
   };
 }
 

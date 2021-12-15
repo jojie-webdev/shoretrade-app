@@ -3,7 +3,8 @@ import React from 'react';
 import Badge from 'components/base/Badge';
 import { Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { Row } from 'react-grid-system';
+import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
+import { Row, Col } from 'react-grid-system';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -81,27 +82,56 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
       </HeaderContainer>
       <div style={{ display: 'flex' }}>
         <StatusContainer>
-          {props.state?.map((item) => {
-            return (
-              <Badge
-                key={item}
-                fontColor={theme.grey.shade9}
-                badgeColor={theme.grey.shade2}
-              >
-                <BadgeText
-                  variant="caption"
-                  weight="bold"
-                  style={{
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {item}
-                </BadgeText>
-              </Badge>
-            );
-          })}
+          <Row nogutter>
+            {ADDITIONAL_INFOS.map((additionalInfo) => {
+              return (
+                props[additionalInfo.key as keyof PreviewProps] && (
+                  <Col xs="content" style={{ marginTop: '5px' }}>
+                    <Badge
+                      fontColor={theme.grey.noshade}
+                      badgeColor={theme.brand.info}
+                    >
+                      <BadgeText
+                        variant="caption"
+                        weight="bold"
+                        color="noshade"
+                        style={{
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {additionalInfo.display}
+                      </BadgeText>
+                    </Badge>
+                  </Col>
+                )
+              );
+            })}
+            {props.state?.map((item) => {
+              return (
+                <Col xs="content" style={{ marginTop: '5px' }}>
+                  <Badge
+                    key={item}
+                    fontColor={theme.grey.shade9}
+                    badgeColor={theme.grey.shade2}
+                  >
+                    <BadgeText
+                      variant="caption"
+                      weight="bold"
+                      style={{
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {item}
+                    </BadgeText>
+                  </Badge>
+                </Col>
+              );
+            })}
+          </Row>
         </StatusContainer>
       </div>
       <BodyContainerAlt>
@@ -253,27 +283,56 @@ const Preview = (props: PreviewProps): JSX.Element => {
           </HeaderContainer>
           <div style={{ display: 'flex' }}>
             <StatusContainer>
-              {props.state?.map((item) => {
-                return (
-                  <Badge
-                    key={item}
-                    fontColor={theme.grey.shade9}
-                    badgeColor={theme.grey.shade2}
-                  >
-                    <BadgeText
-                      variant="caption"
-                      weight="bold"
-                      style={{
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {item}
-                    </BadgeText>
-                  </Badge>
-                );
-              })}
+              <Row nogutter>
+                {ADDITIONAL_INFOS.map((additionalInfo) => {
+                  return (
+                    props[additionalInfo.key as keyof PreviewProps] && (
+                      <Col xs="content" style={{ marginTop: '5px' }}>
+                        <Badge
+                          fontColor={theme.grey.noshade}
+                          badgeColor={theme.brand.info}
+                        >
+                          <BadgeText
+                            variant="caption"
+                            weight="bold"
+                            color="noshade"
+                            style={{
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {additionalInfo.display}
+                          </BadgeText>
+                        </Badge>
+                      </Col>
+                    )
+                  );
+                })}
+                {props.state?.map((item) => {
+                  return (
+                    <Col xs="content" style={{ marginTop: '5px' }}>
+                      <Badge
+                        key={item}
+                        fontColor={theme.grey.shade9}
+                        badgeColor={theme.grey.shade2}
+                      >
+                        <BadgeText
+                          variant="caption"
+                          weight="bold"
+                          style={{
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {item}
+                        </BadgeText>
+                      </Badge>
+                    </Col>
+                  );
+                })}
+              </Row>
             </StatusContainer>
           </div>
           <BodyContainer>

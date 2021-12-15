@@ -37,6 +37,8 @@ export type GetListingsByTypeResponseListingItem = {
   state: string[];
   total: number;
   type: string;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 };
 
 export type GetListingsByTypePayload = GenericResponse<{

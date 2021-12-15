@@ -78,6 +78,8 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           state={fav.state}
                           hiddenPrice={isPendingAccount}
                           hiddenVendor={isPendingAccount}
+                          isIkeJime={fav.isIkeJime}
+                          isIceSlurry={fav.isIceSlurry}
                         />
                       </StyledInteraction>
                     ) : (
@@ -101,6 +103,8 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         state={fav.state}
                         hiddenPrice={isPendingAccount}
                         hiddenVendor={isPendingAccount}
+                        isIkeJime={fav.isIkeJime}
+                        isIceSlurry={fav.isIceSlurry}
                       />
                     )}
                   </Link>

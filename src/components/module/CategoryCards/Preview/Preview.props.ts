@@ -29,4 +29,6 @@ export interface PreviewProps {
   hiddenPrice?: boolean;
   hiddenVendor?: boolean;
   alternate?: boolean;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 }

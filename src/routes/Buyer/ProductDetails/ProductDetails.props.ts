@@ -18,7 +18,7 @@ interface ProductDetailsCard1Props {
   cBorderWidth?: string;
   cBorderRadius?: string;
   title: string;
-  tags?: { label: string }[];
+  tags?: { label: string; type: string }[];
   size?: string;
   location?: string;
   isFavorite?: boolean;

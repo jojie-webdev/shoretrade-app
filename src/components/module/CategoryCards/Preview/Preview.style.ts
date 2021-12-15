@@ -91,15 +91,13 @@ export const BadgeContainer = styled.div`
 `;
 
 export const StatusContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
+  margin-top: 5px;
 `;
 
 export const DetailsContainer = styled.div`
   width: 100%;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 export const HeaderContainer = styled.div`

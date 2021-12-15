@@ -44,6 +44,8 @@ export type GetBuyerHomepageResponseListingItem = {
     cutOffTime: string;
   };
   measurementUnit: string;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

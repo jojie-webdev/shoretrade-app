@@ -148,10 +148,24 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                           return (
                             <Badge
                               key={index}
-                              fontColor={theme.grey.shade9}
-                              badgeColor={theme.grey.shade3}
+                              fontColor={
+                                item.type === 'blue'
+                                  ? theme.grey.noshade
+                                  : theme.grey.shade9
+                              }
+                              badgeColor={
+                                item.type === 'blue'
+                                  ? theme.brand.info
+                                  : theme.grey.shade3
+                              }
                             >
-                              <BadgeText variant="caption" weight="bold">
+                              <BadgeText
+                                variant="caption"
+                                weight="bold"
+                                color={
+                                  item.type === 'blue' ? 'noshade' : 'shade9'
+                                }
+                              >
                                 {item.label}
                               </BadgeText>
                             </Badge>
@@ -165,10 +179,24 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         return (
                           <Badge
                             key={index}
-                            fontColor={theme.grey.shade9}
-                            badgeColor={theme.grey.shade3}
+                            fontColor={
+                              item.type === 'blue'
+                                ? theme.grey.noshade
+                                : theme.grey.shade9
+                            }
+                            badgeColor={
+                              item.type === 'blue'
+                                ? theme.brand.info
+                                : theme.grey.shade3
+                            }
                           >
-                            <BadgeText variant="caption" weight="bold">
+                            <BadgeText
+                              variant="caption"
+                              weight="bold"
+                              color={
+                                item.type === 'blue' ? 'noshade' : 'shade9'
+                              }
+                            >
                               {item.label}
                             </BadgeText>
                           </Badge>

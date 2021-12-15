@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { BUYER_ROUTES } from 'consts';
+import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -295,9 +296,29 @@ const ProductDetails = (): JSX.Element => {
   // }, [updateFavoriteSeller]);
 
   // MARK: - Props
+
+  const additionalInfos = ADDITIONAL_INFOS.map((info) => {
+    if (
+      currentListing &&
+      currentListing[info.key as keyof GetListingResponseItem]
+    ) {
+      return info.display;
+    } else return '';
+  }).filter((info) => info !== '');
+
   const productDetailsCard1Props = {
     title: currentListing?.type || '',
-    tags: (currentListing?.state || []).map((s) => ({ label: s })),
+    tags: additionalInfos
+      .map((info) => ({
+        label: info,
+        type: 'blue',
+      }))
+      .concat(
+        (currentListing?.state || []).map((s) => ({
+          label: s,
+          type: 'plain',
+        }))
+      ),
     size: sizeToString(
       currentListing?.size.unit || '',
       currentListing?.size.from,

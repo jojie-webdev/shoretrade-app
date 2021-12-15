@@ -162,6 +162,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         hiddenVendor={isPendingAccount}
                         hiddenPrice={isPendingAccount}
                         catchRecurrence={product.catchRecurrence}
+                        isIkeJime={product.isIkeJime}
+                        isIceSlurry={product.isIceSlurry}
                       />
                     </StyledInteraction>
                   ) : (
@@ -185,6 +187,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       hiddenVendor={isPendingAccount}
                       hiddenPrice={isPendingAccount}
                       catchRecurrence={product.catchRecurrence}
+                      isIkeJime={product.isIkeJime}
+                      isIceSlurry={product.isIceSlurry}
                     />
                   )}
                 </Link>

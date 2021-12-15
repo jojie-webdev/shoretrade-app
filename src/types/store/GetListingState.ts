@@ -56,6 +56,8 @@ export type GetListingResponseItem = {
     height: number;
     company_id: string | null;
   } | null;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
 };
 
 export type GetListingPayload = GenericResponse<{
