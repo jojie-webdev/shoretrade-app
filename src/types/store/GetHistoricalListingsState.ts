@@ -41,6 +41,8 @@ export type HistoricalListingItem = {
     airline_approved: boolean;
   } | null;
   is_aquafuture: boolean;
+  is_auction_sale: boolean;
+  is_pre_auction_sale: boolean;
   address_id: string;
   quality: string | null;
 };
