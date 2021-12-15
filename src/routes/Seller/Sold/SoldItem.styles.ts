@@ -421,10 +421,6 @@ export const Spacer = styled.div`
   }
 
   @media (min-width: 1500px) {
-    width: 232px;
-  }
-
-  @media (min-width: 1600px) {
-    width: 332px;
+    width: 48px;
   }
 `;
