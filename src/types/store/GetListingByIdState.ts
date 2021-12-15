@@ -63,6 +63,8 @@ export type GetListingByIdData = {
   addressCountryCode: string;
   flatDeliveryFee?: any;
   is_aquafuture: boolean;
+  is_auction_sale: boolean;
+  is_pre_auction_sale: boolean;
   allowedWeightAdjustment: number;
   measurement_unit: string; // ex. 'kg' or 'dozen'
   metric_label?: string;

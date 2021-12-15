@@ -30,6 +30,8 @@ export const historicalListingToEditableListing = (
       suburb: '',
     },
     isAquafuture: data?.is_aquafuture || false,
+    isAuctionSale: data?.is_auction_sale || false,
+    isPreAuctionSale: data?.is_pre_auction_sale || false,
     addressId: data?.address_id || '',
     ...(data?.packaging
       ? {
