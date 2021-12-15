@@ -74,14 +74,6 @@ const SoldView = (props: SoldGeneratedProps) => {
   const isNonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
 
   const [searchValue, setSearchValue] = useState('');
-  const [searchValueTable, updateSearchValueTable] = useReducer(
-    createUpdateReducer<Record<string, string>>(),
-    {
-      [TO_SHIP]: '',
-      [IN_TRANSIT]: '',
-      [DELIVERED]: '',
-    }
-  );
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
@@ -176,8 +168,7 @@ const SoldView = (props: SoldGeneratedProps) => {
   }, [searchValue]);
 
   useEffect(() => {
-    setSearchValue(searchValueTable[currentTab]);
-    // eslint-disable-next-line
+    handleSearchValue(searchValue);
   }, [currentTab]);
 
   let content;
@@ -243,15 +234,9 @@ const SoldView = (props: SoldGeneratedProps) => {
               value={searchValue}
               onChange={(val) => {
                 setSearchValue(val.currentTarget.value);
-                updateSearchValueTable({
-                  [currentTab]: val.currentTarget.value,
-                });
               }}
               resetValue={() => {
                 clearSearchValue();
-                updateSearchValueTable({
-                  [currentTab]: '',
-                });
               }}
               placeholder="Search for a product, order or buyer"
               rounded
