@@ -5,6 +5,36 @@ import {
   GetAllBuyerListingResponseItem,
 } from 'types/store/GetAllBuyerListingsState';
 
+export interface AllListingTableItem {
+  id: string;
+  name: string;
+  category: string;
+  specifications: {
+    value: string;
+    type: string;
+  }[];
+  metric: string;
+  sizeFrom: string | null;
+  sizeTo: string | null;
+  price: string | number;
+  unit: string;
+  origin: {
+    state: string;
+    suburb: string;
+    countryCode: string;
+  };
+  endDate: string;
+  catchDate: string;
+  createdAt: string;
+  catchRecurrence: string | null;
+  remainingWeight: number;
+  totalWeight: number;
+  salesChannel?: string;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
+  clickable?: boolean;
+}
+
 export interface ListingViewProps {
   listings: GetAllBuyerListingResponseItem[];
   handleDownloadCSV: () => void;

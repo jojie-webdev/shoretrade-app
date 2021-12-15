@@ -1,10 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 
-import {
-  BUYER_ROUTES,
-  clickAndCollectAddress,
-  clickAndCollectAddress2,
-} from 'consts';
+import { BUYER_ROUTES, clickAndCollectAddress2 } from 'consts';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';

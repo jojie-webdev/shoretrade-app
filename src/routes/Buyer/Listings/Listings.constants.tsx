@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import theme from 'utils/Theme';
 
 import { Chips, ChipsWrapper } from './Listings.styles';
 
@@ -26,13 +27,13 @@ export const DEFAULT_TABLE_SETTINGS = [
   'category',
   'name',
   'specifications',
-  'end_date',
-  'origin'
+  'endDate',
+  'origin',
 ];
 
 export const COLUMN_GROUPS = [
   ['price', 'size'],
-  ['remaining_weight', 'end_date'],
+  ['remainingWeight', 'endDate'],
 ];
 
 export const DIRECT_SALE_COLUMNS = [
@@ -56,11 +57,25 @@ export const DIRECT_SALE_COLUMNS = [
     component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>
-          {(data?.['specifications']?.split(',') || []).map((specs: string) => {
-            return (
-              <Chips key={`direct-spec-${data?.id}-${specs}`}>{specs}</Chips>
-            );
-          })}
+          {(data?.specifications || []).map(
+            (specs: { value: string; type: string }) => {
+              return (
+                <Chips
+                  key={`direct-spec-${data?.id}-${specs.value}`}
+                  background={
+                    specs.type === 'blue' ? theme.brand.info : theme.grey.shade3
+                  }
+                  color={
+                    specs.type === 'blue'
+                      ? theme.grey.noshade
+                      : theme.grey.shade9
+                  }
+                >
+                  {specs.value}
+                </Chips>
+              );
+            }
+          )}
         </ChipsWrapper>
       );
     },
@@ -70,21 +85,21 @@ export const DIRECT_SALE_COLUMNS = [
     selector: 'size',
     sortable: true,
     tooltip: (data: any) =>
-      sizeToString(data?.metric, data?.size_from, data?.size_to),
+      sizeToString(data?.metric, data?.sizeFrom, data?.sizeTo),
     component: function Size(data: any, _state: any) {
-      return <>{sizeToString(data?.metric, data?.size_from, data?.size_to)}</>;
+      return <>{sizeToString(data?.metric, data?.sizeFrom, data?.sizeTo)}</>;
     },
   },
   {
     name: 'Remaining',
-    selector: 'remaining_weight',
+    selector: 'remainingWeight',
     sortable: true,
     tooltip: (data: any) =>
-      `${data?.remaining_weight} ${formatMeasurementUnit(data?.unit)}`,
+      `${data?.remainingWeight} ${formatMeasurementUnit(data?.unit)}`,
     component: function RemainingWeight(data: any, _state: any) {
       return (
         <>
-          {data?.remaining_weight} {formatMeasurementUnit(data?.unit)}
+          {data?.remainingWeight} {formatMeasurementUnit(data?.unit)}
         </>
       );
     },
@@ -110,15 +125,15 @@ export const DIRECT_SALE_COLUMNS = [
   },
   {
     name: 'Valid Until',
-    selector: 'end_date',
+    selector: 'endDate',
     sortable: true,
     tooltip: (data: any) =>
-      data?.end_date ? moment(data?.end_date).format('ll') : 'Always Available',
+      data?.endDate ? moment(data?.endDate).format('ll') : 'Always Available',
     component: function ValidUntil(data: any, _state: any) {
       return (
         <>
-          {data?.end_date
-            ? moment(data?.end_date).format('ll')
+          {data?.endDate
+            ? moment(data?.endDate).format('ll')
             : 'Always Available'}
         </>
       );
@@ -160,9 +175,25 @@ export const AUCTION_PRODUCT_COLUMNS = [
     component: function Specs(data: any, _state?: any) {
       return (
         <ChipsWrapper>
-          {(data?.['specifications']?.split(',') || []).map((specs: string) => {
-            return <Chips key={`auction-spec-${data?.id}`}>{specs}</Chips>;
-          })}
+          {(data?.specifications || []).map(
+            (specs: { value: string; type: string }) => {
+              return (
+                <Chips
+                  key={`direct-spec-${data?.id}-${specs.value}`}
+                  background={
+                    specs.type === 'blue' ? theme.brand.info : theme.grey.shade3
+                  }
+                  color={
+                    specs.type === 'blue'
+                      ? theme.grey.noshade
+                      : theme.grey.shade9
+                  }
+                >
+                  {specs.value}
+                </Chips>
+              );
+            }
+          )}
         </ChipsWrapper>
       );
     },
@@ -174,7 +205,7 @@ export const AUCTION_PRODUCT_COLUMNS = [
     component: function Size(data: any, _state: any) {
       return (
         <>
-          {data?.size_from}-{data?.size_to}
+          {data?.sizeFrom}-{data?.sizeTo}
         </>
       );
     },

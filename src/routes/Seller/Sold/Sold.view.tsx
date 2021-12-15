@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Select from 'components/base/Select';
 import { Octopus, Crab, Fish } from 'components/base/SVG';
@@ -14,7 +14,6 @@ import { isEmpty } from 'ramda';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import { createUpdateReducer } from 'utils/Hooks';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 import Delivered from './Delivered/Delivered.view';
@@ -169,6 +168,7 @@ const SoldView = (props: SoldGeneratedProps) => {
 
   useEffect(() => {
     handleSearchValue(searchValue);
+    // eslint-disable-next-line
   }, [currentTab]);
 
   let content;

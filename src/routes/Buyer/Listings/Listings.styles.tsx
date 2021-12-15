@@ -52,13 +52,16 @@ export const ChipsWrapper = styled.div`
   gap: 8px;
 `;
 
-export const Chips = styled.div`
+export const Chips = styled.div<{
+  background: string;
+  color: string;
+}>`
   text-transform: uppercase;
   border-radius: 12px;
-  background: #e5e8f5;
+  background: ${({ background }) => background};
   padding: 4px 8px;
   font-weight: 900;
-  color: ${theme.grey.shade9};
+  color: ${({ color }) => color};
   font-size: 9px !important;
   letter-spacing: 2px;
   white-space: nowrap;

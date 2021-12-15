@@ -20,13 +20,15 @@ export type GetAllBuyerListingResponseItem = {
     suburb: string;
     countryCode: string;
   };
-  end_data: string;
+  end_date: string;
   catch_date: string;
   created_at: string;
   catch_recurrence: string | null;
   remaining_weight: number;
   total_weight: number;
   sales_channel?: string;
+  is_ike_jime: boolean;
+  is_ice_slurry: boolean;
 };
 
 export interface GetAllBuyerListingRequestOption {

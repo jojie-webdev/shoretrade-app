@@ -49,6 +49,7 @@ import {
   TabItem,
   Tag,
 } from './Listings.styles';
+import { listingsToTableListings } from './Listings.transform';
 
 const Search = (props: {
   onChange: (value: string) => void;
@@ -412,10 +413,7 @@ export default function ListingView(props: ListingViewProps) {
         sortOrder={sorting.order}
         columnTemplate={columnTemplate}
         columns={columns}
-        data={listings.map((listing) => ({
-          ...listing,
-          clickable: listing.sales_channel !== 'AUCTION',
-        }))}
+        data={listingsToTableListings(listings)}
         isLoading={Boolean(isPending)}
         searchTerm={search}
         setSortOrder={onChangeSortOrder}
