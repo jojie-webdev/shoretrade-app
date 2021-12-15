@@ -152,12 +152,7 @@ const Sold = (): JSX.Element => {
       const toShipItemData = orderItemToSoldItemData(orderGroup);
       const orderTotal = Object.keys(toShipItemData).reduce(
         (accum, current) => {
-          return (
-            accum +
-            toShipItemData[current].reduce((accumA, currentA) => {
-              return accumA + currentA.orders.length;
-            }, 0)
-          );
+          return accum + toShipItemData[current].length;
         },
         0
       );

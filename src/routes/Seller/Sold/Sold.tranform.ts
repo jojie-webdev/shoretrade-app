@@ -58,6 +58,7 @@ const getShipmentMethodLabel = (deliveryMethod: string) => {
 };
 
 const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
+  if (data.isMarketRequest) return 'Market Request';
   return data.orderLineItem.some((l) => l.listing.isAquafuture)
     ? 'Aquafuture'
     : data.orderLineItem.some((l) => l.listing.isPreAuction)

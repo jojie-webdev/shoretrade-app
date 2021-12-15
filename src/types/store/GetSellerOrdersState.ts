@@ -23,6 +23,7 @@ export type GetSellerOrdersResponseItem = {
   shippingChargeGst: number;
   originalExpectedDeliveryDate: string; // yyyy-mm-dd
   latestExpectedDeliveryDate: string | null;
+  isMarketRequest: boolean;
   buyerCompanyName: string;
   buyerCompanyId: string;
   buyerEmployeeFirstName: string;
