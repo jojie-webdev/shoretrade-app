@@ -14,7 +14,8 @@ const getTitleAndDescription = (key: string) => {
     {
       airPickupOrders: {
         title: 'Drop-off Date',
-        desc: 'Please confirm the date this order will be ready for shipment',
+        desc:
+          'Please confirm the date this order will be dropped off to Airport',
       },
       airDeliveryOrders: {
         title: 'Shipment Date',
@@ -22,22 +23,22 @@ const getTitleAndDescription = (key: string) => {
           'Please confirm the date this order will be dropped off to Airport',
       },
       roadPickupOrders: {
-        title: 'Collection Date',
-        desc: 'Please confirm the date this order will be ready for collection',
-      },
-      roadDeliveryOrders: {
-        title: 'Shipment Date',
-        desc:
-          'Please confirm the date this order will be dropped off to Airport',
-      },
-      selfPickupOrders: {
-        title: 'Delivery Date',
-        desc: 'Please confirm the date this order will be delivered',
-      },
-      selfDeliveryOrder: {
         title: 'Arrival Date',
         desc:
           'Please confirm the date that this order will arrive at the depot',
+      },
+      roadDeliveryOrders: {
+        title: 'Arrival Date',
+        desc:
+          'Please confirm the date that this order will arrive at the depot',
+      },
+      selfPickupOrders: {
+        title: 'Collection Date',
+        desc: 'Please confirm the date this order will be ready for collection',
+      },
+      selfDeliveryOrder: {
+        title: 'Delivery Date',
+        desc: 'Please confirm the date this order will be delivered',
       },
     }[key] || { title: '', desc: '' }
   );
