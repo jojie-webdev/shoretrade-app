@@ -52,6 +52,7 @@ export const StyledInteraction = styled(Interaction)<{
       .label {
         display: flex;
         align-items: center;
+        white-space: nowrap;
       }
 
       @media (max-width: 1440px) {
@@ -79,7 +80,7 @@ export const StyledInteraction = styled(Interaction)<{
     }
 
     .left-content-extended {
-      width: 316px;
+      width: 350px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 240px;

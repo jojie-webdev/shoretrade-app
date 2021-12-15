@@ -42,7 +42,7 @@ export const StyledInteraction = styled(Interaction)`
     }
 
     .left-content-extended {
-      width: 316px;
+      width: 350px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 240px;
