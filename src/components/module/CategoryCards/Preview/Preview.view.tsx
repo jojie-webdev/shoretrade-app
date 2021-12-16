@@ -224,7 +224,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   variant="small"
                   color="noshade"
                 >
-                  {props.origin?.state}, {props.origin?.countryCode}
+                  {props.shippingFrom?.state}, {props.shippingFrom?.countryCode}
                 </Typography>
               </div>
             </Badge>

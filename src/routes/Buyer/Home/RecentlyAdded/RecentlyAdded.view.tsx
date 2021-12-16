@@ -93,6 +93,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         coop={rec.coop}
                         minimumOrder={rec.minimumOrder}
                         origin={rec.origin}
+                        shippingFrom={rec.shippingFrom}
                         weight={sizeToString(
                           rec.size.unit,
                           rec.size.from,

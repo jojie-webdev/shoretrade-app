@@ -23,6 +23,7 @@ export type GetBuyerHomepageResponseListingItem = {
   };
   price: string;
   origin: { state: string; suburb: string; countryCode: string };
+  shippingFrom: { state: string; suburb: string; countryCode: string };
   description: string;
   caught?: string; // yyyy-mm-dd
   ends?: string;

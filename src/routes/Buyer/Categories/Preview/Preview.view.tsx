@@ -176,6 +176,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       coop={product.coop}
                       minimumOrder={product.minimumOrder}
                       origin={product.origin}
+                      shippingFrom={product.shippingFrom}
                       weight={sizeToString(
                         product.size.unit,
                         product.size.from,

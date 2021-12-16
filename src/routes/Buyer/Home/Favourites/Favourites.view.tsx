@@ -67,6 +67,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           coop={fav.coop}
                           minimumOrder={fav.minimumOrder}
                           origin={fav.origin}
+                          shippingFrom={fav.shippingFrom}
                           weight={sizeToString(
                             fav.size.unit,
                             fav.size.from,

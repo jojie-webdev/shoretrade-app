@@ -30,6 +30,7 @@ export type GetListingsByTypeResponseListingItem = {
   measurementUnit: string;
   minimumOrder: string;
   origin: { state: string; suburb: string; countryCode: string };
+  shippingFrom: { state: string; suburb: string; countryCode: string };
   price: string;
   remaining: number;
   sellInMultiplesOf: boolean;

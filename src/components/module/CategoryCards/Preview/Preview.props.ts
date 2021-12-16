@@ -14,6 +14,7 @@ export interface PreviewProps {
   measurementUnit?: string;
   minimumOrder?: string;
   origin?: { state: string; suburb: string; countryCode: string };
+  shippingFrom?: { state: string; suburb: string; countryCode: string };
   price?: string;
   remaining?: string;
   sellInMultiplesOf?: boolean;
