@@ -53,6 +53,11 @@ export const StyledInteraction = styled(Interaction)<{
         display: flex;
         align-items: center;
         white-space: nowrap;
+        margin-right: 8px;
+
+        svg {
+          margin-right: 4px;
+        }
       }
 
       @media (max-width: 1440px) {
@@ -80,7 +85,7 @@ export const StyledInteraction = styled(Interaction)<{
     }
 
     .left-content-extended {
-      width: 350px;
+      min-width: 425px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 240px;

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
@@ -41,12 +42,15 @@ export const GetSellerOrder = (
   status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED'
 ): GetSellerOrdersResponseItem | any => {
   const sellerOrders = GetAllSellerOrders(status);
-  const allOrders = sellerOrders.reduce((arr, order) => {
-    const { date, ...obj } = order;
+  // @ts-ignore
+  const allOrders = sellerOrders.reduce((accum, order) => {
+    const { date, ...obj }: GetAllSellerOrder = order;
     const objects = _.flattenDeep([Object.values(obj)]);
-    return [...arr, ...objects];
+    // @ts-ignore
+    return [...accum, ..._.flattenDeep(objects.map((o) => o.orders))];
   }, []);
   return (
+    // @ts-ignore
     allOrders.find((o: GetSellerOrdersResponseItem) => o.orderId === id) || {}
   );
 };

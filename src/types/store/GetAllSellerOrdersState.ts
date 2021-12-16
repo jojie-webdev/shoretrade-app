@@ -2,8 +2,15 @@ import { GenericResponse } from 'types/GenericResponse';
 
 import { GetSellerOrdersResponseItem } from './GetSellerOrdersState';
 
+export type GetAllSellerOrderGroup = {
+  locationName: string | null;
+  sellerAddress: string | null;
+  marketAddress: string | null;
+  orders: GetSellerOrdersResponseItem[];
+};
+
 export type GetAllSellerOrderType = {
-  [key: string]: GetSellerOrdersResponseItem[];
+  [key: string]: GetAllSellerOrderGroup[];
 };
 
 export type GetAllSellerOrder = GetAllSellerOrderType & {

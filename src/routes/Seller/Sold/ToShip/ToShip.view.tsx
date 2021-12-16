@@ -571,13 +571,25 @@ const ToShip = (props: SoldGeneratedProps) => {
                     <div className="left-content left-content-extended">
                       <div className="label">
                         {getDeliveryIcon(group.deliveryMethod)}
-                        <Typography
-                          variant="label"
-                          color="shade6"
-                          className="center-text"
-                        >
-                          {group.deliveryMethodLabel}
-                        </Typography>
+                        <div>
+                          <Typography
+                            variant="label"
+                            color="shade6"
+                            className="center-text"
+                          >
+                            {group.deliveryMethodLabel}
+                          </Typography>
+                          {group.deliveryAddress && (
+                            <Typography
+                              variant="caption"
+                              color="shade6"
+                              fontStyle="italic"
+                              className="center-text"
+                            >
+                              {group.deliveryAddress}
+                            </Typography>
+                          )}
+                        </div>
                       </div>
 
                       <div className="order-count">
@@ -666,7 +678,6 @@ const ToShip = (props: SoldGeneratedProps) => {
 
               <SoldItem
                 data={group.data}
-                rawData={group.rawData}
                 token={token}
                 status="PLACED"
                 updateMessageModal={updateMessageModal}

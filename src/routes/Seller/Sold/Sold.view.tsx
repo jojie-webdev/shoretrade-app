@@ -167,8 +167,9 @@ const SoldView = (props: SoldGeneratedProps) => {
   }, [searchValue]);
 
   useEffect(() => {
-    handleSearchValue(searchValue);
-    // eslint-disable-next-line
+    if (searchValue.length > 2) {
+      handleSearchValue(searchValue);
+    }
   }, [currentTab]);
 
   let content;

@@ -14,6 +14,7 @@ export type PendingToShipItemData = {
   buyerCompanyName: string;
   deliveryMethod: string;
   deliveryMethodLabel: string;
+  deliveryAddress: string | null;
   buyerId: string;
   orderCount: number;
   orders: PendingOrders[];
@@ -31,6 +32,7 @@ export type SoldItemData = {
   orderRefNumber: number;
   totalWeight: number;
   totalPrice: number;
+  deliveryAddress: string | null;
   orders: {
     id: string;
     unit: string;
@@ -59,9 +61,6 @@ export type SoldItem = {
   title: string;
   data: { [p: string]: SoldItemData[] };
   orderTotal: number;
-  rawData: {
-    [index: string]: GetSellerOrdersResponseItem[];
-  };
 };
 
 export type RequestFilters = {

@@ -109,10 +109,10 @@ export const deliveryOptionToServiceNameString = (
 ) => {
   switch (deliveryOption.toUpperCase()) {
     case 'DOOR':
-      return 'delivery to door';
+      return 'Delivery by Door';
     case 'COLLECT':
     case 'DEPOT':
-      return `Pickup at ${locationName}`;
+      return `Road Freight pickup at ${locationName}`;
     default:
       return '';
   }

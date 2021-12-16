@@ -101,6 +101,7 @@ export const StyledInteraction = styled(Interaction)<{
         justify-content: flex-start;
         align-items: center;
         white-space: nowrap;
+        margin-right: 8px;
 
         svg {
           margin-right: 4px;
@@ -123,7 +124,7 @@ export const StyledInteraction = styled(Interaction)<{
     }
 
     .left-content-extended {
-      width: 350px;
+      min-width: 425px;
 
       @media ${BREAKPOINTS.lg} {
         width: 250px;

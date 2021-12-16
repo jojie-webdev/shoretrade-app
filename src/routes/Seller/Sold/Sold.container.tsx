@@ -159,7 +159,6 @@ const Sold = (): JSX.Element => {
       return {
         title: orderGroup.date || '',
         data: toShipItemData,
-        rawData: orderGroup,
         orderTotal,
       };
     });

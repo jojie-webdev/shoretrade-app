@@ -27,9 +27,6 @@ import {
 
 const SoldItem = (props: {
   data: { [p: string]: SoldItemData[] };
-  rawData: {
-    [index: string]: GetSellerOrdersResponseItem[];
-  };
   token: string;
   status: 'PLACED' | 'TRANSIT' | 'DELIVERED';
   updateMessageModal?: React.Dispatch<
@@ -65,10 +62,6 @@ const SoldItem = (props: {
     updateMessageModal,
     messageModal,
     isSendingMessage,
-    // shipOrder,
-    // isPlacingOrder,
-    // placeOrderId,
-    // rawData,
   } = props;
   const history = useHistory();
   const theme = useTheme();
@@ -102,13 +95,9 @@ const SoldItem = (props: {
       key,
       salesChannel,
       id,
+      deliveryAddress,
     } = entry[0];
     const isPreAuction = salesChannel === 'Pre-Auction';
-
-    // const getSellerOrder = (id: string) => {
-    //   const orderData = Object.values(rawData)[idx];
-    //   return orderData.find((o) => o.orderId === id);
-    // };
 
     const Icon = () =>
       type.toLowerCase().includes('air') ? (
@@ -132,13 +121,26 @@ const SoldItem = (props: {
             <div className="left-content left-content-extended">
               <div className="label">
                 <Icon />
-                <Typography
-                  variant="label"
-                  color="shade6"
-                  className="center-text"
-                >
-                  {key}
-                </Typography>
+                <div>
+                  <Typography
+                    variant="label"
+                    color="shade6"
+                    className="center-text"
+                  >
+                    {key}
+                  </Typography>
+
+                  {deliveryAddress && (
+                    <Typography
+                      variant="caption"
+                      color="shade6"
+                      fontStyle="italic"
+                      className="center-text"
+                    >
+                      {deliveryAddress}
+                    </Typography>
+                  )}
+                </div>
               </div>
 
               <div className="order-count">

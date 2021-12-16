@@ -64,12 +64,7 @@ const InTransit = (props: SoldGeneratedProps) => {
                   </span>
                 </Col>
               </TitleRow>
-              <SoldItem
-                data={group.data}
-                rawData={group.rawData}
-                token={token}
-                status="TRANSIT"
-              />
+              <SoldItem data={group.data} token={token} status="TRANSIT" />
             </Col>
           </ItemRow>
         );

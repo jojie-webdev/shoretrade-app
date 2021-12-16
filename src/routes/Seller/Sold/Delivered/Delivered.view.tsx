@@ -63,12 +63,7 @@ const Delivered = (props: SoldGeneratedProps) => {
                   </span>
                 </Col>
               </TitleRow>
-              <SoldItem
-                data={group.data}
-                rawData={group.rawData}
-                token={token}
-                status="DELIVERED"
-              />
+              <SoldItem data={group.data} token={token} status="DELIVERED" />
             </Col>
           </ItemRow>
         );
