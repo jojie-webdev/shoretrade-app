@@ -173,10 +173,13 @@ export const OrderShippingContainer = styled.div`
   }
 `;
 
-export const Tag = styled.div`
+export const Tag = styled.div<{
+  background?: string;
+}>`
   width: fit-content;
   padding: 6px 8px 4px 8px;
-  background-color: ${(props) => props.theme.grey.shade3};
+  background-color: ${({ theme, background }) =>
+    background ? background : theme.grey.shade3};
   border-radius: 8px;
   margin-bottom: 4px;
   margin-right: 4px;

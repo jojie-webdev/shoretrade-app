@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 
 import { BUYER_ROUTES, clickAndCollectAddress2 } from 'consts';
+import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,10 @@ import {
   removeCartItemActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
-import { GetCartDataItem } from 'types/store/GetCartState';
+import {
+  GetCartDataItem,
+  GetCartListingDataItem,
+} from 'types/store/GetCartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
@@ -94,76 +98,93 @@ const Checkout = (): JSX.Element => {
     );
   };
 
-  const cartItems = Object.keys(cartDataItems).map((key) => ({
-    ...cartDataItems[key],
-    cartItemId: key,
-  }));
+  const cartItems: GetCartDataItem[] = Object.keys(cartDataItems).map(
+    (key) => ({
+      ...cartDataItems[key],
+      cartItemId: key,
+    })
+  );
 
   const orders = cartItems.map(
-    (cartItem): OrderItem => ({
-      cartItemId: cartItem.cartItemId,
-      title: 'Order Summary',
-      uri: cartItem.listing.image,
-      name: cartItem.listing.type,
-      price: cartItem.subTotal.toFixed(2),
-      tags: cartItem.listing.specifications
-        .split(',')
-        .map((label) => ({ label })),
-      weight: cartItem.weight.toFixed(2),
-      unit: cartItem.listing.measurementUnit,
-      size: sizeToString(
-        cartItem.listing.metric,
-        cartItem.listing.sizeFrom,
-        cartItem.listing.sizeTo
-      ),
-      location: cartItem.listing.origin.state,
-      vendor: cartItem.companyName,
-      vendorId: cartItem.companyId,
-      shippingOptions: shippingQuotes
-        ? (
-            shippingQuotes[cartItem.companyId] || { priceResult: [] }
-          ).priceResult.map((data) => {
-            const shipmentMode = shipmentModeToString(
-              data.shipmentMode,
-              data.serviceName
-            );
-            const serviceName = serviceNameToString(
-              data.serviceName,
-              data.locationName,
-              cartItem.companyName
-            );
-            const subAddress = subAddressToString(
-              cartItem.companyName,
-              data.serviceName === CLICK_AND_COLLECT_SERVICE
-                ? data.marketAddress
-                : data.sellerAddress
-            );
-            return {
-              id: data.id,
-              priceId: data.priceId,
-              name:
+    (cartItem): OrderItem => {
+      const additionalInfos = ADDITIONAL_INFOS.map((info) => {
+        if (cartItem.listing[info.key as keyof GetCartListingDataItem]) {
+          return info.display;
+        } else return '';
+      }).filter((info) => info !== '');
+
+      return {
+        cartItemId: cartItem.cartItemId || '',
+        title: 'Order Summary',
+        uri: cartItem.listing.image,
+        name: cartItem.listing.type,
+        price: cartItem.subTotal.toFixed(2),
+        tags: additionalInfos
+          .map((info) => ({
+            label: info,
+            type: 'blue',
+          }))
+          .concat(
+            cartItem.listing.specifications
+              .split(',')
+              .map((label) => ({ label, type: 'plain' }))
+          ),
+        weight: cartItem.weight.toFixed(2),
+        unit: cartItem.listing.measurementUnit,
+        size: sizeToString(
+          cartItem.listing.metric,
+          cartItem.listing.sizeFrom,
+          cartItem.listing.sizeTo
+        ),
+        location: cartItem.listing.origin.state,
+        vendor: cartItem.companyName,
+        vendorId: cartItem.companyId,
+        shippingOptions: shippingQuotes
+          ? (
+              shippingQuotes[cartItem.companyId] || { priceResult: [] }
+            ).priceResult.map((data) => {
+              const shipmentMode = shipmentModeToString(
+                data.shipmentMode,
+                data.serviceName
+              );
+              const serviceName = serviceNameToString(
+                data.serviceName,
+                data.locationName,
+                cartItem.companyName
+              );
+              const subAddress = subAddressToString(
+                cartItem.companyName,
                 data.serviceName === CLICK_AND_COLLECT_SERVICE
-                  ? `${serviceName} ${data.locationName}`
-                  : `${shipmentMode} ${serviceName}`,
-              ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
-                ? { secondName: clickAndCollectAddress2 }
-                : {}),
-              price: toPrice(data.grossPrice, false),
-              est: estimatedDeliveryToString(
-                data.minTransitTime,
-                data.maxTransitTime,
-                data.estimatedDate
-              ),
-              imageUrl: data.imageUrl,
-              subAddress:
-                serviceName !== 'delivery to door' &&
-                shipmentMode !== 'Air freight'
-                  ? subAddress || data.subAddress
-                  : undefined,
-            };
-          })
-        : [],
-    })
+                  ? data.marketAddress
+                  : data.sellerAddress
+              );
+              return {
+                id: data.id,
+                priceId: data.priceId,
+                name:
+                  data.serviceName === CLICK_AND_COLLECT_SERVICE
+                    ? `${serviceName} ${data.locationName}`
+                    : `${shipmentMode} ${serviceName}`,
+                ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
+                  ? { secondName: clickAndCollectAddress2 }
+                  : {}),
+                price: toPrice(data.grossPrice, false),
+                est: estimatedDeliveryToString(
+                  data.minTransitTime,
+                  data.maxTransitTime,
+                  data.estimatedDate
+                ),
+                imageUrl: data.imageUrl,
+                subAddress:
+                  serviceName !== 'delivery to door' &&
+                  shipmentMode !== 'Air freight'
+                    ? subAddress || data.subAddress
+                    : undefined,
+              };
+            })
+          : [],
+      };
+    }
   );
 
   const groupOrdersByVendor = groupBy((order: OrderItem) => order.vendorId);

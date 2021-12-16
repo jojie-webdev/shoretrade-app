@@ -74,14 +74,26 @@ const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
 
               {tags && (
                 <div className="checkout-tags">
-                  {tags.map((t) => (
+                  {tags.map((tag) => (
                     <Badge
-                      key={t.label}
-                      fontColor={theme.grey.shade9}
-                      badgeColor={theme.grey.shade2}
+                      key={tag.label}
+                      fontColor={
+                        tag.type === 'blue'
+                          ? theme.grey.noshade
+                          : theme.grey.shade9
+                      }
+                      badgeColor={
+                        tag.type === 'blue'
+                          ? theme.brand.info
+                          : theme.grey.shade3
+                      }
                     >
-                      <BadgeText variant="caption" weight="bold">
-                        {t.label}
+                      <BadgeText
+                        variant="caption"
+                        weight="bold"
+                        color={tag.type === 'blue' ? 'noshade' : 'shade9'}
+                      >
+                        {tag.label}
                       </BadgeText>
                     </Badge>
                   ))}

@@ -1,7 +1,11 @@
+import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import moment from 'moment';
 import { groupBy } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
-import { GetBuyerOrdersResponseItem } from 'types/store/GetBuyerOrdersState';
+import {
+  GetBuyerOrdersResponseItem,
+  ListingResponseItem,
+} from 'types/store/GetBuyerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
@@ -73,11 +77,27 @@ export const transformOrder = (
       detailsProps: orderItem.orderLineItem.map((lineItem) => {
         const unit = formatMeasurementUnit(lineItem.listing.measurementUnit);
 
+        const additionalInfos = ADDITIONAL_INFOS.map((info) => {
+          if (lineItem.listing[info.key as keyof ListingResponseItem]) {
+            return info.display;
+          } else return '';
+        }).filter((info) => info !== '');
+
         return {
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
           price: toPrice(lineItem.price),
-          tags: lineItem.listing.specifications.map((label) => ({ label })),
+          tags: additionalInfos
+            .map((info) => ({
+              label: info,
+              type: 'blue',
+            }))
+            .concat(
+              lineItem.listing.specifications.map((label) => ({
+                label,
+                type: 'plain',
+              }))
+            ),
           weight:
             lineItem.listingBoxes
               .reduce((accum, current) => {

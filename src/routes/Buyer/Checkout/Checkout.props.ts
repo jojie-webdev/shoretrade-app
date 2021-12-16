@@ -6,7 +6,7 @@ export type OrderItem = {
   uri: string;
   name: string;
   price: string;
-  tags: { label: string }[];
+  tags: { label: string; type: string | 'plain' | 'blue' }[];
   weight: string;
   size: string;
   location: string;

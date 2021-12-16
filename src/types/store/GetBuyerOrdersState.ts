@@ -9,6 +9,38 @@ export type GetBuyerOrdersMeta = {
   dateTo?: Date | string;
 };
 
+export type ListingResponseItem = {
+  allowedWeightAdjustment: number;
+  catchDate?: string; // yyyy-mm-dd
+  catchRecurrence?: string;
+  description: string;
+  endDate: string; // iso date string
+  fishermanFirstName: string;
+  fishermanLastName: string;
+  images: string[];
+  isAquafuture: boolean;
+  listingId: string;
+  measurementUnit: string; // ex. 'kg'
+  metricLabel: string; // ex. 'Grams'
+  origin: {
+    countryCode: string;
+    state: string;
+    suburb: string;
+  };
+  priceDelta: number | null;
+  pricePerKilo: number;
+  sizeFrom: string;
+  sizeId: string;
+  sizeTo: string;
+  specifications: string[];
+  typeId: string;
+  typeName: string;
+  unitKgConversion: number;
+  weightConfirmed: boolean;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
+};
+
 export type GetBuyerOrdersResponseItem = {
   buyerCompanyId: string;
   buyerCompanyName: string;
@@ -38,35 +70,7 @@ export type GetBuyerOrdersResponseItem = {
   orderId: string;
   orderLineItem: {
     id: string;
-    listing: {
-      allowedWeightAdjustment: number;
-      catchDate?: string; // yyyy-mm-dd
-      catchRecurrence?: string;
-      description: string;
-      endDate: string; // iso date string
-      fishermanFirstName: string;
-      fishermanLastName: string;
-      images: string[];
-      isAquafuture: boolean;
-      listingId: string;
-      measurementUnit: string; // ex. 'kg'
-      metricLabel: string; // ex. 'Grams'
-      origin: {
-        countryCode: string;
-        state: string;
-        suburb: string;
-      };
-      priceDelta: number | null;
-      pricePerKilo: number;
-      sizeFrom: string;
-      sizeId: string;
-      sizeTo: string;
-      specifications: string[];
-      typeId: string;
-      typeName: string;
-      unitKgConversion: number;
-      weightConfirmed: boolean;
-    };
+    listing: ListingResponseItem;
     listingBoxes: {
       count: number | null;
       id: string;

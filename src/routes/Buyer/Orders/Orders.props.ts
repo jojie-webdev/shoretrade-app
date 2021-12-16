@@ -20,6 +20,7 @@ export interface OrderItem {
       price: string;
       tags: {
         label: string;
+        type: string | 'plain' | 'blue';
       }[];
       weight: string;
       unit: string;

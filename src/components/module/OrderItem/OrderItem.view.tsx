@@ -122,8 +122,20 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                       <Row nogutter={true}>
                         {d.tags.map((tag) => (
                           <Col key={tag.label} xs="content">
-                            <Tag key={tag.label}>
-                              <Typography variant="overlineSmall">
+                            <Tag
+                              key={tag.label}
+                              background={
+                                tag.type === 'blue'
+                                  ? theme.brand.info
+                                  : theme.grey.shade3
+                              }
+                            >
+                              <Typography
+                                variant="overlineSmall"
+                                color={
+                                  tag.type === 'blue' ? 'noshade' : 'shade9'
+                                }
+                              >
                                 {tag.label}
                               </Typography>
                             </Tag>
