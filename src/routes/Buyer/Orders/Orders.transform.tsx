@@ -20,12 +20,17 @@ import { DateType, OrderItem } from './Orders.props';
 export const getShipmentOptionString = (
   deliveryMethod: string,
   deliveryOption: string,
-  locationName: string
+  locationName: string,
+  sellerCompanyName: string
 ) => {
   return `${shipmentModeToString(
     deliveryMethod,
     deliveryOption
-  )} ${deliveryOptionToServiceNameString(deliveryOption, locationName)}`;
+  )} ${deliveryOptionToServiceNameString(
+    deliveryOption,
+    locationName,
+    sellerCompanyName
+  )}`;
 };
 
 const getDeliveredDate = (
@@ -124,8 +129,10 @@ export const transformOrder = (
       shippingOption: getShipmentOptionString(
         orderItem.deliveryMethod,
         orderItem.deliveryOption,
-        orderItem?.deliveryInstruction?.locationName
+        orderItem?.deliveryInstruction?.locationName,
+        orderItem?.sellerCompanyName
       ),
+      shippingAddress: orderItem?.deliveryInstruction?.marketAddress,
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
       shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
       shippingPrice: toPrice(orderItem.shippingCost),

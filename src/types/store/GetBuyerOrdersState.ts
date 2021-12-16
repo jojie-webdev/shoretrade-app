@@ -50,6 +50,7 @@ export type GetBuyerOrdersResponseItem = {
   deliveryDate: string | null;
   deliveryInstruction: {
     locationName: string;
+    marketAddress: string;
   };
   deliveryMethod: string; // ROAD
   deliveryOption: string; // DOOR

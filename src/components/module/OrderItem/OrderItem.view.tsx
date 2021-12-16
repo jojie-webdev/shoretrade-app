@@ -246,6 +246,11 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Typography color="shade6" variant="label">
               {props.data.shippingOption}:
             </Typography>
+            {props.data.shippingAddress && (
+              <Typography color="shade6" variant="caption" fontStyle="italic">
+                {props.data.shippingAddress}
+              </Typography>
+            )}
             <Typography color="shade9" variant="body" weight="bold">
               {toPrice(
                 props.data.shippingChargeNet + props.data.shippingChargeGst

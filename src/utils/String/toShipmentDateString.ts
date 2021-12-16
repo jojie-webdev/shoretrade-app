@@ -105,14 +105,16 @@ export const serviceNameToDeliveryOption = (serviceName: string) => {
 
 export const deliveryOptionToServiceNameString = (
   deliveryOption: string,
-  locationName: string
+  locationName: string,
+  sellerCompanyName: string
 ) => {
   switch (deliveryOption.toUpperCase()) {
     case 'DOOR':
       return 'Delivery by Door';
     case 'COLLECT':
+      return `pickup at ${sellerCompanyName}`;
     case 'DEPOT':
-      return `Road Freight pickup at ${locationName}`;
+      return `pickup at ${locationName}`;
     default:
       return '';
   }
