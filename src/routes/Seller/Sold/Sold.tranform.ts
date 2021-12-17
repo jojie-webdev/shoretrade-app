@@ -29,8 +29,10 @@ const getShipmentMethodLabel = (
       return 'Delivering Yourself';
     case 'selfPickupOrders':
       return `Collecting from ${sellerAddress}`;
+    case 'preAuctionOrders':
+      return 'Pre-Auction';
     default:
-      return '';
+      return 'Others';
   }
 };
 

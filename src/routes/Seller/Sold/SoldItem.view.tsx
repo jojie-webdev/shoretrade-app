@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Plane, Truck, FileCheck } from 'components/base/SVG';
+import { Plane, Truck, FileCheck, Box } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -99,12 +99,16 @@ const SoldItem = (props: {
     } = entry[0];
     const isPreAuction = salesChannel === 'Pre-Auction';
 
-    const Icon = () =>
-      type.toLowerCase().includes('air') ? (
+    const Icon = () => {
+      if (key.toUpperCase() === 'PRE-AUCTION') {
+        return <Box fill={theme.grey.shade6} />;
+      }
+      return type.toLowerCase().includes('air') ? (
         <Plane fill={theme.grey.shade6} />
       ) : (
         <Truck fill={theme.grey.shade6} />
       );
+    };
 
     const accordionId = `${key}-${toAddressState}`;
 
