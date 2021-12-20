@@ -18,7 +18,6 @@ import {
   getMarketInterestsActions,
   getHistoricalListingsActions,
   useHistoricalListingActions,
-  getListingFormDataActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -174,7 +173,6 @@ const AddProduct = (): JSX.Element => {
     );
     onChangeCurrentPage(3);
     updateAdditionalInfos({ isIkeJime: false, isIceSlurry: false });
-    dispatch(getListingFormDataActions.request({ typeId }));
   };
 
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
@@ -629,15 +627,6 @@ const AddProduct = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, [companyId]);
-
-  useEffect(() => {
-    if (editableListing.type) {
-      dispatch(
-        getListingFormDataActions.request({ typeId: editableListing.type })
-      );
-    }
-    // eslint-disable-next-line
-  }, [editableListing])
 
   useEffect(() => {
     getCustomFormData();
